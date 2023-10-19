@@ -536,6 +536,6 @@ describe("Responsive paddings", () => {
 
 		await btnOpenPopover.click();
 
-		assert.strictEqual(await popover.getAttribute("media-range"), "M", "Popover has correct media range");
+		assert.strictEqual(await popover.getAttribute("media-range"), "XL", "Popover has correct media range");
 	});
 });

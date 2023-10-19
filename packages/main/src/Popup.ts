@@ -264,6 +264,10 @@ abstract class Popup extends UI5Element {
 		this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
 	}
 
+	onAfterRendering() {
+		this._updateMediaRange();
+	}
+
 	onEnterDOM() {
 		ResizeHandler.register(this, this._resizeHandler);
 	}
@@ -473,7 +477,6 @@ abstract class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
-
 		this._addOpenedPopup();
 
 		this.opened = true;
@@ -485,7 +488,6 @@ abstract class Popup extends UI5Element {
 			await this.applyInitialFocus();
 		}
 
-		this._updateMediaRange();
 		this.fireEvent("after-open", {}, false, false);
 	}
 

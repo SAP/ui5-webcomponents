@@ -281,6 +281,8 @@ class Popover extends Popup {
 	}
 
 	onAfterRendering() {
+		super.onAfterRendering();
+
 		if (!this.isOpen() && this.open) {
 			let opener;
 
@@ -410,7 +412,6 @@ class Popover extends Popup {
 			this._showOutsideViewport();
 		}
 
-		this._updateMediaRange();
 		const popoverSize = this.getPopoverSize();
 		let placement;
 
