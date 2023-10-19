@@ -13,7 +13,7 @@ module.exports = {
 			src: `copy-and-watch "src/**/*.{js,css}" dist/`,
 			typescript: "tsc",
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
-			jsonImports: `node "${jsonImportsScript}" dist/generated/assets/themes dist/generated/json-imports`,
+			jsonImports: `node "${jsonImportsScript}" src/generated/assets/themes src/generated/json-imports`,
 		},
 		generateReport: `node "${generateReportScript}"`,
 	},

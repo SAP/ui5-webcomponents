@@ -19,7 +19,7 @@ module.exports = function (opts) {
 			let css = root.toString();
 			css = proccessCSS(css);
 
-			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\assets\\");
+			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/src/generated/assets/").replace(`\\${opts.toReplace}\\`, "\\src\\generated\\assets\\");
 			mkdirp.sync(path.dirname(targetFile));
 
 			const filePath = `${targetFile}.json`;

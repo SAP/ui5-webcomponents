@@ -29,7 +29,6 @@
     "clean": "wc-dev clean",
     "lint": "wc-dev lint",
     "lint:scope": "nps scope.lint",
-    "swc": "swc src --out-dir dist",
     "start": "wc-dev start",
     "watch": "wc-dev watch",
     "build": "wc-dev build",

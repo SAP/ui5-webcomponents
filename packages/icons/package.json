@@ -19,7 +19,6 @@
   "scripts": {
     "clean": "wc-dev clean",
     "generate": "nps generate",
-    "swc": "swc src --out-dir dist",
     "build": "wc-dev build",
     "prepublishOnly": "npm run clean && npm run build"
   },

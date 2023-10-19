@@ -4,8 +4,8 @@ const assets = require("../../assets-meta.js");
 
 const generate = async () => {
 	const inputFolder = path.normalize(process.argv[2]);
-	const outputFile = path.normalize(`${process.argv[3]}/Themes-static.js`);
-	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.js`);
+	const outputFile = path.normalize(`${process.argv[3]}/Themes-static.ts`);
+	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.ts`);
 
 // All supported optional themes
 	const allThemes = assets.themes.all;
@@ -26,7 +26,8 @@ const generate = async () => {
 
 
 // static imports file content
-	const contentStatic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	const contentStatic = `// @ts-nocheck
+import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 ${importLines}
 
@@ -47,7 +48,8 @@ ${availableThemesArray}
 
 
 // dynamic imports file content
-	const contentDynamic = `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+	const contentDynamic = `// @ts-nocheck
+import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 
 const loadThemeProperties = async (themeName) => {
 	switch (themeName) {

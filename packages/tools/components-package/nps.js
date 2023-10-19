@@ -11,7 +11,7 @@ const getScripts = (options) => {
 	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath} ${illustration.collection}`);
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
-	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
+	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
 	const tsOption = options.typescript;
@@ -89,7 +89,7 @@ const getScripts = (options) => {
 		typescript: tsCommand,
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
-			templates: `mkdirp dist/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
+			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
 				default: `concurrently "nps build.styles.themes" "nps build.styles.components" ${copySrcGenerated}`,
 				default2: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
@@ -99,15 +99,15 @@ const getScripts = (options) => {
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
-				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
+				default: "mkdirp src/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
+				themes: `node "${LIB}/generate-json-imports/themes.js" src/generated/assets/themes src/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/generated/assets/i18n src/generated/json-imports`,
 			},
 			jsImports: {
-				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrationsLoaders",
+				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig}`,
@@ -117,7 +117,7 @@ const getScripts = (options) => {
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" dist/generated/`,
+			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" src/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {

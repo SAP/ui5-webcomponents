@@ -20,7 +20,6 @@
     "lint": "wc-dev lint",
     "lint:scope": "nps scope.lint",
     "start": "wc-dev start",
-    "swc": "swc src --out-dir dist",
     "watch": "wc-dev watch",
     "generate": "nps generate",
     "build": "wc-dev build",

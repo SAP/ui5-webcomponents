@@ -19,7 +19,6 @@
   "scripts": {
     "clean": "nps clean",
     "build": "nps build",
-    "swc": "swc src --out-dir dist",
     "generate": "nps generate",
     "start": "nps start",
     "verify": "node ./lib/verify-vars/index.js",

@@ -25,7 +25,6 @@
     "lint": "nps lint",
     "start": "nps start",
     "build": "nps build",
-    "swc": "swc src --out-dir dist",
     "generate": "nps generate",
     "prepublishOnly": "npm run clean && npm run build"
   },
