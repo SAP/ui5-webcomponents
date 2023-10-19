@@ -102,6 +102,16 @@ function processClass(ts, classNode, moduleDoc) {
 					member.type = getType(ts, findTag(memberParsedJsDoc, "type"), classNode);
 				}
 
+				if (hasTag(memberParsedJsDoc, "formProperty")) {
+					member._ui5formProperty = true;
+				}
+
+				if (hasTag(memberParsedJsDoc, "formEvents")) {
+					const tag = findTag(memberParsedJsDoc, "formEvents");
+					const tagValue = tag.description ? `${tag.name} ${tag.description}` : tag.name;
+					member._ui5formEvents = tagValue.trim().replaceAll(/\s+/g,",")
+				}
+
 				if (member.readonly) {
 					delete member.return;
 				}

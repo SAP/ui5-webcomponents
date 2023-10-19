@@ -166,6 +166,8 @@ export interface Reference {
   package?: string
 }
 export interface ClassField {
+  _ui5formProperty?: boolean
+  _ui5formEvents?: string
   /**
    * Marks when the field was introduced
    */
