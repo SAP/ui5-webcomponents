@@ -27,6 +27,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
 	renderer: litRender,
 	styles,
 })
+@event("_request-tabindex-change")
 @event("_focused")
 @event("_forward-after")
 @event("_forward-before")
@@ -72,6 +73,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	focused!: boolean;
 
 	_onfocusin(e: FocusEvent) {
+		this.fireEvent("_request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
 			return;
 		}
