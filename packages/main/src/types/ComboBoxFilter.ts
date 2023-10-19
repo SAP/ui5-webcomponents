@@ -1,11 +1,7 @@
 /**
  * Different filtering types of the ComboBox.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.ComboBoxFilter
  */
  enum ComboBoxFilter {
 	/**
