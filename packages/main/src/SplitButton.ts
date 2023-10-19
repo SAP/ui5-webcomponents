@@ -138,13 +138,13 @@ class SplitButton extends UI5Element {
 	 * Defines whether the arrow button should have the active state styles or not.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.SplitButton.prototype.arrowButtonActive
+	 * @name sap.ui.webc.main.SplitButton.prototype.activeArrowButton
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
-	arrowButtonActive!: boolean;
+	activeArrowButton!: boolean;
 
 	/**
 	 * Defines the component design.
@@ -302,14 +302,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_handleMouseClick(e: MouseEvent) {
-		let target = e.target as Button;
-		if (this.disabled) {
-			return;
-		}
-
-		if (e.target instanceof HTMLSlotElement) {
-			target = target.parentNode as Button;
-		}
+		const target = e.target as Button;
 
 		this._manageFocus(target);
 		this._fireClick(e);
@@ -353,7 +346,7 @@ class SplitButton extends UI5Element {
 
 		// Handles button freeze issue when pressing Enter/Space and navigating with Tab/Shift+Tab simultaneously.
 		if (this._isDefaultActionPressed && (isTabNext(e) || isTabPrevious(e))) {
-			this.arrowButtonActive = false;
+			this.activeArrowButton = false;
 			this._textButtonActive = false;
 		}
 
@@ -363,12 +356,12 @@ class SplitButton extends UI5Element {
 	_onKeyUp(e: KeyboardEvent) {
 		if (this._isArrowKeyAction(e)) {
 			e.preventDefault();
-			this.arrowButtonActive = false;
+			this.activeArrowButton = false;
 			this._textButtonActive = false;
 		} else if (this._isDefaultAction(e)) {
 			this._isDefaultActionPressed = false;
 			this._textButtonActive = false;
-			this.arrowButtonActive = false;
+			this.activeArrowButton = false;
 			if (isSpace(e)) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -448,7 +441,7 @@ class SplitButton extends UI5Element {
 	 */
 	_handleArrowButtonAction(e: KeyboardEvent) {
 		e.preventDefault();
-		this.arrowButtonActive = true;
+		this.activeArrowButton = true;
 		this._fireArrowClick(e);
 
 		if (this.arrowButton) {
@@ -472,7 +465,7 @@ class SplitButton extends UI5Element {
 				this._spacePressed = true;
 			}
 		} else if (this.arrowButton && this.arrowButton.focused) {
-			this.arrowButtonActive = true;
+			this.activeArrowButton = true;
 			this._fireArrowClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;

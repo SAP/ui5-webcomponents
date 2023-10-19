@@ -61,15 +61,15 @@ OpeningMenu.decorators = [
 	splitBtn.addEventListener("ui5-arrow-click", function() {
 		if (menu.open) {
 			menu.close();
-			splitBtn.arrowButtonActive = false;
+			splitBtn.activeArrowButton = false;
 		} else {
 			menu.showAt(splitBtn);
-			splitBtn.arrowButtonActive = true;
+			splitBtn.activeArrowButton = true;
 		}
 	});
 	
 	menu.addEventListener("after-close", function() {
-		splitBtn.arrowButtonActive = false;
+		splitBtn.activeArrowButton = false;
 	});
 	</script>`;}
 ];
