@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-business-suite
+
+
+
+
+
 # [1.19.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.1-rc.0...v1.19.0-rc.0) (2023-10-12)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-business-suite
