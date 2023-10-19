@@ -91,7 +91,7 @@
 	pointer-events: none;
 	border-radius: var(--sapField_BorderCornerRadius);
 	border-style: var(--_ui5_input_error_warning_border_style);
-	z-index: 3;
+	z-index: 1;
 	border-width: 0px;
 }
 
@@ -181,7 +181,7 @@
 	height: 2rem;
 	height: 100%;
 	background-color: var(--_ui5_step_input_button_background_color);
-	z-index: 2;
+	z-index: 0;
 }
 
 :host .ui5-step-icon[focused] {
@@ -191,6 +191,7 @@
 
 :host .ui5-step-icon.ui5-step-dec {
 	left: var(--_ui5_step_input_button_left);
+	z-index: 1;
 }
 
 :host .ui5-step-icon.ui5-step-inc {
@@ -222,7 +223,7 @@
 	left: 0px;
 	outline: none;
 	pointer-events: none;
-	z-index: 3;
+	z-index: 1;
 }
 
 :host .ui5-step-input-input[focused] {
