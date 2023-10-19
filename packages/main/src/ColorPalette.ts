@@ -245,14 +245,23 @@ class ColorPalette extends UI5Element {
 		});
 	}
 
+	_getEffectiveColorItems() {
+		let colorItems = this.colors;
+
+		if (this.popupMode) {
+			colorItems = this.getSlottedNodes<ColorPaletteItem>("colors");
+		}
+		return colorItems;
+	}
+
 	/**
 	 * Ensures that only one item is selected or only the last selected item remains active if more than one are explicitly set as 'selected'.
 	 *
 	 * @private
-	 * @returns {void}
 	 */
 	_ensureSingleSelectionOrDeselectAll() {
-		const selectedItems = [...this.colors, ...this.recentColorsElements].filter(item => item.selected);
+		const colorItems = this._getEffectiveColorItems();
+		const selectedItems = [...colorItems, ...this.recentColorsElements].filter(item => item.selected);
 		selectedItems.pop();
 		selectedItems.forEach(item => { item.selected = false; });
 	}
@@ -281,6 +290,8 @@ class ColorPalette extends UI5Element {
 			return;
 		}
 
+		const colorItems = this._getEffectiveColorItems();
+
 		if (this._currentlySelected === target) {
 			target.selected = !target.selected;
 			return;
@@ -294,11 +305,13 @@ class ColorPalette extends UI5Element {
 			this.recentColorsElements[0].focus();
 			this._currentlySelected = this.recentColorsElements[0];
 		} else {
-			[...this.colors, ...this.recentColorsElements].forEach(item => {
+			[...colorItems, ...this.recentColorsElements].forEach(item => {
 				item.selected = item === target;
 			});
 			this._currentlySelected = target;
 		}
+
+		this._ensureSingleSelectionOrDeselectAll();
 	}
 
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
@@ -307,7 +320,7 @@ class ColorPalette extends UI5Element {
 			this._onDefaultColorClick();
 		}
 
-		if (isSpace(e) || isEnter(e)) {
+		if (isSpace(e)) {
 			e.preventDefault();
 			this._onDefaultColorClick();
 		}
@@ -357,6 +370,11 @@ class ColorPalette extends UI5Element {
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
+
+		if ((isUp(e) || isDown(e)) && this._currentlySelected !== undefined && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
+			this._currentlySelected = undefined;
+		}
+
 		if (isTabNext(e) && this.popupMode) {
 			e.preventDefault();
 			this.selectColor(target);
@@ -388,6 +406,10 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
+		if ((isUp(e) || isDown(e)) && this._currentlySelected !== undefined && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
+			this._currentlySelected = undefined;
+		}
+
 		if (isUp(e)) {
 			if (this.showMoreColors) {
 				const navigationElementsIndex = this.showDefaultColor ? 2 : 1;
@@ -432,7 +454,21 @@ class ColorPalette extends UI5Element {
 	_onDefaultColorClick() {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
+			// Handles the Default Color button click when in ColorPalettePopover.
+			const defaultColorItem = this._getDefaultColorItem();
+			if (defaultColorItem) {
+				defaultColorItem.selected = true;
+			}
+
+			if (this._currentlySelected && this._currentlySelected !== defaultColorItem) {
+				this._currentlySelected.selected = false;
+				this._currentlySelected = defaultColorItem;
+			}
 		}
+	}
+
+	_getDefaultColorItem() {
+		return this._getEffectiveColorItems().find(item => item.value === this.defaultColor);
 	}
 
 	/**
@@ -491,6 +527,10 @@ class ColorPalette extends UI5Element {
 	get colorPaletteNavigationElements() {
 		const navigationElements: Array<ColorPaletteNavigationItem> = [];
 		const rootElement = this.shadowRoot!.querySelector(".ui5-cp-root")!;
+
+		if (this._currentlySelected) {
+			navigationElements.push(this._currentlySelected);
+		}
 
 		if (this.showDefaultColor) {
 			navigationElements.push(rootElement.querySelector<Button>(".ui5-cp-default-color-button")!);

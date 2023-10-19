@@ -187,10 +187,25 @@ class ColorPalettePopover extends UI5Element {
 
 		this.responsivePopover!.showAt(opener, true);
 
+		const colorPalette = this._colorPalette();
+		const selectedItem = this.colors.find(item => item.selected)
+						  || colorPalette.recentColorsElements.find(item => item.selected);
+
+		if (selectedItem) {
+			colorPalette.focusColorElement(colorPalette.colorPaletteNavigationElements[0], colorPalette._itemNavigation);
+		}
+		this._defaultFocus(colorPalette);
+	}
+
+	/**
+	 * Sets the focus on the first item of the Palette or on the `selected` one if such exists.
+	 * @param {ColorPalette} colorPalette the color palette
+	 */
+	_defaultFocus(colorPalette: ColorPalette) {
 		if (this.showDefaultColor) {
-			this._colorPalette().colorPaletteNavigationElements[0].focus();
+			colorPalette.colorPaletteNavigationElements[0].focus();
 		} else {
-			this._colorPalette().focusColorElement(this._colorPalette().colorPaletteNavigationElements[0], this._colorPalette()._itemNavigation);
+			colorPalette.focusColorElement(colorPalette.colorPaletteNavigationElements[0], colorPalette._itemNavigation);
 		}
 	}
 
