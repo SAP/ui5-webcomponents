@@ -83,6 +83,7 @@
 	background: var(--sapTextColor);
 	margin-inline-start: 0.0625rem;
 	z-index: 2;
+	margin-left: 0.625rem;
 }
 
 .ui5-tab-expand-button:hover {

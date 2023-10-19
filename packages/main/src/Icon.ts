@@ -139,20 +139,6 @@ class Icon extends UI5Element {
 	/**
 	 * Defines the component semantic design.
 	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Contrast</code></li>
-	 * <li><code>Critical</code></li>
-	 * <li><code>Default</code></li>
-	 * <li><code>Information</code></li>
-	 * <li><code>Negative</code></li>
-	 * <li><code>Neutral</code></li>
-	 * <li><code>NonInteractive</code></li>
-	 * <li><code>Positive</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.main.types.IconDesign}
 	 * @name sap.ui.webc.main.Icon.prototype.design
 	 * @defaultvalue "Default"
