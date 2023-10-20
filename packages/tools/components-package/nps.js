@@ -18,6 +18,7 @@ const getScripts = (options) => {
 	const tsCommand = tsOption ? "tsc" : "";
 	const tsWatchCommand = tsOption ? "tsc --watch" : "";
 	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
+	const generateCEMCommand = tsOption ? "generateAPI.generateCEM" : "generateAPI.prepareManifest"
 	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
 
 	if (tsOption) {
@@ -130,7 +131,7 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest",
+			default: `nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup ${generateCEMCommand}`,
 			generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
 			validateCEM: `ajv validate -s ${LIB}/cem/schema.json -d dist/custom-elements.json --allow-union-types --all-errors`,
 			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
