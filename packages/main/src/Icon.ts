@@ -12,7 +12,6 @@ import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTempla
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
 
-
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
