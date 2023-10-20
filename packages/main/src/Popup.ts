@@ -477,6 +477,11 @@ abstract class Popup extends UI5Element {
 		this._focusedElementBeforeOpen = getFocusedElement();
 
 		this._show();
+
+		if (this.getDomRef()) {
+			this._updateMediaRange();
+		}
+
 		this._addOpenedPopup();
 
 		this.opened = true;
