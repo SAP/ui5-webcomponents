@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* escape special characters when scoping CSS vars ([#7704](https://github.com/SAP/ui5-webcomponents/issues/7704)) ([8888751](https://github.com/SAP/ui5-webcomponents/commit/888875121b56fa0c7216674acc580620d8e0d720))
+* **ui5-date-picker:** align value state colors with the spec ([#7676](https://github.com/SAP/ui5-webcomponents/issues/7676)) ([17a5b12](https://github.com/SAP/ui5-webcomponents/commit/17a5b122926720c3c2b07fc322cb480e867eb63a))
+* **ui5-flexible-column-layout:** wrong focus fixed ([#7586](https://github.com/SAP/ui5-webcomponents/issues/7586)) ([d55d061](https://github.com/SAP/ui5-webcomponents/commit/d55d061b946b083cb68606a719c81abd2d164be7))
+* **ui5-flexible-column-layout:** wrong focus fixed ([#7586](https://github.com/SAP/ui5-webcomponents/issues/7586)) ([721cc0b](https://github.com/SAP/ui5-webcomponents/commit/721cc0b312fb76142dea97712b21343b7b93337e))
+* **ui5-step-input:** fix z-index of increase/decrease buttons and focus ([#7709](https://github.com/SAP/ui5-webcomponents/issues/7709)) ([8bb9c4c](https://github.com/SAP/ui5-webcomponents/commit/8bb9c4c51a726b350d427de31cbf99c2d8fc6b31))
+* **ui5-tabcontainer:** update according to latest SAP Horizon design ([#7668](https://github.com/SAP/ui5-webcomponents/issues/7668)) ([57ff771](https://github.com/SAP/ui5-webcomponents/commit/57ff771c82de51515a998ce09f3b3430ffd69c18))
+
+
+### Features
+
+* do not override CSS Vars by newer runtimes ([#7703](https://github.com/SAP/ui5-webcomponents/issues/7703)) ([8379071](https://github.com/SAP/ui5-webcomponents/commit/8379071846f5f76b7f7257594269dc9e7e814478))
+* **ui5-combobox:** add attribute `no-typeahead` ([#7692](https://github.com/SAP/ui5-webcomponents/issues/7692)) ([4714835](https://github.com/SAP/ui5-webcomponents/commit/4714835990da6858f47462534b46978a9b0c65fc))
+* **ui5-panel:** enable custom styling of title ([#7688](https://github.com/SAP/ui5-webcomponents/issues/7688)) ([9d5a3d1](https://github.com/SAP/ui5-webcomponents/commit/9d5a3d1e95c7d163a91beb068169f2e7df39d4d5))
+* **ui5-rating-indicator:** introduce tooltip property ([#7687](https://github.com/SAP/ui5-webcomponents/issues/7687)) ([f2668b6](https://github.com/SAP/ui5-webcomponents/commit/f2668b6889259c7295b06fe47f846b434510f671))
+* update @ui5/webcomponents-icons to 5.07 & 4.19 ([#7708](https://github.com/SAP/ui5-webcomponents/issues/7708)) ([1732304](https://github.com/SAP/ui5-webcomponents/commit/173230467f93b227c37b54b666dcfcfec07bcab1))
+
+
+
+
+
 # [1.19.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.1-rc.0...v1.19.0-rc.0) (2023-10-12)
 
 
