@@ -118,7 +118,7 @@
 	border-width: var(--_ui5_side_navigation_group_expanded_border_width);
 }
 
-:not(.ui5-sn-in-popover) .ui5-sn-list-li:last-child .ui5-sn-item.ui5-sn-item-level2::before {
+:not(.ui5-sn-in-popover) .ui5-sn-item-group .ui5-sn-list-li:last-child .ui5-sn-item.ui5-sn-item-level2::before {
 	border: var(--_ui5_side_navigation_group_border_style_color);
 	border-width: var(--_ui5_side_navigation_group_border_width);
 }
