@@ -5,14 +5,12 @@ const { existsSync } = require('fs');
 const { dirname, join, resolve } = require('path');
 const tsconfigPaths = require('vite-tsconfig-paths').default;
 const {checker} = require('vite-plugin-checker');
-console.log({checker})
 
 const customResolver = (id, source, options) => {
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
 		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
-		console.log({id, source, resolved})
 		return resolved;
 	}
 	
@@ -26,7 +24,6 @@ const customResolver = (id, source, options) => {
 		//   except 4 files with are ts files in src and could be imported from `dist`
 		const absoluteId = resolve(dirname(source), id);
 		if (absoluteId.includes("/sap/base/") || absoluteId.includes("/sap/ui/core/")) {
-			// console.log({absoluteId})
 			const virtSource = source.replace(/packages\/(\w+)\/src\//, "packages/$1/dist/");
 			let resolved = join(dirname(virtSource), id);
 			if (resolved.endsWith("sap/ui/core/Core.js") && resolved.includes("/dist/")) {
@@ -55,13 +52,13 @@ module.exports = defineConfig(async () => {
 			emptyOutDir: false,
 		},
 		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(),
-			// checker({
-			// 	// e.g. use TypeScript check
-			// 	typescript: {
-			// 		tsconfigPath: "packages/fiori/tsconfig.json",
-			// 		buildMode: true,
-			// 	},
-		  	// }),
+			checker({
+				// e.g. use TypeScript check
+				typescript: {
+					tsconfigPath: "packages/fiori/tsconfig.json",
+					buildMode: true,
+				},
+		  	}),
 		],
 		
 		resolve: {
