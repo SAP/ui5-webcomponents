@@ -526,8 +526,18 @@ describe("Horizontal Alignment", () => {
 });
 
 describe("Responsive paddings", () => {
+	let oldScreenHeight, oldScreenWidth;
+
 	before(async () => {
+		const browserSize = await browser.getWindowSize();
+		oldScreenHeight = browserSize.height;
+		oldScreenWidth = browserSize.width;
 		await browser.url(`test/pages/Popover.html`);
+		await browser.setWindowSize(1000, 400);
+	});
+
+	after(async () => {
+		await browser.setWindowSize(oldScreenWidth, oldScreenHeight);
 	});
 
 	it("tests media-range", async () => {
@@ -536,6 +546,6 @@ describe("Responsive paddings", () => {
 
 		await btnOpenPopover.click();
 
-		assert.strictEqual(await popover.getAttribute("media-range"), "XL", "Popover has correct media range");
+		assert.strictEqual(await popover.getAttribute("media-range"), "M", "Popover has correct media range");
 	});
 });
