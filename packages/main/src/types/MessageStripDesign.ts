@@ -4,8 +4,6 @@
  * @readonly
  * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.MessageStripDesign
  */
 enum MessageStripDesign {
 	/**

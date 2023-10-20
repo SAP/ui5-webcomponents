@@ -72,10 +72,7 @@ type Star = {
  * <code>import "@ui5/webcomponents/dist/RatingIndicator.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.RatingIndicator
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-rating-indicator
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.8
  */
@@ -91,7 +88,6 @@ type Star = {
 /**
  * The event is fired when the value changes.
  *
- * @event sap.ui.webc.main.RatingIndicator#change
  * @public
  */
 @event("change")
@@ -106,9 +102,8 @@ class RatingIndicator extends UI5Element {
 	 * <li>1.3 - 1.7 -> 1.5</li>
 	 * <li>1.8 - 1.9 -> 2</li>
 	 * <ul>
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.value
-	 * @defaultvalue 0
+	 * @type {Float}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 0 })
@@ -116,9 +111,8 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * The number of displayed rating symbols.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.max
-	 * @defaultvalue 5
+	 * @type {Integer}
+	 * @default 5
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -131,8 +125,7 @@ class RatingIndicator extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -145,8 +138,7 @@ class RatingIndicator extends UI5Element {
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -156,7 +148,6 @@ class RatingIndicator extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleName
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -167,8 +158,7 @@ class RatingIndicator extends UI5Element {
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -179,8 +169,7 @@ class RatingIndicator extends UI5Element {
 	 * Defines whether the component is required.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -191,8 +180,7 @@ class RatingIndicator extends UI5Element {
 	 * Defines the tooltip of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.RatingIndicator.prototype.tooltip
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.19.0
 	 */

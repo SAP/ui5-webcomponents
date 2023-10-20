@@ -78,6 +78,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type { IIcon } from "./Interfaces.js";
 
 const SKIP_ITEMS_SIZE = 10;
 
@@ -112,7 +113,6 @@ interface IComboBoxItem extends UI5Element {
 
 /**
  * @class
- *
  * <h3 class="comment-api-title">Overview</h3>
  *
  * The <code>ui5-combobox</code> component represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
@@ -151,7 +151,6 @@ interface IComboBoxItem extends UI5Element {
  * <code>import "@ui5/webcomponents/dist/ComboBox";</code>
  *
  * @constructor
- * @author SAP SE
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
@@ -403,12 +402,12 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the input field.
 	 *
-	 * @type {Icon[]}
+	 * @type {IIcon[]}
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
 	@slot()
-	icon!: Array<Icon>;
+	icon!: Array<IIcon>;
 
 	_initialRendering: boolean;
 	_itemFocused: boolean;

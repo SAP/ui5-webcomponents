@@ -7,9 +7,11 @@ import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IIcon } from "./Interfaces.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
+
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
@@ -135,7 +137,7 @@ const PRESENTATION_ROLE = "presentation";
  * @since 1.0.0-rc.8
  */
 @event("click")
-class Icon extends UI5Element {
+class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
 	 *

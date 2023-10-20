@@ -55,11 +55,11 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IIcon
- * @interface
  * @public
  */
-const IIcon = "sap.ui.webc.main.IIcon";
+interface IIcon{
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that represent an input, usable in numerous higher-order components

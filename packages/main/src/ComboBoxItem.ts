@@ -8,12 +8,9 @@ import type { IComboBoxItem } from "./ComboBox.js";
  * The <code>ui5-cb-item</code> represents the item for a <code>ui5-combobox</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ComboBoxItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-cb-item
- * @implements sap.ui.webc.main.IComboBoxItem
+ * @implements {IComboBoxItem}
  * @public
  */
 @customElement("ui5-cb-item")
@@ -22,8 +19,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * Defines the text of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBoxItem.prototype.text
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -33,8 +29,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * Defines the additional text of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBoxItem.prototype.additionalText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.11
 	 * @public
 	 */
@@ -44,6 +39,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	/**
 	 * Indicates whether the item is focssed
 	 * @protected
+	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	focused!: boolean;
@@ -51,6 +47,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	/**
 	 * Indicates whether the item is selected
 	 * @protected
+	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;

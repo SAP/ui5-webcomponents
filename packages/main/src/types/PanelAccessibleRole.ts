@@ -2,10 +2,7 @@
  * Panel accessible roles.
  *
  * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.PanelAccessibleRole
  */
 enum PanelAccessibleRole {
 

@@ -12,7 +12,7 @@ import type { IComboBoxItem } from "./ComboBox.js";
  * @extends UI5Element
  * @abstract
  * @public
- * @implements IComboBoxItem
+ * @implements {IComboBoxItem}
  * @since 1.0.0-rc.15
  */
 @customElement("ui5-cb-group-item")

@@ -8,12 +8,9 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
  * The <code>ui5-mcb-item</code> represents the item for a <code>ui5-multi-combobox</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MultiComboBoxItem
- * @extends sap.ui.webc.main.ComboBoxItem
+ * @extends ComboBoxItem
  * @abstract
- * @tagname ui5-mcb-item
- * @implements sap.ui.webc.main.IMultiComboBoxItem
+ * @implements {IMultiComboBoxItem}
  * @public
  */
 @customElement("ui5-mcb-item")
@@ -21,8 +18,7 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	/**
 	 * Defines the selected state of the component.
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBoxItem.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
