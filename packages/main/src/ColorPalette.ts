@@ -168,7 +168,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
-	_currentlySelected?: ColorPaletteItem;
+	_currentlySelected?: ColorPaletteItem | null;
 
 	static i18nBundle: I18nBundle;
 
@@ -320,7 +320,7 @@ class ColorPalette extends UI5Element {
 			this._onDefaultColorClick();
 		}
 
-		if (isSpace(e)) {
+		if (isSpace(e) || isEnter(e)) {
 			e.preventDefault();
 			this._onDefaultColorClick();
 		}
@@ -371,8 +371,8 @@ class ColorPalette extends UI5Element {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
 
-		if ((isUp(e) || isDown(e)) && this._currentlySelected !== undefined && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
-			this._currentlySelected = undefined;
+		if ((isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
+			this._currentlySelected = null;
 		}
 
 		if (isTabNext(e) && this.popupMode) {
@@ -406,8 +406,8 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
-		if ((isUp(e) || isDown(e)) && this._currentlySelected !== undefined && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
-			this._currentlySelected = undefined;
+		if ((isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
+			this._currentlySelected = null;
 		}
 
 		if (isUp(e)) {
@@ -454,20 +454,23 @@ class ColorPalette extends UI5Element {
 	_onDefaultColorClick() {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
-			// Handles the Default Color button click when in ColorPalettePopover.
-			const defaultColorItem = this._getDefaultColorItem();
-			if (defaultColorItem) {
-				defaultColorItem.selected = true;
+			const defaultColorItem = this.defaultColorItem;
+
+			if (defaultColorItem && defaultColorItem.selected) {
+				this.focusColorElement(defaultColorItem, this._itemNavigation);
+				return;
 			}
 
-			if (this._currentlySelected && this._currentlySelected !== defaultColorItem) {
-				this._currentlySelected.selected = false;
-				this._currentlySelected = defaultColorItem;
+			if (defaultColorItem) {
+				this.handleSelection(defaultColorItem);
 			}
 		}
 	}
 
-	_getDefaultColorItem() {
+	/**
+	 * Returns the default color item.
+	 */
+	get defaultColorItem() {
 		return this._getEffectiveColorItems().find(item => item.value === this.defaultColor);
 	}
 
