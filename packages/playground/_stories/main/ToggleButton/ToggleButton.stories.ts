@@ -39,14 +39,13 @@ Basic.args = {
 	default: "Default",
 };
 
-export const Examples: StoryFn = () => html`
-	<ui5-toggle-button design="${ButtonDesign.Default}" icon="paper-plane"> Sent </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Default}" icon="email-read"> Received </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Default}" icon="favourite"> Starred </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Default}" icon="email"> Unread </ui5-toggle-button>
-	</br>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="italic-text" tooltip="Italic"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="bold-text" tooltip="Bold"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="underline-text" tooltip="Underline"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="strikethrough" tooltip="Strikethrough"></ui5-toggle-button>
-`;
+export const Examples = Template.bind({});
+Examples.decorators = [
+	(story, {args}) => {
+		return html`
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "paper-plane", default: args.default || "Sent"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "email-read", default: args.default || "Received"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "italic-text", tooltip: args.tooltip || "Italic"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "bold-text", tooltip: args.tooltip || "Bold"}})}`
+	},
+];
