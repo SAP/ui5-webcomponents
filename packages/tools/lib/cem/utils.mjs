@@ -166,13 +166,13 @@ const validateJSDocTag = (tag) => {
         case "since":
             return !tag.type && tag.name;
         case "returns":
-            return tag.type && tag.name;
+            return tag.type;
         case "default":
             return !tag.type && !tag.description;
         case "class":
-            return !tag.type && !tag.name && tag.description;
+            return !tag.type;
         case "param":
-            return tag.type && tag.name && tag.description;
+            return tag.type && tag.name;
         case "type":
             return tag.type && !tag.name && !tag.description;
         case "formEvents":

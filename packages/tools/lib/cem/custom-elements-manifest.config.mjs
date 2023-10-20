@@ -53,7 +53,14 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
 	currClass.privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5reference = getReference(ts, className, classNode);
-	currClass.description = classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.comment;
+	currClass.description = classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description;
+	const slotsInClassComment = findAllTags(classParsedJsDoc, "slot");
+
+	currClass.slots?.forEach(slot => {
+		if (slotsInClassComment.some(classSlot => classSlot.name === slot.name)) {
+			slot.privacy = "public";
+		}
+	})
 
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
 		.map(tag => getReference(ts, tag, classNode));
@@ -109,7 +116,7 @@ function processClass(ts, classNode, moduleDoc) {
 				if (hasTag(memberParsedJsDoc, "formEvents")) {
 					const tag = findTag(memberParsedJsDoc, "formEvents");
 					const tagValue = tag.description ? `${tag.name} ${tag.description}` : tag.name;
-					member._ui5formEvents = tagValue.trim().replaceAll(/\s+/g,",")
+					member._ui5formEvents = tagValue.trim().replaceAll(/\s+/g, ",")
 				}
 
 				if (member.readonly) {
@@ -120,7 +127,8 @@ function processClass(ts, classNode, moduleDoc) {
 			validateJSDocComment("method", memberParsedJsDoc, classNodeMember.name?.text)
 
 			member.parameters?.forEach(param => {
-				param.privacy = hasTag(memberParsedJsDoc, param.name) ? "public" : "private";
+				param.privacy = findAllTags(memberParsedJsDoc, "param").some(tag => tag.name === param.name) ? "public" : "private";
+
 				if (param.type?.text) {
 					param.type = getType(ts, param.type?.text, classNode);
 				}
@@ -282,7 +290,7 @@ export default {
 			},
 			moduleLinkPhase({ moduleDoc }) {
 				for (let i = 0; i < moduleDoc.declarations.length; i++) {
-					const shouldRemove = processPublicAPI(moduleDoc.declarations[i])
+					const shouldRemove = processPublicAPI(moduleDoc.declarations[i]) || ["function", "variable"].includes(moduleDoc.declarations[i].kind)
 
 					if (shouldRemove) {
 						moduleDoc.declarations.splice(i, 1);
