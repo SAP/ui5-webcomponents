@@ -7,10 +7,10 @@ import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { IIcon } from "./Interfaces.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
+import type { IIcon } from "./Interfaces.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
