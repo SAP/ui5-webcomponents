@@ -49,8 +49,8 @@ export const DifferentTypes = Template.bind({});
 DifferentTypes.decorators = [
 	(story, {args}) => {
 		return html`
-${story({args: {...args, design: args.design || ButtonDesign.Default, default: args.default || "Default"}})}
 ${story({args: {...args, design: args.design || ButtonDesign.Emphasized, default: args.default || "Emphasized"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Default, default: args.default || "Default"}})}
 ${story({args: {...args, design: args.design || ButtonDesign.Attention, default: args.default || "Attention"}})}
 ${story({args: {...args, design: args.design || ButtonDesign.Positive, default: args.default || "Positive"}})}
 ${story({args: {...args, design: args.design || ButtonDesign.Negative, default: args.default || "Negative"}})}
