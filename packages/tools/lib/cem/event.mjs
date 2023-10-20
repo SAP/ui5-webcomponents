@@ -60,7 +60,7 @@ function processEvent(ts, event, classNode) {
 	const commentParams = findAllTags(eventParsedComment, "param");
 	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault");
 	const description = eventParsedComment?.description;
-	const native = hasTag(eventParsedComment, "native") ? "Event" : "CustomEvent";
+	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 
 	result.description = description;

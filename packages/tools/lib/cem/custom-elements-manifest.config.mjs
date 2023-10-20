@@ -53,7 +53,7 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
 	currClass.privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5reference = getReference(ts, className, classNode);
-	currClass.description = findTag(currClassJSdoc, "class")?.comment;
+	currClass.description = classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.comment;
 
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
 		.map(tag => getReference(ts, tag, classNode));
