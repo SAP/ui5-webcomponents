@@ -1491,7 +1491,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	announceSelectedItem() {
-		const invisibleText = this.shadowRoot!.querySelector(`#${this._id}-selectionText`)!;
+		const invisibleText = this.shadowRoot!.querySelector(`[id="${this._id}-selectionText"]`)!;
 
 		invisibleText.textContent = this.itemSelectionAnnounce;
 	}

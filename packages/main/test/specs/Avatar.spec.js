@@ -134,8 +134,12 @@ describe("ARIA attributes", () => {
 	it ("role set correctly", async () => {
 		const avatar = await $("#myInteractiveAvatar");;
 		const avatarRoot = await avatar.shadow$(".ui5-avatar-root");
+		const nonInteractiveAvatar = await $("#non-interactive-avatar");;
+		const nonInteractiveavatarRoot = await nonInteractiveAvatar.shadow$(".ui5-avatar-root");
 
 		assert.strictEqual(await avatarRoot.getAttribute("role"), "button", "should have role button for interactive avatar");
+
+		assert.strictEqual(await nonInteractiveavatarRoot.getAttribute("role"), "img", "should have role img for non-interactive avatar");
 	});
 
 	it ("aria-haspopup is correct for interactive avatar", async () => {

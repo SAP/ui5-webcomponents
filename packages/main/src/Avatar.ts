@@ -182,12 +182,7 @@ class Avatar extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the shape of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Circle</code></li>
-	 * <li><code>Square</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.main.types.AvatarShape}
 	 * @name sap.ui.webc.main.Avatar.prototype.shape
 	 * @defaultvalue "Circle"
@@ -198,15 +193,7 @@ class Avatar extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines predefined size of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>XS</code></li>
-	 * <li><code>S</code></li>
-	 * <li><code>M</code></li>
-	 * <li><code>L</code></li>
-	 * <li><code>XL</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.main.types.AvatarSize}
 	 * @name sap.ui.webc.main.Avatar.prototype.size
 	 * @defaultvalue "S"
@@ -223,21 +210,7 @@ class Avatar extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the background color of the desired image.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Accent1</code></li>
-	 * <li><code>Accent2</code></li>
-	 * <li><code>Accent3</code></li>
-	 * <li><code>Accent4</code></li>
-	 * <li><code>Accent5</code></li>
-	 * <li><code>Accent6</code></li>
-	 * <li><code>Accent7</code></li>
-	 * <li><code>Accent8</code></li>
-	 * <li><code>Accent9</code></li>
-	 * <li><code>Accent10</code></li>
-	 * <li><code>Placeholder</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.main.types.AvatarColorScheme}
 	 * @name sap.ui.webc.main.Avatar.prototype.colorScheme
 	 * @defaultvalue "Accent6"
@@ -371,7 +344,7 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	get _role() {
-		return this._interactive ? "button" : undefined;
+		return this._interactive ? "button" : "img";
 	}
 
 	get _ariaHasPopup() {

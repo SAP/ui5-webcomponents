@@ -158,13 +158,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * Determines the layout of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Auto</code></li>
-	 * <li><code>Vertical</code></li>
-	 * <li><code>Horizontal</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
 	 * @name sap.ui.webc.fiori.MediaGallery.prototype.layout
@@ -177,12 +170,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the horizontal alignment of the thumbnails menu
 	 * vs. the central display area.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Left</code></li>
-	 * <li><code>Right</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuHorizontalAlign}
 	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuHorizontalAlign
@@ -195,12 +182,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the vertical alignment of the thumbnails menu
 	 * vs. the central display area.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Top</code></li>
-	 * <li><code>Bottom</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuVerticalAlign}
 	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuVerticalAlign
@@ -214,12 +195,6 @@ class MediaGallery extends UI5Element {
 	 * Determines the actual applied layout type
 	 * (esp. needed when the app did not specify a fixed layout type
 	 * but selected <code>Auto</code> layout type).
-	 * <br><br>
-	 * Possible values are:
-	 * <ul>
-	 * <li><code>Vertical</code></li>
-	 * <li><code>Horizontal</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
 	 * @defaultvalue "Vertical"

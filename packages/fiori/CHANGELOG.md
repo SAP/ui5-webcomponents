@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** wrong focus fixed ([#7586](https://github.com/SAP/ui5-webcomponents/issues/7586)) ([721cc0b](https://github.com/SAP/ui5-webcomponents/commit/721cc0b312fb76142dea97712b21343b7b93337e))
+
+
+
+
+
+# [1.19.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.1-rc.0...v1.19.0-rc.0) (2023-10-12)
+
+
+### Bug Fixes
+
+* **ui5-page:** adjust Horizon themes ([#7685](https://github.com/SAP/ui5-webcomponents/issues/7685)) ([39ccfe6](https://github.com/SAP/ui5-webcomponents/commit/39ccfe63d07b74bb50eb46a419de34fa1461bc6c))
+* **ui5-shellbar:** apply correct height to horizon high contrast themes ([#7655](https://github.com/SAP/ui5-webcomponents/issues/7655)) ([b72f012](https://github.com/SAP/ui5-webcomponents/commit/b72f0124f9b3ebe74cceeaaaf69abd6711ced0e5))
+* **ui5-shellbar:** horizon theme update ([#7623](https://github.com/SAP/ui5-webcomponents/issues/7623)) ([ff04434](https://github.com/SAP/ui5-webcomponents/commit/ff04434c9c00b29367faff22d187edb55186eccd))
+* **ui5-shellbar:** often failing unit test ([#7677](https://github.com/SAP/ui5-webcomponents/issues/7677)) ([a14d57c](https://github.com/SAP/ui5-webcomponents/commit/a14d57c2c25c714983ee3cb0899c8ec72a677b55)), closes [#7673](https://github.com/SAP/ui5-webcomponents/issues/7673)
+
+
+### Features
+
+* **ui5-illustrated-message:** enable vertical responsiveness ([#7672](https://github.com/SAP/ui5-webcomponents/issues/7672)) ([45244aa](https://github.com/SAP/ui5-webcomponents/commit/45244aacdc4fa846175d8a097ae242256e32a5b4)), closes [#6492](https://github.com/SAP/ui5-webcomponents/issues/6492)
+
+
+
+
+
+## [1.18.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0...v1.18.1-rc.0) (2023-10-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.18.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.2...v1.18.0) (2023-10-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

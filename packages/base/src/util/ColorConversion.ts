@@ -241,70 +241,78 @@ const RGBStringToRGBObject = (color: string): ColorRGB => {
 
 const HSLToRGB = (color: ColorHSL): ColorRGB => {
 	// Formula taken from https://www.rapidtables.com/convert/color/hsl-to-rgb.html
-	const C = (1 - Math.abs((2 * color.l) - 1)) * color.s,
-		X = C * (1 - Math.abs(((color.h / 60) % 2) - 1)),
-		m = color.l - C / 2;
+	let saturation = color.s * 100,
+		lightness = color.l * 100,
+		red,
+		green,
+		blue;
 
-	let tempColor: ColorRGB;
-	switch (Math.round(color.h / 60)) {
-	// 0 ≤ H < 60
+	if (saturation > 100) {
+		saturation = 1;
+	} else if (saturation < 0) {
+		saturation = 0;
+	} else {
+		saturation /= 100;
+	}
+
+	if (lightness > 100) {
+		lightness = 1;
+	} else if (lightness < 0) {
+		lightness = 0;
+	} else {
+		lightness /= 100;
+	}
+
+	const hue = color.h,
+		d = saturation * (1 - Math.abs(2 * lightness - 1)),
+		m = 255 * (lightness - 0.5 * d),
+		x = d * (1 - Math.abs(((hue / 60) % 2) - 1)),
+		i = Math.floor(hue / 60),
+		m255x = m + 255 * x,
+		m255d = m + 255 * d;
+
+	switch (i) {
 	case 0:
-		tempColor = {
-			r: C,
-			g: X,
-			b: 0,
-		};
+		red = m255d;
+		green = m255x;
+		blue = m;
 		break;
-
-	// 60 ≤ H < 120
 	case 1:
-		tempColor = {
-			r: X,
-			g: C,
-			b: 0,
-		};
+		red = m255x;
+		green = m255d;
+		blue = m;
 		break;
-
-	// 120 ≤ H < 180
 	case 2:
-		tempColor = {
-			r: 0,
-			g: C,
-			b: X,
-		};
+		red = m;
+		green = m255d;
+		blue = m255x;
 		break;
-
-	// 180 ≤ H < 240
 	case 3:
-		tempColor = {
-			r: 0,
-			g: X,
-			b: C,
-		};
+		red = m;
+		green = m255x;
+		blue = m255d;
 		break;
-
-	// 240 ≤ H < 300
 	case 4:
-		tempColor = {
-			r: X,
-			g: 0,
-			b: C,
-		};
+		red = m255x;
+		green = m;
+		blue = m255d;
 		break;
-
-	// 300 ≤ H < 360
+	case 5:
+		red = m255d;
+		green = m;
+		blue = m255x;
+		break;
 	default:
-		tempColor = {
-			r: C,
-			g: 0,
-			b: X,
-		};
+		red = 0;
+		green = 0;
+		blue = 0;
+		break;
 	}
 
 	return {
-		r: Math.floor((tempColor.r + m) * 255),
-		g: Math.floor((tempColor.g + m) * 255),
-		b: Math.floor((tempColor.b + m) * 255),
+		r: Math.round(red),
+		g: Math.round(green),
+		b: Math.round(blue),
 	};
 };
 

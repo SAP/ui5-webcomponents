@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:** align value state colors with the spec ([#7676](https://github.com/SAP/ui5-webcomponents/issues/7676)) ([17a5b12](https://github.com/SAP/ui5-webcomponents/commit/17a5b122926720c3c2b07fc322cb480e867eb63a))
+* **ui5-step-input:** fix z-index of increase/decrease buttons and focus ([#7709](https://github.com/SAP/ui5-webcomponents/issues/7709)) ([8bb9c4c](https://github.com/SAP/ui5-webcomponents/commit/8bb9c4c51a726b350d427de31cbf99c2d8fc6b31))
+* **ui5-tabcontainer:** update according to latest SAP Horizon design ([#7668](https://github.com/SAP/ui5-webcomponents/issues/7668)) ([57ff771](https://github.com/SAP/ui5-webcomponents/commit/57ff771c82de51515a998ce09f3b3430ffd69c18))
+
+
+### Features
+
+* **ui5-combobox:** add attribute `no-typeahead` ([#7692](https://github.com/SAP/ui5-webcomponents/issues/7692)) ([4714835](https://github.com/SAP/ui5-webcomponents/commit/4714835990da6858f47462534b46978a9b0c65fc))
+* **ui5-panel:** enable custom styling of title ([#7688](https://github.com/SAP/ui5-webcomponents/issues/7688)) ([9d5a3d1](https://github.com/SAP/ui5-webcomponents/commit/9d5a3d1e95c7d163a91beb068169f2e7df39d4d5))
+* **ui5-rating-indicator:** introduce tooltip property ([#7687](https://github.com/SAP/ui5-webcomponents/issues/7687)) ([f2668b6](https://github.com/SAP/ui5-webcomponents/commit/f2668b6889259c7295b06fe47f846b434510f671))
+* update @ui5/webcomponents-icons to 5.07 & 4.19 ([#7708](https://github.com/SAP/ui5-webcomponents/issues/7708)) ([1732304](https://github.com/SAP/ui5-webcomponents/commit/173230467f93b227c37b54b666dcfcfec07bcab1))
+
+
+
+
+
+# [1.19.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.1-rc.0...v1.19.0-rc.0) (2023-10-12)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** a11y fixed ([#7636](https://github.com/SAP/ui5-webcomponents/issues/7636)) ([15a84f8](https://github.com/SAP/ui5-webcomponents/commit/15a84f87fcdba3d7e60364205d2dbf7bf9bca0a9))
+* **ui5-avatar:** prevent hover effect on non-interactive avatars ([#7611](https://github.com/SAP/ui5-webcomponents/issues/7611)) ([8a782f1](https://github.com/SAP/ui5-webcomponents/commit/8a782f1a2f7cff5b26bd3338f4cf61186953539e))
+* **ui5-checkbox:** fix horizon hcb and hcw ([#7686](https://github.com/SAP/ui5-webcomponents/issues/7686)) ([cef8881](https://github.com/SAP/ui5-webcomponents/commit/cef88813e01a8117dc0c824dec17b7cf6e1a71e3))
+* **ui5-label,ui5-input,ui5-list,ui5-tabcontainer,ui5-table,ui5-wheelslider:** special character support for id ([#7634](https://github.com/SAP/ui5-webcomponents/issues/7634)) ([993f2b7](https://github.com/SAP/ui5-webcomponents/commit/993f2b73196827f6558322a82f2e22e0f1bb1d84)), closes [#7633](https://github.com/SAP/ui5-webcomponents/issues/7633)
+* **ui5-menu:** prevent bubbling in events ([#7653](https://github.com/SAP/ui5-webcomponents/issues/7653)) ([6f5caf4](https://github.com/SAP/ui5-webcomponents/commit/6f5caf49def230e716b7534f83f27249caade7d7)), closes [#7637](https://github.com/SAP/ui5-webcomponents/issues/7637)
+* **ui5-step-input:** align decrement icon ([#7654](https://github.com/SAP/ui5-webcomponents/issues/7654)) ([ce81085](https://github.com/SAP/ui5-webcomponents/commit/ce810853e707f682127ceb134011bb629859377a))
+
+
+### Features
+
+* **ui5-color-palette-item:** add selected state ([#7598](https://github.com/SAP/ui5-webcomponents/issues/7598)) ([6983f71](https://github.com/SAP/ui5-webcomponents/commit/6983f71acdaf3f94215d0fb86d9558db5b0b2887))
+
+
+
+
+
+## [1.18.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0...v1.18.1-rc.0) (2023-10-05)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** hide secondary type when same as primary ([#7650](https://github.com/SAP/ui5-webcomponents/issues/7650)) ([6ce7c33](https://github.com/SAP/ui5-webcomponents/commit/6ce7c3315c022c83d35b1121a50ef6fc4bb57dd7))
+* **ui5-label:** use correct i18n bundle & make component language aware ([#7652](https://github.com/SAP/ui5-webcomponents/issues/7652)) ([7b43587](https://github.com/SAP/ui5-webcomponents/commit/7b43587253e4873e49211a02a4a3923bc4a819f6))
+
+
+
+
+
 # [1.18.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.2...v1.18.0) (2023-10-02)
 
 **Note:** Version bump only for package @ui5/webcomponents
