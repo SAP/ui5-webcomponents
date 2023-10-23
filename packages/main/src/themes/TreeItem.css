@@ -33,6 +33,10 @@
 	bottom: 0.125rem;
 }
 
+.ui5-li-tree-text-wrapper {
+	flex: auto;
+}
+
 :host([_minimal]) .ui5-li-text-wrapper {
 	display: none;
 }
