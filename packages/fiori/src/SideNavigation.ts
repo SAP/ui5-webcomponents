@@ -27,9 +27,7 @@ import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationP
 import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
-	SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
-	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -248,15 +246,6 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
-	get ariaRoleDescNavigationListItem() {
-		let key = SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC;
-		if (this.collapsed) {
-			key = SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC;
-		}
-
-		return SideNavigation.i18nBundle.getText(key);
-	}
-
 	handleInnerSelectionChange(e: CustomEvent<InnerSideNavigationSelectionChangeEventDetail>) {
 		const { associatedItem } = e.detail.item;
 
@@ -300,6 +289,10 @@ class SideNavigation extends UI5Element {
 		return !!this.fixedItems.length;
 	}
 
+	get _rootRole() {
+		return this._inPopover ? "None" : undefined;
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -339,14 +332,34 @@ class SideNavigation extends UI5Element {
 	focusItem(item: SideNavigationItemBase) {
 		if (item.isFixedItem) {
 			this._fixedItemNavigation.setCurrentItem(item);
-			this._flexibleItemNavigation.setCurrentItem(this.items[0]);
 		} else {
 			this._flexibleItemNavigation.setCurrentItem(item);
 		}
 	}
 
+	onEnterDOM() {
+		this._fixedItemNavigation.setCurrentItem(this._findSelectedItem(this.fixedItems) || this.fixedItems[0]);
+		this._flexibleItemNavigation.setCurrentItem(this._findSelectedItem(this.items) || this.items[0]);
+	}
+
 	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | null {
-		return items[0];
+		let selectedItem = null;
+
+		if (this.collapsed) {
+			items.forEach(item => {
+				if (item._selected) {
+					selectedItem = item;
+				}
+			});
+		} else {
+			this._walk(current => {
+				if (current.selected) {
+					selectedItem = current;
+				}
+			});
+		}
+
+		return selectedItem;
 	}
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {

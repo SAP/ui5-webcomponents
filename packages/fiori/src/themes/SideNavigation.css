@@ -71,7 +71,7 @@
 }
 
 .ui5-sn-collapsed .ui5-sn-list {
-	overflow: visible;
+	overflow: hidden auto;
 	display: flex;
 	flex-direction: column;
 }
@@ -85,6 +85,7 @@
 	position: relative;
 
 	height: var(--_ui5_side_navigation_item_height);
+	min-height: var(--_ui5_side_navigation_item_height);
 	cursor: pointer;
 	background-color: var(--sapList_Background);
 	border-radius: var(--_ui5_side_navigation_item_border_radius);

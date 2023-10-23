@@ -1,17 +1,21 @@
-<nav class="ui5-sn-root {{classes.root}}">
+<nav class="ui5-sn-root {{classes.root}}" role="{{_rootRole}}">
 	{{> header }}
 
 	{{#if collapsed}}
 		<div role="menubar"
 			 class="ui5-sn-list ui5-sn-flexible"
 			 aria-orientation="vertical"
+			 aria-roledescription="{{ariaRoleDescNavigationList}}"
 		>
 			{{#each items}}
 				{{> menuitem }}
 			{{/each}}
 		</div>
 	{{else}}
-		<ul role="tree" class="ui5-sn-list ui5-sn-flexible">
+		<ul role="tree"
+			class="ui5-sn-list ui5-sn-flexible"
+			aria-roledescription="{{ariaRoleDescNavigationList}}"
+		>
 			{{#each items}}
 				{{> treeitem }}
 			{{/each}}
@@ -24,13 +28,17 @@
 			<div role="menubar"
 				 class="ui5-sn-list ui5-sn-fixed"
 				 aria-orientation="vertical"
+				 aria-roledescription="{{ariaRoleDescNavigationList}}"
 			>
 				{{#each fixedItems}}
 					{{> menuitem }}
 				{{/each}}
 			</div>
 		{{else}}
-			<ul role="tree" class="ui5-sn-list ui5-sn-fixed">
+			<ul role="tree"
+				class="ui5-sn-list ui5-sn-fixed"
+				aria-roledescription="{{ariaRoleDescNavigationList}}"
+			>
 				{{#each fixedItems}}
 					{{> treeitem }}
 				{{/each}}

@@ -134,7 +134,15 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	_tabIndex!: string;
 
 	get _tooltip() {
-		return this.title || this.text;
+		if (this.title) {
+			return this.title;
+		}
+
+		if (this.sideNavigation?.collapsed) {
+			return this.text;
+		}
+
+		return undefined;
 	}
 
 	get _href() {
