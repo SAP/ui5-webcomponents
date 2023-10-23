@@ -856,8 +856,11 @@ describe("Input general interaction", () => {
 		//act
 		await inputWithGroupsInnerInput.keys("ArrowDown");
 
+		const announcementText = await inputWithGroupsAnnouncement.getText();
+
 		//assert
-		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "travel the world explore List item 1 of 12", "The total count announcement and position of items should exclude group items.");
+		assert.ok(announcementText.includes("List item 1 of 12"), "The total count announcement and position of items should exclude group items.");
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "travel the world explore List item 1 of 12", "The additional text and description are announced");
 		await inputWithGroupsInnerInput.keys("Backspace");
 
 		// Close suggestions to not intercept the click in the input below for the last test
