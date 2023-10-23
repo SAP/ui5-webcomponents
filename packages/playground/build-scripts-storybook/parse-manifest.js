@@ -75,6 +75,15 @@ const parseModule = (module) => {
         if (declaration.members) {
             declaration.members = parseMembers(declaration.members);
         }
+        // Storybook remove slots/css parts/properties/events with duplicate names so we add suffix to css parts in order to avoid duplicates.
+        // It can't happen to slots and properties since you can't have duplicate accessors.
+        if (declaration.cssParts) {
+            declaration.cssParts.forEach(part => {
+                if (!part.name.startsWith("_ui5") ) {
+                    part.name = `_ui5${part.name}`;
+                }
+            });
+        }
 
         return declaration;
     });
@@ -116,7 +125,7 @@ const flattenAPIsHierarchicalStructure = module => {
 }
 
 const mergeClassMembers = (declaration, superclassDeclaration) => {
-    const props = ["members", "slots", "events"];
+    const props = ["members", "slots", "events", "cssParts"];
 
     props.forEach(prop => {
         if (declaration[prop]?.length) {
