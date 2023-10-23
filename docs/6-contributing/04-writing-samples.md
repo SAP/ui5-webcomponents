@@ -115,7 +115,7 @@ The above example includes only the `indeterminate`, `checked` properties in the
 
 
 ## Documentation
-The documentation for each component is automatically produced using the `custom-elements.json` file. Additionally, there is an `argTypes.ts` file located beside each `.stories.ts` file. It is generated during build time and contains extra properties that enhance the documentation beyond what is available in the `custom-elements.json` file. This file should not be edited directly, as it can only be modified by the `packages/playground/build-scripts-storybook/samples-prepare.ts` script.
+The documentation for each component is automatically produced using the `custom-elements.json` file. Additionally, there is an `argTypes.ts` file located beside each `.stories.ts` file. It is generated during build time and contains extra properties that enhance the documentation beyond what is available in the `custom-elements.json` file. This file should not be edited directly, as it can only be modified by the `packages/playground/build-scripts-storybook/samples-prepare.js` script.
 
 ### Docs page
 Every story has a `docs` page in the storybook's sidebar. Usually, this page is generated automatically by storybook but it can be customized by adding a `docs` property to the story parameters. 
