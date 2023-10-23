@@ -405,6 +405,8 @@ class Dialog extends Popup {
 	}
 
 	onAfterRendering() {
+		super.onAfterRendering();
+
 		if (!this.isOpen() && this.open) {
 			this.show();
 		} else if (this.isOpen() && !this.open) {
