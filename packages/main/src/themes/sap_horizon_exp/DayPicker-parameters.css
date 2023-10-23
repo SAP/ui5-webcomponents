@@ -3,7 +3,7 @@
 :root {
 	--_ui5_daypicker_item_border_radius: 0.5rem;
 	--_ui5_daypicker_item_focus_border: 0.0625rem dotted var(--sapContent_FocusColor);
-	--_ui5_daypicker_item_selected_border: 0.0625rem solid var(--sapContent_FocusColor);
+	--_ui5_daypicker_item_selected_border: 0.0625rem solid var(--sapList_SelectionBorderColor);
 	--_ui5_daypicker_item_not_selected_focus_border: 0.125rem solid var(--sapContent_FocusColor);
 	--_ui5_daypicker_item_selected_focus_color: var(--sapContent_FocusColor);
 	--_ui5_daypicker_item_selected_focus_width: 0.125rem;
