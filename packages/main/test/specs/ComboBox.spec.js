@@ -683,18 +683,18 @@ describe("Accessibility", async () => {
 
 		await input.keys("ArrowDown");
 
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "First group header is announced")
 
 		await input.keys("ArrowDown");
 
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement3, "Span value is correct.")
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement3, "First list item is announced")
 
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Second group header is announced")
 	});
 
 	it ("Tests setting value programmatically", async () => {
