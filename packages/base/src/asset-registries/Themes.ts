@@ -6,7 +6,9 @@ type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
 type ThemeLoader = (themeName: string) => Promise<ThemeData>;
 
 const themeStyles = new Map<string, StyleData>();
+const customThemeStyles = new Map<string, StyleData>();
 const loaders = new Map<string, ThemeLoader>();
+const customLoaders = new Map<string, ThemeLoader>();
 const registeredPackages = new Set<string>();
 const registeredThemes = new Set<string>();
 
@@ -17,10 +19,33 @@ const registerThemePropertiesLoader = (packageName: string, themeName: string, l
 	fireThemeRegistered(themeName);
 };
 
+const registerCustomThemePropertiesLoader = (packageName: string, themeName: string, loader: ThemeLoader) => {
+	customLoaders.set(`${packageName}/${themeName}`, loader);
+};
+
+const mergeStyles = (style1?: StyleData, style2?: StyleData) => {
+	if (style1 === undefined) {
+		return style2;
+	}
+	if (style2 === undefined) {
+		return style1;
+	}
+	const style2Content = typeof style2 === "string" ? style2 : style2.content;
+	if (typeof style1 === "string") {
+		return `${style1} ${style2Content}`;
+	}
+	return {
+		content: `${style1.content} ${style2Content}`,
+		packageName: style1.packageName,
+		fileName: style1.fileName,
+	};
+};
+
 const getThemeProperties = async (packageName: string, themeName: string) => {
-	const style = themeStyles.get(`${packageName}_${themeName}`);
+	let style = themeStyles.get(`${packageName}_${themeName}`);
+	let customStyle = customThemeStyles.get(`${packageName}_${themeName}`);
 	if (style !== undefined) { // it's valid for style to be an empty string
-		return style;
+		return mergeStyles(style, customStyle);
 	}
 
 	if (!registeredThemes.has(themeName)) {
@@ -29,7 +54,11 @@ const getThemeProperties = async (packageName: string, themeName: string) => {
 		return _getThemeProperties(packageName, DEFAULT_THEME);
 	}
 
-	return _getThemeProperties(packageName, themeName);
+	[style, customStyle] = await Promise.all([
+		_getThemeProperties(packageName, themeName),
+		_getCustomThemeProperties(packageName, themeName),
+	]);
+	return mergeStyles(style, customStyle);
 };
 
 const _getThemeProperties = async (packageName: string, themeName: string) => {
@@ -53,6 +82,25 @@ const _getThemeProperties = async (packageName: string, themeName: string) => {
 	return themeProps;
 };
 
+const _getCustomThemeProperties = async (packageName: string, themeName: string) => {
+	const loader = customLoaders.get(`${packageName}/${themeName}`);
+	if (!loader) {
+		return;
+	}
+	let data;
+	try {
+		data = await loader(themeName);
+	} catch (error: unknown) {
+		const e = error as Error;
+		console.error(packageName, e.message); /* eslint-disable-line */
+		return;
+	}
+	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
+
+	customThemeStyles.set(`${packageName}_${themeName}`, themeProps);
+	return themeProps;
+};
+
 const getRegisteredPackages = () => {
 	return registeredPackages;
 };
@@ -63,6 +111,7 @@ const isThemeRegistered = (theme: string) => {
 
 export {
 	registerThemePropertiesLoader,
+	registerCustomThemePropertiesLoader,
 	getThemeProperties,
 	getRegisteredPackages,
 	isThemeRegistered,
