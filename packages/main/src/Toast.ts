@@ -75,12 +75,10 @@ document.addEventListener("keydown", handleGlobalKeydown);
  * <code>import "@ui5/webcomponents/dist/Toast";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Toast
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-toast
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
+ * @slot {Node[]} default - Defines the text of the component. <br><br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-toast",
@@ -96,9 +94,8 @@ class Toast extends UI5Element {
 	 * <b>Note:</b> The minimum supported value is <code>500</code> ms
 	 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Toast.prototype.duration
-	 * @defaultvalue 3000
+	 * @type {Integer}
+	 * @default 3000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 3000 })
@@ -108,9 +105,8 @@ class Toast extends UI5Element {
 	 * Defines the placement of the component.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.main.types.ToastPlacement}
-	 * @name sap.ui.webc.main.Toast.prototype.placement
-	 * @defaultvalue "BottomCenter"
+	 * @type {ToastPlacement}
+	 * @default "BottomCenter"
 	 * @public
 	 */
 	@property({ type: ToastPlacement, defaultValue: ToastPlacement.BottomCenter })
@@ -157,17 +153,6 @@ class Toast extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	focused!: boolean;
-
-	/**
-	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @public
-	 * @name sap.ui.webc.main.Toast.prototype.default
-	 */
 
 	_reopen: boolean;
 

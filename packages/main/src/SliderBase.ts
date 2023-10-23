@@ -30,9 +30,7 @@ type DirectionStart = "left" | "right";
  *
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SliderBase
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -42,7 +40,6 @@ type DirectionStart = "left" | "right";
 /**
  * Fired when the value changes and the user has finished interacting with the slider.
  *
- * @event sap.ui.webc.main.SliderBase#change
  * @public
  */
 @event("change")
@@ -50,7 +47,6 @@ type DirectionStart = "left" | "right";
 /**
  * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
  *
- * @event sap.ui.webc.main.SliderBase#input
  * @public
  */
 @event("input")
@@ -58,9 +54,8 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.SliderBase.prototype.min
-	 * @defaultvalue 0
+	 * @type {Float}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 0 })
@@ -69,9 +64,8 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the maximum value of the slider.
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.SliderBase.prototype.max
-	 * @defaultvalue 100
+	 * @type {Float}
+	 * @default 100
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 100 })
@@ -82,9 +76,8 @@ abstract class SliderBase extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.SliderBase.prototype.step
-	 * @defaultvalue 1
+	 * @type {Integer}
+	 * @default 1
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 1 })
@@ -97,9 +90,8 @@ abstract class SliderBase extends UI5Element {
 	 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 	 * tickmark will be labelled, which means every 4th value number.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.SliderBase.prototype.labelInterval
-	 * @defaultvalue 0
+	 * @type {Integer}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -111,8 +103,7 @@ abstract class SliderBase extends UI5Element {
 	 * <b>Note:</b> The step must be a positive number.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.showTickmarks
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -122,8 +113,7 @@ abstract class SliderBase extends UI5Element {
 	 * Enables handle tooltip displaying the current value.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.showTooltip
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -133,8 +123,7 @@ abstract class SliderBase extends UI5Element {
 	 * Defines whether the slider is in disabled state.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -144,8 +133,7 @@ abstract class SliderBase extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SliderBase.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.4.0
 	 */

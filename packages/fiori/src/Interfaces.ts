@@ -1,11 +1,11 @@
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
- * @name sap.ui.webc.fiori.IBar
- * @interface
  * @public
  */
-const IBar = "sap.ui.webc.fiori.IBar";
+interface IBar {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items

@@ -66,25 +66,15 @@ type ExceededText = {
  * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
  * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-textarea</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>textarea - Used to style the native textarea</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/TextArea";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TextArea
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-textarea
+ * @extends UI5Element
+ * @implements {IFormElement}
  * @public
+ * @csspart textarea - Used to style the native textarea
  */
 @customElement({
 	tag: "ui5-textarea",
@@ -99,7 +89,6 @@ type ExceededText = {
 /**
  * Fired when the text has changed and the focus leaves the component.
  *
- * @event sap.ui.webc.main.TextArea#change
  * @public
  */
 @event("change")
@@ -108,7 +97,6 @@ type ExceededText = {
  * Fired when the value of the component changes at each keystroke or when
  * something is pasted.
  *
- * @event sap.ui.webc.main.TextArea#input
  * @since 1.0.0-rc.5
  * @public
  */
@@ -119,8 +107,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Defines the value of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TextArea.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 		 */
 	@property()
@@ -131,8 +118,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TextArea.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -144,8 +130,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TextArea.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -154,8 +139,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Defines whether the component is required.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TextArea.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.3
 	 */
@@ -166,8 +150,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TextArea.prototype.placeholder
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -180,9 +163,8 @@ class TextArea extends UI5Element implements IFormElement {
 	 * <b>Note:</b> If <code>maxlength</code> property is set,
 	 * the component turns into "Warning" state once the characters exceeds the limit.
 	 * In this case, only the "Error" state is considered and can be applied.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.TextArea.prototype.valueState
-	 * @defaultvalue "None"
+	 * @type {ValueState}
+	 * @default "None"
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
@@ -199,9 +181,8 @@ class TextArea extends UI5Element implements IFormElement {
 	 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.TextArea.prototype.rows
-	 * @defaultvalue 0
+	 * @type {Integer}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -210,9 +191,8 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the maximum number of characters that the <code>value</code> can have.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.TextArea.prototype.maxlength
-	 * @defaultValue null
+	 * @type {Integer}
+	 * @default null
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: null })
@@ -228,9 +208,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * paste and the counter below the component displays their number.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TextArea.prototype.showExceededText
-
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -240,8 +218,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Enables the component to automatically grow and shrink dynamically with its content.
 	 * <br><br>
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TextArea.prototype.growing
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -250,9 +227,8 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the maximum number of lines that the component can grow.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.TextArea.prototype.growingMaxLines
-	 * @defaultvalue 0
+	 * @type {Integer}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -271,8 +247,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TextArea.prototype.name
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -282,7 +257,6 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TextArea.prototype.accessibleName
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -293,8 +267,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Receives id(or many ids) of the elements that label the textarea.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TextArea.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -341,9 +314,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the component has
 	 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
 	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.TextArea.prototype.valueStateMessage
 	 * @since 1.0.0-rc.7
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -352,8 +323,6 @@ class TextArea extends UI5Element implements IFormElement {
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
 	 * @type {HTMLElement[]}
-	 * @name sa.ui.webc.main.TextArea.prototype.formSupport
-	 * @slot
 	 * @private
 	 */
 	 @slot()
