@@ -13,7 +13,6 @@ import "@ui5/webcomponents-icons/dist/edit.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
-import type { IButton } from "./Button.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
@@ -249,14 +248,14 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
 	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
-	 * @type {IButton}
+	 * @type {sap.ui.webc.main.IButton}
 	 * @name sap.ui.webc.main.ListItem.prototype.deleteButton
 	 * @since 1.9.0
 	 * @slot
 	 * @public
 	 */
 	@slot()
-	deleteButton!: Array<IButton>;
+	deleteButton!: Array<HTMLElement>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;

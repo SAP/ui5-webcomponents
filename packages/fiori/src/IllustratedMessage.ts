@@ -10,7 +10,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
@@ -219,13 +218,13 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the component actions.
-	* @type {IButton[]}
+	* @type {sap.ui.webc.main.IButton[]}
 	* @slot actions
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.default
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
-	actions!: Array<IButton>;
+	actions!: Array<HTMLElement>;
 
 	illustrationTitle?: string;
 	illustrationSubtitle?: string;

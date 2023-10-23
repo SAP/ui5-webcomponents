@@ -27,7 +27,11 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
  *
  * <code>import "@ui5/webcomponents/dist/ToggleButton";</code>
  *
- * @extends Button
+ * @constructor
+ * @author SAP SE
+ * @alias sap.ui.webc.main.ToggleButton
+ * @extends sap.ui.webc.main.Button
+ * @tagname ui5-toggle-button
  * @public
  */
 @customElement({
@@ -40,7 +44,8 @@ class ToggleButton extends Button {
 	 * Determines whether the component is displayed as pressed.
 	 *
 	 * @type {boolean}
-	 * @default false
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ToggleButton.prototype.pressed
 	 * @public
 	 */
 	@property({ type: Boolean })
