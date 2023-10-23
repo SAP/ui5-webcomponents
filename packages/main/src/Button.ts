@@ -38,6 +38,15 @@ let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
 /**
+ * Interface for components that may be used as a button inside numerous higher-order components
+ *
+ * @public
+ */
+interface IButton extends UI5Element {
+	_tabIndex: string,
+}
+
+/**
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
@@ -60,25 +69,14 @@ let activeButton: Button | null = null;
  * its style to provide visual feedback to the user that it is pressed or hovered over with
  * the mouse cursor. A disabled <code>ui5-button</code> appears inactive and cannot be pressed.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-button</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>button - Used to style the native button element</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Button";</code>
  *
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Button
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-button
- * @implements sap.ui.webc.main.IButton
+ * @csspart button - Used to style the native button element
+ * @extends UI5Element
+ * @implements {IButton}
+ * @implements {IFormElement}
  * @public
  */
 @customElement({
@@ -96,18 +94,16 @@ let activeButton: Button | null = null;
  * <b>Note:</b> The event will not be fired if the <code>disabled</code>
  * property is set to <code>true</code>.
  *
- * @event sap.ui.webc.main.Button#click
  * @public
  * @native
  */
 @event("click")
-class Button extends UI5Element implements IFormElement {
+class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines the component design.
 	 *
-	 * @type {sap.ui.webc.main.types.ButtonDesign}
-	 * @name sap.ui.webc.main.Button.prototype.design
-	 * @defaultvalue "Default"
+	 * @type {ButtonDesign}
+	 * @default "Default"
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
@@ -119,8 +115,7 @@ class Button extends UI5Element implements IFormElement {
 	 * focused, and it is not in the tab chain.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Button.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -135,8 +130,7 @@ class Button extends UI5Element implements IFormElement {
 	 * See all the available icons within the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Button.prototype.icon
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -146,8 +140,7 @@ class Button extends UI5Element implements IFormElement {
 	 * Defines whether the icon should be displayed after the component text.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Button.prototype.iconEnd
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -161,8 +154,7 @@ class Button extends UI5Element implements IFormElement {
 	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Button.prototype.submits
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
 	 */
@@ -174,8 +166,7 @@ class Button extends UI5Element implements IFormElement {
 	 * <br>
 	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Button.prototype.tooltip
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -186,8 +177,7 @@ class Button extends UI5Element implements IFormElement {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Button.prototype.accessibleName
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -198,8 +188,7 @@ class Button extends UI5Element implements IFormElement {
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Button.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -230,8 +219,8 @@ class Button extends UI5Element implements IFormElement {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
+	 * @default "{}"
 	 * @type {object}
-	 * @name sap.ui.webc.main.Button.prototype.accessibilityAttributes
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -245,9 +234,8 @@ class Button extends UI5Element implements IFormElement {
 	 * <b>Note:</b> For the <code>type</code> property to have effect, you must add the following import to your project:
 	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 	 *
-	 * @type {sap.ui.webc.main.types.ButtonType}
-	 * @name sap.ui.webc.main.Button.prototype.type
-	 * @defaultvalue "Button"
+	 * @type {ButtonType}
+	 * @default "Button"
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -319,8 +307,6 @@ class Button extends UI5Element implements IFormElement {
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
-	 * @name sap.ui.webc.main.Button.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -525,3 +511,5 @@ class Button extends UI5Element implements IFormElement {
 Button.define();
 
 export default Button;
+
+export type { IButton };

@@ -83,14 +83,10 @@ type Footnote = Record<string, any>;
  * <code>import "@ui5/webcomponents/dist/NotificationListItem.js";</code>
  * <br>
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.NotificationListItem
- * @extends sap.ui.webc.fiori.NotificationListItemBase
- * @tagname ui5-li-notification
- * @appenddocs sap.ui.webc.fiori.NotificationAction
+ * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
- * @implements sap.ui.webc.fiori.INotificationListItem, sap.ui.webc.main.IListItem
+ * @implements {IListItem}
+ * @implements {INotificationListItem}
  * @public
  */
 @customElement({
@@ -116,10 +112,9 @@ class NotificationListItem extends NotificationListItemBase {
 	* <br><br>
 	* <b>Note:</b> by default the <code>titleText</code> and <code>description</code>,
 	* and a <code>ShowMore/Less</code> button would be displayed.
-	* @type {sap.ui.webc.main.types.WrappingType}
-	* @defaultvalue "None"
+	* @type {WrappingType}
+	* @default "None"
 	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.wrappingType
 	* @since 1.0.0-rc.15
 	*/
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
@@ -150,10 +145,8 @@ class NotificationListItem extends NotificationListItemBase {
 	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
 	* you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
 	*
-	* @type {sap.ui.webc.main.IAvatar}
-	* @slot
+	* @type {IAvatar}
 	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.avatar
 	*/
 	@slot()
 	avatar!: Array<HTMLElement>;
@@ -163,7 +156,6 @@ class NotificationListItem extends NotificationListItemBase {
 	* @type {HTMLElement[]}
 	* @slot
 	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.footnotes
 	*/
 	@slot({ type: HTMLElement, individualSlots: true })
 	footnotes!: Array<HTMLElement>;
@@ -176,9 +168,7 @@ class NotificationListItem extends NotificationListItemBase {
 	* <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	*
 	* @type {Node[]}
-	* @slot description
 	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.default
 	*/
 	@slot({ type: Node, "default": true })
 	description!: Array<Node>;

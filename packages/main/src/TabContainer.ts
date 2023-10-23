@@ -21,6 +21,7 @@ import {
 	isLeft,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -35,6 +36,7 @@ import {
 	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
+import type { IButton } from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import type Tab from "./Tab.js";
@@ -300,6 +302,15 @@ class TabContainer extends UI5Element {
 	@property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })
 	tabsPlacement!: `${TabContainerTabsPlacement}`;
 
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	@property()
+	mediaRange!: string;
+
 	@property({ type: Object })
 	_selectedTab!: Tab;
 
@@ -353,7 +364,7 @@ class TabContainer extends UI5Element {
 	 * @name sap.ui.webc.main.TabContainer.prototype.overflowButton
 	 */
 	@slot()
-	overflowButton!: Array<Button>;
+	overflowButton!: Array<IButton>;
 
 	/**
 	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
@@ -366,7 +377,7 @@ class TabContainer extends UI5Element {
 	 * @name sap.ui.webc.main.TabContainer.prototype.startOverflowButton
 	 */
 	@slot()
-	startOverflowButton!: Array<Button>;
+	startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
 	_allItemsAndSubItems?: Array<ITab>;
@@ -448,8 +459,12 @@ class TabContainer extends UI5Element {
 			this.responsivePopover.close();
 		}
 
-		// invalidate
 		this._width = this.offsetWidth;
+		this._updateMediaRange(this._width);
+	}
+
+	_updateMediaRange(width: number) {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	_setItemsPrivateProperties(items: Array<ITab>) {
