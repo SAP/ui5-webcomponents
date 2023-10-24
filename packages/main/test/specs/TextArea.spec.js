@@ -359,9 +359,9 @@ describe("Value update", () => {
 
 		// act
 		await textareaInner.click();
-		await textareaInner.keys([keyCtrlToPress, "a"]);
-		await textareaInner.keys([keyCtrlToPress, "x"]);
-		await textareaInner.keys([keyCtrlToPress, "v"]);
+		await browser.keys([keyCtrlToPress, "a"]);
+		await browser.keys([keyCtrlToPress, "x"]);
+		await browser.keys([keyCtrlToPress, "v"]);
 
 		const selectionLength = await browser.execute(() =>{
 			const textarea = document.getElementById("ta-exceeded-text").shadowRoot.querySelector("textarea");
