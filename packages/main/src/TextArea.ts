@@ -474,6 +474,12 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		this.value = nativeTextArea.value;
+		const valueLength = this.value.length;
+
+		if (e.inputType === "insertFromPaste" && this.maxlength && valueLength > this.maxlength) {
+			nativeTextArea.setSelectionRange(this.maxlength, valueLength);
+		}
+
 		this.fireEvent("input", {});
 
 		// Angular two way data binding

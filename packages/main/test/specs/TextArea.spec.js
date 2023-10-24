@@ -1,5 +1,8 @@
 import { assert } from "chai";
 
+const isMacOS = process.platform === 'darwin';
+const keyCtrlToPress = isMacOS ? 'Command' : 'Control';
+
 describe("Attributes propagation", () => {
 	before(async () => {
 		await browser.url(`test/pages/TextArea.html`);
@@ -348,5 +351,26 @@ describe("Value update", () => {
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Extra long text"), true, "Displayed value state message text is correct");
+	});
+
+	it("Should revert the DOM value, when escape is pressed", async () => {
+		const textarea = await browser.$("#ta-exceeded-text");
+		const textareaInner = await browser.$("#ta-exceeded-text").shadow$("textarea");
+
+		// act
+		await textareaInner.click();
+		await textareaInner.keys([keyCtrlToPress, "a"]);
+		await textareaInner.keys([keyCtrlToPress, "x"]);
+		await textareaInner.keys([keyCtrlToPress, "v"]);
+
+		const selectionLength = await browser.execute(() =>{
+			const textarea = document.getElementById("ta-exceeded-text").shadowRoot.querySelector("textarea");
+			return textarea.selectionEnd - textarea.selectionStart;
+		});
+
+		const counter = await browser.$("#ta-exceeded-text").shadow$(".ui5-textarea-exceeded-text");
+		const count = parseInt(await counter.getText());
+
+		assert.strictEqual(count, selectionLength, "14 symbols should exceed");
 	});
 });
