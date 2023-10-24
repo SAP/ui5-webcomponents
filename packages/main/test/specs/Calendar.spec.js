@@ -422,7 +422,7 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), false, "Secondary Calendar class is applied correctly");
 	});
 
-	it("Focus goes into the current day item of the day picker", async () => {
+	it("Focus goes into the selected day item of the day picker", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 
 		const calendar = await browser.$("#calendar4");

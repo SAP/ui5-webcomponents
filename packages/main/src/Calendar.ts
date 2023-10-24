@@ -514,10 +514,6 @@ class Calendar extends CalendarPart {
 		}
 	}
 
-	// get _timestamp(): number {
-	// 	return this._selectedDatesTimestamps ? this._selectedDatesTimestamps[0] : this._timestamp;
-	// }
-
 	/**
 	 * Returns an array of UTC timestamps, representing the selected dates.
 	 * @protected
