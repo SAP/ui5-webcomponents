@@ -14,6 +14,7 @@
 	>
 		<ui5-side-navigation-item
 			text="{{_popoverContents.item.text}}"
+			title="{{_popoverContents.item.title}}"
 			href="{{_popoverContents.item._href}}"
 			target="{{_popoverContents.item._target}}"
 			?disabled="{{_popoverContents.item.disabled}}"
@@ -25,6 +26,7 @@
 		{{#each _popoverContents.subItems}}
 			<ui5-side-navigation-sub-item
 				text="{{this.text}}"
+				title="{{this.title}}"
 				href="{{this._href}}"
 				target="{{this._target}}"
 				?disabled="{{this.disabled}}"
