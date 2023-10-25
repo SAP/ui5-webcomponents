@@ -118,8 +118,8 @@ describe("UploadCollection", () => {
 
 			const firstItem = await browser.$("#firstItem");
 
-			assert.ok(await firstItem.shadow$(".ui5-li-singlesel-radiobtn").isDisplayed(), "radio button is visible");
-			assert.notOk(await firstItem.shadow$(".ui5-li-multisel-cb").isDisplayed(), "checkbox is not visible");
+			assert.ok(await (await firstItem.shadow$(".ui5-li-singlesel-radiobtn")).isDisplayed(), "radio button is visible");
+			assert.notOk(await (await firstItem.shadow$(".ui5-li-multisel-cb")).isDisplayed(), "checkbox is not visible");
 
 			// revert the UCI  mode "None"
 			await select.click(); // open select
