@@ -42,7 +42,7 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
-		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.generateCEM",
+		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
 		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
 		validateCEM: `ajv validate -s ${LIB}/cem/schema.json -d dist/custom-elements.json --allow-union-types --all-errors`,
 		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,

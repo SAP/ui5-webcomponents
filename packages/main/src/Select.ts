@@ -173,15 +173,13 @@ interface IOption extends UI5Element {
 /**
  * Fired when the selected option changes.
  *
+ * @event sap.ui.webc.main.Select#change
  * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
 @event("change", {
 	detail: {
-		/**
-		 * @public
-		 */
 		selectedOption: { type: HTMLElement },
 	},
 })
@@ -268,8 +266,9 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {ValueState}
+	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @defaultvalue "None"
+	 * @name sap.ui.webc.main.Select.prototype.valueState
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })

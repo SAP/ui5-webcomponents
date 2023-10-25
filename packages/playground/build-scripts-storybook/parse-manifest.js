@@ -31,12 +31,10 @@ const loadManifest = () => {
     try {
         const customElementsMain = require("@ui5/webcomponents/custom-elements.json");
         const customElementsFiori = require("@ui5/webcomponents-fiori/custom-elements.json");
-        const customElementsBase = require("@ui5/webcomponents-base/custom-elements.json");
 
         return {
             customElementsMain,
             customElementsFiori,
-            customElementsBase,
         };
     } catch (error) {
         console.log("Error while loading manifests. Did you run 'yarn build'?");
@@ -45,7 +43,6 @@ const loadManifest = () => {
             return {
                 customElementsMain: {},
                 customElementsFiori: {},
-                customElementsBase: {},
             };
         }
 
@@ -58,6 +55,10 @@ const parseMembers = (members) => {
     members.forEach((member) => {
         if (EXCLUDE_LIST.indexOf(member.name) > -1) {
             return;
+        }
+        if (member.kind === "method") {
+            // change kind to property as Storybook does not show methods from the custom-elements.json
+            member.kind = "field";
         }
         parsed.push(member);
     });
@@ -74,15 +75,6 @@ const parseModule = (module) => {
         }
         if (declaration.members) {
             declaration.members = parseMembers(declaration.members);
-        }
-        // Storybook remove slots/css parts/properties/events with duplicate names so we add suffix to css parts in order to avoid duplicates.
-        // It can't happen to slots and properties since you can't have duplicate accessors.
-        if (declaration.cssParts) {
-            declaration.cssParts.forEach(part => {
-                if (!part.name.startsWith("_ui5") ) {
-                    part.name = `_ui5${part.name}`;
-                }
-            });
         }
 
         return declaration;
@@ -125,7 +117,7 @@ const flattenAPIsHierarchicalStructure = module => {
 }
 
 const mergeClassMembers = (declaration, superclassDeclaration) => {
-    const props = ["members", "slots", "events", "cssParts"];
+    const props = ["members", "slots", "events"];
 
     props.forEach(prop => {
         if (declaration[prop]?.length) {
@@ -147,11 +139,11 @@ const mergeArraysWithoutDuplicates = (currentValues, newValue) => {
 }
 
 
-const { customElementsMain, customElementsFiori, customElementsBase } = loadManifest();
-let customElements = mergeManifests(mergeManifests(customElementsMain, customElementsFiori), customElementsBase );
+const { customElementsMain, customElementsFiori } = loadManifest();
+const customElements = mergeManifests(customElementsMain, customElementsFiori );
 const processedDeclarations = new Map();
 
-customElements.modules.forEach(flattenAPIsHierarchicalStructure);
+customElements.modules.forEach(flattenAPIsHierarchicalStructure)
 
 fs.writeFileSync(
     path.join(__dirname, "../.storybook/custom-elements.json"),

@@ -344,7 +344,7 @@ export interface EnumDeclaration {
    */
   description?: string
   kind: "enum"
-  members?: ClassField[]
+  members?: EnumField[]
   /**
    * Any class mixins applied in the extends clause of this class.
    *
@@ -386,6 +386,35 @@ export interface EnumDeclaration {
     name: string
     package?: string
   }
+}
+export interface EnumField {
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
+  /**
+   * Whether the property is deprecated.
+   * If the value is a string, it's the reason for the deprecation.
+   */
+  deprecated?: string | boolean
+  /**
+   * A markdown description of the field.
+   */
+  description?: string
+  inheritedFrom?: Reference
+  kind: "field"
+  name: string
+  privacy: Privacy
+  source?: SourceReference
+  static: boolean
+  /**
+   * Whether the property is read-only.
+   */
+  readonly: boolean
+  /**
+   * A markdown summary suitable for display in a listing.
+   */
+  summary?: string
 }
 export interface InterfaceDeclaration {
   privacy: Privacy
