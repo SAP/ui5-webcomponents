@@ -353,7 +353,7 @@ describe("Value update", () => {
 		assert.strictEqual(valueStateText.includes("Extra long text"), true, "Displayed value state message text is correct");
 	});
 
-	it("Should revert the DOM value, when escape is pressed", async () => {
+	it("Should select all exceeded characters on paste", async () => {
 		const textarea = await browser.$("#ta-exceeded-text");
 		const textareaInner = await browser.$("#ta-exceeded-text").shadow$("textarea");
 
