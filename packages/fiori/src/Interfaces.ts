@@ -1,5 +1,3 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
-
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
