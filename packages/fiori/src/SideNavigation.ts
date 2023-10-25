@@ -14,10 +14,6 @@ import {
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
-import Tree from "@ui5/webcomponents/dist/Tree.js";
-import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
@@ -46,8 +42,8 @@ type SideNavigationSelectionChangeEventDetail = {
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type InnerSideNavigationSelectionChangeEventDetail = {
-	item: {
+type PopupClickEventDetail = {
+	target: {
 		associatedItem: SideNavigationItemBase
 	}
 };
@@ -106,10 +102,6 @@ type InnerSideNavigationSelectionChangeEventDetail = {
 	styles: SideNavigationCss,
 	staticAreaStyles: SideNavigationPopoverCss,
 	dependencies: [
-		List,
-		StandardListItem,
-		Tree,
-		TreeItem,
 		ResponsivePopover,
 		SideNavigationItem,
 		SideNavigationSubItem,
@@ -119,7 +111,7 @@ type InnerSideNavigationSelectionChangeEventDetail = {
  * Fired when the selection has changed via user interaction
  *
  * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem} item the clicked item.
+ * @param {sap.ui.webc.fiori.SideNavigationItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
  */
@@ -146,7 +138,7 @@ class SideNavigation extends UI5Element {
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
@@ -175,7 +167,7 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
 	 * @slot fixedItems
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
 	 */
@@ -188,12 +180,11 @@ class SideNavigation extends UI5Element {
 	@property({ type: Object })
 	_popoverContents!: SideNavigationPopoverContents;
 
-	_flexibleItemNavigation: ItemNavigation;
-
-	_fixedItemNavigation: ItemNavigation;
-
 	@property({ type: Boolean })
 	_inPopover!: boolean;
+
+	_flexibleItemNavigation: ItemNavigation;
+	_fixedItemNavigation: ItemNavigation;
 
 	static i18nBundle: I18nBundle;
 
@@ -211,13 +202,6 @@ class SideNavigation extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledFixedItems(),
 		});
-	}
-
-	_buildPopoverContent(item: SideNavigationItem) {
-		this._popoverContents = {
-			item,
-			subItems: item.items,
-		};
 	}
 
 	async _onAfterOpen() {
@@ -246,11 +230,12 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
-	handleInnerSelectionChange(e: CustomEvent<InnerSideNavigationSelectionChangeEventDetail>) {
-		const { associatedItem } = e.detail.item;
+	handlePopupItemClick(e: PopupClickEventDetail) {
+		const associatedItem = e.target.associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
+			this.closePicker();
 			return;
 		}
 
@@ -337,9 +322,62 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	onEnterDOM() {
-		this._fixedItemNavigation.setCurrentItem(this._findSelectedItem(this.fixedItems) || this.fixedItems[0]);
-		this._flexibleItemNavigation.setCurrentItem(this._findSelectedItem(this.items) || this.items[0]);
+	onAfterRendering() {
+		const activeElement = this.shadowRoot!.activeElement;
+		const flexibleDom = this.shadowRoot!.querySelector(".ui5-sn-flexible")!;
+		if (!flexibleDom.contains(activeElement)) {
+			const selectedItem = this._findSelectedItem(this.items);
+			if (selectedItem) {
+				this._flexibleItemNavigation.setCurrentItem(selectedItem);
+			} else {
+				const focusedItem = this._findFocusedItem(this.items);
+				if (!focusedItem) {
+					this._flexibleItemNavigation.setCurrentItem(this.items[0]);
+				}
+			}
+		}
+
+		const fixedDom = this.shadowRoot!.querySelector(".ui5-sn-fixed");
+		if (!fixedDom?.contains(activeElement)) {
+			const selectedItem = this._findSelectedItem(this.fixedItems);
+			if (selectedItem) {
+				this._fixedItemNavigation.setCurrentItem(selectedItem);
+			} else {
+				const focusedItem = this._findFocusedItem(this.fixedItems);
+				if (!focusedItem) {
+					this._fixedItemNavigation.setCurrentItem(this.fixedItems[0]);
+				}
+			}
+		}
+	}
+
+	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | null {
+		let focusedItem = null;
+
+		if (this.collapsed) {
+			items.forEach(item => {
+				if (item._tabIndex === "0") {
+					focusedItem = item;
+				}
+			});
+		} else {
+			items.forEach(item => {
+				if (item._tabIndex === "0") {
+					focusedItem = item;
+					return;
+				}
+
+				if (item.expanded) {
+					item.items.forEach(subItem => {
+						if (subItem._tabIndex === "0") {
+							focusedItem = subItem;
+						}
+					});
+				}
+			});
+		}
+
+		return focusedItem;
 	}
 
 	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | null {
@@ -352,7 +390,7 @@ class SideNavigation extends UI5Element {
 				}
 			});
 		} else {
-			this._walk(current => {
+			this._walkItems(items, current => {
 				if (current.selected) {
 					selectedItem = current;
 				}
@@ -370,7 +408,11 @@ class SideNavigation extends UI5Element {
 
 		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
 			e.preventDefault();
-			this._buildPopoverContent(item);
+
+			this._popoverContents = {
+				item,
+				subItems: item.items,
+			};
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
@@ -399,15 +441,12 @@ class SideNavigation extends UI5Element {
 	}
 
 	_walk(callback: (current: SideNavigationItemBase) => void) {
-		this.items.forEach(current => {
-			callback(current);
+		this._walkItems(this.items, callback);
+		this._walkItems(this.fixedItems, callback);
+	}
 
-			current.items.forEach(currentSubitem => {
-				callback(currentSubitem);
-			});
-		});
-
-		this.fixedItems.forEach(current => {
+	_walkItems(items: Array<SideNavigationItem>, callback: (current: SideNavigationItemBase) => void) {
+		items.forEach(current => {
 			callback(current);
 
 			current.items.forEach(currentSubitem => {
