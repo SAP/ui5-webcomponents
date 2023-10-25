@@ -15,6 +15,12 @@ enum CalendarLegendStandardItemsType {
 	 */
 	Today = "Today",
 	/**
+	 * Represents the "Selected" item in the calendar legend.
+	 * @public
+	 * @type {string}
+	 */
+	Selected = "Selected",
+	/**
 	 * Represents the "Working" item in the calendar legend.
 	 * @public
 	 * @type {string}
@@ -26,12 +32,6 @@ enum CalendarLegendStandardItemsType {
 	 * @type {string}
 	 */
 	NonWorking = "NonWorking",
-	/**
-	 * Represents the "Selected" item in the calendar legend.
-	 * @public
-	 * @type {string}
-	 */
-	Selected = "Selected",
 }
 
 export default CalendarLegendStandardItemsType;

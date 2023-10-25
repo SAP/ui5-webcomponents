@@ -1,7 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import CalendarLegendStandardItemsType from "./types/StandardCalendarLegendItemsType.js";
 import CalendarLegendTemplate from "./generated/templates/CalendarLegendTemplate.lit.js";
 
@@ -37,92 +39,90 @@ import CalendarLegendStandardItem from "./CalendarLegendStandardItem.js";
 })
 class CalendarLegend extends UI5Element {
 	/**
-	 * Defines the items of the component.
+	 * Hides the Today item in the legend.
 	 *
-	 * @type {CalendarLegendStandardItem[]}
-	 * @slot
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideToday
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<CalendarLegendStandardItem>
+	@property({ type: Boolean })
+	hideToday!: boolean;
+
+	/**
+	 * Hides the Selected day item in the legend.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideSelectedDay
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideSelectedDay!: boolean;
+
+	/**
+	 * Hides the Non-Working day item in the legend.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideNonWorkingDay
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideNonWorkingDay!: boolean;
+
+	/**
+	 * Hides the Working day item in the legend.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideWorkingDay
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideWorkingDay!: boolean;
+
+	_itemNavigation: ItemNavigation;
 
 	constructor() {
 		super();
-	}
 
-	onBeforeRendering() {
-		this._ensureMaxItemsCount();
-		this._addDefaultItemsIfNeeded();
-		this._removeDuplicateTypes();
-
-		this.items.forEach(item => {
-			if (!(item.type in CalendarLegendStandardItemsType)) {
-				item.remove();
-			}
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this._getFocusableElements(),
+			behavior: ItemNavigationBehavior.Cyclic,
 		});
 	}
 
-	/**
-	 * Ensures that there are no more than 4 items.
-	 * If there are more, removes the items after the 4th one.
-	 * <br><br>
-	 *
-	 * Note: Change/Remove this method when Custom Calendar Legend items are introduced.
-	 *
-	 * @private
-	 */
-	_ensureMaxItemsCount() {
-		while (this.items.length > 4) {
-			this.items[this.items.length - 1].remove();
-			this.items.pop();
-		}
+	_onItemClick(e: MouseEvent) {
+		const target = e.target as CalendarLegendStandardItem;
+
+		this._itemNavigation.setCurrentItem(target);
 	}
 
-	/**
-	 * Adds default items if none are present.
-	 * @private
-	 */
-	_addDefaultItemsIfNeeded() {
-		if (this.items.length === 0) {
-			const itemsToAdd = this._generateDefaultItems();
-			itemsToAdd.forEach(item => {
-				this.appendChild(item);
+	_itemsInLegend() {
+		const items = this.shadowRoot!.querySelectorAll<CalendarLegendStandardItem>("ui5-cal-legend-standard-item");
+		return [...items];
+	}
+
+	_getFocusableElements() {
+		const defaultLegendItems: Array<ITabbable> = this._itemsInLegend();
+		return defaultLegendItems;
+	}
+
+	_initItemNavigation() {
+		if (!this._itemNavigation) {
+			this._itemNavigation = new ItemNavigation(this, {
+				getItemsCallback: () => this._getFocusableElements(),
+				behavior: ItemNavigationBehavior.Cyclic,
 			});
 		}
 	}
 
-	/**
-	 * Generates default items.
-	 * @returns {HTMLElement[]} Array of items to add.
-	 * @private
-	 */
-	_generateDefaultItems() {
-		const types = Object.values(CalendarLegendStandardItemsType);
-		const itemsToAdd: Array<HTMLElement> = [];
+	get typeFromEnum() {
+		const typeMapping = [
+			{ type: [CalendarLegendStandardItemsType.Today], hide: this.hideToday },
+			{ type: [CalendarLegendStandardItemsType.Selected], hide: this.hideSelectedDay },
+			{ type: [CalendarLegendStandardItemsType.Working], hide: this.hideWorkingDay },
+			{ type: [CalendarLegendStandardItemsType.NonWorking], hide: this.hideNonWorkingDay },
+		];
 
-		types.forEach(type => {
-			const item = document.createElement("ui5-cal-legend-standard-item");
-			item.setAttribute("type", type);
-			item.textContent = type;
-			itemsToAdd.push(item);
-		});
-
-		return itemsToAdd;
-	}
-
-	/**
-	 * Removes items with duplicate types, keeping only the first occurrence.
-	 * @private
-	 */
-	_removeDuplicateTypes() {
-		const types = new Set();
-		this.items.forEach(item => {
-			if (types.has(item.type)) {
-				item.remove();
-			} else {
-				types.add(item.type);
-			}
-		});
+		return typeMapping;
 	}
 }
 

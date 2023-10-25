@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	width: 7.5rem;
+	width: var(--_ui5_cal-legend-standard-item-root-width);
 	vertical-align: middle;
 	white-space: pre-line;
 	text-overflow: ellipsis;
@@ -20,6 +20,8 @@
 }
 
 .ui5-cal-legend-standard-item-text {
+	display: flex;
+	align-items: center;
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 	color: var(--sapContent_LabelColor);
@@ -51,4 +53,21 @@
 :host([type="NonWorking"]) .ui5-cal-legend-standard-item-box {
 	background: var(--sapLegend_NonWorkingBackground);
 	border: 0.0625rem solid #758ca4;
+}
+
+.ui5-cal-legend-standard-item-root:focus {
+	outline: 0;
+}
+
+.ui5-cal-legend-standard-item-root:focus::before {
+	box-sizing: border-box;
+	border: var(--_ui5_cal-legend-standard-item-root-focus-brd);
+	border-radius: var(--_ui5_cal-legend-standard-item-root-focus-brd-radius);
+	content: "";
+	height: 1.5rem;
+	pointer-events: none;
+	position: absolute;
+	width: var(--_ui5_cal-legend-standard-item-root-width);
+	margin-inline-start: var(--_ui5_cal-legend-standard-item-root-focus-margin);
+	margin-block-start: var(--_ui5_cal-legend-standard-item-root-focus-margin);
 }

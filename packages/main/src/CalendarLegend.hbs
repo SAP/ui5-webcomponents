@@ -1,3 +1,11 @@
 <div class="ui5-calendar-legend-root">
-	<slot></slot>
+	{{#each typeFromEnum}}
+		{{#unless this.hide}}
+			<ui5-cal-legend-standard-item 
+				type={{this.type}}
+				@click="{{../_onItemClick}}"
+			>
+			</ui5-cal-legend-standard-item>
+		{{/unless}}
+	{{/each}}
 </div>
