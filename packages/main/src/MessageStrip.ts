@@ -77,7 +77,7 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * @extends UI5Element
  * @public
  * @since 0.9.0
- * @slot {Node[]} default - Defines the text of the component
+ * @slot {Node[]} default - Defines the text of the component.
  */
 @customElement({
 	tag: "ui5-message-strip",

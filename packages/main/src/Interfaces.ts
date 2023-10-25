@@ -66,7 +66,7 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
  *
  * @public
  */
-interface IIcon{
+interface IIcon {
 	isUI5Element: boolean;
 }
 
