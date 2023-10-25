@@ -119,7 +119,6 @@
         "EnumDeclaration": {
             "additionalProperties": false,
             "properties": {
-
                 "privacy": {
                     "$ref": "#/definitions/Privacy"
                 },
@@ -149,7 +148,7 @@
                 },
                 "members": {
                     "items": {
-                        "$ref": "#/definitions/ClassField"
+                        "$ref": "#/definitions/EnumField"
                     },
                     "type": "array"
                 },
@@ -309,6 +308,63 @@
                 "privacy",
                 "default",
                 "type"
+            ],
+            "type": "object"
+        },
+        "EnumField": {
+            "additionalProperties": false,
+            "properties": {
+                "_ui5since": {
+                    "description": "Marks when the field was introduced",
+                    "type": "string"
+                },
+                "deprecated": {
+                    "description": "Whether the property is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
+                    "type": [
+                        "string",
+                        "boolean"
+                    ]
+                },
+                "description": {
+                    "description": "A markdown description of the field.",
+                    "type": "string"
+                },
+                "inheritedFrom": {
+                    "$ref": "#/definitions/Reference"
+                },
+                "kind": {
+                    "enum": [
+                        "field"
+                    ],
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "privacy": {
+                    "$ref": "#/definitions/Privacy"
+                },
+                "source": {
+                    "$ref": "#/definitions/SourceReference"
+                },
+                "static": {
+                    "type": "boolean"
+                },
+                "readonly": {
+                    "description": "Whether the property is read-only.",
+                    "type": "boolean"
+                },
+                "summary": {
+                    "description": "A markdown summary suitable for display in a listing.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "kind",
+                "name",
+                "privacy",
+                "static",
+                "readonly"
             ],
             "type": "object"
         },

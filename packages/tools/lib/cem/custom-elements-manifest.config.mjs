@@ -217,6 +217,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 			description: memberJSdoc?.comment,
 			deprecated: getDeprecatedStatus(memberParsedJsDoc),
 			name: member.name?.text,
+			readonly: true
 		};
 
 		return memberResult;
