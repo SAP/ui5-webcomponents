@@ -675,6 +675,7 @@ describe("Accessibility", async () => {
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "Group Header A";
 		const itemAnnouncement2 = "Group Header Donut";
+		const itemAnnouncement3 = "List item 1 of 13";
 
 		await arrow.click();
 
@@ -682,15 +683,18 @@ describe("Accessibility", async () => {
 
 		await browser.keys("ArrowDown");
 
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "First group header is announced")
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement3, "First list item is announced")
 
 		await browser.keys("ArrowDown");
 		await browser.keys("ArrowDown");
 		await browser.keys("ArrowDown");
 		await browser.keys("ArrowDown");
-		await browser.keys("ArrowDown");
 
-		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Second group header is announced")
 	});
 
 	it ("Tests setting value programmatically", async () => {

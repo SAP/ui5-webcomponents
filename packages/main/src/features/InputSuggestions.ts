@@ -57,6 +57,7 @@ type SuggestionsAccInfo = {
 	listSize: number;
 	itemText: string;
 	description: string;
+	additionalText: string;
 }
 
 /**
@@ -296,6 +297,7 @@ class Suggestions {
 			listSize: nonGroupItems.length,
 			itemText: this._getRealItems()[this.selectedItemIndex].text,
 			description: this._getRealItems()[this.selectedItemIndex].description,
+			additionalText: this._getRealItems()[this.selectedItemIndex].additionalText,
 		};
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
@@ -493,6 +495,7 @@ class Suggestions {
 			listSize: nonGroupItems.length,
 			itemText: this._getRealItems()[this.selectedItemIndex].text,
 			description: this._getRealItems()[items.indexOf(currentItem)].description,
+			additionalText: this._getRealItems()[items.indexOf(currentItem)].additionalText,
 		};
 
 		if (previousItem) {
@@ -603,7 +606,7 @@ class Suggestions {
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 		const groupItemText = Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${itemPositionText}`;
+		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion: SuggestionItem) {
