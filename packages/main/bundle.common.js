@@ -18,9 +18,9 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 const customThemeLoader = theme => Promise.resolve(`:root {
 	${getScopedVarName("--_ui5_button_base_height")}: 4rem;
 	${getScopedVarName("--_ui5_button_base_padding")}: 2rem;
-	${getScopedVarName("--_ui5_button_focus_width")}: 5px;
 }`);
-// registerCustomThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", customThemeLoader);
+registerCustomThemePropertiesLoader("@ui5/webcomponents", "my_custom_theme", customThemeLoader);
+
 
 // Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 // import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";

@@ -41,9 +41,9 @@ const mergeStyles = (style1?: StyleData, style2?: StyleData) => {
 	};
 };
 
-const getThemeProperties = async (packageName: string, themeName: string) => {
+const getThemeProperties = async (packageName: string, themeName: string, externalThemeName?: string) => {
 	let style = themeStyles.get(`${packageName}_${themeName}`);
-	let customStyle = customThemeStyles.get(`${packageName}_${themeName}`);
+	let customStyle = externalThemeName ? customThemeStyles.get(`${packageName}_${externalThemeName}`) : undefined;
 	if (style !== undefined) { // it's valid for style to be an empty string
 		return mergeStyles(style, customStyle);
 	}
@@ -54,11 +54,15 @@ const getThemeProperties = async (packageName: string, themeName: string) => {
 		return _getThemeProperties(packageName, DEFAULT_THEME);
 	}
 
-	[style, customStyle] = await Promise.all([
-		_getThemeProperties(packageName, themeName),
-		_getCustomThemeProperties(packageName, themeName),
-	]);
-	return mergeStyles(style, customStyle);
+	if (externalThemeName) {
+		[style, customStyle] = await Promise.all([
+			_getThemeProperties(packageName, themeName),
+			_getCustomThemeProperties(packageName, externalThemeName),
+		]);
+		return mergeStyles(style, customStyle);
+	}
+
+	return _getThemeProperties(packageName, themeName);
 };
 
 const _getThemeProperties = async (packageName: string, themeName: string) => {
