@@ -426,10 +426,14 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const element = (this.getRootNode() as Document).getElementById(this.initialFocus)
-			|| document.getElementById(this.initialFocus)
-			|| await getFirstFocusableElement(this)
-			|| this._root; // in case of no focusable content focus the root
+		let element;
+
+		if (this.initialFocus) {
+			element = (this.getRootNode() as Document).getElementById(this.initialFocus)
+			|| document.getElementById(this.initialFocus);
+		} else {
+			element = await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
+		}
 
 		if (element) {
 			if (element === this._root) {
