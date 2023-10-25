@@ -119,6 +119,12 @@ function processClass(ts, classNode, moduleDoc) {
 					member._ui5formEvents = tagValue.trim().replaceAll(/\s+/g, ",")
 				}
 
+				if (hasTag(memberParsedJsDoc, "default")) {
+					const tag = findTag(memberParsedJsDoc, "default");
+					const tagValue = tag.source?.[0]?.tokens?.name || "";
+					member.default = tagValue;
+				}
+
 				if (member.readonly) {
 					delete member.return;
 				}
@@ -211,6 +217,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 			description: memberJSdoc?.comment,
 			deprecated: getDeprecatedStatus(memberParsedJsDoc),
 			name: member.name?.text,
+			readonly: true
 		};
 
 		return memberResult;

@@ -20,7 +20,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.ListItemBase
- * @extends UI5Element
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  */
 @customElement({
@@ -34,7 +34,8 @@ class ListItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the <code>ListItem</code>.
 	 * @type {boolean}
-	 * @default false
+	 * @name sap.ui.webc.main.ListItemBase.prototype.selected
+	 * @defaultvalue false
 	 * @public
 	 */
 	@property({ type: Boolean })

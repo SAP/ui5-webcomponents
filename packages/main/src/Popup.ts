@@ -264,6 +264,10 @@ abstract class Popup extends UI5Element {
 		this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
 	}
 
+	onAfterRendering() {
+		this._updateMediaRange();
+	}
+
 	onEnterDOM() {
 		ResizeHandler.register(this, this._resizeHandler);
 	}
@@ -282,7 +286,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_resize() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
+		this._updateMediaRange();
 	}
 
 	/**
@@ -474,6 +478,10 @@ abstract class Popup extends UI5Element {
 
 		this._show();
 
+		if (this.getDomRef()) {
+			this._updateMediaRange();
+		}
+
 		this._addOpenedPopup();
 
 		this.opened = true;
@@ -486,6 +494,10 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.fireEvent("after-open", {}, false, false);
+	}
+
+	_updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 
 	/**
