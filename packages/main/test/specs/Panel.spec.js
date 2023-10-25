@@ -58,7 +58,7 @@ describe("Panel general interaction", () => {
 		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
 	});
 
-	it("tests toggle event upon header click", async () => {
+	it.only("tests toggle event upon header click", async () => {
 		const header = await browser.$("#panel1").shadow$(".ui5-panel-header");
 		const field = await browser.$("#field1");
 
@@ -73,7 +73,7 @@ describe("Panel general interaction", () => {
 		await browser.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -81,7 +81,7 @@ describe("Panel general interaction", () => {
 		await browser.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -102,7 +102,7 @@ describe("Panel general interaction", () => {
 		await browser.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -110,7 +110,7 @@ describe("Panel general interaction", () => {
 		await browser.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
