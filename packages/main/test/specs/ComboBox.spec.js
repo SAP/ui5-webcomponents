@@ -163,7 +163,6 @@ describe("General interaction", () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// act
 		await input.click();
@@ -177,6 +176,8 @@ describe("General interaction", () => {
 
 		// assert
 		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
+
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// act
 		await arrow.click();
@@ -685,7 +686,7 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "First group header is announced")
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement3, "First list item is announced")
 
@@ -730,12 +731,11 @@ describe("Accessibility", async () => {
 		const cbSuccess = await browser.$("#vs-success-default");
 		const cbInformation = await browser.$("#vs-information-default");
 
-		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-
 		await cbWarning.click();
 
 		let ariaHiddenText = await cbWarning.shadow$(`#value-state-description`).getHTML(false);
+		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
+		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
 		let valueStateText = await popover.$("div").getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");

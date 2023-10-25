@@ -77,10 +77,11 @@ describe("Calendar general interaction", () => {
 	it("Calendar focuses the selected month when monthpicker is opened with space", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar1");
+		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
+
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
 		const monthPicker = await calendar.shadow$("ui5-monthpicker");
 		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
-		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
 
 		await currentDayItem.click();
 		await browser.keys("Tab");
@@ -96,10 +97,11 @@ describe("Calendar general interaction", () => {
 	it("Calendar focuses the selected year when yearpicker is opened with space", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar1");
+		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
+
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
 		const yearPicker = await calendar.shadow$("ui5-yearpicker");
 		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
-		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
 
 		await currentDayItem.click();
 		await browser.keys("Tab");
@@ -388,7 +390,6 @@ describe("Calendar general interaction", () => {
 		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
 		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
 		await calendar.setAttribute("min-date", "25.10.2018");
-		console.log(await calendar.getAttribute("max-date"));
 
 		await yearButton.click();
 		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {

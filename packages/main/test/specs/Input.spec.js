@@ -315,8 +315,6 @@ describe("Input general interaction", () => {
 
 		await input.click();
 
-
-
 		// -1.33e-2
 		// Press Backspace to remove the "2" character
 		await browser.keys("Backspace");
@@ -825,7 +823,7 @@ describe("Input general interaction", () => {
 
 		//act
 		await inputSuggestions.click();
-		await (await inputSuggestions.shadow$("input")).keys("c");
+		await browser.keys("c");
 
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
@@ -868,7 +866,7 @@ describe("Input general interaction", () => {
 
 		//act
 		await inputSuggestions.click();
-		await (await inputSuggestions.shadow$("input")).keys("c");
+		await browser.keys("c");
 		await browser.keys("ArrowDown");
 
 		//assert
@@ -953,17 +951,17 @@ describe("Input general interaction", () => {
 	it("Change event calling after clear icon is pressed", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#clear-input");
+		let input = await $("#clear-input");
 		const innerInput = await input.shadow$("input");
 		const changeCounter = await $("#clear-input-change-event-count");
 		const inputCounter = await $("#clear-input-input-event-count");
 
 		// type
 		await innerInput.click();
-		await browser.keys("a");
+		await browser.keys("a");	
 		await changeCounter.click();
 
-		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+		let clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
 
 		// press clear icon
 		await clearIcon.click();
@@ -975,6 +973,9 @@ describe("Input general interaction", () => {
 		await innerInput.click();
 		await browser.keys("a");
 		await changeCounter.click();
+
+		clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
 		await clearIcon.click();
 		await browser.keys("a");
 		await changeCounter.click();
