@@ -323,7 +323,7 @@ describe("Testing events", () => {
 
 		await rangeSlider.setProperty("startValue", 0);
 		await firstHandle.click();
-		await firstHandle.keys("Home");
+		await browser.keys("Home");
 
 		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
 
@@ -1023,14 +1023,14 @@ describe("Testing resize handling and RTL support", () => {
 
 		// Selection Range
 		await secondActiveTickmark.click();
-		await rangeSliderSelection.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 40%;", "Start-handle is 40% from the right side of the Range Slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 4, "startValue should be 4");
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 80%;", "End-handle should be 80% from the right side of the Range Slider");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 8, "startValue should be 8");
 
-		await rangeSliderSelection.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 30%;", "Start-handle is 30% from the right side of the Range Slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 3, "startValue should be 3");
@@ -1039,46 +1039,46 @@ describe("Testing resize handling and RTL support", () => {
 
 		// Start Handle
 		await startHandle.click();
-		await startHandle.keys("ArrowLeft");
-		await startHandle.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 50%;", "Start-handle should be 50% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 5, "startValue should be 5");
 
-		await startHandle.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 40%;", "Start-handle should be 40% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 4, "startValue should be 4");
 
-		await startHandle.keys("Home");
+		await browser.keys("Home");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 0%;", "Start-handle should be 0% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "startValue should be 0");
 
-		await startHandle.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.strictEqual(await startHandle.getAttribute("style"), "right: 0%;", "Start-handle should be 0% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "startValue should be 0");
 
 		// End Handle
 		await endHandle.click();
-		await endHandle.keys("ArrowLeft");
-		await endHandle.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 90%;", "End-handle should be 90% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 9, "endValue should be 9");
 
-		await endHandle.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 80%;", "End-handle should be 80% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 8, "endValue should be 8");
 
-		await endHandle.keys("End");
+		await browser.keys("End");
 
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 100%;", "End-handle should be 100% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 10, "endValue should be 10");
 
-		await endHandle.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.strictEqual(await endHandle.getAttribute("style"), "right: 100%;", "End-handle should be 100% from the right of the range slider");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 10, "endValue should be 10");

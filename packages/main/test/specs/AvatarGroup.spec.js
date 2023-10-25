@@ -110,23 +110,23 @@ describe("avatar-group rendering", () => {
 
 		await avatar.click() // set focus (important for the keys interaction to take action)
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per mouse click interaction - Avatar");
-		await avatar.keys('Enter');
+		await browser.keys('Enter');
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Avatar");
-		await avatar.keys('Space');
+		await browser.keys('Space');
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Avatar");
 
 		await overflowButton.click() // set focus (important for the keys interaction to take action)
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per mouse click interaction - Overflow Button");
-		await overflowButton.keys('Enter');
+		await browser.keys('Enter');
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Overflow Button");
-		await overflowButton.keys('Space');
+		await browser.keys('Space');
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Overflow Button");
 
 		await avatarGroupTypeGroup.click() // set focus (important for the keys interaction to take action)
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per mouse click interaction - Avatar Group type Group");
-		await avatarGroupTypeGroup.keys('Enter');
+		await browser.keys('Enter');
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Enter' interaction - Avatar Group type Group");
-		await avatarGroupTypeGroup.keys('Space');
+		await browser.keys('Space');
 		assert.strictEqual(await getEventsCount(), ++eventCounter, "Avatar group 'click' event only fires once per keyboard 'Space' interaction - Avatar Group type Group");
 	});
 });

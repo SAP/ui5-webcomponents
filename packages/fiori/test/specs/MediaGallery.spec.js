@@ -100,16 +100,16 @@ describe("MediaGallery general interaction", () => {
 
 		// Act: move the selection to the second item using KBH
 		await item0.click();
-		await gallery.keys("ArrowDown");
-		await gallery.keys("Enter");
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
 
 		// Check
 		const result = await browser.$("#selectedIndexLabel");
 		assert.strictEqual(await result.getHTML(false), "1", "event for selected item is thrown");
 
 		// Act: move the selection back to the first item using KBH
-		await gallery.keys("ArrowUp");
-		await gallery.keys("Space");
+		await browser.keys("ArrowUp");
+		await browser.keys("Space");
 
 		// Check
 		const result1 = await browser.$("#selectedIndexLabel");

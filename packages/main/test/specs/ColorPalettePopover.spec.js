@@ -26,7 +26,7 @@ describe("ColorPalette interactions", () => {
 		const colorPalette = await colorPalettePopover.shadow$("[ui5-responsive-popover]").$("[ui5-color-palette]");
 		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
 
-		await defaultButton.keys("Space");
+		await browser.keys("Space");
 
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "green", "Check if selected value is darkgreen");
 	});
@@ -41,8 +41,8 @@ describe("ColorPalette interactions", () => {
 		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
 		const item = colorPaletteEntries[0];
 
-		await defaultButton.keys("ArrowDown");
-		await item.keys("Space");
+		await browser.keys("ArrowDown");
+		await browser.keys("Space");
 
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "pink", "Check if selected value is pink");
 	});
@@ -56,7 +56,7 @@ describe("ColorPalette interactions", () => {
 		const moreColorsButton = await colorPalette.shadow$(".ui5-cp-more-colors");
 		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
 
-		await defaultButton.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.ok(await moreColorsButton.getProperty("focused"),  "Check if more colors button is focused");
 	});
@@ -72,12 +72,12 @@ describe("ColorPalette interactions", () => {
 		const moreColorsButton = await colorPalette.shadow$(".ui5-cp-more-colors");
 		const firstRecentColorsElement = await colorPalette.shadow$(".ui5-cp-recent-colors-container [ui5-color-palette-item]");
 
-		await defaultButton.keys("Space");
+		await browser.keys("Space");
 
 		await colorPaletteButton.click();
 
-		await defaultButton.keys("ArrowUp");
-		await firstRecentColorsElement.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.ok(await moreColorsButton.getProperty("focused"),  "Check if more colors button is focused");
 	});

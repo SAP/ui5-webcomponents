@@ -48,12 +48,12 @@ describe("RadioButton general interaction", () => {
 		const field = await browser.$("#field");
 
 		await radioButton1.click();
-		await radioButton1.keys("Tab");
+		await browser.keys("Tab");
 
-		await radioButton2.keys("Enter");
+		await browser.keys("Enter");
 		assert.strictEqual(await field.getProperty("value"), "2", "change event should be fired one more time.");
 
-		await radioButton2.keys("Enter");
+		await browser.keys("Enter");
 		assert.strictEqual(await field.getProperty("value"), "2", "Change event should not be called any more, as radio is already selected.");
 	});
 
@@ -63,12 +63,12 @@ describe("RadioButton general interaction", () => {
 		const field = await browser.$("#field");
 
 		await radioButton1.click();
-		await radioButton1.keys("Tab");
+		await browser.keys("Tab");
 
-		await radioButton2.keys("Space");
+		await browser.keys("Space");
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should be fired one more time.");
 
-		await radioButton2.keys("Space");
+		await browser.keys("Space");
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more, as radio is already selected.");
 	});
 
@@ -77,8 +77,8 @@ describe("RadioButton general interaction", () => {
 		const field = await browser.$("#field");
 
 		await radioButton.click();
-		await radioButton.keys("Space");
-		await radioButton.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more, as radio is disabled.");
 	});
@@ -89,21 +89,21 @@ describe("RadioButton general interaction", () => {
 		const radioButtonToBeSelected = await browser.$("#groupRb3");
 
 		await field.click();
-		await field.keys("Tab");
+		await browser.keys("Tab");
 
-		await radioButtonPreviouslySelected.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.notOk(await radioButtonPreviouslySelected.getProperty("checked"), "Previously selected item has been de-selected.");
 		assert.ok(await radioButtonToBeSelected.getProperty("checked"), "Pressing ArrowRight selects the next (not disabled) radio in the group.");
 
-		await radioButtonToBeSelected.keys("Tab");
+		await browser.keys("Tab");
 	});
 
 	it("tests radio buttons selection within group with ARROW-LEFT key", async () => {
 		const radioButtonPreviouslySelected = await browser.$("#groupRb4");
 		const radioButtonToBeSelected = await browser.$("#groupRb6");
 
-		await radioButtonPreviouslySelected.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.notOk(await radioButtonPreviouslySelected.getProperty("checked"), "Previously selected item has been de-selected.");
 		assert.ok(await radioButtonToBeSelected.getProperty("checked"), "Pressing ArrowLeft selects the next (not disabled) radio in the group.");
@@ -268,7 +268,7 @@ describe("RadioButton keyboard handling in RTL", () => {
 	it("Arrow Left", async () => {
 		const rb = await browser.$("#rtlOptionA");
 		await rb.click();
-		await rb.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
 
@@ -280,7 +280,7 @@ describe("RadioButton keyboard handling in RTL", () => {
 	it("Arrow Right", async () => {
 		const rb = await browser.$("#rtlOptionA");
 		await rb.click();
-		await rb.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
 

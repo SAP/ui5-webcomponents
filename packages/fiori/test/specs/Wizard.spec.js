@@ -123,12 +123,12 @@ describe("Wizard general interaction", () => {
 
 		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
 
-		await step1InHeader.keys(["Shift", "Tab"]);
-		await step2InHeader.keys("Space");
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("Space");
 		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
 
-		await step1InHeader.keys(["Shift", "Tab"]);
-		await step2InHeader.keys("Enter");
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("Enter");
 		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
@@ -156,9 +156,9 @@ describe("Wizard general interaction", () => {
 		// act - bring the focus to the first step in the header
 		// act - use keyboard to move to step2
 		await step1InHeader.click();
-		await step1InHeader.keys(["Shift", "Tab"]);
-		await step1InHeader.keys("ArrowRight");
-		await step2InHeader.keys("Space");
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
 
 		// assert - that first step in the content and in the header are not selected
 		assert.strictEqual(await step1.getAttribute("selected"), null, "First step in the content is not selected.");
@@ -179,9 +179,9 @@ describe("Wizard general interaction", () => {
 
 		// act - move back to step1 then move the focus to the step 2 and press enter
 		await step1InHeader.click();
-		await step1InHeader.keys(["Shift", "Tab"]);
-		await step1InHeader.keys("ArrowRight");
-		await step1InHeader.keys("Enter");
+		await browser.keys(["Shift", "Tab"]);
+		await browser.keys("ArrowRight");
+		await browser.keys("Enter");
 
 		// assert - that first step in the content and in the header are  selected
 		assert.strictEqual(await step2.getAttribute("selected"), "true",

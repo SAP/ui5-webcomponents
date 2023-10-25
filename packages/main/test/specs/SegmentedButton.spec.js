@@ -20,7 +20,7 @@ describe("SegmentedButton general interaction", () => {
 		const secondSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
 
 		await firstSegmentedButtonItem.click();
-		await firstSegmentedButtonItem.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		await browser.keys("Enter");
 
 		assert.notOk(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should not be pressed anymore");
@@ -31,7 +31,7 @@ describe("SegmentedButton general interaction", () => {
 		const secondSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
 		const lastSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
-		await secondSegmentedButtonItem.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		await browser.keys("Space");
 
 		assert.notOk(await secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem should not be pressed anymore");
@@ -69,11 +69,11 @@ describe("SegmentedButton general interaction", () => {
 		const segmentedButtonItem2 =  await browser.$("#testSB2ToggleBtn");
 
 		await button1.click();
-		await button1.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await segmentedButtonItem1.isFocused(), "The first SegmentedButtonItem should be focused.");
 
 		await button2.click();
-		await button2.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await segmentedButtonItem2.isFocused(), "The selected SegmentedButtonItem should be focused.");
 	});
 
@@ -127,7 +127,7 @@ describe("SegmentedButton general interaction", () => {
 		const secondSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:nth-child(1)");
 
 		await firstSegmentedButtonItem.click();
-		await secondSegmentedButtonItem.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		await browser.keys("Space");
 
 		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be pressed");

@@ -163,7 +163,7 @@ describe("Breadcrumbs general interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
-		await externalElement.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys("Space");
 		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
@@ -177,7 +177,7 @@ describe("Breadcrumbs general interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
-		await externalElement.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys("F4");
 		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
@@ -194,7 +194,7 @@ describe("Breadcrumbs general interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
-		await externalElement.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
 		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");

@@ -97,9 +97,9 @@ describe("Eventing", () => {
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 
-		await dialogInput.keys("A");
-		await dialogInput.keys("B");
-		await dialogInput.keys("C");
+		await browser.keys("A");
+		await browser.keys("B");
+		await browser.keys("C");
 
 		const inputText = await browser.$("#input-placeholder").getText();
 		assert.strictEqual(inputText, "ABC", "Input event value property was correct");
@@ -122,7 +122,7 @@ describe("Eventing", () => {
 		const closeButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 
 		await dialogInput.setValue("");
-		await dialogInput.keys("A");
+		await browser.keys("A");
 		await closeButton.click();
 
 		assert.notOk(await combo.getAttribute("value"), "The combo box does not have value attribute");
@@ -145,7 +145,7 @@ describe("Eventing", () => {
 		const dialogOkButton =await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
 
 		await dialogInput.setValue("");
-		await dialogInput.keys("A");
+		await browser.keys("A");
 		await dialogOkButton.click();
 
 		assert.strictEqual(await combo.getAttribute("value"), "Argentina", "The combo box have correct value attribute");
@@ -171,14 +171,14 @@ describe("Eventing", () => {
 
 		await dialogInput.click();
 		await dialogInput.setValue('');
-		await dialogInput.keys('A');
-		await dialogInput.keys('ArrowDown');
+		await browser.keys('A');
+		await browser.keys('ArrowDown');
 		await okBtn.click();
 
 		assert.strictEqual(await cb.getProperty("value"), "Algeria", "Value should be Algeria.");
 
 		await cb.click();
-		await dialogInput.keys('Backspace');
+		await browser.keys('Backspace');
 		await okBtn.click();
 
 		assert.strictEqual(await cb.getProperty("value"), "", "Value should be empty.");
@@ -200,7 +200,7 @@ describe("Typeahead", () => {
 		await combo.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("Bu");
+		await browser.keys("Bu");
 		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
 	});
 
@@ -214,7 +214,7 @@ describe("Typeahead", () => {
 		await combo.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("b");
+		await browser.keys("b");
 		assert.strictEqual(await dialogInput.getProperty("value"), "b", "Value is not autocompleted");
 	});
 });
@@ -236,7 +236,7 @@ describe("Picker filtering", () => {
 		const dialogList = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$('ui5-list')
 
 		assert.strictEqual(await dialogList.$$('ui5-li').length, 8, "All of the items are shown (8)");
-		await dialogInput.keys("B");
+		await browser.keys("B");
 		assert.strictEqual(await dialogList.$$('ui5-li').length, 3, "There are 3 filtered items");
 	});
 
@@ -253,7 +253,7 @@ describe("Picker filtering", () => {
 		const dialogList = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$('ui5-list')
 
 		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 3, "All of the group header list items are shown (3)");
-		await dialogInput.keys("B");
+		await browser.keys("B");
 		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is only 1 visible group header");
 	});
 });

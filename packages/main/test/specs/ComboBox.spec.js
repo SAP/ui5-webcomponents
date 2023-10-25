@@ -66,7 +66,7 @@ describe("General interaction", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await input.click();
-		await input.keys("b");
+		await browser.keys("b");
 
 		await browser.waitUntil(() => popover.getProperty("opened"), {
 			timeout: 200,
@@ -102,7 +102,7 @@ describe("General interaction", () => {
 		await input.click();
 
 		// act
-		await input.keys("I");
+		await browser.keys("I");
 
 		setTimeout(async () => {
 			listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -131,23 +131,23 @@ describe("General interaction", () => {
 		assert.strictEqual(listItems.length, 11, "Items should be 11");
 
 		// act
-		await input.keys("a");
+		await browser.keys("a");
 
 		// assert
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 5, "Items should be 5");
 
 		// act
-		await input.keys("u");
+		await browser.keys("u");
 
 		// assert
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		// assert.strictEqual(listItems.length, 2, "Items should be 2");
 
 		// act
-		await input.keys("z");
-		await input.keys("z");
-		await input.keys("z");
+		await browser.keys("z");
+		await browser.keys("z");
+		await browser.keys("z");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// assert
@@ -167,13 +167,13 @@ describe("General interaction", () => {
 
 		// act
 		await input.click();
-		await input.keys("b");
+		await browser.keys("b");
 
 		// assert
 		assert.ok(await popover.getProperty("opened"), "Popover should be opened");
 
 		// act
-		await input.keys("Enter");
+		await browser.keys("Enter");
 
 		// assert
 		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
@@ -204,7 +204,7 @@ describe("General interaction", () => {
 		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
 
 		await input.click();
-		await input.keys("a");
+		await browser.keys("a");
 
 		assert.strictEqual(await placeholder.getText(), "", "Text should be empty");
 		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
@@ -260,8 +260,8 @@ describe("General interaction", () => {
 		// open picker
 		await arrow.click();
 
-		await combo.keys("B");
-		await combo.keys("a");
+		await browser.keys("B");
+		await browser.keys("a");
 
 		assert.strictEqual(await placeholder.getText(), "", "Text should be empty");
 		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
@@ -286,25 +286,25 @@ describe("General interaction", () => {
 
 		await input.click();
 
-		await input.keys("Enter");
-		await input.keys("Enter");
-		await input.keys("Enter");
-		await input.keys("Enter");
+		await browser.keys("Enter");
+		await browser.keys("Enter");
+		await browser.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
 
-		await input.keys("a");
+		await browser.keys("a");
 
-		await input.keys("Enter");
-		await input.keys("Enter");
-		await input.keys("Enter");
-		await input.keys("Enter");
+		await browser.keys("Enter");
+		await browser.keys("Enter");
+		await browser.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
-		await input.keys("b");
+		await browser.keys("b");
 
-		await input.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await counter.getText(), "2", "Call count should be 2");
 
@@ -322,7 +322,7 @@ describe("General interaction", () => {
 
 		// Type something which is in the list
 		await input.click();
-		await input.keys("Bulgaria");
+		await browser.keys("Bulgaria");
 
 		// Click on the item
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
@@ -342,23 +342,23 @@ describe("General interaction", () => {
 
 		await input.click();
 
-		await input.keys("Al");
+		await browser.keys("Al");
 		// Close picker
-		await input.keys("Escape");
+		await browser.keys("Escape");
 		// Reset value
-		await input.keys("Escape");
+		await browser.keys("Escape");
 
 		assert.strictEqual(await combo.getProperty("value"), "", "Value should be cleared");
 
-		await input.keys("Al");
+		await browser.keys("Al");
 		// Chose itemr
-		await input.keys("Enter");
+		await browser.keys("Enter");
 		// Clear current value
-		await input.keys("");
+		await browser.keys("");
 		// Enter another value
-		await input.keys("Al");
+		await browser.keys("Al");
 		// Reset value
-		await input.keys("Escape");
+		await browser.keys("Escape");
 
 		assert.strictEqual(await combo.getProperty("value"), "Algeria", "Value should be restored to the last confirmed one");
 	});
@@ -372,7 +372,7 @@ describe("General interaction", () => {
 		const placeholder = await browser.$("#change-placeholder");
 
 		await input.click();
-		await input.keys("a");
+		await browser.keys("a");
 
 		// click on first item
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
@@ -392,22 +392,22 @@ describe("General interaction", () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 
 		await input.click();
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await placeholder.getText(), "Argentina", "First items is selected");
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
-		await input.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await placeholder.getText(), "Argentina", "Selection not changed");
 		assert.strictEqual(await counter.getText(), "1", "Input event is not fired when first item is selected and navigating with arrow up");
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await placeholder.getText(), "Germany", "Last item is selected");
 		assert.strictEqual(await counter.getText(), "2", "Call count should be 2");
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await placeholder.getText(), "Germany", "Selection not changed");
 		assert.strictEqual(await counter.getText(), "2", "Input event is not fired when last item is selected and navigating with arrow down");
@@ -425,15 +425,15 @@ describe("General interaction", () => {
 
 		assert.strictEqual(listItems.length, 4, "Items should be 4");
 
-		await input.keys("n");
+		await browser.keys("n");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 3, "Items should be 3");
 
-		await input.keys("a");
+		await browser.keys("a");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 2, "Items should be 2");
 
-		await input.keys("d");
+		await browser.keys("d");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
 
@@ -453,14 +453,14 @@ describe("General interaction", () => {
 
 		assert.strictEqual(listItems.length, 4, "Items should be 4");
 
-		await input.keys("a");
+		await browser.keys("a");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
 
 		assert.strictEqual(listItems.length, 1, "Items should be 1");
 		assert.strictEqual(firstListItemText, "Argentina");
 
-		await input.keys("a");
+		await browser.keys("a");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		assert.notOk(popover.opened, "Popover should be closed when no match");
 	});
@@ -492,8 +492,8 @@ describe("General interaction", () => {
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		await arrow.click();
-		await combo.keys("Backspace");
-		await combo.keys("A");
+		await browser.keys("Backspace");
+		await browser.keys("A");
 
 		const fisrtListItem = listItems[0];
 
@@ -566,7 +566,7 @@ describe("Grouping", () => {
 		assert.strictEqual(groupItems.length, 4, "Group items should be 4");
 		assert.strictEqual(listItems.length, 13, "Items should be 13");
 
-		await input.keys("c");
+		await browser.keys("c");
 
 		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
@@ -587,7 +587,7 @@ describe("Grouping", () => {
 		let groupItem;
 
 		await arrow.click();
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
@@ -602,13 +602,13 @@ describe("Grouping", () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		let groupItem;
 
-		await input.keys("a");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
+		await browser.keys("a");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[1];
 
@@ -634,11 +634,11 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
@@ -657,11 +657,11 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
@@ -680,15 +680,15 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
 
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
@@ -737,7 +737,7 @@ describe("Accessibility", async () => {
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
 
-		await cbWarning.keys("Escape");
+		await browser.keys("Escape");
 		await cbInformation.click();
 
 		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-information-default");
@@ -749,7 +749,7 @@ describe("Accessibility", async () => {
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Informative entry"), true, "Displayed value state message text is correct");
 
-		await cbInformation.keys("Escape");
+		await browser.keys("Escape");
 		await cbSuccess.click();
 
 		ariaHiddenText = await cbSuccess.shadow$(".ui5-hidden-text").getHTML(false);
@@ -761,7 +761,7 @@ describe("Accessibility", async () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-error");
 
 		await cbError.click();
-		await cbError.keys("a");
+		await browser.keys("a");
 
 		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getHTML(false);
@@ -784,23 +784,23 @@ describe("Keyboard navigation", async () => {
 		let groupItem, listItem;
 
 		await arrow.click();
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 
-		await input.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
 
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
 
-		await input.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
@@ -816,7 +816,7 @@ describe("Keyboard navigation", async () => {
 		let valueStateHeader, groupItem;
 
 		await arrow.click();
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		valueStateHeader = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 
@@ -824,13 +824,13 @@ describe("Keyboard navigation", async () => {
 		assert.strictEqual(await combo.getProperty("focused"), false, "The input should not be focused");
 		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
 
-		await input.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
 		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
 		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should not be focused");
 
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
@@ -848,7 +848,7 @@ describe("Keyboard navigation", async () => {
 		let listItem, prevListItem;
 
 		await input.click();
-		await input.keys("A");
+		await browser.keys("A");
 
 		listItem = await popover.$("ui5-list").$$("ui5-li")[1];
 
@@ -857,14 +857,14 @@ describe("Keyboard navigation", async () => {
 		await arrow.click();
 
 		// Got to the last item and press ENTER
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("Enter");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
 
 		await arrow.click();
 
@@ -889,22 +889,22 @@ describe("Keyboard navigation", async () => {
 		let listItem, prevListItem;
 
 		await input.click();
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.equal(await combo.getProperty("value"), "Argentina", "The value is updated with the first suggestion item text");
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
 
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await combo.getProperty("value"), "Australia", "The value is updated with the next item text");
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
 
-		await input.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is updated with the previous item text");
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
 
-		await input.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is still the first item text");
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
@@ -926,7 +926,7 @@ describe("Keyboard navigation", async () => {
 		const nextCombo = await browser.$("#combobox-two-column-layout");
 
 		await arrow.click();
-		await combo.keys("Tab");
+		await browser.keys("Tab");
 
 		assert.strictEqual(await nextCombo.getProperty("focused"), true, "The next combobox should be focused");
 
@@ -948,23 +948,23 @@ describe("Keyboard navigation", async () => {
 
 		// Opened picker
 		await pickerIcon.click();
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
-		await input.keys("Home");
+		await browser.keys("Home");
 		listItem = await respPopover.$("ui5-list").$("ui5-li");
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first item should be focused on HOME");
 		assert.strictEqual(await comboBox.getProperty("focused"), false, "The ComboBox should not be focused");
 
-		await input.keys("End");
+		await browser.keys("End");
 		listItem = await respPopover.$("ui5-list").$$("ui5-li")[10];
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The last item should be focused on END");
 
-		await input.keys("PageUp");
+		await browser.keys("PageUp");
 		listItem = await respPopover.$("ui5-list").$("ui5-li");
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The -10 item should be focused on PAGEUP");
 
-		await input.keys("PageDown");
+		await browser.keys("PageDown");
 		listItem = await respPopover.$("ui5-list").$$("ui5-li")[10];
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The +10 item should be focused on PAGEDOWN");
 
@@ -974,19 +974,19 @@ describe("Keyboard navigation", async () => {
 		// Clearing typed in value to prevent default behavior of HOME
 		await comboBox.setProperty("value", "");
 
-		await input.keys("Home");
+		await browser.keys("Home");
 		assert.strictEqual(await input.getProperty("value"), "Algeria", "The first item should be selected on HOME");
 
 		// Clearing typed in value to prevent default behavior of END
 		await comboBox.setProperty("value", "");
 
-		await input.keys("End");
+		await browser.keys("End");
 		assert.strictEqual(await input.getProperty("value"), "Chile", "The last item should be selected on END");
 
-		await input.keys("PageUp");
+		await browser.keys("PageUp");
 		assert.strictEqual(await input.getProperty("value"), "Algeria", "The -10 item should be selected on PAGEUP");
 
-		await input.keys("PageDown");
+		await browser.keys("PageDown");
 		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
 	});
 
@@ -1000,7 +1000,7 @@ describe("Keyboard navigation", async () => {
 
 		// Opened picker
 		await input.click();
-		await input.keys("A");
+		await browser.keys("A");
 
 		await browser.waitUntil(() => popover.getProperty("opened"), {
 			timeout: 200,
@@ -1024,7 +1024,7 @@ describe("Keyboard navigation", async () => {
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await input.click();
-		await input.keys("b");
+		await browser.keys("b");
 
 		await browser.waitUntil(() => popover.getProperty("opened"), {
 			timeout: 200,

@@ -11,8 +11,8 @@ describe("MessageStrip general interaction", () => {
 		const input = await browser.$("#inputField");
 
 		await closeButton.click();
-		await closeButton.keys("Space");
-		await closeButton.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await input.getProperty("value"), "3", "Close should be called 3 times");
 	});

@@ -40,8 +40,8 @@ describe("Toolbar general interaction", () => {
 	// 	const selectResult = await browser.$("input[placeholder='Changed']");
 
 	// 	await select.click();
-	// 	await select.keys("ArrowDown");
-	// 	await select.keys("Enter");
+	// 	await browser.keys("ArrowDown");
+	// 	await browser.keys("Enter");
 
 	// 	const selectResultText = await selectResult.getValue();
 

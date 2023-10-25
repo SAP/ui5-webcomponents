@@ -11,7 +11,7 @@ describe("BusyIndicator general interaction", () => {
 		const input = await browser.$("#tree-input");
 
 		await dynamicItem.click();
-		await dynamicItem.keys("Space");
+		await browser.keys("Space");
 
 		assert.strictEqual(await input.getProperty("value"), "0", "itemClick is not thrown");
 	});

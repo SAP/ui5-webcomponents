@@ -39,7 +39,7 @@ describe("Wheel Slider general interaction", () => {
 	it("Keyboard arrow down is working", async () => {
 		const slider = await browser.$("#wheelslider");
 
-		await slider.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await slider.getValue(), "2", "Wheel Slider keyboard handling for arrow down is working");
 	});
@@ -47,7 +47,7 @@ describe("Wheel Slider general interaction", () => {
 	it("Keyboard Arrow up is working", async () => {
 		const slider = await browser.$("#wheelslider");
 
-		await slider.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await slider.getValue(), "1", "Wheel Slider keyboard handling for arrow up is working");
 	});

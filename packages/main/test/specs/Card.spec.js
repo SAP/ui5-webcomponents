@@ -44,14 +44,14 @@ describe("Card general interaction", () => {
 		const field = await browser.$("#field");
 
 		await cardHeader.click();
-		await cardHeader.keys("Space");
-		await cardHeader.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "The header's click event should be called 3 times.");
 
 		await cardHeader2.click();
-		await cardHeader2.keys("Space");
-		await cardHeader2.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "The events count should remain 3 as the header is not interactive.");
 	});
@@ -63,8 +63,8 @@ describe("Card general interaction", () => {
 		const fieldBefore = await field.getProperty("value");
 
 		await action.click();
-		await action.keys("Space");
-		await action.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		const fieldAfter = await field.getProperty("value");
 

@@ -114,7 +114,7 @@ describe("Typeahead", () => {
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 
 		await dialogInput.click();
-		await dialogInput.keys("c");
+		await browser.keys("c");
 
 		assert.strictEqual(await mcb.getProperty("value"), sExpected, "Value is autocompleted");
 	});
@@ -131,7 +131,7 @@ describe("Typeahead", () => {
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 
 		await dialogInput.click();
-		await dialogInput.keys("c");
+		await browser.keys("c");
 
 		assert.strictEqual(await mcb.getProperty("value"), "c", "Value is not autocompleted");
 	});
@@ -150,8 +150,8 @@ describe("Typeahead", () => {
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 
 		await dialogInput.click();
-		await dialogInput.keys("c");
-		await dialogInput.keys("Enter");
+		await browser.keys("c");
+		await browser.keys("Enter");
 
 		tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
@@ -160,8 +160,8 @@ describe("Typeahead", () => {
 
 		await mcb.click();
 		await dialogInput.click();
-		await dialogInput.keys("c");
-		await dialogInput.keys("Escape");
+		await browser.keys("c");
+		await browser.keys("Escape");
 
 		assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
 	});
@@ -385,7 +385,7 @@ describe("Validation", () => {
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 		await dialogInput.click();
-		await dialogInput.keys("m");
+		await browser.keys("m");
 
 		const dialogStateHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-valuestatemessage-header");
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");

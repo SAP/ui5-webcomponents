@@ -10,11 +10,11 @@ describe("Item Navigation Tests", () => {
 		const secondItem = await browser.$("#item2");
 
 		await firstItem.click();
-		await firstItem.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.ok(await firstItem.isFocused(), "first item remains focused - border reached.");
 
 		await secondItem.click();
-		await secondItem.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.ok(await secondItem.isFocused(), "second item remains focused - border reached.");
 	});
 
@@ -25,11 +25,11 @@ describe("Item Navigation Tests", () => {
 
 		// horizontal navigation is allowed is prevented
 		await firstItem.click();
-		await firstItem.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		assert.ok(await firstItem.isFocused(), "first item remains focused - horizontal navigation prevented.");
 
 		// verical navigation is allowed
-		await firstItem.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.ok(await secondItem.isFocused(), "second item is now focused - vertical navigation allowed.");
 	});
 
@@ -39,14 +39,14 @@ describe("Item Navigation Tests", () => {
 		const nextFocusedItem = await browser.$("#pageUpDownList_item11");
 
 		await itemOnFocus.click();
-		await itemOnFocus.keys("PageDown");
+		await browser.keys("PageDown");
 		assert.ok(await nextFocusedItem.isFocused(), "The 11th item is focused.");
 
 		const itemOnFocus2 = await browser.$("#pageUpDownList_item16");
 		const nextFocusedItem2 = await browser.$("#pageUpDownList_item26");
 
 		await itemOnFocus2.click();
-		await itemOnFocus2.keys("PageDown");
+		await browser.keys("PageDown");
 		assert.ok(await nextFocusedItem2.isFocused(), "The 26th is focused.");
 	});
 
@@ -56,14 +56,14 @@ describe("Item Navigation Tests", () => {
 		const nextFocusedItem = await browser.$("#pageUpDownList_item1");
 
 		await itemOnFocus.click();
-		await itemOnFocus.keys("PageUp");
+		await browser.keys("PageUp");
 		assert.ok(await nextFocusedItem.isFocused(), "The first item is focused.");
 
 		const itemOnFocus2 = await browser.$("#pageUpDownList_item16");
 		const nextFocusedItem2 = await browser.$("#pageUpDownList_item6");
 
 		await itemOnFocus2.click();
-		await itemOnFocus2.keys("PageUp");
+		await browser.keys("PageUp");
 		assert.ok(await nextFocusedItem2.isFocused(), "The 6th is focused.");
 	});
 

@@ -164,7 +164,7 @@ describe("Date Picker Tests", () => {
 		const input = await datepicker.getInput();
 		await input.click();
 		const root = await datepicker.getRoot();
-		await root.keys("Jan 1, 1999");
+		await browser.keys("Jan 1, 1999");
 		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(await browser.$("#lbl").getHTML(false), "1", 'change has fired once');
@@ -274,14 +274,14 @@ describe("Date Picker Tests", () => {
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
 		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		await innerInput.keys("Jan 8, 2015");
+		await browser.keys("Jan 8, 2015");
 		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(await browser.$("#lbl").getHTML(false), "1", 'change has fired once');
 
 		await innerInput.click();
 		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b");
-		await innerInput.keys("Jan 6, 2015");
+		await browser.keys("Jan 6, 2015");
 		await browser.$("#dp1").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(await browser.$("#lbl").getHTML(false), "2", 'change has fired once');
@@ -297,17 +297,17 @@ describe("Date Picker Tests", () => {
 		// Type tomorrow.
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
-		await innerInput.keys("tomorrow");
+		await browser.keys("tomorrow");
 
 		// Press Enter, store the date and delete it.
-		await innerInput.keys("Enter");
+		await browser.keys("Enter");
 		tomorrowDate = await lblTomorrowDate.getHTML(false);
 		await browser.keys("\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		await innerInput.keys("Enter");
+		await browser.keys("Enter");
 
 		// Type tomorrow and press Enter for the second time.
-		await innerInput.keys("tomorrow");
-		await innerInput.keys("Enter");
+		await browser.keys("tomorrow");
+		await browser.keys("Enter");
 
 		// Two change events should be fired and the date should twice normalized
 		assert.equal(await lblChangeCounter.getHTML(false), "3", 'change event is being fired twice');
@@ -749,8 +749,8 @@ describe("Date Picker Tests", () => {
 
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
-		await innerInput.keys("Jan 1, 1999");
-		await innerInput.keys("Enter");
+		await browser.keys("Jan 1, 1999");
+		await browser.keys("Enter");
 
 		const input = await datepicker.getInput();
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
@@ -765,12 +765,12 @@ describe("Date Picker Tests", () => {
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
 		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
+			await browser.keys("Backspace");
 		}
 
-		await innerInput.keys("May 5, 2100");
+		await browser.keys("May 5, 2100");
 		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await browser.keys("Enter");
 
 		const input = await datepicker.getInput();
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
@@ -786,18 +786,18 @@ describe("Date Picker Tests", () => {
 		const innerInput = await datepicker.getInnerInput();
 		await input.click();
 		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
+			await browser.keys("Backspace");
 		}
 
-		await innerInput.keys("Jan 8, 2100");
+		await browser.keys("Jan 8, 2100");
 		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (1)");
 
 		await input.click();
 		await root.setProperty("value", "Jan 1, 2000");
-		await root.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
 
@@ -812,7 +812,7 @@ describe("Date Picker Tests", () => {
 		await input.click();
 		const root = await datepicker.getRoot();
 		await root.setProperty("value", "Jan 8, 2100");
-		await root.keys("Enter");
+		await browser.keys("Enter");
 
 		await datepicker.openPicker();
 
@@ -820,7 +820,7 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
-		await root.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		displayedYear = await datepicker.getDisplayedYear(10);
 		assert.ok(await displayedYear.isFocusedDeep(), "Focus remained on year 2100");
@@ -840,7 +840,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await displayedMonth.hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
 
 		const root = await datepicker.getRoot();
-		await root.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		displayedMonth = await datepicker.getDisplayedMonth(0);
 		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range  can not be reached with keyboard");
@@ -850,7 +850,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		const root = await datepicker.getRoot();
-		await root.keys("Escape");
+		await browser.keys("Escape");
 		await browser.$("#dp33").scrollIntoView();
 		await datepicker.openPicker();
 
@@ -862,7 +862,7 @@ describe("Date Picker Tests", () => {
 	it("Days are enabled when in range", async () => {
 		datepicker.id = "#dp33";
 		const root = await datepicker.getRoot();
-		await root.keys("Escape");
+		await browser.keys("Escape");
 
 		datepicker.id = "#dp33";
 		await datepicker.openPicker();
@@ -875,7 +875,7 @@ describe("Date Picker Tests", () => {
 		datepicker.id = "#dp33";
 
 		const root = await datepicker.getRoot();
-		await root.keys("Escape");
+		await browser.keys("Escape");
 		await datepicker.openPicker();
 
 		let displayedDay = await datepicker.getDisplayedDay(9);
@@ -943,9 +943,9 @@ describe("Date Picker Tests", () => {
 		// datepicker.id = "#dp13";
 		// datepicker.openPicker();
 		// const root = await datepicker.getRoot();
-		await root.keys("May 3, 2100");
+		await browser.keys("May 3, 2100");
 		// const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await browser.keys("Enter");
 
 		// const content = Array.from(datepicker.getDayPickerDayNames());
 		// const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -961,8 +961,8 @@ describe("Date Picker Tests", () => {
 		await root.setAttribute("primary-calendar-type", "Gregorian");
 		datepicker.id = "#dp13";
 		await datepicker.openPicker();
-		await root.keys("May 3, 2100");
-		await root.keys("Enter");
+		await browser.keys("May 3, 2100");
+		await browser.keys("Enter");
 
 		const rows = Array.from(await datepicker.getDayPickerNumbers());
 		const firstColumn = Array.from(await rows[1].$$("div"));
@@ -1131,7 +1131,7 @@ describe("Date Picker Tests", () => {
 		await input.click();
 
 		const root = await datepicker.getRoot();
-		await root.keys("Jan 1, 1999999");
+		await browser.keys("Jan 1, 1999999");
 		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(await input.getProperty("value"), "", 'the value is not changed');
@@ -1144,7 +1144,7 @@ describe("Date Picker Tests", () => {
 		await input.click();
 
 		const root = await datepicker.getRoot();
-		await root.keys("Mar 31, 1995");
+		await browser.keys("Mar 31, 1995");
 		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
@@ -1185,8 +1185,8 @@ describe("Date Picker Tests", () => {
 		const innerInput = await datepicker.getInnerInput();
 		await input.click();
 
-		await innerInput.keys("asd")
-		await innerInput.keys("Enter");
+		await browser.keys("asd")
+		await browser.keys("Enter");
 
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (1)");
 
@@ -1199,10 +1199,10 @@ describe("Date Picker Tests", () => {
 
 		await input.click();
 		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
+			await browser.keys("Backspace");
 		}
-		await innerInput.keys("asd");
-		await innerInput.keys("Enter");
+		await browser.keys("asd");
+		await browser.keys("Enter");
 
 
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (3)");

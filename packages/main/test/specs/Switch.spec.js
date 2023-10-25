@@ -10,8 +10,8 @@ describe("Switch general interaction", async () => {
 		const field = await browser.$("#field");
 
 		await switchEl.click();
-		await switchEl.keys("Space");
-		await switchEl.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should be fired 3 times");
 	});
@@ -21,8 +21,8 @@ describe("Switch general interaction", async () => {
 		const field = await browser.$("#field");
 
 		await switchEl.click();
-		await switchEl.keys("Space");
-		await switchEl.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more");
 	});

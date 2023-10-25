@@ -91,10 +91,10 @@ describe("Avatar", () => {
 		await avatarRoot.click();
 		assert.strictEqual(await input.getAttribute("value"), "1", "Mouse click throws event");
 
-		await avatarRoot.keys("Enter");
+		await browser.keys("Enter");
 		assert.strictEqual(await input.getAttribute("value"), "2", "Enter throws event");
 
-		await avatarRoot.keys("Space");
+		await browser.keys("Space");
 		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
 	  });
 
@@ -105,10 +105,10 @@ describe("Avatar", () => {
 		await avatarRoot.click();
 		assert.strictEqual(await input.getAttribute("value"), "3", "Mouse click throws event");
 
-		await avatarRoot.keys("Enter");
+		await browser.keys("Enter");
 		assert.strictEqual(await input.getAttribute("value"), "3", "Enter throws event");
 
-		await avatarRoot.keys("Space");
+		await browser.keys("Space");
 		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
 	});
 
