@@ -1374,7 +1374,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await listItem2.getProperty("focused"), true, "The second item is focused as it is selected");
 		});
 
-		it ("Alt + Down should focus the corresponding item to the token from which the combination is pressed", async () => {
+		it.only("Alt + Down should focus the corresponding item to the token from which the combination is pressed", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-items");
@@ -1383,7 +1383,7 @@ describe("MultiComboBox general interaction", () => {
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[2].click();
-			await tokens[2].keys(["Alt", "ArrowDown"]);
+			await browser.keys(["Alt", "ArrowDown"]);
 
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[3];
 

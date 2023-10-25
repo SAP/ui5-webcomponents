@@ -233,13 +233,6 @@ exports.config = {
 			}, this, attrName);
 		}, true);
 
-		await browser.addCommand("focus", async function () {
-			return browser.executeAsync((domElement, done) => {
-				domElement.focus();
-				done();
-			}, this);
-		}, true);
-
 		await browser.addCommand("getStaticAreaItemClassName", async function (selector) {
 			return browser.executeAsync(async (selector, done) => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
