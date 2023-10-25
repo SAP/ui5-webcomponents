@@ -1,3 +1,5 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
+
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
@@ -118,11 +120,18 @@ const IUploadCollectionItem = "sap.ui.webc.fiori.IUploadCollectionItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-wizard</code> as wizard steps
  *
- * @name sap.ui.webc.fiori.IWizardStep
- * @interface
  * @public
  */
-const IWizardStep = "sap.ui.webc.fiori.IWizardStep";
+interface IWizardStep {
+	selected: boolean,
+	disabled: boolean,
+	branching: boolean,
+	subtitleText: string,
+	titleText: string,
+	icon: string,
+	stretch?: boolean,
+	stepContentAriaLabel?: string,
+}
 
 export {
 	IBar,

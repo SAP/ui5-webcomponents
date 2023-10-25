@@ -5,6 +5,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { ITableCell } from "./Interfaces.js";
 import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
@@ -22,22 +23,12 @@ import {
  *
  * The <code>ui5-table-cell</code> component defines the structure of the data in a single <code>ui5-table</code> cell.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-table-cell</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>cell - Used to style the native <code>td</code> element</li>
- * </ul>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableCell
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-cell
- * @implements sap.ui.webc.main.ITableCell
+ * @extends UI5Element
+ * @implements {ITableCell}
  * @public
+ * @csspart cell - Used to style the native <code>td</code> element
  */
 @customElement({
 	tag: "ui5-table-cell",
@@ -45,7 +36,7 @@ import {
 	template: TableCellTemplate,
 	styles: tableCellStyles,
 })
-class TableCell extends UI5Element {
+class TableCell extends UI5Element implements ITableCell {
 	/**
 	 * @private
 	 */
@@ -68,8 +59,6 @@ class TableCell extends UI5Element {
 	 * Specifies the content of the component.
 	 *
 	 * @type {Node[]}
-	 * @slot
-	 * @name sap.ui.webc.main.TableCell.prototype.default
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

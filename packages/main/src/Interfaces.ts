@@ -64,29 +64,30 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IIcon
- * @interface
  * @public
  */
-const IIcon = "sap.ui.webc.main.IIcon";
+interface IIcon {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that represent an input, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IInput
- * @interface
  * @public
  */
-const IInput = "sap.ui.webc.main.IInput";
+interface IInput {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
  *
- * @name sap.ui.webc.main.IInputSuggestionItem
- * @interface
  * @public
  */
-const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
+interface IInputSuggestionItem extends HTMLElement {
+	text: string,
+	groupItem: boolean,
+}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-list</code> as items
@@ -163,29 +164,31 @@ const ITableRow = "sap.ui.webc.main.ITableRow";
 /**
  * Interface for components that may be slotted inside a <code>ui5-table</code> as columns
  *
- * @name sap.ui.webc.main.ITableColumn
- * @interface
  * @public
  */
-const ITableColumn = "sap.ui.webc.main.ITableColumn";
+interface ITableColumn {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-table-row</code> as cells
  *
- * @name sap.ui.webc.main.ITableCell
- * @interface
  * @public
  */
-const ITableCell = "sap.ui.webc.main.ITableCell";
+interface ITableCell {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that represent a token and are usable in components such as <code>ui5-multi-input</code>
  *
- * @name sap.ui.webc.main.IToken
- * @interface
  * @public
  */
-const IToken = "sap.ui.webc.main.IToken";
+interface IToken {
+	text: string;
+	readonly: boolean,
+	selected: boolean,
+}
 
 /**
  * Interface for tree items for the purpose of <code>ui5-tree</code>

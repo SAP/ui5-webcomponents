@@ -62,9 +62,7 @@ type SuggestionsAccInfo = {
 /**
  * A class to manage the <code>Input</code suggestion items.
  *
- * @class
  * @private
- * @author SAP SE
  */
 class Suggestions {
 	component: SuggestionComponent;

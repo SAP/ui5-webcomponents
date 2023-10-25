@@ -5,31 +5,28 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SuggestionListItem from "./SuggestionListItem.js";
 import ListItemType from "./types/ListItemType.js";
+import type { IInputSuggestionItem } from "./Interfaces.js";
 
 /**
  * @class
  * The <code>ui5-suggestion-item</code> represents the suggestion item of the <code>ui5-input</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SuggestionItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-suggestion-item
- * @implements sap.ui.webc.main.IInputSuggestionItem
+ * @implements {IInputSuggestionItem}
  * @public
  */
 @customElement({
 	tag: "ui5-suggestion-item",
 	dependencies: [SuggestionListItem],
 })
-class SuggestionItem extends UI5Element {
+class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	/**
 	 * Defines the text of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.text
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -42,9 +39,8 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 	 * while when <code>Inactive</code> or <code>Detail</code> - will not.
 	 *
-	 * @type {sap.ui.webc.main.types.ListItemType}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.type
-	 * @defaultvalue "Active"
+	 * @type {ListItemType}
+	 * @default "Active"
 	 * @public
 	 * @since 1.0.0-rc.8
 	*/
@@ -54,8 +50,7 @@ class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.description
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -69,7 +64,6 @@ class SuggestionItem extends UI5Element {
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.icon
 	 * @public
 	 */
 	@property()
@@ -81,8 +75,7 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.iconEnd
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -93,7 +86,6 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.image
 	 * @public
 	 */
 	@property()
@@ -102,7 +94,6 @@ class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the item.
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.additionalText
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -113,9 +104,8 @@ class SuggestionItem extends UI5Element {
 	 * Defines the state of the <code>additionalText</code>.
 	 * <br><br>
 	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.SuggestionItem.prototype.additionalTextState
-	 * @defaultvalue "None"
+	 * @type {ValueState}
+	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */

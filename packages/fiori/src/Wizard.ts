@@ -18,6 +18,7 @@ import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/Focu
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
+import type { IWizardStep } from "./Interfaces";
 import WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
@@ -120,15 +121,6 @@ type StepInfo = {
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-wizard</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
- * <li>step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
- * </ul>
  *
  * <h3>Keyboard Handling</h3>
  * The user can navigate using the following keyboard shortcuts:
@@ -191,13 +183,11 @@ type StepInfo = {
  * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes &lt;ui5-wizard-step/&gt;)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Wizard
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-wizard
+ * @extends UI5Element
  * @since 1.0.0-rc.10
- * @appenddocs sap.ui.webc.fiori.WizardStep
  * @public
+ * @csspart navigator - Used to style the progress navigator of the <code>ui5-wizard</code>
+ * @csspart step-content - Used to style a <code>ui5-wizard-step</code> container
  */
 @customElement({
 	tag: "ui5-wizard",
@@ -223,16 +213,24 @@ type StepInfo = {
  * Fired when the step is changed by user interaction - either with scrolling,
  * or by clicking on the steps within the component header.
  *
- * @event sap.ui.webc.fiori.Wizard#step-change
- * @param {sap.ui.webc.fiori.IWizardStep} step The new step.
- * @param {sap.ui.webc.fiori.IWizardStep} previousStep The previous step.
+ * @param {IWizardStep} step The new step.
+ * @param {IWizardStep} previousStep The previous step.
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
  * @public
  */
 @event("step-change", {
 	detail: {
+		/**
+		 * @public
+		*/
 		step: { type: HTMLElement },
+		/**
+		 * @public
+		*/
 		previousStep: { type: HTMLElement },
+		/**
+		 * @public
+		*/
 		changeWithClick: { Boolean },
 	},
 })
@@ -241,10 +239,9 @@ class Wizard extends UI5Element {
 	/**
 	 * Defines how the content of the <code>ui5-wizard</code> would be visualized.
 	 * @public
-	 * @type {sap.ui.webc.fiori.types.WizardContentLayout}
+	 * @type {WizardContentLayout}
 	 * @since 1.14.0
-	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
-	 * @defaultvalue "MultipleSteps"
+	 * @default "MultipleSteps"
 	 */
 	@property({ type: WizardContentLayout, defaultValue: WizardContentLayout.MultipleSteps })
 	contentLayout?: WizardContentLayout
@@ -269,8 +266,8 @@ class Wizard extends UI5Element {
 	 * <b>Note:</b> Supported values are between 0.5 and 1
 	 * and values out of the range will be normalized to 0.5 and 1 respectively.
 	 * @private
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @defaultvalue 0.7
+	 * @type {Float}
+	 * @default 0.7
 	 * @since 1.0.0-rc.13
 	 */
 	@property({ validator: Float, defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT })
@@ -294,10 +291,8 @@ class Wizard extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 	 *
-	 * @type {sap.ui.webc.fiori.IWizardStep[]}
-	 * @name sap.ui.webc.fiori.Wizard.prototype.default
+	 * @type {IWizardStep[]}
 	 * @public
-	 * @slot steps
 	 */
 	@slot({
 		"default": true,
@@ -305,7 +300,7 @@ class Wizard extends UI5Element {
 		"individualSlots": true,
 		invalidateOnChildChange: true,
 	})
-	steps!: Array<WizardStep>
+	steps!: Array<IWizardStep>
 
 	static i18nBundle: I18nBundle;
 
@@ -903,7 +898,7 @@ class Wizard extends UI5Element {
 			accInfo = {
 				"ariaSetsize": stepsCount,
 				"ariaPosinset": pos,
-				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
+				"ariaLabel": this.getStepAriaLabelText((step as WizardStep), ariaLabel),
 			};
 
 			const stepInfo: StepInfo = {
@@ -918,7 +913,7 @@ class Wizard extends UI5Element {
 				branchingSeparator: step.branching,
 				pos,
 				accInfo,
-				refStepId: step._id,
+				refStepId: (step as WizardStep)._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: {
 					zIndex: isAfterCurrent ? --inintialZIndex : 1,
@@ -967,7 +962,7 @@ class Wizard extends UI5Element {
 	}
 
 	getStepWrapperByIdx(idx: number) {
-		return this.getStepWrapperByRefId(this.steps[idx]._id);
+		return this.getStepWrapperByRefId((this.steps[idx] as WizardStep)._id);
 	}
 
 	/**

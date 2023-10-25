@@ -20,6 +20,7 @@ import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/Tabbab
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
+import type { ITableCell } from "./Interfaces.js";
 import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -61,23 +62,12 @@ type TableRowF7PressEventDetail = {
  *
  * The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-table-row</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>row - Used to style the native <code>tr</code> element</li>
- * <li>popin-row - Used to style the <code>tr</code> element when a row pops in</li>
- * </ul>
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableRow
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-row
- * @implements sap.ui.webc.main.ITableRow
+ * @extends UI5Element
+ * @implements {ITableRow}
  * @public
+ * @csspart row - Used to style the native <code>tr</code> element
+ * @csspart popin-row - Used to style the <code>tr</code> element when a row pops in
  */
 @customElement({
 	tag: "ui5-table-row",
@@ -89,16 +79,17 @@ type TableRowF7PressEventDetail = {
 /**
  * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
  *
- * @event sap.ui.webc.main.TableRow#row-click
  * @since 1.0.0-rc.15
  * @private
  */
 @event("row-click")
+/**
+ * @private
+ */
 @event("_focused")
 /**
  * Fired on selection change of an active row.
  *
- * @event sap.ui.webc.main.TableRow#selection-requested
  * @since 1.0.0-rc.15
  * @private
  */
@@ -106,7 +97,6 @@ type TableRowF7PressEventDetail = {
 /**
  * Fired when F7 is pressed.
  *
- * @event sap.ui.webc.main.TableRow#f7-pressed
  * @since 1.2.0
  * @private
  */
@@ -124,9 +114,8 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 	 * while with type <code>Inactive</code> - will not.
 	 *
-	 * @type {sap.ui.webc.main.types.TableRowType}
-	 * @name sap.ui.webc.main.TableRow.prototype.type
-	 * @defaultvalue "Inactive"
+	 * @type {TableRowType}
+	 * @default "Inactive"
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -137,8 +126,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * Defines the row's selected state.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TableRow.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -149,8 +137,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * Indicates if the table row is navigated.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.TableRow.prototype.navigated
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.9.0
 	 * @public
 	 */
@@ -159,8 +146,8 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 	/**
 	 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-	 * @type {sap.ui.webc.main.types.TableMode}
-	 * @defaultvalue "None"
+	 * @type {TableMode}
+	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @private
 	 */
@@ -171,7 +158,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * Indicates if the table row is active.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
 	 */
@@ -195,9 +182,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITableCell[]}
-	 * @name sap.ui.webc.main.TableRow.prototype.default
-	 * @slot cells
+	 * @type {ITableCell[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
