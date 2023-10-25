@@ -304,6 +304,10 @@ class SplitButton extends UI5Element {
 	_handleMouseClick(e: MouseEvent) {
 		const target = e.target as Button;
 
+		if (this.activeArrowButton) {
+			this.activeArrowButton = !this.activeArrowButton;
+		}
+
 		this._manageFocus(target);
 		this._fireClick(e);
 	}
@@ -384,6 +388,11 @@ class SplitButton extends UI5Element {
 
 	_fireArrowClick(e?: Event) {
 		e?.stopPropagation();
+
+		if (this.activeArrowButton) {
+			this.activeArrowButton = !this.activeArrowButton;
+		}
+
 		this.fireEvent("arrow-click");
 	}
 

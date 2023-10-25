@@ -13,6 +13,14 @@
 	border: 0.0625rem solid var(--sapButton_Lite_Active_BorderColor);
 }
 
+:host([active-arrow-button]) .ui5-split-arrow-button::before {
+	border-color: transparent;
+}
+
+:host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button::before {
+	border-color: var(--_ui5_split_button_emphasized_separator);
+}
+
 :host([active-arrow-button][design="Negative"]) .ui5-split-arrow-button,
 :host([design="Negative"]) .ui5-split-arrow-button[active] {
 	border: 0.0625rem solid var(--sapButton_Reject_Active_BorderColor);
@@ -442,5 +450,9 @@
 
 .ui5-split-arrow-button[active][design="Transparent"] {
 	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
+
+:host([design="Transparent"][active-arrow-button]:not([hidden]):not([disabled]):hover) .ui5-split-arrow-button {
 	color: var(--sapButton_Active_TextColor);
 }
