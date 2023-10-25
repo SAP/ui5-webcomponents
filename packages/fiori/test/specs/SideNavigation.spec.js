@@ -14,19 +14,6 @@ async function getRootItemInPopover() {
 	return rootItem;
 }
 
-async function getItems(selector) {
-    const listItems = await browser.$$(`>>>${selector}`);
-
-	const promises = listItems.map(async (item) => {
-		const isDisplayed = await item.isDisplayedInViewport();
-		return isDisplayed ? item : null;
-	},);
-
-	const items = await Promise.all(promises);
-
-	return items.filter((item) => item);
-}
-
 describe("Component Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/SideNavigation.html`);
@@ -134,17 +121,6 @@ describe("Component Behavior", () => {
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);
-
-			// await browser.executeAsync(async (done) => {
-			// 	// close popover after the test because next call of getItems will return the items from the popover as well
-			// 	const staticArea = await document.querySelector("ui5-side-navigation").getStaticAreaItemDomRef();
-			// 	const popover = staticArea.querySelector(".ui5-side-navigation-popover");
-			// 	popover.addEventListener("ui5-after-close", () => {
-			// 		done();
-			// 	});
-			//
-			// 	popover.close();
-			// });
 		});
 
 		it("tests the prevention of the ui5-selection-change event", async () => {
@@ -153,15 +129,19 @@ describe("Component Behavior", () => {
 
 			await items[3].click();
 
-			assert.strictEqual(await items[3].getAttribute("aria-current"), "page", "new item is selected");
+			assert.ok(await browser.$("#item22").getProperty("selected"), "new item is selected");
+			assert.strictEqual(await items[3].getAttribute("aria-current"), "page", "aria-current is set");
 
 			const selectionChangeCheckbox = await browser.$("#prevent-selection");
 			await selectionChangeCheckbox.click();
 
 			await items[0].click();
 
-			assert.notExists(await items[0].getAttribute("aria-current"),  "new item was not selected");
-			assert.strictEqual(await items[3].getAttribute("aria-current"), "page", "initially selected item has not changed");
+			assert.notOk(await browser.$("#item1").getProperty("selected"), "new item is not selected");
+			assert.notExists(await items[0].getAttribute("aria-current"),  "aria-current is not changed");
+
+			assert.ok(await browser.$("#item22").getProperty("selected"), "initially selected item has not changed");
+			assert.strictEqual(await items[3].getAttribute("aria-current"), "page", "aria-current is not changed");
 
 			await selectionChangeCheckbox.click();
 		});

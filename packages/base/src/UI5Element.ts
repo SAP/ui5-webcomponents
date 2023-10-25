@@ -675,9 +675,6 @@ abstract class UI5Element extends HTMLElement {
 
 		this.onBeforeRendering();
 
-		// Intended for framework usage only.
-		// Currently, ItemNavigation updates tab indexes after the component has
-		// updated its state but before the template is rendered
 		this._onComponentStateFinalized();
 
 		// resume normal invalidation handling
@@ -855,10 +852,19 @@ abstract class UI5Element extends HTMLElement {
 		return normalEventResult && noConflictEventResult;
 	}
 
+	/**
+	 * @private
+	 */
 	_addItemNavigation(itemNavigation: ItemNavigation) {
 		this._itemNavigations.push(itemNavigation);
 	}
 
+	/**
+	 * Intended for framework usage only.
+	 * Currently, ItemNavigation updates tab indexes after the component has
+	 * updated its state but before the template is rendered
+	 * @private
+	 * */
 	_onComponentStateFinalized() {
 		this._itemNavigations.forEach(itemNavigation => itemNavigation._init());
 	}
