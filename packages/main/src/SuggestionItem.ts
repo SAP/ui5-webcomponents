@@ -64,6 +64,7 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -86,6 +87,7 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
 	 *
 	 * @type {string}
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -94,6 +96,7 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the item.
 	 * @type {string}
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */

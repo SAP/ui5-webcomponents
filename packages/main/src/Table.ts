@@ -1152,7 +1152,6 @@ class Table extends UI5Element {
 	 * Gets settings to be propagated from columns to rows.
 	 *
 	 * @returns { array }
-	 * @memberof Table
 	 */
 	getColumnPropagationSettings(): Array<TableColumnInfo> {
 		return this.columns.map((column, index) => {
