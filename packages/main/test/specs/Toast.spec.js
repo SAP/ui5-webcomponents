@@ -69,9 +69,10 @@ describe("Toast general interaction", () => {
 
 	it("tests shadow content div role", async () => {
 		const button = await browser.$("#wcBtnShowToastBE");
-		const toastShadowContent = await browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		await button.click();
+
+		const toastShadowContent = await browser.$("#wcToastBE").shadow$(".ui5-toast-root");
 
 		assert.strictEqual(await toastShadowContent.getAttribute("role"), "alert",
 			"The role of the shadow ui5-toast-root div should be alert");
@@ -111,12 +112,13 @@ describe("Toast general interaction", () => {
 
 	it("tests shadow content div inline styles with short duration", async () => {
 		const button = await browser.$("#wcBtnShowToastME");
-		const toast = await browser.$("#wcToastME");
-		const toastShadowContent = await toast.shadow$(".ui5-toast-root");
-		const durationProperty = await toast.getProperty("duration");
 		let calculatedTransition, calculatedDelay;
 
 		await button.click();
+
+		const toast = await browser.$("#wcToastME");
+		const toastShadowContent = await toast.shadow$(".ui5-toast-root");
+		const durationProperty = await toast.getProperty("duration");
 
 		calculatedTransition = durationProperty / 3;
 		calculatedDelay = `${durationProperty - calculatedTransition}ms`;

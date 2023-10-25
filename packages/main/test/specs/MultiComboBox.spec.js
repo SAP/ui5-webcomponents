@@ -1,4 +1,5 @@
 import { assert } from "chai";
+import { Key } from 'webdriverio'
 
 const getTokenizerPopoverId = async (mcbId) => {
 	return await browser.executeAsync(async (mcbId, done) => {
@@ -282,7 +283,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
 			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+			let list = await popover.$(".ui5-multi-combobox-all-items-list");
 
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
 
@@ -294,6 +295,8 @@ describe("MultiComboBox general interaction", () => {
 			});
 
 			await icon.click();
+
+			list = await popover.$(".ui5-multi-combobox-all-items-list");
 
 			await browser.waitUntil(async () => await mcb.getProperty("open"), {
 				timeout: 500,
@@ -353,11 +356,11 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.scrollIntoView();
 			await tokens[1].click();
-			await tokens[1].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
-			await tokens[1].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
@@ -365,16 +368,16 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.click();
 			await tokens[2].click();
-			await tokens[2].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 
-			await tokens[2].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 		})
 
-		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
+		it("tests filtering of items when nmore popover is open and user types in the input field", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
@@ -387,13 +390,13 @@ describe("MultiComboBox general interaction", () => {
 
 			await nMoreText.click();
 
+			await input.click();
+			await browser.keys("c");
+
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
 			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const list = await popover.$(".ui5-multi-combobox-all-items-list");
 			const lastListItem = await list.$("ui5-li:last-child");
-
-			await input.click();
-			await browser.keys("c");
 
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
 			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
@@ -555,7 +558,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await browser.keys("F4");
 			await browser.keys("ArrowDown");
-			await browser.keys(["Control", "a"]);
+			await browser.keys([Key.Ctrl, "a"]);
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 1, "Should have 1 token.");
@@ -1138,17 +1141,17 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
-			await browser.keys(["Control", "ArrowDown"]);
+			await browser.keys([Key.Ctrl, "ArrowDown"]);
 
 			assert.equal(await mcb.getProperty("value"), "Cosy", "The first item name is selected");
 
-			await browser.keys(["Control", "ArrowDown"]);
+			await browser.keys([Key.Ctrl, "ArrowDown"]);
 			assert.equal(await mcb.getProperty("value"), "Compact", "The second item name is selected");
 
-			await browser.keys(["Control", "ArrowUp"]);
+			await browser.keys([Key.Ctrl, "ArrowUp"]);
 			assert.equal(await mcb.getProperty("value"), "Cosy", "The value is set back to the first item name");
 
-			await browser.keys(["Control", "ArrowUp"]);
+			await browser.keys([Key.Ctrl, "ArrowUp"]);
 			assert.equal(await mcb.getProperty("value"), "Cosy", "The value remains the same when pressing arrow up while the first item is set");
 		});
 
@@ -1163,7 +1166,7 @@ describe("MultiComboBox general interaction", () => {
 			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
 
 			await icon.click();
-			await browser.keys(["Control", "ArrowDown"]);
+			await browser.keys([Key.Ctrl, "ArrowDown"]);
 
 			let valueStateHeader = await browser.execute(staticArea => staticArea.shadowRoot.querySelector(".ui5-responsive-popover-header.ui5-valuestatemessage-root"), staticArea);
 			let focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
@@ -1171,7 +1174,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
 			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should be focused");
 
-			await browser.keys(["Control", "ArrowDown"]);
+			await browser.keys([Key.Ctrl, "ArrowDown"]);
 
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
@@ -1180,14 +1183,14 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await listItem.getProperty("focused"), true, "The first item is focused");
 			assert.notEqual(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header should not be focused");
 
-			await browser.keys(["Control", "ArrowUp"]);
+			await browser.keys([Key.Ctrl, "ArrowUp"]);
 			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
 			assert.equal(await listItem.getProperty("focused"), false, "The first item is no longer focused");
 			assert.equal(focusedElement[Object.keys(focusedElement)[0]], valueStateHeader[Object.keys(valueStateHeader)[0]], "The value state header is focused again");
 
-			await browser.keys(["Control", "ArrowUp"]);
+			await browser.keys([Key.Ctrl, "ArrowUp"]);
 			focusedElement = await browser.execute(staticArea => staticArea.shadowRoot.activeElement, staticArea);
 
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
@@ -1204,13 +1207,13 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await browser.keys("F4");
 			await browser.keys("ArrowDown");
-			await browser.keys(["Control", "a"]);
+			await browser.keys([Key.Ctrl, "a"]);
 
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 6, "All items are selected");
 
-			await browser.keys(["Control", "a"]);
+			await browser.keys([Key.Ctrl, "a"]);
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 0, "All items are deselected");
@@ -1218,13 +1221,13 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await browser.keys("c");
 			await browser.keys("ArrowDown");
-			await browser.keys(["Control", "a"]);
+			await browser.keys([Key.Ctrl, "a"]);
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 3, "All filtered items are selected");
 
-			await browser.keys(["Control", "a"]);
+			await browser.keys([Key.Ctrl, "a"]);
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(await tokens.length, 0, "All selected filtered items are deselected");
@@ -1234,14 +1237,14 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
-			const mcb2 = await browser.$("#mcb");
-			const input = await mcb2.shadow$("input");
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "c"]);
-			await input.click();
-			await browser.keys(["Control", "v"]);
+			await browser.keys([Key.Ctrl, 'c'])
+
+			const mcb2 = await browser.$("#mcb");
+			await mcb2.click();
+			await browser.keys([Key.Ctrl, 'v'])
 
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
 		});
@@ -1250,14 +1253,16 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
-			const mcb2 = await browser.$("#readonly-value-state-mcb");
+			let mcb2 = await browser.$("#readonly-value-state-mcb");
 			const input = await mcb2.shadow$("input");
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "c"]);
+			await browser.keys([Key.Ctrl, "c"]);
 			await input.click();
-			await browser.keys(["Control", "v"]);
+			await browser.keys([Key.Ctrl, "v"]);
+
+			mcb2 = await browser.$("#readonly-value-state-mcb");
 
 			const mcb2Tokens = await mcb2.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await mcb2.getProperty("value"), "", "Token is not pasted into the second control");
@@ -1268,18 +1273,17 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
-			const mcb2 = await browser.$("#mcb");
-			const input = await mcb2.shadow$("input");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "x"]);
+			await browser.keys([Key.Ctrl, "x"]);
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
 
-			await input.click();
-			await browser.keys(["Control", "v"]);
+			const mcb2 = await browser.$("#mcb");
+			await mcb2.click();
+			await browser.keys([Key.Ctrl, "v"]);
 
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
 		});
@@ -1288,17 +1292,16 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
-			const mcb2 = await browser.$("#mcb");
-			const input = await mcb2.shadow$("input");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Shift", "Delete"]);
+			await browser.keys(["Shift", "Delete"]);
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
 
-			await input.click();
+			const mcb2 = await browser.$("#mcb");
+			await mcb2.click();
 			await browser.keys(["Shift", "Insert"]);
 
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
@@ -1308,13 +1311,13 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
-			const mcb2 = await browser.$("#mcb");
-			const input = await mcb2.shadow$("input");
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "Insert"]);
-			await input.click();
+			await browser.keys([Key.Ctrl, "Insert"]);
+
+			const mcb2 = await browser.$("#mcb");
+			await mcb2.click();
 			await browser.keys(["Shift", "Insert"]);
 
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
@@ -1328,7 +1331,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.click();
 			await browser.keys("ArrowLeft");
-			await browser.keys(["Control", "Space"]);
+			await browser.keys([Key.Ctrl, "Space"]);
 
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
@@ -1460,19 +1463,19 @@ describe("MultiComboBox general interaction", () => {
 			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
 			await mcb.click();
-			await browser.keys(["Control", "i"]);
+			await browser.keys([Key.Ctrl, "i"]);
 			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
 			await mcb.click();
-			await browser.keys(["Control", "i"]);
+			await browser.keys([Key.Ctrl, "i"]);
 			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
 
 			await mcb.click();
 			await browser.keys("ArrowLeft");
-			await browser.keys(["Control", "i"]);
+			await browser.keys([Key.Ctrl, "i"]);
 			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
 			await mcb.click();
 			await browser.keys("ArrowLeft");
-			await browser.keys(["Control", "i"]);
+			await browser.keys([Key.Ctrl, "i"]);
 			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
 		});
 
@@ -1482,7 +1485,7 @@ describe("MultiComboBox general interaction", () => {
 			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
 			await mcb.click();
-			await browser.keys(["Control", "i"]);
+			await browser.keys([Key.Ctrl, "i"]);
 			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
 
 		});

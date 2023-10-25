@@ -272,7 +272,7 @@ describe("RadioButton keyboard handling in RTL", () => {
 
 		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
 
-		await browser.$("#rtlOptionB").keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowLeft selects the next radio in the group.");
 	});
@@ -284,7 +284,7 @@ describe("RadioButton keyboard handling in RTL", () => {
 
 		assert.ok(await browser.$("#rtlOptionC").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
 
-		await browser.$("#rtlOptionC").keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.ok(await browser.$("#rtlOptionB").getAttribute("checked"), "Pressing ArrowRight selects the next radio in the group.");
 	});
