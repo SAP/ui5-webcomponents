@@ -568,6 +568,7 @@ class TextArea extends UI5Element implements IFormElement {
 				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
