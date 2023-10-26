@@ -3,7 +3,7 @@
 **TypeScript Support is enabled for both component development and component consumption.**
 
 Since version `1.11.0`, we have been providing TypeScript definitions under an experimental flag, and starting from version `1.18.0`, all TypeScript definitions are considered `stable`.
-With TypeScript definitions, when you access a public API, you will benefit from static code checks, autocompletion, and other expected features as expected in a TypeScript application.
+With TypeScript definitions you will benefit from static code checks, autocompletion, and other expected features as expected in a TypeScript application.
 
 
 **Note:** In exceptional cases, some of the available TypeScript types may change. In such instances, we will document all changes in a prominent manner within our release change log.
