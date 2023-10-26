@@ -431,9 +431,9 @@ abstract class Popup extends UI5Element {
 		if (this.initialFocus) {
 			element = (this.getRootNode() as Document).getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus);
-		} else {
-			element = await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 		}
+
+		element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			if (element === this._root) {
