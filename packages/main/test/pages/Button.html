@@ -10,7 +10,7 @@
 	</script>
 
 
-	<script src="../../src/bundle.esm.ts" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
 	<link rel="stylesheet" type="text/css" href="./styles/Button.css">
@@ -18,6 +18,7 @@
 </head>
 
 <body class="button1auto">
+	<span>%MODE% %VITE_BUNDLE_PATH%</span>
 	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
 	<ui5-button icon="text" id="icon-only-blank-text"> </ui5-button>
 	<ui5-button>

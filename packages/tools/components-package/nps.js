@@ -86,7 +86,7 @@ const getScripts = (options) => {
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
-		typescript: tsCommand,
+		copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
@@ -117,7 +117,7 @@ const getScripts = (options) => {
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" src/generated/`,
+			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {

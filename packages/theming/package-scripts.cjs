@@ -9,12 +9,13 @@ module.exports = {
 		clean: "rimraf dist && rimraf src/generated",
 		generate: `cross-env UI5_TS=true nps clean build.src  build.postcss build.jsonImports`,
 		build: {
-			default: `cross-env UI5_TS=true nps clean build.src build.themes build.postcss build.jsonImports build.typescript generateReport`,
+			default: `cross-env UI5_TS=true nps clean build.src build.postcss build.jsonImports build.typescript generateReport`,
 			src: `copy-and-watch "src/**/*.{js,css}" dist/`,
 			typescript: "tsc",
 			postcss: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 			jsonImports: `node "${jsonImportsScript}" src/generated/assets/themes src/generated/json-imports`,
 		},
+		copyGenerated: `copy-and-watch "src/generated/**/*.{js,css,json}" dist/generated/`,
 		generateReport: `node "${generateReportScript}"`,
 	},
 };

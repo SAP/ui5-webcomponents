@@ -21,7 +21,7 @@ const scripts = {
 	typescript: "tsc --build",
 	copy: {
 		"used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
-		cldr: `node ./lib/copy-and-strip-cldr/index.js "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/" src/generated/assets/cldr/`,
+		cldr: `node ./lib/copy-and-strip-cldr/index.js "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/" dist/generated/assets/cldr/`,
 		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 		src: `copy-and-watch "src/**/*.js" dist/`,
 	},
