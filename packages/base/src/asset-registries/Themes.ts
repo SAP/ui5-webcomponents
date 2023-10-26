@@ -38,7 +38,7 @@ const getThemeProperties = async (packageName: string, themeName: string, extern
 
 	const [style, customStyle] = await Promise.all([
 		_getThemeProperties(packageName, themeName),
-		externalThemeName ? _getCustomThemeProperties(packageName, externalThemeName) : undefined,
+		externalThemeName ? _getThemeProperties(packageName, externalThemeName, true) : undefined,
 	]);
 
 	const styleData = mergeStyles(style, customStyle);
@@ -49,29 +49,14 @@ const getThemeProperties = async (packageName: string, themeName: string, extern
 	return styleData;
 };
 
-const _getThemeProperties = async (packageName: string, themeName: string) => {
-	const loader = loaders.get(`${packageName}/${themeName}`);
+const _getThemeProperties = async (packageName: string, themeName: string, forCustomTheme = false) => {
+	const loadersMap = forCustomTheme ? customLoaders : loaders;
+	const loader = loadersMap.get(`${packageName}/${themeName}`);
 	if (!loader) {
 		// no themes for package
-		console.error(`Theme [${themeName}] not registered for package [${packageName}]`); /* eslint-disable-line */
-		return;
-	}
-	let data;
-	try {
-		data = await loader(themeName);
-	} catch (error: unknown) {
-		const e = error as Error;
-		console.error(packageName, e.message); /* eslint-disable-line */
-		return;
-	}
-
-	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
-	return themeProps;
-};
-
-const _getCustomThemeProperties = async (packageName: string, themeName: string) => {
-	const loader = customLoaders.get(`${packageName}/${themeName}`);
-	if (!loader) {
+		if (!forCustomTheme) {
+			console.error(`Theme [${themeName}] not registered for package [${packageName}]`); /* eslint-disable-line */
+		}
 		return;
 	}
 	let data;
