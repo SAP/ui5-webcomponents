@@ -67,6 +67,11 @@
 
 .ui5-tc__overflow.ui5-tc__overflow--end {
 	padding-inline-start: 0.188rem;
+	margin-inline-end: 1rem;
+}
+
+.ui5-tc__overflow.ui5-tc__overflow--start {
+	margin-inline-start: 1rem;
 }
 
 .ui5-tc__overflow[hidden] {
