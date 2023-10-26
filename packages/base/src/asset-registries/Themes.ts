@@ -1,12 +1,12 @@
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
-import { StyleData, StyleDataCSP } from "../types.js";
+import type { StyleData, StyleDataCSP } from "../ManagedStyles.js";
+import { mergeStyles } from "../ManagedStyles.js";
 import { fireThemeRegistered } from "../theming/ThemeRegistered.js";
 
 type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
 type ThemeLoader = (themeName: string) => Promise<ThemeData>;
 
 const themeStyles = new Map<string, StyleData>();
-const customThemeStyles = new Map<string, StyleData>();
 const loaders = new Map<string, ThemeLoader>();
 const customLoaders = new Map<string, ThemeLoader>();
 const registeredPackages = new Set<string>();
@@ -23,29 +23,11 @@ const registerCustomThemePropertiesLoader = (packageName: string, themeName: str
 	customLoaders.set(`${packageName}/${themeName}`, loader);
 };
 
-const mergeStyles = (style1?: StyleData, style2?: StyleData) => {
-	if (style1 === undefined) {
-		return style2;
-	}
-	if (style2 === undefined) {
-		return style1;
-	}
-	const style2Content = typeof style2 === "string" ? style2 : style2.content;
-	if (typeof style1 === "string") {
-		return `${style1} ${style2Content}`;
-	}
-	return {
-		content: `${style1.content} ${style2Content}`,
-		packageName: style1.packageName,
-		fileName: style1.fileName,
-	};
-};
-
 const getThemeProperties = async (packageName: string, themeName: string, externalThemeName?: string) => {
-	let style = themeStyles.get(`${packageName}_${themeName}`);
-	let customStyle = externalThemeName ? customThemeStyles.get(`${packageName}_${externalThemeName}`) : undefined;
-	if (style !== undefined) { // it's valid for style to be an empty string
-		return mergeStyles(style, customStyle);
+	const cacheKey = `${packageName}_${themeName}_${externalThemeName || ""}`;
+	const cachedStyleData = themeStyles.get(cacheKey);
+	if (cachedStyleData !== undefined) { // it's valid for style to be an empty string
+		return cachedStyleData;
 	}
 
 	if (!registeredThemes.has(themeName)) {
@@ -54,15 +36,17 @@ const getThemeProperties = async (packageName: string, themeName: string, extern
 		return _getThemeProperties(packageName, DEFAULT_THEME);
 	}
 
-	if (externalThemeName) {
-		[style, customStyle] = await Promise.all([
-			_getThemeProperties(packageName, themeName),
-			_getCustomThemeProperties(packageName, externalThemeName),
-		]);
-		return mergeStyles(style, customStyle);
+	const [style, customStyle] = await Promise.all([
+		_getThemeProperties(packageName, themeName),
+		externalThemeName ? _getCustomThemeProperties(packageName, externalThemeName) : undefined,
+	]);
+
+	const styleData = mergeStyles(style, customStyle);
+	if (styleData) {
+		themeStyles.set(cacheKey, styleData);
 	}
 
-	return _getThemeProperties(packageName, themeName);
+	return styleData;
 };
 
 const _getThemeProperties = async (packageName: string, themeName: string) => {
@@ -80,9 +64,8 @@ const _getThemeProperties = async (packageName: string, themeName: string) => {
 		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}
-	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
 
-	themeStyles.set(`${packageName}_${themeName}`, themeProps);
+	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
 	return themeProps;
 };
 
@@ -99,9 +82,8 @@ const _getCustomThemeProperties = async (packageName: string, themeName: string)
 		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}
-	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
 
-	customThemeStyles.set(`${packageName}_${themeName}`, themeProps);
+	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
 	return themeProps;
 };
 
