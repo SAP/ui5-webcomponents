@@ -340,7 +340,6 @@ class MultiComboBox extends UI5Element {
 	 *
 	 * @type {boolean}
 	 * @default false
-	 * @readonly
 	 * @since 1.0.0-rc.5
 	 * @public
 	 */
