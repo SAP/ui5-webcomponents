@@ -10,7 +10,7 @@ interface IFormElement extends UI5Element {
 	checked?: boolean,
 }
 
-type NativeFormElement = HTMLInputElement | HTMLTextAreaElement;
+type NativeFormElement = HTMLInputElement & HTMLTextAreaElement;
 type NativeInputUpdateCallback = (element: IFormElement, nativeInput: NativeFormElement) => void;
 type NativeInputChangeCallback = (e: Event) => void;
 
@@ -34,7 +34,7 @@ class FormSupport {
 	 */
 	static syncNativeHiddenInput(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name || element.required;
-		const nativeInput = element.querySelector("input[data-ui5-form-support]") as HTMLInputElement;
+		const nativeInput = element.querySelector("input[data-ui5-form-support]") as NativeFormElement;
 
 		if (needsNativeInput) {
 			this.syncNativeElement(element, nativeInput, nativeInputUpdateCallback);
@@ -51,7 +51,7 @@ class FormSupport {
 	 */
 	static syncNativeHiddenTextArea(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
 		const needsNativeTextArea = !!element.name || element.required;
-		const nativeTextarea = element.querySelector("textarea[data-ui5-form-support]") as HTMLTextAreaElement;
+		const nativeTextarea = element.querySelector("textarea[data-ui5-form-support]") as NativeFormElement;
 
 		if (needsNativeTextArea) {
 			this.syncNativeElement(element, nativeTextarea, nativeInputUpdateCallback, "textarea");
@@ -96,10 +96,10 @@ class FormSupport {
 	 */
 	static syncNativeFileInput(element: IFormElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as HTMLInputElement;
+		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as NativeFormElement;
 
 		if (needsNativeInput && !nativeInput) {
-			nativeInput = document.createElement("input");
+			nativeInput = document.createElement("input") as NativeFormElement;
 			nativeInput.type = "file";
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.slot = "formSupport"; // Needed to visualize the input in the light dom
@@ -160,7 +160,7 @@ class FormSupport {
 	}
 }
 
-const copyDefaultProperties = (element: IFormElement, nativeInput: HTMLInputElement | HTMLTextAreaElement) => {
+const copyDefaultProperties = (element: IFormElement, nativeInput: NativeFormElement) => {
 	nativeInput.disabled = element.disabled!;
 	nativeInput.value = element.value as string; // We do not explicitly convert to string to retain the current browser behavior
 };
