@@ -405,7 +405,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+			FormSupport.syncNativeHiddenTextArea(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
