@@ -74,7 +74,7 @@ type ExceededText = {
  * @extends UI5Element
  * @implements {IFormElement}
  * @public
- * @csspart textarea - Used to style the native textarea
+ * @csspart textarea - Used to style the native textarea.
  */
 @customElement({
 	tag: "ui5-textarea",
@@ -109,7 +109,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @type {string}
 	 * @default ""
 	 * @public
-		 */
+	*/
 	@property()
 	value!: string;
 	/**
@@ -257,6 +257,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */

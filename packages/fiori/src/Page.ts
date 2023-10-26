@@ -31,9 +31,10 @@ import PageCss from "./generated/themes/Page.css.js";
  * <h4>Footer</h4>
  * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
  * This is enabled with the <code>floatingFooter</code> property.
- *
+ * <br /><br />
  * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the <code>ui5-page</code> to be rendered.
+ * <br />
  * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
  *
  * <h3>ES6 Module Import</h3>

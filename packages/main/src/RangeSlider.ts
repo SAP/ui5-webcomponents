@@ -83,9 +83,9 @@ type AffectedValue = "startValue" | "endValue";
  * @extends SliderBase
  * @since 1.0.0-rc.11
  * @public
- * @csspart progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-range-slider</code>
- * @csspart progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>
- * @csspart handle - Used to style the handles of the <code>ui5-range-slider</code>
+ * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the <code>ui5-range-slider</code>.
+ * @csspart progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.
+ * @csspart handle - Used to style the handles of the <code>ui5-range-slider</code>.
  */
 @customElement({
 	tag: "ui5-range-slider",

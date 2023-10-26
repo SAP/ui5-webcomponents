@@ -172,6 +172,7 @@ class Toast extends UI5Element {
 	/**
 	 * Shows the component.
 	 * @public
+	 * @returns {void}
 	 */
 	show() {
 		if (this.open) {
@@ -200,7 +201,6 @@ class Toast extends UI5Element {
 	 * If the minimum duration is lower than 500ms, we force
 	 * it to be 500ms, as described in the documentation.
 	 * @private
-	 * @returns {*}
 	 */
 	get effectiveDuration() {
 		return this.duration < MIN_DURATION ? MIN_DURATION : this.duration;
