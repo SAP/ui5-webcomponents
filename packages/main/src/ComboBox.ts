@@ -1079,7 +1079,9 @@ class ComboBox extends UI5Element {
 	_announceValueStateText() {
 		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
 
-		announce(valueStateText, InvisibleMessageMode.Polite);
+		if (valueStateText) {
+			announce(valueStateText, InvisibleMessageMode.Polite);
+		}
 	}
 
 	get _headerTitleText() {
