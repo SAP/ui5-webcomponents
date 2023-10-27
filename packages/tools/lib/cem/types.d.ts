@@ -84,6 +84,7 @@ export interface JavaScriptModule {
   summary?: string
 }
 export interface ClassDeclaration {
+  _ui5implements?: Reference[]
   privacy: Privacy
   _ui5reference: Reference
   /**
@@ -657,6 +658,7 @@ export interface VariableDeclaration {
  * `CustomElementExport`.
  */
 export interface CustomElementDeclaration {
+  _ui5implements?: Reference[]
   _ui5abstract?: boolean
   privacy: Privacy
   _ui5reference: Reference
