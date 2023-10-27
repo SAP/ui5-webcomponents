@@ -45,9 +45,10 @@ describe("General API", () => {
 	it("should wrap the text of the link", async () => {
 		const wrappingLabel = await browser.$("#wrapping-link");
 		const truncatingLabel = await browser.$("#non-wrapping-link");
+		const LINK_HEIGHT = 20; // It's 20px in sap_horizon, previously 18px in sap_fiori_3
 
 		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
-		assert.strictEqual((await truncatingLabel.getSize()).height, 18, "The truncated label should be single line.");
+		assert.strictEqual((await truncatingLabel.getSize()).height, LINK_HEIGHT, "The truncated label should be single line.");
 	});
 
 	it("should prevent clicking on disabled link", async () => {

@@ -1,6 +1,6 @@
 const assetsMeta = {
   "themes": {
-    "default": "sap_fiori_3",
+    "default": "sap_horizon",
     "all": [
       "sap_fiori_3",
       "sap_fiori_3_dark",
