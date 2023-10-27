@@ -46,6 +46,12 @@
         "ClassDeclaration": {
             "additionalProperties": false,
             "properties": {
+                "_ui5implements": {
+                    "items": {
+                        "$ref": "#/definitions/Reference"
+                    },
+                    "type": "array"
+                },
                 "privacy": {
                     "$ref": "#/definitions/Privacy"
                 },
@@ -517,6 +523,12 @@
             "additionalProperties": false,
             "description": "A description of a custom element class.\n\nCustom elements are JavaScript classes, so this extends from\n`ClassDeclaration` and adds custom-element-specific features like\nattributes, events, and slots.\n\nNote that `tagName` in this interface is optional. Tag names are not\nneccessarily part of a custom element class, but belong to the definition\n(often called the \"registration\") or the `customElements.define()` call.\n\nBecause classes and tag names can only be registered once, there's a\none-to-one relationship between classes and tag names. For ease of use,\nwe allow the tag name here.\n\nSome packages define and register custom elements in separate modules. In\nthese cases one `Module` should contain the `CustomElement` without a\ntagName, and another `Module` should contain the\n`CustomElementExport`.",
             "properties": {
+                "_ui5implements": {
+                    "items": {
+                        "$ref": "#/definitions/Reference"
+                    },
+                    "type": "array"
+                },
                 "_ui5abstract": {
                     "type": "boolean"
                 },
