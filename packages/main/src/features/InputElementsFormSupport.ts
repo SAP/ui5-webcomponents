@@ -34,7 +34,7 @@ class FormSupport {
 	 */
 	static syncNativeHiddenInput(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name || element.required;
-		const nativeInput = element.querySelector("input[data-ui5-form-support]") as NativeFormElement;
+		const nativeInput = element.querySelector<NativeFormElement>("input[data-ui5-form-support]");
 
 		if (needsNativeInput) {
 			this.syncNativeElement(element, nativeInput, nativeInputUpdateCallback);
@@ -51,7 +51,7 @@ class FormSupport {
 	 */
 	static syncNativeHiddenTextArea(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
 		const needsNativeTextArea = !!element.name || element.required;
-		const nativeTextarea = element.querySelector("textarea[data-ui5-form-support]") as NativeFormElement;
+		const nativeTextarea = element.querySelector<NativeFormElement>("textarea[data-ui5-form-support]");
 
 		if (needsNativeTextArea) {
 			this.syncNativeElement(element, nativeTextarea, nativeInputUpdateCallback, "textarea");
@@ -60,7 +60,7 @@ class FormSupport {
 		}
 	}
 
-	static syncNativeElement(element: IFormElement, nativeElement: NativeFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback, nativeElementTagName = "input") {
+	static syncNativeElement(element: IFormElement, nativeElement: NativeFormElement | null, nativeInputUpdateCallback?: NativeInputUpdateCallback, nativeElementTagName = "input") {
 		if (!nativeElement) {
 			nativeElement = document.createElement(nativeElementTagName) as NativeFormElement;
 
@@ -96,7 +96,7 @@ class FormSupport {
 	 */
 	static syncNativeFileInput(element: IFormElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as HTMLInputElement;
+		let nativeInput = element.querySelector<HTMLInputElement>(`input[type="file"][data-ui5-form-support]`);
 
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
@@ -124,8 +124,8 @@ class FormSupport {
 		}
 
 		if (needsNativeInput) {
-			nativeInput.name = element.name!;
-			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput);
+			nativeInput!.name = element.name!;
+			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput!);
 		}
 	}
 
