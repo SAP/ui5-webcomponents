@@ -38,6 +38,7 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		/**
 		 * Used to avoid tag name checks
 		 * @protected
+		 * @default true
 		 * @type {boolean}
 		 */
 		get isGroupItem(): boolean {

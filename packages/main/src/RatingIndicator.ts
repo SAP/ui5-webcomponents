@@ -149,7 +149,7 @@ class RatingIndicator extends UI5Element {
 	 *
 	 * @type {string}
 	 * @public
-	 * @default undefined
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 */
 	@property()

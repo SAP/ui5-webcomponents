@@ -30,6 +30,8 @@ class MultiComboBoxGroupItem extends UI5Element implements IMultiComboBoxItem {
 	/**
 	 * Used to avoid tag name checks
 	 * @protected
+	 * @type {boolean}
+	 * @default true
 	 */
 	get isGroupItem() {
 		return true;
