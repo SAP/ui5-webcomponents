@@ -109,7 +109,13 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual((await slider.getProperty("_labels"))[0], "-20", "Initial slider start label is -20.");
 		assert.strictEqual((await slider.getProperty("_labels"))[labelLength - 1], "20", "Initial slider end label is 20.");
 
-		Promise.all([slider.setProperty("max", 0), slider.setProperty("min", 40)]);
+		// simulate the synchronous update of min and max made programatically 
+		await browser.executeAsync(done => {
+			const slider = document.getElementById("slider-tickmarks-labels");
+			slider.min = 0;
+			slider.max = 40;
+			done();
+		});
 
 		assert.strictEqual((await slider.getProperty("_labels"))[0], "0", "Slider start label is updated correctly.");
 		assert.strictEqual((await slider.getProperty("_labels"))[labelLength - 1], "40", "Slider end label is updated correctly.");
