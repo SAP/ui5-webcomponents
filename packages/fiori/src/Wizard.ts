@@ -300,7 +300,7 @@ class Wizard extends UI5Element {
 		"individualSlots": true,
 		invalidateOnChildChange: true,
 	})
-	steps!: Array<IWizardStep>
+	steps!: Array<WizardStep>
 
 	static i18nBundle: I18nBundle;
 
@@ -898,7 +898,7 @@ class Wizard extends UI5Element {
 			accInfo = {
 				"ariaSetsize": stepsCount,
 				"ariaPosinset": pos,
-				"ariaLabel": this.getStepAriaLabelText((step as WizardStep), ariaLabel),
+				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
 			};
 
 			const stepInfo: StepInfo = {
@@ -913,7 +913,7 @@ class Wizard extends UI5Element {
 				branchingSeparator: step.branching,
 				pos,
 				accInfo,
-				refStepId: (step as WizardStep)._id,
+				refStepId: step._id,
 				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: {
 					zIndex: isAfterCurrent ? --inintialZIndex : 1,
@@ -962,7 +962,7 @@ class Wizard extends UI5Element {
 	}
 
 	getStepWrapperByIdx(idx: number) {
-		return this.getStepWrapperByRefId((this.steps[idx] as WizardStep)._id);
+		return this.getStepWrapperByRefId(this.steps[idx]._id);
 	}
 
 	/**

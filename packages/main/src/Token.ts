@@ -145,6 +145,7 @@ class Token extends UI5Element implements ITabbable, IToken {
 	/**
 	 * Defines the tabIndex of the component.
 	 * @type {string}
+	 * @default -1
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })

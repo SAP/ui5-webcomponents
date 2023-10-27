@@ -35,6 +35,8 @@ class SuggestionGroupItem extends UI5Element implements IInputSuggestionItem {
 	 * Indicates the "grouping" nature of the component
 	 * to avoid tag name checks tag name to diferenciate from the standard suggestion item.
 	 * @protected
+	 * @type {boolean}
+	 * @default true
 	 */
 	get groupItem() {
 		return true;

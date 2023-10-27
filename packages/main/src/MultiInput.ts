@@ -103,6 +103,7 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
+	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -111,6 +112,7 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer has tokens
+	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -370,6 +372,8 @@ class MultiInput extends Input {
 
 	/**
 	 * Returns the placeholder value when there are no tokens.
+	 * @type {string}
+	 * @default ""
 	 * @protected
 	 */
 	get _placeholder() {
