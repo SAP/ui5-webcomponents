@@ -108,6 +108,7 @@ class Page extends UI5Element {
 	 *
 	 * @type {string}
 	 * @private
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 */
 	@property()

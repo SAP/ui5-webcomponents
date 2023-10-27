@@ -123,6 +123,8 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * @private
+	 * @type {boolean}
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	rangePressed!: boolean;
