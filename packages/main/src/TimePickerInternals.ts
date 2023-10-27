@@ -40,6 +40,31 @@ type TimeSelectionChangeEventDetail = {
 	valid: boolean,
 }
 
+type TimePickerEntityAttributes = {
+	min: number,
+	max: number,
+	step: number,
+}
+
+type TimePickerEntityProperties = {
+	label: string,
+	entity?: string,
+	itemMin?: number,
+	itemMax?: number,
+	value: number,
+	stringValue?: string,
+	textValue?: string,
+	displayStep?: number,
+	lastItemReplacement?: number,
+	showInnerCircle?: boolean,
+	prependZero: boolean,
+	active?: boolean,
+	hasSeparator?: boolean,
+	attributes?: TimePickerEntityAttributes,
+}
+
+const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
+
 /**
  * @class
  *
@@ -90,7 +115,7 @@ class TimePickerInternals extends UI5Element {
 	 * HH:mm:ss -> 11:42:35
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
-	 *
+
 	 * @type {string}
 	 * @name sap.ui.webc.main.TimePickerInternals.prototype.formatPattern
 	 * @defaultvalue ""
@@ -100,25 +125,8 @@ class TimePickerInternals extends UI5Element {
 	formatPattern!: string;
 
 	/**
-	 * Determines the minutes step. The minutes clock is populated only by multiples of the step.
-	 * @type {integer}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	minutesStep!: number;
-
-	/**
-	 * Determines the seconds step. The seconds clock is populated only by multiples of the step.
-	 * @type {integer}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	secondsStep!: number;
-
-	/**
 	 * The index of the active Clock/TogleSpinButton.
+	 *
 	 * @type {integer}
 	 * @defaultvalue 0
 	 * @private
@@ -134,6 +142,14 @@ class TimePickerInternals extends UI5Element {
 	 */
 	@property({ type: CalendarType })
 	_calendarType!: CalendarType;
+
+	/**
+	 * Contains currently available Time Picker components depending on time format.
+	 *
+	 * @type {Array}
+	 */
+	@property({ type: Object, multiple: true })
+	_entities!: Array<TimePickerEntityProperties>;
 
 	/**
 	 * Contains component-to-index map.
@@ -154,31 +170,28 @@ class TimePickerInternals extends UI5Element {
 	_periods!: Array<TimeSelectionPeriodProperties>;
 
 	/**
-	 * Contains list of separators between the buttons.
+	 * Id of the cooldown interval
 	 *
-	 * @type {Array}
-	 * @private
+	 * @type {ReturnType}
 	 */
-	@property({ multiple: true })
-	_separators!: Array<string>;
+	@property({ validator: Integer, noAttribute: true })
+	_typeCooldownId?: ReturnType<typeof setTimeout>;
 
 	/**
-	 * Contains separator before AM/PM (if there is any).
+	 * Exact match number buffer
 	 *
-	 * @type {string}
-	 * @private
+	 * @type {integer}
 	 */
-	@property({ defaultValue: "", noAttribute: true })
-	_amPmSeparator!: string;
+	@property({ validator: Integer, noAttribute: true })
+	_exactMatch?: number;
 
 	/**
-	 * Contains separator after all buttons (if there is any).
+	 * Buffer for entered by keyboard numbers
 	 *
 	 * @type {string}
-	 * @private
 	 */
 	@property({ defaultValue: "", noAttribute: true })
-	_lastSeparator!: string;
+	_keyboardBuffer!: string;
 
 	static i18nBundle: I18nBundle;
 
@@ -240,14 +253,6 @@ class TimePickerInternals extends UI5Element {
 		return dayPeriodsAbbrev.map((x: string) => x.toUpperCase());
 	}
 
-	get _showAmPmButton(): boolean {
-		return true;
-	}
-
-	get _pmPressed(): boolean {
-		return false;
-	}
-
 	get _hours() {
 		let hours;
 		const dateValue = this.validDateValue;
@@ -275,12 +280,12 @@ class TimePickerInternals extends UI5Element {
 	}
 
 	get _period() {
+		let period;
+		const dateValue = this.validDateValue;
+
 		if (!this._hoursConfiguration.isTwelveHoursFormat) {
 			return undefined;
 		}
-
-		let period;
-		const dateValue = this.validDateValue;
 		if (this._hoursConfiguration.minHour === 1) {
 			period = dateValue.getHours() >= this._hoursConfiguration.maxHour ? this.periodsArray[1] : this.periodsArray[0];
 		} else {
@@ -293,8 +298,8 @@ class TimePickerInternals extends UI5Element {
 		const pattern = this.formatPattern;
 		const hasHours = !!pattern.match(/H/i);
 		const fallback = !pattern || !hasHours;
-
 		const localeData = getCachedLocaleDataInstance(getLocale());
+
 		return fallback ? localeData.getCombinedDateTimePattern("medium", "medium", undefined) : pattern;
 	}
 
@@ -318,13 +323,9 @@ class TimePickerInternals extends UI5Element {
 		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_CLOCK_DIAL_LABEL);
 	}
 
-	get _nextSeparator() {
-		const sep = this._separators.shift() || "";
-		return sep;
-	}
-
 	setValue(date: Date) {
 		const value = this.formatValue(date);
+
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
 			this.fireEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
@@ -339,7 +340,6 @@ class TimePickerInternals extends UI5Element {
 		if (value === "") {
 			return value;
 		}
-
 		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
 	}
 
@@ -356,7 +356,6 @@ class TimePickerInternals extends UI5Element {
 				style: this._formatPattern,
 			});
 		}
-
 		return dateFormat;
 	}
 
@@ -366,54 +365,94 @@ class TimePickerInternals extends UI5Element {
 
 	_componentKey(name: string) {
 		type ComponentKey = keyof typeof this._componentMap;
-		const key = name as ComponentKey;
-		return key;
+		return name as ComponentKey;
 	}
 
-	_getSeparators() {
-		// @ts-ignore aFormatArray is a private API of DateFormat
-		const formatArray = this.getFormat().aFormatArray;
-		let previousWasEntity = false;
-		let index;
+	_indexFromName(name: string) {
+		return this._componentMap[this._componentKey(name)];
+	}
 
-		this._separators = [];
+	/**
+	 * Returns name of the clock or button from the id of the event target.
+	 *
+	 * @returns {string | undefined} name of the clock/button
+	 */
+	_getNameFromId(id: string) {
+		const parts = id.split("_");
 
-		if (!formatArray.length) {
-			return;
+		return parts.length ? parts[parts.length - 1] : undefined;
+	}
+
+	/**
+	 * Returns index of the clock or button from the id of the event target.
+	 *
+	 * @returns {number} index of the clock/button
+	 */
+	_getIndexFromId(id: string) {
+		const name = this._getNameFromId(id);
+
+		return name ? this._indexFromName(name) : 0;
+	}
+
+	/**
+	 * Changes hours value.
+	 *
+	 * @param {hours} number new hours value
+	 */
+	_hoursChange(hours: number) {
+		if (this._hoursConfiguration.isTwelveHoursFormat) {
+			hours = this._shiftHours(hours);
 		}
 
-		if (formatArray[0].type !== "text") {
-			this._separators.push("");
-		}
+		const date = this.validDateValue;
 
-		for (index = 0; index < formatArray.length; index++) {
-			if (formatArray[index].type !== "text") {
-				if (previousWasEntity) {
-					// there was previous non-separator entity, and this one is the same too, so add empty separator
-					this._separators.push("");
-				} else {
-					// this is non-separator entity, set the entity flag
-					previousWasEntity = true;
-				}
-			} else {
-				// add separator and clear non-separator entity flag
-				this._separators.push(formatArray[index].value as string);
-				previousWasEntity = false;
-			}
-		}
+		date.setHours(hours);
+		this.setValue(date);
+	}
 
-		// push one more empty separator for the last entity
-		if (formatArray[index - 1].type !== "text") {
-			this._separators.push("");
-		}
+	/**
+	 * Changes minutes value.
+	 *
+	 * @param {minutes} number new minutes value
+	 */
+	_minutesChange(minutes: number) {
+		const date = this.validDateValue;
+
+		date.setMinutes(minutes);
+		this.setValue(date);
+	}
+
+	/**
+	 * Changes seconds value.
+	 *
+	 * @param {seconds} number new seconds value
+	 */
+	_secondsChange(seconds: number) {
+		const date = this.validDateValue;
+
+		date.setSeconds(seconds);
+		this.setValue(date);
 	}
 
 	_buttonAmPm() {
 		return this._hasPeriodsComponent ? this.shadowRoot?.querySelector<SegmentedButton>(`#${this._id}_AmPm`) : undefined;
 	}
 
+	_createPeriodComponent() {
+		if (this._hasPeriodsComponent) {
+			// add period item
+			this.periodsArray.forEach(item => {
+				this._periods.push({
+					"label": item,
+					"pressed": this._period === item,
+				});
+			});
+		}
+	}
+
 	_periodChange(evt: PointerEvent) {
 		const periodItem = evt.target;
+
 		if (periodItem) {
 			const period = (periodItem as HTMLElement).textContent;
 			this._calculatePeriodChange(period as string);
@@ -422,6 +461,7 @@ class TimePickerInternals extends UI5Element {
 
 	_calculatePeriodChange(period: string) {
 		const date = this.validDateValue;
+
 		if (period === this._periods[0].label && date.getHours() >= 12) {
 			date.setHours(date.getHours() - 12);
 		} if (period === this._periods[1].label && date.getHours() < 12) {
@@ -429,6 +469,60 @@ class TimePickerInternals extends UI5Element {
 		}
 		this.setValue(date);
 	}
+
+	/**
+	 * Shifts hours value with +/- 12 depending on hour value and day period.
+	 *
+	 * @param {number} hours current hours
+	 * @returns {number} shifted hours
+	 */
+	_shiftHours(hours: number) {
+		if (this._period === this.periodsArray[0]) { // AM
+			hours = hours === 12 ? 0 : hours;
+		} else if (this._period === this.periodsArray[1]) { // PM
+			hours = hours === 12 ? hours : hours + 12;
+		}
+		return hours;
+	}
+
+	/**
+	 * Clears the currently existing cooldown period and starts new one if requested.
+	 *
+	 * @param {boolean} startNewCooldown whether to start new cooldown period after clearing previous one
+	 */
+	_resetCooldown(startNewCooldown: boolean) {
+		if (!TYPE_COOLDOWN_DELAY) {
+			return; // if delay is 0, cooldown is disabled
+		}
+		if (this._typeCooldownId) {
+			clearTimeout(this._typeCooldownId);
+		}
+		if (startNewCooldown) {
+			this._startCooldown();
+		}
+	}
+
+	/**
+	 * Starts new cooldown period.
+	 */
+	_startCooldown() {
+		if (!TYPE_COOLDOWN_DELAY) {
+			return; // if delay is 0, cooldown is disabled
+		}
+		this._typeCooldownId = setTimeout(() => {
+			this._keyboardBuffer = "";
+			this._typeCooldownId = undefined;
+			if (this._exactMatch) {
+				this._setExactMatch();
+				this._exactMatch = undefined;
+			}
+		}, TYPE_COOLDOWN_DELAY);
+	}
+
+	/**
+	 * Sets the exact match value. Override if necessary.
+	 */
+	_setExactMatch() {}
 }
 
 TimePickerInternals.define();

@@ -81,103 +81,6 @@ class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the illustration name that will be displayed in the component.
 	* <br><br>
-	* Available illustrations are:
-	* <ul>
-	* <li><code>AddColumn</code></li>
-	* <li><code>AddPeople</code></li>
-	* <li><code>AddDimensions</code></li>
-	* <li><code>BalloonSky</code></li>
-	* <li><code>BeforeSearch</code></li>
-	* <li><code>Connection</code></li>
-	* <li><code>EmptyCalendar</code></li>
-	* <li><code>EmptyList</code></li>
-	* <li><code>EmptyPlanningCalendar</code></li>
-	* <li><code>ErrorScreen</code></li>
-	* <li><code>FilterTable</code></li>
-	* <li><code>GroupTable</code></li>
-	* <li><code>NoActivities</code></li>
-	* <li><code>NoColumnsSet</code></li>
-	* <li><code>NoData</code></li>
-	* <li><code>NoEntries</code></li>
-	* <li><code>NoFilterResults</code></li>
-	* <li><code>NoMail_v1</code></li>
-	* <li><code>NoMail</code></li>
-	* <li><code>NoNotifications</code></li>
-	* <li><code>NoSavedItems_v1</code></li>
-	* <li><code>NoSavedItems</code></li>
-	* <li><code>NoSearchResults</code></li>
-	* <li><code>NoTasks_v1</code></li>
-	* <li><code>NoTasks</code></li>
-	* <li><code>NoDimensionsSet</code></li>
-	* <li><code>PageNotFound</code></li>
-	* <li><code>ReloadScreen</code></li>
-	* <li><code>ResizeColumn</code></li>
-	* <li><code>SearchEarth</code></li>
-	* <li><code>SearchFolder</code></li>
-	* <li><code>SimpleBalloon</code></li>
-	* <li><code>SimpleBell</code></li>
-	* <li><code>SimpleCalendar</code></li>
-	* <li><code>SimpleCheckMark</code></li>
-	* <li><code>SimpleConnection</code></li>
-	* <li><code>SimpleEmptyDoc</code></li>
-	* <li><code>SimpleEmptyList</code></li>
-	* <li><code>SimpleError</code></li>
-	* <li><code>SimpleMagnifier</code></li>
-	* <li><code>SimpleMail</code></li>
-	* <li><code>SimpleNoSavedItems</code></li>
-	* <li><code>SimpleNotFoundMagnifier</code></li>
-	* <li><code>SimpleReload</code></li>
-	* <li><code>SimpleTask</code></li>
-	* <li><code>SleepingBell</code></li>
-	* <li><code>SortColumn</code></li>
-	* <li><code>SuccessBalloon</code></li>
-	* <li><code>SuccessCheckMark</code></li>
-	* <li><code>SuccessHighFive</code></li>
-	* <li><code>SuccessScreen</code></li>
-	* <li><code>Survey</code></li>
-	* <li><code>Tent</code></li>
-	* <li><code>UnableToLoad</code></li>
-	* <li><code>UnableToLoadImage</code></li>
-	* <li><code>UnableToUpload</code></li>
-	* <li><code>UploadToCloud</code></li>
-	* <li><code>UploadCollection</code></li>
-	* <li><code>TntChartArea</code></li>
-	* <li><code>TntChartArea2</code></li>
-	* <li><code>TntChartBar</code></li>
-	* <li><code>TntChartBPMNFlow</code></li>
-	* <li><code>TntChartBullet</code></li>
-	* <li><code>TntChartDoughnut</code></li>
-	* <li><code>TntChartFlow</code></li>
-	* <li><code>TntChartGantt</code></li>
-	* <li><code>TntChartOrg</code></li>
-	* <li><code>TntChartPie</code></li>
-	* <li><code>TntCodePlaceholder</code></li>
-	* <li><code>TntCompany</code></li>
-	* <li><code>TntComponents</code></li>
-	* <li><code>TntExternalLink</code></li>
-	* <li><code>TntFaceID</code></li>
-	* <li><code>TntFingerprint</code></li>
-	* <li><code>TntLock</code></li>
-	* <li><code>TntMission</code></li>
-	* <li><code>TntNoApplications</code></li>
-	* <li><code>TntNoFlows</code></li>
-	* <li><code>TntNoUsers</code></li>
-	* <li><code>TntRadar</code></li>
-	* <li><code>TntSecrets</code></li>
-	* <li><code>TntServices</code></li>
-	* <li><code>TntSessionExpired</code></li>
-	* <li><code>TntSessionExpiring</code></li>
-	* <li><code>TntSuccess</code></li>
-	* <li><code>TntSuccessfulAuth</code></li>
-	* <li><code>TntSystems</code></li>
-	* <li><code>TntTeams</code></li>
-	* <li><code>TntTools</code></li>
-	* <li><code>TntUnableToLoad</code></li>
-	* <li><code>TntUnlock</code></li>
-	* <li><code>TntUnsuccessfulAuth</code></li>
-	* <li><code>TntUser2</code></li>
-	* </ul>
-	* <br><br>
 	* <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
 	* <br>
 	* When using an illustration type, other than the default, it should be loaded in addition:
@@ -199,14 +102,6 @@ class IllustratedMessage extends UI5Element {
 	/**
 	* Determines which illustration breakpoint variant is used.
 	* <br><br>
-	* Available options are:
-	* <ul>
-	* <li><code>Auto</code></li>
-	* <li><code>Base</code></li>
-	* <li><code>Spot</code></li>
-	* <li><code>Dialog</code></li>
-	* <li><code>Scene</code></li>
-	* </ul>
 	*
 	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
 	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
@@ -336,6 +231,7 @@ class IllustratedMessage extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
+	_lastKnownOffsetHeightForMedia: Record<string, number>;
 	_lastKnownMedia: string;
 	_handleResize: ResizeObserverCallback;
 
@@ -345,6 +241,7 @@ class IllustratedMessage extends UI5Element {
 		this._handleResize = this.handleResize.bind(this);
 		// this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
 		this._lastKnownOffsetWidthForMedia = {};
+		this._lastKnownOffsetHeightForMedia = {};
 		// this will store the last known media, in order to detect if IllustratedMessage has been hidden by expand/collapse container
 		this._lastKnownMedia = "base";
 	}
@@ -358,6 +255,14 @@ class IllustratedMessage extends UI5Element {
 			DIALOG: 679,
 			SPOT: 319,
 			BASE: 259,
+		};
+	}
+
+	static get BREAKPOINTS_HEIGHT() {
+		return {
+			DIALOG: 451,
+			SPOT: 296,
+			BASE: 87,
 		};
 	}
 
@@ -407,31 +312,43 @@ class IllustratedMessage extends UI5Element {
 
 	handleResize() {
 		if (this.size !== IllustrationMessageSize.Auto) {
+			this._adjustHeightToFitContainer();
 			return;
 		}
 
 		this._applyMedia();
+		window.requestAnimationFrame(this._adjustHeightToFitContainer.bind(this));
 	}
 
-	_applyMedia() {
-		const currOffsetWidth = this.offsetWidth;
+	_applyMedia(heightChange?: boolean) {
+		const currOffsetWidth = this.offsetWidth,
+			currOffsetHeight = this.offsetHeight;
+
+		const size = heightChange ? currOffsetHeight : currOffsetWidth,
+			oBreakpounts = heightChange ? IllustratedMessage.BREAKPOINTS_HEIGHT : IllustratedMessage.BREAKPOINTS;
 		let newMedia = "";
 
-		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
+		if (size <= oBreakpounts.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
-		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.SPOT) {
+		} else if (size <= oBreakpounts.SPOT) {
 			newMedia = IllustratedMessage.MEDIA.SPOT;
-		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.DIALOG) {
+		} else if (size <= oBreakpounts.DIALOG) {
 			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
-		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
+		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia],
+			lastKnownOffsetHeight = this._lastKnownOffsetHeightForMedia[newMedia];
 		 // prevents infinite resizing, when same width is detected for the same media,
 		 // excluding the case in which, the control is placed inside expand/collapse container
-		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth) || this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0) {
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth
+			&& lastKnownOffsetHeight && currOffsetHeight === lastKnownOffsetHeight)
+			|| this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0
+			|| this._lastKnownOffsetHeightForMedia[this._lastKnownMedia] === 0
+			|| this._lastKnownMedia !== newMedia) {
 			this.media = newMedia;
 			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
+			this._lastKnownOffsetHeightForMedia[newMedia] = currOffsetHeight;
 			this._lastKnownMedia = newMedia;
 		}
 	}
@@ -443,6 +360,19 @@ class IllustratedMessage extends UI5Element {
 				svg.setAttribute("aria-label", this.ariaLabelText);
 			} else {
 				svg.removeAttribute("aria-label");
+			}
+		}
+	}
+
+	_adjustHeightToFitContainer() {
+		const illustrationWrapper = <HTMLElement> this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration"),
+			illustration = illustrationWrapper.querySelector("svg");
+
+		if (illustration) {
+			illustrationWrapper.classList.toggle("ui5-illustrated-message-illustration-fit-content", false);
+			if (this.getDomRef()!.scrollHeight > this.getDomRef()!.offsetHeight) {
+				illustrationWrapper.classList.toggle("ui5-illustrated-message-illustration-fit-content", true);
+				this._applyMedia(true /* height change */);
 			}
 		}
 	}

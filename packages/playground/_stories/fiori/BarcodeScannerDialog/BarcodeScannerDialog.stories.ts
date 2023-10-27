@@ -13,7 +13,7 @@ import type BarcodeScannerDialog from "@ui5/webcomponents-fiori/dist/BarcodeScan
 const component = "ui5-barcode-scanner-dialog";
 
 export default {
-    title: "Fiori/BarcodeScannerDialog",
+    title: "Fiori/Barcode Scanner Dialog",
     component: "BarcodeScannerDialog",
     parameters: {
         docs: {

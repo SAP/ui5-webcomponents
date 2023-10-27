@@ -33,9 +33,7 @@ import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import Card from "./Card.js";
-// console.log({Card})
 import CardHeader from "./CardHeader.js";
-// console.log({CardHeader})
 import Carousel from "./Carousel.js";
 import CheckBox from "./CheckBox.js";
 import ColorPalette from "./ColorPalette.js";
@@ -57,7 +55,6 @@ import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";
-// console.log({Panel})
 import RadioButton from "./RadioButton.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import SegmentedButton from "./SegmentedButton.js";

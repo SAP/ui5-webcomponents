@@ -39,19 +39,13 @@ Basic.args = {
 	default: "Default",
 };
 
-export const DifferentDesigns: StoryFn = () => html`
-	<ui5-toggle-button design="${ButtonDesign.Emphasized}"> Emphasized </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Attention}"> Attention </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Positive}"> Positive </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Negative}"> Negative </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}"> Transparent </ui5-toggle-button>
-`;
-
-export const IconOnlyToggleButtons: StoryFn = () => html`
-	<ui5-toggle-button design="${ButtonDesign.Emphasized}" icon="business-suite/icon-target"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Attention}" icon="message-warning" tooltip="Warning Button"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Positive}" icon="business-suite/icon-completed" tooltip="Positive Button"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Negative}" icon="cancel" tooltip="Negative Button"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="account" tooltip="Transparent Button"></ui5-toggle-button>
-`;
-IconOnlyToggleButtons.storyName = "Icon-Only Toggle Buttons";
+export const Examples = Template.bind({});
+Examples.decorators = [
+	(story, {args}) => {
+		return html`
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "paper-plane", default: args.default || "Sent"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "email-read", default: args.default || "Received"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "italic-text", tooltip: args.tooltip || "Italic"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "bold-text", tooltip: args.tooltip || "Bold"}})}`
+	},
+];

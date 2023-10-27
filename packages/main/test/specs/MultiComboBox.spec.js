@@ -2,7 +2,7 @@ import { assert } from "chai";
 
 const getTokenizerPopoverId = async (mcbId) => {
 	return await browser.executeAsync(async (mcbId, done) => {
-		const input = document.querySelector(`#${mcbId}`);
+		const input = document.querySelector(`[id="${mcbId}"]`);
 		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
 
 		done(staticAreaItem.host.classList[0]);
@@ -1592,7 +1592,6 @@ describe("MultiComboBox general interaction", () => {
 					mcNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
 				});
 			});
-	
 			assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.mcItemsLabelText, "Text should be 2 Items");
 			assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.mcNMoreLabelText, "Text should be 1 More");
 		});

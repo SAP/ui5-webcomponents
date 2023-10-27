@@ -817,7 +817,7 @@ describe("Input general interaction", () => {
 		await dynamicSuggestionsInnerInput.keys("c");
 
 		//assert
-		assert.strictEqual(await dynamicSuggestionsCount.getText(), "4 results are available", "Suggestions count is available since value is entered");
+		assert.strictEqual(await dynamicSuggestionsCount.getText(), "3 results are available", "Group items should be excluded of the count of available results.");
 		await dynamicSuggestionsInnerInput.keys("Backspace");
 
 		// Close suggestions to not intercept the click in the input below for the last test
@@ -829,6 +829,50 @@ describe("Input general interaction", () => {
 
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
+	});
+
+	it("Suggestions announcement", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const inputWithGroups = await $("#inputCompact");
+		const inputSuggestions = await $("#myInput2");
+		const inputWithGroupsInnerInput = await inputWithGroups.shadow$("input");
+		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#${await inputWithGroups.getProperty("_id")}-selectionText`);
+		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-selectionText`);
+
+		//act
+		await inputWithGroups.click();
+
+		//assert
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "", "Suggestions announcement is not available on initially");
+
+		//act
+		await inputWithGroupsInnerInput.keys("a");
+		await inputWithGroupsInnerInput.keys("ArrowDown");
+
+		//assert
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "Group Header A", "Group item announcement should not contain the position and total coout.");
+
+		//act
+		await inputWithGroupsInnerInput.keys("ArrowDown");
+
+		const announcementText = await inputWithGroupsAnnouncement.getText();
+
+		//assert
+		assert.ok(announcementText.includes("List item 1 of 12"), "The total count announcement and position of items should exclude group items.");
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "travel the world explore List item 1 of 12", "The additional text and description are announced");
+		await inputWithGroupsInnerInput.keys("Backspace");
+
+		// Close suggestions to not intercept the click in the input below for the last test
+		await inputWithGroupsInnerInput.keys("Escape");
+
+		//act
+		await inputSuggestions.click();
+		await (await inputSuggestions.shadow$("input")).keys("c");
+		await inputWithGroupsInnerInput.keys("ArrowDown");
+
+		//assert
+		assert.strictEqual(await suggestionsAnnouncement.getText(), "List item 1 of 5", "Item position and count is announced correctly");
 	});
 
 	it("Should close the Popover when no suggestions are available", async () => {

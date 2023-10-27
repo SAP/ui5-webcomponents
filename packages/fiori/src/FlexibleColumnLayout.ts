@@ -173,19 +173,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 599px,
 	* two columns between 599px and 1023px and three columns for sizes bigger than 1023px.
 	* <br><br>
-	* Available options are:
-	* <ul>
-	* <li><code>OneColumn</code></li>
-	* <li><code>TwoColumnsStartExpanded</code></li>
-	* <li><code>TwoColumnsMidExpanded</code></li>
-	* <li><code>ThreeColumnsMidExpanded</code></li>
-	* <li><code>ThreeColumnsEndExpanded</code></li>
-	* <li><code>ThreeColumnsStartExpandedEndHidden</code></li>
-	* <li><code>ThreeColumnsMidExpandedEndHidden</code></li>
-	* <li><code>MidColumnFullScreen</code></li>
-	* <li><code>EndColumnFullScreen</code></li>
-	* </ul>
-	* <br><br>
 	* <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
 	* in 67%/33% proportion.
 	* @type {sap.ui.webc.fiori.types.FCLLayout}

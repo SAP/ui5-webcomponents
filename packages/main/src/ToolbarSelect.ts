@@ -38,6 +38,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @tagname ui5-toolbar-select
  * @appenddocs sap.ui.webc.main.ToolbarSelectOption
  * @public
+ * @implements sap.ui.webc.main.IToolbarItem
  * @since 1.17.0
  */
 @customElement({

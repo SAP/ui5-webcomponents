@@ -7,4 +7,7 @@
 	--_ui5_split_button_text_button_width: 2.5rem;
 	--_ui5_split_button_text_button_right_border_width: 0;
 	--_ui5_split_button_transparent_disabled_background: var(--sapButton_Background);
+	--_ui5_split_button_transparent_hover_background: var(--sapButton_Hover_Background);
+	--_ui5_split_button_host_transparent_hover_background: var(--sapButton_Background);
+	--_ui5_split_button_host_transparent_hover_box_shadow: inset 0 0 0 var(--sapButton_BorderWidth) var(--sapButton_BorderColor);
 }

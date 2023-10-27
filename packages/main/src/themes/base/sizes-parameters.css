@@ -44,7 +44,6 @@
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
 	--_ui5_input_inner_space_to_tokenizer: 0.125rem;
 	--_ui5_input_inner_space_to_n_more_text: 0.1875rem;
-	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
 	--_ui5_list_item_cb_margin_right: 0;
 	--_ui5_list_item_title_size: var(--sapFontLargeSize);
@@ -54,7 +53,7 @@
 	--_ui5_list_item_img_bottom_margin: 0.5rem;
 	--_ui5_list_item_img_hn_margin: 0.75rem;
 	--_ui5_list_item_dropdown_base_height: 2.5rem;
-	--_ui5_list_item_base_height: 2.75rem;
+	--_ui5_list_item_base_height: var(--sapElement_LineHeight);
 	--_ui5_list_item_icon_size: 1.125rem;
 	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
@@ -219,13 +218,6 @@
 	--_ui5_input_inner_space_to_tokenizer: 0.125rem;
 	--_ui5_input_inner_space_to_n_more_text: 0.125rem;
 	--_ui5_input_icon_min_width: var(--_ui5_input_compact_min_width);
-	--_ui5_input_icon_padding: .25rem .4375rem;
-	--_ui5_input_error_warning_icon_padding: .1875rem .375rem .1875rem .4375rem;
-	--_ui5_input_information_icon_padding: .1875rem .375rem .1875rem .4375rem;
-	--_ui5_input_custom_icon_padding: .25rem .5rem;
-	--_ui5_input_error_warning_custom_icon_padding: .1875rem .5rem;
-	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
-	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
 
 	/* Menu */
 	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;

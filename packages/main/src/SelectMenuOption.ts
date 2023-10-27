@@ -112,6 +112,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
 	 *
 	 * @name sap.ui.webc.main.SelectMenuOption.prototype.deleteButton
+     * @type {Node[]}
 	 * @slot
 	 * @public
 	 * @deprecated
