@@ -63,7 +63,11 @@ function processClass(ts, classNode, moduleDoc) {
 	})
 
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
-		.map(tag => getReference(ts, tag, classNode));
+		.map(tag => getReference(ts, tag.type, classNode));
+
+	if (!currClass._ui5implements.length) {
+		delete currClass._ui5implements;
+	}
 
 	if (hasTag(classParsedJsDoc, "slot") && currClass.slots) {
 		const slotTag = findTag(classParsedJsDoc, "slot");
@@ -241,7 +245,7 @@ const processPublicAPI = object => {
 		if (key === "privacy" && object[key] !== "public") {
 			return true;
 		} else if (typeof object[key] === "object") {
-			if (key === "cssParts") {
+			if (key === "cssParts" || key === "_ui5implements") {
 				continue;
 			}
 
@@ -277,7 +281,7 @@ const processPublicAPI = object => {
 
 export default {
 	/** Globs to analyze */
-	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
+	globs: ["src/Bar.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
