@@ -32,7 +32,7 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 
 type FileUploaderChangeEventDetail = {
 	files: FileList | null,
@@ -327,7 +327,7 @@ class FileUploader extends UI5Element implements IFormElement {
 				this._setFormValue();
 			} else {
 				formSupport.syncNativeFileInput(this,
-					(element: IFormElement, nativeInput: HTMLInputElement) => {
+					(element: IFormElement, nativeInput: NativeFormElement) => {
 						nativeInput.disabled = !!element.disabled;
 					},
 					this._onChange.bind(this));

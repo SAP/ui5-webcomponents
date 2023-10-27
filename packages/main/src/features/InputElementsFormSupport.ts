@@ -10,7 +10,7 @@ interface IFormElement extends UI5Element {
 	checked?: boolean,
 }
 
-type NativeFormElement = HTMLInputElement & HTMLTextAreaElement;
+type NativeFormElement = HTMLInputElement | HTMLTextAreaElement;
 type NativeInputUpdateCallback = (element: IFormElement, nativeInput: NativeFormElement) => void;
 type NativeInputChangeCallback = (e: Event) => void;
 
@@ -96,10 +96,10 @@ class FormSupport {
 	 */
 	static syncNativeFileInput(element: IFormElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as NativeFormElement;
+		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as HTMLInputElement;
 
 		if (needsNativeInput && !nativeInput) {
-			nativeInput = document.createElement("input") as NativeFormElement;
+			nativeInput = document.createElement("input");
 			nativeInput.type = "file";
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.slot = "formSupport"; // Needed to visualize the input in the light dom
@@ -172,6 +172,7 @@ export default FormSupport;
 
 export {
 	IFormElement,
+	NativeFormElement,
 	NativeInputChangeCallback,
 	NativeInputUpdateCallback,
 };
