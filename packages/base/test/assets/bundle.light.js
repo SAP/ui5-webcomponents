@@ -13,7 +13,7 @@ boot();
 const testAssets = {
     // registerThemePropertiesLoader after boot (and after attachBoot ), will call applyTheme
     registerThemeProps: async () => {
-        registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => {
+        registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", () => {
             return {
                 content: `:root{ --customCol: #fff; --customBg: #000; }`,
                 packageName: "",

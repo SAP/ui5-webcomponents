@@ -1135,7 +1135,7 @@ abstract class UI5Element extends HTMLElement {
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = isTagRegistered(tag);
-		const definedGlobally = customElements.get(tag);
+		const definedGlobally = window.customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
 			recordTagRegistrationFailure(tag);

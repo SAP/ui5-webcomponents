@@ -423,6 +423,7 @@ describe("List Tests", () => {
 	it("tests aria-labelledby for mode label", async () => {
 		const justList = await browser.$("#justList");
 		const listDelete = await browser.$("#listDelete");
+		const emptyListDelete = await browser.$("#emptyListDelete");
 		const listMultiSelect = await browser.$("#listMultiSelect");
 		const listSingleSelect = await browser.$("#listSingleSelect");
 
@@ -434,6 +435,7 @@ describe("List Tests", () => {
 		const texts = await getResourceBundleTexts({ keys, id: "justList" });
 
 		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), "", "aria-label mode message is correct");
+		assert.strictEqual(await emptyListDelete.getProperty("ariaLabelModeText"), "", "aria-label mode message is empty when there are no items");
 		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");

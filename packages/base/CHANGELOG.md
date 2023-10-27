@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.1...v1.19.0-rc.2) (2023-10-26)
+
+
+### Bug Fixes
+
+* **ui5-color-picker:** fix hsl to rgb color conversion ([#7723](https://github.com/SAP/ui5-webcomponents/issues/7723)) ([4e95272](https://github.com/SAP/ui5-webcomponents/commit/4e9527225be27c957ea71f17a4cacb3bc065d6b7)), closes [#7660](https://github.com/SAP/ui5-webcomponents/issues/7660)
+
+
+
+
+
 # [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
 
 
