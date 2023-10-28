@@ -169,6 +169,7 @@ class ColorPalette extends UI5Element {
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
 	_currentlySelected?: ColorPaletteItem | null;
+	_shouldFocusRecentColors = false;
 
 	static i18nBundle: I18nBundle;
 
@@ -201,7 +202,16 @@ class ColorPalette extends UI5Element {
 	onBeforeRendering() {
 		this._ensureSingleSelectionOrDeselectAll();
 
-		this.displayedColors.forEach((item, index) => {
+		const colorItems = this._getEffectiveColorItems();
+
+		const selectedItem = [...colorItems, ...this.recentColorsElements].find(item => item.selected);
+
+		if (selectedItem && !this.showRecentColors) {
+			this._selectedColor = selectedItem.value;
+			selectedItem.focus();
+		}
+
+		this.displayedColors.forEach((item: ColorPaletteItem, index: number) => {
 			item.index = index + 1;
 		});
 
@@ -213,6 +223,17 @@ class ColorPalette extends UI5Element {
 				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
 		}
+	}
+
+	onAfterRendering() {
+		if (this._shouldFocusRecentColors && this.hasRecentColors) {
+			this.recentColorsElements[0].selected = true;
+			this.recentColorsElements[0].focus();
+
+			this._shouldFocusRecentColors = false;
+		}
+
+		this._ensureSingleSelectionOrDeselectAll();
 	}
 
 	selectColor(item: ColorPaletteItem) {
@@ -289,6 +310,8 @@ class ColorPalette extends UI5Element {
 		if (!target.hasAttribute("ui5-color-palette-item") || !target.value) {
 			return;
 		}
+
+		this._shouldFocusRecentColors = false;
 
 		const colorItems = this._getEffectiveColorItems();
 
@@ -439,6 +462,7 @@ class ColorPalette extends UI5Element {
 		const colorPicker = await this.getColorPicker();
 		this._setColor(colorPicker.color);
 		this._closeDialog();
+		this._shouldFocusRecentColors = true;
 	}
 
 	async _closeDialog() {
@@ -455,13 +479,21 @@ class ColorPalette extends UI5Element {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
 			const defaultColorItem = this.defaultColorItem;
+			this._shouldFocusRecentColors = true;
+
+			if (!this._recentColors.includes(this.defaultColor) && this.showRecentColors) {
+				this._recentColors.unshift(this.defaultColor);
+				if (this._recentColors.length > this.rowSize) {
+					this._recentColors.pop();
+				}
+			}
 
 			if (defaultColorItem && defaultColorItem.selected) {
 				this.focusColorElement(defaultColorItem, this._itemNavigation);
 				return;
 			}
 
-			if (defaultColorItem) {
+			if (defaultColorItem && !this.showRecentColors) {
 				this.handleSelection(defaultColorItem);
 			}
 		}
