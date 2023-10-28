@@ -69,19 +69,16 @@ describe("ColorPalette interactions", () => {
 		const colorPalettePopover = await browser.$("[ui5-color-palette-popover]");
 		const colorPalette = await colorPalettePopover.shadow$("[ui5-responsive-popover]").$("[ui5-color-palette]");
 		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
-		const lightGreen = await colorPalettePopover.$(`[value="rgb(0,200,0)"]`);
+		const moreColorsButton = await colorPalette.shadow$(".ui5-cp-more-colors");
 		const firstRecentColorsElement = await colorPalette.shadow$(".ui5-cp-recent-colors-container [ui5-color-palette-item]");
 
 		await defaultButton.keys("Space");
 
 		await colorPaletteButton.click();
 
-		await defaultButton.keys("ArrowUp");
 		await firstRecentColorsElement.keys("ArrowUp");
 
-		const isLightGreenFocused = await lightGreen.isFocused();
-
-		assert.ok(isLightGreenFocused, "Check if light green color cell is focused");
+		assert.ok(await moreColorsButton.getProperty("focused"), "Check if more colors button is focused");
 	});
 
 	it("Test attribute propagation propagation", async () => {
