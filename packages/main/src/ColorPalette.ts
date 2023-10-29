@@ -208,10 +208,9 @@ class ColorPalette extends UI5Element {
 
 		if (selectedItem && !this.showRecentColors) {
 			this._selectedColor = selectedItem.value;
-			selectedItem.focus();
 		}
 
-		this.displayedColors.forEach((item: ColorPaletteItem, index: number) => {
+		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
 		});
 
@@ -234,6 +233,41 @@ class ColorPalette extends UI5Element {
 		}
 
 		this._ensureSingleSelectionOrDeselectAll();
+	}
+
+	onEnterDOM() {
+		this._handleFocus(this);
+	}
+
+	/**
+	 * Handles the focus of the color palette upon entering the DOM.
+	 *
+	 * @param {ColorPalette} colorPalette the color palette
+	 * @protected
+	 */
+	_handleFocus(colorPalette: this) {
+		const colorItems = colorPalette._getEffectiveColorItems ? colorPalette._getEffectiveColorItems() : colorPalette.colors;
+		const selectedItem = [...colorItems, ...colorPalette.recentColorsElements].find(item => item.selected);
+
+		if (selectedItem && colorPalette.recentColorsElements.includes(selectedItem)) {
+			colorPalette.focusColorElement(colorPalette.recentColorsElements[0], colorPalette._itemNavigationRecentColors);
+			return;
+		}
+
+		if (selectedItem) {
+			colorPalette.focusColorElement(selectedItem, colorPalette._itemNavigation || colorPalette._itemNavigationRecentColors);
+			return;
+		}
+
+		colorPalette.defaultFocus();
+	}
+
+	defaultFocus() {
+		if (this.showDefaultColor) {
+			this.colorPaletteNavigationElements[0].focus();
+		} else {
+			this.focusColorElement(this.colors[0], this._itemNavigation);
+		}
 	}
 
 	selectColor(item: ColorPaletteItem) {
