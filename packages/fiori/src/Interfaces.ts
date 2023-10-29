@@ -46,11 +46,11 @@ const INotificationAction = "sap.ui.webc.fiori.INotificationAction";
 /**
  * Interface for components that may be slotted inside a notification list
  *
- * @name sap.ui.webc.fiori.INotificationListItem
- * @interface
  * @public
  */
-const INotificationListItem = "sap.ui.webc.fiori.INotificationListItem";
+interface INotificationListItem {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-product-switch</code> as items
@@ -73,8 +73,6 @@ const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-side-navigation</code> as items
  *
- * @name sap.ui.webc.fiori.ISideNavigationItem
- * @interface
  * @public
  */
 const ISideNavigationItem = "sap.ui.webc.fiori.ISideNavigationItem";
@@ -82,8 +80,6 @@ const ISideNavigationItem = "sap.ui.webc.fiori.ISideNavigationItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-side-navigation-item</code> as sub-items
  *
- * @name sap.ui.webc.fiori.ISideNavigationSubItem
- * @interface
  * @public
  */
 const ISideNavigationSubItem = "sap.ui.webc.fiori.ISideNavigationSubItem";
@@ -109,11 +105,11 @@ const ITimelineItem = "sap.ui.webc.fiori.ITimelineItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-upload-collection</code> as items
  *
- * @name sap.ui.webc.fiori.IUploadCollectionItem
- * @interface
  * @public
  */
-const IUploadCollectionItem = "sap.ui.webc.fiori.IUploadCollectionItem";
+interface IUploadCollectionItem {
+	isUI5Element: boolean,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-wizard</code> as wizard steps

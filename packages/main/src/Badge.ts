@@ -6,6 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import type { IIcon } from "./Interfaces.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -34,10 +35,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * <code>import "@ui5/webcomponents/dist/Badge";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Badge
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-badge
+ * @extends UI5Element
  * @since 0.12.0
  * @public
  */
@@ -56,8 +54,7 @@ class Badge extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Badge.prototype.colorScheme
-	 * @defaultvalue "1"
+	 * @default "1"
 	 * @public
 	 */
 	@property({ defaultValue: "1" })
@@ -82,8 +79,6 @@ class Badge extends UI5Element {
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
-	 * @name sap.ui.webc.main.Badge.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -92,13 +87,11 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 *
-	 * @type {sap.ui.webc.main.IIcon[]}
-	 * @name sap.ui.webc.main.Badge.prototype.icon
-	 * @slot
+	 * @type {IIcon[]}
 	 * @public
 	 */
 	@slot()
-	icon!: Array<HTMLElement>;
+	icon!: Array<IIcon>;
 
 	static i18nBundle: I18nBundle;
 

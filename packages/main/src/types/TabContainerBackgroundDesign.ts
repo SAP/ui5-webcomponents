@@ -1,11 +1,7 @@
 /**
  * Background design for the header and content of TabContainer.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.TabContainerBackgroundDesign
  */
 enum TabContainerBackgroundDesign {
 	/**

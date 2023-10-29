@@ -20,13 +20,10 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigationItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-side-navigation-item
  * @public
- * @implements sap.ui.webc.fiori.ISideNavigationItem
+ * @implements ISideNavigationItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-item")
@@ -34,7 +31,6 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * Fired when the component is activated either with a
  * click/tap or by using the Enter or Space key.
  *
- * @event sap.ui.webc.fiori.SideNavigationItem#click
  * @public
  */
 @event("click")
@@ -44,8 +40,7 @@ class SideNavigationItem extends UI5Element {
 	 *
 	 * @public
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.text
+	 * @default ""
 	 */
 	@property()
 	text!: string;
@@ -59,8 +54,7 @@ class SideNavigationItem extends UI5Element {
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 * @public
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.icon
+	 * @default ""
 	 */
 	@property()
 	icon!: string;
@@ -70,8 +64,7 @@ class SideNavigationItem extends UI5Element {
 	 *
 	 * @public
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.expanded
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	expanded!: boolean;
@@ -81,8 +74,7 @@ class SideNavigationItem extends UI5Element {
 	 *
 	 * @public
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.selected
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
@@ -94,8 +86,7 @@ class SideNavigationItem extends UI5Element {
 	 *
 	 * @public
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.wholeItemToggleable
+	 * @default false
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ type: Boolean })
@@ -104,9 +95,8 @@ class SideNavigationItem extends UI5Element {
 	/**
 	 * Defines the tooltip of the component.
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.title
 	 * @since 1.0.0-rc.16
 	 */
 	@property()
@@ -117,8 +107,7 @@ class SideNavigationItem extends UI5Element {
 	 * It is true, for example, for the items inside the Popover of the Side Navigation
 	 * @private
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype._fixed
+	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -127,10 +116,8 @@ class SideNavigationItem extends UI5Element {
 	/**
      * Defines nested items by passing <code>ui5-side-navigation-sub-item</code> to the default slot.
 	 *
-	 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
+	 * @type {ISideNavigationSubItem[]}
 	 * @public
-	 * @slot items
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;

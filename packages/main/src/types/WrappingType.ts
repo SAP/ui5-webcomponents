@@ -1,11 +1,7 @@
 /**
  * Different types of wrapping.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.WrappingType
  */
 enum WrappingType {
 	/**

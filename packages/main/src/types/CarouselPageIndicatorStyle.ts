@@ -1,11 +1,7 @@
 /**
  * Different Carousel page indicator styles.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.CarouselPageIndicatorStyle
  */
 enum CarouselPageIndicatorStyle {
 	/**

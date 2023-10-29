@@ -1,11 +1,7 @@
 /**
  * Tabs placement of TabContainer.
  *
- * @readonly
- * @enum {string}
  * @private
- * @author SAP SE
- * @alias sap.ui.webc.main.types.TabContainerTabsPlacement
  */
 enum TabContainerTabsPlacement {
 	/**

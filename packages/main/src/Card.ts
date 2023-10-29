@@ -8,7 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
-import type CardHeader from "./CardHeader.js";
+import type { ICardHeader } from "./Interfaces";
 
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
@@ -36,12 +36,8 @@ import cardCss from "./generated/themes/Card.css.js";
  * <code>import "@ui5/webcomponents/dist/CardHeader.js";</code> (for <code>ui5-card-header</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Card
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-card
+ * @extends UI5Element
  * @public
- * @appenddocs sap.ui.webc.main.CardHeader
  */
 @customElement({
 	tag: "ui5-card",
@@ -58,8 +54,7 @@ class Card extends UI5Element {
 	 *
 	 *
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.accessibleName
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
@@ -70,8 +65,7 @@ class Card extends UI5Element {
 	 * Defines the IDs of the elements that label the component.
 	 *
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.accessibleNameRef
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
@@ -81,8 +75,6 @@ class Card extends UI5Element {
 	/**
 	 * Defines the content of the component.
 	 * @type {HTMLElement[]}
-	 * @slot content
-	 * @name sap.ui.webc.main.Card.prototype.default
 	 * @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
@@ -92,14 +84,12 @@ class Card extends UI5Element {
 	 * Defines the header of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-	 * @type {sap.ui.webc.main.ICardHeader[]}
+	 * @type {ICardHeader[]}
 	 * @since 1.0.0-rc.15
-	 * @slot header
-	 * @name sap.ui.webc.main.Card.prototype.header
 	 * @public
 	*/
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	header!: Array<CardHeader>;
+	header!: Array<ICardHeader>;
 
 	static i18nBundle: I18nBundle;
 

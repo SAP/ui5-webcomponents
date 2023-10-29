@@ -64,28 +64,17 @@ type CalculatedPlacement = {
  * or selects an action within the popover. You can prevent this with the
  * <code>modal</code> property.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-popover</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>header - Used to style the header of the component</li>
- * <li>content - Used to style the content of the component</li>
- * <li>footer - Used to style the footer of the component</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Popover
  * @extends sap.ui.webc.main.Popup
- * @tagname ui5-popover
  * @since 1.0.0-rc.6
  * @public
+ * @csspart header - Used to style the header of the component
+ * @csspart content - Used to style the content of the component
+ * @csspart footer - Used to style the footer of the component
  */
 @customElement({
 	tag: "ui5-popover",
@@ -103,8 +92,7 @@ class Popover extends Popup {
 	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Popover.prototype.headerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -113,9 +101,8 @@ class Popover extends Popup {
 	/**
 	 * Determines on which side the component is placed at.
 	 *
-	 * @type {sap.ui.webc.main.types.PopoverPlacementType}
-	 * @name sap.ui.webc.main.Popover.prototype.placementType
-	 * @defaultvalue "Right"
+	 * @type {PopoverPlacementType}
+	 * @default "Right"
 	 * @public
 	 */
 	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
@@ -124,9 +111,8 @@ class Popover extends Popup {
 	/**
 	 * Determines the horizontal alignment of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.PopoverHorizontalAlign}
-	 * @name sap.ui.webc.main.Popover.prototype.horizontalAlign
-	 * @defaultvalue "Center"
+	 * @type {PopoverHorizontalAlign}
+	 * @default "Center"
 	 * @public
 	 */
 	@property({ type: PopoverHorizontalAlign, defaultValue: PopoverHorizontalAlign.Center })
@@ -135,9 +121,8 @@ class Popover extends Popup {
 	/**
 	 * Determines the vertical alignment of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.PopoverVerticalAlign}
-	 * @name sap.ui.webc.main.Popover.prototype.verticalAlign
-	 * @defaultvalue "Center"
+	 * @type {PopoverVerticalAlign}
+	 * @default "Center"
 	 * @public
 	 */
 	@property({ type: PopoverVerticalAlign, defaultValue: PopoverVerticalAlign.Center })
@@ -150,7 +135,7 @@ class Popover extends Popup {
 	 *
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Popover.prototype.modal
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -159,8 +144,7 @@ class Popover extends Popup {
 	/**
 	 * Defines whether the block layer will be shown if modal property is set to true.
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popover.prototype.hideBackdrop
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.10
 	 */
@@ -172,7 +156,7 @@ class Popover extends Popup {
 	 *
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Popover.prototype.hideArrow
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -184,8 +168,7 @@ class Popover extends Popup {
 	 * over the target.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popover.prototype.allowTargetOverlap
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -194,9 +177,8 @@ class Popover extends Popup {
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at
 	 * @public
-	 * @type {sap.ui.webc.base.types.DOMReference}
-	 * @name sap.ui.webc.main.Popover.prototype.opener
-	 * @defaultvalue undefined
+	 * @type {DOMReference}
+	 * @default undefined
 	 * @since 1.2.0
 	 */
 	@property({ validator: DOMReference })
@@ -206,7 +188,7 @@ class Popover extends Popup {
 	 * Defines whether the content is scrollable.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -246,8 +228,6 @@ class Popover extends Popup {
 	 * Defines the header HTML Element.
 	 *
 	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Popover.prototype.header
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -257,8 +237,6 @@ class Popover extends Popup {
 	 * Defines the footer HTML Element.
 	 *
 	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Popover.prototype.footer
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -323,10 +301,6 @@ class Popover extends Popup {
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @param {boolean} [preventInitialFocus=false] prevents applying the focus inside the popover
 	 * @public
-	 * @async
-	 * @method
-	 * @name sap.ui.webc.main.Popover#showAt
-	 * @async
 	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {

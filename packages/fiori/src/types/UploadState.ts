@@ -1,11 +1,7 @@
 /**
  * Different types of UploadState.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.fiori.types.UploadState
  */
 enum UploadState {
 	/**
