@@ -1,11 +1,7 @@
 /**
  * Tabs overflow mode in TabContainer.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.TabsOverflowMode
  */
 enum TabsOverflowMode {
 	/**

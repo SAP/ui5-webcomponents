@@ -1,11 +1,7 @@
 /**
  * Popup accessible roles.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.PopupAccessibleRole
  */
 enum PopupAccessibleRole {
 

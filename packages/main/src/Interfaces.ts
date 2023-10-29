@@ -28,11 +28,14 @@ const IButton = "sap.ui.webc.main.IButton";
 /**
  * Interface for components that may be slotted inside <code>ui5-card</code> as header
  *
- * @name sap.ui.webc.main.ICardHeader
- * @interface
  * @public
  */
-const ICardHeader = "sap.ui.webc.main.ICardHeader";
+interface ICardHeader {
+	subtitleText: string,
+	titleText: string,
+	status: string,
+	interactive: boolean,
+}
 
 /**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
@@ -64,11 +67,11 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IIcon
- * @interface
  * @public
  */
-const IIcon = "sap.ui.webc.main.IIcon";
+interface IIcon {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that represent an input, usable in numerous higher-order components
@@ -145,11 +148,11 @@ const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
 /**
  * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
  *
- * @name sap.ui.webc.main.ITab
- * @interface
  * @public
  */
-const ITab = "sap.ui.webc.main.ITab";
+interface ITab {
+	isUI5Element: boolean;
+}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-table</code> as rows

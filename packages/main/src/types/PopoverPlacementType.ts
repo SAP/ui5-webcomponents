@@ -1,11 +1,7 @@
 /**
  * Popover placement types.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.PopoverPlacementType
  */
 enum PopoverPlacementType {
 	/**

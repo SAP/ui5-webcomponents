@@ -1,11 +1,7 @@
 /**
  * Popover horizontal align types.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.main.types.PopoverHorizontalAlign
  */
 enum PopoverHorizontalAlign {
 	/**

@@ -15,13 +15,9 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigationSubItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-side-navigation-sub-item
+ * @extends UI5Element
  * @public
  * @abstract
- * @implements sap.ui.webc.fiori.ISideNavigationSubItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-sub-item")
@@ -29,7 +25,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * Fired when the component is activated either with a
  * click/tap or by using the Enter or Space key.
  *
- * @event sap.ui.webc.fiori.SideNavigationSubItem#click
  * @public
  */
 @event("click")
@@ -39,8 +34,7 @@ class SideNavigationSubItem extends UI5Element {
 	 *
 	 * @public
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.text
+	 * @default ""
 	 */
 	@property()
 	text!: string;
@@ -50,8 +44,7 @@ class SideNavigationSubItem extends UI5Element {
 	 *
 	 * @public
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.selected
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
@@ -65,8 +58,7 @@ class SideNavigationSubItem extends UI5Element {
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 * @public
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.icon
+	 * @default ""
 	 */
 	@property()
 	icon!: string;
@@ -74,8 +66,7 @@ class SideNavigationSubItem extends UI5Element {
 	/**
 	 * Defines the tooltip of the component.
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.title
+	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */

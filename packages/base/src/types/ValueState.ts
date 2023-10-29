@@ -1,11 +1,7 @@
 /**
  * Different types of ValueStates.
  *
- * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.base.types.ValueState
  */
 enum ValueState {
 	/**
