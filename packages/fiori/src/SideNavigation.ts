@@ -351,50 +351,39 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | null {
-		let focusedItem = null;
+	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
+		let focusedItem;
 
 		if (this.collapsed) {
-			items.forEach(item => {
-				if (item._tabIndex === "0") {
-					focusedItem = item;
-				}
-			});
+			focusedItem = items.find(item => item._tabIndex === "0");
 		} else {
-			items.forEach(item => {
-				if (item._tabIndex === "0") {
-					focusedItem = item;
-					return;
-				}
-
-				if (item.expanded) {
-					item.items.forEach(subItem => {
-						if (subItem._tabIndex === "0") {
-							focusedItem = subItem;
-						}
-					});
-				}
-			});
+			focusedItem = this._getWithNestedItems(items, true).find(item => item._tabIndex === "0");
 		}
 
 		return focusedItem;
 	}
 
-	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | null {
-		let selectedItem = null;
+	_getWithNestedItems(items: Array<SideNavigationItem>, expandedOnly = false): Array<SideNavigationItemBase> {
+		let result = new Array<SideNavigationItemBase>();
+
+		items.forEach(item => {
+			result.push(item);
+
+			if (!expandedOnly || item.expanded) {
+				result = result.concat(item.items);
+			}
+		});
+
+		return result;
+	}
+
+	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
+		let selectedItem;
 
 		if (this.collapsed) {
-			items.forEach(item => {
-				if (item._selected) {
-					selectedItem = item;
-				}
-			});
+			selectedItem = items.find(item => item._selected);
 		} else {
-			this._walkItems(items, current => {
-				if (current.selected) {
-					selectedItem = current;
-				}
-			});
+			selectedItem = this._getWithNestedItems(items).find(current => current.selected);
 		}
 
 		return selectedItem;
@@ -433,26 +422,14 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		this._walk(current => {
+		let items = this._getWithNestedItems(this.items);
+		items = items.concat(this._getWithNestedItems(this.fixedItems));
+
+		items.forEach(current => {
 			current.selected = false;
 		});
 
 		item.selected = true;
-	}
-
-	_walk(callback: (current: SideNavigationItemBase) => void) {
-		this._walkItems(this.items, callback);
-		this._walkItems(this.fixedItems, callback);
-	}
-
-	_walkItems(items: Array<SideNavigationItem>, callback: (current: SideNavigationItemBase) => void) {
-		items.forEach(current => {
-			callback(current);
-
-			current.items.forEach(currentSubitem => {
-				callback(currentSubitem);
-			});
-		});
 	}
 
 	static async onDefine() {
