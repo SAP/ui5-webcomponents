@@ -173,6 +173,8 @@ abstract class SliderBase extends UI5Element {
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
 	_oldNumberOfLabels?: number;
+	_oldMin?: number;
+	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
 
@@ -631,10 +633,12 @@ abstract class SliderBase extends UI5Element {
 		const newNumberOfLabels = (this._effectiveMax - this._effectiveMin) / (step * labelInterval);
 
 		// If the required labels are already rendered
-		if (newNumberOfLabels === this._oldNumberOfLabels) {
+		if (newNumberOfLabels === this._oldNumberOfLabels && this._oldMin === this._effectiveMin && this._oldMax === this._effectiveMax) {
 			return;
 		}
 
+		this._oldMin = this._effectiveMin;
+		this._oldMax = this._effectiveMax;
 		this._oldNumberOfLabels = newNumberOfLabels;
 		this._labelWidth = 100 / newNumberOfLabels;
 		this._labelValues = [];
