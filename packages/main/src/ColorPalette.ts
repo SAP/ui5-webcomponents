@@ -291,7 +291,7 @@ class ColorPalette extends UI5Element {
 			if (this._recentColors.includes(this._selectedColor)) {
 				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
 			} else {
-				this._recentColors.unshift(this._selectedColor);
+				this._addRecentColor(this._selectedColor);
 			}
 		}
 
@@ -306,6 +306,7 @@ class ColorPalette extends UI5Element {
 		if (this.popupMode) {
 			colorItems = this.getSlottedNodes<ColorPaletteItem>("colors");
 		}
+
 		return colorItems;
 	}
 
@@ -509,18 +510,22 @@ class ColorPalette extends UI5Element {
 		dialog.show();
 	}
 
+	_addRecentColor(color: string) {
+		if (this.showRecentColors && !this._recentColors.includes(color)) {
+			this._recentColors.unshift(color);
+			if (this._recentColors.length > this.rowSize) {
+				this._recentColors.pop();
+			}
+		}
+	}
+
 	_onDefaultColorClick() {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
 			const defaultColorItem = this.defaultColorItem;
 			this._shouldFocusRecentColors = true;
 
-			if (!this._recentColors.includes(this.defaultColor) && this.showRecentColors) {
-				this._recentColors.unshift(this.defaultColor);
-				if (this._recentColors.length > this.rowSize) {
-					this._recentColors.pop();
-				}
-			}
+			this._addRecentColor(this.defaultColor);
 
 			if (defaultColorItem && defaultColorItem.selected) {
 				this.focusColorElement(defaultColorItem, this._itemNavigation);
