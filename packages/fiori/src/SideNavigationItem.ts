@@ -66,9 +66,9 @@ class SideNavigationItem extends SideNavigationItemBase {
 	items!: Array<SideNavigationSubItem>;
 
 	/**
-	 * Defines whether pressing the whole item or only pressing the icon will show/hide the items's sub items(if present).
-	 * If set to true, pressing the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
-	 * By default, only pressing the arrow icon will toggle the sub items & the click event will be fired if the item is pressed outside of the icon.
+	 * Defines whether clicking the whole item or only pressing the icon will show/hide the sub items (if present).
+	 * If set to true, clicking the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
+	 * By default, only clicking the arrow icon will toggle the sub items.
 	 *
 	 * @public
 	 * @type {boolean}

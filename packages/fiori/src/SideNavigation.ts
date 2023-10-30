@@ -15,7 +15,7 @@ import {
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
