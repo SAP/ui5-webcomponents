@@ -15,7 +15,7 @@ export class HTMLTransformation implements IHTMLTransformation {
     }
 
     transform(html: string): string {
-        var transformed = "";
+        let transformed = "";
         const dom = this.convertToDOM(html),
             head = dom.head,
             body = dom.body;
