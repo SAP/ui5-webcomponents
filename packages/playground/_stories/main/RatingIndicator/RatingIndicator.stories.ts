@@ -39,7 +39,7 @@ const Template: UI5StoryArgs<RatingIndicator, StoryArgsSlots> = (args) => html`
 
 export const Basic = Template.bind({});
 Basic.args = {
-	value: 3.7
+	value: 4
 };
 
 export const MaxValue = Template.bind({});
