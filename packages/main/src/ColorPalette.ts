@@ -168,8 +168,8 @@ class ColorPalette extends UI5Element {
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
-	_currentlySelected?: ColorPaletteItem | null;
-	_shouldFocusRecentColors = false;
+	_currentlySelected: ColorPaletteItem | null;
+	_shouldFocusRecentColors: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -184,6 +184,10 @@ class ColorPalette extends UI5Element {
 
 	constructor() {
 		super();
+
+		this._currentlySelected = null;
+		this._shouldFocusRecentColors = false;
+
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.displayedColors,
 			rowSize: this.rowSize,
@@ -202,9 +206,7 @@ class ColorPalette extends UI5Element {
 	onBeforeRendering() {
 		this._ensureSingleSelectionOrDeselectAll();
 
-		const colorItems = this._getEffectiveColorItems();
-
-		const selectedItem = [...colorItems, ...this.recentColorsElements].find(item => item.selected);
+		const selectedItem = this.allColorsInPalette.find(item => item.selected);
 
 		if (selectedItem && !this.showRecentColors) {
 			this._selectedColor = selectedItem.value;
@@ -230,13 +232,9 @@ class ColorPalette extends UI5Element {
 			this.recentColorsElements[0].focus();
 
 			this._shouldFocusRecentColors = false;
+
+			this._ensureSingleSelectionOrDeselectAll();
 		}
-
-		this._ensureSingleSelectionOrDeselectAll();
-	}
-
-	onEnterDOM() {
-		this._handleFocus(this);
 	}
 
 	/**
@@ -245,21 +243,21 @@ class ColorPalette extends UI5Element {
 	 * @param {ColorPalette} colorPalette the color palette
 	 * @protected
 	 */
-	_handleFocus(colorPalette: this) {
-		const colorItems = colorPalette._getEffectiveColorItems ? colorPalette._getEffectiveColorItems() : colorPalette.colors;
-		const selectedItem = [...colorItems, ...colorPalette.recentColorsElements].find(item => item.selected);
+	_handleFocus() {
+		const colorItems = this._getEffectiveColorItems ? this._getEffectiveColorItems() : this.colors;
+		const selectedItem = [...colorItems, ...this.recentColorsElements].find(item => item.selected);
 
-		if (selectedItem && colorPalette.recentColorsElements.includes(selectedItem)) {
-			colorPalette.focusColorElement(colorPalette.recentColorsElements[0], colorPalette._itemNavigationRecentColors);
+		if (selectedItem && this.recentColorsElements.includes(selectedItem)) {
+			this.focusColorElement(this.recentColorsElements[0], this._itemNavigationRecentColors);
 			return;
 		}
 
 		if (selectedItem) {
-			colorPalette.focusColorElement(selectedItem, colorPalette._itemNavigation || colorPalette._itemNavigationRecentColors);
+			this.focusColorElement(selectedItem, this._itemNavigation || this._itemNavigationRecentColors);
 			return;
 		}
 
-		colorPalette.defaultFocus();
+		this.defaultFocus();
 	}
 
 	defaultFocus() {
@@ -316,8 +314,7 @@ class ColorPalette extends UI5Element {
 	 * @private
 	 */
 	_ensureSingleSelectionOrDeselectAll() {
-		const colorItems = this._getEffectiveColorItems();
-		const selectedItems = [...colorItems, ...this.recentColorsElements].filter(item => item.selected);
+		const selectedItems = this.allColorsInPalette.filter(item => item.selected);
 		selectedItems.pop();
 		selectedItems.forEach(item => { item.selected = false; });
 	}
@@ -348,8 +345,6 @@ class ColorPalette extends UI5Element {
 
 		this._shouldFocusRecentColors = false;
 
-		const colorItems = this._getEffectiveColorItems();
-
 		if (this._currentlySelected === target) {
 			target.selected = !target.selected;
 			return;
@@ -363,7 +358,7 @@ class ColorPalette extends UI5Element {
 			this.recentColorsElements[0].focus();
 			this._currentlySelected = this.recentColorsElements[0];
 		} else {
-			[...colorItems, ...this.recentColorsElements].forEach(item => {
+			this.allColorsInPalette.forEach(item => {
 				item.selected = item === target;
 			});
 			this._currentlySelected = target;
@@ -555,6 +550,12 @@ class ColorPalette extends UI5Element {
 	get displayedColors() {
 		const colors = this.getSlottedNodes<ColorPaletteItem>("colors");
 		return colors.filter(item => item.value).slice(0, 15);
+	}
+
+	get allColorsInPalette() {
+		const colorItems = this._getEffectiveColorItems();
+
+		return [...colorItems, ...this.recentColorsElements];
 	}
 
 	get colorContainerLabel() {

@@ -188,7 +188,7 @@ class ColorPalettePopover extends UI5Element {
 		this.responsivePopover!.showAt(opener, true);
 
 		const colorPalette = this._colorPalette();
-		colorPalette._handleFocus(colorPalette);
+		colorPalette._handleFocus();
 	}
 
 	closePopover() {
