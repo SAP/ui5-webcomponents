@@ -84,9 +84,8 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 	For more information, see [Importing UI5 Web Components](./docs/1-getting-started/02-importing-components.md) and [Understanding UI5 Web Components APIs](./docs/1-getting-started/03-understanding-components-APIs.md).
 
 ## Typescript Support
-Since 1.11 we are providing Typescript definitions for all public APIs.
-However, the **Typescript support is experimental and subject to change**. If you consume the web components via Typescript, you might have to adjust your code before the Typescript definitions become final and officially supported.
-Please, share any kind of feedback about the provided types in GitHub.
+TypeScript Support is enabled for both component development and component consumption.
+Since version `1.11.0`, we have been providing TypeScript definitions under an experimental flag, and starting from version `1.19.0`, all TypeScript definitions are considered `stable`. 
 
 ### Is there a CDN I can use?
 
