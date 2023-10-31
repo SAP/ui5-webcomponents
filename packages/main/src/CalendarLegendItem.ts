@@ -13,10 +13,10 @@ import {
 	CAL_LEGEND_NON_WORKING_DAY_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
-import CalendarLegendStandardItemTemplate from "./generated/templates/CalendarLegendItemTemplate.lit.js";
+import CalendarLegendItemTemplate from "./generated/templates/CalendarLegendItemTemplate.lit.js";
 
 // Styles
-import CalendarLegendStandardItemCss from "./generated/themes/CalendarLegendItem.css.js";
+import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js";
 
 /**
  * @class
@@ -40,8 +40,8 @@ import CalendarLegendStandardItemCss from "./generated/themes/CalendarLegendItem
 @customElement({
 	tag: "ui5-calendar-legend-item",
 	renderer: litRender,
-	styles: CalendarLegendStandardItemCss,
-	template: CalendarLegendStandardItemTemplate,
+	styles: CalendarLegendItemCss,
+	template: CalendarLegendItemTemplate,
 	dependencies: [],
 })
 

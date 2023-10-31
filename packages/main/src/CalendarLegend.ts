@@ -4,7 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
-import CalendarLegendStandardItemsType from "./types/CalendarLegendItemType.js";
+import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import CalendarLegendTemplate from "./generated/templates/CalendarLegendTemplate.lit.js";
 
 // Styles
@@ -116,10 +116,10 @@ class CalendarLegend extends UI5Element {
 
 	get typeFromEnum() {
 		const typeMapping = [
-			{ type: [CalendarLegendStandardItemsType.Today], hide: this.hideToday },
-			{ type: [CalendarLegendStandardItemsType.Selected], hide: this.hideSelectedDay },
-			{ type: [CalendarLegendStandardItemsType.Working], hide: this.hideWorkingDay },
-			{ type: [CalendarLegendStandardItemsType.NonWorking], hide: this.hideNonWorkingDay },
+			{ type: [CalendarLegendItemType.Today], hide: this.hideToday },
+			{ type: [CalendarLegendItemType.Selected], hide: this.hideSelectedDay },
+			{ type: [CalendarLegendItemType.Working], hide: this.hideWorkingDay },
+			{ type: [CalendarLegendItemType.NonWorking], hide: this.hideNonWorkingDay },
 		];
 
 		return typeMapping;
