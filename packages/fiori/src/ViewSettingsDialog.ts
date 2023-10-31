@@ -242,8 +242,6 @@ class ViewSettingsDialog extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_filterStepTwo!: boolean;
 
-	_slotChanged!: boolean;
-
 	/**
 	 * Defines the list of items against which the user could sort data.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
