@@ -238,7 +238,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	/**
-	 * Handles the focus of the color palette upon entering the DOM.
+	 * Used from the ColorPalettePopover to handle the default focus behavior of the ColorPalette.
 	 * @protected
 	 */
 	_handleFocus() {
@@ -247,22 +247,10 @@ class ColorPalette extends UI5Element {
 
 		if (selectedItem && this.recentColorsElements.includes(selectedItem)) {
 			this.focusColorElement(this.recentColorsElements[0], this._itemNavigationRecentColors);
-			return;
-		}
-
-		if (selectedItem) {
+		} else if (selectedItem) {
 			this.focusColorElement(selectedItem, this._itemNavigation || this._itemNavigationRecentColors);
-			return;
-		}
-
-		this.defaultFocus();
-	}
-
-	defaultFocus() {
-		if (this.showDefaultColor) {
-			this.colorPaletteNavigationElements[0].focus();
 		} else {
-			this.focusColorElement(this.colorPaletteNavigationElements[0], this._itemNavigation);
+			this.colorPaletteNavigationElements[0].focus();
 		}
 	}
 
