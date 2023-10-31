@@ -9,6 +9,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -152,6 +153,20 @@ class IllustratedMessage extends UI5Element {
 	*/
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
+
+	/**
+	* Defines the semantic level of the title.
+	*
+	* <b>Note:</b> Used for accessibility purposes only.
+	*
+	* @type {sap.ui.webc.fiori.types.TitleLevel}
+	* @defaultvalue "TitleLevel.H2"
+	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleLevel
+	* @public
+	* @since 1.18.0
+	*/
+	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
+	titleLevel!: `${TitleLevel}`;
 
 	/**
 	* Illustration breakpoint variant for the <code>Spot</code> size.
@@ -364,6 +379,16 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
+	_setTitleAccAttrs() {
+		const title = this.shadowRoot!.querySelector(".ui5-illustrated-message-root ui5-title") || this.querySelector("ui5-illustrated-message ui5-title");
+		if (title) {
+			if (this.titleLevel) {
+				title.setAttribute("aria-level", this.titleLevel);
+				title.setAttribute("level", this.titleLevel);
+			}
+		}
+	}
+
 	_adjustHeightToFitContainer() {
 		const illustrationWrapper = <HTMLElement> this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration"),
 			illustration = illustrationWrapper.querySelector("svg");
@@ -379,6 +404,7 @@ class IllustratedMessage extends UI5Element {
 
 	onAfterRendering() {
 		this._setSVGAccAttrs();
+		this._setTitleAccAttrs();
 	}
 
 	/**
