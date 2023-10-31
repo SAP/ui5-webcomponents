@@ -281,7 +281,7 @@ const processPublicAPI = object => {
 
 export default {
 	/** Globs to analyze */
-	globs: ["src/Bar.ts"],
+	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
