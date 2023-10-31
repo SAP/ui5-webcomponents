@@ -73,12 +73,12 @@ describe("MultiComboBox general interaction", () => {
 
 			await resetBtn.click();
 			await icon.click();
-			assert.ok(await mcb.getProperty("open"), "MultiComboBox should be opened");
+			assert.ok(await mcb.getProperty("_open"), "MultiComboBox should be opened");
 			assert.strictEqual(await eventInput.getValue(), "openChange", "openChange should be called");
 			assert.strictEqual(await callCountInput.getValue(), "1", "Event should be called once");
 
 			await icon.click();
-			assert.notOk(await mcb.getProperty("open"), "MultiComboBox should be closed");
+			assert.notOk(await mcb.getProperty("_open"), "MultiComboBox should be closed");
 
 			assert.strictEqual(await eventInput.getValue(), "openChange", "openChange should be called");
 			assert.strictEqual(await callCountInput.getValue(), "2", "Event should be called once");
@@ -275,7 +275,7 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 			await nMoreText.click();
 
-			await browser.waitUntil(async () => mcb.getProperty("open"), {
+			await browser.waitUntil(async () => mcb.getProperty("_open"), {
 				timeout: 500,
 				timeoutMsg: "Popover is open"
 			});
@@ -288,14 +288,14 @@ describe("MultiComboBox general interaction", () => {
 
 			await icon.click();
 
-			await browser.waitUntil(async () => !(await mcb.getProperty("open")), {
+			await browser.waitUntil(async () => !(await mcb.getProperty("_open")), {
 				timeout: 500,
 				timeoutMsg: "Popover should be closed"
 			});
 
 			await icon.click();
 
-			await browser.waitUntil(async () => await mcb.getProperty("open"), {
+			await browser.waitUntil(async () => await mcb.getProperty("_open"), {
 				timeout: 500,
 				timeoutMsg: "Popover should be open"
 			});
@@ -993,20 +993,20 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys("F4");
 			await mcb.keys("Tab");
 
-			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb.getProperty("_open"), false, "The previous control is closed");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
 
 			await mcb2.keys("F4");
 			await mcb2.keys(["Shift", "Tab"]);
 
-			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed");
+			assert.equal(await mcb2.getProperty("_open"), false, "The next control is closed");
 			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused");
 
 			await mcb.keys(["a", "b", "c"]);
 			await mcb.keys("F4");
 			await mcb.keys("Tab");
 
-			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed");
+			assert.equal(await mcb.getProperty("_open"), false, "The previous control is closed");
 			assert.equal(await mcb.getProperty("value"), "abc", "The previous control value is set");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused");
 		});
@@ -1023,7 +1023,7 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys("ArrowDown");
 			await mcb.keys("Tab");
 
-			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on value state header");
+			assert.equal(await mcb.getProperty("_open"), false, "The previous control is closed after TAB on value state header");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on value state header");
 
 			await mcb2.keys("F4");
@@ -1031,7 +1031,7 @@ describe("MultiComboBox general interaction", () => {
 			await mcb2.keys("ArrowDown");
 			await mcb2.keys(["Shift", "Tab"]);
 
-			assert.equal(await mcb2.getProperty("open"), false, "The next control is closed after TAB on suggestion item");
+			assert.equal(await mcb2.getProperty("_open"), false, "The next control is closed after TAB on suggestion item");
 			assert.equal(await mcb.getProperty("focused"), true, "The previous control is focused after TAB on suggestion item");
 
 			await mcb.keys("F4");
@@ -1039,7 +1039,7 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys("ArrowDown");
 			await mcb.keys("Tab");
 
-			assert.equal(await mcb.getProperty("open"), false, "The previous control is closed after TAB on suggestion item");
+			assert.equal(await mcb.getProperty("_open"), false, "The previous control is closed after TAB on suggestion item");
 			assert.equal(await mcb2.getProperty("focused"), true, "The next control is focused after TAB on suggestion item");
 		});
 
