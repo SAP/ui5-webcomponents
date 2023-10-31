@@ -239,8 +239,6 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Handles the focus of the color palette upon entering the DOM.
-	 *
-	 * @param {ColorPalette} colorPalette the color palette
 	 * @protected
 	 */
 	_handleFocus() {
