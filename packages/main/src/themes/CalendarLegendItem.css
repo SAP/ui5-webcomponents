@@ -3,7 +3,6 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	width: var(--_ui5-calendar-legend-item-root-width);
-	vertical-align: middle;
 	white-space: pre-line;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -12,7 +11,6 @@
 
 .ui5-calendar-legend-item-box {
 	display: inline-block;
-	vertical-align: top;
 	box-sizing: border-box;
 	height: 1rem;
 	width: 1rem;
@@ -28,7 +26,6 @@
 	font-weight: normal;
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
-	vertical-align: middle;
 	white-space: pre-line;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -56,18 +53,6 @@
 }
 
 .ui5-calendar-legend-item-root:focus {
-	outline: 0;
-}
-
-.ui5-calendar-legend-item-root:focus::before {
-	box-sizing: border-box;
-	border: var(--_ui5-calendar-legend-item-root-focus-brd);
+	outline: var(--_ui5-calendar-legend-item-root-focus-brd);
 	border-radius: var(--_ui5-calendar-legend-item-root-focus-brd-radius);
-	content: "";
-	height: 1.5rem;
-	pointer-events: none;
-	position: absolute;
-	width: var(--_ui5-calendar-legend-item-root-width);
-	margin-inline-start: var(--_ui5-calendar-legend-item-root-focus-margin);
-	margin-block-start: var(--_ui5-calendar-legend-item-root-focus-margin);
 }

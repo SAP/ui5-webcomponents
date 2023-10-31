@@ -54,7 +54,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	_tabIndex!: string;
 
 	/**
-	 * Defines the type of the Calendar Legend Standard Item.
+	 * Defines the type of the Calendar Legend Item.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.CalendarLegendItem.prototype.type
@@ -83,9 +83,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 			[CalendarLegendItemType.Working]: WorkingI18n,
 		};
 
-		this.textContent = typeMapping[this.type as keyof typeof typeMapping] || this.type;
-
-		return this.textContent;
+		return typeMapping[this.type as keyof typeof typeMapping] || this.type;
 	}
 }
 

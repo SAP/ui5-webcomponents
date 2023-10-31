@@ -2,5 +2,5 @@
 
 :root {
 	--_ui5-calendar-legend-item-root-focus-brd: var(--sapContent_FocusWidth) solid var(--sapContent_FocusColor);
-	--_ui5-calendar-legend-item-root-focus-brd-radius: 0.25rem;
+	--_ui5-calendar-legend-item-root-focus-brd-radius: 0.125rem;
 }

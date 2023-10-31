@@ -1,5 +1,5 @@
 /**
- * Enum for standard calendar legend items.
+ * Enum for calendar legend items' types.
  *
  * @readonly
  * @enum {string}

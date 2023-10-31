@@ -84,7 +84,7 @@ class CalendarLegend extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this._getFocusableElements(),
+			getItemsCallback: () => this.focusableElements,
 			behavior: ItemNavigationBehavior.Cyclic,
 		});
 	}
@@ -95,26 +95,20 @@ class CalendarLegend extends UI5Element {
 		this._itemNavigation.setCurrentItem(target);
 	}
 
-	_itemsInLegend() {
-		const items = this.shadowRoot!.querySelectorAll<CalendarLegendItem>("ui5-calendar-legend-item");
-		return [...items];
-	}
-
-	_getFocusableElements() {
-		const defaultLegendItems: Array<ITabbable> = this._itemsInLegend();
-		return defaultLegendItems;
+	get focusableElements(): Array<ITabbable> {
+		return [...this.shadowRoot!.querySelectorAll<CalendarLegendItem>("[ui5-calendar-legend-item]")];
 	}
 
 	_initItemNavigation() {
 		if (!this._itemNavigation) {
 			this._itemNavigation = new ItemNavigation(this, {
-				getItemsCallback: () => this._getFocusableElements(),
+				getItemsCallback: () => this.focusableElements,
 				behavior: ItemNavigationBehavior.Cyclic,
 			});
 		}
 	}
 
-	get typeFromEnum() {
+	get defaultItemsMapping() {
 		const typeMapping = [
 			{ type: [CalendarLegendItemType.Today], hide: this.hideToday },
 			{ type: [CalendarLegendItemType.Selected], hide: this.hideSelectedDay },
