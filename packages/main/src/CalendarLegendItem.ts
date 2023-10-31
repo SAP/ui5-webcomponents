@@ -22,14 +22,8 @@ import CalendarLegendStandardItemCss from "./generated/themes/CalendarLegendItem
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-calendar-legend-item</code> represents a standard legend item used within the <code>ui5-calendar-legend</code> component.
- *
- * <h3>Custom Text Override</h3>
- * If you provide `textContent` or use the item as <code><ui5-calendar-legend-item type="Today">Text here</ui5-calendar-legend-item></code>,
- * it will override the default text provided by the `type`. This allows for customization of the legend item text.
  *
  * <h3>Usage</h3>
- *
  * The <code>ui5-calendar-legend-item</code> is intended to be used within the <code>ui5-calendar-legend</code> component.
  *
  * <h3>ES6 Module Import</h3>
