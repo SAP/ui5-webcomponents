@@ -3,35 +3,35 @@
  *
  * @readonly
  * @enum {string}
- * @public
+ * @private
  * @author SAP SE
- * @alias sap.ui.webc.main.types.CalendarLegendStandardItemsType
+ * @alias sap.ui.webc.main.types.CalendarLegendItemType
  */
-enum CalendarLegendStandardItemsType {
+enum CalendarLegendItemType {
 	/**
 	 * Represents the "Today" item in the calendar legend.
-	 * @public
+	 * @private
 	 * @type {string}
 	 */
 	Today = "Today",
 	/**
 	 * Represents the "Selected" item in the calendar legend.
-	 * @public
+	 * @private
 	 * @type {string}
 	 */
 	Selected = "Selected",
 	/**
 	 * Represents the "Working" item in the calendar legend.
-	 * @public
+	 * @private
 	 * @type {string}
 	 */
 	Working = "Working",
 	/**
 	 * Represents the "NonWorking" item in the calendar legend.
-	 * @public
+	 * @private
 	 * @type {string}
 	 */
 	NonWorking = "NonWorking",
 }
 
-export default CalendarLegendStandardItemsType;
+export default CalendarLegendItemType;

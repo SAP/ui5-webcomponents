@@ -4,12 +4,12 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
-import CalendarLegendStandardItemsType from "./types/StandardCalendarLegendItemsType.js";
+import CalendarLegendStandardItemsType from "./types/CalendarLegendItemType.js";
 import CalendarLegendTemplate from "./generated/templates/CalendarLegendTemplate.lit.js";
 
 // Styles
 import CalendarLegendCss from "./generated/themes/CalendarLegend.css.js";
-import CalendarLegendStandardItem from "./CalendarLegendStandardItem.js";
+import CalendarLegendItem from "./CalendarLegendItem.js";
 
 /**
  * @class CalendarLegend
@@ -35,7 +35,7 @@ import CalendarLegendStandardItem from "./CalendarLegendStandardItem.js";
 	renderer: litRender,
 	styles: CalendarLegendCss,
 	template: CalendarLegendTemplate,
-	dependencies: [CalendarLegendStandardItem],
+	dependencies: [CalendarLegendItem],
 })
 class CalendarLegend extends UI5Element {
 	/**
@@ -90,13 +90,13 @@ class CalendarLegend extends UI5Element {
 	}
 
 	_onItemClick(e: MouseEvent) {
-		const target = e.target as CalendarLegendStandardItem;
+		const target = e.target as CalendarLegendItem;
 
 		this._itemNavigation.setCurrentItem(target);
 	}
 
 	_itemsInLegend() {
-		const items = this.shadowRoot!.querySelectorAll<CalendarLegendStandardItem>("ui5-cal-legend-standard-item");
+		const items = this.shadowRoot!.querySelectorAll<CalendarLegendItem>("ui5-calendar-legend-item");
 		return [...items];
 	}
 

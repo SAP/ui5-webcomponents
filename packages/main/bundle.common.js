@@ -33,7 +33,7 @@ import Breadcrumbs from "./dist/Breadcrumbs.js";
 import BusyIndicator from "./dist/BusyIndicator.js";
 import Button from "./dist/Button.js";
 import CalendarLegend from "./dist/CalendarLegend.js";
-import CalendarLegendStandardItem from "./dist/CalendarLegendStandardItem.js";
+import CalendarLegendItem from "./dist/CalendarLegendItem.js";
 import Card from "./dist/Card.js";
 import CardHeader from "./dist/CardHeader.js";
 import Carousel from "./dist/Carousel.js";
