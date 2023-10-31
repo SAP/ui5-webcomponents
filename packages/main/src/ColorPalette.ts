@@ -266,7 +266,7 @@ class ColorPalette extends UI5Element {
 		if (this.showDefaultColor) {
 			this.colorPaletteNavigationElements[0].focus();
 		} else {
-			this.focusColorElement(this.colors[0], this._itemNavigation);
+			this.focusColorElement(this.colorPaletteNavigationElements[0], this._itemNavigation);
 		}
 	}
 
