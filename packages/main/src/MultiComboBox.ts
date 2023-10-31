@@ -549,7 +549,6 @@ class MultiComboBox extends UI5Element {
 	 * @name sap.ui.webc.main.MultiComboBox.prototype.open
 	 * @defaultvalue false
 	 * @readonly
-	 * @since 1.0.0-rc.5
 	 * @public
 	 */
 	get open() {
@@ -848,7 +847,7 @@ class MultiComboBox extends UI5Element {
 			this.value = this.valueBeforeAutoComplete;
 		}
 
-		if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
+		if (!this.allowCustomValues || (!this._open && this.allowCustomValues)) {
 			this.value = this._lastValue;
 		}
 	}
@@ -1433,7 +1432,6 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// this.toggleAttribute("open", this.open);
 		const input = this._innerInput;
 		const autoCompletedChars = input && (input.selectionEnd || 0) - (input.selectionStart || 0);
 		const value = input && input.value;
@@ -1495,13 +1493,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	storeResponsivePopoverWidth() {
-		if (this.open && !this._listWidth) {
+		if (this._open && !this._listWidth) {
 			this._listWidth = this.list!.offsetWidth;
 		}
 	}
 
 	toggle(isToggled: boolean) {
-		if (isToggled && !this.open) {
+		if (isToggled && !this._open) {
 			this.openPopover();
 		} else {
 			this.closePopover();
@@ -1600,7 +1598,7 @@ class MultiComboBox extends UI5Element {
 	inputFocusOut(e: FocusEvent) {
 		if (!this.shadowRoot!.contains(e.relatedTarget as Node) && !this._deleting) {
 			this.focused = false;
-			this._tokenizer.expanded = this.open;
+			this._tokenizer.expanded = this._open;
 			// remove the value if user focus out the input and focus is not going in the popover
 			if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== e.relatedTarget)) {
 				this.value = "";
@@ -1767,7 +1765,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		const isCurrentlyExpanded = this._tokenizer?.expanded;
-		const shouldBeExpanded = this.focused || this.open || isCurrentlyExpanded;
+		const shouldBeExpanded = this.focused || this._open || isCurrentlyExpanded;
 
 		return shouldBeExpanded;
 	}
