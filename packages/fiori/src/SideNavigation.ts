@@ -15,6 +15,10 @@ import {
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -105,6 +109,7 @@ type PopupClickEventDetail = {
 		ResponsivePopover,
 		SideNavigationItem,
 		SideNavigationSubItem,
+		Icon,
 	],
 })
 /**
@@ -275,7 +280,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _rootRole() {
-		return this._inPopover ? "None" : undefined;
+		return this._inPopover ? "none" : undefined;
 	}
 
 	get classes() {

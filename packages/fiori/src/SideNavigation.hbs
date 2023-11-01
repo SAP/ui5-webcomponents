@@ -23,7 +23,7 @@
 	{{/if}}
 
 	{{#if hasFixedItems}}
-		<div class="ui5-sn-spacer"></div>
+		<div role="separator" class="ui5-sn-spacer"></div>
 		{{#if collapsed}}
 			<div role="menubar"
 				 class="ui5-sn-list ui5-sn-fixed"
@@ -45,8 +45,6 @@
 			</ul>
 		{{/if}}
 	{{/if}}
-
-	{{> footer }}
 </nav>
 
 {{#*inline header}}
@@ -55,10 +53,8 @@
 	{{/if}}
 {{/inline}}
 
-{{#*inline footer}}{{/inline}}
-
 {{#*inline menuitem}}
-	{{#if href}}
+	{{#if _href}}
 		<a id="{{_id}}"
 		   class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
 		   role="menuitemradio"
@@ -79,17 +75,17 @@
 		</a>
 	{{else}}
 		<div id="{{_id}}"
-		   class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
-		   role="menuitemradio"
-		   data-sap-focus-ref
-		   @keydown="{{_onkeydown}}"
-		   @keyup="{{_onkeyup}}"
-		   @click="{{_onclick}}"
-		   @focusin="{{_onfocusin}}"
-		   tabindex="{{_effectiveTabIndex}}"
-		   aria-haspopup="{{_ariaHasPopup}}"
-		   aria-checked="{{selected}}"
-		   title="{{_tooltip}}"
+			 class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
+			 role="menuitemradio"
+			 data-sap-focus-ref
+			 @keydown="{{_onkeydown}}"
+			 @keyup="{{_onkeyup}}"
+			 @click="{{_onclick}}"
+			 @focusin="{{_onfocusin}}"
+			 tabindex="{{_effectiveTabIndex}}"
+			 aria-haspopup="{{_ariaHasPopup}}"
+			 aria-checked="{{selected}}"
+			 title="{{_tooltip}}"
 		>
 			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
 			<div class="ui5-sn-item-text">{{text}}</div>
@@ -99,7 +95,7 @@
 
 {{#*inline treeitem}}
 	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
-		{{#if href}}
+		{{#if _href}}
 			<a class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
 			   role="treeitem"
 			   data-sap-focus-ref
@@ -123,26 +119,25 @@
 						  name="circle-task-2"
 				></ui5-icon>
 				{{#if items.length}}
-					<ui5-icon
-							class="ui5-sn-item-toggle-icon"
-							name="{{_toggleIconName}}"
-							@click="{{_onToggleClick}}"
+					<ui5-icon class="ui5-sn-item-toggle-icon"
+							  name="{{_toggleIconName}}"
+							  @click="{{_onToggleClick}}"
 					></ui5-icon>
 				{{/if}}
 			</a>
 		{{else}}
 			<div class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
-			   role="treeitem"
-			   data-sap-focus-ref
-			   @keydown="{{_onkeydown}}"
-			   @keyup="{{_onkeyup}}"
-			   @click="{{_onclick}}"
-			   @focusin="{{_onfocusin}}"
-			   tabindex="{{_effectiveTabIndex}}"
-			   aria-expanded="{{_expanded}}"
-			   aria-current="{{_ariaCurrent}}"
-			   title="{{_tooltip}}"
-			   aria-owns="{{_groupId}}"
+				 role="treeitem"
+				 data-sap-focus-ref
+				 @keydown="{{_onkeydown}}"
+				 @keyup="{{_onkeyup}}"
+				 @click="{{_onclick}}"
+				 @focusin="{{_onfocusin}}"
+				 tabindex="{{_effectiveTabIndex}}"
+				 aria-expanded="{{_expanded}}"
+				 aria-current="{{_ariaCurrent}}"
+				 title="{{_tooltip}}"
+				 aria-owns="{{_groupId}}"
 			>
 				{{#if icon}}
 					<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
@@ -152,10 +147,9 @@
 						  name="circle-task-2"
 				></ui5-icon>
 				{{#if items.length}}
-					<ui5-icon
-							class="ui5-sn-item-toggle-icon"
-							name="{{_toggleIconName}}"
-							@click="{{_onToggleClick}}"
+					<ui5-icon class="ui5-sn-item-toggle-icon"
+							  name="{{_toggleIconName}}"
+							  @click="{{_onToggleClick}}"
 					></ui5-icon>
 				{{/if}}
 			</div>
@@ -168,7 +162,7 @@
 			>
 				{{#each items}}
 					<li id="{{_id}}" class="ui5-sn-list-li" role="none">
-						{{#if href}}
+						{{#if _href}}
 							<a class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
 							   role="treeitem"
 							   data-sap-focus-ref
@@ -192,15 +186,15 @@
 							</a>
 						{{else}}
 							<div class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
-							   role="treeitem"
-							   data-sap-focus-ref
-							   @keydown="{{_onkeydown}}"
-							   @keyup="{{_onkeyup}}"
-							   @click="{{_onclick}}"
-							   @focusin="{{_onfocusin}}"
-							   tabindex="{{_effectiveTabIndex}}"
-							   aria-current="{{_ariaCurrent}}"
-							   title="{{_tooltip}}"
+								 role="treeitem"
+								 data-sap-focus-ref
+								 @keydown="{{_onkeydown}}"
+								 @keyup="{{_onkeyup}}"
+								 @click="{{_onclick}}"
+								 @focusin="{{_onfocusin}}"
+								 tabindex="{{_effectiveTabIndex}}"
+								 aria-current="{{_ariaCurrent}}"
+								 title="{{_tooltip}}"
 							>
 								{{#if icon}}
 									<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>

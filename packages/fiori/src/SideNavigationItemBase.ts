@@ -3,7 +3,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import SideNavigation from "./SideNavigation.js";
+import type SideNavigation from "./SideNavigation.js";
 
 /**
  * @class
@@ -142,7 +142,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get _target() {
-		return (!this.target && this.target) ? this.target : undefined;
+		return (!this.disabled && this.target) ? this.target : undefined;
 	}
 
 	get _selected() {
@@ -183,12 +183,12 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this._tabIndex;
 	}
 
-	get sideNavigation() {
+	get sideNavigation() : SideNavigation | undefined {
 		let parentElement = this.parentElement;
 
 		while (parentElement) {
-			if (parentElement instanceof SideNavigation) {
-				return parentElement;
+			if (parentElement.hasAttribute("ui5-side-navigation")) {
+				return parentElement as SideNavigation;
 			}
 
 			parentElement = parentElement.parentElement;
@@ -224,10 +224,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		if (e.target !== this.getFocusDomRef()) {
-			return;
-		}
-
 		e.stopPropagation();
 
 		this.sideNavigation?.focusItem(this);
