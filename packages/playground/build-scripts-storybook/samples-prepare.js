@@ -75,13 +75,13 @@ export type StoryArgsSlots = {
 						control: "select",
 						options: typeEnum.properties.map(a => a.type),
 					};
-				} else if (NUMERIC_TYPES.indexOf(typeEnum?.name) > -1) {
+				} else if (NUMERIC_TYPES.includes(typeEnum?.name)) {
 					args[prop.name] = {
 						control: {
 							type: "number"
 						},
 					};
-				} else if (STRING_TYPES.indexOf(typeEnum?.name) > -1) {
+				} else if (STRING_TYPES.includes(typeEnum?.name)) {
 					args[prop.name] = {
 						control: {
 							type: "text"
