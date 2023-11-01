@@ -215,6 +215,14 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	get _effectiveItems() {
+		if (this.popupMode) {
+			return this.getSlottedNodes<ColorPaletteItem>("colors");
+		}
+
+		return this.colors;
+	}
+
 	selectColor(item: ColorPaletteItem) {
 		if (!item.value) {
 			return;
@@ -222,11 +230,16 @@ class ColorPalette extends UI5Element {
 
 		item.focus();
 
+		if (this._currentlySelected) {
+			this._currentlySelected.selected = false;
+		}
+
 		if (this.displayedColors.includes(item)) {
 			this._itemNavigation.setCurrentItem(item);
 		}
 
 		this._setColor(item.value);
+		this._currentlySelected = item;
 	}
 
 	_setColor(color: string) {
@@ -252,7 +265,7 @@ class ColorPalette extends UI5Element {
 	 * @returns {void}
 	 */
 	_ensureSingleSelectionOrDeselectAll() {
-		const selectedItems = [...this.colors, ...this.recentColorsElements].filter(item => item.selected);
+		const selectedItems = [...this._effectiveItems, ...this.recentColorsElements].filter(item => item.selected);
 		selectedItems.pop();
 		selectedItems.forEach(item => { item.selected = false; });
 	}
@@ -294,7 +307,7 @@ class ColorPalette extends UI5Element {
 			this.recentColorsElements[0].focus();
 			this._currentlySelected = this.recentColorsElements[0];
 		} else {
-			[...this.colors, ...this.recentColorsElements].forEach(item => {
+			[...this._effectiveItems, ...this.recentColorsElements].forEach(item => {
 				item.selected = item === target;
 			});
 			this._currentlySelected = target;

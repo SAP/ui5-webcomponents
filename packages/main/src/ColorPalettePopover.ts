@@ -187,10 +187,10 @@ class ColorPalettePopover extends UI5Element {
 
 		this.responsivePopover!.showAt(opener, true);
 
-		if (this.showDefaultColor) {
+		if (this.showDefaultColor && !this._colorPalette()._currentlySelected) {
 			this._colorPalette().colorPaletteNavigationElements[0].focus();
 		} else {
-			this._colorPalette().focusColorElement(this._colorPalette().colorPaletteNavigationElements[0], this._colorPalette()._itemNavigation);
+			this._colorPalette()._currentlySelected?.focus();
 		}
 	}
 
