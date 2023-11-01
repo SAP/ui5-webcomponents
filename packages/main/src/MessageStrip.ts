@@ -122,7 +122,7 @@ class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component custom color scheme.
 	 * <br><br>
-	 * <b>Note:</b> The property allowed values are between 1-10.</code>.
+	 * <b>Note:</b> The property allowed values are between 1-10. </code>.
 	 *
 	 * @type {sap.ui.webc.base.types.Integer}
 	 * @defaultValue 6
