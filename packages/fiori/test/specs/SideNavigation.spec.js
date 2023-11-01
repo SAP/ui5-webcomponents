@@ -234,7 +234,7 @@ describe("Component Behavior", () => {
 
 			const popoverRootItem = await getRootItemInPopover();
 
-			assert.strictEqual(await popoverRootItem.getAttribute("role"), "None", "Role is correctly set");
+			assert.strictEqual(await popoverRootItem.getAttribute("role"), "none", "Role is correctly set");
 
 			// clean up
 			await sideNavigation.setProperty("collapsed", false);
