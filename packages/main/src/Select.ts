@@ -68,7 +68,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
@@ -671,7 +671,7 @@ class Select extends UI5Element implements IFormElement {
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
+			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
 				const selectElement = (element as Select);
 				nativeInput.disabled = !!element.disabled;
 				nativeInput.value = selectElement._currentlySelectedOption ? selectElement._currentlySelectedOption.value : "";
