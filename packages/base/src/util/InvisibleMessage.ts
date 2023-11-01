@@ -55,7 +55,6 @@ const announce = (message: string, mode: InvisibleMessageMode) => {
 
 	if (mode !== InvisibleMessageMode.Assertive && mode !== InvisibleMessageMode.Polite) {
 		console.warn(`You have entered an invalid mode. Valid values are: "Polite" and "Assertive". The framework will automatically set the mode to "Polite".`); // eslint-disable-line
-		return InvisibleMessageMode.Assertive;
 	}
 
 	// clear the span in order to avoid reading it out while in JAWS reading node
