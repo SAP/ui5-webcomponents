@@ -163,7 +163,7 @@ class IllustratedMessage extends UI5Element {
 	* @defaultvalue "TitleLevel.H2"
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleLevel
 	* @public
-	* @since 1.18.0
+	* @since 1.19.0
 	*/
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
 	titleLevel!: `${TitleLevel}`;
@@ -379,16 +379,6 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
-	_setTitleAccAttrs() {
-		const title = this.shadowRoot!.querySelector(".ui5-illustrated-message-root ui5-title") || this.querySelector("ui5-illustrated-message ui5-title");
-		if (title) {
-			if (this.titleLevel) {
-				title.setAttribute("aria-level", this.titleLevel);
-				title.setAttribute("level", this.titleLevel);
-			}
-		}
-	}
-
 	_adjustHeightToFitContainer() {
 		const illustrationWrapper = <HTMLElement> this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration"),
 			illustration = illustrationWrapper.querySelector("svg");
@@ -404,7 +394,6 @@ class IllustratedMessage extends UI5Element {
 
 	onAfterRendering() {
 		this._setSVGAccAttrs();
-		this._setTitleAccAttrs();
 	}
 
 	/**

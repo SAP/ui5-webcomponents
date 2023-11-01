@@ -89,22 +89,19 @@ describe("Accessibility", () => {
 			  DEFAULT_TITLE_LEVEL = "H2";
 
 		// Assert
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("aria-level"), EXPECTED_TITLE_lEVEL, "aria-level is set");
 		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), EXPECTED_TITLE_lEVEL, "level is set");
 
 		// Act
 		await illustratedMsg.setAttribute("title-level", NEW_TITLE_LEVEL);
 
 		// Assert
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("aria-level"), NEW_TITLE_LEVEL, "aria-level is set");
 		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), NEW_TITLE_LEVEL, "level is set");
 
 		// Act
 		await illustratedMsg.removeAttribute("title-level");
 
 		// Assert
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("aria-level"), DEFAULT_TITLE_LEVEL, "aria-level has the default aria-level value");
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), DEFAULT_TITLE_LEVEL, "level has the default aria-level value");
+		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), DEFAULT_TITLE_LEVEL, "level has the default value");
 
 	});
 
