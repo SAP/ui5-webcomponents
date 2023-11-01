@@ -99,15 +99,6 @@ class CalendarLegend extends UI5Element {
 		return [...this.shadowRoot!.querySelectorAll<CalendarLegendItem>("[ui5-calendar-legend-item]")];
 	}
 
-	_initItemNavigation() {
-		if (!this._itemNavigation) {
-			this._itemNavigation = new ItemNavigation(this, {
-				getItemsCallback: () => this.focusableElements,
-				behavior: ItemNavigationBehavior.Cyclic,
-			});
-		}
-	}
-
 	get defaultItemsMapping() {
 		const typeMapping = [
 			{ type: [CalendarLegendItemType.Today], hide: this.hideToday },
