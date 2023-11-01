@@ -42,6 +42,250 @@
 	border-color: var(--sapMessage_SuccessBorderColor);
 }
 
+:host([color-set="Indication01"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_1_Background);
+	border-color: var(--sapIndicationColor_1_BorderColor);
+}
+
+:host([color-set="Indication01"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication01"]) ::slotted([slot="icon"]),
+:host([color-set="Indication01"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_1_TextColor);
+}
+
+:host([color-set="Indication01"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button:hover {
+	background: var(--sapIndicationColor_1_Hover_Background);
+	border-color: var(--sapIndicationColor_1_BorderColor);
+}
+
+:host([color-set="Indication01"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button:active {
+	background: var(--sapIndicationColor_1_Active_Background);
+	border-color: var(--sapIndicationColor_1_Active_BorderColor);
+	color: var(--sapIndicationColor_1_Active_TextColor);
+}
+
+:host([color-set="Indication02"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_2_Background);
+	border-color: var(--sapIndicationColor_2_BorderColor);
+}
+
+:host([color-set="Indication02"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication02"]) ::slotted([slot="icon"]),
+:host([color-set="Indication02"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_2_TextColor);
+}
+
+:host([color-set="Indication03"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_3_Background);
+	border-color: var(--sapIndicationColor_3_BorderColor);
+}
+
+:host([color-set="Indication03"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication03"]) ::slotted([slot="icon"]),
+:host([color-set="Indication03"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_3_TextColor);
+}
+
+:host([color-set="Indication04"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_4_Background);
+	border-color: var(--sapIndicationColor_4_BorderColor);
+}
+
+:host([color-set="Indication04"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication04"]) ::slotted([slot="icon"]),
+:host([color-set="Indication04"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_4_TextColor);
+}
+
+:host([color-set="Indication05"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_5_Background);
+	border-color: var(--sapIndicationColor_5_BorderColor);
+}
+
+:host([color-set="Indication05"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication05"]) ::slotted([slot="icon"]),
+:host([color-set="Indication05"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_5_TextColor);
+}
+
+:host(:not([color-set])) .ui5-message-strip-root--custom, :host([color-set="Indication06"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_6_Background);
+	border-color: var(--sapIndicationColor_6_BorderColor);
+}
+
+:host(:not([color-set])) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication06"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host(:not([color-set])) .ui5-message-strip-root--custom ::slotted([slot="icon"]),
+:host([color-set="Indication06"]) ::slotted([slot="icon"]),
+:host(:not([color-set])) .ui5-message-strip-root--custom .ui5-message-strip-text,
+:host([color-set="Indication06"]) .ui5-message-strip-text  {
+	color: var(--sapIndicationColor_6_TextColor);
+}
+
+:host([color-set="Indication07"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_7_Background);
+	border-color: var(--sapIndicationColor_7_BorderColor);
+}
+
+:host([color-set="Indication07"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication07"]) ::slotted([slot="icon"]),
+:host([color-set="Indication07"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_7_TextColor);
+}
+
+:host([color-set="Indication08"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_8_Background);
+	border-color: var(--sapIndicationColor_8_BorderColor);
+}
+
+:host([color-set="Indication08"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication08"]) ::slotted([slot="icon"]),
+:host([color-set="Indication08"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_8_TextColor);
+}
+
+:host([color-set="Indication09"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_9_Background);
+	border-color: var(--sapIndicationColor_9_BorderColor);
+}
+
+:host([color-set="Indication09"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication09"]) ::slotted([slot="icon"]),
+:host([color-set="Indication09"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_9_TextColor);
+}
+
+:host([color-set="Indication10"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_10_Background);
+	border-color: var(--sapIndicationColor_10_BorderColor);
+}
+
+:host([color-set="Indication10"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication10"]) ::slotted([slot="icon"]),
+:host([color-set="Indication10"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_10_TextColor);
+}
+
+:host([color-set="Indication11"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_1b);
+	border-color: var(--sapIndicationColor_1b_BorderColor);
+}
+
+:host([color-set="Indication11"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication11"]) ::slotted([slot="icon"]),
+:host([color-set="Indication11"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_1);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication12"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_2b);
+	border-color: var(--sapIndicationColor_2b_BorderColor);
+}
+
+:host([color-set="Indication12"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication12"]) ::slotted([slot="icon"]),
+:host([color-set="Indication12"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_2);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication13"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_3b);
+	border-color: var(--sapIndicationColor_3b_BorderColor);
+}
+
+:host([color-set="Indication13"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication13"]) ::slotted([slot="icon"]),
+:host([color-set="Indication13"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_3);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication14"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_4b);
+	border-color: var(--sapIndicationColor_4b_BorderColor);
+}
+
+:host([color-set="Indication14"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication14"]) ::slotted([slot="icon"]),
+:host([color-set="Indication14"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_4);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication15"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_5b);
+	border-color: var(--sapIndicationColor_5b_BorderColor);
+}
+
+:host([color-set="Indication15"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication15"]) ::slotted([slot="icon"]),
+:host([color-set="Indication15"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_5);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication16"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_6b);
+	border-color: var(--sapIndicationColor_6b_BorderColor);
+}
+
+:host([color-set="Indication16"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication16"]) ::slotted([slot="icon"]),
+:host([color-set="Indication16"]) .ui5-message-strip-text  {
+	color: var(--sapIndicationColor_6);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication17"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_7b);
+	border-color: var(--sapIndicationColor_7b_BorderColor);
+}
+
+:host([color-set="Indication17"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication17"]) ::slotted([slot="icon"]),
+:host([color-set="Indication17"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_7);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication18"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_8b);
+	border-color: var(--sapIndicationColor_8b_BorderColor);
+}
+
+:host([color-set="Indication18"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication18"]) ::slotted([slot="icon"]),
+:host([color-set="Indication18"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_8);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication19"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_9b);
+	border-color: var(--sapIndicationColor_9b_BorderColor);
+}
+
+:host([color-set="Indication19"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication19"]) ::slotted([slot="icon"]),
+:host([color-set="Indication19"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_9);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([color-set="Indication20"]) .ui5-message-strip-root--custom {
+	background-color: var(--sapIndicationColor_10b);
+	border-color: var(--sapIndicationColor_10b_BorderColor);
+}
+
+:host([color-set="Indication20"]) .ui5-message-strip-root--custom .ui5-message-strip-close-button,
+:host([color-set="Indication20"]) ::slotted([slot="icon"]),
+:host([color-set="Indication20"]) .ui5-message-strip-text {
+	color: var(--sapIndicationColor_10);
+	text-shadow: var(--sapContent_TextShadow);
+}
+
 .ui5-message-strip-root--positive .ui5-message-strip-icon {
 	color: var(--sapPositiveElementColor);
 }
