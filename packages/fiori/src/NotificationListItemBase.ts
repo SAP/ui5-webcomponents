@@ -10,7 +10,7 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
-import type NotificationAction from "./NotificationAction.js";
+import type INotificationAction from "./NotificationAction.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -44,7 +44,6 @@ type NotificationListItemBaseCloseEventDetail = {
  *
  * The base class of the <code>NotificationListItem</code> and <code>NotificationListGroupItem</code>.
  *
- * @abstract
  * @constructor
  * @extends ListItemBase
  * @since 1.0.0-rc.8
@@ -120,7 +119,7 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
+	 * @type {Integer}
 	 * @default 1000
 	 * @public
 	 */
@@ -132,12 +131,11 @@ class NotificationListItemBase extends ListItemBase {
 	 * <br><br>
 	 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 	 *
-	 * @type {sap.ui.webc.fiori.INotificationAction[]}
-	 * @slot
+	 * @type {INotificationAction[]}
 	 * @public
 	 */
 	@slot()
-	actions!: Array<NotificationAction>
+	actions!: Array<INotificationAction>
 
 	static i18nFioriBundle: I18nBundle;
 

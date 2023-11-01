@@ -96,10 +96,6 @@ type CarouselNavigateEventDetail = {
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
  * <br>
- * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li></li>
- * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -715,7 +711,8 @@ class Carousel extends UI5Element {
 	 * The indices of the currently visible items of the component.
 	 * @public
 	 * @since 1.0.0-rc.15
-	 * @returns {Integer[]} the indices of the visible items
+	 * @type {Integer[]} the indices of the visible items
+	 * @default []
 	 */
 	get visibleItemsIndices() {
 		const visibleItemsIndices: Array<number> = [];

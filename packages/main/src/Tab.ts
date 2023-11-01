@@ -54,7 +54,7 @@ const DESIGN_DESCRIPTIONS = {
  * @abstract
  * @constructor
  * @extends UI5Element
- * @implements ITab
+ * @implements {ITab}
  * @public
  */
 @customElement({
@@ -258,7 +258,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
 	 *
-	 * @function
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */

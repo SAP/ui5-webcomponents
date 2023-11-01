@@ -4,6 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
+import type { INotificationAction } from "./Interfaces";
 
 type NotificationActionClickEventDetail = {
 	targetRef: Button,
@@ -15,12 +16,8 @@ type NotificationActionClickEventDetail = {
  * used in the <code>ui5-li-notification</code> and the <code>ui5-li-notification-group</code> items.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.NotificationAction
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-notification-action
- * @implements sap.ui.webc.fiori.INotificationAction
+ * @extends UI5Element
+ * @implements INotificationAction
  * @public
  */
 @customElement("ui5-notification-action")
@@ -28,7 +25,6 @@ type NotificationActionClickEventDetail = {
 /**
  * Fired, when the action is pressed.
  *
- * @event sap.ui.webc.fiori.NotificationAction#click
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
@@ -37,14 +33,13 @@ type NotificationActionClickEventDetail = {
 		targetRef: { type: HTMLElement },
 	},
 })
-class NotificationAction extends UI5Element {
+class NotificationAction extends UI5Element implements INotificationAction {
 	/**
 	 * Defines the text of the <code>ui5-notification-action</code>.
 	 *
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.text
 	 */
 	@property()
 	text!: string;
@@ -55,9 +50,8 @@ class NotificationAction extends UI5Element {
 	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.disabled
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
@@ -65,10 +59,9 @@ class NotificationAction extends UI5Element {
 	/**
 	 * Defines the action design.
 	 *
-	 * @type {sap.ui.webc.main.types.ButtonDesign}
-	 * @defaultvalue "Transparent"
+	 * @type {ButtonDesign}
+	 * @default "Transparent"
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.design
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
 	design!: `${ButtonDesign}`;
@@ -81,9 +74,8 @@ class NotificationAction extends UI5Element {
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.icon
 	 */
 	@property()
 	icon!: string;

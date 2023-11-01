@@ -37,11 +37,11 @@ const IMediaGalleryItem = "sap.ui.webc.fiori.IMediaGalleryItem";
 /**
  * Interface for components that may be slotted as an action inside <code>ui5-li-notification</code> and <code>ui5-li-notification-group</code>
  *
- * @name sap.ui.webc.fiori.INotificationAction
- * @interface
  * @public
  */
-const INotificationAction = "sap.ui.webc.fiori.INotificationAction";
+interface INotificationAction {
+	isUI5Element: boolean,
+}
 
 /**
  * Interface for components that may be slotted inside a notification list

@@ -134,7 +134,6 @@ class Popover extends Popup {
 	 * If enabled, it blocks any interaction with the background.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popover.prototype.modal
 	 * @default false
 	 * @public
 	 */
@@ -155,7 +154,6 @@ class Popover extends Popup {
 	 * Determines whether the component arrow is hidden.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popover.prototype.hideArrow
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -596,11 +594,11 @@ class Popover extends Popup {
 	/**
 	 * Calculates the position for the arrow.
 	 * @private
-	 * @param targetRect BoundingClientRect of the target element
+	 * @param {DOMRect} targetRect BoundingClientRect of the target element
 	 * @param {{width: number, height: number}} popoverSize Width and height of the popover
-	 * @param left Left offset of the popover
-	 * @param top Top offset of the popover
-	 * @param isVertical If the popover is positioned vertically to the target element
+	 * @param {number} left Left offset of the popover
+	 * @param {number} top Top offset of the popover
+	 * @param {boolean} isVertical If the popover is positioned vertically to the target element
 	 * @param {number} borderRadius Value of the border-radius property
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */

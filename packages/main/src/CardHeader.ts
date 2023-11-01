@@ -103,7 +103,7 @@ class CardHeader extends UI5Element implements ICardHeader {
 	 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
 	 * @private
 	 * @type {Integer}
-	 * @defaultValue 3
+	 * @default 3
 	*/
 	@property({ validator: Integer, defaultValue: 3 })
 	_ariaLevel!: number;

@@ -253,7 +253,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
 	 * @type {HTMLElement[]}
-	 * @slot
 	 * @private
 	 */
 	@slot()

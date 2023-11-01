@@ -568,7 +568,6 @@ abstract class Popup extends UI5Element {
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
 	 *
 	 * @protected
-	 * @abstract
 	 * @returns {boolean}
 	 */
 	abstract get isModal(): boolean
@@ -577,7 +576,6 @@ abstract class Popup extends UI5Element {
 	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
 	 *
 	 * @protected
-	 * @abstract
 	 * @returns {boolean}
 	 */
 	abstract get shouldHideBackdrop(): boolean
@@ -586,7 +584,6 @@ abstract class Popup extends UI5Element {
 	 * Return the ID of an element in the shadow DOM that is going to label this popup
 	 *
 	 * @protected
-	 * @abstract
 	 * @returns {string | undefined}
 	 */
 	abstract get _ariaLabelledBy(): string | undefined

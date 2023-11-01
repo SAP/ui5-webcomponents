@@ -51,7 +51,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @constructor
  * @extends ListItem
  * @public
- * @implements IUploadCollectionItem
+ * @implements {IUploadCollectionItem}
  * @since 1.0.0-rc.7
  */
 @customElement({
@@ -109,7 +109,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 /**
  * @since 1.0.0-rc.8
  *
- * @event
  * @private
  */
 @event("_focus-requested")
