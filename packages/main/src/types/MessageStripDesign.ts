@@ -35,6 +35,20 @@ enum MessageStripDesign {
 	 * @type {Warning}
 	 */
 	Warning = "Warning",
+
+	/**
+	* Message is a warning
+	* @public
+	* @type {Custom}
+	*/
+   ColorSet1 = "ColorSet1",
+
+	/**
+	* Message is a warning
+	* @public
+	* @type {Custom}
+	*/
+	ColorSet2 = "ColorSet2",
 }
 
 export default MessageStripDesign;

@@ -13,6 +13,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -24,6 +25,7 @@ import {
 	MESSAGE_STRIP_WARNING,
 	MESSAGE_STRIP_SUCCESS,
 	MESSAGE_STRIP_INFORMATION,
+	MESSAGE_STRIP_CUSTOM,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -34,13 +36,17 @@ enum DesignClassesMapping {
 	Positive = "ui5-message-strip-root--positive",
 	Negative = "ui5-message-strip-root--negative",
 	Warning = "ui5-message-strip-root--warning",
+	ColorSet1 = "ui5-message-strip-root--color-set-1",
+	ColorSet2 = "ui5-message-strip-root--color-set-2",
 }
 
-enum IconMapping {
+enum IconMappings {
 	Information = "information",
 	Positive = "sys-enter-2",
 	Negative = "error",
 	Warning = "alert",
+	ColorSet1 = "",
+	ColorSet2 = "",
 }
 
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
@@ -114,6 +120,19 @@ class MessageStrip extends UI5Element {
 	design!: `${MessageStripDesign}`;
 
 	/**
+	 * Defines the component custom color scheme.
+	 * <br><br>
+	 * <b>Note:</b> The property allowed values are between 1-10.</code>.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 6
+	 * @public
+	 * @name sap.ui.main.MessageStrip.prototype.colorScheme
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	colorScheme!: number;
+
+	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
 	 * You can directly provide an icon with the <code>icon</code> slot. Otherwise, the default icon for the type will be used.
 	 *
@@ -185,6 +204,8 @@ class MessageStrip extends UI5Element {
 			Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
 			Negative: getTranslation(MESSAGE_STRIP_ERROR),
 			Warning: getTranslation(MESSAGE_STRIP_WARNING),
+			ColorSet1: getTranslation(MESSAGE_STRIP_CUSTOM),
+			ColorSet2: getTranslation(MESSAGE_STRIP_CUSTOM),
 		};
 	}
 
@@ -216,7 +237,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return IconMapping[this.design];
+		return IconMappings[this.design];
 	}
 
 	get designClasses() {
