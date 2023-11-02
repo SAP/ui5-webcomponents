@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.2...v1.19.0-rc.3) (2023-11-02)
+
+
+### Bug Fixes
+
+* **ui5-view-settings-dialog:** improve settings management ([#7769](https://github.com/SAP/ui5-webcomponents/issues/7769)) ([33cdb86](https://github.com/SAP/ui5-webcomponents/commit/33cdb86b34a3cb6e1b849a186a8c8c1652eb5bca)), closes [#7752](https://github.com/SAP/ui5-webcomponents/issues/7752)
+
+
+
+
+
 # [1.19.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.1...v1.19.0-rc.2) (2023-10-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

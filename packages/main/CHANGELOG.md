@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.2...v1.19.0-rc.3) (2023-11-02)
+
+
+### Bug Fixes
+
+* **FormSupport:** submit linebreaks in ui5-textarea ([#7757](https://github.com/SAP/ui5-webcomponents/issues/7757)) ([425e97b](https://github.com/SAP/ui5-webcomponents/commit/425e97bd5fa030155502f3b9c7022e0e1a3d3202)), closes [#7467](https://github.com/SAP/ui5-webcomponents/issues/7467)
+* **ui5-button:** align styles to specification ([#7784](https://github.com/SAP/ui5-webcomponents/issues/7784)) ([0cf1201](https://github.com/SAP/ui5-webcomponents/commit/0cf1201c132c993f71b14f0cd06c00300d742b0c)), closes [#7352](https://github.com/SAP/ui5-webcomponents/issues/7352)
+* **ui5-calendar:** focus date set in slot ([#7735](https://github.com/SAP/ui5-webcomponents/issues/7735)) ([842f047](https://github.com/SAP/ui5-webcomponents/commit/842f047844ac7f06716813c2fa0ebcb3ae64c9a7)), closes [#7693](https://github.com/SAP/ui5-webcomponents/issues/7693)
+* **ui5-combobox:** announce value state header on focus ([#7751](https://github.com/SAP/ui5-webcomponents/issues/7751)) ([1941854](https://github.com/SAP/ui5-webcomponents/commit/194185400bb70a778359a721928ad3a99bd5f3a6))
+* **ui5-list:** removed unnecessary accessibility reading ([#7758](https://github.com/SAP/ui5-webcomponents/issues/7758)) ([2f6780f](https://github.com/SAP/ui5-webcomponents/commit/2f6780f45ee2b6c60ead36c54ae634276d959b2e)), closes [#7601](https://github.com/SAP/ui5-webcomponents/issues/7601)
+* **ui5-popup:** add check for initial focused element id ([#7746](https://github.com/SAP/ui5-webcomponents/issues/7746)) ([ec80fae](https://github.com/SAP/ui5-webcomponents/commit/ec80faee410d07fa53756a8972fed29bc969c40f)), closes [#7711](https://github.com/SAP/ui5-webcomponents/issues/7711)
+* **ui5-slider:** update labels on min and max change ([#7764](https://github.com/SAP/ui5-webcomponents/issues/7764)) ([14fd642](https://github.com/SAP/ui5-webcomponents/commit/14fd6423ce0ecd6d34074e81c53ff5e6bdfdf7c8))
+* **ui5-tabcontainer:** add margins for the Overflow buttons (start and end) ([#7745](https://github.com/SAP/ui5-webcomponents/issues/7745)) ([612f503](https://github.com/SAP/ui5-webcomponents/commit/612f50351afcf407a8f86457532f7da0e856d4b5)), closes [#7291](https://github.com/SAP/ui5-webcomponents/issues/7291)
+* **ui5-textarea:** remove white space from value state message ([#7755](https://github.com/SAP/ui5-webcomponents/issues/7755)) ([3df7d03](https://github.com/SAP/ui5-webcomponents/commit/3df7d038e5c16d3c885bc186d0df3d37f34b2f61))
+* **ui5-textarea:** select exceeded text ([#7741](https://github.com/SAP/ui5-webcomponents/issues/7741)) ([5a510cf](https://github.com/SAP/ui5-webcomponents/commit/5a510cff52a1e8d19f38f33b4582f9555aa28527))
+
+
+### Features
+
+* **framework:** switch default theme from Quartz Light to Morning Ho… ([#7749](https://github.com/SAP/ui5-webcomponents/issues/7749)) ([10dadd7](https://github.com/SAP/ui5-webcomponents/commit/10dadd79e3a93daf29baaed3a5bcebd8c66a0940))
+
+
+### Reverts
+
+* **ui5-color-palette-item:** revert selected state feature ([#7782](https://github.com/SAP/ui5-webcomponents/issues/7782)) ([f24ff90](https://github.com/SAP/ui5-webcomponents/commit/f24ff9019287f1b0a83d543b6486e5eb4d34ed35))
+
+
+
+
+
 # [1.19.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.1...v1.19.0-rc.2) (2023-10-26)
 
 
