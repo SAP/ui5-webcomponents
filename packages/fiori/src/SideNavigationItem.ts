@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
@@ -81,7 +80,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 
 	get _ariaHasPopup() {
 		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
-			return HasPopup.Tree;
+			return "tree";
 		}
 
 		return undefined;
