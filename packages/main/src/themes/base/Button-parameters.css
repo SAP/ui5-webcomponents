@@ -20,4 +20,5 @@
 	--_ui5_button_fontFamily: var(--sapFontFamily);
 	--_ui5_button_emphasized_focused_border_color: var(--sapButton_Emphasized_BorderColor);
 	--_ui5_button_emphasized_focused_border_before: none;
+	--_ui5_button_emphasized_focused_active_border_color: transparent;
 }
