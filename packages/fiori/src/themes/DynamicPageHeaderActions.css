@@ -4,7 +4,15 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	
+	.ui5-dynamic-page-header-action {
+		position: relative;
+		z-index: 1;
+		min-width: 1.5rem;
+		height: 1.5rem;
+		background-color: var(--sapObjectHeader_Background);
+		border: 1px solid var(--sapButton_BorderColor);
+	}
+
 	.ui5-dynamic-page-header-actions--wrapper {
 		position: absolute;
 		display: flex;
@@ -17,15 +25,16 @@
 			top: calc(50% - 0.02rem);
 			width: 8rem;
 			height: 0.04rem;
+			z-index: 0;
 		}
-	
+
 		&:before {
-			right: 100%;
+			right: 50%;
 			background: linear-gradient(to right, transparent, black);
 		}
-	
+
 		&::after {
-			left: 100%;
+			left: 50%;
 			background: linear-gradient(to left, transparent, black);
 		}
 	}

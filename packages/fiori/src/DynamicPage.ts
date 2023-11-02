@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 
 // Template
 import DynamicPageTemplate from "./generated/templates/DynamicPageTemplate.lit.js";
@@ -15,6 +16,8 @@ import DynamicPageCss from "./generated/themes/DynamicPage.css.js";
 import DynamicPageHeader from "./DynamicPageHeader.js";
 import DynamicPageTitle from "./DynamicPageTitle.js";
 import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
+
+const SCROLL_DEBOUNCE_RATE = 0; // ms
 
 /**
  * @class
@@ -35,6 +38,7 @@ import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 	template: DynamicPageTemplate,
 	dependencies: [DynamicPageHeader, DynamicPageTitle, DynamicPageHeaderActions],
 })
+
 class DynamicPage extends UI5Element {
 	static i18nBundle: I18nBundle;
 
@@ -63,6 +67,14 @@ class DynamicPage extends UI5Element {
 	@slot({ type: HTMLElement })
 	footer!: HTMLElement[];
 
+	isExpanding = false;
+	iPreviousScrollAmount = 0;
+	_debounceInterval?: Timeout | null;
+
+	onAfterRendering() {
+		this.addEventListener("scroll", this.snapOnScroll.bind(this));
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -80,8 +92,38 @@ class DynamicPage extends UI5Element {
 		};
 	}
 
-	get dynamicPageTitle() {
+	get dynamicPageTitle(): DynamicPageTitle | null {
 		return this.querySelector<DynamicPageTitle>("[ui5-dynamic-page-title]");
+	}
+
+	get dynamicPageHeader(): DynamicPageHeader | null {
+		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
+	}
+
+	snapOnScroll() {
+		this._debounce(() => {
+			if (!this.dynamicPageTitle || !this.dynamicPageHeader) {
+				return;
+			}
+
+			if (this.iPreviousScrollAmount === this.scrollTop || this.headerPinned) {
+				return;
+			}
+
+			this.iPreviousScrollAmount = this.scrollTop;
+
+			if (this.isExpanding) {
+				this.isExpanding = false;
+				return;
+			}
+
+			if (this.scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
+				this.headerSnapped = true;
+			} else {
+				this.headerSnapped = false;
+			}
+			this.dynamicPageTitle.snapped = this.headerSnapped;
+		}, SCROLL_DEBOUNCE_RATE);
 	}
 
 	onExpandClick() {
@@ -89,10 +131,21 @@ class DynamicPage extends UI5Element {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this.headerSnapped;
 		}
+		this.isExpanding = true;
 	}
 
 	onPinClick() {
 		this.headerPinned = !this.headerPinned;
+	}
+
+	///
+
+	_debounce(fn: () => void, delay: number) {
+		clearTimeout(this._debounceInterval!);
+		this._debounceInterval = setTimeout(() => {
+			this._debounceInterval = null;
+			fn();
+		}, delay);
 	}
 }
 

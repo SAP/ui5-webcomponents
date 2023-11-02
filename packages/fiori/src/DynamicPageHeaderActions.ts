@@ -59,11 +59,11 @@ class DynamicPageHeaderActions extends UI5Element {
 	}
 
 	get arrowButtonIcon() {
-		return this.snapped ? "slim-arrow-up" : "slim-arrow-down";
+		return this.snapped ? "slim-arrow-down" : "slim-arrow-up";
 	}
 
 	get pinButtonIcon() {
-		return this.pinned ? "pushpin-off" : "pushpin-on";
+		return this.pinned ? "pushpin-on" : "pushpin-off";
 	}
 
 	onExpandClick() {

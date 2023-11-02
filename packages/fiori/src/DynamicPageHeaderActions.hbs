@@ -1,8 +1,8 @@
 <div class="{{classes.root}}">
     <div class="{{classes.wrapper}}">
-        <ui5-button @click="{{onExpandClick}}" icon="{{arrowButtonIcon}}"></ui5-button>
+        <ui5-button @click="{{onExpandClick}}" icon="{{arrowButtonIcon}}" class="ui5-dynamic-page-header-action"></ui5-button>
         {{#unless snapped}}
-            <ui5-button @click="{{onPinClick}}" icon="{{pinButtonIcon}}"></ui5-button>
+            <ui5-button @click="{{onPinClick}}" icon="{{pinButtonIcon}}" class="ui5-dynamic-page-header-action"></ui5-button>
         {{/unless}}
     </div>
 </div>
