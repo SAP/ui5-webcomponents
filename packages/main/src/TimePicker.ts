@@ -117,7 +117,7 @@ class TimePicker extends TimePickerBase {
 
 	onBeforeRendering() {
 		if (this.value) {
-			this.value = this.normalizeValue(this.value!) || this.value;
+			this.value = this.normalizeValue(this.value) || this.value;
 		}
 	}
 
