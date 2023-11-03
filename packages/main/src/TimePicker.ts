@@ -116,7 +116,9 @@ class TimePicker extends TimePickerBase {
 	formatPattern!: string;
 
 	onBeforeRendering() {
-		this.value = this.normalizeValue(this.value!) || this.value;
+		if (this.value) {
+			this.value = this.normalizeValue(this.value!) || this.value;
+		}
 	}
 
 	get _formatPattern() {
