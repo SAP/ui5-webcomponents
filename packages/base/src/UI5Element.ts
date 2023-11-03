@@ -27,6 +27,7 @@ import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import type ItemNavigation from "./delegate/ItemNavigation.js";
 
 let autoId = 0;
 
@@ -101,7 +102,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	_onComponentStateFinalized?: () => void;
+	_itemNavigations: Array<ItemNavigation>;
 	_getRealDomRef?: () => HTMLElement;
 
 	staticAreaItem?: StaticAreaItem;
@@ -137,6 +138,8 @@ abstract class UI5Element extends HTMLElement {
 		this._state = { ...ctor.getMetadata().getInitialState() };
 
 		this._upgradeAllProperties();
+
+		this._itemNavigations = new Array<ItemNavigation>();
 
 		if (ctor._needsShadowDOM()) {
 			this.attachShadow({ mode: "open" });
@@ -672,10 +675,7 @@ abstract class UI5Element extends HTMLElement {
 
 		this.onBeforeRendering();
 
-		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		if (this._onComponentStateFinalized) {
-			this._onComponentStateFinalized();
-		}
+		this._onComponentStateFinalized();
 
 		// resume normal invalidation handling
 		this._suppressInvalidation = false;
@@ -850,6 +850,23 @@ abstract class UI5Element extends HTMLElement {
 
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && noConflictEventResult;
+	}
+
+	/**
+	 * @private
+	 */
+	_addItemNavigation(itemNavigation: ItemNavigation) {
+		this._itemNavigations.push(itemNavigation);
+	}
+
+	/**
+	 * Intended for framework usage only.
+	 * Currently, ItemNavigation updates tab indexes after the component has
+	 * updated its state but before the template is rendered
+	 * @private
+	 * */
+	_onComponentStateFinalized() {
+		this._itemNavigations.forEach(itemNavigation => itemNavigation._init());
 	}
 
 	/**

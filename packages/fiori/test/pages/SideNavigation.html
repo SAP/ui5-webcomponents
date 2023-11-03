@@ -37,10 +37,10 @@
 			</div>
 
 			<!-- Items -->
-			<ui5-side-navigation-item text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
-			<ui5-side-navigation-item text="People" expanded icon="group">
-				<ui5-side-navigation-sub-item text="From My Team" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-item id="item1" text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
+			<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
+				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
 			<ui5-side-navigation-item text="Events.............................................................." icon="calendar" whole-item-toggleable>
@@ -49,9 +49,9 @@
 			</ui5-side-navigation-item>
 
 			<!-- Fixed Items -->
-			<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link" title="Useful links tooltip">
-				<ui5-side-navigation-sub-item text="Vacation Tool" title="Vacation Tool tooltip"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item text="HR tool"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" title="Useful links tooltip">
+				<ui5-side-navigation-sub-item id="fixedItem11" text="Vacation Tool" title="Vacation Tool tooltip"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item id="fixedItem12" text="HR tool"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
 		</ui5-side-navigation>
@@ -60,12 +60,10 @@
 				<ui5-label>selection-change event</ui5-label>
 				<ui5-input id="counter" value="0"></ui5-input>
 			</div>
-
 			<div>
 				<ui5-label>click event</ui5-label>
 				<ui5-input id="click-counter" value="0"></ui5-input>
 			</div>
-
 			<div>
 				<ui5-label>prevent selection-change event</ui5-label>
 				<ui5-checkbox id="prevent-selection"></ui5-checkbox>
