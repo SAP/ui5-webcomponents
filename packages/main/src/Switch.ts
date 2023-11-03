@@ -16,7 +16,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
@@ -245,9 +245,9 @@ class Switch extends UI5Element implements IFormElement {
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
+			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
 				const switchComponent = (element as Switch);
-				nativeInput.checked = !!switchComponent.checked;
+				(nativeInput as HTMLInputElement).checked = !!switchComponent.checked;
 				nativeInput.disabled = !!switchComponent.disabled;
 				nativeInput.value = switchComponent.checked ? "on" : "";
 			});

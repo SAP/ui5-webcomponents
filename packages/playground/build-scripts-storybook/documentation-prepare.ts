@@ -11,7 +11,7 @@ const docsGenerator = new DocsGenerator({
     reader: new DocsReader({
         directoryUtils,
         src: directoryUtils.joinPath("../../../docs/**/*.md"),
-        ignore: ["/**/*/README.md", "/**/*/images", "/**/*/changelog"],
+        ignore: ["/**/*/README.md", "/**/*/images", "/**/*/changelog", "/**/*/internal"],
     }),
     parsers: [
         new MetadataParser(),

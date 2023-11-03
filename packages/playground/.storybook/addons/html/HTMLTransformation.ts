@@ -1,4 +1,4 @@
-import { AttributeProcessor, IProcessor } from "./processors";
+import { AttributeProcessor, StylesProcessor, IProcessor } from "./processors";
 
 export interface IHTMLTransformation {
     transform(html: string): string;
@@ -9,20 +9,31 @@ export interface IHTMLTransformation {
  * Used by the HTML addon.
  */
 export class HTMLTransformation implements IHTMLTransformation {
-    constructor(private processors: IProcessor[]) {
-        this.processors = processors;
+    constructor(private headProcessors: IProcessor[], private bodyProcessors: IProcessor[]) {
+        this.headProcessors = headProcessors;
+        this.bodyProcessors = bodyProcessors;
     }
 
     transform(html: string): string {
-        const dom = this.convertToDOM(html);
+        let transformed = "";
+        const dom = this.convertToDOM(html),
+            head = dom.head,
+            body = dom.body;
 
-        this.walk(dom, (node) => {
-            this.processors.forEach((processor) => {
+        this.headProcessors.forEach((processor) => {
+            processor.process(head);
+        });
+
+        this.walk(body, (node) => {
+            this.bodyProcessors.forEach((processor) => {
                 processor.process(node);
             });
         });
 
-        const transformed = this.convertToString(dom);
+        if (head.innerHTML) {
+            transformed += this.convertToString(head);
+        }
+        transformed += this.convertToString(body);
         return transformed;
     }
 
@@ -40,13 +51,15 @@ export class HTMLTransformation implements IHTMLTransformation {
         return serializer.serializeToString(dom);
     }
 
-    private convertToDOM(html: string): HTMLElement {
+    private convertToDOM(html: string): Document {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-        return doc.body;
+        return doc;
     }
+
 }
 
-const processors = [new AttributeProcessor()];
+const headProcessors = [new StylesProcessor()];
+const bodyProcessors = [new AttributeProcessor()];
 
-export const htmlTransformation = new HTMLTransformation(processors);
+export const htmlTransformation = new HTMLTransformation(headProcessors, bodyProcessors);

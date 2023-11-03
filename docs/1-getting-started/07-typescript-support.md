@@ -1,9 +1,13 @@
 # TypeScript Support
 
-**Note: TypeScript support is experimental and subject to change**. If you consume the web components via TypeScript, you might have to adjust your code before the TypeScript definitions become final and officially supported.
+**TypeScript Support is enabled for both component development and component consumption.**
 
-Since `1.11.0` we are providing `TypeScript definitions` (as `.d.ts` files) for all framework's and components' APIs, available to applications, written in TypeScript. Previously, without definitions, the usage of UI5 Web Components in TypeScript application was not optimal as the types have been missing and inferred by the TS compiler as `any`.
-Now, when accessing a public API, you will benefit from static code checks, autocompletion, etc. as expected in a TypeScript app.
+Since version `1.11.0`, we have been providing TypeScript definitions under an experimental flag, and starting from version `1.19.0`, all TypeScript definitions are considered `stable`.
+With TypeScript definitions you will benefit from static code checks, autocompletion, and other expected features as expected in a TypeScript application.
+
+
+**Note:** In exceptional cases, some of the available TypeScript types may change. In such instances, we will document all changes in a prominent manner within our release change log.
+
 
 **Example:** usage of `setLanguage` from `@ui5/webcomponents-base`
 

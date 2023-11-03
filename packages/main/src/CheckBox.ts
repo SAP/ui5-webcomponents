@@ -24,7 +24,7 @@ import {
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
 import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
@@ -304,9 +304,9 @@ class CheckBox extends UI5Element implements IFormElement {
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
+			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
 				nativeInput.disabled = !!element.disabled;
-				nativeInput.checked = !!element.checked;
+				(nativeInput as HTMLInputElement).checked = !!element.checked;
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {

@@ -10,7 +10,8 @@ interface IFormElement extends UI5Element {
 	checked?: boolean,
 }
 
-type NativeInputUpdateCallback = (element: IFormElement, nativeInput: HTMLInputElement) => void;
+type NativeFormElement = HTMLInputElement | HTMLTextAreaElement;
+type NativeInputUpdateCallback = (element: IFormElement, nativeInput: NativeFormElement) => void;
 type NativeInputChangeCallback = (e: Event) => void;
 
 const findNearestFormElement = (element: IFormElement) => {
@@ -33,36 +34,57 @@ class FormSupport {
 	 */
 	static syncNativeHiddenInput(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name || element.required;
-		let nativeInput = element.querySelector("input[data-ui5-form-support]") as HTMLInputElement;
-		if (needsNativeInput && !nativeInput) {
-			nativeInput = document.createElement("input");
-
-			nativeInput.style.clip = "rect(0 0 0 0)";
-			nativeInput.style.clipPath = "inset(50%)";
-			nativeInput.style.height = "1px";
-			nativeInput.style.overflow = "hidden";
-			nativeInput.style.position = "absolute";
-			nativeInput.style.whiteSpace = "nowrap";
-			nativeInput.style.width = "1px";
-			nativeInput.style.bottom = "0";
-			nativeInput.setAttribute("tabindex", "-1");
-			nativeInput.required = element.required!;
-			nativeInput.setAttribute("data-ui5-form-support", "");
-			nativeInput.setAttribute("aria-hidden", "true");
-
-			nativeInput.addEventListener("focusin", () => element.getFocusDomRef()?.focus());
-
-			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
-			element.appendChild(nativeInput);
-		}
-		if (!needsNativeInput && nativeInput) {
-			element.removeChild(nativeInput);
-		}
+		const nativeInput = element.querySelector<NativeFormElement>("input[data-ui5-form-support]");
 
 		if (needsNativeInput) {
-			nativeInput.name = element.name!;
-			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput);
+			this.syncNativeElement(element, nativeInput, nativeInputUpdateCallback);
+		} else if (nativeInput) {
+			element.removeChild(nativeInput);
 		}
+	}
+
+	/**
+	 * Syncs the native textarea element, rendered into the component's light DOM,
+	 * with the component's state.
+	 * @param { IFormElement} element - the component with form support
+	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
+	 */
+	static syncNativeHiddenTextArea(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
+		const needsNativeTextArea = !!element.name || element.required;
+		const nativeTextarea = element.querySelector<NativeFormElement>("textarea[data-ui5-form-support]");
+
+		if (needsNativeTextArea) {
+			this.syncNativeElement(element, nativeTextarea, nativeInputUpdateCallback, "textarea");
+		} else if (nativeTextarea) {
+			element.removeChild(nativeTextarea);
+		}
+	}
+
+	static syncNativeElement(element: IFormElement, nativeElement: NativeFormElement | null, nativeInputUpdateCallback?: NativeInputUpdateCallback, nativeElementTagName = "input") {
+		if (!nativeElement) {
+			nativeElement = document.createElement(nativeElementTagName) as NativeFormElement;
+
+			nativeElement.style.clip = "rect(0 0 0 0)";
+			nativeElement.style.clipPath = "inset(50%)";
+			nativeElement.style.height = "1px";
+			nativeElement.style.overflow = "hidden";
+			nativeElement.style.position = "absolute";
+			nativeElement.style.whiteSpace = "nowrap";
+			nativeElement.style.width = "1px";
+			nativeElement.style.bottom = "0";
+			nativeElement.setAttribute("tabindex", "-1");
+			nativeElement.required = element.required!;
+			nativeElement.setAttribute("data-ui5-form-support", "");
+			nativeElement.setAttribute("aria-hidden", "true");
+
+			nativeElement.addEventListener("focusin", () => element.getFocusDomRef()?.focus());
+
+			nativeElement.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
+			element.appendChild(nativeElement);
+		}
+
+		nativeElement.name = element.name!;
+		(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeElement);
 	}
 
 	/**
@@ -74,7 +96,7 @@ class FormSupport {
 	 */
 	static syncNativeFileInput(element: IFormElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as HTMLInputElement;
+		let nativeInput = element.querySelector<HTMLInputElement>(`input[type="file"][data-ui5-form-support]`);
 
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
@@ -102,8 +124,8 @@ class FormSupport {
 		}
 
 		if (needsNativeInput) {
-			nativeInput.name = element.name!;
-			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput);
+			nativeInput!.name = element.name!;
+			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput!);
 		}
 	}
 
@@ -138,7 +160,7 @@ class FormSupport {
 	}
 }
 
-const copyDefaultProperties = (element: IFormElement, nativeInput: HTMLInputElement) => {
+const copyDefaultProperties = (element: IFormElement, nativeInput: NativeFormElement) => {
 	nativeInput.disabled = element.disabled!;
 	nativeInput.value = element.value as string; // We do not explicitly convert to string to retain the current browser behavior
 };
@@ -150,6 +172,7 @@ export default FormSupport;
 
 export {
 	IFormElement,
+	NativeFormElement,
 	NativeInputChangeCallback,
 	NativeInputUpdateCallback,
 };
