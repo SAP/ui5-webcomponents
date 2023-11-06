@@ -7,11 +7,19 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import List from "@ui5/webcomponents/dist/List.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
-import Tree from "@ui5/webcomponents/dist/Tree.js";
-import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
-import type { TreeItemClickEventDetail } from "@ui5/webcomponents/dist/Tree.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import {
+	isPhone,
+	isTablet,
+	isCombi,
+} from "@ui5/webcomponents-base/dist/Device.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
@@ -19,37 +27,30 @@ import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationP
 import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
-	SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
-	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
 
+const PAGE_UP_DOWN_SIZE = 10;
+
 type SideNavigationPopoverContents = {
-	mainItem: SideNavigationItem,
-	mainItemSelected: boolean,
-	selectedSubItemIndex: number,
+	item: SideNavigationItem,
 	subItems: Array<SideNavigationSubItem>,
 };
 
-type TSideNavigationItem = SideNavigationItem | SideNavigationSubItem;
-
 type SideNavigationSelectionChangeEventDetail = {
-	item: TSideNavigationItem;
-};
-
-type ItemHasAssociatedItemField = {
-	item: {
-		associatedItem: TSideNavigationItem
-	}
+	item: SideNavigationItemBase;
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type InnerSideNavigationSelectionChangeEventDetail = SideNavigationSelectionChangeEventDetail & ItemHasAssociatedItemField;
-type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedItemField;
+type PopupClickEventDetail = {
+	target: {
+		associatedItem: SideNavigationItemBase
+	}
+};
 
 /**
  * @class
@@ -105,20 +106,17 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
 	styles: SideNavigationCss,
 	staticAreaStyles: SideNavigationPopoverCss,
 	dependencies: [
-		List,
-		StandardListItem,
-		Tree,
-		TreeItem,
 		ResponsivePopover,
 		SideNavigationItem,
 		SideNavigationSubItem,
+		Icon,
 	],
 })
 /**
  * Fired when the selection has changed via user interaction
  *
  * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem} item the clicked item.
+ * @param {sap.ui.webc.fiori.SideNavigationItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
  */
@@ -140,18 +138,12 @@ class SideNavigation extends UI5Element {
 	collapsed!: boolean;
 
 	/**
-	 * @private
-	 */
-	@property({ type: Object })
-	_popoverContents!: SideNavigationPopoverContents;
-
-	/**
 	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
 	 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
@@ -180,49 +172,41 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
 	 * @slot fixedItems
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	_popoverContents!: SideNavigationPopoverContents;
+
+	@property({ type: Boolean })
+	_inPopover!: boolean;
+
+	_flexibleItemNavigation: ItemNavigation;
+	_fixedItemNavigation: ItemNavigation;
+
 	static i18nBundle: I18nBundle;
 
-	get _items() {
-		return this.items.map(this._createTreeItem);
-	}
+	constructor() {
+		super();
 
-	get _fixedItems() {
-		return this.fixedItems.map(this._createTreeItem);
-	}
-
-	_createTreeItem = (item: SideNavigationItem): { item: SideNavigationItem, selected: boolean } => {
-		return {
-			item,
-			selected: (item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected,
-		};
-	}
-
-	_setSelectedItem(item: TSideNavigationItem) {
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
-			return;
-		}
-
-		this._walk(current => {
-			current.selected = false;
+		this._flexibleItemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
+			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getEnabledFlexibleItems(),
 		});
-		item.selected = true;
-	}
 
-	_buildPopoverContent(item: SideNavigationItem) {
-		this._popoverContents = {
-			mainItem: item,
-			mainItemSelected: item.selected && !item.items.some(subItem => subItem.selected),
-			// add one as the first item is the main item
-			selectedSubItemIndex: item.items.findIndex(subItem => subItem.selected) + 1,
-			subItems: item.items,
-		};
+		this._fixedItemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
+			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getEnabledFixedItems(),
+		});
 	}
 
 	async _onAfterOpen() {
@@ -230,8 +214,12 @@ class SideNavigation extends UI5Element {
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
 		const tree = await this.getPickerTree();
-		const index = this._popoverContents.selectedSubItemIndex;
-		tree.focusItemByIndex(index);
+		const selectedItem = tree._findSelectedItem(tree.items);
+		if (selectedItem) {
+			selectedItem.focus();
+		} else {
+			tree.items[0]?.focus();
+		}
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -247,55 +235,16 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
-	get ariaRoleDescNavigationListItem() {
-		let key = SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC;
-		if (this.collapsed) {
-			key = SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC;
-		}
-
-		return SideNavigation.i18nBundle.getText(key);
-	}
-
-	handleTreeItemClick(e: CustomEvent<InnerTreeClickEventDetail>) {
-		const treeItem = e.detail.item;
-		const item = treeItem.associatedItem;
-
-		if (item instanceof SideNavigationItem && !item.wholeItemToggleable) {
-			item.fireEvent("click");
-		} else if (item instanceof SideNavigationSubItem) {
-			item.fireEvent("click");
-		} else {
-			item.expanded = !item.expanded;
-		}
-
-		if (item.selected && !this.collapsed) {
-			return;
-		}
-
-		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
-			this._buildPopoverContent(item);
-
-			let tree = this._itemsTree;
-			if (tree !== e.target as Tree) {
-				tree = this._fixedItemsTree;
-			}
-
-			this.openPicker(tree!._getListItemForTreeItem(treeItem)!);
-		} else if (!item.selected) {
-			this._setSelectedItem(item);
-		}
-	}
-
-	handleInnerSelectionChange(e: CustomEvent<InnerSideNavigationSelectionChangeEventDetail>) {
-		const item = e.detail.item;
-		const { associatedItem } = item;
+	handlePopupItemClick(e: PopupClickEventDetail) {
+		const associatedItem = e.target.associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
+			this.closePicker();
 			return;
 		}
 
-		this._setSelectedItem(associatedItem);
+		this._selectItem(associatedItem);
 		this.closePicker();
 	}
 
@@ -315,8 +264,7 @@ class SideNavigation extends UI5Element {
 
 	async getPickerTree() {
 		const picker = await this.getPicker();
-		const sideNav = picker.querySelector<SideNavigation>("[ui5-side-navigation]")!;
-		return sideNav._itemsTree!;
+		return picker.querySelector<SideNavigation>("[ui5-side-navigation]")!;
 	}
 
 	get hasHeader() {
@@ -327,30 +275,166 @@ class SideNavigation extends UI5Element {
 		return this.hasHeader && !this.collapsed;
 	}
 
-	get _itemsTree() {
-		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-items-tree");
+	get hasFixedItems() {
+		return !!this.fixedItems.length;
 	}
 
-	get _fixedItemsTree() {
-		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-fixed-items-tree");
+	get _rootRole() {
+		return this._inPopover ? "none" : undefined;
 	}
 
-	_walk(callback: (current: TSideNavigationItem) => void) {
-		this.items.forEach(current => {
-			callback(current);
+	get classes() {
+		return {
+			root: {
+				"ui5-sn-phone": isPhone(),
+				"ui5-sn-tablet": isTablet(),
+				"ui5-sn-combi": isCombi(),
+				"ui5-sn-collapsed": this.collapsed,
+				"ui5-sn-in-popover": this._inPopover,
+			},
+		};
+	}
 
-			current.items.forEach(currentSubitem => {
-				callback(currentSubitem);
-			});
+	getEnabledFixedItems() : Array<ITabbable> {
+		return this.getEnabledItems(this.fixedItems);
+	}
+
+	getEnabledFlexibleItems() : Array<ITabbable> {
+		return this.getEnabledItems(this.items);
+	}
+
+	getEnabledItems(items: Array<SideNavigationItem>) : Array<ITabbable> {
+		let result = new Array<ITabbable>();
+
+		items.forEach(item => {
+			if (!item.disabled) {
+				result.push(item);
+			}
+
+			if (!this.collapsed && item.expanded) {
+				result = result.concat(item.items.filter(el => !el.disabled));
+			}
 		});
 
-		this.fixedItems.forEach(current => {
-			callback(current);
+		return result;
+	}
 
-			current.items.forEach(currentSubitem => {
-				callback(currentSubitem);
-			});
+	focusItem(item: SideNavigationItemBase) {
+		if (item.isFixedItem) {
+			this._fixedItemNavigation.setCurrentItem(item);
+		} else {
+			this._flexibleItemNavigation.setCurrentItem(item);
+		}
+	}
+
+	onAfterRendering() {
+		const activeElement = this.shadowRoot!.activeElement;
+		const flexibleDom = this.shadowRoot!.querySelector(".ui5-sn-flexible")!;
+		if (!flexibleDom.contains(activeElement)) {
+			const selectedItem = this._findSelectedItem(this.items);
+			if (selectedItem) {
+				this._flexibleItemNavigation.setCurrentItem(selectedItem);
+			} else {
+				const focusedItem = this._findFocusedItem(this.items);
+				if (!focusedItem) {
+					this._flexibleItemNavigation.setCurrentItem(this.items[0]);
+				}
+			}
+		}
+
+		const fixedDom = this.shadowRoot!.querySelector(".ui5-sn-fixed");
+		if (!fixedDom?.contains(activeElement)) {
+			const selectedItem = this._findSelectedItem(this.fixedItems);
+			if (selectedItem) {
+				this._fixedItemNavigation.setCurrentItem(selectedItem);
+			} else {
+				const focusedItem = this._findFocusedItem(this.fixedItems);
+				if (!focusedItem) {
+					this._fixedItemNavigation.setCurrentItem(this.fixedItems[0]);
+				}
+			}
+		}
+	}
+
+	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
+		let focusedItem;
+
+		if (this.collapsed) {
+			focusedItem = items.find(item => item._tabIndex === "0");
+		} else {
+			focusedItem = this._getWithNestedItems(items, true).find(item => item._tabIndex === "0");
+		}
+
+		return focusedItem;
+	}
+
+	_getWithNestedItems(items: Array<SideNavigationItem>, expandedOnly = false): Array<SideNavigationItemBase> {
+		let result = new Array<SideNavigationItemBase>();
+
+		items.forEach(item => {
+			result.push(item);
+
+			if (!expandedOnly || item.expanded) {
+				result = result.concat(item.items);
+			}
 		});
+
+		return result;
+	}
+
+	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
+		let selectedItem;
+
+		if (this.collapsed) {
+			selectedItem = items.find(item => item._selected);
+		} else {
+			selectedItem = this._getWithNestedItems(items).find(current => current.selected);
+		}
+
+		return selectedItem;
+	}
+
+	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {
+		if (item.selected && !this.collapsed) {
+			item.fireEvent("click");
+			return;
+		}
+
+		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
+			e.preventDefault();
+
+			this._popoverContents = {
+				item,
+				subItems: item.items,
+			};
+
+			this.openPicker(item.getFocusDomRef() as HTMLElement);
+		} else {
+			item.fireEvent("click");
+
+			if (!item.selected) {
+				this._selectItem(item);
+			}
+		}
+	}
+
+	_selectItem(item: SideNavigationItemBase) {
+		if (item.disabled) {
+			return;
+		}
+
+		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+			return;
+		}
+
+		let items = this._getWithNestedItems(this.items);
+		items = items.concat(this._getWithNestedItems(this.fixedItems));
+
+		items.forEach(current => {
+			current.selected = false;
+		});
+
+		item.selected = true;
 	}
 
 	static async onDefine() {

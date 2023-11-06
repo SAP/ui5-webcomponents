@@ -102,9 +102,7 @@ class ItemNavigation {
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this._onkeydown.bind(this));
-		this.rootWebComponent._onComponentStateFinalized = () => {
-			this._init();
-		};
+		this.rootWebComponent._addItemNavigation(this);
 
 		if (typeof options.getItemsCallback !== "function") {
 			throw new Error("getItemsCallback is required");
