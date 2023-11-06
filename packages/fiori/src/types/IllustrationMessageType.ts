@@ -531,11 +531,11 @@ enum IllustrationMessageType {
 	*/
 	TntRadar = "TntRadar",
 	/**
-	* "TntRoadmap" illustration type.
+	* "TntRoadMap" illustration type.
 	* @public
-	* @type {TntRoadmap}
+	* @type {TntRoadMap}
 	*/
-	TntRoadmap = "TntRoadmap",
+	TntRoadMap = "TntRoadMap",
 	/**
 	* "TntSecrets" illustration type.
 	* @public
