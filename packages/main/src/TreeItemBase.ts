@@ -226,7 +226,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines if the item should be collapsible or not.
-	 * It is true, for example, for the items inside the Popover of the Side Navigation
 	 * @private
 	 * @type {boolean}
 	 * @defaultvalue false
