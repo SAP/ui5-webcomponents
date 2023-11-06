@@ -1,10 +1,21 @@
 const name = "postcss-scope-vars";
 
+const escapeVersion = version => "v" + version?.replaceAll(/[^0-9A-Za-z\-_]/g, "-");
+
 module.exports = (options) => {
-	const versionStr = "v" + options?.version?.replaceAll(/[^0-9A-Za-z\-_]/g, "-");
 	return {
 		postcssPlugin: name,
-		prepare() {
+		prepare(opts) {
+			const filePath = opts.root.source.input.file;
+			let overrideVersion;
+			if  (filePath.includes("overrides/@ui5/webcomponents-fiori")) {
+				overrideVersion = require("@ui5/webcomponents-fiori/package.json").version;
+			} else if  (filePath.includes("overrides/@ui5/webcomponents")) {
+				overrideVersion = require("@ui5/webcomponents/package.json").version;
+			}
+
+			const versionStr = escapeVersion(overrideVersion || options?.version);
+
 			return {
 				Declaration: (declaration) => {
 					if (declaration.__ui5_replaced) {
