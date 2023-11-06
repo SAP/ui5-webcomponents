@@ -245,6 +245,16 @@ class SplitButton extends UI5Element {
 	_textButtonIcon!: string;
 
 	/**
+	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_activeArrowButton!: boolean;
+
+	/**
 	 * Defines the text of the component.
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -272,7 +282,7 @@ class SplitButton extends UI5Element {
 		const handleTouchStartEvent = () => {
 			this._textButtonActive = true;
 			this.focused = false;
-			this._setTabIndexValue();
+			this._tabIndex = "-1";
 		};
 
 		this._textButtonPress = {
@@ -301,12 +311,15 @@ class SplitButton extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		if (this.activeArrowButton) {
+			this._activeArrowButton = true;
+			this.arrowButton!._keepActiveState = true;
+		}
+	}
+
 	_handleMouseClick(e: MouseEvent) {
 		const target = e.target as Button;
-
-		if (this.activeArrowButton) {
-			this.activeArrowButton = !this.activeArrowButton;
-		}
 
 		this._manageFocus(target);
 		this._fireClick(e);
@@ -316,6 +329,14 @@ class SplitButton extends UI5Element {
 		if (this.disabled || getEventMark(e)) {
 			return;
 		}
+
+		if (this.activeArrowButton) {
+			this.arrowButton!._keepActiveState = true;
+			this._activeArrowButton = true;
+		} else {
+			this._activeArrowButton = false;
+		}
+
 		this._shiftOrEscapePressed = false;
 		this._setTabIndexValue();
 		this._manageFocus();
@@ -339,6 +360,7 @@ class SplitButton extends UI5Element {
 	_onKeyDown(e: KeyboardEvent) {
 		if (this._isArrowKeyAction(e)) {
 			this._handleArrowButtonAction(e);
+			this._activeArrowButton = true;
 		} else if (this._isDefaultAction(e)) {
 			this._handleDefaultAction(e);
 			this._isDefaultActionPressed = true;
@@ -350,22 +372,22 @@ class SplitButton extends UI5Element {
 
 		// Handles button freeze issue when pressing Enter/Space and navigating with Tab/Shift+Tab simultaneously.
 		if (this._isDefaultActionPressed && (isTabNext(e) || isTabPrevious(e))) {
-			this.activeArrowButton = false;
+			this._activeArrowButton = false;
 			this._textButtonActive = false;
 		}
 
-		this._setTabIndexValue();
+		this._tabIndex = "-1";
 	}
 
 	_onKeyUp(e: KeyboardEvent) {
 		if (this._isArrowKeyAction(e)) {
 			e.preventDefault();
-			this.activeArrowButton = false;
+			this._activeArrowButton = false;
 			this._textButtonActive = false;
 		} else if (this._isDefaultAction(e)) {
 			this._isDefaultActionPressed = false;
 			this._textButtonActive = false;
-			this.activeArrowButton = false;
+			this._activeArrowButton = false;
 			if (isSpace(e)) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -375,7 +397,18 @@ class SplitButton extends UI5Element {
 			}
 		}
 
-		this._setTabIndexValue();
+		if (this._isShiftOrEscape(e)) {
+			if (this.activeArrowButton) {
+				this._activeArrowButton = true;
+				this.arrowButton!._keepActiveState = true;
+			} else {
+				this._activeArrowButton = false;
+			}
+
+			this._handleShiftOrEscapePressed();
+		}
+
+		this._tabIndex = "-1";
 	}
 
 	_fireClick(e?: Event) {
@@ -389,17 +422,36 @@ class SplitButton extends UI5Element {
 	_fireArrowClick(e?: Event) {
 		e?.stopPropagation();
 
-		if (this.activeArrowButton) {
-			this.activeArrowButton = !this.activeArrowButton;
-		}
-
 		this.fireEvent("arrow-click");
 	}
 
 	_textButtonRelease() {
 		this._textButtonActive = false;
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
-		this._setTabIndexValue();
+		this._tabIndex = "-1";
+	}
+
+	_arrowButtonPress(e: MouseEvent) {
+		e.preventDefault();
+		this.arrowButton!.focus();
+
+		this._activeArrowButton = true;
+		this.arrowButton!._keepActiveState = true;
+
+		this._tabIndex = "-1";
+	}
+
+	_arrowButtonRelease(e: MouseEvent) {
+		e.preventDefault();
+
+		if (this.activeArrowButton) {
+			this._activeArrowButton = true;
+			this.arrowButton!._keepActiveState = true;
+		}
+
+		this._activeArrowButton = false;
+
+		this._tabIndex = "-1";
 	}
 
 	_setTabIndexValue() {
@@ -448,13 +500,13 @@ class SplitButton extends UI5Element {
 	 * @param {KeyboardEvent} e - keyboard event
 	 * @private
 	 */
-	_handleArrowButtonAction(e: KeyboardEvent) {
+	_handleArrowButtonAction(e: KeyboardEvent | MouseEvent) {
 		e.preventDefault();
-		this.activeArrowButton = true;
+
 		this._fireArrowClick(e);
 
-		if (this.arrowButton) {
-			this._manageFocus(this.arrowButton);
+		if (isSpace((e as KeyboardEvent))) {
+			this._spacePressed = true;
 		}
 	}
 
@@ -474,7 +526,7 @@ class SplitButton extends UI5Element {
 				this._spacePressed = true;
 			}
 		} else if (this.arrowButton && this.arrowButton.focused) {
-			this.activeArrowButton = true;
+			this._activeArrowButton = true;
 			this._fireArrowClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;

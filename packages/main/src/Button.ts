@@ -314,6 +314,13 @@ class Button extends UI5Element implements IFormElement {
 	_isTouch!: boolean;
 
 	/**
+	 * Defines whether to keep the active state or not.
+	 * @protected
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_keepActiveState!: boolean;
+
+	/**
 	 * Defines the text of the component.
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -336,7 +343,7 @@ class Button extends UI5Element implements IFormElement {
 		super();
 
 		this._deactivate = () => {
-			if (activeButton) {
+			if (activeButton && !this._keepActiveState) {
 				activeButton.active = false;
 			}
 		};
@@ -382,6 +389,13 @@ class Button extends UI5Element implements IFormElement {
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
 
+	onAfterRendering() {
+		if (this._keepActiveState) {
+			this.active = true;
+			this._keepActiveState = false;
+		}
+	}
+
 	_onclick(e: MouseEvent) {
 		if (this.nonInteractive) {
 			return;
@@ -417,7 +431,7 @@ class Button extends UI5Element implements IFormElement {
 			e.stopPropagation();
 		}
 
-		this.active = false;
+		this._deactivate();
 
 		if (activeButton) {
 			activeButton.active = false;
@@ -438,7 +452,7 @@ class Button extends UI5Element implements IFormElement {
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
-			this.active = false;
+			this._deactivate();
 		}
 	}
 

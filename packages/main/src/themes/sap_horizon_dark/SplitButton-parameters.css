@@ -16,6 +16,13 @@
 	--_ui5_split_button_inner_focused_border_radius_outer: 0.375rem;
 	--_ui5_split_button_inner_focused_border_radius_inner: 0.375rem;
 
+	/* Separator colors */
+	--_ui5_split_button_emphasized_separator_color: transparent;
+	--_ui5_split_button_positive_separator_color: transparent;
+	--_ui5_split_button_negative_separator_color: transparent;
+	--_ui5_split_button_attention_separator_color: transparent;
+	--_ui5_split_button_attention_separator_color_default: var(--sapButton_Attention_TextColor);
+
 	--_ui5_split_text_button_hover_border_right: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 	--_ui5_split_text_button_emphasized_hover_border_right: none;
 	--_ui5_split_text_button_positive_hover_border_right: var(--sapButton_BorderWidth) solid var(--sapButton_Accept_BorderColor);
