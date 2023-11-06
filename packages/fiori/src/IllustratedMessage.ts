@@ -160,7 +160,7 @@ class IllustratedMessage extends UI5Element {
 	* <b>Note:</b> Used for accessibility purposes only.
 	*
 	* @type {sap.ui.webc.fiori.types.TitleLevel}
-	* @defaultvalue "TitleLevel.H2"
+	* @defaultvalue "H2"
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleLevel
 	* @public
 	* @since 1.19.0
