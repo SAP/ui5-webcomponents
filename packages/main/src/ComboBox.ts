@@ -769,6 +769,7 @@ class ComboBox extends UI5Element {
 
 		if (this.focused && indexOfItem === -1 && this.hasValueStateText && isOpen) {
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			this.focused = false;
 			return;
 		}
@@ -792,6 +793,7 @@ class ComboBox extends UI5Element {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			this._filteredItems[0].selected = false;
 			return;
 		}
@@ -815,6 +817,7 @@ class ComboBox extends UI5Element {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			return;
 		}
 
@@ -838,6 +841,7 @@ class ComboBox extends UI5Element {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			return;
 		}
 
@@ -1060,15 +1064,24 @@ class ComboBox extends UI5Element {
 
 	_announceSelectedItem(indexOfItem: number) {
 		const currentItem = this._filteredItems[indexOfItem];
+		const nonGroupItems = this._filteredItems.filter(item => !item.isGroupItem);
 		const currentItemAdditionalText = currentItem.additionalText || "";
 		const isGroupItem = currentItem?.isGroupItem;
-		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
+		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, nonGroupItems.indexOf(currentItem) + 1, nonGroupItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {
 			announce(`${groupHeaderText} ${currentItem.text}`, InvisibleMessageMode.Polite);
 		} else {
 			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), InvisibleMessageMode.Polite);
+		}
+	}
+
+	_announceValueStateText() {
+		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
+
+		if (valueStateText) {
+			announce(valueStateText, InvisibleMessageMode.Polite);
 		}
 	}
 

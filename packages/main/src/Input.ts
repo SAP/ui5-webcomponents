@@ -74,6 +74,7 @@ import {
 	INPUT_SUGGESTIONS_ONE_HIT,
 	INPUT_SUGGESTIONS_MORE_HITS,
 	INPUT_SUGGESTIONS_NO_HIT,
+	INPUT_CLEAR_ICON_ACC_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -1502,6 +1503,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get _headerTitleText() {
 		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get clearIconAccessibleName() {
+		return Input.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
 	}
 
 	get inputType() {

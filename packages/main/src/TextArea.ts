@@ -405,7 +405,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+			FormSupport.syncNativeHiddenTextArea(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
@@ -474,6 +474,12 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		this.value = nativeTextArea.value;
+		const valueLength = this.value.length;
+
+		if (e.inputType === "insertFromPaste" && this.maxlength && valueLength > this.maxlength) {
+			nativeTextArea.setSelectionRange(this.maxlength, valueLength);
+		}
+
 		this.fireEvent("input", {});
 
 		// Angular two way data binding
@@ -568,6 +574,7 @@ class TextArea extends UI5Element implements IFormElement {
 				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
