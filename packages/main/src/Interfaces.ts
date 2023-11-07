@@ -10,11 +10,14 @@ const IAvatar = "sap.ui.webc.main.IAvatar";
 /**
  * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
  *
- * @name sap.ui.webc.main.IBreadcrumbsItem
- * @interface
  * @public
  */
-const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
+interface IBreadcrumbsItem {
+	href: string,
+	target?: string,
+	accessibleName: string,
+	text: Array<Node>,
+ }
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
