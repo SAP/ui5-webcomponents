@@ -81,6 +81,8 @@ class ItemNavigation {
 
 	_skipItemsSize: number | null;
 
+	_initBound: () => void;
+
 	/**
 	 *
 	 * @param rootWebComponent the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
@@ -102,7 +104,8 @@ class ItemNavigation {
 
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this._onkeydown.bind(this));
-		this.rootWebComponent._addItemNavigation(this);
+		this._initBound = this._init.bind(this);
+		this.rootWebComponent.attachComponentStateFinalized(this._initBound);
 
 		if (typeof options.getItemsCallback !== "function") {
 			throw new Error("getItemsCallback is required");
