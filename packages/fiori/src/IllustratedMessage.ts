@@ -11,6 +11,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type IButton from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
@@ -61,10 +62,7 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
  * <code>import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.IllustratedMessage
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-illustrated-message
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  */
@@ -92,9 +90,8 @@ class IllustratedMessage extends UI5Element {
 	* You can import them removing the <code>Tnt</code> prefix like this:
 	* <br>
 	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
-	* @type {sap.ui.webc.fiori.types.IllustrationMessageType}
-	* @defaultvalue "BeforeSearch"
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.name
+	* @type {IllustrationMessageType}
+	* @default "BeforeSearch"
 	* @public
 	*/
 	@property({ type: IllustrationMessageType, defaultValue: IllustrationMessageType.BeforeSearch })
@@ -107,9 +104,8 @@ class IllustratedMessage extends UI5Element {
 	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
 	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
 	*
-	* @type {sap.ui.webc.fiori.types.IllustrationMessageSize}
-	* @defaultvalue "Auto"
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.size
+	* @type {IllustrationMessageSize}
+	* @default "Auto"
 	* @public
 	* @since 1.5.0
 	*/
@@ -123,8 +119,7 @@ class IllustratedMessage extends UI5Element {
 	* <br><br>
 	* <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
 	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitleText
+	* @default ""
 	* @public
 	*/
 	@property()
@@ -135,8 +130,7 @@ class IllustratedMessage extends UI5Element {
 	* <br><br>
 	* <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
 	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleText
+	* @default ""
 	* @public
 	*/
 	@property()
@@ -146,8 +140,7 @@ class IllustratedMessage extends UI5Element {
 	* Receives id(or many ids) of the elements that label the component.
 	*
 	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.accessibleNameRef
+	* @default ""
 	* @public
 	* @since 1.7.0
 	*/
@@ -210,8 +203,6 @@ class IllustratedMessage extends UI5Element {
 	* <br><br>
 	* <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
 	* @type {HTMLElement}
-	* @slot title
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.title
 	* @public
 	* @since 1.7.0
 	*/
@@ -223,8 +214,6 @@ class IllustratedMessage extends UI5Element {
 	* <br><br>
 	* <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
 	* @type {HTMLElement}
-	* @slot subtitle
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitle
 	* @public
 	* @since 1.0.0-rc.16
 	*/
@@ -233,13 +222,11 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the component actions.
-	* @type {sap.ui.webc.main.IButton[]}
-	* @slot actions
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.default
+	* @type {IButton[]}
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
-	actions!: Array<HTMLElement>;
+	actions!: Array<IButton>;
 
 	illustrationTitle?: string;
 	illustrationSubtitle?: string;
