@@ -668,6 +668,11 @@ class Popover extends Popup {
 			safeRangeForArrowX,
 		);
 
+		if (isVertical) {
+			// if the target is with small width - only icon button for example
+			const arrowTranslateXMinimum = -(popoverSize.width / 2 - (targetRect.width / 2 + targetRect.left) + ARROW_SIZE);
+			arrowTranslateX = (arrowTranslateX < arrowTranslateXMinimum) ? arrowTranslateX : arrowTranslateXMinimum;
+		}
 		return {
 			x: Math.round(arrowTranslateX),
 			y: Math.round(arrowTranslateY),

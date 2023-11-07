@@ -343,6 +343,10 @@
 	<br>
 	<br>
 
+	<div class="popover12auto-left">
+		<ui5-button id="btnOpenDynamicLeft" icon="overflow"></ui5-button>
+	</div>
+
 	<div class="popover12auto">
 		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
 	</div>
@@ -556,6 +560,20 @@
 		secondBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "Second button is clicked";
 			popNoFocusableContent.showAt(event.target);
+		});
+
+		btnOpenDynamicLeft.addEventListener("click", function () {
+			var popoverLeft = document.createElement("ui5-popover"),
+				buttonLeft = document.createElement("ui5-button");
+
+			buttonLeft.textContent = "Focusable element";
+			popoverLeft.appendChild(buttonLeft);
+			popoverLeft.setAttribute("id", "dynamic-popover-left");
+			popoverLeft.setAttribute("placement-type", "Bottom");
+
+			document.body.appendChild(popoverLeft);
+
+			popoverLeft.showAt(btnOpenDynamicLeft);
 		});
 
 		btnOpenDynamic.addEventListener("click", function () {
