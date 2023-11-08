@@ -1,7 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import SideNavigationItemBase from "./SideNavigationItemBase.js";
 
 /**
  * @class
@@ -21,60 +19,25 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-sub-item")
-/**
- * Fired when the component is activated either with a
- * click/tap or by using the Enter or Space key.
- *
- * @public
- */
-@event("click")
-class SideNavigationSubItem extends UI5Element {
-	/**
-	 * Defines the text of the item.
-	 *
-	 * @public
-	 * @type {string}
-	 * @default ""
-	 */
-	@property()
-	text!: string;
+class SideNavigationSubItem extends SideNavigationItemBase {
+	get isFixedItem() {
+		return this.parentElement?.slot === "fixedItems";
+	}
 
-	/**
-	 * Defines whether the subitem is selected.
-	 *
-	 * @public
-	 * @type {boolean}
-	 * @default false
-	 */
-	@property({ type: Boolean })
-	selected!: boolean;
+	_onkeydown = (e: KeyboardEvent) => {
+		super._onkeydown(e);
+	}
 
-	/**
-	 * Defines the icon of the item.
-	 * <br><br>
-	 *
-	 * The SAP-icons font provides numerous options.
-	 * <br>
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @public
-	 * @type {string}
-	 * @default ""
-	 */
-	@property()
-	icon!: string;
+	_onkeyup = (e: KeyboardEvent) => {
+		super._onkeyup(e);
+	}
 
-	/**
-	 * Defines the tooltip of the component.
-	 * @type {string}
-	 * @default ""
-	 * @private
-	 * @since 1.0.0-rc.16
-	 */
-	@property()
-	title!: string
+	_onfocusin = (e: FocusEvent) => {
+		super._onfocusin(e);
+	}
 
-	get _tooltip() {
-		return this.title || this.text;
+	_onclick = (e: PointerEvent) => {
+		super._onclick(e);
 	}
 }
 
