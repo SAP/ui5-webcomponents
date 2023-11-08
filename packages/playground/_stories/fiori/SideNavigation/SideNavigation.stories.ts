@@ -155,10 +155,14 @@ ToolLayout.decorators = [
 </div>
 
 <script>
-	const sidenav = document.querySelector("ui5-side-navigation");
-	document.getElementById("toggle").addEventListener("click", () => {
-		sidenav.toggleAttribute("collapsed");
-	});
+debugger;
+	if (!(typeof(sidenav) === undefined)) {
+		const sidenav = document.querySelector("ui5-side-navigation");
+		document.getElementById("toggle").addEventListener("click", () => {
+			sidenav.toggleAttribute("collapsed");
+		});
+	}
+	
 </script>`;
 	}
 ]
