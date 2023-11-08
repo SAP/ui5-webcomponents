@@ -68,10 +68,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.BarcodeScannerDialog
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-barcode-scanner-dialog
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  */
@@ -90,7 +87,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 /**
  * Fires when the scan is completed successfuuly.
  *
- * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-success
  * @param {string} text the scan result as string
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
@@ -105,7 +101,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 /**
  * Fires when the scan fails with error.
  *
- * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-error
  * @param {string} message the error message
  * @public
  */
@@ -120,8 +115,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.BarcodeScannerDialog.prototype.loading
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -143,7 +137,6 @@ class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Shows a dialog with the camera videostream. Starts a scan session.
 	 * @method
-	 * @name sap.ui.webc.fiori.BarcodeScannerDialog#show
 	 * @returns {void}
 	 * @public
 	 */
@@ -171,7 +164,6 @@ class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Closes the dialog and the scan session.
 	 * @method
-	 * @name sap.ui.webc.fiori.BarcodeScannerDialog#close
 	 * @returns {void}
 	 * @public
 	 */

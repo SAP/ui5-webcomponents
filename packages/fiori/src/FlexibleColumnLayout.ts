@@ -125,10 +125,7 @@ type AccessibilityRoles = {
  * <code>import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.FlexibleColumnLayout
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-flexible-column-layout
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.8
  */
@@ -152,7 +149,6 @@ type AccessibilityRoles = {
  * @param {boolean} endColumnVisible Indicates if the end column is currently visible
  * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
  * @param {boolean} resize Indicates if the layout is changed via resizing
- * @event sap.ui.webc.fiori.FlexibleColumnLayout#layout-change
  * @public
  */
 @event("layout-change", {
@@ -175,9 +171,8 @@ class FlexibleColumnLayout extends UI5Element {
 	* <br><br>
 	* <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
 	* in 67%/33% proportion.
-	* @type {sap.ui.webc.fiori.types.FCLLayout}
-	* @defaultvalue "OneColumn"
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.layout
+	* @type {FCLLayout}
+	* @default "OneColumn"
 	* @public
 	*/
 	@property({ type: FCLLayout, defaultValue: FCLLayout.OneColumn })
@@ -188,8 +183,8 @@ class FlexibleColumnLayout extends UI5Element {
 	* used for expanding and shrinking the columns.
 	*
 	* @type {boolean}
-	* @defaultvalue false
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.hideArrows
+	* @default false
+
 	* @public
 	* @since 1.0.0-rc.15
 	*/
@@ -211,7 +206,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - <code>endArrowContainerAccessibleName</code>: the text that the second arrow container (between the <code>mid</code> and <code>end</code> columns) will have as <code>aria-label</code>
 	*
 	* @type {object}
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.accessibilityTexts
 	* @public
 	* @since 1.0.0-rc.11
 	*/
@@ -230,7 +224,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*
 	* @type {object}
 	* @public
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.accessibilityRoles
 	* @since 1.1.0
 	*/
 	@property({ type: Object })
@@ -239,8 +232,8 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the component width in px.
 	*
-	* @type {sap.ui.webc.base.types.Float}
-	* @defaultvalue 0
+	* @type {Float}
+	* @default 0
 	* @private
 	*/
 	@property({ validator: Float, defaultValue: 0 })
@@ -252,7 +245,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* Example: [67%, 33%, 0], [25%, 50%, 25%], etc.
 	*
 	* @type {object}
-	* @defaultvalue undefined
+	* @default undefined
 	* @private
 	*/
 	@property({ type: Object, defaultValue: undefined })
@@ -261,8 +254,8 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the visible columns count - 1, 2 or 3.
 	*
-	* @type {sap.ui.webc.base.types.Integer}
-	* @defaultvalue 1
+	* @type {Integer}
+	* @default 1
 	* @private
 	*/
 	@property({ validator: Integer, defaultValue: 0 })
@@ -281,8 +274,6 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the content in the start column.
 	* @type {HTMLElement}
-	* @slot
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.startColumn
 	* @public
 	*/
 	@slot()
@@ -291,8 +282,6 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the content in the middle column.
 	* @type {HTMLElement}
-	* @slot
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.midColumn
 	* @public
 	*/
 	@slot()
@@ -301,8 +290,6 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the content in the end column.
 	* @type {HTMLElement}
-	* @slot
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.endColumn
 	* @public
 	*/
 	@slot()
@@ -509,8 +496,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* where the numbers represents the width of the start, middle and end columns.
 	* @readonly
 	* @type {array}
-	* @defaultvalue ["100%", 0, 0]
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.columnLayout
+	* @default ["100%", 0, 0]
 	* @public
 	*/
 	get columnLayout(): ColumnLayout | undefined {
@@ -520,9 +506,8 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Returns if the <code>start</code> column is visible.
 	* @readonly
-	* @defaultvalue true
+	* @default true
 	* @type {boolean}
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.startColumnVisible
 	* @public
 	*/
 	get startColumnVisible(): boolean {
@@ -537,8 +522,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* Returns if the <code>middle</code> column is visible.
 	* @readonly
 	* @type {boolean}
-	* @defaultvalue false
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.midColumnVisible
+	* @default false
 	* @public
 	*/
 	get midColumnVisible(): boolean {
@@ -553,8 +537,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* Returns if the <code>end</code> column is visible.
 	* @readonly
 	* @type {boolean}
-	* @defaultvalue false
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.endColumnVisible
+	* @default false
 	* @public
 	*/
 	get endColumnVisible(): boolean {
@@ -568,9 +551,8 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Returns the number of currently visible columns.
 	* @readonly
-	* @type {sap.ui.webc.base.types.Integer}
-	* @defaultvalue 1
-	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.visibleColumns
+	* @type {Integer}
+	* @default 1
 	* @public
 	*/
 	get visibleColumns(): number {

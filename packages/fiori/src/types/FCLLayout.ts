@@ -2,16 +2,12 @@
  * Different types of FCLLayout.
  *
  * @readonly
- * @enum {string}
  * @public
- * @author SAP SE
- * @alias sap.ui.webc.fiori.types.FCLLayout
  */
 enum FCLLayout {
 	/**
 	 * The layout will display 1 column.
 	 * @public
-	 * @type {OneColumn}
 	 */
 	OneColumn = "OneColumn",
 
@@ -23,7 +19,6 @@ enum FCLLayout {
 	 *
 	 * Use to display both a list and a detail page when the user should focus on the list page.
 	 *
-	 * @type {TwoColumnsStartExpanded}
 	 * @public
 	 */
 	TwoColumnsStartExpanded = "TwoColumnsStartExpanded",
@@ -35,7 +30,6 @@ enum FCLLayout {
 	 *
 	 * Use to display both a list and a detail page when the user should focus on the detail page.
 	 *
-	 * @type {TwoColumnsMidExpanded}
 	 * @public
 	 */
 	TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
@@ -47,7 +41,6 @@ enum FCLLayout {
 	 *
 	 * Use to display all three pages (list, detail, detail-detail) when the user should focus on the detail.
 	 *
-	 * @type {ThreeColumnsMidExpanded}
 	 * @public
 	 */
 	ThreeColumnsMidExpanded = "ThreeColumnsMidExpanded",
@@ -60,7 +53,6 @@ enum FCLLayout {
 	 * Use to display all three pages (list, detail, detail-detail) when the user should focus on the detail-detail.
 	 *
 	 * @public
-	 * @type ThreeColumnsEndExpanded
 	 */
 	ThreeColumnsEndExpanded = "ThreeColumnsEndExpanded",
 
@@ -73,7 +65,6 @@ enum FCLLayout {
 	 * The detail-detail is still loaded and easily accessible with layout arrows.
 	 *
 	 * @public
-	 * @type ThreeColumnsStartExpandedEndHidden
 	 */
 	ThreeColumnsStartExpandedEndHidden = "ThreeColumnsStartExpandedEndHidden",
 
@@ -86,7 +77,6 @@ enum FCLLayout {
 	 * The detail-detail is still loaded and easily accessible with a layout arrow.
 	 *
 	 * @public
-	 * @type ThreeColumnsMidExpandedEndHidden
 	 */
 	ThreeColumnsMidExpandedEndHidden = "ThreeColumnsMidExpandedEndHidden",
 
@@ -98,7 +88,6 @@ enum FCLLayout {
 	 * Use to display a detail page only, when the user should focus entirely on it.
 	 *
 	 * @public
-	 * @type MidColumnFullScreen
 	 */
 	MidColumnFullScreen = "MidColumnFullScreen",
 
@@ -110,7 +99,6 @@ enum FCLLayout {
 	 * Use to display a detail-detail page only, when the user should focus entirely on it.
 	 *
 	 * @public
-	 * @type EndColumnFullScreen
 	 */
 	EndColumnFullScreen = "EndColumnFullScreen",
 }

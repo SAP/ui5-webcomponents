@@ -11,6 +11,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IAvatar } from "./Interfaces.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -53,12 +54,9 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  * <code>import "@ui5/webcomponents/dist/Avatar.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Avatar
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-avatar
+ * @extends UI5Element
  * @since 1.0.0-rc.6
- * @implements sap.ui.webc.main.IAvatar
+ * @implements {IAvatar}
  * @public
  */
 @customElement({
@@ -73,20 +71,18 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 * Fired on mouseup, space and enter if avatar is interactive
 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
 * property is set to <code>true</code>.
-* @event
 * @private
 * @since 1.0.0-rc.11
 */
 @event("click")
-class Avatar extends UI5Element implements ITabbable {
+class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Avatar.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -97,8 +93,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * <b>Note:</b> This property won't have effect if the <code>disabled</code>
 	 * property is set to <code>true</code>.
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Avatar.prototype.interactive
-	 * @defaultValue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -133,8 +128,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Avatar.prototype.icon
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -160,8 +154,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Avatar.prototype.fallbackIcon
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -173,8 +166,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * Up to three Latin letters can be displayed as initials.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Avatar.prototype.initials
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -183,9 +175,8 @@ class Avatar extends UI5Element implements ITabbable {
 	/**
 	 * Defines the shape of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.AvatarShape}
-	 * @name sap.ui.webc.main.Avatar.prototype.shape
-	 * @defaultvalue "Circle"
+	 * @type {AvatarShape}
+	 * @default "Circle"
 	 * @public
 	 */
 	@property({ type: AvatarShape, defaultValue: AvatarShape.Circle })
@@ -194,9 +185,8 @@ class Avatar extends UI5Element implements ITabbable {
 	/**
 	 * Defines predefined size of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.AvatarSize}
-	 * @name sap.ui.webc.main.Avatar.prototype.size
-	 * @defaultvalue "S"
+	 * @type {AvatarSize}
+	 * @default "S"
 	 * @public
 	 */
 	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
@@ -211,9 +201,8 @@ class Avatar extends UI5Element implements ITabbable {
 	/**
 	 * Defines the background color of the desired image.
 	 *
-	 * @type {sap.ui.webc.main.types.AvatarColorScheme}
-	 * @name sap.ui.webc.main.Avatar.prototype.colorScheme
-	 * @defaultvalue "Accent6"
+	 * @type {AvatarColorScheme}
+	 * @default "Accent6"
 	 * @public
 	 */
 	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
@@ -230,8 +219,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * If not provided a default text alternative will be set, if present.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Avatar.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.7
 	 */
@@ -241,7 +229,7 @@ class Avatar extends UI5Element implements ITabbable {
 	/**
 	 * Defines the aria-haspopup value of the component when <code>interactive</code> property is <code>true</code>.
 	 * <br><br>
-	 * @type String
+	 * @type {string}
 	 * @since 1.0.0-rc.15
 	 * @protected
 	 */
@@ -265,8 +253,6 @@ class Avatar extends UI5Element implements ITabbable {
 	 *		} <br />
 	 * </code>
 	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.Avatar.prototype.default
-	 * @slot image
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -294,8 +280,6 @@ class Avatar extends UI5Element implements ITabbable {
 	 * </ui5-avatar>
 	 *
 	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.Avatar.prototype.badge
-	 * @slot badge
 	 * @public
 	 * @since 1.7.0
 	 */
@@ -323,7 +307,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * Returns the effective avatar size.
 	 * @readonly
 	 * @type {string}
-	 * @defaultValue "S"
+	 * @default "S"
 	 * @private
 	 */
 	get _effectiveSize(): AvatarSize {
@@ -335,7 +319,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * Returns the effective background color.
 	 * @readonly
 	 * @type {string}
-	 * @defaultValue "Accent6"
+	 * @default "Accent6"
 	 * @private
 	 */
 	get _effectiveBackgroundColor() {

@@ -28,11 +28,13 @@ const IFilterItemOption = "sap.ui.webc.fiori.IFilterItemOption";
 /**
  * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
  *
- * @name sap.ui.webc.fiori.IMediaGalleryItem
- * @interface
  * @public
  */
-const IMediaGalleryItem = "sap.ui.webc.fiori.IMediaGalleryItem";
+interface IMediaGalleryItem {
+	selected: boolean,
+	disabled: boolean,
+	focused: boolean,
+}
 
 /**
  * Interface for components that may be slotted as an action inside <code>ui5-li-notification</code> and <code>ui5-li-notification-group</code>
@@ -55,11 +57,16 @@ const INotificationListItem = "sap.ui.webc.fiori.INotificationListItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-product-switch</code> as items
  *
- * @name sap.ui.webc.fiori.IProductSwitchItem
- * @interface
  * @public
  */
-const IProductSwitchItem = "sap.ui.webc.fiori.IProductSwitchItem";
+interface IProductSwitchItem {
+	titleText: string,
+	subtitleText: string,
+	icon: string,
+	target: string,
+	targetSrc: string,
+	selected: boolean,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
