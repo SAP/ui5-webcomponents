@@ -17,11 +17,8 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
  * The <code>ui5-li-groupheader</code> is a special list item, used only to separate other list items into logical groups.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.GroupHeaderListItem
- * @extends sap.ui.webc.main.ListItemBase
- * @tagname ui5-li-groupheader
- * @implements sap.ui.webc.main.IListItem
+ * @extends ListItemBase
+ * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -36,8 +33,7 @@ class GroupHeaderListItem extends ListItemBase {
 	 * Note: If not provided a default text alternative will be set, if present.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.GroupHeaderListItem.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -50,7 +46,6 @@ class GroupHeaderListItem extends ListItemBase {
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
-	 * @name sap.ui.webc.main.GroupHeaderListItem.prototype.default
 	 * @slot
 	 * @public
 	 */

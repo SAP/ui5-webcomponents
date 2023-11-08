@@ -16,26 +16,16 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  *
  * The component accepts arbitrary HTML content to allow full customization.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-li-custom</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>native-li - Used to style the main li tag of the list item</li>
- * <li>content - Used to style the content area of the list item</li>
- * <li>detail-button - Used to style the button rendered when the list item is of type detail</li>
- * <li>delete-button - Used to style the button rendered when the list item is in delete mode</li>
- * <li>radio - Used to style the radio button rendered when the list item is in single selection mode</li>
- * <li>checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode</li>
- * </ul>
+ * @csspart native-li - Used to style the main li tag of the list item
+ * @csspart content - Used to style the content area of the list item
+ * @csspart detail-button - Used to style the button rendered when the list item is of type detail
+ * @csspart delete-button - Used to style the button rendered when the list item is in delete mode
+ * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
+ * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CustomListItem
- * @extends sap.ui.webc.main.ListItem
- * @tagname ui5-li-custom
- * @implements sap.ui.webc.main.IListItem
+ * @extends ListItem
+ * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -49,8 +39,7 @@ class CustomListItem extends ListItem {
 	 * Note: If not provided a default text alternative will be set, if present.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.CustomListItem.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -60,8 +49,6 @@ class CustomListItem extends ListItem {
 	/**
 	 * Defines the content of the component.
 	 * @type {Node[]}
-	 * @name sap.ui.webc.main.CustomListItem.prototype.default
-	 * @slot
 	 * @public
 	 */
 

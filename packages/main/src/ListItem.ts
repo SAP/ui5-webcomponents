@@ -76,9 +76,7 @@ type AccessibilityAttributes = {
  * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ListItem
- * @extends sap.ui.webc.main.ListItemBase
+ * @extends ListItemBase
  * @public
  */
 @customElement({
@@ -93,7 +91,6 @@ type AccessibilityAttributes = {
 /**
  * Fired when the user clicks on the detail button when type is <code>Detail</code>.
  *
- * @event sap.ui.webc.main.ListItem#detail-click
  * @public
  */
 @event("detail-click")
@@ -108,9 +105,8 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 	 *
-	 * @type {sap.ui.webc.main.types.ListItemType}
-	 * @name sap.ui.webc.main.ListItem.prototype.type
-	 * @defaultvalue "Active"
+	 * @type {ListItemType}
+	 * @default "Active"
 	 * @public
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
@@ -133,7 +129,6 @@ abstract class ListItem extends ListItemBase {
 	 * </ul>
 	 *
 	 * @type {object}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibilityAttributes
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -146,7 +141,6 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 * @public
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.navigated
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -156,7 +150,6 @@ abstract class ListItem extends ListItemBase {
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.active
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -165,8 +158,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the tooltip of the component.
 	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.title
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -177,7 +169,6 @@ abstract class ListItem extends ListItemBase {
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.actionable
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -188,8 +179,7 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 * @private
 	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.role
-	 * @defaultvalue "listitem"
+	 * @default "listitem"
 	 * @since 1.0.0-rc.9
 	 *
 	 */
@@ -200,8 +190,7 @@ abstract class ListItem extends ListItemBase {
 	 * Defines the description for the accessible role of the component.
 	 * @protected
 	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRoleDescription
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ defaultValue: undefined, noAttribute: true })
@@ -212,8 +201,7 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 * @private
 	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRole
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.3.0
 	 *
 	 */
@@ -225,8 +213,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @type {sap.ui.webc.main.types.HasPopup}
-	 * @name sap.ui.webc.main.ListItem.prototype.ariaHaspopup
+	 * @type {HasPopup}
 	 * @since 1.10.0
 	 * @private
 	 */
@@ -248,8 +235,7 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
 	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
-	 * @type {sap.ui.webc.main.IButton}
-	 * @name sap.ui.webc.main.ListItem.prototype.deleteButton
+	 * @type {IButton}
 	 * @since 1.9.0
 	 * @slot
 	 * @public
