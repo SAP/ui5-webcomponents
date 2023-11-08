@@ -2484,10 +2484,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@sap-theming/theming-base-content@11.6.8":
-  version "11.6.8"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.6.8.tgz#3e70ddfe415f4492b3e37df2c642fbbf7cb8296d"
-  integrity sha512-LRYvqVeqFYCqhB4EMbFslQpgRLrYyOOsacWI0JZbWlnvRkbF4/pzKpr4ULyVPFp26CrwXhUZJeSSAa3/8KS6iw==
+"@sap-theming/theming-base-content@11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.9.0.tgz#bd46458c7ed58cfb23e4e0ec620c9780a5711a5b"
+  integrity sha512-EOAYDx13SU9Wd18qgAR+FYTrywC5dk+IU3oM5NGAz0GxJLpiGQkSONYnAMJK/Gqk9QhU7uqWQsjrcnOcOl0fxA==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
