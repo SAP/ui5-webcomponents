@@ -16,7 +16,6 @@ import ToolbarItem from "./ToolbarItem.js";
  *
  * @constructor
  * @extends ToolbarItem
- * @tagname ui5-toolbar-separator
  * @since 1.17.0
  * @abstract
  * @implements {IToolbarItem}
