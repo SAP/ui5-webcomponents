@@ -32,13 +32,9 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
  * @constructor
  * @abstract
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarSelect
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-toolbar-select
- * @appenddocs sap.ui.webc.main.ToolbarSelectOption
+ * @extends UI5Element
  * @public
- * @implements sap.ui.webc.main.IToolbarItem
+ * @implements {IToolbarItem}
  * @since 1.17.0
  */
 @customElement({
@@ -49,7 +45,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 /**
  * Fired when the selected option changes.
  *
- * @event sap.ui.webc.main.ToolbarSelect#change
  * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
@@ -63,14 +58,12 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 /**
  * Fired after the component's dropdown menu opens.
  *
- * @event sap.ui.webc.main.ToolbarSelect#open
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
  *
- * @event sap.ui.webc.main.ToolbarSelect#close
  * @public
  */
 @event("close")
@@ -82,9 +75,8 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.width
-	 * @defaultvalue undefined
-	 * @type { sap.ui.webc.base.types.CSSSize }
+	 * @default undefined
+	 * @type {CSSSize}
 	 * @public
 	 */
 	@property({ validator: CSSSize })
@@ -99,9 +91,8 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
-	 * @type {sap.ui.webc.main.ISelectOption[]}
+	 * @type {ISelectOption[]}
 	 * @slot options
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.default
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -111,9 +102,8 @@ class ToolbarSelect extends ToolbarItem {
 	 * Defines the value state of the component.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.valueState
+	 * @type {ValueState}
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -125,8 +115,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.disabled
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -137,8 +126,7 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * @type {string}
 	 * @public
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.accessibleName
+	 * @default ""
 	 */
 	@property()
 	accessibleName!: string;
@@ -147,8 +135,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * Receives id(or many ids) of the elements that label the select.
 	 *
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.accessibleNameRef
+	 * @default ""
 	 * @public
 	 */
 	@property()

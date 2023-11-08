@@ -14,13 +14,10 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * It takes no space in calculating toolbar items width.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarSpacer
- * @extends sap.ui.webc.main.ToolbarItem
- * @tagname ui5-toolbar-spacer
+ * @extends ToolbarItem
  * @abstract
  * @since 1.17.0
- * @implements sap.ui.webc.main.IToolbarItem
+ * @implements {IToolbarItem}
  * @public
  */
 @customElement({
@@ -35,9 +32,8 @@ class ToolbarSpacer extends ToolbarItem {
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
 	 * @public
-	 * @type { sap.ui.webc.base.types.CSSSize }
-	 * @name sap.ui.webc.main.ToolbarSpacer.prototype.width
-	 * @defaultvalue undefined
+	 * @type {CSSSize}
+	 * @default undefined
 	 */
 	@property({ validator: CSSSize })
 	width?: string;
