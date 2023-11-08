@@ -139,15 +139,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * <li>product-switch</li>
  * </ul>
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-shellbar</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>root - Used to style the outermost wrapper of the <code>ui5-shellbar</code></li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  *
  * <h4>Fast Navigation</h4>
@@ -159,12 +150,10 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
  *
+ * @csspart root - Used to style the outermost wrapper of the <code>ui5-shellbar</code>
+ *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.ShellBar
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-shellbar
- * @appenddocs sap.ui.webc.fiori.ShellBarItem
+ * @extends UI5Element
  * @public
  * @since 0.8.0
  */
@@ -189,7 +178,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  *
  * Fired, when the notification icon is activated.
  *
- * @event sap.ui.webc.fiori.ShellBar#notifications-click
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
@@ -203,7 +191,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  * Fired, when the profile slot is present.
  *
- * @event sap.ui.webc.fiori.ShellBar#profile-click
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -217,7 +204,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when the product switch icon is activated.
  * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
  *
- * @event sap.ui.webc.fiori.ShellBar#product-switch-click
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
@@ -231,7 +217,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  * Fired, when the logo is activated.
  *
- * @event sap.ui.webc.fiori.ShellBar#logo-click
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @since 0.10
  * @public
@@ -245,7 +230,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  * Fired, when the co pilot is activated.
  *
- * @event sap.ui.webc.fiori.ShellBar#co-pilot-click
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @since 0.10
  * @public
@@ -260,7 +244,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when a menu item is activated
  * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
  *
- * @event sap.ui.webc.fiori.ShellBar#menu-item-click
  * @param {HTMLElement} item DOM ref of the activated list item
  * @since 0.10
  * @public
@@ -277,8 +260,7 @@ class ShellBar extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.primaryTitle
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -289,8 +271,7 @@ class ShellBar extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.secondaryTitle
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -300,8 +281,7 @@ class ShellBar extends UI5Element {
 	 * Defines the <code>notificationsCount</code>,
 	 * displayed in the notification icon top-right corner.
 	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.notificationsCount
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -310,8 +290,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines, if the notification icon would be displayed.
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.showNotifications
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -320,8 +299,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines, if the product switch icon would be displayed.
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.showProductSwitch
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -332,8 +310,7 @@ class ShellBar extends UI5Element {
 	 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
 	 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.showCoPilot
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -343,8 +320,7 @@ class ShellBar extends UI5Element {
 	 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
 	 * <br><b>Note:</b> By default the Search Field is not displayed.
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.showSearchField
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -357,7 +333,6 @@ class ShellBar extends UI5Element {
 	 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
 	 *
 	 * @type {object}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.accessibilityRoles
 	 * @public
 	 * @since 1.6.0
 	 */
@@ -373,7 +348,6 @@ class ShellBar extends UI5Element {
 	 * - <code>logoTitle</code>: defines the tooltip for the logo
 	 *
 	 * @type {object}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.accessibilityTexts
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -404,7 +378,6 @@ class ShellBar extends UI5Element {
 	 * 		</li>
 	 * </ul>
 	 * @type {object}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.accessibilityAttributes
 	 * @public
 	 * @since 1.10.0
 	 */
@@ -450,9 +423,7 @@ class ShellBar extends UI5Element {
 	 * <b>Note:</b>
 	 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 	 *
-	 * @type {sap.ui.webc.fiori.IShellBarItem[]}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.default
-	 * @slot items
+	 * @type {IShellBarItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -464,9 +435,7 @@ class ShellBar extends UI5Element {
 	 *
 	 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
 	 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
-	 * @type {sap.ui.webc.main.IAvatar}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.profile
-	 * @slot profile
+	 * @type {IAvatar}
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
@@ -476,9 +445,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines the logo of the <code>ui5-shellbar</code>.
 	 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
-	 * @type {sap.ui.webc.main.IAvatar}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.logo
-	 * @slot
+	 * @type {IAvatar}
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -491,9 +458,7 @@ class ShellBar extends UI5Element {
 	 * <b>Note:</b>
 	 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 	 *
-	 * @type {sap.ui.webc.main.IListItem[]}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.menuItems
-	 * @slot
+	 * @type {IListItem[]}
 	 * @since 0.10
 	 * @public
 	 */
@@ -503,9 +468,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines the <code>ui5-input</code>, that will be used as a search field.
 	 *
-	 * @type {sap.ui.webc.main.IInput}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.searchField
-	 * @slot
+	 * @type {IInput}
 	 * @public
 	 */
 	@slot()
@@ -516,9 +479,7 @@ class ShellBar extends UI5Element {
 	 * We encourage this slot to be used for a back or home button.
 	 * It gets overstyled to match ShellBar's styling.
 	 *
-	 * @type {sap.ui.webc.main.IButton}
-	 * @name sap.ui.webc.fiori.ShellBar.prototype.startButton
-	 * @slot
+	 * @type {IButton}
 	 * @public
 	 */
 	@slot()
