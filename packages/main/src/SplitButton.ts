@@ -269,6 +269,7 @@ class SplitButton extends UI5Element {
 
 	_textButtonPress: { handleEvent: () => void, passive: boolean };
 	_isDefaultActionPressed = false;
+	_isKeyDownOperation = false;
 
 	static i18nBundle: I18nBundle;
 
@@ -293,7 +294,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Function that makes sure the focus is properly managed.
-	 *
 	 * @private
 	 */
 	_manageFocus(button?: Button | SplitButton) {
@@ -312,10 +312,10 @@ class SplitButton extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.activeArrowButton) {
-			this._activeArrowButton = true;
-			this.arrowButton!._keepActiveState = true;
+		if (this._isKeyDownOperation && !this.activeArrowButton) {
+			return;
 		}
+		this._setEffectiveActiveState();
 	}
 
 	_handleMouseClick(e: MouseEvent) {
@@ -328,13 +328,6 @@ class SplitButton extends UI5Element {
 	_onFocusOut(e: FocusEvent) {
 		if (this.disabled || getEventMark(e)) {
 			return;
-		}
-
-		if (this.activeArrowButton) {
-			this.arrowButton!._keepActiveState = true;
-			this._activeArrowButton = true;
-		} else {
-			this._activeArrowButton = false;
 		}
 
 		this._shiftOrEscapePressed = false;
@@ -358,6 +351,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
+		this._isKeyDownOperation = true;
 		if (this._isArrowKeyAction(e)) {
 			this._handleArrowButtonAction(e);
 			this._activeArrowButton = true;
@@ -380,6 +374,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_onKeyUp(e: KeyboardEvent) {
+		this._isKeyDownOperation = false;
 		if (this._isArrowKeyAction(e)) {
 			e.preventDefault();
 			this._activeArrowButton = false;
@@ -394,6 +389,7 @@ class SplitButton extends UI5Element {
 				this._fireClick();
 				this._spacePressed = false;
 				this._textButtonActive = false;
+				this.arrowButton!._keepActiveState = false;
 			}
 		}
 
@@ -435,21 +431,11 @@ class SplitButton extends UI5Element {
 		e.preventDefault();
 		this.arrowButton!.focus();
 
-		this._activeArrowButton = true;
-		this.arrowButton!._keepActiveState = true;
-
 		this._tabIndex = "-1";
 	}
 
 	_arrowButtonRelease(e: MouseEvent) {
 		e.preventDefault();
-
-		if (this.activeArrowButton) {
-			this._activeArrowButton = true;
-			this.arrowButton!._keepActiveState = true;
-		}
-
-		this._activeArrowButton = false;
 
 		this._tabIndex = "-1";
 	}
@@ -460,6 +446,11 @@ class SplitButton extends UI5Element {
 		if (this._tabIndex === "-1" && (this.textButton?.focused || this.arrowButton?.focused)) {
 			this._tabIndex = "0";
 		}
+	}
+
+	_setEffectiveActiveState() {
+		this._activeArrowButton = !!this.activeArrowButton;
+		this.arrowButton!._keepActiveState = !!this.activeArrowButton;
 	}
 
 	/**
@@ -538,6 +529,7 @@ class SplitButton extends UI5Element {
 	_handleShiftOrEscapePressed() {
 		this._shiftOrEscapePressed = true;
 		this._textButtonActive = false;
+		this._isKeyDownOperation = false;
 	}
 
 	get textButtonAccText() {

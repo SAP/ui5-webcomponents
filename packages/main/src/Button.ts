@@ -392,7 +392,6 @@ class Button extends UI5Element implements IFormElement {
 	onAfterRendering() {
 		if (this._keepActiveState) {
 			this.active = true;
-			this._keepActiveState = false;
 		}
 	}
 
@@ -431,7 +430,9 @@ class Button extends UI5Element implements IFormElement {
 			e.stopPropagation();
 		}
 
-		this._deactivate();
+		if (this.active && !this._keepActiveState) {
+			this.active = false;
+		}
 
 		if (activeButton) {
 			activeButton.active = false;
@@ -452,7 +453,9 @@ class Button extends UI5Element implements IFormElement {
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
-			this._deactivate();
+			if (this.active && !this._keepActiveState) {
+				this.active = false;
+			}
 		}
 	}
 
@@ -460,7 +463,11 @@ class Button extends UI5Element implements IFormElement {
 		if (this.nonInteractive) {
 			return;
 		}
-		this.active = false;
+
+		if (this.active && !this._keepActiveState) {
+			this.active = false;
+		}
+
 		if (isDesktop()) {
 			this.focused = false;
 		}

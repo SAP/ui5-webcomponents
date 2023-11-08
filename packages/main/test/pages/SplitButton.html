@@ -25,7 +25,7 @@
 	<div class="samples-margin">
 		<ui5-split-button id="sbDefault" design="Default">Default</ui5-split-button>
 		<ui5-split-button id="sbEmphasized" design="Emphasized">Emphasized</ui5-split-button>
-		<ui5-split-button id="sbPositive" design="Positive" active-arrow-button>Positive</ui5-split-button>
+		<ui5-split-button id="sbPositive" design="Positive">Positive</ui5-split-button>
 		<ui5-split-button id="sbNegative" design="Negative">Negative</ui5-split-button>
 		<ui5-split-button id="sbAttention" design="Attention">Attention</ui5-split-button>
 		<ui5-split-button id="sbTransparent" design="Transparent">Transparent</ui5-split-button>
@@ -76,20 +76,10 @@
 		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section="">
-			<ui5-menu-item text="Open Locally" icon="open-folder">
-				<ui5-menu-item text="Open from C"></ui5-menu-item>
-				<ui5-menu-item text="Open from D"></ui5-menu-item>
-				<ui5-menu-item text="Open from E"></ui5-menu-item>
-			</ui5-menu-item>
+			<ui5-menu-item text="Open Locally" icon="open-folder"></ui5-menu-item>
 			<ui5-menu-item text="Open from Cloud"></ui5-menu-item>
 		</ui5-menu-item>
-		<ui5-menu-item text="Save" icon="save">
-			<ui5-menu-item text="Save Locally" icon="save">
-				<ui5-menu-item text="Save on C" icon="save"></ui5-menu-item>
-				<ui5-menu-item text="Save on D" icon="save"></ui5-menu-item>
-				<ui5-menu-item text="Save on E" icon="save"></ui5-menu-item>
-			</ui5-menu-item>
-			<ui5-menu-item text="Save to Cloud"></ui5-menu-item>
+		<ui5-menu-item text="Save" icon="save"></ui5-menu-item>
 	</ui5-menu>
 
 	<ui5-split-button id="splitBtnWithMenuWithAssociatedLastAction" design="Default">openMenu</ui5-split-button>
