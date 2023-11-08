@@ -44,14 +44,13 @@ import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Input.js";
 ```
 
-## Framework features 
+## Framework features
 
 | Package        | Affects                                           | Feature Import                                                       | Description                                                                                             |
 |----------------|---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | `base`         | Framework                                         | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js`            | Integration with the OpenUI5 framework, allowing synchronization and resources re-use                   |
 | `base`         | Multiple components within all libraries          | `@ui5/webcomponents-base/dist/features/F6Navigation.js`              | Support for F6 fast groups navigation                                                                   |
 | `base`         | Date related components                           | `@ui5/webcomponents-base/dist/features/LegacyDateFormats.js`         | Support for legacy date formats                                                                         |
-|
 
 <b>Note:</b> Framework-level features must be imported before all components modules,
 so that the feature is enabled upon framework boot, before the components' definition.
