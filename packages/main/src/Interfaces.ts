@@ -19,11 +19,10 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
  *
- * @name sap.ui.webc.main.IButton
  * @interface
  * @public
  */
-const IButton = "sap.ui.webc.main.IButton";
+interface IButton extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-card</code> as header
@@ -37,11 +36,10 @@ const ICardHeader = "sap.ui.webc.main.ICardHeader";
 /**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
  *
- * @name sap.ui.webc.main.ICalendarDate
  * @interface
  * @public
  */
-const ICalendarDate = "sap.ui.webc.main.ICalendarDate";
+interface ICalendarDate extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-combobox</code>
@@ -55,11 +53,10 @@ const IComboBoxItem = "sap.ui.webc.main.IComboBoxItem";
 /**
  * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
  *
- * @name sap.ui.webc.main.IColorPaletteItem
  * @interface
  * @public
  */
-const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
+interface IColorPaletteItem extends HTMLElement {}
 
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
@@ -100,11 +97,10 @@ const IListItem = "sap.ui.webc.main.IListItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-menu</code> as items
  *
- * @name sap.ui.webc.main.IMenuItem
  * @interface
  * @public
  */
-const IMenuItem = "sap.ui.webc.main.IMenuItem";
+interface IMenuItem extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
@@ -118,11 +114,10 @@ const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
  *
- * @name sap.ui.webc.main.ISegmentedButtonItem
  * @interface
  * @public
  */
-const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
+interface ISegmentedButtonItem extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options

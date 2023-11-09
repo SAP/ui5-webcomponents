@@ -96,10 +96,7 @@ type DayPickerNavigateEventDetail = {
  * Represents the days inside a single month view of the <code>ui5-calendar</code> component.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DayPicker
- * @extends sap.ui.webc.main.CalendarPart
- * @tagname ui5-daypicker
+ * @extends CalendarPart
  * @public
  */
 @customElement({
@@ -110,20 +107,17 @@ type DayPickerNavigateEventDetail = {
 /**
  * Fired when the selected date(s) change
  * @public
- * @event sap.ui.webc.main.DayPicker#change
  */
 @event("change")
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
  * @public
- * @event sap.ui.webc.main.DayPicker#navigate
  */
 @event("navigate")
 class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @type {array}
-	 * @name sap.ui.webc.main.DayPicker.prototype.selectedDates
 	 * @public
 	 */
 	@property({
@@ -141,9 +135,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 	 * </ul>
-	 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
-	 * @name sap.ui.webc.main.DayPicker.prototype.selectionMode
-	 * @defaultvalue "Single"
+	 * @type {CalendarSelectionMode}
+	 * @default "Single"
 	 * @public
 	 */
 	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
@@ -157,8 +150,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * the week numbers are not displayed regardless of what is set.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.DayPicker.prototype.hideWeekNumbers
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
 	 */
@@ -208,7 +200,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Builds the "_weeks" object that represents the month.
-	 * @param { LocaleData }localeData
+	 * @param { LocaleData } localeData
 	 * @private
 	 */
 	_buildWeeks(localeData: LocaleData) {

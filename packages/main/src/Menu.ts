@@ -87,11 +87,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * <code>import "@ui5/webcomponents/dist/Menu.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Menu
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-menu
- * @appenddocs sap.ui.webc.main.MenuItem
+ * @extends UI5Element
  * @since 1.3.0
  * @public
  */
@@ -114,7 +110,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired when an item is being clicked.
  * <b>Note:</b> Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
  *
- * @event sap.ui.webc.main.Menu#item-click
  * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
@@ -122,9 +117,15 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: {
 			type: HTMLElement,
 		},
+		/**
+		 * @public
+		 */
 		text: {
 			type: String,
 		},
@@ -136,13 +137,15 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * <b>Note:</b> Since 1.14.0 the event is also fired before a sub-menu opens.
  *
  * @public
- * @event sap.ui.webc.main.Menu#before-open
  * @allowPreventDefault
  * @since 1.10.0
  * @param { HTMLElement } item The <code>ui5-menu-item</code> that triggers opening of the sub-menu or undefined when fired upon root menu opening. <b>Note:</b> available since 1.14.0.
  */
 @event("before-open", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: {
 			type: HTMLElement,
 		},
@@ -153,7 +156,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired after the menu is opened. <b>This event does not bubble.</b>
  *
  * @public
- * @event sap.ui.webc.main.Menu#after-open
  * @since 1.10.0
  */
 @event("after-open")
@@ -162,14 +164,18 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>
  *
  * @public
- * @event sap.ui.webc.main.Menu#before-close
  * @allowPreventDefault
  * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
  * @since 1.10.0
  */
 @event("before-close", {
 	detail: {
-		escPressed: { type: Boolean },
+		/**
+		 * @public
+		 */
+		escPressed: {
+			type: Boolean,
+		},
 	},
 })
 
@@ -177,7 +183,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired after the menu is closed. <b>This event does not bubble.</b>
  *
  * @public
- * @event sap.ui.webc.main.Menu#after-close
  * @since 1.10.0
  */
 @event("after-close")
@@ -185,9 +190,8 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.headerText
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -196,10 +200,9 @@ class Menu extends UI5Element {
 	/**
 	 * Indicates if the menu is open
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.open
 	 * @public
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -208,9 +211,8 @@ class Menu extends UI5Element {
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.busy
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.13.0
 	 */
@@ -220,9 +222,8 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.busyDelay
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultValue 1000
+	 * @type {Integer}
+	 * @default 1000
 	 * @public
 	 * @since 1.13.0
 	 */
@@ -232,10 +233,9 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.opener
 	 * @public
-	 * @type {sap.ui.webc.base.types.DOMReference}
-	 * @defaultvalue ""
+	 * @type {DOMReference}
+	 * @default ""
 	 * @since 1.10.0
 	 */
 	@property({ validator: DOMReference, defaultValue: "" })
@@ -244,7 +244,7 @@ class Menu extends UI5Element {
 	/**
 	 * Defines if the menu is sub-menu (not first-level).
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -300,9 +300,7 @@ class Menu extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.default
-	 * @type {sap.ui.webc.main.IMenuItem[]}
-	 * @slot items
+	 * @type {IMenuItem[]}
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -400,8 +398,6 @@ class Menu extends UI5Element {
 	 * Shows the Menu near the opener element.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Menu#showAt
 	 */
 	async showAt(opener: HTMLElement) {
 		if (isPhone()) {
@@ -425,8 +421,6 @@ class Menu extends UI5Element {
 	/**
 	 * Closes the Menu.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Menu#close
 	 */
 	close() {
 		if (this._popover) {

@@ -68,10 +68,7 @@ type MonthPickerNavigateEventDetail = {
  * Displays months which can be selected.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MonthPicker
- * @extends sap.ui.webc.main.CalendarPart
- * @tagname ui5-monthpicker
+ * @extends CalendarPart
  * @public
  */
 @customElement({
@@ -82,14 +79,12 @@ type MonthPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
  * @public
- * @event sap.ui.webc.main.MonthPicker#change
  */
  @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  * @public
- * @event sap.ui.webc.main.MonthPicker#navigate
  */
 @event("navigate")
 class MonthPicker extends CalendarPart implements ICalendarPicker {
@@ -97,7 +92,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
 	 * @type {array}
-	 * @name sap.ui.webc.main.MonthPicker.prototype.selectedDates
 	 * @public
 	 */
 	@property({

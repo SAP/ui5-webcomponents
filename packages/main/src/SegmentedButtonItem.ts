@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { ISegmentedButtonItem } from "./Interfaces";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
 import ToggleButton from "./ToggleButton.js";
@@ -27,12 +28,9 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  * <code>import "@ui5/webcomponents/dist/SegmentedButtonItem";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SegmentedButtonItem
- * @extends sap.ui.webc.main.ToggleButton
+ * @extends ToggleButton
  * @abstract
- * @tagname ui5-segmented-button-item
- * @implements sap.ui.webc.main.ISegmentedButtonItem
+ * @implements {ISegmentedButtonItem}
  * @public
  */
 @customElement({
@@ -40,13 +38,12 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
 	template: SegmentedButtonItemTemplate,
 	dependencies: [Icon],
 })
-class SegmentedButtonItem extends ToggleButton {
+class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @type {sap.ui.webc.main.types.ButtonDesign}
-	 * @defaultvalue "Default"
-	 * @name sap.ui.webc.main.SegmentedButtonItem.prototype.design
+	 * @type {ButtonDesign}
+	 * @default "Default"
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
@@ -56,8 +53,7 @@ class SegmentedButtonItem extends ToggleButton {
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.SegmentedButtonItem.prototype.iconEnd
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -67,8 +63,7 @@ class SegmentedButtonItem extends ToggleButton {
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.SegmentedButtonItem.prototype.submits
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -77,8 +72,8 @@ class SegmentedButtonItem extends ToggleButton {
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @type {Integer}
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -87,8 +82,8 @@ class SegmentedButtonItem extends ToggleButton {
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @type {Integer}
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0 })

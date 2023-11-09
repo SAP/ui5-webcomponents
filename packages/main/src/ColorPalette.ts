@@ -57,12 +57,8 @@ type ColorPaletteItemClickEventDetail = {
  * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ColorPalette
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-color-palette
+ * @extends UI5Element
  * @since 1.0.0-rc.12
- * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
 @customElement({
@@ -81,13 +77,15 @@ type ColorPaletteItemClickEventDetail = {
 /**
  * Fired when the user selects a color.
  *
- * @event sap.ui.webc.main.ColorPalette#item-click
  * @public
  * @since 1.0.0-rc.15
  * @param {string} color the selected color
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		color: {
 			type: String,
 		},
@@ -116,7 +114,7 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Defines whether the user can choose the default color from a button.
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
@@ -126,7 +124,7 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Defines the default color of the color palette
 	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-	 * @type {sap.ui.webc.base.types.CSSColor}
+	 * @type {CSSColor}
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
@@ -135,7 +133,7 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the selected color.
-	 * @type {sap.ui.webc.base.types.CSSColor}
+	 * @type {CSSColor}
 	 * @private
 	 */
 	@property({ validator: CSSColor })
@@ -151,9 +149,7 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the <code>ui5-color-palette-item</code> elements.
-	 * @type {sap.ui.webc.main.IColorPaletteItem[]}
-	 * @name sap.ui.webc.main.ColorPalette.prototype.default
-	 * @slot colors
+	 * @type {IColorPaletteItem[]}
 	 * @public
 	 */
 	@slot({

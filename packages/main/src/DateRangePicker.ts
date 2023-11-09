@@ -49,10 +49,7 @@ import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
  * </ul>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DateRangePicker
- * @extends sap.ui.webc.main.DatePicker
- * @tagname ui5-daterange-picker
+ * @extends DatePicker
  * @since 1.0.0-rc.8
  * @public
  */
@@ -66,8 +63,7 @@ class DateRangePicker extends DatePicker {
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.delimiter
-	 * @defaultvalue "-"
+	 * @default "-"
 	 * @public
 	 */
 	@property({ defaultValue: "-" })
@@ -94,7 +90,6 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.dateValue
 	 */
 	get dateValue() {
 		return null;
@@ -106,7 +101,6 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.dateValueUTC
 	 */
 	get dateValueUTC() {
 		return null;
@@ -160,7 +154,6 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.startDateValue
 	 */
 	get startDateValue() {
 		return CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000).toLocalJSDate();
@@ -172,7 +165,6 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.endDateValue
 	 */
 	get endDateValue() {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();

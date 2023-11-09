@@ -43,12 +43,8 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * <code>import "@ui5/webcomponents/dist/SegmentedButton";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SegmentedButton
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-segmented-button
+ * @extends UI5Element
  * @since 1.0.0-rc.6
- * @appenddocs sap.ui.webc.main.SegmentedButtonItem
  * @public
  */
 @customElement({
@@ -62,14 +58,19 @@ type SegmentedButtonSelectionChangeEventDetail = {
 /**
  * Fired when the selected item changes.
  *
- * @event sap.ui.webc.main.SegmentedButton#selection-change
  * @param {HTMLElement} selectedItem the pressed item. Note: deprecated since 1.14.0 and will be removed in the next major release, use the <code>selectedItems</code> parameter instead.
  * @param {HTMLElement[]} selectedItems an array of selected items. Note: available since 1.14.0.
  * @public
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedItem: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		selectedItems: { type: Array },
 	},
 })
@@ -79,9 +80,8 @@ class SegmentedButton extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.accessibleName
 	 * @since 1.0.3
 	 */
 	@property({ defaultValue: undefined })
@@ -98,10 +98,9 @@ class SegmentedButton extends UI5Element {
 	 * <li><code>MultiSelect</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.main.types.SegmentedButtonMode}
-	 * @defaultvalue "SingleSelect"
+	 * @type {SegmentedButtonMode}
+	 * @default "SingleSelect"
 	 * @public
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.mode
 	 * @since 1.14.0
 	 */
 	@property({ type: SegmentedButtonMode, defaultValue: SegmentedButtonMode.SingleSelect })
@@ -113,9 +112,7 @@ class SegmentedButton extends UI5Element {
 	 * <b>Note:</b> Multiple items are allowed.
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
-	 * @type {sap.ui.webc.main.ISegmentedButtonItem[]}
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.default
-	 * @slot items
+	 * @type {ISegmentedButtonItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -258,8 +255,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected item.
 	 *
 	 * @readonly
-	 * @type {sap.ui.webc.main.ISegmentedButtonItem}
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.selectedItem
+	 * @type {ISegmentedButtonItem}
 	 * @deprecated since 1.14.0. This method will be removed in the next major release.
 	 * Please use the <code>selectedItems</code> property instead.
 	 * @public
@@ -271,8 +267,7 @@ class SegmentedButton extends UI5Element {
 	/**
 	 * Returns an array of the currently selected items.
 	 * @readonly
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.selectedItems
-	 * @type {sap.ui.webc.main.ISegmentedButtonItem[]}
+	 * @type {ISegmentedButtonItem[]}
 	 * @since 1.14.0
 	 * @public
 	 */

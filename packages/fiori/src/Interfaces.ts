@@ -1,29 +1,26 @@
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
- * @name sap.ui.webc.fiori.IBar
  * @interface
  * @public
  */
-const IBar = "sap.ui.webc.fiori.IBar";
+interface IBar extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items
  *
- * @name sap.ui.webc.fiori.IFilterItem
  * @interface
  * @public
  */
-const IFilterItem = "sap.ui.webc.fiori.IFilterItem";
+interface IFilterItem extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-filter-item</code> as values
  *
- * @name sap.ui.webc.fiori.IFilterItemOption
  * @interface
  * @public
  */
-const IFilterItemOption = "sap.ui.webc.fiori.IFilterItemOption";
+interface IFilterItemOption extends HTMLElement {}
 
 /**
  * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
@@ -91,20 +88,18 @@ const ISideNavigationSubItem = "sap.ui.webc.fiori.ISideNavigationSubItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as sort items
  *
- * @name sap.ui.webc.fiori.ISortItem
  * @interface
  * @public
  */
-const ISortItem = "sap.ui.webc.fiori.ISortItem";
+interface ISortItem extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-timeline</code> as items
  *
- * @name sap.ui.webc.fiori.ITimelineItem
  * @interface
  * @public
  */
-const ITimelineItem = "sap.ui.webc.fiori.ITimelineItem";
+interface ITimelineItem extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-upload-collection</code> as items

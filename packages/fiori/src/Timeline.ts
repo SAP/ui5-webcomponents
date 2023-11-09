@@ -32,11 +32,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * while the social timeline offers a high level of interaction and collaboration, and is integrated within SAP Jam.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Timeline
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-timeline
- * @appenddocs sap.ui.webc.fiori.TimelineItem
+ * @extends UI5Element
  * @public
  * @since 0.8.0
  */
@@ -60,9 +56,8 @@ class Timeline extends UI5Element {
 	 * <li><code>Horizontal</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.fiori.types.TimelineLayout}
-	 * @name sap.ui.webc.fiori.Timeline.prototype.layout
-	 * @defaultvalue "Vertical"
+	 * @type {TimelineLayout}
+	 * @default "Vertical"
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -73,8 +68,7 @@ class Timeline extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.Timeline.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default: ""
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -84,9 +78,7 @@ class Timeline extends UI5Element {
 	/**
 	 * Determines the content of the <code>ui5-timeline</code>.
 	 *
-	 * @type {sap.ui.webc.fiori.ITimelineItem[]}
-	 * @name sap.ui.webc.fiori.Timeline.prototype.default
-	 * @slot items
+	 * @type {ITimelineItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })

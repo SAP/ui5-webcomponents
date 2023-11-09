@@ -52,10 +52,7 @@ type TimeSelectionSliderChangeEventDetail = {
  * @class
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelection
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-time-selection
+ * @extends UI5Element
  * @private
  * @since 1.0.0-rc.12
  */
@@ -91,8 +88,7 @@ class TimeSelection extends UI5Element {
 	 * Defines a formatted time value.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TimeSelection.prototype.value
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -107,8 +103,7 @@ class TimeSelection extends UI5Element {
 	 * mm:ss -> 12:04 (only minutes and seconds)
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TimeSelection.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -118,7 +113,6 @@ class TimeSelection extends UI5Element {
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.hideHours
 	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
@@ -128,7 +122,6 @@ class TimeSelection extends UI5Element {
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.hideMinutes
 	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
@@ -138,7 +131,6 @@ class TimeSelection extends UI5Element {
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.hideSeconds
 	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
@@ -147,7 +139,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.maxHours
 	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
@@ -156,7 +147,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.maxMinutes
 	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
@@ -165,7 +155,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.maxSeconds
 	 * @type {Integer}
 	 */
 	@property({ validator: Integer })

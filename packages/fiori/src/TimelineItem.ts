@@ -6,6 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
+import type { ITimelineItem } from "./Interfaces";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
@@ -22,11 +23,8 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * An entry posted on the timeline.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.TimelineItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-timeline-item
- * @implements sap.ui.webc.fiori.ITimelineItem
+ * @extends UI5Element
+ * @implements {ITimelineItem}
  * @public
  */
 @customElement({
@@ -50,7 +48,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @public
  */
 @event("name-click")
-class TimelineItem extends UI5Element implements ITabbable {
+class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 	 * SAP-icons font provides numerous options.
@@ -60,7 +58,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.fiori.TimelineItem.prototype.icon
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -70,8 +68,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * Defines the name of the item, displayed before the <code>title-text</code>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.TimelineItem.prototype.name
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -81,8 +78,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * Defines if the <code>name</code> is clickable.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.TimelineItem.prototype.nameClickable
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -92,8 +88,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * Defines the title text of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.TimelineItem.prototype.titleText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -102,8 +97,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the subtitle text of the component.
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.TimelineItem.prototype.subtitleText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -115,8 +109,8 @@ class TimelineItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the items orientation.
 	 *
-	 * @type {sap.ui.webc.fiori.types.TimelineLayout}
-	 * @defaultvalue "Vertical"
+	 * @type {TimelineLayout}
+	 * @default "Vertical"
 	 * @private
 	 */
 	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
@@ -135,7 +129,6 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * Determines the description of the <code>ui5-timeline-item</code>.
 	 *
 	 * @type {Node[]}
-	 * @name sap.ui.webc.fiori.TimelineItem.prototype.default
 	 * @slot
 	 * @public
 	 */

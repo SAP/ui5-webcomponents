@@ -146,10 +146,7 @@ type DatePickerInputEventDetail = {
  * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DatePicker
- * @extends sap.ui.webc.main.DateComponentBase
- * @tagname ui5-date-picker
+ * @extends DateComponentBase
  * @public
  */
 
@@ -175,7 +172,6 @@ type DatePickerInputEventDetail = {
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
- * @event sap.ui.webc.main.DatePicker#change
  * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
@@ -183,9 +179,15 @@ type DatePickerInputEventDetail = {
 */
 @event("change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		value: {
 			type: String,
 		},
+		/**
+		 * @public
+		 */
 		valid: {
 			type: Boolean,
 		},
@@ -194,7 +196,6 @@ type DatePickerInputEventDetail = {
 /**
  * Fired when the value of the component is changed at each key stroke.
  *
- * @event sap.ui.webc.main.DatePicker#input
  * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
@@ -202,9 +203,15 @@ type DatePickerInputEventDetail = {
 */
 @event("input", {
 	detail: {
+		/**
+		 * @public
+		 */
 		value: {
 			type: String,
 		},
+		/**
+		 * @public
+		 */
 		valid: {
 			type: Boolean,
 		},
@@ -215,8 +222,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines a formatted date value.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DatePicker.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
@@ -227,9 +233,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.DatePicker.prototype.valueState
-	 * @defaultvalue "None"
+	 * @type {ValueState}
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -240,8 +245,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @since 1.0.0-rc.9
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.DatePicker.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -251,8 +255,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Determines whether the component is displayed as disabled.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.DatePicker.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -262,8 +265,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Determines whether the component is displayed as read-only.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.DatePicker.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -278,8 +280,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DatePicker.prototype.placeholder
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -298,8 +299,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DatePicker.prototype.name
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -313,8 +313,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * the week numbers are not displayed regardless of what is set.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.DatePicker.prototype.hideWeekNumbers
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
 	 */
@@ -325,8 +324,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines the aria-label attribute for the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DatePicker.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -337,8 +335,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DatePicker.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -365,9 +362,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.DatePicker.prototype.valueStateMessage
 	 * @since 1.0.0-rc.7
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -377,7 +372,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
 	 * @type {HTMLElement[]}
-	 * @slot
 	 * @private
 	 */
 	@slot({ type: HTMLElement })
@@ -622,8 +616,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#isValid
 	 * @param { string } [value=""] A value to be tested against the current date format
 	 * @returns { boolean }
 	 */
@@ -638,8 +630,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if a date is between the minimum and maximum date.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#isInValidRange
 	 * @param { string } [value=""] A value to be checked
 	 * @returns { boolean }
 	 */
@@ -792,8 +782,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#formatValue
 	 * @param {Date} date A Java Script date object to be formatted as string
 	 * @returns {string} The date as string
 	 */
@@ -804,8 +792,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Closes the picker.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#closePicker
 	 */
 	closePicker() {
 		this.responsivePopover!.close();
@@ -814,9 +800,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Opens the picker.
 	 * @public
-	 * @async
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#openPicker
 	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
@@ -838,8 +821,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if the picker is open.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#isOpen
 	 * @returns {boolean} true if the picker is open, false otherwise
 	 */
 	isOpen() {
@@ -851,7 +832,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @public
 	 * @readonly
-	 * @name sap.ui.webc.main.DatePicker.prototype.dateValue
 	 * @type { Date }
 	 */
 	get dateValue(): Date | null {

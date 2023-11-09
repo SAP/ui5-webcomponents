@@ -23,9 +23,8 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  *  - additional common methods
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DateComponentBase
- * @extends sap.ui.webc.base.UI5Element
+ * @abstract
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -36,8 +35,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Sets a calendar type used for display.
 	 * If not set, the calendar type of the global configuration is used.
-	 * @type {sap.ui.webc.base.types.CalendarType}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.primaryCalendarType
+	 * @type {CalendarType}
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -46,10 +44,9 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Defines the secondary calendar type.
 	 * If not set, the calendar will only show the primary calendar type.
-	 * @type {sap.ui.webc.base.types.CalendarType}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.secondaryCalendarType
+	 * @type {CalendarType}
 	 * @since 1.0.0-rc.16
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -59,8 +56,7 @@ class DateComponentBase extends UI5Element {
 	 * Determines the format, displayed in the input field.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -72,8 +68,7 @@ class DateComponentBase extends UI5Element {
 	 * <b>Note:</b> If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.minDate
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
@@ -86,8 +81,7 @@ class DateComponentBase extends UI5Element {
 	 * <b>Note:</b> If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.DateComponentBase.prototype.maxDate
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */

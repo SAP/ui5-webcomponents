@@ -8,6 +8,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { IColorPaletteItem } from "./Interfaces";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
@@ -24,13 +25,10 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * The <code>ui5-color-palette-item</code> component represents a color in the the <code>ui5-color-palette</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ColorPaletteItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-color-palette-item
  * @since 1.0.0-rc.12
- * @implements sap.ui.webc.main.IColorPaletteItem
+ * @implements {IColorPaletteItem}
  * @public
  */
 @customElement({
@@ -39,14 +37,13 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 	styles: ColorPaletteItemCss,
 	template: ColorPaletteItemTemplate,
 })
-class ColorPaletteItem extends UI5Element implements ITabbable {
+class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteItem {
 	/**
 	 * Defines the colour of the component.
 	 * <br><br>
 	 * <b>Note:</b> The value should be a valid CSS color.
 	 *
-	 * @type {sap.ui.webc.base.types.CSSColor}
-	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.value
+	 * @type {CSSColor}
 	 * @public
 	 */
 	@property({ validator: CSSColor })
@@ -60,8 +57,7 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 	 *
 	 * @public
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })

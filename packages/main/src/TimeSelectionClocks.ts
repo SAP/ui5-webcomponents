@@ -46,11 +46,8 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
  * This component should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelectionClocks
- * @extends sap.ui.webc.main.TimePickerInternals
+ * @extends TimePickerInternals
  * @abstract
- * @tagname ui5-time-selection-clocks
  * @since 1.15.0
  * @private
  */

@@ -19,11 +19,8 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  * have spin button look and feel from accessibility point of view. This component should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ToggleSpinButton
- * @extends sap.ui.webc.base.UI5Element
+ * @extends ToggleButton
  * @abstract
- * @tagname ui5-toggle-spin-button
  * @since 1.15.0
  * @private
  */
@@ -38,7 +35,6 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemin of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueMin
 	 * @type {Integer}
 	 * @defaultvalue -1
 	 */

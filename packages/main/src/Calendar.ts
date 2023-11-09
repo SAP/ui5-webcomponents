@@ -158,11 +158,7 @@ type CalendarSelectedDatesChangeEventDetail = {
  * <code>import "@ui5/webcomponents/dist/Calendar";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Calendar
- * @extends sap.ui.webc.main.CalendarPart
- * @tagname ui5-calendar
- * @appenddocs sap.ui.webc.main.CalendarDate
+ * @extends CalendarPart
  * @public
  * @since 1.0.0-rc.11
  */
@@ -184,7 +180,6 @@ type CalendarSelectedDatesChangeEventDetail = {
  * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
  * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
  *
- * @event sap.ui.webc.main.Calendar#selected-dates-change
  * @allowPreventDefault
  * @param {Array} values The selected dates
  * @param {Array} dates The selected dates as UTC timestamps
@@ -192,7 +187,13 @@ type CalendarSelectedDatesChangeEventDetail = {
  */
 @event("selected-dates-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		dates: { type: Array },
+		/**
+		 * @public
+		 */
 		values: { type: Array },
 	},
 })
@@ -208,9 +209,8 @@ class Calendar extends CalendarPart {
 	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 	 * </ul>
-	 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
-	 * @name sap.ui.webc.main.Calendar.prototype.selectionMode
-	 * @defaultvalue "Single"
+	 * @type {CalendarSelectionMode}
+	 * @default "Single"
 	 * @public
 	 */
 	@property({
@@ -227,8 +227,7 @@ class Calendar extends CalendarPart {
 	 * the week numbers are not displayed regardless of what is set.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Calendar.prototype.hideWeekNumbers
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -236,6 +235,7 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * Which picker is currently visible to the user: day/month/year
+	 * @private
 	 */
 	@property({ defaultValue: "day" })
 	_currentPicker!: string;
@@ -264,9 +264,7 @@ class Calendar extends CalendarPart {
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
 	 *
-	 * @type {sap.ui.webc.main.ICalendarDate[]}
-	 * @name sap.ui.webc.main.Calendar.prototype.default
-	 * @slot dates
+	 * @type {ICalendarDate[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })

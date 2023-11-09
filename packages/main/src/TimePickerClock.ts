@@ -80,10 +80,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  * <code>import "@ui5/webcomponents/dist/TimePickerClock.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimePickerClock
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-time-picker-clock
+ * @extends UI5Element
  * @since 1.15.0
  * @private
  */
@@ -97,15 +94,23 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 /**
  * Fired when a value of clock is changed.
  *
- * @event sap.ui.webc.main.TimePickerClock#change
  * @param { integer } value The new <code>value</code> of the clock.
  * @param { string } stringValue The new <code>value</code> of the clock, as string, zero-prepended when necessary.
  * @param { boolean } finalChange <code>true</code> when a value is selected and confirmed, <code>false</code> when a value is only selected but not confirmed.
  */
 @event("change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		value: { type: Integer },
+		/**
+		 * @public
+		 */
 		stringValue: { type: String },
+		/**
+		 * @public
+		 */
 		finalChange: { type: Boolean },
 	},
 })
@@ -114,9 +119,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * Determines whether the component is displayed as disabled.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.disabled
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
@@ -124,9 +128,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * Determines whether the component is active (visible).
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.active
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	active!: boolean;
@@ -134,9 +137,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * Minimum item value for the outer circle of the clock.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.itemMin
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	itemMin!: number;
@@ -144,9 +146,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * Maximum item value for the outer circle of the clock.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.itemMax
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	itemMax!: number;
@@ -155,9 +156,8 @@ class TimePickerClock extends UI5Element {
 	 * If set to <code>true</code>, an inner circle is displayed.
 	 * The first item value of the inner circle will be itemMax + 1
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.showInnerCircle
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	showInnerCircle!: boolean;
@@ -165,9 +165,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * Label of the clock dial - for example, 'Hours', 'Minutes', or 'Seconds'.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.label
 	 * @type {string}
-	 * @defaultvalue undefined
+	 * @default undefined
 	 */
 	@property({ type: String, defaultValue: undefined })
 	label?: string;
@@ -176,9 +175,8 @@ class TimePickerClock extends UI5Element {
 	 * If set to <code>true</code>, a surrounding circle with markers (dots) will be hidden.
 	 * (for example, on the 'Minutes' clock-dial, markers represent minutes).
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.hideFractions
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	hideFractions!: boolean;
@@ -188,9 +186,8 @@ class TimePickerClock extends UI5Element {
 	 * the last item from outer circle will be replaced; if there is an inner circle too, the last
 	 * item of inner circle will be replaced. Usually, the last item '24' is replaced with '0'.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.lastItemReplacement
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	lastItemReplacement!: number;
@@ -198,9 +195,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * Prepend with zero flag. If <code>true</code>, values less than 10 will be prepend with 0.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.prependZero
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	prependZero!: boolean;
@@ -208,9 +204,8 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * The currently selected value of the clock.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.selectedValue
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	selectedValue!: number;
@@ -221,9 +216,8 @@ class TimePickerClock extends UI5Element {
 	 * The default display step is 5 which means minutes and seconds are displayed as "0", "5", "10", etc.
 	 * For hours the display step must be set to 1.
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.displayStep
 	 * @type {integer}
-	 * @defaultvalue 5
+	 * @default 5
 	 */
 	@property({ validator: Integer, defaultValue: 5 })
 	displayStep!: number;
@@ -234,9 +228,8 @@ class TimePickerClock extends UI5Element {
 	 * - if the clock displays hours - 1 unit = 1 hour
 	 * - if the clock displays minutes/seconds - 1 unit = 1 minute/second
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.valueStep
 	 * @type {integer}
-	 * @defaultvalue 1
+	 * @default 1
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	valueStep!: number;
@@ -269,7 +262,7 @@ class TimePickerClock extends UI5Element {
 	 * Mousedown or Touchstart event flag.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_mouseOrTouchDown!: boolean;
@@ -278,7 +271,7 @@ class TimePickerClock extends UI5Element {
 	 * Cancel Mouseout flag.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_cancelTouchOut!: boolean;
@@ -287,7 +280,7 @@ class TimePickerClock extends UI5Element {
 	 * Calculated selected value of the clock during interactions.
 	 *
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_selectedValue!: number;
@@ -296,7 +289,7 @@ class TimePickerClock extends UI5Element {
 	 * Selected value of the clock during interactions.
 	 *
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_movSelectedValue!: number;
@@ -305,7 +298,7 @@ class TimePickerClock extends UI5Element {
 	 * Hovered value of the clock during interactions.
 	 *
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_hoveredValue!: number;
@@ -314,7 +307,7 @@ class TimePickerClock extends UI5Element {
 	 * Previously hovered value of the clock during interactions.
 	 *
 	 * @type {integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_prevHoveredValue!: number;
@@ -323,7 +316,7 @@ class TimePickerClock extends UI5Element {
 	 * Animation in progress flag.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_animationInProgress!: boolean;

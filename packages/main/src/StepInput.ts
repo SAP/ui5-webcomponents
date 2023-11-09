@@ -86,10 +86,7 @@ const INITIAL_SPEED = 120; // milliseconds
  * <code>import "@ui5/webcomponents/dist/StepInput.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.StepInput
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-step-input
+ * @extends UI5Element
  * @since 1.0.0-rc.13
  * @public
  */
@@ -106,7 +103,6 @@ const INITIAL_SPEED = 120; // milliseconds
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
- * @event sap.ui.webc.main.StepInput#change
  * @public
  */
 @event("change")
@@ -114,9 +110,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a value of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.value
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @defaultvalue 0
+	 * @type {Float}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 0 })
@@ -125,8 +120,7 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a minimum value of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.min
-	 * @type {sap.ui.webc.base.types.Float}
+	 * @type {Float}
 	 * @public
 	 */
 	@property({ validator: Float })
@@ -135,8 +129,7 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a maximum value of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.max
-	 * @type {sap.ui.webc.base.types.Float}
+	 * @type {Float}
 	 * @public
 	 */
 	@property({ validator: Float })
@@ -145,9 +138,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a step of increasing/decreasing the value of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.step
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @defaultvalue 1
+	 * @type {Float}
+	 * @default 1
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 1 })
@@ -156,9 +148,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.valueState
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @defaultvalue "None"
+	 * @type {ValueState}
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -167,9 +158,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.required
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -178,9 +168,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines whether the component is displayed as disabled.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.disabled
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -189,9 +178,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines whether the component is displayed as read-only.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.readonly
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -205,9 +193,8 @@ class StepInput extends UI5Element implements IFormElement {
 	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.placeholder
 	 * @type {string}
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -225,9 +212,8 @@ class StepInput extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.name
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -236,9 +222,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines the number of digits after the decimal point of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.valuePrecision
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @type {Integer}
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -247,7 +232,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.accessibleName
 	 * @type {string}
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -258,9 +242,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.accessibleNameRef
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -307,7 +290,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 	 * @type {HTMLElement}
 	 * @slot
-	 * @name sap.ui.webc.main.StepInput.prototype.valueStateMessage
 	 * @public
 	 */
 	@slot()
@@ -458,6 +440,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 * Value modifier - modifies the value of the component, validates the new value and enables/disables increment and
 	 * decrement buttons according to the value and min/max values (if set). Fires <code>change</code> event when requested
 	 *
+	 * @private
 	 * @param {Float} modifier modifies the value of the component with the given modifier (positive or negative)
 	 * @param {boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
 	 */
@@ -579,6 +562,7 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Called when the increment or decrement button is pressed and held to set new value.
+	 * @private
 	 * @param {boolean} increment - is this the increment button or not so the values should be spin accordingly up or down
 	 * @param {boolean} resetVariables - whether to reset the spin-related variables or not
 	 */

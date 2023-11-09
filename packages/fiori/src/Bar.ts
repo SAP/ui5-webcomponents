@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import BarDesign from "./types/BarDesign.js";
+import type { IBar } from "./Interfaces";
 
 // Template
 import BarTemplate from "./generated/templates/BarTemplate.lit.js";
@@ -30,15 +31,6 @@ import BarCss from "./generated/themes/Bar.css.js";
  * The default slot will be centered in the available space between the startContent and the endContent areas,
  * therefore it might not always be centered in the entire bar.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-bar</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>bar - Used to style the wrapper of the content of the component</li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  *
  * <h4>Fast Navigation</h4>
@@ -51,12 +43,10 @@ import BarCss from "./generated/themes/Bar.css.js";
  *
  * <code>import "@ui5/webcomponents-fiori/dist/Bar.js";</code>
  *
+ * @csspart bar - Used to style the wrapper of the content of the component
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Bar
- * @implements sap.ui.webc.fiori.IBar
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-bar
+ * @implements {IBar}
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.11
  */
@@ -67,13 +57,12 @@ import BarCss from "./generated/themes/Bar.css.js";
 	styles: BarCss,
 	template: BarTemplate,
 })
-class Bar extends UI5Element {
+class Bar extends UI5Element implements IBar {
 	/**
 	 * Defines the component's design.
 	 *
-	 * @type {sap.ui.webc.fiori.types.BarDesign}
-	 * @name sap.ui.webc.fiori.Bar.prototype.design
-	 * @defaultvalue "Header"
+	 * @type {BarDesign}
+	 * @default "Header"
 	 * @public
 	 */
 	@property({ type: BarDesign, defaultValue: BarDesign.Header })
@@ -82,8 +71,6 @@ class Bar extends UI5Element {
 	/**
 	* Defines the content at the start of the bar.
 	* @type {HTMLElement[]}
-	* @name sap.ui.webc.fiori.Bar.prototype.startContent
-	* @slot
 	* @public
 	*/
 	@slot({ type: HTMLElement })
@@ -92,8 +79,6 @@ class Bar extends UI5Element {
 	/**
 	* Defines the content in the middle of the bar.
 	* @type {HTMLElement[]}
-	* @name sap.ui.webc.fiori.Bar.prototype.default
-	* @slot middleContent
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
@@ -102,8 +87,6 @@ class Bar extends UI5Element {
 	/**
 	* Defines the content at the end of the bar.
 	* @type {HTMLElement[]}
-	* @name sap.ui.webc.fiori.Bar.prototype.endContent
-	* @slot
 	* @public
 	*/
 	@slot({ type: HTMLElement })

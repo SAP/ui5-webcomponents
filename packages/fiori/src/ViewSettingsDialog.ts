@@ -100,11 +100,7 @@ type VSDInternalSettings = {
  * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.ViewSettingsDialog
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-view-settings-dialog
- * @appenddocs sap.ui.webc.fiori.SortItem sap.ui.webc.fiori.FilterItem sap.ui.webc.fiori.FilterItemOption
+ * @extends UI5Element
  * @since 1.0.0-rc.16
  * @public
  */
@@ -130,7 +126,6 @@ type VSDInternalSettings = {
 /**
  * Fired when confirmation button is activated.
  *
- * @event sap.ui.webc.fiori.ViewSettingsDialog#confirm
  * @param {String} sortOrder The current sort order selected.
  * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
  * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
@@ -140,10 +135,25 @@ type VSDInternalSettings = {
  */
 @event("confirm", {
 	detail: {
+		/**
+		 * @public
+		 */
 		sortOrder: { type: String },
+		/**
+		 * @public
+		 */
 		sortBy: { type: String },
+		/**
+		 * @public
+		 */
 		sortByItem: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		sortDescending: { type: Boolean },
+		/**
+		 * @public
+		 */
 		filters: { type: Array },
 	},
 })
@@ -151,7 +161,6 @@ type VSDInternalSettings = {
 /**
  * Fired when cancel button is activated.
  *
- * @event sap.ui.webc.fiori.ViewSettingsDialog#cancel
  * @param {String} sortOrder The current sort order selected.
  * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
  * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
@@ -161,10 +170,25 @@ type VSDInternalSettings = {
  */
 @event("cancel", {
 	detail: {
+		/**
+		 * @public
+		 */
 		sortOrder: { type: String },
+		/**
+		 * @public
+		 */
 		sortBy: { type: String },
+		/**
+		 * @public
+		 */
 		sortByItem: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		sortDescending: { type: Boolean },
+		/**
+		 * @public
+		 */
 		filters: { type: Array },
 	},
 })
@@ -173,16 +197,14 @@ type VSDInternalSettings = {
  * Fired before the component is opened. <b>This event does not bubble.</b>
  *
  * @public
- * @event sap.ui.webc.fiori.ViewSettingsDialog#before-open
  */
 @event("before-open")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
 	 *
-	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.sortDescending
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -246,8 +268,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the list of items against which the user could sort data.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 	 *
-	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.sortItems
-	 * @type {sap.ui.webc.fiori.ISortItem[]}
+	 * @type {ISortItem[]}
 	 * @slot sortItems
 	 * @public
 	 */
@@ -258,8 +279,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the <code>filterItems</code> list.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 	 *
-	 * @type {sap.ui.webc.fiori.IFilterItem[]}
-	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.filterItems
+	 * @type {IFilterItem[]}
 	 * @slot filterItems
 	 * @public
 	 */
@@ -499,8 +519,6 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Shows the dialog.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.fiori.ViewSettingsDialog#show
 	 */
 	show() {
 		if (!this._dialog) {
@@ -718,8 +736,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * @param {string} settings.sortBy - sort by
 	 * @param {Array.<Object>} settings.filters - filters
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.fiori.ViewSettingsDialog#setConfirmedSettings
 	 */
 	setConfirmedSettings(settings: VSDSettings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {

@@ -75,10 +75,8 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webc.main.TimePickerInternals
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-time-picker-internals
  * @since 1.15.0
  * @private
  */
@@ -101,8 +99,7 @@ class TimePickerInternals extends UI5Element {
 	 * Defines a formatted time value.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.value
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -117,8 +114,7 @@ class TimePickerInternals extends UI5Element {
 	 * mm:ss -> 12:04 (only minutes and seconds)
 
 	 * @type {string}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -128,7 +124,7 @@ class TimePickerInternals extends UI5Element {
 	 * The index of the active Clock/TogleSpinButton.
 	 *
 	 * @type {integer}
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })

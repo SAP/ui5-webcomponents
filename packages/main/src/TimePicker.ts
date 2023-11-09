@@ -74,10 +74,7 @@ import {
  * <code>import "@ui5/webcomponents/dist/TimePicker.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimePicker
- * @extends sap.ui.webc.main.TimePickerBase
- * @tagname ui5-time-picker
+ * @extends TimePickerBase
  * @public
  * @since 1.0.0-rc.6
  */
@@ -92,8 +89,7 @@ class TimePicker extends TimePickerBase {
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TimePicker.prototype.placeholder
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -108,8 +104,7 @@ class TimePicker extends TimePickerBase {
 	 * mm:ss -> 12:04 (only minutes and seconds)
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.TimePicker.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -142,7 +137,6 @@ class TimePicker extends TimePickerBase {
 	 * @readonly
 	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.TimePicker.prototype.dateValue
 	 */
 	get dateValue() {
 		return this.getFormat().parse(this._effectiveValue as string);

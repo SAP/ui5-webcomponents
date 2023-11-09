@@ -62,10 +62,7 @@ type YearPickerNavigateEventDetail = {
  * Displays years which can be selected.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.YearPicker
- * @extends sap.ui.webc.main.CalendarPart
- * @tagname ui5-yearpicker
+ * @extends CalendarPart
  * @public
  */
 @customElement({
@@ -76,14 +73,12 @@ type YearPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
  * @public
- * @event sap.ui.webc.main.YearPicker#change
  */
 @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  * @public
- * @event sap.ui.webc.main.YearPicker#navigate
  */
 @event("navigate")
 class YearPicker extends CalendarPart implements ICalendarPicker {
@@ -91,7 +86,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
 	 * @type {array}
-	 * @name sap.ui.webc.main.YearPicker.prototype.selectedDates
 	 * @public
 	 */
 	@property({

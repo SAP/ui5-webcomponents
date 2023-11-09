@@ -110,10 +110,7 @@ type PreviewValues = {
  * <code>import "@ui5/webcomponents/dist/DateTimePicker.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DateTimePicker
- * @extends sap.ui.webc.main.DatePicker
- * @tagname ui5-datetime-picker
+ * @extends DatePicker
  * @since 1.0.0-rc.7
  * @public
  */
@@ -145,7 +142,7 @@ class DateTimePicker extends DatePicker {
 	 * <br><br>
 	 * <b>Note:</b> The date view would be displayed by default.
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -157,7 +154,7 @@ class DateTimePicker extends DatePicker {
 	 * In phone mode the user can see either the calendar view, or the time view
 	 * and can switch between the views via toggle buttons.
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })

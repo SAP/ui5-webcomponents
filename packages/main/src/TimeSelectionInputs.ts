@@ -39,11 +39,8 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
  * This component should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelectionInputs
- * @extends sap.ui.webc.main.TimePickerInternals
+ * @extends TimePickerInternals
  * @abstract
- * @tagname ui5-time-selection-inputs
  * @since 1.18.0
  * @private
  */
@@ -242,7 +239,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 	 *
 	 * @param {number} num A number to format
 	 * @param {boolean} prependZero Whether to prepend with zero or not
-	 * @param {number} max Max value of the number for this clock
 	 * @returns {string} Formatted value
 	 * @private
 	 */
