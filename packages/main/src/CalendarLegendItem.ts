@@ -31,10 +31,7 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
  * <code>import "@ui5/webcomponents/dist/CalendarLegendItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CalendarLegendItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-calendar-legend-item
+ * @extends UI5Element
  * @private
  */
 @customElement({
@@ -54,11 +51,19 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	_tabIndex!: string;
 
 	/**
+	 * Defines the text content of the Calendar Legend Item.
+	 * @type {string}
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	placeholder!: string;
+
+	/**
 	 * Defines the type of the Calendar Legend Item.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.CalendarLegendItem.prototype.type
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
 	 */
 	@property()
@@ -83,7 +88,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 			[CalendarLegendItemType.Working]: WorkingI18n,
 		};
 
-		return typeMapping[this.type as keyof typeof typeMapping] || this.type;
+		return typeMapping[this.type as keyof typeof typeMapping] || this.placeholder || this.type;
 	}
 }
 

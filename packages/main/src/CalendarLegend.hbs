@@ -4,8 +4,18 @@
 			<ui5-calendar-legend-item 
 				type={{this.type}}
 				@click="{{../_onItemClick}}"
+				@keydown="{{../_onItemKeyDown}}"
 			>
 			</ui5-calendar-legend-item>
 		{{/unless}}
+	{{/each}}
+
+	{{#each legendItems}}
+		<div
+			@click="{{../_onItemClick}}"
+			@keydown="{{../_onItemKeyDown}}"
+		>
+			<slot name="{{this._individualSlot}}"></slot>
+		</div>
 	{{/each}}
 </div>
