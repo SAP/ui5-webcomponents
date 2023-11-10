@@ -156,6 +156,10 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
+		if (!this.items.length) {
+			return;
+		}
+
 		switch (this.mode) {
 		case SegmentedButtonMode.SingleSelect: {
 			const selectedItems = this.selectedItems;

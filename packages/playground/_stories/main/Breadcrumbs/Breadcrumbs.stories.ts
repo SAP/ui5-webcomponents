@@ -42,24 +42,16 @@ Basic.args = {
 	`,
 };
 
-export const NoCurrentPage = Template.bind({});
-NoCurrentPage.args = {
-    design: BreadcrumbsDesign.NoCurrentPage,
-    default: `<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Root Page
-</ui5-breadcrumbs-item>
-<ui5-breadcrumbs-item href="https://www.sap.com">Parent Page</ui5-breadcrumbs-item>`,
-};
-
 export const SeparatorStyle: StoryFn = () => html`
     <div>
-        <ui5-breadcrumbs separator-style="Slash">
+        <ui5-breadcrumbs design ="NoCurrentPage" separator-style="Slash">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Parent Page</ui5-breadcrumbs-item
             >
-            <ui5-breadcrumbs-item>Current Page</ui5-breadcrumbs-item>
+            <ui5-breadcrumbs-item>Current Page   (ui5-breadcrumbs desing="NoCurrentPage")</ui5-breadcrumbs-item>
         </ui5-breadcrumbs>
     </div>
     <div>

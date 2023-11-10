@@ -1,3 +1,5 @@
+const dns = require("node:dns");
+
 exports.config = {
 	//
 	// ====================
@@ -160,6 +162,9 @@ exports.config = {
 	 */
 	// beforeSession: function (config, capabilities, specs) {
 	// },
+	beforeSession: () => {
+        dns.setDefaultResultOrder('ipv4first');
+    },
 	/**
 	 * Gets executed before test execution begins. At this point you can access to all global
 	 * variables like `browser`. It is the perfect place to define custom commands.

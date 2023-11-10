@@ -91,7 +91,7 @@ describe("Eventing", () => {
 	it("Should fire input event with correct parameters when typing in internal input", async () => {
 		const combo = await browser.$("#input-cb");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#input-cb");
-		
+
 		await combo.scrollIntoView();
 		await combo.click();
 
@@ -156,15 +156,15 @@ describe("Eventing", () => {
 
 		assert.strictEqual(changeCountText, "1", "Change was fired once");
 		assert.strictEqual(await combo.getValue(), "Argentina", "The original value was changed");
-		
+
 	});
 
 	it ("When select an item, then open the dialog again and delete the text, then press OK button, the value should be deleted.", async ()=> {
 		const cb = await browser.$("#combo2");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
-		
+
 		await cb.click();
-	
+
 		const resPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialogInput = await resPopover.$(".ui5-input-inner-phone");
 		const okBtn = await resPopover.$(".ui5-responsive-popover-footer").$("ui5-button");
@@ -176,7 +176,7 @@ describe("Eventing", () => {
 		await okBtn.click();
 
 		assert.strictEqual(await cb.getProperty("value"), "Algeria", "Value should be Algeria.");
-		
+
 		await cb.click();
 		await dialogInput.keys('Backspace');
 		await okBtn.click();
@@ -202,6 +202,20 @@ describe("Typeahead", () => {
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys("Bu");
 		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
+	});
+
+	it("Should not perform typeahead when it is disabled", async () => {
+		await browser.url("test/pages/ComboBox.html");
+
+		const combo = await browser.$("#combo-without-type-ahead");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-without-type-ahead")
+
+		await combo.scrollIntoView();
+		await combo.click();
+
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
+		await dialogInput.keys("b");
+		assert.strictEqual(await dialogInput.getProperty("value"), "b", "Value is not autocompleted");
 	});
 });
 

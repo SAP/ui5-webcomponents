@@ -116,11 +116,11 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(await ratingIndicatorList.getAttribute("aria-hidden"), "true", "aria-hidden is set");
 	});
 
-	it("Tests ACC attrs - title attribute provided", async () => {
+	it("Tests ACC attrs - tooltip property", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator-title").shadow$(".ui5-rating-indicator-root");
 		const TOOLTIP = "Test";
 
-		assert.strictEqual(await ratingIndicator.getAttribute("title"), TOOLTIP, "The title attribute is rendered in the inner div as well.");
+		assert.strictEqual(await ratingIndicator.getAttribute("title"), TOOLTIP, "The tooltip property is rendered as a title in the inner div.");
 	});
 
 	it("Tests ACC attrs - required property add aria-description", async () => {
