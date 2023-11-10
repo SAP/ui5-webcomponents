@@ -44,6 +44,19 @@
     },
     "ClassDeclaration": {
       "properties": {
+        "_ui5implements": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was",
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the class or mixin is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
@@ -102,8 +115,132 @@
       ],
       "type": "object"
     },
+    "EnumDeclaration": {
+      "properties": {
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
+        "deprecated": {
+          "description": "Whether the class or mixin is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
+        "description": {
+          "description": "A markdown description of the class.",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "enum"
+          ],
+          "type": "string"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/definitions/EnumField"
+          },
+          "type": "array"
+        },
+        "mixins": {
+          "description": "Any class mixins applied in the extends clause of this class.\n\nIf mixins are applied in the class definition, then the true superclass\nof this class is the result of applying mixins in order to the superclass.\n\nMixins must be listed in order of their application to the superclass or\nprevious mixin application. This means that the innermost mixin is listed\nfirst. This may read backwards from the common order in JavaScript, but\nmatches the order of language used to describe mixin application, like\n\"S with A, B\".",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/SourceReference"
+        },
+        "summary": {
+          "description": "A markdown summary suitable for display in a listing.",
+          "type": "string"
+        },
+        "superclass": {
+          "$ref": "#/definitions/Reference",
+          "description": "The superclass of this class.\n\nIf this class is defined with mixin applications, the prototype chain\nincludes the mixin applications and the true superclass is computed\nfrom them."
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
+    "InterfaceDeclaration": {
+      "properties": {
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
+        "deprecated": {
+          "description": "Whether the class or mixin is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
+        "description": {
+          "description": "A markdown description of the class.",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "interface"
+          ],
+          "type": "string"
+        },
+        "mixins": {
+          "description": "Any class mixins applied in the extends clause of this class.\n\nIf mixins are applied in the class definition, then the true superclass\nof this class is the result of applying mixins in order to the superclass.\n\nMixins must be listed in order of their application to the superclass or\nprevious mixin application. This means that the innermost mixin is listed\nfirst. This may read backwards from the common order in JavaScript, but\nmatches the order of language used to describe mixin application, like\n\"S with A, B\".",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/SourceReference"
+        },
+        "summary": {
+          "description": "A markdown summary suitable for display in a listing.",
+          "type": "string"
+        },
+        "superclass": {
+          "$ref": "#/definitions/Reference",
+          "description": "The superclass of this class.\n\nIf this class is defined with mixin applications, the prototype chain\nincludes the mixin applications and the true superclass is computed\nfrom them."
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
     "ClassField": {
       "properties": {
+        "_ui5formProperty": {
+          "type": "boolean"
+        },
+        "_ui5formEvents": {
+          "type": "string"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "default": {
           "type": "string"
         },
@@ -157,8 +294,65 @@
       ],
       "type": "object"
     },
+    "EnumField": {
+      "properties": {
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
+        "deprecated": {
+          "description": "Whether the property is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
+        "description": {
+          "description": "A markdown description of the field.",
+          "type": "string"
+        },
+        "inheritedFrom": {
+          "$ref": "#/definitions/Reference"
+        },
+        "kind": {
+          "enum": [
+            "field"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "source": {
+          "$ref": "#/definitions/SourceReference"
+        },
+        "static": {
+          "type": "boolean"
+        },
+        "readonly": {
+          "description": "Whether the property is read-only.",
+          "type": "boolean"
+        },
+        "summary": {
+          "description": "A markdown summary suitable for display in a listing.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
     "ClassMethod": {
       "properties": {
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the function is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
@@ -226,6 +420,10 @@
     },
     "CssCustomProperty": {
       "properties": {
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "default": {
           "type": "string"
         },
@@ -261,6 +459,10 @@
     "CssPart": {
       "description": "The description of a CSS Part",
       "properties": {
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the CSS shadow part is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
@@ -288,6 +490,22 @@
     "CustomElementDeclaration": {
       "description": "A description of a custom element class.\n\nCustom elements are JavaScript classes, so this extends from\n`ClassDeclaration` and adds custom-element-specific features like\nattributes, events, and slots.\n\nNote that `tagName` in this interface is optional. Tag names are not\nneccessarily part of a custom element class, but belong to the definition\n(often called the \"registration\") or the `customElements.define()` call.\n\nBecause classes and tag names can only be registered once, there's a\none-to-one relationship between classes and tag names. For ease of use,\nwe allow the tag name here.\n\nSome packages define and register custom elements in separate modules. In\nthese cases one `Module` should contain the `CustomElement` without a\ntagName, and another `Module` should contain the\n`CustomElementExport`.",
       "properties": {
+        "_ui5implements": {
+          "items": {
+            "$ref": "#/definitions/Reference"
+          },
+          "type": "array"
+        },
+        "_ui5abstract": {
+          "type": "boolean"
+        },
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "attributes": {
           "description": "The attributes that this element is known to understand.",
           "items": {
@@ -584,6 +802,23 @@
     },
     "Event": {
       "properties": {
+        "_ui5parameters": {
+          "items": {
+            "$ref": "#/definitions/Parameter"
+          },
+          "type": "array"
+        },
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5allowPreventDefault": {
+          "description": "Whether the parameter is optional. Undefined implies non-optional.",
+          "type": "boolean"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the event is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
@@ -618,6 +853,10 @@
     },
     "FunctionDeclaration": {
       "properties": {
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the function is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
@@ -713,6 +952,12 @@
             "anyOf": [
               {
                 "$ref": "#/definitions/ClassDeclaration"
+              },
+              {
+                "$ref": "#/definitions/EnumDeclaration"
+              },
+              {
+                "$ref": "#/definitions/InterfaceDeclaration"
               },
               {
                 "$ref": "#/definitions/FunctionDeclaration"
@@ -864,6 +1109,13 @@
     },
     "Parameter": {
       "properties": {
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "default": {
           "type": "string"
         },
@@ -934,6 +1186,16 @@
     },
     "Slot": {
       "properties": {
+        "_ui5type": {
+          "$ref": "#/definitions/Type"
+        },
+        "_ui5privacy": {
+          "$ref": "#/definitions/Privacy"
+        },
+        "_ui5since": {
+          "description": "Marks when the field was introduced",
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the slot is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
