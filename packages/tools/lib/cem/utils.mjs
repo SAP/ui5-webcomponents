@@ -283,6 +283,8 @@ const validateJSDocTag = (tag) => {
             return !tag.type;
         case "param":
             return !tag.type && tag.name;
+        case "eventparam":
+            return tag.type && tag.name;
         case "formEvents":
             return !tag.type && tag.name;
         default:
@@ -292,8 +294,13 @@ const validateJSDocTag = (tag) => {
 
 const validateJSDocComment = (fieldType, jsdocComment, node) => {
     return !!jsdocComment?.tags?.every((tag) => {
-        const isValid =
-            allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag(tag);
+        let isValid = false
+
+        if (fieldType === "event" && tag?.tag === "param") {
+            isValid = allowedTags[fieldType]?.includes(tag.tag) && (tag.tag = "eventparam") && validateJSDocTag(tag);
+        } else {
+            isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag(tag);
+        }
 
         if (!isValid) {
             JSDocErrors.push(
