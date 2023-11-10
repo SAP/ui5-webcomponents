@@ -56,7 +56,7 @@ localeIds.forEach(localeId => {
 `;
 
 		// Actual imports for json assets
-		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import("../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
+		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
 
 		// Resulting file content
 		contentDynamic = `import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
