@@ -57,7 +57,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	text!: string;
 
 	/**
 	 * Defines the type of the Calendar Legend Item.
@@ -88,7 +88,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 			[CalendarLegendItemType.Working]: WorkingI18n,
 		};
 
-		return typeMapping[this.type as keyof typeof typeMapping] || this.placeholder || this.type;
+		return typeMapping[this.type as keyof typeof typeMapping] || this.text || this.type;
 	}
 }
 
