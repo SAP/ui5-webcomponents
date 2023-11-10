@@ -155,7 +155,7 @@ describe("General interaction", () => {
 		assert.notOk(await popover.getProperty("opened"), "Popover should close");
 	});
 
-	it.only ("Should close popover on item click / change event", async () => {
+	it ("Should close popover on item click / change event", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
