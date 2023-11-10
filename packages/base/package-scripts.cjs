@@ -44,7 +44,7 @@ const scripts = {
 	generateAPI: {
 		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
 		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
-		validateCEM: `ajv validate -s ${LIB}/cem/schema.json -d dist/custom-elements.json --allow-union-types --all-errors`,
+		validateCEM: `node "${LIB}/cem/validate.js"`,
 		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
 		preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
 		jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,

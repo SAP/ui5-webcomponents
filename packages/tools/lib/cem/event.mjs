@@ -8,11 +8,12 @@ import {
 	hasTag,
 	findTag,
 	findAllTags,
+	getReference
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
 
-const getParams = (ts, eventDetails, commentParams, classNode) => {
+const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 	return commentParams?.map(commentParam => {
 		const decoratorParam = eventDetails?.find(prop => prop?.name?.text === commentParam?.name);
 
@@ -22,12 +23,27 @@ const getParams = (ts, eventDetails, commentParams, classNode) => {
 
 		const decoratorParamParsedComment = parse(decoratorParam?.jsDoc?.[0]?.getText?.())[0];
 
-		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text)
+		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text);
+
+		const { typeName, name } = getType(commentParam?.type);
+		let type;
+
+		if (typeName) {
+			type = { text: typeName };
+
+			let typeRefs = name?.split("|")
+				?.map(e => getReference(ts, e.trim(), classNode, moduleDoc.path))
+				.filter(Boolean);
+
+			if (typeRefs?.length) {
+				type.references = typeRefs;
+			}
+		}
 
 		return {
-			type: getType(ts, commentParam?.type, classNode),
+			type,
 			name: commentParam?.name,
-			privacy: getPrivacyStatus(decoratorParamParsedComment),
+			_ui5privacy: getPrivacyStatus(decoratorParamParsedComment),
 			description: commentParam?.description,
 			_ui5since: getSinceStatus(decoratorParamParsedComment),
 			deprecated: getDeprecatedStatus(decoratorParamParsedComment),
@@ -35,13 +51,11 @@ const getParams = (ts, eventDetails, commentParams, classNode) => {
 	}).filter(pair => !!pair);
 };
 
-function processEvent(ts, event, classNode) {
+function processEvent(ts, event, classNode, moduleDoc) {
 	const result = {
 		name: event?.expression?.arguments?.[0]?.text,
-		privacy: "private",
-		type: {
-			text: "CustomEvent"
-		}
+		_ui5privacy: "private",
+		type: { text: "CustomEvent" }
 	};
 
 	const comment = event.getFullText?.().match(jsDocRegExp)?.[0];
@@ -52,13 +66,13 @@ function processEvent(ts, event, classNode) {
 
 	const eventParsedComment = parse(comment)[0];
 
-	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text)
+	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text);
 
-	const deprecatedTag = findTag(eventParsedComment, "deprecated")
+	const deprecatedTag = findTag(eventParsedComment, "deprecated");
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
 	const sinceTag = findTag(eventParsedComment, "since");
 	const commentParams = findAllTags(eventParsedComment, "param");
-	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault");
+	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault") || undefined;
 	const description = eventParsedComment?.description;
 	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
@@ -71,19 +85,25 @@ function processEvent(ts, event, classNode) {
 	}
 
 	if (privacy) {
-		result.privacy = privacy;
+		result._ui5privacy = privacy;
 	}
 
 	if (deprecatedTag?.name) {
-		result.deprecated = deprecatedTag?.description ? `${deprecatedTag.name} ${deprecatedTag.description}` : deprecatedTag.name;
+		result.deprecated = deprecatedTag.description
+			? `${deprecatedTag.name} ${deprecatedTag.description}`
+			: deprecatedTag.name;
+	} else if (deprecatedTag) {
+		result.deprecated = true;
 	}
 
 	if (sinceTag?.name) {
-		result._ui5since = sinceTag?.description ? `${sinceTag.name} ${sinceTag.description}` : sinceTag.name;
+		result._ui5since = sinceTag?.description
+			? `${sinceTag.name} ${sinceTag.description}`
+			: sinceTag.name;
 	}
 
 	if (commentParams && eventDetails) {
-		result.params = getParams(ts, eventDetails, commentParams, classNode);
+		result._ui5parameters = getParams(ts, eventDetails, commentParams, classNode, moduleDoc);
 	}
 
 	return result;

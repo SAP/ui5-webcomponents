@@ -27,6 +27,7 @@ const overrides = tsMode ? [{
 		"@typescript-eslint/no-unsafe-call": "off",
 		"@typescript-eslint/no-non-null-assertion": "off",
 		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/no-empty-interface": "off",
 		"lines-between-class-members": "off",
 	}
 }] : [];
