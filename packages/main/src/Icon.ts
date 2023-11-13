@@ -10,6 +10,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
+import type { IIcon } from "./Interfaces";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
@@ -124,11 +125,10 @@ const PRESENTATION_ROLE = "presentation";
  * @since 1.0.0-rc.8
  */
 @event("click")
-class Icon extends UI5Element {
+class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
 	 *
-	 * @type {IconDesign}
 	 * @default "Default"
 	 * @public
 	 * @since 1.9.2
@@ -138,7 +138,6 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -177,7 +176,6 @@ class Icon extends UI5Element {
 	 * Example:
 	 * <br>
 	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -191,7 +189,6 @@ class Icon extends UI5Element {
 	 * <b>Note:</b> Every icon should have a text alternative in order to
 	 * calculate its accessible name.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -203,7 +200,6 @@ class Icon extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The tooltip text should be provided via the <code>accessible-name</code> property.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -212,7 +208,6 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines the accessibility role of the component.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
