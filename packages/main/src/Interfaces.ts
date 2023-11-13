@@ -67,6 +67,7 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
  * @interface
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IIcon extends HTMLElement { }
 
 /**
