@@ -81,7 +81,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -92,7 +91,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * Defines if the avatar is interactive (focusable and pressable).
 	 * <b>Note:</b> This property won't have effect if the <code>disabled</code>
 	 * property is set to <code>true</code>.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -127,7 +125,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * <b>Note:</b> If no icon or an empty one is provided, by default the "employee" icon should be displayed.
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -153,7 +150,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * <br>
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -165,7 +161,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * <br>
 	 * Up to three Latin letters can be displayed as initials.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -175,7 +170,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Defines the shape of the component.
 	 *
-	 * @type {AvatarShape}
 	 * @default "Circle"
 	 * @public
 	 */
@@ -185,7 +179,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Defines predefined size of the component.
 	 *
-	 * @type {AvatarSize}
 	 * @default "S"
 	 * @public
 	 */
@@ -201,7 +194,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Defines the background color of the desired image.
 	 *
-	 * @type {AvatarColorScheme}
 	 * @default "Accent6"
 	 * @public
 	 */
@@ -218,7 +210,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.7
@@ -229,7 +220,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Defines the aria-haspopup value of the component when <code>interactive</code> property is <code>true</code>.
 	 * <br><br>
-	 * @type {string}
 	 * @since 1.0.0-rc.15
 	 * @protected
 	 */
@@ -252,7 +242,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 *			&nbsp;visibility: hidden; <br />
 	 *		} <br />
 	 * </code>
-	 * @type {HTMLElement}
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -279,7 +268,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * </ui5-badge>
 	 * </ui5-avatar>
 	 *
-	 * @type {HTMLElement}
 	 * @public
 	 * @since 1.7.0
 	 */
@@ -306,7 +294,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Returns the effective avatar size.
 	 * @readonly
-	 * @type {string}
 	 * @default "S"
 	 * @private
 	 */
@@ -318,7 +305,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	/**
 	 * Returns the effective background color.
 	 * @readonly
-	 * @type {string}
 	 * @default "Accent6"
 	 * @private
 	 */

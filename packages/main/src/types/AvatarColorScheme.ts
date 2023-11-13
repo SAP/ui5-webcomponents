@@ -1,7 +1,6 @@
 /**
  * Different types of AvatarColorScheme.
  *
- * @readonly
  * @public
  */
 enum AvatarColorScheme {

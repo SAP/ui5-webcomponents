@@ -1,7 +1,6 @@
 /**
  * Types for the vertical alignment of the thumbnails menu of the <code>ui5-media-gallery</code> component.
  *
- * @readonly
  * @public
  */
 enum MediaGalleryMenuVerticalAlign {

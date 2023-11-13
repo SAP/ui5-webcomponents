@@ -1,7 +1,6 @@
 /**
  * Defines the layout type of the thumbnails list of the <code>ui5-media-gallery</code> component.
  *
- * @readonly
  * @public
  */
 enum MediaGalleryLayout {

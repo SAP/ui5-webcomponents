@@ -1,7 +1,6 @@
 /**
  * Different types of AvatarGroupType.
  *
- * @readonly
  * @public
  */
 enum AvatarGroupType {

@@ -1,7 +1,6 @@
 /**
  * Defines the layout of the content displayed in the <code>ui5-media-gallery-item</code>.
  *
- * @readonly
  * @public
  */
 enum MediaGalleryItemLayout {

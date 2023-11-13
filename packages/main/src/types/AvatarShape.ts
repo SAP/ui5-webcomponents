@@ -1,7 +1,6 @@
 /**
  * Different types of AvatarShape.
  *
- * @readonly
  * @public
  */
 enum AvatarShape {

@@ -67,7 +67,6 @@ class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchI
 
 	/**
 	 * Defines the title of the component.
-	 * @type {string}
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -77,7 +76,6 @@ class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchI
 
 	/**
 	 * Defines the subtitle of the component.
-	 * @type {string}
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -94,7 +92,6 @@ class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchI
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -113,7 +110,6 @@ class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchI
 	 * <li><code>_search</code></li>
 	 * </ul>
 	 *
-	 * @type {string}
 	 * @public
 	 */
 	@property({ defaultValue: "_self" })
@@ -121,9 +117,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchI
 
 	/**
 	 * Defines the component target URI. Supports standard hyperlink behavior.
-	 * @type {string}
-
-	* @default ""
+	 * @default ""
 	 * @public
 	 */
 	@property()

@@ -1,7 +1,6 @@
 /**
  * Different types of FCLLayout.
  *
- * @readonly
  * @public
  */
 enum FCLLayout {

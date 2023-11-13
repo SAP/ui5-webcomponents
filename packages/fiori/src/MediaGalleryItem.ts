@@ -55,8 +55,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable, IMediaGalleryIte
 	/**
 	 * Defines the selected state of the component.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -65,8 +64,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable, IMediaGalleryIte
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -81,8 +79,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable, IMediaGalleryIte
 	 * <li><code>Wide</code></li>
 	 * </ul>
 	 *
-	 * @type {MediaGalleryItemLayout}
-	 * @defaultvalue "Square"
+	 * @default "Square"
 	 * @public
 	 */
 	@property({ type: MediaGalleryItemLayout, defaultValue: MediaGalleryItemLayout.Square })
@@ -139,7 +136,6 @@ class MediaGalleryItem extends UI5Element implements ITabbable, IMediaGalleryIte
 	/**
 	 * Defines the content of the component.
 	 *
-	 * @type {HTMLElement}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -148,7 +144,6 @@ class MediaGalleryItem extends UI5Element implements ITabbable, IMediaGalleryIte
 	/**
 	 * Defines the content of the thumbnail.
 	 *
-	 * @type {HTMLElement}
 	 * @public
 	 */
 	@slot()

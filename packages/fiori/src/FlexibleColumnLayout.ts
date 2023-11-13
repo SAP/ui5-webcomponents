@@ -8,6 +8,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -84,6 +85,12 @@ type AccessibilityRoles = {
 	endArrowContainerRole?: I18nText;
 };
 
+interface IEffectiveArrowsInfo {
+    visible: boolean,
+    dir: string | null,
+    separator?: boolean | undefined,
+}
+
 /**
  * @class
  *
@@ -142,7 +149,7 @@ type AccessibilityRoles = {
  * Fired when the layout changes via user interaction by clicking the arrows
  * or by changing the component size due to resizing.
  *
- * @param {sap.ui.webc.fiori.types.FCLLayout} layout The current layout
+ * @param {FCLLayout} layout The current layout
  * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
  * @param {boolean} startColumnVisible Indicates if the start column is currently visible
  * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
@@ -171,7 +178,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* <br><br>
 	* <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
 	* in 67%/33% proportion.
-	* @type {FCLLayout}
 	* @default "OneColumn"
 	* @public
 	*/
@@ -182,7 +188,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* Defines the visibility of the arrows,
 	* used for expanding and shrinking the columns.
 	*
-	* @type {boolean}
 	* @default false
 
 	* @public
@@ -205,7 +210,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - <code>startArrowContainerAccessibleName</code>: the text that the first arrow container (between the <code>begin</code> and <code>mid</code> columns) will have as <code>aria-label</code>
 	*  - <code>endArrowContainerAccessibleName</code>: the text that the second arrow container (between the <code>mid</code> and <code>end</code> columns) will have as <code>aria-label</code>
 	*
-	* @type {object}
 	* @public
 	* @since 1.0.0-rc.11
 	*/
@@ -222,7 +226,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - <code>endArrowContainerRole</code>: the accessibility role for the second arrow container (between the <code>mid</code> and <code>end</code> columns)
 	*  - <code>endColumnRole</code>: the accessibility role for the <code>endColumn</code>
 	*
-	* @type {object}
 	* @public
 	* @since 1.1.0
 	*/
@@ -232,7 +235,6 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the component width in px.
 	*
-	* @type {Float}
 	* @default 0
 	* @private
 	*/
@@ -244,7 +246,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* based on both the <code>layout</code> property and the screen size.
 	* Example: [67%, 33%, 0], [25%, 50%, 25%], etc.
 	*
-	* @type {object}
 	* @default undefined
 	* @private
 	*/
@@ -254,7 +255,6 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the visible columns count - 1, 2 or 3.
 	*
-	* @type {Integer}
 	* @default 1
 	* @private
 	*/
@@ -264,16 +264,13 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Allows the user to replace the whole layouts configuration
 	*
-	* @type {object}
 	* @private
-	* @sap-restricted
 	*/
 	@property({ type: Object, defaultValue: undefined })
 	_layoutsConfiguration?: LayoutConfiguration;
 
 	/**
 	* Defines the content in the start column.
-	* @type {HTMLElement}
 	* @public
 	*/
 	@slot()
@@ -281,7 +278,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Defines the content in the middle column.
-	* @type {HTMLElement}
 	* @public
 	*/
 	@slot()
@@ -289,7 +285,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Defines the content in the end column.
-	* @type {HTMLElement}
 	* @public
 	*/
 	@slot()
@@ -494,8 +489,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* <br><br>
 	* <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
 	* where the numbers represents the width of the start, middle and end columns.
-	* @readonly
-	* @type {array}
 	* @default ["100%", 0, 0]
 	* @public
 	*/
@@ -505,9 +498,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Returns if the <code>start</code> column is visible.
-	* @readonly
 	* @default true
-	* @type {boolean}
 	* @public
 	*/
 	get startColumnVisible(): boolean {
@@ -520,8 +511,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Returns if the <code>middle</code> column is visible.
-	* @readonly
-	* @type {boolean}
 	* @default false
 	* @public
 	*/
@@ -535,8 +524,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Returns if the <code>end</code> column is visible.
-	* @readonly
-	* @type {boolean}
 	* @default false
 	* @public
 	*/
@@ -550,8 +537,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Returns the number of currently visible columns.
-	* @readonly
-	* @type {Integer}
 	* @default 1
 	* @public
 	*/
@@ -559,7 +544,7 @@ class FlexibleColumnLayout extends UI5Element {
 		return this._visibleColumns;
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		const hasAnimation = getAnimationMode() !== AnimationMode.None;
 
 		return {
@@ -609,55 +594,55 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
-	get startColumnWidth() {
+	get startColumnWidth(): string | number {
 		return this._columnLayout ? this._columnLayout[0] : "100%";
 	}
 
-	get midColumnWidth() {
+	get midColumnWidth(): string | number {
 		return this._columnLayout ? this._columnLayout[1] : "0px";
 	}
 
-	get endColumnWidth() {
+	get endColumnWidth(): string | number {
 		return this._columnLayout ? this._columnLayout[2] : "0px";
 	}
 
-	get showStartSeparator() {
+	get showStartSeparator(): boolean {
 		return this.effectiveArrowsInfo[0].separator || this.startArrowVisibility;
 	}
 
-	get showEndSeparator() {
+	get showEndSeparator(): boolean {
 		return this.effectiveArrowsInfo[1].separator || this.endArrowVisibility;
 	}
 
-	get showStartArrow() {
+	get showStartArrow(): boolean {
 		return this.hideArrows ? false : this.startArrowVisibility;
 	}
 
-	get showEndArrow() {
+	get showEndArrow(): boolean {
 		return this.hideArrows ? false : this.endArrowVisibility;
 	}
 
-	get startArrowVisibility() {
+	get startArrowVisibility(): boolean {
 		return this.effectiveArrowsInfo[0].visible;
 	}
 
-	get endArrowVisibility() {
+	get endArrowVisibility(): boolean {
 		return this.effectiveArrowsInfo[1].visible;
 	}
 
-	get startArrowDirection() {
+	get startArrowDirection(): string | null {
 		return this.effectiveArrowsInfo[0].dir;
 	}
 
-	get endArrowDirection() {
+	get endArrowDirection(): string | null {
 		return this.effectiveArrowsInfo[1].dir;
 	}
 
-	get effectiveArrowsInfo() {
+	get effectiveArrowsInfo(): IEffectiveArrowsInfo[] {
 		return this._effectiveLayoutsByMedia[this.media][this.layout].arrows;
 	}
 
-	get media() {
+	get media(): MEDIA {
 		if (this._width <= BREAKPOINTS.PHONE) {
 			return MEDIA.PHONE;
 		}
@@ -669,68 +654,68 @@ class FlexibleColumnLayout extends UI5Element {
 		return MEDIA.DESKTOP;
 	}
 
-	get widthDOM() {
+	get widthDOM(): number {
 		return this.getBoundingClientRect().width;
 	}
 
-	get startColumnDOM() {
+	get startColumnDOM(): HTMLElement {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--start")!;
 	}
 
-	get midColumnDOM() {
+	get midColumnDOM(): HTMLElement {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--middle")!;
 	}
 
-	get endColumnDOM() {
+	get endColumnDOM(): HTMLElement {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--end")!;
 	}
 
-	get accStartColumnText() {
+	get accStartColumnText(): string | I18nText {
 		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
-	get accMiddleColumnText() {
+	get accMiddleColumnText(): string | I18nText {
 		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
-	get accEndColumnText() {
+	get accEndColumnText(): string | I18nText {
 		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
-	get accStartArrowContainerText() {
+	get accStartArrowContainerText(): I18nText | undefined {
 		return this.accessibilityTexts.startArrowContainerAccessibleName || undefined;
 	}
 
-	get accEndArrowContainerText() {
+	get accEndArrowContainerText(): I18nText | undefined {
 		return this.accessibilityTexts.endArrowContainerAccessibleName || undefined;
 	}
 
-	get accStartColumnRole() {
+	get accStartColumnRole(): I18nText | "region" | undefined {
 		if (this.startColumnVisible) {
 			return this.accessibilityRoles.startColumnRole || "region";
 		}
 		return undefined;
 	}
 
-	get accMiddleColumnRole() {
+	get accMiddleColumnRole(): I18nText | "region" | undefined {
 		if (this.midColumnVisible) {
 			return this.accessibilityRoles.midColumnRole || "region";
 		}
 		return undefined;
 	}
 
-	get accEndColumnRole() {
+	get accEndColumnRole(): I18nText | "region" | undefined {
 		if (this.endColumnVisible) {
 			return this.accessibilityRoles.endColumnRole || "region";
 		}
 		return undefined;
 	}
 
-	get accStartArrowContainerRole() {
+	get accStartArrowContainerRole(): I18nText | undefined {
 		return this.accessibilityRoles.startArrowContainerRole || undefined;
 	}
 
-	get accEndArrowContainerRole() {
+	get accEndArrowContainerRole(): I18nText | undefined {
 		return this.accessibilityRoles.endArrowContainerRole || undefined;
 	}
 
@@ -757,7 +742,7 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
-	get accStartArrowText() {
+	get accStartArrowText(): string | I18nText {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.startArrowDirection === "mirror") {
@@ -767,7 +752,7 @@ class FlexibleColumnLayout extends UI5Element {
 		return customTexts.startArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 
-	get accEndArrowText() {
+	get accEndArrowText(): string | I18nText {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.endArrowDirection === "mirror") {

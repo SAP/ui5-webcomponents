@@ -114,7 +114,6 @@ class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -136,11 +135,9 @@ class BarcodeScannerDialog extends UI5Element {
 
 	/**
 	 * Shows a dialog with the camera videostream. Starts a scan session.
-	 * @method
-	 * @returns {void}
 	 * @public
 	 */
-	show() {
+	show(): void {
 		if (this.loading) {
 			console.warn("Barcode scanning is already in progress.");  // eslint-disable-line
 			return;
@@ -163,11 +160,9 @@ class BarcodeScannerDialog extends UI5Element {
 
 	/**
 	 * Closes the dialog and the scan session.
-	 * @method
-	 * @returns {void}
 	 * @public
 	 */
-	close() {
+	close():void {
 		this._closeDialog();
 		this.loading = false;
 	}

@@ -127,7 +127,6 @@ class MediaGallery extends UI5Element {
 	 * If <code>false</code>, only up to five thumbnails are rendered, followed by
 	 * an overflow button that shows the count of the remaining thumbnails.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -141,7 +140,6 @@ class MediaGallery extends UI5Element {
 	 * The display area is the central area that contains
 	 * the enlarged content of the currently selected item.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -151,7 +149,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the layout of the component.
 	 *
-	 * @type {MediaGalleryLayout}
 	 * @default "Auto"
 	 * @public
 	 */
@@ -162,7 +159,6 @@ class MediaGallery extends UI5Element {
 	 * Determines the horizontal alignment of the thumbnails menu
 	 * vs. the central display area.
 	 *
-	 * @type {MediaGalleryMenuHorizontalAlign}
 	 * @default "Left"
 	 * @public
 	 */
@@ -173,7 +169,6 @@ class MediaGallery extends UI5Element {
 	 * Determines the vertical alignment of the thumbnails menu
 	 * vs. the central display area.
 	 *
-	 * @type {MediaGalleryMenuVerticalAlign}
 	 * @default "Bottom"
 	 * @public
 	 */
@@ -185,7 +180,6 @@ class MediaGallery extends UI5Element {
 	 * (esp. needed when the app did not specify a fixed layout type
 	 * but selected <code>Auto</code> layout type).
 	 *
-	 * @type {MediaGalleryLayout}
 	 * @default "Vertical"
 	 * @private
 	 */
@@ -217,7 +211,6 @@ class MediaGallery extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
 	 *
-	 * @type {IMediaGalleryItem[]}
 	 * @public
 	 */
 	@slot({

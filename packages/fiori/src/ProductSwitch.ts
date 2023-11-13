@@ -86,8 +86,6 @@ class ProductSwitch extends UI5Element {
 	/**
 	 * Defines the items of the <code>ui5-product-switch</code>.
 	 *
-	 * @type {IProductSwitchItem[]}
-	 * @name sap.ui.webc.fiori.ProductSwitch.prototype.default
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

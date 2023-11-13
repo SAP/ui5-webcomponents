@@ -171,7 +171,6 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Defines the mode of the <code>AvatarGroup</code>.
 	 *
-	 * @type {AvatarGroupType}
 	 * @default "Group"
 	 * @public
 	 */
@@ -186,8 +185,7 @@ class AvatarGroup extends UI5Element {
 	 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
 	 * </ul>
 	 * <br><br>
-	 * @type {string}
-	* @since 1.0.0-rc.15
+	 * @since 1.0.0-rc.15
 	 * @protected
 	 */
 	@property()
@@ -205,7 +203,6 @@ class AvatarGroup extends UI5Element {
 	 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
 	 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 	 * as the built-in overflow action has "Circle" shape.
-	 * @type {IAvatar[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -217,7 +214,6 @@ class AvatarGroup extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If this slot is not used, the component will
 	 * display the built-in overflow button.
-	 * @type {HTMLElement}
 	 * @public
 	 * @since 1.0.0-rc.13
 	 */
@@ -249,23 +245,19 @@ class AvatarGroup extends UI5Element {
 
 	/**
 	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
-	 * @readonly
-	 * @type {HTMLElement[]}
 	 * @default []
 	 * @public
 	 */
-	get hiddenItems() {
+	get hiddenItems(): IAvatar[] {
 		return this.items.slice(this._hiddenStartIndex);
 	}
 
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
-	 * @readonly
-	 * @type {AvatarColorScheme[]}
 	 * @default []
 	 * @public
 	 */
-	get colorScheme() {
+	get colorScheme(): string[] {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
 	}
 
@@ -367,7 +359,7 @@ class AvatarGroup extends UI5Element {
 		return button.offsetWidth;
 	}
 
-	get firstAvatarSize() {
+	get firstAvatarSize(): string {
 		return this.items[0].size;
 	}
 
@@ -493,7 +485,7 @@ class AvatarGroup extends UI5Element {
 	 * Returns the total width to item excluding the item width
 	 * RTL/LTR aware
 	 * @private
-	 * @param {HTMLElement} item
+	 * @param item
 	 */
 	_getWidthToItem(item: HTMLElement) {
 		const isRTL = this.effectiveDir === "rtl";
