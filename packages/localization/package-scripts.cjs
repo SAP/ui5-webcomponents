@@ -1,7 +1,10 @@
 const resolve = require("resolve");
+const path = require("path");
+
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const replaceGlobalCore = resolve.sync("@ui5/webcomponents-tools/lib/replace-global-core/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
+const LIB = path.join(__dirname, `../tools/lib/`);
 
 const scripts = {
 	clean: "rimraf dist",
@@ -21,10 +24,11 @@ const scripts = {
 	typescript: "tsc --build",
 	copy: {
 		"used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
-		cldr: `node ./lib/copy-and-strip-cldr/index.js "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/" dist/generated/assets/cldr/`,
+		cldr: `node ./lib/copy-and-strip-cldr/index.js "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/" src/generated/assets/cldr/`,
 		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 		src: `copy-and-watch "src/**/*.js" dist/`,
 	},
+	copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 	watch: {
 		"default": "nps watch.src",
 		typescript: "tsc --watch",
