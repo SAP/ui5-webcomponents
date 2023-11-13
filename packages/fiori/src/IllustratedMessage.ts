@@ -163,7 +163,7 @@ class IllustratedMessage extends UI5Element {
 	* @defaultvalue "H2"
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleLevel
 	* @public
-	* @since 1.19.0
+	* @since 1.20.0
 	*/
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
 	titleLevel!: `${TitleLevel}`;
