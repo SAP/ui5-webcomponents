@@ -4,7 +4,7 @@ import assets from "@ui5/webcomponents-tools/assets-meta.js";
 const allLocales = assets.locales.all;
 
 const imports = allLocales.map(locale => `import ${locale} from "../assets/cldr/${locale}.json";`).join("\n");
-const caseImports = allLocales.map(locale => `\t\tcase "${locale}": return (await import("../assets/cldr/${locale}.json")).default;`).join("\n");
+const caseImports = allLocales.map(locale => `\t\tcase "${locale}": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-${locale}" */ "../assets/cldr/${locale}.json")).default;`).join("\n");
 const localesKeys = allLocales.join(",");
 const localesKeysStrArray = allLocales.map(_ => `"${_}"`).join(",");
 
