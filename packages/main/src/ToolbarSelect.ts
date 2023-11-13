@@ -4,6 +4,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
+import type IToolbarItem from "./ToolbarItem.js";
+import { ISelectOption } from "./Interfaces.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
@@ -68,7 +70,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @event("close")
 
-class ToolbarSelect extends ToolbarItem {
+class ToolbarSelect extends ToolbarItem implements IToolbarItem {
 	/**
 	 * Defines the width of the select.
 	 * <br><br>
@@ -76,7 +78,6 @@ class ToolbarSelect extends ToolbarItem {
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
 	 * @default undefined
-	 * @type {CSSSize}
 	 * @public
 	 */
 	@property({ validator: CSSSize })
@@ -91,18 +92,16 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
-	 * @type {ISelectOption[]}
 	 * @slot options
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<Option>;
+	options!: Array<ISelectOption>;
 
 	/**
 	 * Defines the value state of the component.
 	 * <br><br>
 	 *
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 */
@@ -114,7 +113,6 @@ class ToolbarSelect extends ToolbarItem {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -124,7 +122,6 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @public
 	 * @default ""
 	 */
@@ -134,7 +131,6 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -193,7 +189,7 @@ class ToolbarSelect extends ToolbarItem {
 			// update options
 			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
 			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-			this.options.forEach((option: Option, index: number) => {
+			this.options.forEach((option: ISelectOption, index: number) => {
 				if (index === selectedOptionIndex) {
 					option.setAttribute("selected", "");
 				} else {

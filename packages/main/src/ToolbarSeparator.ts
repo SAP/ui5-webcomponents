@@ -6,6 +6,7 @@ import ToolbarPopoverSeparatorTemplate from "./generated/templates/ToolbarPopove
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 import ToolbarItem from "./ToolbarItem.js";
+import type IToolbarItem from "./ToolbarItem.js";
 
 /**
  * @class
@@ -25,7 +26,7 @@ import ToolbarItem from "./ToolbarItem.js";
 	tag: "ui5-toolbar-separator",
 })
 
-class ToolbarSeparator extends ToolbarItem {
+class ToolbarSeparator extends ToolbarItem implements IToolbarItem {
 	@property({ type: Boolean })
 	visible!: boolean;
 

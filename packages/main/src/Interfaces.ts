@@ -127,11 +127,11 @@ const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
- * @name sap.ui.webc.main.ISelectOption
  * @interface
  * @public
  */
-const ISelectOption = "sap.ui.webc.main.ISelectOption";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ISelectOption extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
@@ -208,11 +208,11 @@ const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
 /**
  * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
  *
- * @name sap.ui.webc.main.IToolbarSelectOption
  * @interface
  * @public
  */
-const IToolbarSelectOption = "sap.ui.webc.main.IToolbarSelectOption";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IToolbarSelectOption extends HTMLElement { }
 
 export {
 	IAvatar,

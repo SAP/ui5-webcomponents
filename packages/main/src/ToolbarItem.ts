@@ -42,7 +42,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * </ul>
 	 * @public
 	 * @default "Default"
-	 * @type {ToolbarItemOverflowBehavior}
 	 */
 	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
 	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
@@ -50,7 +49,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
 	 * It will close by default.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */

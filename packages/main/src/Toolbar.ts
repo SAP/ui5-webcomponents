@@ -13,6 +13,7 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type IToolbarItem from "./ToolbarItem.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -28,7 +29,7 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 import HasPopup from "./types/HasPopup.js";
 
-import type ToolbarItem from "./ToolbarItem.js";
+import ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import {
@@ -86,7 +87,6 @@ class Toolbar extends UI5Element {
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
 	 *
-	 * @type {ToolbarAlign}
 	 * @public
 	 * @default: "End"
 	 */
@@ -96,25 +96,22 @@ class Toolbar extends UI5Element {
 	/**
 	 * Calculated width of the whole toolbar.
 	 * @private
-	 * @type {Integer}
 	 * @default false
 	 */
-	@property({ type: Integer })
+	@property({ validator: Integer })
 	width?: number;
 
 	/**
 	 * Calculated width of the toolbar content.
 	 * @private
-	 * @type {Integer}
 	 * @default 0
 	 */
-	@property({ type: Integer })
+	@property({ validator: Integer })
 	contentWidth?: number;
 
 	/**
 	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
 	 * @private
-	 * @type {Boolean}
 	 */
 	@property({ type: Boolean })
 	reverseOverflow!: boolean;
@@ -122,7 +119,6 @@ class Toolbar extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default: ""
 	 * @public
 	 */
@@ -132,7 +128,6 @@ class Toolbar extends UI5Element {
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -144,12 +139,11 @@ class Toolbar extends UI5Element {
      *
      * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
 	 *
-	 * @type {IToolbarItem[]}
 	 * @slot items
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<ToolbarItem>
+	items!: Array<IToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
 	_onInteract!: EventListener;

@@ -4,6 +4,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import type IToolbarItem from "./ToolbarItem.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import type { IEventOptions } from "./ToolbarItem.js";
@@ -46,13 +47,12 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @public
  */
 @event("click")
-class ToolbarButton extends ToolbarItem {
+class ToolbarButton extends ToolbarItem implements IToolbarItem {
 	/**
 	 * Defines if the action is disabled.
 	 * <br><br>
 	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -72,7 +72,6 @@ class ToolbarButton extends ToolbarItem {
 	 * <li><code>Attention</code></li>
 	 * </ul>
 	 *
-	 * @type {ButtonDesign}
 	 * @default "Default"
 	 * @public
 	 */
@@ -86,7 +85,6 @@ class ToolbarButton extends ToolbarItem {
 	 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 	 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -96,7 +94,6 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines whether the icon should be displayed after the component text.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -107,7 +104,6 @@ class ToolbarButton extends ToolbarItem {
 	 * Defines the tooltip of the component.
 	 * <br>
 	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -117,7 +113,6 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -127,7 +122,6 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -158,7 +152,6 @@ class ToolbarButton extends ToolbarItem {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
-	 * @type {object}
 	 * @public
 	 */
 	@property({ type: Object })
@@ -168,7 +161,6 @@ class ToolbarButton extends ToolbarItem {
 	 * Button text
 	 * @public
 	 * @default ""
-	 * @type {string}
 	 */
 	@property()
 	text!: string;
@@ -180,7 +172,6 @@ class ToolbarButton extends ToolbarItem {
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
 	 * @default undefined
-	 * @type { sap.ui.webc.base.types.CSSSize }
 	 * @public
 	 */
 	@property({ validator: CSSSize })
