@@ -240,21 +240,50 @@ function processEnum(ts, enumNode, moduleDoc) {
 }
 
 const processPublicAPI = object => {
-	if (!object || (object.privacy && object.privacy !== "public") || (object._ui5privacy && object._ui5privacy !== "public")) return true;
+	if (!object) {
+		return true;
+	}
+	const keys = Object.keys(object);
+	if (!keys.includes("privacy") && !keys.includes("_ui5privacy")) {
+		return true;
+	}
+	for (const key of keys) {
+		if ((key === "privacy" && object[key] !== "public") || (key === "_ui5privacy" && object[key] !== "public")) {
+			return true;
+		} else if (typeof object[key] === "object") {
+			if (key === "cssParts" || key === "_ui5implements") {
+				continue;
+			}
 
-	for (const key in object) {
-		if (key !== "cssParts" && key !== "_ui5implements" && Array.isArray(object[key])) {
-			object[key] = object[key].filter(item => !processPublicAPI(item));
-			if (object[key].length === 0) delete object[key];
-			else object[key].sort((a, b) => a.name.localeCompare(b.name));
+			if (Array.isArray(object[key])) {
+				for (let i = 0; i < object[key].length; i++) {
+					const shouldRemove = processPublicAPI(object[key][i]);
+					if (shouldRemove) {
+						object[key].splice(i, 1);
+						i--;
+					}
+				}
+				if (object[key].length === 0) {
+					delete object[key];
+				} else {
+					object[key].sort(function (a, b) {
+						if (a.name < b.name) {
+							return -1;
+						}
+						if (a.name > b.name) {
+							return 1;
+						}
+						return 0;
+					});
+				}
+			}
 		}
 	}
-
 	return false;
 };
 
 export default {
-	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
+	globs: ["src/Input.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
@@ -273,15 +302,21 @@ export default {
 				}
 			},
 			moduleLinkPhase({ moduleDoc }) {
-				processPublicAPI(moduleDoc);
+				for (let i = 0; i < moduleDoc.declarations.length; i++) {
+					const shouldRemove = processPublicAPI(moduleDoc.declarations[i]) || ["function", "variable"].includes(moduleDoc.declarations[i].kind)
+					if (shouldRemove) {
+						moduleDoc.declarations.splice(i, 1);
+						i--;
+					}
+				}
 			},
 			packageLinkPhase() {
 				// Uncomment and handle errors appropriately
 				const JSDocErrors = getJSDocErrors();
 				if (JSDocErrors.length > 0) {
-				  console.log(JSDocErrors.join("\n"));
-				  console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-				  throw new Error(`Invalid JSDoc.`);
+					console.log(JSDocErrors.join("\n"));
+					console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
+					throw new Error(`Invalid JSDoc.`);
 				}
 			}
 		},
