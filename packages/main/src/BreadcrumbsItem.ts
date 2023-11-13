@@ -12,7 +12,6 @@ import type { IBreadcrumbsItem } from "./Interfaces.js";
  * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcrumbs</code>.
  *
  * @constructor
- * @author SAP SE
  * @extends UI5Element
  * @implements {IBreadcrumbsItem}
  * @public
@@ -25,7 +24,6 @@ class BreadcrumbsItem extends UI5Element implements IBreadcrumbsItem {
 	 * <br><br>
 	 * <b>Note:</b> Standard hyperlink behavior is supported.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -46,7 +44,6 @@ class BreadcrumbsItem extends UI5Element implements IBreadcrumbsItem {
 	 * <br><br>
 	 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -56,7 +53,6 @@ class BreadcrumbsItem extends UI5Element implements IBreadcrumbsItem {
 	/**
 	 * Defines the accessible ARIA name of the item.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -68,7 +64,6 @@ class BreadcrumbsItem extends UI5Element implements IBreadcrumbsItem {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

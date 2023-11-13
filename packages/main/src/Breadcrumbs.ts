@@ -137,7 +137,6 @@ class Breadcrumbs extends UI5Element {
 	 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
 	 * The last item contains only plain text and is not a link.
 	 *
-	 * @type {BreadcrumbsDesign}
 	 * @default "Standard"
 	 * @public
 	*/
@@ -147,7 +146,6 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
 	 *
-	 * @type {BreadcrumbsSeparatorStyle}
 	 * @default "Slash"
 	 * @public
 	 */
@@ -157,7 +155,6 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Holds the number of items in the overflow.
 	 *
-	 * @type {Integer}
 	 * @default 0
 	 * @private
 	 */
@@ -169,7 +166,6 @@ class Breadcrumbs extends UI5Element {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
-	 * @type {IBreadcrumbsItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })

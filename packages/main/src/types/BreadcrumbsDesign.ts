@@ -1,7 +1,6 @@
 /**
  * Different  Breadcrumbs designs.
  *
- * @readonly
  * @public
  */
 enum BreadcrumbsDesign {
