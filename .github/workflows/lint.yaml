@@ -19,7 +19,7 @@ jobs:
     - name: Install Dependencies
       run: yarn --frozen-lockfile
 
-    - name: realease Build
+    - name: lint
       run: yarn ci:lint
 
     - name: Test
