@@ -297,7 +297,7 @@ const validateJSDocComment = (fieldType, jsdocComment, node) => {
         let isValid = false
 
         if (fieldType === "event" && tag?.tag === "param") {
-            isValid = allowedTags[fieldType]?.includes(tag.tag) && (tag.tag = "eventparam") && validateJSDocTag(tag);
+            isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag({...tag, tag: "eventparam"});
         } else {
             isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag(tag);
         }
