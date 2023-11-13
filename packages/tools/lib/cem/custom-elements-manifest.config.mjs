@@ -283,7 +283,7 @@ const processPublicAPI = object => {
 };
 
 export default {
-	globs: ["src/Input.ts"],
+	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
