@@ -90,7 +90,6 @@ class IllustratedMessage extends UI5Element {
 	* You can import them removing the <code>Tnt</code> prefix like this:
 	* <br>
 	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
-	* @type {IllustrationMessageType}
 	* @default "BeforeSearch"
 	* @public
 	*/
@@ -104,7 +103,6 @@ class IllustratedMessage extends UI5Element {
 	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
 	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
 	*
-	* @type {IllustrationMessageSize}
 	* @default "Auto"
 	* @public
 	* @since 1.5.0
@@ -118,7 +116,6 @@ class IllustratedMessage extends UI5Element {
 	* <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
 	* <br><br>
 	* <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
-	* @type {string}
 	* @default ""
 	* @public
 	*/
@@ -129,7 +126,6 @@ class IllustratedMessage extends UI5Element {
 	* Defines the title of the component.
 	* <br><br>
 	* <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
-	* @type {string}
 	* @default ""
 	* @public
 	*/
@@ -139,7 +135,6 @@ class IllustratedMessage extends UI5Element {
 	/**
 	* Receives id(or many ids) of the elements that label the component.
 	*
-	* @type {string}
 	* @default ""
 	* @public
 	* @since 1.7.0
@@ -165,7 +160,6 @@ class IllustratedMessage extends UI5Element {
 	* Illustration breakpoint variant for the <code>Spot</code> size.
 	*
 	* @private
-	* @type {String}
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
@@ -175,7 +169,6 @@ class IllustratedMessage extends UI5Element {
 	* Illustration breakpoint variant for the <code>Scene</code> size.
 	*
 	* @private
-	* @type {String}
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
@@ -185,7 +178,6 @@ class IllustratedMessage extends UI5Element {
 	* Illustration breakpoint variant for the <code>Dialog</code> size.
 	*
 	* @private
-	* @type {String}
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
@@ -202,7 +194,6 @@ class IllustratedMessage extends UI5Element {
 	* Defines the title of the component.
 	* <br><br>
 	* <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
-	* @type {HTMLElement}
 	* @public
 	* @since 1.7.0
 	*/
@@ -213,7 +204,6 @@ class IllustratedMessage extends UI5Element {
 	* Defines the subtitle of the component.
 	* <br><br>
 	* <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
-	* @type {HTMLElement}
 	* @public
 	* @since 1.0.0-rc.16
 	*/
@@ -222,7 +212,6 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the component actions.
-	* @type {IButton[]}
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })

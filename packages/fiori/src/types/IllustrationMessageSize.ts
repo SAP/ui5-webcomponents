@@ -1,7 +1,6 @@
 /**
  * Different types of IllustrationMessageSize.
  *
- * @readonly
  * @public
  * @since 1.5.0
  */

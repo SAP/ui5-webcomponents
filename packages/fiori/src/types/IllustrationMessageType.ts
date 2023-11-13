@@ -433,7 +433,6 @@ enum IllustrationMessageType {
 	/**
 	* "TntNoUsers" illustration type.
 	* @public
-	* @ {TntNoUsers}
 	*/
 	TntNoUsers = "TntNoUsers",
 	/**

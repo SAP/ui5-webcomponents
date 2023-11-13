@@ -53,7 +53,6 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.16.0
@@ -64,7 +63,6 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines whether component is in disabled state.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -74,7 +72,6 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines whether the component value is shown.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -86,7 +83,6 @@ class ProgressIndicator extends UI5Element {
 	 *
 	 * <b>Note:</b>
 	 * If a value greater than 100 is provided, the percentValue is set to 100. In other cases of invalid value, percentValue is set to its default of 0.
-	 * @type {Integer}
 	 * @default 0
 	 * @public
 	 */
@@ -102,7 +98,6 @@ class ProgressIndicator extends UI5Element {
 	 * <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li>
 	 * </ul>
 	 *
-	 * @type {string}
 	 * @public
 	 */
 	@property()
@@ -111,7 +106,6 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 */
