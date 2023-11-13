@@ -180,6 +180,10 @@ describe("General interaction", () => {
 
 		// act
 		await arrow.click();
+
+		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+
+		listItems = await popover.$("ui5-list").$$("ui5-li");
 		await listItems[0].click();
 
 		// assert
