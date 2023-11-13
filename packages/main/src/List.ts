@@ -596,14 +596,16 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelModeText(): string {
-		if (this.isMultiSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
-		}
-		if (this.isSingleSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
-		}
-		if (this.isDelete) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+		if (this.hasData) {
+			if (this.isMultiSelect) {
+				return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
+			}
+			if (this.isSingleSelect) {
+				return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
+			}
+			if (this.isDelete) {
+				return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+			}
 		}
 
 		return "";

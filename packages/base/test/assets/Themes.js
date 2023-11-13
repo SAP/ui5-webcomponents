@@ -1,5 +1,12 @@
 import { registerThemePropertiesLoader } from "../../dist/asset-registries/Themes.js";
 
+const defaultTheme = {
+	content: `:root{ --var1: grey; }`,
+	packageName: "",
+	fileName: "",
+};
+
+
 const fiori3 = {
 	content: `:root{ --var1: red; }`,
 	packageName: "",
@@ -42,6 +49,7 @@ const fiori3Hcw = {
 	fileName: "",
 };
 
+registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_horizon", () => defaultTheme);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3", () => fiori3);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_dark", () => fiori3Dark);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_belize", () => belize);

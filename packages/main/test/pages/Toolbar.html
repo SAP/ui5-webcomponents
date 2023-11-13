@@ -267,7 +267,7 @@
 		});
 
 		select.addEventListener("ui5-change", e => {
-			console.log("Selected " + e.detail.selectedOption.getAttribute("text"));
+			console.log("Selected " + e.detail.selectedOption.textContent);
 		});
 
 		select.addEventListener("ui5-open", e => {
