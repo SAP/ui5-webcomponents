@@ -29,6 +29,7 @@
     "start": "nps start",
     "build": "nps build",
     "generate": "nps generate",
+    "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
     "test": "nps test",
     "prepublishOnly": "npm run clean && npm run build"
