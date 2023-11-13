@@ -62,7 +62,7 @@
     "ci:releasebuild": "npm-run-all --sequential generate copy:generated ts generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate copy:generated ts bundle",
-    "ci:deploybuild": "yarn ci:releasebuild && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
+    "ci:deploybuild": "yarn ci:testbuild && yarn generateAPI && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
 
     "lint": "wsrun --exclude-missing lint",
     "lint:scope": "wsrun --exclude-missing lint:scope",
