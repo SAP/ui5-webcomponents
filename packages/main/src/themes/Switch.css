@@ -260,6 +260,18 @@
 	transform: var(--_ui5_switch_transform);
 }
 
+.ui5-switch-root.ui5-switch-desktop.ui5-switch--no-label.ui5-switch--checked .ui5-switch-slider,
+.ui5-switch-root.ui5-switch-desktop.ui5-switch--checked.ui5-switch--semantic .ui5-switch-slider {
+	right: var(--test_var); /* 0.225rem horizon rtl compact scenario, 
+	0.375 for the base one ( 0.325rem for base for rtl compact -> .ui5-switch-root.ui5-switch--checked:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-slider )
+} */
+}
+
+
+.ui5-switch-root.ui5-switch--checked:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-slider {
+	right: var(--test_var1);
+}
+
 /* switch semantic icon and type noLabel icon in horizon theme */
 .ui5-switch-text .ui5-switch-text--on .ui5-switch-no-label-icon,
 .ui5-switch-root.ui5-switch--semantic .ui5-switch-text,
