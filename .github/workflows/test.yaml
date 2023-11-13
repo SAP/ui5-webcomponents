@@ -22,7 +22,7 @@ jobs:
     - name: Install Dependencies
       run: yarn --frozen-lockfile
 
-    - name: realease Build
+    - name: Test Build
       run: yarn ci:testbuild
 
     - name: Test

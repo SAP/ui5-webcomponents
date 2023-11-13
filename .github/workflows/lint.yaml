@@ -19,8 +19,5 @@ jobs:
     - name: Install Dependencies
       run: yarn --frozen-lockfile
 
-    - name: lint
+    - name: Lint
       run: yarn ci:lint
-
-    - name: Test
-      run: yarn test:${{ matrix.suite }}
