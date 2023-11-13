@@ -6,7 +6,7 @@
 			{{#if hasFormattedTitle}}
 				<slot name="title"></slot>
 			{{else}}
-				<ui5-title level="H2" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+				<ui5-title level="{{titleLevel}}" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
 			{{/if}}
 	{{/if}}
 
