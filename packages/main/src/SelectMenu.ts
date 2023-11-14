@@ -7,7 +7,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 // Template
 import SelectMenuTemplate from "./generated/templates/SelectMenuTemplate.lit.js";
@@ -234,15 +233,15 @@ class SelectMenu extends UI5Element {
 		this.close();
 	}
 
-	get open(): boolean {
+	get open() {
 		return !!this.respPopover?.open;
 	}
 
-	get respPopover(): ResponsivePopover {
+	get respPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>(".ui5-select-menu")!;
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,

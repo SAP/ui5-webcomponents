@@ -31,7 +31,7 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import type { ClassMap, Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -899,7 +899,7 @@ class Select extends UI5Element implements IFormElement {
 		return this._filteredItems;
 	}
 
-	get hasCustomLabel(): boolean {
+	get hasCustomLabel() {
 		return !!this.label.length;
 	}
 
@@ -934,7 +934,7 @@ class Select extends UI5Element implements IFormElement {
 		};
 	}
 
-	get valueStateText(): string {
+	get valueStateText() {
 		let valueStateText;
 
 		if (this.shouldDisplayDefaultValueStateMessage) {
@@ -946,23 +946,23 @@ class Select extends UI5Element implements IFormElement {
 		return `${this.valueStateTypeText} ${valueStateText}`;
 	}
 
-	get valueStateDefaultText(): string {
+	get valueStateDefaultText() {
 		return this.valueState !== ValueState.None ? this.valueStateTextMappings[this.valueState] : "";
 	}
 
-	get valueStateTypeText(): string {
+	get valueStateTypeText() {
 		return this.valueState !== ValueState.None ? this.valueStateTypeMappings[this.valueState] : "";
 	}
 
-	get hasValueState(): boolean {
+	get hasValueState() {
 		return this.valueState !== ValueState.None;
 	}
 
-	get valueStateTextId(): string | undefined {
+	get valueStateTextId() {
 		return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
 	}
 
-	get isDisabled(): boolean | undefined {
+	get isDisabled() {
 		return this.disabled || undefined;
 	}
 
@@ -998,7 +998,7 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOptionIcon ? 2 : 1;
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
@@ -1028,23 +1028,23 @@ class Select extends UI5Element implements IFormElement {
 		};
 	}
 
-	get ariaLabelText(): string | undefined {
+	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get valueStateMessageText(): Node[] {
+	get valueStateMessageText() {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
-	get shouldDisplayDefaultValueStateMessage(): boolean {
+	get shouldDisplayDefaultValueStateMessage() {
 		return !this.valueStateMessageText.length && this.hasValueStateText;
 	}
 
-	get hasValueStateText(): boolean {
+	get hasValueStateText() {
 		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
-	get shouldOpenValueStateMessagePopover(): boolean {
+	get shouldOpenValueStateMessagePopover() {
 		return this.focused && this.hasValueStateText && !this._iconPressed
 			&& !this._isPickerOpen && !this._isPhone;
 	}
