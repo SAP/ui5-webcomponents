@@ -2,6 +2,8 @@ const fs = require('fs/promises');
 const path = require('path');
 
 const STORIES_ROOT_FOLDER_NAME = '../_stories';
+const NUMERIC_TYPES = ["sap.ui.webc.base.types.Integer", "sap.ui.webc.base.types.Float"];
+const STRING_TYPES = ["sap.ui.webc.base.types.CSSColor", "sap.ui.webc.base.types.DOMReference"];
 
 // run the script to generate the argTypes for the stories available in the _stories folder
 const main = async () => {
@@ -72,6 +74,18 @@ export type StoryArgsSlots = {
 					args[prop.name] = {
 						control: "select",
 						options: typeEnum.properties.map(a => a.type),
+					};
+				} else if (NUMERIC_TYPES.includes(typeEnum?.name)) {
+					args[prop.name] = {
+						control: {
+							type: "number"
+						},
+					};
+				} else if (STRING_TYPES.includes(typeEnum?.name)) {
+					args[prop.name] = {
+						control: {
+							type: "text"
+						},
 					};
 				}
 			}
