@@ -259,7 +259,6 @@ class ShellBar extends UI5Element {
 	 * Defines the <code>primaryTitle</code>.
 	 * <br><br>
 	 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -270,7 +269,6 @@ class ShellBar extends UI5Element {
 	 * Defines the <code>secondaryTitle</code>.
 	 * <br><br>
 	 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -280,7 +278,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines the <code>notificationsCount</code>,
 	 * displayed in the notification icon top-right corner.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -289,7 +286,6 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines, if the notification icon would be displayed.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -298,7 +294,6 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines, if the product switch icon would be displayed.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -309,7 +304,6 @@ class ShellBar extends UI5Element {
 	 * Defines, if the product CoPilot icon would be displayed.
 	 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
 	 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -319,7 +313,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
 	 * <br><b>Note:</b> By default the Search Field is not displayed.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -332,7 +325,6 @@ class ShellBar extends UI5Element {
 	 * It supports the following fields:
 	 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
 	 *
-	 * @type {object}
 	 * @public
 	 * @since 1.6.0
 	 */
@@ -347,7 +339,6 @@ class ShellBar extends UI5Element {
 	 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
 	 * - <code>logoTitle</code>: defines the tooltip for the logo
 	 *
-	 * @type {object}
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -377,7 +368,6 @@ class ShellBar extends UI5Element {
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
-	 * @type {object}
 	 * @public
 	 * @since 1.10.0
 	 */
@@ -423,7 +413,6 @@ class ShellBar extends UI5Element {
 	 * <b>Note:</b>
 	 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 	 *
-	 * @type {IShellBarItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -435,7 +424,6 @@ class ShellBar extends UI5Element {
 	 *
 	 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
 	 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
-	 * @type {IAvatar}
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
@@ -445,7 +433,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines the logo of the <code>ui5-shellbar</code>.
 	 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
-	 * @type {IAvatar}
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -458,7 +445,6 @@ class ShellBar extends UI5Element {
 	 * <b>Note:</b>
 	 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 	 *
-	 * @type {IListItem[]}
 	 * @since 0.10
 	 * @public
 	 */
@@ -468,7 +454,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines the <code>ui5-input</code>, that will be used as a search field.
 	 *
-	 * @type {IInput}
 	 * @public
 	 */
 	@slot()
@@ -479,7 +464,6 @@ class ShellBar extends UI5Element {
 	 * We encourage this slot to be used for a back or home button.
 	 * It gets overstyled to match ShellBar's styling.
 	 *
-	 * @type {IButton}
 	 * @public
 	 */
 	@slot()
@@ -668,9 +652,8 @@ class ShellBar extends UI5Element {
 	 * Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event
 	 * @public
      * @method
-     * @name sap.ui.webc.fiori.ShellBar#closeOverflow
 	 */
-	closeOverflow() {
+	closeOverflow(): void {
 		if (this.overflowPopover) {
 			this.overflowPopover.close();
 		}
@@ -868,79 +851,67 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>logo</code> DOM ref.
-	 * @type {HTMLElement}
-     * @name sap.ui.webc.fiori.ShellBar.prototype.logoDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get logoDomRef() {
-		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="logo"]`);
+	get logoDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="logo"]`);
 	}
 
 	/**
 	 * Returns the <code>copilot</code> DOM ref.
-	 * @type {HTMLElement}
-     * @name sap.ui.webc.fiori.ShellBar.prototype.copilotDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get copilotDomRef() {
-		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="copilot"]`);
+	get copilotDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="copilot"]`);
 	}
 
 	/**
 	 * Returns the <code>notifications</code> icon DOM ref.
-	 * @type {HTMLElement}
-     * @name sap.ui.webc.fiori.ShellBar.prototype.notificationsDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get notificationsDomRef() {
-		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="notifications"]`);
+	get notificationsDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="notifications"]`);
 	}
 
 	/**
 	 * Returns the <code>overflow</code> icon DOM ref.
-	 * @type {HTMLElement}
-     * @name sap.ui.webc.fiori.ShellBar.prototype.overflowDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get overflowDomRef() {
-		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="overflow"]`);
+	get overflowDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="overflow"]`);
 	}
 
 	/**
 	 * Returns the <code>profile</code> icon DOM ref.
-	 * @type {HTMLElement}
-     * @name sap.ui.webc.fiori.ShellBar.prototype.profileDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get profileDomRef() {
-		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="profile"]`);
+	get profileDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="profile"]`);
 	}
 
 	/**
 	 * Returns the <code>product-switch</code> icon DOM ref.
-	 * @type {HTMLElement}
-     * @name sap.ui.webc.fiori.ShellBar.prototype.productSwitchDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
-	get productSwitchDomRef() {
-		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="product-switch"]`);
+	get productSwitchDomRef(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(`*[data-ui5-stable="product-switch"]`);
 	}
 
 	/**
 	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
-	 * @param {boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
+	 * @param showOverflowButton Determines if overflow button should be visible (not overflowing)
 	 */
 	_getAllItems(showOverflowButton: boolean) {
 		let domOrder = -1;

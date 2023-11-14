@@ -64,11 +64,11 @@ const IProductSwitchItem = "sap.ui.webc.fiori.IProductSwitchItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
  *
- * @name sap.ui.webc.fiori.IShellBarItem
  * @interface
  * @public
  */
-const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IShellBarItem extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside <code>ui5-side-navigation</code> as items
