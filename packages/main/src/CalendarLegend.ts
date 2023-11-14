@@ -102,7 +102,7 @@ class CalendarLegend extends UI5Element {
 
 	_onItemKeyDown(e: KeyboardEvent) {
 		const items = this.focusableElements;
-		const totalItems = items.length;
+		const itemsCount = items.length;
 		const currentItem = e.target as CalendarLegendItem;
 		const currentIndex = items.indexOf(currentItem);
 
@@ -110,7 +110,7 @@ class CalendarLegend extends UI5Element {
 			e.preventDefault();
 			const nextIndex = currentIndex + 1;
 
-			if (nextIndex < totalItems) {
+			if (nextIndex < itemsCount) {
 				this._itemNavigation.setCurrentItem(items[nextIndex]);
 				this._itemNavigation._focusCurrentItem();
 			}
@@ -131,7 +131,12 @@ class CalendarLegend extends UI5Element {
 		let allFocusableItems = [...this.shadowRoot!.querySelectorAll<CalendarLegendItem>("[ui5-calendar-legend-item]"), ...this.legendItems];
 		const rearrangedItems: Array<CalendarLegendItem> = [];
 
-		// Rearrange items' order
+		/**
+		 * Rearrange items for better keyboard navigation.
+		 * Resolves uneven indexing in the 2-column display (e.g., [0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9]),
+		 * which ensures a linear and logical navigation sequence
+		 * for the desired itemNavigation behaviour.
+		 */
 		allFocusableItems.forEach(item => rearrangedItems.push(item));
 
 		const itemsFirstColumn = rearrangedItems.filter((item, index) => index % 2 === 0);
