@@ -80,6 +80,31 @@ describe("Accessibility", () => {
 
 	});
 
+	it("title-level", async () => {
+		// Arrange
+		const illustratedMsg = await browser.$("#illustratedMsg2"),
+			  illustratedMsgTitle = await browser.$("#illustratedMsg2").shadow$(".ui5-illustrated-message-root ui5-title"),
+			  EXPECTED_TITLE_lEVEL = "H6",
+			  NEW_TITLE_LEVEL = "H3",
+			  DEFAULT_TITLE_LEVEL = "H2";
+
+		// Assert
+		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), EXPECTED_TITLE_lEVEL, "level is set");
+
+		// Act
+		await illustratedMsg.setAttribute("title-level", NEW_TITLE_LEVEL);
+
+		// Assert
+		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), NEW_TITLE_LEVEL, "level is set");
+
+		// Act
+		await illustratedMsg.removeAttribute("title-level");
+
+		// Assert
+		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), DEFAULT_TITLE_LEVEL, "level has the default value");
+
+	});
+
 });
 
 describe("Vertical responsiveness", () => {
