@@ -1,7 +1,7 @@
 <div class="{{classes.root}}">
-  <div class="{{classes.breadcrumbs}}">
+  <div class="{{classes.topArea}}">
     {{#if hasBreadcrumb}}
-      <div>
+      <div class="{{classes.breadcrumbs}}">
         <slot name="breadcrumbs"></slot>
       </div>
     {{/if}}
@@ -16,9 +16,11 @@
       <slot name="{{headingSlotName}}"></slot>
     </div>
 
-    <div class="{{classes.content}}">
+   {{#if hasContent}}
+    <div class="{{classes.content}}"
       <slot></slot>
     </div>
+    {{/if}}
 
     <div class="{{classes.actions}}">
       <slot name="actions"></slot>

@@ -111,8 +111,12 @@
     flex: 0 1;
 }
 
-.ui5-dynamic-page-title--breadcrumbs {
+.ui5-dynamic-page-title--top-area {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.ui5-dynamic-page-title--breadcrumbs {
+    width: 100%;
 }
