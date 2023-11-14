@@ -4,6 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
+import { IListItem } from "./Interfaces.js";
 
 // Styles
 import customListItemCss from "./generated/themes/CustomListItem.css.js";
@@ -33,12 +34,11 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
 	template: CustomListItemTemplate,
 	styles: [ListItem.styles, customListItemCss],
 })
-class CustomListItem extends ListItem {
+class CustomListItem extends ListItem implements IListItem {
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -48,7 +48,6 @@ class CustomListItem extends ListItem {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {Node[]}
 	 * @public
 	 */
 

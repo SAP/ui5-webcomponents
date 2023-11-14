@@ -91,11 +91,11 @@ const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 /**
  * Interface for components that may be slotted inside a <code>ui5-list</code> as items
  *
- * @name sap.ui.webc.main.IListItem
  * @interface
  * @public
  */
-const IListItem = "sap.ui.webc.main.IListItem";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IListItem extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside <code>ui5-menu</code> as items

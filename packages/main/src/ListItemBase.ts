@@ -32,7 +32,6 @@ import styles from "./generated/themes/ListItemBase.css.js";
 class ListItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the <code>ListItem</code>.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -53,7 +52,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* Defines whether <code>ui5-li</code> is in disabled state.
 	* <br><br>
 	* <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
-	* @type {boolean}
 	* @default false
 	* @protected
 	* @since 1.0.0-rc.12

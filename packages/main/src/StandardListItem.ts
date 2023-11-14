@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
+import { IListItem } from "./Interfaces.js";
 import type { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
@@ -30,6 +31,7 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  *
  * @constructor
  * @extends ListItem
+ * @implements {IAccessibleListItem}
  * @implements {IListItem}
  * @public
  */
@@ -42,11 +44,9 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
 		Avatar,
 	],
 })
-class StandardListItem extends ListItem implements IAccessibleListItem {
+class StandardListItem extends ListItem implements IAccessibleListItem, IListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
-	 * @type {string}
-	 * @default: ""
 	 * @public
 	 * @since 0.8.0
 	 */
@@ -60,7 +60,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @public
 	 */
 	@property()
@@ -71,7 +70,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * <br><br>
 	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -83,7 +81,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * <br><br>
 	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
 	 *
-	 * @type {string}
 	 * @public
 	 */
 	@property()
@@ -91,7 +88,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the list item.
-	 * @type {string}
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -102,7 +98,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * Defines the state of the <code>additionalText</code>.
 	 * <br>
 	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -114,7 +109,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -127,7 +121,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
-	 * @type {WrappingType}
 	 * @default "None"
 	 * @private
 	 * @since 1.5.0
@@ -137,7 +130,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	/**
 	 * Indicates if the list item has text content.
-	 * @type {boolean}
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -151,7 +143,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 
@@ -160,7 +151,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S.
 	 * <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the
 	 * <code>ui5-li</code> should be customized in order to fit.
-	 * @type {HTMLElement[]}
 	 * @since 1.10.0
 	 * @public
 	 */

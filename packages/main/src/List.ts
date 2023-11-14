@@ -258,7 +258,6 @@ class List extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -268,7 +267,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the footer text.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -278,7 +276,6 @@ class List extends UI5Element {
 	/**
 	 * Determines whether the component is indented.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -288,7 +285,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the mode of the component.
 	 *
-	 * @type {ListMode}
 	 * @default "None"
 	 * @public
 	 */
@@ -298,7 +294,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the text that is displayed when the component contains no items.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -308,7 +303,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the item separator style that is used.
 	 *
-	 * @type {ListSeparators}
 	 * @default "All"
 	 * @public
 	 */
@@ -321,7 +315,6 @@ class List extends UI5Element {
 	 * <br><br>
 	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 	 * on IE the component will fallback to <code>growing="Button"</code>.
-	 * @type {ListGrowingMode}
 	 * @default "None"
 	 * @since 1.0.0-rc.13
 	 * @public
@@ -332,7 +325,6 @@ class List extends UI5Element {
 	/**
 	 * Defines if the component would display a loading indicator over the list.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.6
@@ -343,7 +335,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 *
-	 * @type {Integer}
 	 * @default 1000
 	 * @public
 	 */
@@ -353,7 +344,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the accessible name of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -364,7 +354,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the IDs of the elements that label the input.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -376,7 +365,6 @@ class List extends UI5Element {
 	 * Defines the accessible role of the component.
 	 * <br><br>
 	 * @public
-	 * @type {string}
 	 * @default "list"
 	 * @since 1.0.0-rc.15
 	 */
@@ -386,7 +374,6 @@ class List extends UI5Element {
 	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
-	 * @type {string}
 	 * @default undefined
 	 * @since 1.10.0
 	 */
@@ -412,8 +399,6 @@ class List extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 	 *
-	 * @type {IListItem[]}
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -425,8 +410,6 @@ class List extends UI5Element {
 	 * <b>Note:</b> When <code>header</code> is set, the
 	 * <code>headerText</code> property is ignored.
 	 *
-	 * @type {HTMLElement[]}
-	 * @slot
 	 * @public
 	 */
 	@slot()

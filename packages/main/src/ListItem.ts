@@ -105,7 +105,6 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 	 *
-	 * @type {ListItemType}
 	 * @default "Active"
 	 * @public
 	*/
@@ -128,7 +127,6 @@ abstract class ListItem extends ListItemBase {
 	 * 		</li>
 	 * </ul>
 	 *
-	 * @type {object}
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -140,7 +138,6 @@ abstract class ListItem extends ListItemBase {
 	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
 	 *
 	 * @public
-	 * @type {boolean}
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -149,7 +146,6 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 *
-	 * @type {boolean}
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -157,7 +153,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @type {string}
 	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -168,7 +163,6 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
 	 *
-	 * @type {boolean}
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -178,7 +172,6 @@ abstract class ListItem extends ListItemBase {
 	 * Used to define the role of the list item.
 	 *
 	 * @private
-	 * @type {string}
 	 * @default "listitem"
 	 * @since 1.0.0-rc.9
 	 *
@@ -189,7 +182,6 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
-	 * @type {string}
 	 * @default undefined
 	 * @since 1.10.0
 	 */
@@ -200,7 +192,6 @@ abstract class ListItem extends ListItemBase {
 	 * Used to define the role of the list item.
 	 *
 	 * @private
-	 * @type {string}
 	 * @default ""
 	 * @since 1.3.0
 	 *
@@ -213,7 +204,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @type {HasPopup}
 	 * @since 1.10.0
 	 * @private
 	 */
@@ -235,9 +225,7 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
 	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
-	 * @type {IButton}
 	 * @since 1.9.0
-	 * @slot
 	 * @public
 	 */
 	@slot()
