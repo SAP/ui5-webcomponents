@@ -300,7 +300,7 @@ class SplitButton extends UI5Element {
 		const buttons: Array<Button | SplitButton> = [this.textButton!, this.arrowButton!, this];
 
 		buttons.forEach(btn => {
-			if (btn) { btn.focused = btn === button; }
+			btn.focused = btn === button;
 		});
 	}
 
@@ -382,25 +382,16 @@ class SplitButton extends UI5Element {
 		} else if (this._isDefaultAction(e)) {
 			this._isDefaultActionPressed = false;
 			this._textButtonActive = false;
-			this._activeArrowButton = false;
 			if (isSpace(e)) {
 				e.preventDefault();
 				e.stopPropagation();
 				this._fireClick();
 				this._spacePressed = false;
 				this._textButtonActive = false;
-				this.arrowButton!._keepActiveState = false;
 			}
 		}
 
 		if (this._isShiftOrEscape(e)) {
-			if (this.activeArrowButton) {
-				this._activeArrowButton = true;
-				this.arrowButton!._keepActiveState = true;
-			} else {
-				this._activeArrowButton = false;
-			}
-
 			this._handleShiftOrEscapePressed();
 		}
 
