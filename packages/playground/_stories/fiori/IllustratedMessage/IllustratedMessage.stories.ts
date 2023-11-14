@@ -33,8 +33,9 @@ const Template: UI5StoryArgs<IllustratedMessage, StoryArgsSlots> = (
     subtitle-text="${ifDefined(args.subtitleText)}"
     title-text="${ifDefined(args.titleText)}"
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
+    title-level="${ifDefined(args.titleLevel)}"
 >
-    ${unsafeHTML(args.title)} 
+    ${unsafeHTML(args.title)}
 	${unsafeHTML(args.subtitle)}
     ${unsafeHTML(args.default)}
 </ui5-illustrated-message>`;

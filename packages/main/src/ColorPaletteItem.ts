@@ -106,15 +106,6 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 			},
 		};
 	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-cp-item": true,
-				"ui5-cp-selected": this.selected,
-			},
-		};
-	}
 }
 
 ColorPaletteItem.define();

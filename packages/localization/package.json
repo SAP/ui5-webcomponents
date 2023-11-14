@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-localization",
-  "version": "1.19.0-rc.2",
+  "version": "1.20.0-rc.0",
   "description": "Localization for UI5 Web Components",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -29,13 +29,13 @@
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.116.0",
-    "@ui5/webcomponents-tools": "1.19.0-rc.2",
+    "@ui5/webcomponents-tools": "1.20.0-rc.0",
     "chromedriver": "117.0.3",
     "mkdirp": "^1.0.4",
     "resolve": "^1.20.0"
   },
   "dependencies": {
     "@types/openui5": "^1.113.0",
-    "@ui5/webcomponents-base": "1.19.0-rc.2"
+    "@ui5/webcomponents-base": "1.20.0-rc.0"
   }
 }

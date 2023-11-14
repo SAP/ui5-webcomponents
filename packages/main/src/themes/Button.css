@@ -240,8 +240,13 @@ bdi {
 }
 
 :host([design="Emphasized"][focused]) .ui5-button-root:after {
-	border-color: var(--sapContent_ContrastFocusColor);
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
 	outline: none;
+}
+
+/* Belize related */
+:host([design="Emphasized"][focused][active]:not([non-interactive])) .ui5-button-root:after {
+	border-color: var(--_ui5_button_emphasized_focused_active_border_color);
 }
 
 :host([design="Transparent"]) {
