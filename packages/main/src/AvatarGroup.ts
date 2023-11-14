@@ -359,7 +359,7 @@ class AvatarGroup extends UI5Element {
 		return button.offsetWidth;
 	}
 
-	get firstAvatarSize(): string {
+	get firstAvatarSize() {
 		return this.items[0].size;
 	}
 

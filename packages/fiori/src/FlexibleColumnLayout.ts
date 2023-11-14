@@ -8,7 +8,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -84,12 +83,6 @@ type AccessibilityRoles = {
 	startArrowContainerRole?: I18nText;
 	endArrowContainerRole?: I18nText;
 };
-
-interface IEffectiveArrowsInfo {
-    visible: boolean,
-    dir: string | null,
-    separator?: boolean | undefined,
-}
 
 /**
  * @class
@@ -544,7 +537,7 @@ class FlexibleColumnLayout extends UI5Element {
 		return this._visibleColumns;
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		const hasAnimation = getAnimationMode() !== AnimationMode.None;
 
 		return {
@@ -594,55 +587,55 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
-	get startColumnWidth(): string | number {
+	get startColumnWidth() {
 		return this._columnLayout ? this._columnLayout[0] : "100%";
 	}
 
-	get midColumnWidth(): string | number {
+	get midColumnWidth() {
 		return this._columnLayout ? this._columnLayout[1] : "0px";
 	}
 
-	get endColumnWidth(): string | number {
+	get endColumnWidth() {
 		return this._columnLayout ? this._columnLayout[2] : "0px";
 	}
 
-	get showStartSeparator(): boolean {
+	get showStartSeparator() {
 		return this.effectiveArrowsInfo[0].separator || this.startArrowVisibility;
 	}
 
-	get showEndSeparator(): boolean {
+	get showEndSeparator() {
 		return this.effectiveArrowsInfo[1].separator || this.endArrowVisibility;
 	}
 
-	get showStartArrow(): boolean {
+	get showStartArrow() {
 		return this.hideArrows ? false : this.startArrowVisibility;
 	}
 
-	get showEndArrow(): boolean {
+	get showEndArrow() {
 		return this.hideArrows ? false : this.endArrowVisibility;
 	}
 
-	get startArrowVisibility(): boolean {
+	get startArrowVisibility() {
 		return this.effectiveArrowsInfo[0].visible;
 	}
 
-	get endArrowVisibility(): boolean {
+	get endArrowVisibility() {
 		return this.effectiveArrowsInfo[1].visible;
 	}
 
-	get startArrowDirection(): string | null {
+	get startArrowDirection() {
 		return this.effectiveArrowsInfo[0].dir;
 	}
 
-	get endArrowDirection(): string | null {
+	get endArrowDirection() {
 		return this.effectiveArrowsInfo[1].dir;
 	}
 
-	get effectiveArrowsInfo(): IEffectiveArrowsInfo[] {
+	get effectiveArrowsInfo() {
 		return this._effectiveLayoutsByMedia[this.media][this.layout].arrows;
 	}
 
-	get media(): MEDIA {
+	get media() {
 		if (this._width <= BREAKPOINTS.PHONE) {
 			return MEDIA.PHONE;
 		}
@@ -654,68 +647,68 @@ class FlexibleColumnLayout extends UI5Element {
 		return MEDIA.DESKTOP;
 	}
 
-	get widthDOM(): number {
+	get widthDOM() {
 		return this.getBoundingClientRect().width;
 	}
 
-	get startColumnDOM(): HTMLElement {
+	get startColumnDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--start")!;
 	}
 
-	get midColumnDOM(): HTMLElement {
+	get midColumnDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--middle")!;
 	}
 
-	get endColumnDOM(): HTMLElement {
+	get endColumnDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-column--end")!;
 	}
 
-	get accStartColumnText(): string | I18nText {
+	get accStartColumnText() {
 		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
-	get accMiddleColumnText(): string | I18nText {
+	get accMiddleColumnText() {
 		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
-	get accEndColumnText(): string | I18nText {
+	get accEndColumnText() {
 		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
-	get accStartArrowContainerText(): I18nText | undefined {
+	get accStartArrowContainerText() {
 		return this.accessibilityTexts.startArrowContainerAccessibleName || undefined;
 	}
 
-	get accEndArrowContainerText(): I18nText | undefined {
+	get accEndArrowContainerText() {
 		return this.accessibilityTexts.endArrowContainerAccessibleName || undefined;
 	}
 
-	get accStartColumnRole(): I18nText | "region" | undefined {
+	get accStartColumnRole() {
 		if (this.startColumnVisible) {
 			return this.accessibilityRoles.startColumnRole || "region";
 		}
 		return undefined;
 	}
 
-	get accMiddleColumnRole(): I18nText | "region" | undefined {
+	get accMiddleColumnRole() {
 		if (this.midColumnVisible) {
 			return this.accessibilityRoles.midColumnRole || "region";
 		}
 		return undefined;
 	}
 
-	get accEndColumnRole(): I18nText | "region" | undefined {
+	get accEndColumnRole() {
 		if (this.endColumnVisible) {
 			return this.accessibilityRoles.endColumnRole || "region";
 		}
 		return undefined;
 	}
 
-	get accStartArrowContainerRole(): I18nText | undefined {
+	get accStartArrowContainerRole() {
 		return this.accessibilityRoles.startArrowContainerRole || undefined;
 	}
 
-	get accEndArrowContainerRole(): I18nText | undefined {
+	get accEndArrowContainerRole() {
 		return this.accessibilityRoles.endArrowContainerRole || undefined;
 	}
 
@@ -742,7 +735,7 @@ class FlexibleColumnLayout extends UI5Element {
 		};
 	}
 
-	get accStartArrowText(): string | I18nText {
+	get accStartArrowText() {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.startArrowDirection === "mirror") {
@@ -752,7 +745,7 @@ class FlexibleColumnLayout extends UI5Element {
 		return customTexts.startArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 
-	get accEndArrowText(): string | I18nText {
+	get accEndArrowText() {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.endArrowDirection === "mirror") {
