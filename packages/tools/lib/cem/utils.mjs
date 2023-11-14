@@ -292,7 +292,7 @@ const validateJSDocTag = (tag) => {
     }
 };
 
-const validateJSDocComment = (fieldType, jsdocComment, node) => {
+const validateJSDocComment = (fieldType, jsdocComment, node, moduleDoc) => {
     return !!jsdocComment?.tags?.every((tag) => {
         let isValid = false
 
@@ -304,7 +304,7 @@ const validateJSDocComment = (fieldType, jsdocComment, node) => {
 
         if (!isValid) {
             JSDocErrors.push(
-                `=== ERROR: Problem found with ${node}'s JSDoc comment: \n\t- @${tag.tag} tag is being used wrong or it's not part of ${fieldType} JSDoc tags`
+                `=== ERROR: Problem found with ${node}'s JSDoc comment in ${moduleDoc.path}: \n\t- @${tag.tag} tag is being used wrong or it's not part of ${fieldType} JSDoc tags`
             );
         }
 

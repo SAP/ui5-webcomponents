@@ -23,7 +23,7 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 
 		const decoratorParamParsedComment = parse(decoratorParam?.jsDoc?.[0]?.getText?.())[0];
 
-		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text);
+		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text, moduleDoc);
 
 		const { typeName, name } = getType(commentParam?.type);
 		let type;
@@ -66,7 +66,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 
 	const eventParsedComment = parse(comment)[0];
 
-	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text);
+	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text, moduleDoc);
 
 	const deprecatedTag = findTag(eventParsedComment, "deprecated");
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";

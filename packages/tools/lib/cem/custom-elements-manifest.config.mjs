@@ -24,58 +24,60 @@ function processClass(ts, classNode, moduleDoc) {
 
 	const customElementDecorator = findDecorator(classNode, "customElement");
 	const classParsedJsDoc = parse(currClassJSdoc?.getText())[0];
-	validateJSDocComment("class", classParsedJsDoc, classNode.name?.text);
+
+	validateJSDocComment("class", classParsedJsDoc, classNode.name?.text, moduleDoc);
 
 	const decoratorArg = customElementDecorator?.expression?.arguments[0];
 	currClass.tagName = decoratorArg?.text || (decoratorArg?.properties.find(property => property.name.text === "tag")?.initializer?.text);
 	currClass.customElement = !!decoratorArg;
-
+	currClass.kind = "class";
+	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
+	currClass._ui5since = getSinceStatus(classParsedJsDoc);
+	currClass._ui5privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
+	currClass.description = classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description;
+	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
+		.map(tag => getReference(ts, tag.type, classNode, moduleDoc.path))
+		.filter(Boolean);
+
 
 	if (hasTag(classParsedJsDoc, "extends")) {
 		const superclassTag = findTag(classParsedJsDoc, "extends");
 		currClass.superclass = getReference(ts, superclassTag.name, classNode, moduleDoc.path);
 	}
 
-	currClass.kind = "class";
-	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
-	currClass._ui5since = getSinceStatus(classParsedJsDoc);
-	currClass._ui5privacy = getPrivacyStatus(classParsedJsDoc);
-
-	currClass.description = classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description;
-	const slotsInClassComment = findAllTags(classParsedJsDoc, "slot");
-
-	currClass.slots?.forEach(slot => {
-		if (slotsInClassComment.some(classSlot => classSlot.name === slot.name)) {
-			slot._ui5privacy = "public";
-		}
-	});
-
-	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
-		.map(tag => getReference(ts, tag.type, classNode, moduleDoc.path))
-		.filter(Boolean);
-
 	if (!currClass._ui5implements.length) delete currClass._ui5implements;
 
+	// Slots
+
+	// Slots without accessort (defined in class comment)
 	if (hasTag(classParsedJsDoc, "slot") && currClass.slots) {
 		const slotTags = findAllTags(classParsedJsDoc, "slot");
-		slotTags.forEach(slotTag => {
-			const slot = currClass.slots.find(s => s.name === slotTag.name);
-			const typeRefs = (slotTag.type
+
+		currClass.slots.forEach(slot => {
+			const tag = slotTags.find(tag => tag.name === slot.name);
+
+			const typeRefs = (tag.type
 				?.replaceAll(/Array<|>|\[\]/g, "")
 				?.split("|")
-				?.map(e => getReference(ts, e.trim(), classNode, moduleDoc.path)).filter(Boolean)) || [];
+				?.map(e => getReference(ts, e.trim(), classNode, moduleDoc.path)).filter(Boolean));
 
-			slot._ui5type = { text: slotTag.type };
+			slot._ui5privacy = "public";
+			slot._ui5type = { text: tag.type };
 
-			if (typeRefs.length) {
+			if (typeRefs && typeRefs.length) {
 				slot._ui5type.references = typeRefs;
 			}
-		});
 
-		currClass.slots.forEach(s => delete s.type);
+			delete slot.type
+		})
 	}
 
+	// Events
+	currClass.events = findAllDecorators(classNode, "event")
+		?.map(event => processEvent(ts, event, classNode, moduleDoc));
+
+	// Slots (with accessor), methods and fields
 	for (let i = 0; i < (currClass.members?.length || 0); i++) {
 		const member = currClass.members[i];
 		const classNodeMember = classNode.members?.find(nodeMember => nodeMember.name?.text === member?.name);
@@ -86,16 +88,12 @@ function processClass(ts, classNode, moduleDoc) {
 		const memberParsedJsDoc = parse(classNodeMemberJSdoc?.getText())[0];
 
 		member._ui5since = getSinceStatus(memberParsedJsDoc);
-		if (member.deprecated === "true") {
-			member.deprecated = true
-		};
+		member.deprecated === "true" && (member.deprecated = true)
 
+		// Slots with accessors are treated like fields by the tool, so we have to convert them into slots.
 		if (member.kind === "field") {
 			const slotDecorator = findDecorator(classNodeMember, "slot");
-			validateJSDocComment(slotDecorator ? "slot" : "field", memberParsedJsDoc, classNodeMember.name?.text);
-
-			if (slotDecorator) {
-				if (!currClass.slots) currClass.slots = [];
+			validateJSDocComment(slotDecorator ? "slot" : "field", memberParsedJsDoc, classNodeMember.name?.text, moduleDoc);
 
 				const typeRefs = (getTypeRefs(ts, classNodeMember, member)
 					?.map(e => getReference(ts, e, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
@@ -104,11 +102,19 @@ function processClass(ts, classNode, moduleDoc) {
 					member.type.references = typeRefs;
 				}
 
+			if (slotDecorator) {
+				if (!currClass.slots) currClass.slots = [];
+
 				const slot = currClass.members.splice(i, 1)[0];
 				const defaultProperty = slotDecorator.expression?.arguments?.[0]?.properties?.find(property => property.name.text === "default");
 
-				if (defaultProperty && defaultProperty.initializer?.kind === ts.SyntaxKind.TrueKeyword) slot.name = "default";
+				// name of the default slot declared with decorator will be overriden so we to provide it's accessor name
+				if (defaultProperty && defaultProperty.initializer?.kind === ts.SyntaxKind.TrueKeyword) {
+					slot._ui5propertyName = slot.name;
+					slot.name = "default";
+				}
 
+				// Slots don't have type, privacy and kind, so we have do convert them and to clean unused props
 				member._ui5type = member.type;
 				member._ui5privacy = member.privacy;
 				delete member.type;
@@ -118,42 +124,39 @@ function processClass(ts, classNode, moduleDoc) {
 				currClass.slots.push(slot);
 				i--;
 			} else {
-				const typeRefs = (getTypeRefs(ts, classNodeMember, member)
-					?.map(e => getReference(ts, e, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
-
-				if (member.type && typeRefs.length) {
-					member.type.references = typeRefs;
+				if (hasTag(memberParsedJsDoc, "formProperty")) {
+					member._ui5formProperty = true;
 				}
 
-				if (hasTag(memberParsedJsDoc, "formProperty")) member._ui5formProperty = true;
-
-				if (hasTag(memberParsedJsDoc, "formEvents")) {
-					const tag = findTag(memberParsedJsDoc, "formEvents");
-					const tagValue = tag.description ? `${tag.name} ${tag.description}` : tag.name;
+				const formEventsTag = findTag(memberParsedJsDoc, "formEvents");
+				if (formEventsTag) {
+					const tagValue = formEventsTag.description ? `${formEventsTag.name} ${formEventsTag.description}` : formEventsTag.name;
 					member._ui5formEvents = tagValue.trim().replaceAll(/\s+/g, ",");
 				}
 
-				if (hasTag(memberParsedJsDoc, "default")) {
-					const tag = findTag(memberParsedJsDoc, "default");
-					const tagValue = tag.source?.[0]?.tokens?.name || tag.source?.[0]?.tokens?.description || tag.source?.[0]?.tokens?.type || "";
+				const defaultTag = findTag(memberParsedJsDoc, "default");
+				if (defaultTag) {
+					const tagValue = defaultTag.source?.[0]?.tokens?.name || defaultTag.source?.[0]?.tokens?.description || defaultTag.source?.[0]?.tokens?.type || "";
 					member.default = tagValue;
 				}
 
+				// Getters are treated as fields so they should not have return, instead of return they should have default value defined with @default
 				if (member.readonly) {
 					delete member.return;
 				}
 			}
 		} else if (member.kind === "method") {
-			validateJSDocComment("method", memberParsedJsDoc, classNodeMember.name?.text);
+			validateJSDocComment("method", memberParsedJsDoc, classNodeMember.name?.text, moduleDoc);
 
 			member.parameters?.forEach(param => {
+				// Treat every parameter that has respective @param tag as public
 				param._ui5privacy = findAllTags(memberParsedJsDoc, "param").some(tag => tag.name === param.name) ? "public" : "private";
 				const paramNode = classNodeMember.parameters?.find(parameter => parameter.name?.text === param.name);
 
 				const typeRefs = (getTypeRefs(ts, paramNode, param)
 					?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
-				if (param.type && typeRefs.length) {
+				if (typeRefs.length) {
 					param.type.references = typeRefs;
 				}
 			});
@@ -165,15 +168,12 @@ function processClass(ts, classNode, moduleDoc) {
 				const typeRefs = (getTypeRefs(ts, classNodeMember, member.return)
 					?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
-				if (member.return.type && typeRefs.length) {
+				if (typeRefs.length) {
 					member.return.type.references = typeRefs;
 				}
 			}
 		}
 	}
-
-	currClass.events = findAllDecorators(classNode, "event")
-		?.map(event => processEvent(ts, event, classNode, moduleDoc));
 }
 
 function processInterface(ts, interfaceNode, moduleDoc) {
@@ -184,7 +184,7 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 
 	const interfaceParsedJsDoc = parse(interfaceJSdoc?.getText())[0];
 
-	validateJSDocComment("interface", interfaceParsedJsDoc, interfaceNode.name?.text);
+	validateJSDocComment("interface", interfaceParsedJsDoc, interfaceNode.name?.text, moduleDoc);
 
 	moduleDoc.declarations.push({
 		kind: "interface",
@@ -204,7 +204,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 
 	const enumParsedJsDoc = parse(enumJSdoc?.getText())[0];
 
-	validateJSDocComment("enum", enumParsedJsDoc, enumNode.name?.text);
+	validateJSDocComment("enum", enumParsedJsDoc, enumNode.name?.text, moduleDoc);
 
 	const result = {
 		kind: "enum",
@@ -220,7 +220,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 
 			const memberParsedJsDoc = parse(memberJSdoc?.getText())[0];
 
-			validateJSDocComment("enum", memberParsedJsDoc, member.name?.text);
+			validateJSDocComment("enum", memberParsedJsDoc, member.name?.text, moduleDoc);
 
 			return {
 				kind: "field",
@@ -283,7 +283,7 @@ const processPublicAPI = object => {
 };
 
 export default {
-	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
+	globs: ["src/Test.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
