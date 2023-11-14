@@ -73,3 +73,22 @@
         opacity: 0;
     }
 }
+
+/*** Responsive paddings ***/
+
+:host([media-range="S"]) .ui5-dynamic-page-root {
+    padding: 0 1rem;
+}
+
+:host([media-range="S"]) ::slotted([ui5-dynamic-page-header][slot="headerArea"]) {
+    padding-top: 0.5rem;
+}
+
+:host([media-range="M"]) .ui5-dynamic-page-root,
+:host([media-range="L"]) .ui5-dynamic-page-root {
+    padding: 0 2rem;
+}
+
+:host([media-range="XL"]) .ui5-dynamic-page-root {
+    padding: 0 3rem;
+}
