@@ -94,7 +94,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines the component design.
 	 *
-	 * @type {ButtonDesign}
 	 * @default "Default"
 	 * @public
 	 */
@@ -106,7 +105,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -121,7 +119,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 *
 	 * See all the available icons within the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -131,7 +128,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines whether the icon should be displayed after the component text.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -145,7 +141,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * <b>Note:</b> For the <code>submits</code> property to have effect, you must add the following import to your project:
 	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
@@ -157,7 +152,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * Defines the tooltip of the component.
 	 * <br>
 	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.2.0
@@ -168,7 +162,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -179,7 +172,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -211,7 +203,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
-	 * @type {object}
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -225,7 +216,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * <b>Note:</b> For the <code>type</code> property to have effect, you must add the following import to your project:
 	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 	 *
-	 * @type {ButtonType}
 	 * @default "Button"
 	 * @public
 	 * @since 1.15.0
@@ -300,7 +290,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

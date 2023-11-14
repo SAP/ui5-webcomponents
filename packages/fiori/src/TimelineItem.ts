@@ -56,7 +56,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @name sap.ui.webc.fiori.TimelineItem.prototype.icon
 	 * @default ""
 	 * @public
@@ -67,7 +66,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Defines the name of the item, displayed before the <code>title-text</code>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -77,7 +75,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Defines if the <code>name</code> is clickable.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -87,7 +84,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Defines the title text of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -96,7 +92,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 
 	/**
 	 * Defines the subtitle text of the component.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -109,7 +104,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Defines the items orientation.
 	 *
-	 * @type {TimelineLayout}
 	 * @default "Vertical"
 	 * @private
 	 */
@@ -119,7 +113,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Defines the indicator line width.
 	 *
-	 * @type {string}
 	 * @private
 	 */
 	@property()
@@ -128,7 +121,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	/**
 	 * Determines the description of the <code>ui5-timeline-item</code>.
 	 *
-	 * @type {Node[]}
 	 * @slot
 	 * @public
 	 */

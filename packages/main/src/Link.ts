@@ -110,7 +110,6 @@ class Link extends UI5Element implements ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> When disabled, the click event cannot be triggered by the user.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -119,7 +118,6 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @type {string}
 	 * @default ""
 	 * @private
 	 * @since 1.18.0
@@ -132,7 +130,6 @@ class Link extends UI5Element implements ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Standard hyperlink behavior is supported.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -154,7 +151,6 @@ class Link extends UI5Element implements ITabbable {
 	 *
 	 * <b>This property must only be used when the <code>href</code> property is set.</b>
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -166,7 +162,6 @@ class Link extends UI5Element implements ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 	 *
-	 * @type {LinkDesign}
 	 * @default "Default"
 	 * @public
 	 */
@@ -177,7 +172,6 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @type {WrappingType}
 	 * @default "None"
 	 * @public
 	 */
@@ -187,7 +181,6 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.2.0
@@ -198,7 +191,6 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Receives id(or many ids) of the elements that label the input
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -211,7 +203,6 @@ class Link extends UI5Element implements ITabbable {
 	 *
 	 * <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
 	 *
-	 * @type {string}
 	 * @default "link"
 	 * @public
 	 * @since 1.9.0
@@ -242,7 +233,6 @@ class Link extends UI5Element implements ITabbable {
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
-	 * @type {object}
 	 * @public
 	 * @since 1.1.0
 	 */

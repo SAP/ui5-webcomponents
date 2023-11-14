@@ -88,7 +88,6 @@ class TimePicker extends TimePickerBase {
 	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -103,7 +102,6 @@ class TimePicker extends TimePickerBase {
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -137,10 +135,9 @@ class TimePicker extends TimePickerBase {
 	 * Currently selected time represented as JavaScript Date instance
 	 *
 	 * @readonly
-	 * @type {Date}
 	 * @public
 	 */
-	get dateValue() {
+	get dateValue(): Date | Date[] {
 		return this.getFormat().parse(this._effectiveValue as string);
 	}
 

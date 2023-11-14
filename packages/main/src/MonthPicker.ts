@@ -91,7 +91,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 * @type {array}
 	 * @public
 	 */
 	@property({
@@ -237,7 +236,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
-	 * @param { number } value
+	 * @param value
 	 * @private
 	 */
 	_setTimestamp(value: number) {
@@ -248,8 +247,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
-	 * @param { number } amount
-	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
+	 * @param amount
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
@@ -268,7 +267,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Selects a month, when the user clicks or presses "Enter" or "Space".
-	 * @param { Event } e
+	 * @param e
 	 * @private
 	 */
 	_selectMonth(e: Event) {
@@ -286,7 +285,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasPreviousPage(): boolean {
 		return this._calendarDate.getYear() !== this._minDate.getYear();
@@ -295,7 +293,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasNextPage(): boolean {
 		return this._calendarDate.getYear() !== this._maxDate.getYear();

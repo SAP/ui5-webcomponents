@@ -203,7 +203,6 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -213,7 +212,6 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
 	 *
-	 * @type {object}
 	 * @private
 	 */
 	@property({ type: Object })
@@ -222,7 +220,6 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores settings of the dialog before the initial open.
 	 *
-	 * @type {object}
 	 * @private
 	 */
 	@property({ type: Object })
@@ -231,7 +228,6 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores settings of the dialog after confirmation.
 	 *
-	 * @type {object}
 	 * @private
 	 */
 	@property({ type: Object })
@@ -240,7 +236,6 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores current settings of the dialog.
 	 *
-	 * @type {object}
 	 * @private
 	 */
 	@property({ type: Object })
@@ -268,7 +263,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the list of items against which the user could sort data.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 	 *
-	 * @type {ISortItem[]}
 	 * @slot sortItems
 	 * @public
 	 */
@@ -279,7 +273,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the <code>filterItems</code> list.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 	 *
-	 * @type {IFilterItem[]}
 	 * @slot filterItems
 	 * @public
 	 */
@@ -656,7 +649,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * If the dialog is closed by [ESC] key, do the same as if the <code>Cancel</code> button is pressed.
 	 *
-	 * @param {event} evt
+	 * @param evt
 	 */
 	_restoreConfirmedOnEscape(evt: CustomEvent) { // Dialog#before-close
 		if (evt.detail.escPressed) {
@@ -678,7 +671,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Sets current settings to ones passed as <code>settings</code> argument.
 	 *
-	 * @param {Object} settings
+	 * @param settings
 	 */
 	_restoreSettings(settings: VSDInternalSettings) {
 		this._currentSettings = JSON.parse(JSON.stringify(settings));
@@ -731,10 +724,10 @@ class ViewSettingsDialog extends UI5Element {
 	 *	]
 	 * }
 	 * </pre>
-	 * @param {Object} settings - predefined settings.
-	 * @param {string} settings.sortOrder - sort order
-	 * @param {string} settings.sortBy - sort by
-	 * @param {Array.<Object>} settings.filters - filters
+	 * @param settings - predefined settings.
+	 * @param settings.sortOrder - sort order
+	 * @param settings.sortBy - sort by
+	 * @param settings.filters - filters
 	 * @public
 	 */
 	setConfirmedSettings(settings: VSDSettings) {

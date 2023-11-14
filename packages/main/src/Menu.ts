@@ -190,7 +190,6 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -201,7 +200,6 @@ class Menu extends UI5Element {
 	 * Indicates if the menu is open
 	 *
 	 * @public
-	 * @type {boolean}
 	 * @default false
 	 * @since 1.10.0
 	 */
@@ -211,7 +209,6 @@ class Menu extends UI5Element {
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -222,7 +219,6 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
 	 *
-	 * @type {Integer}
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -234,7 +230,6 @@ class Menu extends UI5Element {
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
 	 *
 	 * @public
-	 * @type {DOMReference}
 	 * @default ""
 	 * @since 1.10.0
 	 */
@@ -243,7 +238,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines if the menu is sub-menu (not first-level).
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -252,7 +246,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Stores id of a list item that opened sub-menu.
-	 * @type {string}
 	 * @private
 	 */
 	@property()
@@ -263,7 +256,6 @@ class Menu extends UI5Element {
 	 * (in case of non-phone devices these are the items of the menu,
 	 * but for phone devices the items of the currently opened sub-menu
 	 * will be populated here)
-	 * @type {array}
 	 * @private
 	 */
 	@property({ type: Object, multiple: true })
@@ -271,7 +263,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Stores a list of parent menu items for each sub-menu (on phone).
-	 * @type {array}
 	 * @private
 	 */
 	@property({ type: Object, multiple: true })
@@ -300,7 +291,6 @@ class Menu extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 	 *
-	 * @type {IMenuItem[]}
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -396,7 +386,7 @@ class Menu extends UI5Element {
 
 	/**
 	 * Shows the Menu near the opener element.
-	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @param opener the element that the popover is shown at
 	 * @public
 	 */
 	async showAt(opener: HTMLElement) {

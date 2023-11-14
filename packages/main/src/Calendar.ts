@@ -209,7 +209,6 @@ class Calendar extends CalendarPart {
 	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 	 * </ul>
-	 * @type {CalendarSelectionMode}
 	 * @default "Single"
 	 * @public
 	 */
@@ -226,7 +225,6 @@ class Calendar extends CalendarPart {
 	 * <b>Note:</b> For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -264,7 +262,6 @@ class Calendar extends CalendarPart {
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
 	 *
-	 * @type {ICalendarDate[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -436,10 +433,9 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * The month button is hidden when the month picker or year picker is shown
-	 * @returns {boolean}
 	 * @private
 	 */
-	get _isHeaderMonthButtonHidden() {
+	get _isHeaderMonthButtonHidden(): boolean {
 		return this._currentPicker === "month" || this._currentPicker === "year";
 	}
 
@@ -525,7 +521,7 @@ class Calendar extends CalendarPart {
 	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
 	 * @protected
 	 * @deprecated
-	 * @param { Array<number> } selectedDates Array of UTC timestamps
+	 * @param selectedDates Array of UTC timestamps
 	 */
 	set selectedDates(selectedDates: Array<number>) {
 		this._setSelectedDates(selectedDates);

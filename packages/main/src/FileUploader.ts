@@ -97,7 +97,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * Comma-separated list of file types that the component should accept.
 	 * <br><br>
 	 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -106,7 +105,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -118,7 +116,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -127,7 +124,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Allows multiple files to be chosen.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -146,7 +142,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -155,7 +150,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -164,7 +158,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the name/names of the file/files to upload.
-	 * @type {string}
 	 * @default ""
 	 * @formEvents change
 	 * @formProperty
@@ -175,7 +168,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 */
@@ -193,7 +185,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * <b>Note:</b> If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.<br>
 	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
 	 *
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -207,7 +198,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement[]}
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -217,7 +207,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
 	 * @private
 	 */
 	@slot()
@@ -281,10 +270,9 @@ class FileUploader extends UI5Element implements IFormElement {
 	/**
 	 * FileList of all selected files.
 	 * @readonly
-	 * @type {FileList}
 	 * @public
 	 */
-	get files() {
+	get files(): FileList {
 		if (this._input) {
 			return this._input.files;
 		}

@@ -94,7 +94,6 @@ type ColorPaletteItemClickEventDetail = {
 class ColorPalette extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
-	 * @type {boolean}
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -104,7 +103,6 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
 	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
-	 * @type {boolean}
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -113,7 +111,6 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 * @since 1.0.0-rc.16
@@ -124,7 +121,6 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Defines the default color of the color palette
 	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-	 * @type {CSSColor}
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
@@ -133,7 +129,6 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the selected color.
-	 * @type {CSSColor}
 	 * @private
 	 */
 	@property({ validator: CSSColor })
@@ -141,7 +136,6 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines if the palette is in Popup or Embeded mode.
-	 * @type {sap.ui.webc.base.types.CSSColor}
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -149,7 +143,6 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the <code>ui5-color-palette-item</code> elements.
-	 * @type {IColorPaletteItem[]}
 	 * @public
 	 */
 	@slot({

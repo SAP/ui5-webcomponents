@@ -42,7 +42,6 @@ class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's timestamp.
 	 * <b>Note:</b> set by the Calendar component
-	 * @type {Integer}
 	 * @public
 	 */
 	@property({ validator: Integer })
@@ -51,7 +50,6 @@ class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's primary calendar type.
 	 * <b>Note:</b> set by the Calendar component
-	 * @type {CalendarType}
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -62,7 +60,6 @@ class CalendarHeader extends UI5Element {
 	 * <b>Note:</b> set by the Calendar component
 	 * @since 1.0.0-rc.16
 	 * @default undefined
-	 * @type {CalendarType}
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -70,7 +67,6 @@ class CalendarHeader extends UI5Element {
 
 	/**
 	 * Stores information for month button for secondary calendar type
-	 * @type {object}
 	 * @private
 	*/
 	@property({ type: Object })

@@ -221,7 +221,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Defines a formatted date value.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
@@ -233,7 +232,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 */
@@ -244,7 +242,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines whether the component is required.
 	 *
 	 * @since 1.0.0-rc.9
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -254,7 +251,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Determines whether the component is displayed as disabled.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -264,7 +260,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Determines whether the component is displayed as read-only.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -279,7 +274,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -298,7 +292,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -312,7 +305,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * <b>Note:</b> For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -323,7 +315,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Defines the aria-label attribute for the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -334,7 +325,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -361,7 +351,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement}
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
@@ -371,7 +360,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
 	 * @private
 	 */
 	@slot({ type: HTMLElement })
@@ -418,10 +406,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Override in derivatives to change calendar selection mode
-	 * @returns {string}
 	 * @protected
 	 */
-	get _calendarSelectionMode() {
+	get _calendarSelectionMode(): string {
 		return "Single";
 	}
 
@@ -430,7 +417,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Override in derivatives to provide the calendar a timestamp based on their properties
 	 * By default focus the calendar on the selected date if set, or the current day otherwise
 	 * @protected
-	 * @returns { number } the calendar timestamp
+	 * @returns the calendar timestamp
 	 */
 	get _calendarTimestamp(): number {
 		if (this.value && this.dateValueUTC && this._checkValueValidity(this.value)) {
@@ -445,7 +432,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Used to provide selectedDates to the calendar based on the component's state
 	 * Override in derivatives to provide different rules for setting the calendar's selected dates
 	 * @protected
-	 * @returns { array } the selected dates
+	 * @returns the selected dates
 	 */
 	get _calendarSelectedDates(): Array<string> {
 		if (this.value && this._checkValueValidity(this.value)) {
@@ -502,9 +489,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 *
-	 * @param { number } amount
-	 * @param { string } unit
-	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
+	 * @param amount
+	 * @param unit
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @protected
 	 */
 	_modifyDateValue(amount: number, unit: string, preserveDate?: boolean) {
@@ -596,8 +583,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if the provided value is valid and within valid range.
 	 * @protected
-	 * @param { string } value
-	 * @returns { boolean }
+	 * @param value
 	 */
 	_checkValueValidity(value: string): boolean {
 		if (value === "") {
@@ -616,8 +602,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
 	 * @public
-	 * @param { string } [value=""] A value to be tested against the current date format
-	 * @returns { boolean }
+	 * @param value A value to be tested against the current date format
 	 */
 	isValid(value = ""): boolean {
 		if (value === "") {
@@ -630,8 +615,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if a date is between the minimum and maximum date.
 	 * @public
-	 * @param { string } [value=""] A value to be checked
-	 * @returns { boolean }
+	 * @param value A value to be checked
 	 */
 	isInValidRange(value = ""): boolean {
 		if (value === "") {
@@ -782,10 +766,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
 	 * @public
-	 * @param {Date} date A Java Script date object to be formatted as string
-	 * @returns {string} The date as string
+	 * @param date A Java Script date object to be formatted as string
+	 * @returns The date as string
 	 */
-	formatValue(date: Date) {
+	formatValue(date: Date): string {
 		return this.getFormat().format(date);
 	}
 
@@ -800,9 +784,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Opens the picker.
 	 * @public
-	 * @returns {Promise} Resolves when the picker is open
+	 * @returns Resolves when the picker is open
 	 */
-	async openPicker() {
+	async openPicker(): Promise<void> {
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
@@ -821,9 +805,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Checks if the picker is open.
 	 * @public
-	 * @returns {boolean} true if the picker is open, false otherwise
+	 * @returns true if the picker is open, false otherwise
 	 */
-	isOpen() {
+	isOpen(): boolean {
 		return !!this._isPickerOpen;
 	}
 
@@ -832,7 +816,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @public
 	 * @readonly
-	 * @type { Date }
 	 */
 	get dateValue(): Date | null {
 		return this.liveValue ? this.getFormat().parse(this.liveValue) as Date : this.getFormat().parse(this.value) as Date;

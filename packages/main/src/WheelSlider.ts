@@ -83,7 +83,6 @@ class WheelSlider extends UI5Element {
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -92,7 +91,6 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Defines the currently selected value
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -101,7 +99,6 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Defines the label of the wheelslider.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -110,7 +107,6 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Indicates if the wheelslider is expanded.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -119,7 +115,6 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Indicates if the wheelslider has a cyclic behaviour.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -324,7 +319,7 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 *
-	 * @param {event} e Wheel Event
+	 * @param e Wheel Event
 	 * @private
 	 *
 	 * The listener for this event can't be passive as it calls preventDefault()

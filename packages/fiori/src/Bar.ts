@@ -61,7 +61,6 @@ class Bar extends UI5Element implements IBar {
 	/**
 	 * Defines the component's design.
 	 *
-	 * @type {BarDesign}
 	 * @default "Header"
 	 * @public
 	 */
@@ -70,7 +69,6 @@ class Bar extends UI5Element implements IBar {
 
 	/**
 	* Defines the content at the start of the bar.
-	* @type {HTMLElement[]}
 	* @public
 	*/
 	@slot({ type: HTMLElement })
@@ -78,7 +76,6 @@ class Bar extends UI5Element implements IBar {
 
 	/**
 	* Defines the content in the middle of the bar.
-	* @type {HTMLElement[]}
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
@@ -86,7 +83,6 @@ class Bar extends UI5Element implements IBar {
 
 	/**
 	* Defines the content at the end of the bar.
-	* @type {HTMLElement[]}
 	* @public
 	*/
 	@slot({ type: HTMLElement })

@@ -108,7 +108,6 @@ class SplitButton extends UI5Element {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -118,7 +117,6 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in active state as graphical element within the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -128,7 +126,6 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the component design.
 	 *
-	 * @type {ButtonDesign}
 	 * @default "Default"
 	 * @public
 	 */
@@ -140,7 +137,6 @@ class SplitButton extends UI5Element {
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -150,7 +146,6 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default: ""
 	 * @public
 	 */
@@ -159,7 +154,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if the elements is on focus
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -169,7 +163,6 @@ class SplitButton extends UI5Element {
 	/**
 	 * Accessibility-related properties for inner elements of the Split Button
 	 *
-	 * @type {object}
 	 * @private
 	 */
 	@property({ type: Object })
@@ -177,7 +170,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the tabIndex of the component.
-	 * @type {string}
 	 * @default ""
 	 * @private
 	 */
@@ -186,7 +178,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if there is Space key pressed
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -195,7 +186,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if there is SHIFT or ESCAPE key pressed
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -204,7 +194,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the active state of the text button
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -213,7 +202,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the icon of the text button
-	 * @type {string}
 	 * @default ""
 	 * @private
 	 */
@@ -222,7 +210,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the active state of the arrow button
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -234,7 +221,6 @@ class SplitButton extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

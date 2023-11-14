@@ -30,7 +30,6 @@ class FilterItem extends UI5Element implements IFilterItem {
 	/**
 	 * Defines the text of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -40,7 +39,6 @@ class FilterItem extends UI5Element implements IFilterItem {
 	/**
 	 * Defines the additional text of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -49,7 +47,6 @@ class FilterItem extends UI5Element implements IFilterItem {
 
 	/**
 	 * Defines the <code>values</code> list.
-	 * @type {IFilterItemOption[]}
 	 * @slot values
 	 * @public
 	 */

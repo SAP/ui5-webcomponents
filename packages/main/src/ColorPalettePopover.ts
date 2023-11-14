@@ -84,7 +84,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -94,7 +93,6 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a component.
 	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -103,7 +101,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -113,7 +110,6 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines the default color of the component.
 	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-	 * @type {CSSColor}
 	 * @public
 	 */
 	@property({ validator: CSSColor })
@@ -121,7 +117,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {IColorPaletteItem[]}
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
@@ -150,7 +145,7 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @since 1.1.1
 	 */
@@ -161,7 +156,7 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Shows the ColorPalettePopover.
 	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
-	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @since 1.0.0-rc.16
 	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
@@ -197,9 +192,8 @@ class ColorPalettePopover extends UI5Element {
 	 *
 	 * @protected
 	 * @since 1.0.0-rc.16
-	 * @returns {boolean}
 	 */
-	isOpen() {
+	isOpen(): boolean {
 		this._respPopover();
 		return this.responsivePopover!.opened;
 	}

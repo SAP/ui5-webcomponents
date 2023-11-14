@@ -117,7 +117,6 @@ type DayPickerNavigateEventDetail = {
 class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-	 * @type {array}
 	 * @public
 	 */
 	@property({
@@ -135,7 +134,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 	 * </ul>
-	 * @type {CalendarSelectionMode}
 	 * @default "Single"
 	 * @public
 	 */
@@ -149,7 +147,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * <b>Note:<b> For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -158,7 +155,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	hideWeekNumbers!: boolean;
 
 	/**
-	 * @type {object}
 	 * @private
 	 */
 	@property({
@@ -175,7 +171,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
-	 * @type {boolean}
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -200,7 +195,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Builds the "_weeks" object that represents the month.
-	 * @param { LocaleData } localeData
+	 * @param localeData
 	 * @private
 	 */
 	_buildWeeks(localeData: LocaleData) {
@@ -322,7 +317,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Builds the dayNames object (header of the month).
-	 * @param { LocaleData } localeData
+	 * @param localeData
 	 * @private
 	 */
 	_buildDayNames(localeData: LocaleData) {
@@ -384,8 +379,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Tells if the day is selected (dark blue).
-	 * @param { number } timestamp
-	 * @returns { boolean }
+	 * @param timestamp
 	 * @private
 	 */
 	_isDaySelected(timestamp: number): boolean {
@@ -399,8 +393,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Tells if the day is inside a selection range (light blue).
-	 * @param { number } timestamp
-	 * @returns { boolean }
+	 * @param timestamp
 	 * @private
 	 */
 	_isDayInsideSelectionRange(timestamp: number): boolean {
@@ -420,8 +413,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Selects/deselects a day.
-	 * @param { Event} e
-	 * @param { boolean} isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
+	 * @param e
+	 * @param isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
 	 * @private
 	 */
 	_selectDate(e: Event, isShift: boolean) {
@@ -505,7 +498,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called when at least one day is selected and the user presses "Shift".
-	 * @param { number } timestamp
+	 * @param timestamp
 	 * @private
 	 */
 	_multipleSelection(timestamp: number) {
@@ -546,7 +539,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Set the hovered day as the "_secondTimestamp".
-	 * @param { MouseEvent } e
+	 * @param e
 	 * @private
 	 */
 	_onmouseover(e: MouseEvent) {
@@ -616,7 +609,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Click is the same as "Enter".
 	 * <b>Note:</b> "Click+Shift" has the same effect as "Enter+Shift".
-	 * @param { MouseEvent } e
+	 * @param e
 	 * @private
 	 */
 	_onclick(e: MouseEvent) {
@@ -625,7 +618,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called upon "Home" or "End" - moves the focus to the first or last item in the row.
-	 * @param { boolean } homePressed
+	 * @param homePressed
 	 * @private
 	 */
 	_onHomeOrEnd(homePressed: boolean) {
@@ -645,7 +638,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasPreviousPage(): boolean {
 		return !(this._calendarDate.getMonth() === this._minDate.getMonth() && this._calendarDate.getYear() === this._minDate.getYear());
@@ -654,7 +646,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasNextPage(): boolean {
 		return !(this._calendarDate.getMonth() === this._maxDate.getMonth() && this._calendarDate.getYear() === this._maxDate.getYear());
@@ -678,9 +669,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Modifies the timestamp by a certain amount of days/months/years.
-	 * @param { number } amount
-	 * @param { string } unit
-	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
+	 * @param amount
+	 * @param unit
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
@@ -694,7 +685,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
-	 * @param { number } value
+	 * @param value
 	 * @private
 	 */
 	_setTimestamp(value: number) {

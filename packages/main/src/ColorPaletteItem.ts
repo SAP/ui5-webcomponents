@@ -43,7 +43,6 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 	 * <br><br>
 	 * <b>Note:</b> The value should be a valid CSS color.
 	 *
-	 * @type {CSSColor}
 	 * @public
 	 */
 	@property({ validator: CSSColor })
@@ -59,7 +58,6 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
 	 * @private
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	index?: number;
@@ -67,14 +65,12 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 	/**
 	 * Defines if the ColorPalette is on phone mode.
 	 * @private
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	phone!: boolean;
 
 	/**
 	 * @private
-	 * @type {boolean}
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })

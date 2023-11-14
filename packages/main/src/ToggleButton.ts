@@ -40,7 +40,6 @@ class ToggleButton extends Button {
 	/**
 	 * Determines whether the component is displayed as pressed.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */

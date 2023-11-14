@@ -85,7 +85,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 * @type {array}
 	 * @public
 	 */
 	@property({
@@ -291,7 +290,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
-	 * @param { number } value
+	 * @param value
 	 * @private
 	 */
 	_setTimestamp(value: number) {
@@ -301,7 +300,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page.
-	 * @param { number } amount
+	 * @param amount
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number) {
@@ -320,7 +319,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * User clicked with the mouser or pressed Enter/Space
-	 * @param { Event } e
+	 * @param e
 	 * @private
 	 */
 	_selectYear(e: Event) {
@@ -336,7 +335,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasPreviousPage(): boolean {
 		return this._firstYear! > this._minDate.getYear();
@@ -345,7 +343,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasNextPage(): boolean {
 		return this._firstYear! + this._getPageSize() - 1 < this._maxDate.getYear();

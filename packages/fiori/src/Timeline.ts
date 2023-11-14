@@ -56,7 +56,6 @@ class Timeline extends UI5Element {
 	 * <li><code>Horizontal</code></li>
 	 * </ul>
 	 *
-	 * @type {TimelineLayout}
 	 * @default "Vertical"
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -67,7 +66,6 @@ class Timeline extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default: ""
 	 * @public
 	 * @since 1.2.0
@@ -78,7 +76,6 @@ class Timeline extends UI5Element {
 	/**
 	 * Determines the content of the <code>ui5-timeline</code>.
 	 *
-	 * @type {ITimelineItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })

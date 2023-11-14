@@ -42,7 +42,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @type {ButtonDesign}
 	 * @default "Default"
 	 * @public
 	 */
@@ -52,7 +51,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -62,7 +60,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -72,7 +69,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
 	 *
-	 * @type {Integer}
 	 * @default 0
 	 * @private
 	 */
@@ -82,7 +78,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
 	 *
-	 * @type {Integer}
 	 * @default 0
 	 * @private
 	 */

@@ -155,7 +155,6 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the visibility of the main content.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 *
@@ -166,7 +165,6 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the visibility of the side content.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 *
@@ -186,7 +184,6 @@ class DynamicSideContent extends UI5Element {
 	 * <li><code>End</code></li>
 	 * </ul>
 	 *
-	 * @type {SideContentPosition}
 	 * @default "End"
 	 * @public
 	 *
@@ -208,7 +205,6 @@ class DynamicSideContent extends UI5Element {
 	 * <li><code>NeverShow</code></li>
 	 * </ul>
 	 *
-	 * @type {SideContentVisibility}
 	 * @default "ShowAboveS"
 	 * @public
 	 *
@@ -229,7 +225,6 @@ class DynamicSideContent extends UI5Element {
 	 * <li><code>OnMinimumWidth</code></li>
 	 * </ul>
 	 *
-	 * @type {SideContentFallDown}
 	 * @default "OnMinimumWidth"
 	 * @public
 	 *
@@ -243,7 +238,6 @@ class DynamicSideContent extends UI5Element {
 	 * except for phone, where the main and side contents are switching visibility
 	 * using the toggle method.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 *
@@ -278,7 +272,6 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the side content.
 	 *
-	 * @type {HTMLElement[]}
 	 * @slot
 	 * @public
 	 */

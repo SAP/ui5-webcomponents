@@ -87,7 +87,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Defines a formatted time value.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -102,7 +101,6 @@ class TimeSelection extends UI5Element {
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -113,7 +111,6 @@ class TimeSelection extends UI5Element {
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideHours!: boolean;
@@ -122,7 +119,6 @@ class TimeSelection extends UI5Element {
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideMinutes!: boolean;
@@ -131,7 +127,6 @@ class TimeSelection extends UI5Element {
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideSeconds!: boolean;
@@ -139,7 +134,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
 	 * @public
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxHours?: number;
@@ -147,7 +141,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
 	 * @public
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxMinutes?: number;
@@ -155,7 +148,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
 	 * @public
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxSeconds?: number;
@@ -368,7 +360,7 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * Event handler for the "click" and "focusin" events of the sliders
-	 * @param event
+	 * @param e
 	 */
 	selectSlider(e: MouseEvent | FocusEvent) {
 		const target = e.target as HTMLElement;

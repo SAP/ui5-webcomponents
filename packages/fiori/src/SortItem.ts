@@ -28,7 +28,6 @@ class SortItem extends UI5Element implements ISortItem {
 	/**
 	 * Defines the text of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -38,7 +37,6 @@ class SortItem extends UI5Element implements ISortItem {
 	/**
 	 * Defines if the component is selected.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */

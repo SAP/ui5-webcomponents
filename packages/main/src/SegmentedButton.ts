@@ -79,7 +79,6 @@ class SegmentedButton extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 * @since 1.0.3
@@ -98,7 +97,6 @@ class SegmentedButton extends UI5Element {
 	 * <li><code>MultiSelect</code></li>
 	 * </ul>
 	 *
-	 * @type {SegmentedButtonMode}
 	 * @default "SingleSelect"
 	 * @public
 	 * @since 1.14.0
@@ -112,7 +110,6 @@ class SegmentedButton extends UI5Element {
 	 * <b>Note:</b> Multiple items are allowed.
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
-	 * @type {ISegmentedButtonItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -259,21 +256,21 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected item.
 	 *
 	 * @readonly
-	 * @type {ISegmentedButtonItem}
 	 * @deprecated since 1.14.0. This method will be removed in the next major release.
 	 * Please use the <code>selectedItems</code> property instead.
 	 * @public
+	 * @returns selected segmented button item
 	 */
-	get selectedItem() {
+	get selectedItem(): SegmentedButtonItem | undefined {
 		return this._selectedItem;
 	}
 
 	/**
 	 * Returns an array of the currently selected items.
 	 * @readonly
-	 * @type {ISegmentedButtonItem[]}
 	 * @since 1.14.0
 	 * @public
+	 * @returns array of selected segmented button items
 	 */
 	get selectedItems(): Array<SegmentedButtonItem> {
 		return this.items.filter(item => item.pressed);

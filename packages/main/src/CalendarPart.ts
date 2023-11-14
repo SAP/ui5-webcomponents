@@ -20,7 +20,6 @@ class CalendarPart extends DateComponentBase {
 	/**
 	 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 	 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
-	 * @type {Integer}
 	 * @protected
 	 */
 	@property({ validator: Integer })
@@ -65,7 +64,7 @@ class CalendarPart extends DateComponentBase {
 	/**
 	 * Change a timestamp and enforce limits
 	 *
-	 * @param {number} timestamp
+	 * @param timestamp
 	 * @protected
 	 */
 	_safelySetTimestamp(timestamp: number) {
@@ -84,9 +83,9 @@ class CalendarPart extends DateComponentBase {
 
 	/**
 	 * Modify a timestamp by a certain amount of days/months/years and enforce limits
-	 * @param {number} amount
-	 * @param {string} unit
-	 * @param {boolean} preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
+	 * @param amount
+	 * @param unit
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @protected
 	 */
 	_safelyModifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {

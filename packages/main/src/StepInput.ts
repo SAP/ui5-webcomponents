@@ -110,7 +110,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a value of the component.
 	 *
-	 * @type {Float}
 	 * @default 0
 	 * @public
 	 */
@@ -120,7 +119,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a minimum value of the component.
 	 *
-	 * @type {Float}
 	 * @public
 	 */
 	@property({ validator: Float })
@@ -129,7 +127,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a maximum value of the component.
 	 *
-	 * @type {Float}
 	 * @public
 	 */
 	@property({ validator: Float })
@@ -138,7 +135,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a step of increasing/decreasing the value of the component.
 	 *
-	 * @type {Float}
 	 * @default 1
 	 * @public
 	 */
@@ -148,7 +144,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 */
@@ -158,7 +153,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -168,7 +162,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines whether the component is displayed as disabled.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -178,7 +171,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines whether the component is displayed as read-only.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -193,7 +185,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 */
@@ -212,7 +203,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -222,7 +212,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines the number of digits after the decimal point of the component.
 	 *
-	 * @type {Integer}
 	 * @default 0
 	 * @public
 	 */
@@ -232,7 +221,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -242,7 +230,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -288,7 +275,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement}
 	 * @slot
 	 * @public
 	 */
@@ -299,7 +285,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
 	 *
-	 * @type {HTMLElement[]}
 	 * @slot
 	 * @private
 	 */
@@ -441,8 +426,8 @@ class StepInput extends UI5Element implements IFormElement {
 	 * decrement buttons according to the value and min/max values (if set). Fires <code>change</code> event when requested
 	 *
 	 * @private
-	 * @param {Float} modifier modifies the value of the component with the given modifier (positive or negative)
-	 * @param {boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
+	 * @param modifier modifies the value of the component with the given modifier (positive or negative)
+	 * @param fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
 	 */
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
@@ -563,8 +548,8 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Called when the increment or decrement button is pressed and held to set new value.
 	 * @private
-	 * @param {boolean} increment - is this the increment button or not so the values should be spin accordingly up or down
-	 * @param {boolean} resetVariables - whether to reset the spin-related variables or not
+	 * @param increment - is this the increment button or not so the values should be spin accordingly up or down
+	 * @param resetVariables - whether to reset the spin-related variables or not
 	 */
 	_spinValue(increment: boolean, resetVariables = false) {
 		if (resetVariables) {

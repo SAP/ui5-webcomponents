@@ -141,7 +141,6 @@ class DateTimePicker extends DatePicker {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> The date view would be displayed by default.
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -153,7 +152,6 @@ class DateTimePicker extends DatePicker {
 	 * The phone mode turns on when the component is used on small screens or phone devices.
 	 * In phone mode the user can see either the calendar view, or the time view
 	 * and can switch between the views via toggle buttons.
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -374,7 +372,7 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * Handles the date/time switch available in <code>phoneMode</code> to switch
 	 * between the date and time views.
-	 * @param {Event} e
+	 * @param e
 	 */
 	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
 		const target = e.target as HTMLElement;

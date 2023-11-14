@@ -85,7 +85,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 	 *
 	 * @public
-	 * @type {SwitchDesign}
 	 * @default "Textual"
 	 */
 	@property({ type: SwitchDesign, defaultValue: SwitchDesign.Textual })
@@ -96,7 +95,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> The property can be changed with user interaction,
 	 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
-	 * @type {boolean}
 	 * @default false
 	 * @formEvents change
 	 * @formProperty
@@ -110,7 +108,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -123,7 +120,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -135,7 +131,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -147,7 +142,6 @@ class Switch extends UI5Element implements IFormElement {
 	 *
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @type {string}
 	 * @default: ""
 	 * @public
 	 * @since 1.2.0
@@ -160,7 +154,6 @@ class Switch extends UI5Element implements IFormElement {
 	 *
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -172,7 +165,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * Defines the tooltip of the component.
 	 * <br>
 	 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
-	 * @type {string}
 	 * @default: ""
 	 * @public
 	 * @since 1.9.0
@@ -183,7 +175,6 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.16.0
@@ -203,7 +194,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.16.0
@@ -214,7 +204,6 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit, when <code>Switch</code> is a part of HTML form.
 	 *
-	 * @type {HTMLElement[]}
 	 * @private
 	 * @since 1.16.0
 	 */

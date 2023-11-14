@@ -22,7 +22,6 @@ class CalendarDate extends UI5Element implements ICalendarDate {
 	 * The date formatted according to the <code>formatPattern</code> property
 	 * of the <code>ui5-calendar</code> that hosts the component.
 	 *
-	 * @type {string}
 	 * @public
 	 */
 	@property()
