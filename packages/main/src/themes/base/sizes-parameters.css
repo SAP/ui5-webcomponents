@@ -148,9 +148,6 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-
-	--_ui5_switch_text_active_left_alternate: calc(-100% + 1.575rem);
-
 	--_ui5_button_base_height: var(--sapElement_Compact_Height);
 	--_ui5_button_base_padding: 0.4375rem;
 	--_ui5_button_base_min_width: 2rem;

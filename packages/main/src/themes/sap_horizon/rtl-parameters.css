@@ -1,9 +1,5 @@
 @import "../base/rtl-parameters.css";
 
-:root {
-	--test_var: 0;
-}
-
 [dir="rtl"] {
 	--_ui5_segmented_btn_item_border_left: 0.0625rem;
 	--_ui5_segmented_btn_item_border_right: 0.0625rem;
@@ -21,13 +17,4 @@
 	--_ui5_switch_text_active_right_alternate: 0.1875rem;
 
 	--_ui5_switch_transform: translateX(-100%) translateX(1.625rem);
-}
-
-[dir="rtl"][data-ui5-compact-size],
-[dir="rtl"] .ui5-content-density-compact,
-[dir="rtl"] .sapUiSizeCompact {
-	--test_var: 0.225rem;
-	--test_var1: 0;
-
-	--_ui5_switch_text_active_right_alternate: calc(-100% + 2.075rem);
 }

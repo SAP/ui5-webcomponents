@@ -18,13 +18,3 @@
 
 	--_ui5_switch_transform: translateX(-100%) translateX(1.625rem);
 }
-
-
-[dir="rtl"][data-ui5-compact-size],
-[dir="rtl"] .ui5-content-density-compact,
-[dir="rtl"] .sapUiSizeCompact {
-	--test_var: 0.225rem;
-	--test_var1: 0;
-
-	--_ui5_switch_text_active_right_alternate: calc(-100% + 2.075rem);
-}
