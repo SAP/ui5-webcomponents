@@ -7,6 +7,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 // Template
 import SelectMenuTemplate from "./generated/templates/SelectMenuTemplate.lit.js";
@@ -58,10 +59,7 @@ type SelectMenuChange = {
  * <code>import @ui5/webcomponents/dist/SelectMenu.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SelectMenu
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-select-menu
+ * @extends UI5Element
  * @public
  * @since 1.17.0
  */
@@ -101,9 +99,6 @@ class SelectMenu extends UI5Element {
 	/**
 	 * Defines the options of the component.
 	 *
-	 * @type {sap.ui.webc.main.ISelectMenuOption[]}
-	 * @name sap.ui.webc.main.SelectMenu.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({
@@ -116,8 +111,6 @@ class SelectMenu extends UI5Element {
 	/**
 	 * Defines the width of the component.
 	 *
-	 * @type { number }
-	 * @name sap.ui.webc.main.SelectMenu.prototype.selectWidth
 	 * @private
 	 */
 	@property({ validator: Integer })
@@ -241,15 +234,15 @@ class SelectMenu extends UI5Element {
 		this.close();
 	}
 
-	get open() {
+	get open(): boolean {
 		return !!this.respPopover?.open;
 	}
 
-	get respPopover() {
+	get respPopover(): ResponsivePopover {
 		return this.shadowRoot!.querySelector<ResponsivePopover>(".ui5-select-menu")!;
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,

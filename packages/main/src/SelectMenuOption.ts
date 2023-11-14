@@ -26,11 +26,8 @@ import type { AccessibilityAttributes } from "./ListItem.js";
  * <code>import @ui5/webcomponents/dist/SelectMenuOption.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SelectMenuOption
- * @extends sap.ui.webc.base.UI5Element
- * @implements sap.ui.webc.main.ISelectMenuOption
- * @tagname ui5-select-menu-option
+ * @extends UI5Element
+ * @implements {ISelectMenuOption}
  * @public
  * @since 1.17.0
  */
@@ -46,8 +43,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * Defines the text, displayed inside the <code>ui5-select</code> input filed
 	 * when the option gets selected.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.displayText
 	 * @public
 	 */
 	@property()
@@ -57,8 +52,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.value
 	 * @public
 	 */
 	@property()
@@ -67,9 +60,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @type {sap.ui.webc.main.types.ListItemType}
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.type
-	 * @defaultvalue "Active"
+	 * @default "Active"
 	 * @public
 	 * @deprecated
 	 */
@@ -79,8 +70,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @type {object}
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.accessibilityAttributes
 	 * @public
 	 * @deprecated
 	 */
@@ -91,8 +80,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.navigated
 	 * @deprecated
 	 */
 	@property({ type: Boolean })
@@ -102,18 +89,12 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * Defines the content of the component.
 	 * <br><br>
 	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.default
-	 * @slot
 	 * @public
 	 */
 
 	/**
 	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
 	 *
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.deleteButton
-     * @type {Node[]}
-	 * @slot
 	 * @public
 	 * @deprecated
 	 */
