@@ -46,6 +46,8 @@ export interface JavaScriptModule {
    */
   declarations?: (
     | ClassDeclaration
+    | EnumDeclaration
+    | InterfaceDeclaration
     | FunctionDeclaration
     | MixinDeclaration
     | VariableDeclaration
@@ -78,6 +80,12 @@ export interface JavaScriptModule {
   summary?: string
 }
 export interface ClassDeclaration {
+  _ui5implements?: Reference[]
+  _ui5privacy?: Privacy
+  /**
+   * Marks when the field was
+   */
+  _ui5since?: string
   /**
    * Whether the class or mixin is deprecated.
    * If the value is a string, it's the reason for the deprecation.
@@ -128,7 +136,31 @@ export interface ClassDeclaration {
     [k: string]: unknown
   }
 }
+/**
+ * A reference to an export of a module.
+ *
+ * All references are required to be publically accessible, so the canonical
+ * representation of a reference is the export it's available from.
+ *
+ * `package` should generally refer to an npm package name. If `package` is
+ * undefined then the reference is local to this package. If `module` is
+ * undefined the reference is local to the containing module.
+ *
+ * References to global symbols like `Array`, `HTMLElement`, or `Event` should
+ * use a `package` name of `"global:"`.
+ */
+export interface Reference {
+  module?: string
+  name: string
+  package?: string
+}
 export interface ClassField {
+  _ui5formProperty?: boolean
+  _ui5formEvents?: string
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
   default?: string
   /**
    * Whether the property is deprecated.
@@ -154,24 +186,6 @@ export interface ClassField {
    */
   summary?: string
   type?: Type
-}
-/**
- * A reference to an export of a module.
- *
- * All references are required to be publically accessible, so the canonical
- * representation of a reference is the export it's available from.
- *
- * `package` should generally refer to an npm package name. If `package` is
- * undefined then the reference is local to this package. If `module` is
- * undefined the reference is local to the containing module.
- *
- * References to global symbols like `Array`, `HTMLElement`, or `Event` should
- * use a `package` name of `"global:"`.
- */
-export interface Reference {
-  module?: string
-  name: string
-  package?: string
 }
 /**
  * A reference to the source of a declaration or member.
@@ -218,6 +232,10 @@ export interface TypeReference {
 }
 export interface ClassMethod {
   /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
+  /**
    * Whether the function is deprecated.
    * If the value is a string, it's the reason for the deprecation.
    */
@@ -251,6 +269,11 @@ export interface ClassMethod {
   summary?: string
 }
 export interface Parameter {
+  _ui5privacy?: Privacy
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
   default?: string
   /**
    * Whether the property is deprecated.
@@ -281,7 +304,151 @@ export interface Parameter {
   summary?: string
   type?: Type
 }
+export interface EnumDeclaration {
+  _ui5privacy?: Privacy
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
+  /**
+   * Whether the class or mixin is deprecated.
+   * If the value is a string, it's the reason for the deprecation.
+   */
+  deprecated?: string | boolean
+  /**
+   * A markdown description of the class.
+   */
+  description?: string
+  kind: "enum"
+  members?: EnumField[]
+  /**
+   * Any class mixins applied in the extends clause of this class.
+   *
+   * If mixins are applied in the class definition, then the true superclass
+   * of this class is the result of applying mixins in order to the superclass.
+   *
+   * Mixins must be listed in order of their application to the superclass or
+   * previous mixin application. This means that the innermost mixin is listed
+   * first. This may read backwards from the common order in JavaScript, but
+   * matches the order of language used to describe mixin application, like
+   * "S with A, B".
+   */
+  mixins?: Reference[]
+  name: string
+  source?: SourceReference
+  /**
+   * A markdown summary suitable for display in a listing.
+   */
+  summary?: string
+  /**
+   * A reference to an export of a module.
+   *
+   * All references are required to be publically accessible, so the canonical
+   * representation of a reference is the export it's available from.
+   *
+   * `package` should generally refer to an npm package name. If `package` is
+   * undefined then the reference is local to this package. If `module` is
+   * undefined the reference is local to the containing module.
+   *
+   * References to global symbols like `Array`, `HTMLElement`, or `Event` should
+   * use a `package` name of `"global:"`.
+   */
+  superclass?: {
+    module?: string
+    name: string
+    package?: string
+    [k: string]: unknown
+  }
+}
+export interface EnumField {
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
+  /**
+   * Whether the property is deprecated.
+   * If the value is a string, it's the reason for the deprecation.
+   */
+  deprecated?: string | boolean
+  /**
+   * A markdown description of the field.
+   */
+  description?: string
+  inheritedFrom?: Reference
+  kind: "field"
+  name: string
+  privacy?: Privacy
+  source?: SourceReference
+  static?: boolean
+  /**
+   * Whether the property is read-only.
+   */
+  readonly?: boolean
+  /**
+   * A markdown summary suitable for display in a listing.
+   */
+  summary?: string
+}
+export interface InterfaceDeclaration {
+  _ui5privacy?: Privacy
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
+  /**
+   * Whether the class or mixin is deprecated.
+   * If the value is a string, it's the reason for the deprecation.
+   */
+  deprecated?: string | boolean
+  /**
+   * A markdown description of the class.
+   */
+  description?: string
+  kind: "interface"
+  /**
+   * Any class mixins applied in the extends clause of this class.
+   *
+   * If mixins are applied in the class definition, then the true superclass
+   * of this class is the result of applying mixins in order to the superclass.
+   *
+   * Mixins must be listed in order of their application to the superclass or
+   * previous mixin application. This means that the innermost mixin is listed
+   * first. This may read backwards from the common order in JavaScript, but
+   * matches the order of language used to describe mixin application, like
+   * "S with A, B".
+   */
+  mixins?: Reference[]
+  name: string
+  source?: SourceReference
+  /**
+   * A markdown summary suitable for display in a listing.
+   */
+  summary?: string
+  /**
+   * A reference to an export of a module.
+   *
+   * All references are required to be publically accessible, so the canonical
+   * representation of a reference is the export it's available from.
+   *
+   * `package` should generally refer to an npm package name. If `package` is
+   * undefined then the reference is local to this package. If `module` is
+   * undefined the reference is local to the containing module.
+   *
+   * References to global symbols like `Array`, `HTMLElement`, or `Event` should
+   * use a `package` name of `"global:"`.
+   */
+  superclass?: {
+    module?: string
+    name: string
+    package?: string
+    [k: string]: unknown
+  }
+}
 export interface FunctionDeclaration {
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
   /**
    * Whether the function is deprecated.
    * If the value is a string, it's the reason for the deprecation.
@@ -445,6 +612,13 @@ export interface VariableDeclaration {
  * `CustomElementExport`.
  */
 export interface CustomElementDeclaration {
+  _ui5implements?: Reference[]
+  _ui5abstract?: boolean
+  _ui5privacy?: Privacy
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
   /**
    * The attributes that this element is known to understand.
    */
@@ -639,6 +813,16 @@ export interface Demo {
   url: string
 }
 export interface Event {
+  _ui5parameters?: Parameter[]
+  _ui5privacy?: Privacy
+  /**
+   * Whether the parameter is optional. Undefined implies non-optional.
+   */
+  _ui5allowPreventDefault?: boolean
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
   /**
    * Whether the event is deprecated.
    * If the value is a string, it's the reason for the deprecation.
@@ -678,6 +862,12 @@ export interface Event {
   }
 }
 export interface Slot {
+  _ui5type?: Type
+  _ui5privacy?: Privacy
+  /**
+   * Marks when the field was introduced
+   */
+  _ui5since?: string
   /**
    * Whether the slot is deprecated.
    * If the value is a string, it's the reason for the deprecation.

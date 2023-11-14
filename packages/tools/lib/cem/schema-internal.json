@@ -420,10 +420,6 @@
     },
     "CssCustomProperty": {
       "properties": {
-        "_ui5since": {
-          "description": "Marks when the field was introduced",
-          "type": "string"
-        },
         "default": {
           "type": "string"
         },
@@ -459,10 +455,6 @@
     "CssPart": {
       "description": "The description of a CSS Part",
       "properties": {
-        "_ui5since": {
-          "description": "Marks when the field was introduced",
-          "type": "string"
-        },
         "deprecated": {
           "description": "Whether the CSS shadow part is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
