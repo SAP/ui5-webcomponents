@@ -146,6 +146,7 @@
 
 	/* RTL Parameters */
 	--_ui5_switch_text_inactive_left_alternate_rtl: 0.0625rem;
+	--_ui5_switch_text_inactive_right_rtl: 0.0625rem;
 }
 
 [data-ui5-compact-size],
