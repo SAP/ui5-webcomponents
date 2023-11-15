@@ -272,7 +272,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @readonly
 	 * @public
 	 */
-	get files(): FileList {
+	get files(): FileList | null {
 		if (this._input) {
 			return this._input.files;
 		}
