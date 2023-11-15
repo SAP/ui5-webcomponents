@@ -16,13 +16,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * <code>import @ui5/webcomponents-fiori/dist/FilterItemOption.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.FilterItemOption
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
  * @since 1.0.0-rc.16
- * @tagname ui5-filter-item-option
- * @implements sap.ui.webc.fiori.IFilterItemOption
+ * @implements IFilterItemOption
  * @public
  */
 @customElement("ui5-filter-item-option")
@@ -30,9 +27,7 @@ class FilterItemOption extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *
-	 * @name sap.ui.webc.fiori.FilterItemOption.prototype.text
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -41,9 +36,7 @@ class FilterItemOption extends UI5Element {
 	/**
 	 * Defines if the component is selected.
 	 *
-	 * @name sap.ui.webc.fiori.FilterItemOption.prototype.selected
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
