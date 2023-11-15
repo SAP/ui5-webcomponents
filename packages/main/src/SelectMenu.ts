@@ -135,7 +135,7 @@ class SelectMenu extends UI5Element {
 	@property()
 	valueStateText!: string;
 
-	@property()
+	@property({ type: String, noAttribute: true })
 	value!: string;
 
 	valueStateMessageText: Array<Node>;
@@ -178,8 +178,7 @@ class SelectMenu extends UI5Element {
 			selectedIndex;
 		const options = this.options;
 		options.forEach((opt, index) => {
-			if (opt.selected || opt.textContent === this.value) {
-				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
+			if (opt.selected) {
 				lastSelectedOptionIndex = index;
 			}
 			if (firstEnabledOptionIndex === -1) {
@@ -266,8 +265,7 @@ class SelectMenu extends UI5Element {
 
 	get styles() {
 		return {
-			responsivePopoverHeader: {
-				"display": this.options.length && this.respPopover?.offsetWidth === 0 ? "none" : "inline-block",
+			valueStatePopover: {
 				"width": `${this.selectWidth!}px`,
 			},
 			responsivePopover: {

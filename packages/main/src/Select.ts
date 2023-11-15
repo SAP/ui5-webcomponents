@@ -504,7 +504,18 @@ class Select extends UI5Element implements IFormElement {
 		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	get value() {
+	/**
+	 * Returns the "value" of the component - either the <code>value</code> property of the selected option, or the text of the selected option.
+	 *
+	 * @public
+	 * @type { string }
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Select.prototype.value
+	 * @since 1.20.0
+	 * @formProperty
+	 * @formEvents change liveChange
+	 */
+	get value(): string {
 		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
@@ -615,8 +626,7 @@ class Select extends UI5Element implements IFormElement {
 			firstEnabledOptionIndex = -1;
 		const options = this._filteredItems;
 		const syncOpts = options.map((opt, index) => {
-			if (opt.selected || opt.textContent === this.value) {
-				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
+			if (opt.selected) {
 				lastSelectedOptionIndex = index;
 			}
 			if (firstEnabledOptionIndex === -1) {
