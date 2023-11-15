@@ -293,7 +293,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	/**
 	 * Returns the effective avatar size.
-	 * @readonly
 	 * @default "S"
 	 * @private
 	 */
@@ -304,7 +303,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	/**
 	 * Returns the effective background color.
-	 * @readonly
 	 * @default "Accent6"
 	 * @private
 	 */
