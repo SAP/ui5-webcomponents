@@ -45,7 +45,7 @@ describe("Menu interaction", () => {
 		assert.ok(await listItems[4].$(".ui5-menu-item-dummy-icon"), "The fourth list item has no icon and has dummy div instead of icon");
 	});
 
-	it.only("Sub-menu creation, opening, closing and destroying", async () => {
+	it("Sub-menu creation, opening, closing and destroying", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
