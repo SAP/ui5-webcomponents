@@ -8,16 +8,28 @@
     padding: 0 0 0 var(--_ui5_dynamic_page_title_content_padding_left);
 }
 
-.ui5-dynamic-page-footer {
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-}
-
 :host {
     display: block;
     overflow-y: scroll;
     height: 100%;
+}
+
+/* Footer  */
+.ui5-dynamic-page-footer {
+    position: sticky;
+    bottom: 0.5rem;
+    box-sizing: border-box;
+    z-index: 1;
+    opacity: 1;
+    padding: 0 1rem;
+}
+
+:host([show-footer]) .ui5-dynamic-page-footer {
+    animation: bounceShow 0.35s forwards ease-in-out;
+}
+
+:host(:not([show-footer])) .ui5-dynamic-page-footer {
+    animation: bounceHide 0.35s forwards ease-in-out;
 }
 
 ::slotted([slot="footer"]) {
@@ -25,4 +37,26 @@
     border: 1px solid;
     border-radius: 0.25rem;
     background-color: #fff;
+}
+
+/* Footer animation */
+@keyframes bounceShow {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bounceHide {
+    0% {
+        transform: translateY(-5%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }

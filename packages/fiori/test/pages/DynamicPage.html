@@ -20,7 +20,7 @@
     </head>
 
     <body class="fcl1auto">
-        <ui5-dynamic-page show-footer>
+        <ui5-dynamic-page id="page" show-footer>
             <ui5-dynamic-page-title slot="titleArea">
                 <ui5-breadcrumbs slot="breadcrumbs">
                     <ui5-breadcrumbs-item href="https://www.sap.com"
@@ -62,6 +62,7 @@
                 </ui5-toolbar>
 
                 <ui5-toolbar slot="actions">
+                    <ui5-toolbar-button id="toggleFooterBtn" text="Toggle Footer"></ui5-toolbar-button>
                     <ui5-toolbar-button icon="edit"></ui5-toolbar-button>
                     <ui5-toolbar-button icon="delete"></ui5-toolbar-button>
                     <ui5-toolbar-button icon="copy"></ui5-toolbar-button>
@@ -815,10 +816,18 @@
                 >
             </ui5-list>
 
-            <ui5-toolbar slot="footer">
-                <ui5-toolbar-button text="Edit"></ui5-toolbar-button>
-                <ui5-toolbar-button text="Close"></ui5-toolbar-button>
-            </ui5-toolbar>
+            <ui5-bar id="footer" slot="footer" design="FloatingFooter">
+                <ui5-button slot="endContent">Edit</ui5-button>
+                <ui5-button slot="endContent">Close</ui5-button>
+            </ui5-bar>
         </ui5-dynamic-page>
+
+        <script>
+            let page = document.getElementById("page");
+
+            document.getElementById("toggleFooterBtn").addEventListener("click", () => {
+                page.showFooter = !page.showFooter;
+            });
+        </script>
     </body>
 </html>
