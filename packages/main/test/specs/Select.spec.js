@@ -32,6 +32,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once.");
 		const selectTextHtml = await selectText.getHTML(false);
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT, "The 'value' property is correct.");
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
 	});
 
@@ -47,6 +48,7 @@ describe("Select general interaction", () => {
 		await secondItem.click();
 
 		const selectTextHtml = await selectText.getHTML(false);
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT, "The 'value' property is correct.");
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is not changed (reverted on third item).");
 	});
 
@@ -104,6 +106,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once more.");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Select label is correct.");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.click();
 		await select.keys("ArrowDown");
@@ -112,7 +115,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Fired change event is called once more.");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
-
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 	});
 
 	it("changes selection while closed with Arrow Up/Down", async () => {
@@ -131,10 +134,12 @@ describe("Select general interaction", () => {
 		await select.keys("ArrowUp");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.keys("ArrowDown");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Change event should have fired twice");
 	});
@@ -213,7 +218,7 @@ describe("Select general interaction", () => {
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Arrow Up should change selected item");
-
+		
 		const focusedElementId = await browser.executeAsync(done => {
 			done(document.activeElement.id);
 		});
@@ -573,5 +578,5 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
 		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
-	});
+ 	});
 });

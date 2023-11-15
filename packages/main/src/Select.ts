@@ -358,7 +358,7 @@ class Select extends UI5Element implements IFormElement {
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
-	value!: string;
+	// value!: string;
 
 	selectMenu?: SelectMenu;
 
@@ -502,6 +502,29 @@ class Select extends UI5Element implements IFormElement {
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	get value() {
+		return this.selectedOption?.value || this.selectedOption?.textContent || "";
+	}
+
+	set value(newValue: string) {
+		const option = this.getOptionByValue(newValue);
+		const prevSelectedOption = this.selectedOption;
+
+		if (prevSelectedOption && option) {
+			prevSelectedOption.selected = false;
+			option.selected = true;
+		}
+	}
+
+	getOptionByValue(value: string) {
+		const menu = this._getSelectMenu();
+
+		if (menu) {
+			return menu.options?.find((option: IOption) => (option.value || option.textContent) === value);
+		}
+		return this.options?.find((option: IOption) => (option.value || option.textContent) === value);
 	}
 
 	/**

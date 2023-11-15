@@ -52,6 +52,7 @@
 		
 				<ui5-button id="clearCounter">Reset counters</ui5-button>
 				<ui5-button id="btnFocusOut">Focus out</ui5-button>
+				<ui5-button id="btnSetValue">select.value = "item1"</ui5-button>
 			</section>
 
 			<section>
@@ -74,7 +75,7 @@
 
 	<ui5-select-menu id="selectOptions">
 
-		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S">
+		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S" value="tshirt">
 			<div class="selectMenuOption">
 				T-shirt [1]
 				<div>
@@ -84,7 +85,7 @@
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option data-display-text="Dress [2]" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
+		<ui5-select-menu-option data-display-text="Dress [2]" value="dress" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
 			<div class="selectMenuOption selectMenuOption--warning">
 				Dress [2]
 				<div>
@@ -94,7 +95,7 @@
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L" accessible-name="Skirt size L" selected>
+		<ui5-select-menu-option data-display-text="Skirt [3]" value="skirt" data-additional-text="L" accessible-name="Skirt size L" selected>
 			<div  class="selectMenuOption">
 				Skirt [3]
 				<div>
@@ -174,15 +175,15 @@
 	</ui5-select-menu>
 
 	<ui5-select-menu id="selectOptionsTest">
-		<ui5-select-menu-option id="selOption1" display-text="item1">
+		<ui5-select-menu-option id="selOption1" display-text="item1" value="item1">
 			<div>Item 1</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option id="selOption2" display-text="item2">
+		<ui5-select-menu-option id="selOption2" display-text="item2" value="item2">
 			<div>Item 2</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option id="selOption3" display-text="item3">
+		<ui5-select-menu-option id="selOption3" display-text="item3" value="item3">
 			<div>Item 3</div>
 		</ui5-select-menu-option>
 	</ui5-select-menu>
@@ -662,6 +663,10 @@
 			testPreview.value = testPreviewCounter;
 			testOpen.value = testOpenCounter;
 			testClose.value = testCloseCounter;
+		});
+
+		btnSetValue.addEventListener("click", function(e) {
+			selTest.value = "item1";
 		});
 	</script>
 </html>
