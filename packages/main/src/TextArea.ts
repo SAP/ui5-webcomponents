@@ -124,7 +124,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @formProperty
 	 * @defaultvalue ""
 	 * @public
-	*/
+	 */
 	@property()
 	value!: string;
 	/**
