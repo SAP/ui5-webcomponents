@@ -358,7 +358,6 @@ class Select extends UI5Element implements IFormElement {
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
-	// value!: string;
 
 	selectMenu?: SelectMenu;
 
