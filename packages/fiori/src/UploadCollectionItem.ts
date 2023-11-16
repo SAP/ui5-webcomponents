@@ -121,7 +121,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Holds an instance of <code>File</code> associated with this item.
 	 *
-	 * @type {File}
 	 * @default null
 	 * @public
 	 */
@@ -131,7 +130,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * The name of the file.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -141,7 +139,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -151,7 +148,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Disables the delete button.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -162,7 +158,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
 	 * Setting this property to <code>true</code> will hide the delete button.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -172,7 +167,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Hides the retry button when <code>uploadState</code> property is <code>Error</code>.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -182,7 +176,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Hides the terminate button when <code>uploadState</code> property is <code>Uploading</code>.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -194,7 +187,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * <br><br>
 	 * <b>Note:</b> Expected values are in the interval [0, 100].
 	 *
-	 * @type {Integer}
 	 * @default 0
 	 * @public
 	 */
@@ -206,7 +198,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
 	 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
 	 *
-	 * @type {UploadState}
 	 * @default "Ready"
 	 * @public
 	 */
@@ -216,7 +207,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Indicates if editing.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -228,7 +218,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-icon</code> or <code>img</code> for the intended design.
 	 *
-	 * @type {HTMLElement}
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -237,7 +226,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 

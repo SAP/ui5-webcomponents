@@ -26,18 +26,6 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 const IButton = "sap.ui.webc.main.IButton";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-card</code> as header
- *
- * @public
- */
-interface ICardHeader {
-	subtitleText: string,
-	titleText: string,
-	status: string,
-	interactive: boolean,
-}
-
-/**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
  *
  * @name sap.ui.webc.main.ICalendarDate
@@ -67,11 +55,11 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
+ * @name sap.ui.webc.main.IIcon
+ * @interface
  * @public
  */
-interface IIcon {
-	isUI5Element: boolean;
-}
+const IIcon = "sap.ui.webc.main.IIcon";
 
 /**
  * Interface for components that represent an input, usable in numerous higher-order components
@@ -146,15 +134,6 @@ const ISelectOption = "sap.ui.webc.main.ISelectOption";
 const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
- *
- * @public
- */
-interface ITab {
-	isUI5Element: boolean;
-}
-
-/**
  * Interface for components that may be slotted inside a <code>ui5-table</code> as rows
  *
  * @name sap.ui.webc.main.ITableRow
@@ -221,7 +200,6 @@ export {
 	IAvatar,
 	IBreadcrumbsItem,
 	IButton,
-	ICardHeader,
 	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
@@ -234,7 +212,6 @@ export {
 	ISegmentedButtonItem,
 	ISelectOption,
 	ISelectMenuOption,
-	ITab,
 	ITableCell,
 	ITableColumn,
 	ITableRow,

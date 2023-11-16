@@ -124,7 +124,7 @@ type CarouselNavigateEventDetail = {
  * when the user clicks on the navigation arrows or while resizing,
  * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
  *
- * @param {Integer} selectedIndex the current selected index
+ * @param selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
  */
@@ -137,7 +137,6 @@ type CarouselNavigateEventDetail = {
 class Carousel extends UI5Element {
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -146,7 +145,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-	 * @type {Integer}
 	 * @default 1
 	 * @public
 	 */
@@ -155,7 +153,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-	 * @type {Integer}
 	 * @default 1
 	 * @public
 	 */
@@ -164,7 +161,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-	 * @type {Integer}
 	 * @default 1
 	 * @public
 	 */
@@ -188,7 +184,6 @@ class Carousel extends UI5Element {
 	/**
 	 * Defines the visibility of the page indicator.
 	 * If set to true the page indicator will be hidden.
-	 * @type {boolean}
 	 * @since 1.0.0-rc.15
 	 * @default false
 	 * @public
@@ -203,7 +198,6 @@ class Carousel extends UI5Element {
 	 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
 	 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
 	 * </ul>
-	 * @type {CarouselPageIndicatorStyle}
 	 * @since 1.10
 	 * @default "Default"
 	 * @public
@@ -213,7 +207,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the carousel's background design.
-	 * @type {BackgroundDesign}
 	 * @since 1.14
 	 * @default "Translucent"
 	 * @public
@@ -223,7 +216,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the page indicator background design.
-	 * @type {BackgroundDesign}
 	 * @since 1.14
 	 * @default "Solid"
 	 * @public
@@ -233,7 +225,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the page indicator border design.
-	 * @type {BorderDesign}
 	 * @since 1.14
 	 * @default "Solid"
 	 * @public
@@ -243,7 +234,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the index of the initially selected item.
-	 * @type {Integer}
 	 * @default 0
 	 * @private
 	 */
@@ -258,7 +248,6 @@ class Carousel extends UI5Element {
 	 * <li><code>Content</code> - the arrows are placed on the sides of the current page.</li>
 	 * <li><code>Navigation</code> - the arrows are placed on the sides of the page indicator.</li>
 	 * </ul>
-	 * @type {CarouselArrowsPlacement}
 	 * @default "Content"
 	 * @public
 	 */
@@ -522,7 +511,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Changes the currently displayed page.
-	 * @param {Integer} itemIndex The index of the target page
+	 * @param itemIndex The index of the target page
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */

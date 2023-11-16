@@ -115,7 +115,6 @@ class Dialog extends Popup {
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -128,7 +127,6 @@ class Dialog extends Popup {
 	 * <b>Note:</b> The component will be stretched to approximately
 	 * 90% of the viewport.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -144,7 +142,6 @@ class Dialog extends Popup {
 	 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
 	 * When "draggable" is set to true, the native browser "draggable"
 	 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
-	 * @type {boolean}
 	 * @default false
 	 * @since 1.0.0-rc.9
 	 * @public
@@ -160,7 +157,6 @@ class Dialog extends Popup {
 	 * <b>Note:</b> The component can be resizable only in desktop mode.
 	 * <br>
 	 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
-	 * @type {boolean}
 	 * @default false
 	 * @since 1.0.0-rc.10
 	 * @public
@@ -172,7 +168,6 @@ class Dialog extends Popup {
 	 * Defines the state of the <code>Dialog</code>.
 	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
-	 * @type {ValueState}
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -220,7 +215,6 @@ class Dialog extends Popup {
 	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
 	 *
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot()
@@ -231,7 +225,6 @@ class Dialog extends Popup {
 	 * <br><br>
 	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot()
@@ -264,9 +257,9 @@ class Dialog extends Popup {
 	/**
 	 * Shows the dialog.
 	 *
-	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
+	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
-	 * @returns {Promise} Resolves when the dialog is open
+	 * @returns Resolves when the dialog is open
 	 */
 	async show(preventInitialFocus = false) {
 		await super._open(preventInitialFocus);

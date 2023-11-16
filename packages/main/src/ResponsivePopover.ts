@@ -70,7 +70,6 @@ class ResponsivePopover extends Popover {
 	 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
 	 *
 	 * @private
-	 * @type {boolean}
 	 * @default false
 	 * @since 1.0.0-rc.16
 	 */
@@ -85,10 +84,10 @@ class ResponsivePopover extends Popover {
 
 	/**
 	 * Shows popover on desktop and dialog on mobile.
-	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
+	 * @param opener the element that the popover is shown at
+	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
-	 * @returns {Promise} Resolves when the responsive popover is open
+	 * @returns Resolves when the responsive popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {
 		if (!isPhone()) {
@@ -108,7 +107,6 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Closes the popover/dialog.
 	 * @public
-	 * @returns {void}
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!isPhone()) {
@@ -129,7 +127,6 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Tells if the responsive popover is open.
 	 * @public
-	 * @returns {boolean}
 	 */
 	isOpen() {
 		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();

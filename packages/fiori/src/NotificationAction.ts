@@ -4,7 +4,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
-import type { INotificationAction } from "./Interfaces";
 
 type NotificationActionClickEventDetail = {
 	targetRef: Button,
@@ -17,7 +16,6 @@ type NotificationActionClickEventDetail = {
  *
  * @constructor
  * @extends UI5Element
- * @implements INotificationAction
  * @public
  */
 @customElement("ui5-notification-action")
@@ -25,7 +23,7 @@ type NotificationActionClickEventDetail = {
 /**
  * Fired, when the action is pressed.
  *
- * @param {HTMLElement} targetRef DOM ref of the clicked element
+ * @param targetRef DOM ref of the clicked element
  * @public
  */
 @event("click", {
@@ -33,11 +31,10 @@ type NotificationActionClickEventDetail = {
 		targetRef: { type: HTMLElement },
 	},
 })
-class NotificationAction extends UI5Element implements INotificationAction {
+class NotificationAction extends UI5Element {
 	/**
 	 * Defines the text of the <code>ui5-notification-action</code>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -49,7 +46,6 @@ class NotificationAction extends UI5Element implements INotificationAction {
 	 * <br><br>
 	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -59,7 +55,6 @@ class NotificationAction extends UI5Element implements INotificationAction {
 	/**
 	 * Defines the action design.
 	 *
-	 * @type {ButtonDesign}
 	 * @default "Transparent"
 	 * @public
 	 */
@@ -73,7 +68,6 @@ class NotificationAction extends UI5Element implements INotificationAction {
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -84,9 +78,9 @@ class NotificationAction extends UI5Element implements INotificationAction {
 	 * Fires a custom event "click".
 	 * <b>Note:</b> Called by NotificationListItem and NotificationListGroupItem components.
 	 *
-	 * @param { MouseEvent } e
+	 * @param e
 	 * @protected
-	 * @returns { boolean } false, if the event was cancelled (preventDefault called), true otherwise
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireClickEvent(e: MouseEvent): boolean {
 		return this.fireEvent<NotificationActionClickEventDetail>("click", {

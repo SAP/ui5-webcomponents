@@ -55,6 +55,7 @@ const DESIGN_DESCRIPTIONS = {
  * @constructor
  * @extends UI5Element
  * @implements {ITab}
+ * @implements {ITabbable}
  * @public
  */
 @customElement({
@@ -72,7 +73,6 @@ const DESIGN_DESCRIPTIONS = {
 class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * The text to be displayed for the item.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -81,7 +81,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Disabled tabs can't be selected.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -90,7 +89,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -102,7 +100,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * The SAP-icons font provides numerous built-in icons.
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -124,7 +121,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> The design depends on the current theme.
-	 * @type {SemanticColor}
 	 * @default "Default"
 	 * @public
 	 */
@@ -134,7 +130,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Specifies if the component is selected.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -153,7 +148,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Holds the content associated with this tab.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 	@slot({
@@ -171,7 +165,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 	 *
-	 * @type {ITab[]}
 	 * @public
 	 */
 	@slot({

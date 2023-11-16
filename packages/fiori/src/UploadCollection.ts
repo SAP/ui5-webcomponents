@@ -82,7 +82,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * <br><br>
  * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
  *
- * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
+ * @param dataTransfer The <code>drop</code> event operation data.
  * @public
  * @native
  */
@@ -91,7 +91,7 @@ type UploadCollectionItemDeleteEventDetail = {
 /**
  * Fired when the delete button of any item is pressed.
  *
- * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
+ * @param item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
 @event("item-delete", {
@@ -104,7 +104,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * Fired when selection is changed by user interaction
  * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
  *
- * @param {Array} selectedItems An array of the selected items.
+ * @param selectedItems An array of the selected items.
  * @public
  */
 @event("selection-change", {
@@ -119,7 +119,6 @@ class UploadCollection extends UI5Element {
 	 * <br><b>Note:</b>
 	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
 	 *
-	 * @type {ListMode}
 	 * @default "None"
 	 * @public
 	 */
@@ -129,7 +128,6 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Allows you to set your own text for the 'No data' description.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -139,7 +137,6 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Allows you to set your own text for the 'No data' text.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -153,7 +150,6 @@ class UploadCollection extends UI5Element {
 	 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
 	 * <code>ui5-upload-collection</code> only displays an overlay.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -163,7 +159,6 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -174,7 +169,6 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Indicates what overlay to show when files are being dragged.
 	 *
-	 * @type {UploadCollectionDnDOverlayMode}
 	 * @default "None"
 	 * @private
 	 */
@@ -185,7 +179,6 @@ class UploadCollection extends UI5Element {
 	 * Defines the items of the <code>ui5-upload-collection</code>.
 	 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
 	 *
-	 * @type {IUploadCollectionItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -198,7 +191,6 @@ class UploadCollection extends UI5Element {
 	 * the labelling of the <code>UploadCollection</code> is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
 	 *
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement })

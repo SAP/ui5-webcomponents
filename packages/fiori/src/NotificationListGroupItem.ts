@@ -78,13 +78,9 @@ type NotificationListGroupItemToggleEventDetail = {
  * <br>
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.NotificationListGroupItem
- * @extends sap.ui.webc.fiori.NotificationListItemBase
- * @tagname ui5-li-notification-group
+ * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
- * @appenddocs sap.ui.webc.fiori.NotificationAction
- * @implements sap.ui.webc.main.IListItem
+ * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -105,15 +101,12 @@ type NotificationListGroupItemToggleEventDetail = {
  * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
  *
  * @public
- * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
  */
 @event("toggle")
 class NotificationListGroupItem extends NotificationListItemBase {
 	/**
 	 * Defines if the group is collapsed or expanded.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.collapsed
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -121,9 +114,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	/**
 	 * Defines if the items <code>counter</code> would be displayed.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.showCounter
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -133,9 +124,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * Defines the items of the <code>ui5-li-notification-group</code>,
 	 * usually <code>ui5-li-notification</code> items.
 	 *
-	 * @type {sap.ui.webc.fiori.INotificationListItem[]}
-	 * @slot items
-	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.default
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

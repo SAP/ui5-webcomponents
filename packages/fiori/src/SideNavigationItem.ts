@@ -22,7 +22,6 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @extends UI5Element
  * @abstract
  * @public
- * @implements ISideNavigationItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-item")
@@ -31,7 +30,6 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * Defines if the item is expanded
 	 *
 	 * @public
-	 * @type {boolean}
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -41,7 +39,6 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * Defines if the item should be collapsible or not.
 	 * It is true, for example, for the items inside the Popover of the Side Navigation
 	 * @private
-	 * @type {boolean}
 	 * @default false
 	 * @since 1.10.0
 	 */
@@ -51,7 +48,6 @@ class SideNavigationItem extends SideNavigationItemBase {
 	/**
      * Defines nested items by passing <code>ui5-side-navigation-sub-item</code> to the default slot.
 	 *
-	 * @type {ISideNavigationSubItem[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -63,9 +59,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * By default, only clicking the arrow icon will toggle the sub items.
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.wholeItemToggleable
+	 * @default false
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ type: Boolean })

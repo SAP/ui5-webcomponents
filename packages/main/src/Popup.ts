@@ -103,7 +103,7 @@ type PopupBeforeCloseEventDetail = {
  *
  * @public
  * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+ * @param escPressed Indicates that <code>ESC</code> key has triggered the event.
  */
 @event("before-close", {
 	escPressed: { type: Boolean },
@@ -126,7 +126,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -136,7 +135,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Defines if the focus should be returned to the previously focused element,
 	 * when the popup closes.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -147,7 +145,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Indicates if the element is open
 	 * @public
-	 * @type {boolean}
 	 * @default false
 	 * @since 1.2.0
 	 */
@@ -157,7 +154,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Indicates if the element is already open
 	 * @private
-	 * @type {boolean}
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -166,7 +162,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Defines the accessible name of the component.
 	 *
-	 * @type {string}
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -177,7 +172,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Defines the IDs of the elements that label the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -188,7 +182,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Allows setting a custom role.
 	 *
-	 * @type {PopupAccessibleRole}
 	 * @default "Dialog"
 	 * @public
 	 * @since 1.10.0
@@ -199,7 +192,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Defines the current media query size.
 	 *
-	 * @type {string}
 	 * @private
 	 */
 	@property()
@@ -220,7 +212,6 @@ abstract class Popup extends UI5Element {
 	 * This property is calculated automatically
 	 *
 	 * @private
-	 * @type {boolean}
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -228,7 +219,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the content of the Popup.
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -399,7 +389,7 @@ abstract class Popup extends UI5Element {
 	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
-	 * @returns {Promise} Promise that resolves when the focus is applied
+	 * @returns Promise that resolves when the focus is applied
 	 */
 	async applyFocus() {
 		await this._waitForDomRef();
@@ -428,7 +418,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Tells if the component is opened
 	 * @public
-	 * @returns {boolean}
 	 */
 	isOpen() {
 		return this.opened;
@@ -495,7 +484,6 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Closes the popup.
 	 * @public
-	 * @returns {void}
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {
@@ -568,7 +556,6 @@ abstract class Popup extends UI5Element {
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
 	 *
 	 * @protected
-	 * @returns {boolean}
 	 */
 	abstract get isModal(): boolean
 
@@ -576,7 +563,6 @@ abstract class Popup extends UI5Element {
 	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
 	 *
 	 * @protected
-	 * @returns {boolean}
 	 */
 	abstract get shouldHideBackdrop(): boolean
 
@@ -584,13 +570,11 @@ abstract class Popup extends UI5Element {
 	 * Return the ID of an element in the shadow DOM that is going to label this popup
 	 *
 	 * @protected
-	 * @returns {string | undefined}
 	 */
 	abstract get _ariaLabelledBy(): string | undefined
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {string | undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {

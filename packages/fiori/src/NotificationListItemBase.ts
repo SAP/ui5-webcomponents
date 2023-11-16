@@ -10,7 +10,7 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
-import type INotificationAction from "./NotificationAction.js";
+import NotificationAction from "./NotificationAction.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -53,7 +53,7 @@ type NotificationListItemBaseCloseEventDetail = {
 /**
  * Fired when the <code>Close</code> button is pressed.
  *
- * @param {HTMLElement} item the closed item.
+ * @param item the closed item.
  * @public
  */
 @event("close", {
@@ -68,7 +68,6 @@ type NotificationListItemBaseCloseEventDetail = {
 class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the <code>titleText</code> of the item.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -78,7 +77,6 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the <code>priority</code> of the item.
 	 *
-	 * @type {Priority}
 	 * @default "None"
 	 * @public
 	 */
@@ -87,7 +85,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines if the <code>close</code> button would be displayed.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -99,7 +96,6 @@ class NotificationListItemBase extends ListItemBase {
 	 * <br><br>
 	 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
 	 * if set to true - it has a normal font.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -108,7 +104,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines if a busy indicator would be displayed over the item.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -119,7 +114,6 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 *
-	 * @type {Integer}
 	 * @default 1000
 	 * @public
 	 */
@@ -131,11 +125,10 @@ class NotificationListItemBase extends ListItemBase {
 	 * <br><br>
 	 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 	 *
-	 * @type {INotificationAction[]}
 	 * @public
 	 */
 	@slot()
-	actions!: Array<INotificationAction>
+	actions!: Array<NotificationAction>
 
 	static i18nFioriBundle: I18nBundle;
 

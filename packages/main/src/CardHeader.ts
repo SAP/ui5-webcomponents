@@ -10,7 +10,6 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
-import type { ICardHeader } from "./Interfaces";
 
 import {
 	AVATAR_TOOLTIP,
@@ -20,6 +19,18 @@ import {
 
 // Styles
 import cardHeaderCss from "./generated/themes/CardHeader.css.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-card</code> as header
+ *
+ * @public
+ */
+interface ICardHeader extends UI5Element {
+	subtitleText: string,
+	titleText: string,
+	status: string,
+	interactive: boolean,
+}
 
 /**
  * @class
@@ -63,7 +74,6 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 class CardHeader extends UI5Element implements ICardHeader {
 	/**
 	 * Defines the title text.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	*/
@@ -72,7 +82,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	/**
 	 * Defines the subtitle text.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	*/
@@ -81,7 +90,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	/**
 	 * Defines the status text.
-	 * @type {string}
 	 * @default ""
 	 * @public
 	*/
@@ -91,7 +99,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 	/**
 	 * Defines if the component would be interactive,
 	 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	*/
@@ -102,7 +109,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 	 * Define the <code>aria-level</code> attribute of the component
 	 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
 	 * @private
-	 * @type {Integer}
 	 * @default 3
 	*/
 	@property({ validator: Integer, defaultValue: 3 })
@@ -113,7 +119,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	/**
 	 * Defines an avatar image, displayed in the left most part of the header.
-	 * @type {HTMLElement[]}
 	 * @public
 	*/
 	@slot()
@@ -121,7 +126,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	/**
 	 * Defines an action, displayed in the right most part of the header.
-	 * @type {HTMLElement[]}
 	 * @public
 	*/
 	@slot()

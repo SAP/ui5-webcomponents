@@ -53,7 +53,6 @@ class Badge extends UI5Element {
 	 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 	 * <br><br>
 	 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
-	 * @type {string}
 	 * @default "1"
 	 * @public
 	 */
@@ -78,7 +77,6 @@ class Badge extends UI5Element {
 	 * Defines the text of the component.
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -87,7 +85,6 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 *
-	 * @type {IIcon[]}
 	 * @public
 	 */
 	@slot()

@@ -111,7 +111,7 @@ type PopupClickEventDetail = {
 /**
  * Fired when the selection has changed via user interaction
  *
- * @param {ISideNavigationItem|ISideNavigationSubItem} item the clicked item.
+ * @param item the clicked item.
  * @allowPreventDefault
  * @public
  */
@@ -125,7 +125,6 @@ class SideNavigation extends UI5Element {
 	 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
 	 *
 	 * @public
-	 * @type {boolean}
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -137,7 +136,6 @@ class SideNavigation extends UI5Element {
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {ISideNavigationItem[]}
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
@@ -149,7 +147,6 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
 	 *
 	 * @public
-	 * @type {HTMLElement[]}
 	 * @since 1.0.0-rc.11
 	 */
 	@slot()
@@ -162,7 +159,6 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {ISideNavigationItem[]}
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;

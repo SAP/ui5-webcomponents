@@ -78,8 +78,8 @@ type Footnote = Record<string, any>;
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
- * @implements INotificationListItem
- * @implements IListItem
+ * @implements {INotificationListItem}
+ * @implements {IListItem}
  * @public
  * @csspart title-text - Used to style the titleText of the notification list item
  */

@@ -53,7 +53,6 @@ class Card extends UI5Element {
 	 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
 	 *
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -64,7 +63,6 @@ class Card extends UI5Element {
 	/**
 	 * Defines the IDs of the elements that label the component.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -74,7 +72,6 @@ class Card extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {HTMLElement[]}
 	 * @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
@@ -84,7 +81,6 @@ class Card extends UI5Element {
 	 * Defines the header of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-	 * @type {ICardHeader[]}
 	 * @since 1.0.0-rc.15
 	 * @public
 	*/

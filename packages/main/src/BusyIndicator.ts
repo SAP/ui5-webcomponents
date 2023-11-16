@@ -69,7 +69,6 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 class BusyIndicator extends UI5Element {
 	/**
 	 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
-	 * @type {string}
 	 * @public
 	 * @default ""
 	 * @since 1.0.0-rc.7
@@ -80,7 +79,6 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines the size of the component.
 	 *
-	 * @type {BusyIndicatorSize}
 	 * @default "Medium"
 	 * @public
 	 */
@@ -90,7 +88,6 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -100,7 +97,6 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
 	 *
-	 * @type {Integer}
 	 * @default 1000
 	 * @public
 	 */
@@ -117,7 +113,6 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Determines the content over which the component will appear.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 

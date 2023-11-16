@@ -49,7 +49,6 @@ class Label extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -60,7 +59,6 @@ class Label extends UI5Element {
 	 * Defines whether colon is added to the component text.
 	 * <br><br>
 	 * <b>Note:</b> Usually used in forms.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -74,7 +72,6 @@ class Label extends UI5Element {
 	 * In that case the <code>required</> property of
 	 * the corresponding input should also be set.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -85,7 +82,6 @@ class Label extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @type {WrappingType}
 	 * @default "None"
 	 * @public
 	 */

@@ -91,7 +91,6 @@ class Popover extends Popup {
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
-	 * @type {string}
 	 * @default ""
 	 * @public
 	 */
@@ -101,7 +100,6 @@ class Popover extends Popup {
 	/**
 	 * Determines on which side the component is placed at.
 	 *
-	 * @type {PopoverPlacementType}
 	 * @default "Right"
 	 * @public
 	 */
@@ -111,7 +109,6 @@ class Popover extends Popup {
 	/**
 	 * Determines the horizontal alignment of the component.
 	 *
-	 * @type {PopoverHorizontalAlign}
 	 * @default "Center"
 	 * @public
 	 */
@@ -121,7 +118,6 @@ class Popover extends Popup {
 	/**
 	 * Determines the vertical alignment of the component.
 	 *
-	 * @type {PopoverVerticalAlign}
 	 * @default "Center"
 	 * @public
 	 */
@@ -133,7 +129,6 @@ class Popover extends Popup {
 	 * clicking/tapping outside of the popover.
 	 * If enabled, it blocks any interaction with the background.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -142,7 +137,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines whether the block layer will be shown if modal property is set to true.
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.10
@@ -153,7 +147,6 @@ class Popover extends Popup {
 	/**
 	 * Determines whether the component arrow is hidden.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -165,7 +158,6 @@ class Popover extends Popup {
 	 * Determines if there is no enough space, the component can be placed
 	 * over the target.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @public
 	 */
@@ -175,7 +167,6 @@ class Popover extends Popup {
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at
 	 * @public
-	 * @type {DOMReference}
 	 * @default undefined
 	 * @since 1.2.0
 	 */
@@ -185,7 +176,6 @@ class Popover extends Popup {
 	/**
 	 * Defines whether the content is scrollable.
 	 *
-	 * @type {boolean}
 	 * @default false
 	 * @private
 	 */
@@ -225,7 +215,6 @@ class Popover extends Popup {
 	/**
 	 * Defines the header HTML Element.
 	 *
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -234,7 +223,6 @@ class Popover extends Popup {
 	/**
 	 * Defines the footer HTML Element.
 	 *
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -296,10 +284,10 @@ class Popover extends Popup {
 
 	/**
 	 * Shows the popover.
-	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} [preventInitialFocus=false] prevents applying the focus inside the popover
+	 * @param opener the element that the popover is shown at
+	 * @param [preventInitialFocus=false] prevents applying the focus inside the popover
 	 * @public
-	 * @returns {Promise} Resolved when the popover is open
+	 * @returns Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {
 		if (!opener || this.opened) {
@@ -451,8 +439,8 @@ class Popover extends Popup {
 	 * Adjust the desired top position to compensate for shift of the screen
 	 * caused by opened keyboard on iOS which affects all elements with position:fixed.
 	 * @private
-	 * @param {int} top The target top in px.
-	 * @returns {int} The adjusted top in px.
+	 * @param top The target top in px.
+	 * @returns The adjusted top in px.
 	 */
 	_adjustForIOSKeyboard(top: number): number {
 		if (!isIOS()) {
@@ -594,13 +582,13 @@ class Popover extends Popup {
 	/**
 	 * Calculates the position for the arrow.
 	 * @private
-	 * @param {DOMRect} targetRect BoundingClientRect of the target element
-	 * @param {{width: number, height: number}} popoverSize Width and height of the popover
-	 * @param {number} left Left offset of the popover
-	 * @param {number} top Top offset of the popover
-	 * @param {boolean} isVertical If the popover is positioned vertically to the target element
-	 * @param {number} borderRadius Value of the border-radius property
-	 * @returns {{x: number, y: number}} Arrow's coordinates
+	 * @param targetRect BoundingClientRect of the target element
+	 * @param popoverSize Width and height of the popover
+	 * @param left Left offset of the popover
+	 * @param top Top offset of the popover
+	 * @param isVertical If the popover is positioned vertically to the target element
+	 * @param borderRadius Value of the border-radius property
+	 * @returns  Arrow's coordinates
 	 */
 	getArrowPosition(targetRect: DOMRect, popoverSize: PopoverSize, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPosition {
 		const horizontalAlign = this._actualHorizontalAlign;

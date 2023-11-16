@@ -38,7 +38,6 @@ class Title extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @type {WrappingType}
 	 * @default "None"
 	 * @public
 	 */
@@ -49,7 +48,6 @@ class Title extends UI5Element {
 	 * Defines the component level.
 	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 	 *
-	 * @type {TitleLevel}
 	 * @default "H2"
 	 * @public
 	 */
@@ -62,7 +60,6 @@ class Title extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
 	 * @public
 	 */
 
