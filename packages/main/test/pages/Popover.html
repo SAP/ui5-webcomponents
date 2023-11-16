@@ -31,7 +31,7 @@
 		<ui5-tab text="tab 1">
 			<ui5-button id="popbtn">Open Popover</ui5-button>
 
-			<ui5-popover placement-type="Bottom" hide-arrow id="danger">
+			<ui5-dialog placement-type="Bottom" hide-arrow id="danger">
 
 				<ui5-list>
 					<ui5-li>Hello</ui5-li>
@@ -51,7 +51,7 @@
 						<ui5-li>Again</ui5-li>
 					</ui5-list>
 				</ui5-popover>
-			</ui5-popover>
+			</ui5-dialog>
 		</ui5-tab>
 		<ui5-tab text="tab 2">
 
@@ -462,7 +462,7 @@
 		});
 
 		popbtn.addEventListener("click", function (event) {
-			danger.showAt(popbtn);
+			danger.show(popbtn);
 		});
 
 		bigDanger.addEventListener("click", function (event) {

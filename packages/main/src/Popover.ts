@@ -464,7 +464,7 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement!.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
-		const stackingContextOffset = this._getStackingContextOffset(left, top);
+		const stackingContextOffset = this._getStackingContextOffset();
 		left -= stackingContextOffset.left;
 		top -= stackingContextOffset.top;
 
@@ -495,7 +495,7 @@ class Popover extends Popup {
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
 	}
 
-	_getStackingContextOffset(left: number, top: number) {
+	_getStackingContextOffset() {
 		let parentNode = this.parentElement ? this.parentNode as HTMLElement : (this.parentNode as ShadowRoot).host as HTMLElement;
 
 		while (parentNode) {
