@@ -27,6 +27,37 @@
 <body class="popover2auto">
 	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
 
+	<ui5-tabcontainer>
+		<ui5-tab text="tab 1">
+			<ui5-button id="popbtn">Open Popover</ui5-button>
+
+			<ui5-popover placement-type="Bottom" hide-arrow id="danger">
+
+				<ui5-list>
+					<ui5-li>Hello</ui5-li>
+					<ui5-li>World</ui5-li>
+					<ui5-li>Again</ui5-li>
+				</ui5-list>
+
+				<br>
+				<br>
+
+				<ui5-button id="bigDanger">Super Danger !</ui5-button>
+
+				<ui5-popover id="bigDangerPop">
+					<ui5-list>
+						<ui5-li>Hello</ui5-li>
+						<ui5-li>World</ui5-li>
+						<ui5-li>Again</ui5-li>
+					</ui5-list>
+				</ui5-popover>
+			</ui5-popover>
+		</ui5-tab>
+		<ui5-tab text="tab 2">
+
+		</ui5-tab>
+	</ui5-tabcontainer>
+
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
@@ -43,29 +74,9 @@
 		<br>
 		<br>
 
-		<ui5-button id="popbtn">Open Popover</ui5-button>
 
-		<ui5-popover placement-type="Bottom" hide-arrow id="danger">
 
-			<ui5-list>
-				<ui5-li>Hello</ui5-li>
-				<ui5-li>World</ui5-li>
-				<ui5-li>Again</ui5-li>
-			</ui5-list>
 
-			<br>
-			<br>
-
-			<ui5-button id="bigDanger">Super Danger !</ui5-button>
-
-			<ui5-popover id="bigDangerPop">
-				<ui5-list>
-					<ui5-li>Hello</ui5-li>
-					<ui5-li>World</ui5-li>
-					<ui5-li>Again</ui5-li>
-				</ui5-list>
-			</ui5-popover>
-		</ui5-popover>
 
 		<br>
 		<br>
@@ -395,7 +406,7 @@
 	<ui5-button id="popoverFocusButton">Dialog Focus</ui5-button>
 	<ui5-popover id="popoverFocus">
 		<div slot="header">Header text</div>
-	
+
 		<div slot="footer" class="dialog-footer">
 			<div style="flex: 1"></div>
 			<ui5-button id="closeButton" design="Emphasized">Close</ui5-button>
@@ -415,7 +426,7 @@
 	<div>
 		<ui5-checkbox id="rtlCb" text="rtl"></ui5-checkbox>
 	</div>
-	
+
 	<div id="horizontalAlignContainer">
 		<div id="targetOpener" class="popover10auto">
 			<span>Target opener</span>
@@ -626,7 +637,7 @@
 
 		createAndRemove.addEventListener("click", function () {
 			var pop = document.createElement("ui5-popover");
-	
+
 			pop.setAttribute("open", true);
 			pop.setAttribute("opener", "createAndRemove");
 

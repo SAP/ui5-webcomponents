@@ -464,6 +464,9 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement!.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
+		const stackingContextOffset = this._getStackingContextOffset(left, top);
+		left -= stackingContextOffset.left;
+		top -= stackingContextOffset.top;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -490,6 +493,23 @@ class Popover extends Popup {
 		const actualTop = Math.ceil(this.getBoundingClientRect().top);
 
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
+	}
+
+	_getStackingContextOffset(left: number, top: number) {
+		let parentNode = this.parentElement ? this.parentNode as HTMLElement : (this.parentNode as ShadowRoot).host as HTMLElement;
+
+		while (parentNode) {
+			const computedStyle = getComputedStyle(parentNode);
+
+			if (["size", "inline-size"].indexOf(computedStyle.containerType) > -1
+				|| computedStyle.transform !== "none") {
+				return parentNode.getBoundingClientRect();
+			}
+
+			parentNode = parentNode.parentElement ? parentNode.parentNode as HTMLElement : (parentNode.parentNode as ShadowRoot).host as HTMLElement;
+		}
+
+		return { left: 0, top: 0 };
 	}
 
 	getPopoverSize(): PopoverSize {
