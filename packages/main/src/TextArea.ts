@@ -120,9 +120,11 @@ class TextArea extends UI5Element implements IFormElement {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.TextArea.prototype.value
+	 * @formEvents change input
+	 * @formProperty
 	 * @defaultvalue ""
 	 * @public
-		 */
+	 */
 	@property()
 	value!: string;
 	/**
