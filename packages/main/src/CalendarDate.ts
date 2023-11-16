@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ICalendarDate } from "./Interfaces";
 
 /**
  * @class
@@ -13,11 +12,10 @@ import type { ICalendarDate } from "./Interfaces";
  * @constructor
  * @extends UI5Element
  * @abstract
- * @implements {ICalendarDate}
  * @public
  */
 @customElement("ui5-date")
-class CalendarDate extends UI5Element implements ICalendarDate {
+class CalendarDate extends UI5Element {
 	/**
 	 * The date formatted according to the <code>formatPattern</code> property
 	 * of the <code>ui5-calendar</code> that hosts the component.

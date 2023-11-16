@@ -28,7 +28,8 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * @extends UI5Element
  * @abstract
  * @since 1.0.0-rc.12
- * @implements {IColorPaletteItem}
+ * @implements { ITabbable }
+ * @implements { IColorPaletteItem }
  * @public
  */
 @customElement({

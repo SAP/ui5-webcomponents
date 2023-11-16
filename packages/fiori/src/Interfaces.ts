@@ -1,3 +1,5 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
@@ -5,22 +7,6 @@
  * @public
  */
 interface IBar extends HTMLElement {}
-
-/**
- * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items
- *
- * @interface
- * @public
- */
-interface IFilterItem extends HTMLElement {}
-
-/**
- * Interface for components that may be slotted inside <code>ui5-filter-item</code> as values
- *
- * @interface
- * @public
- */
-interface IFilterItemOption extends HTMLElement {}
 
 /**
  * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
@@ -86,20 +72,15 @@ const ISideNavigationItem = "sap.ui.webc.fiori.ISideNavigationItem";
 const ISideNavigationSubItem = "sap.ui.webc.fiori.ISideNavigationSubItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as sort items
- *
- * @interface
- * @public
- */
-interface ISortItem extends HTMLElement {}
-
-/**
  * Interface for components that may be slotted inside <code>ui5-timeline</code> as items
  *
  * @interface
  * @public
  */
-interface ITimelineItem extends HTMLElement {}
+interface ITimelineItem extends UI5Element {
+	icon: string,
+	layout: string,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-upload-collection</code> as items
@@ -121,8 +102,6 @@ const IWizardStep = "sap.ui.webc.fiori.IWizardStep";
 
 export {
 	IBar,
-	IFilterItem,
-	IFilterItemOption,
 	IMediaGalleryItem,
 	INotificationAction,
 	INotificationListItem,
@@ -130,7 +109,6 @@ export {
 	IShellBarItem,
 	ISideNavigationItem,
 	ISideNavigationSubItem,
-	ISortItem,
 	ITimelineItem,
 	IUploadCollectionItem,
 	IWizardStep,

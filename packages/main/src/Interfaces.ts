@@ -34,14 +34,6 @@ interface IButton extends HTMLElement {}
 const ICardHeader = "sap.ui.webc.main.ICardHeader";
 
 /**
- * Interface for components that may be used as dates inside <code>ui5-calendar</code>
- *
- * @interface
- * @public
- */
-interface ICalendarDate extends HTMLElement {}
-
-/**
  * Interface for components that may be slotted inside a <code>ui5-combobox</code>
  *
  * @name sap.ui.webc.main.IComboBoxItem
@@ -95,14 +87,6 @@ const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 const IListItem = "sap.ui.webc.main.IListItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-menu</code> as items
- *
- * @interface
- * @public
- */
-interface IMenuItem extends HTMLElement {}
-
-/**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
  *
  * @name sap.ui.webc.main.IMultiComboBoxItem
@@ -110,14 +94,6 @@ interface IMenuItem extends HTMLElement {}
  * @public
  */
 const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
- *
- * @interface
- * @public
- */
-interface ISegmentedButtonItem extends HTMLElement {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
@@ -214,16 +190,13 @@ export {
 	IBreadcrumbsItem,
 	IButton,
 	ICardHeader,
-	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
 	IIcon,
 	IInput,
 	IInputSuggestionItem,
 	IListItem,
-	IMenuItem,
 	IMultiComboBoxItem,
-	ISegmentedButtonItem,
 	ISelectOption,
 	ISelectMenuOption,
 	ITab,

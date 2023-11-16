@@ -24,7 +24,8 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  *
  * @constructor
  * @extends UI5Element
- * @implements {ITimelineItem}
+ * @implements { ITabbable }
+ * @implements { ITimelineItem }
  * @public
  */
 @customElement({
@@ -44,7 +45,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
  * attribute is not set.
  *
- * @event sap.ui.webc.fiori.TimelineItem#name-click
  * @public
  */
 @event("name-click")
@@ -56,7 +56,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @name sap.ui.webc.fiori.TimelineItem.prototype.icon
 	 * @default ""
 	 * @public
 	 */

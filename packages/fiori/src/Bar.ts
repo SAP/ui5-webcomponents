@@ -45,7 +45,7 @@ import BarCss from "./generated/themes/Bar.css.js";
  *
  * @csspart bar - Used to style the wrapper of the content of the component
  * @constructor
- * @implements {IBar}
+ * @implements { IBar }
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.11

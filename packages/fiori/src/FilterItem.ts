@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type FilterItemOption from "./FilterItemOption.js";
-import type { IFilterItem } from "./Interfaces";
 
 /**
  * @class
@@ -22,11 +21,10 @@ import type { IFilterItem } from "./Interfaces";
  * @extends UI5Element
  * @abstract
  * @since 1.0.0-rc.16
- * @implements {IFilterItem}
  * @public
  */
 @customElement("ui5-filter-item")
-class FilterItem extends UI5Element implements IFilterItem {
+class FilterItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *

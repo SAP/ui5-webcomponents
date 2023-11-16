@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type Menu from "./Menu.js";
-import type { IMenuItem } from "./Interfaces";
 
 /**
  * @class
@@ -27,12 +26,11 @@ import type { IMenuItem } from "./Interfaces";
  * @constructor
  * @extends UI5Element
  * @abstract
- * @implements IMenuItem
  * @since 1.3.0
  * @public
  */
 @customElement("ui5-menu-item")
-class MenuItem extends UI5Element implements IMenuItem {
+class MenuItem extends UI5Element {
 	/**
 	 * Defines the text of the tree item.
 	 *

@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { ISortItem } from "./Interfaces";
 
 /**
  * @class
@@ -20,11 +19,10 @@ import type { ISortItem } from "./Interfaces";
  * @extends UI5Element
  * @abstract
  * @since 1.0.0-rc.16
- * @implements {ISortItem}
  * @public
  */
 @customElement("ui5-sort-item")
-class SortItem extends UI5Element implements ISortItem {
+class SortItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *
