@@ -49,7 +49,7 @@ describe("Day Picker Tests", () => {
 	it("Day names are correctly displayed when length is less than 3", async () => {
 		daypicker.id = "daypicker";
 		const dayPickerRoot = daypicker.getDayPickerRoot();
-		const dayPickerFirstDayName = dayPicker.$(".ui5-dp-firstday");
+		const dayPickerFirstDayName = dayPickerRoot.$(".ui5-dp-firstday");
 
 		assert.strictEqual(dayPickerFirstDayName, "mon", "Name is rendered correctly");
 	});
@@ -58,7 +58,7 @@ describe("Day Picker Tests", () => {
 		browser.url(`test/pages/DayPicker.html?sap-ui-language=pt_PT`)
 		daypicker.id = "daypicker";
 		const dayPickerRoot = daypicker.getDayPickerRoot();
-		const dayPickerFirstDayName = dayPicker.$(".ui5-dp-firstday");
+		const dayPickerFirstDayName = dayPickerRoot.$(".ui5-dp-firstday");
 
 		assert.strictEqual(dayPickerFirstDayName, "D", "Name is rendered correctly");
 	});
