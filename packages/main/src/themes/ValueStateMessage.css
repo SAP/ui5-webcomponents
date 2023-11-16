@@ -43,11 +43,11 @@
 	text-overflow: ellipsis;
 	min-width: 6.25rem;
 	border: var(--_ui5_value_state_message_border);
+	line-height: var(--_ui5_value_state_message_line_height);
 }
 
 [ui5-responsive-popover] .ui5-valuestatemessage-header, [ui5-popover] .ui5-valuestatemessage-header  {
 	min-height: 2rem;
-	line-height: 1rem;
 }
 
 [ui5-responsive-popover] .ui5-valuestatemessage-header {
@@ -85,7 +85,7 @@
 
 .ui5-valuestatemessage-popover::part(header),
 .ui5-valuestatemessage-popover::part(footer),
-.ui5-suggestions-popover-with-value-state-header-p::part(header) {
+.ui5-suggestions-popover-with-value-state-header-phone::part(header) {
 	min-height: 0;
 }
 
@@ -96,34 +96,42 @@
 
 /* ValueState Header bottom border color in Responsive Popover */
 .ui5-suggestions-popover-with-value-state-header .ui5-valuestatemessage--error {
-	box-shadow: var(--_ui5_value_state_message_header_box_shadow) var(--sapField_InvalidColor);
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_InvalidColor);
 }
 
 .ui5-suggestions-popover-with-value-state-header .ui5-valuestatemessage--information {
-	box-shadow: var(--_ui5_value_state_message_header_box_shadow) var(--sapField_InformationColor);
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_InformationColor);
 }
 
 .ui5-suggestions-popover-with-value-state-header .ui5-valuestatemessage--success {
-	box-shadow: var(--_ui5_value_state_message_header_box_shadow) var(--sapField_SuccessColor);
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_SuccessColor);
 }
 
 .ui5-suggestions-popover-with-value-state-header .ui5-valuestatemessage--warning {
-	box-shadow: var(--_ui5_value_state_message_header_box_shadow) var(--sapField_WarningColor);
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_WarningColor);
 }
 
 /* ValueState Header bottom border color when in Dialog */
-.ui5-suggestions-popover-with-value-state-header-p:has(.ui5-valuestatemessage--error)::part(header)::before{
+.ui5-suggestions-popover-with-value-state-header-phone:has(.ui5-valuestatemessage--error)::part(header)::before{
 	background: var(--sapField_InvalidColor);
 }
 
-.ui5-suggestions-popover-with-value-state-header-p:has(.ui5-valuestatemessage--information)::part(header)::before{
+.ui5-suggestions-popover-with-value-state-header-phone:has(.ui5-valuestatemessage--information)::part(header)::before{
 	background: var(--sapField_InformationColor);
 }
 
-.ui5-suggestions-popover-with-value-state-header-p:has(.ui5-valuestatemessage--success)::part(header)::before{
+.ui5-suggestions-popover-with-value-state-header-phone:has(.ui5-valuestatemessage--success)::part(header)::before{
 	background: var(--sapField_SuccessColor);
 }
 
-.ui5-suggestions-popover-with-value-state-header-p:has(.ui5-valuestatemessage--warning)::part(header)::before{
+.ui5-suggestions-popover-with-value-state-header-phone:has(.ui5-valuestatemessage--warning)::part(header)::before{
 	background: var(--sapField_WarningColor);
+}
+
+.ui5-suggestions-popover-with-value-state-header-phone .ui5-input-value-state-message-icon {
+	left: var(--_ui5_value_state_message_icon_offset_phone);
+}
+
+.ui5-suggestions-popover-with-value-state-header-phone .ui5-valuestatemessage-root {
+	padding: var(--_ui5_value_state_message_padding_phone);
 }

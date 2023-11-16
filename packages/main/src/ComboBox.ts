@@ -1225,7 +1225,7 @@ class ComboBox extends UI5Element {
 		return {
 			popover: {
 				"ui5-suggestions-popover": true,
-				"ui5-suggestions-popover-with-value-state-header-p": this._isPhone && this.hasValueStateText,
+				"ui5-suggestions-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
 				"ui5-suggestions-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
 			},
 			popoverValueState: {
