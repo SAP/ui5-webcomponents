@@ -10,7 +10,8 @@
 	--_ui5_value_state_message_padding: .5rem .5rem .5rem 1.875rem;
 	--_ui5_input_value_state_icon_offset: .625rem;
 	--_ui5_value_state_header_offset: -0.1875rem;
-	--_ui5_value_state_header_border_bottom: calc(2 * var(--sapField_BorderWidth)) solid var(--sapField_BorderColor);
+	--_ui5_value_state_header_border_bottom: none;
 	--_ui5_value_state_header_box_shadow: inset 0 -0.125rem;
 	--_ui5_value_state_message_padding_phone: 0.5rem 0.5rem 0.5rem 2.375rem;
+	--_ui5_value_state_header_border_top_height: 0.125rem;
 }

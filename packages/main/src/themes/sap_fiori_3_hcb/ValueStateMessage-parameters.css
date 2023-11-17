@@ -1,8 +1,11 @@
 @import "../base/ValueStateMessage-parameters.css";
 
 :root {
-	--_ui5_value_state_message_border: 2px solid var(--sapField_BorderColor);
+	--_ui5_value_state_message_border: calc(2 * var(--sapField_BorderWidth)) solid var(--sapField_BorderColor);
 	--_ui5_value_state_header_offset: -0.1875rem;
-	--_ui5_value_state_header_border_bottom: 2px solid var(--sapField_BorderColor);
+	--_ui5_value_state_header_border_bottom: none;
 	--_ui5_value_state_header_box_shadow: inset 0 -0.125rem;
+	--_ui5_value_state_header_border_top_height: 0.125rem;
+	--_ui5_value_state_message_icon_width: .75rem;
+	--_ui5_value_state_message_icon_height: .75rem;
 }
