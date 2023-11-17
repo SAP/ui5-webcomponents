@@ -927,6 +927,11 @@ class List extends UI5Element {
 		return afterElement && afterElement.id === elementId;
 	}
 
+	onItemTabIndexChange(e: CustomEvent) {
+		const target = e.target as ListItemBase;
+		this._itemNavigation.setCurrentItem(target);
+	}
+
 	onItemFocused(e: CustomEvent) {
 		const target = e.target as ListItemBase;
 

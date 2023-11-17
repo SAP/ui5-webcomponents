@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* declare webpackChunkName in generated dynamic imports for readable runtime bundle names ([#7835](https://github.com/SAP/ui5-webcomponents/issues/7835)) ([592a10b](https://github.com/SAP/ui5-webcomponents/commit/592a10b25a14da89885874c40c5c7a192b8b4d85))
+* **ui5-list:** shift+tab navigation in List ([#7728](https://github.com/SAP/ui5-webcomponents/issues/7728)) ([399b941](https://github.com/SAP/ui5-webcomponents/commit/399b941ebeae7b44f6dba9cd4e8ec7ebb6f283c6))
+
+
+### Features
+
+* **ui5-illustrated-message:** titleLevel property added ([#7771](https://github.com/SAP/ui5-webcomponents/issues/7771)) ([2883c58](https://github.com/SAP/ui5-webcomponents/commit/2883c587f367e51e0f08065498b990f86e60e88c)), closes [#7037](https://github.com/SAP/ui5-webcomponents/issues/7037)
+
+
+
+
+
+# [1.20.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.20.0-rc.0) (2023-11-09)
+
+
+### Bug Fixes
+
+* **ItemNavigation:** more than 1 ItemNavigation per component allowed ([#7798](https://github.com/SAP/ui5-webcomponents/issues/7798)) ([b1019af](https://github.com/SAP/ui5-webcomponents/commit/b1019aff6c4aced61458c1b718ffe0a3a7802ae2))
+* **ui5-segmented-button:** check for items before applying settings ([#7792](https://github.com/SAP/ui5-webcomponents/issues/7792)) ([7f11274](https://github.com/SAP/ui5-webcomponents/commit/7f112746d50381474ec86da5e428df79c17c6499)), closes [#7788](https://github.com/SAP/ui5-webcomponents/issues/7788)
+* **ui5-time-picker:** check value before formatting ([#7793](https://github.com/SAP/ui5-webcomponents/issues/7793)) ([70deda8](https://github.com/SAP/ui5-webcomponents/commit/70deda85293d5e62e99530c9dc0747071d9ee59c)), closes [#7790](https://github.com/SAP/ui5-webcomponents/issues/7790)
+
+
+### Features
+
+* **ui5-illustrated-message:** added new TNT illustrations ([#7773](https://github.com/SAP/ui5-webcomponents/issues/7773)) ([03f28b9](https://github.com/SAP/ui5-webcomponents/commit/03f28b90df0b2a28c0f09f67caaa0a5a1e63c4f3))
+* **ui5-side-navigation:** added href and target properties ([#7682](https://github.com/SAP/ui5-webcomponents/issues/7682)) ([7530f00](https://github.com/SAP/ui5-webcomponents/commit/7530f00b589d0b95dcbee49f6ed980e9d36ba58b))
+
+
+
+
+
 # [1.19.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.3...v1.19.0) (2023-11-02)
 
 **Note:** Version bump only for package ui5-webcomponents

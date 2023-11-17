@@ -201,24 +201,6 @@ class TreeItemBase extends ListItem {
 	accessibleName!: string;
 
 	/**
-	 * Defines whether the toggle button is shown at the end, rather than at the beginning of the item
-	 *
-	 * @protected
-	 * @since 1.0.0-rc.8
-	 */
-	@property({ type: Boolean })
-	_toggleButtonEnd!: boolean;
-
-	/**
-	 * Defines whether the item shows minimal details - only icon (no text or toggle button)
-	 *
-	 * @protected
-	 * @since 1.0.0-rc.8
-	 */
-	@property({ type: Boolean })
-	_minimal!: boolean;
-
-	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
@@ -244,7 +226,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines if the item should be collapsible or not.
-	 * It is true, for example, for the items inside the Popover of the Side Navigation
 	 * @private
 	 * @type {boolean}
 	 * @defaultvalue false
@@ -311,38 +292,23 @@ class TreeItemBase extends ListItem {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
 
-	get _showToggleButtonBeginning() {
-		return this.showToggleButton && !this._minimal && !this._toggleButtonEnd;
-	}
-
-	get _showToggleButtonEnd() {
-		return this.showToggleButton && !this._minimal && this._toggleButtonEnd;
-	}
-
 	get _ariaLabel() {
 		return this.accessibleRoleDescription ? undefined : TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: this._minimal ? "menuitemradio" : "treeitem",
-			ariaExpanded: this.showToggleButton && !this._minimal ? this.expanded : undefined,
-			ariaLevel: this._minimal ? undefined : this.level,
+			role: "treeitem",
+			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
+			ariaLevel: this.level,
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
 			ariaHaspopup: this.ariaHaspopup || undefined,
-			ariaChecked: false,
-			ariaSelected: false,
+			ariaSelected: this.selected,
 		};
-
-		if (this._minimal) {
-			accInfoSettings.ariaChecked = this.selected;
-		} else {
-			accInfoSettings.ariaSelected = this.selected;
-		}
 
 		return { ...super._accInfo, ...accInfoSettings };
 	}
