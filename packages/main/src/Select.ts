@@ -530,22 +530,9 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const option = this.getOptionByValue(newValue);
-		const prevSelectedOption = this.selectedOption;
-
-		if (prevSelectedOption && option) {
-			prevSelectedOption.selected = false;
-			option.selected = true;
-		}
-	}
-
-	getOptionByValue(value: string) {
-		const menu = this._getSelectMenu();
-
-		if (menu) {
-			return menu.options?.find((option: IOption) => (option.value || option.textContent) === value);
-		}
-		return this.options?.find((option: IOption) => (option.value || option.textContent) === value);
+		this._filteredItems.forEach(option => {
+			option.selected = !!((option.value || option.textContent) === newValue);
+		});
 	}
 
 	/**

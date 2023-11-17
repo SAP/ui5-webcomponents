@@ -93,6 +93,7 @@ describe("Select general interaction", () => {
 	it("fires change on selection with keyboard handling", async () => {
 		await browser.url(`test/pages/Select.html`);
 
+		const selectHost = await browser.$("#errorSelect")
 		const select = await browser.$("#errorSelect").shadow$(".ui5-select-root");
 		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const inputResult = await browser.$("#inputResult");
@@ -106,7 +107,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once more.");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Select label is correct.");
-		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
+		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.click();
 		await select.keys("ArrowDown");
@@ -115,7 +116,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Fired change event is called once more.");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
-		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
+		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 	});
 
 	it("changes selection while closed with Arrow Up/Down", async () => {
