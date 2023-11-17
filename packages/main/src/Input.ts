@@ -259,6 +259,13 @@ type InputSuggestionScrollEventDetail = {
 	},
 })
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
+	static formAssociated = true;
+	get form() {
+		return this._internals.form;
+	}
+	formStateRestoreCallback(value: string) {
+		this.value = value;
+	}
 	/**
 	 * Defines whether the component is in disabled state.
 	 * <br><br>
@@ -642,9 +649,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_performTextSelection?: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
+	_internals: ElementInternals;
 
 	constructor() {
 		super();
+		this._internals = this.attachInternals();
+
 		// Indicates if there is selected suggestionItem.
 		this.hasSuggestionItemSelected = false;
 
@@ -1365,10 +1375,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
+			this._setFormValue();
 			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 		}
+	}
+
+	_setFormValue() {
+		this._internals.setFormValue(this.value);
 	}
 
 	async getInputValue() {

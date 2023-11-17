@@ -15,60 +15,142 @@
 	</script>
 	<script src="../../bundle.esm.js" type="module"></script>
 </head>
+
 <body>
 	<link rel="stylesheet" type="text/css" href="./styles/FormComponents.css">
 	<div class="demo-section">
-		<ui5-label>ui5-button</ui5-label>
-		<ui5-button design="Default">Default</ui5-button>
-		<ui5-label>ui5-toggle-button</ui5-label>
-		<ui5-toggle-button>ToggleButton</ui5-toggle-button>
-		<ui5-label>ui5-segmented-button</ui5-label>
-		<ui5-segmented-button accessible-name="Geographic location">
-			<ui5-segmented-button-item>Map</ui5-segmented-button-item>
-			<ui5-segmented-button-item pressed>Satellite</ui5-segmented-button-item>
-			<ui5-segmented-button-item>Terrain</ui5-segmented-button-item>
-		</ui5-segmented-button>
-		<ui5-label>ui5-split-button</ui5-label>
-		<ui5-split-button>Default</ui5-split-button>
-		<ui5-label>Native button</ui5-label>
-		<button class="nativebutton">Text</button>
-		<ui5-label>ui5-input</ui5-label>
-		<ui5-input show-clear-icon value="Input"></ui5-input>
-		<ui5-label>ui5-multi-input</ui5-label>
-		<ui5-multi-input value="multi input"></ui5-multi-input>
-		<ui5-label>ui5-select</ui5-label>
-		<ui5-select>
-			<ui5-option icon="iphone">Phone</ui5-option>
-			<ui5-option icon="ipad">Tablet</ui5-option>
-			<ui5-option icon="laptop" selected>Desktop</ui5-option>
-		</ui5-select>
-		<ui5-label>ui5-combobox</ui5-label>
-		<ui5-combobox placeholder="Enter value">
-			<ui5-cb-item text="Item 1"></ui5-cb-item>
-			<ui5-cb-item text="Item 2"></ui5-cb-item>
-			<ui5-cb-item text="Item 3"></ui5-cb-item>
-		</ui5-combobox>
-		<ui5-label>ui5-multi-combobox</ui5-label>
-		<ui5-multi-combobox placeholder="Type your value">
-			<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
-		</ui5-multi-combobox>
-		<ui5-label>ui5-textarea</ui5-label>
-		<ui5-textarea class="textarea" placeholder="Type your value"></ui5-textarea>
-		<ui5-label>ui5-time-picker</ui5-label>
-		<ui5-time-picker id="timepicker1"></ui5-time-picker>
-		<ui5-label>ui5-date-picker</ui5-label>
-		<ui5-date-picker id="timepicker1"></ui5-date-picker>
-		<ui5-label>ui5-daterange-picker</ui5-label>
-		<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
-		<ui5-label>ui5-step-input</ui5-label>
-		<ui5-step-input class="stepinput" value="5"></ui5-step-input>
-		<label>Native input</label>
-		<input class="nativeinput"/>
-		<ui5-label>ui5-file-uploader</ui5-label>
-		<ui5-file-uploader>
-			<ui5-button icon="upload">Upload Images</ui5-button>
-		</ui5-file-uploader>
+		<form>
+			<ui5-button id="print">Print from data</ui5-button>
+			<pre></pre>
+
+			<ui5-checkbox name="lights" text="Lights"></ui5-checkbox>
+			<br>
+
+			<ui5-radio-button name="location" value="Sofia" text="Sofia" checked></ui5-radio-button>
+			<ui5-radio-button name="location" value="Plovdiv" text="Plovdiv"></ui5-radio-button>
+			<ui5-radio-button name="location" value="Varna" text="Varna"></ui5-radio-button>
+			<br>
+
+			<ui5-label>ui5-button</ui5-label>
+			<ui5-button design="Default">Default</ui5-button>
+			<br>
+
+			<ui5-label>ui5-toggle-button</ui5-label>
+			<ui5-toggle-button>ToggleButton</ui5-toggle-button>
+			<br>
+
+			<ui5-label>ui5-segmented-button</ui5-label>
+			<ui5-segmented-button accessible-name="Geographic location">
+				<ui5-segmented-button-item>Map</ui5-segmented-button-item>
+				<ui5-segmented-button-item pressed>Satellite</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Terrain</ui5-segmented-button-item>
+			</ui5-segmented-button>
+			<br>
+
+			<ui5-label>ui5-split-button</ui5-label>
+			<ui5-split-button>Default</ui5-split-button>
+			<br>
+
+			<ui5-label>Native button</ui5-label>
+			<button class="nativebutton">Text</button>
+			<br>
+
+			<ui5-label>ui5-input</ui5-label>
+			<input name="inp1" show-clear-icon value="Input"></input>
+			<ui5-input name="inp2" show-clear-icon value="Input"></ui5-input>
+			<br>
+
+			<ui5-label>ui5-multi-input</ui5-label>
+			<ui5-multi-input value="multi input"></ui5-multi-input>
+			<br>
+
+			<ui5-label>ui5-select</ui5-label>
+			<ui5-select name="product">
+				<ui5-option icon="iphone" value="Phone">Phone</ui5-option>
+				<ui5-option icon="ipad" value="Tablet">Tablet</ui5-option>
+				<ui5-option icon="laptop" selected value="Desktop">Desktop</ui5-option>
+			</ui5-select>
+			<br>
+
+			<ui5-label>ui5-combobox</ui5-label>
+			<ui5-combobox placeholder="Enter value">
+				<ui5-cb-item text="Item 1"></ui5-cb-item>
+				<ui5-cb-item text="Item 2"></ui5-cb-item>
+				<ui5-cb-item text="Item 3"></ui5-cb-item>
+			</ui5-combobox>
+			<br>
+
+			<ui5-label>ui5-multi-combobox</ui5-label>
+			<ui5-multi-combobox name="mcb" placeholder="Type your value" allow-custom-values style="width: 400px">
+				<ui5-mcb-item selected text="UI5"></ui5-mcb-item>
+				<ui5-mcb-item selected text="React"></ui5-mcb-item>
+				<ui5-mcb-item selected text="Angular"></ui5-mcb-item>
+			</ui5-multi-combobox>
+			<br>
+
+			<ui5-label>ui5-textarea</ui5-label>
+			<ui5-textarea class="textarea" placeholder="Type your value"></ui5-textarea>
+			<br>
+
+			<ui5-label>ui5-time-picker</ui5-label>
+			<ui5-time-picker id="timepicker1"></ui5-time-picker>
+			<br>
+
+			<ui5-label>ui5-date-picker</ui5-label>
+			<ui5-date-picker id="timepicker1"></ui5-date-picker>
+			<br>
+
+			<ui5-label>ui5-daterange-picker</ui5-label>
+			<ui5-daterange-picker id="daterange-picker1"></ui5-daterange-picker>
+			<br>
+
+			<ui5-label>ui5-step-input</ui5-label>
+			<ui5-step-input class="stepinput" value="5"></ui5-step-input>
+			<br>
+
+			<label>Native input</label>
+			<input class="nativeinput" />
+			<br>
+
+			<ui5-label>ui5-file-uploader</ui5-label>
+			<ui5-file-uploader>
+				<ui5-button icon="upload">Upload Images</ui5-button>
+			</ui5-file-uploader>
+		</form>
+
 	</div>
 </body>
+<script>
+	const notDefinedCE = new Set(Array.from(document.querySelectorAll(":not(:defined)")).map(x => x.tagName));
+	const whenDefinedPromises = Array.from(notDefinedCE.values()).map(tagName => customElements.whenDefined(tagName.toLowerCase()));
+	Promise.all(whenDefinedPromises).then(() => printFormData());
 
+	const form = document.querySelector("form");
+	const pre = document.querySelector("pre");
+	const printButton = document.getElementById("print");
+	printButton.addEventListener("click", () => {
+		printFormData();
+	})
+
+	const printFormData = () => {
+		let buf = "";
+		for ([key, value] of new FormData(form).entries()) {
+			buf += `${key}: ${value}\n`;
+		}
+		pre.textContent = buf;
+	}
+	printFormData();
+
+	// customElements.whenDefined("ui5-checkbox").then(() => {
+	// 	printFormData();
+	// });
+
+	// most components
+	form.addEventListener("input", printFormData);
+	// checkbox toggle
+	form.addEventListener("change", printFormData);
+	// MCB token selection
+	form.addEventListener("selection-change", printFormData);
+
+</script>
 </html>

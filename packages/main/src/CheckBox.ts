@@ -108,6 +108,32 @@ let activeCb: CheckBox;
 @event("change")
 
 class CheckBox extends UI5Element implements IFormElement {
+	static formAssociated = true;
+	get form() {
+		return this.#internals.form;
+	}
+
+	formStateRestoreCallback(value: string) {
+		this.checked = Boolean(value);
+		this._setFormValue();
+	}
+
+	formAssociatedCallback() {
+		this._setFormValue();
+	}
+
+	_setFormValue() {
+		this.#internals.setFormValue(this.checked.toString());
+	}
+
+	connectedCallback(): Promise<void> {
+		return super.connectedCallback();
+	}
+
+	onEnterDOM(): void {
+		console.log();
+	}
+
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @type {string}
@@ -281,10 +307,12 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
+	#internals: ElementInternals;
 
 	constructor() {
 		super();
 
+		this.#internals = this.attachInternals();
 		this._deactivate = () => {
 			if (activeCb) {
 				activeCb.active = false;
@@ -368,6 +396,7 @@ class CheckBox extends UI5Element implements IFormElement {
 				this.checked = !this.checked;
 			}
 
+			this._setFormValue();
 			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding
 			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
@@ -375,6 +404,7 @@ class CheckBox extends UI5Element implements IFormElement {
 			if (changePrevented || valueChagnePrevented) {
 				this.checked = lastState.checked;
 				this.indeterminate = lastState.indeterminate;
+				this._setFormValue();
 			}
 		}
 		return this;

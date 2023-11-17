@@ -386,7 +386,7 @@ class Menu extends UI5Element {
 		}
 		if (this.open) {
 			const rootNode = this.getRootNode() as Document;
-			const opener = this.opener instanceof HTMLElement ? this.opener : rootNode && rootNode.getElementById(this.opener);
+			const opener = this.opener instanceof HTMLElement ? this.opener : rootNode && typeof rootNode.getElementById === "function" && rootNode.getElementById(this.opener);
 
 			if (opener) {
 				this.showAt(opener);

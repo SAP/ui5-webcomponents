@@ -212,6 +212,17 @@ interface IOption extends UI5Element {
  */
 @event("close")
 class Select extends UI5Element implements IFormElement {
+	static formAssociated = true;
+	formStateValue?: string;
+	get form() {
+		return this.#internals.form;
+	}
+	formStateRestoreCallback(value: string) {
+		this.formStateValue = value;
+		this.options.forEach(option => {
+			option.selected = option.value === value;
+		});
+	}
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -436,10 +447,12 @@ class Select extends UI5Element implements IFormElement {
 	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
 	_attachMenuListeners: (menu: HTMLElement) => void;
 	_detachMenuListeners: (menu: HTMLElement) => void;
+	#internals: ElementInternals;
 
 	constructor() {
 		super();
 
+		this.#internals = this.attachInternals();
 		this._syncedOptions = [];
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
@@ -789,6 +802,7 @@ class Select extends UI5Element implements IFormElement {
 		this.selectOptions[this._selectedIndex].selected = false;
 
 		if (this._selectedIndex !== index) {
+			this.#internals.setFormValue(this.selectOptions[index].value);
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
 		}
 
@@ -1123,6 +1137,13 @@ class Select extends UI5Element implements IFormElement {
 			this.openValueStatePopover();
 		} else {
 			this.closeValueStatePopover();
+		}
+	}
+
+	onEnterDOM(): void {
+		if (this.formStateValue) {
+			this.formStateRestoreCallback(this.formStateValue);
+			// TODO remove
 		}
 	}
 

@@ -93,6 +93,17 @@ let activeRadio: RadioButton;
 @event("change")
 
 class RadioButton extends UI5Element implements IFormElement {
+	static formAssociated = true;
+
+	formStateRestoreCallback(value: string) {
+		this.checked = (this.value === value);
+		this._setFormValue();
+	}
+
+	formAssociatedCallback() {
+		this._setFormValue();
+	}
+
 	/**
 	 * Defines whether the component is disabled.
 	 * <br><br>
@@ -279,10 +290,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	_checked!: boolean;
 	_internals: ElementInternals;
 
-	static get formAssociated() {
-		return true;
-	}
-
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -308,8 +315,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	onBeforeRendering() {
 		this.syncGroup();
-
-		this._enableFormSupport();
 	}
 
 	onExitDOM() {
@@ -346,16 +351,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 		this._name = this.name;
 		this._checked = this.checked;
-	}
-
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-
-		if (formSupport) {
-			this._setFormValue();
-		} else if (this.value) {
-			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 	}
 
 	_setFormValue() {
@@ -450,6 +445,7 @@ class RadioButton extends UI5Element implements IFormElement {
 
 		if (!this.name) {
 			this.checked = !this.checked;
+			this._setFormValue();
 			this.fireEvent("change");
 			return this;
 		}

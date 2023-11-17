@@ -165,6 +165,7 @@ class RadioButtonGroup {
 	static _deselectRadio(radioBtn: RadioButton) {
 		if (radioBtn) {
 			radioBtn.checked = false;
+			radioBtn._setFormValue();
 		}
 	}
 
@@ -173,6 +174,7 @@ class RadioButtonGroup {
 			radioBtn.focus();
 			radioBtn.checked = true;
 			radioBtn._checked = true;
+			radioBtn._setFormValue();
 			radioBtn.fireEvent("change");
 		}
 	}

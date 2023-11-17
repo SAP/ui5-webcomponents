@@ -240,6 +240,31 @@ type MultiComboboxItemWithSelection = {
 })
 
 class MultiComboBox extends UI5Element {
+	static formAssociated = true;
+	private _internals: ElementInternals;
+	formStateValue?: FormData;
+
+	get form() {
+		return this._internals.form;
+	}
+
+
+	formStateRestoreCallback(formValue: FormData) {
+		this.formStateValue = formValue;
+		const [value, ...tokens] = formValue.getAll(this.getAttribute("name")!) as string[];
+		this.items.forEach(item => {
+			const idx = tokens.indexOf(item.text);
+			if (idx !== -1) {
+				item.selected = true;
+				tokens.splice(idx, 1);
+			} else {
+				item.selected = false;
+			}
+		});
+
+		this.value = value;
+	}
+
 	/**
 	 * Defines the value of the component.
 	 * <br><br>
@@ -490,6 +515,7 @@ class MultiComboBox extends UI5Element {
 	constructor() {
 		super();
 
+		this._internals = this.attachInternals();
 		this._filteredItems = [];
 		this._previouslySelectedItems = [];
 		this.selectedValues = [];
@@ -506,6 +532,9 @@ class MultiComboBox extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (this.formStateValue) {
+			this.formStateRestoreCallback(this.formStateValue);
+		}
 		ResizeHandler.register(this, this._handleResizeBound);
 	}
 
@@ -592,7 +621,32 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
+		this._internals.setFormValue(this.buildValue());
 		this.fireEvent("input");
+	}
+
+	buildValue() {
+		const fd = new FormData();
+
+		// value is always present and always first
+		fd.append(this.getAttribute("name")!, this.value);
+		// fd.set("value", this.value);
+
+		// tokens if any
+		this._getSelectedItems().forEach(token => {
+			// fd.append("tokens", token.text);
+			// eslint-disable-next-line prefer-template
+			fd.append(this.getAttribute("name")!, token.text);
+		});
+
+		// const obj = { value: this.value, tokens: this._getSelectedItems().map(t => t.text) };
+		// const blob = new Blob([JSON.stringify(obj, null, 2)], {
+		// 	type: "application/json",
+		// });
+		// // return blob;
+		// fd.set(this.getAttribute("name")!, blob);
+
+		return fd;
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -777,6 +831,7 @@ class MultiComboBox extends UI5Element {
 			});
 		} else {
 			this.value = pastedText;
+			this._internals.setFormValue(this.buildValue());
 			this.fireEvent("input");
 		}
 	}
@@ -1297,6 +1352,7 @@ class MultiComboBox extends UI5Element {
 				}
 			}
 
+			this._internals.setFormValue(this.buildValue());
 			this.fireEvent("input");
 		}
 
@@ -1314,6 +1370,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	fireSelectionChange() {
+		this._internals.setFormValue(this.buildValue());
 		const changePrevented = !this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 			items: this._getSelectedItems(),
 		}, true);
@@ -1419,6 +1476,7 @@ class MultiComboBox extends UI5Element {
 		this._filteredItems.forEach(item => {
 			item.selected = this._previouslySelectedItems.includes(item);
 		});
+		this._internals.setFormValue(this.buildValue());
 	}
 
 	onBeforeRendering() {

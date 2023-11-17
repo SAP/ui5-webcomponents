@@ -92,6 +92,8 @@ type MultiInputTokenDeleteEventDetail = {
 })
 
 class MultiInput extends Input {
+	static formAssociated = true;
+
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire <code>value-help-trigger</code> event.
