@@ -5,31 +5,37 @@
 #myBtn1 {
 	top: 0;
 	left: 0;
+	margin: 10px;
 }
 
 #myBtn2 {
 	top: 40px;
 	right: 0;
+	margin:10px;
 }
 
 #myBtn3 {
 	top: 50%;
 	left: 0;
+	margin:10px;
 }
 
 #myBtn4 {
 	top: 50%;
 	right: 0;
+	margin:10px;
 }
 
 #myBtn5 {
 	bottom: 0;
 	left: 0;
+	margin:10px;
 }
 
 #myBtn6 {
 	bottom: 0;
 	right: 0;
+	margin:10px;
 }
 
 #customSizeBtn {
