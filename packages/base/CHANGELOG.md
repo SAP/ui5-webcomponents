@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.19.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* openui5 support crashes with 1.120-snapshot ([2caf1cb](https://github.com/SAP/ui5-webcomponents/commit/2caf1cb9c5a0142441e4e295bfe6dd47e8ecfbe7))
+
+
+
+
+
 # [1.19.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.3...v1.19.0) (2023-11-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
