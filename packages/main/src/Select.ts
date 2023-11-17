@@ -504,7 +504,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	/**
-	 * Returns the "value" of the component - either the <code>value</code> property of the selected option, or the text of the selected option.
+	 * Returns the value of the component - the <code>value</code> property of the selected option or its text content.
 	 *
 	 * @public
 	 * @type { string }
@@ -518,6 +518,17 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
+	/**
+	 * Defines the value of the component - the option with matching <code>value</code> property or text content will be selected.
+	 *
+	 * @public
+	 * @type { string }
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Select.prototype.value
+	 * @since 1.20.0
+	 * @formProperty
+	 * @formEvents change liveChange
+	 */
 	set value(newValue: string) {
 		const option = this.getOptionByValue(newValue);
 		const prevSelectedOption = this.selectedOption;
