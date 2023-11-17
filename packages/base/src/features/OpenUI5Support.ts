@@ -138,7 +138,8 @@ class OpenUI5Support {
 				calendarType: Formatting.getCalendarType(),
 				formatSettings: {
 					firstDayOfWeek: CalendarUtils.getWeekConfigurationValues().firstDayOfWeek,
-					legacyDateCalendarCustomizing: Formatting.getLegacyDateCalendarCustomizing(),
+					legacyDateCalendarCustomizing: Formatting.getCustomIslamicCalendarData?.()
+												?? Formatting.getLegacyDateCalendarCustomizing?.(),
 				},
 			};
 		}
@@ -157,8 +158,7 @@ class OpenUI5Support {
 			calendarType: config.getCalendarType(),
 			formatSettings: {
 				firstDayOfWeek: LocaleData ? LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek() : undefined,
-				legacyDateCalendarCustomizing: Formatting.getCustomIslamicCalendarData?.()
-												?? Formatting.getLegacyDateCalendarCustomizing?.(),
+				legacyDateCalendarCustomizing: config.getFormatSettings().getLegacyDateCalendarCustomizing(),
 			},
 		};
 	}
