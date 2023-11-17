@@ -54,6 +54,7 @@ type Theming = {
 type Formatting = {
 	getCalendarType: () => string,
 	getLegacyDateCalendarCustomizing: () => LegacyDateCalendarCustomizing,
+	getCustomIslamicCalendarData?: () => LegacyDateCalendarCustomizing,
 }
 
 type CalendarUtils = {
@@ -156,7 +157,8 @@ class OpenUI5Support {
 			calendarType: config.getCalendarType(),
 			formatSettings: {
 				firstDayOfWeek: LocaleData ? LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek() : undefined,
-				legacyDateCalendarCustomizing: config.getFormatSettings().getLegacyDateCalendarCustomizing(),
+				legacyDateCalendarCustomizing: Formatting.getCustomIslamicCalendarData?.()
+												?? Formatting.getLegacyDateCalendarCustomizing?.(),
 			},
 		};
 	}
