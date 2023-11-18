@@ -520,6 +520,9 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value of the component - the option with matching <code>value</code> property or text content will be selected.
+	 * <br>
+	 * <b>Note:</> If the given value does not matches any existing option,
+	 * the first option will get selected and its value will become the Select's value.
 	 *
 	 * @public
 	 * @type { string }
@@ -530,7 +533,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		this._filteredItems.forEach(option => {
+		this.selectOptions.forEach(option => {
 			option.selected = !!((option.value || option.textContent) === newValue);
 		});
 	}
@@ -704,7 +707,7 @@ class Select extends UI5Element implements IFormElement {
 			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
 				const selectElement = (element as Select);
 				nativeInput.disabled = !!element.disabled;
-				nativeInput.value = selectElement._currentlySelectedOption ? selectElement._currentlySelectedOption.value : "";
+				nativeInput.value = selectElement.value;
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line

@@ -312,6 +312,32 @@ describe("Select general interaction", () => {
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Typing text should change selection");
 	});
 
+	it("changes selection using 'value'", async () => {
+		const select = await browser.$("#mySelect7");
+		const btnSetValue = await browser.$("#btnSetValue");
+		const btnSetInvalidValue = await browser.$("#btnSetInvalidValue");
+		const selectText = await select.shadow$(".ui5-select-label-root");
+		const EXPECTED_SELECTION_TEXT1 = "Item1";
+		const EXPECTED_SELECTION_TEXT2 = "Item2";
+
+		
+		await btnSetValue.click();
+		let selectTextHtml = await selectText.getHTML(false);
+
+		assert.strictEqual(await select.getProperty("value"),
+			EXPECTED_SELECTION_TEXT2, "Second option is selected.");
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2,
+			"Select label is " + EXPECTED_SELECTION_TEXT2);
+		
+		await btnSetInvalidValue.click();
+		selectTextHtml = await selectText.getHTML(false);
+
+		assert.strictEqual(await select.getProperty("value"),
+			EXPECTED_SELECTION_TEXT1, "First option is selected as value did not match any options.");
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1,
+			"Select label is " + EXPECTED_SELECTION_TEXT1);
+	});
+
 	it("opens upon space", async () => {
 		await browser.url(`test/pages/Select.html`);
 

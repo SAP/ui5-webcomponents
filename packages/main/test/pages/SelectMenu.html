@@ -18,6 +18,7 @@
 		<label id="lblLive"></label><br>
 		<label id="lblOpen"></label><br>
 		<label id="lblClose"></label><br>
+		<label id="lblValue"></label><br>
 
 		<div class="app-inner">
 			<section>
@@ -53,6 +54,7 @@
 				<ui5-button id="clearCounter">Reset counters</ui5-button>
 				<ui5-button id="btnFocusOut">Focus out</ui5-button>
 				<ui5-button id="btnSetValue">select.value = "item1"</ui5-button>
+				<ui5-button id="btnSetInvalidValue">select.value = "nan"</ui5-button>
 			</section> 
 
 			<section>
@@ -618,10 +620,12 @@
 
 		sel.addEventListener("ui5-change", function(e) {
 			lbl.innerHTML = "CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++counter) + ">";
+			lblValue.innerHTML = "Select value :: " + sel.value;
 		});
 
 		sel.addEventListener("ui5-live-change", function(e) {
 			lblLive.innerHTML = "PREVIEW CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
+			lblValue.innerHTML = "Select value :: " + sel.value;
 			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
 			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
 		});
@@ -667,6 +671,9 @@
 
 		btnSetValue.addEventListener("click", function(e) {
 			selTest.value = "item1";
+		});
+		btnSetInvalidValue.addEventListener("click", function(e) {
+			selTest.value = "nan";
 		});
 	</script>
 </html>
