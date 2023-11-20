@@ -106,7 +106,6 @@ class NotificationListItem extends NotificationListItemBase implements INotifica
 	* <br><br>
 	* <b>Note:</b> by default the <code>titleText</code> and <code>description</code>,
 	* and a <code>ShowMore/Less</code> button would be displayed.
-	* @type {WrappingType}
 	* @default "None"
 	* @public
 	* @since 1.0.0-rc.15
@@ -139,7 +138,6 @@ class NotificationListItem extends NotificationListItemBase implements INotifica
 	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
 	* you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
 	*
-	* @type {IAvatar}
 	* @public
 	*/
 	@slot()
@@ -147,7 +145,6 @@ class NotificationListItem extends NotificationListItemBase implements INotifica
 
 	/**
 	* Defines the elements, displayed in the footer of the of the component.
-	* @type {HTMLElement[]}
 	* @public
 	*/
 	@slot({ type: HTMLElement, individualSlots: true })
@@ -160,7 +157,6 @@ class NotificationListItem extends NotificationListItemBase implements INotifica
 	* <br><br>
 	* <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	*
-	* @type {Node[]}
 	* @public
 	*/
 	@slot({ type: Node, "default": true })

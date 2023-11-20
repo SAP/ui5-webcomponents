@@ -162,8 +162,8 @@ interface TabContainerTabInOverflow extends CustomListItem {
 /**
  * Fired when a tab is selected.
  *
- * @param tab The selected <code>tab</code>.
- * @param tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
+ * @param {HTMLElement} tab The selected <code>tab</code>.
+ * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
  * @public
  * @allowPreventDefault
  */

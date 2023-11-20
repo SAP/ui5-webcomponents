@@ -49,21 +49,21 @@ type NotificationListItemBaseCloseEventDetail = {
  * @since 1.0.0-rc.8
  * @public
  */
+@customElement({
+	staticAreaStyles: NotificationOverflowActionsPopoverCss,
+	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
+})
 
 /**
  * Fired when the <code>Close</code> button is pressed.
  *
- * @param item the closed item.
+ * @param {HTMLElement} item the closed item.
  * @public
  */
 @event("close", {
 	 detail: {
 		item: HTMLElement,
 	},
-})
-@customElement({
-	staticAreaStyles: NotificationOverflowActionsPopoverCss,
-	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
 })
 class NotificationListItemBase extends ListItemBase {
 	/**

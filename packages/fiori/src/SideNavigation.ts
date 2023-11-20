@@ -111,7 +111,7 @@ type PopupClickEventDetail = {
 /**
  * Fired when the selection has changed via user interaction
  *
- * @param item the clicked item.
+ * @param {SideNavigationItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
  */

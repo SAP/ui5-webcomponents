@@ -23,7 +23,7 @@ type NotificationActionClickEventDetail = {
 /**
  * Fired, when the action is pressed.
  *
- * @param targetRef DOM ref of the clicked element
+ * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
 @event("click", {

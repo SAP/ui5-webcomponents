@@ -82,7 +82,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * <br><br>
  * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
  *
- * @param dataTransfer The <code>drop</code> event operation data.
+ * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
  * @public
  * @native
  */
@@ -91,7 +91,7 @@ type UploadCollectionItemDeleteEventDetail = {
 /**
  * Fired when the delete button of any item is pressed.
  *
- * @param item The <code>ui5-upload-collection-item</code> which was deleted.
+ * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
 @event("item-delete", {
@@ -104,7 +104,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * Fired when selection is changed by user interaction
  * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
  *
- * @param selectedItems An array of the selected items.
+ * @param {Array} selectedItems An array of the selected items.
  * @public
  */
 @event("selection-change", {

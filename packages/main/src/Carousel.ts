@@ -124,7 +124,7 @@ type CarouselNavigateEventDetail = {
  * when the user clicks on the navigation arrows or while resizing,
  * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
  *
- * @param selectedIndex the current selected index
+ * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
  */
@@ -173,7 +173,6 @@ class Carousel extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
 	 * In this case, the user can swipe to navigate through the items.
-	 * @type {boolean}
 	 * @since 1.0.0-rc.15
 	 * @default false
 	 * @public
@@ -284,7 +283,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {HTMLElement[]}
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
@@ -700,10 +698,9 @@ class Carousel extends UI5Element {
 	 * The indices of the currently visible items of the component.
 	 * @public
 	 * @since 1.0.0-rc.15
-	 * @type {Integer[]} the indices of the visible items
 	 * @default []
 	 */
-	get visibleItemsIndices() {
+	get visibleItemsIndices() : Array<number> {
 		const visibleItemsIndices: Array<number> = [];
 
 		this.items.forEach((item, index) => {
