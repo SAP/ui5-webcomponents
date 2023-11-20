@@ -127,6 +127,7 @@ abstract class ListItem extends ListItemBase {
 	 * 		</li>
 	 * </ul>
 	 *
+	 * @default {}
 	 * @public
 	 * @since 1.15.0
 	 */

@@ -91,7 +91,6 @@ const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 /**
  * Interface for components that may be slotted inside a <code>ui5-list</code> as items
  *
- * @interface
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

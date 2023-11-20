@@ -24,6 +24,8 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  *
+ * @slot default - Defines the content of the component.
+ *
  * @constructor
  * @extends ListItem
  * @implements {IListItem}
@@ -45,11 +47,6 @@ class CustomListItem extends ListItem implements IListItem {
 	 */
 	@property()
 	accessibleName!: string;
-
-	/**
-	 * Defines the content of the component.
-	 * @public
-	 */
 
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
