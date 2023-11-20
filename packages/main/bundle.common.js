@@ -100,7 +100,9 @@ import TreeItemCustom from "./dist/TreeItemCustom.js";
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
-import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
+import Form from "./dist/Form.js";
+import FormGroup from "./dist/FormGroup.js";
+import FormItem from "./dist/FormItem.js";
 
 // Features
 import "./dist/features/InputElementsFormSupport.js";

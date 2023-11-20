@@ -1,0 +1,44 @@
+.ui5-form-root {
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+    border-radius: 0.75rem;
+	container-type: inline-size;
+}
+
+.ui5-form-header {
+	display: flex;
+	height: 2.75rem;
+	align-items: center;
+	border-bottom: 1px solid #a8b3bd;
+	padding: 0 1rem 0 1rem;
+}
+
+.ui5-form-layout {
+	display: grid;
+	padding: 1rem 0.75rem;
+}
+
+@container (max-width: 599px) {
+	.ui5-form-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+@container (min-width: 600px) {
+	.ui5-form-layout {
+		grid-template-columns: 1fr;
+	}
+}
+
+@container  (min-width: 1024px) {
+	.ui5-form-layout {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@container (min-width: 1440px) {
+	.ui5-form-layout {
+		grid-template-columns: 1fr 1fr;
+	}
+}

@@ -1,0 +1,13 @@
+<div class="ui5-form-root">
+	<div class="ui5-form-header">
+		{{#if hasCustomHeader}}
+			<slot name="header"></slot>
+		{{else}}
+			<ui5-title level="H4">{{ headerText }}</ui5-title>
+		{{/if}}
+	</div>
+
+	<div class="ui5-form-layout">
+		<slot></slot>
+	</div>
+</div>

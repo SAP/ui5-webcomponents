@@ -1,0 +1,22 @@
+.formBody {
+    background-color: var(--sapBackgroundColor);
+}
+
+.banner {height: 1rem;container-type: inline-size;}
+.banner-inner {height: 1rem;background-color: red;}
+@container (max-width: 599px) {.banner-inner {background-color: darkred;}}
+@container (min-width: 600px) {.banner-inner {background-color: red;}}
+@container (min-width: 1024px) {.banner-inner {background-color: orange;}
+@container (min-width: 1440px) {.banner-inner {background-color: yellow;}}
+
+.text {
+    display: inline-block;
+    box-sizing: border-box;
+    white-space: pre-line;
+    word-wrap: break-word;
+    cursor: text;
+    font-size: .875rem;
+    font-family: "72","72full",Arial,Helvetica,sans-serif;
+    line-height: normal;
+    color: #1d2d3e;
+}
