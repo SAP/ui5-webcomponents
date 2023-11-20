@@ -127,7 +127,6 @@ const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
- * @interface
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -197,15 +196,6 @@ const IToken = "sap.ui.webc.main.IToken";
 const ITreeItem = "sap.ui.webc.main.ITreeItem";
 
 /**
- * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
- *
- * @name sap.ui.webc.main.IToolbarItem
- * @interface
- * @public
- */
-const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
-
-/**
  * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
  *
  * @interface
@@ -237,6 +227,5 @@ export {
 	ITableRow,
 	IToken,
 	ITreeItem,
-	IToolbarItem,
 	IToolbarSelectOption,
 };

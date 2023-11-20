@@ -92,7 +92,6 @@ class ToolbarSelect extends ToolbarItem implements IToolbarItem {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
-	 * @slot options
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })

@@ -88,7 +88,7 @@ class Toolbar extends UI5Element {
 	 * Indicated the direction in which the Toolbar items will be aligned.
 	 *
 	 * @public
-	 * @default: "End"
+	 * @default "End"
 	 */
 	@property({ type: ToolbarAlign, defaultValue: ToolbarAlign.End })
 	alignContent!: `${ToolbarAlign}`;
@@ -96,7 +96,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Calculated width of the whole toolbar.
 	 * @private
-	 * @default false
+	 * @default undefined
 	 */
 	@property({ validator: Integer })
 	width?: number;
@@ -104,7 +104,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Calculated width of the toolbar content.
 	 * @private
-	 * @default 0
+	 * @default undefined
 	 */
 	@property({ validator: Integer })
 	contentWidth?: number;
@@ -119,7 +119,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @default: ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -139,7 +139,6 @@ class Toolbar extends UI5Element {
      *
      * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
 	 *
-	 * @slot items
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })

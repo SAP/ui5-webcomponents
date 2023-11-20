@@ -17,8 +17,8 @@ enum ToolbarItemOverflowBehavior {
 	NeverOverflow = "NeverOverflow",
 
 	/**
-	 * @public
 	 * When set, the item will be always part of the overflow part of ui5-toolbar.
+	 * @public
 	 */
 	AlwaysOverflow = "AlwaysOverflow",
 }

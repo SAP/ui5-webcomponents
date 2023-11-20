@@ -33,7 +33,6 @@ class ToolbarSelectOption extends UI5Element implements IToolbarSelectOption {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })

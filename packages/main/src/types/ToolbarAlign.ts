@@ -5,14 +5,14 @@
  */
 enum ToolbarAlign {
 	/**
-	 * @public
 	 * Toolbar items are situated at the <code>start</code> of the Toolbar
+	 * @public
 	 */
 	Start = "Start",
 
 	/**
-	 * @public
 	 * Toolbar items are situated at the <code>end</code> of the Toolbar
+	 * @public
 	 */
 	End = "End",
 }

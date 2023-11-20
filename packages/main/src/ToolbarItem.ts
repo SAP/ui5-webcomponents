@@ -8,6 +8,11 @@ type IEventOptions = {
 	preventClosing: boolean;
 }
 
+/**
+ * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
+ *
+ * @public
+ */
 interface IToolbarItem {
 	overflowPriority: `${ToolbarItemOverflowBehavior}`;
 	preventOverflowClosing: boolean;
