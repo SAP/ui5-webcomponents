@@ -688,8 +688,12 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
-	get hasValueState() {
+	get noValueState() {
 		return this.valueState === ValueState.None || this.valueState === ValueState.Success;
+	}
+
+	get hasValueState() {
+		return !this.noValueState;
 	}
 
 	get valueStateMessageText() {
@@ -729,6 +733,10 @@ class Tokenizer extends UI5Element {
 				"ui5-tokenizer--content": true,
 				"ui5-tokenizer-expanded--content": !this.showNMore,
 				"ui5-tokenizer-nmore--content": this.showNMore,
+			},
+			popover: {
+				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueState,
+				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueState,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,

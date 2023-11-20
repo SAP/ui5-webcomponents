@@ -43,6 +43,7 @@
 	text-overflow: ellipsis;
 	min-width: 6.25rem;
 	border: var(--_ui5_value_state_message_border);
+	line-height: var(--_ui5_value_state_message_line_height);
 }
 
 [ui5-responsive-popover] .ui5-valuestatemessage-header, [ui5-popover] .ui5-valuestatemessage-header  {
@@ -53,6 +54,8 @@
 	padding: var(--_ui5_value_state_header_padding);
 	border: var(--_ui5_value_state_header_border);
 	border-bottom: var(--_ui5_value_state_header_border_bottom);
+	flex-grow: 1;
+	position: relative;
 }
 
 .ui5-valuestatemessage--success {
@@ -87,6 +90,55 @@
 }
 
 .ui5-valuestatemessage-popover::part(header),
-.ui5-suggestions-popover-with-value-state-header::part(header) {
+.ui5-popover-with-value-state-header::part(header),
+.ui5-popover-with-value-state-header-phone::part(header) {
 	margin-bottom: 0;
+}
+
+.ui5-popover-with-value-state-header .ui5-valuestatemessage-root {
+	padding: var(--_ui5_value_state_message_padding);
+}
+
+.ui5-popover-with-value-state-header-phone .ui5-valuestatemessage-root {
+	padding: var(--_ui5_value_state_message_padding_phone);
+	width: 100%;
+}
+
+.ui5-popover-with-value-state-header-phone .ui5-input-value-state-message-icon {
+	left: var(--_ui5_value_state_message_icon_offset_phone);
+}
+
+.ui5-popover-with-value-state-header-phone .ui5-valuestatemessage-header{
+	position: relative;
+	flex: none;
+	top: 0;
+	left: 0;
+}
+
+.ui5-popover-with-value-state-header-phone::part(content) {
+	padding: unset;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.ui5-popover-with-value-state-header-phone .ui5-valuestatemessage-root + ui5-list {
+	overflow: auto;
+}
+
+/* ValueState Header bottom border color in Responsive Popover and Dialog */
+[ui5-responsive-popover] .ui5-valuestatemessage--error {
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_InvalidColor);
+}
+
+[ui5-responsive-popover] .ui5-valuestatemessage--information {
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_InformationColor);
+}
+
+[ui5-responsive-popover] .ui5-valuestatemessage--success {
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_SuccessColor);
+}
+
+[ui5-responsive-popover] .ui5-valuestatemessage--warning {
+	box-shadow: var(--_ui5_value_state_header_box_shadow) var(--sapField_WarningColor);
 }

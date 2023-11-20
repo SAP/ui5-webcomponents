@@ -1,7 +1,7 @@
 @import "../base/ValueStateMessage-parameters.css";
 
 :root {
-	--_ui5_value_state_message_border: 2px solid var(--sapField_BorderColor);
+	--_ui5_value_state_message_border: calc(2 * var(--sapField_BorderWidth)) solid var(--sapField_BorderColor);
 	--_ui5_input_value_state_icon_display: inline-block;
 	--_ui5_value_state_message_icon_width: 1rem;
 	--_ui5_value_state_message_icon_height: 1rem;
@@ -9,5 +9,8 @@
 	--_ui5_value_state_message_padding: .5rem .5rem .5rem 1.875rem;
 	--_ui5_input_value_state_icon_offset: .625rem;
 	--_ui5_value_state_header_offset: -0.1875rem;
-	--_ui5_value_state_header_border_bottom: 2px solid var(--sapField_BorderColor);
+	--_ui5_value_state_header_border_bottom: 0.0625rem solid var(--sapField_BorderColor);
+	--_ui5_value_state_header_box_shadow: inset 0 -0.125rem;
+	--_ui5_value_state_message_padding_phone: 0.5rem 0.5rem 0.5rem 2.375rem;
+	--_ui5_value_state_message_line_height: 1.125rem;
 }
