@@ -17,11 +17,11 @@
       <slot name="{{headingSlotName}}"></slot>
     </div>
 
-  {{#if hasContent}}
-    <div class="{{classes.content}}"
-      style="{{styles.content}}">
-      <slot></slot>
-    </div>
+    {{#if hasContent}}
+      <div class="{{classes.content}}"
+        style="{{styles.content}}">
+        <slot></slot>
+      </div>
     {{/if}}
 
     <div class="{{classes.actions}}"

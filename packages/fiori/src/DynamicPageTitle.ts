@@ -178,10 +178,10 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	onMinContentWidthChange(event: CustomEvent<ToolbarMinWidthChangeEventDetail>) {
-		const container = (<HTMLElement>event.target)?.assignedSlot?.parentElement;
-		if (container === this.getDomRef()?.querySelector(".ui5-dynamic-page-title--content")) {
+		const slotName = (<HTMLElement>event.target)?.assignedSlot?.name;
+		if (!slotName || slotName === "content") {
 			this.minContentWidth = event.detail.minWidth;
-		} else if (container === this.getDomRef()?.querySelector(".ui5-dynamic-page-title--actions")) {
+		} else if (slotName === "actions") {
 			this.minActionsWidth = event.detail.minWidth;
 		}
 	}
