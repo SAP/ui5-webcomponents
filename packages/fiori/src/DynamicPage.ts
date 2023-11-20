@@ -70,6 +70,7 @@ class DynamicPage extends UI5Element {
 	isExpanding = false;
 	iPreviousScrollAmount = 0;
 	_debounceInterval?: Timeout | null;
+	showHeaderInStickArea = false;
 
 	onAfterRendering() {
 		this.addEventListener("scroll", this.snapOnScroll.bind(this));
@@ -119,6 +120,7 @@ class DynamicPage extends UI5Element {
 
 			if (this.scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
 				this.headerSnapped = true;
+				this.showHeaderInStickArea = false;
 			} else {
 				this.headerSnapped = false;
 			}
@@ -127,10 +129,12 @@ class DynamicPage extends UI5Element {
 	}
 
 	onExpandClick() {
+		this.showHeaderInStickArea = !this.showHeaderInStickArea;
 		this.headerSnapped = !this.headerSnapped;
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this.headerSnapped;
 		}
+
 		this.isExpanding = true;
 	}
 

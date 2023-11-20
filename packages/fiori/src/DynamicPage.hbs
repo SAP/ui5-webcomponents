@@ -1,25 +1,44 @@
 <div class="{{classes.root}}">
   <div class="{{classes.headerWrapper}}">
     <slot name="titleArea"></slot>
-    {{#unless headerSnapped}}
-      <slot name="headerArea"></slot>
-    {{/unless}}
+    {{#if showHeaderInStickArea}}
+      {{#unless headerSnapped}}
+        <slot name="headerArea"></slot>
+            <ui5-dynamic-page-header-actions
+            ?snapped="{{headerSnapped}}"
+            ?pinned="{{headerPinned}}"
+            @ui5-expand-button-click={{onExpandClick}}
+            @ui5-pin-button-click={{onPinClick}}
+          ></ui5-dynamic-page-header-actions>
+        {{/unless}}
+    {{/if}}
 
-    <ui5-dynamic-page-header-actions
-      ?snapped="{{headerSnapped}}"
-      ?pinned="{{headerPinned}}"
-      @ui5-expand-button-click={{onExpandClick}}
-      @ui5-pin-button-click={{onPinClick}}
-    ></ui5-dynamic-page-header-actions>
+    {{#if headerSnapped}}
+      <ui5-dynamic-page-header-actions
+        ?snapped="{{headerSnapped}}"
+        ?pinned="{{headerPinned}}"
+        @ui5-expand-button-click={{onExpandClick}}
+        @ui5-pin-button-click={{onPinClick}}
+      ></ui5-dynamic-page-header-actions>
+    {{/if}}
   </div>
 
   <div class="{{classes.content}}">
+    {{#unless showHeaderInStickArea}}
+      <slot name="headerArea"></slot>
+    {{/unless}}
+    {{#unless headerSnapped}}
+      <ui5-dynamic-page-header-actions
+          ?snapped="{{headerSnapped}}"
+          ?pinned="{{headerPinned}}"
+          @ui5-expand-button-click={{onExpandClick}}
+          @ui5-pin-button-click={{onPinClick}}
+        ></ui5-dynamic-page-header-actions>
+    {{/unless}}
     <slot></slot>
   </div>
 
-  {{#if showFooter}}
     <div class="{{classes.footer}}">
       <slot name="footer"></slot>
     </div>
-  {{/if}}
 </div>
