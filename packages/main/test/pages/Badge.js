@@ -1,12 +1,4 @@
 function initializeBadges() {
-	const designTypes = [
-		"ColorScheme",
-		"ValueState",
-		"ValueStateInverted",
-		"IndicationColorSet1",
-		"IndicationColorSet2"
-	];
-
 	const colorSchemes = [
 		"1",
 		"2",
@@ -20,23 +12,15 @@ function initializeBadges() {
 		"10"
 	];
 
-	const valueStates = [
+	const designTypes = [
+		"Set1",
+		"Set2",
+		"Set3",
 		"None",
 		"Success",
 		"Warning",
 		"Error",
 		"Information"
-	];
-
-	const indicationColor = [
-		"DarkRed",
-		"Red",
-		"Yellow",
-		"Teal",
-		"Purple",
-		"Pink",
-		"BlackAndWhite",
-		"Grey"
 	];
 
 	const clickEvent = (e) => {
@@ -55,33 +39,30 @@ function initializeBadges() {
 		})
 	});
 
-	const colorSchemeContent = document.querySelector("#colorSchemeContent");
+	const set1Content = document.querySelector("#set1Content");
 	colorSchemes.forEach((value) => {
-		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}">Color Scheme ${value}</ui5-badge>`);
-		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ColorScheme" color-scheme="${value}">Color Scheme ${value} - design type set</ui5-badge>`);
+		set1Content.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}">Set 1 - Value - ${value}</ui5-badge>`);
+		set1Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set1" color-scheme="${value}">Set 1 - Value - ${value}</ui5-badge>`);
 
-		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Color Scheme ${value}</ui5-badge>`);
-		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ColorScheme" color-scheme="${value}"><ui5-icon name="error" slot="icon"></ui5-icon>Color Scheme ${value} - design type set</ui5-badge>`);
+		set1Content.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 1 - Value - ${value}</ui5-badge>`);
+		set1Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set1" color-scheme="${value}"><ui5-icon name="error" slot="icon"></ui5-icon>Set 1 - Value - ${value}</ui5-badge>`);
 
-		colorSchemeContent.insertAdjacentHTML("beforeend", "<br><br>");
+		set1Content.insertAdjacentHTML("beforeend", "<br><br>");
 	});
 
-	const valueStateContent = document.querySelector("#valueStateContent");
-	valueStates.forEach((value) => {
-		valueStateContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ValueState" value-state="${value}">${value}</ui5-badge>`);
-		valueStateContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ValueState" value-state="${value}" show-state-icon>${value} default state icon</ui5-badge>`);
-		valueStateContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ValueState" value-state="${value}" show-state-icon><ui5-icon name="lab" slot="icon"></ui5-icon>${value} custom icon</ui5-badge>`);
+	const set2Content = document.querySelector("#set2Content");
+	colorSchemes.forEach((value) => {
+		set2Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set2" color-scheme="${value}">Set 2 - Value - ${value}</ui5-badge>`);
+		set2Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set2" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 2 - Value - ${value}</ui5-badge>`);
 
-		valueStateContent.insertAdjacentHTML("beforeend", "<br><br>");
+		set2Content.insertAdjacentHTML("beforeend", "<br><br>");
 	});
 
-	const indicationColorSet1Content = document.querySelector("#indicationColorSet1Content");
-	indicationColor.forEach((value) => {
-		indicationColorSet1Content.insertAdjacentHTML("beforeend", `<ui5-badge design-type="IndicationColorSet1" indication-color="${value}">${value}</ui5-badge><br>`);
-	});
+	const set3Content = document.querySelector("#set3Content");
+	colorSchemes.forEach((value) => {
+		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set3" color-scheme="${value}">Set 3 - Value - ${value}</ui5-badge>`);
+		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set3" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 3 - Value - ${value}</ui5-badge>`);
 
-	const indicationColorSet2Content = document.querySelector("#indicationColorSet2Content");
-	indicationColor.forEach((value) => {
-		indicationColorSet2Content.insertAdjacentHTML("beforeend", `<ui5-badge design-type="IndicationColorSet2" indication-color="${value}">${value}</ui5-badge><br>`);
+		set3Content.insertAdjacentHTML("beforeend", "<br><br>");
 	});
 }
