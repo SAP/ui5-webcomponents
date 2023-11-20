@@ -64,7 +64,6 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
- * @interface
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
