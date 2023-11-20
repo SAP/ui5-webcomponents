@@ -85,6 +85,10 @@ class DynamicPageTitle extends UI5Element {
 		return !!this.breadcrumbs.length;
 	}
 
+	get hasContent() {
+		return !!this.content.length;
+	}
+
 	get hasHeading() {
 		return !!this.heading.length;
 	}
@@ -107,6 +111,9 @@ class DynamicPageTitle extends UI5Element {
 		return {
 			root: {
 				"ui5-dynamic-page-title-root": true,
+			},
+			topArea: {
+				"ui5-dynamic-page-title--top-area": true,
 			},
 			breadcrumbs: {
 				"ui5-dynamic-page-title--breadcrumbs": true,
