@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* declare webpackChunkName in generated dynamic imports for readable runtime bundle names ([#7835](https://github.com/SAP/ui5-webcomponents/issues/7835)) ([592a10b](https://github.com/SAP/ui5-webcomponents/commit/592a10b25a14da89885874c40c5c7a192b8b4d85))
+* **ui5-list:** shift+tab navigation in List ([#7728](https://github.com/SAP/ui5-webcomponents/issues/7728)) ([399b941](https://github.com/SAP/ui5-webcomponents/commit/399b941ebeae7b44f6dba9cd4e8ec7ebb6f283c6))
+
+
+### Features
+
+* **ui5-illustrated-message:** titleLevel property added ([#7771](https://github.com/SAP/ui5-webcomponents/issues/7771)) ([2883c58](https://github.com/SAP/ui5-webcomponents/commit/2883c587f367e51e0f08065498b990f86e60e88c)), closes [#7037](https://github.com/SAP/ui5-webcomponents/issues/7037)
+
+
+
+
+
 # [1.20.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.20.0-rc.0) (2023-11-09)
 
 
