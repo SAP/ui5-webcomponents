@@ -1143,7 +1143,7 @@ class Table extends UI5Element {
 		}
 
 		const hiddenColumnsChange = (this._hiddenColumns.length !== hiddenColumns.length) || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
-		const shownColumnsChange = hiddenColumnsChange && hiddenColumns.length === 0;
+		const shownColumnsChange = hiddenColumns.length === 0;
 
 		// invalidate if hidden columns count has changed or columns are shown
 		if (hiddenColumnsChange || shownColumnsChange) {
