@@ -30,7 +30,6 @@
     box-sizing: border-box;
     z-index: 1;
     opacity: 1;
-    padding: 0 1rem;
 }
 
 :host([show-footer]) .ui5-dynamic-page-content {
@@ -74,7 +73,7 @@
     }
 }
 
-/*** Responsive paddings ***/
+/* Responsive paddings */
 
 :host([media-range="S"]) .ui5-dynamic-page-root {
     padding: 0 1rem;
