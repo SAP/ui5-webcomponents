@@ -116,6 +116,8 @@ class StepInput extends UI5Element implements IFormElement {
 	 *
 	 * @name sap.ui.webc.main.StepInput.prototype.value
 	 * @type {sap.ui.webc.base.types.Float}
+	 * @formEvents change
+	 * @formProperty
 	 * @defaultvalue 0
 	 * @public
 	 */

@@ -340,9 +340,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 		let dayOfTheWeek;
 
-		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType);
-		const aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType);
+		const aDayNamesWide = localeData.getDays("wide", this._primaryCalendarType) as Array<string>;
+		let aDayNamesAbbreviated = localeData.getDays("abbreviated", this._primaryCalendarType) as Array<string>;
 		let dayName;
+
+		if (this.namesTooLong(aDayNamesAbbreviated)) {
+			aDayNamesAbbreviated = localeData.getDays("narrow", this._primaryCalendarType) as Array<string>;
+		}
 
 		this._dayNames = [];
 		this._dayNames.push({
@@ -359,15 +363,22 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				ultraShortName: aDayNamesAbbreviated[dayOfTheWeek],
 				classes: "ui5-dp-dayname",
 			};
-
 			this._dayNames.push(dayName);
 		}
-
 		this._dayNames[1].classes += " ui5-dp-firstday";
-
 		if (this.shouldHideWeekNumbers) {
 			this._dayNames.shift();
 		}
+	}
+
+	/**
+	 * Tells if any of the days is more than 4 characters(too long to render).
+	 * @param { Array<string> } dayNames
+	 * @returns { boolean }
+	 * @private
+	 */
+	namesTooLong(dayNames: Array<string>): boolean {
+		return dayNames.some(dayName => dayName.length > 3);
 	}
 
 	onAfterRendering() {
