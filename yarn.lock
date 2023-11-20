@@ -2527,10 +2527,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@sap-theming/theming-base-content@11.6.8":
-  version "11.6.8"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.6.8.tgz#3e70ddfe415f4492b3e37df2c642fbbf7cb8296d"
-  integrity sha512-LRYvqVeqFYCqhB4EMbFslQpgRLrYyOOsacWI0JZbWlnvRkbF4/pzKpr4ULyVPFp26CrwXhUZJeSSAa3/8KS6iw==
+"@sap-theming/theming-base-content@11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.9.0.tgz#bd46458c7ed58cfb23e4e0ec620c9780a5711a5b"
+  integrity sha512-EOAYDx13SU9Wd18qgAR+FYTrywC5dk+IU3oM5NGAz0GxJLpiGQkSONYnAMJK/Gqk9QhU7uqWQsjrcnOcOl0fxA==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
@@ -3233,9 +3233,9 @@
     defer-to-connect "^2.0.0"
 
 "@testim/chrome-version@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@testim/chrome-version/-/chrome-version-1.1.3.tgz#fbb68696899d7b8c1b9b891eded9c04fe2cd5529"
-  integrity sha512-g697J3WxV/Zytemz8aTuKjTGYtta9+02kva3C1xc7KXB8GdbfE1akGJIsZLyY/FSh2QrnE+fiB7vmWU3XNcb6A==
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@testim/chrome-version/-/chrome-version-1.1.4.tgz#86e04e677cd6c05fa230dd15ac223fa72d1d7090"
+  integrity sha512-kIhULpw9TrGYnHp/8VfdcneIcxKnLixmADtukQRtJUmsVlMg0niMkwV0xZmi8hqa57xqilIHjWFA0GKvEjVU5g==
 
 "@tootallnate/once@2":
   version "2.0.0"
@@ -4677,9 +4677,9 @@ axe-core@4.2.3:
   integrity sha512-pXnVMfJKSIWU2Ml4JHP7pZEPIrgBO1Fd3WGx+fPBsS+KRGhE4vxooD8XBGWbQOIVSZsVK7pUDBBkCicNu80yzQ==
 
 axios@^1.0.0, axios@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.4.0.tgz#38a7bf1224cd308de271146038b551d725f0be1f"
-  integrity sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.2.tgz#de67d42c755b571d3e698df1b6504cde9b0ee9f2"
+  integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -5330,10 +5330,10 @@ chrome-launcher@^0.15.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@117.0.3:
-  version "117.0.3"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-117.0.3.tgz#4a14cc992d572367b99b53c772adcc4c19078e1e"
-  integrity sha512-c2rk2eGK5zZFBJMdviUlAJfQEBuPNIKfal4+rTFVYAmrWbMPYAqPozB+rIkc1lDP/Ryw44lPiqKglrI01ILhTQ==
+chromedriver@118.0.1:
+  version "118.0.1"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-118.0.1.tgz#76bf821bb11dd85a45a7e3df7ee48e8d464677dd"
+  integrity sha512-GlGfyRE47IuSJnuadIiDy89EMDMQFBVWxUmiclLJKzQhFsiWAtcIr/mNOxjljZdsw9IwIOQEkrB9wympKYFPLw==
   dependencies:
     "@testim/chrome-version" "^1.1.3"
     axios "^1.4.0"

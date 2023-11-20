@@ -277,24 +277,6 @@ class Tree extends UI5Element {
 	accessibleRoleDescription?: string;
 
 	/**
-	 * Shows the toggle button at the end, rather than at the beginning of the items
-	 *
-	 * @protected
-	 * @since 1.0.0-rc.8
-	 */
-	@property({ type: Boolean })
-	_toggleButtonEnd!: boolean;
-
-	/**
-	 * Represents the tree in a very minimal state - icons only with no text and no toggle buttons
-	 *
-	 * @protected
-	 * @since 1.0.0-rc.8
-	 */
-	@property({ type: Boolean })
-	_minimal!: boolean;
-
-	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
@@ -336,7 +318,7 @@ class Tree extends UI5Element {
 	}
 
 	get _role() {
-		return this._minimal ? "menubar" : "tree";
+		return "tree";
 	}
 
 	get _label() {
@@ -429,8 +411,6 @@ class Tree extends UI5Element {
 
 			item.setAttribute("level", level.toString());
 
-			item._toggleButtonEnd = this._toggleButtonEnd;
-			item._minimal = this._minimal;
 			item._setsize = ariaSetSize;
 			item._posinset = index + 1;
 		});

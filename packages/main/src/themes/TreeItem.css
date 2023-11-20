@@ -4,41 +4,8 @@
 	position: relative;
 }
 
-:host([_minimal]) .ui5-li-tree-toggle-box {
-	width: 0;
-	min-width: 0;
-}
-
-:host([_minimal]) .ui5-li-icon {
-	padding: 0;
-}
-
-:host([_minimal]) .ui5-li-content {
-	justify-content: center;
-}
-
-:host([_minimal]) .ui5-li-root-tree {
-	padding: 0;
-}
-
-:host([_minimal][show-toggle-button])::after {
-	display: var(--_ui5-tree-item-minimal-children-indicator-display);
-	content: "";
-	width: 0;
-	height: 0;
-	border-left: 0.375rem solid transparent;
-	border-bottom: .375rem solid var(--sapContent_NonInteractiveIconColor);
-	position: absolute;
-	right: 0.1875rem;
-	bottom: 0.125rem;
-}
-
 .ui5-li-tree-text-wrapper {
 	flex: auto;
-}
-
-:host([_minimal]) .ui5-li-text-wrapper {
-	display: none;
 }
 
 .ui5-li-root-tree {
@@ -121,10 +88,6 @@ is the .ui5-li-root and not the host. The host height expands to fill subtree */
 }
 :host([selected]) .ui5-li-root {
     background: var(--sapList_SelectionBackgroundColor);
-}
-
-:host([_minimal][selected]) .ui5-li-root {
-	background: var(--_ui5-tree-item-minimal-background);
 }
 
 :host([has-border]) {
