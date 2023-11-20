@@ -1,8 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
-import type { IOption } from "./Select.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 // Template
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
@@ -11,6 +10,7 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
 import type { AccessibilityAttributes } from "./ListItem.js";
+import { ISelectMenuOption } from "./Interfaces.js";
 
 /**
  * @class
@@ -30,6 +30,7 @@ import type { AccessibilityAttributes } from "./ListItem.js";
  * @implements {ISelectMenuOption}
  * @public
  * @since 1.17.0
+ * @slot {Array<Node>} default  Defines the content of the component.
  */
 @customElement({
 	tag: "ui5-select-menu-option",
@@ -38,7 +39,7 @@ import type { AccessibilityAttributes } from "./ListItem.js";
 	template: CustomListItemTemplate,
 	dependencies: [],
 })
-class SelectMenuOption extends CustomListItem implements IOption {
+class SelectMenuOption extends CustomListItem implements ISelectMenuOption {
 	/**
 	 * Defines the text, displayed inside the <code>ui5-select</code> input filed
 	 * when the option gets selected.
@@ -86,18 +87,17 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	navigated!: boolean;
 
 	/**
-	 * Defines the content of the component.
-	 * <br><br>
-	 *
-	 * @public
-	 */
-
-	/**
 	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
 	 *
 	 * @public
 	 * @deprecated
 	 */
+	@slot()
+	deleteButton!: Array<HTMLElement>;
+
+	get stableDomRef() {
+		return "";
+	}
 
 	get _accInfo() {
 		const accInfoSettings = {

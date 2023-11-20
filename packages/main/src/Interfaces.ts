@@ -1,3 +1,7 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { AccessibilityAttributes } from "./ListItem.js";
+import ListItemType from "./types/ListItemType.js";
+
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
@@ -10,11 +14,14 @@ const IAvatar = "sap.ui.webc.main.IAvatar";
 /**
  * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
  *
- * @name sap.ui.webc.main.IBreadcrumbsItem
- * @interface
  * @public
  */
-const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
+interface IBreadcrumbsItem {
+	href: string,
+	target?: string,
+	accessibleName: string,
+	text: Array<Node>,
+ }
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -127,20 +134,32 @@ const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
- * @name sap.ui.webc.main.ISelectOption
- * @interface
  * @public
  */
-const ISelectOption = "sap.ui.webc.main.ISelectOption";
+interface ISelectOption extends UI5Element {
+	selected: boolean,
+	disabled: boolean,
+	title: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	_focused?: boolean,
+	focused?: boolean,
+	text?: Array<Node>,
+	stableDomRef: string,
+	displayText?: string,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
  *
- * @name sap.ui.webc.main.ISelectMenuOption
- * @interface
  * @public
  */
-const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
+interface ISelectMenuOption extends ISelectOption{
+	type: `${ListItemType}`,
+	accessibilityAttributes: AccessibilityAttributes,
+	navigated: boolean,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>

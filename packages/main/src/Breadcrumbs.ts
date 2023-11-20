@@ -20,7 +20,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
-import BreadcrumbsItem from "./BreadcrumbsItem.js";
+import IBreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
 	BREADCRUMBS_ARIA_LABEL,
@@ -47,7 +47,7 @@ import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
 import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js";
 
 type BreadcrumbsItemClickEventDetail = {
-	item: BreadcrumbsItem;
+	item: IBreadcrumbsItem;
 	altKey: boolean;
 	ctrlKey: boolean;
 	metaKey: boolean;
@@ -86,11 +86,7 @@ type FocusAdaptor = ITabbable & {
  * </ul>
  * <br>
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Breadcrumbs
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-breadcrumbs
- * @appenddocs sap.ui.webc.main.BreadcrumbsItem
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  */
@@ -103,7 +99,7 @@ type FocusAdaptor = ITabbable & {
 	styles: breadcrumbsCss,
 	staticAreaStyles: breadcrumbsPopoverCss,
 	dependencies: [
-		BreadcrumbsItem,
+		IBreadcrumbsItem,
 		Link,
 		Label,
 		ResponsivePopover,
@@ -117,7 +113,6 @@ type FocusAdaptor = ITabbable & {
  * Fires when a <code>BreadcrumbsItem</code> is clicked.
  * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
  *
- * @event sap.ui.webc.main.Breadcrumbs#item-click
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
@@ -142,9 +137,7 @@ class Breadcrumbs extends UI5Element {
 	 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
 	 * The last item contains only plain text and is not a link.
 	 *
-	 * @type {sap.ui.webc.main.types.BreadcrumbsDesign}
-	 * @name sap.ui.webc.main.Breadcrumbs.prototype.design
-	 * @defaultvalue "Standard"
+	 * @default "Standard"
 	 * @public
 	*/
 	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
@@ -153,9 +146,7 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
 	 *
-	 * @type {sap.ui.webc.main.types.BreadcrumbsSeparatorStyle}
-	 * @name sap.ui.webc.main.Breadcrumbs.prototype.separatorStyle
-	 * @defaultvalue "Slash"
+	 * @default "Slash"
 	 * @public
 	 */
 	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
@@ -164,8 +155,7 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Holds the number of items in the overflow.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
@@ -176,19 +166,16 @@ class Breadcrumbs extends UI5Element {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
-	 * @type {sap.ui.webc.main.IBreadcrumbsItem[]}
-	 * @name sap.ui.webc.main.Breadcrumbs.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<BreadcrumbsItem>;
+	items!: Array<IBreadcrumbsItem>;
 
 	_itemNavigation: ItemNavigation
 	_onResizeHandler: ResizeObserverCallback;
 
 	// maps items to their widths
-	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
+	_breadcrumbItemWidths = new WeakMap<IBreadcrumbsItem, number>();
 	// the width of the interactive element that opens the overflow
 	_dropdownArrowLinkWidth = 0;
 	responsivePopover?: ResponsivePopover;
@@ -221,7 +208,7 @@ class Breadcrumbs extends UI5Element {
 
 	onInvalidation(changeInfo: ChangeInfo) {
 		if (changeInfo.reason === "childchange") {
-			const itemIndex = this._getItems().indexOf(changeInfo.child as BreadcrumbsItem),
+			const itemIndex = this._getItems().indexOf(changeInfo.child as IBreadcrumbsItem),
 				isInOverflow = itemIndex < this._overflowSize;
 			if (isInOverflow) {
 				// the content of an overflowing item has changed
@@ -233,7 +220,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getItems() {
-		return this.getSlottedNodes<BreadcrumbsItem>("items");
+		return this.getSlottedNodes<IBreadcrumbsItem>("items");
 	}
 
 	onBeforeRendering() {
@@ -468,11 +455,11 @@ class Breadcrumbs extends UI5Element {
 		this.responsivePopover.showAt(this._dropdownArrowLink);
 	}
 
-	_isItemVisible(item: BreadcrumbsItem) {
+	_isItemVisible(item: IBreadcrumbsItem) {
 		return !item.hidden && this._hasVisibleContent(item);
 	}
 
-	_hasVisibleContent(item: BreadcrumbsItem) {
+	_hasVisibleContent(item: IBreadcrumbsItem) {
 		// the check is not complete but may be extended in the future if needed to cover
 		// cases besides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !(child as HTMLElement).hidden);
@@ -488,7 +475,7 @@ class Breadcrumbs extends UI5Element {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
 	}
 
-	_getItemAccessibleName(item: BreadcrumbsItem, position: number, size: number) {
+	_getItemAccessibleName(item: IBreadcrumbsItem, position: number, size: number) {
 		const positionText = this._getItemPositionText(position, size);
 		const itemsText = item.textContent || "";
 
