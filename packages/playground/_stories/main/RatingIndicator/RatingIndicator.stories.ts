@@ -32,13 +32,14 @@ const Template: UI5StoryArgs<RatingIndicator, StoryArgsSlots> = (args) => html`
 	?disabled="${ifDefined(args.disabled)}"
 	?readonly="${ifDefined(args.readonly)}"
 	?required="${ifDefined(args.required)}"
+	tooltip="${ifDefined(args.tooltip)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 ></ui5-rating-indicator>`;
 
 export const Basic = Template.bind({});
 Basic.args = {
-	value: 3.7
+	value: 4
 };
 
 export const MaxValue = Template.bind({});

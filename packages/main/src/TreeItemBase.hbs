@@ -9,7 +9,7 @@
 		class="ui5-li-tree-toggle-box"
 		style="{{styles.preContent}}"
 	>
-		{{#if _showToggleButtonBeginning}}
+		{{#if showToggleButton}}
 			<ui5-icon
 				part="toggle-icon"
 				class="ui5-li-tree-toggle-icon"
@@ -30,17 +30,6 @@
 {{#*inline "iconBegin"}}
 	{{#if icon}}
 		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
-	{{/if}}
-{{/inline}}
-
-{{#*inline "iconEnd"}}
-	{{#if _showToggleButtonEnd}}
-		<ui5-icon
-			part="toggle-icon"
-			class="ui5-li-tree-toggle-icon"
-			name="{{_toggleIconName}}"
-			@click="{{_toggleClick}}"
-		></ui5-icon>
 	{{/if}}
 {{/inline}}
 

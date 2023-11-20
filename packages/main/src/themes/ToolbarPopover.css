@@ -11,6 +11,9 @@
 
 .ui5-tb-popover-item {
 	width: 100%;
+}
+
+.ui5-tb-popover-item:not(:last-child) {
 	margin-bottom: 0.25rem;
 }
 

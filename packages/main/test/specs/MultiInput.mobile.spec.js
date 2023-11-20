@@ -2,7 +2,7 @@ import { assert } from "chai";
 
 const getTokenizerPopoverId = async (inputId) => {
 	return await browser.executeAsync(async (inputId, done) => {
-		const input = document.querySelector(`#${inputId}`);
+		const input = document.querySelector(`[id="${inputId}"]`);
 		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
 
 		done(staticAreaItem.host.classList[0]);

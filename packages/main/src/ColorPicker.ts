@@ -412,9 +412,9 @@ class ColorPicker extends UI5Element {
 	_calculateColorFromCoordinates(x: number, y: number) {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
-
 		// 0 ≤ H < 360
-		const h = this._hue / 4.25;
+		// 4.251 because with 4.25 we get out of the colors range.
+		const h = this._hue / 4.251;
 
 		// 0 ≤ S ≤ 1
 		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
