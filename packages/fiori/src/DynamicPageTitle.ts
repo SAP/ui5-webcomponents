@@ -8,6 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
+import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 
 // Template
 import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
@@ -75,6 +76,8 @@ class DynamicPageTitle extends UI5Element {
 	mobileNavigationActions!: boolean;
 
 	_handleResize: ResizeObserverCallback;
+	minContentWidth?: number;
+	minActionsWidth?: number;
 
 	constructor() {
 		super();
@@ -136,6 +139,17 @@ class DynamicPageTitle extends UI5Element {
 		};
 	}
 
+	get styles() {
+		return {
+			content: {
+				"min-width": `${this.minContentWidth || 0}px`,
+			},
+			actions: {
+				"min-width": `${this.minActionsWidth || 0}px`,
+			},
+		};
+	}
+
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
 	}
@@ -161,6 +175,15 @@ class DynamicPageTitle extends UI5Element {
 
 	handleResize() {
 		this.mobileNavigationActions = this.offsetWidth < 1280;
+	}
+
+	onMinContentWidthChange(event: CustomEvent<ToolbarMinWidthChangeEventDetail>) {
+		const slotName = (<HTMLElement>event.target)?.assignedSlot?.name;
+		if (!slotName || slotName === "content") {
+			this.minContentWidth = event.detail.minWidth;
+		} else if (slotName === "actions") {
+			this.minActionsWidth = event.detail.minWidth;
+		}
 	}
 }
 
