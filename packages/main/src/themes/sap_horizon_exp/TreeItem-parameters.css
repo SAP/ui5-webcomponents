@@ -1,6 +1,0 @@
-@import "../base/TreeItem-parameters.css";
-
-:root {
-	--_ui5-tree-item-minimal-background: 0 100% / 100% 0.125rem no-repeat linear-gradient(0deg, var(--sapList_SelectionBorderColor), var(--sapList_SelectionBorderColor)), var(--sapList_SelectionBackgroundColor);
-	--_ui5-tree-item-minimal-children-indicator-display: none;
-}
