@@ -281,6 +281,8 @@ class Popover extends Popup {
 	}
 
 	onAfterRendering() {
+		super.onAfterRendering();
+
 		if (!this.isOpen() && this.open) {
 			let opener;
 
@@ -406,8 +408,12 @@ class Popover extends Popup {
 	}
 
 	_show() {
-		let placement;
+		if (!this.opened) {
+			this._showOutsideViewport();
+		}
+
 		const popoverSize = this.getPopoverSize();
+		let placement;
 
 		if (popoverSize.width === 0 || popoverSize.height === 0) {
 			// size can not be determined properly at this point, popover will be shown with the next reposition
@@ -463,7 +469,6 @@ class Popover extends Popup {
 			top: `${top}px`,
 			left: `${left}px`,
 		});
-		super._show();
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
@@ -488,19 +493,19 @@ class Popover extends Popup {
 	}
 
 	getPopoverSize(): PopoverSize {
-		if (!this.opened) {
-			Object.assign(this.style, {
-				display: "block",
-				top: "-10000px",
-				left: "-10000px",
-			});
-		}
-
 		const rect = this.getBoundingClientRect(),
 			width = rect.width,
 			height = rect.height;
 
 		return { width, height };
+	}
+
+	_showOutsideViewport() {
+		Object.assign(this.style, {
+			display: this._displayProp,
+			top: "-10000px",
+			left: "-10000px",
+		});
 	}
 
 	get arrowDOM() {

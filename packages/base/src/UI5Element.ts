@@ -76,7 +76,7 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 
 	this._changedState.push(changeInfo);
 	renderDeferred(this);
-	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
+	this._invalidationEventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
 
 /**
@@ -93,7 +93,8 @@ abstract class UI5Element extends HTMLElement {
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
-	_eventProvider: EventProvider<InvalidationInfo, void>;
+	_invalidationEventProvider: EventProvider<InvalidationInfo, void>;
+	_componentStateFinalizedEventProvider: EventProvider<void, void>;
 	_inDOM: boolean;
 	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
@@ -101,7 +102,6 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	_onComponentStateFinalized?: () => void;
 	_getRealDomRef?: () => HTMLElement;
 
 	staticAreaItem?: StaticAreaItem;
@@ -126,7 +126,8 @@ abstract class UI5Element extends HTMLElement {
 		this._fullyConnected = false; // A flag telling whether the UI5Element's onEnterDOM hook was called (since it's possible to have the element removed from DOM before that)
 		this._childChangeListeners = new Map(); // used to store lazy listeners per slot for the child change event of every child inside that slot
 		this._slotChangeListeners = new Map(); // used to store lazy listeners per slot for the slotchange event of all slot children inside that slot
-		this._eventProvider = new EventProvider(); // used by parent components for listening to changes to child components
+		this._invalidationEventProvider = new EventProvider(); // used by parent components for listening to changes to child components
+		this._componentStateFinalizedEventProvider = new EventProvider(); // used by friend classes for synchronization
 		let deferredResolve;
 		this._domRefReadyPromise = new Promise(resolve => {
 			deferredResolve = resolve;
@@ -441,7 +442,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	attachInvalidate(callback: (param: InvalidationInfo) => void) {
-		this._eventProvider.attachEvent("invalidate", callback);
+		this._invalidationEventProvider.attachEvent("invalidate", callback);
 	}
 
 	/**
@@ -451,7 +452,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	detachInvalidate(callback: (param: InvalidationInfo) => void) {
-		this._eventProvider.detachEvent("invalidate", callback);
+		this._invalidationEventProvider.detachEvent("invalidate", callback);
 	}
 
 	/**
@@ -673,9 +674,7 @@ abstract class UI5Element extends HTMLElement {
 		this.onBeforeRendering();
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		if (this._onComponentStateFinalized) {
-			this._onComponentStateFinalized();
-		}
+		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
 
 		// resume normal invalidation handling
 		this._suppressInvalidation = false;
@@ -859,6 +858,26 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	getSlottedNodes<T = Node>(slotName: string) {
 		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]) as Array<T>;
+	}
+
+	/**
+	 * Attach a callback that will be executed whenever the component's state is finalized
+	 *
+	 * @param {} callback
+	 * @public
+	 */
+	attachComponentStateFinalized(callback: () => void) {
+		this._componentStateFinalizedEventProvider.attachEvent("componentStateFinalized", callback);
+	}
+
+	/**
+	 * Detach the callback that is executed whenever the component's state is finalized
+	 *
+	 * @param {} callback
+	 * @public
+	 */
+	detachComponentStateFinalized(callback: () => void) {
+		this._componentStateFinalizedEventProvider.detachEvent("componentStateFinalized", callback);
 	}
 
 	/**
@@ -1118,7 +1137,7 @@ abstract class UI5Element extends HTMLElement {
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = isTagRegistered(tag);
-		const definedGlobally = customElements.get(tag);
+		const definedGlobally = window.customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
 			recordTagRegistrationFailure(tag);

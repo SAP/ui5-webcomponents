@@ -9,7 +9,7 @@
 </head>
 
 <body class="icon1auto">
-	<ui5-toggle-button id="themeToggle">Horizon</ui5-toggle-button>
+	<ui5-toggle-button id="themeToggle">Quartz</ui5-toggle-button>
 
 	<div>SAPIcons auto ("home")</div>
 	<ui5-icon name="home"></ui5-icon>
@@ -72,7 +72,7 @@
 		themeToggle.addEventListener("click", event => {
 			const pressed = event.target.pressed;
 
-			window["sap-ui-webcomponents-bundle"].configuration.setTheme(pressed ? "sap_horizon" : "sap_fiori_3");
+			window["sap-ui-webcomponents-bundle"].configuration.setTheme(pressed ? "sap_fiori_3" : "sap_horizon");
 			event.target.innerHTML = pressed ? "Quartz" : "Horizon"
 		});
 	</script>

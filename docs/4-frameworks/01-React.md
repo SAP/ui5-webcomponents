@@ -2,7 +2,7 @@
 
 In this tutorial, you will learn how to add UI5 Web Components to your application. You can add UI5 Web Components both to new React applications and to already existing ones.
 
-**Important:** The get the best development experience, we recommend using the [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and follow the [UI5 Web Components for React Тutorial](https://developers.sap.com/mission.react-spa.html). UI5 Web Components for React library is a React implementation of UI5 Web Components which overcomes several limitations of React in handling web components in general, explained in the "Additional Info" section below.
+**Important:** To get the best development experience, we recommend using the [UI5 Web Components for React](https://github.com/SAP/ui5-webcomponents-react) and follow the [UI5 Web Components for React Тutorial](https://developers.sap.com/mission.react-spa.html). UI5 Web Components for React library is a React implementation of UI5 Web Components which overcomes several limitations of React in handling web components in general, explained in the "Additional Info" section below.
 
 Here are the steps to use pure UI5 Web Components in React:
 

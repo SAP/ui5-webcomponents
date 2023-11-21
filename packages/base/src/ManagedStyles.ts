@@ -105,16 +105,18 @@ const updateStyle = (data: StyleData, name: string, value = "", theme?: string) 
 	}
 };
 
-const hasStyle = (name: string, value = "") => {
+const hasStyle = (name: string, value = ""): boolean => {
 	if (shouldUseLinks()) {
 		return !!document.querySelector(`head>link[${name}="${value}"]`);
 	}
 
+	const styleElement = document.querySelector(`head>style[${name}="${value}"]`);
+
 	if (document.adoptedStyleSheets && !isSafari()) {
-		return !!document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
+		return !!styleElement || !!document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
 	}
 
-	return !!document.querySelector(`head>style[${name}="${value}"]`);
+	return !!styleElement;
 };
 
 const removeStyle = (name: string, value = "") => {
