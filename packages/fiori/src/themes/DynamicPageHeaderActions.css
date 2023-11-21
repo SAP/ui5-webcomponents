@@ -11,6 +11,7 @@
 		height: 1.5rem;
 		background-color: var(--sapObjectHeader_Background);
 		border: 1px solid var(--sapButton_BorderColor);
+		box-shadow: var(--sapContent_Shadow0);
 	}
 
 	.ui5-dynamic-page-header-actions--wrapper {
@@ -22,20 +23,21 @@
 		&:after {
 			content: "";
 			position: absolute;
-			top: calc(50% - 0.02rem);
-			width: 8rem;
-			height: 0.04rem;
+			top: 50%;
+			transform: translate(0, -100%);
+			width: 6.125rem;
+			height: 0.0625rem;
 			z-index: 0;
 		}
 
 		&:before {
 			right: 50%;
-			background: linear-gradient(to right, transparent, black);
+			background: linear-gradient(to right, transparent, var(--sapObjectHeader_BorderColor));
 		}
 
 		&::after {
 			left: 50%;
-			background: linear-gradient(to left, transparent, black);
+			background: linear-gradient(to left, transparent, var(--sapObjectHeader_BorderColor));
 		}
 	}
 }

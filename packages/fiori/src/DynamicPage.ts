@@ -101,6 +101,16 @@ class DynamicPage extends UI5Element {
 		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
 	}
 
+	get actionsInTitle(): boolean {
+		return this.headerSnapped || this.showHeaderInStickArea || this.headerPinned;
+	}
+	get headerInTitle(): boolean {
+		return !this.headerSnapped && (this.showHeaderInStickArea || this.headerPinned);
+	}
+	get headerInContent(): boolean {
+		return !this.headerSnapped && !this.headerInTitle;
+	}
+
 	snapOnScroll() {
 		this._debounce(() => {
 			if (!this.dynamicPageTitle || !this.dynamicPageHeader) {
@@ -136,6 +146,7 @@ class DynamicPage extends UI5Element {
 		}
 
 		this.isExpanding = true;
+		this.headerPinned = false;
 	}
 
 	onPinClick() {

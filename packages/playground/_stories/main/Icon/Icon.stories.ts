@@ -40,19 +40,8 @@ Basic.args = {
 	name: "activities",
 };
 
-export const FioriToolsIcons = Template.bind({});
-FioriToolsIcons.args = {
-	name: "tnt/antenna",
-};
-
 export const Customized = Template.bind({});
 Customized.args = {
-	name: "employee",
+	name: "tnt/antenna",
 	style: "width: 3rem; height: 3rem; font-size: 1.5rem; color: crimson; background-color: #fafafa",
-};
-
-export const SemanticDesign = Template.bind({});
-SemanticDesign.args = {
-	name: "employee",
-	design: IconDesign.Positive,
 };

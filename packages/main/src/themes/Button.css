@@ -54,7 +54,6 @@
 :host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
 :host(:not([hidden]):not([disabled]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
-	box-shadow: var(--sapContent_Interaction_Shadow);
 	border: 1px solid var(--sapButton_Hover_BorderColor);
 	color: var(--sapButton_Hover_TextColor);
 }
@@ -168,7 +167,6 @@ bdi {
 :host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border-color: var(--sapButton_Accept_Hover_BorderColor);
-	box-shadow: var(--sapContent_Positive_Shadow);
 	color: var(--sapButton_Accept_Hover_TextColor);
 }
 
@@ -189,7 +187,6 @@ bdi {
 :host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border-color: var(--sapButton_Reject_Hover_BorderColor);
-	box-shadow: var(--sapContent_Negative_Shadow);
 	color: var(--sapButton_Reject_Hover_TextColor);
 }
 
@@ -211,7 +208,6 @@ bdi {
 	background-color: var(--sapButton_Attention_Hover_Background);
 	border-color: var(--sapButton_Attention_Hover_BorderColor);
 	color: var(--sapButton_Attention_Hover_TextColor);
-	box-shadow: var(--sapContent_Critical_Shadow)
 }
 
 :host([ui5-button][design="Attention"][active]:not([non-interactive])) {
@@ -225,7 +221,7 @@ bdi {
 	border-color: var(--sapButton_Emphasized_BorderColor);
 	border-width: var(--_ui5_button_emphasized_border_width);
 	color: var(--sapButton_Emphasized_TextColor);
-	font-weight: var(--_ui5_button_emphasized_font_weight);
+	font-weight: var(--sapButton_Emphasized_FontWeight);
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
@@ -235,7 +231,6 @@ bdi {
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
 	border-width: var(--_ui5_button_emphasized_border_width);
 	color: var(--sapButton_Emphasized_Hover_TextColor);
-	box-shadow: none;
 }
 
 :host([ui5-button][design="Empasized"][active]:not([non-interactive])) {
@@ -245,8 +240,13 @@ bdi {
 }
 
 :host([design="Emphasized"][focused]) .ui5-button-root:after {
-	border-color: var(--sapContent_ContrastFocusColor);
+	border-color: var(--_ui5_button_emphasized_focused_border_color);
 	outline: none;
+}
+
+/* Belize related */
+:host([design="Emphasized"][focused][active]:not([non-interactive])) .ui5-button-root:after {
+	border-color: var(--_ui5_button_emphasized_focused_active_border_color);
 }
 
 :host([design="Transparent"]) {
@@ -260,7 +260,6 @@ bdi {
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
-	box-shadow: var(--sapContent_Interaction_Shadow);
 	color: var(--sapButton_Lite_Hover_TextColor);
 }
 

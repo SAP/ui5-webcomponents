@@ -11,7 +11,7 @@ describe("Theming works", () => {
 			const bundle = window['sap-ui-webcomponents-bundle'];
 			const dataPropAttr = `data-ui5-component-properties-${bundle.getCurrentRuntimeIndex()}`;
 			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`).cssRules[0].cssText
-			done(style && style.includes("--var1: red")); // see test/assets/Themes.js
+			done(style && style.includes("--var1: grey")); // see test/assets/Themes.js
 		});
 
 		assert.strictEqual(res, true, "The fiori3 vars are found");
@@ -42,7 +42,7 @@ describe("Theming works", () => {
 			const bundle = window['sap-ui-webcomponents-bundle'];
 			const dataPropAttr = `data-ui5-component-properties-${bundle.getCurrentRuntimeIndex()}`;
 			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`).cssRules[0].cssText
-			const varsFound = style && style.includes("--var1: red"); // "red" for fiori3 - see test/assets/Themes.js
+			const varsFound = style && style.includes("--var1: grey"); // "grey" for horizon - see test/assets/Themes.js
 			done(varsFound);
 		});
 

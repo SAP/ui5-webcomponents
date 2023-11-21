@@ -300,9 +300,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 * <br><br>
-	 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
-	 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 	 *
 	 * @type {sap.ui.webc.main.types.ListMode}
 	 * @name sap.ui.webc.main.List.prototype.mode
@@ -325,14 +322,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the item separator style that is used.
-	 * <br><br>
-	 * <b>Notes:</b>
-	 * <ul>
-	 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
-	 * <li>When set to <code>None</code>, none of the items are separated by horizontal lines.</li>
-	 * <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last
-	 * item doesn't have a bottom separator.</li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.ListSeparators}
 	 * @name sap.ui.webc.main.List.prototype.separators
@@ -346,17 +335,6 @@ class List extends UI5Element {
 	 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
 	 * or via user scroll. In both cases <code>load-more</code> event is fired.
 	 * <br><br>
-	 *
-	 * Available options:
-	 * <br><br>
-	 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the list,
-	 * pressing of which triggers the <code>load-more</code> event.
-	 * <br>
-	 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the list;
-	 * <br>
-	 * <code>None</code> (default) - The growing is off.
-	 * <br><br>
-	 *
 	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 	 * on IE the component will fallback to <code>growing="Button"</code>.
 	 * @type {sap.ui.webc.main.types.ListGrowingMode}
@@ -618,14 +596,16 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelModeText(): string {
-		if (this.isMultiSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
-		}
-		if (this.isSingleSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
-		}
-		if (this.isDelete) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+		if (this.hasData) {
+			if (this.isMultiSelect) {
+				return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
+			}
+			if (this.isSingleSelect) {
+				return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
+			}
+			if (this.isDelete) {
+				return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+			}
 		}
 
 		return "";
@@ -947,6 +927,11 @@ class List extends UI5Element {
 		return afterElement && afterElement.id === elementId;
 	}
 
+	onItemTabIndexChange(e: CustomEvent) {
+		const target = e.target as ListItemBase;
+		this._itemNavigation.setCurrentItem(target);
+	}
+
 	onItemFocused(e: CustomEvent) {
 		const target = e.target as ListItemBase;
 
@@ -1041,7 +1026,7 @@ class List extends UI5Element {
 	}
 
 	getGrowingButton() {
-		return this.shadowRoot!.querySelector(`#${this._id}-growing-btn`) as HTMLElement;
+		return this.shadowRoot!.querySelector(`[id="${this._id}-growing-btn"]`) as HTMLElement;
 	}
 
 	/**
@@ -1127,14 +1112,14 @@ class List extends UI5Element {
 
 	getAfterElement() {
 		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot!.querySelector(`#${this._id}-after`) as HTMLElement;
+			this._afterElement = this.shadowRoot!.querySelector(`[id="${this._id}-after"]`) as HTMLElement;
 		}
 		return this._afterElement;
 	}
 
 	getBeforeElement() {
 		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot!.querySelector(`#${this._id}-before`) as HTMLElement;
+			this._beforeElement = this.shadowRoot!.querySelector(`[id="${this._id}-before"]`) as HTMLElement;
 		}
 		return this._beforeElement;
 	}

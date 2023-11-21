@@ -97,6 +97,11 @@
 
 		<br>
 		<br>
+		<h1 class="sample-container-title">Multi Input show wrapping</h1>
+		<ui5-multi-input>
+			<ui5-token slot="tokens" text="Item that does not wrap"></ui5-token>
+			<ui5-token slot="tokens" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum" slot="tokens"></ui5-token>
+		</ui5-multi-input>
 
 		<span id="basic-event-listener"></span>
 	</div>
@@ -284,6 +289,17 @@
 				<ui5-button>Cancel</ui5-button>
 			</div>
 		</ui5-dialog>
+	</div>
+
+	<div class="sample-container">
+		<h1>Suggestions + showing wrapping</h1>
+
+		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-wrapping">
+			<ui5-suggestion-item text="Lorem ipsum Text"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id justo sed nisl consequat tincidunt. Vivamus tincidunt, sapien a tincidunt consequat, leo libero lacinia justo, a lacinia orci enim vel justo. Integer ultricies ex eu eros luctus, eu cursus nisl volutpat."></ui5-suggestion-item>
+			<ui5-suggestion-item text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea."></ui5-suggestion-item>
+			<ui5-suggestion-item text="Longest text in the world" ></ui5-suggestion-item>
+		</ui5-multi-input>
 	</div>
 
 	<div class="sample-container">

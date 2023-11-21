@@ -20,6 +20,7 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @tagname ui5-toolbar-spacer
  * @abstract
  * @since 1.17.0
+ * @implements sap.ui.webc.main.IToolbarItem
  * @public
  */
 @customElement({

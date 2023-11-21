@@ -81,7 +81,7 @@ class TreeItem extends TreeItemBase {
 	additionalTextState!: `${ValueState}`;
 
 	get _showTitle() {
-		return this.text.length && !this._minimal;
+		return this.text.length;
 	}
 }
 

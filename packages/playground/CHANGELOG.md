@@ -3,6 +3,115 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
+
+
+### Features
+
+* **ui5-illustrated-message:** titleLevel property added ([#7771](https://github.com/SAP/ui5-webcomponents/issues/7771)) ([2883c58](https://github.com/SAP/ui5-webcomponents/commit/2883c587f367e51e0f08065498b990f86e60e88c)), closes [#7037](https://github.com/SAP/ui5-webcomponents/issues/7037)
+
+
+
+
+
+# [1.20.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.20.0-rc.0) (2023-11-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.19.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.3...v1.19.0) (2023-11-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.19.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.2...v1.19.0-rc.3) (2023-11-02)
+
+
+### Features
+
+* **framework:** switch default theme from Quartz Light to Morning Ho… ([#7749](https://github.com/SAP/ui5-webcomponents/issues/7749)) ([10dadd7](https://github.com/SAP/ui5-webcomponents/commit/10dadd79e3a93daf29baaed3a5bcebd8c66a0940))
+
+
+
+
+
+# [1.19.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.1...v1.19.0-rc.2) (2023-10-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
+
+
+### Features
+
+* **ui5-combobox:** add attribute `no-typeahead` ([#7692](https://github.com/SAP/ui5-webcomponents/issues/7692)) ([4714835](https://github.com/SAP/ui5-webcomponents/commit/4714835990da6858f47462534b46978a9b0c65fc))
+* **ui5-rating-indicator:** introduce tooltip property ([#7687](https://github.com/SAP/ui5-webcomponents/issues/7687)) ([f2668b6](https://github.com/SAP/ui5-webcomponents/commit/f2668b6889259c7295b06fe47f846b434510f671))
+
+
+
+
+
+# [1.19.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.1-rc.0...v1.19.0-rc.0) (2023-10-12)
+
+
+### Bug Fixes
+
+* **ui5-page:** adjust Horizon themes ([#7685](https://github.com/SAP/ui5-webcomponents/issues/7685)) ([39ccfe6](https://github.com/SAP/ui5-webcomponents/commit/39ccfe63d07b74bb50eb46a419de34fa1461bc6c))
+
+
+
+
+
+## [1.18.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0...v1.18.1-rc.0) (2023-10-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.18.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.2...v1.18.0) (2023-10-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.18.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.1...v1.18.0-rc.2) (2023-09-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.18.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.0...v1.18.0-rc.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* **ui5-input,ui5-page,ui5-rating-indicator,ui5-slider,ui5-textarea:** improve samples names ([#7588](https://github.com/SAP/ui5-webcomponents/issues/7588)) ([202ac76](https://github.com/SAP/ui5-webcomponents/commit/202ac768dd824bd5eea1cb8e4fc3e30301ab6f3b))
+
+
+### Features
+
+* **ui5-combobox, ui5-multi-combo-box, ui5-input, ui5-multi-input:** add wrapping in suggestions and n-more ([#7509](https://github.com/SAP/ui5-webcomponents/issues/7509)) ([21528a0](https://github.com/SAP/ui5-webcomponents/commit/21528a0ae5f3cec84d30362eba79bb6fa08a75d4))
+
+
+
+
+
 # [1.18.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.18.0-rc.0) (2023-09-07)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

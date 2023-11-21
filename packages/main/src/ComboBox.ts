@@ -227,6 +227,18 @@ class ComboBox extends UI5Element {
 	value!: string;
 
 	/**
+	 * Defines whether the value will be autocompleted to match an item
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ComboBox.prototype.noTypeahead
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.19.0
+	 */
+	@property({ type: Boolean })
+	noTypeahead!: boolean;
+
+	/**
 	 * Defines the "live" value of the component.
 	 * <br><br>
 	 * <b>Note:</b> If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
@@ -656,7 +668,7 @@ class ComboBox extends UI5Element {
 			"historyUndo",
 		];
 
-		return !allowedEventTypes.includes(eventType);
+		return !this.noTypeahead && !allowedEventTypes.includes(eventType);
 	}
 
 	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
@@ -757,6 +769,7 @@ class ComboBox extends UI5Element {
 
 		if (this.focused && indexOfItem === -1 && this.hasValueStateText && isOpen) {
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			this.focused = false;
 			return;
 		}
@@ -780,6 +793,7 @@ class ComboBox extends UI5Element {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			this._filteredItems[0].selected = false;
 			return;
 		}
@@ -803,6 +817,7 @@ class ComboBox extends UI5Element {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			return;
 		}
 
@@ -826,6 +841,7 @@ class ComboBox extends UI5Element {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
+			this._announceValueStateText();
 			return;
 		}
 
@@ -1048,15 +1064,24 @@ class ComboBox extends UI5Element {
 
 	_announceSelectedItem(indexOfItem: number) {
 		const currentItem = this._filteredItems[indexOfItem];
+		const nonGroupItems = this._filteredItems.filter(item => !item.isGroupItem);
 		const currentItemAdditionalText = currentItem.additionalText || "";
 		const isGroupItem = currentItem?.isGroupItem;
-		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
+		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, nonGroupItems.indexOf(currentItem) + 1, nonGroupItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {
 			announce(`${groupHeaderText} ${currentItem.text}`, InvisibleMessageMode.Polite);
 		} else {
 			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), InvisibleMessageMode.Polite);
+		}
+	}
+
+	_announceValueStateText() {
+		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
+
+		if (valueStateText) {
+			announce(valueStateText, InvisibleMessageMode.Polite);
 		}
 	}
 

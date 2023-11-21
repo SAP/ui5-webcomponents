@@ -105,18 +105,6 @@ class Button extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
 	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Default</code></li>
-	 * <li><code>Emphasized</code></li>
-	 * <li><code>Positive</code></li>
-	 * <li><code>Negative</code></li>
-	 * <li><code>Transparent</code></li>
-	 * <li><code>Attention</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.main.types.ButtonDesign}
 	 * @name sap.ui.webc.main.Button.prototype.design
 	 * @defaultvalue "Default"
@@ -252,15 +240,6 @@ class Button extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the button has special form-related functionality.
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Button</code></li>
-	 * <li><code>Submit</code></li>
-	 * <li><code>Reset</code></li>
-	 * </ul>
 	 *
 	 * <br><br>
 	 * <b>Note:</b> For the <code>type</code> property to have effect, you must add the following import to your project:

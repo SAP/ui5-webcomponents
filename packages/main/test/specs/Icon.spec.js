@@ -66,19 +66,19 @@ describe("Icon general interaction", () => {
 		// assert - initial SVG path
 		const iconPath = await browser.$("#myIcon").shadow$(".ui5-icon-root path");
 		const pathValue = await iconPath.getAttribute("d");
-		assert.ok(pathValue.startsWith(V4_PATH_START), "Icon's path in sap_fiori_3");
+		assert.ok(pathValue.startsWith(V5_PATH_START), "Icon's path in sap_horizon.");
 
 		// act - switch theme
 		await browser.executeAsync( async (newTheme, done) => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			await config.setTheme(newTheme);
 			done();
-		}, "sap_horizon");
+		}, "sap_fiori_3");
 
 		// assert - SVG path changed
 		const iconPathAfter = await browser.$("#myIcon").shadow$(".ui5-icon-root path");
 		const iconPathValueAfter = await iconPathAfter.getAttribute("d");
-		assert.ok(iconPathValueAfter.startsWith(V5_PATH_START), "Icon's path changed in sap_horizon.");
+		assert.ok(iconPathValueAfter.startsWith(V4_PATH_START), "Icon's path changed in sap_fiori_3.");
 	});
 
 	it("Tests icon modules' exported values", async () => {
