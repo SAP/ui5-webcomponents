@@ -1,7 +1,7 @@
 .ui5-form-root {
 	display: flex;
 	flex-direction: column;
-	background-color: #fff;
+	background-color: var(--sapGroup_ContentBackground);
     border-radius: 0.75rem;
 	container-type: inline-size;
 }
@@ -10,35 +10,85 @@
 	display: flex;
 	height: 2.75rem;
 	align-items: center;
-	border-bottom: 1px solid #a8b3bd;
+	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 	padding: 0 1rem 0 1rem;
 }
 
 .ui5-form-layout {
 	display: grid;
+	column-gap: 0.5rem;
+	row-gap: 0.125rem;
 	padding: 1rem 0.75rem;
+	/* (XL - max. 4 columns, L - max. 3 columns, M - max. 2 columns and S - 1 column.) */
 }
 
+::slotted([ui5-label]) {
+	justify-self: end;
+}
+
+/* Two Column XL, L, One Column M, S */
 @container (max-width: 599px) {
 	.ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
-}
 
-@container (min-width: 600px) {
-	.ui5-form-layout {
-		grid-template-columns: 1fr;
+	::slotted([ui5-label]) {
+		justify-self: start;
+	}
+
+	::slotted(:nth-child(2n)){
+		margin-bottom: 0.5rem;
 	}
 }
 
-@container  (min-width: 1024px) {
+
+@container (min-width: 600px) {
 	.ui5-form-layout {
+		/* grid-template-columns: 1fr; */
 		grid-template-columns: 1fr 1fr;
+	}
+}
+@container (min-width: 1024px) {
+	:host([columnsM=2]) .ui5-form-layout {
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr 1fr 2fr;
+	}
+}
+
+@container (min-width: 1024px) {
+	:host([columnsL=1]) .ui5-form-layout {
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr;
+	}
+}
+@container (min-width: 1024px) {
+	.ui5-form-layout {
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr 1fr 2fr;
 	}
 }
 
 @container (min-width: 1440px) {
+	:host([columns-xl=1]) .ui5-form-layout {
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr;
+	}
+}
+@container (min-width: 1440px) {
 	.ui5-form-layout {
-		grid-template-columns: 1fr 1fr;
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr 1fr 2fr;
+	}
+}
+@container (min-width: 1440px) {
+	:host([columns-xl=3]) .ui5-form-layout {
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr;
+	}
+}
+@container (min-width: 1440px) {
+	:host([columns-xl=4]) .ui5-form-layout {
+		/* grid-template-columns: 1fr 1fr; */
+		grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr;
 	}
 }
