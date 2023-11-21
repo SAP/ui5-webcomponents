@@ -566,12 +566,19 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (this._validationTimeout) {
-			input.value = this._inputLastValue;
-			return;
+			if (e.inputType === "deleteContentBackward") {
+				this.valueState = oldValueState;
+			} else {
+				input.value = this._inputLastValue;
+				return;
+			}
 		}
 
 		if (!filteredItems.length && value && !this.allowCustomValues) {
-			input.value = this.valueBeforeAutoComplete || this._inputLastValue;
+			const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
+
+			input.value = newValue;
+			this.value = newValue;
 			this.valueState = ValueState.Error;
 
 			this._shouldAutocomplete = false;

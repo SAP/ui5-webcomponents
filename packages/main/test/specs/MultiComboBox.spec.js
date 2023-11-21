@@ -218,6 +218,34 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
+		it("tests if item is created when enter is pressed while validation is ongoing", async () => {
+			const mcb = await $("#mcb-validation");
+			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
+
+			await innerInput.click();
+			await innerInput.keys("c");
+			await innerInput.keys("c");
+			await innerInput.keys("Enter");
+
+			const tokens = await mcb.shadow$$("[ui5-token]");
+
+			assert.strictEqual(tokens.length, 0, "No Items are selected");
+		});
+
+		it("tests if deleting text is possible while validation is triggered", async () => {
+			const mcb = await $("#mcb-validation");
+			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
+
+			await innerInput.click();
+			await innerInput.keys("c");
+			await innerInput.keys("c");
+			await innerInput.keys("Backspace");
+			
+			const value = await mcb.getProperty("value");
+
+			assert.strictEqual(value, "", "Value should be deleted");
+		});
+
 		it("When item is clicked, the popover should be closed and the value in the input should be removed", async () => {
 			const input = await browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#another-mcb")
