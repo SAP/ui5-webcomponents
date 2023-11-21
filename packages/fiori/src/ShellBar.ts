@@ -184,6 +184,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 @event("notifications-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		targetRef: { type: HTMLElement },
 	},
 })
@@ -196,6 +199,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 @event("profile-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		targetRef: { type: HTMLElement },
 	},
 })
@@ -210,6 +216,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 @event("product-switch-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		targetRef: { type: HTMLElement },
 	},
 })
@@ -223,6 +232,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 @event("logo-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		targetRef: { type: HTMLElement },
 	},
 })
@@ -236,6 +248,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 @event("co-pilot-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		targetRef: { type: HTMLElement },
 	},
 })
@@ -250,6 +265,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 @event("menu-item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
