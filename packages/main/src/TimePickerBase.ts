@@ -193,7 +193,6 @@ class TimePickerBase extends UI5Element {
 	 * when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 	 *
 	 * @since 1.0.0-rc.8
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -215,7 +214,6 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * @abstract
 	 * @protected
 	 */
 	get _placeholder(): string | undefined {
@@ -223,7 +221,6 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * @abstract
 	 * @protected
 	 */
 	get _formatPattern(): string | undefined {
@@ -545,11 +542,10 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
+	 * The listener for this event can't be passive as it calls preventDefault()
 	 *
 	 * @param e Wheel Event
 	 * @private
-	 *
-	 * The listener for this event can't be passive as it calls preventDefault()
 	 */
 	_handleWheel(e: WheelEvent) {
 		e.preventDefault();

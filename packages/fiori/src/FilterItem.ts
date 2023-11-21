@@ -45,7 +45,6 @@ class FilterItem extends UI5Element {
 
 	/**
 	 * Defines the <code>values</code> list.
-	 * @slot values
 	 * @public
 	 */
 	@slot()

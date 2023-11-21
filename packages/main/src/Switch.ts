@@ -142,7 +142,7 @@ class Switch extends UI5Element implements IFormElement {
 	 *
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @default: ""
+	 * @default ""
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -165,7 +165,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * Defines the tooltip of the component.
 	 * <br>
 	 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
-	 * @default: ""
+	 * @default ""
 	 * @public
 	 * @since 1.9.0
 	 */

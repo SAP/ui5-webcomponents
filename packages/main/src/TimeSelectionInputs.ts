@@ -286,7 +286,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Input 'change' event handler.
 	 *
-	 * @param number new value to set on active input
+	 * @param value new value to set on active input
 	 */
 	_inputChange(value: number) {
 		const stringValue = this._formatNumberToString(value, this._entities[this._activeIndex].prependZero);

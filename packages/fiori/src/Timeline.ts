@@ -66,7 +66,7 @@ class Timeline extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @default: ""
+	 * @default ""
 	 * @public
 	 * @since 1.2.0
 	 */

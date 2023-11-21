@@ -19,7 +19,6 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
  *
- * @interface
  * @public
  */
 interface IButton extends HTMLElement {}
@@ -45,7 +44,6 @@ const IComboBoxItem = "sap.ui.webc.main.IComboBoxItem";
 /**
  * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
  *
- * @interface
  * @public
  */
 interface IColorPaletteItem extends HTMLElement {}

@@ -3,7 +3,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
- * @interface
  * @public
  */
 interface IBar extends HTMLElement {}
@@ -74,7 +73,6 @@ const ISideNavigationSubItem = "sap.ui.webc.fiori.ISideNavigationSubItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-timeline</code> as items
  *
- * @interface
  * @public
  */
 interface ITimelineItem extends UI5Element {

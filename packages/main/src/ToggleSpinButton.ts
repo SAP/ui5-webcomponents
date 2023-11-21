@@ -35,7 +35,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemin of the component.
 	 *
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueMin!: number;
@@ -43,8 +43,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemax of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueMax
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueMax!: number;
@@ -52,8 +51,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuenow of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueNow
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueNow!: number;
@@ -61,7 +59,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuetext of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueText
+	 * @default ""
 	 */
 	@property()
 	valueText?: string;

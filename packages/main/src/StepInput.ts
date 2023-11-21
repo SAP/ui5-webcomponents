@@ -275,7 +275,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -285,7 +284,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
 	 *
-	 * @slot
 	 * @private
 	 */
 	@slot()

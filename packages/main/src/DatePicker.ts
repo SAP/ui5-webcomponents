@@ -417,7 +417,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Override in derivatives to provide the calendar a timestamp based on their properties
 	 * By default focus the calendar on the selected date if set, or the current day otherwise
 	 * @protected
-	 * @returns the calendar timestamp
 	 */
 	get _calendarTimestamp(): number {
 		if (this.value && this.dateValueUTC && this._checkValueValidity(this.value)) {
@@ -432,7 +431,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Used to provide selectedDates to the calendar based on the component's state
 	 * Override in derivatives to provide different rules for setting the calendar's selected dates
 	 * @protected
-	 * @returns the selected dates
 	 */
 	get _calendarSelectedDates(): Array<string> {
 		if (this.value && this._checkValueValidity(this.value)) {
@@ -737,7 +735,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The user selected a new date in the calendar
-	 * @param event
+	 * @param e
 	 * @protected
 	 */
 	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
@@ -815,7 +813,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Currently selected date represented as a Local JavaScript Date instance.
 	 *
 	 * @public
-	 * @readonly
 	 */
 	get dateValue(): Date | null {
 		return this.liveValue ? this.getFormat().parse(this.liveValue) as Date : this.getFormat().parse(this.value) as Date;

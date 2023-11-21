@@ -263,7 +263,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the list of items against which the user could sort data.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 	 *
-	 * @slot sortItems
 	 * @public
 	 */
 	@slot()
@@ -273,7 +272,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the <code>filterItems</code> list.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 	 *
-	 * @slot filterItems
 	 * @public
 	 */
 	@slot()
@@ -513,7 +511,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Shows the dialog.
 	 * @public
 	 */
-	show() {
+	show(): void {
 		if (!this._dialog) {
 			this._sortOrder = this._sortOrderListDomRef;
 			this._sortBy = this._sortByList;
@@ -725,12 +723,9 @@ class ViewSettingsDialog extends UI5Element {
 	 * }
 	 * </pre>
 	 * @param settings - predefined settings.
-	 * @param settings.sortOrder - sort order
-	 * @param settings.sortBy - sort by
-	 * @param settings.filters - filters
 	 * @public
 	 */
-	setConfirmedSettings(settings: VSDSettings) {
+	setConfirmedSettings(settings: VSDSettings): void {
 		if (settings && this._dialog && !this._dialog.isOpen()) {
 			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {

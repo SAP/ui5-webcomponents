@@ -134,7 +134,6 @@ class TimePicker extends TimePickerBase {
 	/**
 	 * Currently selected time represented as JavaScript Date instance
 	 *
-	 * @readonly
 	 * @public
 	 */
 	get dateValue(): Date | Date[] {

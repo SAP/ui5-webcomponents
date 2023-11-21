@@ -74,7 +74,6 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
  * and <ui5-time-selection-inputs> components and should not be used separately.
  *
  * @constructor
- * @author SAP SE
  * @extends UI5Element
  * @abstract
  * @since 1.15.0
