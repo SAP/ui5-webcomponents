@@ -44,6 +44,7 @@ class MenuItem extends UI5Element {
 	 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
 	 * <b>Note:</b> The additional text would not be displayed if the item has a submenu.
 	 *
+	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */

@@ -15,6 +15,7 @@ import {
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonMode from "./types/SegmentedButtonMode.js";
+import type { ISegmentedButtonItem } from "./Interfaces";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -23,8 +24,8 @@ import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTempla
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 
 type SegmentedButtonSelectionChangeEventDetail = {
-	selectedItem: SegmentedButtonItem,
-	selectedItems: Array<SegmentedButtonItem>,
+	selectedItem: ISegmentedButtonItem,
+	selectedItems: Array<ISegmentedButtonItem>,
 }
 
 /**
@@ -113,7 +114,7 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<SegmentedButtonItem>;
+	items!: Array<ISegmentedButtonItem>;
 
 	static i18nBundle: I18nBundle;
 
@@ -121,7 +122,7 @@ class SegmentedButton extends UI5Element {
 
 	hasPreviouslyFocusedItem: boolean;
 
-	_selectedItem?: SegmentedButtonItem;
+	_selectedItem?: ISegmentedButtonItem;
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -198,7 +199,7 @@ class SegmentedButton extends UI5Element {
 		return this;
 	}
 
-	_applySingleSelection(item: SegmentedButtonItem) {
+	_applySingleSelection(item: ISegmentedButtonItem) {
 		this.items.forEach(currentItem => {
 			currentItem.pressed = false;
 		});
@@ -259,7 +260,7 @@ class SegmentedButton extends UI5Element {
 	 * Please use the <code>selectedItems</code> property instead.
 	 * @public
 	 */
-	get selectedItem(): SegmentedButtonItem | undefined {
+	get selectedItem(): ISegmentedButtonItem | undefined {
 		return this._selectedItem;
 	}
 
@@ -268,7 +269,7 @@ class SegmentedButton extends UI5Element {
 	 * @since 1.14.0
 	 * @public
 	 */
-	get selectedItems(): Array<SegmentedButtonItem> {
+	get selectedItems(): Array<ISegmentedButtonItem> {
 		return this.items.filter(item => item.pressed);
 	}
 

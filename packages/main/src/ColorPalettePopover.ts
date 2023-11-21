@@ -84,6 +84,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -93,6 +94,7 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a component.
 	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -101,6 +103,7 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -110,6 +113,8 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines the default color of the component.
 	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: CSSColor })
@@ -117,6 +122,8 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
+	 *
+	 * @default []
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
@@ -145,6 +152,7 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
+	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @since 1.1.1
@@ -156,6 +164,7 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Shows the ColorPalettePopover.
 	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
+	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @since 1.0.0-rc.16

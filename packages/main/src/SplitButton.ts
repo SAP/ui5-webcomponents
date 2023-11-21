@@ -154,6 +154,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if the elements is on focus
+	 *
 	 * @default false
 	 * @private
 	 */
@@ -170,7 +171,8 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the tabIndex of the component.
-	 * @default ""
+	 *
+	 * @default "0"
 	 * @private
 	 */
 	@property({ defaultValue: "0", noAttribute: true })
@@ -178,6 +180,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if there is Space key pressed
+	 *
 	 * @default false
 	 * @private
 	 */
@@ -186,6 +189,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if there is SHIFT or ESCAPE key pressed
+	 *
 	 * @default false
 	 * @private
 	 */
@@ -194,6 +198,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the active state of the text button
+	 *
 	 * @default false
 	 * @private
 	 */
@@ -202,6 +207,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the icon of the text button
+	 *
 	 * @default ""
 	 * @private
 	 */
@@ -210,6 +216,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the active state of the arrow button
+	 *
 	 * @default false
 	 * @private
 	 */

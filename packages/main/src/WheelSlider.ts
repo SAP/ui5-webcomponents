@@ -91,7 +91,7 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Defines the currently selected value
-	 * @default ""
+	 * @default "0"
 	 * @public
 	 */
 	@property({ defaultValue: "0" })

@@ -119,6 +119,7 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a minimum value of the component.
 	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: Float })
@@ -127,6 +128,7 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a maximum value of the component.
 	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: Float })
@@ -221,6 +223,7 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */

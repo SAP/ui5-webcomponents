@@ -68,7 +68,6 @@ let activeButton: Button | null = null;
  * @csspart button - Used to style the native button element
  * @constructor
  * @extends UI5Element
- * @implements { IFormElement }
  * @implements { IButton }
  * @public
  */

@@ -386,10 +386,11 @@ class Menu extends UI5Element {
 
 	/**
 	 * Shows the Menu near the opener element.
+	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 */
-	async showAt(opener: HTMLElement) {
+	async showAt(opener: HTMLElement): Promise<void> {
 		if (isPhone()) {
 			this._prepareCurrentItems(this.items);
 			this._parentItemsStack = [];
@@ -410,9 +411,10 @@ class Menu extends UI5Element {
 
 	/**
 	 * Closes the Menu.
+	 *
 	 * @public
 	 */
-	close() {
+	close(): void {
 		if (this._popover) {
 			if (isPhone()) {
 				this._parentItemsStack = [];

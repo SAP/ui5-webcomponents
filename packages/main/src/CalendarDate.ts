@@ -20,6 +20,7 @@ class CalendarDate extends UI5Element {
 	 * The date formatted according to the <code>formatPattern</code> property
 	 * of the <code>ui5-calendar</code> that hosts the component.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()

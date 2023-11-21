@@ -35,6 +35,8 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Sets a calendar type used for display.
 	 * If not set, the calendar type of the global configuration is used.
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -43,6 +45,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Defines the secondary calendar type.
 	 * If not set, the calendar will only show the primary calendar type.
+	 *
 	 * @since 1.0.0-rc.16
 	 * @default undefined
 	 * @public

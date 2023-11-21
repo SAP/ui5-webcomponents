@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { ISegmentedButtonItem } from "./Interfaces";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
 import ToggleButton from "./ToggleButton.js";
@@ -28,6 +29,7 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  *
  * @constructor
  * @extends ToggleButton
+ * @implements { ISelectedButtonItem }
  * @abstract
  * @public
  */
@@ -36,7 +38,7 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
 	template: SegmentedButtonItemTemplate,
 	dependencies: [Icon],
 })
-class SegmentedButtonItem extends ToggleButton {
+class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *

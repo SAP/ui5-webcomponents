@@ -28,7 +28,6 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * @extends UI5Element
  * @abstract
  * @since 1.0.0-rc.12
- * @implements { ITabbable }
  * @implements { IColorPaletteItem }
  * @public
  */
@@ -44,13 +43,15 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 	 * <br><br>
 	 * <b>Note:</b> The value should be a valid CSS color.
 	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: CSSColor })
-	value!: string;
+	value?: string;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
+	 *
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
@@ -58,6 +59,7 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
+	 *
 	 * @private
 	 */
 	@property({ validator: Integer })
@@ -65,6 +67,7 @@ class ColorPaletteItem extends UI5Element implements ITabbable, IColorPaletteIte
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.
+	 *
 	 * @private
 	 */
 	@property({ type: Boolean })

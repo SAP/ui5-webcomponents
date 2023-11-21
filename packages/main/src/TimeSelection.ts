@@ -110,6 +110,8 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 *
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -118,6 +120,8 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 *
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -126,6 +130,8 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 *
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -133,6 +139,8 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: Integer })
@@ -140,6 +148,8 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: Integer })
@@ -147,6 +157,8 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: Integer })

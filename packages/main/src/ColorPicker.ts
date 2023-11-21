@@ -96,6 +96,8 @@ class ColorPicker extends UI5Element {
 	 * Defines the currently selected color of the component.
 	 * <br><br>
 	 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
+	 *
+	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
 	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
@@ -104,6 +106,7 @@ class ColorPicker extends UI5Element {
 	/**
 	 * Defines the HEX code of the currently selected color
 	 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
+	 *
 	 * @private
 	 */
 	@property({ defaultValue: "ffffff", noAttribute: true })
@@ -111,6 +114,7 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
+	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -118,6 +122,7 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the currenty selected color from the main color section.
+	 *
 	 * @private
 	 */
 	@property({ type: Object })
