@@ -8,7 +8,7 @@ const escapeVersion = version => "v" + version?.replaceAll(/[^0-9A-Za-z\-_]/g, "
  * @param {*} filePath For example: /my_project/src/themes/overrides/@ui5/webcomponents/my_custom_theme/parameters-bundle.css
  * @returns 
  */
-const getOverrideVersion = filePath => 
+const getOverrideVersion = filePath => {
 	console.log(filePath);
 	if (!filePath.includes(`overrides${path.sep}`)) {
 		return; // The "overrides/" directory is the marker
