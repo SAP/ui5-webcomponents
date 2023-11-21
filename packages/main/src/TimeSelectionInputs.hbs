@@ -1,0 +1,41 @@
+	<div
+		class="ui5-time-selection-inputs"
+		@keydown="{{_onkeydown}}"
+	>
+	{{#each _entities}}
+		{{#if this.hasSeparator}}
+		<span separator>:</span>
+		{{/if}}
+		<ui5-input
+			id="{{../_id}}_input_{{this.entity}}"
+			data-sap-input="{{this.entity}}"
+			type="{{../_numberType}}"
+			maxlength="2"
+			autocomplete="off"
+			pattern="[0-9]*"
+			inputmode="numeric"
+			class="ui5-time-selection-numeric-input"
+			.value="{{this.stringValue}}"
+			.accessibleName="{{this.label}}"
+			._nativeInputAttributes={{this.attributes}}
+			@focusin={{../_onfocusin}}
+			@focusout={{../_onfocusout}}
+			@ui5-input={{../_oninput}}
+		></ui5-input>
+	{{/each}}
+	{{#if _periods.length}}
+		<span separator> </span>
+		<ui5-segmented-button
+			id="{{_id}}_AmPm"
+			@click={{_periodChange}}
+		>
+		{{#each _periods}}
+    		<ui5-segmented-button-item
+				?pressed={{this.pressed}}
+			>
+			{{this.label}}
+			</ui5-segmented-button-item>
+		{{/each}}
+		</ui5-segmented-button>
+	{{/if}}
+	</div>

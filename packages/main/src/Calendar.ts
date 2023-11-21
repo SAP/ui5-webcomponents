@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -257,6 +258,8 @@ class Calendar extends CalendarPart {
 	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
 	_pickersMode!: CalendarPickersMode;
 
+	_valueIsProcessed!: boolean
+
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
@@ -280,6 +283,11 @@ class Calendar extends CalendarPart {
 		}).filter((date): date is number => !!date);
 	}
 
+	constructor() {
+		super();
+
+		this._valueIsProcessed = false;
+	}
 	/**
 	 * @private
 	 */
@@ -315,6 +323,14 @@ class Calendar extends CalendarPart {
 
 	onBeforeRendering() {
 		this._normalizeCurrentPicker();
+
+		if (!this._valueIsProcessed) {
+			if (this._selectedDatesTimestamps) {
+				this.timestamp = this._selectedDatesTimestamps[0];
+			}
+
+			this._valueIsProcessed = true;
+		}
 	}
 
 	async onAfterRendering() {
@@ -338,6 +354,12 @@ class Calendar extends CalendarPart {
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
+	}
+
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.reason === "childchange") {
+			this._valueIsProcessed = false;
+		}
 	}
 
 	/**
@@ -397,7 +419,7 @@ class Calendar extends CalendarPart {
 	}
 
 	get secondaryCalendarTypeButtonText() {
-		if (!this._secondaryCalendarType) {
+		if (!this.hasSecondaryCalendarType) {
 			return;
 		}
 

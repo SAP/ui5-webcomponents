@@ -89,11 +89,7 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>End</code></li>
-	 * <li><code>Start</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.main.types.ToolbarAlign}
 	 * @public
 	 * @defaultvalue: "End"

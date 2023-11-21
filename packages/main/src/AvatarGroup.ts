@@ -175,12 +175,7 @@ type AvatarGroupClickEventDetail = {
 class AvatarGroup extends UI5Element {
 	/**
 	 * Defines the mode of the <code>AvatarGroup</code>.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Group</code></li>
-	 * <li><code>Individual</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.main.types.AvatarGroupType}
 	 * @name sap.ui.webc.main.AvatarGroup.prototype.type
 	 * @defaultValue "Group"

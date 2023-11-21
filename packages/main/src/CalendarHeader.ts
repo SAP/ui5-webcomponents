@@ -188,7 +188,7 @@ class CalendarHeader extends UI5Element {
 	}
 
 	get hasSecondaryCalendarType() {
-		return !!this.secondaryCalendarType;
+		return !!this.secondaryCalendarType && this.secondaryCalendarType !== this.primaryCalendarType;
 	}
 
 	get classes() {

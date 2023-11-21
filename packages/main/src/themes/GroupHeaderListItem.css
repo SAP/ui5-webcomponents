@@ -7,7 +7,7 @@
 }
 
 :host([has-border]) {
-	border-bottom: 1px solid var(--sapList_GroupHeaderBorderColor);
+	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
 }
 
 .ui5-li-root.ui5-ghli-root {
@@ -25,4 +25,5 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-weight: bold;
+	font-family: var(--sapFontHeaderFamily);
 }

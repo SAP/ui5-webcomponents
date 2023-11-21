@@ -138,7 +138,6 @@ type FocusAdaptor = ITabbable & {
 class Breadcrumbs extends UI5Element {
 	/**
 	 * Defines the visual indication and behavior of the breadcrumbs.
-	 * Available options are <code>Standard</code> (by default) and <code>NoCurrentPage</code>.
 	 * <br><br>
 	 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
 	 * The last item contains only plain text and is not a link.
@@ -153,17 +152,6 @@ class Breadcrumbs extends UI5Element {
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
-	 *
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Slash</code></li>
-	 * <li><code>BackSlash</code></li>
-	 * <li><code>DoubleBackSlash</code></li>
-	 * <li><code>DoubleGreaterThan</code></li>
-	 * <li><code>DoubleSlash</code></li>
-	 * <li><code>GreaterThan</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.BreadcrumbsSeparatorStyle}
 	 * @name sap.ui.webc.main.Breadcrumbs.prototype.separatorStyle
@@ -360,7 +348,7 @@ class Breadcrumbs extends UI5Element {
 			requiredWidth += this._dropdownArrowLinkWidth;
 		}
 
-		while ((requiredWidth > availableWidth) && (overflowSize < this._maxAllowedOverflowSize)) {
+		while ((requiredWidth >= availableWidth) && (overflowSize < this._maxAllowedOverflowSize)) {
 			const itemToOverflow = items[overflowSize];
 			let itemWidth = 0;
 

@@ -6,6 +6,7 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
+	container-type: inline-size;
 }
 
 .ui5-tc-root {
@@ -19,7 +20,6 @@
 
 .ui5-tc__header {
 	position: relative;
-	padding: 0 1rem;
 	display: flex;
 	align-items: center;
 	background-color: var(--_ui5_tc_header_background);
@@ -67,6 +67,11 @@
 
 .ui5-tc__overflow.ui5-tc__overflow--end {
 	padding-inline-start: 0.188rem;
+	margin-inline-end: 1rem;
+}
+
+.ui5-tc__overflow.ui5-tc__overflow--start {
+	margin-inline-start: 1rem;
 }
 
 .ui5-tc__overflow[hidden] {
@@ -100,7 +105,6 @@
 	position: relative;
 	display: flex;
 	height: calc(100% - var(--_ui5_tc_header_height)); /* the header height (tabs with icons and text) */
-	padding: 1rem 2rem;
 	background-color: var(--_ui5_tc_content_background);
 	border-bottom: var(--_ui5_tc_content_border_bottom);
 	box-sizing: border-box;
@@ -138,19 +142,30 @@
 }
 
 /*** Responsive paddings ***/
-
-:host([media-range="S"]) .ui5-tc__header {
+.ui5-tc__header {
 	padding: 0;
 }
 
-:host([media-range="S"]) .ui5-tc__content {
+.ui5-tc__content {
 	padding: 1rem;
 }
 
-:host([media-range="XL"]) .ui5-tc__header {
-	padding: 0 2rem;
+@container (min-width: 600px) {
+	.ui5-tc__header {
+		padding: 0 1rem;
+	}
+
+	.ui5-tc__content {
+		padding: 1rem 2rem;
+	}
 }
 
-:host([media-range="XL"]) .ui5-tc__content {
-	padding: 1rem 3rem;
+@container (min-width: 1440px) {
+	.ui5-tc__header {
+		padding: 0 2rem;
+	}
+	
+	.ui5-tc__content {
+		padding: 1rem 3rem;
+	}
 }

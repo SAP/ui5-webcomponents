@@ -5,6 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -360,6 +361,10 @@ class Wizard extends UI5Element {
 
 	get classes() {
 		return {
+			root: {
+				"ui5-wiz-root": true,
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+			},
 			popover: {
 				"ui5-wizard-responsive-popover": true,
 				"ui5-wizard-popover": !isPhone(),
