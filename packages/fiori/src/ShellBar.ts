@@ -324,7 +324,7 @@ class ShellBar extends UI5Element {
 	 *
 	 * It supports the following fields:
 	 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
-	 *
+	 * @default {}
 	 * @public
 	 * @since 1.6.0
 	 */
@@ -339,6 +339,7 @@ class ShellBar extends UI5Element {
 	 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
 	 * - <code>logoTitle</code>: defines the tooltip for the logo
 	 *
+	 * @default {}
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -368,6 +369,7 @@ class ShellBar extends UI5Element {
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
+	 * @default {}
 	 * @public
 	 * @since 1.10.0
 	 */
@@ -651,7 +653,6 @@ class ShellBar extends UI5Element {
 	 * Closes the overflow area.
 	 * Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event
 	 * @public
-     * @method
 	 */
 	closeOverflow(): void {
 		if (this.overflowPopover) {
@@ -852,7 +853,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>logo</code> DOM ref.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get logoDomRef(): HTMLElement | null {
@@ -862,7 +862,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>copilot</code> DOM ref.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get copilotDomRef(): HTMLElement | null {
@@ -872,7 +871,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>notifications</code> icon DOM ref.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get notificationsDomRef(): HTMLElement | null {
@@ -882,7 +880,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>overflow</code> icon DOM ref.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get overflowDomRef(): HTMLElement | null {
@@ -892,7 +889,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>profile</code> icon DOM ref.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get profileDomRef(): HTMLElement | null {
@@ -902,7 +898,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>product-switch</code> icon DOM ref.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.16
 	 */
 	get productSwitchDomRef(): HTMLElement | null {

@@ -12,11 +12,6 @@ type ShellBarItemClickEventDetail = {
  *
  * @public
  */
-interface IShellBarItem {
-	icon: string;
-	text: string;
-	count: string;
-}
 
 /**
  * @class
@@ -29,7 +24,6 @@ interface IShellBarItem {
  * @constructor
  * @extends UI5Element
  * @abstract
- * @implements {IShellBarItem}
  * @public
  */
 @customElement("ui5-shellbar-item")
@@ -46,7 +40,7 @@ interface IShellBarItem {
 	},
 })
 
-class ShellBarItem extends UI5Element implements IShellBarItem {
+class ShellBarItem extends UI5Element {
 	/**
 	 * Defines the name of the item's icon.
 	 * @default ""
@@ -89,7 +83,4 @@ ShellBarItem.define();
 
 export default ShellBarItem;
 
-export type {
-	ShellBarItemClickEventDetail,
-	IShellBarItem,
-};
+export type { ShellBarItemClickEventDetail };
