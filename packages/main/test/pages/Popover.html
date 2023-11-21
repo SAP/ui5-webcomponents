@@ -26,38 +26,6 @@
 
 <body class="popover2auto">
 	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
-
-	<ui5-tabcontainer>
-		<ui5-tab text="tab 1">
-			<ui5-button id="popbtn">Open Popover</ui5-button>
-
-			<ui5-popover placement-type="Bottom" hide-arrow id="danger">
-
-				<ui5-list>
-					<ui5-li>Hello</ui5-li>
-					<ui5-li>World</ui5-li>
-					<ui5-li>Again</ui5-li>
-				</ui5-list>
-
-				<br>
-				<br>
-
-				<ui5-button id="bigDanger">Super Danger !</ui5-button>
-
-				<ui5-popover id="bigDangerPop">
-					<ui5-list>
-						<ui5-li>Hello</ui5-li>
-						<ui5-li>World</ui5-li>
-						<ui5-li>Again</ui5-li>
-					</ui5-list>
-				</ui5-popover>
-			</ui5-popover>
-		</ui5-tab>
-		<ui5-tab text="tab 2">
-
-		</ui5-tab>
-	</ui5-tabcontainer>
-
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
@@ -74,9 +42,29 @@
 		<br>
 		<br>
 
+		<ui5-button id="popbtn">Open Popover</ui5-button>
 
+		<ui5-popover placement-type="Bottom" hide-arrow id="danger">
 
+			<ui5-list>
+				<ui5-li>Hello</ui5-li>
+				<ui5-li>World</ui5-li>
+				<ui5-li>Again</ui5-li>
+			</ui5-list>
 
+			<br>
+			<br>
+
+			<ui5-button id="bigDanger">Super Danger !</ui5-button>
+
+			<ui5-popover id="bigDangerPop">
+				<ui5-list>
+					<ui5-li>Hello</ui5-li>
+					<ui5-li>World</ui5-li>
+					<ui5-li>Again</ui5-li>
+				</ui5-list>
+			</ui5-popover>
+		</ui5-popover>
 
 		<br>
 		<br>
@@ -127,6 +115,24 @@
 	<br>
 
 	<ui5-select id="many-items"></ui5-select>
+
+	<br>
+	<br>
+
+	<div class="containingBlock">
+		<div>
+			Containing Block Div
+			<pre>
+container-type: inline-size;
+position: relative;
+z-index: 1;
+			</pre>
+		</div>
+		<ui5-button id="openPopoverInsideContainingBlockButton">Open Popover Inside a Containing Block</ui5-button>
+		<ui5-popover id="popoverInsideContainingBlock" placement-type="Bottom">
+			Popover<br>Inside<br>Containing<br>Block
+		</ui5-popover>
+	</div>
 
 	<br>
 	<br>
@@ -443,7 +449,6 @@
 	<span id="createAndRemoveResult" style="display: none;"></span>
 	<br>
 	<br>
-
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -659,6 +664,10 @@
 				}
 				createAndRemoveResult.style.display = "";
 			})
+		});
+
+		openPopoverInsideContainingBlockButton.addEventListener("click", function () {
+			popoverInsideContainingBlock.showAt(openPopoverInsideContainingBlockButton);
 		});
 
 	</script>
