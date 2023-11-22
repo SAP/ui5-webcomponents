@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.6](https://github.com/SAP/ui5-webcomponents/compare/v1.14.5...v1.14.6) (2023-11-22)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** render the correct length of day names ([#7866](https://github.com/SAP/ui5-webcomponents/issues/7866)) ([d3be843](https://github.com/SAP/ui5-webcomponents/commit/d3be84327be4ed5483102c70e30f774142489257)), closes [#7831](https://github.com/SAP/ui5-webcomponents/issues/7831)
+
+
+
+
+
 ## [1.14.5](https://github.com/SAP/ui5-webcomponents/compare/v1.14.4...v1.14.5) (2023-06-26)
 
 **Note:** Version bump only for package @ui5/webcomponents
