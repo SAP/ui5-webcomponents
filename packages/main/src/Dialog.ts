@@ -95,9 +95,11 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * <code>import "@ui5/webcomponents/dist/Dialog";</code>
  *
  * <b>Note: </b> We recommend placing popup-like components (<code>ui5-dialog</code> and <code>ui5-popover</code>)
- * outside any other components. Preferably the popup-like components should be placed in
- * a top level HTML element. Otherwise, in some cases the parent elements can break
+ * outside any other components. Preferably, the popup-like components should be placed
+ * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
  * the position and/or z-index management of the popup-like components.
+ *
+ * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>).
  *
  * @constructor
  * @author SAP SE
