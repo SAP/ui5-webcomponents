@@ -25,6 +25,10 @@ import titleCss from "./generated/themes/Title.css.js";
  *
  * @constructor
  * @extends UI5Element
+ * @slot {Node[]} default - Defines the text of the component.
+ * This component supports nesting a <code>Link</code> component inside.
+ * <br><br>
+ * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @public
  */
 @customElement({
@@ -53,15 +57,6 @@ class Title extends UI5Element {
 	 */
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
 	level!: `${TitleLevel}`;
-
-	/**
-	 * Defines the text of the component.
-	 * This component supports nesting a <code>Link</code> component inside.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @public
-	 */
 
 	get normalizedLevel() {
 		return this.level.toLowerCase();

@@ -12,7 +12,7 @@ enum TabContainerBackgroundDesign {
 
 	/**
 	 * A Transparent background color.
-	 * @type {Transparent}
+	 * @public
 	 */
 	Transparent = "Transparent",
 

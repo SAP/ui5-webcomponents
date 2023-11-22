@@ -605,7 +605,7 @@ class TabContainer extends UI5Element {
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
 	 */
-	get allItems() {
+	get allItems() : Array<ITab> {
 		return this._getAllSubItems(this.items);
 	}
 
