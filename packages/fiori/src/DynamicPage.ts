@@ -81,6 +81,9 @@ class DynamicPage extends UI5Element {
 			root: {
 				"ui5-dynamic-page-root": true,
 			},
+			scrollContainer: {
+				"ui5-dynamic-page-scroll-container": true,
+			},
 			headerWrapper: {
 				"ui5-dynamic-page-title-header-wrapper": true,
 			},
