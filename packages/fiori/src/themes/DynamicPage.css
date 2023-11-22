@@ -4,10 +4,6 @@
     z-index: 1;
 }
 
-.ui5-dynamic-page-content {
-    padding: 0 0 0 var(--_ui5_dynamic_page_title_content_padding_left);
-}
-
 :host {
     display: block;
     overflow-y: scroll;
@@ -65,4 +61,23 @@
         transform: translateY(100%);
         opacity: 0;
     }
+}
+
+/* Dynamic Page Content */
+
+
+.ui5-dynamic-page-content-background-standard {
+    background-color: var(--sapBackgroundColor);
+}
+
+.ui5-dynamic-page-content-background-solid {
+    background-color: var(--sapBackgroundColor);
+}
+
+.ui5-dynamic-page-content-background-transparent {
+    background-color: transparent;
+}
+
+.ui5-dynamic-page-content-background-list {
+    background-color: var(--sapGroup_ContentBackground);
 }

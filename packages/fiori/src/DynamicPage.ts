@@ -6,6 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import DynamicPageBackgroundDesign from "./types/DynamicPageBackgroundDesign.js";
 
 // Template
 import DynamicPageTemplate from "./generated/templates/DynamicPageTemplate.lit.js";
@@ -55,6 +56,17 @@ class DynamicPage extends UI5Element {
 	@property({ type: Boolean })
 	showFooter!: boolean;
 
+	/**
+	 * Indicated the direction in which the Toolbar items will be aligned.
+	 *
+	 * @type {sap.ui.webc.fiori.types.DynamicPageBackgroundDesign}
+	 * @public
+	 * @defaultvalue: "Standard"
+	 * @name sap.ui.webc.fiori.DynamicPage.prototype.BackgroundDesign
+	 */
+	@property({ type: DynamicPageBackgroundDesign, defaultValue: DynamicPageBackgroundDesign.Standard })
+	backgroundDesign!: `${DynamicPageBackgroundDesign}`;
+
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
 
@@ -77,7 +89,8 @@ class DynamicPage extends UI5Element {
 	}
 
 	get classes() {
-		return {
+		const backgroundDesignClass = `ui5-dynamic-page-content-background-${this.backgroundDesign.toLowerCase()}`;
+		const classes = {
 			root: {
 				"ui5-dynamic-page-root": true,
 			},
@@ -91,6 +104,10 @@ class DynamicPage extends UI5Element {
 				"ui5-dynamic-page-footer": true,
 			},
 		};
+
+		classes.content[backgroundDesignClass as keyof typeof classes.content] = true;
+
+		return classes;
 	}
 
 	get dynamicPageTitle(): DynamicPageTitle | null {
