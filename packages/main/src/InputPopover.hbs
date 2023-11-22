@@ -94,11 +94,12 @@
 
 {{#*inline "suggestionsList"}}
 	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" mode="SingleSelect">
-		{{#each suggestionsTexts}}
+		{{#each suggestionObjects}}
 			{{#if groupItem}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
 			{{else}}
 				<ui5-li-suggestion-item
+					wrapping-type="Normal"
 					image="{{this.image}}"
 					icon="{{this.icon}}"
 					additional-text="{{this.additionalText}}"

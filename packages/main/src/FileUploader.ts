@@ -32,7 +32,7 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 
 type FileUploaderChangeEventDetail = {
 	files: FileList | null,
@@ -183,16 +183,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.FileUploader.prototype.valueState
 	 * @defaultvalue "None"
@@ -337,7 +327,7 @@ class FileUploader extends UI5Element implements IFormElement {
 				this._setFormValue();
 			} else {
 				formSupport.syncNativeFileInput(this,
-					(element: IFormElement, nativeInput: HTMLInputElement) => {
+					(element: IFormElement, nativeInput: NativeFormElement) => {
 						nativeInput.disabled = !!element.disabled;
 					},
 					this._onChange.bind(this));

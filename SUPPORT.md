@@ -15,7 +15,7 @@ You may be able to add additional or missing information, such as a step-by-step
 
 ## 📝 Reporting Issues
 ### Not a Bug / Questions
-If you need help setting something up, or if you have questions regarding the UI5 Web Components, please seek help on a community platform like [StackOverflow](http://stackoverflow.com/questions/tagged/ui5-webcomponents) or the `#webcomponents` channel of the [OpenUI5 Community Slack](https://slackui5invite.herokuapp.com).
+If you need help setting something up, or if you have questions regarding the UI5 Web Components, please seek help on a community platform like [StackOverflow](http://stackoverflow.com/questions/tagged/ui5-webcomponents) or the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
 
 ### Requirements for a Bug Report
 You are encouraged to use the issue templates for a [bug](/.github/ISSUE_TEMPLATE/bug_report.md) or [feature request](/.github/ISSUE_TEMPLATE/feature_request.md).

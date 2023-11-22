@@ -524,3 +524,28 @@ describe("Horizontal Alignment", () => {
 		assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned, flipped by RTL direction`);
 	});
 });
+
+describe("Responsive paddings", () => {
+	let oldScreenHeight, oldScreenWidth;
+
+	before(async () => {
+		const browserSize = await browser.getWindowSize();
+		oldScreenHeight = browserSize.height;
+		oldScreenWidth = browserSize.width;
+		await browser.url(`test/pages/Popover.html`);
+		await browser.setWindowSize(1000, 400);
+	});
+
+	after(async () => {
+		await browser.setWindowSize(oldScreenWidth, oldScreenHeight);
+	});
+
+	it("tests media-range", async () => {
+		const popover = await browser.$("#popXRightWide");
+		const btnOpenPopover = await browser.$("#btnOpenXRightWide");
+
+		await btnOpenPopover.click();
+
+		assert.strictEqual(await popover.getAttribute("media-range"), "M", "Popover has correct media range");
+	});
+});

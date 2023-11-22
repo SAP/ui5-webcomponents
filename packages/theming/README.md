@@ -1,5 +1,6 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_wide.png)
 
+
 # UI5 Web Components - Theming
 
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
@@ -22,7 +23,7 @@ The assets, provided by this package, are additional themes:
 - [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
 ## Support
-We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).
+We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
 
 ## Contribute
 Please check our [Contribution Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/docs/6-contributing/02-conventions-and-guidelines.md).

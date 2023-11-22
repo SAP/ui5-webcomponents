@@ -149,6 +149,22 @@
 	</div>
 
 	<div class="demo-section">
+		<ui5-label id="combo-without-type-ahead-text">Without type ahead:</ui5-label>
+		<ui5-combobox id="combo-without-type-ahead" class="combobox2auto" no-typeahead>
+			<ui5-cb-item text="Algeria" additional-text="DZ"></ui5-cb-item>
+			<ui5-cb-item text="Argentina" additional-text="AR"></ui5-cb-item>
+			<ui5-cb-item text="Australia" additional-text="AU"></ui5-cb-item>
+			<ui5-cb-item text="Austria" additional-text="AT"></ui5-cb-item>
+			<ui5-cb-item text="Bahrain" additional-text="BH"></ui5-cb-item>
+			<ui5-cb-item text="Belgium" additional-text="BE"></ui5-cb-item>
+			<ui5-cb-item text="Brazil" additional-text="BR"></ui5-cb-item>
+			<ui5-cb-item text="Bulgaria" additional-text="BG"></ui5-cb-item>
+			<ui5-cb-item text="Canada" additional-text="CA"></ui5-cb-item>
+			<ui5-cb-item text="Chile" additional-text="CL"></ui5-cb-item>
+		</ui5-combobox>
+	</div>
+
+	<div class="demo-section">
 		<span id="change-event-result"></span>
 		<br />
 		<span id="selection-change-event-result"></span>
@@ -259,6 +275,28 @@
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
 			<ui5-cb-item text="Germany"></ui5-cb-item>
 			<ui5-cb-item text="Argentina"></ui5-cb-item>
+		</ui5-combobox>
+	</div>
+
+	<div class="demo-section">
+		<span>ComboBox - suggestions and show wrapping </span>
+
+		<ui5-combobox class="combobox" id="same-name-suggestions-cb">
+			<ui5-cb-item text="Item that does not wrap"></ui5-cb-item>
+			<ui5-cb-item text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"></ui5-cb-item>
+		</ui5-combobox>
+	</div>
+
+	<div class="demo-section">
+		<ui5-combobox id="value-state-error-text" value-state="Error">
+			<ui5-cb-item text="Algeria"></ui5-cb-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Australia"></ui5-cb-item>
+			<ui5-cb-item text="Austria"></ui5-cb-item>
+			<ui5-cb-item text="Bahrain"></ui5-cb-item>
+			<ui5-cb-item text="Belgium"></ui5-cb-item>
+			<ui5-cb-item text="Bosnia and Herzegovina"></ui5-cb-item>
+			<div slot="valueStateMessage">Please choose a country</div>
 		</ui5-combobox>
 	</div>
 

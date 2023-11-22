@@ -162,6 +162,7 @@ class ColorPalette extends UI5Element {
 		invalidateOnChildChange: true,
 		individualSlots: true,
 	})
+
 	colors!: Array<ColorPaletteItem>;
 
 	_itemNavigation: ItemNavigation;
@@ -228,6 +229,7 @@ class ColorPalette extends UI5Element {
 
 	_setColor(color: string) {
 		this._selectedColor = color;
+
 		if (this._recentColors[0] !== this._selectedColor) {
 			if (this._recentColors.includes(this._selectedColor)) {
 				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);

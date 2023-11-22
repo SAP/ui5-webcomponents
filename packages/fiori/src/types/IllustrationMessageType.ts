@@ -357,6 +357,18 @@ enum IllustrationMessageType {
 	 */
 	UploadCollection = "UploadCollection",
 	/**
+	* "TntAvatar" illustration type.
+	* @public
+	* @type {TntAvatar}
+	*/
+	TntAvatar = "TntAvatar",
+	/**
+	* "TntCalculator" illustration type.
+	* @public
+	* @type {TntCalculator}
+	*/
+	TntCalculator = "TntCalculator",
+	/**
 	* "TntChartArea" illustration type.
 	* @public
 	* @type {TntChartArea}
@@ -429,11 +441,23 @@ enum IllustrationMessageType {
 	*/
 	TntCompany = "TntCompany",
 	/**
+	* "TntCompass" illustration type.
+	* @public
+	* @type {TntCompass}
+	*/
+	TntCompass = "TntCompass",
+	/**
 	* "TntComponents" illustration type.
 	* @public
 	* @type {TntComponents}
 	*/
 	TntComponents = "TntComponents",
+	/**
+	* "TntDialog" illustration type.
+	* @public
+	* @type {TntDialog}
+	*/
+	TntDialog = "TntDialog",
 	/**
 	* "TntExternalLink" illustration type.
 	* @public
@@ -453,6 +477,18 @@ enum IllustrationMessageType {
 	*/
 	TntFingerprint = "TntFingerprint",
 	/**
+	* "TntHandshake" illustration type.
+	* @public
+	* @type {TntHandshake}
+	*/
+	TntHandshake = "TntHandshake",
+	/**
+	* "TntHelp" illustration type.
+	* @public
+	* @type {TntHelp}
+	*/
+	TntHelp = "TntHelp",
+	/**
 	* "TntLock" illustration type.
 	* @public
 	* @type {TntLock}
@@ -464,6 +500,12 @@ enum IllustrationMessageType {
 	* @type {TntMission}
 	*/
 	TntMission = "TntMission",
+	/**
+	* "TntMissionFailed" illustration type.
+	* @public
+	* @type {TntMissionFailed}
+	*/
+	TntMissionFailed = "TntMissionFailed",
 	/**
 	* "TntNoApplications" illustration type.
 	* @public
@@ -489,6 +531,12 @@ enum IllustrationMessageType {
 	*/
 	TntRadar = "TntRadar",
 	/**
+	* "TntRoadMap" illustration type.
+	* @public
+	* @type {TntRoadMap}
+	*/
+	TntRoadMap = "TntRoadMap",
+	/**
 	* "TntSecrets" illustration type.
 	* @public
 	* @type {TntSecrets}
@@ -512,6 +560,12 @@ enum IllustrationMessageType {
 	* @type {TntSessionExpiring}
 	*/
 	TntSessionExpiring = "TntSessionExpiring",
+	/**
+	* "TntSettings" illustration type.
+	* @public
+	* @type {TntSettings}
+	*/
+	TntSettings = "TntSettings",
 	/**
 	* "TntSuccess" illustration type.
 	* @public
@@ -542,6 +596,12 @@ enum IllustrationMessageType {
 	* @type {TntTools}
 	*/
 	TntTools = "TntTools",
+	/**
+	* "TntTutorials" illustration type.
+	* @public
+	* @type {TntTutorials}
+	*/
+	TntTutorials = "TntTutorials",
 	/**
 	* "TntUnableToLoad" illustration type.
 	* @public

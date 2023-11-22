@@ -7,6 +7,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
@@ -287,6 +288,12 @@ class ViewSettingsDialog extends UI5Element {
 
 		if (!this.shouldBuildSort && this.shouldBuildFilter) {
 			this._currentMode = ViewSettingsDialogMode.Filter;
+		}
+	}
+
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.type === "slot") {
+			this._confirmedSettings = this._settings;
 		}
 	}
 

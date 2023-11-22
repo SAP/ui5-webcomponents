@@ -26,7 +26,7 @@ export default {
 } as Meta<Menu>;
 
 const Template: UI5StoryArgs<Menu, StoryArgsSlots> = (args) => html`<ui5-menu
-	headerText="${ifDefined(args.headerText)}"
+	header-text="${ifDefined(args.headerText)}"
 	opener="${ifDefined(args.opener)}"
 	?open="${ifDefined(args.open)}"
 	id="${ifDefined(args.id)}"
@@ -35,7 +35,7 @@ const Template: UI5StoryArgs<Menu, StoryArgsSlots> = (args) => html`<ui5-menu
 </ui5-menu>`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "Basic Menu with Header Text";
+Basic.storyName = "Basic";
 Basic.args = {
 	id: "menuBasic",
 	headerText: "Basic Menu with Items",
@@ -47,7 +47,7 @@ Basic.args = {
 <ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>`,
 };
 Basic.decorators = [
-	(story) => html`<ui5-button id="btnOpenBasic" class="samples-margin">Open Menu</ui5-button> <br/>
+	(story) => html`<ui5-button id="btnOpenBasic" class="samples-margin" icon="slim-arrow-down" icon-end>Open Menu</ui5-button> <br/>
 	${story()}
 	<script>
 		btnOpenBasic.addEventListener("click", function(event) {
@@ -90,7 +90,7 @@ SubMenu.args = {
 <ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>`,
 };
 SubMenu.decorators = [
-	(story) => html`<ui5-button id="btnOpenBasic" class="samples-margin">Open Menu</ui5-button> <br/>
+	(story) => html`<ui5-button id="btnOpenBasic" class="samples-margin" icon="slim-arrow-down" icon-end>Open Menu</ui5-button> <br/>
 	${story()}
 	<script>
 		btnOpenBasic.addEventListener("click", function(event) {
@@ -118,7 +118,7 @@ AditionalText.args = {
 <ui5-menu-item text="Exit" icon="journey-arrive" additional-text="Ctrl+X"></ui5-menu-item>`,
 };
 AditionalText.decorators = [
-	(story) => html`<ui5-button id="btnOpenAdditionalText" class="samples-margin">Open Menu</ui5-button> <br/>
+	(story) => html`<ui5-button id="btnOpenAdditionalText" class="samples-margin" icon="slim-arrow-down" icon-end>Open Menu</ui5-button> <br/>
 	${story()}
 	<script>
 		btnOpenAdditionalText.addEventListener("click", function(event) {

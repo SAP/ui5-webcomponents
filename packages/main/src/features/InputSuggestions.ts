@@ -19,6 +19,7 @@ import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
+	LIST_ITEM_GROUP_HEADER,
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
@@ -38,7 +39,7 @@ interface SuggestionComponent extends UI5Element {
 	onItemPreviewed: (item: SuggestionListItem) => void;
 }
 
-type InputSuggestionText = {
+type InputSuggestion = {
 	text: string;
 	description: string;
 	image?: string;
@@ -51,9 +52,12 @@ type InputSuggestionText = {
 }
 
 type SuggestionsAccInfo = {
+	isGroup: boolean,
 	currentPos: number;
 	listSize: number;
 	itemText: string;
+	description: string;
+	additionalText: string;
 }
 
 /**
@@ -110,7 +114,7 @@ class Suggestions {
 	defaultSlotProperties(hightlightValue: string) {
 		const inputSuggestionItems = this._getComponent().suggestionItems;
 		const highlight = this.highlight && !!hightlightValue;
-		const suggestions: Array<InputSuggestionText> = [];
+		const suggestions: Array<InputSuggestion> = [];
 
 		inputSuggestionItems.map((suggestion: SuggestionItem, idx: number) => {
 			const text = highlight ? this.getHighlightedText(suggestion, hightlightValue) : this.getRowText(suggestion);
@@ -283,13 +287,17 @@ class Suggestions {
 	onItemSelected(selectedItem: SuggestionListItem | null, keyboardUsed: boolean) {
 		const allItems = this._getItems();
 		const item = selectedItem || allItems[this.selectedItemIndex];
+		const nonGroupItems = this._getNonGroupItems();
 
 		this.selectedItemIndex = allItems.indexOf(item);
 
 		this.accInfo = {
-			currentPos: this.selectedItemIndex + 1,
-			listSize: allItems.length,
-			itemText: this._getRealItems()[this.selectedItemIndex].description,
+			isGroup: item.groupItem,
+			currentPos: nonGroupItems.indexOf(item) + 1,
+			listSize: nonGroupItems.length,
+			itemText: this._getRealItems()[this.selectedItemIndex].text,
+			description: this._getRealItems()[this.selectedItemIndex].description,
+			additionalText: this._getRealItems()[this.selectedItemIndex].additionalText,
 		};
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
@@ -472,6 +480,7 @@ class Suggestions {
 		const items = this._getItems();
 		const currentItem = items[nextIdx];
 		const previousItem = items[previousIdx];
+		const nonGroupItems = this._getNonGroupItems();
 
 		if (!currentItem) {
 			return;
@@ -481,9 +490,12 @@ class Suggestions {
 		this._clearValueStateFocus();
 
 		this.accInfo = {
-			currentPos: nextIdx + 1,
-			listSize: items.length,
-			itemText: this._getRealItems()[items.indexOf(currentItem)].description,
+			isGroup: currentItem.groupItem,
+			currentPos: nonGroupItems.indexOf(currentItem) + 1,
+			listSize: nonGroupItems.length,
+			itemText: this._getRealItems()[this.selectedItemIndex].text,
+			description: this._getRealItems()[items.indexOf(currentItem)].description,
+			additionalText: this._getRealItems()[items.indexOf(currentItem)].additionalText,
 		};
 
 		if (previousItem) {
@@ -554,6 +566,10 @@ class Suggestions {
 		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [];
 	}
 
+	_getNonGroupItems(): Array<SuggestionListItem> {
+		return this._getItems().filter(item => !item.groupItem);
+	}
+
 	_getComponent(): SuggestionComponent {
 		return this.component;
 	}
@@ -588,8 +604,9 @@ class Suggestions {
 		}
 
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
+		const groupItemText = Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		return `${this.accInfo.itemText} ${itemPositionText}`;
+		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion: SuggestionItem) {
@@ -665,5 +682,5 @@ export default Suggestions;
 
 export type {
 	SuggestionComponent,
-	InputSuggestionText,
+	InputSuggestion,
 };

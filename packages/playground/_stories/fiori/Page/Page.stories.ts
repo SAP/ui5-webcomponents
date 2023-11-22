@@ -56,9 +56,9 @@ Basic.args = {
     </div>`,
 	header: `
     <ui5-bar design="Header" slot="header">
-        <ui5-button icon="home" tooltip="Go home" slot="startContent"></ui5-button>
+        <ui5-button design="Transparent" icon="home" tooltip="Go home" slot="startContent"></ui5-button>
         <ui5-label slot="startContent">Title</ui5-label>
-        <ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+        <ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
     </ui5-bar>`,
 	footer: `
     <div slot="footer">
@@ -71,9 +71,9 @@ Basic.args = {
 };
 
 
-export const WithFloatingFooter = Template.bind({});
-WithFloatingFooter.args = {
-    backgroundDesign: PageBackgroundDesign.List,
+export const FloatingFooter = Template.bind({});
+FloatingFooter.args = {
+    backgroundDesign: PageBackgroundDesign.Transparent,
     floatingFooter: true,
 	default: `
     <div>
@@ -98,9 +98,9 @@ WithFloatingFooter.args = {
     </div>`,
 	header: `
     <ui5-bar design="Header" slot="header">
-        <ui5-button icon="home" tooltip="Go home" slot="startContent"></ui5-button>
+        <ui5-button design="Transparent" icon="home" tooltip="Go home" slot="startContent"></ui5-button>
         <ui5-label slot="startContent">Title</ui5-label>
-        <ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+        <ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
     </ui5-bar>`,
 	footer: `
     <div slot="footer">

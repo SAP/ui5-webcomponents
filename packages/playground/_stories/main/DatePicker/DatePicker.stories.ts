@@ -55,7 +55,7 @@ State.args = {
 };
 
 export const MinMax = Template.bind({});
-MinMax.storyName = "Min/Max Dates and Format Pattern";
+MinMax.storyName = "Formatted Date Range";
 MinMax.args = {
 	minDate: "1/1/2020",
 	maxDate: "4/5/2020",

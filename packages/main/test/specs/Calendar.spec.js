@@ -362,7 +362,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
-		await browser.url("test/pages/Calendar.html");
+		await browser.url(`test/pages/Calendar.html`);
 
 		const calendar = await browser.$("#calendar6");
 		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0]); // sets the max date to 2024-10-04
@@ -382,8 +382,6 @@ describe("Calendar general interaction", () => {
 		await browser.url("test/pages/Calendar.html");
 
 		const calendar = await browser.$("#calendar1");
-		const nextButton = await calendar.shadow$("ui5-calendar-header").shadow$("[data-ui5-cal-header-btn-next]");
-		const prevButton = await calendar.shadow$("ui5-calendar-header").shadow$("[data-ui5-cal-header-btn-prev]");
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
 		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
@@ -404,5 +402,33 @@ describe("Calendar general interaction", () => {
 		}).parentElement();
 
 		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
+	});
+
+	it("Apply secondaryCalendar class when primary and secondary calendar types are different", async () => {
+		await browser.url("test/pages/Calendar.html");
+
+		const calendar = await browser.$("#calendar5");
+		const dayPickerRoot = await calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-root");
+
+		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), true, "Secondary Calendar class is applied correctly");
+	});
+
+	it("Apply secondaryCalendar class when primary and secondary calendar types are the same", async () => {
+		await browser.url("test/pages/Calendar.html");
+
+		const calendar = await browser.$("#calendar7");
+		const dayPickerRoot = await calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-root");
+
+		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), false, "Secondary Calendar class is applied correctly");
+	});
+
+	it("Focus goes into the selected day item of the day picker", async () => {
+		await browser.url(`test/pages/Calendar.html`);
+
+		const calendar = await browser.$("#calendar4");
+		const dayPicker = await calendar.shadow$("ui5-daypicker");
+		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="1594166400"]`);
+
+		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});
 });

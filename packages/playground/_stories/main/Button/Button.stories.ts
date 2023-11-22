@@ -40,39 +40,31 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`<ui5-butto
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: "Button",
+	default: "Button Text",
+	accessibleName: "Button with Accessible Name",
+	icon: "sap-icon://action"
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	default: "Disabled",
-	disabled: true,
-};
-
-export const WithIconAndDesign = Template.bind({});
-WithIconAndDesign.args = {
-	default: "Warning",
-	design: ButtonDesign.Attention,
-	icon: "message-warning",
-};
-
-export const WithEndIcon = Template.bind({});
-WithEndIcon.args = {
-	default: "Download",
-	icon: "download",
-	iconEnd: true,
-};
-
-export const IconOnly = Template.bind({});
-IconOnly.storyName = "Icon-only Button";
-IconOnly.args = {
-	design: ButtonDesign.Negative,
-	icon: "cancel",
-	accessibleName: "Cancel",
-	accessibleNameRef: "lblCancel",
-	tooltip: "Cancel",
-};
-IconOnly.decorators = [
-	(story) => html`<ui5-label style="display:none;" id="lblCancel" aria-hidden="true">Cancel</ui5-label>
-	${story()}`,
+export const DifferentTypes = Template.bind({});
+DifferentTypes.decorators = [
+	(story, {args}) => {
+		return html`
+${story({args: {...args, design: args.design || ButtonDesign.Emphasized, default: args.default || "Emphasized"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Default, default: args.default || "Default"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Attention, default: args.default || "Attention"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Positive, default: args.default || "Positive"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Negative, default: args.default || "Negative"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, default: args.default || "Transparent"}})}`;
+	},
 ];
+
+export const IconOnlyButtons = Template.bind({});
+IconOnlyButtons.decorators = [
+	(story, {args}) => {
+		return html`
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "edit", tooltip: args.tooltip || "Edit Button"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "account", tooltip: args.tooltip || "Account Button"}})}`
+	},
+];
+
+IconOnlyButtons.storyName = "Icon-Only Buttons";

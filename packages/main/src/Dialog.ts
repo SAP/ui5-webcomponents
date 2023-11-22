@@ -184,10 +184,7 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the state of the <code>Dialog</code>.
-	 * <br><br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-	 * <br><br>
-	 * <b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
+	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.Dialog.prototype.state
@@ -408,6 +405,8 @@ class Dialog extends Popup {
 	}
 
 	onAfterRendering() {
+		super.onAfterRendering();
+
 		if (!this.isOpen() && this.open) {
 			this.show();
 		} else if (this.isOpen() && !this.open) {

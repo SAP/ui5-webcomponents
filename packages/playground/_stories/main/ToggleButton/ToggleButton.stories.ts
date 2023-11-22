@@ -39,29 +39,13 @@ Basic.args = {
 	default: "Default",
 };
 
-export const Pressed = Template.bind({});
-Pressed.args = {
-	default: "Pressed",
-	pressed: true,
-};
-
-export const DisabledAndPressed = Template.bind({});
-DisabledAndPressed.args = {
-	default: "ToggleButton",
-	pressed: true,
-	disabled: true,
-};
-
-export const IconOnly = Template.bind({});
-IconOnly.storyName = "Icon-Only ToggleButton";
-IconOnly.args = {
-	icon: "add",
-};
-
-export const WithIconAndDesign = Template.bind({});
-WithIconAndDesign.args = {
-	default: "ToggleButton",
-	design: ButtonDesign.Positive,
-	pressed: false,
-	icon: "add",
-};
+export const Examples = Template.bind({});
+Examples.decorators = [
+	(story, {args}) => {
+		return html`
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "paper-plane", default: args.default || "Sent"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Default, icon: args.icon || "email-read", default: args.default || "Received"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "italic-text", tooltip: args.tooltip || "Italic"}})}
+${story({args: {...args, design: args.design || ButtonDesign.Transparent, icon: args.icon || "bold-text", tooltip: args.tooltip || "Bold"}})}`
+	},
+];
