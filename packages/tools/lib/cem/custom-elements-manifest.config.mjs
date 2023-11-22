@@ -93,7 +93,7 @@ function processClass(ts, classNode, moduleDoc) {
 		// Slots with accessors are treated like fields by the tool, so we have to convert them into slots.
 		if (member.kind === "field") {
 			const slotDecorator = findDecorator(classNodeMember, "slot");
-			validateJSDocComment(slotDecorator ? "slot" : "field", memberParsedJsDoc, classNodeMember.name?.text, moduleDoc);
+			validateJSDocComment(slotDecorator ? "slot" : (member.readonly ? "getter" : "field" ), memberParsedJsDoc, classNodeMember.name?.text, moduleDoc);
 
 				const typeRefs = (getTypeRefs(ts, classNodeMember, member)
 					?.map(e => getReference(ts, e, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
@@ -140,8 +140,31 @@ function processClass(ts, classNode, moduleDoc) {
 					member.default = tagValue;
 				}
 
+				if (member.privacy === "public") {
+					const JSDocErrors = getJSDocErrors();
+					if (member.readonly && !member.type) {
+							JSDocErrors.push(
+								`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
+							);
+					}
+
+					if (!member.default) {
+							JSDocErrors.push(
+								`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Default value is missing`
+							);
+					}
+				}
+
 				// Getters are treated as fields so they should not have return, instead of return they should have default value defined with @default
 				if (member.readonly) {
+					if (member.privacy === "public" && !member.type) {
+						const JSDocErrors = getJSDocErrors();
+
+						JSDocErrors.push(
+							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
+						);
+					}
+
 					delete member.return;
 				}
 			}
@@ -171,6 +194,14 @@ function processClass(ts, classNode, moduleDoc) {
 				if (typeRefs.length) {
 					member.return.type.references = typeRefs;
 				}
+			}
+
+			if (member.privacy === "public" && !member.return) {
+				const JSDocErrors = getJSDocErrors();
+
+				JSDocErrors.push(
+					`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
+				);
 			}
 		}
 	}
