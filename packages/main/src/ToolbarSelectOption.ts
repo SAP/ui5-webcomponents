@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { IToolbarSelectOption } from "./Interfaces.js";
 
 /**
  * @class
@@ -14,12 +13,11 @@ import { IToolbarSelectOption } from "./Interfaces.js";
  * @constructor
  * @extends UI5Element
  * @abstract
- * @implements {IToolbarSelectOption}
  * @public
  * @since 1.17.0
  */
 @customElement("ui5-toolbar-select-option")
-class ToolbarSelectOption extends UI5Element implements IToolbarSelectOption {
+class ToolbarSelectOption extends UI5Element {
 	/**
 	 * Defines the selected state of the component.
 	 * @default false

@@ -4,8 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
-import type IToolbarItem from "./ToolbarItem.js";
-import { ISelectOption } from "./Interfaces.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
@@ -16,7 +14,7 @@ import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSe
 import ToolbarItem from "./ToolbarItem.js";
 import Select from "./Select.js";
 import Option from "./Option.js";
-import "./ToolbarSelectOption.js";
+import ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
 type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
@@ -36,7 +34,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @abstract
  * @extends UI5Element
  * @public
- * @implements {IToolbarItem}
  * @since 1.17.0
  */
 @customElement({
@@ -53,6 +50,9 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @event("change", {
 	detail: {
+		/**
+		* @public
+		*/
 		selectedOption: { type: HTMLElement },
 	},
 })
@@ -70,7 +70,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @event("close")
 
-class ToolbarSelect extends ToolbarItem implements IToolbarItem {
+class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the width of the select.
 	 * <br><br>
@@ -95,7 +95,7 @@ class ToolbarSelect extends ToolbarItem implements IToolbarItem {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<ISelectOption>;
+	options!: Array<ToolbarSelectOption>;
 
 	/**
 	 * Defines the value state of the component.
@@ -188,7 +188,7 @@ class ToolbarSelect extends ToolbarItem implements IToolbarItem {
 			// update options
 			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
 			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-			this.options.forEach((option: ISelectOption, index: number) => {
+			this.options.forEach((option: ToolbarSelectOption, index: number) => {
 				if (index === selectedOptionIndex) {
 					option.setAttribute("selected", "");
 				} else {

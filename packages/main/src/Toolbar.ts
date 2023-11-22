@@ -13,7 +13,6 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import type IToolbarItem from "./ToolbarItem.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -142,7 +141,7 @@ class Toolbar extends UI5Element {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<IToolbarItem>
+	items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
 	_onInteract!: EventListener;

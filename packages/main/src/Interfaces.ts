@@ -194,15 +194,6 @@ const IToken = "sap.ui.webc.main.IToken";
  */
 const ITreeItem = "sap.ui.webc.main.ITreeItem";
 
-/**
- * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
- *
- * @interface
- * @public
- */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IToolbarSelectOption extends HTMLElement { }
-
 export {
 	IAvatar,
 	IBreadcrumbsItem,
@@ -226,5 +217,4 @@ export {
 	ITableRow,
 	IToken,
 	ITreeItem,
-	IToolbarSelectOption,
 };

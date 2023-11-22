@@ -62,7 +62,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
-	* @returns {boolean}
 	* @protected
 	*/
 	get ignoreSpace(): boolean {
@@ -73,7 +72,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item contains text. Used to position the text properly inside the popover.
 	 * Aligned left if the item has text, default aligned otherwise.
 	 * @protected
-	 * @returns {boolean}
 	 */
 	get containsText(): boolean {
 		return false;
@@ -83,7 +81,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item is flexible. An item that is returning true for this property will make
 	 * the toolbar expand to fill the 100% width of its container.
 	 * @protected
-	 * @returns {Boolean}
 	 */
 	get hasFlexibleWidth(): boolean {
 		return false;
@@ -94,7 +91,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * This value is used to determinate if the toolbar should have its accessibility role and attributes set.
 	 * At least two interactive items are needed for the toolbar to have the role="toolbar" attribute set.
 	 * @protected
-	 * @returns {boolean}
 	 */
 	get isInteractive(): boolean {
 		return true;
@@ -103,7 +99,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns if the item is separator.
 	 * @protected
-	 * @returns {boolean}
 	 */
 	get isSeparator() {
 		return false;
@@ -112,7 +107,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns the template for the toolbar item.
 	 * @protected
-	 * @returns {TemplateFunction}
 	 */
 	static get toolbarTemplate(): TemplateFunction {
 		throw new Error("Template must be defined");
@@ -121,7 +115,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns the template for the toolbar item popover.
 	 * @protected
-	 * @returns {TemplateFunction}
 	 */
 	static get toolbarPopoverTemplate(): TemplateFunction {
 		throw new Error("Popover template must be defined");
@@ -130,7 +123,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns the events that the item is subscribed to.
 	 * @protected
-	 * @returns {Map}
 	 */
 	get subscribedEvents(): Map<string, IEventOptions> {
 		return new Map();

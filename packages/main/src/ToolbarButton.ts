@@ -4,7 +4,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-import type IToolbarItem from "./ToolbarItem.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import type { IEventOptions } from "./ToolbarItem.js";
@@ -29,7 +28,6 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @abstract
  * @extends ToolbarItem
  * @public
- * @implements {IToolbarItem}
  * @since 1.17.0
  */
 @customElement({
@@ -47,7 +45,7 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @public
  */
 @event("click")
-class ToolbarButton extends ToolbarItem implements IToolbarItem {
+class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines if the action is disabled.
 	 * <br><br>

@@ -4,7 +4,6 @@ import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
 
 import ToolbarItem from "./ToolbarItem.js";
-import type IToolbarItem from "./ToolbarItem.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
@@ -19,14 +18,13 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @extends ToolbarItem
  * @abstract
  * @since 1.17.0
- * @implements {IToolbarItem}
  * @public
  */
 @customElement({
 	tag: "ui5-toolbar-spacer",
 })
 
-class ToolbarSpacer extends ToolbarItem implements IToolbarItem {
+class ToolbarSpacer extends ToolbarItem {
 	/**
 	 * Defines the width of the spacer.
 	 * <br><br>
