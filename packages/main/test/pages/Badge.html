@@ -22,6 +22,55 @@
 	<h1>Badges</h1>
 	<ui5-checkbox text="Interactive" id="checkboxId"></ui5-checkbox>
 	<section class="group gaps">
+		<h2>Custom Badges</h2>
+		<ui5-badge>
+			Default color
+		</ui5-badge>
+		<ui5-badge id="badgeWithTextAndIcon" style="width: 300px" color-scheme="1">
+			<ui5-icon name="accept" slot="icon"></ui5-icon>bigger width
+		</ui5-badge>
+		<ui5-badge id="badgeIconOnly" color-scheme="2">
+			<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="3">
+			In Process
+		</ui5-badge>
+		<ui5-badge color-scheme="4">
+			<ui5-icon name="lab" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="5">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="6">
+			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
+		</ui5-badge>
+		<ui5-badge color-scheme="7">
+			<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="8">
+			<ui5-icon name="locked" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<br>
+		<ui5-badge color-scheme="6">
+			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal" color-scheme="6">
+			<ui5-icon name="pending" slot="icon"></ui5-icon>P wrapping-type="true"
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal">
+			wrapping-type="true"
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal" style="width: 150px">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>Some truncated text with more lines text wrapping-type="true"
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+	</section>
+	<section class="group gaps">
 		<h2>Set 1</h2>
 		<div id="set1Content">
 		</div>
@@ -73,36 +122,6 @@
 				Critical - No icon
 			</ui5-badge>
 		</div>
-	</section>
-	<section class="group gaps">
-		<h2>Custom Badges</h2>
-		<ui5-badge>
-			Default color
-		</ui5-badge>
-		<ui5-badge id="badgeWithTextAndIcon" color-scheme="1">
-			<ui5-icon name="accept" slot="icon"></ui5-icon>Done
-		</ui5-badge>
-		<ui5-badge id="badgeIconOnly" color-scheme="2">
-			<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
-		</ui5-badge>
-		<ui5-badge color-scheme="3">
-			In Process
-		</ui5-badge>
-		<ui5-badge color-scheme="4">
-			<ui5-icon name="lab" slot="icon"></ui5-icon>
-		</ui5-badge>
-		<ui5-badge color-scheme="5">
-			<ui5-icon name="email-read" slot="icon"></ui5-icon>
-		</ui5-badge>
-		<ui5-badge color-scheme="6">
-			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
-		</ui5-badge>
-		<ui5-badge color-scheme="7">
-			<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
-		</ui5-badge>
-		<ui5-badge color-scheme="8">
-			<ui5-icon name="locked" slot="icon"></ui5-icon>
-		</ui5-badge>
 	</section>
 </body>
 

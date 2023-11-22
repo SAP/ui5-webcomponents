@@ -19,6 +19,7 @@
 	font-weight: var(--_ui5-badge-font-weight);
 	text-align: center;
 	letter-spacing: var(--_ui5-badge-letter-spacing);
+	white-space: nowrap;
 }
 
 :host([interactive]) .ui5-badge-root {
@@ -29,6 +30,31 @@
 :host([interactive]) .ui5-badge-root:focus {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: 1px;
+}
+
+:host([wrapping-type="Normal"]) {
+	line-height: 0;
+}
+
+:host([wrapping-type="Normal"]) .ui5-badge-root {
+	height: auto;
+	display: inline-block;
+	overflow: hidden;
+	white-space: normal;
+	text-overflow: ellipsis;
+	text-align: left;
+}
+
+:host([wrapping-type="Normal"]) ::slotted([ui5-icon]) {
+	height: var(--_ui5-badge-height);
+	min-height: var(--_ui5-badge-height);
+	vertical-align: bottom;
+}
+
+:host([wrapping-type="Normal"]) .ui5-badge-root .ui5-badge-text {
+	line-height: var(--_ui5-badge-height);
+	vertical-align: center;
+	white-space: normal;
 }
 
 .ui5-badge-text {
