@@ -339,7 +339,6 @@ class Toolbar extends UI5Element {
 	 * Returns if the overflow popup is open.
 	 *
 	 * @public
-	 * @return { Promise<Boolean> }
 	 */
 	async isOverflowOpen(): Promise<boolean> {
 		const overflowPopover = await this.getOverflowPopover();

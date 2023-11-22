@@ -150,6 +150,7 @@ class ToolbarButton extends ToolbarItem {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
+	 * @default {}
 	 * @public
 	 */
 	@property({ type: Object })
