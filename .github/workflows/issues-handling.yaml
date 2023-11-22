@@ -1,4 +1,4 @@
-name: Test auto issue comments
+name: Auto-comment On GitHub Issues [WIP]
 
 on: workflow_dispatch
   

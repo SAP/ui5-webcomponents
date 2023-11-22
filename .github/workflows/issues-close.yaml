@@ -1,4 +1,4 @@
-name: Auto-close stale issues
+name: Close Stale Issues [auto]
 
 on:
   schedule:
