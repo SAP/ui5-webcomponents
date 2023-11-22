@@ -76,13 +76,13 @@
 
 .ui5-dynamic-page-title--content {
     flex-shrink: 1.6;
-    min-width: 3rem;
+    min-width: fit-content;
     flex-grow: 1;
 }
 
 .ui5-dynamic-page-title--actions {
     flex-shrink: 1.6;
-    min-width: 3rem;
+    min-width: fit-content;
     flex-grow: 1;
     display: flex;
 }

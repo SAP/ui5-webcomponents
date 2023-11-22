@@ -11,21 +11,18 @@
     {{/if}}
   </div>
 
-  <div class="{{classes.wrapper}}"
-  @ui5-_min-content-width-change={{onMinContentWidthChange}}>
+  <div class="{{classes.wrapper}}">
     <div class="{{classes.heading}}">
       <slot name="{{headingSlotName}}"></slot>
     </div>
 
     {{#if hasContent}}
-      <div class="{{classes.content}}"
-        style="{{styles.content}}">
+      <div class="{{classes.content}}">
         <slot></slot>
       </div>
     {{/if}}
 
-    <div class="{{classes.actions}}"
-      style="{{styles.actions}}">
+    <div class="{{classes.actions}}">
       <slot name="actions"></slot>
       {{#unless mobileNavigationActions}}
         <div class="{{classes.actionsSeparator}}"></div>
