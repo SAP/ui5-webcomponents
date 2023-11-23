@@ -55,11 +55,10 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IIcon
- * @interface
  * @public
  */
-const IIcon = "sap.ui.webc.main.IIcon";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IIcon extends HTMLElement { }
 
 /**
  * Interface for components that represent an input, usable in numerous higher-order components

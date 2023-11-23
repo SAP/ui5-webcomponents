@@ -8,8 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
-import type { ICardHeader } from "./Interfaces";
-
+import type { ICardHeader } from "./CardHeader.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,

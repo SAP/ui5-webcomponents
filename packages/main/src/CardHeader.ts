@@ -249,3 +249,6 @@ class CardHeader extends UI5Element implements ICardHeader {
 CardHeader.define();
 
 export default CardHeader;
+export type {
+	ICardHeader,
+};
