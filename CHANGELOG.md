@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.1...v1.20.0-rc.2) (2023-11-23)
+
+
+### Bug Fixes
+
+* **framework:** redundant fonts loading ([#7868](https://github.com/SAP/ui5-webcomponents/issues/7868)) ([87535f1](https://github.com/SAP/ui5-webcomponents/commit/87535f1ba30b85d3c1c718451a89f0121e441338))
+* openui5 support crashes with 1.121-snapshot ([#7872](https://github.com/SAP/ui5-webcomponents/issues/7872)) ([334ed68](https://github.com/SAP/ui5-webcomponents/commit/334ed6821433b0364ee65a2db2d3ab44cad0612d))
+* **ui5-calendar:** render the correct length of day names ([#7866](https://github.com/SAP/ui5-webcomponents/issues/7866)) ([2a31e8d](https://github.com/SAP/ui5-webcomponents/commit/2a31e8d1587a2461099810239364913421708afa)), closes [#7831](https://github.com/SAP/ui5-webcomponents/issues/7831)
+* **ui5-switch:** align 'off' text in RTL, add compact mode params ([#7603](https://github.com/SAP/ui5-webcomponents/issues/7603)) ([007e755](https://github.com/SAP/ui5-webcomponents/commit/007e755f301e6112bf98afef1b47676b422eb268)), closes [#7522](https://github.com/SAP/ui5-webcomponents/issues/7522) [#7806](https://github.com/SAP/ui5-webcomponents/issues/7806)
+* **ui5-wizard:** scrollbar styles are now present on root ([#7838](https://github.com/SAP/ui5-webcomponents/issues/7838)) ([1534d89](https://github.com/SAP/ui5-webcomponents/commit/1534d897f15f52f947a96430ca498a5548e4b6c8))
+
+
+
+
+
 # [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
 
 
