@@ -127,7 +127,7 @@ class ItemNavigation {
 	 * @public
 	 * @param current the new selected item
 	 */
-	setCurrentItem(current: ITabbable) {
+	setCurrentItem(current: ITabbable): void {
 		const currentItemIndex = this._getItems().indexOf(current);
 
 		if (currentItemIndex === -1) {
@@ -145,7 +145,7 @@ class ItemNavigation {
 	 * @public
 	 * @param newRowSize
 	 */
-	setRowSize(newRowSize: number) {
+	setRowSize(newRowSize: number): void {
 		this._rowSize = newRowSize;
 	}
 
