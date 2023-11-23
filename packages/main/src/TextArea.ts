@@ -452,6 +452,22 @@ class TextArea extends UI5Element implements IFormElement {
 		this.previousValue = this.getInputDomRef().value;
 	}
 
+	get selectionStart() {
+		return this.shadowRoot!.querySelector("textarea")!.selectionStart;
+	}
+
+	set selectionStart(sel) {
+		this.shadowRoot!.querySelector("textarea")!.selectionStart = sel;
+	}
+
+	get selectionEnd() {
+		return this.shadowRoot!.querySelector("textarea")!.selectionEnd;
+	}
+
+	set selectionEnd(sel) {
+		this.shadowRoot!.querySelector("textarea")!.selectionEnd = sel;
+	}
+
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
 		const focusedOutToValueStateMessage = eTarget?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");

@@ -200,7 +200,10 @@
 		<ui5-label id="lblForTextAreaID2" for="taWithLabelID2">This should not be in aria-label property of the text area</ui5-label>
 		<ui5-textarea id="taWithLabelID2" class="textarea-width" placeholder="Enter some text here" accessible-name="Here aria label should be this one"></ui5-textarea>
 	</section>
-
+	<ui5-popover id="pop" opener="test" placement-type="Bottom">
+		<ui5-icon name="joule"></ui5-icon>
+	</ui5-popover>
+	<div id="test" style="width: 2px; height: 1.2em; background: red; position: absolute;"></div>
 	<script>
 		var changeCounter = 0;
 		var inputCounter = 0;
@@ -214,6 +217,70 @@
 			inputCounter += 1;
 			document.getElementById('inputResult').value = inputCounter;
 		});
+
+		function createCopy(textArea) {
+			var copy = document.createElement('div');
+			copy.textContent = textArea.value;
+			var style = getComputedStyle(textArea);
+			[
+			'fontFamily',
+			'fontSize',
+			'fontWeight',
+			'wordWrap',
+			'whiteSpace',
+			'borderLeftWidth',
+			'borderTopWidth',
+			'borderRightWidth',
+			'borderBottomWidth',
+			].forEach(function(key) {
+				copy.style[key] = style[key];
+			});
+			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
+			const innerTextAreaStyle = getComputedStyle(innerTextArea)
+			copy.style.whiteSpace = "pre";
+			copy.style.paddingTop = innerTextAreaStyle.paddingTop;
+			copy.style.paddingLeft = innerTextAreaStyle.paddingLeft;
+			copy.style.lineHeight = innerTextAreaStyle.lineHeight;
+			copy.style.overflow = 'auto';
+			copy.style.width = textArea.offsetWidth + 'px';
+			copy.style.height = textArea.offsetHeight + 'px';
+			copy.style.position = 'absolute';
+			copy.style.left = textArea.offsetLeft + 'px';
+			copy.style.top = textArea.offsetTop + 'px';
+			document.body.appendChild(copy);
+			return copy;
+		}
+
+		function getCaretPosition(textArea) {
+			var start = textArea.selectionStart;
+			var end = textArea.selectionEnd;
+			var copy = createCopy(textArea);
+			var range = document.createRange();
+			range.setStart(copy.firstChild, start);
+			range.setEnd(copy.firstChild, end);
+			var selection = document.getSelection();
+			selection.removeAllRanges();
+			selection.addRange(range);
+			var rect = range.getBoundingClientRect();
+			document.body.removeChild(copy);
+			textArea.selectionStart = start;
+			textArea.selectionEnd = end;
+			textArea.focus();
+			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
+			return {
+				x: rect.left - innerTextArea.scrollLeft,
+				y: rect.top - innerTextArea.scrollTop
+			};
+		}
+
+		const textArea = document.getElementById("basic-textarea")
+
+		textArea.onkeyup = function() {
+			var position = getCaretPosition(textArea);
+			test.style.left = position.x + 'px';
+			test.style.top = (position.y + window.scrollY) + 'px';
+			pop.showAt(test, true);
+		}
 	</script>
 
 </body>
