@@ -87,6 +87,7 @@ class DateRangePicker extends DatePicker {
 	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
 	 *
 	 * @public
+	 * @default null
 	 */
 	get dateValue(): null {
 		return null;
@@ -96,6 +97,7 @@ class DateRangePicker extends DatePicker {
 	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
 	 *
 	 * @public
+	 * @default null
 	 */
 	get dateValueUTC(): null {
 		return null;
@@ -147,6 +149,7 @@ class DateRangePicker extends DatePicker {
 	 * Returns the start date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @public
+	 * @default null
 	 */
 	get startDateValue(): Date | null {
 		return CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000).toLocalJSDate();
@@ -156,6 +159,7 @@ class DateRangePicker extends DatePicker {
 	 * Returns the end date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @public
+	 * @default null
 	 */
 	get endDateValue(): Date | null {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();

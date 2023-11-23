@@ -203,8 +203,10 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
+	 *
 	 * @public
 	 * @since 1.2.0
+	 * @default {}
 	 */
 	@property({ type: Object })
 	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};

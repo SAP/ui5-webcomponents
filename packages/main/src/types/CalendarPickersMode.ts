@@ -7,19 +7,22 @@
 enum CalendarPickersMode {
 	/**
 	 * User can select days, months and years
-	 * @public
+	 *
+	 * @private
 	 */
 	DAY_MONTH_YEAR = "DAY_MONTH_YEAR",
 
 	/**
 	 * User can select months and years
-	 * @public
+	 *
+	 * @private
 	 */
 	MONTH_YEAR = "MONTH_YEAR",
 
 	/**
 	 * User can select years
-	 * @public
+	 *
+	 * @private
 	 */
 	YEAR = "YEAR"
 }

@@ -91,7 +91,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
+	 *
 	 * @public
+	 * @default []
 	 */
 	@property({
 		validator: Integer,

@@ -259,6 +259,7 @@ class SegmentedButton extends UI5Element {
 	 * @deprecated since 1.14.0. This method will be removed in the next major release.
 	 * Please use the <code>selectedItems</code> property instead.
 	 * @public
+	 * @default undefined
 	 */
 	get selectedItem(): ISegmentedButtonItem | undefined {
 		return this._selectedItem;
@@ -268,6 +269,7 @@ class SegmentedButton extends UI5Element {
 	 * Returns an array of the currently selected items.
 	 * @since 1.14.0
 	 * @public
+	 * @default []
 	 */
 	get selectedItems(): Array<ISegmentedButtonItem> {
 		return this.items.filter(item => item.pressed);

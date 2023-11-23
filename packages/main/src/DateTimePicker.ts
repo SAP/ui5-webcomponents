@@ -205,9 +205,10 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Opens the picker.
+	 *
 	 * @public
 	 */
-	async openPicker() {
+	async openPicker(): Promise<void> {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
@@ -294,6 +295,7 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Defines whether the dialog on mobile should have header
+	 *
 	 * @private
 	 */
 	get _shouldHideHeader() {
@@ -372,6 +374,7 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * Handles the date/time switch available in <code>phoneMode</code> to switch
 	 * between the date and time views.
+	 *
 	 * @param e
 	 */
 	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS

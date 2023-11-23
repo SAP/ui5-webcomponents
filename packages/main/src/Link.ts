@@ -233,8 +233,10 @@ class Link extends UI5Element implements ITabbable {
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
+	 *
 	 * @public
 	 * @since 1.1.0
+	 * @default {}
 	 */
 	@property({ type: Object })
 	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };

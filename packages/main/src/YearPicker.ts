@@ -85,6 +85,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
+	 *
+	 * @default []
 	 * @public
 	 */
 	@property({
@@ -290,6 +292,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
+	 *
 	 * @param value
 	 * @private
 	 */
@@ -300,6 +303,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page.
+	 *
 	 * @param amount
 	 * @private
 	 */
@@ -319,6 +323,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * User clicked with the mouser or pressed Enter/Space
+	 *
 	 * @param e
 	 * @private
 	 */
@@ -334,6 +339,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
+	 *
 	 * @protected
 	 */
 	_hasPreviousPage(): boolean {
@@ -342,6 +348,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
+	 *
 	 * @protected
 	 */
 	_hasNextPage(): boolean {
@@ -351,6 +358,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
+	 *
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -361,6 +369,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
+	 *
 	 * @protected
 	 */
 	_showNextPage() {

@@ -304,9 +304,10 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
+	 *
 	 * @public
 	 */
-	toggleContents() {
+	toggleContents(): void {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
 			this._toggled = !this._toggled;
 		}
