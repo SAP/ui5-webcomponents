@@ -20,6 +20,9 @@ import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
+import { calculateOrigCoordinates } from "./PopoverHelpers.js";
+
+const scale = 0.7;
 
 const ARROW_SIZE = 8;
 
@@ -443,7 +446,7 @@ class Popover extends Popup {
 		let left = clamp(
 			this._left!,
 			Popover.VIEWPORT_MARGIN,
-			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientWidth * scale - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
 		if (this.actualPlacementType === PopoverPlacementType.Right) {
@@ -453,7 +456,7 @@ class Popover extends Popup {
 		let top = clamp(
 			this._top!,
 			Popover.VIEWPORT_MARGIN,
-			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientHeight * scale - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
 
 		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
@@ -463,10 +466,19 @@ class Popover extends Popup {
 		this.arrowTranslateX = placement!.arrow.x;
 		this.arrowTranslateY = placement!.arrow.y;
 
+		const transformedParent = this.findTransformedParent();
 		top = this._adjustForIOSKeyboard(top);
-		const stackingContextOffset = this._getStackingContextOffset();
-		left -= stackingContextOffset.left;
-		top -= stackingContextOffset.top;
+	    const stackingContextOffset = this._getStackingContextOffset();
+		const { x: stackingLeft, y: stackingTop } = calculateOrigCoordinates(stackingContextOffset.left, stackingContextOffset.top, transformedParent);
+		left -= stackingLeft;
+		top -= stackingTop;
+
+		// containingNode
+		if (transformedParent) {
+			const { x, y } = calculateOrigCoordinates(left, top, transformedParent);
+			left = x;
+			top = y;
+		}
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -475,6 +487,16 @@ class Popover extends Popup {
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
+		}
+	}
+
+	findTransformedParent() {
+		let parent = this.parentElement;
+		while (parent) {
+			if (window.getComputedStyle(parent).transform) {
+				return parent;
+			}
+			parent = parent.parentElement;
 		}
 	}
 
@@ -540,8 +562,8 @@ class Popover extends Popup {
 		let top = 0;
 		const allowTargetOverlap = this.allowTargetOverlap;
 
-		const clientWidth = document.documentElement.clientWidth;
-		const clientHeight = document.documentElement.clientHeight;
+		const clientWidth = document.documentElement.clientWidth * scale;
+		const clientHeight = document.documentElement.clientHeight * scale;
 
 		let maxHeight = clientHeight;
 		let maxWidth = clientWidth;
