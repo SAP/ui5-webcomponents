@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **ui5-list:** shift+tab navigation in List ([#7728](https://github.com/SAP/ui5-webcomponents/issues/7728)) ([399b941](https://github.com/SAP/ui5-webcomponents/commit/399b941ebeae7b44f6dba9cd4e8ec7ebb6f283c6))
+
+
+
+
+
+# [1.20.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.20.0-rc.0) (2023-11-09)
+
+
+### Bug Fixes
+
+* **ui5-segmented-button:** check for items before applying settings ([#7792](https://github.com/SAP/ui5-webcomponents/issues/7792)) ([7f11274](https://github.com/SAP/ui5-webcomponents/commit/7f112746d50381474ec86da5e428df79c17c6499)), closes [#7788](https://github.com/SAP/ui5-webcomponents/issues/7788)
+* **ui5-time-picker:** check value before formatting ([#7793](https://github.com/SAP/ui5-webcomponents/issues/7793)) ([70deda8](https://github.com/SAP/ui5-webcomponents/commit/70deda85293d5e62e99530c9dc0747071d9ee59c)), closes [#7790](https://github.com/SAP/ui5-webcomponents/issues/7790)
+
+
+
+
+
 # [1.19.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.3...v1.19.0) (2023-11-02)
 
 **Note:** Version bump only for package @ui5/webcomponents

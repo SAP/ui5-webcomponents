@@ -16,7 +16,7 @@ Import the feature file from the respective NPM package:
 
 `import "@ui5/<PACKAGE-NAME>/dist/features/<FEATURE-NAME>.js`
 
-## Component features 
+## Component features
 
 Currently, only a few components offer additional features:
 
@@ -31,22 +31,28 @@ Currently, only a few components offer additional features:
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Japanese.js` | Japanese calendar support                                                                               |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Persian.js`  | Persian calendar support                                                                                |
 
+<b>Note:</b> Features must be imported before all components modules,
+so that the feature is enabled before the components' definition.
+
 For example:
 
 ```js
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
+
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Link.js";
+import "@ui5/webcomponents/dist/Input.js";
 ```
 
-## Framework features 
+## Framework features
 
 | Package        | Affects                                           | Feature Import                                                       | Description                                                                                             |
 |----------------|---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | `base`         | Framework                                         | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js`            | Integration with the OpenUI5 framework, allowing synchronization and resources re-use                   |
 | `base`         | Multiple components within all libraries          | `@ui5/webcomponents-base/dist/features/F6Navigation.js`              | Support for F6 fast groups navigation                                                                   |
 | `base`         | Date related components                           | `@ui5/webcomponents-base/dist/features/LegacyDateFormats.js`         | Support for legacy date formats                                                                         |
-|
 
-Framework-level features must be imported before all components modules,
+<b>Note:</b> Framework-level features must be imported before all components modules,
 so that the feature is enabled upon framework boot, before the components' definition.
 
 For example:
