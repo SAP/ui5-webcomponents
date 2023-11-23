@@ -1,5 +1,6 @@
 <div class="{{classes.root}}">
-  <div class="{{classes.scrollContainer}}">
+  <div class="{{classes.scrollContainer}}"
+    @scroll="{{snapOnScroll}}">
     <div class="{{classes.headerWrapper}}">
       <slot name="titleArea"></slot>
       {{#if headerInTitle}}
