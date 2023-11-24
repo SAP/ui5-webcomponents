@@ -8,6 +8,7 @@ import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
+import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -472,9 +473,9 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement!.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
-		const containingBlockClientRect = this._getContainingBlockClientRect();
-		left -= containingBlockClientRect.left;
-		top -= containingBlockClientRect.top;
+		const containingBlockClientLocation = this._getContainingBlockClientLocation();
+		left -= containingBlockClientLocation.left;
+		top -= containingBlockClientLocation.top;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -503,15 +504,15 @@ class Popover extends Popup {
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
 	}
 
-	_getContainingBlockClientRect() {
-		let parentNode = this.parentElement ? this.parentNode as HTMLElement : (this.parentNode as ShadowRoot).host as HTMLElement;
+	_getContainingBlockClientLocation() {
+		let parentElement = getParentElement(this);
 
-		while (parentNode) {
-			if (isElementContainingBlock(parentNode)) {
-				return parentNode.getBoundingClientRect();
+		while (parentElement) {
+			if (isElementContainingBlock(parentElement)) {
+				return parentElement.getBoundingClientRect();
 			}
 
-			parentNode = parentNode.parentElement ? parentNode.parentNode as HTMLElement : (parentNode.parentNode as ShadowRoot).host as HTMLElement;
+			parentElement = getParentElement(parentElement);
 		}
 
 		return { left: 0, top: 0 };
