@@ -15,6 +15,7 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
+import type { IIcon } from "./Interfaces.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import {
@@ -73,12 +74,10 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * <code>import "@ui5/webcomponents/dist/MessageStrip";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MessageStrip
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-message-strip
+ * @extends UI5Element
  * @public
  * @since 0.9.0
+ * @slot {Node[]} default - Defines the text of the component. <br><br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-message-strip",
@@ -92,7 +91,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * Fired when the close button is pressed either with a
  * click/tap or by using the Enter or Space key.
  *
- * @event sap.ui.webc.main.MessageStrip#close
  * @public
  */
 @event("close")
@@ -101,9 +99,7 @@ class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component type.
 	 *
-	 * @type {sap.ui.webc.main.types.MessageStripDesign}
-	 * @name sap.ui.webc.main.MessageStrip.prototype.design
-	 * @defaultvalue "Information"
+	 * @default "Information"
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -117,9 +113,7 @@ class MessageStrip extends UI5Element {
 	 * Defines whether the MessageStrip will show an icon in the beginning.
 	 * You can directly provide an icon with the <code>icon</code> slot. Otherwise, the default icon for the type will be used.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MessageStrip.prototype.hideIcon
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -129,24 +123,11 @@ class MessageStrip extends UI5Element {
 	/**
 	 * Defines whether the MessageStrip renders close button.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MessageStrip.prototype.hideCloseButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	hideCloseButton!: boolean;
-
-	/**
-	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.MessageStrip.prototype.default
-	 * @slot
-	 * @public
-	 */
 
 	/**
 	 * Defines the content to be displayed as graphical element within the component.
@@ -157,13 +138,10 @@ class MessageStrip extends UI5Element {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {sap.ui.webc.main.IIcon}
-	 * @name sap.ui.webc.main.MessageStrip.prototype.icon
-	 * @slot
 	 * @public
 	 */
 	@slot()
-	icon!: Array<Icon>;
+	icon!: Array<IIcon>;
 
 	static i18nBundle: I18nBundle;
 
