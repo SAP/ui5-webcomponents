@@ -415,7 +415,7 @@ class Table extends UI5Element {
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
 
-	@property({	type: Object, multiple: true })
+	@property({ type: Object, multiple: true })
 	_hiddenColumns!: Array<TableColumnInfo>;
 
 	@property({ type: Boolean })
@@ -940,7 +940,7 @@ class Table extends UI5Element {
 		this._itemNavigation.setCurrentItem(this._columnHeader);
 	}
 
-	_onColumnHeaderClick(e: MouseEvent| KeyboardEvent) {
+	_onColumnHeaderClick(e: MouseEvent | KeyboardEvent) {
 		if (!e.target) {
 			this.columnHeader!.focus();
 		}
@@ -1116,7 +1116,6 @@ class Table extends UI5Element {
 	checkTableInViewport() {
 		this._inViewport = isElementInView(this.getDomRef()!);
 	}
-
 	popinContent() {
 		const clientRect: DOMRect = this.getDomRef()!.getBoundingClientRect();
 		const tableWidth: number = clientRect.width;
@@ -1144,15 +1143,14 @@ class Table extends UI5Element {
 		}
 
 		const hiddenColumnsChange = (this._hiddenColumns.length !== hiddenColumns.length) || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
+		const shownColumnsChange = hiddenColumns.length === 0;
 
-		// invalidate only if hidden columns count has changed
-		if (hiddenColumnsChange) {
+		// invalidate if hidden columns count has changed or columns are shown
+		if (hiddenColumnsChange || shownColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
-			if (hiddenColumns.length) {
-				this.fireEvent<TablePopinChangeEventDetail>("popin-change", {
-					poppedColumns: this._hiddenColumns,
-				});
-			}
+			this.fireEvent<TablePopinChangeEventDetail>("popin-change", {
+				poppedColumns: this._hiddenColumns,
+			});
 		}
 	}
 
