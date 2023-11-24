@@ -23,8 +23,8 @@
 	<ui5-checkbox text="Interactive" id="checkboxId"></ui5-checkbox>
 	<section class="group gaps">
 		<h2>Custom Badges</h2>
-		<ui5-badge>
-			Default color
+		<ui5-badge style="width: 200px">
+			Default color truncate truncate
 		</ui5-badge>
 		<ui5-badge id="badgeWithTextAndIcon" style="width: 300px" color-scheme="1">
 			<ui5-icon name="accept" slot="icon"></ui5-icon>bigger width
@@ -44,6 +44,7 @@
 		<ui5-badge color-scheme="6">
 			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
 		</ui5-badge>
+		<ui5-badge color-scheme="6"><ui5-icon name="pending" slot="icon"></ui5-icon>same line</ui5-badge>
 		<ui5-badge color-scheme="7">
 			<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
 		</ui5-badge>
@@ -57,14 +58,11 @@
 		<ui5-badge wrapping-type="Normal" color-scheme="6">
 			<ui5-icon name="pending" slot="icon"></ui5-icon>P wrapping-type="true"
 		</ui5-badge>
-		<ui5-badge wrapping-type="Normal">
+		<ui5-badge>
 			wrapping-type="true"
 		</ui5-badge>
-		<ui5-badge wrapping-type="Normal">
-			<ui5-icon name="email-read" slot="icon"></ui5-icon>
-		</ui5-badge>
 		<ui5-badge wrapping-type="Normal" style="width: 150px">
-			<ui5-icon name="email-read" slot="icon"></ui5-icon>Some truncated text with more lines text wrapping-type="true"
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>Some long text with more lines text wrapping-type="true"
 		</ui5-badge>
 		<ui5-badge wrapping-type="Normal">
 			<ui5-icon name="email-read" slot="icon"></ui5-icon>
@@ -105,7 +103,6 @@
 			</ui5-badge>
 			<br />
 			<br />
-
 			<ui5-badge hide-state-icon design="Neutral">
 				Neutral - No icon
 			</ui5-badge>
@@ -121,6 +118,24 @@
 			<ui5-badge hide-state-icon design="Critical">
 				Critical - No icon
 			</ui5-badge>
+			<br />
+			<br />
+			<ui5-badge design="Neutral">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Neutral - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Information">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Information - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Positive">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Positive - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Negative">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Negative - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Critical">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Critical - Custom icon
+			</ui5-badge>
+
 		</div>
 	</section>
 </body>

@@ -2,13 +2,12 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	line-height: 0;
 }
 
 .ui5-badge-root {
-	display: flex;
-	align-items: center;
+	display: inline-block;
 	width: 100%;
-	height: var(--_ui5-badge-height);
 	min-width: 1.125em;
 	max-width: 100%;
 	box-sizing: border-box;
@@ -18,8 +17,9 @@
 	font-family: var(--_ui5-badge-font);
 	font-weight: var(--_ui5-badge-font-weight);
 	text-align: center;
-	letter-spacing: var(--_ui5-badge-letter-spacing);
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 :host([interactive]) .ui5-badge-root {
@@ -32,41 +32,19 @@
 	outline-offset: 1px;
 }
 
-:host([wrapping-type="Normal"]) {
-	line-height: 0;
-}
-
 :host([wrapping-type="Normal"]) .ui5-badge-root {
-	height: auto;
-	display: inline-block;
-	overflow: hidden;
 	white-space: normal;
-	text-overflow: ellipsis;
 	text-align: left;
 }
 
-:host([wrapping-type="Normal"]) ::slotted([ui5-icon]) {
-	height: var(--_ui5-badge-height);
-	min-height: var(--_ui5-badge-height);
-	vertical-align: bottom;
-}
-
-:host([wrapping-type="Normal"]) .ui5-badge-root .ui5-badge-text {
-	line-height: var(--_ui5-badge-height);
-	vertical-align: center;
-	white-space: normal;
-}
-
 .ui5-badge-text {
-	width: 100%;
-	overflow: hidden;
-	white-space: nowrap;
 	font-weight: inherit;
-	text-overflow: ellipsis;
 	text-transform: var(--_ui5-badge-text-transform);
-	letter-spacing: inherit;
 	font-size: var(--_ui5-badge-font-size);
 	pointer-events: none;
+	line-height: var(--_ui5-badge-height);
+	vertical-align: center;
+	letter-spacing: var(--_ui5-badge-letter-spacing);
 }
 
 :host([_icon-only]) {
@@ -76,15 +54,16 @@
 [ui5-icon],
 ::slotted([ui5-icon]) {
 	width: 0.75em;
-	height: 0.75em;
 	min-width: 0.75em;
-	min-height: 0.75em;
+	height: var(--_ui5-badge-height);
+	min-height: var(--_ui5-badge-height);
 	color: inherit;
 	pointer-events: none;
+	vertical-align: bottom;
 }
 
 :host([_has-icon]) .ui5-badge-text {
-	padding-inline-start: var(--_ui5-badge-icon-gap);
+	margin-inline-start: var(--_ui5-badge-icon-gap);
 }
 
 /* Color Scheme Design Type */
