@@ -182,7 +182,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* used for expanding and shrinking the columns.
 	*
 	* @default false
-
 	* @public
 	* @since 1.0.0-rc.15
 	*/
@@ -203,6 +202,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - <code>startArrowContainerAccessibleName</code>: the text that the first arrow container (between the <code>begin</code> and <code>mid</code> columns) will have as <code>aria-label</code>
 	*  - <code>endArrowContainerAccessibleName</code>: the text that the second arrow container (between the <code>mid</code> and <code>end</code> columns) will have as <code>aria-label</code>
 	*
+	* @default {}
 	* @public
 	* @since 1.0.0-rc.11
 	*/
@@ -219,6 +219,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - <code>endArrowContainerRole</code>: the accessibility role for the second arrow container (between the <code>mid</code> and <code>end</code> columns)
 	*  - <code>endColumnRole</code>: the accessibility role for the <code>endColumn</code>
 	*
+	* @default {}
 	* @public
 	* @since 1.1.0
 	*/

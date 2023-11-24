@@ -109,7 +109,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchI
 	 * <li><code>_parent</code></li>
 	 * <li><code>_search</code></li>
 	 * </ul>
-	 *
+	 * @default "_self"
 	 * @public
 	 */
 	@property({ defaultValue: "_self" })

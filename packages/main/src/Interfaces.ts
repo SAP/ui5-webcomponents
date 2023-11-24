@@ -125,15 +125,6 @@ const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
 const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-select</code> as options
- *
- * @public
- */
-interface ISelectOption {
-	isUI5Element: boolean,
-}
-
-/**
  * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
  *
  * @name sap.ui.webc.main.ISelectMenuOption
