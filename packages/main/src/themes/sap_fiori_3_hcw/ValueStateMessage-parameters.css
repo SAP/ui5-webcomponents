@@ -3,8 +3,11 @@
 :root {
 	--_ui5_value_state_message_border: calc(2 * var(--sapField_BorderWidth)) solid var(--sapField_BorderColor);
 	--_ui5_value_state_header_offset: -0.1875rem;
-	--_ui5_value_state_header_border_bottom: 0.0625rem solid var(--sapField_BorderColor);
-	--_ui5_value_state_header_box_shadow: inset 0 -0.125rem;
+	/* --_ui5_value_state_header_border_bottom: 0.0625rem solid var(--sapField_BorderColor); */
+	--_ui5_value_state_header_box_shadow_error: inset 0 -0.1875rem var(--sapField_InvalidColor);
+	--_ui5_value_state_header_box_shadow_information: inset 0 -0.1875rem var(--sapField_InformationColor);
+	--_ui5_value_state_header_box_shadow_success: inset 0 -0.1875rem var(--sapField_SuccessColor);
+	--_ui5_value_state_header_box_shadow_warning: inset 0 -0.1875rem var(--sapField_WarningColor);
 	--_ui5_value_state_message_icon_width: .75rem;
 	--_ui5_value_state_message_icon_height: .75rem;
 }
