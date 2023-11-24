@@ -2,7 +2,6 @@
 
 :root {
 	--_ui5_value_state_message_border: 2px solid var(--sapField_BorderColor);
-	/* --_ui5_value_state_header_border_bottom: 0.0625rem solid var(--sapField_BorderColor); */
 	--_ui5_value_state_header_box_shadow_error: inset 0 -0.125rem var(--sapField_InvalidColor);
 	--_ui5_value_state_header_box_shadow_information: inset 0 -0.125rem var(--sapField_InformationColor);
 	--_ui5_value_state_header_box_shadow_success: inset 0 -0.125rem var(--sapField_SuccessColor);
