@@ -5,7 +5,7 @@ import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Title from "@ui5/webcomponents/dist/Title.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
@@ -28,7 +28,7 @@ const Template: UI5StoryArgs<Title, StoryArgsSlots> = (args) => {
 <ui5-title
 	level="${ifDefined(args.level)}"
 	wrapping-type="${ifDefined(args.wrappingType)}"
->${unsafeHTML(args.default)}</ui5-title>`;
+>${sanitizedUnsafeHTML(args.default)}</ui5-title>`;
 };
 Template.decorators = [
 	(story, {args}) => {

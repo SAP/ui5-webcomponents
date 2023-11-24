@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 
 import type { Meta, StoryFn } from "@storybook/web-components";
 
@@ -44,7 +44,7 @@ const Template: UI5StoryArgs<TextArea, StoryArgsSlots> = (args) => html`
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-	${unsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
 </ui5-textarea>`;
 
 export const Basic = Template.bind({});
@@ -63,7 +63,7 @@ MaxLength.decorators = [
 
 			textAreaMaxLength.addEventListener("input", function (event) {
 				const { value, maxlength} = textAreaMaxLength;
-				textAreaMaxLength.valueState = value.length > maxlength ? "Warning" : "None";	
+				textAreaMaxLength.valueState = value.length > maxlength ? "Warning" : "None";
 			});
 		})()
 		</script>`

@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -31,7 +31,7 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 	?show-colon="${ifDefined(args.showColon)}"
 	wrapping-type="${ifDefined(args.wrappingType)}"
 	class="${ifDefined(args.className)}"
->${unsafeHTML(args.default)}</ui5-label>`;
+>${sanitizedUnsafeHTML(args.default)}</ui5-label>`;
 };
 
 const addInput = (id: string): Decorator => {

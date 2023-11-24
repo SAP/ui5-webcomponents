@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -26,7 +26,7 @@ export default {
 } as Meta<ProductSwitch>;
 
 const Template: UI5StoryArgs<ProductSwitch, StoryArgsSlots> = (args) => html`
-    <ui5-product-switch> ${unsafeHTML(args.default)} </ui5-product-switch>
+    <ui5-product-switch> ${sanitizedUnsafeHTML(args.default)} </ui5-product-switch>
 `;
 
 export const Basic = Template.bind({});

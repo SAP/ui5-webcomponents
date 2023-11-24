@@ -9,7 +9,7 @@ import { DocsPage } from "../../../.storybook/docs";
 
 import type Table from "@ui5/webcomponents/dist/Table.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 
 import TableMode from "@ui5/webcomponents/dist/types/TableMode.js";
 import TableGrowingMode from "@ui5/webcomponents/dist/types/TableGrowingMode.js";
@@ -44,8 +44,8 @@ const Template: UI5StoryArgs<Table, StoryArgsSlots> = (args) => html`
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.columns)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.columns)}
 </ui5-table>
 `;
 

@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -34,9 +34,9 @@ const Template: UI5StoryArgs<IllustratedMessage, StoryArgsSlots> = (
     title-text="${ifDefined(args.titleText)}"
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-    ${unsafeHTML(args.title)} 
-	${unsafeHTML(args.subtitle)}
-    ${unsafeHTML(args.default)}
+    ${sanitizedUnsafeHTML(args.title)}
+	${sanitizedUnsafeHTML(args.subtitle)}
+    ${sanitizedUnsafeHTML(args.default)}
 </ui5-illustrated-message>`;
 
 export const Basic = Template.bind({});

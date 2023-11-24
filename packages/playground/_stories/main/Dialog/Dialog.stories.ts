@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta } from "@storybook/web-components";
 import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -44,14 +44,14 @@ const Template: UI5StoryArgs<Dialog, StoryArgsSlots> = (args) => {
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	accessible-role="${ifDefined(args.accessibleRole)}"
 >
-	${unsafeHTML(args.header)}
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.footer)}
+	${sanitizedUnsafeHTML(args.header)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.footer)}
 </ui5-dialog>
 
 <script>
 	var dialogOpener = document.getElementById("dialogOpener");
-	var dialog = document.getElementById("dialog"); 
+	var dialog = document.getElementById("dialog");
 	var dialogClosers = [...dialog.querySelectorAll(".dialogCloser")];
 
 	dialogOpener.accessibilityAttributes = {
@@ -105,7 +105,7 @@ Basic.decorators = [
 		align-items: flex-start;
 		margin: 3rem 6rem;
 	}
-	
+
 	.login-form > div {
 		display: grid;
 		width: 15rem;

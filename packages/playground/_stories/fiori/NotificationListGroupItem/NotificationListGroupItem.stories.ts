@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -38,8 +38,8 @@ const Template: UI5StoryArgs<NotificationListGroupItem, StoryArgsSlots> = (args)
 	?busy="${ifDefined(args.busy)}"
 	busy-delay="${ifDefined(args.busyDelay)}"
 >
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.actions)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.actions)}
 </ui5-li-notification-group>`;
 };
 

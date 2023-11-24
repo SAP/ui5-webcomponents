@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -48,8 +48,8 @@ const Template: UI5StoryArgs<DynamicSideContent, StoryArgsSlots> = (args) => htm
 	side-content-visibility="${ifDefined(args.sideContentVisibility)}"
 	side-content-fall-down="${ifDefined(args.sideContentFallDown)}"
 >
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.sideContent)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.sideContent)}
 </ui5-dynamic-side-content>`;
 
 export const Basic = Template.bind({});

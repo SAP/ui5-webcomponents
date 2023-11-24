@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 
 import type { Meta } from "@storybook/web-components";
 
@@ -38,7 +38,7 @@ const Template: UI5StoryArgs<Carousel, StoryArgsSlots> = (args) => {
 	page-indicator-style="${ifDefined(args.pageIndicatorStyle)}"
 	arrows-placement="${ifDefined(args.arrowsPlacement)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-carousel>`;
 }
 

@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
@@ -34,8 +34,8 @@ const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
     .type="${ifDefined(args.type)}"
     .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
   >
-    ${unsafeHTML(args.default)}
-    ${unsafeHTML(args.overflowButton)}
+    ${sanitizedUnsafeHTML(args.default)}
+    ${sanitizedUnsafeHTML(args.overflowButton)}
   </ui5-avatar-group> `;
 
 export const TypeGroup = Template.bind({});

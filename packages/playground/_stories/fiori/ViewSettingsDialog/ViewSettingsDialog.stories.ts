@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
@@ -29,8 +29,8 @@ const Template: UI5StoryArgs<ViewSettingsDialog, StoryArgsSlots> = (args) => htm
 	id="${ifDefined(args.id)}"
 	sort-descending="${ifDefined(args.sortDescending)}"
 >
-	${unsafeHTML(args.sortItems)}
-	${unsafeHTML(args.filterItems)}
+	${sanitizedUnsafeHTML(args.sortItems)}
+	${sanitizedUnsafeHTML(args.filterItems)}
 </ui5-view-settings-dialog>`;
 
 export const Basic = Template.bind({});

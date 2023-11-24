@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -27,8 +27,8 @@ const Template: UI5StoryArgs<Badge, StoryArgsSlots> = (args) => {
 	color-scheme="${ifDefined(args.colorScheme)}"
 	style="${ifDefined(args.style)}"
 >
-	${unsafeHTML(args.icon)}
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.icon)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-badge>`;
 };
 

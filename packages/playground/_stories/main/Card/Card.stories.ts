@@ -5,7 +5,7 @@ import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Card from "@ui5/webcomponents/dist/Card.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 const component = "ui5-card";
@@ -32,8 +32,8 @@ const Template: UI5StoryArgs<Card, StoryArgsSlots> = (args) => {
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-	${unsafeHTML(args.header)}
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.header)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-card>
 	`;
 };

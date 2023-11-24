@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -45,9 +45,9 @@ const Template: UI5StoryArgs<ComboBox, StoryArgsSlots> = (
 		accessible-name="${ifDefined(args.accessibleName)}"
 		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-		${unsafeHTML(args.default)}
-		${unsafeHTML(args.valueStateMessage)}
-		${unsafeHTML(args.icon)}
+		${sanitizedUnsafeHTML(args.default)}
+		${sanitizedUnsafeHTML(args.valueStateMessage)}
+		${sanitizedUnsafeHTML(args.icon)}
 </ui5-combobox>`;
 
 export const Basic = Template.bind({});
@@ -94,8 +94,8 @@ Grouping.args = {
 	default: `
 		<ui5-cb-group-item text="A"></ui5-cb-group-item>
 		<ui5-cb-item text="Argentina"></ui5-cb-item>
-		<ui5-cb-item text="Australia"></ui5-cb-item>	
-		<ui5-cb-item text="Austria"></ui5-cb-item>	
+		<ui5-cb-item text="Australia"></ui5-cb-item>
+		<ui5-cb-item text="Austria"></ui5-cb-item>
 		<ui5-cb-group-item text="B"></ui5-cb-group-item>
 		<ui5-cb-item text="Bahrain"></ui5-cb-item>
 		<ui5-cb-item text="Belgium"></ui5-cb-item>

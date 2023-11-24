@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -33,7 +33,7 @@ const Template: UI5StoryArgs<TimePicker, StoryArgsSlots> = (args) => html`<ui5-t
 	placeholder="${ifDefined(args.placeholder)}"
 	format-pattern="${ifDefined(args.formatPattern)}"
 >
-	${unsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
 </ui5-time-picker>`;
 
 export const Basic = Template.bind({});

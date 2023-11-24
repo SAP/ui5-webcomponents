@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
@@ -29,7 +29,7 @@ const Template: UI5StoryArgs<SegmentedButton, StoryArgsSlots> = (args) => html`<
 	accessible-name="${ifDefined(args.accessibleName)}"
 	mode="${ifDefined(args.mode)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-segmented-button>`;
 
 export const Basic = Template.bind({});

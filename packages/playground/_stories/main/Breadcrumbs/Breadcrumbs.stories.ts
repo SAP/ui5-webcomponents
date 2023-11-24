@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -31,7 +31,7 @@ const Template: UI5StoryArgs<Breadcrumbs, StoryArgsSlots> = (args) =>
         design="${ifDefined(args.design)}"
         separator-style="${ifDefined(args.separatorStyle)}"
     >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-breadcrumbs>`;
 
 export const Basic = Template.bind({});

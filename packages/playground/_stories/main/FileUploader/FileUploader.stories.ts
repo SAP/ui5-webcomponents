@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -35,8 +35,8 @@ const Template: UI5StoryArgs<FileUploader, StoryArgsSlots> = (args) => html`<ui5
 	valueState="${ifDefined(args.valueState)}"
 	id="${ifDefined(args.id)}"
 >
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
 </ui5-file-uploader>`;
 
 export const Basic = Template.bind({});

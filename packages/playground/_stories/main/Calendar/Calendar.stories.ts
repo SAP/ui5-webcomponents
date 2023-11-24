@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -37,7 +37,7 @@ const Template: UI5StoryArgs<Calendar, StoryArgsSlots> = (args) => html`<ui5-cal
 	min-date="${ifDefined(args.minDate)}"
 	max-date="${ifDefined(args.maxDate)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-calendar>`;
 
 export const Basic = Template.bind({});
@@ -45,7 +45,7 @@ export const Basic = Template.bind({});
 export const Bounds = Template.bind({});
 Bounds.storyName = "Formatted Date Range";
 Bounds.args = {
-	minDate: "7/10/2020", 
+	minDate: "7/10/2020",
 	maxDate: "20/10/2020",
 	formatPattern: "dd/MM/yyyy",
 };

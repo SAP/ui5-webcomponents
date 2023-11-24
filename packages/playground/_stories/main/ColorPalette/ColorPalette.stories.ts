@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -25,7 +25,7 @@ export default {
 } as Meta<ColorPalette>;
 
 const Template: UI5StoryArgs<ColorPalette, StoryArgsSlots> = (args) => html`<ui5-color-palette>
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-color-palette>`;
 
 export const Basic = Template.bind({});

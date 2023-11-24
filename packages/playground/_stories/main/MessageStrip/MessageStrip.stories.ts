@@ -1,7 +1,7 @@
 import { html } from "lit";
 import type { Meta, StoryFn } from "@storybook/web-components";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
@@ -23,14 +23,14 @@ export default {
     argTypes,
 } as Meta<MessageStrip>;
 
-const Template: UI5StoryArgs<MessageStrip, StoryArgsSlots> = (args) => 
-html`<ui5-message-strip 
+const Template: UI5StoryArgs<MessageStrip, StoryArgsSlots> = (args) =>
+html`<ui5-message-strip
 	design="${ifDefined(args.design)}"
 	?hide-icon="${ifDefined(args.hideIcon)}"
 	?hide-close-button="${ifDefined(args.hideCloseButton)}"
 >
-	${unsafeHTML(args.icon)}
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.icon)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-message-strip>
 `;
 

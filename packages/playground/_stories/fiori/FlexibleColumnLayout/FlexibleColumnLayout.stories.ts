@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -58,8 +58,8 @@ const Template: UI5StoryArgs<FlexibleColumnLayout, StoryArgsSlots> = (args) => {
       .accessibility-texts=${ifDefined(args.accessibilityTexts)}
       .accessibility-roles=${ifDefined(args.accessibilityRoles)}
     >
-      ${unsafeHTML(args.startColumn)} ${unsafeHTML(args.midColumn)}
-      ${unsafeHTML(args.endColumn)}
+      ${sanitizedUnsafeHTML(args.startColumn)} ${sanitizedUnsafeHTML(args.midColumn)}
+      ${sanitizedUnsafeHTML(args.endColumn)}
     </ui5-flexible-column-layout>
 
     <script>

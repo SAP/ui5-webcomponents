@@ -1,6 +1,5 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -8,6 +7,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
 import TabLayout from "@ui5/webcomponents/dist/types/TabLayout.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 
 const component = "ui5-tabcontainer";
 
@@ -33,7 +33,7 @@ const Template: UI5StoryArgs<TabContainer, StoryArgsSlots> = (args) => {
 	content-background-design="${ifDefined(args.contentBackgroundDesign)}"
 	tabs-placement="${ifDefined(args.tabsPlacement)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-tabcontainer>`;
 };
 

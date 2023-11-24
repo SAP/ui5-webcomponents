@@ -8,7 +8,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type MultiComboBox from "@ui5/webcomponents/dist/MultiComboBox.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
@@ -41,9 +41,9 @@ const Template: UI5StoryArgs<MultiComboBox, StoryArgsSlots> = (args) => html`
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.icon)}
-	${unsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.icon)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
 </ui5-multi-combobox>`;
 
 

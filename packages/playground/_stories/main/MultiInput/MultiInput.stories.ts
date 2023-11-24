@@ -9,7 +9,7 @@ import { DocsPage } from "../../../.storybook/docs";
 
 import type MultiInput from "@ui5/webcomponents/dist/MultiInput.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 
 const component = "ui5-multi-input";
 
@@ -46,10 +46,10 @@ const Template: UI5StoryArgs<MultiInput, StoryArgsSlots> = (args) => html`
 	?show-clear-icon="${ifDefined(args.showClearIcon)}"
 	?show-value-help-icon="${ifDefined(args.showValueHelpIcon)}"
 >
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.valueStateMessage)}
-	${unsafeHTML(args.icon)}
-	${unsafeHTML(args.tokens)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.icon)}
+	${sanitizedUnsafeHTML(args.tokens)}
 </ui5-multi-input>`;
 
 export const Basic = Template.bind({});

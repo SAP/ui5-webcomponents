@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -39,7 +39,7 @@ const Template: UI5StoryArgs<DateTimePicker, StoryArgsSlots> = (args) => html`<u
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
-	${unsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
 </ui5-datetime-picker>`;
 
 export const Basic = Template.bind({});

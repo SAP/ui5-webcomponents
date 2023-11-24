@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -35,7 +35,7 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`<ui5-butto
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-button>`;
 
 export const Basic = Template.bind({});

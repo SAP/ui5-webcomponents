@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Decorator, Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -30,9 +30,9 @@ export default {
 const Template: UI5StoryArgs<SideNavigation, StoryArgsSlots> = (args) => {
 	return html`
 <ui5-side-navigation ?collapsed="${ifDefined(args.collapsed)}">
-	${args.header ? unsafeHTML(args.header) : null}
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.fixedItems)}
+	${args.header ? sanitizedUnsafeHTML(args.header) : null}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.fixedItems)}
 </ui5-side-navigation>`;
 };
 

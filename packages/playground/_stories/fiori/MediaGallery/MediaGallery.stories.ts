@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
 import type { PartialStoryFn } from "@storybook/types";
@@ -55,7 +55,7 @@ const Template: UI5StoryArgs<MediaGallery, StoryArgsSlots> = (args) => {
         menu-horizontal-align="${ifDefined(args.menuHorizontalAlign)}"
         menu-vertical-align="${ifDefined(args.menuVerticalAlign)}"
     >
-        ${unsafeHTML(args.default)}
+        ${sanitizedUnsafeHTML(args.default)}
     </ui5-media-gallery>`;
 };
 export const Basic = Template.bind({});
@@ -267,7 +267,7 @@ ThumbnailOverflow.decorators = [
     const mediaGalleryDialog = document.getElementById("mediaGalleryDialog");
     const mediaGallery = document.querySelector(".container > ui5-media-gallery");
     const closeDialogButton = document.getElementById("closeDialogButton");
-    
+
     closeDialogButton.addEventListener("click", () => {
         mediaGalleryDialog.close();
     });

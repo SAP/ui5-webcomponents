@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -50,10 +50,10 @@ const Template: UI5StoryArgs<NotificationListItem, StoryArgsSlots> = (args) => {
 	busy-delay="${ifDefined(args.busyDelay)}"
 	wrappingType="${ifDefined(args.wrappingType)}"
 >
-	${unsafeHTML(args.actions)}
-	${unsafeHTML(args.avatar)}
-	${unsafeHTML(args.footnotes)}
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.actions)}
+	${sanitizedUnsafeHTML(args.avatar)}
+	${sanitizedUnsafeHTML(args.footnotes)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-li-notification>`;
 };
 Template.decorators = [wrapInList];

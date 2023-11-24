@@ -9,7 +9,7 @@ import { DocsPage } from "../../../.storybook/docs";
 
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import InputType from "@ui5/webcomponents/dist/types/InputType.js";
 
@@ -49,9 +49,9 @@ const Template: UI5StoryArgs<Input, StoryArgsSlots> = (args) => html`
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	?show-clear-icon="${ifDefined(args.showClearIcon)}"
 >
-	${unsafeHTML(args.valueStateMessage)}
-	${unsafeHTML(args.default)}
-	${unsafeHTML(args.icon)}
+	${sanitizedUnsafeHTML(args.valueStateMessage)}
+	${sanitizedUnsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.icon)}
 </ui5-input>`;
 
 

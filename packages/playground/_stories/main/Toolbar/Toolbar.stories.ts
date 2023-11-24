@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { Meta } from "@storybook/web-components";
 
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
@@ -36,7 +36,7 @@ const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
 	return html`<ui5-toolbar
 		align-content="${ifDefined(args.alignContent)}"
 	>
-		${unsafeHTML(args.default)}
+		${sanitizedUnsafeHTML(args.default)}
 </ui5-toolbar>`;
 };
 
@@ -44,7 +44,7 @@ export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
 	default: `
-	<ui5-toolbar-button 
+	<ui5-toolbar-button
 	icon="decline"
 	text="Mid 2">
 	</ui5-toolbar-button>

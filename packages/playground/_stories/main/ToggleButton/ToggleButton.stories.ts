@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
@@ -31,7 +31,7 @@ const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`<ui5
 	design="${ifDefined(args.design)}"
 	icon="${ifDefined(args.icon)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-toggle-button>`;
 
 export const Basic = Template.bind({});

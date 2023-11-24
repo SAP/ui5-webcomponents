@@ -1,5 +1,5 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -29,7 +29,7 @@ const Template: UI5StoryArgs<BusyIndicator, StoryArgsSlots> = (args) => {
 	?active="${ifDefined(args.active)}"
 	delay="${ifDefined(args.delay)}"
 >
-	${unsafeHTML(args.default)}
+	${sanitizedUnsafeHTML(args.default)}
 </ui5-busy-indicator>`;
 };
 

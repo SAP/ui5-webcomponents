@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { sanitizedUnsafeHTML } from "../../../.storybook/addons/html/sanitizeUnsafeHTML.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
 import type Select from "@ui5/webcomponents/dist/Select.js";
@@ -40,7 +40,7 @@ const Template: UI5StoryArgs<Select, StoryArgsSlots> = (args) => {
     accessible-name="${ifDefined(args.accessibleName)}"
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
   >
-    ${unsafeHTML(args.default)}
+    ${sanitizedUnsafeHTML(args.default)}
   </ui5-select> `;
 };
 
