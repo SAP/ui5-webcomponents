@@ -459,6 +459,9 @@ class Select extends UI5Element implements IFormElement {
 
 		if (menu) {
 			menu.value = this.value;
+			// To cause invalidation when the menu is used for another Select that could have the same value as the previous.
+			// Otherwise, the menu won't re-render.
+			menu.selectId = this.__id;
 		} else {
 			this._syncSelection();
 		}

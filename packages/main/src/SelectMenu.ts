@@ -138,6 +138,9 @@ class SelectMenu extends UI5Element {
 	@property({ type: String, noAttribute: true })
 	value!: string;
 
+	@property({ type: String, noAttribute: true })
+	selectId?: string;
+
 	valueStateMessageText: Array<Node>;
 
 	_headerTitleText?: string;
