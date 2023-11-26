@@ -1,5 +1,8 @@
 :host {
     background: #fff;
+    padding-top: var(--_ui5_dynamic_page_header_padding_top);
+    padding-bottom: var(--_ui5_dynamic_page_header_padding_bottom);
+    display: block;
 }
 
 .ui5-dynamic-page-header-root {
