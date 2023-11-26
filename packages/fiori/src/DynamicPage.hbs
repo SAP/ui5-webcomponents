@@ -18,11 +18,11 @@
 
     </div>
 
-    <div class="{{classes.content}}">
-      {{#if headerInContent}}
-        <slot name="headerArea"></slot>
-      {{/if}}
+    {{#if headerInContent}}
+      <slot name="headerArea"></slot>
+    {{/if}}
 
+    <div class="{{classes.content}}">
       {{#unless actionsInTitle}}
         <ui5-dynamic-page-header-actions
             ?snapped="{{headerSnapped}}"
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-    <div class="{{classes.footer}}">
-      <slot name="footer"></slot>
-    </div>
+  <div class="{{classes.footer}}">
+    <slot name="footer"></slot>
+  </div>
 </div>
