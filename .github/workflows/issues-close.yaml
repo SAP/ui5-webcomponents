@@ -1,4 +1,4 @@
-name: Auto-close stale issues
+name: GitHub Issues - auto-close stale issues
 
 on:
   schedule:
