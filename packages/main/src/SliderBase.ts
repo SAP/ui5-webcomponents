@@ -24,19 +24,6 @@ type StateStorage = {
 type DirectionStart = "left" | "right";
 
 /**
- * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
- *
- * @constructor
- * @extends UI5Element
- * @public
- */
-@customElement({
-	renderer: litRender,
-	styles: sliderBaseStyles,
-})
-/**
  * Fired when the value changes and the user has finished interacting with the slider.
  *
  * @public
@@ -49,6 +36,16 @@ type DirectionStart = "left" | "right";
  * @public
  */
 @event("input")
+
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * @constructor
+ * @extends UI5Element
+ * @public
+ */
 abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
@@ -226,6 +223,14 @@ abstract class SliderBase extends UI5Element {
 			VISIBLE: "visible",
 			HIDDEN: "hidden",
 		};
+	}
+
+	static get render() {
+		return litRender;
+	}
+
+	static get styles() {
+		return sliderBaseStyles;
 	}
 
 	get classes() {
