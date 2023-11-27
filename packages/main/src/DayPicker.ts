@@ -367,8 +367,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Tells if any of the days is more than 4 characters(too long to render).
-	 * @param { Array<string> } dayNames
-	 * @returns { boolean }
+	 *
+	 * @param dayNames
 	 * @private
 	 */
 	namesTooLong(dayNames: Array<string>): boolean {

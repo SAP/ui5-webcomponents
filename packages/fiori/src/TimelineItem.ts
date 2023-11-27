@@ -26,6 +26,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
+ * @slot {Node[]} default - Determines the description of the <code>ui5-timeline-item</code>.
  */
 @customElement({
 	tag: "ui5-timeline-item",
@@ -57,7 +58,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 	 *
 	 * @default ""
 	 * @public
-	 * @slot {Node[]} default - Determines the description of the <code>ui5-timeline-item</code>.
 	 */
 	@property()
 	icon!: string;
