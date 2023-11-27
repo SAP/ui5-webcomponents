@@ -79,6 +79,11 @@
 }
 
 @font-face {
+	font-family: '72Blackfull';
+	src: url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black-full.woff2?ui5-webcomponents) format('woff2');
+}
+
+@font-face {
     font-family: "72-SemiboldDuplex";
     src: url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-SemiboldDuplex.woff2?ui5-webcomponents) format("woff2"), local('72-SemiboldDuplex');
 }
