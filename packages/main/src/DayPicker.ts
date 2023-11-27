@@ -72,6 +72,7 @@ type Day = {
 	secondDay?: number,
 	weekNum?: number,
 	isHidden?: boolean,
+	hasSpecialType?: boolean;
 }
 
 type WeekNumber = {
@@ -273,6 +274,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				ariaSelected: isSelected ? "true" : "false",
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
+				// for the PoC-type implementation of special days
+				// remove/edit for the final implementation
+				hasSpecialType: true,
 			};
 
 			if (isFirstDayOfWeek) {

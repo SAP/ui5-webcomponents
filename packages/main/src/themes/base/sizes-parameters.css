@@ -208,6 +208,11 @@
     --_ui5_dp_two_calendar_item_secondary_text_height: 0.75rem;
 	--_ui5_dp_two_calendar_item_text_padding_top: 0;
 
+	--_ui5_daypicker_selected_item_now_special_day_top: 1.5rem;
+	--_ui5_daypicker_specialday_focused_top: 1.5rem;
+	--_ui5_daypicker_special_day_top: 1.625rem;
+	--_ui5_daypicker_item_now_specialday_top: 1.5rem;
+
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 17rem;
 	--_ui5_datetime_picker_width: 34.0625rem;

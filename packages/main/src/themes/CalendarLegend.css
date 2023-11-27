@@ -7,6 +7,6 @@
 	gap: 0.5rem;
 	padding: var(--_ui5-calendar-legend-root-padding);
 	margin: 0.5rem 0; 
-	max-width: var(--_ui5-calendar-legend-root-width);
+	width: var(--_ui5-calendar-legend-root-width);
 	background-color: var(--sapList_Background);
 }
