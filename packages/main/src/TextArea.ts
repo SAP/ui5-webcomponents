@@ -186,11 +186,11 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the maximum number of characters that the <code>value</code> can have.
 	 *
-	 * @default null
+	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: null })
-	maxlength?: number;
+	@property({ validator: Integer })
+	maxlength?: number
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
