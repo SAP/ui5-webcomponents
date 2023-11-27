@@ -390,6 +390,9 @@ class MultiComboBox extends UI5Element {
 	@property()
 	accessibleNameRef!: string;
 
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	_effectiveValueState!: `${ValueState}`;
+
 	@property({ type: Object, noAttribute: true, multiple: true })
 	_filteredItems!: Array<IMultiComboBoxItem>;
 
@@ -567,12 +570,15 @@ class MultiComboBox extends UI5Element {
 
 		if (this._validationTimeout) {
 			if (e.inputType === "deleteContentBackward") {
-				this.valueState = oldValueState;
+				this.valueState = this._effectiveValueState;
+				this._validationTimeout = null;
 			} else {
 				input.value = this._inputLastValue;
 				return;
 			}
 		}
+
+		this._effectiveValueState = this.valueState;
 
 		if (!filteredItems.length && value && !this.allowCustomValues) {
 			const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
@@ -1155,6 +1161,7 @@ class MultiComboBox extends UI5Element {
 
 	_resetValueState(valueState: `${ValueState}`, callback?: () => void) {
 		this._validationTimeout = setTimeout(() => {
+			this._effectiveValueState = this.valueState;
 			this.valueState = valueState;
 			this._validationTimeout = null;
 
