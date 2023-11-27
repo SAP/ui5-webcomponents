@@ -8,7 +8,7 @@ export class EventDescriptionRenderer implements IDescriptionRenderer {
                 <b><code>{p.name}</code></b>
                 <ul>
                     <li><b>type:</b> {p.type.text}</li>
-                    <li><b>description:</b> {p.description}</li>
+                    {p.description && <li><b>description:</b> {p.description}</li>}
                 </ul>
             </React.Fragment>
         ));

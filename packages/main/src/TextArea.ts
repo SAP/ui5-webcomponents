@@ -190,7 +190,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: null })
-	maxlength?: number;
+	maxlength?: number | null;
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible

@@ -871,6 +871,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>logo</code> DOM ref.
 	 * @public
+	 * @default null
 	 * @since 1.0.0-rc.16
 	 */
 	get logoDomRef(): HTMLElement | null {
@@ -880,6 +881,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>copilot</code> DOM ref.
 	 * @public
+	 * @default null
 	 * @since 1.0.0-rc.16
 	 */
 	get copilotDomRef(): HTMLElement | null {
@@ -889,6 +891,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>notifications</code> icon DOM ref.
 	 * @public
+	 * @default null
 	 * @since 1.0.0-rc.16
 	 */
 	get notificationsDomRef(): HTMLElement | null {
@@ -898,6 +901,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>overflow</code> icon DOM ref.
 	 * @public
+	 * @default null
 	 * @since 1.0.0-rc.16
 	 */
 	get overflowDomRef(): HTMLElement | null {
@@ -907,6 +911,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>profile</code> icon DOM ref.
 	 * @public
+	 * @default null
 	 * @since 1.0.0-rc.16
 	 */
 	get profileDomRef(): HTMLElement | null {
@@ -916,6 +921,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>product-switch</code> icon DOM ref.
 	 * @public
+	 * @default null
 	 * @since 1.0.0-rc.16
 	 */
 	get productSwitchDomRef(): HTMLElement | null {
