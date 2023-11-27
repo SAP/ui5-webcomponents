@@ -10,6 +10,15 @@
 
 :host {
     display: block;
+    height: 100%;
+}
+
+.ui5-dynamic-page-root {
+    height: inherit;
+    overflow-y: hidden;
+}
+
+.ui5-dynamic-page-scroll-container {
     overflow-y: scroll;
     height: 100%;
 }
@@ -24,18 +33,16 @@
     padding: 0 1rem;
 }
 
+:host([show-footer]) .ui5-dynamic-page-content {
+    padding-bottom: 4rem;
+}
+
 :host([show-footer]) .ui5-dynamic-page-footer {
     animation: bounceShow 0.35s forwards ease-in-out;
 }
 
 :host(:not([show-footer])) .ui5-dynamic-page-footer {
     animation: bounceHide 0.35s forwards ease-in-out;
-}
-
-:host {
-    display: block;
-    overflow-y: scroll;
-    height: 100%;
 }
 
 ::slotted([slot="footer"]) {

@@ -72,14 +72,13 @@ class DynamicPage extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	showHeaderInStickArea = false;
 
-	onAfterRendering() {
-		this.addEventListener("scroll", this.snapOnScroll.bind(this));
-	}
-
 	get classes() {
 		return {
 			root: {
 				"ui5-dynamic-page-root": true,
+			},
+			scrollContainer: {
+				"ui5-dynamic-page-scroll-container": true,
 			},
 			headerWrapper: {
 				"ui5-dynamic-page-title-header-wrapper": true,
@@ -101,6 +100,10 @@ class DynamicPage extends UI5Element {
 		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
 	}
 
+	get scrollContainer(): HTMLElement | null | undefined {
+		return this.getDomRef()?.querySelector(".ui5-dynamic-page-scroll-container");
+	}
+
 	get actionsInTitle(): boolean {
 		return this.headerSnapped || this.showHeaderInStickArea || this.headerPinned;
 	}
@@ -117,18 +120,20 @@ class DynamicPage extends UI5Element {
 				return;
 			}
 
-			if (this.iPreviousScrollAmount === this.scrollTop || this.headerPinned) {
+			const scrollTop = this.scrollContainer!.scrollTop;
+
+			if (this.iPreviousScrollAmount === scrollTop || this.headerPinned) {
 				return;
 			}
 
-			this.iPreviousScrollAmount = this.scrollTop;
+			this.iPreviousScrollAmount = scrollTop;
 
 			if (this.isExpanding) {
 				this.isExpanding = false;
 				return;
 			}
 
-			if (this.scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
+			if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
 				this.headerSnapped = true;
 				this.showHeaderInStickArea = false;
 			} else {
