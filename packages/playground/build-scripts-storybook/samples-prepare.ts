@@ -3,7 +3,7 @@ import path from "path";
 import type {
 	ClassDeclaration,
 	CustomElementDeclaration,
-	MySchema,
+	Package,
 	Parameter,
 	Type,
 	ClassField,
@@ -14,7 +14,7 @@ import type {
 	CustomElementMixinDeclaration,
 	MixinDeclaration,
 	VariableDeclaration
-} from "@ui5/webcomponents-tools/lib/cem/types.js";
+} from "@ui5/webcomponents-tools/lib/cem/types-internal";
 
 const STORIES_ROOT_FOLDER_NAME = '../_stories';
 
@@ -59,7 +59,7 @@ type APIData = {
 
 // run the script to generate the argTypes for the stories available in the _stories folder
 const main = async () => {
-	const api: MySchema = JSON.parse((await fs.readFile(`./.storybook/custom-elements.json`)).toString());
+	const api: Package = JSON.parse((await fs.readFile(`./.storybook/custom-elements.json`)).toString());
 
 	// read all directories inside _stories folder and create a list of components
 	const packages = await fs.readdir(path.join(__dirname, STORIES_ROOT_FOLDER_NAME));
@@ -81,7 +81,7 @@ const main = async () => {
 	}
 };
 
-const generateStoryDoc = async (componentPath: string, component: string, api: MySchema, componentPackage: string) => {
+const generateStoryDoc = async (componentPath: string, component: string, api: Package, componentPackage: string) => {
 	console.log(`Generating argTypes for story ${component}`);
 	const apiData = getAPIData(api, component, componentPackage);
 
@@ -98,9 +98,9 @@ export type StoryArgsSlots = {
 }`);
 };
 
-const getAPIData = (api: MySchema, module: string, componentPackage: string): APIData | undefined => {
-	const moduleAPI = api.modules?.find(currModule => currModule.declarations?.find(s => s._ui5reference?.name === module && s._ui5reference?.package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`));
-	const declaration = moduleAPI?.declarations?.find(s => s._ui5reference?.name === module && s._ui5reference?.package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`);
+const getAPIData = (api: Package, module: string, componentPackage: string): APIData | undefined => {
+	const moduleAPI = api.modules?.find(currModule => currModule.declarations?.find(s => s.name === module && s._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`));
+	const declaration = moduleAPI?.declarations?.find(s => s.name === module && s._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`);
 
 	if (!declaration) {
 		return;
@@ -111,14 +111,14 @@ const getAPIData = (api: MySchema, module: string, componentPackage: string): AP
 	return {
 		info: {
 			package: `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`,
-			since: declaration?._ui5since
+			since: (declaration as CustomElementDeclaration)?._ui5since
 		},
 		slotNames: data.slotNames,
 		storyArgsTypes: JSON.stringify(data.args, null, "\t")
 	};
 };
 
-const getArgsTypes = (api: MySchema, moduleAPI: CustomElementDeclaration | ClassDeclaration) => {
+const getArgsTypes = (api: Package, moduleAPI: CustomElementDeclaration | ClassDeclaration) => {
 	let args: ArgsTypes = {};
 	let slotNames: string[] = [];
 
@@ -134,7 +134,7 @@ const getArgsTypes = (api: MySchema, moduleAPI: CustomElementDeclaration | Class
 					}
 
 					for (const s of currModule.declarations) {
-						if (s?._ui5reference?.name === prop.type?.references[0].name && s._ui5reference?.package === prop.type?.references[0].package && s.kind === "enum") {
+						if (s.name === prop.type?.references[0].name && s._ui5package === prop.type?.references[0].package && s.kind === "enum") {
 							typeEnum = s;
 							break;
 						}
@@ -161,6 +161,11 @@ const getArgsTypes = (api: MySchema, moduleAPI: CustomElementDeclaration | Class
 			args[prop.name] = {
 				control: {
 					type: "text"
+				},
+				table: {
+					type: {
+						summary: prop._ui5type?.text
+					}
 				}
 			};
 			slotNames.push(prop.name);
@@ -190,14 +195,17 @@ const getArgsTypes = (api: MySchema, moduleAPI: CustomElementDeclaration | Class
 	// events also have custom descriptions with parameters of their detail objec
 	if (isCustomElementDeclaration(moduleAPI)) {
 		moduleAPI.events?.forEach((prop) => {
-			if (prop.privacy === "public" && prop.params?.length) {
+			if (prop._ui5privacy === "public" && prop._ui5parameters?.length) {
 				args[prop.name] = {
 					description: prop.description,
+					control: {
+						type: false
+					},
 					table: {
 						category: "events",
 					},
 					UI5CustomData: {
-						parameters: prop.params,
+						parameters: prop._ui5parameters,
 					},
 				};
 			}
@@ -219,7 +227,7 @@ const getArgsTypes = (api: MySchema, moduleAPI: CustomElementDeclaration | Class
 		}
 	}
 
-	const referencePackage = moduleAPIBeingExtended?._ui5reference?.package;
+	const referencePackage = moduleAPIBeingExtended?._ui5package;
 
 	if (moduleAPIBeingExtended && referencePackage && packages.includes(referencePackage)) {
 		const { args: nextArgs, slotNames: nextSlotNames } = getArgsTypes(api, moduleAPIBeingExtended as ClassDeclaration);
@@ -234,7 +242,7 @@ const getArgsTypes = (api: MySchema, moduleAPI: CustomElementDeclaration | Class
 };
 
 const findReference = (something: Array<Declaration>, componentName: string, componentPackage: string): Declaration | undefined => {
-	return something.find(s => s._ui5reference?.name === componentName && s._ui5reference?.package === componentPackage)
+	return something.find(s => s.name === componentName && s._ui5package === componentPackage)
 }
 
 main();
