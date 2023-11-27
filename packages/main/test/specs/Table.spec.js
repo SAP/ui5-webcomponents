@@ -34,10 +34,15 @@ describe("Table general interaction", () => {
 	it("tests if popinChange is fired when min-width is reacted (500px)", async () => {
 		let tableLabel = await browser.$("#tableLabel");
 		const btn = await browser.$("#size-btn-500");
+		const btn2 = await browser.$("#size-btn-650");
 
 		await btn.click();
 
 		assert.strictEqual(await tableLabel.getHTML(false), "Number of poppedColumns: 4", "popinChange should be fired and columns should be 4");
+
+		await btn2.click();
+
+		assert.strictEqual(await tableLabel.getHTML(false), "Number of poppedColumns: 2", "popinChange should be fired and columns should be 2");
 	});
 
 	it("tests row-click is fired", async () => {

@@ -1,4 +1,4 @@
-name: Release Snapshot
+name: Release Experimental Version
 
 on:
   workflow_dispatch
