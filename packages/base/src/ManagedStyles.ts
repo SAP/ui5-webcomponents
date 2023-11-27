@@ -139,12 +139,31 @@ const createOrUpdateStyle = (data: StyleData, name: string, value = "", theme?: 
 	}
 };
 
+const mergeStyles = (style1?: StyleData, style2?: StyleData) => {
+	if (style1 === undefined) {
+		return style2;
+	}
+	if (style2 === undefined) {
+		return style1;
+	}
+	const style2Content = typeof style2 === "string" ? style2 : style2.content;
+	if (typeof style1 === "string") {
+		return `${style1} ${style2Content}`;
+	}
+	return {
+		content: `${style1.content} ${style2Content}`,
+		packageName: style1.packageName,
+		fileName: style1.fileName,
+	};
+};
+
 export {
 	createStyle,
 	hasStyle,
 	updateStyle,
 	removeStyle,
 	createOrUpdateStyle,
+	mergeStyles,
 };
 
 export type {
