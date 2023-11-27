@@ -16,6 +16,7 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
+import { IButton } from "./Interfaces.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -231,7 +232,7 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 */
 	@slot()
-	deleteButton!: Array<HTMLElement>;
+	deleteButton!: Array<IButton>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;

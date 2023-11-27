@@ -19,11 +19,10 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
  *
- * @name sap.ui.webc.main.IButton
- * @interface
  * @public
  */
-const IButton = "sap.ui.webc.main.IButton";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IButton extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside <code>ui5-card</code> as header

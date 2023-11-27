@@ -28,6 +28,10 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  *
+ * @slot {Node[]} default - Defines the text of the component.
+ * <br><br>
+ * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ *
  * @constructor
  * @extends ListItem
  * @implements {IAccessibleListItem}
@@ -139,14 +143,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	@property({ type: Boolean })
 	_hasImageContent!: boolean;
-
-	/**
-	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @public
-	 */
 
 	/**
 	 * <b>Note:</b> While the slot allows option for setting custom avatar, to match the
