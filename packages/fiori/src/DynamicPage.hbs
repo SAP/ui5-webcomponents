@@ -1,26 +1,28 @@
 <div class="{{classes.root}}">
-  <div class="{{classes.headerWrapper}}">
-    <slot name="titleArea"></slot>
-    {{#if headerInTitle}}
-      <slot name="headerArea"></slot>
-    {{/if}}
+  <div class="{{classes.scrollContainer}}"
+    @scroll="{{snapOnScroll}}">
+    <div class="{{classes.headerWrapper}}">
+      <slot name="titleArea"></slot>
+      {{#if headerInTitle}}
+        <slot name="headerArea"></slot>
+      {{/if}}
 
-    {{#if actionsInTitle}}
-      {{> header-actions}}
-    {{/if}}
+      {{#if actionsInTitle}}
+        {{> header-actions}}
+      {{/if}}
 
-  </div>
+    </div>
 
-  <div class="{{classes.content}}">
-    {{#if headerInContent}}
-      <slot name="headerArea"></slot>
-    {{/if}}
+    <div class="{{classes.content}}">
+      {{#if headerInContent}}
+        <slot name="headerArea"></slot>
+      {{/if}}
+      {{#unless actionsInTitle}}
+       {{> header-actions}}
+      {{/unless}}
 
-    {{#unless actionsInTitle}}
-     {{> header-actions}}
-    {{/unless}}
-
-    <slot></slot>
+      <slot></slot>
+    </div>
   </div>
 
     <div class="{{classes.footer}}">
