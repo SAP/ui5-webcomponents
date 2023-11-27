@@ -419,7 +419,7 @@ abstract class Popup extends UI5Element {
 	 * Tells if the component is opened
 	 * @public
 	 */
-	isOpen() {
+	isOpen() : boolean {
 		return this.opened;
 	}
 
@@ -485,7 +485,7 @@ abstract class Popup extends UI5Element {
 	 * Closes the popup.
 	 * @public
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
 		if (!this.opened) {
 			return;
 		}

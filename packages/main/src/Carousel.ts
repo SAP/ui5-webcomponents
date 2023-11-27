@@ -513,7 +513,7 @@ class Carousel extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
-	navigateTo(itemIndex: number) {
+	navigateTo(itemIndex: number) : void {
 		this._resizing = false;
 		this._selectedIndex = itemIndex;
 	}

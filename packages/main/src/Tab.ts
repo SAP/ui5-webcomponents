@@ -254,7 +254,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */
-	getTabInStripDomRef() {
+	getTabInStripDomRef() : ITab | null {
 		if (this._getElementInStrip) {
 			return this._getElementInStrip();
 		}

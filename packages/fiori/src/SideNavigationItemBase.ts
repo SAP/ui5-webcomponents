@@ -6,6 +6,14 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import type SideNavigation from "./SideNavigation.js";
 
 /**
+ * Fired when the component is activated either with a
+ * click/tap or by using the Enter or Space key.
+ *
+ * @public
+ */
+@event("click")
+
+/**
  * @class
  * A class to serve as a foundation
  * for the <code>SideNavigationItem</code> and <code>SideNavigationSubItem</code> classes.
@@ -16,14 +24,6 @@ import type SideNavigation from "./SideNavigation.js";
  * @public
  * @since 1.19.0
  */
-
-/**
- * Fired when the component is activated either with a
- * click/tap or by using the Enter or Space key.
- *
- * @public
- */
-@event("click")
 class SideNavigationItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text of the item.

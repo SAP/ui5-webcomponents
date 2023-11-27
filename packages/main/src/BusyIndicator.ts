@@ -111,12 +111,6 @@ class BusyIndicator extends UI5Element {
 	@property({ type: Boolean })
 	_isBusy!: boolean;
 
-	/**
-	 * Determines the content over which the component will appear.
-	 *
-	 * @public
-	 */
-
 	_keydownHandler: (e: KeyboardEvent) => void;
 	_preventEventHandler: (e: KeyboardEvent) => void;
 	_busyTimeoutId?: Timeout;
