@@ -146,6 +146,17 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	selected!: boolean;
 
 	/**
+	 * Defines whether or not the row is selectable.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.TableRow.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	 @property({ type: Boolean })
+	 disabled!: boolean;
+
+	/**
 	 * Indicates if the table row is navigated.
 	 *
 	 * @type {boolean}
