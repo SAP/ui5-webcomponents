@@ -340,6 +340,21 @@ export default {
 						i--;
 					}
 				}
+
+				moduleDoc.exports?.forEach(e => {
+					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
+
+					if (classNode?.customElement && e.kind !== "custom-element-definition") {
+						moduleDoc.exports.push({
+							kind: "custom-element-definition",
+							name: classNode.tagName,
+							declaration: {
+								name: e.declaration.name,
+								module: e.declaration.module
+							}
+						})
+					}
+				})
 			},
 			packageLinkPhase() {
 				// Uncomment and handle errors appropriately
