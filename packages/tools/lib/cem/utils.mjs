@@ -191,7 +191,7 @@ const getType = (type) => {
 const commonTags = ["public", "protected", "private", "since", "deprecated"];
 
 const allowedTags = {
-    field: [...commonTags, "formEvents", "formProperty", "default", "readonly", "override"],
+    field: [...commonTags, "formEvents", "formProperty", "default"],
     slot: [...commonTags, "default"],
     event: [...commonTags, "param", "allowPreventDefault", "native"],
     eventParam: [...commonTags],
@@ -201,6 +201,7 @@ const allowedTags = {
     enumMember: [...commonTags],
     interface: [...commonTags],
 };
+allowedTags.getter = [...allowedTags.field, "override"]
 
 const tagMatchCallback = (tag, tagName) => {
     const currentTagName = tag.tag;

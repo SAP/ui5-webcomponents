@@ -7,7 +7,7 @@ export class EventDescriptionRenderer implements IDescriptionRenderer {
             <React.Fragment key={p.name}>
                 <b><code>{p.name}</code></b>
                 <ul>
-                    <li><b>type:</b> {p.type}</li>
+                    <li><b>type:</b> {p.type.text}</li>
                     <li><b>description:</b> {p.description}</li>
                 </ul>
             </React.Fragment>
