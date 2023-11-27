@@ -9,21 +9,6 @@ type IEventOptions = {
 }
 
 /**
- * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
- *
- * @public
- */
-interface IToolbarItem {
-	overflowPriority: `${ToolbarItemOverflowBehavior}`;
-	preventOverflowClosing: boolean;
-	ignoreSpace?: boolean;
-	isSeparator?: boolean;
-	containsText?: boolean;
-	hasFlexibleWidth?: boolean;
-	stableDomRef: string;
-}
-
-/**
  * @class
  *
  * The <code>ui5-tb-item</code> represents an abstract class for items,
@@ -35,7 +20,7 @@ interface IToolbarItem {
  * @public
  * @since 1.17.0
  */
-class ToolbarItem extends UI5Element implements IToolbarItem {
+class ToolbarItem extends UI5Element {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
@@ -133,8 +118,5 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	}
 }
 
-export type {
-	IToolbarItem,
-	IEventOptions,
-};
+export type { IEventOptions };
 export default ToolbarItem;
