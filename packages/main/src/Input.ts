@@ -622,7 +622,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	hasSuggestionItemSelected: boolean;
 	valueBeforeItemSelection: string;
 	valueBeforeItemPreview: string
-	suggestionSelectionCanceled: boolean;
+	suggestionSelectionCancelled: boolean;
 	previousValue: string;
 	firstRendering: boolean;
 	typedInValue: string;
@@ -660,7 +660,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = "";
 
 		// Indicates if the user selection has been canceled with [ESC].
-		this.suggestionSelectionCanceled = false;
+		this.suggestionSelectionCancelled = false;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = "";
@@ -945,9 +945,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			// Restore the value.
 			this.value = this.typedInValue || this.valueBeforeItemPreview;
 
-			// Mark that the selection has been canceled, so the popover can close
+			// Mark that the selection has been cancelled, so the popover can close
 			// and not reopen, due to receiving focus.
-			this.suggestionSelectionCanceled = true;
+			this.suggestionSelectionCancelled = true;
 			this.focused = true;
 
 			return;
@@ -1096,7 +1096,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		];
 
 		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
-		this.suggestionSelectionCanceled = false;
+		this.suggestionSelectionCancelled = false;
 
 		if (e instanceof InputEvent) {
 			// ---- Special cases of numeric Input ----
@@ -1281,6 +1281,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
+		const isCancelledByUser = !this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item }, true);
+
+		if (isCancelledByUser) {
+			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
+			this.value = this.valueBeforeItemPreview;
+			this.hasSuggestionItemSelected = false;
+			this.suggestionSelectionCancelled = false;
+
+			this.isTyping = false;
+			this.openOnMobile = false;
+			this._forceOpen = false;
+			return;
+		}
+
 		const value = this.typedInValue || this.value;
 		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
 		const fireInput = keyboardUsed
@@ -1294,7 +1308,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.lastConfirmedValue = itemText;
 
 			this._performTextSelection = true;
-			this.hasSuggestionItemSelected = true;
 			this.value = itemText;
 
 			this.fireEvent(INPUT_EVENTS.CHANGE);
@@ -1309,9 +1322,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.valueBeforeItemPreview = "";
-		this.suggestionSelectionCanceled = false;
-
-		this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
+		this.suggestionSelectionCancelled = false;
 
 		this.isTyping = false;
 		this.openOnMobile = false;
