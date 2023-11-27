@@ -30,7 +30,6 @@
     box-sizing: border-box;
     z-index: 1;
     opacity: 1;
-    padding: 0 1rem;
 }
 
 :host([show-footer]) .ui5-dynamic-page-content {
@@ -50,6 +49,9 @@
     border: 1px solid;
     border-radius: 0.25rem;
     background-color: #fff;
+    box-sizing: border-box;
+    width: auto;
+    margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 /* Footer animation */
@@ -72,4 +74,35 @@
         transform: translateY(100%);
         opacity: 0;
     }
+}
+
+::slotted([slot="titleArea"]) {
+    width: auto;
+}
+
+/* Responsive paddings */
+
+:host([media-range="S"]) .ui5-dynamic-page-content,
+:host([media-range="S"]) ::slotted([slot="titleArea"]),
+:host([media-range="S"]) ::slotted([slot="headerArea"]) {
+    padding: 0 1rem;
+}
+
+:host([media-range="S"]) ::slotted([slot="headerArea"]) {
+    padding-top: 0.5rem;
+}
+
+:host([media-range="M"]) .ui5-dynamic-page-content,
+:host([media-range="M"]) ::slotted([slot="titleArea"]),
+:host([media-range="M"]) ::slotted([slot="headerArea"]),
+:host([media-range="L"]) .ui5-dynamic-page-content,
+:host([media-range="L"]) ::slotted([slot="titleArea"]),
+:host([media-range="L"]) ::slotted([slot="headerArea"]) {
+    padding: 0 2rem;
+}
+
+:host([media-range="XL"]) .ui5-dynamic-page-content,
+:host([media-range="XL"]) ::slotted([slot="titleArea"]),
+:host([media-range="XL"]) ::slotted([slot="headerArea"]) {
+    padding: 0 3rem;
 }
