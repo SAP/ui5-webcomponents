@@ -30,7 +30,7 @@ const deleteThemeBase = () => {
 	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
 
-const loadComponentPackages = async (theme: string) => {
+const loadComponentPackages = async (theme: string, externalThemeName?: string) => {
 	const registeredPackages = getRegisteredPackages();
 
 	const packagesStylesPromises = [...registeredPackages].map(async packageName => {
@@ -38,7 +38,7 @@ const loadComponentPackages = async (theme: string) => {
 			return;
 		}
 
-		const cssData = await getThemeProperties(packageName, theme);
+		const cssData = await getThemeProperties(packageName, theme, externalThemeName);
 		if (cssData) {
 			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName);
 		}
@@ -83,7 +83,7 @@ const applyTheme = async (theme: string) => {
 
 	// Always load component packages properties. For non-registered themes, try with the base theme, if any
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
-	await loadComponentPackages(packagesTheme || DEFAULT_THEME);
+	await loadComponentPackages(packagesTheme || DEFAULT_THEME, extTheme && extTheme.themeName === theme ? theme : undefined);
 
 	fireThemeLoaded(theme);
 };
