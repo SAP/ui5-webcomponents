@@ -138,6 +138,7 @@ abstract class ListItem extends ListItemBase {
 	 * The navigated state of the list item.
 	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
 	 *
+	 * @default false
 	 * @public
 	 * @since 1.10.0
 	 */

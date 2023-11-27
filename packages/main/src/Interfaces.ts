@@ -88,14 +88,6 @@ const IInput = "sap.ui.webc.main.IInput";
 const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 
 /**
- * Interface for components that may be slotted inside a <code>ui5-list</code> as items
- *
- * @public
- */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IListItem extends HTMLElement { }
-
-/**
  * Interface for components that may be slotted inside <code>ui5-menu</code> as items
  *
  * @name sap.ui.webc.main.IMenuItem
@@ -223,7 +215,6 @@ export {
 	IIcon,
 	IInput,
 	IInputSuggestionItem,
-	IListItem,
 	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,

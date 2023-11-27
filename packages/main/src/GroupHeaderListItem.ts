@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
-import { IListItem } from "./Interfaces.js";
 
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";
 
@@ -23,7 +22,6 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
  *
  * @constructor
  * @extends ListItemBase
- * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -32,7 +30,7 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
 	template: GroupHeaderListItemTemplate,
 	styles: [ListItemBase.styles, groupheaderListItemCss],
 })
-class GroupHeaderListItem extends ListItemBase implements IListItem {
+class GroupHeaderListItem extends ListItemBase {
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.

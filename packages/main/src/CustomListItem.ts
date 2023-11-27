@@ -4,7 +4,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ListItem from "./ListItem.js";
 import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate.lit.js";
-import { IListItem } from "./Interfaces.js";
 
 // Styles
 import customListItemCss from "./generated/themes/CustomListItem.css.js";
@@ -24,11 +23,10 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
  *
- * @slot default - Defines the content of the component.
+ * @slot {Node[]} default - Defines the content of the component.
  *
  * @constructor
  * @extends ListItem
- * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -36,7 +34,7 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
 	template: CustomListItemTemplate,
 	styles: [ListItem.styles, customListItemCss],
 })
-class CustomListItem extends ListItem implements IListItem {
+class CustomListItem extends ListItem {
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.

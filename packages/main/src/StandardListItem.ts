@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
-import { IListItem } from "./Interfaces.js";
 import type { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
@@ -32,7 +31,6 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @constructor
  * @extends ListItem
  * @implements {IAccessibleListItem}
- * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -44,9 +42,10 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
 		Avatar,
 	],
 })
-class StandardListItem extends ListItem implements IAccessibleListItem, IListItem {
+class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
+	 * @default ""
 	 * @public
 	 * @since 0.8.0
 	 */
@@ -60,6 +59,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem, IListIte
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -81,6 +81,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem, IListIte
 	 * <br><br>
 	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -88,6 +89,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem, IListIte
 
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the list item.
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
