@@ -483,7 +483,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* <br><br>
 	* <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
 	* where the numbers represents the width of the start, middle and end columns.
-	* @default ["100%", 0, 0]
+	* @default undefined
 	* @public
 	*/
 	get columnLayout(): ColumnLayout | undefined {

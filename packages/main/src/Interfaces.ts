@@ -220,7 +220,6 @@ export {
 	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
-	ISelectOption,
 	ISelectMenuOption,
 	ITab,
 	ITableCell,
