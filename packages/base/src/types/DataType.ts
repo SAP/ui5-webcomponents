@@ -1,20 +1,15 @@
 import { PropertyValue } from "../UI5ElementMetadata.js";
 
 /**
+ * @class
  * Base class for all data types.
  *
- * @class
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.base.types.DataType
  * @public
  */
 class DataType {
 	/**
 	 * Checks if the value is valid for its data type.
  	 * @public
-	 * @abstract
-	 * @returns {Boolean}
 	 */
 	// eslint-disable-next-line
 	static isValid(value: any): boolean {
