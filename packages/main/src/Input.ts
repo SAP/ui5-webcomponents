@@ -1285,7 +1285,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (isCancelledByUser) {
 			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
-			this.value = this.valueBeforeItemPreview;
 			this.hasSuggestionItemSelected = false;
 			this.suggestionSelectionCancelled = false;
 
