@@ -18,20 +18,20 @@
 
     </div>
 
+    {{#if headerInContent}}
+      <slot name="headerArea"></slot>
+    {{/if}}
+
+    {{#unless actionsInTitle}}
+      <ui5-dynamic-page-header-actions
+          ?snapped="{{headerSnapped}}"
+          ?pinned="{{headerPinned}}"
+          @ui5-expand-button-click={{onExpandClick}}
+          @ui5-pin-button-click={{onPinClick}}
+        ></ui5-dynamic-page-header-actions>
+    {{/unless}}
+
     <div class="{{classes.content}}">
-      {{#if headerInContent}}
-        <slot name="headerArea"></slot>
-      {{/if}}
-
-      {{#unless actionsInTitle}}
-        <ui5-dynamic-page-header-actions
-            ?snapped="{{headerSnapped}}"
-            ?pinned="{{headerPinned}}"
-            @ui5-expand-button-click={{onExpandClick}}
-            @ui5-pin-button-click={{onPinClick}}
-          ></ui5-dynamic-page-header-actions>
-      {{/unless}}
-
       <slot></slot>
     </div>
   </div>

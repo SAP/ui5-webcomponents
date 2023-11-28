@@ -3,6 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
@@ -42,6 +45,12 @@ const SCROLL_DEBOUNCE_RATE = 0; // ms
 class DynamicPage extends UI5Element {
 	static i18nBundle: I18nBundle;
 
+	constructor() {
+		super();
+
+		this._updateMediaRange = this.updateMediaRange.bind(this);
+	}
+
 	static async onDefine() {
 		DynamicPage.i18nBundle = await getI18nBundle("INIT_PACKAGE_VAR_NAME");
 	}
@@ -54,6 +63,15 @@ class DynamicPage extends UI5Element {
 
 	@property({ type: Boolean })
 	showFooter!: boolean;
+
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	@property()
+	mediaRange!: string;
 
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
@@ -71,6 +89,15 @@ class DynamicPage extends UI5Element {
 	iPreviousScrollAmount = 0;
 	_debounceInterval?: Timeout | null;
 	showHeaderInStickArea = false;
+	_updateMediaRange: ResizeObserverCallback;
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._updateMediaRange);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._updateMediaRange);
+	}
 
 	get classes() {
 		return {
@@ -166,6 +193,10 @@ class DynamicPage extends UI5Element {
 			this._debounceInterval = null;
 			fn();
 		}, delay);
+	}
+
+	updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 }
 
