@@ -8,8 +8,8 @@ export class MethodDescriptionRenderer implements IDescriptionRenderer {
             <React.Fragment key={p.name}>
                 <b><code>{p.name}</code></b>
                 <ul>
-                    <li><b>type:</b> {p.type}</li>
-                    <li><b>description:</b> {p.description}</li>
+                    <li><b>type:</b> {p.type.text}</li>
+                    {p.description && <li><b>description:</b> {p.description}</li>}
                 </ul>
             </React.Fragment>
         ));
@@ -31,8 +31,8 @@ export class MethodDescriptionRenderer implements IDescriptionRenderer {
             <>
                 <p><b>Return Value:</b></p>
                 <ul>
-                    <li><b>type:</b> {returnValue?.type}</li>
-                    <li><b>description:</b> {returnValue?.description}</li>
+                    <li><b>type:</b> {returnValue?.type?.text}</li>
+                    {returnValue?.description && <li><b>description:</b> {returnValue?.description}</li>}
                 </ul>
             </>
         );

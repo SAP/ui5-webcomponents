@@ -62,15 +62,6 @@ const INotificationListItem = "sap.ui.webc.fiori.INotificationListItem";
 const IProductSwitchItem = "sap.ui.webc.fiori.IProductSwitchItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
- *
- * @name sap.ui.webc.fiori.IShellBarItem
- * @interface
- * @public
- */
-const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
-
-/**
  * Interface for components that may be slotted inside <code>ui5-side-navigation</code> as items
  *
  * @name sap.ui.webc.fiori.ISideNavigationItem
@@ -132,7 +123,6 @@ export {
 	INotificationAction,
 	INotificationListItem,
 	IProductSwitchItem,
-	IShellBarItem,
 	ISideNavigationItem,
 	ISideNavigationSubItem,
 	ISortItem,
