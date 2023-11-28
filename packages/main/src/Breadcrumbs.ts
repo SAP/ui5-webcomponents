@@ -20,7 +20,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
-import IBreadcrumbsItem from "./BreadcrumbsItem.js";
+import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
 	BREADCRUMBS_ARIA_LABEL,
@@ -47,7 +47,7 @@ import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
 import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js";
 
 type BreadcrumbsItemClickEventDetail = {
-	item: IBreadcrumbsItem;
+	item: BreadcrumbsItem;
 	altKey: boolean;
 	ctrlKey: boolean;
 	metaKey: boolean;
@@ -99,7 +99,7 @@ type FocusAdaptor = ITabbable & {
 	styles: breadcrumbsCss,
 	staticAreaStyles: breadcrumbsPopoverCss,
 	dependencies: [
-		IBreadcrumbsItem,
+		BreadcrumbsItem,
 		Link,
 		Label,
 		ResponsivePopover,
@@ -169,13 +169,13 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<IBreadcrumbsItem>;
+	items!: Array<BreadcrumbsItem>;
 
 	_itemNavigation: ItemNavigation
 	_onResizeHandler: ResizeObserverCallback;
 
 	// maps items to their widths
-	_breadcrumbItemWidths = new WeakMap<IBreadcrumbsItem, number>();
+	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
 	// the width of the interactive element that opens the overflow
 	_dropdownArrowLinkWidth = 0;
 	responsivePopover?: ResponsivePopover;
@@ -208,7 +208,7 @@ class Breadcrumbs extends UI5Element {
 
 	onInvalidation(changeInfo: ChangeInfo) {
 		if (changeInfo.reason === "childchange") {
-			const itemIndex = this._getItems().indexOf(changeInfo.child as IBreadcrumbsItem),
+			const itemIndex = this._getItems().indexOf(changeInfo.child as BreadcrumbsItem),
 				isInOverflow = itemIndex < this._overflowSize;
 			if (isInOverflow) {
 				// the content of an overflowing item has changed
@@ -220,7 +220,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getItems() {
-		return this.getSlottedNodes<IBreadcrumbsItem>("items");
+		return this.getSlottedNodes<BreadcrumbsItem>("items");
 	}
 
 	onBeforeRendering() {
@@ -455,11 +455,11 @@ class Breadcrumbs extends UI5Element {
 		this.responsivePopover.showAt(this._dropdownArrowLink);
 	}
 
-	_isItemVisible(item: IBreadcrumbsItem) {
+	_isItemVisible(item: BreadcrumbsItem) {
 		return !item.hidden && this._hasVisibleContent(item);
 	}
 
-	_hasVisibleContent(item: IBreadcrumbsItem) {
+	_hasVisibleContent(item: BreadcrumbsItem) {
 		// the check is not complete but may be extended in the future if needed to cover
 		// cases besides the standard (UX-recommended) ones
 		return item.innerText || Array.from(item.children).some(child => !(child as HTMLElement).hidden);
@@ -475,7 +475,7 @@ class Breadcrumbs extends UI5Element {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
 	}
 
-	_getItemAccessibleName(item: IBreadcrumbsItem, position: number, size: number) {
+	_getItemAccessibleName(item: BreadcrumbsItem, position: number, size: number) {
 		const positionText = this._getItemPositionText(position, size);
 		const itemsText = item.textContent || "";
 

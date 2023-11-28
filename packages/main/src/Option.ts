@@ -2,8 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { ISelectOption } from "./Interfaces.js";
-
+import type { IOption } from "./Interfaces.js";
 /**
  * @class
  *
@@ -17,7 +16,7 @@ import type { ISelectOption } from "./Interfaces.js";
  * @public
  */
 @customElement("ui5-option")
-class Option extends UI5Element implements ISelectOption {
+class Option extends UI5Element implements IOption {
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -31,7 +30,6 @@ class Option extends UI5Element implements ISelectOption {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is hidden.
 	 * @default false
-	 * @name sap.ui.webc.main.Option.prototype.disabled
 	 * @public
 	 * @since 1.0.0-rc.12
 	 */
@@ -63,6 +61,7 @@ class Option extends UI5Element implements ISelectOption {
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -70,6 +69,7 @@ class Option extends UI5Element implements ISelectOption {
 
 	/**
 	 * Defines the additional text displayed at the end of the option element.
+	 * @default ""
 	 * @public
 	 * @since 1.3.0
 	 */

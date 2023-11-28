@@ -72,13 +72,13 @@ import type { IFormElement, NativeFormElement } from "./features/InputElementsFo
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
-import { ISelectOption } from "./Interfaces.js";
+import { IOption } from "./Interfaces.js";
 
 type SelectChangeEventDetail = {
-	selectedOption: ISelectOption,
+	selectedOption: IOption,
 }
 type SelectLiveChangeEventDetail = {
-	selectedOption: ISelectOption,
+	selectedOption: IOption,
 }
 
 /**
@@ -311,10 +311,10 @@ class Select extends UI5Element implements IFormElement {
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_selectedIndex!: number;
 
-	_syncedOptions: Array<ISelectOption>;
+	_syncedOptions: Array<IOption>;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption: ISelectOption | null;
+	_lastSelectedOption: IOption | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
@@ -336,7 +336,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<ISelectOption>;
+	options!: Array<IOption>;
 
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
@@ -459,7 +459,7 @@ class Select extends UI5Element implements IFormElement {
 	 * Currently selected <code>ui5-option</code> element.
 	 * @public
 	 */
-	get selectedOption(): ISelectOption | undefined {
+	get selectedOption(): IOption | undefined {
 		return this.selectOptions.find(option => option.selected);
 	}
 
@@ -584,7 +584,7 @@ class Select extends UI5Element implements IFormElement {
 			}
 		}
 
-		this._syncedOptions = syncOpts as Array<ISelectOption>;
+		this._syncedOptions = syncOpts as Array<IOption>;
 	}
 
 	_getSelectMenu(): SelectMenu | undefined {
@@ -812,7 +812,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options: Array<ISelectOption> = this.selectOptions;
+		const options: Array<IOption> = this.selectOptions;
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
@@ -873,7 +873,7 @@ class Select extends UI5Element implements IFormElement {
 		this.fireEvent<CustomEvent>("close");
 	}
 
-	get selectOptions(): Array<ISelectOption> {
+	get selectOptions(): Array<IOption> {
 		const menu = this._getSelectMenu();
 		if (menu) {
 			return menu.options;
@@ -885,7 +885,7 @@ class Select extends UI5Element implements IFormElement {
 		return !!this.label.length;
 	}
 
-	_fireChangeEvent(selectedOption: ISelectOption) {
+	_fireChangeEvent(selectedOption: IOption) {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
@@ -1094,4 +1094,5 @@ export default Select;
 export type {
 	SelectChangeEventDetail,
 	SelectLiveChangeEventDetail,
+	IOption,
 };

@@ -44,6 +44,7 @@ class SelectMenuOption extends CustomListItem implements ISelectMenuOption {
 	 * Defines the text, displayed inside the <code>ui5-select</code> input filed
 	 * when the option gets selected.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -53,6 +54,7 @@ class SelectMenuOption extends CustomListItem implements ISelectMenuOption {
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -71,6 +73,7 @@ class SelectMenuOption extends CustomListItem implements ISelectMenuOption {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
+	 * @default {}
 	 * @public
 	 * @deprecated
 	 */
@@ -80,6 +83,7 @@ class SelectMenuOption extends CustomListItem implements ISelectMenuOption {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *
+	 * @default false
 	 * @public
 	 * @deprecated
 	 */

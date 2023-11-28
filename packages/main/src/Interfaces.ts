@@ -12,18 +12,6 @@ import ListItemType from "./types/ListItemType.js";
 const IAvatar = "sap.ui.webc.main.IAvatar";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
- *
- * @public
- */
-interface IBreadcrumbsItem {
-	href: string,
-	target?: string,
-	accessibleName: string,
-	text: Array<Node>,
- }
-
-/**
  * Interface for components that may be used as a button inside numerous higher-order components
  *
  * @name sap.ui.webc.main.IButton
@@ -132,11 +120,22 @@ const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
 const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
+ *
+ * @public
+ */
+interface ISelectMenuOption extends IOption {
+	type: `${ListItemType}`,
+	accessibilityAttributes: AccessibilityAttributes,
+	navigated: boolean,
+}
+
+/**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
  * @public
  */
-interface ISelectOption extends UI5Element {
+interface IOption extends UI5Element {
 	selected: boolean,
 	disabled: boolean,
 	title: string,
@@ -148,17 +147,6 @@ interface ISelectOption extends UI5Element {
 	text?: Array<Node>,
 	stableDomRef: string,
 	displayText?: string,
-}
-
-/**
- * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
- *
- * @public
- */
-interface ISelectMenuOption extends ISelectOption{
-	type: `${ListItemType}`,
-	accessibilityAttributes: AccessibilityAttributes,
-	navigated: boolean,
 }
 
 /**
@@ -235,7 +223,6 @@ const IToolbarSelectOption = "sap.ui.webc.main.IToolbarSelectOption";
 
 export {
 	IAvatar,
-	IBreadcrumbsItem,
 	IButton,
 	ICardHeader,
 	ICalendarDate,
@@ -248,7 +235,7 @@ export {
 	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
-	ISelectOption,
+	IOption,
 	ISelectMenuOption,
 	ITab,
 	ITableCell,

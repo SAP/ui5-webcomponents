@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { IBreadcrumbsItem } from "./Interfaces.js";
 
 /**
  * @class
@@ -13,12 +12,12 @@ import type { IBreadcrumbsItem } from "./Interfaces.js";
  *
  * @constructor
  * @extends UI5Element
- * @implements {IBreadcrumbsItem}
+ * @implements {BreadcrumbsItem}
  * @public
  * @since 1.0.0-rc.15
  */
 @customElement("ui5-breadcrumbs-item")
-class BreadcrumbsItem extends UI5Element implements IBreadcrumbsItem {
+class BreadcrumbsItem extends UI5Element implements BreadcrumbsItem {
 	/**
 	 * Defines the link href.
 	 * <br><br>

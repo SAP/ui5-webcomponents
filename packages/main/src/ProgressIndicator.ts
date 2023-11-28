@@ -98,9 +98,10 @@ class ProgressIndicator extends UI5Element {
 	 * <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li>
 	 * </ul>
 	 *
+	 * @default null
 	 * @public
 	 */
-	@property()
+	@property({ defaultValue: null })
 	displayValue!: string;
 
 	/**
