@@ -89,7 +89,7 @@ class ResponsivePopover extends Popover {
 	 * @public
 	 * @returns Resolves when the responsive popover is open
 	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false) {
+	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
 		if (!isPhone()) {
 			await super.showAt(opener, preventInitialFocus);
 		} else {

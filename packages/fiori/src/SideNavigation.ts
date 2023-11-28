@@ -117,6 +117,9 @@ type PopupClickEventDetail = {
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })

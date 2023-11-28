@@ -13,7 +13,7 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
  *
  * @constructor
- * @extends UI5Element
+ * @extends SideNavigationItemBase
  * @public
  * @abstract
  * @since 1.0.0-rc.8

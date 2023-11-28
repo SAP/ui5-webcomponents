@@ -169,7 +169,13 @@ interface TabContainerTabInOverflow extends CustomListItem {
  */
 @event("tab-select", {
 	detail: {
+		/**
+		 * @public
+		 */
 		tab: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		tabIndex: { type: Number },
 	},
 })
