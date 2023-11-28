@@ -16,7 +16,6 @@ const component = "ui5-segmented-button";
 export default {
 	title: "Main/SegmentedButton",
 	component: "SegmentedButton",
-	subcomponents: {'SegmentedButtonItem' : 'SegmentedButtonItem'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

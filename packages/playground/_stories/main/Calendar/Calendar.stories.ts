@@ -19,7 +19,6 @@ const component = "ui5-calendar";
 export default {
 	title: "Main/Calendar",
 	component: "Calendar",
-	subcomponents: {'CalendarDate' : 'CalendarDate'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

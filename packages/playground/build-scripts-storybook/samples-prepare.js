@@ -34,13 +34,22 @@ const main = async () => {
 	async function generateStoryDoc(componentPath, component, api, package) {
 		console.log(`Generating argTypes for story ${component}`);
 		const apiData = getAPIData(api, component, package);
-		const { storyArgsTypes, slotNames, info } = apiData;
+		const { storyArgsTypes, slotNames, info, subComponents, componentName, componentTag } = apiData;
 
-		await fs.writeFile(componentPath + '/argTypes.ts', `export default ${storyArgsTypes};
+		await fs.writeFile(componentPath + '/argTypes.ts', `import { registerComponentArgTypes } from '../../../.storybook/argTypeRegistry';
+const storyArgsTypes = ${storyArgsTypes};
+export const subComponents = ${JSON.stringify(subComponents, null, 4)};
 export const componentInfo = ${JSON.stringify(info, null, 4)};
 export type StoryArgsSlots = {
 	${slotNames.map(slotName => `${slotName}: string;`).join('\n	')}
-}`);
+}
+export default storyArgsTypes;
+registerComponentArgTypes("${componentTag}", {
+	componentName: "${componentName}",
+	storyArgsTypes,
+	subComponents,
+	componentInfo,
+});`);
 	};
 
 	function getAPIData(api, module, package) {
@@ -48,11 +57,14 @@ export type StoryArgsSlots = {
 		const data = getArgsTypes(api, moduleAPI);
 
 		return {
+			componentName: module,
 			info: {
 				package: `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`,
 				since: moduleAPI.since
 			},
+			subComponents: moduleAPI.appenddocs?.split(" ").map(item => item.split(".").pop()),
 			slotNames: data.slotNames,
+			componentTag: moduleAPI.tagname,
 			storyArgsTypes: JSON.stringify(data.args, null, "\t")
 		};
 	}

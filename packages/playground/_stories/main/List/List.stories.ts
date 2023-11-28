@@ -5,7 +5,6 @@ import type { Meta, StoryFn } from "@storybook/web-components";
 
 import type List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
-import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
 
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -18,11 +17,6 @@ const component = "ui5-list";
 export default {
   title: "Main/List",
   component: "List",
-  subcomponents: {
-    StandardListItem: "StandardListItem",
-    CustomListItem: "CustomListItem",
-    GroupHeaderListItem: "GroupHeaderListItem",
-  },
   parameters: {
     docs: {
       page: DocsPage({ ...componentInfo, component })

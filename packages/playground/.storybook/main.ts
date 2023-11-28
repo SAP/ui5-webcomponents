@@ -1,3 +1,4 @@
+import { dirname, join } from "path";
 import remarkGfm from 'remark-gfm';
 
 const config = {
@@ -8,14 +9,14 @@ const config = {
     { from: "../docs/landing-page.html", to: "../index.html" }, // from /docs/landing-page.html to /dist/index.html
   ],
   addons: [
-    "@storybook/addon-links",
+    getAbsolutePath("@storybook/addon-links"),
     {
       name: "@storybook/addon-essentials",
       options: {
         docs: false,
       },
     },
-    "@whitespace/storybook-addon-html",
+    getAbsolutePath("@whitespace/storybook-addon-html"),
     {
       name: '@storybook/addon-docs',
       options: {
@@ -28,11 +29,8 @@ const config = {
     }
   ],
   framework: {
-    name: "@storybook/web-components-vite",
+    name: getAbsolutePath("@storybook/web-components-vite"),
     options: {}
-  },
-  core: {
-    builder: "@storybook/builder-vite"
   },
   features: {
     storyStoreV7: true
@@ -45,3 +43,7 @@ const config = {
   }
 };
 export default config;
+
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, "package.json")));
+}
