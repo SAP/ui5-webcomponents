@@ -143,18 +143,18 @@
 	box-shadow: var(--_ui5_value_state_header_box_shadow_warning);
 }
 
-[ui5-responsive-popover] .ui5-valuestatemessage--information:has(+[ui5-list]:empty) {
+[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--information:has(+[ui5-list]:empty) {
 	box-shadow: unset;
 }
 
-[ui5-responsive-popover] .ui5-valuestatemessage--warning:has(+[ui5-list]:empty) {
+[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--warning:has(+[ui5-list]:empty) {
 	box-shadow: unset;
 }
 
-[ui5-responsive-popover] .ui5-valuestatemessage--error:has(+[ui5-list]:empty) {
+[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--error:has(+[ui5-list]:empty) {
 	box-shadow: unset;
 }
 
-[ui5-responsive-popover] .ui5-valuestatemessage--success:has(+[ui5-list]:empty) {
+[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--success:has(+[ui5-list]:empty) {
 	box-shadow: unset;
 }
