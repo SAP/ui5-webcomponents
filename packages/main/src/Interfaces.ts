@@ -190,11 +190,10 @@ const IToken = "sap.ui.webc.main.IToken";
 /**
  * Interface for tree items for the purpose of <code>ui5-tree</code>
  *
- * @name sap.ui.webc.main.ITreeItem
- * @interface
  * @public
  */
-const ITreeItem = "sap.ui.webc.main.ITreeItem";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ITreeItem extends HTMLElement { }
 
 /**
  * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>

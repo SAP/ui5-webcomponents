@@ -58,7 +58,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  *
  * <h4>When not to use:</h4>
  * <ul>
- * <li>To display items not hierarchically strcutured. In this case, use the List component.</li>
+ * <li>To display items not hierarchically structured. In this case, use the List component.</li>
  * <li>To select one item from a very small number of non-hierarchical items. Select or ComboBox might be more appropriate.</li>
  * <li>The hierarchy turns out to have only two levels. In this case, use List with group items.</li>
  * </ul>
@@ -87,11 +87,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Tree
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-tree
- * @appenddocs sap.ui.webc.main.TreeItem sap.ui.webc.main.TreeItemCustom
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.8
  */
@@ -112,7 +108,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
  * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
  *
- * @event sap.ui.webc.main.Tree#item-toggle
  * @param {HTMLElement} item the toggled item.
  * @allowPreventDefault
  * @public
@@ -124,7 +119,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 /**
  * Fired when the mouse cursor enters the tree item borders.
- * @event sap.ui.webc.main.Tree#item-mouseover
  * @param {HTMLElement} item the hovered item.
  * @since 1.0.0-rc.16
  * @public
@@ -136,7 +130,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 /**
  * Fired when the mouse cursor leaves the tree item borders.
- * @event sap.ui.webc.main.Tree#item-mouseout
  * @param {HTMLElement} item the hovered item.
  * @since 1.0.0-rc.16
  * @public
@@ -149,7 +142,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 /**
  * Fired when a tree item is activated.
  *
- * @event sap.ui.webc.main.Tree#item-click
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
@@ -166,7 +158,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * <b>Note:</b> A Delete button is displayed on each item,
  * when the component <code>mode</code> property is set to <code>Delete</code>.
  *
- * @event sap.ui.webc.main.Tree#item-delete
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -180,7 +171,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * Fired when selection is changed by user interaction
  * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
  *
- * @event sap.ui.webc.main.Tree#selection-change
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @param {HTMLElement} targetItem The item triggering the event.
@@ -199,9 +189,7 @@ class Tree extends UI5Element {
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.main.types.ListMode}
-	 * @name sap.ui.webc.main.Tree.prototype.mode
-	 * @defaultValue "None"
+	 * @default "None"
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
 	mode!: `${ListMode}`;
@@ -209,9 +197,7 @@ class Tree extends UI5Element {
 	/**
 	 * Defines the text that is displayed when the component contains no items.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.noDataText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -222,9 +208,7 @@ class Tree extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If the <code>header</code> slot is set, this property is ignored.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.headerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -233,9 +217,7 @@ class Tree extends UI5Element {
 	/**
 	 * Defines the component footer text.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.footerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -244,9 +226,7 @@ class Tree extends UI5Element {
 	/**
 	 * Defines the accessible name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */
@@ -256,9 +236,7 @@ class Tree extends UI5Element {
 	/**
 	 * Defines the IDs of the elements that label the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */
@@ -268,9 +246,7 @@ class Tree extends UI5Element {
 	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
-	 * @type {string}
-	 * @name sap.ui.webc.main.Tree.prototype.accessibleRoleDescription
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ defaultValue: undefined, noAttribute: true })
@@ -281,9 +257,6 @@ class Tree extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITreeItem[]}
-	 * @name sap.ui.webc.main.Tree.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -295,9 +268,6 @@ class Tree extends UI5Element {
 	 * <b>Note:</b> When the <code>header</code> slot is set, the
 	 * <code>headerText</code> property is ignored.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Tree.prototype.header
-	 * @slot header
 	 * @public
 	 */
 	@slot()
