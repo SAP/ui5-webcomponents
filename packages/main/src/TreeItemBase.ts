@@ -172,7 +172,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines the accessible name of the component.
 	 *
-	 * @default: ""
+	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */
@@ -288,19 +288,18 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Used to duck-type TreeItem elements without using instanceof
-	 * @returns {boolean}
+	 * @returns if it's tree item
 	 * @protected
 	 */
-	get isTreeItem() {
+	get isTreeItem(): boolean {
 		return true;
 	}
 
 	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
 	 * @public
-	 * @method
 	 */
-	toggle() {
+	toggle(): void {
 		this.expanded = !this.expanded;
 	}
 
@@ -329,7 +328,7 @@ class TreeItemBase extends ListItem {
 		}
 	}
 
-	get iconAccessibleName() {
+	get iconAccessibleName(): string {
 		return this.expanded ? TreeItemBase.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
 

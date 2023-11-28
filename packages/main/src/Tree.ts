@@ -399,7 +399,7 @@ class Tree extends UI5Element {
 	/**
 	 * Returns the a flat array of all tree items
 	 * @protected
-	 * @returns {Array}
+	 * @returns array of the tree items
 	 */
 	getItems(): Array<TreeItemBase> {
 		return this.list.getItems();
@@ -419,9 +419,9 @@ class Tree extends UI5Element {
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node
 	 *
 	 * @public
-	 * @param {function} callback function to execute on each node of the tree with 3 arguments: the node, the level and the index
+	 * @param callback function to execute on each node of the tree with 3 arguments: the node, the level and the index
 	 */
-	walk(callback: WalkCallback) {
+	walk(callback: WalkCallback): void {
 		walkTree(this, 1, callback);
 	}
 
