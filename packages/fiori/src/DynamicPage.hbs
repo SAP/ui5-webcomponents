@@ -32,7 +32,12 @@
     {{/unless}}
 
     <div class="{{classes.content}}">
-      <slot></slot>
+      <div class="{{classes.fitContent}}">
+        <slot></slot>
+        {{#if showFooter}}
+          <div class="{{classes.spacer}}"></div>
+        {{/if}}
+      </div>
     </div>
   </div>
 
