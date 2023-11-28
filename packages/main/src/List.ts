@@ -166,6 +166,9 @@ type ListItemClickEventDetail = {
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -182,6 +185,9 @@ type ListItemClickEventDetail = {
  */
 @event("item-close", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -197,6 +203,9 @@ type ListItemClickEventDetail = {
  */
 @event("item-toggle", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -212,6 +221,9 @@ type ListItemClickEventDetail = {
  */
 @event("item-delete", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -227,7 +239,13 @@ type ListItemClickEventDetail = {
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedItems: { type: Array },
+		/**
+		 * @public
+		 */
 		previouslySelectedItems: { type: Array },
 		targetItem: { type: HTMLElement }, // protected, holds the event target item
 		selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
