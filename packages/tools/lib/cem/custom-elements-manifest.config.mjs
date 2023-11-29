@@ -179,6 +179,9 @@ function processClass(ts, classNode, moduleDoc) {
 					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isPropertyDeclaration(m) && m.name?.text === member.name);
 					const attributeValue = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramMember), tsProgramMember);
 
+					if (attributeValue === "boolean" && member.default === "true") {
+						logDocumentationError(moduleDoc.path, `Boolean properties must be initialzed to false. [${member.name}] property of class [${className}] is intialized to \`true\``)
+					}
 					currClass.attributes.push({
 						description: member.description,
 						name: toKebabCase(member.name),

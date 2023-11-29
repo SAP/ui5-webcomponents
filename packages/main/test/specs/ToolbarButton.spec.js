@@ -26,7 +26,7 @@ describe("Toolbar general interaction", () => {
 	it ("Should render the button with the correct accessible name", async () => {
 		const toolbar = await browser.$("ui5-toolbar");
 		const buttonAccName = await toolbar.shadow$("ui5-button[accessible-name]");
-		const buttonAccessibleName = await buttonAccName.getAttribute("accessible-name");
+		const buttonAccessibleName = await buttonAccName.getProperty("accessibleName");
 		const buttonAccessibleNameRef = await buttonAccName.getAttribute("accessible-name-ref");
 
 		assert.strictEqual(buttonAccessibleName, "Add", "Button accessible name is correct");

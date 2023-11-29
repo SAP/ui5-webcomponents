@@ -127,7 +127,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	@property({
 		validator: Integer,
 		multiple: true,
-		compareValues: true,
 	})
 	selectedDates!: Array<number>;
 

@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -53,12 +52,12 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
 class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.16.0
 	*/
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component value is shown.
@@ -66,7 +65,7 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideValue!: boolean;
+	hideValue = false;
 
 	/**
 	 * Specifies the numerical value in percent for the length of the component.
@@ -76,8 +75,8 @@ class ProgressIndicator extends UI5Element {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value = 0;
 
 	/**
 	 * Specifies the text value to be displayed in the bar.
@@ -86,19 +85,19 @@ class ProgressIndicator extends UI5Element {
 	 *
 	 * - If there is no value provided or the value is empty, the default percentage value is shown.
 	 * - If `hideValue` property is `true` both the `displayValue` and `value` property values are not shown.
-	 * @default null
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: null })
-	displayValue?: string | null;
+	@property()
+	displayValue?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	static i18nBundle: I18nBundle;
 	_previousValue: number;

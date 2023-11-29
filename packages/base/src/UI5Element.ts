@@ -67,6 +67,31 @@ type ChildChangeListener = (param: InvalidationInfo) => void;
 
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
 
+const defaultConverter = {
+	fromAttribute(value: string | null, type: unknown) {
+		if (type === Boolean) {
+			return value !== null;
+		}
+		if (type === Number) {
+			return value === null ? undefined : parseFloat(value);
+		}
+		return value;
+	},
+	toAttribute(value: unknown, type: unknown) {
+		if (type === Boolean) {
+			return value as boolean ? "" : null;
+		}
+
+		// don't set attributes for arrays and objects
+		if (type === Object || type === Array) {
+			return null;
+		}
+
+		// object, array, other
+		return String(value);
+	},
+};
+
 /**
  * Triggers re-rendering of a UI5Element instance due to state change.
  * @param {ChangeInfo} changeInfo An object with information about the change that caused invalidation.
@@ -114,6 +139,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 abstract class UI5Element extends HTMLElement {
 	__id?: string;
 	_suppressInvalidation: boolean;
+	_rendering = false;
 	_changedState: Array<ChangeInfo>;
 	_invalidationEventProvider: EventProvider<InvalidationInfo, void>;
 	_componentStateFinalizedEventProvider: EventProvider<void, void>;
@@ -130,6 +156,7 @@ abstract class UI5Element extends HTMLElement {
 	static _metadata: UI5ElementMetadata;
 
 	static renderer: Renderer;
+	initializedProperties: Map<string, unknown>;
 
 	constructor() {
 		super();
@@ -151,6 +178,16 @@ abstract class UI5Element extends HTMLElement {
 		this._doNotSyncAttributes = new Set(); // attributes that are excluded from attributeChangedCallback synchronization
 
 		this._state = { ...ctor.getMetadata().getInitialState() };
+
+		// save properties set before element is upgraded, as they will be overriden by the field initializers in the constructor
+		this.initializedProperties = new Map();
+		const allProps = (this.constructor as typeof UI5Element).getMetadata().getPropertiesList();
+		allProps.forEach(propertyName => {
+			if (this.hasOwnProperty(propertyName)) { // eslint-disable-line
+				const value = (this as Record<string, unknown>)[propertyName];
+				this.initializedProperties.set(propertyName, value);
+			}
+		});
 
 		this._upgradeAllProperties();
 
@@ -504,6 +541,16 @@ abstract class UI5Element extends HTMLElement {
 		const nameInCamelCase = kebabToCamelCase(realName);
 		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
 			const propData = properties[nameInCamelCase];
+
+			// new decorator
+			if (propData.hasInitializer) {
+				const converter = propData.converter ?? defaultConverter;
+				newPropertyValue = converter.fromAttribute(newValue, propData.type);
+
+				(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
+
+				return;
+			}
 			const propertyType = propData.type;
 			let propertyValidator = propData.validator as typeof DataType;
 
@@ -534,6 +581,12 @@ abstract class UI5Element extends HTMLElement {
 		}
 		const properties = ctor.getMetadata().getProperties();
 		const propData = properties[name];
+
+		if (propData.hasInitializer) {
+			this._updateAttributeV2(name, newValue);
+			return;
+		}
+
 		const propertyType = propData.type;
 		let propertyValidator = propData.validator as typeof DataType;
 		const attrName = camelToKebabCase(name);
@@ -563,6 +616,30 @@ abstract class UI5Element extends HTMLElement {
 				this.setAttribute(attrName, newValue as string);
 			}
 		} // else { return; } // old object handling
+	}
+
+	/**
+	 * TODO(v2) rename to _updateAttribute
+	 * @private
+	 */
+	_updateAttributeV2(name: string, newValue: PropertyValue) {
+		const ctor = this.constructor as typeof UI5Element;
+
+		if (!ctor.getMetadata().hasAttribute(name)) {
+			return;
+		}
+		const properties = ctor.getMetadata().getProperties();
+		const propData = properties[name];
+		const attrName = camelToKebabCase(name);
+		// const attrValue = this.getAttribute(attrName);
+		const converter = propData.converter || defaultConverter;
+
+		const newAttrValue = converter.toAttribute(newValue, propData.type);
+		if (newAttrValue === null) {
+			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
+		} else {
+			this.setAttribute(attrName, newAttrValue);
+		}
 	}
 
 	/**
@@ -670,6 +747,22 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	onInvalidation(changeInfo: ChangeInfo): void {} // eslint-disable-line
 
+	updateAttributes() {
+		const ctor = this.constructor as typeof UI5Element;
+		const props = ctor.getMetadata().getProperties();
+		for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
+			if (!propData.hasInitializer) {
+				// old style property without initializer - don't update it here, it will be updated
+				// in the property setter for compatibility
+				continue; // eslint-disable-line no-continue
+			}
+			if (this._state[prop] !== undefined) {
+				// if there is an initializer or state has been set, update the attribute
+				this._updateAttribute(prop, this._state[prop]);
+			}
+		}
+	}
+
 	/**
 	 * Do not call this method directly, only intended to be called by js
 	 * @protected
@@ -678,16 +771,25 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
 
+		if (this.initializedProperties.size > 0) {
+			Array.from(this.initializedProperties.entries()).forEach(([prop, value]) => {
+				(this as Record<string, unknown>)[prop] = value;
+			});
+			this.initializedProperties.clear();
+		}
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
+		// this._rendering = true;
 
 		this.onBeforeRendering();
+		this.updateAttributes();
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
 		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
 
 		// resume normal invalidation handling
 		this._suppressInvalidation = false;
+		this._rendering = false;
 
 		// Update the shadow root with the render result
 		/*
@@ -948,7 +1050,7 @@ abstract class UI5Element extends HTMLElement {
 				throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
 			}
 
-			if (propData.type === Array) {
+			if (propData.type === Array && !propData.hasInitializer) {
 				throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
 			}
 
@@ -1002,20 +1104,28 @@ abstract class UI5Element extends HTMLElement {
 					const ctor = this.constructor as typeof UI5Element;
 					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
 
-					value = metadataCtor.validatePropertyValue(value, propData);
-					const propertyType = propData.type;
-					let propertyValidator = propData.validator as typeof DataType;
 					const oldState = origGet ? origGet.call(this) : this._state[prop];
 
-					if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-						propertyValidator = propertyType as typeof DataType;
-					}
+					if (!propData.hasInitializer) {
+						value = metadataCtor.validatePropertyValue(value, propData);
+						const propertyType = propData.type;
+						let propertyValidator = propData.validator as typeof DataType;
 
-					if (propertyValidator) {
-						isDifferent = !propertyValidator.valuesAreEqual(oldState, value);
-					} else if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
-						isDifferent = !arraysAreEqual(oldState, value);
+						if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+							propertyValidator = propertyType as typeof DataType;
+						}
+
+						if (propertyValidator) {
+							isDifferent = !propertyValidator.valuesAreEqual(oldState, value);
+						} else if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
+							isDifferent = !arraysAreEqual(oldState, value);
+						} else {
+							isDifferent = oldState !== value;
+						}
 					} else {
+						// if both values are NaN, this check will say they are different, ensure one of them is not NaN
+						// console.log({oldState, value})
+						// isDifferent = oldState !== value && !(Number.isNaN(oldState) && Number.isNaN(value));
 						isDifferent = oldState !== value;
 					}
 
@@ -1032,7 +1142,12 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
-						this._updateAttribute(prop, value);
+						// TODO
+						if (!propData.hasInitializer || this._rendering) {
+							// old style properties with default value, update the attribute here
+							// new style properties while rendering - safe to update here, it's not the constructor
+							this._updateAttribute(prop, value);
+						}
 					}
 				},
 			});

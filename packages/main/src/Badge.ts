@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -84,8 +84,8 @@ class Badge extends UI5Element {
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ defaultValue: BadgeDesign.Neutral })
-	design!: `${BadgeDesign}`;
+	@property()
+	design: `${BadgeDesign}` = "Neutral"
 
 	/**
 	 * Defines the color scheme of the component.
@@ -96,8 +96,8 @@ class Badge extends UI5Element {
 	 * @default "1"
 	 * @public
 	 */
-	@property({ defaultValue: "1" })
-	colorScheme!: string;
+	@property()
+	colorScheme = "1";
 
 	/**
 	 * Defines if the default state icon is shown.
@@ -106,7 +106,7 @@ class Badge extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
-	hideStateIcon!: boolean;
+	hideStateIcon = false;
 
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
@@ -118,7 +118,7 @@ class Badge extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -129,8 +129,8 @@ class Badge extends UI5Element {
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Defines predefined size of the component.
@@ -138,29 +138,29 @@ class Badge extends UI5Element {
 	 * @public
 	 * @since 2.0
 	 */
-	@property({ type: BadgeSize, defaultValue: BadgeSize.S })
-	size!: `${BadgeSize}`;
+	@property()
+	size: `${BadgeSize}` = "S";
 
 	/**
 	 * Defines if the badge has an icon.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hasIcon!: boolean;
+	_hasIcon = false;
 
 	/**
 	 * Defines if the badge has only an icon (and no text).
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_iconOnly!: boolean;
+	_iconOnly = false;
 
 	/**
 	 * Defines if the badge has "Tag" design type.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isTagDesign!: boolean;
+	_isTagDesign = false;
 
 	/**
 	 * Defines the text of the component.

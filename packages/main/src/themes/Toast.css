@@ -19,6 +19,10 @@
 	padding: 1rem;
 }
 
+:host([dom-rendered]) .ui5-toast-root {
+	display: block;
+}
+
 .ui5-toast-root {
 	height: 100%;
 	width: 100%;

@@ -26,6 +26,21 @@ type Property = {
 	noAttribute?: boolean,
 	multiple?: boolean,
 	compareValues?: boolean,
+	hasInitializer?: boolean,
+	converter?: {
+		fromAttribute(): string | number | boolean | null | undefined,
+		toAttribute(value: unknown, type: unknown): string | null,
+	}
+}
+
+type PropertyV2 = {
+	type?: BooleanConstructor | StringConstructor | ObjectConstructor | NumberConstructor | ArrayConstructor | DataType
+	noAttribute?: boolean,
+	hasInitializer?: boolean,
+	converter?: {
+		fromAttribute(): string | number | boolean | null | undefined,
+		toAttribute(value: unknown, type: unknown): string | null,
+	}
 }
 
 type PropertyValue = boolean | number | string | object | undefined | null | DataType;
@@ -68,6 +83,10 @@ class UI5ElementMetadata {
 		// Initialize properties
 		const props = this.getProperties();
 		for (const propName in props) { // eslint-disable-line
+			if (props[propName].hasInitializer) {
+				// eslint-disable-next-line no-continue
+				continue;
+			}
 			const propType = props[propName].type;
 			const propDefaultValue = props[propName].defaultValue;
 
@@ -388,6 +407,7 @@ const validateSingleSlot = (value: Node, slotData: Slot) => {
 export default UI5ElementMetadata;
 export type {
 	Property,
+	PropertyV2,
 	PropertyValue,
 	Slot,
 	SlotValue,

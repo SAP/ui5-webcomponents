@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -79,7 +79,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
@@ -90,7 +90,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
@@ -106,11 +106,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * **Note:** If no icon or an empty one is provided, by default the "employee" icon should be displayed.
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the name of the fallback icon, which should be displayed in the following cases:
@@ -128,67 +128,67 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * `<ui5-avatar fallback-icon="alert">`
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default "employee"
 	 * @public
 	 */
 	@property()
-	fallbackIcon!: string;
+	fallbackIcon = "employee";
 
 	/**
 	 * Defines the displayed initials.
 	 *
 	 * Up to three Latin letters can be displayed as initials.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initials!: string;
+	initials?: string;
 
 	/**
 	 * Defines the shape of the component.
 	 * @default "Circle"
 	 * @public
 	 */
-	@property({ type: AvatarShape, defaultValue: AvatarShape.Circle })
-	shape!: `${AvatarShape}`;
+	@property()
+	shape: `${AvatarShape}` = "Circle";
 
 	/**
 	 * Defines predefined size of the component.
 	 * @default "S"
 	 * @public
 	 */
-	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	size!: `${AvatarSize}`;
+	@property()
+	size: `${AvatarSize}` = "S";
 
 	/**
 	 * @private
 	 */
-	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	_size!: AvatarSize;
+	@property()
+	_size: `${AvatarSize}` = "S";
 
 	/**
 	 * Defines the background color of the desired image.
 	 * @default "Accent6"
 	 * @public
 	 */
-	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	colorScheme!: `${AvatarColorScheme}`;
+	@property()
+	colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * @private
 	 */
-	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	_colorScheme!: AvatarColorScheme;
+	@property()
+	_colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the aria-haspopup value of the component when `interactive` property is `true`.
@@ -196,13 +196,13 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @protected
 	 */
 	@property()
-	ariaHaspopup!: string;
+	ariaHaspopup?: string;
 
 	@property({ noAttribute: true })
-	forcedTabIndex!: string;
+	forcedTabIndex?: string;
 
 	@property({ type: Boolean })
-	_hasImage!: boolean;
+	_hasImage = false;
 
 	/**
 	 * Receives the desired `<img>` tag
@@ -269,14 +269,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	get _ariaHasPopup() {
 		return this._getAriaHasPopup();
-	}
-
-	get _fallbackIcon() {
-		if (this.fallbackIcon === "") {
-			this.fallbackIcon = "employee";
-		}
-
-		return this.fallbackIcon;
 	}
 
 	get _interactive() {
@@ -400,7 +392,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	_getAriaHasPopup() {
-		if (!this._interactive || this.ariaHaspopup === "") {
+		if (!this._interactive) {
 			return;
 		}
 

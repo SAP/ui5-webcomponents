@@ -6,7 +6,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
@@ -181,8 +181,8 @@ class AvatarGroup extends UI5Element {
 	 * @default "Group"
 	 * @public
 	 */
-	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
-	type!: `${AvatarGroupType}`;
+	@property()
+	type: `${AvatarGroupType}` = "Group"
 
 	/**
 	 * Defines the aria-haspopup value of the component on:
@@ -193,13 +193,13 @@ class AvatarGroup extends UI5Element {
 	 * @protected
 	 */
 	@property()
-	ariaHaspopup!: string;
+	ariaHaspopup?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_overflowButtonText!: string;
+	_overflowButtonText?: string;
 
 	/**
 	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
@@ -227,8 +227,8 @@ class AvatarGroup extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
-	_colorIndex: number;
-	_hiddenItems: number;
+	_colorIndex = 0;
+	_hiddenItems = 0;
 	_itemNavigation: ItemNavigation;
 
 	constructor() {
@@ -239,8 +239,6 @@ class AvatarGroup extends UI5Element {
 				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
 			},
 		});
-		this._colorIndex = 0;
-		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
 	}
 
@@ -296,12 +294,12 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _containerAriaHasPopup() {
-		return this._isGroup ? this._getAriaHasPopup() : undefined;
+		return this._isGroup ? this.ariaHaspopup : undefined;
 	}
 
 	get _overflowButtonAccAttributes() {
 		return {
-			hasPopup: this._isGroup ? undefined : this._getAriaHasPopup(),
+			hasPopup: this._isGroup ? undefined : this.ariaHasPopup,
 		};
 	}
 
@@ -574,14 +572,6 @@ class AvatarGroup extends UI5Element {
 		if (shouldFireEvent) {
 			this.fireEvent("overflow");
 		}
-	}
-
-	_getAriaHasPopup() {
-		if (this.ariaHaspopup === "") {
-			return;
-		}
-
-		return this.ariaHaspopup;
 	}
 }
 

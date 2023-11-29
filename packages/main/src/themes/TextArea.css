@@ -181,10 +181,16 @@
 :host([growing]):not([growing-max-rows]) .ui5-textarea-inner {
 	max-height: 100%;
 }
+/* :host([growing]):not([growing-max-lines="0"]) .ui5-textarea-inner {
+	max-height: 100%;
+} */
 
 :host([growing-max-rows]) .ui5-textarea-mirror {
 	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
+/* :host([growing-max-lines]:not([growing-max-lines="0"])) .ui5-textarea-mirror {
+	max-height: calc((var(--_textarea_growing_max_lines) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+} */
 
 :host([rows="1"]) .ui5-textarea-inner {
 	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));

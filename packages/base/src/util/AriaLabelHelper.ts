@@ -17,8 +17,8 @@ const associatedElements = new WeakMap<HTMLElement, AssociatedElement>();
 const registeredElements = new WeakMap<UI5Element, RegisteredElement>();
 
 type AccessibleElement = HTMLElement & {
-	accessibleNameRef: string;
-	accessibleName: string;
+	accessibleNameRef?: string;
+	accessibleName?: string;
 };
 
 const observerOptions = {
