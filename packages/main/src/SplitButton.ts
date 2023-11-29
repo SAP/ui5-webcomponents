@@ -141,7 +141,7 @@ class SplitButton extends UI5Element {
 	 * @name sap.ui.webc.main.SplitButton.prototype.activeArrowButton
 	 * @defaultvalue false
 	 * @public
-	 * @since 1.19.0
+	 * @since 1.20.0
 	 */
 	@property({ type: Boolean })
 	activeArrowButton!: boolean;
@@ -311,13 +311,6 @@ class SplitButton extends UI5Element {
 		}
 	}
 
-	onAfterRendering() {
-		if (this._isKeyDownOperation && !this.activeArrowButton) {
-			return;
-		}
-		this._setEffectiveActiveState();
-	}
-
 	_handleMouseClick(e: MouseEvent) {
 		const target = e.target as Button;
 
@@ -439,9 +432,10 @@ class SplitButton extends UI5Element {
 		}
 	}
 
-	_setEffectiveActiveState() {
-		this._activeArrowButton = !!this.activeArrowButton;
-		this.arrowButton!._keepActiveState = !!this.activeArrowButton;
+	_onArrowButtonActiveStateChange(e: CustomEvent) {
+		if (this.activeArrowButton) {
+			e.preventDefault();
+		}
 	}
 
 	/**
@@ -521,6 +515,10 @@ class SplitButton extends UI5Element {
 		this._shiftOrEscapePressed = true;
 		this._textButtonActive = false;
 		this._isKeyDownOperation = false;
+	}
+
+	get effectiveActiveArrowButton() {
+		return this.activeArrowButton || this._activeArrowButton;
 	}
 
 	get textButtonAccText() {

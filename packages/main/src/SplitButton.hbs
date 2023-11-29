@@ -39,13 +39,14 @@
 			icon="slim-arrow-down"
 			tabindex="-1"
 			?disabled="{{disabled}}"
-			?active="{{_activeArrowButton}}"
+			?active="{{effectiveActiveArrowButton}}"
 			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
 			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
 			@click="{{_handleArrowButtonAction}}"
 			@mousedown={{_arrowButtonPress}}
 			@mouseup={{_arrowButtonRelease}}
 			@focusin={{_setTabIndexValue}}
+			@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
 		>
 		</ui5-button>
 	</div>

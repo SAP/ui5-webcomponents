@@ -101,6 +101,11 @@ let activeButton: Button | null = null;
  * @native
  */
 @event("click")
+/**
+ * Fired whenever the active state of the component changes.
+ * @private
+ */
+@event("_active-state-change")
 class Button extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
@@ -314,13 +319,6 @@ class Button extends UI5Element implements IFormElement {
 	_isTouch!: boolean;
 
 	/**
-	 * Defines whether to keep the active state or not.
-	 * @protected
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_keepActiveState!: boolean;
-
-	/**
 	 * Defines the text of the component.
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -343,8 +341,8 @@ class Button extends UI5Element implements IFormElement {
 		super();
 
 		this._deactivate = () => {
-			if (activeButton && !this._keepActiveState) {
-				activeButton.active = false;
+			if (activeButton) {
+				activeButton._setActiveState(false);
 			}
 		};
 
@@ -361,7 +359,7 @@ class Button extends UI5Element implements IFormElement {
 				return;
 			}
 
-			this.active = true;
+			this._setActiveState(true);
 		};
 
 		this._ontouchstart = {
@@ -389,12 +387,6 @@ class Button extends UI5Element implements IFormElement {
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
 
-	onAfterRendering() {
-		if (this._keepActiveState) {
-			this.active = true;
-		}
-	}
-
 	_onclick(e: MouseEvent) {
 		if (this.nonInteractive) {
 			return;
@@ -420,7 +412,7 @@ class Button extends UI5Element implements IFormElement {
 		}
 
 		markEvent(e, "button");
-		this.active = true;
+		this._setActiveState(true);
 		activeButton = this; // eslint-disable-line
 	}
 
@@ -430,12 +422,12 @@ class Button extends UI5Element implements IFormElement {
 			e.stopPropagation();
 		}
 
-		if (this.active && !this._keepActiveState) {
-			this.active = false;
+		if (this.active) {
+			this._setActiveState(false);
 		}
 
 		if (activeButton) {
-			activeButton.active = false;
+			activeButton._setActiveState(false);
 		}
 	}
 
@@ -447,14 +439,14 @@ class Button extends UI5Element implements IFormElement {
 		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
-			this.active = true;
+			this._setActiveState(true);
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
-			if (this.active && !this._keepActiveState) {
-				this.active = false;
+			if (this.active) {
+				this._setActiveState(false);
 			}
 		}
 	}
@@ -464,8 +456,8 @@ class Button extends UI5Element implements IFormElement {
 			return;
 		}
 
-		if (this.active && !this._keepActiveState) {
-			this.active = false;
+		if (this.active) {
+			this._setActiveState(false);
 		}
 
 		if (isDesktop()) {
@@ -482,6 +474,16 @@ class Button extends UI5Element implements IFormElement {
 		if (isDesktop()) {
 			this.focused = true;
 		}
+	}
+
+	_setActiveState(active: boolean) {
+		const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+
+		if (eventPrevented) {
+			return;
+		}
+
+		this.active = active;
 	}
 
 	get hasButtonType() {

@@ -37,6 +37,7 @@
 }
 
 :host([active-arrow-button][design="Transparent"]) .ui5-split-arrow-button,
+:host([active-arrow-button]) .ui5-split-arrow-button,
 :host([design="Transparent"]) .ui5-split-arrow-button[active],
 :host([design="Default"]) .ui5-split-arrow-button[active],
 .ui5-split-arrow-button[active], .ui5-split-arrow-button[active]:hover {
