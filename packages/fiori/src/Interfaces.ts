@@ -106,15 +106,6 @@ const ITimelineItem = "sap.ui.webc.fiori.ITimelineItem";
  */
 const IUploadCollectionItem = "sap.ui.webc.fiori.IUploadCollectionItem";
 
-/**
- * Interface for components that may be slotted inside <code>ui5-wizard</code> as wizard steps
- *
- * @name sap.ui.webc.fiori.IWizardStep
- * @interface
- * @public
- */
-const IWizardStep = "sap.ui.webc.fiori.IWizardStep";
-
 export {
 	IBar,
 	IFilterItem,

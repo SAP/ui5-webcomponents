@@ -121,16 +121,6 @@ type StepInfo = {
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-wizard</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
- * <li>step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  * The user can navigate using the following keyboard shortcuts:
  * <br>
@@ -192,13 +182,11 @@ type StepInfo = {
  * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes &lt;ui5-wizard-step/&gt;)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Wizard
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-wizard
+ * @extends UI5Element
  * @since 1.0.0-rc.10
- * @appenddocs sap.ui.webc.fiori.WizardStep
  * @public
+ * @csspart navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
+ * @csspart step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
  */
 @customElement({
 	tag: "ui5-wizard",
@@ -224,16 +212,24 @@ type StepInfo = {
  * Fired when the step is changed by user interaction - either with scrolling,
  * or by clicking on the steps within the component header.
  *
- * @event sap.ui.webc.fiori.Wizard#step-change
- * @param {sap.ui.webc.fiori.IWizardStep} step The new step.
- * @param {sap.ui.webc.fiori.IWizardStep} previousStep The previous step.
+ * @param {IWizardStep} step The new step.
+ * @param {IWizardStep} previousStep The previous step.
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
  * @public
  */
 @event("step-change", {
 	detail: {
+		/**
+		* @public
+		*/
 		step: { type: HTMLElement },
+		/**
+		* @public
+		*/
 		previousStep: { type: HTMLElement },
+		/**
+		* @public
+		*/
 		changeWithClick: { Boolean },
 	},
 })
@@ -242,13 +238,11 @@ class Wizard extends UI5Element {
 	/**
 	 * Defines how the content of the <code>ui5-wizard</code> would be visualized.
 	 * @public
-	 * @type {sap.ui.webc.fiori.types.WizardContentLayout}
 	 * @since 1.14.0
-	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
-	 * @defaultvalue "MultipleSteps"
+	 * @default "MultipleSteps"
 	 */
 	@property({ type: WizardContentLayout, defaultValue: WizardContentLayout.MultipleSteps })
-	contentLayout?: WizardContentLayout
+	contentLayout!: WizardContentLayout
 
 	/**
 	 * Defines the width of the <code>ui5-wizard</code>.
@@ -270,8 +264,7 @@ class Wizard extends UI5Element {
 	 * <b>Note:</b> Supported values are between 0.5 and 1
 	 * and values out of the range will be normalized to 0.5 and 1 respectively.
 	 * @private
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @defaultvalue 0.7
+	 * @default 0.7
 	 * @since 1.0.0-rc.13
 	 */
 	@property({ validator: Float, defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT })
@@ -295,10 +288,7 @@ class Wizard extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 	 *
-	 * @type {sap.ui.webc.fiori.IWizardStep[]}
-	 * @name sap.ui.webc.fiori.Wizard.prototype.default
 	 * @public
-	 * @slot steps
 	 */
 	@slot({
 		"default": true,
@@ -484,7 +474,6 @@ class Wizard extends UI5Element {
 	/**
 	 * Handles user click on steps' tabs within the header.
 	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {MouseEvent} e
 	 * @private
 	 */
 	onSelectionChangeRequested(e: MouseEvent) {
@@ -495,7 +484,6 @@ class Wizard extends UI5Element {
 	/**
 	 * Handles user scrolling with debouncing.
 	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {MouseEvent} e
 	 * @private
 	 */
 	onScroll(e: MouseEvent) {
@@ -510,7 +498,6 @@ class Wizard extends UI5Element {
 	/**
 	 * Handles when a step in the header is focused in order to update the <code>ItemNavigation</code>.
 	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {FocusEvent} e
 	 * @private
 	 */
 	onStepInHeaderFocused(e: FocusEvent) {
@@ -696,7 +683,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Called upon <code>onScroll</code>.
 	 * Selects the closest step, based on the user scroll position.
-	 * @param {Integer} scrollPos the current scroll position
+	 * @param scrollPos the current scroll position
 	 * @private
 	 */
 	changeSelectionByScroll(scrollPos: number) {
@@ -720,7 +707,7 @@ class Wizard extends UI5Element {
 	 * Called upon <code>onSelectionChangeRequested</code>.
 	 * Selects the external step (ui5-wizard-step),
 	 * based on the clicked or activated via keyboard step in the header (ui5-wizard-tab).
-	 * @param {WizardTab} stepInHeader the step equivalent in the header
+	 * @param stepInHeader the step equivalent in the header
 	 * @private
 	 */
 	async changeSelectionByStepAction(stepInHeader: WizardTab) {
@@ -882,7 +869,6 @@ class Wizard extends UI5Element {
 	/**
 	 * Returns an array of data objects, based on the user defined steps
 	 * to later build the steps (tabs) within the header.
-	 * @returns {Array<StepInfo>}
 	 * @private
 	 */
 	getStepsInfo() {
@@ -936,7 +922,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the index of the selected step.
-	 * @returns {Integer}
 	 * @private
 	 */
 	getSelectedStepIndex() {
@@ -948,7 +933,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns the index of the last enabled step.
-	 * @returns {Integer}
 	 * @private
 	 */
 	getLastEnabledStepIndex() {
@@ -991,7 +975,7 @@ class Wizard extends UI5Element {
 	 * by given step index.
 	 *
 	 * @private
-	 * @param {Integer} stepIndex the index of a step
+	 * @param stepIndex the index of a step
 	 */
 	scrollToContentItem(stepIndex: number) {
 		this.contentDOM.scrollTop = this.getClosestScrollPosByStepIndex(stepIndex);
@@ -1001,7 +985,7 @@ class Wizard extends UI5Element {
 	 * Returns to closest scroll position for the given step index.
 	 *
 	 * @private
-	 * @param {Integer} stepIndex the index of a step
+	 * @param stepIndex the index of a step
 	 */
 	getClosestScrollPosByStepIndex(stepIndex: number) {
 		if (stepIndex === 0) {
@@ -1023,7 +1007,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Returns the closest step index by given scroll position.
 	 * @private
-	 * @param {Integer} scrollPos the scroll position
+	 * @param scrollPos the scroll position
 	 */
 	getClosestStepIndexByScrollPos(scrollPos: number) {
 		for (let closestStepIndex = 0; closestStepIndex <= this.stepScrollOffsets.length - 1; closestStepIndex++) {
@@ -1046,10 +1030,10 @@ class Wizard extends UI5Element {
 	/**
 	 * Switches the selection from the old step to the newly selected step.
 	 *
-	 * @param {WizardStep} selectedStep the old step
-	 * @param {WizardStep} stepToSelect the step to be selected
-	 * @param {Integer} stepToSelectIndex the index of the newly selected step
-	 * @param {boolean} changeWithClick the selection changed due to user click in the step navigation
+	 * @param selectedStep the old step
+	 * @param stepToSelect the step to be selected
+	 * @param stepToSelectIndex the index of the newly selected step
+	 * @param changeWithClick the selection changed due to user click in the step navigation
 	 * @private
 	 */
 	switchSelectionFromOldToNewStep(selectedStep: WizardStep | null, stepToSelect: WizardStep, stepToSelectIndex: number, changeWithClick: boolean) {

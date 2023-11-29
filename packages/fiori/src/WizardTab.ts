@@ -27,10 +27,7 @@ type WizardTabInfo = {
  * <code>import "@ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.WizardTab
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-wizard-tab
+ * @extends UI5Element
  * @private
  */
 
@@ -45,7 +42,6 @@ type WizardTabInfo = {
 /**
  * Fired when clicking on none disabled step.
  *
- * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
  * @private
  */
 @event("selection-change-requested")
@@ -53,8 +49,8 @@ type WizardTabInfo = {
 class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the <code>icon</code> of the step.
-	 * @type {string}
-	 * @defaultvalue ""
+	 *
+	 * @default ""
 	 * @private
 	 */
 	@property()
@@ -62,8 +58,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the <code>titleText</code> of the step.
-	 * @type {string}
-	 * @defaultvalue ""
+	 *
+	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -72,8 +68,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the <code>subtitleText</code> of the step.
-	 * @type {string}
-	 * @defaultvalue ""
+	 *
+	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -82,8 +78,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the number that will be displayed in place of the <code>icon</code>, when it's missing.
-	 * @type {string}
-	 * @defaultvalue ""
+	 *
+	 * @default ""
 	 * @private
 	 */
 	@property()
@@ -91,8 +87,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step is <code>disabled</code> - the step is not responding to user interaction.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	 @property({ type: Boolean })
@@ -102,8 +98,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * Defines if the step is <selected>selected</code>.
 	 * <br><br>
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -111,8 +106,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step's separator is hidden or not.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -120,8 +115,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step's separator is active or not.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -129,8 +124,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step's separator is dashed or not.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -138,8 +133,8 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tabindex of the step.
-	 * @type {string}
-	 * @defaultvalue "-1"
+	 *
+	 * @default "-1"
 	 * @private
 	 */
 	@property({ defaultValue: "-1" })
