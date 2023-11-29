@@ -126,5 +126,4 @@ export {
 	ISortItem,
 	ITimelineItem,
 	IUploadCollectionItem,
-	IWizardStep,
 };

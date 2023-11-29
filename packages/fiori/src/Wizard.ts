@@ -212,8 +212,8 @@ type StepInfo = {
  * Fired when the step is changed by user interaction - either with scrolling,
  * or by clicking on the steps within the component header.
  *
- * @param {IWizardStep} step The new step.
- * @param {IWizardStep} previousStep The previous step.
+ * @param {WizardStep} step The new step.
+ * @param {WizardStep} previousStep The previous step.
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
  * @public
  */
