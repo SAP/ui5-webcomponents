@@ -14,6 +14,7 @@ type Slot = {
 	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
+	cloned?: boolean,
 };
 
 type SlotValue = Node;
@@ -179,9 +180,8 @@ class UI5ElementMetadata {
 	/**
 	 * Determines whether this UI5 Element has a default slot of type Node, therefore can slot text
 	 */
-	canSlotText(): boolean {
-		const defaultSlot = this.getSlots().default;
-		return defaultSlot && defaultSlot.type === Node;
+	canSlotText() {
+		return (this.getSlots().default)?.type === Node;
 	}
 
 	/**

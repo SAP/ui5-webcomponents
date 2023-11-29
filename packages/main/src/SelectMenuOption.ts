@@ -26,7 +26,7 @@ import { IOption } from "./Interfaces.js";
  * <code>import @ui5/webcomponents/dist/SelectMenuOption.js";</code>
  *
  * @constructor
- * @extends UI5Element
+ * @extends CustomListItem
  * @implements {IOption}
  * @public
  * @since 1.17.0
@@ -54,9 +54,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * Defines whether the component is in disabled state.
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is hidden.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.disabled
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
