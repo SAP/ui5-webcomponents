@@ -10,6 +10,7 @@ import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTe
 
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
+import type { IProductSwitchItem } from "./Interfaces.js";
 
 /**
  * @class
@@ -33,12 +34,9 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.ProductSwitchItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-product-switch-item
+ * @extends UI5Element
  * @public
- * @implements sap.ui.webc.fiori.IProductSwitchItem
+ * @implements {IProductSwitchItem}
  * @since 1.0.0-rc.5
  */
 @customElement({
@@ -52,12 +50,11 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * Fired when the <code>ui5-product-switch-item</code> is activated either with a
  * click/tap or by using the Enter or Space key.
  *
- * @event sap.ui.webc.fiori.ProductSwitchItem#click
  * @public
  */
 @event("click")
 @event("_focused")
-class ProductSwitchItem extends UI5Element implements ITabbable {
+class ProductSwitchItem extends UI5Element implements ITabbable, IProductSwitchItem {
 	constructor() {
 		super();
 
@@ -70,9 +67,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the title of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.titleText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -81,9 +76,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the subtitle of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.subtitleText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -99,9 +92,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.icon
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -118,9 +109,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * <li><code>_parent</code></li>
 	 * <li><code>_search</code></li>
 	 * </ul>
-	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.target
+	 * @default "_self"
 	 * @public
 	 */
 	@property({ defaultValue: "_self" })
@@ -128,9 +117,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the component target URI. Supports standard hyperlink behavior.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.targetSrc
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()

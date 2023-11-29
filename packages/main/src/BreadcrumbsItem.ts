@@ -11,25 +11,19 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcrumbs</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.BreadcrumbsItem
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-breadcrumbs-item
- * @implements sap.ui.webc.main.IBreadcrumbsItem
+ * @extends UI5Element
+ * @implements {BreadcrumbsItem}
  * @public
  * @since 1.0.0-rc.15
  */
 @customElement("ui5-breadcrumbs-item")
-class BreadcrumbsItem extends UI5Element {
+class BreadcrumbsItem extends UI5Element implements BreadcrumbsItem {
 	/**
 	 * Defines the link href.
 	 * <br><br>
 	 * <b>Note:</b> Standard hyperlink behavior is supported.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.href
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -49,9 +43,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * <br><br>
 	 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.target
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -60,9 +52,7 @@ class BreadcrumbsItem extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the item.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.accessibleName
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -73,9 +63,6 @@ class BreadcrumbsItem extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.BreadcrumbsItem.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
