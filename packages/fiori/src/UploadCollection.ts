@@ -96,6 +96,9 @@ type UploadCollectionItemDeleteEventDetail = {
  */
 @event("item-delete", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -109,6 +112,9 @@ type UploadCollectionItemDeleteEventDetail = {
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedItems: { type: Array },
 	},
 })

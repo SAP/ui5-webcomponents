@@ -62,6 +62,9 @@ type NotificationListItemBaseCloseEventDetail = {
  */
 @event("close", {
 	 detail: {
+		/**
+		 * @public
+		 */
 		item: HTMLElement,
 	},
 })

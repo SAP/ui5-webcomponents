@@ -106,6 +106,9 @@ type PopupBeforeCloseEventDetail = {
  * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
  */
 @event("before-close", {
+	/**
+	 * @public
+	 */
 	escPressed: { type: Boolean },
 })
 
@@ -391,7 +394,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @returns Promise that resolves when the focus is applied
 	 */
-	async applyFocus() {
+	async applyFocus(): Promise<void> {
 		await this._waitForDomRef();
 
 		if (this.getRootNode() === this) {
@@ -485,7 +488,7 @@ abstract class Popup extends UI5Element {
 	 * Closes the popup.
 	 * @public
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
 		if (!this.opened) {
 			return;
 		}

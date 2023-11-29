@@ -69,7 +69,7 @@ type CalculatedPlacement = {
  * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
  *
  * @constructor
- * @extends sap.ui.webc.main.Popup
+ * @extends Popup
  * @since 1.0.0-rc.6
  * @public
  * @csspart header - Used to style the header of the component
@@ -289,7 +289,7 @@ class Popover extends Popup {
 	 * @public
 	 * @returns Resolved when the popover is open
 	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false) {
+	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
 		if (!opener || this.opened) {
 			return;
 		}

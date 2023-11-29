@@ -126,7 +126,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * @public
 	 */
 	@property({ type: Object, noAttribute: true, defaultValue: null })
-	file?: object;
+	file?: File | null;
 
 	/**
 	 * The name of the file.
@@ -223,12 +223,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 */
 	@slot({ type: HTMLElement })
 	thumbnail!: Array<HTMLElement>;
-
-	/**
-	 * Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
-	 *
-	 * @public
-	 */
 
 	static i18nFioriBundle: I18nBundle;
 

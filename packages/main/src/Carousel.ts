@@ -130,6 +130,9 @@ type CarouselNavigateEventDetail = {
  */
 @event("navigate", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedIndex: { type: Integer },
 	},
 })
