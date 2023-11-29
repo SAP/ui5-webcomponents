@@ -72,26 +72,13 @@ import type { IFormElement, NativeFormElement } from "./features/InputElementsFo
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
+import { IOption } from "./Interfaces.js";
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
 }
 type SelectLiveChangeEventDetail = {
 	selectedOption: IOption,
-}
-
-interface IOption extends UI5Element {
-	id: string,
-	selected: boolean,
-	_focused?: boolean,
-	focused?: boolean,
-	icon?: string | undefined,
-	value: string,
-	textContent: string | null,
-	title: string,
-	additionalText?: string,
-	stableDomRef?: string,
-	displayText?: string,
 }
 
 /**
@@ -139,11 +126,7 @@ interface IOption extends UI5Element {
  * <br>
  * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Select
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-select
- * @appenddocs sap.ui.webc.main.Option sap.ui.webc.main.SelectMenu sap.ui.webc.main.SelectMenuOption
+ * @extends UI5Element
  * @public
  * @since 0.8.0
  */
@@ -173,7 +156,6 @@ interface IOption extends UI5Element {
 /**
  * Fired when the selected option changes.
  *
- * @event sap.ui.webc.main.Select#change
  * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
@@ -187,7 +169,6 @@ interface IOption extends UI5Element {
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
  *
- * @event sap.ui.webc.main.Select#live-change
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  * @since 1.17.0
@@ -200,14 +181,12 @@ interface IOption extends UI5Element {
 /**
  * Fired after the component's dropdown menu opens.
  *
- * @event sap.ui.webc.main.Select#open
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
  *
- * @event sap.ui.webc.main.Select#close
  * @public
  */
 @event("close")
@@ -220,9 +199,7 @@ class Select extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
 	 *
-	 * @type {sap.ui.webc.base.types.DOMReference}
-	 * @defaultvalue undefined
-	 * @name sap.ui.webc.main.Select.prototype.menu
+	 * @default undefined
 	 * @public
 	 * @since 1.17.0
 	 */
@@ -234,9 +211,7 @@ class Select extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Select.prototype.disabled
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -255,9 +230,7 @@ class Select extends UI5Element implements IFormElement {
 	 * will be created inside the <code>ui5-select</code> so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.prototype.name
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -266,9 +239,7 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.Select.prototype.valueState
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -278,9 +249,7 @@ class Select extends UI5Element implements IFormElement {
 	 * Defines whether the component is required.
 	 *
 	 * @since 1.0.0-rc.9
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Select.prototype.required
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -289,12 +258,9 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @since 1.0.0-rc.9
 	 * @public
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.prototype.accessibleName
-	 * @since 1.0.0-rc.15
+	 * @default ""
 	 */
 	@property()
 	accessibleName!: string;
@@ -302,9 +268,7 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.prototype.accessibleNameRef
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -330,7 +294,6 @@ class Select extends UI5Element implements IFormElement {
 	opened!: boolean;
 
 	/**
-	 * @type {sap.ui.webc.base.types.Integer}
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
@@ -343,7 +306,6 @@ class Select extends UI5Element implements IFormElement {
 	focused!: boolean;
 
 	/**
-	 * @type {sap.ui.webc.base.types.Integer}
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
@@ -371,19 +333,14 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-	 * @type {sap.ui.webc.main.ISelectOption[]}
-	 * @slot options
-	 * @name sap.ui.webc.main.Select.prototype.default
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<Option>;
+	options!: Array<IOption>;
 
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
-	 * @slot
 	 * @private
 	 */
 	@slot()
@@ -400,9 +357,6 @@ class Select extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> If the component has <code>suggestionItems</code>,
 	 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Select.prototype.valueStateMessage
-	 * @slot
 	 * @public
 	*/
 	@slot()
@@ -420,9 +374,6 @@ class Select extends UI5Element implements IFormElement {
 	 * <b>Note:</b> If not specified and <code>ui5-option</code> is used,
 	 * the option's textContent will be displayed.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Select.prototype.label
-	 * @slot label
 	 * @public
 	 * @since 1.17.0
 	*/
@@ -506,12 +457,9 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Currently selected <code>ui5-option</code> element.
-	 * @readonly
-	 * @type {sap.ui.webc.main.ISelectOption}
-	 * @name sap.ui.webc.main.Select.prototype.selectedOption
 	 * @public
 	 */
-	get selectedOption() {
+	get selectedOption(): IOption | undefined {
 		return this.selectOptions.find(option => option.selected);
 	}
 

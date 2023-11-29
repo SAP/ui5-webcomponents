@@ -37,10 +37,7 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  * <code>import "@ui5/webcomponents/dist/ProgressIndicator.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ProgressIndicator
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-progress-indicator
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.8
  */
@@ -56,9 +53,7 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ProgressIndicator.prototype.accessibleName
+	 * @default ""
 	 * @public
 	 * @since 1.16.0
 	*/
@@ -68,9 +63,7 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines whether component is in disabled state.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ProgressIndicator.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -79,9 +72,7 @@ class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines whether the component value is shown.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ProgressIndicator.prototype.hideValue
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -92,9 +83,7 @@ class ProgressIndicator extends UI5Element {
 	 *
 	 * <b>Note:</b>
 	 * If a value greater than 100 is provided, the percentValue is set to 100. In other cases of invalid value, percentValue is set to its default of 0.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.ProgressIndicator.prototype.value
-	 * @defaultvalue 0
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -109,19 +98,16 @@ class ProgressIndicator extends UI5Element {
 	 * <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li>
 	 * </ul>
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ProgressIndicator.prototype.displayValue
+	 * @default null
 	 * @public
 	 */
-	@property()
+	@property({ defaultValue: null })
 	displayValue!: string;
 
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.ProgressIndicator.prototype.valueState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
