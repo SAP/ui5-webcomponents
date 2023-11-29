@@ -51,6 +51,18 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	displayText!: string;
 
 	/**
+	 * Defines whether the component is in disabled state.
+	 * <br><br>
+	 * <b>Note:</b> A disabled component is hidden.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.disabled
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
