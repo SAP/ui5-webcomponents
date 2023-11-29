@@ -288,7 +288,7 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Used to duck-type TreeItem elements without using instanceof
-	 * @returns if it's tree item
+	 * @default true
 	 * @protected
 	 */
 	get isTreeItem(): boolean {

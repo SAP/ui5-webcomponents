@@ -14,7 +14,6 @@ interface IAvatar {
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IButton extends HTMLElement { }
 
 /**
@@ -58,7 +57,6 @@ const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IIcon extends HTMLElement { }
 
 /**
@@ -175,8 +173,11 @@ const IToken = "sap.ui.webc.main.IToken";
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface ITreeItem extends HTMLElement { }
+interface ITreeItem extends HTMLElement {
+	items: Array<ITreeItem>;
+	_setsize: number;
+	_posinset: number;
+}
 
 export {
 	IAvatar,

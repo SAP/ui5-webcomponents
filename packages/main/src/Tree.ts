@@ -20,6 +20,7 @@ import type {
 	ListItemDeleteEventDetail,
 	ListSelectionChangeEventDetail,
 } from "./List.js";
+import type { ITreeItem } from "./Interfaces.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -40,7 +41,7 @@ type TreeSelectionChangeEventDetail = {
 	previouslySelectedItems: Array<TreeItemBase>;
 	targetItem: TreeItemBase;
 }
-type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
+type WalkCallback = (item: ITreeItem, level: number, index: number) => void;
 
 /**
  * @class
@@ -114,6 +115,9 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @event("item-toggle", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -125,6 +129,9 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @event("item-mouseover", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -136,6 +143,9 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @event("item-mouseout", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -148,6 +158,9 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -163,6 +176,9 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @event("item-delete", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -178,8 +194,17 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedItems: { type: Array },
+		/**
+		 * @public
+		 */
 		previouslySelectedItems: { type: Array },
+		/**
+		 * @public
+		 */
 		targetItem: { type: HTMLElement },
 	},
 })
@@ -260,7 +285,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<TreeItemBase>;
+	items!: Array<ITreeItem>;
 
 	/**
 	 * Defines the component header.
@@ -430,7 +455,7 @@ class Tree extends UI5Element {
 	}
 }
 
-const walkTree = (el: Tree | TreeItemBase, level: number, callback: WalkCallback) => {
+const walkTree = (el: Tree | ITreeItem, level: number, callback: WalkCallback) => {
 	(el.items).forEach((item, index) => {
 		callback(item, level, index);
 		if (item.items.length > 0) {
