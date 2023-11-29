@@ -1,20 +1,13 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
- * @name sap.ui.webc.main.IAvatar
- * @interface
  * @public
  */
-const IAvatar = "sap.ui.webc.main.IAvatar";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
- *
- * @name sap.ui.webc.main.IBreadcrumbsItem
- * @interface
- * @public
- */
-const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
+interface IAvatar {
+	isUI5Element: boolean,
+}
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -116,20 +109,21 @@ const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
- * @name sap.ui.webc.main.ISelectOption
- * @interface
  * @public
  */
-const ISelectOption = "sap.ui.webc.main.ISelectOption";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
- *
- * @name sap.ui.webc.main.ISelectMenuOption
- * @interface
- * @public
- */
-const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
+interface IOption extends UI5Element {
+	selected: boolean,
+	disabled: boolean,
+	title: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	_focused?: boolean,
+	focused?: boolean,
+	text?: Array<Node>,
+	stableDomRef: string,
+	displayText?: string,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
@@ -186,7 +180,6 @@ interface ITreeItem extends HTMLElement { }
 
 export {
 	IAvatar,
-	IBreadcrumbsItem,
 	IButton,
 	ICardHeader,
 	ICalendarDate,
@@ -198,8 +191,7 @@ export {
 	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
-	ISelectOption,
-	ISelectMenuOption,
+	IOption,
 	ITab,
 	ITableCell,
 	ITableColumn,
