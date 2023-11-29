@@ -14,7 +14,7 @@
 </head>
 
 <body class="input1auto">
-	<!-- <h3> Input with suggestions: type 'a'</h3>
+	<h3> Input with suggestions: type 'a'</h3>
 	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
@@ -41,12 +41,12 @@
 			show-suggestions
 			placeholder="Search for a country ...">
 		</ui5-input>
-	</div> -->
+	</div>
 
 	<br/>
 	<br/>
 	<h3>Input suggestions with ui5-li</h3>
-	<ui5-input id="myInput2" show-suggestions class="input3auto" no-typeahead>
+	<ui5-input id="myInput2" show-suggestions class="input3auto">
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
@@ -54,20 +54,10 @@
 		<ui5-li type="Inactive">Inactive Condensed</ui5-li>
 	</ui5-input>
 
-	<script>
-		var input = document.querySelector("#myInput2");
-		input.addEventListener("suggestion-item-select", (e) => {
-			if(e.detail.item.text === "Cozy" || e.detail.item.textContent === "Cozy"){
-				e.preventDefault();
-				//input.value = "alabala";
-			}
-		}, true);
-		
-	</script>
 	<br/>
 	<br/>
 	<h3>Input suggestions with grouping</h3>
-	<ui5-input id="myInputGrouping" show-suggestions class="input3auto" no-typeahead>
+	<ui5-input id="myInputGrouping" show-suggestions class="input3auto">
 		<ui5-suggestion-group-item text="Content Density"></ui5-suggestion-group-item>
 		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
@@ -78,7 +68,7 @@
 		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
 	</ui5-input>
 
-	<!-- <h3>Input suggestions with highlighing</h3>
+	<h3>Input suggestions with highlighing</h3>
 	<ui5-input id="myInputHighlighted" show-suggestions class="input3auto">
 		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
@@ -764,6 +754,6 @@
 		});
 
 		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
-	</script> -->
+	</script>
 </body>
 </html>

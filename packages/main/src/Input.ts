@@ -870,7 +870,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_handleEnter(e: KeyboardEvent) {
-		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
+		const suggestionItemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
+
 		const innerInput = this.getInputDOMRefSync()!;
 		// Check for autocompleted item
 		const matchingItem = this.suggestionItems.find(item => {
@@ -881,7 +882,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			const itemText = matchingItem.text ? matchingItem.text : (matchingItem.textContent || "");
 
 			innerInput.setSelectionRange(itemText.length, itemText.length);
-			if (!itemPressed) {
+			if (!suggestionItemPressed) {
 				this.selectSuggestion(matchingItem, true);
 				this.open = false;
 			}
@@ -891,14 +892,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
-		if (!itemPressed) {
+		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
 
-			if (this.FormSupport) {
+			if (this.open && this.Suggestions?._isGroupOrInactiveItem) {
+				this.isTyping = false;
+				this._forceOpen = false;
+				this.open = false;
+			} else if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}
-
-			return;
 		}
 
 		this.focused = true;
@@ -1290,7 +1293,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		if (isCancelledByUser) {
 			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
 			this.hasSuggestionItemSelected = false;
-			this.suggestionSelectionCancelled = false;
+			this.suggestionSelectionCancelled = true;
 
 			this.isTyping = false;
 			this.openOnMobile = false;
