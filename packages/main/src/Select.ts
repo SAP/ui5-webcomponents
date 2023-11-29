@@ -162,6 +162,9 @@ type SelectLiveChangeEventDetail = {
  */
 @event("change", {
 	detail: {
+		/**
+		* @public
+		*/
 		selectedOption: { type: HTMLElement },
 	},
 })
@@ -175,7 +178,10 @@ type SelectLiveChangeEventDetail = {
  */
 @event("live-change", {
 	detail: {
-		option: { type: HTMLElement },
+		/**
+		* @public
+		*/
+		selectedOption: { type: HTMLElement },
 	},
 })
 /**
@@ -458,6 +464,7 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Currently selected <code>ui5-option</code> element.
 	 * @public
+	 * @default undefined
 	 */
 	get selectedOption(): IOption | undefined {
 		return this.selectOptions.find(option => option.selected);

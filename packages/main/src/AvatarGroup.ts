@@ -154,7 +154,13 @@ type AvatarGroupClickEventDetail = {
 */
 @event("click", {
 	detail: {
+		/**
+		* @public
+		*/
 		targetRef: { type: HTMLElement },
+		/**
+		* @public
+		*/
 		overflowButtonClicked: { type: Boolean },
 	},
 })
@@ -166,7 +172,6 @@ type AvatarGroupClickEventDetail = {
 * @since 1.0.0-rc.13
 */
 @event("overflow")
-
 class AvatarGroup extends UI5Element {
 	/**
 	 * Defines the mode of the <code>AvatarGroup</code>.

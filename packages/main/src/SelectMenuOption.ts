@@ -10,7 +10,7 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
 import type { AccessibilityAttributes } from "./ListItem.js";
-import { ISelectMenuOption } from "./Interfaces.js";
+import { IOption } from "./Interfaces.js";
 
 /**
  * @class
@@ -27,7 +27,7 @@ import { ISelectMenuOption } from "./Interfaces.js";
  *
  * @constructor
  * @extends UI5Element
- * @implements {ISelectMenuOption}
+ * @implements {IOption}
  * @public
  * @since 1.17.0
  * @slot {Array<Node>} default  Defines the content of the component.
@@ -39,7 +39,7 @@ import { ISelectMenuOption } from "./Interfaces.js";
 	template: CustomListItemTemplate,
 	dependencies: [],
 })
-class SelectMenuOption extends CustomListItem implements ISelectMenuOption {
+class SelectMenuOption extends CustomListItem implements IOption {
 	/**
 	 * Defines the text, displayed inside the <code>ui5-select</code> input filed
 	 * when the option gets selected.

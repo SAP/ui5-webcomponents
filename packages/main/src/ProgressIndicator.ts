@@ -102,7 +102,7 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ defaultValue: null })
-	displayValue!: string;
+	displayValue?: string | null;
 
 	/**
 	 * Defines the value state of the component.

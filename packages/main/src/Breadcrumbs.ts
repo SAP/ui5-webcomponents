@@ -123,10 +123,25 @@ type FocusAdaptor = ITabbable & {
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		altKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		ctrlKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		metaKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		shiftKey: { type: Boolean },
 	},
 })

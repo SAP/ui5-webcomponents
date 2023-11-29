@@ -24,7 +24,7 @@ import Button from "./Button.js";
 // Types
 import type Select from "./Select.js";
 import type SelectMenuOption from "./SelectMenuOption.js";
-import { ISelectMenuOption } from "./Interfaces.js";
+import { IOption } from "./Interfaces.js";
 
 type SelectMenuOptionClick = {
 	option: SelectMenuOption,
@@ -106,7 +106,7 @@ class SelectMenu extends UI5Element {
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})
-	options!: Array<ISelectMenuOption>;
+	options!: Array<IOption>;
 
 	/**
 	 * Defines the width of the component.

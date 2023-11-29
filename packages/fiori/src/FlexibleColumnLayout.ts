@@ -153,12 +153,33 @@ type AccessibilityRoles = {
  */
 @event("layout-change", {
 	detail: {
+		/**
+		* @public
+		*/
 		layout: { type: FCLLayout },
+		/**
+		* @public
+		*/
 		columnLayout: { type: Array },
+		/**
+		* @public
+		*/
 		startColumnVisible: { type: Boolean },
+		/**
+		* @public
+		*/
 		midColumnVisible: { type: Boolean },
+		/**
+		* @public
+		*/
 		endColumnVisible: { type: Boolean },
+		/**
+		* @public
+		*/
 		arrowsUsed: { type: Boolean },
+		/**
+		* @public
+		*/
 		resize: { type: Boolean },
 	},
 })

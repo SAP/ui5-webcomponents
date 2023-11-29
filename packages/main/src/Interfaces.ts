@@ -1,6 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { AccessibilityAttributes } from "./ListItem.js";
-import ListItemType from "./types/ListItemType.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
@@ -109,18 +107,6 @@ const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
 const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
-
- *
- * @public
- */
-interface ISelectMenuOption extends IOption {
-	type: `${ListItemType}`,
-	accessibilityAttributes: AccessibilityAttributes,
-	navigated: boolean,
-}
-
-/**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
  * @public
@@ -207,7 +193,6 @@ export {
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	IOption,
-	ISelectMenuOption,
 	ITab,
 	ITableCell,
 	ITableColumn,
