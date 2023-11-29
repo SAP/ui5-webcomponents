@@ -39,9 +39,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  *
  * @abstract
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TreeItemBase
- * @extends sap.ui.webc.main.ListItem
+ * @extends ListItem
  * @public
  */
 @customElement({
@@ -58,7 +56,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 })
 /**
  * Fired when the user interacts with the expand/collapse button of the tree list item.
- * @event
  * @param {HTMLElement} item the toggled item.
  * @protected
  */
@@ -71,7 +68,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 /**
  * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
  *
- * @event sap.ui.webc.main.TreeItemBase#step-in
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
@@ -84,7 +80,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 /**
  * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
  *
- * @event sap.ui.webc.main.TreeItemBase#step-out
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
@@ -97,10 +92,8 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.level
 	 * @protected
-	 * @defaultValue 1
+	 * @default 1
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	level!: number;
@@ -109,9 +102,7 @@ class TreeItemBase extends ListItem {
 	 * If set, an icon will be displayed before the text of the tree list item.
 	 *
 	 * @public
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.icon
-	 * @type {string}
-	 * @defaultValue ""
+	 * @default ""
 	 */
 	@property()
 	icon!: string;
@@ -119,9 +110,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines whether the tree list item should display an expand/collapse button.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.showToggleButton
-	 * @defaultvalue false
+	 * @default false
 	 * @protected
 	 */
 	@property({ type: Boolean })
@@ -130,9 +119,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines whether the tree list item will show a collapse or expand icon inside its toggle button.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.expanded
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -151,9 +138,7 @@ class TreeItemBase extends ListItem {
 	* </ul>
 	* <br>
 	* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
-	* @type {boolean}
-	* @name sap.ui.webc.main.TreeItemBase.prototype.indeterminate
-	* @defaultvalue false
+	* @default false
 	* @public
 	* @since 1.1.0
 	*/
@@ -167,9 +152,7 @@ class TreeItemBase extends ListItem {
 	 * Set this to <code>true</code> for nodes you intend to load lazily, when the user clicks the expand button.
 	 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.hasChildren
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -179,9 +162,7 @@ class TreeItemBase extends ListItem {
 	 * Defines the state of the <code>additionalText</code>.
 	 * <br>
 	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.additionalTextState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -191,9 +172,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines the accessible name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */
@@ -217,8 +196,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
-	 * @type {string}
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ type: String, defaultValue: undefined, noAttribute: true })
@@ -227,8 +205,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines if the item should be collapsible or not.
 	 * @private
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -236,7 +213,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @type {sap.ui.webc.main.types.HasPopup}
 	 * @since 1.10.0
 	 * @private
 	 */
@@ -249,9 +225,6 @@ class TreeItemBase extends ListItem {
 	 * <br />
 	 * <b>Note:</b> Use <code>ui5-tree-item</code> or <code>ui5-tree-item-custom</code>
 	 *
-	 * @type {sap.ui.webc.main.ITreeItem[]}
-	 * @name sap.ui.webc.main.TreeItemBase.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -315,20 +288,18 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Used to duck-type TreeItem elements without using instanceof
-	 * @returns {boolean}
+	 * @default true
 	 * @protected
 	 */
-	get isTreeItem() {
+	get isTreeItem(): boolean {
 		return true;
 	}
 
 	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TreeItemBase#toggle
 	 */
-	toggle() {
+	toggle(): void {
 		this.expanded = !this.expanded;
 	}
 
@@ -357,7 +328,7 @@ class TreeItemBase extends ListItem {
 		}
 	}
 
-	get iconAccessibleName() {
+	get iconAccessibleName(): string {
 		return this.expanded ? TreeItemBase.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
 

@@ -36,26 +36,15 @@ import PageCss from "./generated/themes/Page.css.js";
  * that there is enough space for the <code>ui5-page</code> to be rendered.
  * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-page</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>content - Used to style the content section of the component</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/Page.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Page
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-page
+ * @extends UI5Element
  * @since 1.0.0-rc.12
  * @public
+ * @csspart content - Used to style the content section of the component
  */
 @customElement({
 	tag: "ui5-page",
@@ -74,9 +63,7 @@ class Page extends UI5Element {
 	 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.fiori.types.PageBackgroundDesign}
-	 * @name sap.ui.webc.fiori.Page.prototype.backgroundDesign
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @public
 	 */
 	@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
@@ -86,9 +73,7 @@ class Page extends UI5Element {
 	 * Disables vertical scrolling of page content.
 	 * If set to true, there will be no vertical scrolling at all.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.Page.prototype.disableScrolling
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -98,9 +83,8 @@ class Page extends UI5Element {
 	 * Defines if the footer should float over the content.
 	 * <br><br>
 	 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.Page.prototype.floatingFooter
-	 * @defaultvalue true
+	 *
+	 * @default true
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -109,9 +93,7 @@ class Page extends UI5Element {
 	/**
 	 * Defines the footer visibility.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.Page.prototype.hideFooter
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -120,7 +102,6 @@ class Page extends UI5Element {
 	/**
 	 * Defines the current media query size.
 	 *
-	 * @type {string}
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -130,9 +111,6 @@ class Page extends UI5Element {
 	/**
 	 * Defines the header HTML Element.
 	 *
-	 * @type {sap.ui.webc.fiori.IBar}
-	 * @name sap.ui.webc.fiori.Page.prototype.header
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -141,9 +119,6 @@ class Page extends UI5Element {
 	/**
 	 * Defines the content HTML Element.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.fiori.Page.prototype.default
-	 * @slot content
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -152,9 +127,6 @@ class Page extends UI5Element {
 	/**
 	 * Defines the footer HTML Element.
 	 *
-	 * @type {sap.ui.webc.fiori.IBar}
-	 * @name sap.ui.webc.fiori.Page.prototype.footer
-	 * @slot
 	 * @public
 	 */
 	@slot()
