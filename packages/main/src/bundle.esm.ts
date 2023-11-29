@@ -32,6 +32,15 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 
+// import { registerCustomThemePropertiesLoader } from "@ui5/webcomponents-base/dist/AssetRegistry.js";
+// import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+// const customThemeLoader = theme => Promise.resolve(`:root {
+// 	${getScopedVarName("--_ui5_button_base_height")}: 4rem;
+// 	${getScopedVarName("--_ui5_button_base_padding")}: 2rem;
+// }`);
+// registerCustomThemePropertiesLoader("@ui5/webcomponents", "my_custom_theme", customThemeLoader);
+
+
 // Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 // import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 // import parse from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";

@@ -4,9 +4,6 @@
 	--ui5-listitem-selected-border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 	--ui5-listitem-focused-selected-border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 	--ui5-listitem-active-border-color: var(--sapContent_ContrastFocusColor);
-	--ui5-listitem-padding: 0 1rem;
-	--ui5-listitem-focus-border-radius: 0;
-	--ui5-listitem-focus-offset: 0.125rem;
 	--_ui5_listitembase_focus_width: 1px;
 	--_ui5-listitembase_disabled_opacity: 0.5;
 	--_ui5_product_switch_item_border: none;
