@@ -63,16 +63,6 @@ import panelCss from "./generated/themes/Panel.css.js";
  * clockwise/counter-clockwise.</li>
  * </ul>
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-panel</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>header - Used to style the wrapper of the header</li>
- * <li>content - Used to style the wrapper of the content</li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  *
  * <h4>Fast Navigation</h4>
@@ -86,11 +76,11 @@ import panelCss from "./generated/themes/Panel.css.js";
  * <code>import "@ui5/webcomponents/dist/Panel";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Panel
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-panel
+ * @extends UI5Element
  * @public
+ * @slot {Node[]} default - Defines the content of the component. The content is visible only when the component is expanded.
+ * @csspart header - Used to style the wrapper of the header.
+ * @csspart content - Used to style the wrapper of the content.
  */
 @customElement({
 	tag: "ui5-panel",
@@ -104,7 +94,6 @@ import panelCss from "./generated/themes/Panel.css.js";
 /**
  * Fired when the component is expanded/collapsed by user interaction.
  *
- * @event sap.ui.webc.main.Panel#toggle
  * @public
  */
 @event("toggle")
@@ -115,9 +104,7 @@ class Panel extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Panel.prototype.headerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -127,9 +114,7 @@ class Panel extends UI5Element {
 	 * Determines whether the component is in a fixed state that is not
 	 * expandable/collapsible by user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.fixed
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -138,9 +123,7 @@ class Panel extends UI5Element {
 	/**
 	 * Indicates whether the component is collapsed and only the header is displayed.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.collapsed
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -149,9 +132,7 @@ class Panel extends UI5Element {
 	/**
 	 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.noAnimation
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */
@@ -163,9 +144,7 @@ class Panel extends UI5Element {
 	 * Depending on the usage, you can change the role from the default <code>Form</code>
 	 * to <code>Region</code> or <code>Complementary</code>.
 	 *
-	 * @type {sap.ui.webc.main.types.PanelAccessibleRole}
-	 * @name sap.ui.webc.main.Panel.prototype.accessibleRole
-	 * @defaultvalue "Form"
+	 * @default "Form"
 	 * @public
 	 */
 	@property({ type: PanelAccessibleRole, defaultValue: PanelAccessibleRole.Form })
@@ -176,9 +155,8 @@ class Panel extends UI5Element {
 	 * set by the <code>headerText</code>.
 	 * <br><br>
 	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
-	 * @type {sap.ui.webc.main.types.TitleLevel}
-	 * @name sap.ui.webc.main.Panel.prototype.headerLevel
-	 * @defaultvalue "H2"
+	 *
+	 * @default "H2"
 	 * @public
 	*/
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
@@ -187,9 +165,7 @@ class Panel extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Panel.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -201,9 +177,8 @@ class Panel extends UI5Element {
 	 * If stickyHeader is set to true, then whenever you scroll the content or
 	 * the application, the header of the panel will be always visible and
 	 * a solid color will be used for its design.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Panel.prototype.stickyHeader
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @public
 	 * @since 1.16.0-rc.1
 	 */
@@ -214,8 +189,8 @@ class Panel extends UI5Element {
 	 * When set to <code>true</code>, the <code>accessibleName</code> property will be
 	 * applied not only on the panel root itself, but on its toggle button too.
 	 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	  */
 	@property({ type: Boolean })
@@ -238,23 +213,10 @@ class Panel extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Panel.prototype.header
-	 * @slot
 	 * @public
 	 */
 	@slot()
 	header!: Array<HTMLElement>;
-
-	/**
-	 * Defines the content of the component.
-	 * The content is visible only when the component is expanded.
-	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.Panel.prototype.default
-	 * @slot
-	 * @public
-	 */
 
 	static i18nBundle: I18nBundle;
 
