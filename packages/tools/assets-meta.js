@@ -83,7 +83,7 @@ const assetsMeta = {
       "ar_SA",
       "bg",
       "ca",
-      "cnr_ME", // cldr for not available yet - will fallback to browser locale
+      // "cnr_ME" - cldr for not available yet
       "cs",
       "da",
       "de",
@@ -131,7 +131,7 @@ const assetsMeta = {
       "lt",
       "lv",
       "ms",
-      "mk_MK", // cldr for not available - will fallback to browser locale
+      // "mk_MK" cldr not available yet
       "nb",
       "nl",
       "nl_BE",
