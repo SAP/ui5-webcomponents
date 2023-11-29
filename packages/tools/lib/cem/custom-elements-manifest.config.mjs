@@ -93,14 +93,14 @@ function processClass(ts, classNode, moduleDoc) {
 		// Slots with accessors are treated like fields by the tool, so we have to convert them into slots.
 		if (member.kind === "field") {
 			const slotDecorator = findDecorator(classNodeMember, "slot");
-			validateJSDocComment(slotDecorator ? "slot" : (member.readonly ? "getter" : "field" ), memberParsedJsDoc, classNodeMember.name?.text, moduleDoc);
+			validateJSDocComment(slotDecorator ? "slot" : (member.readonly ? "getter" : "field"), memberParsedJsDoc, classNodeMember.name?.text, moduleDoc);
 
-				const typeRefs = (getTypeRefs(ts, classNodeMember, member)
-					?.map(e => getReference(ts, e, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
+			const typeRefs = (getTypeRefs(ts, classNodeMember, member)
+				?.map(e => getReference(ts, e, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
-				if (member.type && typeRefs.length) {
-					member.type.references = typeRefs;
-				}
+			if (member.type && typeRefs.length) {
+				member.type.references = typeRefs;
+			}
 
 			if (slotDecorator) {
 				if (!currClass.slots) currClass.slots = [];
@@ -143,15 +143,15 @@ function processClass(ts, classNode, moduleDoc) {
 				if (member.privacy === "public") {
 					const JSDocErrors = getJSDocErrors();
 					if (member.readonly && !member.type) {
-							JSDocErrors.push(
-								`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
-							);
+						JSDocErrors.push(
+							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
+						);
 					}
 
 					if (!member.default) {
-							JSDocErrors.push(
-								`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Default value is missing`
-							);
+						JSDocErrors.push(
+							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Default value is missing`
+						);
 					}
 				}
 
@@ -320,14 +320,14 @@ export default {
 		{
 			name: 'my-plugin',
 			analyzePhase({ ts, node, moduleDoc }) {
-				switch (node.kind) {
-					case ts.SyntaxKind.ClassDeclaration:
+				switch (true) {
+					case ts.isClassDeclaration(node):
 						processClass(ts, node, moduleDoc);
 						break;
-					case ts.SyntaxKind.EnumDeclaration:
+					case ts.isEnumDeclaration(node):
 						processEnum(ts, node, moduleDoc);
 						break;
-					case ts.SyntaxKind.InterfaceDeclaration:
+					case ts.isInterfaceDeclaration(node):
 						processInterface(ts, node, moduleDoc);
 						break;
 				}
@@ -340,6 +340,21 @@ export default {
 						i--;
 					}
 				}
+
+				moduleDoc.exports?.forEach(e => {
+					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
+
+					if (classNode?.customElement && e.kind !== "custom-element-definition") {
+						moduleDoc.exports.push({
+							kind: "custom-element-definition",
+							name: classNode.tagName,
+							declaration: {
+								name: e.declaration.name,
+								module: e.declaration.module
+							}
+						})
+					}
+				})
 			},
 			packageLinkPhase() {
 				// Uncomment and handle errors appropriately

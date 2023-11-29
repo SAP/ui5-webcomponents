@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -24,25 +23,8 @@ type StateStorage = {
 type DirectionStart = "left" | "right";
 
 /**
- * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
- *
- *
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SliderBase
- * @extends sap.ui.webc.base.UI5Element
- * @public
- */
-@customElement({
-	renderer: litRender,
-	styles: sliderBaseStyles,
-})
-/**
  * Fired when the value changes and the user has finished interacting with the slider.
  *
- * @event sap.ui.webc.main.SliderBase#change
  * @public
  */
 @event("change")
@@ -50,17 +32,24 @@ type DirectionStart = "left" | "right";
 /**
  * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
  *
- * @event sap.ui.webc.main.SliderBase#input
  * @public
  */
 @event("input")
+
+/**
+ * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
+ *
+ * @constructor
+ * @extends UI5Element
+ * @public
+ */
 abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.SliderBase.prototype.min
-	 * @defaultvalue 0
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 0 })
@@ -69,9 +58,7 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the maximum value of the slider.
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.SliderBase.prototype.max
-	 * @defaultvalue 100
+	 * @default 100
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 100 })
@@ -82,9 +69,7 @@ abstract class SliderBase extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.SliderBase.prototype.step
-	 * @defaultvalue 1
+	 * @default 1
 	 * @public
 	 */
 	@property({ validator: Float, defaultValue: 1 })
@@ -97,9 +82,7 @@ abstract class SliderBase extends UI5Element {
 	 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 	 * tickmark will be labelled, which means every 4th value number.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.SliderBase.prototype.labelInterval
-	 * @defaultvalue 0
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -110,9 +93,7 @@ abstract class SliderBase extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The step must be a positive number.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.showTickmarks
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -121,9 +102,7 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Enables handle tooltip displaying the current value.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.showTooltip
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -132,9 +111,7 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines whether the slider is in disabled state.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SliderBase.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -143,9 +120,7 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.SliderBase.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.4.0
 	 */
@@ -247,6 +222,14 @@ abstract class SliderBase extends UI5Element {
 			VISIBLE: "visible",
 			HIDDEN: "hidden",
 		};
+	}
+
+	static get render() {
+		return litRender;
+	}
+
+	static get styles() {
+		return sliderBaseStyles;
 	}
 
 	get classes() {

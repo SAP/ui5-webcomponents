@@ -80,15 +80,6 @@ const IInput = "sap.ui.webc.main.IInput";
 const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 
 /**
- * Interface for components that may be slotted inside a <code>ui5-list</code> as items
- *
- * @name sap.ui.webc.main.IListItem
- * @interface
- * @public
- */
-const IListItem = "sap.ui.webc.main.IListItem";
-
-/**
  * Interface for components that may be slotted inside <code>ui5-menu</code> as items
  *
  * @name sap.ui.webc.main.IMenuItem
@@ -178,24 +169,6 @@ const IToken = "sap.ui.webc.main.IToken";
  */
 const ITreeItem = "sap.ui.webc.main.ITreeItem";
 
-/**
- * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
- *
- * @name sap.ui.webc.main.IToolbarItem
- * @interface
- * @public
- */
-const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
-
-/**
- * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
- *
- * @name sap.ui.webc.main.IToolbarSelectOption
- * @interface
- * @public
- */
-const IToolbarSelectOption = "sap.ui.webc.main.IToolbarSelectOption";
-
 export {
 	IAvatar,
 	IBreadcrumbsItem,
@@ -206,7 +179,6 @@ export {
 	IIcon,
 	IInput,
 	IInputSuggestionItem,
-	IListItem,
 	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
@@ -217,6 +189,4 @@ export {
 	ITableRow,
 	IToken,
 	ITreeItem,
-	IToolbarItem,
-	IToolbarSelectOption,
 };

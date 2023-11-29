@@ -9,7 +9,7 @@ export class MethodDescriptionRenderer implements IDescriptionRenderer {
                 <b><code>{p.name}</code></b>
                 <ul>
                     <li><b>type:</b> {p.type.text}</li>
-                    <li><b>description:</b> {p.description}</li>
+                    {p.description && <li><b>description:</b> {p.description}</li>}
                 </ul>
             </React.Fragment>
         ));
@@ -32,7 +32,7 @@ export class MethodDescriptionRenderer implements IDescriptionRenderer {
                 <p><b>Return Value:</b></p>
                 <ul>
                     <li><b>type:</b> {returnValue?.type?.text}</li>
-                    <li><b>description:</b> {returnValue?.description}</li>
+                    {returnValue?.description && <li><b>description:</b> {returnValue?.description}</li>}
                 </ul>
             </>
         );

@@ -6,6 +6,8 @@ const path = require("path");
 
 // The following properties are excluded from the members array as they are not truly public.
 const EXCLUDE_LIST = [
+    "detachComponentStateFinalized",
+    "attachComponentStateFinalized",
     "effectiveDir",
     "isUI5Element",
     "attachInvalidate",
@@ -34,18 +36,30 @@ const loadManifest = () => {
 
     try {
         customElementsMain = require("@ui5/webcomponents/custom-elements.json");
+
+        customElementsMain.modules.forEach(module => {
+            applyPackageToDeclarations(module, "@ui5/webcomponents")
+        })
     } catch (error) {
         console.error("Did you run `yarn build` for packages/main?")
     }
 
     try {
         customElementsFiori = require("@ui5/webcomponents-fiori/custom-elements.json");
+
+        customElementsFiori.modules.forEach(module => {
+            applyPackageToDeclarations(module, "@ui5/webcomponents-fiori")
+        })
     } catch (error) {
         console.error("Did you run `yarn build` for packages/main?")
     }
 
     try {
         customElementsBase = require("@ui5/webcomponents-base/custom-elements.json");
+
+        customElementsBase.modules.forEach(module => {
+            applyPackageToDeclarations(module, "@ui5/webcomponents-base")
+        })
     } catch (error) {
         console.error("Did you run `yarn build` for packages/main?")
     }
@@ -56,6 +70,10 @@ const loadManifest = () => {
         customElementsBase,
     };
 };
+
+const applyPackageToDeclarations = (module, package) => {
+    module?.declarations?.forEach(declaration => (declaration._ui5package = package));
+}
 
 const parseMembers = (members) => {
     const parsed = [];
@@ -83,7 +101,7 @@ const parseModule = (module) => {
         // It can't happen to slots and properties since you can't have duplicate accessors.
         if (declaration.cssParts) {
             declaration.cssParts.forEach(part => {
-                if (!part.name.startsWith("_ui5") ) {
+                if (!part.name.startsWith("_ui5")) {
                     part.name = `_ui5${part.name}`;
                 }
             });
@@ -110,10 +128,10 @@ const flattenAPIsHierarchicalStructure = module => {
     const declarations = module.declarations;
 
     declarations.forEach(declaration => {
-        let superclassDeclaration = processedDeclarations.get(declaration.superclass?.name);
+        let superclassDeclaration = processedDeclarations.get(`${declaration.superclass?.package}/${declaration.superclass?.name}`);
 
         if (!superclassDeclaration) {
-            superclassDeclaration = customElements.modules.find(_m => _m.declarations.find(_d => _d.name === declaration.superclass?.name ));
+            superclassDeclaration = customElements.modules.find(_m => _m.declarations.find(_d => _d.name === declaration.superclass?.name && _d._ui5package === declaration.superclass?.package));
 
             if (superclassDeclaration) {
                 flattenAPIsHierarchicalStructure(superclassDeclaration);
@@ -121,9 +139,9 @@ const flattenAPIsHierarchicalStructure = module => {
         }
 
         if (superclassDeclaration) {
-            processedDeclarations.set(declaration.name, mergeClassMembers(declaration, processedDeclarations.get(declaration.superclass?.name)));
+            processedDeclarations.set(`${declaration._ui5package}/${declaration.name}`, mergeClassMembers(declaration, processedDeclarations.get(`${declaration.superclass?.package}/${declaration.superclass?.name}`)));
         } else {
-            processedDeclarations.set(declaration.name, declaration);
+            processedDeclarations.set(`${declaration._ui5package}/${declaration.name}`, declaration);
         }
     })
 }
@@ -152,7 +170,7 @@ const mergeArraysWithoutDuplicates = (currentValues, newValue) => {
 
 
 const { customElementsMain, customElementsFiori, customElementsBase } = loadManifest();
-let customElements = mergeManifests(mergeManifests(customElementsMain, customElementsFiori), customElementsBase );
+let customElements = mergeManifests(mergeManifests(customElementsMain, customElementsFiori), customElementsBase);
 const processedDeclarations = new Map();
 
 customElements.modules?.forEach(flattenAPIsHierarchicalStructure);
