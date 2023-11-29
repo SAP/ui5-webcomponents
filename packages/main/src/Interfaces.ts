@@ -1,11 +1,11 @@
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
- * @name sap.ui.webc.main.IAvatar
- * @interface
  * @public
  */
-const IAvatar = "sap.ui.webc.main.IAvatar";
+interface IAvatar {
+	isUI5Element: boolean,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
@@ -114,15 +114,6 @@ const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
 const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-select</code> as options
- *
- * @name sap.ui.webc.main.ISelectOption
- * @interface
- * @public
- */
-const ISelectOption = "sap.ui.webc.main.ISelectOption";
-
-/**
  * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
  *
  * @name sap.ui.webc.main.ISelectMenuOption
@@ -199,7 +190,6 @@ export {
 	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
-	ISelectOption,
 	ISelectMenuOption,
 	ITab,
 	ITableCell,
