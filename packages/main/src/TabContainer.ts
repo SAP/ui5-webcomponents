@@ -46,6 +46,7 @@ import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
 import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import type { IButton } from "./Interfaces.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -318,7 +319,7 @@ class TabContainer extends UI5Element {
 	 * @since 1.0.0-rc.9
 	 */
 	@slot()
-	overflowButton!: Array<Button>;
+	overflowButton!: Array<IButton>;
 
 	/**
 	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
@@ -328,7 +329,7 @@ class TabContainer extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@slot()
-	startOverflowButton!: Array<Button>;
+	startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
 	_allItemsAndSubItems?: Array<ITab>;

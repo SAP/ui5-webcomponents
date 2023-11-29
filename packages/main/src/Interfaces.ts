@@ -1,3 +1,5 @@
+import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
@@ -19,11 +21,10 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
  *
- * @name sap.ui.webc.main.IButton
- * @interface
  * @public
  */
-const IButton = "sap.ui.webc.main.IButton";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IButton extends HTMLElement, ITabbable { }
 
 /**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
