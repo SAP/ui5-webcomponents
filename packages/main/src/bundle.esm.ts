@@ -40,7 +40,6 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // }`);
 // registerCustomThemePropertiesLoader("@ui5/webcomponents", "my_custom_theme", customThemeLoader);
 
-
 // Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 // import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 // import parse from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
