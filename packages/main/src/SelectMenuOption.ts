@@ -28,7 +28,7 @@ import type { AccessibilityAttributes } from "./ListItem.js";
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.SelectMenuOption
- * @extends sap.ui.webc.base.UI5Element
+ * @extends sap.ui.webc.main.CustomListItem
  * @implements sap.ui.webc.main.ISelectMenuOption
  * @tagname ui5-select-menu-option
  * @public
@@ -52,6 +52,18 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 */
 	@property()
 	displayText!: string;
+
+	/**
+	 * Defines whether the component is in disabled state.
+	 * <br><br>
+	 * <b>Note:</b> A disabled component is hidden.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.disabled
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
 
 	/**
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
