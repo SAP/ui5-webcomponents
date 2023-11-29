@@ -55,8 +55,8 @@ OpeningMenu.decorators = [
 		</ui5-menu>
 	${story()}
 	<script>
-	const splitBtn = document.querySelector("ui5-split-button");
-	const menu = document.getElementById("menuInSplitBtnDefaultAction");
+	var splitBtn = document.querySelector("ui5-split-button");
+	var menu = document.getElementById("menuInSplitBtnDefaultAction");
 	
 	splitBtn.addEventListener("ui5-arrow-click", function() {
 		if (menu.open) {
