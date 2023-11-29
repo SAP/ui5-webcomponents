@@ -144,7 +144,7 @@ const assetsMeta = {
       "sk",
       "sl",
       "sr",
-      "sr_Cyrl_RS", // cldr not available - will fallback to "sr"
+      // "sr_Cyrl_RS" - cldr not available yet
       "sr_Latn",
       "sv",
       "th",
