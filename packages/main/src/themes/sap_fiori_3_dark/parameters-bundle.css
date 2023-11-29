@@ -22,7 +22,7 @@
 @import "../base/Menu-parameters.css";
 @import "./MonthPicker-parameters.css";
 @import "../base/MessageStrip-parameters.css";
-@import "./Panel-parameters.css";
+@import "../base/Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
 @import "../base/ProgressIndicator-parameters.css";
@@ -47,7 +47,6 @@
 @import "../base/GrowingButton-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/Tokenizer-parameters.css";
-@import "../base/TreeItem-parameters.css";
 @import "../base/ValueStateMessage-parameters.css";
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";

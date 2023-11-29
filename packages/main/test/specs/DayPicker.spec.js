@@ -45,4 +45,20 @@ describe("Day Picker Tests", () => {
 
 		assert.strictEqual(selectedDate, new Date(Date.now() + 24 * 3600 * 1000).getDate(), "Dates are equal");
 	});
+
+	it("Day names are correctly displayed when length is less than 3", async () => {
+		const dayPickerFirstDayName = await browser.$(`#${daypicker._sut}`).shadow$(".ui5-dp-firstday");
+		const dayPickerFirstDayNameText = await dayPickerFirstDayName.getProperty("textContent");
+
+		assert.strictEqual(dayPickerFirstDayNameText, "Sun", "Name is rendered correctly");
+	});
+
+	it("Day names are correctly displayed when length is more than 3", async () => {
+		browser.url(`test/pages/DayPicker.html?sap-ui-language=pt_PT`);
+
+		const dayPickerFirstDayName = await browser.$(`#${daypicker._sut}`).shadow$(".ui5-dp-firstday");
+		const dayPickerFirstDayNameText = await dayPickerFirstDayName.getProperty("textContent");
+
+		assert.strictEqual(dayPickerFirstDayNameText, "D", "Name is rendered correctly");
+	});
 });
