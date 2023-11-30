@@ -24,12 +24,8 @@ import type Menu from "./Menu.js";
  * <code>import "@ui5/webcomponents/dist/MenuItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MenuItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-menu-item
- * @implements sap.ui.webc.main.IMenuItem
  * @since 1.3.0
  * @public
  */
@@ -38,9 +34,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the text of the tree item.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.text
-	 * @type {string}
-	 * @defaultValue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -50,8 +44,7 @@ class MenuItem extends UI5Element {
 	 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
 	 * <b>Note:</b> The additional text would not be displayed if the item has a submenu.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.additionalText
-	 * @type {string}
+	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */
@@ -65,9 +58,7 @@ class MenuItem extends UI5Element {
 	 <b>* Example:</b>
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.icon
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -76,9 +67,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines whether a visual separator should be rendered before the item.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.startsSection
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -89,9 +78,7 @@ class MenuItem extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> A disabled <code>ui5-menu-item</code> is noninteractive.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.disabled
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -102,9 +89,7 @@ class MenuItem extends UI5Element {
 	 *
 	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related one to the current <code>ui5-menu-item</code> sub-menu popover.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.busy
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.13.0
 	 */
@@ -114,9 +99,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.busyDelay
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultValue 1000
+	 * @default 1000
 	 * @public
 	 * @since 1.13.0
 	 */
@@ -126,9 +109,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.accessibleName
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.7.0
 	 */
@@ -162,9 +143,6 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the items of this component.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.default
-	 * @type {sap.ui.webc.main.IMenuItem[]}
-	 * @slot items
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })

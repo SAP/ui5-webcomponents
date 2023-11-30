@@ -1,5 +1,5 @@
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
@@ -15,17 +15,7 @@ interface IAvatar {
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IButton extends HTMLElement, ITabbable { }
-
-/**
- * Interface for components that may be used as dates inside <code>ui5-calendar</code>
- *
- * @name sap.ui.webc.main.ICalendarDate
- * @interface
- * @public
- */
-const ICalendarDate = "sap.ui.webc.main.ICalendarDate";
+interface IButton extends HTMLElement, ITabbable {}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-combobox</code>
@@ -39,11 +29,12 @@ const IComboBoxItem = "sap.ui.webc.main.IComboBoxItem";
 /**
  * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
  *
- * @name sap.ui.webc.main.IColorPaletteItem
- * @interface
  * @public
  */
-const IColorPaletteItem = "sap.ui.webc.main.IColorPaletteItem";
+interface IColorPaletteItem extends UI5Element, ITabbable {
+	value?: string,
+	index?: number,
+}
 
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
@@ -71,15 +62,6 @@ const IInput = "sap.ui.webc.main.IInput";
 const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-menu</code> as items
- *
- * @name sap.ui.webc.main.IMenuItem
- * @interface
- * @public
- */
-const IMenuItem = "sap.ui.webc.main.IMenuItem";
-
-/**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
  *
  * @name sap.ui.webc.main.IMultiComboBoxItem
@@ -91,11 +73,13 @@ const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
  *
- * @name sap.ui.webc.main.ISegmentedButtonItem
- * @interface
  * @public
  */
-const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
+interface ISegmentedButtonItem extends UI5Element {
+	disabled: boolean,
+	pressed: boolean,
+	_tabIndex: string,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-select</code> as options
@@ -166,13 +150,11 @@ interface ITreeItem extends HTMLElement {
 export {
 	IAvatar,
 	IButton,
-	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
 	IIcon,
 	IInput,
 	IInputSuggestionItem,
-	IMenuItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	IOption,

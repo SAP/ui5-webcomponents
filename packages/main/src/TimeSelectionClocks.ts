@@ -46,11 +46,8 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
  * This component should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelectionClocks
- * @extends sap.ui.webc.main.TimePickerInternals
+ * @extends TimePickerInternals
  * @abstract
- * @tagname ui5-time-selection-clocks
  * @since 1.15.0
  * @private
  */
@@ -80,10 +77,10 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Returns ToggleSpinButton component by index or name.
 	 *
-	 * @param {number | string} indexOrName the index or name of the component
-	 * @returns { ToggleSpinButton | undefined} component (if exists) or undefined
+	 * @param indexOrName the index or name of the component
+	 * @returns component (if exists) or undefined
 	 */
-	_buttonComponent(indexOrName: number | string) {
+	_buttonComponent(indexOrName: number | string): ToggleSpinButton | undefined | null {
 		const index = typeof indexOrName === "string" ? this._indexFromName(indexOrName) : indexOrName;
 		const entity = this._entities[index].entity;
 		return entity ? this.shadowRoot?.querySelector<ToggleSpinButton>(`#${this._id}_button_${entity}`) : undefined;
@@ -92,10 +89,10 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Returns TimePickerClock component by index or name.
 	 *
-	 * @param {number | string} indexOrName the index or name of the component
-	 * @returns { TimePickerClock | undefined} component (if exists) or undefined
+	 * @param indexOrName the index or name of the component
+	 * @returns component (if exists) or undefined
 	 */
-	_clockComponent(indexOrName: number | string) {
+	_clockComponent(indexOrName: number | string): TimePickerClock | undefined | null {
 		const index = typeof indexOrName === "string" ? this._indexFromName(indexOrName) : indexOrName;
 		const entity = this._entities[index].entity;
 		return entity ? this.shadowRoot?.querySelector<TimePickerClock>(`#${this._id}_clock_${entity}`) : undefined;
@@ -104,7 +101,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * TimePickerClocks focusin event handler. Focuses the active button and switches to active clock.
 	 *
-	 * @param {event} evt Event object
+	 * @param evt Event object
 	 */
 	_clocksFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
@@ -116,7 +113,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * ToggleSpinButton focusin event handler.Switches to clock which button is being focused.
 	 *
-	 * @param {event} evt Event object
+	 * @param evt Event object
 	 */
 	_buttonFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
@@ -129,7 +126,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * keyup event handler.
 	 *
-	 * @param {event} evt Event object
+	 * @param evt Event object
 	 */
 	_onkeyup(evt: KeyboardEvent) {
 		if (isSpace(evt)) {
@@ -140,7 +137,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * keydown event handler.
 	 *
-	 * @param {event} evt Event object
+	 * @param evt Event object
 	 */
 	_onkeydown(evt: KeyboardEvent) {
 		let clock;
@@ -211,7 +208,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Handles direct numbers entry.
 	 *
-	 * @param {event} evt Event object
+	 * @param evt Event object
 	 */
 	_numbersInput(evt: KeyboardEvent) {
 		const char = evt.key;
@@ -358,7 +355,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Switches to the specific clock by name.
 	 *
-	 * @param {string} clockName the name of the clock
+	 * @param clockName the name of the clock
 	 */
 	_switchTo(clockName: string) {
 		const key = this._componentKey(clockName);
@@ -370,7 +367,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Switches to the specific clock by its index in _clocks property.
 	 *
-	 * @param {number} clockIndex the index of the clock
+	 * @param clockIndex the index of the clock
 	 */
 	_switchClock(clockIndex: number) {
 		const newButton = this._buttonComponent(clockIndex);
@@ -386,7 +383,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Switches to the next available clock.
 	 *
-	 * @param {boolean} wrapAround whether to switch to the first clock if there are no next clock
+	 * @param wrapAround whether to switch to the first clock if there are no next clock
 	 */
 	_switchNextClock(wrapAround = false) {
 		let activeIndex = this._activeIndex;
@@ -412,7 +409,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * Clock 'change' event handler.
 	 *
-	 * @param {event} evt Event object
+	 * @param evt Event object
 	 */
 	_clockChange(evt: CustomEvent<TimePickerClockChangeEventDetail>) {
 		const index = this._getIndexFromId((evt.target as HTMLElement).id);

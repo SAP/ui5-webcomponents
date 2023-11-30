@@ -60,10 +60,7 @@ type FileUploaderChangeEventDetail = {
  *
  * @constructor
  * @since 1.0.0-rc.6
- * @author SAP SE
- * @alias sap.ui.webc.main.FileUploader
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-file-uploader
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -84,12 +81,14 @@ type FileUploaderChangeEventDetail = {
  * Event is fired when the value of the file path has been changed.
  * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
  *
- * @event sap.ui.webc.main.FileUploader#change
  * @param {FileList} files The current files.
  * @public
  */
 @event("change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		files: { type: FileList },
 	},
 })
@@ -98,9 +97,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * Comma-separated list of file types that the component should accept.
 	 * <br><br>
 	 * <b>Note:</b> Please make sure you are adding the <code>.</code> in front on the file type, e.g. <code>.png</code> in case you want to accept png's only.
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.accept
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -108,9 +105,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.FileUploader.prototype.hideInput
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -121,9 +116,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.FileUploader.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -131,9 +124,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Allows multiple files to be chosen.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.FileUploader.prototype.multiple
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -151,9 +142,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.name
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -161,9 +150,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.placeholder
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -171,9 +158,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the name/names of the file/files to upload.
-	 * @type {string}
-	 * @name sap.ui.webc.main.FileUploader.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @formEvents change
 	 * @formProperty
 	 * @public
@@ -183,9 +168,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.FileUploader.prototype.valueState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -202,9 +185,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * <b>Note:</b> If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.<br>
 	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.FileUploader.prototype.default
-	 * @slot content
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -218,10 +198,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.FileUploader.prototype.valueStateMessage
 	 * @since 1.0.0-rc.9
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -230,8 +207,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
-	 * @slot
 	 * @private
 	 */
 	@slot()
@@ -294,12 +269,11 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * FileList of all selected files.
-	 * @readonly
-	 * @type {FileList}
+	 *
 	 * @public
-	 * @name sap.ui.webc.main.FileUploader.prototype.files
+	 * @default null
 	 */
-	get files() {
+	get files(): FileList | null {
 		if (this._input) {
 			return this._input.files;
 		}

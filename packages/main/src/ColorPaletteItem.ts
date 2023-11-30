@@ -4,10 +4,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { IColorPaletteItem } from "./Interfaces";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
@@ -24,13 +24,10 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * The <code>ui5-color-palette-item</code> component represents a color in the the <code>ui5-color-palette</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ColorPaletteItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-color-palette-item
  * @since 1.0.0-rc.12
- * @implements sap.ui.webc.main.IColorPaletteItem
+ * @implements { IColorPaletteItem }
  * @public
  */
 @customElement({
@@ -39,21 +36,21 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 	styles: ColorPaletteItemCss,
 	template: ColorPaletteItemTemplate,
 })
-class ColorPaletteItem extends UI5Element implements ITabbable {
+class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	/**
 	 * Defines the colour of the component.
 	 * <br><br>
 	 * <b>Note:</b> The value should be a valid CSS color.
 	 *
-	 * @type {sap.ui.webc.base.types.CSSColor}
-	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.value
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: CSSColor })
-	value!: string;
+	value?: string;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
+	 *
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
@@ -61,23 +58,22 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
+	 *
 	 * @private
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	index?: number;
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.
+	 *
 	 * @private
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	phone!: boolean;
 
 	/**
 	 * @private
-	 * @type {boolean}
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })

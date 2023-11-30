@@ -62,10 +62,7 @@ type YearPickerNavigateEventDetail = {
  * Displays years which can be selected.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.YearPicker
- * @extends sap.ui.webc.main.CalendarPart
- * @tagname ui5-yearpicker
+ * @extends CalendarPart
  * @public
  */
 @customElement({
@@ -76,22 +73,20 @@ type YearPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
  * @public
- * @event sap.ui.webc.main.YearPicker#change
  */
 @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  * @public
- * @event sap.ui.webc.main.YearPicker#navigate
  */
 @event("navigate")
 class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 * @type {array}
-	 * @name sap.ui.webc.main.YearPicker.prototype.selectedDates
+	 *
+	 * @default []
 	 * @public
 	 */
 	@property({
@@ -297,7 +292,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
-	 * @param { number } value
+	 *
+	 * @param value
 	 * @private
 	 */
 	_setTimestamp(value: number) {
@@ -307,7 +303,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page.
-	 * @param { number } amount
+	 *
+	 * @param amount
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number) {
@@ -326,7 +323,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * User clicked with the mouser or pressed Enter/Space
-	 * @param { Event } e
+	 *
+	 * @param e
 	 * @private
 	 */
 	_selectYear(e: Event) {
@@ -341,8 +339,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
+	 *
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasPreviousPage(): boolean {
 		return this._firstYear! > this._minDate.getYear();
@@ -350,8 +348,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
+	 *
 	 * @protected
-	 * @returns { boolean }
 	 */
 	_hasNextPage(): boolean {
 		return this._firstYear! + this._getPageSize() - 1 < this._maxDate.getYear();
@@ -360,6 +358,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
+	 *
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -370,6 +369,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * Called by the Calendar component.
 	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
+	 *
 	 * @protected
 	 */
 	_showNextPage() {

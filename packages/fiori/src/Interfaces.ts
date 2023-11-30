@@ -1,29 +1,13 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import TimelineLayout from "./types/TimelineLayout.js";
+
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
  *
- * @name sap.ui.webc.fiori.IBar
- * @interface
  * @public
  */
-const IBar = "sap.ui.webc.fiori.IBar";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as filter items
- *
- * @name sap.ui.webc.fiori.IFilterItem
- * @interface
- * @public
- */
-const IFilterItem = "sap.ui.webc.fiori.IFilterItem";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-filter-item</code> as values
- *
- * @name sap.ui.webc.fiori.IFilterItemOption
- * @interface
- * @public
- */
-const IFilterItemOption = "sap.ui.webc.fiori.IFilterItemOption";
+interface IBar extends HTMLElement {}
 
 /**
  * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
@@ -68,22 +52,17 @@ interface IProductSwitchItem {
 const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as sort items
- *
- * @name sap.ui.webc.fiori.ISortItem
- * @interface
- * @public
- */
-const ISortItem = "sap.ui.webc.fiori.ISortItem";
-
-/**
  * Interface for components that may be slotted inside <code>ui5-timeline</code> as items
  *
- * @name sap.ui.webc.fiori.ITimelineItem
- * @interface
  * @public
  */
-const ITimelineItem = "sap.ui.webc.fiori.ITimelineItem";
+interface ITimelineItem extends UI5Element, ITabbable {
+    layout: `${TimelineLayout}`,
+    icon: string,
+    _lineWidth: string,
+    nameClickable: boolean,
+    focusLink: () => void,
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-upload-collection</code> as items
@@ -104,13 +83,10 @@ const IWizardStep = "sap.ui.webc.fiori.IWizardStep";
 
 export {
 	IBar,
-	IFilterItem,
-	IFilterItemOption,
 	IMediaGalleryItem,
 	INotificationListItem,
 	IProductSwitchItem,
 	IShellBarItem,
-	ISortItem,
 	ITimelineItem,
 	IUploadCollectionItem,
 	IWizardStep,
