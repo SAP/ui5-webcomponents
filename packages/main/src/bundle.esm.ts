@@ -124,6 +124,8 @@ import MultiInput from "./MultiInput.js";
 import Label from "./Label.js";
 import Link from "./Link.js";
 import Menu from "./Menu.js";
+import NavigationMenu from "./NavigationMenu.js";
+import NavigationMenuItem from "./NavigationMenuItem.js";
 import MenuItem from "./MenuItem.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";

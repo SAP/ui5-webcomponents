@@ -2,6 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -19,11 +22,13 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationPopoverTemplate.lit.js";
+
 import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
@@ -49,6 +54,15 @@ type SideNavigationSelectionChangeEventDetail = {
 type PopupClickEventDetail = {
 	target: {
 		associatedItem: SideNavigationItemBase
+	}
+};
+
+// used for the inner side navigation used in the SideNavigationPopoverTemplate
+type MenuClickEventDetail = {
+	detail: {
+		item: {
+			associatedItem: SideNavigationItemBase
+		}
 	}
 };
 
@@ -92,7 +106,7 @@ type PopupClickEventDetail = {
  * @alias sap.ui.webc.fiori.SideNavigation
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-side-navigation
- * @since 1.0.0-rc.8
+ * @since
  * @appenddocs sap.ui.webc.fiori.SideNavigationItem sap.ui.webc.fiori.SideNavigationSubItem
  * @public
  */
@@ -110,6 +124,8 @@ type PopupClickEventDetail = {
 		SideNavigationItem,
 		SideNavigationSubItem,
 		Icon,
+		Button,
+		NavigationMenu,
 	],
 })
 /**
@@ -178,7 +194,6 @@ class SideNavigation extends UI5Element {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;
-
 	/**
 	 * @private
 	 */
@@ -187,9 +202,12 @@ class SideNavigation extends UI5Element {
 
 	@property({ type: Boolean })
 	_inPopover!: boolean;
-
+	_isOverflow!: boolean;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
+
+	@property({ type: Object, multiple: true })
+	_menuPopoverItems!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
 
@@ -207,7 +225,12 @@ class SideNavigation extends UI5Element {
 			navigationMode: NavigationMode.Vertical,
 			getItemsCallback: () => this.getEnabledFixedItems(),
 		});
+
+		this._handleResizeBound = this.handleResize.bind(this);
+		this._isOverflow = false;
 	}
+
+	_handleResizeBound: () => void;
 
 	async _onAfterOpen() {
 		// as the tree/list inside the popover is never destroyed,
@@ -248,6 +271,24 @@ class SideNavigation extends UI5Element {
 		this.closePicker();
 	}
 
+	handleOverflowItemClick(e: MenuClickEventDetail) {
+		const associatedItem = e.detail?.item.associatedItem;
+
+		associatedItem.fireEvent("click");
+		if (associatedItem.selected) {
+			this.closeMenu();
+			return;
+		}
+
+		this._selectItem(associatedItem);
+		this._flexibleItemNavigation.setCurrentItem(associatedItem);
+		this.closeMenu();
+	}
+
+	async getOverflowPopover() {
+		return (await this.getStaticAreaItemDomRef())!.querySelector<NavigationMenu>(".ui5-side-navigation-overflow-menu")!;
+	}
+
 	async getPicker() {
 		return (await this.getStaticAreaItemDomRef())!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
@@ -257,9 +298,20 @@ class SideNavigation extends UI5Element {
 		responsivePopover.showAt(opener);
 	}
 
+	async openOverflowMenu(opener: HTMLElement) {
+		const menu = await this.getOverflowPopover();
+		menu.showAt(opener);
+		menu.opener = opener;
+	}
+
 	async closePicker() {
 		const responsivePopover = await this.getPicker();
 		responsivePopover.close();
+	}
+
+	async closeMenu() {
+		const menu = await this.getOverflowPopover();
+		menu.close();
 	}
 
 	async getPickerTree() {
@@ -300,13 +352,20 @@ class SideNavigation extends UI5Element {
 	}
 
 	getEnabledFlexibleItems() : Array<ITabbable> {
-		return this.getEnabledItems(this.items);
+		if (!this._overflowDom) {
+			return this.getEnabledItems(this.items);
+		}
+		return [...this.getEnabledItems(this.items), this._overflowDom];
 	}
 
 	getEnabledItems(items: Array<SideNavigationItem>) : Array<ITabbable> {
 		let result = new Array<ITabbable>();
 
 		items.forEach(item => {
+			if (item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
+				return;
+			}
+
 			if (!item.disabled) {
 				result.push(item);
 			}
@@ -315,7 +374,6 @@ class SideNavigation extends UI5Element {
 				result = result.concat(item.items.filter(el => !el.disabled));
 			}
 		});
-
 		return result;
 	}
 
@@ -354,6 +412,78 @@ class SideNavigation extends UI5Element {
 				}
 			}
 		}
+		if (this.collapsed) {
+			this.handleResize();
+		}
+	}
+
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResizeBound);
+	}
+
+	handleResize() {
+		const domRef = this.getDomRef(),
+			overflowItemRef = domRef?.querySelector(".ui5-sn-item-overflow");
+
+		this._updateOverflowItems();
+
+		if (this._getOverflowItems().length > 0 && this.collapsed) {
+			overflowItemRef?.classList.remove("ui5-sn-item-hidden");
+		} else {
+			overflowItemRef?.classList.add("ui5-sn-item-hidden");
+		}
+	}
+
+	_updateOverflowItems() {
+		const domRef = this.getDomRef();
+		if (!this.collapsed || !domRef) {
+			return null;
+		}
+
+		const overflowItemRef:HTMLElement = domRef.querySelector(".ui5-sn-item-overflow")!;
+		const flexibleContentDomRef:HTMLElement = domRef.querySelector(".ui5-sn-flexible")!;
+		if (!overflowItemRef) {
+			return null;
+		}
+
+		overflowItemRef.classList.add("ui5-sn-item-hidden");
+
+		const aItemsRefs = [...domRef.querySelectorAll<HTMLElement>(".ui5-sn-flexible .ui5-sn-item-level1:not(.ui5-sn-item-overflow")];
+
+		let iItemsHeight = aItemsRefs.reduce<number>((iSum, oItemRef) => {
+			oItemRef.classList.remove("ui5-sn-item-hidden");
+			return iSum + oItemRef.offsetHeight;
+		}, 0);
+
+		const { paddingTop, paddingBottom } = window.getComputedStyle(flexibleContentDomRef);
+		const iListHeight = flexibleContentDomRef?.offsetHeight - parseInt(paddingTop) - parseInt(paddingBottom);
+
+		overflowItemRef.classList.remove("ui5-sn-item-hidden");
+
+		iItemsHeight = overflowItemRef.offsetHeight;
+		const oSelectedItemRef = domRef.querySelector(".ui5-sn-item-selected") as HTMLElement;
+		if (oSelectedItemRef) {
+			const { marginTop, marginBottom } = window.getComputedStyle(oSelectedItemRef);
+
+			iItemsHeight += oSelectedItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+		}
+
+		aItemsRefs.forEach(oItemRef => {
+			if (oItemRef === oSelectedItemRef) {
+				return;
+			}
+
+			const { marginTop, marginBottom } = window.getComputedStyle(oItemRef);
+			iItemsHeight += oItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+
+			if (iItemsHeight >= iListHeight) {
+				oItemRef.classList.add("ui5-sn-item-hidden");
+			}
+		});
 	}
 
 	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
@@ -402,6 +532,7 @@ class SideNavigation extends UI5Element {
 
 		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
 			e.preventDefault();
+			this._isOverflow = false;
 
 			this._popoverContents = {
 				item,
@@ -416,6 +547,40 @@ class SideNavigation extends UI5Element {
 				this._selectItem(item);
 			}
 		}
+	}
+
+	_handleOverflowClick() {
+		this._isOverflow = true;
+		this._menuPopoverItems = this._getOverflowItems();
+
+		this.openOverflowMenu(this._overflowDom as HTMLElement);
+	}
+
+	_getOverflowItems(): Array<SideNavigationItem> {
+		const overflowClass = "ui5-sn-item-hidden";
+		const result: Array<SideNavigationItem> = [];
+
+		this.items.forEach(item => {
+			if (item.getDomRef().classList.contains(overflowClass)) {
+				 result.push(item);
+			}
+		});
+		return result;
+	}
+
+	async _beforeMenuOpen() {
+		const menu = await this.getOverflowPopover();
+		if (menu?._popover) {
+			menu._popover.verticalAlign = "Top";
+			menu._popover.placementType = "Right";
+		}
+	}
+
+	async _afterMenuClose() {
+		const selectedItem = this._findSelectedItem(this.items)!;
+
+		await renderFinished();
+		selectedItem.getDomRef().focus();
 	}
 
 	_selectItem(item: SideNavigationItemBase) {
@@ -435,8 +600,19 @@ class SideNavigation extends UI5Element {
 		});
 
 		item.selected = true;
+
+		if (this.collapsed && item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
+			item.getDomRef().classList.remove("ui5-sn-item-hidden");
+		}
 	}
 
+	get _overflowDom() {
+		return this.shadowRoot!.querySelector<Button>(".ui5-sn-item-overflow");
+	}
+
+	get isOverflow() {
+		return this._isOverflow;
+	}
 	static async onDefine() {
 		[SideNavigation.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents-fiori"),

@@ -10,6 +10,7 @@
 			{{#each items}}
 				{{> menuitem }}
 			{{/each}}
+			{{> overflowItem}}
 		</div>
 	{{else}}
 		<ul role="tree"
@@ -210,4 +211,15 @@
 			</ul>
 		{{/if}}
 	</li>
+{{/inline}}
+
+{{#*inline overflowItem}}
+	<ui5-button id="{{_id}}"
+					class="ui5-sn-item ui5-sn-item-level1 ui5-sn-item-overflow"
+					role="menuitemradio"
+					@click="{{_handleOverflowClick}}"
+					design="Transparent"
+					icon="overflow"
+				>
+		</ui5-button>	
 {{/inline}}
