@@ -69,10 +69,7 @@ let activeRadio: RadioButton;
  * <code>import "@ui5/webcomponents/dist/RadioButton";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.RadioButton
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-radio-button
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -86,7 +83,6 @@ let activeRadio: RadioButton;
 /**
  * Fired when the component checked state changes.
  *
- * @event sap.ui.webc.main.RadioButton#change
  * @public
  * @since 1.0.0-rc.15
  */
@@ -98,9 +94,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.RadioButton.prototype.disabled
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -112,9 +106,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * <b>Note:</b> A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.RadioButton.prototype.readonly
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -123,9 +115,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.RadioButton.prototype.required
+	 * @default false
 	 * @public
 	 * @since 1.9.0
 	 */
@@ -139,11 +129,9 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * either by clicking/tapping on the component,
 	 * or by using the Space or Enter key.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @formEvents change
 	 * @formProperty
-	 * @name sap.ui.webc.main.RadioButton.prototype.checked
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -153,9 +141,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * Defines the text of the component.
 	 *
-	 * @type  {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.RadioButton.prototype.text
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -164,9 +150,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.RadioButton.prototype.valueState
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -193,9 +177,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.RadioButton.prototype.name
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -209,9 +191,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * <b>Important:</b> For the <code>value</code> property to have effect, you must add the following import to your project:
 	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.RadioButton.prototype.value
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -221,9 +201,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * Defines whether the component text wraps when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.RadioButton.prototype.wrappingType
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
@@ -232,9 +210,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.RadioButton.prototype.accessibleName
+	 * @default ""
 	 * @public
 	 * @since 1.6.0
 	 */
@@ -244,9 +220,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * Defines the IDs of the elements that label the component.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.RadioButton.prototype.accessibleNameRef
+	 * @default ""
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -258,7 +232,7 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -267,8 +241,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 	 * when <code>name</code> property is set.
-	 * @type {HTMLElement[]}
-	 * @slot
 	 * @private
 	 */
 	@slot()

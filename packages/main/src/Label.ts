@@ -32,11 +32,9 @@ import labelCss from "./generated/themes/Label.css.js";
  * <code>import "@ui5/webcomponents/dist/Label";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Label
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-label
+ * @extends UI5Element
  * @public
+ * @slot {Node[]} default - Defines the text of the component.
  */
 @customElement({
 	tag: "ui5-label",
@@ -51,9 +49,7 @@ class Label extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Label.prototype.for
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -63,9 +59,7 @@ class Label extends UI5Element {
 	 * Defines whether colon is added to the component text.
 	 * <br><br>
 	 * <b>Note:</b> Usually used in forms.
-	 * @name sap.ui.webc.main.Label.prototype.showColon
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -78,9 +72,7 @@ class Label extends UI5Element {
 	 * In that case the <code>required</> property of
 	 * the corresponding input should also be set.
 	 *
-	 * @name sap.ui.webc.main.Label.prototype.required
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -90,9 +82,7 @@ class Label extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @name sap.ui.webc.main.Label.prototype.wrappingType
-	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
@@ -103,16 +93,6 @@ class Label extends UI5Element {
 	static async onDefine() {
 		Label.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
-
-	/**
-	 * Defines the text of the component.
-	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @public
-	 * @name sap.ui.webc.main.Label.prototype.default
-	 */
 
 	_onclick() {
 		if (!this.for) {

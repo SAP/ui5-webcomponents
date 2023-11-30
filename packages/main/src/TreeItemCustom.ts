@@ -8,6 +8,7 @@ import TreeItemCustomTemplate from "./generated/templates/TreeItemCustomTemplate
 
 // Styles
 import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
+import { ITreeItem } from "./Interfaces.js";
 
 /**
  * @class
@@ -18,27 +19,17 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  *
  * You can use this item to put any custom content inside the tree item.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-tree-item-custom</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>title - Used to style the title of the tree list item</li>
- * <li>additionalText - Used to style the additionalText of the tree list item</li>
- * <li>icon - Used to style the icon of the tree list item</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/TreeItemCustom.js";</code>
  *
+ * @csspart title - Used to style the title of the tree list item
+ * @csspart additionalText - Used to style the additionalText of the tree list item
+ * @csspart icon - Used to style the icon of the tree list item
+ *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TreeItemCustom
- * @extends sap.ui.webc.main.TreeItemBase
- * @tagname ui5-tree-item-custom
+ * @extends TreeItemBase
  * @public
- * @implements sap.ui.webc.main.ITreeItem
+ * @implements {ITreeItem}
  * @since 1.9.2
  */
 @customElement({
@@ -46,14 +37,12 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 	template: TreeItemCustomTemplate,
 	styles: [TreeItemBase.styles, treeItemCustomCss],
 })
-class TreeItemCustom extends TreeItemBase {
+class TreeItemCustom extends TreeItemBase implements ITreeItem {
 	/**
 	 * Defines whether the tree list item should display the selection element.
 	 *
-	 * @type {Boolean}
-	 * @name sap.ui.webc.main.TreeItemCustom.prototype.hideSelectionElement
 	 * @public
-	 * @defaultValue false
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	hideSelectionElement!: boolean;
@@ -61,9 +50,6 @@ class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines the content of the <code>ui5-tree-item</code>.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.TreeItemCustom.prototype.content
-	 * @slot content
 	 * @public
 	 */
 	@slot()

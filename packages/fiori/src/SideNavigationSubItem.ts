@@ -13,13 +13,9 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigationSubItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-side-navigation-sub-item
+ * @extends SideNavigationItemBase
  * @public
  * @abstract
- * @implements sap.ui.webc.fiori.ISideNavigationSubItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-sub-item")

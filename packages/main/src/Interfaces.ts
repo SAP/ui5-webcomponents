@@ -4,20 +4,11 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
- * @name sap.ui.webc.main.IAvatar
- * @interface
  * @public
  */
-const IAvatar = "sap.ui.webc.main.IAvatar";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-breadcrumbs</code> as options
- *
- * @name sap.ui.webc.main.IBreadcrumbsItem
- * @interface
- * @public
- */
-const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
+interface IAvatar {
+	isUI5Element: boolean,
+}
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -25,15 +16,6 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
  * @public
  */
 interface IButton extends HTMLElement, ITabbable {}
-
-/**
- * Interface for components that may be slotted inside <code>ui5-card</code> as header
- *
- * @name sap.ui.webc.main.ICardHeader
- * @interface
- * @public
- */
-const ICardHeader = "sap.ui.webc.main.ICardHeader";
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-combobox</code>
@@ -57,11 +39,9 @@ interface IColorPaletteItem extends UI5Element, ITabbable {
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IIcon
- * @interface
  * @public
  */
-const IIcon = "sap.ui.webc.main.IIcon";
+interface IIcon extends HTMLElement { }
 
 /**
  * Interface for components that represent an input, usable in numerous higher-order components
@@ -82,15 +62,6 @@ const IInput = "sap.ui.webc.main.IInput";
 const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
 
 /**
- * Interface for components that may be slotted inside a <code>ui5-list</code> as items
- *
- * @name sap.ui.webc.main.IListItem
- * @interface
- * @public
- */
-const IListItem = "sap.ui.webc.main.IListItem";
-
-/**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
  *
  * @name sap.ui.webc.main.IMultiComboBoxItem
@@ -98,15 +69,6 @@ const IListItem = "sap.ui.webc.main.IListItem";
  * @public
  */
 const IMultiComboBoxItem = "sap.ui.webc.main.IMultiComboBoxItem";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-select</code> as options
- *
- * @name sap.ui.webc.main.ISelectOption
- * @interface
- * @public
- */
-const ISelectOption = "sap.ui.webc.main.ISelectOption";
 
 /**
  * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
@@ -120,22 +82,23 @@ interface ISegmentedButtonItem extends UI5Element {
 }
 
 /**
- * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
+ * Interface for components that may be slotted inside <code>ui5-select</code> as options
  *
- * @name sap.ui.webc.main.ISelectMenuOption
- * @interface
  * @public
  */
-const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
- *
- * @name sap.ui.webc.main.ITab
- * @interface
- * @public
- */
-const ITab = "sap.ui.webc.main.ITab";
+interface IOption extends UI5Element {
+	selected: boolean,
+	disabled: boolean,
+	title: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	_focused?: boolean,
+	focused?: boolean,
+	text?: Array<Node>,
+	stableDomRef: string,
+	displayText?: string,
+}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-table</code> as rows
@@ -176,51 +139,28 @@ const IToken = "sap.ui.webc.main.IToken";
 /**
  * Interface for tree items for the purpose of <code>ui5-tree</code>
  *
- * @name sap.ui.webc.main.ITreeItem
- * @interface
  * @public
  */
-const ITreeItem = "sap.ui.webc.main.ITreeItem";
-
-/**
- * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
- *
- * @name sap.ui.webc.main.IToolbarItem
- * @interface
- * @public
- */
-const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
-
-/**
- * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
- *
- * @name sap.ui.webc.main.IToolbarSelectOption
- * @interface
- * @public
- */
-const IToolbarSelectOption = "sap.ui.webc.main.IToolbarSelectOption";
+interface ITreeItem extends HTMLElement {
+	items: Array<ITreeItem>;
+	_setsize: number;
+	_posinset: number;
+}
 
 export {
 	IAvatar,
-	IBreadcrumbsItem,
 	IButton,
-	ICardHeader,
 	IColorPaletteItem,
 	IComboBoxItem,
 	IIcon,
 	IInput,
 	IInputSuggestionItem,
-	IListItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
-	ISelectOption,
-	ISelectMenuOption,
-	ITab,
+	IOption,
 	ITableCell,
 	ITableColumn,
 	ITableRow,
 	IToken,
 	ITreeItem,
-	IToolbarItem,
-	IToolbarSelectOption,
 };

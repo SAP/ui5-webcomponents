@@ -30,6 +30,7 @@ import {
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
+import type { IUploadCollectionItem } from "./Interfaces";
 
 // Template
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
@@ -48,12 +49,10 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.UploadCollectionItem
- * @extends sap.ui.webc.main.ListItem
- * @tagname ui5-upload-collection-item
+ * @extends ListItem
  * @public
- * @implements sap.ui.webc.fiori.IUploadCollectionItem
+ * @implements {IUploadCollectionItem}
+ * @slot {Node[]} default - Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
  * @since 1.0.0-rc.7
  */
 @customElement({
@@ -76,7 +75,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * <br><br>
  * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#file-name-click
  * @public
  */
 @event("file-name-click")
@@ -87,7 +85,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * <b>Note:</b> An edit button is displayed on each item,
  * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#rename
  * @public
  */
 @event("rename")
@@ -97,7 +94,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * <br><br>
  * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#terminate
  * @public
  */
 @event("terminate")
@@ -107,7 +103,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * <br><br>
  * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
  *
- * @event sap.ui.webc.fiori.UploadCollectionItem#retry
  * @public
  */
 @event("retry")
@@ -115,7 +110,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 /**
  * @since 1.0.0-rc.8
  *
- * @event
  * @private
  */
 @event("_focus-requested")
@@ -124,24 +118,20 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @private
  */
 @event("_uci-delete")
-class UploadCollectionItem extends ListItem {
+class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Holds an instance of <code>File</code> associated with this item.
 	 *
-	 * @type {File}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.file
-	 * @defaultvalue null
+	 * @default null
 	 * @public
 	 */
 	@property({ type: Object, noAttribute: true, defaultValue: null })
-	file?: object;
+	file?: File | null;
 
 	/**
 	 * The name of the file.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.fileName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -150,9 +140,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.fileNameClickable
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -161,9 +149,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * Disables the delete button.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.disableDeleteButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean, noAttribute: false })
@@ -173,9 +159,7 @@ class UploadCollectionItem extends ListItem {
 	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
 	 * Setting this property to <code>true</code> will hide the delete button.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideDeleteButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -184,9 +168,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * Hides the retry button when <code>uploadState</code> property is <code>Error</code>.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideRetryButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -195,9 +177,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * Hides the terminate button when <code>uploadState</code> property is <code>Uploading</code>.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideTerminateButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -208,9 +188,7 @@ class UploadCollectionItem extends ListItem {
 	 * <br><br>
 	 * <b>Note:</b> Expected values are in the interval [0, 100].
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.progress
-	 * @defaultvalue 0
+	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -221,9 +199,7 @@ class UploadCollectionItem extends ListItem {
 	 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
 	 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
 	 *
-	 * @type {sap.ui.webc.fiori.types.UploadState}
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.uploadState
-	 * @defaultvalue "Ready"
+	 * @default "Ready"
 	 * @public
 	 */
 	@property({ type: UploadState, defaultValue: UploadState.Ready })
@@ -232,8 +208,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * Indicates if editing.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -244,22 +219,10 @@ class UploadCollectionItem extends ListItem {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-icon</code> or <code>img</code> for the intended design.
 	 *
-	 * @type {HTMLElement}
-	 * @slot
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.thumbnail
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
 	thumbnail!: Array<HTMLElement>;
-
-	/**
-	 * Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.default
-	 * @public
-	 */
 
 	static i18nFioriBundle: I18nBundle;
 

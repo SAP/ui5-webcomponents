@@ -80,12 +80,9 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 }
 
 /**
+ * @class
  * Base class for all UI5 Web Components
  *
- * @class
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.base.UI5Element
  * @extends HTMLElement
  * @public
  */
@@ -230,40 +227,43 @@ abstract class UI5Element extends HTMLElement {
 	 * Called every time before the component renders.
 	 * @public
 	 */
-	onBeforeRendering() {}
+	onBeforeRendering(): void {}
 
 	/**
 	 * Called every time after the component renders.
 	 * @public
 	 */
-	onAfterRendering() {}
+	onAfterRendering(): void {}
 
 	/**
 	 * Called on connectedCallback - added to the DOM.
 	 * @public
 	 */
-	onEnterDOM() {}
+	onEnterDOM(): void {}
 
 	/**
 	 * Called on disconnectedCallback - removed from the DOM.
 	 * @public
 	 */
-	onExitDOM() {}
+	onExitDOM(): void {}
 
 	/**
 	 * @private
 	 */
 	_startObservingDOMChildren() {
 		const ctor = this.constructor as typeof UI5Element;
-		const shouldObserveChildren = ctor.getMetadata().hasSlots();
+		const metadata = ctor.getMetadata();
+		const shouldObserveChildren = metadata.hasSlots();
+
 		if (!shouldObserveChildren) {
 			return;
 		}
 
-		const canSlotText = ctor.getMetadata().canSlotText();
+		const canSlotText = metadata.canSlotText();
+		const hasClonedSlot = Object.keys(metadata.getSlots()).some(slotName => metadata.getSlots()[slotName].cloned);
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: canSlotText,
+			subtree: canSlotText || hasClonedSlot,
 			characterData: canSlotText,
 		};
 		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
@@ -438,28 +438,28 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * Attach a callback that will be executed whenever the component is invalidated
 	 *
-	 * @param {InvalidationInfo} callback
+	 * @param callback
 	 * @public
 	 */
-	attachInvalidate(callback: (param: InvalidationInfo) => void) {
+	attachInvalidate(callback: (param: InvalidationInfo) => void): void {
 		this._invalidationEventProvider.attachEvent("invalidate", callback);
 	}
 
 	/**
 	 * Detach the callback that is executed whenever the component is invalidated
 	 *
-	 * @param {InvalidationInfo} callback
+	 * @param callback
 	 * @public
 	 */
-	detachInvalidate(callback: (param: InvalidationInfo) => void) {
+	detachInvalidate(callback: (param: InvalidationInfo) => void): void {
 		this._invalidationEventProvider.detachEvent("invalidate", callback);
 	}
 
 	/**
 	 * Callback that is executed whenever a monitored child changes its state
 	 *
-	 * @param {sting} slotName the slot in which a child was invalidated
-	 * @param { ChangeInfo } childChangeInfo the changeInfo object for the child in the given slot
+	 * @param slotName the slot in which a child was invalidated
+	 * @param childChangeInfo the changeInfo object for the child in the given slot
 	 * @private
 	 */
 	_onChildChange(slotName: string, childChangeInfo: ChangeInfo) {
@@ -576,24 +576,22 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns a singleton event listener for the "change" event of a child in a given slot
 	 *
 	 * @param slotName the name of the slot, where the child is
-	 * @returns {ChildChangeListener}
 	 * @private
 	 */
-	_getChildChangeListener(slotName: string) {
+	_getChildChangeListener(slotName: string): ChildChangeListener {
 		if (!this._childChangeListeners.has(slotName)) {
 			this._childChangeListeners.set(slotName, this._onChildChange.bind(this, slotName));
 		}
-		return this._childChangeListeners.get(slotName);
+		return this._childChangeListeners.get(slotName)!;
 	}
 
 	/**
 	 * Returns a singleton slotchange event listener that invalidates the component due to changes in the given slot
 	 *
 	 * @param slotName the name of the slot, where the slot element (whose slotchange event we're listening to) is
-	 * @returns {SlotChangeListener}
 	 * @private
 	 */
-	_getSlotChangeListener(slotName: string) {
+	_getSlotChangeListener(slotName: string): SlotChangeListener {
 		if (!this._slotChangeListeners.has(slotName)) {
 			this._slotChangeListeners.set(slotName, this._onSlotChange.bind(this, slotName));
 		}
@@ -658,7 +656,7 @@ abstract class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	onInvalidation(changeInfo: ChangeInfo) {} // eslint-disable-line
+	onInvalidation(changeInfo: ChangeInfo): void {} // eslint-disable-line
 
 	/**
 	 * Do not call this method directly, only intended to be called by js
@@ -746,7 +744,7 @@ abstract class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	getDomRef() {
+	getDomRef(): HTMLElement | undefined {
 		// If a component set _getRealDomRef to its children, use the return value of this function
 		if (typeof this._getRealDomRef === "function") {
 			return this._getRealDomRef();
@@ -769,7 +767,7 @@ abstract class UI5Element extends HTMLElement {
 	 * This is the element that will receive the focus by default.
 	 * @public
 	 */
-	getFocusDomRef() {
+	getFocusDomRef(): HTMLElement | undefined {
 		const domRef = this.getDomRef();
 		if (domRef) {
 			const focusRef = domRef.querySelector("[data-sap-focus-ref]") as HTMLElement;
@@ -782,17 +780,17 @@ abstract class UI5Element extends HTMLElement {
 	 * This is the element that will receive the focus by default.
 	 * @public
 	 */
-	async getFocusDomRefAsync() {
+	async getFocusDomRefAsync(): Promise<HTMLElement | undefined> {
 		await this._waitForDomRef();
 		return this.getFocusDomRef();
 	}
 
 	/**
 	 * Set the focus to the element, returned by "getFocusDomRef()" (marked by "data-sap-focus-ref")
-	 * @param {FocusOptions} focusOptions additional options for the focus
+	 * @param focusOptions additional options for the focus
 	 * @public
 	 */
-	async focus(focusOptions?: FocusOptions) {
+	async focus(focusOptions?: FocusOptions): Promise<void> {
 		await this._waitForDomRef();
 
 		const focusDomRef = this.getFocusDomRef();
@@ -809,9 +807,9 @@ abstract class UI5Element extends HTMLElement {
 	 * @param data - additional data for the event
 	 * @param cancelable - true, if the user can call preventDefault on the event object
 	 * @param bubbles - true, if the event bubbles
-	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
+	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
 		const camelCaseEventName = kebabToCamelCase(name);
 
@@ -856,27 +854,27 @@ abstract class UI5Element extends HTMLElement {
 	 * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.
 	 * @public
 	 */
-	getSlottedNodes<T = Node>(slotName: string) {
+	getSlottedNodes<T = Node>(slotName: string): Array<T> {
 		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]) as Array<T>;
 	}
 
 	/**
 	 * Attach a callback that will be executed whenever the component's state is finalized
 	 *
-	 * @param {} callback
+	 * @param callback
 	 * @public
 	 */
-	attachComponentStateFinalized(callback: () => void) {
+	attachComponentStateFinalized(callback: () => void): void {
 		this._componentStateFinalizedEventProvider.attachEvent("componentStateFinalized", callback);
 	}
 
 	/**
 	 * Detach the callback that is executed whenever the component's state is finalized
 	 *
-	 * @param {} callback
+	 * @param callback
 	 * @public
 	 */
-	detachComponentStateFinalized(callback: () => void) {
+	detachComponentStateFinalized(callback: () => void): void {
 		this._componentStateFinalizedEventProvider.detachEvent("componentStateFinalized", callback);
 	}
 
@@ -885,19 +883,19 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns: "rtl", "ltr" or undefined
 	 *
 	 * @public
-	 * @returns {String|undefined}
+	 * @default undefined
 	 */
-	get effectiveDir() {
+	get effectiveDir(): string | undefined {
 		markAsRtlAware(this.constructor as typeof UI5Element); // if a UI5 Element calls this method, it's considered to be rtl-aware
 		return getEffectiveDir(this);
 	}
 
 	/**
 	 * Used to duck-type UI5 elements without using instanceof
-	 * @returns {boolean}
 	 * @public
+	 * @default true
 	 */
-	get isUI5Element() {
+	get isUI5Element(): boolean {
 		return true;
 	}
 
@@ -930,7 +928,7 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @public
 	 */
-	getStaticAreaItemDomRef() {
+	getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
 		if (!(this.constructor as typeof UI5Element)._needsStaticArea()) {
 			throw new Error("This component does not use the static area");
 		}
@@ -1093,7 +1091,7 @@ abstract class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	static getUniqueDependencies(this: typeof UI5Element) {
+	static getUniqueDependencies(this: typeof UI5Element): Array<typeof UI5Element> {
 		if (!uniqueDependenciesCache.has(this)) {
 			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
 			uniqueDependenciesCache.set(this, filtered);
@@ -1104,8 +1102,6 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
-	 *
-	 * @returns {Promise}
 	 */
 	static whenDependenciesDefined(): Promise<Array<typeof UI5Element>> {
 		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
@@ -1115,18 +1111,16 @@ abstract class UI5Element extends HTMLElement {
 	 * Hook that will be called upon custom element definition
 	 *
 	 * @protected
-	 * @returns {Promise<void>}
 	 */
-	static async onDefine() {
+	static async onDefine(): Promise<void> {
 		return Promise.resolve();
 	}
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
-	 * @returns {Promise<UI5Element>}
 	 */
-	static async define() {
+	static async define(): Promise<typeof UI5Element> {
 		await boot();
 
 		await Promise.all([
@@ -1154,9 +1148,8 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns an instance of UI5ElementMetadata.js representing this UI5 Web Component's full metadata (its and its parents')
 	 * Note: not to be confused with the "get metadata()" method, which returns an object for this class's metadata only
 	 * @public
-	 * @returns {UI5ElementMetadata}
 	 */
-	static getMetadata() {
+	static getMetadata(): UI5ElementMetadata {
 		if (this.hasOwnProperty("_metadata")) { // eslint-disable-line
 			return this._metadata;
 		}
@@ -1176,7 +1169,6 @@ abstract class UI5Element extends HTMLElement {
 
 /**
  * Always use duck-typing to cover all runtimes on the page.
- * @returns {boolean}
  */
 const instanceOfUI5Element = (object: any): object is UI5Element => {
 	return "isUI5Element" in object;

@@ -14,6 +14,7 @@ type Slot = {
 	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
+	cloned?: boolean,
 };
 
 type SlotValue = Node;
@@ -45,7 +46,6 @@ type Metadata = {
 type State = Record<string, PropertyValue | Array<SlotValue>>;
 
 /**
- *
  * @class
  * @public
  */
@@ -106,7 +106,7 @@ class UI5ElementMetadata {
 	 * <b>Note:</b> Only intended for use by UI5Element.js
 	 * @public
 	 */
-	static validatePropertyValue(value: PropertyValue, propData: Property) {
+	static validatePropertyValue(value: PropertyValue, propData: Property): PropertyValue {
 		const isMultiple = propData.multiple;
 		if (isMultiple && value) {
 			return (value as Array<PropertyValue>).map((propValue: PropertyValue) => validateSingleProperty(propValue, propData));
@@ -118,9 +118,9 @@ class UI5ElementMetadata {
 	 * Validates the slot's value and returns it if correct
 	 * or throws an exception if not.
 	 * <b>Note:</b> Only intended for use by UI5Element.js
-	 * @pubic
+	 * @public
 	 */
-	static validateSlotValue(value: Node, slotData: Slot) {
+	static validateSlotValue(value: Node, slotData: Slot): Node {
 		return validateSingleSlot(value, slotData);
 	}
 
@@ -128,7 +128,7 @@ class UI5ElementMetadata {
 	 * Returns the tag of the UI5 Element without the scope
 	 * @public
 	 */
-	getPureTag() {
+	getPureTag(): string {
 		return this.metadata.tag || "";
 	}
 
@@ -136,7 +136,7 @@ class UI5ElementMetadata {
 	 * Returns the tag of the UI5 Element
 	 * @public
 	 */
-	getTag() {
+	getTag(): string {
 		const pureTag = this.metadata.tag;
 
 		if (!pureTag) {
@@ -155,9 +155,8 @@ class UI5ElementMetadata {
 	 * Determines whether a property should have an attribute counterpart
 	 * @public
 	 * @param propName
-	 * @returns {boolean}
 	 */
-	hasAttribute(propName: string) {
+	hasAttribute(propName: string): boolean {
 		const propData = this.getProperties()[propName];
 		return propData.type !== Object && !propData.noAttribute && !propData.multiple;
 	}
@@ -165,35 +164,31 @@ class UI5ElementMetadata {
 	/**
 	 * Returns an array with the properties of the UI5 Element (in camelCase)
 	 * @public
-	 * @returns {string[]}
 	 */
-	getPropertiesList() {
+	getPropertiesList(): Array<string> {
 		return Object.keys(this.getProperties());
 	}
 
 	/**
 	 * Returns an array with the attributes of the UI5 Element (in kebab-case)
 	 * @public
-	 * @returns {string[]}
 	 */
-	getAttributesList() {
+	getAttributesList(): Array<string> {
 		return this.getPropertiesList().filter(this.hasAttribute.bind(this)).map(camelToKebabCase);
 	}
 
 	/**
 	 * Determines whether this UI5 Element has a default slot of type Node, therefore can slot text
-	 * @returns {boolean}
 	 */
 	canSlotText() {
-		const defaultSlot = this.getSlots().default;
-		return defaultSlot && defaultSlot.type === Node;
+		return (this.getSlots().default)?.type === Node;
 	}
 
 	/**
 	 * Determines whether this UI5 Element supports any slots
 	 * @public
 	 */
-	hasSlots() {
+	hasSlots(): boolean {
 		return !!Object.entries(this.getSlots()).length;
 	}
 
@@ -201,7 +196,7 @@ class UI5ElementMetadata {
 	 * Determines whether this UI5 Element supports any slots with "individualSlots: true"
 	 * @public
 	 */
-	hasIndividualSlots() {
+	hasIndividualSlots(): boolean {
 		return this.slotsAreManaged() && Object.values(this.getSlots()).some(slotData => slotData.individualSlots);
 	}
 
@@ -209,7 +204,7 @@ class UI5ElementMetadata {
 	 * Determines whether this UI5 Element needs to invalidate if children are added/removed/changed
 	 * @public
 	 */
-	slotsAreManaged() {
+	slotsAreManaged(): boolean {
 		return !!this.metadata.managedSlots;
 	}
 
@@ -217,7 +212,7 @@ class UI5ElementMetadata {
 	 * Determines whether this control supports F6 fast navigation
 	 * @public
 	 */
-	supportsF6FastNavigation() {
+	supportsF6FastNavigation(): boolean {
 		return !!this.metadata.fastNavigation;
 	}
 
@@ -225,7 +220,7 @@ class UI5ElementMetadata {
 	 * Returns an object with key-value pairs of properties and their metadata definitions
 	 * @public
 	 */
-	getProperties() {
+	getProperties(): Record<string, Property> {
 		if (!this.metadata.properties) {
 			this.metadata.properties = {};
 		}
@@ -236,7 +231,7 @@ class UI5ElementMetadata {
 	 * Returns an object with key-value pairs of events and their metadata definitions
 	 * @public
 	 */
-	getEvents() {
+	getEvents(): EventData {
 		if (!this.metadata.events) {
 			this.metadata.events = {};
 		}
@@ -247,7 +242,7 @@ class UI5ElementMetadata {
 	 * Returns an object with key-value pairs of slots and their metadata definitions
 	 * @public
 	 */
-	 getSlots() {
+	 getSlots(): Record<string, Slot> {
 		if (!this.metadata.slots) {
 			this.metadata.slots = {};
 		}
@@ -256,17 +251,15 @@ class UI5ElementMetadata {
 
 	/**
 	 * Determines whether this UI5 Element has any translatable texts (needs to be invalidated upon language change)
-	 * @returns {boolean}
 	 */
-	isLanguageAware() {
+	isLanguageAware(): boolean {
 		return !!this.metadata.languageAware;
 	}
 
 	/**
 	 * Determines whether this UI5 Element has any theme dependant carachteristics.
-	 * @returns {boolean}
 	 */
-	 isThemeAware() {
+	 isThemeAware(): boolean {
 		return !!this.metadata.themeAware;
 	}
 
@@ -277,9 +270,8 @@ class UI5ElementMetadata {
 	 * @param slotName the name of the slot in which a child was changed
 	 * @param type the type of change in the child: "property" or "slot"
 	 * @param name the name of the property/slot that changed
-	 * @returns {boolean}
 	 */
-	shouldInvalidateOnChildChange(slotName: string, type: "property" | "slot", name: string) {
+	shouldInvalidateOnChildChange(slotName: string, type: "property" | "slot", name: string): boolean {
 		const config = this.getSlots()[slotName].invalidateOnChildChange;
 
 		// invalidateOnChildChange was not set in the slot metadata - by default child changes do not affect the component

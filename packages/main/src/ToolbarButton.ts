@@ -26,12 +26,8 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  *
  * @constructor
  * @abstract
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarButton
- * @extends sap.ui.webc.main.ToolbarItem
- * @tagname ui5-toolbar-button
+ * @extends ToolbarItem
  * @public
- * @implements sap.ui.webc.main.IToolbarItem
  * @since 1.17.0
  */
 @customElement({
@@ -46,7 +42,6 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * <b>Note:</b> The event will not be fired if the <code>disabled</code>
  * property is set to <code>true</code>.
  *
- * @event sap.ui.webc.main.ToolbarButton#click
  * @public
  */
 @event("click")
@@ -56,9 +51,7 @@ class ToolbarButton extends ToolbarItem {
 	 * <br><br>
 	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.disabled
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -77,9 +70,7 @@ class ToolbarButton extends ToolbarItem {
 	 * <li><code>Attention</code></li>
 	 * </ul>
 	 *
-	 * @type {ButtonDesign}
-	 * @defaultvalue "Default"
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.design
+	 * @default "Default"
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
@@ -92,9 +83,7 @@ class ToolbarButton extends ToolbarItem {
 	 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 	 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.icon
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -103,9 +92,7 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines whether the icon should be displayed after the component text.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.iconEnd
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -115,9 +102,7 @@ class ToolbarButton extends ToolbarItem {
 	 * Defines the tooltip of the component.
 	 * <br>
 	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @type {string}
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.tooltip
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -126,9 +111,7 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.accessibleName
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -137,9 +120,7 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property({ defaultValue: "" })
@@ -169,8 +150,7 @@ class ToolbarButton extends ToolbarItem {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
-	 * @type {object}
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.accessibilityAttributes
+	 * @default {}
 	 * @public
 	 */
 	@property({ type: Object })
@@ -179,9 +159,7 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Button text
 	 * @public
-	 * @defaultvalue ""
-	 * @type {string}
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.text
+	 * @default ""
 	 */
 	@property()
 	text!: string;
@@ -192,9 +170,7 @@ class ToolbarButton extends ToolbarItem {
 	 *
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
-	 * @name sap.ui.webc.main.ToolbarButton.prototype.width
-	 * @defaultvalue undefined
-	 * @type { sap.ui.webc.base.types.CSSSize }
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: CSSSize })

@@ -53,11 +53,9 @@ const DESIGN_DESCRIPTIONS = {
  *
  * @abstract
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Tab
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-tab
- * @implements sap.ui.webc.main.ITab
+ * @extends UI5Element
+ * @implements {ITab}
+ * @implements {ITabbable}
  * @public
  */
 @customElement({
@@ -75,30 +73,24 @@ const DESIGN_DESCRIPTIONS = {
 class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * The text to be displayed for the item.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.text
 	 */
 	@property()
 	text!: string;
 
 	/**
 	 * Disabled tabs can't be selected.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.disabled
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
 
 	/**
 	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.additionalText
 	 */
 	@property()
 	additionalText!: string;
@@ -108,10 +100,8 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * The SAP-icons font provides numerous built-in icons.
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.icon
 	 */
 	@property()
 	icon!: string;
@@ -131,10 +121,8 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> The design depends on the current theme.
-	 * @type {sap.ui.webc.main.types.SemanticColor}
-	 * @defaultvalue "Default"
+	 * @default "Default"
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.design
 	 */
 	@property({ type: SemanticColor, defaultValue: SemanticColor.Default })
 	design!: `${SemanticColor}`;
@@ -142,10 +130,8 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Specifies if the component is selected.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.Tab.prototype.selected
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
@@ -162,10 +148,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Holds the content associated with this tab.
 	 *
-	 * @type {Node[]}
 	 * @public
-	 * @slot
-	 * @name sap.ui.webc.main.Tab.prototype.default
 	 */
 	@slot({
 		type: Node,
@@ -182,10 +165,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITab[]}
 	 * @public
-	 * @slot subTabs
-	 * @name sap.ui.webc.main.Tab.prototype.subTabs
 	 */
 	@slot({
 		type: HTMLElement,
@@ -271,12 +251,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
 	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
 	 *
-	 * @function
 	 * @public
-     * @name sap.ui.webc.main.Tab.prototype.getTabInStripDomRef
 	 * @since 1.0.0-rc.16
 	 */
-	getTabInStripDomRef() {
+	getTabInStripDomRef() : ITab | null {
 		if (this._getElementInStrip) {
 			return this._getElementInStrip();
 		}

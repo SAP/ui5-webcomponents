@@ -88,12 +88,8 @@ type PopupClickEventDetail = {
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code> (for <code>ui5-side-navigation-sub-item</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigation
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-side-navigation
+ * @extends UI5Element
  * @since 1.0.0-rc.8
- * @appenddocs sap.ui.webc.fiori.SideNavigationItem sap.ui.webc.fiori.SideNavigationSubItem
  * @public
  */
 
@@ -115,13 +111,15 @@ type PopupClickEventDetail = {
 /**
  * Fired when the selection has changed via user interaction
  *
- * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.SideNavigationItemBase} item the clicked item.
+ * @param {SideNavigationItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -130,9 +128,7 @@ class SideNavigation extends UI5Element {
 	 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.collapsed
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	collapsed!: boolean;
@@ -143,9 +139,6 @@ class SideNavigation extends UI5Element {
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
-	 * @slot items
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
@@ -157,10 +150,7 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
 	 *
 	 * @public
-	 * @type {HTMLElement[]}
 	 * @since 1.0.0-rc.11
-	 * @slot header
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.header
 	 */
 	@slot()
 	header!: Array<HTMLElement>;
@@ -172,9 +162,6 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
-	 * @slot fixedItems
-	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;
