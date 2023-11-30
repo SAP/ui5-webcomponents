@@ -74,6 +74,15 @@ OpeningMenu.decorators = [
 	</script>`;}
 ];
 
+OpeningMenu.parameters = {
+	docs: {
+		story: {
+			inline: false,
+			iframeHeight: "150px",
+		},
+	}
+};
+
 export const DifferentDesigns: StoryFn = () => html`
 	<ui5-split-button design="${ButtonDesign.Emphasized}"> Emphasized </ui5-split-button>
 	<ui5-split-button design="${ButtonDesign.Attention}"> Attention </ui5-split-button>
