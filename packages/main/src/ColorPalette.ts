@@ -25,6 +25,7 @@ import Button from "./Button.js";
 import type Dialog from "./Dialog.js";
 import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
+import type { IColorPaletteItem } from "./Interfaces.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,
@@ -35,7 +36,7 @@ import {
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
 import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
 
-type ColorPaletteNavigationItem = ColorPaletteItem | Button;
+type ColorPaletteNavigationItem = IColorPaletteItem | Button;
 
 type ColorPaletteItemClickEventDetail = {
 	color: string,
@@ -152,7 +153,7 @@ class ColorPalette extends UI5Element {
 		individualSlots: true,
 	})
 
-	colors!: Array<ColorPaletteItem>;
+	colors!: Array<IColorPaletteItem>;
 
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
@@ -202,7 +203,7 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	selectColor(item: ColorPaletteItem) {
+	selectColor(item: IColorPaletteItem) {
 		if (!item.value) {
 			return;
 		}
@@ -391,7 +392,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get displayedColors() {
-		const colors = this.getSlottedNodes<ColorPaletteItem>("colors");
+		const colors = this.getSlottedNodes<IColorPaletteItem>("colors");
 		return colors.filter(item => item.value).slice(0, 15);
 	}
 

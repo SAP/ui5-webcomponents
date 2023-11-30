@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
@@ -23,7 +24,7 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
  *
  * @public
  */
-interface IButton extends HTMLElement {}
+interface IButton extends HTMLElement, ITabbable {}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-card</code> as header
@@ -48,7 +49,10 @@ const IComboBoxItem = "sap.ui.webc.main.IComboBoxItem";
  *
  * @public
  */
-interface IColorPaletteItem extends HTMLElement {}
+interface IColorPaletteItem extends UI5Element, ITabbable {
+	value?: string,
+	index?: number,
+}
 
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components

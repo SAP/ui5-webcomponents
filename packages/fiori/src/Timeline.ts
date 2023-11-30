@@ -12,6 +12,7 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
+import type { ITimelineItem } from "./Interfaces.js";
 
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
@@ -79,7 +80,7 @@ class Timeline extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })
-	items!: Array<TimelineItem>;
+	items!: Array<ITimelineItem>;
 
 	static i18nBundle: I18nBundle;
 
@@ -137,7 +138,7 @@ class Timeline extends UI5Element {
 	_handleTabNextOrPrevious(e: KeyboardEvent, isNext?: boolean) {
 		const target = e.target as TimelineItem;
 		const nextTargetIndex = isNext ? this.items.indexOf(target) + 1 : this.items.indexOf(target) - 1;
-		const nextTarget = this.items[nextTargetIndex];
+		const nextTarget = this.items[nextTargetIndex] as TimelineItem;
 		if (!nextTarget) {
 			return;
 		}

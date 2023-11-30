@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import type { ITimelineItem } from "./Interfaces";
@@ -48,7 +47,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @public
  */
 @event("name-click")
-class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
+class TimelineItem extends UI5Element implements ITimelineItem {
 	/**
 	 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 	 * SAP-icons font provides numerous options.
@@ -127,7 +126,6 @@ class TimelineItem extends UI5Element implements ITabbable, ITimelineItem {
 
 	/**
 	 * Focus the internal link.
-	 * @protected
 	 */
 	focusLink() {
 		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();

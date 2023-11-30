@@ -123,7 +123,6 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines the content of the component.
 	 *
-	 * @default []
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
