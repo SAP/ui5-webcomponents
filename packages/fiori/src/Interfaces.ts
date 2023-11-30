@@ -72,15 +72,6 @@ interface ITimelineItem extends UI5Element, ITabbable {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IUploadCollectionItem extends HTMLElement { }
 
-/**
- * Interface for components that may be slotted inside <code>ui5-wizard</code> as wizard steps
- *
- * @name sap.ui.webc.fiori.IWizardStep
- * @interface
- * @public
- */
-const IWizardStep = "sap.ui.webc.fiori.IWizardStep";
-
 export {
 	IBar,
 	IMediaGalleryItem,
@@ -89,5 +80,4 @@ export {
 	IShellBarItem,
 	ITimelineItem,
 	IUploadCollectionItem,
-	IWizardStep,
 };
