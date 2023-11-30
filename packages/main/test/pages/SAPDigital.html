@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html role="application">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>SAP Digital</title>
+	<script src="../../bundle.esm.js" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/SAPDigital.css">
+</head>
+
+<body class="bg">
+	<style>
+		ui5-message-strip {
+			margin-bottom: 1rem;
+		}
+		.ms-text--error {
+			color: var(--sapNegativeColor);
+			font-weight: bold;
+		}
+		.ms-text--warning {
+			color: var(--sapWarningColor);
+			font-weight: bold;
+		}
+		.ms-text--success {
+			color: var(--sapPositiveColor);
+			font-weight: bold;
+		}
+		.ms-text--information {
+			color: var(--sapInformationColor);
+			font-weight: bold;
+		}
+	</style>
+
+	<ui5-title level="H4">MessageStrip</ui5-title>
+	<ui5-message-strip design="Negative"><span class="ms-text--error">Error:</span> This is an error message.</ui5-message-strip>
+	<ui5-message-strip design="Warning"><span class="ms-text--warning">Warning:</span> This is a warning message.</ui5-message-strip>
+	<ui5-message-strip design="Positive"><span class="ms-text--success">Positive:</span> This is a success message.</ui5-message-strip>
+	<ui5-message-strip design="Information"><span class="ms-text--information">Information:</span>  This is a information message.</ui5-message-strip>
+
+	<style>
+		.badge {
+			background: var(--sapContent_Illustrative_Color7);
+			border: 1px solid var(--sapIndicationColor_5);
+			box-sizing: border-box;
+		}
+
+		.badge--m {
+			height: 26px;
+			padding: 4px 8px 4px 8px;
+			font-size: 14px;
+		}
+
+		.badge--s {
+			height: 18px;
+			padding: 4px 8px 4px 8px;
+			font-size: 12px;
+		}
+
+		.bagde-number {
+			border-radius: 16px;
+			background: var(--sapIndicationColor_5);
+			border: 1px solid var(--sapIndicationColor_5);
+			color: #fff;
+			padding: 0px 4px;
+		}
+	</style>
+
+	<ui5-title level="H4">Badge - S, M</ui5-title>
+	<section>
+		<ui5-badge class="badge badge--m" color-scheme="6" interactive>Info badge</ui5-badge>
+		<ui5-badge class="badge badge--s" color-scheme="6" interactive>Info badge</ui5-badge>
+	</section>
+
+	<section>
+		<ui5-badge class="badge badge--m bagde-number" color-scheme="2">72</ui5-badge>
+		<ui5-badge class="badge badge--s bagde-number" color-scheme="2">72</ui5-badge>
+	</section>
+	
+	<style>
+		.ui5Button-size--s {
+			height: 26px;
+		}
+		.ui5Button-size--s::part(button) {
+			padding: 5.5px 10px 5.5px 10px;
+		}
+
+		.ui5Button-size--m {
+			height: 36px; 
+		}
+		.ui5Button-size--m::part(button) {
+			padding: 9px 10px 9px 10px;
+		}
+		
+		.ui5Button-size--l {
+			height: 42px;
+		}
+		.ui5Button-size--l::part(button) {
+			padding: 12px 14px 12px 14px;
+		}
+
+
+		.ui5Button-size--s-icononly-paddings::part(button) {
+			padding: 6px;
+		}
+		.ui5Button-size--m-icononly-paddings::part(button) {
+			padding: 10px;
+		}
+		.ui5Button-size--l-icononly-paddings::part(button) {
+			padding: 12px;
+		}
+	</style>
+
+	<ui5-title level="H4">Button - S, M, L</ui5-title>
+	<section>
+		<ui5-button class="ui5Button-size--s">Default</ui5-button>
+		<ui5-button class="ui5Button-size--m">Default</ui5-button>
+		<ui5-button class="ui5Button-size--l">Default</ui5-button>
+	</section>
+
+	<section>
+		<ui5-button icon="bell" class="ui5Button-size--s ui5Button-size--s-icononly-paddings"></ui5-button>
+		<ui5-button icon="bell" class="ui5Button-size--m ui5Button-size--m-icononly-paddings"></ui5-button>
+		<ui5-button icon="bell" class="ui5Button-size--l ui5Button-size--l-icononly-paddings"></ui5-button>
+	</section>
+
+	
+
+	<ui5-title level="H4">TextArea</ui5-title>
+	<section>
+		<ui5-input  placeholder="Label" value="Value" value-state="Error"></ui5-input>
+		<br><br><br>
+		<ui5-textarea rows="5" id="basic-textarea-error" placeholder="Label" value="Value" value-state="Error"></ui5-textarea>
+	</section>
+	
+	
+	<ui5-title level="H4">List</ui5-title>
+	<section>
+		<ui5-list>
+			<ui5-li icon="nutrition-activity" description="Tropical plant with an edible fruit" additional-text="In-stock" additional-text-state="Success">Pineapple</ui5-li>
+			<ui5-li icon="nutrition-activity" description="Occurs between red and yellow" additional-text="Expires" additional-text-state="Warning">Orange</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The yellow lengthy fruit" additional-text="Re-stock" additional-text-state="Information">Blueberry</ui5-li>
+			<ui5-li icon="nutrition-activity" description="The tropical stone fruit" additional-text="Re-stock" additional-text-state="Error">Mango</ui5-li>
+		</ui5-list>
+	</section>
+
+	<section>
+		<ui5-list>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-icon name="accept" style="color: #223548"></ui5-icon></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Pinaapple</ui5-label>
+						</div>
+						<ui5-label>Tropical plant with an edible fruit</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-label style="font-weight: bold; color: #223548;">1. </ui5-label></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Pinaapple</ui5-label>
+						</div>
+						<ui5-label>Tropical plant with an edible fruit</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-icon name="circle-task-2" style="color: #223548; height: 0.25rem; width: 0.25rem"></ui5-icon></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Pinaapple</ui5-label>
+						</div>
+						<ui5-label>Tropical plant with an edible fruit</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+
+		</ui5-list>
+	</section>
+
+	<section>
+		<ui5-list>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-icon name="accept" style="color: #223548"></ui5-icon></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Standard List Item</ui5-label>
+						</div>
+						<ui5-label style="align-self: end;">standard</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-label style="font-weight: bold; color: #223548;">1. </ui5-label></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Standard List Item</ui5-label>
+						</div>
+						<ui5-label style="align-self: end;">standard</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-icon name="circle-task-2" style="color: #223548; height: 0.25rem; width: 0.25rem"></ui5-icon></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Standard List Item</ui5-label>
+						</div>
+						<ui5-label style="align-self: end;">standard</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+		</ui5-list>
+	</section>
+
+	<section>
+		<ui5-list mode="MultiSelect">
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-icon name="accept" style="color: black"></ui5-icon></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Pinaapple</ui5-label>
+						</div>
+						<ui5-label>Tropical plant with an edible fruit</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-label style="font-weight: bold; color: black;">1. </ui5-label></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Pinaapple</ui5-label>
+						</div>
+						<ui5-label>Tropical plant with an edible fruit</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom>
+				<div style="display: flex; flex-direction: row; padding: 0.25rem">
+					<div><ui5-icon name="circle-task-2" style="color: #223548; height: 0.25rem; width: 0.25rem"></ui5-icon></div>
+					<div style="display: flex; flex-direction: column; padding-inline-start: 0.5rem;">
+						<div style="margin-bottom: 0.25rem;">
+							<ui5-label style="font-weight: bold; color: #223548;">Pinaapple</ui5-label>
+						</div>
+						<ui5-label>Tropical plant with an edible fruit</ui5-label>
+					</div>
+				</div>
+			</ui5-li-custom>
+	
+		</ui5-list>
+	</section>
+	
+	<style>
+		ui5-toast::part(root) {
+			height: 3.313rem;
+			border-radius: 8px;
+			max-width: 100%;
+		}
+	</style>
+
+	<ui5-title level="H4">Toast</ui5-title>
+	<section>
+		<ui5-button id="btn1">Show Toast</ui5-button>
+		<ui5-toast id="toast1" placement="MiddleCenter" duration="500000">
+			<div style="display: flex; flex-direction: row; justify-content: space-between; box-sizing: border-box;">
+				<ui5-label>This is a standard message</ui5-label>
+				<ui5-icon name="decline" style="margin-inline-start: 1rem;"></ui5-icon>
+			</div>
+		</ui5-toast>
+
+
+		<ui5-button id="btn2">Show Toast</ui5-button>
+		<ui5-toast id="toast2" placement="TopCenter" duration="500000">
+			<div style="display: flex; flex-direction: row; justify-content: space-between; box-sizing: border-box;">
+				<ui5-icon name="error" style="color: var(--sapNegativeColor); margin-inline-end: 1rem; width: 1.125rem; height: 1.125rem;"></ui5-icon>
+				<ui5-label>This is an error message</ui5-label>
+				<ui5-icon name="decline" style="margin-inline-start: 1rem;"></ui5-icon>
+			</div>
+		</ui5-toast>
+
+		<ui5-button id="btn3">Show Toast</ui5-button>
+		<ui5-toast id="toast3" placement="BottomCenter" duration="500000">
+			<div style="display: flex; flex-direction: row; justify-content: space-between; box-sizing: border-box;">
+				<ui5-icon name="sys-enter-2" style="color: var(--sapNegativeColor); margin-inline-end: 1rem;  width: 1.125rem; height: 1.125rem;"></ui5-icon>
+				<ui5-label>This is an success message message message message message</ui5-label>
+				<ui5-icon name="decline" style="margin-inline-start: 1rem;"></ui5-icon>
+			</div>
+		</ui5-toast>
+	</section>
+</body>
+
+<script>
+	btn1.addEventListener('click', function () {
+		toast1.show();
+	});
+	btn2.addEventListener('click', function () {
+		toast2.show();
+	});
+	btn3.addEventListener('click', function () {
+		toast3.show();
+	});
+</script>
+</html>

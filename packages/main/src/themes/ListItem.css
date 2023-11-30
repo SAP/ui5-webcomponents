@@ -172,6 +172,7 @@
 }
 
 .ui5-li-icon {
+	align-self: baseline;
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);
 	color: var(--sapContent_NonInteractiveIconColor);

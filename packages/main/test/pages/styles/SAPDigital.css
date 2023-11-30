@@ -1,0 +1,16 @@
+.top {
+    margin-top: 3rem;
+}
+
+section, ui5-title {
+    margin-bottom: 1rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.bg {
+    background-color: var(--sapBackgroundColor);
+}

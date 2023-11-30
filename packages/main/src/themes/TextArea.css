@@ -3,6 +3,7 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	padding: 0.5rem 0
 }
 
 :host {
@@ -454,4 +455,16 @@
 
 :host([focused]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background-image: none;
+}
+
+.ui5-textarea-label {
+	position: absolute;
+	top: -10px;
+	left: 10px;
+	z-index: 2;
+	padding: 0 0.5rem;
+	color: var(--sapTextColor);
+	background-color: var(--sapBackgroundColor);
+	font-size: 0.75rem;
+	font-family: var(--sapFontFamily);
 }

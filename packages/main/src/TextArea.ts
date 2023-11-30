@@ -592,6 +592,14 @@ class TextArea extends UI5Element implements IFormElement {
 		};
 	}
 
+	get showLabel() {
+		return this.focused || !!this.value;
+	}
+
+	get _placehodler() {
+		return this.showLabel ? "" : this.placeholder;
+	}
+
 	get tabIndex() {
 		return this.disabled ? -1 : 0;
 	}

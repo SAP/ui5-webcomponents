@@ -17,7 +17,7 @@
 		<textarea
 			id="{{_id}}-inner"
 			class="ui5-textarea-inner"
-			placeholder="{{placeholder}}"
+			placeholder="{{_placehodler}}"
 			?disabled="{{disabled}}"
 			?readonly="{{readonly}}"
 			aria-label="{{ariaLabelText}}"
@@ -43,6 +43,10 @@
 
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
+	{{/if}}
+
+	{{#if showLabel}}
+		<span class="ui5-textarea-label">{{ placeholder }}</span>
 	{{/if}}
 
 	<slot name="formSupport"></slot>

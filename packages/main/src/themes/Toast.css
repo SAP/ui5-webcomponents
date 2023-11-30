@@ -5,7 +5,8 @@
 }
 
 :host([open]) .ui5-toast-root {
-	display: block;
+	display: flex;
+	align-items: center;
 }
 
 .ui5-toast-root {

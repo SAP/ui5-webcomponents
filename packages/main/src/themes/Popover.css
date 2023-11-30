@@ -1,6 +1,7 @@
 :host {
 	box-shadow: var(--_ui5_popover_box_shadow);
-	background-color: var(--_ui5_popover_background);
+	/* background-color: var(--_ui5_popover_background); */
+	background-color: transparent;
 	max-width: calc(100vw - (100vw - 100%) - 2 * var(--_ui5_popup_viewport_margin));
 }
 
