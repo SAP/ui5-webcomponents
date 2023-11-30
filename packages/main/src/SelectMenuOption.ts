@@ -10,7 +10,7 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
 import type { AccessibilityAttributes } from "./ListItem.js";
-import { IOption } from "./Interfaces.js";
+import { IButton, IOption } from "./Interfaces.js";
 
 /**
  * @class
@@ -107,7 +107,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@slot()
-	deleteButton!: Array<HTMLElement>;
+	deleteButton!: Array<IButton>;
 
 	get stableDomRef() {
 		return "";
