@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
 import {
-  Subtitle,
   Description,
   ArgsTable,
   PRIMARY_STORY,
@@ -52,11 +51,6 @@ export const TabbedArgsTable = ({ subComponents }: TabbedArgsTableProps) => {
         <>
           <br />
           <br />
-          <Subtitle>
-            <span style={{ fontWeight: "bold", color: "#000" }}>
-              {selectedTabText}
-            </span>
-          </Subtitle>
           <Description of={selectedTabText} />
           <ArgsTable of={selectedTabText} />
         </>
