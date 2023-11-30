@@ -140,6 +140,16 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	design!: `${SemanticColor}`;
 
 	/**
+	 * Defines whether this tab can be draggable.
+	 * Should be used in combination...............
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	draggable!: boolean;
+
+	/**
 	 * Specifies if the component is selected.
 	 *
 	 * @type {boolean}
@@ -264,6 +274,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get _hasOwnContent() {
 		return willShowContent(this.content);
+	}
+
+	get effectiveDraggable() {
+		return this.draggable || null;
 	}
 
 	/**
@@ -466,6 +480,22 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		}
 
 		return classes.join(" ");
+	}
+
+	_onDragStart(e: DragEvent) {
+		if (!e.dataTransfer || !e.target) {
+			console.error("dataTransfer is null");
+			return;
+		}
+
+		e.dataTransfer.dropEffect = "move";
+		const draggedTabId = `${(e.target as HTMLElement).id}`;
+		e.dataTransfer.setData("text/plain", draggedTabId);
+		// console.log(e)
+	}
+
+	_onDragEnd(e: DragEvent) {
+		e.preventDefault();
 	}
 
 	get overflowState() {

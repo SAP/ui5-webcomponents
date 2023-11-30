@@ -31,6 +31,8 @@
 			class="{{classes.tabStrip}}"
 			role="tablist"
 			aria-describedby="{{tablistAriaDescribedById}}"
+			@drop="{{_onDrop}}"
+			@dragover="{{_onDragOver}}"
 			@click="{{_onTabStripClick}}"
 			@keydown="{{_onTabStripKeyDown}}"
 			@keyup="{{_onTabStripKeyUp}}"

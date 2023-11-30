@@ -176,7 +176,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
  *
  * @event sap.ui.webc.main.TabContainer#tab-select
  * @param {HTMLElement} tab The selected <code>tab</code>.
- * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
+ * @param {Integer} tabIndex The selected <code>tab</code>'s index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
  * @public
  * @allowPreventDefault
  */
@@ -184,6 +184,24 @@ interface TabContainerTabInOverflow extends CustomListItem {
 	detail: {
 		tab: { type: HTMLElement },
 		tabIndex: { type: Number },
+	},
+})
+
+/**
+ * todo
+ *
+ * @public
+ */
+@event("tab-reorder", {
+	detail: {
+		source: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
+		destination: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
 	},
 })
 class TabContainer extends UI5Element {
@@ -1165,6 +1183,42 @@ class TabContainer extends UI5Element {
 
 	_getEndOverflowBtnDOM() {
 		return this._getEndOverflow().querySelector<Button>("[ui5-button]");
+	}
+
+	_onDragOver(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	_onDrop(e: DragEvent) {
+		e.preventDefault();
+		if (!e.dataTransfer) {
+			console.error("dataTransfer is null");
+			return;
+		}
+
+		const id = e.dataTransfer.getData("text/plain");
+		const droppedElement = this.shadowRoot!.querySelector<ITab>(`[id="${id}"]`);
+		if (!droppedElement) {
+			console.error("didnt find dropped tab in this tabcontainer");
+			return;
+		}
+
+		const droppedTab = droppedElement._realTab!;
+		const droppedTabParent = droppedTab.parentElement!;
+
+		this.fireEvent("tab-reorder", {
+			source: {
+				element: droppedTab,
+				index: [...droppedTabParent.children].indexOf(droppedTab),
+			},
+			destination: {
+				element: this, // todo
+				index: 1, // todo
+				insertBeforeElement: this.children[1],
+			},
+		});
+
+		droppedTab.focus();
 	}
 
 	async _respPopover() {
