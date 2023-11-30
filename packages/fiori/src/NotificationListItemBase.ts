@@ -10,7 +10,7 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
-import type NotificationAction from "./NotificationAction.js";
+import NotificationAction from "./NotificationAction.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -44,38 +44,35 @@ type NotificationListItemBaseCloseEventDetail = {
  *
  * The base class of the <code>NotificationListItem</code> and <code>NotificationListGroupItem</code>.
  *
- * @abstract
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.NotificationListItemBase
- * @extends sap.ui.webc.main.ListItemBase
+ * @extends ListItemBase
  * @since 1.0.0-rc.8
  * @public
  */
+@customElement({
+	staticAreaStyles: NotificationOverflowActionsPopoverCss,
+	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
+})
 
 /**
  * Fired when the <code>Close</code> button is pressed.
  *
- * @event sap.ui.webc.fiori.NotificationListItemBase#close
  * @param {HTMLElement} item the closed item.
  * @public
  */
 @event("close", {
 	 detail: {
+		/**
+		 * @public
+		 */
 		item: HTMLElement,
 	},
-})
-@customElement({
-	staticAreaStyles: NotificationOverflowActionsPopoverCss,
-	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
 })
 class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the <code>titleText</code> of the item.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.titleText
 	 */
 	@property()
 	titleText!: string;
@@ -83,20 +80,16 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the <code>priority</code> of the item.
 	 *
-	 * @type {sap.ui.webc.main.types.Priority}
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.priority
 	 */
 	@property({ type: Priority, defaultValue: Priority.None })
 	priority!: `${Priority}`;
 
 	/**
 	 * Defines if the <code>close</code> button would be displayed.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.showClose
 	 */
 	@property({ type: Boolean })
 	showClose!: boolean;
@@ -106,20 +99,16 @@ class NotificationListItemBase extends ListItemBase {
 	 * <br><br>
 	 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
 	 * if set to true - it has a normal font.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.read
 	 */
 	@property({ type: Boolean })
 	read!: boolean;
 
 	/**
 	 * Defines if a busy indicator would be displayed over the item.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.busy
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
@@ -128,10 +117,8 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultValue 1000
+	 * @default 1000
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.busyDelay
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
 	busyDelay!: number;
@@ -141,10 +128,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * <br><br>
 	 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 	 *
-	 * @type {sap.ui.webc.fiori.INotificationAction[]}
-	 * @slot
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.actions
 	 */
 	@slot()
 	actions!: Array<NotificationAction>

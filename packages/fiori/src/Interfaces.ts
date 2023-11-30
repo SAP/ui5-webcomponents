@@ -37,22 +37,12 @@ interface IMediaGalleryItem {
 }
 
 /**
- * Interface for components that may be slotted as an action inside <code>ui5-li-notification</code> and <code>ui5-li-notification-group</code>
- *
- * @name sap.ui.webc.fiori.INotificationAction
- * @interface
- * @public
- */
-const INotificationAction = "sap.ui.webc.fiori.INotificationAction";
-
-/**
  * Interface for components that may be slotted inside a notification list
  *
- * @name sap.ui.webc.fiori.INotificationListItem
- * @interface
  * @public
  */
-const INotificationListItem = "sap.ui.webc.fiori.INotificationListItem";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface INotificationListItem extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside <code>ui5-product-switch</code> as items
@@ -69,22 +59,13 @@ interface IProductSwitchItem {
 }
 
 /**
- * Interface for components that may be slotted inside <code>ui5-side-navigation</code> as items
+ * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
  *
- * @name sap.ui.webc.fiori.ISideNavigationItem
+ * @name sap.ui.webc.fiori.IShellBarItem
  * @interface
  * @public
  */
-const ISideNavigationItem = "sap.ui.webc.fiori.ISideNavigationItem";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-side-navigation-item</code> as sub-items
- *
- * @name sap.ui.webc.fiori.ISideNavigationSubItem
- * @interface
- * @public
- */
-const ISideNavigationSubItem = "sap.ui.webc.fiori.ISideNavigationSubItem";
+const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
 
 /**
  * Interface for components that may be slotted inside <code>ui5-view-settings-dialog</code> as sort items
@@ -107,11 +88,10 @@ const ITimelineItem = "sap.ui.webc.fiori.ITimelineItem";
 /**
  * Interface for components that may be slotted inside <code>ui5-upload-collection</code> as items
  *
- * @name sap.ui.webc.fiori.IUploadCollectionItem
- * @interface
  * @public
  */
-const IUploadCollectionItem = "sap.ui.webc.fiori.IUploadCollectionItem";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IUploadCollectionItem extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside <code>ui5-wizard</code> as wizard steps
@@ -127,11 +107,9 @@ export {
 	IFilterItem,
 	IFilterItemOption,
 	IMediaGalleryItem,
-	INotificationAction,
 	INotificationListItem,
 	IProductSwitchItem,
-	ISideNavigationItem,
-	ISideNavigationSubItem,
+	IShellBarItem,
 	ISortItem,
 	ITimelineItem,
 	IUploadCollectionItem,

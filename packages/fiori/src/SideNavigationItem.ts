@@ -19,13 +19,9 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigationItem
- * @extends sap.ui.webc.fiori.SideNavigationItemBase
+ * @extends SideNavigationItemBase
  * @abstract
- * @tagname ui5-side-navigation-item
  * @public
- * @implements sap.ui.webc.fiori.ISideNavigationItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-item")
@@ -34,9 +30,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * Defines if the item is expanded
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.expanded
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	expanded!: boolean;
@@ -45,9 +39,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * Defines if the item should be collapsible or not.
 	 * It is true, for example, for the items inside the Popover of the Side Navigation
 	 * @private
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype._fixed
+	 * @default false
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -56,10 +48,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	/**
      * Defines nested items by passing <code>ui5-side-navigation-sub-item</code> to the default slot.
 	 *
-	 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
 	 * @public
-	 * @slot items
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
@@ -70,9 +59,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * By default, only clicking the arrow icon will toggle the sub items.
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.wholeItemToggleable
+	 * @default false
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ type: Boolean })

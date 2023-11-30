@@ -1,3 +1,4 @@
+import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 /**
@@ -14,16 +15,8 @@ interface IAvatar {
  *
  * @public
  */
-interface IButton extends HTMLElement { }
-
-/**
- * Interface for components that may be slotted inside <code>ui5-card</code> as header
- *
- * @name sap.ui.webc.main.ICardHeader
- * @interface
- * @public
- */
-const ICardHeader = "sap.ui.webc.main.ICardHeader";
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IButton extends HTMLElement, ITabbable { }
 
 /**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
@@ -124,15 +117,6 @@ interface IOption extends UI5Element {
 }
 
 /**
- * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
- *
- * @name sap.ui.webc.main.ITab
- * @interface
- * @public
- */
-const ITab = "sap.ui.webc.main.ITab";
-
-/**
  * Interface for components that may be slotted inside a <code>ui5-table</code> as rows
  *
  * @name sap.ui.webc.main.ITableRow
@@ -182,7 +166,6 @@ interface ITreeItem extends HTMLElement {
 export {
 	IAvatar,
 	IButton,
-	ICardHeader,
 	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
@@ -193,7 +176,6 @@ export {
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	IOption,
-	ITab,
 	ITableCell,
 	ITableColumn,
 	ITableRow,

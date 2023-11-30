@@ -96,22 +96,16 @@ type CarouselNavigateEventDetail = {
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
  * <br>
- * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>content - Used to style the content of the component</li>
- * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Carousel
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-carousel
+ * @extends UI5Element
  * @since 1.0.0-rc.6
  * @public
+ * @csspart content - Used to style the content of the component
  */
 @customElement({
 	tag: "ui5-carousel",
@@ -130,13 +124,15 @@ type CarouselNavigateEventDetail = {
  * when the user clicks on the navigation arrows or while resizing,
  * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
  *
- * @event sap.ui.webc.main.Carousel#navigate
  * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
  */
 @event("navigate", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedIndex: { type: Integer },
 	},
 })
@@ -144,9 +140,7 @@ type CarouselNavigateEventDetail = {
 class Carousel extends UI5Element {
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Carousel.prototype.cyclic
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -154,9 +148,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageS
-	 * @defaultvalue 1
+	 * @default 1
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
@@ -164,9 +156,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageM
-	 * @defaultvalue 1
+	 * @default 1
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
@@ -174,9 +164,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageL
-	 * @defaultvalue 1
+	 * @default 1
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
@@ -188,10 +176,8 @@ class Carousel extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
 	 * In this case, the user can swipe to navigate through the items.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Carousel.prototype.hideNavigationArrows
 	 * @since 1.0.0-rc.15
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -200,10 +186,8 @@ class Carousel extends UI5Element {
 	/**
 	 * Defines the visibility of the page indicator.
 	 * If set to true the page indicator will be hidden.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Carousel.prototype.hidePageIndicator
 	 * @since 1.0.0-rc.15
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -216,10 +200,8 @@ class Carousel extends UI5Element {
 	 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
 	 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
 	 * </ul>
-	 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
-	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorStyle
 	 * @since 1.10
-	 * @defaultvalue "Default"
+	 * @default "Default"
 	 * @public
 	 */
 	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
@@ -227,10 +209,8 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the carousel's background design.
-	 * @type {sap.ui.webc.main.types.BackgroundDesign}
-	 * @name sap.ui.webc.main.Carousel.prototype.backgroundDesign
 	 * @since 1.14
-	 * @defaultvalue "Translucent"
+	 * @default "Translucent"
 	 * @public
 	 */
 	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
@@ -238,10 +218,8 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the page indicator background design.
-	 * @type {sap.ui.webc.main.types.BackgroundDesign}
-	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBackgroundDesign
 	 * @since 1.14
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @public
 	 */
 	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
@@ -249,10 +227,8 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the page indicator border design.
-	 * @type {sap.ui.webc.main.types.BorderDesign}
-	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBorderDesign
 	 * @since 1.14
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @public
 	 */
 	@property({ type: BorderDesign, defaultValue: BorderDesign.Solid })
@@ -260,9 +236,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the index of the initially selected item.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Carousel.prototype._selectedIndex
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
@@ -276,9 +250,7 @@ class Carousel extends UI5Element {
 	 * <li><code>Content</code> - the arrows are placed on the sides of the current page.</li>
 	 * <li><code>Navigation</code> - the arrows are placed on the sides of the page indicator.</li>
 	 * </ul>
-	 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
-	 * @name sap.ui.webc.main.Carousel.prototype.arrowsPlacement
-	 * @defaultvalue "Content"
+	 * @default "Content"
 	 * @public
 	 */
 	@property({ type: CarouselArrowsPlacement, defaultValue: CarouselArrowsPlacement.Content })
@@ -314,9 +286,6 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @name sap.ui.webc.main.Carousel.prototype.default
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
@@ -543,13 +512,11 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Changes the currently displayed page.
-	 * @param {Integer} itemIndex The index of the target page
+	 * @param itemIndex The index of the target page
 	 * @since 1.0.0-rc.15
-	 * @method
-	 * @name sap.ui.webc.main.Carousel#navigateTo
 	 * @public
 	 */
-	navigateTo(itemIndex: number) {
+	navigateTo(itemIndex: number) : void {
 		this._resizing = false;
 		this._selectedIndex = itemIndex;
 	}
@@ -733,11 +700,10 @@ class Carousel extends UI5Element {
 	/**
 	 * The indices of the currently visible items of the component.
 	 * @public
-	 * @readonly
 	 * @since 1.0.0-rc.15
-	 * @returns {Integer[]} the indices of the visible items
+	 * @default []
 	 */
-	get visibleItemsIndices() {
+	get visibleItemsIndices() : Array<number> {
 		const visibleItemsIndices: Array<number> = [];
 
 		this.items.forEach((item, index) => {

@@ -75,16 +75,6 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * The <code>stretch</code> property can be used to stretch the
  * <code>ui5-dialog</code> on full screen.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-dialog</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>header - Used to style the header of the component</li>
- * <li>content - Used to style the content of the component</li>
- * <li>footer - Used to style the footer of the component</li>
- * </ul>
  * <b>Note:</b> When a <code>ui5-bar</code> is used in the header or in the footer, you should remove the default dialog's paddings.
  * <br>
  * For more information see the sample "Bar in Header/Footer".
@@ -101,11 +91,11 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * This might break z-index management.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Dialog
- * @extends sap.ui.webc.main.Popup
- * @tagname ui5-dialog
+ * @extends Popup
  * @public
+ * @csspart header - Used to style the header of the component
+ * @csspart content - Used to style the content of the component
+ * @csspart footer - Used to style the footer of the component
  */
 @customElement({
 	tag: "ui5-dialog",
@@ -125,9 +115,7 @@ class Dialog extends Popup {
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Dialog.prototype.headerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -139,9 +127,7 @@ class Dialog extends Popup {
 	 * <b>Note:</b> The component will be stretched to approximately
 	 * 90% of the viewport.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Dialog.prototype.stretch
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -156,9 +142,7 @@ class Dialog extends Popup {
 	 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
 	 * When "draggable" is set to true, the native browser "draggable"
 	 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Dialog.prototype.draggable
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -173,9 +157,7 @@ class Dialog extends Popup {
 	 * <b>Note:</b> The component can be resizable only in desktop mode.
 	 * <br>
 	 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Dialog.prototype.resizable
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.0.0-rc.10
 	 * @public
 	 */
@@ -186,9 +168,7 @@ class Dialog extends Popup {
 	 * Defines the state of the <code>Dialog</code>.
 	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.Dialog.prototype.state
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -235,9 +215,6 @@ class Dialog extends Popup {
 	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Dialog.prototype.header
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -248,9 +225,6 @@ class Dialog extends Popup {
 	 * <br><br>
 	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.Dialog.prototype.footer
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -283,12 +257,9 @@ class Dialog extends Popup {
 	/**
 	 * Shows the dialog.
 	 *
-	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
+	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Dialog#show
-	 * @async
-	 * @returns {Promise} Resolves when the dialog is open
+	 * @returns Resolves when the dialog is open
 	 */
 	async show(preventInitialFocus = false) {
 		await super._open(preventInitialFocus);
