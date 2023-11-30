@@ -115,3 +115,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.ui5-list-end-marker {
+	display: inline-block;
+}
