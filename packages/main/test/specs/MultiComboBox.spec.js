@@ -218,7 +218,7 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
-		it("tests if deleting text is possible while validation is triggered", async () => {
+		it("tests if entering valid text is possible while validation is triggered", async () => {
 			const mcb = await $("#mcb-validation");
 			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
 
@@ -226,10 +226,14 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.keys("c");
 			await innerInput.keys("c");
 			await innerInput.keys("Backspace");
-			
-			const value = await mcb.getProperty("value");
 
-			assert.strictEqual(value, "", "Value should be deleted");
+			assert.strictEqual(await mcb.getProperty("value"), "", "Value should be deleted");
+
+			await innerInput.keys("c");
+			await innerInput.keys("c");
+			await innerInput.keys("o");
+
+			assert.strictEqual(await mcb.getProperty("value"), "Cosy", "User should be able to type valid value");
 		});
 
 		it("tests if item is created when enter is pressed while validation is ongoing", async () => {

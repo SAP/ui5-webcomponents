@@ -569,7 +569,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (this._validationTimeout) {
-			if (e.inputType === "deleteContentBackward") {
+			if (this._filterItems(value).length) {
 				this.valueState = this._effectiveValueState;
 				this._validationTimeout = null;
 			} else {
