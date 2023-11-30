@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import TimelineLayout from "./types/TimelineLayout.js";
 
 /**
  * Interface for components that may be slotted inside <code>ui5-page</code> as header and footer.
@@ -56,10 +57,11 @@ const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
  * @public
  */
 interface ITimelineItem extends UI5Element, ITabbable {
-	icon: string,
-	layout: string,
-	nameClickable: boolean,
-	_lineWidth: string,
+    layout: `${TimelineLayout}`,
+    icon: string,
+    _lineWidth: string,
+    nameClickable: boolean,
+    focusLink: () => void,
 }
 
 /**
