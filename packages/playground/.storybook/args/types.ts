@@ -19,6 +19,8 @@ export type Parameter = {
     type: {
         text: string
     };
+    optional: boolean;
+    default: string;
     description: string;
 };
 

@@ -175,8 +175,32 @@ function processClass(ts, classNode, moduleDoc) {
 				// Treat every parameter that has respective @param tag as public
 				param._ui5privacy = findAllTags(memberParsedJsDoc, "param").some(tag => tag.name === param.name) ? "public" : "private";
 				const paramNode = classNodeMember.parameters?.find(parameter => parameter.name?.text === param.name);
+				let type;
 
-				const typeRefs = (getTypeRefs(ts, paramNode, param)
+				if (param.optional) {
+					const filename = classNode.getSourceFile().fileName;
+
+					const program = ts.createProgram([filename], {});
+					const sourceFile = program.getSourceFile(filename);
+					const typeChecker = program.getTypeChecker();
+					const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
+					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isMethodDeclaration(m) && m.name?.text === member.name);
+					const tsProgramParameter = tsProgramMember.parameters.find(p => ts.isParameter(p) && p.name?.text === param.name);
+
+					if (tsProgramParameter) {
+						const typeName = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramParameter), tsProgramParameter);
+
+						if (!param.type) {
+							param.type = {};
+							param.type.text = typeName;
+						}
+
+						type = typeName.replaceAll(/Array<|>|\[\]/g, "")
+							?.split("|");
+					}
+				}
+
+				const typeRefs = ((type || getTypeRefs(ts, (type || paramNode), param))
 					?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
 				if (typeRefs.length) {
