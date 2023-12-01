@@ -895,13 +895,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
 
-			if (this.open && this.Suggestions?._isGroupOrInactiveItem) {
-				this.isTyping = false;
-				this._forceOpen = false;
-				this.open = false;
-			} else if (this.FormSupport) {
+			if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}
+
+			return;
 		}
 
 		this.focused = true;
