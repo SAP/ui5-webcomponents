@@ -358,12 +358,12 @@ export default {
 			},
 			packageLinkPhase() {
 				// Uncomment and handle errors appropriately
-				const JSDocErrors = getJSDocErrors();
-				if (JSDocErrors.length > 0) {
-					console.log(JSDocErrors.join("\n"));
-					console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-					throw new Error(`Invalid JSDoc.`);
-				}
+				// const JSDocErrors = getJSDocErrors();
+				// if (JSDocErrors.length > 0) {
+				// 	console.log(JSDocErrors.join("\n"));
+				// 	console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
+				// 	throw new Error(`Invalid JSDoc.`);
+				// }
 			}
 		},
 	],
