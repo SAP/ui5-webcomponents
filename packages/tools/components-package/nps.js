@@ -128,7 +128,7 @@ const getScripts = (options) => {
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
 		scope: {
-			prepare: "nps scope.lint prepare scope.testPages",
+			prepare: "nps scope.lint scope.testPages",
 			lint: `node "${LIB}/scoping/lint-src.js"`,
 			testPages: {
 				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",
