@@ -365,7 +365,6 @@ class Button extends UI5Element implements IFormElement {
 
 	onEnterDOM() {
 		this._isTouch = (isPhone() || isTablet()) && !isCombi();
-		// this.active = "true";
 	}
 
 	async onBeforeRendering() {
