@@ -15,10 +15,13 @@ const getScripts = (options) => {
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
 	const tsOption = options.typescript;
-	const tsCommand = tsOption ? "tsc --build" : "";
-	const tsWatchCommand = tsOption ? "tsc --watch" : "";
+	const tsCommandOld = tsOption ? "tsc" : "";
+	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
+	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
+	if (options.noWatchTS) {
+		tsWatchCommandStandalone = "";
+	}
 	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
-	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
 
 	if (tsOption) {
 		try {
@@ -82,17 +85,18 @@ const getScripts = (options) => {
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
+			default: `${tsCrossEnv} nps clean prepare.all copy prepare.typescript generateAPI`,
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
+			typescript: tsCommandOld,
 		},
 		copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: `concurrently "nps build.styles.themes" "nps build.styles.components" ${copySrcGenerated}`,
-				default2: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
+				default: `concurrently "nps build.styles.themes" "nps build.styles.components"`,
+				default2: `nps build.styles.themes build.styles.components`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
@@ -116,15 +120,15 @@ const getScripts = (options) => {
 		},
 		copy: {
 			default: "nps copy.src copy.props",
-			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
+			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
+			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
-			typescript: tsWatchCommand,
+			typescript: tsWatchCommandStandalone,
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {

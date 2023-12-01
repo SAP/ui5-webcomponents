@@ -51,13 +51,11 @@ const scripts = {
 	},
 	watch: {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',
-		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.typescript"',
+		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
-		typescript: 'tsc --watch',
 		bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
-	start: "nps prepare watch.withBundle",
 	test: {
 		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2"',
 		ssr: `mocha test/ssr`,

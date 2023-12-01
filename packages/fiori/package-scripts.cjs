@@ -5,10 +5,10 @@ const filterOut = [
 	"sapIllus-Dialog",
 	"sapIllus-Scene",
 	"sapIllus-Spot",
-	"tnt-Dot", 
-	"tnt-Dialog", 
-	"tnt-Scene", 
-	"tnt-Spot", 
+	"tnt-Dot",
+	"tnt-Dialog",
+	"tnt-Scene",
+	"tnt-Spot",
 	"AllIllustrations",
 ];
 
@@ -17,6 +17,7 @@ const options = {
 	portStep: 2,
 	fioriPackage: true,
 	typescript: true,
+	noWatchTS: true,
 	illustrationsData: [
 		{
 			path: "src/illustrations",

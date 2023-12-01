@@ -31,7 +31,6 @@ const scripts = {
 	copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 	watch: {
 		"default": "nps watch.src",
-		typescript: "tsc --watch",
 		src: `nps "copy.src --watch --skip-initial-copy"`,
 	},
 	start: "nps watch",
