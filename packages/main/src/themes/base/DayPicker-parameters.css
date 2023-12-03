@@ -72,6 +72,8 @@
 	--_ui5_daypicker_twocalendar_item_special_day_now_inset: 0.1875rem;
 	--_ui5_daypicker_twocalendar_item_special_day_now_border_radius: 0;
 	--_ui5_daypicker_item_now_focus_margin: 0.09375rem;
+	--_ui5_daypicker_special_day_border_top: 0.0625rem solid var(--_ui5_daypicker_special_day_before_border_color);
+	--_ui5_daypicker_special_day_selected_not_focused_border_bottom: 0.0625rem;
 
 	--_ui5_daypicker_specialday_focused_top: 2.375rem;
 	--_ui5_daypicker_specialday_focused_width: calc(100% - 0.375rem);
