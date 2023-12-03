@@ -8,3 +8,18 @@
     padding-top: var(--_ui5_dynamic_page_header_padding_top);
     padding-bottom: var(--_ui5_dynamic_page_header_padding_bottom);
 }
+
+/* Responsive paddings */
+
+:host([media-range="S"]) .ui5-dynamic-page-header-root {
+    padding: 0.5rem 1rem 0 1rem;
+}
+
+:host([media-range="M"]) .ui5-dynamic-page-header-root,
+:host([media-range="L"]) .ui5-dynamic-page-header-root {
+    padding: 0 2rem;
+}
+
+:host([media-range="XL"]) .ui5-dynamic-page-header-root {
+    padding: 0 3rem;
+}

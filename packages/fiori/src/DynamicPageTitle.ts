@@ -7,6 +7,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 
@@ -30,6 +31,7 @@ import DynamicPageTitleCss from "./generated/themes/DynamicPageTitle.css.js";
  */
 @customElement({
 	tag: "ui5-dynamic-page-title",
+	fastNavigation: true,
 	renderer: litRender,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
@@ -70,6 +72,15 @@ class DynamicPageTitle extends UI5Element {
 
 	@property({ type: Boolean })
 	snapped!: boolean;
+
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @type {string}
+	 * @protected
+	 */
+	@property()
+	mediaRange!: string;
 
 	// private properties
 	@property({ type: Boolean })
@@ -183,6 +194,19 @@ class DynamicPageTitle extends UI5Element {
 			this.minContentWidth = event.detail.minWidth;
 		} else if (slotName === "actions") {
 			this.minActionsWidth = event.detail.minWidth;
+		}
+	}
+
+	_onclick(e: PointerEvent) {
+		if (e.target === this.getDomRef()) {
+			this.fireEvent("_toggle-title");
+		}
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (e.target === this.getDomRef() && (isEnter(e) || isSpace(e))) {
+			e.preventDefault();
+			this.fireEvent("_toggle-title");
 		}
 	}
 }
