@@ -55,7 +55,8 @@ class MenuItem extends UI5Element {
 	 * Defines the icon to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous options.
 	 * <br><br>
-	 <b>* Example:</b>
+	 * <b>Example:</b>
+	 * <br />
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @default ""

@@ -73,8 +73,8 @@ interface ITab extends UI5Element {
 	icon?: string;
 	isSingleClickArea?: boolean;
 	requiresExpandButton?: boolean;
-	selected?: boolean;
-	subTabs?: Array<ITab>;
+	selected: boolean;
+	subTabs: Array<ITab>;
 	tabs?: Array<ITab>
 	text?: string;
 	_tabIndex?: string;
@@ -92,16 +92,16 @@ interface ITab extends UI5Element {
 }
 
 type TabContainerTabSelectEventDetail = {
-	tab: Tab;
+	tab: ITab;
 	tabIndex: number;
 }
 
 interface TabContainerExpandButton extends Button {
-	tab: Tab;
+	tab: ITab;
 }
 
 interface TabContainerTabInOverflow extends CustomListItem {
-	_realTab: Tab;
+	_realTab: ITab;
 }
 
 /**
@@ -166,7 +166,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 /**
  * Fired when a tab is selected.
  *
- * @param {HTMLElement} tab The selected <code>tab</code>.
+ * @param {ITab} tab The selected <code>tab</code>.
  * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
  * @public
  * @allowPreventDefault
@@ -614,7 +614,7 @@ class TabContainer extends UI5Element {
 	 * Calling <code>allItems</code> on this TabContainer will return the instances in the following order:
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
-	 * @default Array[]
+	 * @default []
 	 */
 	get allItems() : Array<ITab> {
 		return this._getAllSubItems(this.items);

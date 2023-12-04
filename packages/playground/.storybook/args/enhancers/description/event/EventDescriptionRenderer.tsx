@@ -9,6 +9,8 @@ export class EventDescriptionRenderer implements IDescriptionRenderer {
                 <ul>
                     <li><b>type:</b> {p.type.text}</li>
                     {p.description && <li><b>description:</b> {p.description}</li>}
+                    {p.deprecated && (typeof p.deprecated === "string" ? <li><b>deprecated:</b> {p.deprecated} </li> : <li><b>deprecated</b></li>)}
+                    {p._ui5since && <li><b>since:</b> {p._ui5since}</li>}
                 </ul>
             </React.Fragment>
         ));

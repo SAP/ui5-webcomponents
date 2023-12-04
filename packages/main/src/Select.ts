@@ -157,7 +157,7 @@ type SelectLiveChangeEventDetail = {
  * Fired when the selected option changes.
  *
  * @allowPreventDefault
- * @param {HTMLElement} selectedOption the selected option.
+ * @param {IOption} selectedOption the selected option.
  * @public
  */
 @event("change", {
@@ -172,7 +172,7 @@ type SelectLiveChangeEventDetail = {
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
  *
- * @param {HTMLElement} selectedOption the selected option.
+ * @param {IOption} selectedOption the selected option.
  * @public
  * @since 1.17.0
  */

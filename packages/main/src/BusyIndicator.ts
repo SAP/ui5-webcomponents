@@ -56,7 +56,7 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Node[]} default - Determines the content over which the component will appear.
+ * @slot {Array<Node>} default - Determines the content over which the component will appear.
  * @since 0.12.0
  */
 @customElement({

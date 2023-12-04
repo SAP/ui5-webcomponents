@@ -38,6 +38,7 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
 
 import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
+import { INotificationListItem } from "./Interfaces.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -127,7 +128,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<NotificationListItem>
+	items!: Array<INotificationListItem>
 
 	onBeforeRendering() {
 		if (this.busy) {

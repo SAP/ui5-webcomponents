@@ -106,10 +106,14 @@ type PopupBeforeCloseEventDetail = {
  * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
  */
 @event("before-close", {
-	/**
-	 * @public
-	 */
-	escPressed: { type: Boolean },
+	detail: {
+		/**
+		 * @public
+		 */
+		escPressed: {
+			type: Boolean,
+		},
+	},
 })
 
 /**

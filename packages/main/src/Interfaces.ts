@@ -15,7 +15,9 @@ interface IAvatar {
  *
  * @public
  */
-interface IButton extends HTMLElement, ITabbable {}
+interface IButton extends HTMLElement, ITabbable {
+	nonInteractive: boolean;
+}
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-combobox</code>

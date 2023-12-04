@@ -46,6 +46,7 @@ import {
 	SHELLBAR_SEARCH,
 	SHELLBAR_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
+import { IButton } from "@ui5/webcomponents/dist/Interfaces.js";
 
 type AccessibilityRoles = {
 	logoRole?: string;
@@ -487,7 +488,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	startButton!: Array<Button>;
+	startButton!: Array<IButton>;
 
 	static i18nBundle: I18nBundle;
 	overflowPopover?: Popover | null;

@@ -59,18 +59,20 @@ type SegmentedButtonSelectionChangeEventDetail = {
 /**
  * Fired when the selected item changes.
  *
- * @param {HTMLElement} selectedItem the pressed item. Note: deprecated since 1.14.0 and will be removed in the next major release, use the <code>selectedItems</code> parameter instead.
- * @param {HTMLElement[]} selectedItems an array of selected items. Note: available since 1.14.0.
+ * @param {ISegmentedButtonItem} selectedItem the pressed item.
+ * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
  * @public
  */
 @event("selection-change", {
 	detail: {
 		/**
 		 * @public
+		 * @deprecated deprecated since 1.14.0 and will be removed in the next major release, use the <code>selectedItems</code> parameter instead.
 		 */
 		selectedItem: { type: HTMLElement },
 		/**
 		 * @public
+		 * @since 1.14.0
 		 */
 		selectedItems: { type: Array },
 	},

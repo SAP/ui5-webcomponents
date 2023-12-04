@@ -78,7 +78,7 @@ document.addEventListener("keydown", handleGlobalKeydown);
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
- * @slot {Node[]} default
+ * @slot {Array<Node>} default
  * Defines the text of the component.
  * <br><br>
  * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.

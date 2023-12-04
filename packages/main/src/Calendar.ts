@@ -180,8 +180,8 @@ type CalendarSelectedDatesChangeEventDetail = {
  * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
  *
  * @allowPreventDefault
- * @param {Array} values The selected dates
- * @param {Array} dates The selected dates as UTC timestamps
+ * @param {Array<string>} values The selected dates
+ * @param {Array<number>} dates The selected dates as UTC timestamps
  * @public
  */
 @event("selected-dates-change", {
