@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
+
+
+### Bug Fixes
+
+* **framework:** fix font72 for special characters ([#7949](https://github.com/SAP/ui5-webcomponents/issues/7949)) ([55665b0](https://github.com/SAP/ui5-webcomponents/commit/55665b0ac02cd9060de1368fb427bb338338c5aa)), closes [#7948](https://github.com/SAP/ui5-webcomponents/issues/7948)
+
+
+
+
+
 # [1.20.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.2...v1.20.0-rc.3) (2023-11-30)
 
 
