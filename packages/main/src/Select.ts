@@ -295,6 +295,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Select.prototype.readonly
 	 * @defaultvalue false
+	 * @since 1.21.0
 	 * @public
 	 */
 	@property({ type: Boolean })
