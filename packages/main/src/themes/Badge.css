@@ -2,11 +2,17 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	line-height: 0;
+	font-size: var(--_ui5-badge-font-size);
+	font-family: var(--_ui5-badge-font);
+	font-weight: var(--_ui5-badge-font-weight);
+	line-height: var(--_ui5-badge-height);
+	letter-spacing: var(--_ui5-badge-letter-spacing);
 }
 
 .ui5-badge-root {
-	display: inline-block;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
 	width: 100%;
 	min-width: 1.125em;
 	max-width: 100%;
@@ -14,17 +20,17 @@
 	padding: 0 var(--_ui5-badge-padding-inline);
 	border: var(--_ui5-badge-border);
 	border-radius: var(--_ui5-badge-border-radius);
-	font-family: var(--_ui5-badge-font);
-	font-weight: var(--_ui5-badge-font-weight);
-	text-align: center;
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+
+	font-size: inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
 }
 
 :host([interactive]) .ui5-badge-root {
 	cursor: pointer;
-	font-size: inherit;
 }
 
 :host([interactive]) .ui5-badge-root:focus {
@@ -34,21 +40,23 @@
 
 :host([wrapping-type="Normal"]) .ui5-badge-root {
 	white-space: normal;
-	text-align: left;
 }
 
 .ui5-badge-text {
 	font-weight: inherit;
 	text-transform: var(--_ui5-badge-text-transform);
-	font-size: var(--_ui5-badge-font-size);
+	text-align: start;
 	pointer-events: none;
-	line-height: var(--_ui5-badge-height);
-	vertical-align: center;
-	letter-spacing: var(--_ui5-badge-letter-spacing);
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 :host([_icon-only]) {
 	padding-inline: var(--_ui5-badge-padding-inline-icon-only);
+}
+
+:host([_has-icon]) .ui5-badge-text {
+	padding-inline-start: var(--_ui5-badge-icon-gap);
 }
 
 [ui5-icon],
@@ -60,10 +68,6 @@
 	color: inherit;
 	pointer-events: none;
 	vertical-align: bottom;
-}
-
-:host([_has-icon]) .ui5-badge-text {
-	margin-inline-start: var(--_ui5-badge-icon-gap);
 }
 
 /* Color Scheme Design Type */
