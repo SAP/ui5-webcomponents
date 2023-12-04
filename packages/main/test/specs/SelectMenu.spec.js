@@ -12,6 +12,7 @@ describe("Select Menu general interaction", () => {
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT, "The 'value' property is correct.");
 	});
 
 	it("fires 'open' and 'close' events", async () => {
@@ -41,10 +42,12 @@ describe("Select Menu general interaction", () => {
 		await select.keys("ArrowDown");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.keys("ArrowUp");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 
 		assert.strictEqual(await inpTestChange.getProperty("value"), "2", "Change event should have fired twice");
 	});
@@ -68,6 +71,7 @@ describe("Select Menu general interaction", () => {
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT, "The 'value' property is correct.");
 	});
 
 	it("fires 'change' and 'live-change' on Arrow Down, Arrow Up", async () => {
@@ -91,6 +95,7 @@ describe("Select Menu general interaction", () => {
 		assert.strictEqual(await inpTestChange.getProperty("value"), "1", "Fired 'change' event once.");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Select label is correct.");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.click();
 		await select.keys("ArrowUp");
@@ -100,6 +105,7 @@ describe("Select Menu general interaction", () => {
 		assert.strictEqual(await inpTestChange.getProperty("value"), "2", "Fired 'change' event once more.");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 	});
 
 	it("reverts value on ESC key", async () => {
