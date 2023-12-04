@@ -734,19 +734,11 @@ class Select extends UI5Element implements IFormElement {
 			} else {
 				this.responsivePopover.close();
 			}
-		}
-
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
-		if (this.readonly) {
-			return;
-		}
-
-		if (isShow(e)) {
+		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
+		} else if (isSpace(e)) {
+			e.preventDefault();
 		} else if (isEscape(e) && this._isPickerOpen) {
 			this._escapePressed = true;
 		} else if (isHome(e)) {
@@ -812,13 +804,22 @@ class Select extends UI5Element implements IFormElement {
 
 	_handleHomeKey(e: KeyboardEvent) {
 		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
 		this._changeSelectedItem(this._selectedIndex, 0);
 	}
 
 	_handleEndKey(e: KeyboardEvent) {
-		const lastIndex = this.selectOptions.length - 1;
-
 		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
+		const lastIndex = this.selectOptions.length - 1;
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
@@ -892,11 +893,16 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleArrowNavigation(e: KeyboardEvent) {
+		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(e);
 
-		e.preventDefault();
 		if (isDownKey) {
 			nextIndex = this._getNextOptionIndex();
 		} else {
@@ -1049,10 +1055,6 @@ class Select extends UI5Element implements IFormElement {
 
 	get isDisabled() {
 		return this.disabled || undefined;
-	}
-
-	get isReadOnly() {
-		return this.readonly || undefined;
 	}
 
 	get _headerTitleText() {
