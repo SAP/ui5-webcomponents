@@ -18,12 +18,9 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
  * The <code>ui5-tab-separator</code> represents a vertical line to separate tabs inside a <code>ui5-tabcontainer</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TabSeparator
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-tab-separator
- * @implements sap.ui.webc.main.ITab
+ * @implements {ITab}
  * @public
  */
 @customElement({
@@ -57,9 +54,7 @@ class TabSeparator extends UI5Element implements ITab {
 	 * Returns the DOM reference of the separator that is placed in the header.
 	 * <b>Note:</b> Tabs and separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return <code>null</code>.
 	 *
-	 * @function
 	 * @public
-	 * @name sap.ui.webc.main.TabSeparator.prototype.getTabInStripDomRef
 	 */
 	getTabInStripDomRef() {
 		if (this._getElementInStrip) {

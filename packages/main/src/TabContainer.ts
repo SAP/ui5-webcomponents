@@ -60,6 +60,9 @@ const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
+/**
+ * @public
+ */
 interface ITab extends UI5Element {
 	isSeparator: boolean;
 	getTabInStripDomRef: () => ITab | null;

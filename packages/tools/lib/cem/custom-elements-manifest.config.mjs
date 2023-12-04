@@ -381,7 +381,7 @@ export default {
 				})
 			},
 			packageLinkPhase() {
-				// Uncomment and handle errors appropriately
+				// // Uncomment and handle errors appropriately
 				// const JSDocErrors = getJSDocErrors();
 				// if (JSDocErrors.length > 0) {
 				// 	console.log(JSDocErrors.join("\n"));
