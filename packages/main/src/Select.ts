@@ -287,6 +287,20 @@ class Select extends UI5Element implements IFormElement {
 	required!: boolean;
 
 	/**
+	 * Defines whether the component is read-only.
+	 * <br><br>
+	 * <b>Note:</b> A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Select.prototype.readonly
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
+	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
@@ -589,7 +603,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async _toggleRespPopover() {
-		if (this.disabled) {
+		if (this.disabled || this.readonly) {
 			return;
 		}
 
@@ -720,11 +734,19 @@ class Select extends UI5Element implements IFormElement {
 			} else {
 				this.responsivePopover.close();
 			}
-		} else if (isShow(e)) {
+		}
+
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (this.readonly) {
+			return;
+		}
+
+		if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
-		} else if (isSpace(e)) {
-			e.preventDefault();
 		} else if (isEscape(e) && this._isPickerOpen) {
 			this._escapePressed = true;
 		} else if (isHome(e)) {
@@ -739,7 +761,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleKeyboardNavigation(e: KeyboardEvent) {
-		if (isEnter(e)) {
+		if (isEnter(e) || this.readonly) {
 			return;
 		}
 
@@ -1027,6 +1049,10 @@ class Select extends UI5Element implements IFormElement {
 
 	get isDisabled() {
 		return this.disabled || undefined;
+	}
+
+	get isReadOnly() {
+		return this.readonly || undefined;
 	}
 
 	get _headerTitleText() {
