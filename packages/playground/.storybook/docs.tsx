@@ -1,4 +1,5 @@
 import React from 'react';
+import { Footer } from "@sb/components/footer/Footer.tsx";
 import {
     Title,
     Subtitle,
@@ -36,6 +37,7 @@ export const DocsPage = (args: DocsPageArgs) => {
             <Primary />
             <ArgsTable story={PRIMARY_STORY} />
             <Stories />
+			<Footer />
         </>
     )
 }
