@@ -73,8 +73,8 @@ interface ITab extends UI5Element {
 	icon?: string;
 	isSingleClickArea?: boolean;
 	requiresExpandButton?: boolean;
-	selected: boolean;
-	subTabs: Array<ITab>;
+	selected?: boolean;
+	subTabs?: Array<ITab>;
 	tabs?: Array<ITab>
 	text?: string;
 	_tabIndex?: string;
@@ -506,7 +506,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._overflowItems = tabInstance.subTabs;
+		this._overflowItems = tabInstance.subTabs || [];
 		this._addStyleIndent(this._overflowItems);
 
 		this.responsivePopover = await this._respPopover();

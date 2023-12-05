@@ -338,7 +338,7 @@ const processPublicAPI = object => {
 };
 
 export default {
-	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
+	globs: ["src/Wizard.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
