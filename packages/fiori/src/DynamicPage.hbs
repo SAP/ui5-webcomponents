@@ -8,12 +8,7 @@
       {{/if}}
 
       {{#if actionsInTitle}}
-      <ui5-dynamic-page-header-actions
-        ?snapped="{{headerSnapped}}"
-        ?pinned="{{headerPinned}}"
-        @ui5-expand-button-click={{onExpandClick}}
-        @ui5-pin-button-click={{onPinClick}}
-      ></ui5-dynamic-page-header-actions>
+        {{> header-actions}}
       {{/if}}
 
     </div>
@@ -23,12 +18,7 @@
     {{/if}}
 
     {{#unless actionsInTitle}}
-      <ui5-dynamic-page-header-actions
-          ?snapped="{{headerSnapped}}"
-          ?pinned="{{headerPinned}}"
-          @ui5-expand-button-click={{onExpandClick}}
-          @ui5-pin-button-click={{onPinClick}}
-        ></ui5-dynamic-page-header-actions>
+      {{> header-actions}}
     {{/unless}}
 
     <div class="{{classes.content}}">
@@ -40,3 +30,11 @@
       <slot name="footer"></slot>
     </div>
 </div>
+{{#*inline "header-actions"}}
+    <ui5-dynamic-page-header-actions
+      ?snapped="{{headerSnapped}}"
+      ?pinned="{{headerPinned}}"
+      @ui5-expand-button-click={{onExpandClick}}
+      @ui5-pin-button-click={{onPinClick}}
+  ></ui5-dynamic-page-header-actions>
+  {{/inline}}

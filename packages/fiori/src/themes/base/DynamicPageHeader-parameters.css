@@ -1,4 +1,8 @@
 :root {
 	--_ui5_dynamic_page_header_padding_top: 1rem;
     --_ui5_dynamic_page_header_padding_bottom: 1rem;
+
+    --_ui5_dynamic_page_header_background_color: var(--sapObjectHeader_Background);
+    --_ui5_dynamic_page_header-actions-boxshadow: var(--sapContent_HeaderShadow);
+    --_ui5-v1-20-0-rc-3_dynamic_page_header-boxshadow: var(--sapContent_HeaderShadow);
 }
