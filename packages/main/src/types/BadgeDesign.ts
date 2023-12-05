@@ -9,56 +9,56 @@
  */
 enum BadgeDesign {
 	/**
-	 * Color scheme palette.
+	 * Set1 design
 	 * @public
 	 * @type {Set1}
 	 */
 	Set1 = "Set1",
 
 	/**
-	 * Value state palette.
+	 * Set2 design type
 	 * @public
 	 * @type {Set2}
 	 */
 	Set2 = "Set2",
 
 	/**
-	 * First color set of indication colors palette.
+	 * Set3 design type
 	 * @public
 	 * @type {Set3}
 	 */
 	Set3 = "Set3",
 
 	/**
-	 *
+	 * Neutral design
 	 * @public
 	 * @type {Neutral}
 	 */
 	Neutral = "Neutral",
 
 	/**
-	 * Message should be just an information
+	 * Information design
 	 * @public
 	 * @type {Information}
 	 */
 	Information = "Information",
 
 	/**
-	 * Message is a success message
+	 * Positive design
 	 * @public
 	 * @type {Positive}
 	 */
 	Positive = "Positive",
 
 	/**
-	 * Message is an error
+	 * Negative design
 	 * @public
 	 * @type {Negative}
 	 */
 	Negative = "Negative",
 
 	/**
-	 * Message is a warning
+	 * Critical design
 	 * @public
 	 * @type {Warning}
 	 */

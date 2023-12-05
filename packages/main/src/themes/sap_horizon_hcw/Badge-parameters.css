@@ -5,12 +5,12 @@
 	--_ui5-badge-border: none;
 	--_ui5-badge-border-radius: 0.25rem;
 	--_ui5-badge-padding-inline: 0.375em;
-	--_ui5-badge-padding-inline-icon-only: var(--_ui5-badge-padding-inline);
+	--_ui5-badge-padding-inline-icon-only: 0.313rem;
 	--_ui5-badge-text-transform: none;
 	--_ui5-badge-icon-height: 1rem;
 	--_ui5-badge-icon-gap: 0.25rem;
 	--_ui5-badge-font-size: var(--sapFontSize);
-	--_ui5-badge-font: "72override", var(--sapFontSemiboldDuplexFamily);
+	--_ui5-badge-font: var(--sapFontSemiboldDuplexFamily);
 	--_ui5-badge-font-weight: normal;
 	--_ui5-badge-default-border-color: transparent;
 	--_ui5-badge-default-background: var(--ui5-badge-color-scheme-1-background);

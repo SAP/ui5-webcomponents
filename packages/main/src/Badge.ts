@@ -64,11 +64,11 @@ class Badge extends UI5Element {
 	 * Defines the design type of the component.
 	 * @type {string}
 	 * @name sap.ui.webc.main.Badge.prototype.design
-	 * @defaultvalue "Set1"
+	 * @defaultvalue "Set3"
 	 * @public
 	 * @since 1.20
 	 */
-	@property({ defaultValue: BadgeDesign.Set1 })
+	@property({ defaultValue: BadgeDesign.Set3 })
 	design!: `${BadgeDesign}`;
 
 	/**
@@ -135,6 +135,13 @@ class Badge extends UI5Element {
 	_iconOnly!: boolean;
 
 	/**
+	 * Defines if the badge has "Tag" design type.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_isTagDesign!: boolean;
+
+	/**
 	 * Defines the text of the component.
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
@@ -166,6 +173,7 @@ class Badge extends UI5Element {
 	onBeforeRendering() {
 		this._hasIcon = this.hasIcon || !!this._semanticIconName;
 		this._iconOnly = this.iconOnly;
+		this._isTagDesign = this.design !== BadgeDesign.Set3;
 	}
 
 	get hasText() {

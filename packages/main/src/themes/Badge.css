@@ -2,11 +2,19 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+}
+
+:host {
 	font-size: var(--_ui5-badge-font-size);
 	font-family: var(--_ui5-badge-font);
 	font-weight: var(--_ui5-badge-font-weight);
 	line-height: var(--_ui5-badge-height);
 	letter-spacing: var(--_ui5-badge-letter-spacing);
+}
+
+:host([_is-tag-design]) {
+	font-size: var(--sapFontBoldFamily);
+	font-family: var(--sapFontSmallSize);
 }
 
 .ui5-badge-root {
@@ -21,12 +29,17 @@
 	border: var(--_ui5-badge-border);
 	border-radius: var(--_ui5-badge-border-radius);
 	white-space: nowrap;
-
 	font-size: inherit;
 	font-family: inherit;
 	font-weight: inherit;
 	line-height: inherit;
 	letter-spacing: inherit;
+}
+
+:host([_is-tag-design]) .ui5-badge-root {
+	padding: 0 0.25rem;
+	border: 0.0625rem solid;
+	border-radius: var(--sapButton_BorderCornerRadius);
 }
 
 :host([interactive]) .ui5-badge-root {
@@ -42,17 +55,16 @@
 	white-space: normal;
 }
 
+:host([_icon-only]) .ui5-badge-root {
+	padding-inline: var(--_ui5-badge-padding-inline-icon-only);
+}
+
 .ui5-badge-text {
-	font-weight: inherit;
 	text-transform: var(--_ui5-badge-text-transform);
 	text-align: start;
 	pointer-events: none;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-:host([_icon-only]) {
-	padding-inline: var(--_ui5-badge-padding-inline-icon-only);
 }
 
 :host([_has-icon]) .ui5-badge-text {
@@ -61,8 +73,8 @@
 
 [ui5-icon],
 ::slotted([ui5-icon]) {
-	width: 0.75em;
-	min-width: 0.75em;
+	width: 0.75rem;
+	min-width: 0.75rem;
 	height: var(--_ui5-badge-height);
 	min-height: var(--_ui5-badge-height);
 	color: inherit;
@@ -243,18 +255,187 @@
 	color: var(--sapButton_Selected_TextColor);
 }
 
-/* Set2 Design Type */
+/* Set1 Design Type */
 
-:host([design="Set2"]) .ui5-badge-root,
-:host([design="Set2"]):host([color-scheme="1"]) .ui5-badge-root {
+:host([design="Set1"]) .ui5-badge-root,
+:host([design="Set1"]):host([color-scheme="1"]) .ui5-badge-root {
 	background-color: var(--sapIndicationColor_1_Background);
 	border-color: var(--sapIndicationColor_1_BorderColor);
 	color: var(--sapIndicationColor_1_TextColor);
 }
 
+:host([interactive]):host([design="Set1"]) .ui5-badge-root:hover,
+:host([interactive]):host([design="Set1"]):host([color-scheme="1"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_1_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]) .ui5-badge-root:active,
+:host([interactive]):host([design="Set1"]):host([color-scheme="1"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_1_Active_Background);
+	border-color: var(--sapIndicationColor_1_Active_BorderColor);
+	color: var(--sapIndicationColor_1_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="2"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_2_Background);
+	border-color: var(--sapIndicationColor_2_BorderColor);
+	color: var(--sapIndicationColor_2_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="2"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_2_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="2"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_2_Active_Background);
+	border-color: var(--sapIndicationColor_2_Active_BorderColor);
+	color: var(--sapIndicationColor_2_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="3"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_3_Background);
+	border-color: var(--sapIndicationColor_3_BorderColor);
+	color: var(--sapIndicationColor_3_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="3"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_3_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="3"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_3_Active_Background);
+	border-color: var(--sapIndicationColor_3_Active_BorderColor);
+	color: var(--sapIndicationColor_3_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="4"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_4_Background);
+	border-color: var(--sapIndicationColor_4_BorderColor);
+	color: var(--sapIndicationColor_4_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="4"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_4_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="4"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_4_Active_Background);
+	border-color: var(--sapIndicationColor_4_Active_BorderColor);
+	color: var(--sapIndicationColor_4_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="5"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_5_Background);
+	border-color: var(--sapIndicationColor_5_BorderColor);
+	color: var(--sapIndicationColor_5_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="5"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_5_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="5"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_5_Active_Background);
+	border-color: var(--sapIndicationColor_5_Active_BorderColor);
+	color: var(--sapIndicationColor_5_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="6"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_6_Background);
+	border-color: var(--sapIndicationColor_6_BorderColor);
+	color: var(--sapIndicationColor_6_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="6"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_6_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="6"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_6_Active_Background);
+	border-color: var(--sapIndicationColor_6_Active_BorderColor);
+	color: var(--sapIndicationColor_6_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="7"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_7_Background);
+	border-color: var(--sapIndicationColor_7_BorderColor);
+	color: var(--sapIndicationColor_7_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="7"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_7_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="7"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_7_Active_Background);
+	border-color: var(--sapIndicationColor_7_Active_BorderColor);
+	color: var(--sapIndicationColor_7_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="8"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_8_Background);
+	border-color: var(--sapIndicationColor_8_BorderColor);
+	color: var(--sapIndicationColor_8_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="8"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_8_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="8"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_8_Active_Background);
+	border-color: var(--sapIndicationColor_8_Active_BorderColor);
+	color: var(--sapIndicationColor_8_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="9"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_9_Background);
+	border-color: var(--sapIndicationColor_9_BorderColor);
+	color: var(--sapIndicationColor_9_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="9"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_9_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="9"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_9_Active_Background);
+	border-color: var(--sapIndicationColor_9_Active_BorderColor);
+	color: var(--sapIndicationColor_9_Active_TextColor);
+}
+
+:host([design="Set1"]):host([color-scheme="10"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_10_Background);
+	border-color: var(--sapIndicationColor_10_BorderColor);
+	color: var(--sapIndicationColor_10_TextColor);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="10"]) .ui5-badge-root:hover {
+	background-color: var(--sapIndicationColor_10_Hover_Background);
+}
+
+:host([interactive]):host([design="Set1"]):host([color-scheme="10"]) .ui5-badge-root:active {
+	background-color: var(--sapIndicationColor_10_Active_Background);
+	border-color: var(--sapIndicationColor_10_Active_BorderColor);
+	color: var(--sapIndicationColor_10_Active_TextColor);
+}
+
+/* Set2 Design Type */
+
+:host([design="Set2"]) .ui5-badge-root {
+	text-shadow: var(--sapContent_TextShadow);
+}
+
+:host([design="Set2"]) .ui5-badge-root,
+:host([design="Set2"]):host([color-scheme="1"]) .ui5-badge-root {
+	background-color: var(--sapIndicationColor_1b);
+	border-color: var(--sapIndicationColor_1b_BorderColor);
+	color: var(--sapIndicationColor_1);
+}
+
 :host([interactive]):host([design="Set2"]) .ui5-badge-root:hover,
 :host([interactive]):host([design="Set2"]):host([color-scheme="1"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_1_Hover_Background);
+	background-color: var(--sapIndicationColor_1b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]) .ui5-badge-root:active,
@@ -265,13 +446,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="2"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_2_Background);
-	border-color: var(--sapIndicationColor_2_BorderColor);
-	color: var(--sapIndicationColor_2_TextColor);
+	background-color: var(--sapIndicationColor_2b);
+	border-color: var(--sapIndicationColor_2b_BorderColor);
+	color: var(--sapIndicationColor_2);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="2"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_2_Hover_Background);
+	background-color: var(--sapIndicationColor_2b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="2"]) .ui5-badge-root:active {
@@ -281,13 +462,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="3"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_3_Background);
-	border-color: var(--sapIndicationColor_3_BorderColor);
-	color: var(--sapIndicationColor_3_TextColor);
+	background-color: var(--sapIndicationColor_3b);
+	border-color: var(--sapIndicationColor_3b_BorderColor);
+	color: var(--sapIndicationColor_3);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="3"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_3_Hover_Background);
+	background-color: var(--sapIndicationColor_3b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="3"]) .ui5-badge-root:active {
@@ -297,13 +478,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="4"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_4_Background);
-	border-color: var(--sapIndicationColor_4_BorderColor);
-	color: var(--sapIndicationColor_4_TextColor);
+	background-color: var(--sapIndicationColor_4b);
+	border-color: var(--sapIndicationColor_4b_BorderColor);
+	color: var(--sapIndicationColor_4);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="4"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_4_Hover_Background);
+	background-color: var(--sapIndicationColor_4b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="4"]) .ui5-badge-root:active {
@@ -313,13 +494,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="5"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_5_Background);
-	border-color: var(--sapIndicationColor_5_BorderColor);
-	color: var(--sapIndicationColor_5_TextColor);
+	background-color: var(--sapIndicationColor_5b);
+	border-color: var(--sapIndicationColor_5b_BorderColor);
+	color: var(--sapIndicationColor_5);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="5"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_5_Hover_Background);
+	background-color: var(--sapIndicationColor_5b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="5"]) .ui5-badge-root:active {
@@ -329,13 +510,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="6"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_6_Background);
-	border-color: var(--sapIndicationColor_6_BorderColor);
-	color: var(--sapIndicationColor_6_TextColor);
+	background-color: var(--sapIndicationColor_6b);
+	border-color: var(--sapIndicationColor_6b_BorderColor);
+	color: var(--sapIndicationColor_6);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="6"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_6_Hover_Background);
+	background-color: var(--sapIndicationColor_6b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="6"]) .ui5-badge-root:active {
@@ -345,13 +526,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="7"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_7_Background);
-	border-color: var(--sapIndicationColor_7_BorderColor);
-	color: var(--sapIndicationColor_7_TextColor);
+	background-color: var(--sapIndicationColor_7b);
+	border-color: var(--sapIndicationColor_7b_BorderColor);
+	color: var(--sapIndicationColor_7);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="7"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_7_Hover_Background);
+	background-color: var(--sapIndicationColor_7b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="7"]) .ui5-badge-root:active {
@@ -361,13 +542,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="8"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_8_Background);
-	border-color: var(--sapIndicationColor_8_BorderColor);
-	color: var(--sapIndicationColor_8_TextColor);
+	background-color: var(--sapIndicationColor_8b);
+	border-color: var(--sapIndicationColor_8b_BorderColor);
+	color: var(--sapIndicationColor_8);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="8"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_8_Hover_Background);
+	background-color: var(--sapIndicationColor_8b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="8"]) .ui5-badge-root:active {
@@ -377,13 +558,13 @@
 }
 
 :host([design="Set2"]):host([color-scheme="9"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_9_Background);
-	border-color: var(--sapIndicationColor_9_BorderColor);
-	color: var(--sapIndicationColor_9_TextColor);
+	background-color: var(--sapIndicationColor_9b);
+	border-color: var(--sapIndicationColor_9b_BorderColor);
+	color: var(--sapIndicationColor_9);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="9"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_9_Hover_Background);
+	background-color: var(--sapIndicationColor_9b_Hover_Background);
 }
 
 :host([interactive]):host([design="Set2"]):host([color-scheme="9"]) .ui5-badge-root:active {
@@ -393,185 +574,16 @@
 }
 
 :host([design="Set2"]):host([color-scheme="10"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_10_Background);
-	border-color: var(--sapIndicationColor_10_BorderColor);
-	color: var(--sapIndicationColor_10_TextColor);
-}
-
-:host([interactive]):host([design="Set2"]):host([color-scheme="10"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_10_Hover_Background);
-}
-
-:host([interactive]):host([design="Set2"]):host([color-scheme="10"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_10_Active_Background);
-	border-color: var(--sapIndicationColor_10_Active_BorderColor);
-	color: var(--sapIndicationColor_10_Active_TextColor);
-}
-
-/* Set3 Design Type */
-
-:host([design="Set3"]) .ui5-badge-root {
-	text-shadow: var(--sapContent_TextShadow);
-}
-
-:host([design="Set3"]) .ui5-badge-root,
-:host([design="Set3"]):host([color-scheme="1"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_1b);
-	border-color: var(--sapIndicationColor_1b_BorderColor);
-	color: var(--sapIndicationColor_1);
-}
-
-:host([interactive]):host([design="Set3"]) .ui5-badge-root:hover,
-:host([interactive]):host([design="Set3"]):host([color-scheme="1"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_1b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]) .ui5-badge-root:active,
-:host([interactive]):host([design="Set3"]):host([color-scheme="1"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_1_Active_Background);
-	border-color: var(--sapIndicationColor_1_Active_BorderColor);
-	color: var(--sapIndicationColor_1_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="2"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_2b);
-	border-color: var(--sapIndicationColor_2b_BorderColor);
-	color: var(--sapIndicationColor_2);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="2"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_2b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="2"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_2_Active_Background);
-	border-color: var(--sapIndicationColor_2_Active_BorderColor);
-	color: var(--sapIndicationColor_2_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="3"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_3b);
-	border-color: var(--sapIndicationColor_3b_BorderColor);
-	color: var(--sapIndicationColor_3);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="3"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_3b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="3"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_3_Active_Background);
-	border-color: var(--sapIndicationColor_3_Active_BorderColor);
-	color: var(--sapIndicationColor_3_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="4"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_4b);
-	border-color: var(--sapIndicationColor_4b_BorderColor);
-	color: var(--sapIndicationColor_4);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="4"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_4b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="4"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_4_Active_Background);
-	border-color: var(--sapIndicationColor_4_Active_BorderColor);
-	color: var(--sapIndicationColor_4_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="5"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_5b);
-	border-color: var(--sapIndicationColor_5b_BorderColor);
-	color: var(--sapIndicationColor_5);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="5"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_5b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="5"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_5_Active_Background);
-	border-color: var(--sapIndicationColor_5_Active_BorderColor);
-	color: var(--sapIndicationColor_5_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="6"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_6b);
-	border-color: var(--sapIndicationColor_6b_BorderColor);
-	color: var(--sapIndicationColor_6);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="6"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_6b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="6"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_6_Active_Background);
-	border-color: var(--sapIndicationColor_6_Active_BorderColor);
-	color: var(--sapIndicationColor_6_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="7"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_7b);
-	border-color: var(--sapIndicationColor_7b_BorderColor);
-	color: var(--sapIndicationColor_7);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="7"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_7b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="7"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_7_Active_Background);
-	border-color: var(--sapIndicationColor_7_Active_BorderColor);
-	color: var(--sapIndicationColor_7_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="8"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_8b);
-	border-color: var(--sapIndicationColor_8b_BorderColor);
-	color: var(--sapIndicationColor_8);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="8"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_8b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="8"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_8_Active_Background);
-	border-color: var(--sapIndicationColor_8_Active_BorderColor);
-	color: var(--sapIndicationColor_8_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="9"]) .ui5-badge-root {
-	background-color: var(--sapIndicationColor_9b);
-	border-color: var(--sapIndicationColor_9b_BorderColor);
-	color: var(--sapIndicationColor_9);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="9"]) .ui5-badge-root:hover {
-	background-color: var(--sapIndicationColor_9b_Hover_Background);
-}
-
-:host([interactive]):host([design="Set3"]):host([color-scheme="9"]) .ui5-badge-root:active {
-	background-color: var(--sapIndicationColor_9_Active_Background);
-	border-color: var(--sapIndicationColor_9_Active_BorderColor);
-	color: var(--sapIndicationColor_9_Active_TextColor);
-}
-
-:host([design="Set3"]):host([color-scheme="10"]) .ui5-badge-root {
 	background-color: var(--sapIndicationColor_10b);
 	border-color: var(--sapIndicationColor_10b_BorderColor);
 	color: var(--sapIndicationColor_10);
 }
 
-:host([interactive]):host([design="Set3"]):host([color-scheme="10"]) .ui5-badge-root:hover {
+:host([interactive]):host([design="Set2"]):host([color-scheme="10"]) .ui5-badge-root:hover {
 	background-color: var(--sapIndicationColor_10b_Hover_Background);
 }
 
-:host([interactive]):host([design="Set3"]):host([color-scheme="10"]) .ui5-badge-root:active {
+:host([interactive]):host([design="Set2"]):host([color-scheme="10"]) .ui5-badge-root:active {
 	background-color: var(--sapIndicationColor_10_Active_Background);
 	border-color: var(--sapIndicationColor_10_Active_BorderColor);
 	color: var(--sapIndicationColor_10_Active_TextColor);
