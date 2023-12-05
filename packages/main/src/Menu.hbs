@@ -6,7 +6,7 @@
 	vertical-align={{verticalAlign}}
 	hide-arrow
 	allow-target-overlap
-	?sub-menu={{_isSubMenu}}
+	?sub-menu={{_isSubmenu}}
 	@ui5-before-open={{_beforePopoverOpen}}
 	@ui5-after-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
@@ -69,7 +69,7 @@
 				._ariaHasPopup={{this.ariaHasPopup}}
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
-				?selected={{this.item.subMenuOpened}}
+				?selected={{this.item.submenuOpened}}
 				?is-phone={{../isPhone}}
 				@mouseover={{../_itemMouseOver}}
 				@mouseout={{../_itemMouseOut}}
@@ -109,8 +109,3 @@
 	{{/if}}
 	</div>
 </ui5-responsive-popover>
-
-<div
-	class="ui5-menu-submenus"
->
-</div>
