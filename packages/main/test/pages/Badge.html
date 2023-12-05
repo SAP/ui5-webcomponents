@@ -23,11 +23,14 @@
 	<ui5-checkbox text="Interactive" id="checkboxId"></ui5-checkbox>
 	<section class="group gaps">
 		<h2>Custom Badges</h2>
-		<ui5-badge style="width: 200px">
+		<ui5-badge class="width200px">
 			Default color truncate truncate truncate
 		</ui5-badge>
-		<ui5-badge id="badgeWithTextAndIcon" style="width: 300px" color-scheme="1">
+		<ui5-badge id="badgeWithTextAndIcon" class="width300px" color-scheme="1">
 			<ui5-icon name="accept" slot="icon"></ui5-icon>bigger width
+		</ui5-badge>
+		<ui5-badge design="Positive" id="interactiveBadge" interactive>
+			Interactive
 		</ui5-badge>
 		<ui5-badge id="badgeIconOnly" color-scheme="2">
 			<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
@@ -61,7 +64,7 @@
 		<ui5-badge>
 			wrapping-type="true"
 		</ui5-badge>
-		<ui5-badge wrapping-type="Normal" style="width: 150px">
+		<ui5-badge wrapping-type="Normal" class="width200px">
 			<ui5-icon name="email-read" slot="icon"></ui5-icon>Some long text with more lines text wrapping-type="true"
 		</ui5-badge>
 		<ui5-badge wrapping-type="Normal">

@@ -5,6 +5,14 @@ describe("Badge rendering", async () => {
 		await browser.url(`test/pages/Badge.html`);
 	});
 
+	it("rendering", async () => {
+		let badgeRoot = await browser.$("#badgeWithTextAndIcon").shadow$(".ui5-badge-root");
+		assert.strictEqual(await badgeRoot.getTagName(), "span", "badge root is span.");
+
+		badgeRoot = await browser.$("#interactiveBadge").shadow$(".ui5-badge-root");
+		assert.strictEqual(await badgeRoot.getTagName(), "button", "badge root is button.");
+	});
+
 	it("tests that label is rendered if there is text content", async () => {
 		const badgeLabel = await browser.$("#badgeWithTextAndIcon").shadow$(".ui5-badge-text");
 
