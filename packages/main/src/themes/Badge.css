@@ -42,6 +42,10 @@
 	border-radius: var(--sapButton_BorderCornerRadius);
 }
 
+:host([_is-tag-design][interactive]) .ui5-badge-root:active {
+	text-shadow: var(--sapContent_TextShadow);
+}
+
 :host([interactive]) .ui5-badge-root {
 	cursor: pointer;
 }
@@ -82,7 +86,7 @@
 	vertical-align: bottom;
 }
 
-/* Color Scheme Design Type */
+/* Set3 (BTP) Design Type */
 
 /* Scheme 1 */
 .ui5-badge-root,
@@ -156,19 +160,11 @@
 }
 
 /* Value State Design Type */
-
-:host([design="Neutral"]) .ui5-badge-root,
-:host([design="Information"]) .ui5-badge-root,
-:host([design="Positive"]) .ui5-badge-root,
-:host([design="Negative"]) .ui5-badge-root,
-:host([design="Critical"]) .ui5-badge-root {
-	/*border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);*/
-}
-
 :host([design="Neutral"]) .ui5-badge-root {
 	background-color: var(--sapNeutralBackground);
 	border-color: var(--sapNeutralBorderColor);
 	color: var(--sapTextColor);
+	text-shadow: var(--sapContent_TextShadow);
 }
 
 :host([interactive]):host([design="Neutral"]) .ui5-badge-root:hover {
@@ -187,6 +183,7 @@
 	background-color: var(--sapButton_Success_Background);
 	border-color: var(--sapButton_Success_BorderColor);
 	color: var(--sapButton_Success_TextColor);
+	text-shadow: var(--sapContent_ContrastTextShadow);
 }
 
 :host([interactive]):host([design="Positive"]) .ui5-badge-root:hover {
@@ -205,6 +202,7 @@
 	background-color: var(--sapButton_Negative_Background);
 	border-color: var(--sapButton_Negative_BorderColor);
 	color: var(--sapButton_Negative_TextColor);
+	text-shadow: var(--sapContent_ContrastTextShadow);
 }
 
 :host([interactive]):host([design="Negative"]) .ui5-badge-root:hover {
@@ -223,6 +221,7 @@
 	background-color: var(--sapButton_Critical_Background);
 	border-color: var(--sapButton_Critical_BorderColor);
 	color: var(--sapButton_Critical_TextColor);
+	text-shadow: var(--sapContent_ContrastTextShadow);
 }
 
 :host([interactive]):host([design="Critical"]) .ui5-badge-root:hover {
@@ -241,6 +240,7 @@
 	background-color: var(--sapButton_Information_Background);
 	border-color: var(--sapButton_Information_BorderColor);
 	color: var(--sapButton_Information_TextColor);
+	text-shadow: var(--sapContent_TextShadow);
 }
 
 :host([interactive]):host([design="Information"]) .ui5-badge-root:hover {
@@ -256,6 +256,10 @@
 }
 
 /* Set1 Design Type */
+
+:host([design="Set1"]) .ui5-badge-root {
+	text-shadow: var(--sapContent_ContrastTextShadow);
+}
 
 :host([design="Set1"]) .ui5-badge-root,
 :host([design="Set1"]):host([color-scheme="1"]) .ui5-badge-root {
