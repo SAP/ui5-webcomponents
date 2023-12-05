@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.20.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.2...v1.20.0-rc.3) (2023-11-30)
+
+
+### Features
+
+* register custom theme properties ([#7750](https://github.com/SAP/ui5-webcomponents/issues/7750)) ([c6c04c6](https://github.com/SAP/ui5-webcomponents/commit/c6c04c609d82a7442bdf79ef5bba46a406859a27))
+
+
+
+
+
+# [1.20.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.1...v1.20.0-rc.2) (2023-11-23)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* declare webpackChunkName in generated dynamic imports for readable runtime bundle names ([#7835](https://github.com/SAP/ui5-webcomponents/issues/7835)) ([592a10b](https://github.com/SAP/ui5-webcomponents/commit/592a10b25a14da89885874c40c5c7a192b8b4d85))
+
+
+
+
+
 # [1.20.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.20.0-rc.0) (2023-11-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

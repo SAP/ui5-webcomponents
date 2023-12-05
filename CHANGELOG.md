@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
+
+
+### Bug Fixes
+
+* **framework:** fix font72 for special characters ([#7949](https://github.com/SAP/ui5-webcomponents/issues/7949)) ([55665b0](https://github.com/SAP/ui5-webcomponents/commit/55665b0ac02cd9060de1368fb427bb338338c5aa)), closes [#7948](https://github.com/SAP/ui5-webcomponents/issues/7948)
+* **ui5-multi-combobox:** adjust open property handling ([#7763](https://github.com/SAP/ui5-webcomponents/issues/7763)) ([bb2ecfc](https://github.com/SAP/ui5-webcomponents/commit/bb2ecfc87dc95e67aea7acfce92de296899db074))
+
+
+### Features
+
+* **ui5-select:** introduce `value` property ([#7865](https://github.com/SAP/ui5-webcomponents/issues/7865)) ([8c62d34](https://github.com/SAP/ui5-webcomponents/commit/8c62d34c353f07d338a52ba7fd9f87141fa62b5a))
+
+
+
+
+
+# [1.20.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.2...v1.20.0-rc.3) (2023-11-30)
+
+
+### Bug Fixes
+
+* **framework:** enable `72Blackfull` font-family ([#7918](https://github.com/SAP/ui5-webcomponents/issues/7918)) ([214780f](https://github.com/SAP/ui5-webcomponents/commit/214780ffde6c99a395472e5714370788668ed71e)), closes [#7800](https://github.com/SAP/ui5-webcomponents/issues/7800)
+* **ui5-panel:** improve header visualization ([#7906](https://github.com/SAP/ui5-webcomponents/issues/7906)) ([3c1fe39](https://github.com/SAP/ui5-webcomponents/commit/3c1fe39e93546a9c067f6b04cf593a7de48f7f0a))
+* **ui5-table:** popin-change is now fired on pop out ([#7837](https://github.com/SAP/ui5-webcomponents/issues/7837)) ([4ca3898](https://github.com/SAP/ui5-webcomponents/commit/4ca3898e0d0c22c0cea2d439af33455fcec9cce2))
+* **ui5-table:** show busy indicator above sticky column headers ([#7886](https://github.com/SAP/ui5-webcomponents/issues/7886)) ([bce4b93](https://github.com/SAP/ui5-webcomponents/commit/bce4b933ab28e0de33d57f11bb1878953302c8b6)), closes [#7848](https://github.com/SAP/ui5-webcomponents/issues/7848)
+* **ui5-textarea:** adjust scroll positioning ([#7920](https://github.com/SAP/ui5-webcomponents/issues/7920)) ([944b260](https://github.com/SAP/ui5-webcomponents/commit/944b260d81df8940c0f3061046a1137c32c5b3a7))
+
+
+### Features
+
+* cloned property to the slot decorator ([#7882](https://github.com/SAP/ui5-webcomponents/issues/7882)) ([2f3742b](https://github.com/SAP/ui5-webcomponents/commit/2f3742bae6a73796ccb0f59b48d35d0f794fba63)), closes [#7681](https://github.com/SAP/ui5-webcomponents/issues/7681)
+* register custom theme properties ([#7750](https://github.com/SAP/ui5-webcomponents/issues/7750)) ([c6c04c6](https://github.com/SAP/ui5-webcomponents/commit/c6c04c609d82a7442bdf79ef5bba46a406859a27))
+
+
+
+
+
+# [1.20.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.1...v1.20.0-rc.2) (2023-11-23)
+
+
+### Bug Fixes
+
+* **framework:** redundant fonts loading ([#7868](https://github.com/SAP/ui5-webcomponents/issues/7868)) ([87535f1](https://github.com/SAP/ui5-webcomponents/commit/87535f1ba30b85d3c1c718451a89f0121e441338))
+* openui5 support crashes with 1.121-snapshot ([#7872](https://github.com/SAP/ui5-webcomponents/issues/7872)) ([334ed68](https://github.com/SAP/ui5-webcomponents/commit/334ed6821433b0364ee65a2db2d3ab44cad0612d))
+* **ui5-calendar:** render the correct length of day names ([#7866](https://github.com/SAP/ui5-webcomponents/issues/7866)) ([2a31e8d](https://github.com/SAP/ui5-webcomponents/commit/2a31e8d1587a2461099810239364913421708afa)), closes [#7831](https://github.com/SAP/ui5-webcomponents/issues/7831)
+* **ui5-switch:** align 'off' text in RTL, add compact mode params ([#7603](https://github.com/SAP/ui5-webcomponents/issues/7603)) ([007e755](https://github.com/SAP/ui5-webcomponents/commit/007e755f301e6112bf98afef1b47676b422eb268)), closes [#7522](https://github.com/SAP/ui5-webcomponents/issues/7522) [#7806](https://github.com/SAP/ui5-webcomponents/issues/7806)
+* **ui5-wizard:** scrollbar styles are now present on root ([#7838](https://github.com/SAP/ui5-webcomponents/issues/7838)) ([1534d89](https://github.com/SAP/ui5-webcomponents/commit/1534d897f15f52f947a96430ca498a5548e4b6c8))
+
+
+
+
+
+# [1.20.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.0...v1.20.0-rc.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* declare webpackChunkName in generated dynamic imports for readable runtime bundle names ([#7835](https://github.com/SAP/ui5-webcomponents/issues/7835)) ([592a10b](https://github.com/SAP/ui5-webcomponents/commit/592a10b25a14da89885874c40c5c7a192b8b4d85))
+* **ui5-list:** shift+tab navigation in List ([#7728](https://github.com/SAP/ui5-webcomponents/issues/7728)) ([399b941](https://github.com/SAP/ui5-webcomponents/commit/399b941ebeae7b44f6dba9cd4e8ec7ebb6f283c6))
+
+
+### Features
+
+* **ui5-illustrated-message:** titleLevel property added ([#7771](https://github.com/SAP/ui5-webcomponents/issues/7771)) ([2883c58](https://github.com/SAP/ui5-webcomponents/commit/2883c587f367e51e0f08065498b990f86e60e88c)), closes [#7037](https://github.com/SAP/ui5-webcomponents/issues/7037)
+
+
+
+
+
 # [1.20.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0...v1.20.0-rc.0) (2023-11-09)
 
 

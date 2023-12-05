@@ -15,6 +15,7 @@
 	box-sizing: border-box;
 	font-family: var(--_ui5-badge-font);
 	font-weight: var(--_ui5-badge-font-weight);
+	font-size: var(--_ui5-badge-font-size);
 	text-align: center;
 	letter-spacing: var(--_ui5-badge-letter-spacing);
 }
@@ -36,7 +37,7 @@
 	text-overflow: ellipsis;
 	text-transform: var(--_ui5-badge-text-transform);
 	letter-spacing: inherit;
-	font-size: var(--_ui5-badge-font-size);
+	font-size: inherit;
 }
 
 :host([_icon-only]) {
