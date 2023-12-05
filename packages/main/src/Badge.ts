@@ -21,14 +21,15 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-badge</code> is a small non-interactive component which contains text information and color chosen from a list of predefined color schemes.
- * It serves the purpose to attract the user attention to some piece of information (state, quantity, condition, etc.).
+ * The <code>ui5-badge</code> is a component which attracts the user attention
+ * to some piece of information (state, quantity, condition, etc.).
+ *
+ * It can contain icon, text information and design chosen from a specific design types.
  *
  * <h3>Usage Guidelines</h3>
  * <ul>
- * <li>If the text is longer than the width of the component, it doesn’t wrap, it shows ellipsis.</li>
- * <li>When truncated, the full text is not visible, therefore, it’s recommended to make more space for longer texts to be fully displayed.</li>
- * <li>Colors are not semantic and have no visual representation in High Contrast Black (sap_belize_hcb) theme.</li>
+ * <li>If the text is longer than the width of the component, it can wrap, or it can show ellipsis, depending on the <code>wrappingType</code> property.</li>
+  * <li>Colors can be semantic or not semantic.</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
