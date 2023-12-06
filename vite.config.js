@@ -35,7 +35,7 @@ const customResolver = (id, source, options) => {
 			const virtSource = source.replace(/packages\/(\w+)\/src\//, "packages/$1/dist/");
 			let resolved = join(dirname(virtSource), id);
 			// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-			reseolved = resolved.split(path.sep).join(path.posix.sep);
+			resolved = resolved.split(path.sep).join(path.posix.sep);
 			if (resolved.endsWith("sap/ui/core/Core.js") && resolved.includes("/dist/")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
