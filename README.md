@@ -149,15 +149,13 @@ A dev server will be started and the browser will open its index URL with a list
 You can start the Playground app with the following commands:
 
 ```sh
-# install playground specific dependencies (one time only)
-cd packages/playground
-yarn install:dependencies
+yarn # to install all dependencies
 
 # start the playground from the project root
-cd ../..
+cd packages/playground # to open playground's package
 yarn start:playground
 
-# open http://localhost:4000/
+# open http://localhost:6006/
 ```
 
 **Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)
