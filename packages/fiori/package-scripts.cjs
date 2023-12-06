@@ -5,10 +5,10 @@ const filterOut = [
 	"sapIllus-Dialog",
 	"sapIllus-Scene",
 	"sapIllus-Spot",
-	"tnt-Dot", 
-	"tnt-Dialog", 
-	"tnt-Scene", 
-	"tnt-Spot", 
+	"tnt-Dot",
+	"tnt-Dialog",
+	"tnt-Scene",
+	"tnt-Spot",
 	"AllIllustrations",
 ];
 
@@ -17,6 +17,7 @@ const options = {
 	portStep: 2,
 	fioriPackage: true,
 	typescript: true,
+	noWatchTS: true,
 	illustrationsData: [
 		{
 			path: "src/illustrations",
@@ -26,7 +27,7 @@ const options = {
 			collection: "V4",
 			destinationPath: "dist/illustrations",
 			dynamicImports: {
-				outputFile: "dist/generated/js-imports/Illustrations.js",
+				outputFile: "src/generated/js-imports/Illustrations.ts",
 				location: '../../illustrations',
 				prefix: "",
 				filterOut
@@ -40,7 +41,7 @@ const options = {
 			collection: "V4",
 			destinationPath: "dist/illustrations/tnt",
 			dynamicImports: {
-				outputFile: "dist/generated/js-imports/IllustrationsTNT.js",
+				outputFile: "src/generated/js-imports/IllustrationsTNT.ts",
 				location: '../../illustrations/tnt',
 				prefix: "Tnt",
 				filterOut
@@ -54,7 +55,7 @@ const options = {
 			collection: "V5",
 			destinationPath: "dist/illustrations-v5/tnt",
 			dynamicImports: {
-				outputFile: "dist/generated/js-imports/IllustrationsV5TNT.js",
+				outputFile: "src/generated/js-imports/IllustrationsV5TNT.ts",
 				location: '../../illustrations-v5/tnt',
 				prefix: "Tnt",
 				filterOut
@@ -68,7 +69,7 @@ const options = {
 			collection: "V5/HC",
 			destinationPath: "dist/illustrations-v5/tnt/hc",
 			dynamicImports: {
-				outputFile: "dist/generated/js-imports/IllustrationsV5TNTHC.js",
+				outputFile: "src/generated/js-imports/IllustrationsV5TNTHC.ts",
 				location: '../../illustrations-v5/tnt/hc',
 				prefix: "Tnt",
 				filterOut

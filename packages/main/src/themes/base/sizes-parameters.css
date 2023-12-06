@@ -97,9 +97,6 @@
 	/* TextArea */
 	--_ui5_textarea_margin: .25rem 0;
 
-	/* Panel */
-	--_ui5_panel_header_height: 2.75rem;
-
 	/* Radio Button */
 	--_ui5_radio_button_height: 2.75rem;
 	--_ui5_radio_button_label_side_padding: .875rem;
@@ -248,7 +245,9 @@
 
 	--_ui5_month_picker_item_height: 2rem;
 	--_ui5_year_picker_item_height: 2rem;
-	--_ui5_panel_header_height: 2.5rem;
+	--_ui5_panel_header_height: 2rem;
+	--_ui5_panel_button_root_height: 2rem;
+	--_ui5_panel_button_root_width: 2.5rem;
 
 	--_ui5_token_height: 1.25rem;
 	--_ui5_token_right_margin: 0.25rem;

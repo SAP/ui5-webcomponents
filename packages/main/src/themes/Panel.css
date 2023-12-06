@@ -102,7 +102,7 @@
 	align-items: center;
 	flex-shrink: 0;
 	width: var(--_ui5_panel_button_root_width);
-	height: var(--_ui5_panel_button_root_width);
+	height: var(--_ui5_panel_button_root_height);
 	padding: var(--_ui5_panel_header_button_wrapper_padding);
 	box-sizing: border-box;
 }
