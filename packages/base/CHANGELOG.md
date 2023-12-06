@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
+
+
+### Bug Fixes
+
+* **framework:** fix font72 for special characters ([#7949](https://github.com/SAP/ui5-webcomponents/issues/7949)) ([55665b0](https://github.com/SAP/ui5-webcomponents/commit/55665b0ac02cd9060de1368fb427bb338338c5aa)), closes [#7948](https://github.com/SAP/ui5-webcomponents/issues/7948)
+
+
+
+
+
+# [1.20.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.2...v1.20.0-rc.3) (2023-11-30)
+
+
+### Bug Fixes
+
+* **framework:** enable `72Blackfull` font-family ([#7918](https://github.com/SAP/ui5-webcomponents/issues/7918)) ([214780f](https://github.com/SAP/ui5-webcomponents/commit/214780ffde6c99a395472e5714370788668ed71e)), closes [#7800](https://github.com/SAP/ui5-webcomponents/issues/7800)
+
+
+### Features
+
+* cloned property to the slot decorator ([#7882](https://github.com/SAP/ui5-webcomponents/issues/7882)) ([2f3742b](https://github.com/SAP/ui5-webcomponents/commit/2f3742bae6a73796ccb0f59b48d35d0f794fba63)), closes [#7681](https://github.com/SAP/ui5-webcomponents/issues/7681)
+* register custom theme properties ([#7750](https://github.com/SAP/ui5-webcomponents/issues/7750)) ([c6c04c6](https://github.com/SAP/ui5-webcomponents/commit/c6c04c609d82a7442bdf79ef5bba46a406859a27))
+
+
+
+
+
 # [1.20.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.1...v1.20.0-rc.2) (2023-11-23)
 
 

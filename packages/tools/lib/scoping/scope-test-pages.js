@@ -18,6 +18,7 @@ const replaceTagsHTML = content => {
 
 // Replace tags in any content
 const replaceTagsAny = content => {
+	console.log(tags.length);
 	tags.forEach(tag => {
 		content = content.replace(new RegExp(`(^|[^\-_A-Za-z0-9])(${tag})([^\-_A-Za-z0-9]|$)`, "g"), `$1$2-${suffix}$3`);
 	});
@@ -27,7 +28,7 @@ const replaceTagsAny = content => {
 // Replace bundle names and HTML tag names in test pages
 glob.sync(path.join(root, "/**/*.html")).forEach(file => {
 	let content = String(fs.readFileSync(file));
-	content = content.replace(/bundle\.(.*?)\.js/g, `../bundle.scoped.$1.js`);
+	content = content.replace("%VITE_BUNDLE_PATH%", "%VITE_BUNDLE_PATH_SCOPED%");
 	content = replaceTagsHTML(content);
 	fs.writeFileSync(file, content);
 });

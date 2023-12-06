@@ -255,15 +255,18 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_startObservingDOMChildren() {
 		const ctor = this.constructor as typeof UI5Element;
-		const shouldObserveChildren = ctor.getMetadata().hasSlots();
+		const metadata = ctor.getMetadata();
+		const shouldObserveChildren = metadata.hasSlots();
+
 		if (!shouldObserveChildren) {
 			return;
 		}
 
-		const canSlotText = ctor.getMetadata().canSlotText();
+		const canSlotText = metadata.canSlotText();
+		const hasClonedSlot = Object.keys(metadata.getSlots()).some(slotName => metadata.getSlots()[slotName].cloned);
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: canSlotText,
+			subtree: canSlotText || hasClonedSlot,
 			characterData: canSlotText,
 		};
 		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
