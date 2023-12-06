@@ -61,7 +61,8 @@ import badgeCss from "./generated/themes/Badge.css.js";
 })
 
 /**
- * Fired when the user clicks on a badge when <code>interactive</code> property is <code>true</code>.
+ * Fired when the user clicks on an interactive badge.
+ * <b>Note:</b> The event will be fired if the <code>interactive</code> property is <code>true</code>
  * @event sap.ui.webc.main.Badge#click
  * @public
  * @since 1.20
