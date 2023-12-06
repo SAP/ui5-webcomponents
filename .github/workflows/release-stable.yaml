@@ -29,8 +29,8 @@ jobs:
     - name: Install
       run: yarn --frozen-lockfile
 
-    - name: Build
-      run: yarn build
+    - name: Release Build
+      run: yarn ci:releasebuild
 
     - name: Publish
       env:

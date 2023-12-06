@@ -18,6 +18,7 @@
   },
   "scripts": {
     "clean": "wc-dev clean",
+    "generate": "nps generate",
     "build": "wc-dev build",
     "prepublishOnly": "npm run clean && npm run build"
   },

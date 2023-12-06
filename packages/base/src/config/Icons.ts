@@ -1,7 +1,7 @@
 const IconCollectionConfiguration = new Map<string, string>();
 
 // All supported icon collections + unknown custom ones
-type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | "business-suite-v1" | "business-suite-v2" | string;
+type IconCollection = string;
 
 /**
  * Sets the default icon collection for a given theme.

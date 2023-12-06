@@ -1,1 +1,1 @@
-import "@ui5/webcomponents-fiori/bundle.esm.js";
+import "@ui5/webcomponents-fiori/dist/bundle.esm.js";
