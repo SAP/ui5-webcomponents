@@ -153,7 +153,7 @@ yarn # to install all dependencies
 
 # start the playground from the project root
 cd packages/playground # to open playground's package
-yarn start:playground
+yarn start:playground # to serve playground
 
 # open http://localhost:6006/
 ```
