@@ -48,20 +48,9 @@ interface IIcon extends HTMLElement { }
 /**
  * Interface for components that represent an input, usable in numerous higher-order components
  *
- * @name sap.ui.webc.main.IInput
- * @interface
  * @public
  */
-const IInput = "sap.ui.webc.main.IInput";
-
-/**
- * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
- *
- * @name sap.ui.webc.main.IInputSuggestionItem
- * @interface
- * @public
- */
-const IInputSuggestionItem = "sap.ui.webc.main.IInputSuggestionItem";
+interface IInput extends HTMLElement { }
 
 /**
  * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
@@ -132,11 +121,14 @@ const ITableCell = "sap.ui.webc.main.ITableCell";
 /**
  * Interface for components that represent a token and are usable in components such as <code>ui5-multi-input</code>
  *
- * @name sap.ui.webc.main.IToken
- * @interface
  * @public
  */
-const IToken = "sap.ui.webc.main.IToken";
+interface IToken extends HTMLElement, ITabbable {
+	text: string;
+	readonly: boolean,
+	selected: boolean,
+	isTruncatable: boolean,
+}
 
 /**
  * Interface for tree items for the purpose of <code>ui5-tree</code>
@@ -156,7 +148,6 @@ export {
 	IComboBoxItem,
 	IIcon,
 	IInput,
-	IInputSuggestionItem,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	IOption,
