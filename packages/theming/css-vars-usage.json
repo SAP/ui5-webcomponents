@@ -203,6 +203,7 @@
   "--sapContent_ContrastIconColor",
   "--sapContent_ContrastShadowColor",
   "--sapContent_ContrastTextColor",
+  "--sapContent_ContrastTextShadow",
   "--sapContent_Critical_Shadow",
   "--sapContent_DisabledOpacity",
   "--sapContent_DisabledTextColor",

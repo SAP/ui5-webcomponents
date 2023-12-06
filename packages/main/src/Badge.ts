@@ -7,6 +7,12 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/sys-help-2.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/information.js";
 import WrappingType from "./types/WrappingType.js";
 import BadgeDesign from "./types/BadgeDesign.js";
 // Template
@@ -23,8 +29,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  *
  * The <code>ui5-badge</code> is a component which attracts the user attention
  * to some piece of information (state, quantity, condition, etc.).
- *
- * It can contain icon, text information and design chosen from a specific design types.
+ * It can contain icon, text information and design chosen from specific design types.
  *
  * <h3>Usage Guidelines</h3>
  * <ul>
@@ -50,13 +55,15 @@ import badgeCss from "./generated/themes/Badge.css.js";
 	renderer: litRender,
 	template: BadgeTemplate,
 	styles: badgeCss,
+	dependencies: [
+		Icon,
+	],
 })
 
 /**
- * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
- * - on mouse click, the icon fires native <code>click</code> event
- * - on <code>SPACE</code> and <code>ENTER</code>, the badge fires custom <code>click</code> event
- * @private
+ * Fired when the user clicks on a badge when <code>interactive</code> property is <code>true</code>.
+ * @event sap.ui.webc.main.Badge#click
+ * @public
  * @since 1.20
  */
 @event("click")
@@ -200,7 +207,7 @@ class Badge extends UI5Element {
 
 		switch (this.design) {
 		case BadgeDesign.Neutral:
-			return "icon-sys-help-2";
+			return "sys-help-2";
 		case BadgeDesign.Positive:
 			return "sys-enter-2";
 		case BadgeDesign.Negative:
