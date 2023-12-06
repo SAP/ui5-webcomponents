@@ -6,6 +6,20 @@
   z-index: 2;
 }
 
+.footerInner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.footerGenericFlex {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
 .content {
   min-height: 2.75rem;
   padding-inline: 1rem;

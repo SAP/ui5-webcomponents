@@ -55,9 +55,6 @@
     "prepare:manifest": "node ./build-scripts-storybook/parse-manifest.js",
     "prepare:documentation": "vite-node ./build-scripts-storybook/documentation-prepare.ts",
     "storybook": "npm-run-all --parallel prepare:* && storybook dev -p 6006",
-    "build-storybook": "npm-run-all --parallel prepare:build:* prepare:* && storybook build -o ./dist/playground"
-  },
-  "dependencies": {
-    "@ui5/webcomponents-react": "^1.23.0"
+    "build-storybook": "npm-run-all --parallel prepare:build:* prepare:* && tsc && storybook build -o ./dist/playground"
   }
 }
