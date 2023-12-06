@@ -8,7 +8,7 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import Button from "./Button.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
@@ -176,6 +176,8 @@ class DateTimePicker extends DatePicker {
 	@property({ defaultValue: "hours" })
 	_currentTimeSlider!: string;
 
+	_timeSelection?: TimeSelection | null;
+
 	_handleResizeBound: ResizeObserverCallback;
 
 	constructor() {
@@ -216,8 +218,14 @@ class DateTimePicker extends DatePicker {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
+		this._timeSelection = await this._getTimeSelection();
 	}
 
+	async _getTimeSelection() {
+		const responsivePopover = await this._respPopover();
+
+		return responsivePopover.querySelector<TimeSelection>("[ui5-time-selection]");
+	}
 	/**
 	 * Read-only getters
 	 */
@@ -384,6 +392,10 @@ class DateTimePicker extends DatePicker {
 		this._showTimeView = target.getAttribute("key") === "Time";
 		if (this._showTimeView) {
 			this._currentTimeSlider = "hours";
+			if (this._timeSelection!._currentSliderDOM) {
+				this._timeSelection!._currentSliderDOM.expanded = false;
+				this._timeSelection!._currentSliderDOM.expanded = true;
+			}
 		}
 	}
 
