@@ -28,7 +28,7 @@
     "start:all": "npm-run-all --parallel copy-css watch:base watch:localization watch:main watch:fiori dev",
     "dev": "node packages/tools/lib/dev-server/dev-server.js",
     "scopeStart:all": "npm-run-all --parallel watch:base watch:localization scopeWatch:main scopeWatch:fiori dev",
-    "start:playground": "yarn build && yarn bundle && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
+    "start:playground": "yarn ci:releasebuild && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
     "test:base": "yarn workspace @ui5/webcomponents-base test",
     "test:main": "yarn workspace @ui5/webcomponents test",
     "test:main:suite-1": "yarn workspace @ui5/webcomponents test:suite-1",
