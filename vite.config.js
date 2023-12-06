@@ -3,29 +3,39 @@ const virtualIndex = require("@ui5/webcomponents-tools/lib/dev-server/virtual-in
 const customHotUpdate = require("@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js");
 const { existsSync } = require('fs');
 const { dirname, join, resolve } = require('path');
+const path = require('path');
 const tsconfigPaths = require('vite-tsconfig-paths').default;
 const {checker} = require('vite-plugin-checker');
 
 const customResolver = (id, source, options) => {
+	// TODO test without
+	// source = source.split(path.sep).join(path.posix.sep);
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
 		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
 		return resolved;
 	}
-	
+
 	if (isIconImporter && id.startsWith("../generated")) {
-		const resolved = join(dirname(source), id).replace("/dist/", "/src/").replace(/\.js$/, ".ts");
+		let absoluteId = join(dirname(source), id);
+		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		const resolved = absoluteId.replace("/dist/", "/src/").replace(/\.js$/, ".ts");
 		return resolved;
 	}
 
 	if (id.startsWith("./") || id.startsWith("../")) {
 		//   `/sap/base/` and `sap/ui/core/` files imported from `src` are actually in dist
 		//   except 4 files with are ts files in src and could be imported from `dist`
-		const absoluteId = resolve(dirname(source), id);
+		let absoluteId = resolve(dirname(source), id);
+		// resolve returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
 		if (absoluteId.includes("/sap/base/") || absoluteId.includes("/sap/ui/core/")) {
 			const virtSource = source.replace(/packages\/(\w+)\/src\//, "packages/$1/dist/");
 			let resolved = join(dirname(virtSource), id);
+			// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+			reseolved = resolved.split(path.sep).join(path.posix.sep);
 			if (resolved.endsWith("sap/ui/core/Core.js") && resolved.includes("/dist/")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
@@ -47,14 +57,19 @@ const customResolver = (id, source, options) => {
 
 	// relative imports from fiori src that are to a folder starting with `illustrations` are in dist
 	if (source.includes("fiori/src/") && id.includes("/illustrations") && !id.includes("AllIllustrations") && id.startsWith(".")) {
-		const absoluteId = resolve(dirname(source), id);
-		resolved = absoluteId.replace("/src/", "/dist/");
+		let absoluteId = resolve(dirname(source), id);
+		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		const resolved = absoluteId.replace("/src/", "/dist/");
 		return resolved;
 	}
 
 	// generated illustrations search for i18n texts which are in `src/generated`
 	if (source.includes("fiori/dist/illustrations") && id.startsWith("../generated")) {
-		const resolved = join(dirname(source), id).replace("/dist/", "/src/").replace(/\.js$/, ".ts");
+		let absoluteId = join(dirname(source), id);
+		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		const resolved = absoluteId.replace("/dist/", "/src/").replace(/\.js$/, ".ts");
 		return resolved;
 	}
 
@@ -63,7 +78,6 @@ const customResolver = (id, source, options) => {
 		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
 		return resolved;
 	}
-
 }
 
 module.exports = defineConfig(async () => {
@@ -80,7 +94,7 @@ module.exports = defineConfig(async () => {
 				},
 		  	}),
 		],
-		
+
 		resolve: {
 			alias: [
 				// { find: /\@ui5\/webcomponents-base\/dist\/(.*)/, replacement: "../base/src/$1" },
