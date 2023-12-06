@@ -28,9 +28,14 @@
   "scripts": {
     "clean": "wc-dev clean",
     "lint": "wc-dev lint",
+    "lint:scope": "nps scope.lint",
     "start": "wc-dev start",
     "watch": "wc-dev watch",
     "build": "wc-dev build",
+    "generate": "nps generate",
+    "generateAPI": "nps generateAPI",
+    "copyGenerated": "nps copyGenerated",
+    "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
