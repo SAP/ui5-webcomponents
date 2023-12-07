@@ -7,9 +7,12 @@ const path = require('path');
 const tsconfigPaths = require('vite-tsconfig-paths').default;
 const {checker} = require('vite-plugin-checker');
 
+// use after path.join and path.resolve as they turn paths to windows separators and comparisons and replacements stop working
+const toPosixPath = (pathStr) => {
+	return pathStr.split(path.sep).join(path.posix.sep);
+}
+
 const customResolver = (id, source, options) => {
-	// TODO test without
-	// source = source.split(path.sep).join(path.posix.sep);
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
@@ -20,7 +23,7 @@ const customResolver = (id, source, options) => {
 	if (isIconImporter && id.startsWith("../generated")) {
 		let absoluteId = join(dirname(source), id);
 		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		absoluteId = toPosixPath(absoluteId);
 		const resolved = absoluteId.replace("/dist/", "/src/").replace(/\.js$/, ".ts");
 		return resolved;
 	}
@@ -30,12 +33,12 @@ const customResolver = (id, source, options) => {
 		//   except 4 files with are ts files in src and could be imported from `dist`
 		let absoluteId = resolve(dirname(source), id);
 		// resolve returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		absoluteId = toPosixPath(absoluteId);
 		if (absoluteId.includes("/sap/base/") || absoluteId.includes("/sap/ui/core/")) {
 			const virtSource = source.replace(/packages\/(\w+)\/src\//, "packages/$1/dist/");
 			let resolved = join(dirname(virtSource), id);
 			// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-			resolved = resolved.split(path.sep).join(path.posix.sep);
+			resolved = toPosixPath(resolved);
 			if (resolved.endsWith("sap/ui/core/Core.js") && resolved.includes("/dist/")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
@@ -59,7 +62,7 @@ const customResolver = (id, source, options) => {
 	if (source.includes("fiori/src/") && id.includes("/illustrations") && !id.includes("AllIllustrations") && id.startsWith(".")) {
 		let absoluteId = resolve(dirname(source), id);
 		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		absoluteId = toPosixPath(absoluteId);
 		const resolved = absoluteId.replace("/src/", "/dist/");
 		return resolved;
 	}
@@ -68,7 +71,7 @@ const customResolver = (id, source, options) => {
 	if (source.includes("fiori/dist/illustrations") && id.startsWith("../generated")) {
 		let absoluteId = join(dirname(source), id);
 		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-		absoluteId = absoluteId.split(path.sep).join(path.posix.sep);
+		absoluteId = toPosixPath(absoluteId);
 		const resolved = absoluteId.replace("/dist/", "/src/").replace(/\.js$/, ".ts");
 		return resolved;
 	}
