@@ -23,7 +23,7 @@
     "copyGenerated": "nps copyGenerated",
     "start": "nps start",
     "verify": "node ./lib/verify-vars/index.js",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",

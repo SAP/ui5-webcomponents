@@ -32,7 +32,7 @@
     "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
     "test": "nps test",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "tsc"
   },
   "dependencies": {
     "lit-html": "^2.0.1"

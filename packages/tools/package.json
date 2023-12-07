@@ -76,6 +76,7 @@
     }
   },
   "devDependencies": {
+    "esbuild": "^0.19.8",
     "yargs": "^17.5.1"
   }
 }

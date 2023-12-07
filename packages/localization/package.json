@@ -27,7 +27,7 @@
     "build": "nps build",
     "generate": "nps generate",
     "copyGenerated": "nps copyGenerated",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "tsc"
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.116.0",
