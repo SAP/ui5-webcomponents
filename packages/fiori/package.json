@@ -38,7 +38,7 @@
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "create-ui5-element": "wc-create-ui5-element",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",
