@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0...v1.21.0-rc.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* **base:** add local variant for language loading ([#7968](https://github.com/SAP/ui5-webcomponents/issues/7968)) ([440cf48](https://github.com/SAP/ui5-webcomponents/commit/440cf4876dcf54cda86074fdb4dfe5ab0a19d4c5))
+* **infra:** windows build ([#7973](https://github.com/SAP/ui5-webcomponents/issues/7973)) ([dfc0e09](https://github.com/SAP/ui5-webcomponents/commit/dfc0e09b9574012684b3ba2816eddc13a01f654e))
+* **ui5-table-row:** fix runtime exception in test env execution ([#7953](https://github.com/SAP/ui5-webcomponents/issues/7953)) ([e24f294](https://github.com/SAP/ui5-webcomponents/commit/e24f294501b1b1bb3d1f1f30f902fc165fefcf57)), closes [#7787](https://github.com/SAP/ui5-webcomponents/issues/7787)
+
+
+### Features
+
+* **ui5-split-button:** expose active state property for arrow button ([#7683](https://github.com/SAP/ui5-webcomponents/issues/7683)) ([d6d3705](https://github.com/SAP/ui5-webcomponents/commit/d6d3705a585af32ff440d1b7ae57faf46ef0913f))
+
+
+
+
+
 # [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
 
 
