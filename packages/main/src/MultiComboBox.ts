@@ -354,19 +354,6 @@ class MultiComboBox extends UI5Element {
 	filter!: `${ComboBoxFilter}`;
 
 	/**
-	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
-	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.open
-	 * @defaultvalue false
-	 * @readonly
-	 * @since 1.0.0-rc.5
-	 * @public
-	 */
-	@property({ type: Boolean })
-	open!: boolean;
-
-	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
@@ -392,6 +379,15 @@ class MultiComboBox extends UI5Element {
 
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	_effectiveValueState!: `${ValueState}`;
+	/**
+	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_open!: boolean;
 
 	@property({ type: Object, noAttribute: true, multiple: true })
 	_filteredItems!: Array<IMultiComboBoxItem>;
@@ -546,6 +542,19 @@ class MultiComboBox extends UI5Element {
 		this.filterSelected = (e.target as ToggleButton).pressed;
 		const selectedItems = this._filteredItems.filter(item => item.selected);
 		this.selectedItems = this.items.filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
+	}
+
+	/**
+	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.MultiComboBox.prototype.open
+	 * @defaultvalue false
+	 * @readonly
+	 * @public
+	 */
+	get open() {
+		return this._open;
 	}
 
 	get _showAllItemsButtonPressed(): boolean {
@@ -1265,7 +1274,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_toggle() {
-		this.open = !this.open;
+		this._open = !this._open;
 		this.fireEvent("open-change");
 	}
 

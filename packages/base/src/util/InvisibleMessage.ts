@@ -45,7 +45,7 @@ attachBoot(() => {
  * @param { InvisibleMessageMode } mode The mode to be inserted in the aria-live attribute.
  * @public
  */
-const announce = (message: string, mode: `${InvisibleMessageMode}`) => {
+const announce = (message: string, mode: InvisibleMessageMode) => {
 	// If no type is presented, fallback to polite announcement.
 	const span = mode === InvisibleMessageMode.Assertive ? assertiveSpan : politeSpan;
 

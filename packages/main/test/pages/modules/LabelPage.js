@@ -1,4 +1,3 @@
-import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 
 var select = document.getElementById("languageSelect");
 
@@ -20,7 +19,7 @@ function updateLabelsText(lang) {
 select.addEventListener("ui5-change", function (e) {
 	var lang = e.detail.selectedOption.id;
 
-	setLanguage(lang);
+	window["sap-ui-webcomponents-bundle"].configuration.setLanguage(lang);
 	updateLabelsText(lang);
 });
 
