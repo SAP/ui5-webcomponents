@@ -176,7 +176,7 @@ class DateTimePicker extends DatePicker {
 	@property({ defaultValue: "hours" })
 	_currentTimeSlider!: string;
 
-	_timeSelection?: TimeSelection | null;
+	_timeSelection?: TimeSelection;
 
 	_handleResizeBound: ResizeObserverCallback;
 
@@ -224,7 +224,7 @@ class DateTimePicker extends DatePicker {
 	async _getTimeSelection() {
 		const responsivePopover = await this._respPopover();
 
-		return responsivePopover.querySelector<TimeSelection>("[ui5-time-selection]");
+		return responsivePopover.querySelector<TimeSelection>("[ui5-time-selection]")!;
 	}
 	/**
 	 * Read-only getters
