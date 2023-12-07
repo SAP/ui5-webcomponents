@@ -7,7 +7,13 @@
 	_hide-header
 	class="ui5-tab-container-responsive-popover"
 >
-	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
+	<ui5-list
+		_reorder-items="{{reorderTabs}}"
+		mode="SingleSelect"
+		separators="None"
+		@ui5-item-click="{{_onOverflowListItemClick}}"
+		@ui5-item-reorder="{{_onReorderItemsInOverflow}}"
+	>
 		{{#each _overflowItems}}
 			{{overflowPresentation}}
 		{{/each}}

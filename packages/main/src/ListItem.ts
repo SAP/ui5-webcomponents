@@ -244,6 +244,13 @@ abstract class ListItem extends ListItemBase {
 	disableDeleteButton!: boolean;
 
 	/**
+	 * Used in TabInOverflow
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_draggable!: boolean;
+
+	/**
 	 * Defines the delete button, displayed in "Delete" mode.
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
@@ -371,6 +378,16 @@ abstract class ListItem extends ListItemBase {
 		this.fireItemPress(e);
 	}
 
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer || !e.target) {
+			return;
+		}
+
+		e.dataTransfer.clearData();
+		e.dataTransfer.setData("text/plain", this.id);
+		e.dataTransfer.dropEffect = "move";
+	}
+
 	/*
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
@@ -450,6 +467,13 @@ abstract class ListItem extends ListItemBase {
 	 */
 	get renderDeleteButton() {
 		return this.modeDelete;
+	}
+
+	/**
+	 * Used in TabInOverflow
+	 */
+	get _effectiveDraggable() {
+		return this._draggable || null;
 	}
 
 	/**

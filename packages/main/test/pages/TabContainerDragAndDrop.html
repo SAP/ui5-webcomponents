@@ -11,11 +11,12 @@
 </head>
 
 <body class="tabcontainer1auto">
-	<ui5-toggle-button id="densityToggle">Compact</ui5-toggle-button>
+	<ui5-checkbox id="reorder" text="Reorder tabs" checked></ui5-checkbox>
+	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed>
+		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs>
 			<ui5-tab design="Positive" text="One"></ui5-tab>
 			<ui5-tab design="Negative" text="Two" disabled>
 				<ui5-tab slot="subTabs" text="2.1"></ui5-tab>
@@ -24,6 +25,8 @@
 				<ui5-tab slot="subTabs" design="Positive" text="3.1">
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
+
+				content
 			</ui5-tab>
 			<ui5-tab text="Four"></ui5-tab>
 
@@ -68,25 +71,30 @@
 	</section>
 
 	<script>
-		document.getElementById("densityToggle").addEventListener("click", function (event) {
-			document.body.classList.toggle("sapUiSizeCompact")
-		});
-
-		[...document.getElementById("tabContainerDnd").querySelectorAll("ui5-tab")].forEach(t => t.setAttribute("draggable", true))
-
-		// document.getElementById("tabContainerDnd").addEventListener("dragend", (e) => {
-		// 	console.log("drag ended")
-		// });
-
-		document.getElementById("tabContainerDnd").addEventListener("tab-reorder", (e) => {
+		const el = document.getElementById("tabContainerDnd");
+		el.addEventListener("tab-reorder", (e) => {
 			const { destination, source } = e.detail;
+
+			let insertBeforeElement = destination.element.children[destination.index];
 
 			destination.element.insertBefore(
 				source.element,
-				destination.insertBeforeElement);
+				insertBeforeElement);
+
+			setTimeout(() => {
+				source.element.getFocusDomRef().focus();
+			})
 		});
 
-		
+		const densityCb = document.getElementById("density");
+		densityCb.addEventListener("change", e => {
+			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
+		});
+
+		const reorderCb = document.getElementById("reorder");
+		reorderCb.addEventListener("change", e => {
+			el.toggleAttribute("reorder-tabs", e.target.checked);
+		});
 	</script>
 </body>
 

@@ -6,6 +6,11 @@
 		class="{{classes.header}}"
 		id="{{_id}}-header"
 		@focusin="{{_onHeaderFocusin}}"
+		@drop="{{_onHeaderDrop}}"
+		@dragover="{{_onHeaderDragOver}}"
+		{{!-- @dragenter="{{_onHeaderDragEnter}}"
+		@dragend="{{_onHeaderDragEnd}}"
+		@dragleave="{{_onHeaderDragLeave}}" --}}
 	>
 		<div
 			class="ui5-tc__overflow ui5-tc__overflow--start"
@@ -31,8 +36,6 @@
 			class="{{classes.tabStrip}}"
 			role="tablist"
 			aria-describedby="{{tablistAriaDescribedById}}"
-			@drop="{{_onDrop}}"
-			@dragover="{{_onDragOver}}"
 			@click="{{_onTabStripClick}}"
 			@keydown="{{_onTabStripKeyDown}}"
 			@keyup="{{_onTabStripKeyUp}}"
@@ -70,6 +73,9 @@
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	{{/if}}
 
+	{{#if reorderTabs}}
+		<div class="ui5-drop-indicator" data-ui5-indicator-orientation="Vertical"></div>
+	{{/if}}
 </div>
 
 {{#*inline "contentArea"}}

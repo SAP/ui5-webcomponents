@@ -140,16 +140,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	design!: `${SemanticColor}`;
 
 	/**
-	 * Defines whether this tab can be draggable.
-	 * Should be used in combination...............
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	draggable!: boolean;
-
-	/**
 	 * Specifies if the component is selected.
 	 *
 	 * @type {boolean}
@@ -168,6 +158,9 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	@property({ type: Boolean })
 	_isTopLevelTab!: boolean;
+
+	@property({ type: Boolean })
+	_draggable!: boolean;
 
 	/**
 	 * Holds the content associated with this tab.
@@ -276,8 +269,8 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		return willShowContent(this.content);
 	}
 
-	get effectiveDraggable() {
-		return this.draggable || null;
+	get _effectiveDraggable() {
+		return this._draggable || null;
 	}
 
 	/**
@@ -482,20 +475,21 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		return classes.join(" ");
 	}
 
-	_onDragStart(e: DragEvent) {
+	_onTabDragStart(e: DragEvent) {
 		if (!e.dataTransfer || !e.target) {
-			console.error("dataTransfer is null");
 			return;
 		}
 
+		const draggedTabInStrip = e.target as ITab;
+		// draggedTabInStrip.getTabInStripDomRef()!.setAttribute("data-ui5-dragging", "true");
+
+		e.dataTransfer.clearData();
+		e.dataTransfer.setData("text/plain", `${draggedTabInStrip.id}`);
 		e.dataTransfer.dropEffect = "move";
-		const draggedTabId = `${(e.target as HTMLElement).id}`;
-		e.dataTransfer.setData("text/plain", draggedTabId);
-		// console.log(e)
 	}
 
-	_onDragEnd(e: DragEvent) {
-		e.preventDefault();
+	_onTabDragEnd(e: DragEvent) {
+		// e.target!.getTabInStripDomRef()!.removeAttribute("data-ui5-dragging");
 	}
 
 	get overflowState() {

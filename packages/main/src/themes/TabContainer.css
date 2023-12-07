@@ -164,8 +164,48 @@
 	.ui5-tc__header {
 		padding: 0 2rem;
 	}
-	
+
 	.ui5-tc__content {
 		padding: 1rem 3rem;
 	}
 }
+
+
+.ui5-drop-indicator {
+	position: absolute;
+	pointer-events: none;
+	z-index: 99;
+	left: -1rem;
+	top: 0;
+}
+
+.ui5-drop-indicator[data-ui5-indicator-orientation="Vertical"] {
+	background: var(--sapContent_DragAndDropActiveColor);
+	width: 0.125rem;
+	inset-block: 0;
+}
+
+.ui5-drop-indicator[data-ui5-indicator-orientation="Vertical"]:before {
+	top: -0.1875rem;
+	left: -0.1875rem;
+	content: "";
+	position: absolute;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
+	background-color: #fff;
+	pointer-events: none;
+}
+
+/* [draggable=true] {
+	cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+}
+
+[draggable=true]:active {
+	cursor: grabbing;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+} */

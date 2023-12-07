@@ -262,6 +262,22 @@ type ListItemClickEventDetail = {
 		item: { type: HTMLElement },
 	},
 })
+
+/**
+ * @private
+ */
+@event("item-reorder", {
+	detail: {
+		source: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
+		destination: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
+	},
+})
 class List extends UI5Element {
 	/**
 	 * Defines the component header text.
@@ -429,6 +445,13 @@ class List extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	_loadMoreActive!: boolean;
+
+	/**
+	 * Used in TabContainerPopover
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_reorderItems!: boolean;
 
 	/**
 	 * Defines the items of the component.
@@ -1134,6 +1157,98 @@ class List extends UI5Element {
 		}
 
 		return this.growingIntersectionObserver;
+	}
+
+	_ondragover(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	_ondrop(e: DragEvent) {
+		// this.dropIndicatorDOM.style.left = "";
+
+		if (!e.dataTransfer) {
+			return;
+		}
+
+		const id = e.dataTransfer.getData("text/plain");
+		const droppedItemIndex = this.items.findIndex(item => item.id === id);
+		const droppedItem = this.items[droppedItemIndex];
+		if (!droppedItem) {
+			console.warn("didnt find dropped tab in this tabcontainer");
+			return;
+		}
+
+		const result = this._findItemAtCoordinates(
+			e.clientX,
+			e.clientY,
+		);
+
+		if (!result) {
+			return;
+		}
+
+		this.fireEvent("item-reorder", {
+			source: {
+				element: droppedItem,
+				index: droppedItemIndex,
+			},
+			destination: {
+				element: this,
+				index: this.items.indexOf(result.closestItem),
+			},
+		});
+	}
+
+	_findItemAtCoordinates(x: number, y: number) {
+		let closestOffset = Number.NEGATIVE_INFINITY,
+			closestItem: Element | null = null;
+
+		// determine which item is most closest to x
+		for (let i = 0; i < this.items.length; i++) {
+			const item = this.items[i],
+				{ top, height } = item.getBoundingClientRect(),
+				offset = y - top - height / 2;
+
+			if (offset <= 0 && offset > closestOffset) {
+				closestOffset = offset;
+				closestItem = item;
+			}
+		}
+
+		if (!closestItem) {
+			return null;
+		}
+
+		const { top, /* width, */ bottom } = closestItem.getBoundingClientRect(),
+			distanceToTopBorder = Math.abs(y - top),
+			distanceToBottomBorder = Math.abs(top - y);
+
+		const smallestDistance = Math.min(
+			distanceToTopBorder,
+			distanceToBottomBorder,
+		);
+
+		let dropIndicatorY = Number.NEGATIVE_INFINITY;
+		switch (smallestDistance) {
+		case distanceToTopBorder:
+			dropIndicatorY = top;
+			break;
+		case distanceToBottomBorder:
+			dropIndicatorY = bottom;
+			break;
+		}
+
+		return {
+			closestItem: closestItem as ListItemBase,
+			dropIndicator: {
+				y: dropIndicatorY,
+				type: "Between",
+			},
+		};
+	}
+
+	get dropIndicatorDOM(): HTMLElement {
+		return this.shadowRoot!.querySelector(".ui5-drop-indicator")!;
 	}
 }
 

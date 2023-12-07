@@ -80,6 +80,7 @@ interface ITab extends UI5Element {
 	_getElementInStrip?: () => ITab | null;
 	_isInline?: boolean;
 	_mixedMode?: boolean;
+	_draggable?: boolean;
 	_posinset?: number;
 	_setsize?: number;
 	_realTab?: Tab;
@@ -318,6 +319,16 @@ class TabContainer extends UI5Element {
 	@property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })
 	tabsPlacement!: `${TabContainerTabsPlacement}`;
 
+	/**
+	 * Defines whether the tabs can be reordered using drag and drop.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	reorderTabs!: boolean;
+
 	@property({ type: Object })
 	_selectedTab!: Tab;
 
@@ -480,6 +491,7 @@ class TabContainer extends UI5Element {
 		allTabs.forEach((tab, index, arr) => {
 			tab._isInline = this.tabLayout === TabLayout.Inline;
 			tab._mixedMode = this.mixedMode;
+			tab._draggable = this.reorderTabs;
 			tab._posinset = index + 1;
 			tab._setsize = arr.length;
 			tab._realTab = this._selectedTab;
@@ -572,13 +584,13 @@ class TabContainer extends UI5Element {
 	}
 
 	_getSelectedTabInOverflow() {
-		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
+		return <TabContainerTabInOverflow>(<List>this.responsivePopover!.content[0]).items.find(item => {
 			return (<TabContainerTabInOverflow>item)._realTab && (<TabContainerTabInOverflow>item)._realTab.selected;
 		});
 	}
 
 	_getFirstFocusableItemInOverflow() {
-		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
+		return <TabContainerTabInOverflow>(<List>this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
@@ -968,7 +980,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number }) {
 		if (selectedItemIndexAndWidth.index === 0) {
 			return false;
 		}
@@ -993,7 +1005,7 @@ class TabContainer extends UI5Element {
 		return hasStartOverflow;
 	}
 
-	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number }) {
 		if (selectedItemIndexAndWidth.index >= itemsDomRefs.length) {
 			return false;
 		}
@@ -1185,40 +1197,166 @@ class TabContainer extends UI5Element {
 		return this._getEndOverflow().querySelector<Button>("[ui5-button]");
 	}
 
-	_onDragOver(e: DragEvent) {
-		e.preventDefault();
+	// _onHeaderDragEnter(e: DragEvent) {
+	// 	// console.log(e.type, e)
+	// }
+
+	// _onHeaderDragLeave(e: DragEvent) {
+	// 	// console.log(e.type, e)
+	// }
+
+	// _onHeaderDragEnd(e: DragEvent) {
+	// 	// console.log(e.type, e)
+	// }
+
+	get dropIndicatorDOM(): HTMLElement {
+		return this.shadowRoot!.querySelector(".ui5-drop-indicator")!;
 	}
 
-	_onDrop(e: DragEvent) {
-		e.preventDefault();
+	_onHeaderDrop(e: DragEvent) {
+		this.dropIndicatorDOM.style.left = "";
+
 		if (!e.dataTransfer) {
-			console.error("dataTransfer is null");
 			return;
 		}
 
 		const id = e.dataTransfer.getData("text/plain");
 		const droppedElement = this.shadowRoot!.querySelector<ITab>(`[id="${id}"]`);
 		if (!droppedElement) {
-			console.error("didnt find dropped tab in this tabcontainer");
+			console.warn("didnt find dropped tab in this tabcontainer");
 			return;
 		}
 
 		const droppedTab = droppedElement._realTab!;
 		const droppedTabParent = droppedTab.parentElement!;
+		const droppedTabSiblings = [...droppedTabParent.children];
+		const droppedTabIndex = droppedTabSiblings.indexOf(droppedTab);
+
+		const target = this._findTabAtCoordinates(
+			this.shadowRoot!.querySelector(`[id="${this._id}-tabStrip"]`)!,
+			e.clientX,
+			e.clientY,
+		)?.closestTab;
+
+		if (!target) {
+			console.warn("didnt find target tab in this tabcontainer");
+			return;
+		}
+
+		const targetParent = this;
+		const targetTabIndex = [...droppedTabParent.children].indexOf((target as ITab)._realTab!);
 
 		this.fireEvent("tab-reorder", {
 			source: {
 				element: droppedTab,
-				index: [...droppedTabParent.children].indexOf(droppedTab),
+				index: droppedTabIndex,
 			},
 			destination: {
-				element: this, // todo
-				index: 1, // todo
-				insertBeforeElement: this.children[1],
+				element: targetParent, // todo: support nesting
+				index: targetTabIndex,
 			},
 		});
 
 		droppedTab.focus();
+	}
+
+	_onHeaderDragOver(e: DragEvent) {
+		const draggedElement = (e.target as HTMLElement)?.closest(`[role="tab"]`);
+		if (!draggedElement) {
+			this.dropIndicatorDOM.style.left = "";
+			return;
+		}
+
+		// the tab past this point qualifies to be dropped.
+		// prevent default to allow the drop event to fire
+		e.preventDefault();
+
+		const result = this._findTabAtCoordinates(
+			this.shadowRoot!.querySelector(`[id="${this._id}-tabStrip"]`)!,
+			e.clientX,
+			e.clientY,
+		);
+
+		if (!result) {
+			return;
+		}
+
+		// draw drop indicator
+		this.dropIndicatorDOM.style.left = `${result.dropIndicator.x}px`;
+		this.dropIndicatorDOM.setAttribute("data-ui5-drop-mode", result.dropIndicator.type);
+	}
+
+	_findTabAtCoordinates(container: HTMLElement, x: number, y: number) {
+		let closestOffset = Number.NEGATIVE_INFINITY,
+			dropIndicatorX = Number.NEGATIVE_INFINITY,
+			closestTab: Element | null = null;
+
+		// determine which tab is most closest to x
+		const tabs = [...container.querySelectorAll(`[role="tab"]:not([hidden])`)];
+		for (let i = 0; i < tabs.length; i++) {
+			const tab = tabs[i],
+				{ left, width } = tab.getBoundingClientRect(),
+				offset = x - left - width / 2;
+
+			if (offset <= 0 && offset > closestOffset) {
+				closestOffset = offset;
+				closestTab = tab;
+			}
+		}
+
+		if (!closestTab) {
+			return null;
+		}
+
+		const { left, /* width, */ right } = closestTab.getBoundingClientRect(),
+			distanceToLeftBorder = Math.abs(x - left),
+			// distanceToCenter = Math.abs((left + width / 2) - x),
+			distanceToRightBorder = Math.abs(right - x);
+
+		const smallestDistance = Math.min(
+			distanceToLeftBorder,
+			// distanceToCenter,
+			distanceToRightBorder,
+		);
+		switch (smallestDistance) {
+		case distanceToLeftBorder:
+			dropIndicatorX = left;
+			break;
+		// case distanceToCenter:
+		// 	dropIndicatorX = left + width / 2;
+		// 	break;
+		case distanceToRightBorder:
+			dropIndicatorX = right;
+			break;
+		}
+
+		return {
+			closestTab,
+			dropIndicator: {
+				x: dropIndicatorX,
+				type: "Between",
+				// type: smallestDistance === distanceToCenter ? "On" : "Between",
+			},
+		};
+	}
+
+	_onReorderItemsInOverflow(e: any) {
+		const { source, destination } = e.detail;
+
+		const droppedTab = (source.element as ITab)._realTab!;
+		const droppedTabIndex = this.items.indexOf(droppedTab);
+		const targetTabIndex = this.items.indexOf(this._overflowItems[destination.index])
+
+		this.fireEvent("tab-reorder", {
+			source: {
+				element: droppedTab,
+				index: droppedTabIndex,
+			},
+			destination: {
+				element: this, // todo: support nesting
+				index: targetTabIndex,
+			},
+		});
 	}
 
 	async _respPopover() {

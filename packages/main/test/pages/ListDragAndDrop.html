@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Tab Container Drag and Drop</title>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/TabContainer.css">
+</head>
+
+<body class="tabcontainer1auto">
+	<ui5-checkbox id="reorder" text="Reorder items" checked></ui5-checkbox>
+	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
+
+	<section>
+		<h2>Drag and drop</h2>
+		<ui5-list id="listDnd" _reorder-items>
+			<ui5-li _draggable id="bg">Bulgaria</ui5-li>
+			<ui5-li _draggable id="de">Germany</ui5-li>
+			<ui5-li _draggable id="es">Spain</ui5-li>
+		</ui5-list>
+	</section>
+
+	<script>
+		const el = document.getElementById("listDnd");
+		el.addEventListener("item-reorder", (e) => {
+			const { destination, source } = e.detail;
+
+			destination.element.insertBefore(
+				source.element,
+				destination.insertBeforeElement);
+
+			setTimeout(() => {
+				source.element.getFocusDomRef().focus();
+			})
+		});
+
+		const densityCb = document.getElementById("density");
+		densityCb.addEventListener("change", e => {
+			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
+		});
+
+		const reorderCb = document.getElementById("reorder");
+		reorderCb.addEventListener("change", e => {
+			el.toggleAttribute("_reorder-items", e.target.checked);
+		});
+	</script>
+</body>
+
+</html>

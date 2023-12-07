@@ -11,9 +11,9 @@
 	aria-disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	?disabled="{{this.effectiveDisabled}}"
-	@dragstart="{{_onDragStart}}"
-	@dragend="{{_onDragEnd}}"
-	draggable="{{this.effectiveDraggable}}"
+	draggable="{{this._effectiveDraggable}}"
+	@dragstart="{{_onTabDragStart}}"
+	@dragend="{{_onTabDragEnd}}"
 	._realTab="{{this}}"
 >
 	{{#if this.icon}}
@@ -65,5 +65,7 @@
 	{{/if}}
 
 {{#*inline additionalText}}
-		<span class="{{this.stripClasses.additionalTextClasses}}" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+	<span class="{{this.stripClasses.additionalTextClasses}}" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
 {{/inline}}
+
+</div>

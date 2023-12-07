@@ -40,14 +40,13 @@
 	<script>
 		const sn = document.getElementById("sn1");
 
-		const collapsedBtn = document.getElementById("collapsed");
-
-		collapsedBtn.addEventListener("change", e => {
+		const collapsedCb = document.getElementById("collapsed");
+		collapsedCb.addEventListener("change", e => {
 			sn.toggleAttribute("collapsed", e.target.checked);
 		});
 
-		const densityBtn = document.getElementById("density");
-		density.addEventListener("change", e => {
+		const densityCb = document.getElementById("density");
+		densityCb.addEventListener("change", e => {
 			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
 		});
 	</script>
