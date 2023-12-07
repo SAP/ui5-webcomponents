@@ -18,7 +18,15 @@ import BadgeDesign from "./types/BadgeDesign.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
-import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import {
+	BADGE_DESCRIPTION_BADGE,
+	BADGE_DESCRIPTION_TAG,
+	BADGE_ROLE_DESCRIPTION,
+	BADGE_ERROR,
+	BADGE_WARNING,
+	BADGE_SUCCESS,
+	BADGE_INFORMATION,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
@@ -185,6 +193,25 @@ class Badge extends UI5Element {
 		this._isTagDesign = this.design !== BadgeDesign.Set3;
 	}
 
+	get _roleDescription() {
+		return Badge.i18nBundle.getText(BADGE_ROLE_DESCRIPTION);
+	}
+
+	get _valueState() {
+		switch (this.design) {
+		case BadgeDesign.Positive:
+			return Badge.i18nBundle.getText(BADGE_SUCCESS);
+		case BadgeDesign.Negative:
+			return Badge.i18nBundle.getText(BADGE_ERROR);
+		case BadgeDesign.Critical:
+			return Badge.i18nBundle.getText(BADGE_WARNING);
+		case BadgeDesign.Information:
+			return Badge.i18nBundle.getText(BADGE_INFORMATION);
+		}
+
+		return undefined;
+	}
+
 	get hasText() {
 		return willShowContent(this.text);
 	}
@@ -197,8 +224,27 @@ class Badge extends UI5Element {
 		return this.hasIcon && !this.hasText;
 	}
 
+	get _title() {
+		return this.title || undefined;
+	}
+
 	get badgeDescription() {
-		return Badge.i18nBundle.getText(BADGE_DESCRIPTION);
+		if (this.interactive) {
+			return undefined;
+		}
+
+		if (this.design === BadgeDesign.Set3) {
+			return Badge.i18nBundle.getText(BADGE_DESCRIPTION_BADGE);
+		}
+
+		const valueState = this._valueState;
+		let description = Badge.i18nBundle.getText(BADGE_DESCRIPTION_TAG);
+
+		if (valueState) {
+			description = `${description} ${valueState}`;
+		}
+
+		return description;
 	}
 
 	get _semanticIconName() {

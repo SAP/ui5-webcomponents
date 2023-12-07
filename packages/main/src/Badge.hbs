@@ -1,11 +1,15 @@
 {{#if interactive}}
 	<button class="ui5-badge-root"
-		 @onclick={{_onclick}}
+			title="{{_title}}"
+			aria-roledescription="{{_roleDescription}}"
+			aria-description="{{_valueState}}"
+			@onclick={{_onclick}}
 	>
 		{{> content}}
 	</button>
 {{else}}
-	<div class="ui5-badge-root">
+	<div class="ui5-badge-root"
+		 title="{{_title}}">
 		{{> content}}
 	</div>
 {{/if}}
@@ -15,10 +19,10 @@
 	{{#if this._semanticIconName}}
 		<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
 	{{/if}}
+	<span class="ui5-hidden-text">{{badgeDescription}}</span>
 	{{#if hasText}}
 		<span class="ui5-badge-text"><bdi><slot></slot></bdi></span>
 	{{/if}}
-	<span class="ui5-hidden-text">{{badgeDescription}}</span>
 {{/inline}}
 
 
