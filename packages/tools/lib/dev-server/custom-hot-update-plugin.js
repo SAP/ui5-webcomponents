@@ -22,7 +22,7 @@ const customHotUpdate = async () => {
 		name: 'custom-hot-update',
 		handleHotUpdate(ctx) {
 			// custom check for generated json files
-			if (ctx.file.includes("dist/") && ctx.file.endsWith(".json")) {
+			if (ctx.file.includes("src/") && ctx.file.endsWith(".json")) {
 				const stat = fs.statSync(ctx.file);
 
 				// metadata change only

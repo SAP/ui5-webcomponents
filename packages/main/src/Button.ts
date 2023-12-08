@@ -101,6 +101,11 @@ let activeButton: Button | null = null;
  * @native
  */
 @event("click")
+/**
+ * Fired whenever the active state of the component changes.
+ * @private
+ */
+@event("_active-state-change")
 class Button extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
@@ -337,7 +342,7 @@ class Button extends UI5Element implements IFormElement {
 
 		this._deactivate = () => {
 			if (activeButton) {
-				activeButton.active = false;
+				activeButton._setActiveState(false);
 			}
 		};
 
@@ -354,7 +359,7 @@ class Button extends UI5Element implements IFormElement {
 				return;
 			}
 
-			this.active = true;
+			this._setActiveState(true);
 		};
 
 		this._ontouchstart = {
@@ -407,7 +412,7 @@ class Button extends UI5Element implements IFormElement {
 		}
 
 		markEvent(e, "button");
-		this.active = true;
+		this._setActiveState(true);
 		activeButton = this; // eslint-disable-line
 	}
 
@@ -417,10 +422,12 @@ class Button extends UI5Element implements IFormElement {
 			e.stopPropagation();
 		}
 
-		this.active = false;
+		if (this.active) {
+			this._setActiveState(false);
+		}
 
 		if (activeButton) {
-			activeButton.active = false;
+			activeButton._setActiveState(false);
 		}
 	}
 
@@ -432,13 +439,15 @@ class Button extends UI5Element implements IFormElement {
 		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
-			this.active = true;
+			this._setActiveState(true);
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
-			this.active = false;
+			if (this.active) {
+				this._setActiveState(false);
+			}
 		}
 	}
 
@@ -446,7 +455,11 @@ class Button extends UI5Element implements IFormElement {
 		if (this.nonInteractive) {
 			return;
 		}
-		this.active = false;
+
+		if (this.active) {
+			this._setActiveState(false);
+		}
+
 		if (isDesktop()) {
 			this.focused = false;
 		}
@@ -461,6 +474,16 @@ class Button extends UI5Element implements IFormElement {
 		if (isDesktop()) {
 			this.focused = true;
 		}
+	}
+
+	_setActiveState(active: boolean) {
+		const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+
+		if (eventPrevented) {
+			return;
+		}
+
+		this.active = active;
 	}
 
 	get hasButtonType() {

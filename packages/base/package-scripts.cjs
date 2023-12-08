@@ -15,8 +15,9 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint .`,
-	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
-	typescript: "tsc",
+	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates",
+	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript",
+	typescript: "tsc -b",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -30,7 +31,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `nps prepare lint build.bundle`,
+		default: `nps prepare`,
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
@@ -49,14 +50,12 @@ const scripts = {
 		cleanup: "rimraf jsdoc-dist/"
 	},
 	watch: {
-		default: 'concurrently "nps watch.src" "nps watch.styles" "nps watch.typescript"',
-		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.typescript"',
+		default: 'concurrently "nps watch.src" "nps watch.styles"',
+		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
-		typescript: 'tsc --watch',
 		bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
-	start: "nps prepare watch.withBundle",
 	test: {
 		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2"',
 		ssr: `mocha test/ssr`,
