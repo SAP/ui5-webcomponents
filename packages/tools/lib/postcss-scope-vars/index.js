@@ -6,7 +6,7 @@ const escapeVersion = version => "v" + version?.replaceAll(/[^0-9A-Za-z\-_]/g, "
 /**
  * Tries to detect an override for a package
  * @param {*} filePath For example: /my_project/src/themes/overrides/@ui5/webcomponents/my_custom_theme/parameters-bundle.css
- * @returns 
+ * @returns
  */
 const getOverrideVersion = filePath => {
 	console.log(filePath);

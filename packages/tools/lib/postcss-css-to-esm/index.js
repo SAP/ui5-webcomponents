@@ -88,3 +88,4 @@ module.exports = function (opts) {
 	};
 };
 module.exports.postcss = true;
+module.exports.getFileContent = getFileContent;

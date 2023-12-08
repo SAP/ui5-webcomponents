@@ -73,10 +73,12 @@ const getScripts = (options) => {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: `concurrently "nps build.styles.themes" "nps build.styles.components"`,
+				default: `concurrently "nps build.styles.themes2" "nps build.styles.components2"`,
 				default2: `nps build.styles.themes build.styles.components`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
+				themes2: `node "${LIB}/postcss-p/postcss-p2.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
+				components2: `node "${LIB}/postcss-p/postcss-p3.mjs"`,
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
