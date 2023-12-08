@@ -124,6 +124,12 @@ function processClass(ts, classNode, moduleDoc) {
 				currClass.slots.push(slot);
 				i--;
 			} else {
+				const propertyDecorator = findDecorator(classNodeMember, "property");
+
+				if (propertyDecorator) {
+					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
+				}
+
 				if (hasTag(memberParsedJsDoc, "formProperty")) {
 					member._ui5formProperty = true;
 				}
