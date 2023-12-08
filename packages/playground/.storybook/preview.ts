@@ -1,4 +1,4 @@
-import "@ui5/webcomponents-fiori/bundle.esm.js";
+import "@ui5/webcomponents-fiori/dist/bundle.esm.js";
 import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import customElements from "./custom-elements.json";
 import { setCustomElementsManifest } from "@storybook/web-components";

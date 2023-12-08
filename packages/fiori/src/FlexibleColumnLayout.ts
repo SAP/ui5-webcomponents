@@ -46,10 +46,10 @@ enum MEDIA {
 	DESKTOP = "desktop",
 }
 
-enum BREAKPOINTS {
-	"PHONE" = 599,
-	"TABLET" = 1023,
-}
+const BREAKPOINTS = {
+	"PHONE": 599,
+	"TABLET": 1023,
+} as const;
 
 type ColumnLayout = Array<string | number>;
 
