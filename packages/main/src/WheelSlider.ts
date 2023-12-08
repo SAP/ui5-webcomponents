@@ -265,7 +265,7 @@ class WheelSlider extends UI5Element {
 			return Math.floor(this._currentElementIndex / this._items.length);
 		}
 
-		return 0;
+		return 1;
 	}
 
 	_selectElementByIndex(currentIndex: number) {
