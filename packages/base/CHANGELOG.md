@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.1](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0...v1.20.1) (2023-12-08)
+
+
+### Bug Fixes
+
+* **ui5-popover:** fix "containing block" issue on safari ([#7985](https://github.com/SAP/ui5-webcomponents/issues/7985)) ([e2a9891](https://github.com/SAP/ui5-webcomponents/commit/e2a989184e9bf95340fec0c26fdf8b926d18e836)), closes [#7983](https://github.com/SAP/ui5-webcomponents/issues/7983)
+
+
+
+
+
 # [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
 
 
