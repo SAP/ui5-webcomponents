@@ -11,6 +11,20 @@ describe("Badge rendering", async () => {
 
 		badgeRoot = await browser.$("#interactiveBadge").shadow$(".ui5-badge-root");
 		assert.strictEqual(await badgeRoot.getTagName(), "button", "badge root tag is 'button'.");
+
+		let roleDescription = await browser.executeAsync(done => {
+			const sn = document.getElementById("badgeWithTextAndIcon");
+			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.BADGE_ROLE_DESCRIPTION));
+		});
+
+		assert.strictEqual(await badgeRoot.getAttribute("aria-roledescription"), roleDescription, "aria-roledescription is set correctly");
+
+		let description = await browser.executeAsync(done => {
+			const sn = document.getElementById("badgeWithTextAndIcon");
+			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.BADGE_SUCCESS));
+		});
+
+		assert.strictEqual(await badgeRoot.getAttribute("aria-description"), description, "aria-description is set correctly");
 	});
 
 	it("tests that label is rendered if there is text content", async () => {

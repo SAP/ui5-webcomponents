@@ -115,6 +115,8 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
+	 * <br><b>Note:</b> Badge cannot be <code>interactive</code>
+	 * when <code>design</code> property is <code>BadgeDesign.Set3</code>
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Badge.prototype.interactive
 	 * @defaultValue false
