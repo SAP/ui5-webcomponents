@@ -104,6 +104,35 @@ describe("ColorPalette interactions", () => {
 
 		// assert - MoreColors is focused
 		assert.ok(await moreColorsButton.getProperty("focused"),  "Check if more colors button is focused");
+
+		// act - close popover
+		await defaultButton.click();
+	});
+
+	it("Test open-change fired when popover closes", async () => {
+		const colorPaletteButton = await browser.$("#colorPaletteBtnTest6");
+		const btnFocusOut = await browser.$("#btnFocusOut");
+		const inpOpenChangeCounter = await browser.$("#inpOpenChangeCounter");
+
+		// act - open color palette popover and click outside
+		await colorPaletteButton.click();
+		await btnFocusOut.click();
+
+		// assert
+		assert.ok(await inpOpenChangeCounter.getProperty("value"), "1", "Event open-change fired when popover closes.");
+
+		// act - open color palette popover
+		await colorPaletteButton.click();
+
+		const colorPalettePopover = await browser.$("#colorPalettePopoverTest6");
+		const colorPalette = await colorPalettePopover.shadow$("[ui5-responsive-popover]").$("[ui5-color-palette]");
+		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
+
+		// act - select default color
+		await defaultButton.click();
+
+		// assert
+		assert.ok(await inpOpenChangeCounter.getProperty("value"), "2", "Event open-change fired when popover closes.");
 	});
 
 	it("Test attribute propagation propagation", async () => {
