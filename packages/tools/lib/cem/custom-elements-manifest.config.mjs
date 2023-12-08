@@ -364,7 +364,7 @@ export default {
 						i--;
 					}
 				}
-debugger
+
 				moduleDoc.exports?.forEach(e => {
 					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
 
@@ -397,7 +397,6 @@ debugger
 						e.declaration.module = e.declaration?.module?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
 					});
 				})
-				console.log(JSON.stringify(customElementsManifest));
 			}
 		},
 	],

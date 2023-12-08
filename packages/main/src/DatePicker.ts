@@ -612,8 +612,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @param value A value to be tested against the current date format
 	 */
-	isValid(value = ""): boolean {
-		if (value === "") {
+	isValid(value: string): boolean {
+		if (value === "" || value === undefined) {
 			return true;
 		}
 
@@ -626,8 +626,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @param value A value to be checked
 	 */
-	isInValidRange(value = ""): boolean {
-		if (value === "") {
+	isInValidRange(value: string): boolean {
+		if (value === "" || value === undefined) {
 			return true;
 		}
 
