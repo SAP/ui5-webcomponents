@@ -32,6 +32,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
+import { IButton } from "./Interfaces.js";
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -223,7 +224,7 @@ class AvatarGroup extends UI5Element {
 	 * @since 1.0.0-rc.13
 	 */
 	@slot()
-	overflowButton!: Array<Button>;
+	overflowButton!: Array<IButton>;
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
@@ -262,7 +263,7 @@ class AvatarGroup extends UI5Element {
 	 * @default []
 	 * @public
 	 */
-	get colorScheme(): string[] {
+	get colorScheme(): AvatarColorScheme[] {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
 	}
 

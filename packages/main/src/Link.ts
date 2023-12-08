@@ -64,7 +64,7 @@ type LinkClickEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Node[]} default - Defines the text of the component. <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * @slot {Array<Node>} default - Defines the text of the component. <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-link",
@@ -79,10 +79,10 @@ type LinkClickEventDetail = {
  *
  * @public
  * @allowPreventDefault
- * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
- * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
- * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
- * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
 	detail: {

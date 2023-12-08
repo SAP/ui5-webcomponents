@@ -25,8 +25,9 @@ interface IMediaGalleryItem {
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface INotificationListItem extends HTMLElement { }
+interface INotificationListItem extends HTMLElement {
+	busy: boolean
+}
 
 /**
  * Interface for components that may be slotted inside <code>ui5-product-switch</code> as items

@@ -34,7 +34,7 @@ import labelCss from "./generated/themes/Label.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Node[]} default - Defines the text of the component.
+ * @slot {Array<Node>} default - Defines the text of the component.
  */
 @customElement({
 	tag: "ui5-label",

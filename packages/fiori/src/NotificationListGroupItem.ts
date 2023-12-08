@@ -9,7 +9,8 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import type NotificationListItem from "./NotificationListItem.js";
+import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
+import { INotificationListItem } from "./Interfaces.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -36,8 +37,6 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
-
-import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -127,7 +126,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<NotificationListItem>
+	items!: Array<INotificationListItem>
 
 	onBeforeRendering() {
 		if (this.busy) {

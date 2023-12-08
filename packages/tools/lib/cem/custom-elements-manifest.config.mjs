@@ -380,7 +380,7 @@ export default {
 					}
 				})
 			},
-			packageLinkPhase() {
+			packageLinkPhase({customElementsManifest, context}) {
 				// // Uncomment and handle errors appropriately
 				// const JSDocErrors = getJSDocErrors();
 				// if (JSDocErrors.length > 0) {
@@ -388,6 +388,15 @@ export default {
 				// 	console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
 				// 	throw new Error(`Invalid JSDoc.`);
 				// }
+
+				customElementsManifest.modules?.forEach(m => {
+					m.path = m.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+
+					m.exports?.forEach(e => {
+						if (e.declaration && e.declaration.module)
+						e.declaration.module = e.declaration?.module?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+					});
+				})
 			}
 		},
 	],

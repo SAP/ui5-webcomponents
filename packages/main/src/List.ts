@@ -233,8 +233,8 @@ type ListItemClickEventDetail = {
  * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
  *
  * @allowPreventDefault
- * @param {Array} selectedItems An array of the selected items.
- * @param {Array} previouslySelectedItems An array of the previously selected items.
+ * @param {Array<ListItemBase>} selectedItems An array of the selected items.
+ * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
  * @public
  */
 @event("selection-change", {

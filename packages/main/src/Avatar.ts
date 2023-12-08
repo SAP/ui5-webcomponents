@@ -306,9 +306,9 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "Accent6"
 	 * @private
 	 */
-	get _effectiveBackgroundColor() {
+	get _effectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
-		return this.getAttribute("color-scheme") || this._colorScheme;
+		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}
 
 	get _role() {

@@ -15,6 +15,7 @@ const overrides = tsMode ? [{
 	],
 	parserOptions: {
 	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
+	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
 	},
 	rules: {
 		"no-shadow": "off",

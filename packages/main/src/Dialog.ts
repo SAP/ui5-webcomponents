@@ -262,7 +262,7 @@ class Dialog extends Popup {
 	 * @public
 	 * @returns Resolves when the dialog is open
 	 */
-	async show(preventInitialFocus = false) {
+	async show(preventInitialFocus = false): Promise<void> {
 		await super._open(preventInitialFocus);
 	}
 

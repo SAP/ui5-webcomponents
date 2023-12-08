@@ -92,7 +92,7 @@ const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
         } else {
             return Object.keys(packageJSON?.dependencies || {}).find(
                 (dependency) =>
-                    currentModuleSpecifier?.text?.startsWith(dependency)
+                    currentModuleSpecifier?.text?.startsWith(`${dependency}/`)
             );
         }
     }

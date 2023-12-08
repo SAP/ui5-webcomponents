@@ -20,6 +20,8 @@ export type Parameter = {
         text: string
     };
     optional: boolean;
+    deprecated?: string | boolean;
+    _ui5since?: string;
     default: string;
     description: string;
 };

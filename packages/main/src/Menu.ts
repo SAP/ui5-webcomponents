@@ -108,6 +108,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired when an item is being clicked.
+ * <br />
  * <b>Note:</b> Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
  *
  * @allowPreventDefault
@@ -134,6 +135,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
+ * <br />
  * <b>Note:</b> Since 1.14.0 the event is also fired before a sub-menu opens.
  *
  * @public

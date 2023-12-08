@@ -41,18 +41,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  *
  * <h3>Keyboard Handling</h3>
  * The state can be changed by pressing the Space and Enter keys.
- *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>slider - Used to style the track, where the handle is being slid</li>
- * <li>text-on - Used to style the <code>textOn</code> property text</li>
- * <li>text-off - Used to style the <code>textOff</code> property text</li>
- * <li>handle - Used to style the handle of the switch</li>
- * </ul>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -62,6 +51,10 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @extends UI5Element
  * @public
  * @since 0.8.0
+ * @csspart slider - Used to style the track, where the handle is being slid
+ * @csspart text-on - Used to style the <code>textOn</code> property text
+ * @csspart text-off - Used to style the <code>textOff</code> property text
+ * @csspart handle - Used to style the handle of the switch
  */
 @customElement({
 	tag: "ui5-switch",

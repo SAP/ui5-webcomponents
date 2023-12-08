@@ -17,11 +17,11 @@
 		tabindex="-1"
 		?disabled="{{disabled}}"
 		?active="{{_textButtonActive}}"
-		@click="{{_fireClick}}"
+		@click="{{_handleMouseClick}}"
 		@touchstart={{_textButtonPress}}
 		@mousedown={{_textButtonPress}}
 		@mouseup={{_textButtonRelease}}
-		@focusin={{_setTabIndexValue}}
+		@focusin={{_textButtonFocusIn}}
 		@focusout={{_onFocusOut}}
 	>
 		{{#if isTextButton}}
@@ -39,12 +39,14 @@
 			icon="slim-arrow-down"
 			tabindex="-1"
 			?disabled="{{disabled}}"
-			?active="{{_arrowButtonActive}}"
+			?active="{{effectiveActiveArrowButton}}"
 			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
 			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
-			@click="{{_fireArrowClick}}"
+			@click="{{_handleArrowButtonAction}}"
+			@mousedown={{_arrowButtonPress}}
+			@mouseup={{_arrowButtonRelease}}
 			@focusin={{_setTabIndexValue}}
-			@focusout={{_onFocusOut}}
+			@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
 		>
 		</ui5-button>
 	</div>

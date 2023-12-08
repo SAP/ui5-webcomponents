@@ -23,6 +23,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
+import { IColorPaletteItem } from "./Interfaces.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -126,7 +127,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
-	colors!: Array<ColorPaletteItem>;
+	colors!: Array<IColorPaletteItem>;
 
 	static i18nBundle: I18nBundle;
 

@@ -107,7 +107,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * @extends UI5Element
  * @public
  * @since 1.1.0
- * @slot {HTMLElement[]} default - Defines the main content.
+ * @slot {Array<HTMLElement>} default - Defines the main content.
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
