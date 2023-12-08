@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.0...v1.21.0-rc.1) (2023-12-08)
+
+
+### Bug Fixes
+
+* base usage from test pages ([#7975](https://github.com/SAP/ui5-webcomponents/issues/7975)) ([b4c8769](https://github.com/SAP/ui5-webcomponents/commit/b4c87697d61a48f2f0c90b1d92393c34cae27663))
+* **infra:** release commands ([#7978](https://github.com/SAP/ui5-webcomponents/issues/7978)) ([b0e653c](https://github.com/SAP/ui5-webcomponents/commit/b0e653cf911cc0ffe5fb5dcbd50a7c238f20f33d))
+* **ui5-combobox:** update picker items while open ([#7937](https://github.com/SAP/ui5-webcomponents/issues/7937)) ([8f99f8d](https://github.com/SAP/ui5-webcomponents/commit/8f99f8d0d473e6e573c8c6366563a9545ab04874)), closes [#7011](https://github.com/SAP/ui5-webcomponents/issues/7011)
+
+
+
+
+
+# [1.21.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0...v1.21.0-rc.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* **base:** add local variant for language loading ([#7968](https://github.com/SAP/ui5-webcomponents/issues/7968)) ([440cf48](https://github.com/SAP/ui5-webcomponents/commit/440cf4876dcf54cda86074fdb4dfe5ab0a19d4c5))
+* **infra:** windows build ([#7973](https://github.com/SAP/ui5-webcomponents/issues/7973)) ([dfc0e09](https://github.com/SAP/ui5-webcomponents/commit/dfc0e09b9574012684b3ba2816eddc13a01f654e))
+* **ui5-table-row:** fix runtime exception in test env execution ([#7953](https://github.com/SAP/ui5-webcomponents/issues/7953)) ([e24f294](https://github.com/SAP/ui5-webcomponents/commit/e24f294501b1b1bb3d1f1f30f902fc165fefcf57)), closes [#7787](https://github.com/SAP/ui5-webcomponents/issues/7787)
+
+
+### Features
+
+* **ui5-split-button:** expose active state property for arrow button ([#7683](https://github.com/SAP/ui5-webcomponents/issues/7683)) ([d6d3705](https://github.com/SAP/ui5-webcomponents/commit/d6d3705a585af32ff440d1b7ae57faf46ef0913f))
+
+
+
+
+
 # [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
 
 
