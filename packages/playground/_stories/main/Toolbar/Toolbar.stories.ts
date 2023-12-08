@@ -38,13 +38,7 @@ const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
 		align-content="${ifDefined(args.alignContent)}"
 	>
 		${unsafeHTML(args.default)}
-</ui5-toolbar>
-<script>
-	select.addEventListener("ui5-change", e => {
-		textarea.setAttribute("value", "Selected option is:" + e.detail.selectedOption.textContent);
-	});
-</script>
-`;
+</ui5-toolbar>`;
 };
 
 export const Basic = Template.bind({});
