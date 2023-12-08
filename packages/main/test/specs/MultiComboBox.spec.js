@@ -117,7 +117,7 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("selection and filtering", () => {
-		before(async () => {
+		beforeEach(async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 		});
@@ -280,7 +280,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.pause(500);
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "Compact", "Value is correct");
+			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItemCheckbox.click();
 
