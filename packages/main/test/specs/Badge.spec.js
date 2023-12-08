@@ -19,12 +19,30 @@ describe("Badge rendering", async () => {
 
 		assert.strictEqual(await badgeRoot.getAttribute("aria-roledescription"), roleDescription, "aria-roledescription is set correctly");
 
-		let description = await browser.executeAsync(done => {
+		let descriptionSuccess = await browser.executeAsync(done => {
 			const sn = document.getElementById("badgeWithTextAndIcon");
 			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.BADGE_SUCCESS));
 		});
 
-		assert.strictEqual(await badgeRoot.getAttribute("aria-description"), description, "aria-description is set correctly");
+		assert.strictEqual(await badgeRoot.getAttribute("aria-description"), descriptionSuccess, "aria-description is set correctly");
+
+		let badgeHideenText = await browser.$("#noninteractiveBadge").shadow$(".ui5-hidden-text");
+
+		let descriptionTag = await browser.executeAsync(done => {
+			const sn = document.getElementById("badgeWithTextAndIcon");
+			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.BADGE_DESCRIPTION_TAG));
+		});
+
+		assert.strictEqual(await badgeHideenText.getText(), `${descriptionTag} ${descriptionSuccess}`, "hidden text is correct");
+
+		badgeHideenText = await browser.$("#badgeWithTextAndIcon").shadow$(".ui5-hidden-text");
+
+		let descriptionBadge = await browser.executeAsync(done => {
+			const sn = document.getElementById("badgeWithTextAndIcon");
+			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.BADGE_DESCRIPTION_BADGE));
+		});
+
+		assert.strictEqual(await badgeHideenText.getText(), descriptionBadge, "hidden text is correct");
 	});
 
 	it("tests that label is rendered if there is text content", async () => {
