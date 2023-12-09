@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.3](https://github.com/SAP/ui5-webcomponents/compare/v1.17.2...v1.17.3) (2023-12-09)
+
+
+### Bug Fixes
+
+* **framework:** enable `72Blackfull` font-family ([#7918](https://github.com/SAP/ui5-webcomponents/issues/7918)) ([c6d55db](https://github.com/SAP/ui5-webcomponents/commit/c6d55db53980daf300692c794b7ba3979bedd564)), closes [#7800](https://github.com/SAP/ui5-webcomponents/issues/7800)
+* **framework:** fix font72 for special characters ([#7949](https://github.com/SAP/ui5-webcomponents/issues/7949)) ([b0e0fe1](https://github.com/SAP/ui5-webcomponents/commit/b0e0fe1c7f81fba8741306bbdc62c24959d7fcd5)), closes [#7948](https://github.com/SAP/ui5-webcomponents/issues/7948)
+
+
+
+
+
 ## [1.17.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.1...v1.17.2) (2023-09-21)
 
 **Note:** Version bump only for package @ui5/webcomponents
