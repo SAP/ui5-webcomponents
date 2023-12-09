@@ -1,11 +1,8 @@
-name: Deploy Latest Playground
+name: Deploy Main Playground [on push]
 
 on:
-  release:
-    types:
-      - 'released'
-  workflow_dispatch:
-
+  push:
+    branches: [ main ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,7 +11,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 18
         cache: 'yarn'
 
     - name: Install and Build
@@ -22,7 +19,6 @@ jobs:
         export NODE_OPTIONS="--max_old_space_size=4096"
         yarn install
         yarn build:playground
-
     - name: Write version.md
       run: git log -1 &>> packages/playground/dist/version.md
 
@@ -31,5 +27,5 @@ jobs:
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/playground/dist # The folder the action should deploy.
+        target-folder: nightly
         clean: true
-        clean-exclude: nightly

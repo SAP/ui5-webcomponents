@@ -1,4 +1,4 @@
-name: Test auto issue comments
+name: GitHub Issues - auto-comment on issues [WIP]
 
 on: workflow_dispatch
   
@@ -12,7 +12,7 @@ jobs:
         fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 18
         cache: 'yarn'
 
     - name: Install
