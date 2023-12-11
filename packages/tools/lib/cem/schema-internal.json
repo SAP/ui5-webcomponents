@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Attribute": {
+      "additionalProperties": false,
       "properties": {
         "default": {
           "description": "The default value of the attribute, if any.\n\nAs attributes are always strings, this is the actual value, not a human\nreadable description.",
@@ -43,7 +44,11 @@
       "type": "object"
     },
     "ClassDeclaration": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "_ui5implements": {
           "items": {
             "$ref": "#/definitions/Reference"
@@ -116,7 +121,11 @@
       "type": "object"
     },
     "EnumDeclaration": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "_ui5privacy": {
           "$ref": "#/definitions/Privacy"
         },
@@ -143,7 +152,7 @@
         },
         "members": {
           "items": {
-            "$ref": "#/definitions/EnumField"
+            "$ref": "#/definitions/ClassField"
           },
           "type": "array"
         },
@@ -176,7 +185,11 @@
       "type": "object"
     },
     "InterfaceDeclaration": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "_ui5privacy": {
           "$ref": "#/definitions/Privacy"
         },
@@ -230,7 +243,11 @@
       "type": "object"
     },
     "ClassField": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5validator": {
+          "type": "string"
+        },
         "_ui5formProperty": {
           "type": "boolean"
         },
@@ -294,60 +311,8 @@
       ],
       "type": "object"
     },
-    "EnumField": {
-      "properties": {
-        "_ui5since": {
-          "description": "Marks when the field was introduced",
-          "type": "string"
-        },
-        "deprecated": {
-          "description": "Whether the property is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
-          "type": [
-            "string",
-            "boolean"
-          ]
-        },
-        "description": {
-          "description": "A markdown description of the field.",
-          "type": "string"
-        },
-        "inheritedFrom": {
-          "$ref": "#/definitions/Reference"
-        },
-        "kind": {
-          "enum": [
-            "field"
-          ],
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "privacy": {
-          "$ref": "#/definitions/Privacy"
-        },
-        "source": {
-          "$ref": "#/definitions/SourceReference"
-        },
-        "static": {
-          "type": "boolean"
-        },
-        "readonly": {
-          "description": "Whether the property is read-only.",
-          "type": "boolean"
-        },
-        "summary": {
-          "description": "A markdown summary suitable for display in a listing.",
-          "type": "string"
-        }
-      },
-      "required": [
-        "kind",
-        "name"
-      ],
-      "type": "object"
-    },
     "ClassMethod": {
+      "additionalProperties": false,
       "properties": {
         "_ui5since": {
           "description": "Marks when the field was introduced",
@@ -419,6 +384,7 @@
       "type": "object"
     },
     "CssCustomProperty": {
+      "additionalProperties": false,
       "properties": {
         "default": {
           "type": "string"
@@ -453,6 +419,7 @@
       "type": "object"
     },
     "CssPart": {
+      "additionalProperties": false,
       "description": "The description of a CSS Part",
       "properties": {
         "deprecated": {
@@ -480,8 +447,12 @@
       "type": "object"
     },
     "CustomElementDeclaration": {
+      "additionalProperties": false,
       "description": "A description of a custom element class.\n\nCustom elements are JavaScript classes, so this extends from\n`ClassDeclaration` and adds custom-element-specific features like\nattributes, events, and slots.\n\nNote that `tagName` in this interface is optional. Tag names are not\nneccessarily part of a custom element class, but belong to the definition\n(often called the \"registration\") or the `customElements.define()` call.\n\nBecause classes and tag names can only be registered once, there's a\none-to-one relationship between classes and tag names. For ease of use,\nwe allow the tag name here.\n\nSome packages define and register custom elements in separate modules. In\nthese cases one `Module` should contain the `CustomElement` without a\ntagName, and another `Module` should contain the\n`CustomElementExport`.",
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "_ui5implements": {
           "items": {
             "$ref": "#/definitions/Reference"
@@ -608,6 +579,7 @@
       "type": "object"
     },
     "CustomElementExport": {
+      "additionalProperties": false,
       "description": "A global custom element defintion, ie the result of a\n`customElements.define()` call.\n\nThis is represented as an export because a definition makes the element\navailable outside of the module it's defined it.",
       "properties": {
         "declaration": {
@@ -640,8 +612,12 @@
       "type": "object"
     },
     "CustomElementMixinDeclaration": {
+      "additionalProperties": false,
       "description": "A class mixin that also adds custom element related properties.",
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "attributes": {
           "description": "The attributes that this element is known to understand.",
           "items": {
@@ -774,6 +750,7 @@
       "type": "object"
     },
     "Demo": {
+      "additionalProperties": false,
       "properties": {
         "description": {
           "description": "A markdown description of the demo.",
@@ -793,6 +770,7 @@
       "type": "object"
     },
     "Event": {
+      "additionalProperties": false,
       "properties": {
         "_ui5parameters": {
           "items": {
@@ -844,7 +822,11 @@
       "type": "object"
     },
     "FunctionDeclaration": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "_ui5since": {
           "description": "Marks when the field was introduced",
           "type": "string"
@@ -906,6 +888,7 @@
       "type": "object"
     },
     "JavaScriptExport": {
+      "additionalProperties": false,
       "properties": {
         "declaration": {
           "$ref": "#/definitions/Reference",
@@ -937,6 +920,7 @@
       "type": "object"
     },
     "JavaScriptModule": {
+      "additionalProperties": false,
       "properties": {
         "declarations": {
           "description": "The declarations of a module.\n\nFor documentation purposes, all declarations that are reachable from\nexports should be described here. Ie, functions and objects that may be\nproperties of exported objects, or passed as arguments to functions.",
@@ -1017,8 +1001,12 @@
       "type": "object"
     },
     "MixinDeclaration": {
+      "additionalProperties": false,
       "description": "A description of a class mixin.\n\nMixins are functions which generate a new subclass of a given superclass.\nThis interfaces describes the class and custom element features that\nare added by the mixin. As such, it extends the CustomElement interface and\nClassLike interface.\n\nSince mixins are functions, it also extends the FunctionLike interface. This\nmeans a mixin is callable, and has parameters and a return type.\n\nThe return type is often hard or impossible to accurately describe in type\nsystems like TypeScript. It requires generics and an `extends` operator\nthat TypeScript lacks. Therefore it's recommended that the return type is\nleft empty. The most common form of a mixin function takes a single\nargument, so consumers of this interface should assume that the return type\nis the single argument subclassed by this declaration.\n\nA mixin should not have a superclass. If a mixins composes other mixins,\nthey should be listed in the `mixins` field.\n\nSee [this article]{@link https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/}\nfor more information on the classmixin pattern in JavaScript.",
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "deprecated": {
           "description": "Whether the class or mixin is deprecated.\nIf the value is a string, it's the reason for the deprecation.",
           "type": [
@@ -1100,6 +1088,7 @@
       "type": "object"
     },
     "Parameter": {
+      "additionalProperties": false,
       "properties": {
         "_ui5privacy": {
           "$ref": "#/definitions/Privacy"
@@ -1159,6 +1148,7 @@
       "type": "string"
     },
     "Reference": {
+      "additionalProperties": false,
       "description": "A reference to an export of a module.\n\nAll references are required to be publically accessible, so the canonical\nrepresentation of a reference is the export it's available from.\n\n`package` should generally refer to an npm package name. If `package` is\nundefined then the reference is local to this package. If `module` is\nundefined the reference is local to the containing module.\n\nReferences to global symbols like `Array`, `HTMLElement`, or `Event` should\nuse a `package` name of `\"global:\"`.",
       "properties": {
         "module": {
@@ -1177,7 +1167,11 @@
       "type": "object"
     },
     "Slot": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5propertyName": {
+          "type": "string"
+        },
         "_ui5type": {
           "$ref": "#/definitions/Type"
         },
@@ -1214,6 +1208,7 @@
       "type": "object"
     },
     "SourceReference": {
+      "additionalProperties": false,
       "description": "A reference to the source of a declaration or member.",
       "properties": {
         "href": {
@@ -1227,6 +1222,7 @@
       "type": "object"
     },
     "Type": {
+      "additionalProperties": false,
       "properties": {
         "references": {
           "description": "An array of references to the types in the type string.\n\nThese references have optional indices into the type string so that tools\ncan understand the references in the type string independently of the type\nsystem and syntax. For example, a documentation viewer could display the\ntype `Array<FooElement | BarElement>` with cross-references to `FooElement`\nand `BarElement` without understanding arrays, generics, or union types.",
@@ -1249,6 +1245,7 @@
       "type": "object"
     },
     "TypeReference": {
+      "additionalProperties": false,
       "description": "A reference that is associated with a type string and optionally a range\nwithin the string.\n\nStart and end must both be present or not present. If they're present, they\nare indices into the associated type string. If they are missing, the entire\ntype string is the symbol referenced and the name should match the type\nstring.",
       "properties": {
         "end": {
@@ -1273,7 +1270,11 @@
       "type": "object"
     },
     "VariableDeclaration": {
+      "additionalProperties": false,
       "properties": {
+        "_ui5package": {
+          "type": "string"
+        },
         "default": {
           "type": "string"
         },
@@ -1348,5 +1349,6 @@
     "modules",
     "schemaVersion"
   ],
-  "type": "object"
+  "type": "object",
+  "additionalProperties": false
 }

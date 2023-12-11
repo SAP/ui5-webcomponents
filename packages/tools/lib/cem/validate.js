@@ -46,7 +46,7 @@ let validate = ajv.compile(internalSchema)
 if (validate(inputDataInternal)) {
     console.log('Validation internal custom-elements successful');
 } else {
-    console.error('Validation of internal custom-elements failed:', ajv.errorsText(validate.errors));
+    console.error('Validation of internal custom-elements failed:', validate.errors);
     throw new Error("Validation of internal custom-elements failed");
 }
 

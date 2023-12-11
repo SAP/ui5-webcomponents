@@ -15,6 +15,10 @@ import {
 	getTypeRefs,
 } from "./utils.mjs";
 
+const formatArrays = (typeText) => {
+	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+}
+
 function processClass(ts, classNode, moduleDoc) {
 	const className = classNode?.name?.text;
 	const currClass = moduleDoc?.declarations?.find(declaration => declaration?.name === className);
@@ -63,7 +67,7 @@ function processClass(ts, classNode, moduleDoc) {
 				?.map(e => getReference(ts, e.trim(), classNode, moduleDoc.path)).filter(Boolean));
 
 			slot._ui5privacy = "public";
-			slot._ui5type = { text: tag.type };
+			slot._ui5type = { text: formatArrays(tag.type) };
 
 			if (typeRefs && typeRefs.length) {
 				slot._ui5type.references = typeRefs;
@@ -97,6 +101,10 @@ function processClass(ts, classNode, moduleDoc) {
 
 			const typeRefs = (getTypeRefs(ts, classNodeMember, member)
 				?.map(e => getReference(ts, e, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
+
+			if (member.type?.text) {
+				member.type.text = formatArrays(member.type.text);
+			}
 
 			if (member.type && typeRefs.length) {
 				member.type.references = typeRefs;
@@ -386,8 +394,8 @@ export default {
 					}
 				})
 			},
-			packageLinkPhase({customElementsManifest, context}) {
-				// // Uncomment and handle errors appropriately
+			packageLinkPhase({customElementsManifest}) {
+				// Uncomment and handle errors appropriately
 				// const JSDocErrors = getJSDocErrors();
 				// if (JSDocErrors.length > 0) {
 				// 	console.log(JSDocErrors.join("\n"));

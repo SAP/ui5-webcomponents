@@ -80,6 +80,7 @@ export interface JavaScriptModule {
   summary?: string
 }
 export interface ClassDeclaration {
+  _ui5package?: string
   _ui5implements?: Reference[]
   _ui5privacy?: Privacy
   /**
@@ -133,7 +134,6 @@ export interface ClassDeclaration {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
 }
 /**
@@ -155,6 +155,7 @@ export interface Reference {
   package?: string
 }
 export interface ClassField {
+  _ui5validator?: string
   _ui5formProperty?: boolean
   _ui5formEvents?: string
   /**
@@ -305,6 +306,7 @@ export interface Parameter {
   type?: Type
 }
 export interface EnumDeclaration {
+  _ui5package?: string
   _ui5privacy?: Privacy
   /**
    * Marks when the field was introduced
@@ -320,7 +322,7 @@ export interface EnumDeclaration {
    */
   description?: string
   kind: "enum"
-  members?: EnumField[]
+  members?: ClassField[]
   /**
    * Any class mixins applied in the extends clause of this class.
    *
@@ -357,39 +359,10 @@ export interface EnumDeclaration {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
 }
-export interface EnumField {
-  /**
-   * Marks when the field was introduced
-   */
-  _ui5since?: string
-  /**
-   * Whether the property is deprecated.
-   * If the value is a string, it's the reason for the deprecation.
-   */
-  deprecated?: string | boolean
-  /**
-   * A markdown description of the field.
-   */
-  description?: string
-  inheritedFrom?: Reference
-  kind: "field"
-  name: string
-  privacy?: Privacy
-  source?: SourceReference
-  static?: boolean
-  /**
-   * Whether the property is read-only.
-   */
-  readonly?: boolean
-  /**
-   * A markdown summary suitable for display in a listing.
-   */
-  summary?: string
-}
 export interface InterfaceDeclaration {
+  _ui5package?: string
   _ui5privacy?: Privacy
   /**
    * Marks when the field was introduced
@@ -441,10 +414,10 @@ export interface InterfaceDeclaration {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
 }
 export interface FunctionDeclaration {
+  _ui5package?: string
   /**
    * Marks when the field was introduced
    */
@@ -504,6 +477,7 @@ export interface FunctionDeclaration {
  * for more information on the classmixin pattern in JavaScript.
  */
 export interface MixinDeclaration {
+  _ui5package?: string
   /**
    * Whether the class or mixin is deprecated.
    * If the value is a string, it's the reason for the deprecation.
@@ -564,10 +538,10 @@ export interface MixinDeclaration {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
 }
 export interface VariableDeclaration {
+  _ui5package?: string
   default?: string
   /**
    * Whether the property is deprecated.
@@ -612,6 +586,7 @@ export interface VariableDeclaration {
  * `CustomElementExport`.
  */
 export interface CustomElementDeclaration {
+  _ui5package?: string
   _ui5implements?: Reference[]
   _ui5abstract?: boolean
   _ui5privacy?: Privacy
@@ -686,7 +661,6 @@ export interface CustomElementDeclaration {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
   /**
    * An optional tag name that should be specified if this is a
@@ -744,7 +718,6 @@ export interface Attribute {
      * used, such as JSDoc, Closure, or TypeScript.
      */
     text: string
-    [k: string]: unknown
   }
 }
 /**
@@ -858,10 +831,10 @@ export interface Event {
      * used, such as JSDoc, Closure, or TypeScript.
      */
     text: string
-    [k: string]: unknown
   }
 }
 export interface Slot {
+  _ui5propertyName?: string
   _ui5type?: Type
   _ui5privacy?: Privacy
   /**
@@ -890,6 +863,7 @@ export interface Slot {
  * A class mixin that also adds custom element related properties.
  */
 export interface CustomElementMixinDeclaration {
+  _ui5package?: string
   /**
    * The attributes that this element is known to understand.
    */
@@ -970,7 +944,6 @@ export interface CustomElementMixinDeclaration {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
   /**
    * An optional tag name that should be specified if this is a
@@ -999,7 +972,6 @@ export interface JavaScriptExport {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
   /**
    * Whether the export is deprecated. For example, the name of the export was changed.
@@ -1045,7 +1017,6 @@ export interface CustomElementExport {
     module?: string
     name: string
     package?: string
-    [k: string]: unknown
   }
   /**
    * Whether the custom-element export is deprecated.
