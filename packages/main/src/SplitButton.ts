@@ -128,9 +128,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines whether the arrow button should have the active state styles or not.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SplitButton.prototype.activeArrowButton
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.20.0
 	 */
@@ -421,8 +419,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Checks if the pressed key is an arrow key.
 	 *
-	 * @param {KeyboardEvent} e - keyboard event
-	 * @returns {boolean}
+	 * @param e - keyboard event
 	 * @private
 	 */
 	_isArrowKeyAction(e: KeyboardEvent): boolean {
@@ -432,8 +429,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Checks if the pressed key is a default action key (Space or Enter).
 	 *
-	 * @param {KeyboardEvent} e - keyboard event
-	 * @returns {boolean}
+	 * @param e - keyboard event
 	 * @private
 	 */
 	_isDefaultAction(e: KeyboardEvent): boolean {
@@ -443,8 +439,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Checks if the pressed key is an escape key or shift key.
 	 *
-	 * @param {KeyboardEvent} e - keyboard event
-	 * @returns {boolean}
+	 * @param e - keyboard event
 	 * @private
 	 */
 	_isShiftOrEscape(e: KeyboardEvent): boolean {
@@ -453,7 +448,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Handles the click event and the focus on the arrow button.
-	 * @param {KeyboardEvent} e - keyboard event
+	 * @param e - keyboard event
 	 * @private
 	 */
 	_handleArrowButtonAction(e: KeyboardEvent | MouseEvent) {
@@ -468,7 +463,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Handles the default action and the active state of the respective button.
-	 * @param {KeyboardEvent} e - keyboard event
+	 * @param e - keyboard event
 	 * @private
 	 */
 	_handleDefaultAction(e: KeyboardEvent) {

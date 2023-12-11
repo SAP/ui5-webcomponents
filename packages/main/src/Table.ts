@@ -231,7 +231,6 @@ enum TableFocusTargetElement {
 * Fired when selection is changed by user interaction
 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 *
-* @event sap.ui.webc.main.Table#selection-change
 * @param {Array} selectedRows An array of the selected rows.
 * @param {Array} previouslySelectedRows An array of the previously selected rows.
 * @public
@@ -240,12 +239,12 @@ enum TableFocusTargetElement {
 @event("selection-change", {
 	detail: {
 		/**
-		* @public
-		*/
+		 * @public
+		 */
 		selectedRows: { type: Array },
 		/**
-		* @public
-		*/
+		 * @public
+		 */
 		previouslySelectedRows: { type: Array },
 	},
 })
@@ -460,7 +459,6 @@ class Table extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 	 *
-	 * @slot
 	 * @public
 	 */
 	@slot({
@@ -1135,8 +1133,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Gets settings to be propagated from columns to rows.
-	 *
-	 * @memberof Table
 	 */
 	getColumnPropagationSettings(): Array<TableColumnInfo> {
 		return this.columns.map((column, index) => {

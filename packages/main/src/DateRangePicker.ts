@@ -89,7 +89,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 * @default null
 	 */
-	get dateValue(): null {
+	get dateValue(): Date | null {
 		return null;
 	}
 
@@ -99,7 +99,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 * @default null
 	 */
-	get dateValueUTC(): null {
+	get dateValueUTC(): Date | null {
 		return null;
 	}
 

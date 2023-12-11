@@ -56,7 +56,7 @@ class TabSeparator extends UI5Element implements ITab {
 	 *
 	 * @public
 	 */
-	getTabInStripDomRef() {
+	getTabInStripDomRef(): ITab | null {
 		if (this._getElementInStrip) {
 			return this._getElementInStrip();
 		}

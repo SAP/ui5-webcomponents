@@ -27,12 +27,8 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
  * The <code>ui5-table-group-row</code> component represents a group row in the <code>ui5-table</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableGroupRow
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-group-row
  * @since 1.0.0-rc.15
- * @implements sap.ui.webc.main.ITableRow
+ * @implements {ITableRow}
  * @public
  * @slot {Node[]} default - Defines the text of the component. <br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @csspart group-row - Used to style the native <code>tr</code> element

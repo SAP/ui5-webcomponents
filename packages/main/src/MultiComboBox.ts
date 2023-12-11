@@ -352,8 +352,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -509,13 +508,10 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.open
-	 * @defaultvalue false
-	 * @readonly
+	 * @default false
 	 * @public
 	 */
-	get open() {
+	get open(): boolean {
 		return this._open;
 	}
 

@@ -62,11 +62,8 @@ type TableRowF7PressEventDetail = {
  * The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableRow
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-row
- * @implements sap.ui.webc.main.ITableRow
+ * @extends UI5Element
+ * @implements {ITableRow}
  * @public
  * @csspart row - Used to style the native <code>tr</code> element
  * @csspart popin-row - Used to style the <code>tr</code> element when a row pops in
@@ -81,7 +78,6 @@ type TableRowF7PressEventDetail = {
 /**
  * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
  *
- * @event sap.ui.webc.main.TableRow#row-click
  * @since 1.0.0-rc.15
  * @private
  */
@@ -90,7 +86,6 @@ type TableRowF7PressEventDetail = {
 /**
  * Fired on selection change of an active row.
  *
- * @event sap.ui.webc.main.TableRow#selection-requested
  * @since 1.0.0-rc.15
  * @private
  */
@@ -98,7 +93,6 @@ type TableRowF7PressEventDetail = {
 /**
  * Fired when F7 is pressed.
  *
- * @event sap.ui.webc.main.TableRow#f7-pressed
  * @since 1.2.0
  * @private
  */
