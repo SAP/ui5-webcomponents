@@ -65,7 +65,6 @@ type SuggestionsAccInfo = {
  *
  * @class
  * @private
- * @author SAP SE
  */
 class Suggestions {
 	component: SuggestionComponent;

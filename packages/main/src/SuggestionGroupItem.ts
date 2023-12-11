@@ -9,12 +9,8 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
  * that can be used to split the <code>ui5-input</code> suggestions into groups.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SuggestionGroupItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-suggestion-group-item
- * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public
  * @since 1.0.0-rc.15
  */
@@ -26,9 +22,7 @@ class SuggestionGroupItem extends UI5Element {
 	/**
 	 * Defines the text of the <code>ui5-suggestion-group-item</code>.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.text
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
