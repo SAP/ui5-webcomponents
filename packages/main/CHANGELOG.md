@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.0...v1.21.0-rc.1) (2023-12-08)
+
+
+### Bug Fixes
+
+* base usage from test pages ([#7975](https://github.com/SAP/ui5-webcomponents/issues/7975)) ([b4c8769](https://github.com/SAP/ui5-webcomponents/commit/b4c87697d61a48f2f0c90b1d92393c34cae27663))
+* **infra:** release commands ([#7978](https://github.com/SAP/ui5-webcomponents/issues/7978)) ([b0e653c](https://github.com/SAP/ui5-webcomponents/commit/b0e653cf911cc0ffe5fb5dcbd50a7c238f20f33d))
+* **ui5-combobox:** update picker items while open ([#7937](https://github.com/SAP/ui5-webcomponents/issues/7937)) ([8f99f8d](https://github.com/SAP/ui5-webcomponents/commit/8f99f8d0d473e6e573c8c6366563a9545ab04874)), closes [#7011](https://github.com/SAP/ui5-webcomponents/issues/7011)
+
+
+
+
+
 # [1.21.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0...v1.21.0-rc.0) (2023-12-07)
 
 

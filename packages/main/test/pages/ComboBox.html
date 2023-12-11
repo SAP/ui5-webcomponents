@@ -300,6 +300,27 @@
 		</ui5-combobox>
 	</div>
 
+	<div class="demo-section">
+		<ui5-combobox id="dynamic-items">
+			<ui5-cb-item text="Hello World"></ui5-cb-item>
+		</ui5-combobox>
+	
+		<ui5-button id="add-items-btn">Start adding items</ui5-button>
+	
+		<script>
+			const addItemsBtn = document.getElementById("add-items-btn");
+			const dynamicItemsCb = document.getElementById("dynamic-items");
+	
+			addItemsBtn.addEventListener("click", () => {
+				setInterval(() => {
+					const item = document.createElement("ui5-cb-item");
+					item.text = "test";
+					dynamicItemsCb.appendChild(item);
+				}, 1000);
+			});
+		</script>
+	</div>
+
 	<script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
 			const { value } = event.target;
