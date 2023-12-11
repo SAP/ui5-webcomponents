@@ -1286,19 +1286,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const isCancelledByUser = !this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item }, true);
-
-		if (isCancelledByUser) {
-			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
-			this.hasSuggestionItemSelected = false;
-			this.suggestionSelectionCancelled = true;
-
-			this.isTyping = false;
-			this.openOnMobile = false;
-			this._forceOpen = false;
-			return;
-		}
-
 		const value = this.typedInValue || this.value;
 		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
 		const fireInput = keyboardUsed
@@ -1306,13 +1293,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.hasSuggestionItemSelected = true;
 
+		const valueOriginal = this.value;
+		const valueBeforeItemSelectionOriginal = this.valueBeforeItemSelection;
+		const lastConfirmedValueOriginal = this.lastConfirmedValue;
+		const performTextSelectionOriginal = this._performTextSelection;
+		const typedInValueOriginal = this.typedInValue;
+		const previousValueOriginal = this.previousValue;
+
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 
 			this._performTextSelection = true;
-			this.value = itemText;
 
 			this.fireEvent(INPUT_EVENTS.CHANGE);
 
@@ -1327,6 +1320,27 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCancelled = false;
+
+		// Fire suggestion-item-select event after input change events for backward compatibility, but revert all input properties set before suggestion was prevented.
+		// For v2.0 this code will be reworked.
+		const isCancelledByUser = !this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item }, true);
+		const mostRecentValue = this.value;
+
+		if (isCancelledByUser) {
+			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
+			this.hasSuggestionItemSelected = false;
+			this.suggestionSelectionCancelled = true;
+
+			if (fireInput) {
+				// revert properties set during fireInput
+				this.value = valueOriginal !== mostRecentValue ? mostRecentValue : valueOriginal;
+				this.valueBeforeItemSelection = valueBeforeItemSelectionOriginal;
+				this.lastConfirmedValue = lastConfirmedValueOriginal;
+				this._performTextSelection = performTextSelectionOriginal;
+				this.typedInValue = typedInValueOriginal;
+				this.previousValue = previousValueOriginal;
+			}
+		}
 
 		this.isTyping = false;
 		this.openOnMobile = false;
