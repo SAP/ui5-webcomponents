@@ -3,8 +3,8 @@ import 'zx/globals';
 // don't print executed commands and their output
 $.verbose = false;
 
-const inputFiles = await globby("src/**/parameters-bundle.css");
-
+let inputFiles = await globby("src/**/parameters-bundle.css");
+// inputFiles = inputFiles.filter(x => x.includes("fiori_3"))
 const restArgs = process.argv.slice(2);
 
 // run all postcss processes in parallel as passing the glob directly to postcss makes them processed sequentially.

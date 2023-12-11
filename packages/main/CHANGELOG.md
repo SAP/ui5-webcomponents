@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0...v1.21.0-rc.0) (2023-12-07)
+
+
+### Bug Fixes
+
+* **ui5-table-row:** fix runtime exception in test env execution ([#7953](https://github.com/SAP/ui5-webcomponents/issues/7953)) ([e24f294](https://github.com/SAP/ui5-webcomponents/commit/e24f294501b1b1bb3d1f1f30f902fc165fefcf57)), closes [#7787](https://github.com/SAP/ui5-webcomponents/issues/7787)
+
+
+### Features
+
+* **ui5-split-button:** expose active state property for arrow button ([#7683](https://github.com/SAP/ui5-webcomponents/issues/7683)) ([d6d3705](https://github.com/SAP/ui5-webcomponents/commit/d6d3705a585af32ff440d1b7ae57faf46ef0913f))
+
+
+
+
+
+# [1.20.0](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.3...v1.20.0) (2023-12-04)
+
+
+### Bug Fixes
+
+* **framework:** fix font72 for special characters ([#7949](https://github.com/SAP/ui5-webcomponents/issues/7949)) ([55665b0](https://github.com/SAP/ui5-webcomponents/commit/55665b0ac02cd9060de1368fb427bb338338c5aa)), closes [#7948](https://github.com/SAP/ui5-webcomponents/issues/7948)
+* **ui5-multi-combobox:** adjust open property handling ([#7763](https://github.com/SAP/ui5-webcomponents/issues/7763)) ([bb2ecfc](https://github.com/SAP/ui5-webcomponents/commit/bb2ecfc87dc95e67aea7acfce92de296899db074))
+
+
+### Features
+
+* **ui5-select:** introduce `value` property ([#7865](https://github.com/SAP/ui5-webcomponents/issues/7865)) ([8c62d34](https://github.com/SAP/ui5-webcomponents/commit/8c62d34c353f07d338a52ba7fd9f87141fa62b5a))
+
+
+
+
+
 # [1.20.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.20.0-rc.2...v1.20.0-rc.3) (2023-11-30)
 
 

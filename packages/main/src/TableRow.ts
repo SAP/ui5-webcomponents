@@ -331,8 +331,8 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 		this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 	}
 
-	_activeElementHasAttribute(attr: string) {
-		return (this.getRootNode() as Document).activeElement!.hasAttribute(attr);
+	_activeElementHasAttribute(attr: string): boolean {
+		return !!((this.getRootNode() as Document).activeElement?.hasAttribute(attr));
 	}
 
 	get _ariaCurrent() {

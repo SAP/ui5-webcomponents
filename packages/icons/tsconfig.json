@@ -1,5 +1,5 @@
 {
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "src/generated/**/*.json"],
 	"compilerOptions": {
 		"target": "es2022",
 		// Generate d.ts files
@@ -13,5 +13,14 @@
       	"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
+		"composite": true,
+		"rootDir": "src",
+		"tsBuildInfoFile": "dist/.tsbuildinfo",
+		"paths": {
+			"@ui5/webcomponents-base/dist/*": ["../base/src/*"],
+		},
 	},
+	"references": [
+		{ "path": "../base" },
+	  ]
 }

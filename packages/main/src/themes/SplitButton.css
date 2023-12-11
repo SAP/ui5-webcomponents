@@ -9,6 +9,43 @@
 	box-shadow: var(--_ui5_split_button_host_default_box_shadow);
 }
 
+:host([active-arrow-button][design="Negative"]) .ui5-split-arrow-button,
+:host([design="Negative"]) .ui5-split-arrow-button[active] {
+	background-color: var(--sapButton_Reject_Selected_Background);
+	border: 0.0625rem solid var(--sapButton_Reject_Active_BorderColor);
+	color: var(--sapButton_Reject_Active_TextColor);
+}
+
+:host([active-arrow-button][design="Positive"]) .ui5-split-arrow-button,
+:host([design="Positive"]) .ui5-split-arrow-button[active] {
+	background-color: var(--sapButton_Accept_Selected_Background);
+	border: 0.0625rem solid var(--sapButton_Accept_Active_BorderColor);
+	color: var(--sapButton_Accept_Active_TextColor);
+}
+
+:host([active-arrow-button][design="Attention"]) .ui5-split-arrow-button,
+:host([design="Attention"]) .ui5-split-arrow-button[active] {
+	background-color: var(--sapButton_Attention_Selected_Background);
+	border: 0.0625rem solid var(--sapButton_Attention_Active_BorderColor);
+	color: var(--sapButton_Attention_Active_TextColor);
+}
+
+:host([active-arrow-button][design="Emphasized"]) .ui5-split-arrow-button,
+:host([design="Emphasized"]) .ui5-split-arrow-button[active] {
+	background-color: var(--sapButton_Selected_Background);
+	border: 0.0625rem solid var(--sapButton_Emphasized_Active_BorderColor);
+}
+
+:host([active-arrow-button][design="Transparent"]) .ui5-split-arrow-button,
+:host([active-arrow-button]) .ui5-split-arrow-button,
+:host([design="Transparent"]) .ui5-split-arrow-button[active],
+:host([design="Default"]) .ui5-split-arrow-button[active],
+.ui5-split-arrow-button[active], .ui5-split-arrow-button[active]:hover {
+	background-color: var(--sapButton_Selected_Background);
+	border: 0.0625rem solid var(--sapButton_Lite_Active_BorderColor);
+	color: var(--sapButton_Active_TextColor);
+}
+
 :host([disabled]:not([hidden])) {
 	pointer-events: none;
 }
@@ -79,6 +116,12 @@
 	width: inherit;
 }
 
+.ui5-split-button-root:focus,
+.ui5-split-text-button:focus,
+.ui5-split-arrow-button:focus {
+	outline: 0;
+}
+
 .ui5-split-text-button {
 	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
@@ -135,33 +178,39 @@
 	border-left: var(--_ui5_split_text_button_transparent_hover_border_left);
 }
 
-.ui5-split-text-button[active] {
-	outline: 0;
-}
-
 .ui5-split-text-button[active][design="Emphasized"] {
 	background-color: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Emphasized_Active_TextColor);
+	border-color: var(--sapButton_Emphasized_Active_BorderColor);
 }
 .ui5-split-text-button[active][design="Negative"] {
 	background-color: var(--sapButton_Reject_Selected_Background);
 	color: var(--sapButton_Reject_Active_TextColor);
+	border-color: var(--sapButton_Reject_Active_BorderColor);
 }
 .ui5-split-text-button[active][design="Positive"] {
 	background-color: var(--sapButton_Accept_Selected_Background);
 	color: var(--sapButton_Accept_Active_TextColor);
+	border-color: var(--sapButton_Accept_Active_BorderColor);
 }
 .ui5-split-text-button[active][design="Attention"] {
 	background-color: var(--sapButton_Attention_Selected_Background);
 	color: var(--sapButton_Attention_Active_TextColor);
+	border-color: var(--sapButton_Attention_Active_BorderColor);
 }
 .ui5-split-text-button[active][design="Default"] {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
+	border-color: var(--sapButton_Active_BorderColor);
 }
 .ui5-split-text-button[active][design="Transparent"] {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
+	border-color: var(--sapButton_Active_BorderColor);
+}
+
+.ui5-split-text-button[active] {
+	outline: 0;
 }
 
 .ui5-split-arrow-button-wrapper {
@@ -317,7 +366,7 @@
 }
 
 .ui5-split-arrow-button[design="Attention"]:before {
-	border-color: var(--_ui5_split_button_attention_separator_color);
+	border-color: var(--_ui5_split_button_attention_separator_color_default);
 }
 
 .ui5-split-text-button[dir="rtl"] {
@@ -366,32 +415,53 @@
 	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
 }
 
+.ui5-split-text-button[active][design="Emphasized"] {
+	color: var(--sapButton_Emphasized_Active_TextColor);
+	background-color: var(--sapButton_Selected_Background);
+}
+
+:host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button,
 .ui5-split-arrow-button[active][design="Emphasized"] {
 	background-color: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Emphasized_Active_TextColor);
+	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
 }
 
-.ui5-split-arrow-button[active][design="Negative"] {
-	background-color: var(--sapButton_Reject_Selected_Background);
-	color: var(--sapButton_Reject_Active_TextColor);
-}
-
-.ui5-split-arrow-button[active][design="Positive"] {
-	background-color: var(--sapButton_Accept_Selected_Background);
-	color: var(--sapButton_Accept_Active_TextColor);
-}
-
-.ui5-split-arrow-button[active][design="Attention"] {
-	background-color: var(--sapButton_Attention_Selected_Background);
-	color: var(--sapButton_Attention_Active_TextColor);
-}
-
-.ui5-split-arrow-button[active][design="Default"] {
-	background-color: var(--sapButton_Active_Background);
+:host([design="Transparent"][active-arrow-button]:not([hidden]):not([disabled]):hover) .ui5-split-arrow-button {
 	color: var(--sapButton_Active_TextColor);
 }
 
-.ui5-split-arrow-button[active][design="Transparent"] {
-	background-color: var(--sapButton_Active_Background);
-	color: var(--sapButton_Active_TextColor);
+
+:host([active-arrow-button]) .ui5-split-arrow-button {
+	border: 0.0625rem solid var(--sapButton_Lite_Active_BorderColor);
+}
+
+:host([active-arrow-button]) .ui5-split-arrow-button::before,
+.ui5-split-arrow-button[active]::before,
+.ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
+	border-color: transparent;
+}
+
+:host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button::before,
+:host([design="Emphasized"]) .ui5-split-arrow-button[active]::before,
+:host([design="Emphasized"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
+	border-color: var(--_ui5_split_button_emphasized_separator_color);
+}
+
+:host([design="Positive"][active-arrow-button]) .ui5-split-arrow-button::before,
+:host([design="Positive"]) .ui5-split-arrow-button[active]::before,
+:host([design="Positive"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
+	border-color: var(--_ui5_split_button_positive_separator_color);
+}
+
+:host([design="Negative"][active-arrow-button]) .ui5-split-arrow-button::before,
+:host([design="Negative"]) .ui5-split-arrow-button[active]::before,
+:host([design="Negative"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
+	border-color: var(--_ui5_split_button_negative_separator_color);
+}
+
+:host([design="Attention"][active-arrow-button]) .ui5-split-arrow-button::before,
+:host([design="Attention"]) .ui5-split-arrow-button[active]::before,
+:host([design="Attention"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
+	border-color: var(--_ui5_split_button_attention_separator_color);
 }
