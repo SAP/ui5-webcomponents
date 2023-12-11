@@ -11,8 +11,7 @@ type IEventOptions = {
 /**
  * @class
  *
- * The <code>ui5-tb-item</code> represents an abstract class for items,
- * used in the <code>ui5-toolbar</code>.
+ * Represents an abstract class for items, used in the <code>ui5-toolbar</code>.
  *
  * @constructor
  * @extends UI5Element

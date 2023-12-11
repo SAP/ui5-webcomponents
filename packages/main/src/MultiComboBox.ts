@@ -347,6 +347,8 @@ class MultiComboBox extends UI5Element {
 	@property()
 	accessibleNameRef!: string;
 
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	_effectiveValueState!: `${ValueState}`;
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 	 *
@@ -538,12 +540,22 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (this._validationTimeout) {
-			input.value = this._inputLastValue;
-			return;
+			if (this._filterItems(value).length) {
+				this.valueState = this._effectiveValueState;
+				this._validationTimeout = null;
+			} else {
+				input.value = this._inputLastValue;
+				return;
+			}
 		}
 
+		this._effectiveValueState = this.valueState;
+
 		if (!filteredItems.length && value && !this.allowCustomValues) {
-			input.value = this.valueBeforeAutoComplete || this._inputLastValue;
+			const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
+
+			input.value = newValue;
+			this.value = newValue;
 			this.valueState = ValueState.Error;
 
 			this._shouldAutocomplete = false;
@@ -1120,6 +1132,7 @@ class MultiComboBox extends UI5Element {
 
 	_resetValueState(valueState: `${ValueState}`, callback?: () => void) {
 		this._validationTimeout = setTimeout(() => {
+			this._effectiveValueState = this.valueState;
 			this.valueState = valueState;
 			this._validationTimeout = null;
 
