@@ -110,7 +110,7 @@
 
 		menu.addEventListener("ui5-before-open", function(event) {
 			const item = event.detail.item;
-			if (item && item.text === "Open" && !fetched) {
+			if (item && item.text.substr(0, 4) === "Open" && !fetched) {
 				setTimeout(function() {
 					item.removeAttribute("busy");
 					item.removeAttribute("busy-delay");
