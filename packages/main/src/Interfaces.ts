@@ -112,24 +112,6 @@ interface IOption extends UI5Element {
 const ITableRow = "sap.ui.webc.main.ITableRow";
 
 /**
- * Interface for components that may be slotted inside a <code>ui5-table</code> as columns
- *
- * @name sap.ui.webc.main.ITableColumn
- * @interface
- * @public
- */
-const ITableColumn = "sap.ui.webc.main.ITableColumn";
-
-/**
- * Interface for components that may be slotted inside a <code>ui5-table-row</code> as cells
- *
- * @name sap.ui.webc.main.ITableCell
- * @interface
- * @public
- */
-const ITableCell = "sap.ui.webc.main.ITableCell";
-
-/**
  * Interface for components that represent a token and are usable in components such as <code>ui5-multi-input</code>
  *
  * @name sap.ui.webc.main.IToken
@@ -160,8 +142,6 @@ export {
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	IOption,
-	ITableCell,
-	ITableColumn,
 	ITableRow,
 	IToken,
 	ITreeItem,
