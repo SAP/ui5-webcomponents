@@ -14,7 +14,7 @@
 	</script>
 
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
 	<link rel="stylesheet" type="text/css" href="./styles/Popover.css">
@@ -26,7 +26,6 @@
 
 <body class="popover2auto">
 	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
-
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
@@ -116,6 +115,24 @@
 	<br>
 
 	<ui5-select id="many-items"></ui5-select>
+
+	<br>
+	<br>
+
+	<div class="containingBlock">
+		<div>
+			Containing Block Div
+			<pre>
+container-type: inline-size;
+position: relative;
+z-index: 1;
+			</pre>
+		</div>
+		<ui5-button id="openPopoverInsideContainingBlockButton">Open Popover Inside a Containing Block</ui5-button>
+		<ui5-popover id="popoverInsideContainingBlock" placement-type="Bottom">
+			Popover<br>Inside<br>Containing<br>Block
+		</ui5-popover>
+	</div>
 
 	<br>
 	<br>
@@ -395,7 +412,7 @@
 	<ui5-button id="popoverFocusButton">Dialog Focus</ui5-button>
 	<ui5-popover id="popoverFocus">
 		<div slot="header">Header text</div>
-	
+
 		<div slot="footer" class="dialog-footer">
 			<div style="flex: 1"></div>
 			<ui5-button id="closeButton" design="Emphasized">Close</ui5-button>
@@ -415,7 +432,7 @@
 	<div>
 		<ui5-checkbox id="rtlCb" text="rtl"></ui5-checkbox>
 	</div>
-	
+
 	<div id="horizontalAlignContainer">
 		<div id="targetOpener" class="popover10auto">
 			<span>Target opener</span>
@@ -432,7 +449,6 @@
 	<span id="createAndRemoveResult" style="display: none;"></span>
 	<br>
 	<br>
-
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -626,7 +642,7 @@
 
 		createAndRemove.addEventListener("click", function () {
 			var pop = document.createElement("ui5-popover");
-	
+
 			pop.setAttribute("open", true);
 			pop.setAttribute("opener", "createAndRemove");
 
@@ -648,6 +664,10 @@
 				}
 				createAndRemoveResult.style.display = "";
 			})
+		});
+
+		openPopoverInsideContainingBlockButton.addEventListener("click", function () {
+			popoverInsideContainingBlock.showAt(openPopoverInsideContainingBlockButton);
 		});
 
 	</script>

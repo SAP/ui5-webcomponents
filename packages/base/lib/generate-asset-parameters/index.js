@@ -18,8 +18,8 @@ export {
 };`;
 
 const generate = async () => {
-	await fs.mkdir("dist/generated/", { recursive: true });
-	return fs.writeFile("dist/generated/AssetParameters.js", fileContent);
+	await fs.mkdir("src/generated/", { recursive: true });
+	return fs.writeFile("src/generated/AssetParameters.ts", fileContent);
 }
 
 generate().then(() => {

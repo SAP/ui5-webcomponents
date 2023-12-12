@@ -616,7 +616,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @slot
 	 * @public
 	 */
-	@slot()
+	@slot({
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+		cloned: true,
+	})
 	valueStateMessage!: Array<HTMLElement>;
 
 	hasSuggestionItemSelected: boolean;
