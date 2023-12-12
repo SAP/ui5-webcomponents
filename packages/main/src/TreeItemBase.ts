@@ -40,7 +40,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  *
  * @abstract
  * @constructor
- * @implements {ITreeItem}
  * @extends ListItem
  * @public
  */
@@ -90,7 +89,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		item: { type: HTMLElement },
 	},
 })
-class TreeItemBase extends ListItem implements ITreeItem {
+class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 	 *

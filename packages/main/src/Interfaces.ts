@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import type ListItem from "./ListItemBase.js";
+import type TreeItemBase from "./TreeItemBase.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
@@ -118,14 +118,7 @@ interface IToken extends HTMLElement, ITabbable {
  *
  * @public
  */
-interface ITreeItem extends ListItem {
-	items: Array<ITreeItem>;
-	expanded: boolean;
-	level: number;
-	isTreeItem: boolean;
-	_setsize: number;
-	_posinset: number;
-}
+interface ITreeItem extends TreeItemBase {}
 
 export {
 	IAvatar,
