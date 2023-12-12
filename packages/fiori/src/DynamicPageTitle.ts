@@ -73,18 +73,16 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	snapped!: boolean;
 
-	/**
-	 * Defines the current media query size.
-	 *
-	 * @type {string}
-	 * @protected
-	 */
-	@property()
-	mediaRange!: string;
-
 	// private properties
 	@property({ type: Boolean })
 	mobileNavigationActions!: boolean;
+
+	/**
+	 * Indicates if the elements is on focus
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	_handleResize: ResizeObserverCallback;
 	minContentWidth?: number;
@@ -125,6 +123,9 @@ class DynamicPageTitle extends UI5Element {
 		return {
 			root: {
 				"ui5-dynamic-page-title-root": true,
+			},
+			focusArea: {
+				"ui5-dynamic-page-title-focus-area": true,
 			},
 			topArea: {
 				"ui5-dynamic-page-title--top-area": true,
@@ -197,14 +198,16 @@ class DynamicPageTitle extends UI5Element {
 		}
 	}
 
-	_onclick(e: PointerEvent) {
-		if (e.target === this.getDomRef()) {
-			this.fireEvent("_toggle-title");
-		}
+	_onfocusout() {
+		this.focused = false;
+	}
+
+	_onfocusin() {
+		this.focused = true;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (e.target === this.getDomRef() && (isEnter(e) || isSpace(e))) {
+		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
 			this.fireEvent("_toggle-title");
 		}

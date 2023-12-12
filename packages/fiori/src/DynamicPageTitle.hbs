@@ -1,8 +1,11 @@
-<div class="{{classes.root}}"
-  data-sap-focus-ref
-	tabindex="0"
-  @keydown="{{_onkeydown}}"
-  @click="{{_onclick}}">
+<div class="{{classes.root}}">
+  <span class="{{classes.focusArea}}"
+    data-sap-focus-ref
+    tabindex="0"
+    @focusout={{_onfocusout}}
+    @focusin={{_onfocusin}}
+    @keydown="{{_onkeydown}}">
+  </span>
   <div class="{{classes.topArea}}">
     {{#if hasBreadcrumb}}
       <div class="{{classes.breadcrumbs}}">

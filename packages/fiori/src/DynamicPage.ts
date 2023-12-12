@@ -215,14 +215,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	updateMediaRange() {
-		const mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
-		this.mediaRange = mediaRange;
-		if (this.dynamicPageTitle) {
-			this.dynamicPageTitle.mediaRange = mediaRange;
-		}
-		if (this.dynamicPageHeader) {
-			this.dynamicPageHeader.mediaRange = mediaRange;
-		}
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 }
 

@@ -7,7 +7,6 @@
     word-wrap: break-word;
     padding-top: var(--_ui5_dynamic_page_title_padding_top);
     padding-bottom: var(--_ui5_dynamic_page_title_padding_bottom);
-    box-sizing: border-box;
 }
 
 :host .ui5-dynamic-page-title-root {
@@ -122,17 +121,13 @@
     width: 100%;
 }
 
-/* Responsive paddings */
-
-:host([media-range="S"]) .ui5-dynamic-page-title-root {
-    padding: 0 1rem;
+/* focus */
+:host([focused]) {
+    /* separate change adds proper parameters */
+    outline: 0.0625rem dotted black;
+    outline-offset: -0.0625rem;
 }
 
-:host([media-range="M"]) .ui5-dynamic-page-title-root,
-:host([media-range="L"]) .ui5-dynamic-page-title-root {
-    padding: 0 2rem;
-}
-
-:host([media-range="XL"]) .ui5-dynamic-page-title-root {
-    padding: 0 3rem;
+.ui5-dynamic-page-title-focus-area {
+    outline: none;
 }
