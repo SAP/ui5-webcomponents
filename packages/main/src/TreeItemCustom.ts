@@ -8,7 +8,6 @@ import TreeItemCustomTemplate from "./generated/templates/TreeItemCustomTemplate
 
 // Styles
 import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
-import { ITreeItem } from "./Interfaces.js";
 
 /**
  * @class
@@ -29,7 +28,6 @@ import { ITreeItem } from "./Interfaces.js";
  * @constructor
  * @extends TreeItemBase
  * @public
- * @implements {ITreeItem}
  * @since 1.9.2
  */
 @customElement({
@@ -37,7 +35,7 @@ import { ITreeItem } from "./Interfaces.js";
 	template: TreeItemCustomTemplate,
 	styles: [TreeItemBase.styles, treeItemCustomCss],
 })
-class TreeItemCustom extends TreeItemBase implements ITreeItem {
+class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines whether the tree list item should display the selection element.
 	 *

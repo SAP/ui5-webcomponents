@@ -25,6 +25,7 @@ import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit
 import treeItemCss from "./generated/themes/TreeItem.css.js";
 
 import HasPopup from "./types/HasPopup.js";
+import { ITreeItem } from "./Interfaces.js";
 
 type TreeItemBaseEventDetail = {
 	item: TreeItemBase,
@@ -39,6 +40,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  *
  * @abstract
  * @constructor
+ * @implements {ITreeItem}
  * @extends ListItem
  * @public
  */
@@ -88,7 +90,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		item: { type: HTMLElement },
 	},
 })
-class TreeItemBase extends ListItem {
+class TreeItemBase extends ListItem implements ITreeItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 	 *
@@ -228,7 +230,7 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<TreeItemBase>;
+	items!: Array<ITreeItem>;
 
 	onBeforeRendering() {
 		this.actionable = false;
