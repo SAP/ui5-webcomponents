@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>TextArea</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/TextArea.css">
+	</head>
+
+	<body class="textarea1auto">
+
+
+	<section class="group">
+		<ui5-title>Simple TextArea</ui5-title>
+		<ui5-textarea id="basic-textarea" placeholder="Basic text area">
+			<div slot="valueStateMessage">
+				This msg will not be displayed as no value-state is set.
+			</div>
+		</ui5-textarea>
+
+		<ui5-list>
+			<ui5-li description="test for selection">alabala</ui5-li>
+			<ui5-li description="test for selection">alabala</ui5-li>
+			<ui5-li description="test for selection">alabala</ui5-li>
+			<ui5-li description="test for selection">alabala</ui5-li>
+		</ui5-list>
+
+		<div id="selection"></div>
+
+	</section>
+
+	<ui5-popover id="pop" opener="test" placement-type="Bottom">
+		<ui5-icon name="joule"></ui5-icon>
+	</ui5-popover>
+	<div id="test" style="width: 2px; height: 1.2em; background: red; position: absolute;"></div>
+	<script>
+
+		function createCopy(textArea) {
+			var copy = document.createElement('div');
+			copy.textContent = textArea.value;
+			var style = getComputedStyle(textArea);
+			[
+			'fontFamily',
+			'fontSize',
+			'fontWeight',
+			'wordWrap',
+			'whiteSpace',
+			'borderLeftWidth',
+			'borderTopWidth',
+			'borderRightWidth',
+			'borderBottomWidth',
+			].forEach(function(key) {
+				copy.style[key] = style[key];
+			});
+			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
+			const innerTextAreaStyle = getComputedStyle(innerTextArea)
+			copy.style.whiteSpace = "pre";
+			copy.style.paddingTop = innerTextAreaStyle.paddingTop;
+			copy.style.paddingLeft = innerTextAreaStyle.paddingLeft;
+			copy.style.lineHeight = innerTextAreaStyle.lineHeight;
+			copy.style.overflow = 'auto';
+			copy.style.width = textArea.offsetWidth + 'px';
+			copy.style.height = textArea.offsetHeight + 'px';
+			copy.style.position = 'absolute';
+			copy.style.left = textArea.offsetLeft + 'px';
+			copy.style.top = textArea.offsetTop + 'px';
+			document.body.appendChild(copy);
+			return copy;
+		}
+
+		function getCaretPosition(textArea) {
+			var start = textArea.selectionStart;
+			var end = textArea.selectionEnd;
+			var copy = createCopy(textArea);
+			var range = document.createRange();
+			range.setStart(copy.firstChild, start);
+			range.setEnd(copy.firstChild, end);
+			var selection = document.getSelection();
+			selection.removeAllRanges();
+			selection.addRange(range);
+			var rect = range.getBoundingClientRect();
+			document.body.removeChild(copy);
+			textArea.selectionStart = start;
+			textArea.selectionEnd = end;
+			textArea.focus();
+			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
+			return {
+				x: rect.left - innerTextArea.scrollLeft,
+				y: rect.top - innerTextArea.scrollTop
+			};
+		}
+
+		const textArea = document.getElementById("basic-textarea")
+
+		textArea.onkeyup = function() {
+			var position = getCaretPosition(textArea);
+			test.style.left = position.x + 'px';
+			test.style.top = (position.y + window.scrollY) + 'px';
+			pop.showAt(test, true);
+		}
+
+
+		const getSelection = () => {
+			const selection = window.getSelection();
+			console.log(selection);
+			if (selection.anchorNode && selection.anchorNode.nodeType === Node.TEXT_NODE) {
+				// Firefox
+				const range = document.createRange();
+				range.setStart(selection.anchorNode, selection.anchorOffset);
+				range.setEnd(selection.focusNode, selection.focusOffset);
+				return range.toString();
+			}
+			if (selection.anchorNode) {
+				// chrome
+				const node = selection.anchorNode.childNodes[selection.anchorOffset];
+				if (node.shadowRoot) {
+					const innerSelection = node.shadowRoot.getSelection();
+					console.log(innerSelection);
+					const range = document.createRange();
+					range.setStart(innerSelection.anchorNode, innerSelection.anchorOffset);
+					range.setEnd(innerSelection.focusNode, innerSelection.focusOffset);
+					return range.toString();
+				}
+			} else {
+				// safari
+				const range = selection.getComposedRanges()[0];
+				const innerSelection = range.startContainer.childNodes[range.startOffset];
+				console.log(innerSelection);
+				const innerSelection2 = document.getSelection().getComposedRanges(innerSelection.shadowRoot)[0];
+				console.log(innerSelection2);
+
+				const range2 = document.createRange();
+				range2.setStart(innerSelection2.startContainer, innerSelection2.startOffset);
+				range2.setEnd(innerSelection2.endContainer, innerSelection2.endOffset);
+				return range2.toString();
+			}
+		}
+
+		const updateSelection = () => {
+			document.getElementById("selection").innerHTML = `${getSelection()}`
+		}
+
+		document.addEventListener("selectionchange", () => {
+			updateSelection();
+		})
+	</script>
+
+</body>
+</html>
