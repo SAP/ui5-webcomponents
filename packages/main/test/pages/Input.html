@@ -122,6 +122,13 @@
 		<ui5-li>Condensed</ui5-li>
 	</ui5-input>
 
+	<h3>Input with disabled autocomplete and preventable suggestion select</h3>
+	<ui5-input id="input-prevent-suggestion-select" show-suggestions no-typeahead="true">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
 
@@ -752,6 +759,15 @@
 		});
 
 		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
+
+		const inputWithPreventableSelection = document.getElementById("input-prevent-suggestion-select");
+		inputWithPreventableSelection.addEventListener("ui5-suggestionItemSelect", (e) => {
+			const selectedItemText = e.detail.item.text || e.detail.item.textContent;
+			if(selectedItemText === "Cozy"){
+				e.preventDefault();
+				inputWithPreventableSelection.value = "test test";
+			}
+		});
 	</script>
 </body>
 </html>
