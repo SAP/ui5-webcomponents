@@ -10,5 +10,14 @@
 		"inlineSources": true,
 		"strict": true,
 		"moduleResolution": "node",
+		"composite": true,
+		"rootDir": "src",
+		"tsBuildInfoFile": "dist/.tsbuildinfo",
+		"paths": {
+			"@ui5/webcomponents-base/dist/*": ["../base/src/*"],
+		},
 	},
+	"references": [
+        { "path": "../base" }
+    ]
 }

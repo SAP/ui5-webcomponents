@@ -55,13 +55,33 @@ OpeningMenu.decorators = [
 		</ui5-menu>
 	${story()}
 	<script>
-		var splitBtnWithMenuDefaultAction = document.querySelector("ui5-split-button");
-		var menuInSplitBtn = document.getElementById("menuInSplitBtnDefaultAction");
-		splitBtnWithMenuDefaultAction.addEventListener("ui5-arrow-click", function () {
-			menuInSplitBtn.open ? menuInSplitBtn.close() : menuInSplitBtn.showAt(splitBtnWithMenuDefaultAction);
-		});
+	var splitBtn = document.querySelector("ui5-split-button");
+	var menu = document.getElementById("menuInSplitBtnDefaultAction");
+	
+	splitBtn.addEventListener("ui5-arrow-click", function() {
+		if (menu.open) {
+			menu.close();
+			splitBtn.activeArrowButton = false;
+		} else {
+			menu.showAt(splitBtn);
+			splitBtn.activeArrowButton = true;
+		}
+	});
+	
+	menu.addEventListener("after-close", function() {
+		splitBtn.activeArrowButton = false;
+	});
 	</script>`;}
 ];
+
+OpeningMenu.parameters = {
+	docs: {
+		story: {
+			inline: false,
+			iframeHeight: "150px",
+		},
+	}
+};
 
 export const DifferentDesigns: StoryFn = () => html`
 	<ui5-split-button design="${ButtonDesign.Emphasized}"> Emphasized </ui5-split-button>

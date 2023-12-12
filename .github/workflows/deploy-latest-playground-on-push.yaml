@@ -1,4 +1,4 @@
-name: Deploy Latest Playground
+name: Deploy Latest Playground [on push]
 
 on:
   push:
@@ -18,10 +18,10 @@ jobs:
       run: |
         export NODE_OPTIONS="--max_old_space_size=4096"
         yarn install
-        yarn build:playground
+        yarn ci:deploybuild
 
     - name: Write version.md
-      run: git log -1 &>> packages/playground/dist/version.md
+      run: git log -1 &> packages/playground/dist/version.md
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3

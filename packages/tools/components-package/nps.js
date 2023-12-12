@@ -11,14 +11,17 @@ const getScripts = (options) => {
 	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath} ${illustration.collection}`);
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
-	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
+	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
 	const tsOption = options.typescript;
-	const tsCommand = tsOption ? "tsc" : "";
-	const tsWatchCommand = tsOption ? "tsc --watch" : "";
+	const tsCommandOld = tsOption ? "tsc" : "";
+	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
+	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
+	if (options.noWatchTS) {
+		tsWatchCommandStandalone = "";
+	}
 	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
-	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
 
 	if (tsOption) {
 		try {
@@ -54,48 +57,56 @@ const getScripts = (options) => {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
-		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
+		generate: {
+			default: `${tsCrossEnv} nps prepare.all`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
-		typescript: tsCommand,
+		prepare: {
+			default: `${tsCrossEnv} nps clean prepare.all copy prepare.typescript generateAPI`,
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
+			styleRelated: "nps build.styles build.jsonImports build.jsImports",
+			typescript: tsCommandOld,
+		},
+		copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 		build: {
-			default: "nps prepare lint build.bundle",
-			templates: `mkdirp dist/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
+			default: "nps prepare lint build.bundle", // build.bundle2
+			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
+				default: `concurrently "nps build.styles.themes" "nps build.styles.components"`,
+				default2: `nps build.styles.themes build.styles.components`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
-				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
+				default: "mkdirp src/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
+				themes: `node "${LIB}/generate-json-imports/themes.js" src/generated/assets/themes src/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/generated/assets/i18n src/generated/json-imports`,
 			},
 			jsImports: {
-				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrationsLoaders",
+				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig}`,
+			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
 		copy: {
 			default: "nps copy.src copy.props",
-			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
-			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" dist/generated/`,
+			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
+			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
-			typescript: tsWatchCommand,
+			typescript: tsWatchCommandStandalone,
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
@@ -117,7 +128,7 @@ const getScripts = (options) => {
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
 		scope: {
-			prepare: "nps scope.lint prepare scope.testPages",
+			prepare: "nps scope.lint scope.testPages",
 			lint: `node "${LIB}/scoping/lint-src.js"`,
 			testPages: {
 				default: "nps scope.testPages.clean scope.testPages.copy scope.testPages.replace",

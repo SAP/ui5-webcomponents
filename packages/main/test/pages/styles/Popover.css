@@ -66,3 +66,10 @@ ui5-date-picker,
     height: 150px;
     width: 300px;
 }
+
+.containingBlock {
+	border: 1px solid black;
+	container-type: inline-size;
+	position: relative;
+	z-index: 1;
+}

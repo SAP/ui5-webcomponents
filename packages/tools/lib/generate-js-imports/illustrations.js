@@ -20,7 +20,8 @@ const generateAvailableIllustrationsArray = (fileNames, exclusionPatterns = []) 
 };
 
 const generateDynamicImportsFileContent = (dynamicImports, availableIllustrations, collection, prefix = "") => {
-  return `import { registerIllustrationLoader } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+  return `// @ts-nocheck
+  import { registerIllustrationLoader } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 
 export const loadIllustration = async (illustrationName) => {
   const collectionAndPrefix = "${collection}/${prefix}";

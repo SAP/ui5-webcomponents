@@ -608,6 +608,26 @@ describe("Input general interaction", () => {
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});
 
+	it("Checks if valueStateMessage gets updated dynamically", async () => {
+		const btn = await $("#dynamic-value-state-trigger");
+		const input = await $("#dynamic-value-state").shadow$("input");
+
+		await input.scrollIntoView();
+		await btn.click();
+		await browser.pause(2000);
+		await input.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#dynamic-value-state");
+		const valueStatePopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const initialContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
+
+		await browser.pause(2000);
+
+		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
+
+		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
+	});
+
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
 		const input = await browser.$("#input-max-length"); // Input with no show-suggestions attribute
 		const innerInput = await input.shadow$("input");
