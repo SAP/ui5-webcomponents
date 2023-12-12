@@ -1,3 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// OpenUI5 integration
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+
+// Assets
+import "./Assets.js";
+
+// Icons
+import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons/dist/AllIcons.js";
+
+// TNT Icons
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/AllIcons.js";
+
+// SAP Business Suite Icons
+import "@ui5/webcomponents-icons-business-suite/dist/Assets.js";
+import "@ui5/webcomponents-icons-business-suite/dist/AllIcons.js";
+
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 // import "./customI18n.js";
@@ -13,6 +32,14 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 // CLDR
 import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocaleData.js";
 
+// import { registerCustomThemePropertiesLoader } from "@ui5/webcomponents-base/dist/AssetRegistry.js";
+// import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+// const customThemeLoader = theme => Promise.resolve(`:root {
+// 	${getScopedVarName("--_ui5_button_base_height")}: 4rem;
+// 	${getScopedVarName("--_ui5_button_base_padding")}: 2rem;
+// }`);
+// registerCustomThemePropertiesLoader("@ui5/webcomponents", "my_custom_theme", customThemeLoader);
+
 // Uncomment to test the registration of custom properties and JSON bundles - use the TextArea test page
 // import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 // import parse from "@ui5/webcomponents-base/dist/PropertiesFileFormat.js";
@@ -26,112 +53,26 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // 	return await (await fetch("fr")).json();
 // });
 
-import Avatar from "./dist/Avatar.js";
-import AvatarGroup from "./dist/AvatarGroup.js";
-import Badge from "./dist/Badge.js";
-import Breadcrumbs from "./dist/Breadcrumbs.js";
-import BusyIndicator from "./dist/BusyIndicator.js";
-import Button from "./dist/Button.js";
-import Card from "./dist/Card.js";
-import CardHeader from "./dist/CardHeader.js";
-import Carousel from "./dist/Carousel.js";
-import CheckBox from "./dist/CheckBox.js";
-import ColorPalette from "./dist/ColorPalette.js";
-import ColorPaletteItem from "./dist/ColorPaletteItem.js";
-import ColorPalettePopover from "./dist/ColorPalettePopover.js";
-import ColorPicker from "./dist/ColorPicker.js";
-import ComboBox from "./dist/ComboBox.js";
-import DatePicker from "./dist/DatePicker.js";
-import DateRangePicker from "./dist/DateRangePicker.js";
-import DateTimePicker from "./dist/DateTimePicker.js";
-import Dialog from "./dist/Dialog.js";
-import FileUploader from "./dist/FileUploader.js";
-import Icon from "./dist/Icon.js";
-import Input from "./dist/Input.js";
-import MultiInput from "./dist/MultiInput.js";
-import Label from "./dist/Label.js";
-import Link from "./dist/Link.js";
-import Menu from "./dist/Menu.js";
-import MenuItem from "./dist/MenuItem.js";
-import Popover from "./dist/Popover.js";
-import Panel from "./dist/Panel.js";
-import RadioButton from "./dist/RadioButton.js";
-import ResponsivePopover from "./dist/ResponsivePopover.js";
-import SegmentedButton from "./dist/SegmentedButton.js";
-import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
-import Select from "./dist/Select.js";
-import SelectMenu from "./dist/SelectMenu.js";
-import SelectMenuOption from "./dist/SelectMenuOption.js";
-import Slider from "./dist/Slider.js";
-import SplitButton from "./dist/SplitButton.js";
-import StepInput from "./dist/StepInput.js";
-import RangeSlider from "./dist/RangeSlider.js";
-import Switch from "./dist/Switch.js";
-import MessageStrip from "./dist/MessageStrip.js";
-import MultiComboBox from "./dist/MultiComboBox.js";
-import ProgressIndicator from "./dist/ProgressIndicator.js";
-import RatingIndicator from "./dist/RatingIndicator.js";
-import TabContainer from "./dist/TabContainer.js";
-import Tab from "./dist/Tab.js";
-import TabSeparator from "./dist/TabSeparator.js";
-import Table from "./dist/Table.js";
-import TableColumn from "./dist/TableColumn.js";
-import TableRow from "./dist/TableRow.js";
-import TableGroupRow from "./dist/TableGroupRow.js";
-import TableCell from "./dist/TableCell.js";
-import TextArea from "./dist/TextArea.js";
-import TimeSelection from "./dist/TimeSelection.js";
-import TimePicker from "./dist/TimePicker.js";
-import TimePickerClock from "./dist/TimePickerClock.js";
-import TimeSelectionClocks from "./dist/TimeSelectionClocks.js";
-import TimeSelectionInputs from "./dist/TimeSelectionInputs.js";
-import Title from "./dist/Title.js";
-import Toast from "./dist/Toast.js";
-import ToggleButton from "./dist/ToggleButton.js";
-import Toolbar from "./dist/Toolbar.js";
-import ToolbarButton from "./dist/ToolbarButton.js";
-import ToolbarSeparator from "./dist/ToolbarSeparator.js";
-import ToolbarSpacer from "./dist/ToolbarSpacer.js";
-import ToolbarSelect from "./dist/ToolbarSelect.js";
-import Tree from "./dist/Tree.js";
-import TreeList from "./dist/TreeList.js";
-import TreeItem from "./dist/TreeItem.js";
-import TreeItemCustom from "./dist/TreeItemCustom.js";
-import List from "./dist/List.js";
-import StandardListItem from "./dist/StandardListItem.js";
-import CustomListItem from "./dist/CustomListItem.js";
-import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
-
-// Features
-import "./dist/features/InputElementsFormSupport.js";
-import "./dist/features/ColorPaletteMoreColors.js";
-import "./dist/features/InputSuggestions.js";
-
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 
 import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/util/HTMLSanitizer.js";
-window.sanitizeHTML = sanitizeHTML;
-window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
-import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
+import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import { _getRegisteredNames as getIconNames, getIconAccessibleName } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { _getRegisteredNames as getIconNames, getIconAccessibleName, registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { ignoreCustomElements, shouldIgnoreCustomElement } from "@ui5/webcomponents-base/dist/IgnoreCustomElements.js";
-ignoreCustomElements("app-");
-ignoreCustomElements("my-");
 
 // SAP Icons
 import accept from "@ui5/webcomponents-icons/dist/accept.js";
@@ -142,20 +83,119 @@ import actor from "@ui5/webcomponents-icons-tnt/dist/actor.js";
 import actorv2 from "@ui5/webcomponents-icons-tnt/dist/v2/actor.js";
 import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
 // SAP BS Icons
-import icon_3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
-import icon_3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
-import icon_3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
+import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
+import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
+import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
 import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
+import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
+
+// The SAP Icons V4 icon collection is set by default in sap_fiori_3,
+// but it's configurable:
+// import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
+// setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
+// or for custom theme
+// setDefaultIconCollection("my_custom_theme", "SAP-icons-v5");
+// or for custom icon collection
+// setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
+
+import Avatar from "./Avatar.js";
+import AvatarGroup from "./AvatarGroup.js";
+import Badge from "./Badge.js";
+import Breadcrumbs from "./Breadcrumbs.js";
+import BusyIndicator from "./BusyIndicator.js";
+import Button from "./Button.js";
+import Card from "./Card.js";
+import CardHeader from "./CardHeader.js";
+import Carousel from "./Carousel.js";
+import CheckBox from "./CheckBox.js";
+import ColorPalette from "./ColorPalette.js";
+import ColorPaletteItem from "./ColorPaletteItem.js";
+import ColorPalettePopover from "./ColorPalettePopover.js";
+import ColorPicker from "./ColorPicker.js";
+import ComboBox from "./ComboBox.js";
+import DatePicker from "./DatePicker.js";
+import DateRangePicker from "./DateRangePicker.js";
+import DateTimePicker from "./DateTimePicker.js";
+import Dialog from "./Dialog.js";
+import FileUploader from "./FileUploader.js";
+import Icon from "./Icon.js";
+import Input from "./Input.js";
+import MultiInput from "./MultiInput.js";
+import Label from "./Label.js";
+import Link from "./Link.js";
+import Menu from "./Menu.js";
+import MenuItem from "./MenuItem.js";
+import Popover from "./Popover.js";
+import Panel from "./Panel.js";
+import RadioButton from "./RadioButton.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import Select from "./Select.js";
+import SelectMenu from "./SelectMenu.js";
+import SelectMenuOption from "./SelectMenuOption.js";
+import Slider from "./Slider.js";
+import SplitButton from "./SplitButton.js";
+import StepInput from "./StepInput.js";
+import RangeSlider from "./RangeSlider.js";
+import Switch from "./Switch.js";
+import MessageStrip from "./MessageStrip.js";
+import MultiComboBox from "./MultiComboBox.js";
+import ProgressIndicator from "./ProgressIndicator.js";
+import RatingIndicator from "./RatingIndicator.js";
+import TabContainer from "./TabContainer.js";
+import Tab from "./Tab.js";
+import TabSeparator from "./TabSeparator.js";
+import Table from "./Table.js";
+import TableColumn from "./TableColumn.js";
+import TableRow from "./TableRow.js";
+import TableGroupRow from "./TableGroupRow.js";
+import TableCell from "./TableCell.js";
+import TextArea from "./TextArea.js";
+import TimeSelection from "./TimeSelection.js";
+import TimePicker from "./TimePicker.js";
+import TimePickerClock from "./TimePickerClock.js";
+import TimeSelectionClocks from "./TimeSelectionClocks.js";
+import Title from "./Title.js";
+import Toast from "./Toast.js";
+import ToggleButton from "./ToggleButton.js";
+// console.log({ToggleButton})
+import Toolbar from "./Toolbar.js";
+import ToolbarButton from "./ToolbarButton.js";
+import ToolbarSeparator from "./ToolbarSeparator.js";
+import ToolbarSpacer from "./ToolbarSpacer.js";
+import ToolbarSelect from "./ToolbarSelect.js";
+import Tree from "./Tree.js";
+import TreeList from "./TreeList.js";
+import TreeItem from "./TreeItem.js";
+import TreeItemCustom from "./TreeItemCustom.js";
+import List from "./List.js";
+// console.log({List})
+import StandardListItem from "./StandardListItem.js";
+import CustomListItem from "./CustomListItem.js";
+import GroupHeaderListItem from "./GroupHeaderListItem.js";
+
+// Features
+import "./features/InputElementsFormSupport.js";
+import "./features/ColorPaletteMoreColors.js";
+import "./features/InputSuggestions.js";
+
+// @ts-ignore
+window.sanitizeHTML = sanitizeHTML;
+// @ts-ignore
+window.URLListValidator = URLListValidator;
+ignoreCustomElements("app-");
+ignoreCustomElements("my-");
 // setUseLinks(true); // "true" to force all browsers to use links
 // setPackageCSSRoot("@ui5/webcomponents-base", "./resources/css/base/");
 // setPackageCSSRoot("@ui5/webcomponents-theming", "./resources/css/theming/");
 // setPackageCSSRoot("@ui5/webcomponents", "./resources/css/main/");
 // setPackageCSSRoot("@ui5/webcomponents-fiori", "./resources/css/fiori/");
 
-const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon_3d, icon_3dv1, icon_3dv2];
+const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 
 const testAssets = {
-	configuration : {
+	configuration: {
 		getAnimationMode,
 		setAnimationMode,
 		getTheme,
@@ -171,7 +211,7 @@ const testAssets = {
 		getTimezone,
 		setTimezone,
 	},
-	invisibleMessage : {
+	invisibleMessage: {
 		announce,
 	},
 	getLocaleData,
@@ -190,17 +230,6 @@ const testAssets = {
 	ignoreCustomElements,
 	shouldIgnoreCustomElement,
 };
-
-// The SAP Icons V4 icon collection is set by default in sap_fiori_3,
-// but it's configurable:
-// import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
-// setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
-// or for custom theme
-// setDefaultIconCollection("my_custom_theme", "SAP-icons-v5");
-// or for custom icon collection
-// setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
-
-import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 registerIconLoader("my-icons", () => {
 	return Promise.resolve([{
@@ -279,6 +308,7 @@ registerIconLoader("my-icons", () => {
 	}]);
 });
 
+// @ts-ignore
 window["sap-ui-webcomponents-bundle"] = testAssets;
 
 export default testAssets;

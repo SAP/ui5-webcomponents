@@ -1,0 +1,56 @@
+.footer {
+  container: footer / inline-size;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.footerInner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.footerGenericFlex {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.content {
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  display: flex;
+  align-items: center;
+  background-color: var(--sapPageFooter_Background);
+  border-top: 0.0625rem solid var(--sapPageFooter_BorderColor);
+  overflow: hidden;
+}
+
+@container (max-width: 599px) {
+  .footer {
+    padding-inline: 1rem;
+  }
+}
+
+@container (min-width: 600px) and (max-width: 1023px) {
+  .footer {
+    padding-inline: 2rem;
+  }
+}
+
+@container (min-width: 1024px) and (max-width: 1439px) {
+  .footer {
+    padding-inline: 2rem;
+  }
+}
+
+@container (min-width: 1440px) {
+  .footer {
+    padding-inline: 3rem;
+  }
+}
