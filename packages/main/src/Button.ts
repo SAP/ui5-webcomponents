@@ -25,7 +25,7 @@ import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.j
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import type { IButton } from "./Interfaces";
+import type { IButton } from "./Interfaces.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 

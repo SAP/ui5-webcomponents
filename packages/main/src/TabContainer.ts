@@ -46,7 +46,7 @@ import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
 import TabsOverflowMode from "./types/TabsOverflowMode.js";
-import type { IButton } from "./Interfaces.js";
+import type { IButton, ITab } from "./Interfaces.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -59,37 +59,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
-
-/**
- * @public
- */
-interface ITab extends UI5Element {
-	isSeparator: boolean;
-	getTabInStripDomRef: () => ITab | null;
-	stableDomRef: string;
-	additionalText?: string;
-	design?: `${SemanticColor}`;
-	disabled?: boolean;
-	icon?: string;
-	isSingleClickArea?: boolean;
-	requiresExpandButton?: boolean;
-	selected?: boolean;
-	subTabs?: Array<ITab>;
-	tabs?: Array<ITab>
-	text?: string;
-	_tabIndex?: string;
-	_hasOwnContent?: boolean;
-	_level?: number;
-	_selected?: boolean;
-	_getElementInStrip?: () => ITab | null;
-	_isInline?: boolean;
-	_mixedMode?: boolean;
-	_posinset?: number;
-	_setsize?: number;
-	_realTab?: Tab;
-	_isTopLevelTab?: boolean;
-	_style?: Record<string, any>;
-}
 
 type TabContainerTabSelectEventDetail = {
 	tab: ITab;

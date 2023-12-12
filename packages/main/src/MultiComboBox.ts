@@ -63,7 +63,7 @@ import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
-import type { IIcon } from "./Interfaces.js";
+import type { IIcon, IMultiComboBoxItem } from "./Interfaces.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -100,16 +100,6 @@ import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
-
-/**
- * @public
- */
-interface IMultiComboBoxItem extends UI5Element {
-	text: string,
-	selected: boolean,
-	isGroupItem?: boolean,
-	stableDomRef: string,
-}
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;

@@ -55,6 +55,7 @@ import {
 	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
+import type { ITableRow } from "./Interfaces.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -65,20 +66,6 @@ import tableStyles from "./generated/themes/Table.css.js";
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 20;
-
-/**
- * @public
- */
-interface ITableRow extends UI5Element {
-	mode: `${TableMode}`,
-	selected: boolean,
-	_busy: boolean,
-	_tabIndex: string,
-	_ariaPosition: string,
-	_columnsInfoString: string,
-	_columnsInfo: Array<TableColumnInfo>,
-	_tabbables: Array<HTMLElement>,
-}
 
 type TableColumnInfo = {
 	cell?: TableCell,

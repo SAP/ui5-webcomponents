@@ -14,7 +14,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import type { INotificationListItem } from "./Interfaces";
+import type { INotificationListItem } from "./Interfaces.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";

@@ -36,7 +36,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { IIcon } from "./Interfaces.js";
+import type { IIcon, IComboBoxItem } from "./Interfaces.js";
 import * as Filters from "./Filters.js";
 
 import {
@@ -99,14 +99,6 @@ enum ValueStateIconMapping {
 type ComboBoxSelectionChangeEventDetail = {
 	item: ComboBoxItem,
 };
-
-interface IComboBoxItem extends UI5Element {
-	text: string,
-	focused: boolean,
-	isGroupItem: boolean,
-	selected?: boolean,
-	additionalText?: string,
-}
 
 /**
  * @class

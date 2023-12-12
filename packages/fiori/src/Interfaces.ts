@@ -44,15 +44,6 @@ interface IProductSwitchItem {
 }
 
 /**
- * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
- *
- * @name sap.ui.webc.fiori.IShellBarItem
- * @interface
- * @public
- */
-const IShellBarItem = "sap.ui.webc.fiori.IShellBarItem";
-
-/**
  * Interface for components that may be slotted inside <code>ui5-timeline</code> as items
  *
  * @public
@@ -70,7 +61,6 @@ interface ITimelineItem extends UI5Element, ITabbable {
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IUploadCollectionItem extends HTMLElement { }
 
 export {
@@ -78,7 +68,6 @@ export {
 	IMediaGalleryItem,
 	INotificationListItem,
 	IProductSwitchItem,
-	IShellBarItem,
 	ITimelineItem,
 	IUploadCollectionItem,
 };

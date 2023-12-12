@@ -9,6 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { ICardHeader } from "./Interfaces.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {
@@ -19,18 +20,6 @@ import {
 
 // Styles
 import cardHeaderCss from "./generated/themes/CardHeader.css.js";
-
-/**
- * Interface for components that may be slotted inside <code>ui5-card</code> as header
- *
- * @public
- */
-interface ICardHeader extends UI5Element {
-	subtitleText: string,
-	titleText: string,
-	status: string,
-	interactive: boolean,
-}
 
 /**
  * @class

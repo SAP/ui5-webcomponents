@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
-import type { ITimelineItem } from "./Interfaces";
+import type { ITimelineItem } from "./Interfaces.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
