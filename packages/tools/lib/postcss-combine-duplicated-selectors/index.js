@@ -67,6 +67,9 @@ function removeDupProperties(selector, exact) {
 	if (!exact) { // Remove duplicated properties, regardless of value
 		const retainedProps = new Set();
 
+		if (!selector.nodes) {
+			// console.log(selector)
+		}
 		for (let actIndex = selector.nodes.length - 1; actIndex >= 1; actIndex--) {
 			const prop = selector.nodes[actIndex].prop;
 			if (prop !== undefined) {
@@ -154,22 +157,29 @@ module.exports = (options) => {
 							options.removeDuplicatedProperties ||
 							options.removeDuplicatedValues
 						) {
-							removeDupProperties(
-								destination,
-								options.removeDuplicatedValues,
-							);
+							// removeDupProperties(
+							// 	destination,
+							// 	options.removeDuplicatedValues,
+							// );
 						}
 					} else {
 						if (
 							options.removeDuplicatedProperties ||
 							options.removeDuplicatedValues
 						) {
-							removeDupProperties(rule, options.removeDuplicatedValues);
+							// removeDupProperties(rule, options.removeDuplicatedValues);
 						}
 						// add new selector to symbol table
 						map.set(selector, rule);
 					}
 				},
+				OnceExit(root) {
+					root.nodes.forEach(node => {
+						if (node.type === "rule") {
+							removeDupProperties(node, options.removeDuplicatedValues);
+						}
+					})
+				}
 			};
 		},
 	};
