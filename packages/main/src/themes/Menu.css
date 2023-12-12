@@ -136,5 +136,5 @@
 }
 
 .ui5-menu-item-text:has(.ui5-menu-item-submenu-icon) {
-	padding-right: 1rem;
+	padding-inline-end: 1rem;
 }
