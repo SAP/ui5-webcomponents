@@ -88,7 +88,7 @@ enum ClipboardDataOperation {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tokenizer
  * @usestextcontent
- * @private
+ * @public
  */
 @customElement({
 	tag: "ui5-tokenizer",
@@ -158,6 +158,12 @@ class Tokenizer extends UI5Element {
 	popoverMinWidth?: number;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	/**
 	 * Indicates the value state of the related input component.
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
@@ -223,16 +229,23 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _openMorePopoverAndFireEvent() {
+	async _handleNMoreClick() {
 		if (!this.preventPopoverOpen) {
 			await this.openMorePopover();
 		}
+
+		this.expanded = true;
+		setTimeout(() => {
+			this.scrollToEnd();
+		}, 0);
 
 		this.fireEvent("show-more-items-press");
 	}
 
 	async openMorePopover() {
-		(await this.getPopover()).showAt(this.morePopoverOpener || this);
+		const popoverOpener = Object.keys(this.morePopoverOpener).length === 0 ? this : this.morePopoverOpener;
+
+		(await this.getPopover()).showAt(popoverOpener);
 	}
 
 	_getTokens() {
@@ -281,15 +294,6 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom! : this.narrowContentDom;
-
-		if (this.expanded) {
-			this._expandedScrollWidth = this.expandedContentDom!.scrollWidth;
-			this.scrollToEnd();
-		}
-
-		if (!this.expanded) {
-			this.scrollToStart();
-		}
 	}
 
 	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
@@ -392,6 +396,9 @@ class Tokenizer extends UI5Element {
 				token.selected = false;
 			});
 		}
+
+		this.expanded = false;
+		this.showMore = true;
 	}
 
 	handleBeforeOpen() {
@@ -544,6 +551,25 @@ class Tokenizer extends UI5Element {
 		this._handleTokenSelection(e);
 	}
 
+	_onfocusin(e: FocusEvent) {
+		if (!this.expanded) {
+			this.expanded = true;
+			this.showMore = false;
+		}
+
+		// When standalone tokenizer is getting focused and no token is clicked (with TAB) - focus the first token
+		if (e.relatedTarget && e.relatedTarget.tagName !== "INPUT" && !this.focused) {
+			this.focused = true;
+			this.scrollToStart();
+			this.tokens[0].focus();
+		}
+	}
+
+	_onfocusout() {
+		this.expanded = false;
+		this.showMore = !this.showMore;
+	}
+
 	_toggleTokenSelection(tokens: Array<Token>) {
 		if (!tokens || !tokens.length) {
 			return;
@@ -654,6 +680,10 @@ class Tokenizer extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer-nmore--content");
 	}
 
+	get moreLink() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer-more-text");
+	}
+
 	get tokenizerLabel() {
 		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
 	}
@@ -744,7 +774,7 @@ class Tokenizer extends UI5Element {
 	get styles() {
 		return {
 			popover: {
-				"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : "",
+				"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : `${this.getBoundingClientRect().width}px`,
 			},
 			popoverValueStateMessage: {
 				"width": this.popoverMinWidth && !isPhone() ? `${this.popoverMinWidth}px` : "100%",
@@ -784,6 +814,10 @@ class Tokenizer extends UI5Element {
 		const lastToken = this.tokens[this.tokens.length - 1];
 		lastToken.focus();
 		this._itemNav.setCurrentItem(lastToken);
+	}
+
+	get _tabIndex() {
+		return this.disabled ? "-1" : "0";
 	}
 
 	static async onDefine() {

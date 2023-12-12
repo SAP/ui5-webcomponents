@@ -25,6 +25,14 @@ ui5-tokenizer {
 	width: 240px;
 }
 
+ui5-tokenizer#nmore-tokenizer {
+	width: 100%;
+}
+
+.tokenizer-container {
+	width: 240px;
+}
+
 .wrapper {
 	background-color: var(--sapBackgroundColor);
 	color: var(--_ui5_token_text_color);

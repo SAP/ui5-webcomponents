@@ -200,6 +200,10 @@ class MultiInput extends Input {
 		}
 	}
 
+	// Tokenizer should not be expanded when focused in the context of MultiInput
+	_tokenizerFocusIn() {
+	}
+
 	valueHelpMouseUp() {
 		setTimeout(() => {
 			this._valueHelpIconPressed = false;
@@ -352,6 +356,22 @@ class MultiInput extends Input {
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+	}
+
+	// We no longer want tokenezer to always scroll to end when expanded
+	// When in standalone mode we need to expand it, scroll to start and
+	// focus the first token when it is initially focused
+	async onAfterRendering() {
+		await super.onAfterRendering();
+
+		if (this.tokenizer.expanded) {
+			this.tokenizer._expandedScrollWidth = this.tokenizer.expandedContentDom!.scrollWidth;
+			this.tokenizer.scrollToEnd();
+		}
+
+		if (!this.tokenizer.expanded) {
+			this.tokenizer.scrollToStart();
+		}
 	}
 
 	get iconsCount() {

@@ -19,7 +19,26 @@
 
 <body>
 	<div class="wrapper">
+		<h1 class="sample-container-title">Basic Tokenizer</h1>
+		<ui5-tokenizer id="basic-tokenizer">
+            <ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+        </ui5-tokenizer>
 
+		<h1 class="sample-container-title">Tokenizer with n-more items</h1>
+		<div class="tokenizer-container">
+			<ui5-tokenizer id="nmore-tokenizer" show-more>
+				<ui5-token text="Andora"></ui5-token>
+				<ui5-token text="Bulgaria"></ui5-token>
+				<ui5-token text="Canada"></ui5-token>
+				<ui5-token text="Denmark"></ui5-token>
+				<ui5-token text="Estonia"></ui5-token>
+			</ui5-tokenizer>
+		</div>
+	</div>
+
+	<h1>Basic API</h1>
+	<div class="wrapper">
 		<ui5-segmented-button id="theme-switch">
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon" selected>Morning</ui5-segmented-button-item>
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_dark">Evening</ui5-segmented-button-item>
