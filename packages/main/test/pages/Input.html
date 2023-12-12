@@ -6,7 +6,7 @@
 	<title>ui5-input</title>
 
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
@@ -449,7 +449,29 @@
 	<div>
 		Change event value: <span id="input-change-value-3"></span>
 	</div>
+
+	<br>
+
+	<ui5-input value-state="Error" id="dynamic-value-state">
+		<span slot="valueStateMessage" id="text">0</span>
+	</ui5-input>
+
+	<br>
+
+	<ui5-button id="dynamic-value-state-trigger">Trigger dynamic value state</ui5-button>
+
 	<script>
+		const dynamicValueState = document.getElementById("dynamic-value-state");
+		const dynamicValueStateTrigger = document.getElementById("dynamic-value-state-trigger");
+
+		dynamicValueStateTrigger.addEventListener("click", () => {
+			const valueState = dynamicValueState.querySelector("[slot='valueStateMessage']");
+
+			setInterval(() => {
+				valueState.textContent = parseInt(valueState.textContent) + 1;
+			}, 1000);
+		});
+
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
 				var formToSubmit = document.getElementById("submit-form");

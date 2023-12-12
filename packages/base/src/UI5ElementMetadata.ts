@@ -14,6 +14,7 @@ type Slot = {
 	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
+	cloned?: boolean,
 };
 
 type SlotValue = Node;
@@ -185,8 +186,7 @@ class UI5ElementMetadata {
 	 * @returns {boolean}
 	 */
 	canSlotText() {
-		const defaultSlot = this.getSlots().default;
-		return defaultSlot && defaultSlot.type === Node;
+		return (this.getSlots().default)?.type === Node;
 	}
 
 	/**
@@ -352,6 +352,7 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	}
 
 	if (!propertyType || propertyType === String) {
+		// eslint-disable-next-line @typescript-eslint/no-base-to-string -- if an object is passed as a value to a string property, this was an error so displaying [object Object] will indicate the issue to the developer
 		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
 	}
 

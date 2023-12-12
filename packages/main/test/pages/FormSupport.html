@@ -6,7 +6,7 @@
     <title>Form support</title>
 
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
 <link rel="stylesheet" type="text/css" href="./styles/FormSupport.css">
@@ -17,6 +17,11 @@
 <form method="get">
     <ui5-input name="input" value="ok"></ui5-input>
     <ui5-input name="input_disabled" disabled value="ok"></ui5-input>
+    <ui5-select name="sel">
+        <ui5-option value="cozy">Cozy</ui5-option>
+        <ui5-option value="compact">Compact</ui5-option>
+        <ui5-option value="condensed" selected>Condensed</ui5-option>
+    </ui5-select>
     <br><br>
     <ui5-textarea id="ta" name="ta" value="ok"></ui5-textarea>
     <ui5-textarea name="ta_disabled" disabled value="ok"></ui5-textarea>

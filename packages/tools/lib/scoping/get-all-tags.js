@@ -10,7 +10,7 @@ const getTag = file => {
 
 const getPackageTags = (packageDir) => {
 	const srcDir = path.join(packageDir, "src/");
-	return glob.sync(path.join(srcDir, "/**/*.js")).flatMap(file => {
+	return glob.sync(path.join(srcDir, "/**/*.ts")).flatMap(file => {
 		const tag = getTag(file);
 		return [tag];
 	}).filter(item => !!item);

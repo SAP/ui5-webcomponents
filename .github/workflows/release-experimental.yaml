@@ -1,4 +1,4 @@
-name: Release Snapshot
+name: Release Experimental Version
 
 on:
   workflow_dispatch
@@ -17,7 +17,7 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Build
-      run: yarn build
+      run: yarn ci:releasebuild
 
     - name: Publish
       env:
