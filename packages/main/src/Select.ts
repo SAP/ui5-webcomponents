@@ -474,9 +474,7 @@ class Select extends UI5Element implements IFormElement {
 	 * the first option will get selected.
 	 *
 	 * @public
-	 * @type { string }
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.prototype.value
+	 * @default ""
 	 * @since 1.20.0
 	 * @formProperty
 	 * @formEvents change liveChange
