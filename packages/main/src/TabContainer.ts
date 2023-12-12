@@ -115,6 +115,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * @extends UI5Element
  * @public
  * @csspart content - Used to style the content of the component
+ * @csspart tabstrip - Used to style the tabstrip of the component
  */
 @customElement({
 	tag: "ui5-tabcontainer",
