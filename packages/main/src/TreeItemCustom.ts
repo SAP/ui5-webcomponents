@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import TreeItemBase from "./TreeItemBase.js";
+import type { ITreeItem } from "./Interfaces.js";
 
 // Template
 import TreeItemCustomTemplate from "./generated/templates/TreeItemCustomTemplate.lit.js";
@@ -26,6 +27,7 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  * @csspart icon - Used to style the icon of the tree list item
  *
  * @constructor
+ * @implements {ITreeItem}
  * @extends TreeItemBase
  * @public
  * @since 1.9.2
@@ -35,7 +37,7 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 	template: TreeItemCustomTemplate,
 	styles: [TreeItemBase.styles, treeItemCustomCss],
 })
-class TreeItemCustom extends TreeItemBase {
+class TreeItemCustom extends TreeItemBase implements ITreeItem {
 	/**
 	 * Defines whether the tree list item should display the selection element.
 	 *
