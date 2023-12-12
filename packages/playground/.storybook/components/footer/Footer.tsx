@@ -1,19 +1,18 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link, TooltipMessage, WithTooltip } from "@storybook/components";
-import { createPortal } from 'react-dom';
 // @ts-ignore 
 import BestRunLogo from '../../../assets/images/SAP_Best_R_grad_blk_scrn.png';
 // @ts-ignore 
 import classes from './Footer.module.css';
 export const Footer = ({ style }: { style : object }) => {
 
-	return createPortal(
+	return (
 		<footer className={classes.footer} style={style}>
 			<div className={classes.content}>
 				<div className={classes.footerInner}>
 					<div className={classes.footerGenericFlex}>
 						<img src={BestRunLogo} alt="SAP Logo with Text 'The Best Run'" style={{ height: '1.5rem' }} />
-						<span>&copy; Copyright {new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors</span>
+						<p>&copy; Copyright {new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors</p>
 				</div>
 					<div className={classes.footerGenericFlex}>
 						<WithTooltip tooltip={
@@ -42,7 +41,6 @@ export const Footer = ({ style }: { style : object }) => {
 					</div>
 				</div>
 			</div>
-		</footer>,
-		document.getElementById('storybook-docs') as HTMLElement
-	);
+		</footer>
+	)
 };
