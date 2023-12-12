@@ -59,22 +59,11 @@ const STEP_SWITCH_THRESHOLDS = {
 	MAX: 1,
 };
 
-type ResponsiveBreakpoints = {
-	[key: string]: string,
-}
-
 type WizardStepChangeEventDetail = {
 	step: WizardStep,
 	previousStep: WizardStep,
 	changeWithClick: boolean,
 }
-
-const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
-	"0": "S",
-	"599": "M",
-	"1023": "L",
-	"1439": "XL",
-};
 
 type AccessibilityInformation = {
 	ariaSetsize: number,
@@ -286,9 +275,6 @@ class Wizard extends UI5Element {
 
 	@property({ type: Object, multiple: true })
 	_groupedTabs!: Array<WizardTab>
-
-	@property()
-	_breakpoint!: string
 
 	/**
 	 * Defines the steps.
@@ -533,8 +519,6 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
-
-		this._calcCurrentBreakpoint();
 	}
 
 	attachStepsResizeObserver() {
@@ -548,12 +532,6 @@ class Wizard extends UI5Element {
 		this.stepsDOM.forEach(stepDOM => {
 			ResizeHandler.deregister(stepDOM, this._onStepResize);
 		});
-	}
-
-	_calcCurrentBreakpoint() {
-		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
-		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width!);
-		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	/**
