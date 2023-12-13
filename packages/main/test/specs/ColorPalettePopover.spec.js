@@ -109,7 +109,7 @@ describe("ColorPalette interactions", () => {
 		await defaultButton.click();
 	});
 
-	it("Test open-change fired when popover closes", async () => {
+	it("Test 'close' event fired when popover closes", async () => {
 		const colorPaletteButton = await browser.$("#colorPaletteBtnTest6");
 		const btnFocusOut = await browser.$("#btnFocusOut");
 		const inpOpenChangeCounter = await browser.$("#inpOpenChangeCounter");
@@ -119,7 +119,7 @@ describe("ColorPalette interactions", () => {
 		await btnFocusOut.click();
 
 		// assert
-		assert.ok(await inpOpenChangeCounter.getProperty("value"), "1", "Event open-change fired when popover closes.");
+		assert.ok(await inpOpenChangeCounter.getProperty("value"), "1", "Event 'close' fired when popover closes.");
 
 		// act - open color palette popover
 		await colorPaletteButton.click();
@@ -132,7 +132,7 @@ describe("ColorPalette interactions", () => {
 		await defaultButton.click();
 
 		// assert
-		assert.ok(await inpOpenChangeCounter.getProperty("value"), "2", "Event open-change fired when popover closes.");
+		assert.ok(await inpOpenChangeCounter.getProperty("value"), "2", "Event 'close' fired when popover closes.");
 	});
 
 	it("Test attribute propagation propagation", async () => {

@@ -85,11 +85,11 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 })
 /**
  * Fired when the "open" state changes due to user interaction.
- * @event sap.ui.webc.main.ColorPalettePopover#open-change
+ * @event sap.ui.webc.main.ColorPalettePopover#close
  * @since 1.21.0
  * @public
  */
-@event("open-change")
+@event("close")
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
@@ -188,9 +188,11 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.ColorPalettePopover#showAt
+	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 * @since 1.1.1
 	 */
 	showAt(opener: HTMLElement) {
+		console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
 		this.open = true;
 		this.opener = opener;
 	}
@@ -203,10 +205,10 @@ class ColorPalettePopover extends UI5Element {
 	 * @method
 	 * @name sap.ui.webc.main.ColorPalettePopover#openPopover
 	 * @since 1.0.0-rc.16
-	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
+	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 */
 	openPopover(opener: HTMLElement) {
-		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead."); // eslint-disable-line
+		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
 		this.showAt(opener);
 	}
 
@@ -216,7 +218,7 @@ class ColorPalettePopover extends UI5Element {
 
 	onAfterClose() {
 		this.closePopover();
-		this.fireEvent("open-change");
+		this.fireEvent("close");
 	}
 
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
