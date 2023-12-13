@@ -35,9 +35,10 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-badge</code> is a component which attracts the user attention
- * to some piece of information (state, quantity, condition, etc.).
- * It can contain icon, text information and design chosen from specific design types.
+ * The <code>ui5-badge</code> is a component is a component which serves
+ * the purpose to attract the user attention to some piece
+ * of information (state, quantity, condition, etc.).
+ * It can contain icon and text information, and its design can be chosen from specific design types.
  *
  * <h3>Usage Guidelines</h3>
  * <ul>
@@ -115,7 +116,7 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
-	 * <br><b>Note:</b> Badge cannot be <code>interactive</code>
+	 * <br><b>Note:</b> The badge cannot be <code>interactive</code>
 	 * when <code>design</code> property is <code>BadgeDesign.Set3</code>
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Badge.prototype.interactive
@@ -128,7 +129,8 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
+	 * <br><b>Note:</b> For option "Normal" the text will wrap and the
+	 * words will not be broken based on hyphenation.
 	 *
 	 * @name sap.ui.webc.main.Badge.prototype.wrappingType
 	 * @type {sap.ui.webc.main.types.WrappingType}
