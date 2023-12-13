@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.4](https://github.com/SAP/ui5-webcomponents/compare/v1.17.3...v1.17.4) (2023-12-13)
+
+
+### Bug Fixes
+
+* **framework:** redundant fonts loading ([#7868](https://github.com/SAP/ui5-webcomponents/issues/7868)) ([abbd5e5](https://github.com/SAP/ui5-webcomponents/commit/abbd5e545ecb4c00d7766f7e9f26e4a261e9996f))
+* openui5 support crashes with 1.121-snapshot ([#7872](https://github.com/SAP/ui5-webcomponents/issues/7872)) ([a7e9f9d](https://github.com/SAP/ui5-webcomponents/commit/a7e9f9d1767c5b61efa77be9d495506fd1acd9b8))
+
+
+
+
+
 ## [1.17.3](https://github.com/SAP/ui5-webcomponents/compare/v1.17.2...v1.17.3) (2023-12-09)
 
 
