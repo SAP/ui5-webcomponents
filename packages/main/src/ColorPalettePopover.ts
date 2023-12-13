@@ -84,7 +84,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 	},
 })
 /**
- * Fired when the "open" state changes due to user interaction.
+ * Fired when the <code>ui5-color-palette-popover</code> is closed due to user interaction.
  * @event sap.ui.webc.main.ColorPalettePopover#close
  * @since 1.21.0
  * @public
