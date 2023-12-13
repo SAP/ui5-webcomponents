@@ -25,7 +25,6 @@ import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit
 import treeItemCss from "./generated/themes/TreeItem.css.js";
 
 import HasPopup from "./types/HasPopup.js";
-import { ITreeItem } from "./Interfaces.js";
 
 type TreeItemBaseEventDetail = {
 	item: TreeItemBase,
@@ -229,7 +228,7 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<ITreeItem>;
+	items!: Array<TreeItemBase>;
 
 	onBeforeRendering() {
 		this.actionable = false;

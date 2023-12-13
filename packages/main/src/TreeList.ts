@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import List from "./List.js";
-import { ITreeItem } from "./Interfaces.js";
+import type TreeItemBase from "./TreeItemBase.js";
 
 @customElement("ui5-tree-list")
 
@@ -8,16 +8,16 @@ class TreeList extends List {
 	/*
 	 * @override
 	 */
-	getItems(includeCollapsed = false): Array<ITreeItem> {
-		const slottedItems = this.getSlottedNodes<ITreeItem>("items");
-		const flatItems: Array<ITreeItem> = [];
+	getItems(includeCollapsed = false): Array<TreeItemBase> {
+		const slottedItems = this.getSlottedNodes<TreeItemBase>("items");
+		const flatItems: Array<TreeItemBase> = [];
 
 		flattenTree(slottedItems, flatItems, includeCollapsed);
 
 		return flatItems;
 	}
 
-	getItemsForProcessing(): Array<ITreeItem> {
+	getItemsForProcessing(): Array<TreeItemBase> {
 		return this.getItems(true);
 	}
 }
@@ -29,7 +29,7 @@ class TreeList extends List {
  * @param {Array} result
  * @param {Boolean} includeCollapsed
  */
-const flattenTree = (items: Array<ITreeItem>, result: Array<ITreeItem>, includeCollapsed = false) => {
+const flattenTree = (items: Array<TreeItemBase>, result: Array<TreeItemBase>, includeCollapsed = false) => {
 	items.forEach(item => {
 		result.push(item);
 

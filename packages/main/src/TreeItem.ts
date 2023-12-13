@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TreeItemBase from "./TreeItemBase.js";
-import type { ITreeItem } from "./Interfaces.js";
 // Template
 import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";
 
@@ -25,7 +24,6 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  * @csspart icon - Used to style the icon of the tree list item
  *
  * @constructor
- * @implements {ITreeItem}
  * @extends TreeItemBase
  * @public
  * @since 1.0.0-rc.8
@@ -35,7 +33,7 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
 	template: TreeItemTemplate,
 	styles: [TreeItemBase.styles, treeItemCss],
 })
-class TreeItem extends TreeItemBase implements ITreeItem {
+class TreeItem extends TreeItemBase {
 	/**
 	 * Defines the text of the tree item.
 	 *

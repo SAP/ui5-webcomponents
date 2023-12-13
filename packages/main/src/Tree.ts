@@ -6,6 +6,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import TreeItem from "./TreeItem.js";
+import type TreeItemBase from "./TreeItemBase.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import TreeList from "./TreeList.js";
 import ListMode from "./types/ListMode.js";
@@ -19,7 +20,6 @@ import type {
 	ListItemDeleteEventDetail,
 	ListSelectionChangeEventDetail,
 } from "./List.js";
-import type { ITreeItem } from "./Interfaces.js";
 
 // Template
 import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
@@ -28,7 +28,7 @@ import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
 import TreeCss from "./generated/themes/Tree.css.js";
 
 type TreeItemEventDetail = {
-	item: ITreeItem,
+	item: TreeItemBase,
 }
 type TreeItemToggleEventDetail = TreeItemEventDetail;
 type TreeItemMouseoverEventDetail = TreeItemEventDetail;
@@ -36,11 +36,11 @@ type TreeItemMouseoutEventDetail = TreeItemEventDetail;
 type TreeItemClickEventDetail = TreeItemEventDetail;
 type TreeItemDeleteEventDetail = TreeItemEventDetail;
 type TreeSelectionChangeEventDetail = {
-	selectedItems: Array<ITreeItem>;
-	previouslySelectedItems: Array<ITreeItem>;
-	targetItem: ITreeItem;
+	selectedItems: Array<TreeItemBase>;
+	previouslySelectedItems: Array<TreeItemBase>;
+	targetItem: TreeItemBase;
 }
-type WalkCallback = (item: ITreeItem, level: number, index: number) => void;
+type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 
 /**
  * @class
@@ -284,7 +284,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<ITreeItem>;
+	items!: Array<TreeItemBase>;
 
 	/**
 	 * Defines the component header.
@@ -335,7 +335,7 @@ class Tree extends UI5Element {
 	_onListItemStepOut(e: CustomEvent<TreeItemBaseStepOutEventDetail>) {
 		const treeItem = e.detail.item;
 		if (treeItem.parentElement !== this) {
-			const parent = treeItem.parentElement as ITreeItem;
+			const parent = treeItem.parentElement as TreeItemBase;
 			const parentListItem = this._getListItemForTreeItem(parent);
 			parentListItem && this.list.focusItem(parentListItem);
 		}
@@ -350,7 +350,7 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const treeItem = e.detail.item as ITreeItem;
+		const treeItem = e.detail.item as TreeItemBase;
 
 		if (!this.fireEvent<TreeItemClickEventDetail>("item-click", { item: treeItem }, true)) {
 			e.preventDefault();
@@ -358,7 +358,7 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
-		const treeItem = e.detail.item as ITreeItem;
+		const treeItem = e.detail.item as TreeItemBase;
 		this.fireEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
 	}
 
@@ -379,9 +379,9 @@ class Tree extends UI5Element {
 	}
 
 	_onListSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		const previouslySelectedItems = e.detail.previouslySelectedItems as Array<ITreeItem>;
-		const selectedItems = e.detail.selectedItems as Array<ITreeItem>;
-		const targetItem = e.detail.targetItem as ITreeItem;
+		const previouslySelectedItems = e.detail.previouslySelectedItems as Array<TreeItemBase>;
+		const selectedItems = e.detail.selectedItems as Array<TreeItemBase>;
+		const targetItem = e.detail.targetItem as TreeItemBase;
 
 		previouslySelectedItems.forEach(item => {
 			item.selected = false;
@@ -415,7 +415,7 @@ class Tree extends UI5Element {
 	 * @param item The tree item
 	 * @protected
 	 */
-	_getListItemForTreeItem(item: ITreeItem) {
+	_getListItemForTreeItem(item: TreeItemBase) {
 		return this.getItems().find(listItem => listItem === item);
 	}
 
@@ -424,7 +424,7 @@ class Tree extends UI5Element {
 	 * @protected
 	 * @returns array of the tree items
 	 */
-	getItems(): Array<ITreeItem> {
+	getItems(): Array<TreeItemBase> {
 		return this.list.getItems();
 	}
 
@@ -448,12 +448,12 @@ class Tree extends UI5Element {
 		walkTree(this, 1, callback);
 	}
 
-	_isInstanceOfTreeItemBase(object: any): object is ITreeItem {
+	_isInstanceOfTreeItemBase(object: any): object is TreeItemBase {
 		return "isTreeItem" in object;
 	}
 }
 
-const walkTree = (el: Tree | ITreeItem, level: number, callback: WalkCallback) => {
+const walkTree = (el: Tree | TreeItemBase, level: number, callback: WalkCallback) => {
 	(el.items).forEach((item, index) => {
 		callback(item, level, index);
 		if (item.items.length > 0) {

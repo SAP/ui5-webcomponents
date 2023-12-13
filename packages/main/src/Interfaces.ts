@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import type TreeItemBase from "./TreeItemBase.js";
 import type { TableColumnInfo } from "./Table.js";
 import type TableMode from "./types/TableMode.js";
 import type SemanticColor from "./types/SemanticColor.js";
@@ -11,9 +10,7 @@ import type Tab from "./Tab.js";
  *
  * @public
  */
-interface IAvatar {
-	isUI5Element: boolean,
-}
+interface IAvatar extends UI5Element {}
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -176,13 +173,6 @@ interface IToken extends HTMLElement, ITabbable {
 	isTruncatable: boolean,
 }
 
-/**
- * Interface for tree items for the purpose of <code>ui5-tree</code>
- *
- * @public
- */
-interface ITreeItem extends TreeItemBase {}
-
 export {
 	IAvatar,
 	IButton,
@@ -197,5 +187,4 @@ export {
 	ITab,
 	ITableRow,
 	IToken,
-	ITreeItem,
 };
