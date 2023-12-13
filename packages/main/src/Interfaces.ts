@@ -117,10 +117,9 @@ interface IOption extends UI5Element {
  *
  * @public
  */
-interface ITab extends UI5Element {
+interface ITab extends UI5Element, ITabbable {
 	isSeparator: boolean;
 	getTabInStripDomRef: () => ITab | null;
-	stableDomRef: string;
 	additionalText?: string;
 	design?: `${SemanticColor}`;
 	disabled?: boolean;
@@ -131,7 +130,6 @@ interface ITab extends UI5Element {
 	subTabs?: Array<ITab>;
 	tabs?: Array<ITab>
 	text?: string;
-	_tabIndex?: string;
 	_hasOwnContent?: boolean;
 	_level?: number;
 	_selected?: boolean;

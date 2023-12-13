@@ -66,11 +66,11 @@ type TabContainerTabSelectEventDetail = {
 }
 
 interface TabContainerExpandButton extends Button {
-	tab: ITab;
+	tab: Tab;
 }
 
 interface TabContainerTabInOverflow extends CustomListItem {
-	_realTab: ITab;
+	_realTab: Tab;
 }
 
 /**
@@ -476,7 +476,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._overflowItems = tabInstance.subTabs || [];
+		this._overflowItems = tabInstance.subTabs;
 		this._addStyleIndent(this._overflowItems);
 
 		this.responsivePopover = await this._respPopover();
