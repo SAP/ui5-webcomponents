@@ -5,7 +5,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CheckBox from "./CheckBox.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
@@ -43,7 +42,7 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 	],
 })
 @event("_focused")
-class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
+class TableGroupRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the mode of the row
 	 *

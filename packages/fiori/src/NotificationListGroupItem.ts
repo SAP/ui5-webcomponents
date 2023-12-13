@@ -10,7 +10,6 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
-import { INotificationListItem } from "./Interfaces.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -79,7 +78,6 @@ type NotificationListGroupItemToggleEventDetail = {
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
- * @implements {IListItem}
  * @public
  */
 @customElement({
@@ -126,7 +124,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<INotificationListItem>
+	items!: Array<NotificationListItemBase>
 
 	onBeforeRendering() {
 		if (this.busy) {

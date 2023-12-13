@@ -14,19 +14,10 @@ interface IBar extends HTMLElement {}
  *
  * @public
  */
-interface IMediaGalleryItem {
+interface IMediaGalleryItem extends ITabbable {
 	selected: boolean,
 	disabled: boolean,
 	focused: boolean,
-}
-
-/**
- * Interface for components that may be slotted inside a notification list
- *
- * @public
- */
-interface INotificationListItem extends HTMLElement {
-	busy: boolean
 }
 
 /**
@@ -34,7 +25,7 @@ interface INotificationListItem extends HTMLElement {
  *
  * @public
  */
-interface IProductSwitchItem {
+interface IProductSwitchItem extends ITabbable {
 	titleText: string,
 	subtitleText: string,
 	icon: string,
@@ -66,7 +57,6 @@ interface IUploadCollectionItem extends HTMLElement { }
 export {
 	IBar,
 	IMediaGalleryItem,
-	INotificationListItem,
 	IProductSwitchItem,
 	ITimelineItem,
 	IUploadCollectionItem,

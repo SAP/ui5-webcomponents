@@ -55,7 +55,6 @@ const DESIGN_DESCRIPTIONS = {
  * @constructor
  * @extends UI5Element
  * @implements {ITab}
- * @implements {ITabbable}
  * @public
  */
 @customElement({

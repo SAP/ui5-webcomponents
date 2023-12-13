@@ -13,7 +13,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
@@ -75,7 +74,7 @@ type TokenDeleteEventDetail = {
 	},
 })
 
-class Token extends UI5Element implements ITabbable {
+class Token extends UI5Element {
 	/**
 	 * Defines the text of the token.
 	 *

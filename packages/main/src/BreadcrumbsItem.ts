@@ -12,12 +12,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  *
  * @constructor
  * @extends UI5Element
- * @implements {BreadcrumbsItem}
  * @public
  * @since 1.0.0-rc.15
  */
 @customElement("ui5-breadcrumbs-item")
-class BreadcrumbsItem extends UI5Element implements BreadcrumbsItem {
+class BreadcrumbsItem extends UI5Element {
 	/**
 	 * Defines the link href.
 	 * <br><br>

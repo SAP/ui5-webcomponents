@@ -34,7 +34,6 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  *
  * @constructor
  * @extends ListItem
- * @implements {IAccessibleListItem}
  * @public
  */
 @customElement({

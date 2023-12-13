@@ -7,7 +7,6 @@ import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import type { IMediaGalleryItem } from "./Interfaces.js";
 
@@ -51,7 +50,7 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
 	template: MediaGalleryItemTemplate,
 	dependencies: [Icon],
 })
-class MediaGalleryItem extends UI5Element implements ITabbable, IMediaGalleryItem {
+class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	/**
 	 * Defines the selected state of the component.
 	 *

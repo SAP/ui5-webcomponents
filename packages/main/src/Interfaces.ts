@@ -10,7 +10,7 @@ import type Tab from "./Tab.js";
  *
  * @public
  */
-interface IAvatar extends UI5Element {}
+interface IAvatar extends HTMLElement {}
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -26,7 +26,7 @@ interface IButton extends HTMLElement, ITabbable {
  *
  * @public
  */
-interface ICardHeader extends UI5Element {
+interface ICardHeader extends HTMLElement {
 	subtitleText: string,
 	titleText: string,
 	status: string,
@@ -38,7 +38,7 @@ interface ICardHeader extends UI5Element {
  *
  * @public
  */
-interface IComboBoxItem extends UI5Element {
+interface IComboBoxItem {
 	text: string,
 	focused: boolean,
 	isGroupItem: boolean,
@@ -51,7 +51,7 @@ interface IComboBoxItem extends UI5Element {
  *
  * @public
  */
-interface IColorPaletteItem extends UI5Element, ITabbable {
+interface IColorPaletteItem extends HTMLElement, ITabbable {
 	value?: string,
 	index?: number,
 }
@@ -150,7 +150,7 @@ interface ITab extends UI5Element {
  *
  * @public
  */
-interface ITableRow extends UI5Element {
+interface ITableRow extends HTMLElement, ITabbable {
 	mode: `${TableMode}`,
 	selected: boolean,
 	_busy: boolean,

@@ -26,6 +26,7 @@ import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
@@ -470,7 +471,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	menuItems!: Array<HTMLElement>;
+	menuItems!: Array<ListItemBase>;
 
 	/**
 	 * Defines the <code>ui5-input</code>, that will be used as a search field.

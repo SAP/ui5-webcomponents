@@ -14,7 +14,6 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import type { INotificationListItem } from "./Interfaces.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -78,8 +77,6 @@ type Footnote = Record<string, any>;
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
- * @implements {INotificationListItem}
- * @implements {IListItem}
  * @public
  * @csspart title-text - Used to style the titleText of the notification list item
  */
@@ -98,7 +95,7 @@ type Footnote = Record<string, any>;
 })
 
 @event("_press")
-class NotificationListItem extends NotificationListItemBase implements INotificationListItem {
+class NotificationListItem extends NotificationListItemBase {
 	/**
 	* Defines if the <code>titleText</code> and <code>description</code> should wrap,
 	* they truncate by default.
