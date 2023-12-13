@@ -1,7 +1,12 @@
 <div class="{{classes.root}}">
   <div class="{{classes.scrollContainer}}"
     @scroll="{{snapOnScroll}}">
-    <div class="{{classes.headerWrapper}}">
+    <header class="{{classes.headerWrapper}}"
+      id="{{_id}}-header"
+      aria-label="{{_headerLabel}}"
+      aria-expanded="{{_headerExpanded}}"
+      role="region"
+      @ui5-_toggle-title={{onToggleTitle}}>
       <slot name="titleArea"></slot>
       {{#if headerInTitle}}
         <slot name="headerArea"></slot>
@@ -11,12 +16,13 @@
       <ui5-dynamic-page-header-actions
         ?snapped="{{headerSnapped}}"
         ?pinned="{{headerPinned}}"
+        .accessibilityAttributes="{{_accAttributesForHeaderActions}}"
         @ui5-expand-button-click={{onExpandClick}}
         @ui5-pin-button-click={{onPinClick}}
       ></ui5-dynamic-page-header-actions>
       {{/if}}
 
-    </div>
+   </header>
 
     {{#if headerInContent}}
       <slot name="headerArea"></slot>
@@ -26,6 +32,7 @@
       <ui5-dynamic-page-header-actions
           ?snapped="{{headerSnapped}}"
           ?pinned="{{headerPinned}}"
+          .accessibilityAttributes="{{_accAttributesForHeaderActions}}"
           @ui5-expand-button-click={{onExpandClick}}
           @ui5-pin-button-click={{onPinClick}}
         ></ui5-dynamic-page-header-actions>
