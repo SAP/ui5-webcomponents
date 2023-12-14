@@ -33,7 +33,7 @@ const normalizeLocale = (locale: string) => {
 		language = M_ISO639_NEW_TO_OLD[language as keyof typeof M_ISO639_NEW_TO_OLD] || language;
 
 		// Serbian Latin Script "sr-Latn"
-		if (language === "sr" && script === "latn" && !region) {
+		if (language === "sr" && script === "latn") {
 			language = "sh";
 		}
 
