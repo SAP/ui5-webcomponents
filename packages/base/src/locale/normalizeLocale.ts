@@ -8,7 +8,6 @@ const M_ISO639_NEW_TO_OLD = {
 	"he": "iw",
 	"yi": "ji",
 	"nb": "no",
-	// "sr": "sh",
 };
 
 /**
