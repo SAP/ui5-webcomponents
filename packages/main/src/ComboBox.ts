@@ -458,6 +458,10 @@ class ComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
+		if (this.open && !this._isKeyNavigation) {
+			this._filteredItems = this._filterItems(this.filterValue);
+		}
+
 		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
 			popover?.close();
 		}
@@ -535,6 +539,7 @@ class ComboBox extends UI5Element {
 	_afterClosePopover() {
 		this._iconPressed = false;
 		this._filteredItems = this.items;
+		this.filterValue = "";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {

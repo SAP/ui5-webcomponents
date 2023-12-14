@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>Font Face</title>
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/FontFace.css">
 </head>
 
@@ -16,4 +16,9 @@
 	<div class="boldFamily makeItBold">Hello مرحبًا שלום 你好 Hallo Hola</div>
 	<ui5-label>sapFontFamily</ui5-label>
 	<div class="normal">Hello مرحبًا שלום 你好 Hallo Hola</div>
+
+	<span style="font-family: var(--sapFontBlackFamily);">sapFontBlackFamily </span>
+	<span style="font-family: var(--sapFontBlackFamily);">Dzień </span>
+	<span style="font-family: var(--sapFontBlackFamily);">Čeněk Pěč  Martina Tarageĺ </span>
+	<ui5-input value="Čeněk Pěč  Martina Tarageĺ"></ui5-input>
 </body>

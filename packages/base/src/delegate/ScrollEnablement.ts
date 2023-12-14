@@ -130,18 +130,18 @@ class ScrollEnablement extends EventProvider<ScrollEnablementEventListenerParam,
 			touch = event.touches[0];
 		}
 
-		if (!this.supportsTouch) {
+		if (!touch) {
 			document.addEventListener("mouseup", this.mouseUp, { passive: true });
 			document.addEventListener("mousemove", this.mouseMove, { passive: true });
 		} else {
 			// Needed only on mobile
-			this.startX = touch!.pageX;
-			this.startY = touch!.pageY;
+			this.startX = touch.pageX;
+			this.startY = touch.pageY;
 		}
 
-		if (this.supportsTouch && event instanceof TouchEvent) {
-			this._prevDragX = touch!.pageX;
-			this._prevDragY = touch!.pageY;
+		if (touch) {
+			this._prevDragX = touch.pageX;
+			this._prevDragY = touch.pageY;
 		}
 
 		if (event instanceof MouseEvent) {

@@ -64,6 +64,7 @@
 	border-radius: var(--sapField_BorderCornerRadius);
 	border-width: var(--sapField_BorderWidth);
 	border-style: var(--sapField_BorderStyle);
+	padding: var(--_ui5_textarea_wrapper_padding);
 	outline: none;
 }
 
@@ -331,6 +332,7 @@
 :host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
 	border-style: var(--_ui5_textarea_error_warning_border_style);
 	border-width: var(--_ui5_textarea_state_border_width);
+	padding: var(--_ui5_textarea_warning_error_wrapper_padding);
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
@@ -366,6 +368,7 @@
 	border-color: var(--sapField_SuccessColor);
 	border-width: var(--sapField_BorderWidth);
 	box-shadow: var(--sapField_SuccessShadow);
+	padding: var(--_ui5_textarea_success_wrapper_padding);
 }
 
 :host([value-state="Success"][focused]:not([readonly])) .ui5-textarea-wrapper {
@@ -396,6 +399,7 @@
 	background-color: var(--sapField_InformationBackground);
 	border-color: var(--sapField_InformationColor);
 	box-shadow: var(--sapField_InformationShadow);
+	padding: var(--_ui5_textarea_information_wrapper_padding);
 }
 
 :host([value-state="Information"][focused]:not([readonly])) .ui5-textarea-wrapper {
@@ -426,29 +430,23 @@
 }
 
 :host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background: var(--sapField_BackgroundStyle);
-	background-color: var(--sapScrollBar_TrackColor);
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
 }
 
 :host([value-state="Error"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background: var(--sapField_InvalidBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
 :host([value-state="Warning"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background: var(--sapField_WarningBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
 :host([value-state="Information"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background: var(--sapField_InformationBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
 :host([value-state="Success"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background: var(--sapField_SuccessBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 

@@ -82,6 +82,8 @@ describe("Popover general interaction", () => {
 		const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
 		const btnMoveFocus = await browser.$("#btnMoveFocus");
 
+		await btnOpenPopover.scrollIntoView();
+
 		// assert - the opener is visible
 		assert.strictEqual(await btnOpenPopover.isDisplayedInViewport(), true,
 			"Opener is available.");
@@ -474,7 +476,7 @@ describe("Horizontal Alignment", () => {
 		await browser.$("#horizontalAlignBtn").click();
 		const popover = await browser.$("#popoverHorizontalAlign");
 		const opener = await browser.$("#targetOpener");
-	
+
 		assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
 	});
 
@@ -492,7 +494,7 @@ describe("Horizontal Alignment", () => {
 		await browser.$("#horizontalAlignBtn").click();
 		const popover = await browser.$("#popoverHorizontalAlign");
 		const opener = await browser.$("#targetOpener");
-	
+
 		assert.ok(await isHorizontallyRightAligned(popover, opener), `Popover should be right aligned`);
 	});
 

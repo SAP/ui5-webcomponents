@@ -20,8 +20,8 @@ export default {
 	title: "Main/Input",
 	component: "Input",
 	subcomponents: {
-		SuggestionItem: 'SuggestionsItem',
-		SuggestionGroupItem : 'SuggestionsGroupItem'
+		SuggestionItem: 'SuggestionItem',
+		SuggestionGroupItem : 'SuggestionGroupItem'
 	},
 	parameters: {
 		docs: {

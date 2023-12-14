@@ -37,10 +37,12 @@ export class MDXParser implements IDocsParser {
 
     private parseContent(content: string, articleName: string): string {
         return `import { Meta } from '@storybook/blocks';
+import { Footer } from "@sb/components/footer/Footer.tsx";
 
 <Meta title="${articleName}" />
 
-${content}`;
+${content}
+<Footer />`;
     }
 
     private removePrefixNumbers(name: string): string {

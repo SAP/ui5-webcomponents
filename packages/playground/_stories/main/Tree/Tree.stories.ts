@@ -16,7 +16,7 @@ const component = "ui5-tree";
 export default {
     title: "Main/Tree",
     component: "Tree",
-    subcomponents: { TreeItem: "TreeItem" },
+    subcomponents: { TreeItem: "TreeItem", TreeItemCustom: "TreeItemCustom" },
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),
