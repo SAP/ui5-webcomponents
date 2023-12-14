@@ -113,8 +113,8 @@
                             <div class="productInfo">
                                 <ui5-title level="H5">Supplier:</ui5-title>
                                 <ui5-title level="H5" id="lblSupplier"
-                                    ><b>Titanium</b></ui5-title
-                                >
+                                    ><b>Titanium</b></ui5-title>
+                                <ui5-button id="scrollBtn">Scroll to bottom</ui5-button>
                             </div>
                         </div>
                     </div>
@@ -828,6 +828,14 @@
 
             document.getElementById("toggleFooterBtn").addEventListener("click", () => {
                 page.showFooter = !page.showFooter;
+            });
+
+            document.getElementById("scrollBtn").addEventListener("click", () => {
+                const scrollContainer = document.getElementById("page")
+                    .shadowRoot.querySelector(".ui5-dynamic-page-scroll-container");
+                const newScrollTop = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+
+                scrollContainer.scrollTop = newScrollTop;
             });
         </script>
     </body>
