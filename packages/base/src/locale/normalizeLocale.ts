@@ -8,7 +8,7 @@ const M_ISO639_NEW_TO_OLD = {
 	"he": "iw",
 	"yi": "ji",
 	"nb": "no",
-	"sr": "sh",
+	// "sr": "sh",
 };
 
 /**
@@ -31,6 +31,11 @@ const normalizeLocale = (locale: string) => {
 		const isPrivate = m[6];
 
 		language = M_ISO639_NEW_TO_OLD[language as keyof typeof M_ISO639_NEW_TO_OLD] || language;
+
+		// Serbian Latin Script "sr-Latn"
+		if (language === "sr" && script === "latn" && !region) {
+			language = "sh";
+		}
 
 		// recognize and convert special SAP supportability locales (overwrites m[]!)
 		if ((isPrivate && (m = SAPSupportabilityLocales.exec(isPrivate))) /* eslint-disable-line */ ||
