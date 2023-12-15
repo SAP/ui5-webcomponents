@@ -28,7 +28,7 @@ const stripThemingBaseContent = css => {
 	css = css.replace(/\.background-image.*{.*}/, "");
 	css = css.replace(/\.sapContrast[ ]*:root[\s\S]*?}/, "");
 	css = css.replace(/--sapFontUrl.*\);?/, "");
-	return JSON.stringify(css);
+	return css;
 }
 
 export { writeFileIfChanged, stripThemingBaseContent }
