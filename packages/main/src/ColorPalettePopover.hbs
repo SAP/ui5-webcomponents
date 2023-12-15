@@ -2,6 +2,9 @@
 	hide-arrow
 	content-only-on-desktop
 	placement-type="Bottom"
+	?open="{{_open}}"
+	.opener="{{opener}}"
+	@ui5-after-close="{{onAfterClose}}"
 >
 	<div slot="header" class="ui5-cp-header">
 		<ui5-title

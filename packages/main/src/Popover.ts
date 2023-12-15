@@ -262,7 +262,7 @@ class Popover extends Popup {
 			if (this.opener instanceof HTMLElement) {
 				opener = this.opener;
 			} else if (typeof this.opener === "string") {
-				opener = (this.getRootNode() as Document).getElementById(this.opener);
+				opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
 			}
 
 			if (!opener) {

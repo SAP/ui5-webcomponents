@@ -203,7 +203,17 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	selectColor(item: IColorPaletteItem) {
+	onAfterRendering() {
+		if (this.popupMode) {
+			if (this.showDefaultColor) {
+				this.focusFirstFocusableElement();
+			} else {
+				this.focusFirstDisplayColorElement();
+			}
+		}
+	}
+
+	selectColor(item: ColorPaletteItem) {
 		if (!item.value) {
 			return;
 		}
@@ -296,7 +306,7 @@ class ColorPalette extends UI5Element {
 			if (this.hasRecentColors) {
 				this.focusColorElement(this.colorPaletteNavigationElements[index + 1], this._itemNavigationRecentColors);
 			} else if (this.showDefaultColor) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else {
 				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
 			}
@@ -314,7 +324,7 @@ class ColorPalette extends UI5Element {
 		if (isUp(e) && target === this.displayedColors[0] && this.colorPaletteNavigationElements.length > 1) {
 			e.stopPropagation();
 			if (this.showDefaultColor) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else if (!this.showDefaultColor && this.hasRecentColors) {
 				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (!this.showDefaultColor && this.showMoreColors) {
@@ -327,7 +337,7 @@ class ColorPalette extends UI5Element {
 			if (this.showDefaultColor && this.showMoreColors) {
 				this.colorPaletteNavigationElements[2].focus();
 			} else if (this.showDefaultColor && !this.showMoreColors && (!this.showRecentColors || !this.recentColors[0])) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else if (isRecentColorsNextElement) {
 				this.focusColorElement(lastElementInNavigation, this._itemNavigationRecentColors);
 			} else if (!this.showDefaultColor && this.showMoreColors) {
@@ -349,7 +359,7 @@ class ColorPalette extends UI5Element {
 			}
 		} else if (isDown(e)) {
 			if (this.showDefaultColor) {
-				this.colorPaletteNavigationElements[0].focus();
+				this.firstFocusableElement.focus();
 			} else {
 				e.stopPropagation();
 				this.focusColorElement(this.displayedColors[0], this._itemNavigation);
@@ -360,6 +370,18 @@ class ColorPalette extends UI5Element {
 	focusColorElement(element: ColorPaletteNavigationItem, itemNavigation: ItemNavigation) {
 		itemNavigation.setCurrentItem(element);
 		itemNavigation._focusCurrentItem();
+	}
+
+	focusFirstDisplayColorElement() {
+		this.focusColorElement(this.displayedColors[0], this._itemNavigation);
+	}
+
+	focusFirstFocusableElement() {
+		this.firstFocusableElement.focus();
+	}
+
+	get firstFocusableElement() {
+		return this.colorPaletteNavigationElements[0];
 	}
 
 	async _chooseCustomColor() {

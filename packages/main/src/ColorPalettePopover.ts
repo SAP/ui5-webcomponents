@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -82,6 +83,12 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 		},
 	},
 })
+/**
+ * Fired when the <code>ui5-color-palette-popover</code> is closed due to user interaction.
+ * @since 1.21.0
+ * @public
+ */
+@event("close")
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
@@ -122,6 +129,24 @@ class ColorPalettePopover extends UI5Element {
 	defaultColor?: string;
 
 	/**
+	 * Defines the open | closed state of the popover.
+	 * @public
+	 * @default false
+	 * @since 1.21.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
+	 * Defines the ID or DOM Reference of the element that the popover is shown at.
+	 * @public
+	 * @default undefined
+	 * @since 1.21.0
+	 */
+	@property({ validator: DOMReference })
+	opener?: HTMLElement | string;
+
+	/**
 	 * Defines the content of the component.
 	 *
 	 * @public
@@ -131,8 +156,6 @@ class ColorPalettePopover extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	responsivePopover?: ResponsivePopover;
-
 	static async onDefine() {
 		ColorPalettePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -141,13 +164,12 @@ class ColorPalettePopover extends UI5Element {
 		super();
 	}
 
-	_respPopover() {
-		this.responsivePopover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-		return this.responsivePopover;
+	get responsivePopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	_colorPalette() {
-		return this.responsivePopover!.content[0].querySelector<ColorPalette>("[ui5-color-palette]")!;
+	get respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -155,10 +177,13 @@ class ColorPalettePopover extends UI5Element {
 	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 * @since 1.1.1
 	 */
-	showAt(opener: HTMLElement): void {
-		this._openPopover(opener);
+	showAt(opener: HTMLElement) {
+		console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
+		this.open = true;
+		this.opener = opener;
 	}
 
 	/**
@@ -168,27 +193,20 @@ class ColorPalettePopover extends UI5Element {
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @since 1.0.0-rc.16
-	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
+	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 */
-	openPopover(opener: HTMLElement): void {
-		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'showAt' instead."); // eslint-disable-line
-		this._openPopover(opener);
-	}
-
-	_openPopover(opener: HTMLElement) {
-		this._respPopover();
-
-		this.responsivePopover!.showAt(opener, true);
-
-		if (this.showDefaultColor) {
-			this._colorPalette().colorPaletteNavigationElements[0].focus();
-		} else {
-			this._colorPalette().focusColorElement(this._colorPalette().colorPaletteNavigationElements[0], this._colorPalette()._itemNavigation);
-		}
+	openPopover(opener: HTMLElement) {
+		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
+		this.showAt(opener);
 	}
 
 	closePopover() {
-		this.responsivePopover!.close();
+		this.open = false;
+	}
+
+	onAfterClose() {
+		this.closePopover();
+		this.fireEvent("close");
 	}
 
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
@@ -202,9 +220,8 @@ class ColorPalettePopover extends UI5Element {
 	 * @protected
 	 * @since 1.0.0-rc.16
 	 */
-	isOpen(): boolean {
-		this._respPopover();
-		return this.responsivePopover!.opened;
+	isOpen() {
+		return this.open;
 	}
 
 	get colorPaletteColors() {
@@ -217,6 +234,10 @@ class ColorPalettePopover extends UI5Element {
 
 	get _cancelButtonLabel() {
 		return ColorPalettePopover.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
+	}
+
+	get _open() {
+		return this.open || undefined;
 	}
 }
 
