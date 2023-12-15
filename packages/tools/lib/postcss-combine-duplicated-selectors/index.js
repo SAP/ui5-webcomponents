@@ -67,9 +67,6 @@ function removeDupProperties(selector, exact) {
 	if (!exact) { // Remove duplicated properties, regardless of value
 		const retainedProps = new Set();
 
-		if (!selector.nodes) {
-			// console.log(selector)
-		}
 		for (let actIndex = selector.nodes.length - 1; actIndex >= 1; actIndex--) {
 			const prop = selector.nodes[actIndex].prop;
 			if (prop !== undefined) {

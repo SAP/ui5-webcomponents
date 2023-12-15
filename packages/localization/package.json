@@ -26,7 +26,6 @@
     "start": "nps start",
     "build": "nps build",
     "generate": "nps generate",
-    "copyGenerated": "nps copyGenerated",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {

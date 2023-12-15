@@ -20,7 +20,6 @@
     "clean": "nps clean",
     "build": "nps build",
     "generate": "nps generate",
-    "copyGenerated": "nps copyGenerated",
     "start": "nps start",
     "verify": "node ./lib/verify-vars/index.js",
     "prepublishOnly": "npm run clean && npm run build"

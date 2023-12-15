@@ -6,18 +6,16 @@ import { writeFile, mkdir } from "fs/promises";
 import { getFileContent } from '../postcss-css-to-esm/index.js';
 import postcss from "postcss";
 import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/index.js"
+import { writeFileIfChanged } from "./shared.mjs";
+import scopeVariables from "./scope-variables.mjs";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
+
 let inputFiles = await globby("src/**/parameters-bundle.css");
 const restArgs = process.argv.slice(2);
 
-const escapeVersion = version => "v" + version?.replaceAll(/[^0-9A-Za-z\-_]/g, "-");
-const versionStr = escapeVersion(packageJSON.version);
-const expr = /(--_?ui5)([^\,\:\)\s]+)/g
-
 const removeDuplicateSelectors = async (text) => {
     const result = await postcss(combineDuplicatedSelectors).process(text);
-    // console.log(result.css);
     return result.css;
 }
 
@@ -32,35 +30,30 @@ let scopingPlugin = {
                 let newText = await removeDuplicateSelectors(f.text);
 
                 // scoping
-                newText = newText.replaceAll(expr, `$1-${versionStr}$2`);
+                newText = scopeVariables(newText, packageJSON);
                 await mkdir(path.dirname(f.path), {recursive: true});
                 writeFile(f.path, newText);
 
-                // json
-                const jsonPath = f.path.replace("dist/css", "src/generated/assets").replace(".css", ".css.json");
+                // JSON
+                const jsonPath = f.path.replace("dist/css", "dist/generated/assets").replace(".css", ".css.json");
                 await mkdir(path.dirname(jsonPath), {recursive: true});
-
                 const data = {
                     packageName: packageJSON.name,
                     fileName: jsonPath.substr(jsonPath.lastIndexOf("themes")),
                     content: newText,
                 };
-
-                writeFile(jsonPath, JSON.stringify({_: data}))
+                writeFileIfChanged(jsonPath, JSON.stringify({_: data}));
 
                 // JS/TS
-                const jsPath = f.path.replace("dist/css2", "src/generated/").replace(".css", ".css.ts");
-                await mkdir(path.dirname(jsPath), {recursive: true});
+                const jsPath = f.path.replace("dist/css", "src/generated/").replace(".css", ".css.ts");
                 const jsContent = getFileContent(true, jsPath, packageJSON.name, "\`" + newText + "\`");
-                writeFile(jsPath, jsContent);
-                // console.log(f.path, newText);
+                writeFileIfChanged(jsPath, jsContent);
             });
         })
     },
 }
 
-// $`esbuild ${file} --bundle --minify --outdir=dist/css2 --outbase=src ${restArgs}`;
-const result = await esbuild.build({
+const config = {
     entryPoints: inputFiles,
     bundle: true,
     minify: true,
@@ -68,6 +61,14 @@ const result = await esbuild.build({
     outbase: 'src',
     plugins: [
         scopingPlugin,
-    ]
-})
-// console.log({result})
+    ],
+    external: ["*.ttf", "*.woff", "*.woff2"],
+};
+
+if (restArgs.includes("-w")) {
+    let ctx = await esbuild.context(config);
+    await ctx.watch()
+    console.log('watching...')
+} else {
+    const result = await esbuild.build(config);
+}
