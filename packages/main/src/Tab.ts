@@ -4,6 +4,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -22,7 +23,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { ITab } from "./Interfaces.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -68,7 +69,7 @@ const DESIGN_DESCRIPTIONS = {
 		CustomListItem,
 	],
 })
-class Tab extends UI5Element implements ITab {
+class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * The text to be displayed for the item.
 	 * @default ""

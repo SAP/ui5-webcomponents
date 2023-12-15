@@ -117,7 +117,7 @@ interface IOption extends UI5Element {
  *
  * @public
  */
-interface ITab extends UI5Element, ITabbable {
+interface ITab extends UI5Element {
 	isSeparator: boolean;
 	getTabInStripDomRef: () => ITab | null;
 	additionalText?: string;
