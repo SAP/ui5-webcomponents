@@ -403,7 +403,8 @@ class Tree extends UI5Element {
 			const parent = item.parentNode;
 			const ariaSetSize = (parent && parent.children.length) || this.items.length;
 
-			item.level = level;
+			item.setAttribute("level", level.toString());
+
 			item._setsize = ariaSetSize;
 			item._posinset = index + 1;
 		});
