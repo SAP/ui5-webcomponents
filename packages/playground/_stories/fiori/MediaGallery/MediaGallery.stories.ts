@@ -11,8 +11,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import MediaGallery from "@ui5/webcomponents-fiori/dist/MediaGallery.js";
-import MediaGalleryLayout from "@ui5/webcomponents-fiori/dist/types/MediaGalleryLayout.js";
-import MediaGalleryMenuHorizontalAlign from "@ui5/webcomponents-fiori/dist/types/MediaGalleryMenuHorizontalAlign.js";
 import TemplateMediaGalleryTypes from "./TemplateMediaGalleryTypes.js";
 
 const component = "ui5-media-gallery";
@@ -35,7 +33,6 @@ const stylesDecorator = (storyFn: PartialStoryFn) => html`
 export default {
     title: "Fiori/Media Gallery",
     component: "MediaGallery",
-    subcomponents: { MediaGalleryItem: "MediaGalleryItem" },
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),

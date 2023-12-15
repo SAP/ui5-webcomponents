@@ -5,3 +5,13 @@ import './addons/github/Github';
 addons.setConfig({
   theme: wcTheme,
 });
+
+addons.setConfig({
+  sidebar: {
+    filters: {
+      patterns: (item) => {
+        return !(item.tags?.includes("_hidden_") && item.tags?.includes("story"))
+      }
+    }
+  }
+});

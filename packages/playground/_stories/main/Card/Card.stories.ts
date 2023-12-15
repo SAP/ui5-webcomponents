@@ -3,7 +3,7 @@ import type { Meta, StoryFn } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import { DocsPage } from "../../../.storybook/docs";
+import { DocsPage } from "../../../.storybook/docs.js";
 import type Card from "@ui5/webcomponents/dist/Card.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -13,7 +13,6 @@ const component = "ui5-card";
 export default {
 	title: "Main/Card",
 	component: "Card",
-	subcomponents: { 'CardHeader': 'CardHeader' },
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

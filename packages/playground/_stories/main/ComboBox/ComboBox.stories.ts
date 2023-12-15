@@ -19,10 +19,6 @@ const component = "ui5-combobox";
 export default {
 	title: "Main/Combo Box",
 	component: "ComboBox",
-	subcomponents: {
-		ComboBoxItem: "ComboBoxItem",
-		ComboBoxGroupItem: "ComboBoxGroupItem",
-	},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),
