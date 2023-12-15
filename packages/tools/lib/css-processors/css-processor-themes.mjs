@@ -30,7 +30,7 @@ let scopingPlugin = {
                 let newText = await removeDuplicateSelectors(f.text);
 
                 // scoping
-                newText = scopeVariables(newText, packageJSON);
+                newText = scopeVariables(newText, packageJSON, f.path);
                 await mkdir(path.dirname(f.path), {recursive: true});
                 writeFile(f.path, newText);
 
