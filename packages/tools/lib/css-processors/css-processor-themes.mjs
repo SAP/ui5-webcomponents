@@ -6,7 +6,7 @@ import { writeFile, mkdir } from "fs/promises";
 import { getFileContent } from '../postcss-css-to-esm/index.js';
 import postcss from "postcss";
 import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/index.js"
-import { writeFileIfChanged } from "./shared.mjs";
+import { writeFileIfChanged, stripThemingBaseContent } from "./shared.mjs";
 import scopeVariables from "./scope-variables.mjs";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
@@ -28,6 +28,9 @@ let scopingPlugin = {
             result.outputFiles.forEach(async f => {
                 // remove duplicate selectors
                 let newText = await removeDuplicateSelectors(f.text);
+
+                // strip unnecessary theming-base-content
+                newText = stripThemingBaseContent(newText);
 
                 // scoping
                 newText = scopeVariables(newText, packageJSON, f.path);

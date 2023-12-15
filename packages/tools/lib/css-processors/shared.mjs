@@ -22,4 +22,13 @@ const writeFileIfChanged = async (fileName, content) => {
     }
 }
 
-export { writeFileIfChanged }
+// strips the unnecessary theming data coming from @sap-theming/theming-base-content and leaves only the css parameters
+const stripThemingBaseContent = css => {
+	css = css.replace(/\.sapThemeMeta[\s\S]*?:root/, ":root");
+	css = css.replace(/\.background-image.*{.*}/, "");
+	css = css.replace(/\.sapContrast[ ]*:root[\s\S]*?}/, "");
+	css = css.replace(/--sapFontUrl.*\);?/, "");
+	return JSON.stringify(css);
+}
+
+export { writeFileIfChanged, stripThemingBaseContent }
