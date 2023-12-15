@@ -180,7 +180,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 * @since 1.1.1
 	 */
-	showAt(opener: HTMLElement) {
+	showAt(opener: HTMLElement): void {
 		console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
 		this.open = true;
 		this.opener = opener;
@@ -195,7 +195,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 */
-	openPopover(opener: HTMLElement) {
+	openPopover(opener: HTMLElement): void {
 		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
 		this.showAt(opener);
 	}
