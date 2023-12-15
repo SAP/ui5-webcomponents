@@ -1,7 +1,7 @@
 @import "../base/ValueStateMessage-parameters.css";
 
 :root {
-	--_ui5_value_state_message_border: calc(2 * var(--sapField_BorderWidth)) solid var(--sapField_BorderColor);
+	--_ui5_value_state_message_border: var(--sapField_BorderWidth) solid var(--sapField_BorderColor);
 	--_ui5_input_value_state_icon_display: inline-block;
 	--_ui5_value_state_message_icon_width: 1rem;
 	--_ui5_value_state_message_icon_height: 1rem;

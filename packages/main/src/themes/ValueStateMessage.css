@@ -95,10 +95,6 @@
 	margin-bottom: 0;
 }
 
-.ui5-popover-with-value-state-header .ui5-valuestatemessage-root {
-	padding: var(--_ui5_value_state_message_padding);
-}
-
 .ui5-popover-with-value-state-header-phone .ui5-valuestatemessage-root {
 	padding: var(--_ui5_value_state_message_padding_phone);
 	width: 100%;
@@ -116,7 +112,7 @@
 }
 
 .ui5-popover-with-value-state-header-phone::part(content) {
-	padding: unset;
+	padding: 0;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
@@ -143,18 +139,7 @@
 	box-shadow: var(--_ui5_value_state_header_box_shadow_warning);
 }
 
-[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--information:has(+[ui5-list]:empty) {
-	box-shadow: unset;
-}
-
-[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--warning:has(+[ui5-list]:empty) {
-	box-shadow: unset;
-}
-
-[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--error:has(+[ui5-list]:empty) {
-	box-shadow: unset;
-}
-
-[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--success:has(+[ui5-list]:empty) {
-	box-shadow: unset;
+/* Unset bottom border box-shadow in a specific case when the value state message is displayed on desktop in a popover and the suggestions list is empty */
+[ui5-responsive-popover].ui5-popover-with-value-state-header .ui5-valuestatemessage--root:has(+[ui5-list]:empty) {
+	box-shadow: none;
 }

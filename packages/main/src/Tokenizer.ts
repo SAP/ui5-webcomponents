@@ -692,10 +692,6 @@ class Tokenizer extends UI5Element {
 		return this.valueState === ValueState.None || this.valueState === ValueState.Success;
 	}
 
-	get hasValueState() {
-		return !this.noValueState;
-	}
-
 	get valueStateMessageText() {
 		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
@@ -735,12 +731,12 @@ class Tokenizer extends UI5Element {
 				"ui5-tokenizer-nmore--content": this.showNMore,
 			},
 			popover: {
-				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueState,
-				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueState,
+				"ui5-popover-with-value-state-header-phone": this._isPhone && !this.noValueState,
+				"ui5-popover-with-value-state-header": !this._isPhone && !this.noValueState,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": true,
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,

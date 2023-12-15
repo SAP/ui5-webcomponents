@@ -11,14 +11,14 @@
 >
 	{{#unless _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
-			{{#if hasValueState}}
+			{{#unless noValueState}}
 				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 					{{#each valueStateMessageText}}
 						{{this}}
 					{{/each}}
 				</div>
-			{{/if}}
+			{{/unless}}
 		</div>
 	{{/unless}}
 
@@ -35,14 +35,14 @@
 				</ui5-button>
 			</div>
 		</div>
-		{{#if hasValueState}}
+		{{#unless noValueState}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{#each valueStateMessageText}}
 					{{this}}
 				{{/each}}
 			</div>
-		{{/if}}
+		{{/unless}}
 	{{/if}}
 	<ui5-list
 		class="ui5-tokenizer-list"
