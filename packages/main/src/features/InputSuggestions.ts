@@ -656,6 +656,11 @@ class Suggestions {
 		this.component._isValueStateFocused = false;
 	}
 
+	_clearSelectedSuggestionAndAccInfo() {
+		this.accInfo = undefined;
+		this.selectedItemIndex = 0;
+	}
+
 	static get dependencies() {
 		return [
 			SuggestionItem,

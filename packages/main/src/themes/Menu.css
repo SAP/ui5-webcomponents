@@ -43,6 +43,14 @@
 	pointer-events: none;
 }
 
+.ui5-menu-item-submenu-icon {
+	min-width: var(--_ui5_list_item_icon_size);
+	min-height: var(--_ui5_list_item_icon_size);
+	display: inline-block;
+	vertical-align: middle;
+	pointer-events: none;
+}
+
 .ui5-menu-busy-indicator {
 	width: 100%;
 }
@@ -118,4 +126,15 @@
 	margin-inline-start: var(--_ui5_menu_item_additional_text_start_margin);
 	color: var(--sapContent_LabelColor);
 	min-width: max-content;
+}
+
+.ui5-menu-item-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	pointer-events: none;
+}
+
+.ui5-menu-item-text:has(.ui5-menu-item-submenu-icon) {
+	padding-inline-end: 1rem;
 }
