@@ -19,7 +19,7 @@ export default {
   argTypes,
   parameters: {
     docs: {
-      page: DocsPage({ ...componentInfo, component })
+      page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
     },
   },
 } as Meta<SelectMenuOption>;
@@ -36,13 +36,13 @@ const Template: UI5StoryArgs<SelectMenuOption, StoryArgsSlots> = (args) => {
 <ui5-select-menu id="selectMenu">
   <ui5-select-menu-option
     accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"
-    disabled="${ifDefined(args.disabled)}"
+    ?disabled="${ifDefined(args.disabled)}"
     display-text="${ifDefined(args.displayText)}"
-    navigated="${ifDefined(args.navigated)}"
+    ?navigated="${ifDefined(args.navigated)}"
     type="${ifDefined(args.type)}"
     value="${ifDefined(args.value)}"
     accessible-name="${ifDefined(args.accessibleName)}"
-    selected="${ifDefined(args.selected)}"
+    ?selected="${ifDefined(args.selected)}"
   >
   ${unsafeHTML(args.default)}
   ${unsafeHTML(args.deleteButton)}

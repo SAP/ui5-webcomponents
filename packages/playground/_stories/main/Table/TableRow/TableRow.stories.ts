@@ -18,7 +18,7 @@ export default {
 	component: "TableRow",
 	parameters: {
 		docs: {
-		  page: DocsPage({ ...componentInfo, component })
+		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,
@@ -30,8 +30,8 @@ const Template: UI5StoryArgs<TableRow, StoryArgsSlots> = (args) => html`
 		<span>Product</span>
 	</ui5-table-column>
 	<ui5-table-row
-		navigated=${ifDefined(args.navigated)}
-		selected=${ifDefined(args.selected)}
+		?navigated=${ifDefined(args.navigated)}
+		?selected=${ifDefined(args.selected)}
 		type=${ifDefined(args.type)}
 	>${unsafeHTML(args.default)}</ui5-table-row>
 </ui5-table>

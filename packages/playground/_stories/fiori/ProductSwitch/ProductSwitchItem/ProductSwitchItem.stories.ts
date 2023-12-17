@@ -1,5 +1,4 @@
 import { html } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -19,7 +18,7 @@ export default {
     component: "ProductSwitchItem",
     parameters: {
         docs: {
-            page: DocsPage({ ...componentInfo, component }),
+            page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true }),
         },
     },
     argTypes,

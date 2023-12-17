@@ -17,7 +17,7 @@ export default {
 	component: "SuggestionItem",
 	parameters: {
 		docs: {
-		  page: DocsPage({ ...componentInfo, component })
+		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,
@@ -30,7 +30,7 @@ const Template: UI5StoryArgs<SuggestionItem, StoryArgsSlots> = (args) => html`
 	additional-text-state="${ifDefined(args.additionalTextState)}"
 	description="${ifDefined(args.description)}"
 	icon="${ifDefined(args.icon)}"
-	icon-end="${ifDefined(args.iconEnd)}"
+	?icon-end="${ifDefined(args.iconEnd)}"
 	image="${ifDefined(args.image)}"
 	text="${ifDefined(args.text)}"
 	type="${ifDefined(args.type)}"

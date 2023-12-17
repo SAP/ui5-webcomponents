@@ -19,7 +19,7 @@ export default {
 	argTypes,
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 } as Meta<ToolbarSelect>;
@@ -30,7 +30,7 @@ const Template: UI5StoryArgs<ToolbarSelect, StoryArgsSlots> = (args) => {
 	<ui5-toolbar-select
 		accessible-name="${ifDefined(args.accessibleName)}"
 		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
-		disabled="${ifDefined(args.disabled)}"
+		?disabled="${ifDefined(args.disabled)}"
 		value-state="${ifDefined(args.valueState)}"
 		width="${ifDefined(args.width)}"
 	>

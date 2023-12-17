@@ -19,7 +19,7 @@ export default {
 	argTypes,
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 } as Meta<ToolbarSeparator>;

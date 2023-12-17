@@ -19,7 +19,7 @@ export default {
 	argTypes,
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 } as Meta<ToolbarButton>;
@@ -33,9 +33,9 @@ const Template: UI5StoryArgs<ToolbarButton, StoryArgsSlots> = (args) => {
 		accessible-name="${ifDefined(args.accessibleName)}"
 		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 		design="${ifDefined(args.design)}"
-		disabled="${ifDefined(args.disabled)}"
+		?disabled="${ifDefined(args.disabled)}"
 		icon="${ifDefined(args.icon)}"
-		icon-end="${ifDefined(args.iconEnd)}"
+		?icon-end="${ifDefined(args.iconEnd)}"
 		tooltip="${ifDefined(args.tooltip)}"
 		width="${ifDefined(args.width)}"
 	></ui5-toolbar-button>

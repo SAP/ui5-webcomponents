@@ -10,7 +10,6 @@ import type { UI5StoryArgs } from "../../../../types.js";
 
 import { DocsPage } from "../../../../.storybook/docs.js";
 
-import MediaGallery from "@ui5/webcomponents-fiori/dist/MediaGallery.js";
 import MediaGalleryItem from "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";
 
 const component = "ui5-media-gallery-item";
@@ -35,7 +34,7 @@ export default {
     component: "MediaGalleryItem",
     parameters: {
         docs: {
-            page: DocsPage({ ...componentInfo, component }),
+            page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true }),
         }
     },
     decorators: [stylesDecorator],

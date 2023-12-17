@@ -10,7 +10,6 @@ import type { UI5StoryArgs } from "../../../../types.js";
 import { DocsPage } from "../../../../.storybook/docs.js";
 
 import type CalendarDate from "@ui5/webcomponents/dist/CalendarDate.js";
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 
 
 const component = "ui5-date";
@@ -20,7 +19,7 @@ export default {
 	component: "CalendarDate",
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,

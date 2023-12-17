@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import type { Meta, StoryFn } from "@storybook/web-components";
+import type { Meta } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -18,7 +18,7 @@ export default {
 	component: "MenuItem",
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,
@@ -28,11 +28,11 @@ const Template: UI5StoryArgs<MenuItem, StoryArgsSlots> = (args) => html`<ui5-men
 	<ui5-menu-item
     accessible-name="${ifDefined(args.accessibleName)}"
     additional-text="${ifDefined(args.additionalText)}"
-    busy="${ifDefined(args.busy)}"
+    ?busy="${ifDefined(args.busy)}"
     busy-delay="${ifDefined(args.busyDelay)}"
-    disabled="${ifDefined(args.disabled)}"
+    ?disabled="${ifDefined(args.disabled)}"
     icon="${ifDefined(args.icon)}"
-    starts-section="${ifDefined(args.startsSection)}"
+    ?starts-section="${ifDefined(args.startsSection)}"
     text="${ifDefined(args.text)}"
 	>
 		${unsafeHTML(args.default)}

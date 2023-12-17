@@ -1,5 +1,5 @@
 import { html } from "lit";
-import type { Meta, StoryFn } from "@storybook/web-components";
+import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
@@ -15,7 +15,7 @@ export default {
 	component: "CardHeader",
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,

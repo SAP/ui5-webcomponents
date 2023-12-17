@@ -16,7 +16,7 @@ export default {
 	component: "Tab",
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,
@@ -28,9 +28,9 @@ const Template: UI5StoryArgs<Tab, StoryArgsSlots> = (args) => {
 	<ui5-tab
 	additional-text="${ifDefined(args.additionalText)}"
 	design="${ifDefined(args.design)}"
-	disabled="${ifDefined(args.disabled)}"
+	?disabled="${ifDefined(args.disabled)}"
 	icon="${ifDefined(args.icon)}"
-	selected="${ifDefined(args.selected)}"
+	?selected="${ifDefined(args.selected)}"
 	text="${ifDefined(args.text)}"
 	>
 		${unsafeHTML(args.default)}	

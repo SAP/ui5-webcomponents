@@ -19,7 +19,7 @@ export default {
 	argTypes,
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 } as Meta<ToolbarSelectOption>;
@@ -28,7 +28,7 @@ const Template: UI5StoryArgs<ToolbarSelectOption, StoryArgsSlots> = (args) => {
 	return html`
 	<ui5-toolbar align-content="Start">
 	<ui5-toolbar-select>
-		<ui5-toolbar-select-option>${unsafeHTML(args.default)}</ui5-toolbar-select-option>
+		<ui5-toolbar-select-option ?selected=${ifDefined(args.selected)}>${unsafeHTML(args.default)}</ui5-toolbar-select-option>
 	</ui5-toolbar-select>
 </ui5-toolbar>`;
 };

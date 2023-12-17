@@ -19,7 +19,7 @@ export default {
   argTypes,
   parameters: {
     docs: {
-      page: DocsPage({ ...componentInfo, component })
+      page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
     },
   },
 } as Meta<Option>;
@@ -28,9 +28,9 @@ const Template: UI5StoryArgs<Option, StoryArgsSlots> = (args) => {
   return html`<ui5-select>
    <ui5-option
    additional-text="${ifDefined(args.additionalText)}"
-   disabled="${ifDefined(args.disabled)}"
+   ?disabled="${ifDefined(args.disabled)}"
    icon="${ifDefined(args.icon)}"
-   selected="${ifDefined(args.selected)}"
+   ?selected="${ifDefined(args.selected)}"
    value="${ifDefined(args.value)}"
    >${unsafeHTML(args.default)}</ui5-option>
 </ui5-select> `;

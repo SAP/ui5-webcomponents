@@ -1,5 +1,5 @@
 import { html } from "lit";
-import type { Meta, StoryFn } from "@storybook/web-components";
+import type { Meta } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -18,7 +18,7 @@ export default {
     component: "Token",
     parameters: {
         docs: {
-          page: DocsPage({ ...componentInfo, component })
+          page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
         },
     },
     argTypes,
@@ -29,8 +29,8 @@ const Template: UI5StoryArgs<Token, StoryArgsSlots> = (args) => html`
 	<ui5-token
 		slot="tokens"
 		text="${ifDefined(args.text)}"
-		selected="${ifDefined(args.selected)}"
-		readonly="${ifDefined(args.readonly)}"
+		?selected="${ifDefined(args.selected)}"
+		?readonly="${ifDefined(args.readonly)}"
 	>
 	${unsafeHTML(args.closeIcon)}
 	</ui5-token>

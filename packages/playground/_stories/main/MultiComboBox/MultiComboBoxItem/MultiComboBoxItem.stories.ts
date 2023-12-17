@@ -17,7 +17,7 @@ export default {
     component: "MultiComboBoxItem",
     parameters: {
         docs: {
-          page: DocsPage({ ...componentInfo, component })
+          page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
         },
     },
     argTypes,
@@ -28,7 +28,7 @@ const Template: UI5StoryArgs<MultiComboBoxItem, StoryArgsSlots> = (args) => html
 	<ui5-mcb-item
 		text="${ifDefined(args.text)}"
 		additional-text="${ifDefined(args.additionalText)}"
-		selected="${ifDefined(args.selected)}"
+		?selected="${ifDefined(args.selected)}"
 	></ui5-mcb-item>
 </ui5-multi-combobox>`;
 

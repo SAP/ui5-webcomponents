@@ -18,7 +18,7 @@ export default {
 	component: "TableColumn",
 	parameters: {
 		docs: {
-		  page: DocsPage({ ...componentInfo, component })
+		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,
@@ -28,7 +28,7 @@ const Template: UI5StoryArgs<TableColumn, StoryArgsSlots> = (args) => html`
 <ui5-table>
 	<ui5-table-column
 		slot="columns"
-		demand-popin="${ifDefined(args.demandPopin)}"
+		?demand-popin="${ifDefined(args.demandPopin)}"
 		min-width="${ifDefined(args.minWidth)}"
 		popin-display="${ifDefined(args.popinDisplay)}"
 		popin-text="${ifDefined(args.popinText)}"

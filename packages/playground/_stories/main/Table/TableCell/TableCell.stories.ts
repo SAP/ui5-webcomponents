@@ -17,7 +17,7 @@ export default {
 	component: "TableCell",
 	parameters: {
 		docs: {
-		  page: DocsPage({ ...componentInfo, component })
+		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
 		},
 	},
 	argTypes,
