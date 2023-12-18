@@ -21,8 +21,7 @@ interface IToolbarItem {
 /**
  * @class
  *
- * The <code>ui5-tb-item</code> represents an abstract class for items,
- * used in the <code>ui5-toolbar</code>.
+ * Represents an abstract class for items, used in the <code>ui5-toolbar</code>.
  *
  * @constructor
  * @author SAP SE
@@ -45,7 +44,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * @public
 	 * @name sap.ui.webc.main.ToolbarItem.prototype.overflowPriority
 	 * @defaultvalue "Default"
-	 * @type {ToolbarItemOverflowBehavior}
+	 * @type {sap.ui.webc.main.types.ToolbarItemOverflowBehavior}
 	 */
 	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
 	overflowPriority!: `${ToolbarItemOverflowBehavior}`;

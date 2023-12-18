@@ -25,6 +25,7 @@ const assetsMeta = {
       "ar",
       "bg",
       "ca",
+      "cnr",
       "cs",
       "cy",
       "da",
@@ -52,6 +53,7 @@ const assetsMeta = {
       "ko",
       "lt",
       "lv",
+      "mk",
       "ms",
       "nl",
       "no",
@@ -63,6 +65,7 @@ const assetsMeta = {
       "sh",
       "sk",
       "sl",
+      "sr",
       "sv",
       "th",
       "tr",
@@ -80,6 +83,7 @@ const assetsMeta = {
       "ar_SA",
       "bg",
       "ca",
+      // "cnr_ME" - cldr for not available yet
       "cs",
       "da",
       "de",
@@ -127,6 +131,7 @@ const assetsMeta = {
       "lt",
       "lv",
       "ms",
+      // "mk_MK" cldr not available yet
       "nb",
       "nl",
       "nl_BE",
@@ -139,6 +144,7 @@ const assetsMeta = {
       "sk",
       "sl",
       "sr",
+      // "sr_Cyrl_RS" - cldr not available yet
       "sr_Latn",
       "sv",
       "th",

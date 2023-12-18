@@ -1,13 +1,16 @@
 const fs = require("fs").promises;
 const path = require('path');
 
+const isTypeScript = process.env.UI5_TS;
+const ext = isTypeScript ? 'ts' : 'js';
+
 const generate = async () => {
 
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
 	const inputFolder = path.normalize(process.argv[2]);
-	const outputFile = path.normalize(`${process.argv[3]}/i18n-static.js`);
-	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.js`);
+	const outputFile = path.normalize(`${process.argv[3]}/i18n-static.${ext}`);
+	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.${ext}`);
 
 // All languages present in the file system
 	const files = await fs.readdir(inputFolder);
@@ -32,7 +35,8 @@ const generate = async () => {
 		const assetsImportsString = languages.map(key => `import _${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
 
 		// static imports
-		contentStatic = `import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+		contentStatic = `// @ts-nocheck
+import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 ${assetsImportsString}
 
@@ -59,7 +63,8 @@ localeIds.forEach(localeId => {
 		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
 
 		// Resulting file content
-		contentDynamic = `import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
+		contentDynamic = `// @ts-nocheck
+import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
 
 	const importMessageBundle = async (localeId) => {
 		switch (localeId) {

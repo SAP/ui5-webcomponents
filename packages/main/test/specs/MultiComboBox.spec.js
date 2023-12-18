@@ -117,7 +117,7 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("selection and filtering", () => {
-		before(async () => {
+		beforeEach(async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 		});
@@ -218,6 +218,38 @@ describe("MultiComboBox general interaction", () => {
 			}, 2500, "expect value state to be different after 2.5 seconds");
 		});
 
+		it("tests if entering valid text is possible while validation is triggered", async () => {
+			const mcb = await $("#mcb-validation");
+			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
+
+			await innerInput.click();
+			await innerInput.keys("c");
+			await innerInput.keys("c");
+			await innerInput.keys("Backspace");
+
+			assert.strictEqual(await mcb.getProperty("value"), "", "Value should be deleted");
+
+			await innerInput.keys("c");
+			await innerInput.keys("c");
+			await innerInput.keys("o");
+
+			assert.strictEqual(await mcb.getProperty("value"), "Cosy", "User should be able to type valid value");
+		});
+
+		it("tests if item is created when enter is pressed while validation is ongoing", async () => {
+			const mcb = await $("#mcb-validation");
+			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
+
+			await innerInput.click();
+			await innerInput.keys("c");
+			await innerInput.keys("c");
+			await innerInput.keys("Enter");
+
+			const tokens = await mcb.shadow$$("[ui5-token]");
+
+			assert.strictEqual(tokens.length, 0, "No Items are selected");
+		});
+
 		it("When item is clicked, the popover should be closed and the value in the input should be removed", async () => {
 			const input = await browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#another-mcb")
@@ -248,7 +280,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.pause(500);
 
 			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
-			assert.strictEqual(await input.getValue(), "Compact", "Value is correct");
+			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItemCheckbox.click();
 

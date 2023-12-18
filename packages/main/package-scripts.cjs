@@ -4,6 +4,7 @@ const options = {
 	port: 8080,
 	portStep: 2,
 	typescript: true,
+	noWatchTS: true,
 };
 
 const scripts = getScripts(options);
