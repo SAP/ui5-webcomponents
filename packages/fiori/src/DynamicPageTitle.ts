@@ -206,6 +206,10 @@ class DynamicPageTitle extends UI5Element {
 		this.focused = true;
 	}
 
+	_onclick() {
+		this.fireEvent("_toggle-title");
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();

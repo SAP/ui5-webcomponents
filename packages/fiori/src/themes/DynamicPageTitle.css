@@ -123,11 +123,16 @@
 
 /* focus */
 :host([focused]) {
-    /* separate change adds proper parameters */
+/* separate change adds proper parameters */
     outline: 0.0625rem dotted black;
     outline-offset: -0.0625rem;
 }
 
 .ui5-dynamic-page-title-focus-area {
     outline: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

@@ -178,13 +178,13 @@ class DynamicPage extends UI5Element {
 	async onExpandClick() {
 		this._toggleHeader();
 		await renderFinished();
-		this.headerActions!.focusExpandButton();
+		this.headerActions?.focusExpandButton();
 	}
 
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
 		await renderFinished();
-		this.headerActions!.focusPinButton();
+		this.headerActions?.focusPinButton();
 	}
 
 	async onToggleTitle() {
