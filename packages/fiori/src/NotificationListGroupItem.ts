@@ -61,15 +61,6 @@ type NotificationListGroupItemToggleEventDetail = {
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-li-notification-group</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>title-text - Used to style the titleText of the notification list group item</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
