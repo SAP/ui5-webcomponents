@@ -1,12 +1,11 @@
-import 'zx/globals';
+import { globby } from "globby";
 import * as esbuild from 'esbuild'
 import * as fs from "fs";
 import * as path from "path";
 import { writeFile, mkdir } from "fs/promises";
-import { getFileContent } from '../postcss-css-to-esm/index.js';
 import postcss from "postcss";
 import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/index.js"
-import { writeFileIfChanged, stripThemingBaseContent } from "./shared.mjs";
+import { writeFileIfChanged, stripThemingBaseContent, getFileContent } from "./shared.mjs";
 import scopeVariables from "./scope-variables.mjs";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))

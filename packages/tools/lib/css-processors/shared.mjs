@@ -1,4 +1,6 @@
 import { writeFile, readFile, mkdir } from "fs/promises";
+import * as path from "path";
+import assets from "../../assets-meta.js";
 
 const readOldContent = async (fileName) => {
     // it seems slower to read the old content, but writing the same content with no real changes
@@ -31,4 +33,44 @@ const stripThemingBaseContent = css => {
 	return css;
 }
 
-export { writeFileIfChanged, stripThemingBaseContent }
+
+const DEFAULT_THEME = assets.themes.default;
+
+const getDefaultThemeCode = packageName => {
+	return `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+
+import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
+import defaultTheme from "./${DEFAULT_THEME}/parameters-bundle.css.js";
+
+registerThemePropertiesLoader("@ui5/webcomponents-theming", "${DEFAULT_THEME}", async () => defaultThemeBase);
+registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", async () => defaultTheme);
+`;
+};
+
+const getFileContent = (tsMode, targetFile, packageName, css, includeDefaultTheme) => {
+	if (tsMode) {
+		return getTSContent(targetFile, packageName, css, includeDefaultTheme);
+	}
+
+	return getJSContent(targetFile, packageName, css, includeDefaultTheme);
+}
+
+const getTSContent = (targetFile, packageName, css, includeDefaultTheme) => {
+	const typeImport = "import type { StyleData } from \"@ui5/webcomponents-base/dist/types.js\";"
+	const defaultTheme = includeDefaultTheme ? getDefaultThemeCode(packageName) : "";
+
+	// tabs are intentionally mixed to have proper identation in the produced file
+	return `${typeImport}
+${defaultTheme}
+const styleData: StyleData = {packageName:"${packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}};
+export default styleData;
+	`;
+}
+
+const getJSContent = (targetFile, packageName, css, includeDefaultTheme) => {
+	const defaultTheme = includeDefaultTheme ? getDefaultThemeCode(packageName) : "";
+
+	return `${defaultTheme}export default {packageName:"${packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}}`
+}
+
+export { writeFileIfChanged, stripThemingBaseContent, getFileContent}

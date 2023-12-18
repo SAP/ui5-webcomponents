@@ -16,7 +16,6 @@ module.exports = {
 			src: `copy-and-watch "src/**/*.{json}" dist/`,
 			typescript: "tsc",
 			postcss: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
-			postcss2: "postcss dist/**/parameters-bundle.css --config config/postcss.themes --base dist/ --dir dist/css/",
 			jsonImports: `node "${jsonImportsScript}" dist/generated/assets/themes src/generated/json-imports`,
 		},
 		generateReport: `node "${generateReportScript}"`,

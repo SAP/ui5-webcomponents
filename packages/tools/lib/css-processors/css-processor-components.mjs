@@ -1,12 +1,11 @@
-import 'zx/globals';
+import { globby } from "globby";
 import * as esbuild from 'esbuild'
 import * as fs from "fs";
 import * as path from "path";
-import { writeFile, readFile, mkdir } from "fs/promises";
-import { getFileContent } from '../postcss-css-to-esm/index.js';
+import { writeFile, mkdir } from "fs/promises";
 import chokidar from "chokidar";
 import scopeVariables from "./scope-variables.mjs";
-import { writeFileIfChanged } from "./shared.mjs";
+import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
 const inputFilesGlob = "src/themes/*.css";
