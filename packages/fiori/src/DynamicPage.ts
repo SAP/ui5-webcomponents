@@ -113,8 +113,14 @@ class DynamicPage extends UI5Element {
 			content: {
 				"ui5-dynamic-page-content": true,
 			},
+			fitContent: {
+				"ui5-dynamic-page-fit-content": true,
+			},
 			footer: {
 				"ui5-dynamic-page-footer": true,
+			},
+			spacer: {
+				"ui5-dynamic-page-spacer": true,
 			},
 		};
 	}
