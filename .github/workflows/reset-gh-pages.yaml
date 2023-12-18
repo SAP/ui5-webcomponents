@@ -22,7 +22,7 @@ jobs:
         git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
         git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
         git checkout -b gh-pages origin/gh-pages
-        git checkout -f 
+        git checkout --orphan tmp-gh-pages
         git add -A
         git commit -am "reset history"
         git branch -D gh-pages
