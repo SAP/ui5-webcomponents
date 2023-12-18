@@ -7,6 +7,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 
@@ -30,6 +31,7 @@ import DynamicPageTitleCss from "./generated/themes/DynamicPageTitle.css.js";
  */
 @customElement({
 	tag: "ui5-dynamic-page-title",
+	fastNavigation: true,
 	renderer: litRender,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
@@ -75,6 +77,13 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	mobileNavigationActions!: boolean;
 
+	/**
+	 * Indicates if the elements is on focus
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
 	_handleResize: ResizeObserverCallback;
 	minContentWidth?: number;
 	minActionsWidth?: number;
@@ -114,6 +123,9 @@ class DynamicPageTitle extends UI5Element {
 		return {
 			root: {
 				"ui5-dynamic-page-title-root": true,
+			},
+			focusArea: {
+				"ui5-dynamic-page-title-focus-area": true,
 			},
 			topArea: {
 				"ui5-dynamic-page-title--top-area": true,
@@ -183,6 +195,25 @@ class DynamicPageTitle extends UI5Element {
 			this.minContentWidth = event.detail.minWidth;
 		} else if (slotName === "actions") {
 			this.minActionsWidth = event.detail.minWidth;
+		}
+	}
+
+	_onfocusout() {
+		this.focused = false;
+	}
+
+	_onfocusin() {
+		this.focused = true;
+	}
+
+	_onclick() {
+		this.fireEvent("_toggle-title");
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (isEnter(e) || isSpace(e)) {
+			e.preventDefault();
+			this.fireEvent("_toggle-title");
 		}
 	}
 }

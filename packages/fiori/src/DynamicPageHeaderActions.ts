@@ -66,6 +66,22 @@ class DynamicPageHeaderActions extends UI5Element {
 		return this.pinned ? "pushpin-on" : "pushpin-off";
 	}
 
+	get expandButton(): HTMLElement | null | undefined {
+		return this.getDomRef()?.querySelector(".ui5-dynamic-page-header-action-expand");
+	}
+
+	get pinButton(): HTMLElement | null | undefined {
+		return this.getDomRef()?.querySelector(".ui5-dynamic-page-header-action-pin");
+	}
+
+	focusExpandButton() {
+		this.expandButton?.focus();
+	}
+
+	focusPinButton() {
+		this.pinButton?.focus();
+	}
+
 	onExpandClick() {
 		this.fireEvent("expand-button-click");
 	}

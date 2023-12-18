@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
@@ -137,6 +138,10 @@ class DynamicPage extends UI5Element {
 		return this.getDomRef()?.querySelector(".ui5-dynamic-page-scroll-container");
 	}
 
+	get headerActions(): DynamicPageHeaderActions | null | undefined {
+		return this.getDomRef()?.querySelector("ui5-dynamic-page-header-actions");
+	}
+
 	get actionsInTitle(): boolean {
 		return this.headerSnapped || this.showHeaderInStickArea || this.headerPinned;
 	}
@@ -176,7 +181,25 @@ class DynamicPage extends UI5Element {
 		}, SCROLL_DEBOUNCE_RATE);
 	}
 
-	onExpandClick() {
+	async onExpandClick() {
+		this._toggleHeader();
+		await renderFinished();
+		this.headerActions?.focusExpandButton();
+	}
+
+	async onPinClick() {
+		this.headerPinned = !this.headerPinned;
+		await renderFinished();
+		this.headerActions?.focusPinButton();
+	}
+
+	async onToggleTitle() {
+		this._toggleHeader();
+		await renderFinished();
+		this.dynamicPageTitle!.focus();
+	}
+
+	_toggleHeader() {
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
 		this.headerSnapped = !this.headerSnapped;
 		if (this.dynamicPageTitle) {
@@ -185,10 +208,6 @@ class DynamicPage extends UI5Element {
 
 		this.isExpanding = true;
 		this.headerPinned = false;
-	}
-
-	onPinClick() {
-		this.headerPinned = !this.headerPinned;
 	}
 
 	///
