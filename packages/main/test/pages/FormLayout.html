@@ -4,30 +4,60 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 	<title>Form</title>
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 <link rel="stylesheet" type="text/css" href="./styles/FormLayout.css">
 </head>
 
-<body class="formBody">
-	<div class="banner"><div class="banner-inner"></div></div>
+<body class="bg">
+	<ui5-slider id="slider" min="1" max="100" value="100" class="slider"></ui5-slider>
+	
+	<section id="container">
+		<div class="banner"><div class="banner-inner"></div></div>
 
-	<ui5-title level="H2">Display</ui5-title>
-	<section>
-		<ui5-form header-text="Address">
-				<ui5-label class="label">Name:</ui5-label>
-				<span class="text">Red Point Stores</span>
-				<ui5-label class="label">Street:</ui5-label>
-				<span class="text">Main St 1618</span>
-				<ui5-label class="label">ZIPCode/City:</ui5-label>
-				<span class="text">411 Maintown</span>
-				<ui5-label class="label">Country:</ui5-label>
-				<span class="text">Germany</span>
-		</ui5-form>
+		<ui5-select id="selXL">
+			<ui5-option value="1">columnsXL=1</ui5-option>
+			<ui5-option value="1" selected>columnsXL=2</ui5-option>
+			<ui5-option value="1">columnsXL=3</ui5-option>
+			<ui5-option value="1">columnsXL=4</ui5-option>
+		</ui5-select>
+
+		<ui5-select id="selL">
+			<ui5-option value="1">columnsL=1</ui5-option>
+			<ui5-option value="1" selected>columnsL=2</ui5-option>
+			<ui5-option value="1">columnsL=3</ui5-option>
+		</ui5-select>
+
+		<ui5-select id="selM">
+			<ui5-option value="1">columnsM=1</ui5-option>
+			<ui5-option value="1" selected>columnsM=2</ui5-option>
+		</ui5-select>
+
+		<section>
+			<ui5-form header-text="Address">
+				<ui5-form-item>
+					<ui5-label>Name:</ui5-label>
+					<span class="text">Red Point Stores</span>
+				</ui5-form-item>
+				
+				<ui5-form-item label="Street">
+					<span class="text">Main St 1618</span>
+				</ui5-form-item>
+			
+				<ui5-form-item label="ZIPCode/City">
+					<span class="text">411 Maintown</span>
+				</ui5-form-item>
+				
+				<ui5-form-item>
+					<ui5-label>Country:</ui5-label>
+					<span class="text">Germany</span>
+				</ui5-form-item>
+			</ui5-form>
+		</section>
 	</section>
+	
 
-
-	<ui5-title level="H2">Edit</ui5-title>
+	<!-- <ui5-title level="H2">Edit</ui5-title>
 	<section>
 		<ui5-form header-text="Address">
 			<ui5-form-item>
@@ -53,6 +83,17 @@
 				</ui5-select>
 			</ui5-form-item>
 		</ui5-form>
-	</section>
+	</section> -->
+
+	<ui5-slider id="slider2" min="1" max="100" value="100" class="slider"></ui5-slider>
+
+	<script>
+		slider.addEventListener("ui5-input", function (event) {
+			container.style.width = event.target.value + '%';
+		});
+		slider2.addEventListener("ui5-input", function (event) {
+			container.style.width = event.target.value + '%';
+		});
+	</script>
 </body>
 </html>

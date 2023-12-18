@@ -1,8 +1,8 @@
-.formBody {
+.bg {
     background-color: var(--sapBackgroundColor);
 }
 
-.banner {height: 1rem;container-type: inline-size;}
+.banner {height: 1rem;container-type: inline-size; margin: 1rem 0}
 .banner-inner {height: 1rem;background-color: red;}
 @container (max-width: 599px) {.banner-inner {background-color: darkred;}}
 @container (min-width: 600px) {.banner-inner {background-color: red;}}

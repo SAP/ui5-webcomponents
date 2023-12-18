@@ -1,13 +1,20 @@
-<div class="ui5-form-root">
-	<div class="ui5-form-header">
+<div class="ui5-form-root" role="form" aria-labelledby="_ariaLabelledBy">
+	<div class="ui5-form-header" part="header">
 		{{#if hasCustomHeader}}
 			<slot name="header"></slot>
 		{{else}}
-			<ui5-title level="H4">{{ headerText }}</ui5-title>
+			<ui5-title id="{{_id}}-header-text" level="H4">{{ headerText }}</ui5-title>
 		{{/if}}
 	</div>
 
-	<div class="ui5-form-layout">
-		<slot></slot>
+	<div class="ui5-form-layout" part="layout">
+		{{#each items}}
+			<div class="ui5-form-layout-item">
+				{{#if label}}
+					<ui5-label class="ui5-form-item-lbl">{{ label }}:</ui5-label>
+				{{/if}}
+				<slot name="{{this._individualSlot}}"></slot>
+			</div>
+		{{/each}}
 	</div>
 </div>
