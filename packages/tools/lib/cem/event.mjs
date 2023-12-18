@@ -8,7 +8,8 @@ import {
 	hasTag,
 	findTag,
 	findAllTags,
-	getReference
+	getReference,
+	normalizeDescription
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
@@ -21,7 +22,7 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 			return;
 		}
 
-		const decoratorParamParsedComment = parse(decoratorParam?.jsDoc?.[0]?.getText?.())[0];
+		const decoratorParamParsedComment = parse(decoratorParam?.jsDoc?.[0]?.getText?.(), { spacing: 'preserve' })[0];
 
 		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text, moduleDoc);
 
@@ -44,7 +45,7 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 			type,
 			name: commentParam?.name,
 			_ui5privacy: getPrivacyStatus(decoratorParamParsedComment),
-			description: commentParam?.description,
+			description: normalizeDescription(commentParam?.description),
 			_ui5since: getSinceStatus(decoratorParamParsedComment),
 			deprecated: getDeprecatedStatus(decoratorParamParsedComment),
 		};
@@ -64,7 +65,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 		return result;
 	}
 
-	const eventParsedComment = parse(comment)[0];
+	const eventParsedComment = parse(comment, { spacing: 'preserve' })[0];
 
 	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text, moduleDoc);
 
@@ -73,7 +74,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const sinceTag = findTag(eventParsedComment, "since");
 	const commentParams = findAllTags(eventParsedComment, "param");
 	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault") || undefined;
-	const description = eventParsedComment?.description;
+	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 

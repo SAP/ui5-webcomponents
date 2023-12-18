@@ -13,11 +13,9 @@ import {
 	findAllTags,
 	getJSDocErrors,
 	getTypeRefs,
+	normalizeDescription,
+	formatArrays
 } from "./utils.mjs";
-
-const formatArrays = (typeText) => {
-	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
-}
 
 function processClass(ts, classNode, moduleDoc) {
 	const className = classNode?.name?.text;
@@ -27,7 +25,7 @@ function processClass(ts, classNode, moduleDoc) {
 	if (!currClassJSdoc) return;
 
 	const customElementDecorator = findDecorator(classNode, "customElement");
-	const classParsedJsDoc = parse(currClassJSdoc?.getText())[0];
+	const classParsedJsDoc = parse(currClassJSdoc?.getText(), { spacing: 'preserve' })[0];
 
 	validateJSDocComment("class", classParsedJsDoc, classNode.name?.text, moduleDoc);
 
@@ -39,7 +37,7 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
 	currClass._ui5privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
-	currClass.description = classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description;
+	currClass.description = normalizeDescription(classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description);
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
 		.map(tag => getReference(ts, tag.type, classNode, moduleDoc.path))
 		.filter(Boolean);
@@ -68,6 +66,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 			slot._ui5privacy = "public";
 			slot._ui5type = { text: formatArrays(tag.type) };
+			slot.description = normalizeDescription(tag.description)
 
 			if (typeRefs && typeRefs.length) {
 				slot._ui5type.references = typeRefs;
@@ -251,14 +250,14 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 
 	if (!interfaceJSdoc) return;
 
-	const interfaceParsedJsDoc = parse(interfaceJSdoc?.getText())[0];
+	const interfaceParsedJsDoc = parse(interfaceJSdoc?.getText(), { spacing: 'preserve' })[0];
 
 	validateJSDocComment("interface", interfaceParsedJsDoc, interfaceNode.name?.text, moduleDoc);
 
 	moduleDoc.declarations.push({
 		kind: "interface",
 		name: interfaceName,
-		description: interfaceParsedJsDoc?.description,
+		description: normalizeDescription(interfaceParsedJsDoc?.description),
 		_ui5privacy: getPrivacyStatus(interfaceParsedJsDoc),
 		_ui5since: getSinceStatus(interfaceParsedJsDoc),
 		deprecated: getDeprecatedStatus(interfaceParsedJsDoc),
@@ -271,14 +270,14 @@ function processEnum(ts, enumNode, moduleDoc) {
 
 	if (!enumJSdoc) return;
 
-	const enumParsedJsDoc = parse(enumJSdoc?.getText())[0];
+	const enumParsedJsDoc = parse(enumJSdoc?.getText(), { spacing: 'preserve' })[0];
 
 	validateJSDocComment("enum", enumParsedJsDoc, enumNode.name?.text, moduleDoc);
 
 	const result = {
 		kind: "enum",
 		name: enumName,
-		description: enumJSdoc?.comment,
+		description: normalizeDescription(enumJSdoc?.comment),
 		_ui5privacy: getPrivacyStatus(enumParsedJsDoc),
 		_ui5since: getSinceStatus(enumParsedJsDoc),
 		deprecated: getDeprecatedStatus(enumParsedJsDoc) || undefined,

@@ -14,6 +14,10 @@ const getDeprecatedStatus = (jsdocComment) => {
             : undefined;
 };
 
+const normalizeDescription = (description) => {
+	return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, ""): description;
+}
+
 const getTypeRefs = (ts, classNodeMember, member) => {
     const extractTypeRefs = (type) => {
         if (type?.kind === ts.SyntaxKind.TypeReference) {
@@ -317,6 +321,10 @@ const getJSDocErrors = () => {
     return JSDocErrors;
 };
 
+const formatArrays = (typeText) => {
+	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+}
+
 export {
     getPrivacyStatus,
     getSinceStatus,
@@ -331,4 +339,6 @@ export {
     findAllTags,
     getJSDocErrors,
     getTypeRefs,
+    normalizeDescription,
+    formatArrays
 };
