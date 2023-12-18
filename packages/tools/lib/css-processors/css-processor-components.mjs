@@ -25,7 +25,7 @@ let customPlugin = {
                 writeFile(f.path, newText);
 
                 // JS/TS
-                const jsPath = f.path.replace("dist/css", "src/generated/").replace(".css", ".css.ts");
+                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", ".css.ts");
                 const jsContent = getFileContent(true, jsPath, packageJSON.name, "\`" + newText + "\`", true);
                 writeFileIfChanged(jsPath, jsContent);
             });
