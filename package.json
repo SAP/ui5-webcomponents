@@ -19,7 +19,7 @@
     "watch:base": "yarn workspace @ui5/webcomponents-base nps watch",
     "watch:main": "yarn workspace @ui5/webcomponents nps watch",
     "watch:fiori": "yarn workspace @ui5/webcomponents-fiori nps watch",
-    "watch:allWithDelay": "sleep 5 && npm-run-all --parallel copy-css watch:base watch:main watch:fiori",
+    "watch:allWithDelay": "node -e 'setTimeout(function(){}, 5000)' && npm-run-all --parallel copy-css watch:base watch:main watch:fiori",
     "scopeWatch:main": "yarn workspace @ui5/webcomponents nps scope.watch",
     "scopeWatch:fiori": "yarn workspace @ui5/webcomponents-fiori nps scope.watch",
     "start": "npm-run-all --sequential generate start:all",

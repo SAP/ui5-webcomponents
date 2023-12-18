@@ -38,7 +38,7 @@ let scopingPlugin = {
                 writeFile(f.path, newText);
 
                 // JSON
-                const jsonPath = f.path.replace("dist/css", "dist/generated/assets").replace(".css", ".css.json");
+                const jsonPath = f.path.replace(/dist[\/\\]css/, "dist/generated/assets").replace(".css", ".css.json");
                 await mkdir(path.dirname(jsonPath), {recursive: true});
                 const data = {
                     packageName: packageJSON.name,
@@ -48,7 +48,7 @@ let scopingPlugin = {
                 writeFileIfChanged(jsonPath, JSON.stringify({_: data}));
 
                 // JS/TS
-                const jsPath = f.path.replace("dist/css", "src/generated/").replace(".css", ".css.ts");
+                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", ".css.ts");
                 const jsContent = getFileContent(true, jsPath, packageJSON.name, "\`" + newText + "\`");
                 writeFileIfChanged(jsPath, jsContent);
             });
