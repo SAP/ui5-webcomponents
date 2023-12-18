@@ -2,7 +2,7 @@
 	tokenizer-popover="true"
 	style={{styles.popover}}
 	class={{classes.popover}}
-	?content-only-on-desktop="{{noValueState}}"
+	?content-only-on-desktop="{{noValueStatePopover}}"
 	hide-arrow
 	placement-type="Bottom"
 	horizontal-align="Left"
@@ -11,7 +11,7 @@
 >
 	{{#unless _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
-			{{#unless noValueState}}
+			{{#unless noValueStatePopover}}
 				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 					{{#each valueStateMessageText}}
@@ -35,7 +35,7 @@
 				</ui5-button>
 			</div>
 		</div>
-		{{#unless noValueState}}
+		{{#unless noValueStatePopover}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{#each valueStateMessageText}}
