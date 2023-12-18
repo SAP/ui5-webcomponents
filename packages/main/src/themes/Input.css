@@ -51,6 +51,14 @@
 	right: var(--_ui5_input_focus_offset);
 }
 
+:host([focused][readonly]:not([opened])) .ui5-input-focusable-element::after {
+	top: var(--_ui5_input_readonly_focus_offset);
+	bottom: var(--_ui5_input_readonly_focus_offset);
+	left: var(--_ui5_input_readonly_focus_offset);
+	right: var(--_ui5_input_readonly_focus_offset);
+	border-radius: var(--_ui5_input_readonly_focus_border_radius);
+}
+
 .ui5-input-root::before {
 	content: "";
 	position: absolute;
