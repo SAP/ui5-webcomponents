@@ -22,7 +22,6 @@ export default {
 } as Meta<CardHeader>;
 
 const Template: UI5StoryArgs<CardHeader, StoryArgsSlots> = (args) => {
-	debugger
 	return html`
 <ui5-card style="width: 22rem">
 	<ui5-card-header
