@@ -76,7 +76,7 @@
     }
   },
   "devDependencies": {
-    "lightningcss-cli": "^1.22.1",
+    "esbuild": "^0.19.9",
     "yargs": "^17.5.1"
   }
 }
