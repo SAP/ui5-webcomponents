@@ -11,18 +11,8 @@ jobs:
       with:
         token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
         fetch-depth: 0
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: 'yarn'
 
-    - name: Install
-      run: yarn --frozen-lockfile
-
-    - name: Build
-      run: yarn ci:releasebuild
-
-    - name: Publish
+    - name: Reset gh-pages git history
       env:
         NPM_USERNAME: ${{ secrets.NPM_USER }}
         NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
@@ -31,7 +21,7 @@ jobs:
       run: |
         git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
         git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
-        git checkout gh-pages
+        git checkout -b gh-pages origin/gh-pages
         git checkout -f 
         git add -A
         git commit -am "reset history"
