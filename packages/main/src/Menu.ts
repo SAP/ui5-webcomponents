@@ -445,7 +445,7 @@ class Menu extends UI5Element {
 
 	getOpener() {
 		const rootNode = this.getRootNode() as Document;
-		return this.opener instanceof HTMLElement ? this.opener : (rootNode && rootNode.getElementById && rootNode.getElementById(this.opener));
+		return this.opener instanceof HTMLElement ? this.opener : rootNode?.getElementById?.(this.opener);
 	}
 
 	_navigateBack() {
