@@ -58,9 +58,9 @@
 			@mouseover="{{_busyMouseOver}}"
 		>
 		{{#each _currentItems}}
-			<ui5-li
+			<ui5-li-custom
 				.associatedItem="{{this.item}}"
-				class="ui5-menu-item"
+				class="ui5-menu-custom-item"
 				id="{{../_id}}-menu-item-{{@index}}"
 				.icon="{{this.item.icon}}"
 				accessible-name={{this.item.ariaLabelledByText}}
@@ -75,33 +75,42 @@
 				@mouseout={{../_itemMouseOut}}
 				@keydown={{../_itemKeyDown}}
 			>
-				<div class="ui5-menu-item-text">
-				{{#if this.item.hasDummyIcon}}
-					<div
-						class="ui5-menu-item-dummy-icon"
-					>
+				{{#if ../itemsWithIcon}}
+					<div icon>
+					{{#if this.item.hasIcon}}
+						<ui5-icon
+							name="{{this.item.icon}}"
+						>
+					{{/if}}
 					</div>
 				{{/if}}
-				{{this.item.text}}
-				{{#if this.item.hasSubmenu}}
-					<div
-						class="ui5-menu-item-submenu-icon"
-					>
-						<ui5-icon
-							part="subicon"
-							name="slim-arrow-right"
-							class="ui5-menu-item-icon-end"
-						>
-						</ui5-icon>
-					</div>
-				{{else if this.item._siblingsWithChildren}}
-					<div
-						class="ui5-menu-item-no-icon-end"
-					>
-					</div>
+
+				<div title>
+					{{this.item.text}}
+				</div>
+
+				{{#if this.item.hasAfterContent}}
+				<div after>
+				{{#if this.item.hasActions}}
+					{{#each this.item.actionComponents}}
+						{{this}}
+					{{/each}}
+				{{else}}
+					{{this.item._additionalText}}
 				{{/if}}
 				</div>
-			</ui5-li>
+				{{/if}}
+
+				{{#if ../itemsWithChildren}}
+				<div sub>
+					{{#if this.item.hasSubmenu}}
+						<ui5-icon
+							name="slim-arrow-right"
+						>
+					{{/if}}
+				</div>
+				{{/if}}
+			</ui5-li-custom>
 		{{/each}}
 		</ui5-list>
 	{{else if busy}}

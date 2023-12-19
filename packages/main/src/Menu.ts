@@ -25,6 +25,7 @@ import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopove
 import Button from "./Button.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
+import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
@@ -55,7 +56,8 @@ type MenuItemClickEventDetail = {
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
-type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
+// type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
+type OpenerStandardListItem = CustomListItem & { associatedItem: MenuItem };
 
 /**
  * @class
@@ -105,6 +107,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		Button,
 		List,
 		StandardListItem,
+		CustomListItem,
 		Icon,
 		BusyIndicator,
 	],
@@ -127,6 +130,25 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		},
 		text: {
 			type: String,
+		},
+	},
+})
+
+/**
+ * Fired when an action of an item is being clicked.
+ *
+ * @event sap.ui.webc.main.Menu#action-click
+ * @param { HTMLElement } item The menu item which action is currently clicked.
+ * @param { HTMLElement } action The currently clicked menu item action.
+ * @public
+ */
+@event("item-click", {
+	detail: {
+		item: {
+			type: HTMLElement,
+		},
+		action: {
+			type: HTMLElement,
 		},
 	},
 })
@@ -384,6 +406,7 @@ class Menu extends UI5Element {
 		if (!this.opener) {
 			return;
 		}
+
 		if (this.open) {
 			const rootNode = this.getRootNode() as Document;
 			const opener = this.opener instanceof HTMLElement ? this.opener : rootNode && rootNode.getElementById(this.opener);
@@ -457,6 +480,7 @@ class Menu extends UI5Element {
 
 	_prepareCurrentItems(items: Array<MenuItem>) {
 		this._currentItems = items.map((item, index) => {
+			item._parentMenu = this._findMainMenu(item);
 			return {
 				item,
 				position: index + 1,
@@ -493,13 +517,15 @@ class Menu extends UI5Element {
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
 		const mainMenu = this._findMainMenu(item);
-		mainMenu.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
-			item,
-		}, false, false);
-		item._subMenu!.showAt(opener);
-		item._preventSubMenuClose = true;
-		this._openedSubMenuItem = item;
-		this._subMenuOpenerId = actionId;
+		if (mainMenu) {
+			mainMenu.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+				item,
+			}, false, false);
+			item._subMenu!.showAt(opener);
+			item._preventSubMenuClose = true;
+			this._openedSubMenuItem = item;
+			this._subMenuOpenerId = actionId;
+		}
 	}
 
 	_closeItemSubMenu(item: MenuItem, forceClose = false) {
@@ -655,22 +681,24 @@ class Menu extends UI5Element {
 				}
 			} else {
 				const mainMenu = this._findMainMenu(item);
-				const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
-					"item": item,
-					"text": item.text,
-				}, true, false);
+				if (mainMenu) {
+					const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
+						"item": item,
+						"text": item.text,
+					}, true, false);
 
-				if (!prevented) {
-					let openerMenuItem = item;
-					let parentMenu = openerMenuItem.parentElement as Menu;
-					do {
-						openerMenuItem._preventSubMenuClose = false;
-						this._closeItemSubMenu(openerMenuItem);
-						parentMenu = openerMenuItem.parentElement as Menu;
-						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
-					} while (parentMenu._parentMenuItem);
+					if (!prevented) {
+						let openerMenuItem = item;
+						let parentMenu = openerMenuItem.parentElement as Menu;
+						do {
+							openerMenuItem._preventSubMenuClose = false;
+							this._closeItemSubMenu(openerMenuItem);
+							parentMenu = openerMenuItem.parentElement as Menu;
+							openerMenuItem = parentMenu._parentMenuItem as MenuItem;
+						} while (parentMenu._parentMenuItem);
 
-					mainMenu._popover!.close();
+						mainMenu._popover!.close();
+					}
 				}
 			}
 		} else if (isPhone()) {
@@ -684,6 +712,9 @@ class Menu extends UI5Element {
 
 	_findMainMenu(item: MenuItem) {
 		let parentMenu = item.parentElement as Menu;
+		if (!parentMenu) {
+			return;
+		}
 		while (parentMenu._parentMenuItem) {
 			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
 		}
@@ -723,6 +754,13 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireEvent("after-close", {}, false, false);
+	}
+
+	_fireActionClicked(item: MenuItem, action: HTMLElement) {
+		this.fireEvent("action-click", {
+			"item": item,
+			"action": action,
+		}, false, false);
 	}
 }
 

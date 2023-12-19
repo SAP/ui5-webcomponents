@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>ui5-list / ui5-li</title>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+<link rel="stylesheet" type="text/css" href="./styles/ListCustom.css">
+</head>
+
+<body class="list1auto">
+	<ui5-title>List with custom items</ui5-title>
+
+	<ui5-button>Focus Button</ui5-button>
+
+	<div style="max-width: 500px">
+		<ui5-list separators="None">
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div icon><ui5-icon name="folder"></ui5-icon></div>
+				<div title>Item 1 title with veeery long text that must be truncated somewhere</div>
+				<div after>
+					<ui5-button icon="add" design="Transparent"></ui5-button>
+					<ui5-button icon="less" design="Transparent"></ui5-button>
+					<ui5-button icon="decline" design="Transparent"></ui5-button>
+				</div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div before></div>
+				<div icon><ui5-icon name="save"></ui5-icon></div>
+				<div title>Item 2 title</div>
+				<div sub><ui5-icon name="slim-arrow-right"></ui5-icon></div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div before><ui5-radio-button></ui5-radio-button></div>
+				<div icon><ui5-icon name="journey-arrive"></ui5-icon></div>
+				<div title>Item 3 title</div>
+				<div after>Ctrl+X</div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item" starts-section>
+				<div before></div>
+				<div icon><ui5-icon name="journey-arrive"></ui5-icon></div>
+				<div title>Item 4 title with veeery long text that must be truncated somewhere</div>
+				<div sub><ui5-icon name="slim-arrow-right"></ui5-icon></div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div before><ui5-icon name="accept"></ui5-icon></div>
+				<div icon><ui5-icon name="action-settings"></ui5-icon></div>
+				<div title>Item 5 title</div>
+				<div after>Ctrl+A</div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item" starts-section>
+				<div before><ui5-button icon="home" design="Transparent"></ui5-button></div>
+				<div icon></div>
+				<div title><ui5-button>Press me</ui5-button></div>
+				<div after><ui5-link>Go to SAP</ui5-link></div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item" starts-section>
+				<div title>Item 6 title with veeery long text that must be truncated somewhere</div>
+				<div sub><ui5-icon name="slim-arrow-right"></ui5-icon></div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div title>Item 7 title with veeery long text that must be truncated somewhere</div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item" starts-section>
+				<div before><ui5-icon name="accept"></ui5-icon></div>
+				<div icon><ui5-icon name="action-settings"></ui5-icon></div>
+				<div title><ui5-date-picker></ui5-date-picker></div>
+				<div after>Ctrl+C</div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div before><ui5-icon name="decline"></ui5-icon></div>
+				<div icon></div>
+				<div title>Item 8 title</div>
+				<div sub><ui5-icon name="slim-arrow-right"></ui5-icon></div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div title>Item 9 title with veeery long text that must be truncated somewhere</div>
+			</ui5-li-custom>
+			<ui5-li-custom class="ui5-menu-custom-item">
+				<div before></div>
+				<div icon></div>
+				<div title>Item 10 title with veeery long text that must be truncated somewhere</div>
+				<div after>Ctrl+U</div>
+			</ui5-li-custom>
+		</ui5-list>
+	</div>
+
+	<ui5-button>Focus Button</ui5-button>
+
+</body>
+</html>

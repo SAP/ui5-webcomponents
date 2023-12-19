@@ -160,6 +160,12 @@ class MenuItem extends UI5Element {
 	_subMenu?: Menu;
 
 	/**
+	 * Stores reference to parent Menu object
+	 */
+	@property({ type: Object, defaultValue: undefined })
+	_parentMenu?: Menu;
+
+	/**
 	 * Defines the items of this component.
 	 *
 	 * @name sap.ui.webc.main.MenuItem.prototype.default
@@ -170,12 +176,35 @@ class MenuItem extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
 
+	/**
+	 * Defines the action components of this menu item.
+	 *
+	 * @name sap.ui.webc.main.MenuItem.prototype.actions
+	 * @type {HTMLElement[]}
+	 * @slot actions
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	actions!: Array<HTMLElement>;
+
 	get hasSubmenu() {
 		return !!(this.items.length || this.busy);
 	}
 
-	get hasDummyIcon() {
+	get hasActions() {
+		return !!(this.actions.length);
+	}
+
+	get hasAfterContent() {
+		return this.hasActions || this._additionalText;
+	}
+
+	get hasDummyIcon() { // For removal
 		return this._siblingsWithIcon && !this.icon;
+	}
+
+	get hasIcon() {
+		return !!this.icon;
 	}
 
 	get subMenuOpened() {
@@ -188,6 +217,17 @@ class MenuItem extends UI5Element {
 
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
+	}
+
+	get actionComponents() {
+		const actions = this.getSlottedNodes("actions").map(el => {
+			const cloned = el.cloneNode(true);
+			cloned.addEventListener("click", e => {
+				this._parentMenu?._fireActionClicked(this, e.target as HTMLElement);
+			});
+			return cloned;
+		});
+		return actions;
 	}
 }
 

@@ -1,0 +1,41 @@
+.ui5-menu-custom-item > div:not([title]) {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.ui5-menu-custom-item > div[before] {
+    min-width: 44px;
+    max-width: 44px;
+    justify-content: center;
+}
+
+.ui5-menu-custom-item > div[icon] {
+    min-width: 24px;
+    max-width: 24px;
+    justify-content: start;
+}
+
+.ui5-menu-custom-item > div[title] {
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.ui5-menu-custom-item > div[after] {
+	padding-inline-start: 8px;
+    justify-content: end;
+	color: rgb(85, 107, 130);
+}
+
+.ui5-menu-custom-item > div[sub] {
+    min-width: 24px;
+    max-width: 24px;
+    justify-content: end;
+}
+
+.ui5-menu-custom-item[starts-section] {
+	border-top: 1px solid var(--sapGroup_ContentBorderColor);
+}

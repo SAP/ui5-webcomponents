@@ -15,7 +15,6 @@
 <body class="responsivepopover2auto">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
-
 		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section busy-delay="100" busy>
@@ -28,14 +27,21 @@
 		</ui5-menu-item>
 		<ui5-menu-item text="Save with very long title for a menu item text inside" icon="save">
 			<ui5-menu-item text="Save Locally" icon="save">
-				<ui5-menu-item text="Save on C" icon="save"></ui5-menu-item>
+				<ui5-menu-item text="Save on C" icon="save" accessible-name="Has 2 actions">
+					<ui5-button icon="accept" design="Transparent" slot="actions" accessible-name="Accept item" title="Accept"></ui5-button>
+					<ui5-button icon="decline" design="Transparent" slot="actions" accessible-name="Decline item"></ui5-button>
+				</ui5-menu-item>
 				<ui5-menu-item text="Save on D" icon="save"></ui5-menu-item>
 				<ui5-menu-item text="Save on E" icon="save"></ui5-menu-item>
 			</ui5-menu-item>
 			<ui5-menu-item text="Save on Cloud" icon="upload-to-cloud"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Close" additional-text="Ctrl+W" busy-delay="100" busy></ui5-menu-item>
-		<ui5-menu-item text="Preferences" icon="action-settings" starts-section disabled></ui5-menu-item>
+		<ui5-menu-item text="Preferences" icon="action-settings" starts-section accessible-name="Has 3 actions">
+			<ui5-button icon="add" design="Transparent" slot="actions" accessible-name="Add item"></ui5-button>
+			<ui5-button icon="less" design="Transparent" slot="actions" accessible-name="Remove item"></ui5-button>
+			<ui5-button icon="decline" design="Transparent" slot="actions" accessible-name="Clear item"></ui5-button>
+		</ui5-menu-item>
 		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
 
@@ -130,6 +136,12 @@
 			if (item && item.text === "New File") {
 				event.preventDefault();
 			}
+		});
+
+		menu.addEventListener("ui5-action-click", function(event) {
+			const item = event.detail.item;
+			const action = event.detail.action;
+			console.warn("action click at item: [", item.text, "] action: [", action.icon, "]");
 		});
 
 		menu.addEventListener("ui5-before-open", function(event) {
