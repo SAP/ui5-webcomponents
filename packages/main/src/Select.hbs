@@ -19,6 +19,7 @@
 		aria-describedby="{{valueStateTextId}}"
 		aria-disabled="{{isDisabled}}"
 		aria-required="{{required}}"
+		aria-readonly="{{readonly}}"
 		aria-expanded="{{_isPickerOpen}}"
 		aria-roledescription="{{_ariaRoleDescription}}"
 		@keydown="{{_onkeydown}}"
@@ -34,11 +35,13 @@
 		{{/if}}
 	</div>
 
-	<ui5-icon
-		name="slim-arrow-down"
-		input-icon
-		?pressed="{{_iconPressed}}"
-	></ui5-icon>
+	{{#unless readonly}}
+		<ui5-icon
+			name="slim-arrow-down"
+			input-icon
+			?pressed="{{_iconPressed}}"
+		></ui5-icon>
+	{{/unless}}
 
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>

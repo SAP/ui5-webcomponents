@@ -34,6 +34,7 @@ const Template: UI5StoryArgs<Select, StoryArgsSlots> = (args) => {
     name="${ifDefined(args.name)}"
     ?disabled="${ifDefined(args.disabled)}"
     ?required="${ifDefined(args.required)}"
+    ?readonly="${ifDefined(args.readonly)}"
     value-state="${ifDefined(args.valueState)}"
     value-state-message="${ifDefined(args.valueStateMessage)}"
     selected-option="${ifDefined(args.selectedOption)}"
@@ -102,6 +103,11 @@ export const ValueStateAndValueStateMessage: StoryFn = () =>
         used as an information message. Extra long text used as an information
         message - 2. Extra long text used as an information message - 3.
       </div>
+    </ui5-select>
+    <ui5-select class="select" readonly>
+      <ui5-option icon="meal" selected="">Apple</ui5-option>
+      <ui5-option icon="meal">Avocado</ui5-option>
+      <ui5-option icon="meal">Mango</ui5-option>
     </ui5-select>`;
 
 ValueStateAndValueStateMessage.storyName = "Value State";

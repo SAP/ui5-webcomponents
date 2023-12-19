@@ -188,6 +188,33 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "3", "Change event should have fired twice");
 	});
 
+	it("remains closed and unchanged when read-only", async () => {
+		const select = await browser.$("#mySelectReadOnly");
+		const EXPECTED_SELECTION_TEXT = "Compact";
+		const selectOptionText = await select.shadow$(".ui5-select-label-root");
+
+		// act - try to open the dropdown
+		await select.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelectReadOnly");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// assert
+		assert.notOk(await popover.getProperty("opened"), "Select remains closed.");
+
+		// act - try to change selection when dropdown is closed
+		await select.keys("ArrowUp");
+		// assert
+		let selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains " + EXPECTED_SELECTION_TEXT);
+
+		// act - try to change selection when dropdown is closed
+		await select.keys("ArrowDown");
+		// assert
+		selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains" + EXPECTED_SELECTION_TEXT);
+	});
+
 	it("announces the selected value once Select Popover is opened", async () => {
 		await browser.url(`test/pages/Select.html`);
 

@@ -21,6 +21,10 @@
 	padding: 1rem 0.75rem;
 }
 
+.ui5-form-layout-item {
+	background-color:aliceblue;
+}
+
 /* 
 * The Form layout is divided into one or more columns. 
 * XL - max. 4 columns, L - max. 3 columns, M - max. 2 columns and S - 1 column.

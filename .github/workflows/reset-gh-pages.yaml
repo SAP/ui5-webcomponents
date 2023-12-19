@@ -1,10 +1,11 @@
 name: Reset Github Pages
 
 on:
-  workflow_dispatch:
+  schedule:
+  - cron: "00 08 * * *"
 
 jobs:
-  build-and-release:
+  reset-gh-pages:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
