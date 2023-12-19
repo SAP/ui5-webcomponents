@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="./styles/Menu.css">
 </head>
 
-<body class="responsivepopover2auto">
+<body class="bg">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
 
@@ -39,51 +39,26 @@
 		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
 
-	<header class="header">
-		<h3 class="header-title">Clicked menu item text</h3>
-	</header>
+	<ui5-title level="H5" class="header-title">Clicked menu item text</ui5-title>
+	<ui5-input id="selectionInput"></ui5-input>
 
-	<div class="samples-margin">
-		<ui5-input id="selectionInput"></ui5-input>
-	</div>
+	<ui5-title level="H5" class="header-title">Text Direction</ui5-title>
+	<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-switch>
 
-	<header class="header">
-		<h3 class="header-title">Text Direction</h3>
-	</header>
-	<div class="samples-margin">
-		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-switch>
-	</div>
+	<ui5-title level="H5" class="header-title">Prevent "before-open" event</ui5-title>
+	<ui5-switch id="preventBeforeOpen" text-on="Yes" text-off="No"></ui5-switch>
 
-	<header class="header">
-		<h3 class="header-title">Prevent "before-open" event</h3>
-	</header>
-	<div class="samples-margin">
-		<ui5-switch id="preventBeforeOpen" text-on="Yes" text-off="No"></ui5-switch>
-	</div>
+	<ui5-title level="H5" class="header-title">Prevent "before-close" event</ui5-title>
+	<ui5-switch id="preventBeforeClose" text-on="Yes" text-off="No"></ui5-switch>
 
-	<header class="header">
-		<h3 class="header-title">Prevent "before-close" event</h3>
-	</header>
-	<div class="samples-margin">
-		<ui5-switch id="preventBeforeClose" text-on="Yes" text-off="No"></ui5-switch>
-	</div>
+	<ui5-title level="H5" class="header-title">open/opener</ui5-title>
+	<ui5-button id="btnAddOpener">Add opener</ui5-button>
+	<ui5-button id="btnRemoveOpener">Remove opener</ui5-button>
+	<ui5-toggle-button id="btnToggleOpen">Toggle open</ui5-toggle-button> <br/>
+	<ui5-input id="openerInput"></ui5-input>
 
-	<header class="header">
-		<h3 class="header-title">open/opener</h3>
-	</header>
-	<div class="samples-margin">
-		<ui5-button id="btnAddOpener">Add opener</ui5-button>
-		<ui5-button id="btnRemoveOpener">Remove opener</ui5-button>
-		<ui5-toggle-button id="btnToggleOpen">Toggle open</ui5-toggle-button> <br/>
-		<ui5-input id="openerInput"></ui5-input>
-	</div>
-
-	<header class="header">
-		<h3 class="header-title">Event logger</h3>
-	</header>
-	<div class="samples-margin">
-		<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
-	</div>
+	<ui5-title level="H5" class="header-title">Event logger</ui5-title>
+	<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
 
 	<script>
 		btnOpen.accessibilityAttributes = {
