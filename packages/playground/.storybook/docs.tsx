@@ -31,7 +31,7 @@ export const DocsPage = (args: DocsPageArgs) => {
                 )}
             </header>
             <div className='sb-ui5-component-package'><b>{args.package}</b></div>
-            <div className='sb-ui5-control-tag'>&lt;{args.component}&gt;</div>
+            <h2 className='sb-ui5-control-tag'>&lt;{args.component}&gt;</h2>
             <Subtitle />
             <Description />
             <br />
