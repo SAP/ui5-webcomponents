@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.1...v1.21.0-rc.2) (2023-12-14)
+
+
+### Bug Fixes
+
+* **ui5-toolbar:** story error fixed ([#7986](https://github.com/SAP/ui5-webcomponents/issues/7986)) ([7b6eab2](https://github.com/SAP/ui5-webcomponents/commit/7b6eab225d964de112ae8f100fdcdf39aae122f6))
+
+
+
+
+
 # [1.21.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.0...v1.21.0-rc.1) (2023-12-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground
