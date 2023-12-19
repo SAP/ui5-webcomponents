@@ -14,7 +14,6 @@ const component = "ui5-li-notification";
 export default {
 	title: "Fiori/Notification List Item",
 	component: "NotificationListItem",
-	subcomponents: { 'NotificationAction': 'NotificationAction' },
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

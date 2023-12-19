@@ -17,12 +17,12 @@ type IllustrationData = IllustrationProperties & {
 	collection: string,
 };
 
-enum IllustrationCollections {
-	"sap_horizon" = "V5",
-	"sap_horizon_dark" = "V5",
-	"sap_horizon_hcb" = "V5/HC",
-	"sap_horizon_hcw" = "V5/HC",
-}
+const IllustrationCollections = new Map([
+	["sap_horizon", "V5"],
+	["sap_horizon_dark", "V5"],
+	["sap_horizon_hcb", "V5/HC"],
+	["sap_horizon_hcw", "V5/HC"],
+]);
 
 const FALLBACK_COLLECTION = "V4";
 
@@ -31,10 +31,10 @@ const registry = getSharedResource<Map<string, IllustrationProperties>>("SVGIllu
 const illustrationPromises = getSharedResource<Map<string, Promise<IllustrationData>>>("SVGIllustration.promises", new Map());
 
 const getCollection = () => {
-	const theme = getTheme() as keyof typeof IllustrationCollections;
+	const theme = getTheme();
 
-	if (IllustrationCollections[theme]) {
-		return IllustrationCollections[theme];
+	if (IllustrationCollections.has(theme)) {
+		return IllustrationCollections.get(theme);
 	}
 
 	return FALLBACK_COLLECTION;

@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>ui5-select-menu</title>
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/SelectMenu.css">
 </head>
 
@@ -38,6 +38,8 @@
 				<ui5-select menu="selectOptions3" value-state="Information"></ui5-select>
 
 				<ui5-select menu="selectMultipleItems" value-state="Error"></ui5-select>
+
+				<ui5-select menu="selectReadOnly" readonly></ui5-select>
 			</section>
 			
 			<section>
@@ -610,6 +612,40 @@
 				</div>
 			</div>
 		</ui5-select-menu-option>
+	</ui5-select-menu>
+
+	<ui5-select-menu id="selectReadOnly">
+
+		<ui5-select-menu-option display-text="Phone">
+			<div class="selectMenuOption">
+				Phone
+				<div>
+					<ui5-icon name="phone"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Tablet">
+			<div class="selectMenuOption">
+				Tablet
+				<div>
+					<ui5-icon name="ipad-2"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Desktop">
+			<div class="selectMenuOption">
+				Desktop
+				<div>
+					<ui5-icon name="laptop"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
 	</ui5-select-menu>
 
 	<script>

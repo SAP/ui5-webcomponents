@@ -39,16 +39,18 @@
 			<span class="ui5-dt-picker-separator"></span>
 		{{/unless}}
 
-		<ui5-time-selection
-				id="{{_id}}-time-sel"
-				class="ui5-dt-time {{classes.dateTimeView}}"
-				value="{{_timeSelectionValue}}"
-				format-pattern="{{_formatPattern}}"
-				._currentSlider="{{_currentTimeSlider}}"
-				._calendarType="{{_primaryCalendarType}}"
-				@ui5-change="{{onTimeSelectionChange}}"
-				@ui5-slider-change="{{onTimeSliderChange}}"
-		></ui5-time-selection>
+		{{#if showTimeView}}
+			<ui5-time-selection
+					id="{{_id}}-time-sel"
+					class="ui5-dt-time {{classes.dateTimeView}}"
+					value="{{_timeSelectionValue}}"
+					format-pattern="{{_formatPattern}}"
+					._currentSlider="{{_currentTimeSlider}}"
+					._calendarType="{{_primaryCalendarType}}"
+					@ui5-change="{{onTimeSelectionChange}}"
+					@ui5-slider-change="{{onTimeSliderChange}}"
+			></ui5-time-selection>
+		{{/if}}
 	</div>
 {{/inline}}
 

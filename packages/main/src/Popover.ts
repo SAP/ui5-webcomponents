@@ -298,7 +298,7 @@ class Popover extends Popup {
 			if (this.opener instanceof HTMLElement) {
 				opener = this.opener;
 			} else if (typeof this.opener === "string") {
-				opener = (this.getRootNode() as Document).getElementById(this.opener);
+				opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
 			}
 
 			if (!opener) {
@@ -434,7 +434,7 @@ class Popover extends Popup {
 			this._openerRect = this._opener!.getBoundingClientRect();
 		}
 
-		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
+		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin() && this._oldPlacement) {
 			// reuse the old placement as the opener is not available,
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
@@ -447,7 +447,7 @@ class Popover extends Popup {
 		}
 
 		this._oldPlacement = placement;
-		this.actualPlacementType = placement!.placementType;
+		this.actualPlacementType = placement.placementType;
 
 		let left = clamp(
 			this._left!,
@@ -469,8 +469,8 @@ class Popover extends Popup {
 			top = Math.max(top, this._top!);
 		}
 
-		this.arrowTranslateX = placement!.arrow.x;
-		this.arrowTranslateY = placement!.arrow.y;
+		this.arrowTranslateX = placement.arrow.x;
+		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
 		const containingBlockClientLocation = this._getContainingBlockClientLocation();

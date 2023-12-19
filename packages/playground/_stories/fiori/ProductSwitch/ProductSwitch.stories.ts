@@ -16,7 +16,6 @@ const component = "ui5-product-switch";
 export default {
     title: "Fiori/Product Switch",
     component: "ProductSwitch",
-    subcomponents: { ProductSwitchItem: "ProductSwitchItem" },
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),
