@@ -34,7 +34,6 @@
     "build": "wc-dev build",
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
-    "copyGenerated": "nps copyGenerated",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "create-ui5-element": "wc-create-ui5-element",

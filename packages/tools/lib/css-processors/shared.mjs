@@ -1,7 +1,38 @@
-const fs = require('fs');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const assets = require("../../assets-meta.js");
+import { writeFile, readFile, mkdir } from "fs/promises";
+import * as path from "path";
+import assets from "../../assets-meta.js";
+
+const readOldContent = async (fileName) => {
+    // it seems slower to read the old content, but writing the same content with no real changes
+    // (as in initial build and then watch mode) will cause an unnecessary dev server refresh
+    let oldContent = "";
+    try {
+        oldContent = (await readFile(fileName)).toString();
+    } catch (e) {
+        // file not found
+    }
+    return oldContent;
+}
+
+const writeFileIfChanged = async (fileName, content) => {
+    const oldContent = await readOldContent(fileName);
+    if (content !== oldContent) {
+        if (!oldContent) {
+            await mkdir(path.dirname(fileName), {recursive: true});
+        }
+        return writeFile(fileName, content);
+    }
+}
+
+// strips the unnecessary theming data coming from @sap-theming/theming-base-content and leaves only the css parameters
+const stripThemingBaseContent = css => {
+	css = css.replace(/\.sapThemeMeta[\s\S]*?:root/, ":root");
+	css = css.replace(/\.background-image.*{.*}/, "");
+	css = css.replace(/\.sapContrast[ ]*:root[\s\S]*?}/, "");
+	css = css.replace(/--sapFontUrl.*\);?/, "");
+	return css;
+}
+
 
 const DEFAULT_THEME = assets.themes.default;
 
@@ -42,49 +73,4 @@ const getJSContent = (targetFile, packageName, css, includeDefaultTheme) => {
 	return `${defaultTheme}export default {packageName:"${packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}}`
 }
 
-
-const proccessCSS = css => {
-	css = css.replace(/\.sapThemeMeta[\s\S]*?:root/, ":root");
-	css = css.replace(/\.background-image.*{.*}/, "");
-	css = css.replace(/\.sapContrast[ ]*:root[\s\S]*?}/, "");
-	css = css.replace(/--sapFontUrl.*\);?/, "");
-	return JSON.stringify(css);
-}
-
-module.exports = function (opts) {
-	opts = opts || {};
-
-	const packageName = opts.packageName;
-	const includeDefaultTheme = opts.includeDefaultTheme;
-	const toReplace = opts.toReplace;
-
-	return {
-		postcssPlugin: 'postcss-css-to-esm',
-		OnceExit(root) {
-			const tsMode = process.env.UI5_TS === "true";
-
-			let css = root.toString();
-			css = proccessCSS(css);
-
-			const targetFile = root.source.input.from.replace(`/${toReplace}/`, "/src/generated/").replace(`\\${toReplace}\\`, "\\src\\generated\\");
-			mkdirp.sync(path.dirname(targetFile));
-
-			const filePath = `${targetFile}.${tsMode ? "ts" : "js"}`;
-
-			// it seems slower to read the old content, but writing the same content with no real changes
-			// (as in initial build and then watch mode) will cause an unnecessary dev server refresh
-			let oldContent = "";
-			try {
-				oldContent = fs.readFileSync(filePath).toString();
-			} catch (e) {
-				// file not found
-			}
-
-			const content = getFileContent(tsMode, targetFile, packageName, css, includeDefaultTheme);
-			if (content !== oldContent) {
-				fs.writeFileSync(filePath, content);
-			}
-		}
-	};
-};
-module.exports.postcss = true;
+export { writeFileIfChanged, stripThemingBaseContent, getFileContent}

@@ -23,7 +23,6 @@
     "watch": "wc-dev watch",
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
-    "copyGenerated": "nps copyGenerated",
     "build": "wc-dev build",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
