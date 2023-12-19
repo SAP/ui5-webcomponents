@@ -27,7 +27,7 @@
 					{{#each this}}
 						{{#if this.timestamp}}
 							<div
-								special-day
+								?special-day="{{this.type}}"
 								tabindex="{{this._tabIndex}}"
 								?data-sap-focus-ref="{{this.focusRef}}"
 								data-sap-timestamp="{{this.timestamp}}"
@@ -47,10 +47,8 @@
 											{{this.secondDay}}
 										</span>
 									{{/if}}
-									{{!-- Align this with the API we come up with --}}
-									{{#if this.hasSpecialType}}
-										<div class="ui5-dp-specialday type01" >
-										</div>
+									{{#if this.type}}
+										<div class="ui5-dp-specialday {{this.type}}"></div>
 									{{/if}}
 							</div>
 						{{else}}

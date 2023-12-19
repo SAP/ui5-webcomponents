@@ -26,6 +26,9 @@ import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import CalendarLegend from "./CalendarLegend.js";
+import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
+import SpecialCalendarDate from "./SpecialCalendarDate.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -51,6 +54,11 @@ type CalendarSelectedDatesChangeEventDetail = {
 	dates: Array<number>,
 	timestamp: number | undefined,
 }
+
+type SpecialCalendarDateT = {
+	specialDateTimestamp: number;
+	dateType: string;
+};
 
 /**
  * @class
@@ -177,6 +185,7 @@ type CalendarSelectedDatesChangeEventDetail = {
 		DayPicker,
 		MonthPicker,
 		YearPicker,
+		CalendarLegend,
 	],
 })
 /**
@@ -260,6 +269,16 @@ class Calendar extends CalendarPart {
 
 	_valueIsProcessed!: boolean
 
+	@property({ type: Object, multiple: true })
+	_specialCalendarDates!: Array<SpecialCalendarDateT>;
+
+	/**
+	 * Defines the calendar legend of the component.
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	calendarLegend!: CalendarLegend;
+
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
@@ -271,6 +290,19 @@ class Calendar extends CalendarPart {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	dates!: Array<CalendarDateComponentT>;
+
+	/**
+	 * Defines the special dates, visually emphasized in the calendar.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	specialDates!: Array<SpecialCalendarDate>;
+
+	/**
+	 * Flag variable which indicates whether the method is called from an event handler.
+	 * @private
+	 */
+	_calledFromEventHandler = false;
 
 	/**
 	 * @private
@@ -287,6 +319,7 @@ class Calendar extends CalendarPart {
 		super();
 
 		this._valueIsProcessed = false;
+		this._specialCalendarDates = [];
 	}
 	/**
 	 * @private
@@ -306,6 +339,53 @@ class Calendar extends CalendarPart {
 			dateElement.value = value;
 			this.appendChild(dateElement);
 		});
+	}
+
+	_isValidCalendarDate(dateString: string): boolean {
+		const date = new Date(dateString);
+		if (Number.isNaN(date.getTime())) {
+			return false;
+		}
+		return true;
+	}
+
+	_populateSpecialCalendarDates(selectedItemType?: string): void {
+		this._calledFromEventHandler = !!selectedItemType;
+
+		const validSpecialDates = this._specialDates.filter(date => {
+			const dateType = date.getAttribute("type");
+			const dateValue = date.getAttribute("value");
+			// if selectedItemType is provided filter by it otherwise, include all types
+			const isTypeMatch = selectedItemType ? dateType === selectedItemType : true;
+			return isTypeMatch && dateValue !== null && dateValue !== "" && this._isValidCalendarDate(dateValue);
+		});
+
+		if (validSpecialDates.length === 0) {
+			return;
+		}
+
+		const uniqueDates = new Set();
+		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
+
+		validSpecialDates.forEach(date => {
+			const dateFromValue = new Date(date.getAttribute("value")!);
+			const timestamp = dateFromValue.getTime();
+
+			if (!uniqueDates.has(timestamp)) {
+				uniqueDates.add(timestamp);
+				const specialDateTimestamp = CalendarDate.fromLocalJSDate(dateFromValue).valueOf() / 1000;
+				const dateType = date.getAttribute("type")!;
+				uniqueSpecialDates.push({ specialDateTimestamp, dateType });
+			}
+		});
+
+		this._specialCalendarDates = uniqueSpecialDates;
+	}
+
+	_onCalendarLegendItemSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
+		const selectedItemType = e.detail.item.type;
+		e.detail.item.focus();
+		this._populateSpecialCalendarDates(selectedItemType);
 	}
 
 	/**
@@ -354,6 +434,14 @@ class Calendar extends CalendarPart {
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
+	}
+
+	onEnterDOM() {
+		if (!this._calledFromEventHandler) {
+			this._populateSpecialCalendarDates();
+		}
+
+		this._calledFromEventHandler = false;
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
@@ -514,6 +602,14 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	_onLegendFocusOut() {
+		this._populateSpecialCalendarDates();
+	}
+
+	get _specialDates() {
+		return this.getSlottedNodes<SpecialCalendarDate>("specialDates");
+	}
+
 	/**
 	 * Returns an array of UTC timestamps, representing the selected dates.
 	 * @protected
@@ -540,4 +636,5 @@ export default Calendar;
 export type {
 	ICalendarPicker,
 	CalendarSelectedDatesChangeEventDetail,
+	SpecialCalendarDateT,
 };

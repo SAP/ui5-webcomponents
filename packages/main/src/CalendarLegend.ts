@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -16,6 +17,10 @@ import CalendarLegendTemplate from "./generated/templates/CalendarLegendTemplate
 // Styles
 import CalendarLegendCss from "./generated/themes/CalendarLegend.css.js";
 import CalendarLegendItem from "./CalendarLegendItem.js";
+
+type CalendarLegendItemSelectionChangeEventDetail = {
+	item: CalendarLegendItem;
+}
 
 /**
  * @class CalendarLegend
@@ -39,6 +44,11 @@ import CalendarLegendItem from "./CalendarLegendItem.js";
 	styles: CalendarLegendCss,
 	template: CalendarLegendTemplate,
 	dependencies: [CalendarLegendItem],
+})
+@event("_calendar-legend-item-selection-change", {
+	detail: {
+		item: { type: CalendarLegendItem },
+	},
 })
 class CalendarLegend extends UI5Element {
 	/**
@@ -93,11 +103,20 @@ class CalendarLegend extends UI5Element {
 		});
 	}
 
-	_onItemClick(e: MouseEvent) {
+	_onMouseDown(e: MouseEvent) {
+		e.stopPropagation();
 		const target = e.target as CalendarLegendItem;
 
 		this._itemNavigation.setCurrentItem(target);
 		this._itemNavigation._focusCurrentItem();
+	}
+
+	_onFocusIn(e: MouseEvent) {
+		const target = e.target as CalendarLegendItem;
+
+		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-item-selection-change", {
+			item: target,
+		});
 	}
 
 	_onItemKeyDown(e: KeyboardEvent) {
@@ -166,3 +185,6 @@ class CalendarLegend extends UI5Element {
 CalendarLegend.define();
 
 export default CalendarLegend;
+export type {
+	CalendarLegendItemSelectionChangeEventDetail,
+};

@@ -2,12 +2,15 @@
 	class="ui5-cal-root"
 	@keydown={{_onkeydown}}
 >
+	<slot name="specialDates"></slot>
+
 	<div id="{{_id}}-content" class="ui5-cal-content">
 		<ui5-daypicker
 			id="{{_id}}-daypicker"
 			?hidden="{{_isDayPickerHidden}}"
 			format-pattern="{{_formatPattern}}"
 			.selectedDates="{{_selectedDatesTimestamps}}"
+			.specialCalendarDates="{{_specialCalendarDates}}"
 			._hidden="{{_isDayPickerHidden}}"
 			.primaryCalendarType="{{_primaryCalendarType}}"
 			.secondaryCalendarType="{{_secondaryCalendarType}}"
@@ -69,4 +72,11 @@
 			@ui5-show-month-press="{{onHeaderShowMonthPress}}"
 			@ui5-show-year-press="{{onHeaderShowYearPress}}"
 	></ui5-calendar-header>
+</div>
+
+<div
+	@ui5-_calendar-legend-item-selection-change={{_onCalendarLegendItemSelectionChange}}
+	@focusout={{_onLegendFocusOut}}
+>
+	<slot name="calendarLegend"></slot>
 </div>

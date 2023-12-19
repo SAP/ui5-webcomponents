@@ -6,7 +6,7 @@
 	justify-content: space-between;
 	gap: 0.5rem;
 	padding: var(--_ui5-calendar-legend-root-padding);
-	margin: 0.5rem 0; 
+	margin: 1rem 0;
 	width: var(--_ui5-calendar-legend-root-width);
 	background-color: var(--sapList_Background);
 }

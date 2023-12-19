@@ -81,4 +81,11 @@
 
 	--_ui5_daypicker_item_now_specialday_top: 2.375rem;
 	--_ui5_daypicker_item_now_specialday_width: calc(100% - 0.375rem);
+
+	--_ui5_daypicker_twocalendar_item_special_day_after_border_width: 0.125rem;
+	--_ui5_daypicker_twocalendar_item_special_day_dot: 0.375rem;
+	--_ui5_daypicker_twocalendar_item_special_day_top: 2rem;
+	--_ui5_daypicker_twocalendar_item_not_now_special_day_top: 2rem;
+	--_ui5_daypicker_twocalendar_item_special_day_right: 1.4375rem;
+	--_ui5_daypicker_twocalendar_item_not_now_special_day_right: 1.4375rem;
 }
