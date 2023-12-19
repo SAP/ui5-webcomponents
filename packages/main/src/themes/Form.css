@@ -41,32 +41,33 @@
 }
 
 /* M  - 1 column by defaultm, up to 2 columns */
-@container (min-width: 600px) {
+@container (width > 599px) and (width < 1022px) {
 	.ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
 
-	:host([columns-l=1]) .ui5-form-layout {
+	:host([columns-m="1"]) .ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
-	:host([columns-l=2]) .ui5-form-layout {
+	:host([columns-m="2"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
 /* L - 2 columns by default, up to 3 columns */
-@container (min-width: 1024px) {
+@container (width > 1023px) and (width < 1439px) {
+
 	.ui5-form-layout {
 		grid-template-columns: 1fr 1fr;
 	}
 
-	:host([columns-l=1]) .ui5-form-layout {
+	:host([columns-l="1"]) .ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
-	:host([columns-l=2]) .ui5-form-layout {
+	:host([columns-l="2"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr;
 	}
-	:host([columns-l=3]) .ui5-form-layout {
+	:host([columns-l="3"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
@@ -77,16 +78,16 @@
 		grid-template-columns: 1fr 1fr;
 	}
 
-	:host([columns-xl=1]) .ui5-form-layout {
+	:host([columns-xl="1"]) .ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
-	:host([columns-xl=2]) .ui5-form-layout {
+	:host([columns-xl="2"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr;
 	}
-	:host([columns-xl=3]) .ui5-form-layout {
+	:host([columns-xl="3"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
-	:host([columns-xl=4]) .ui5-form-layout {
+	:host([columns-xl="4"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 }

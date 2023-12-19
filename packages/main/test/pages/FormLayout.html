@@ -15,26 +15,30 @@
 	<section id="container">
 		<div class="banner"><div class="banner-inner"></div></div>
 
-		<ui5-select id="selXL">
-			<ui5-option value="1">columnsXL=1</ui5-option>
-			<ui5-option value="1" selected>columnsXL=2</ui5-option>
-			<ui5-option value="1">columnsXL=3</ui5-option>
-			<ui5-option value="1">columnsXL=4</ui5-option>
+		<ui5-select id="selM" readonly>
+			<ui5-option value="1" selected>columnsS=1</ui5-option>
+		</ui5-select>
+
+		<ui5-select id="selM">
+			<ui5-option value="1" selected>columnsM=1</ui5-option>
+			<ui5-option value="2">columnsM=2</ui5-option>
 		</ui5-select>
 
 		<ui5-select id="selL">
 			<ui5-option value="1">columnsL=1</ui5-option>
-			<ui5-option value="1" selected>columnsL=2</ui5-option>
-			<ui5-option value="1">columnsL=3</ui5-option>
+			<ui5-option value="2" selected>columnsL=2</ui5-option>
+			<ui5-option value="3">columnsL=3</ui5-option>
 		</ui5-select>
 
-		<ui5-select id="selM">
-			<ui5-option value="1">columnsM=1</ui5-option>
-			<ui5-option value="1" selected>columnsM=2</ui5-option>
+		<ui5-select id="selXL">
+			<ui5-option value="1">columnsXL=1</ui5-option>
+			<ui5-option value="2" selected>columnsXL=2</ui5-option>
+			<ui5-option value="3">columnsXL=3</ui5-option>
+			<ui5-option value="4">columnsXL=4</ui5-option>
 		</ui5-select>
 
 		<section>
-			<ui5-form header-text="Address">
+			<ui5-form id="addressForm" header-text="Address">
 				<ui5-form-item>
 					<ui5-label>Name:</ui5-label>
 					<span class="text">Red Point Stores</span>
@@ -93,6 +97,16 @@
 		});
 		slider2.addEventListener("ui5-input", function (event) {
 			container.style.width = event.target.value + '%';
+		});
+
+		selXL.addEventListener("ui5-change", function (event) {
+			addressForm.columnsXL = parseInt(event.detail.selectedOption.value);
+		});
+		selL.addEventListener("ui5-change", function (event) {
+			addressForm.columnsL = parseInt(event.detail.selectedOption.value);
+		});
+		selM.addEventListener("ui5-change", function (event) {
+			addressForm.columnsM = parseInt(event.detail.selectedOption.value);
 		});
 	</script>
 </body>
