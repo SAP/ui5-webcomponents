@@ -14,7 +14,7 @@ import type ViewSettingsDialog from "@ui5/webcomponents-fiori/dist/ViewSettingsD
 const component = "ui5-view-settings-dialog";
 
 export default {
-	title: "Fiori/ViewSettingsDialog",
+	title: "Fiori/View Settings Dialog",
 	component: "ViewSettingsDialog",
 	subcomponents: {'SortItem' : 'SortItem', 'FilterItem' : 'FilterItem', 'FilterItemOption' : 'FilterItemOption'},
 	parameters: {

@@ -140,7 +140,6 @@ The UI5 Web Components project contains several packages:
 
 ```sh
 yarn # to install all dependencies
-yarn build # to build the project initially (this step needs to be performed only the first time you run the project)
 yarn start # to serve the project
 ```
 
@@ -149,15 +148,12 @@ A dev server will be started and the browser will open its index URL with a list
 You can start the Playground app with the following commands:
 
 ```sh
-# install playground specific dependencies (one time only)
-cd packages/playground
-yarn install:dependencies
+yarn # to install all dependencies
 
 # start the playground from the project root
-cd ../..
 yarn start:playground
 
-# open http://localhost:4000/
+# open http://localhost:6006/
 ```
 
 **Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)
@@ -167,7 +163,7 @@ To build the UI5 Web Components project, run the following commands:
 
 ```sh
 yarn # to install all dependencies
-yarn build # to build the project
+yarn ci:releasebuild # to build the project
 ```
 
 Afterwards, you can find the build output in the `dist` folder of the corresponding package folder.
