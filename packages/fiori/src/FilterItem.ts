@@ -9,7 +9,6 @@ import type FilterItemOption from "./FilterItemOption.js";
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- *
  * <h3>Usage</h3>
  *
  * For the <code>ui5-filter-item</code>

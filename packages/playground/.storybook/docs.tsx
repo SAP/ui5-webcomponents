@@ -12,6 +12,7 @@ import {
 } from '@storybook/addon-docs';
 
 interface DocsPageArgs {
+    showDefaultStoryOnly?: boolean;
     component: string;
     package: string;
     since?: string;
@@ -37,7 +38,7 @@ export const DocsPage = (args: DocsPageArgs) => {
             <br />
             <Primary />
             <ArgsTable story={PRIMARY_STORY} />
-            <Stories />
+            { !args.showDefaultStoryOnly && <Stories />}
 			<Footer />
         </>
     )

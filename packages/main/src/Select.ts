@@ -262,6 +262,19 @@ class Select extends UI5Element implements IFormElement {
 	required!: boolean;
 
 	/**
+	 * Defines whether the component is read-only.
+	 * <br><br>
+	 * <b>Note:</b> A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 *
+	 * @default false
+	 * @since 1.21.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
+	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @since 1.0.0-rc.9
@@ -542,7 +555,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async _toggleRespPopover() {
-		if (this.disabled) {
+		if (this.disabled || this.readonly) {
 			return;
 		}
 
@@ -692,7 +705,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleKeyboardNavigation(e: KeyboardEvent) {
-		if (isEnter(e)) {
+		if (isEnter(e) || this.readonly) {
 			return;
 		}
 
@@ -743,13 +756,22 @@ class Select extends UI5Element implements IFormElement {
 
 	_handleHomeKey(e: KeyboardEvent) {
 		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
 		this._changeSelectedItem(this._selectedIndex, 0);
 	}
 
 	_handleEndKey(e: KeyboardEvent) {
-		const lastIndex = this.selectOptions.length - 1;
-
 		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
+		const lastIndex = this.selectOptions.length - 1;
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
@@ -823,11 +845,16 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleArrowNavigation(e: KeyboardEvent) {
+		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(e);
 
-		e.preventDefault();
 		if (isDownKey) {
 			nextIndex = this._getNextOptionIndex();
 		} else {

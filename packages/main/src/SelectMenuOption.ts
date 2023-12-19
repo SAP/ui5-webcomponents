@@ -16,7 +16,7 @@ import { IButton, IOption } from "./Interfaces.js";
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- * The code>ui5-select-menu-option</code> component represents an option in the <code>ui5-select-menu</code>.
+ * The <code>ui5-select-menu-option</code> component represents an option in the <code>ui5-select-menu</code>.
  *
  * <h3>Usage</h3>
  *
