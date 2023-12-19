@@ -25,7 +25,6 @@
     "start": "npm-run-all --sequential generate start:all",
     "startWithScope": "npm-run-all --sequential generate scopePrepare:main scopePrepare:fiori copy-css scopeStart:all",
     "start:all": "npm-run-all --parallel watch:allWithDelay dev",
-    "start:all2": "npm-run-all generate dev",
     "dev": "node packages/tools/lib/dev-server/dev-server.js",
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:fiori dev",
     "start:playground": "yarn ci:releasebuild && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
@@ -36,6 +35,7 @@
     "test:fiori": "yarn workspace @ui5/webcomponents-fiori test",
     "test": "yarn wsrun --exclude-missing test",
 
+    "build": "yarn ci:releasebuild",
     "ci:releasebuild": "npm-run-all --sequential generate ts generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts bundle",
