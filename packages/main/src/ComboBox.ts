@@ -1219,7 +1219,6 @@ class ComboBox extends UI5Element {
 				"min-width": `${this.offsetWidth || 0}px`,
 				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
-			popoverValueStateMessage: {},
 		};
 	}
 
