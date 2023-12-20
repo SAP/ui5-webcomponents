@@ -9,6 +9,7 @@
 	--_ui5_input_background_color: var(--sapField_Background);
 	--_ui5_input_border_radius: var(--sapField_BorderCornerRadius);
 	--_ui5_input_focus_border_radius: 0;
+	--_ui5_input_readonly_focus_border_radius: 0;
 	--_ui5-input-border: 2px solid transparent; /* The value of this variable defaults to sap_horizon theme, because if it defaults to fiori, then a flickering of the border is present*/
 	--_ui5_input_placeholder_style: italic;
 	--_ui5_input_placeholder_color: var(--sapField_PlaceholderTextColor);
@@ -62,6 +63,7 @@
 	--_ui5-input-value-state-information-border-width: 1px;
 	--_ui5-input-background-image: none;
 	--_ui5_input_focus_offset: 1px;
+	--_ui5_input_readonly_focus_offset: 1px;
 	--ui5_input_focus_pseudo_element_content: '';
 	--_ui5_input_value_state_error_warning_placeholder_font_weight: normal;
 	--_ui5_input_focus_outline_color: var(--sapContent_FocusColor);

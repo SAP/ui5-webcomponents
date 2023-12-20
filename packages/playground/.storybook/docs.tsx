@@ -1,4 +1,6 @@
 import React from 'react';
+// @ts-ignore 
+import { Footer } from "@sb/components/footer/Footer.tsx";
 import {
     Title,
     Subtitle,
@@ -10,6 +12,7 @@ import {
 } from '@storybook/addon-docs';
 
 interface DocsPageArgs {
+    showDefaultStoryOnly?: boolean;
     component: string;
     package: string;
     since?: string;
@@ -35,7 +38,8 @@ export const DocsPage = (args: DocsPageArgs) => {
             <br />
             <Primary />
             <ArgsTable story={PRIMARY_STORY} />
-            <Stories />
+            { !args.showDefaultStoryOnly && <Stories />}
+			<Footer />
         </>
     )
 }

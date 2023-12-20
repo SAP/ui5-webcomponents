@@ -16,6 +16,10 @@
 	padding: 0;
 }
 
+[ui5-title], [ui5-button] {
+	margin-bottom: 1rem;
+}
+
 .ui5-cp-item-container {
 	padding: 0.3125rem 0.6875rem;
 }

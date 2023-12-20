@@ -128,6 +128,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * <br>
  * The <code>ui5-tabcontainer</code> exposes the following CSS Shadow Parts:
  * <ul>
+ * <li>tabstrip - Used to style the tabstrip of the component</li>
  * <li>content - Used to style the content of the component</li>
  * </ul>
  *

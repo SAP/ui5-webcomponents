@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-theming",
-  "version": "1.20.0",
+  "version": "1.21.0-rc.2",
   "description": "UI5 Web Components: webcomponents.theming",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -20,10 +20,9 @@
     "clean": "nps clean",
     "build": "nps build",
     "generate": "nps generate",
-    "copyGenerated": "nps copyGenerated",
     "start": "nps start",
     "verify": "node ./lib/verify-vars/index.js",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",
@@ -32,11 +31,10 @@
   },
   "dependencies": {
     "@sap-theming/theming-base-content": "11.9.0",
-    "@ui5/webcomponents-base": "1.20.0"
+    "@ui5/webcomponents-base": "1.21.0-rc.2"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.20.0",
-    "cssnano": "^6.0.1",
+    "@ui5/webcomponents-tools": "1.21.0-rc.2",
     "globby": "^13.1.1",
     "json-beautify": "^1.1.1",
     "nps": "^5.10.0",

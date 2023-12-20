@@ -79,7 +79,8 @@ const useFallbackBundle = (packageName: string, localeId: string) => {
 const fetchI18nBundle = async (packageName: string) => {
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
-	let localeId = language + (region ? `-${region}` : ``);
+	const variant = getLocale().getVariant();
+	let localeId = language + (region ? `-${region}` : ``) + (variant ? `-${variant}` : ``);
 
 	if (useFallbackBundle(packageName, localeId)) {
 		localeId = normalizeLocale(localeId);
