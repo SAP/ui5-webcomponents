@@ -465,6 +465,10 @@ abstract class Popup extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
 	}
 
+	async getStaticAreaItemDomRef() {
+		return Promise.resolve(this.shadowRoot!);
+	}
+
 	get _getBlockingLayer() {
 		return this.shadowRoot!.querySelector<HTMLElement>("[block-layer]")!;
 	}

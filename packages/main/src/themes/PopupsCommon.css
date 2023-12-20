@@ -1,9 +1,5 @@
 :host {
     position: fixed;
-    overflow: visible;
-    border: none;
-    inset: "unset";
-    margin: 0;
     background: var(--sapGroup_ContentBackground);
     border-radius: var(--_ui5_popup_border_radius);
     min-height: 2rem;

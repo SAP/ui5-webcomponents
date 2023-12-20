@@ -530,6 +530,10 @@ class ComboBox extends UI5Element {
 		}
 	}
 
+	async getStaticAreaItemDomRef() {
+		return Promise.resolve(this.shadowRoot!);
+	}
+
 	_afterOpenPopover() {
 		this._iconPressed = true;
 	}

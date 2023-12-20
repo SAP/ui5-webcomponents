@@ -387,12 +387,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @name sap.ui.webc.main.Select.prototype.default
 	 * @public
 	 */
-	@slot({
-		"default": true,
-		type: HTMLElement,
-		invalidateOnChildChange: true,
-		individualSlots: true,
-	})
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<Option>;
 
 	/**
@@ -682,6 +677,10 @@ class Select extends UI5Element implements IFormElement {
 		}
 
 		this._syncedOptions = syncOpts as Array<IOption>;
+	}
+
+	async getStaticAreaItemDomRef() {
+		return Promise.resolve(this.shadowRoot!);
 	}
 
 	_getSelectMenu(): SelectMenu | undefined {
