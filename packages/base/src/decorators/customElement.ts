@@ -20,6 +20,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	isPopup?: boolean,
 }): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -36,6 +37,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			isPopup,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
@@ -47,6 +49,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
+		}
+		if (isPopup) {
+			target.metadata.isPopup = isPopup;
 		}
 
 		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {

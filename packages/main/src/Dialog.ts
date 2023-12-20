@@ -1,6 +1,7 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import {
@@ -112,6 +113,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
+		...(Popup.styles as ComponentStylesData[]),
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,

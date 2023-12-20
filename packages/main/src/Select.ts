@@ -60,7 +60,6 @@ import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -152,9 +151,7 @@ interface IOption extends UI5Element {
 	languageAware: true,
 	renderer: litRender,
 	template: SelectTemplate,
-	staticAreaTemplate: SelectPopoverTemplate,
-	styles: selectCss,
-	staticAreaStyles: [
+	styles: [selectCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		SelectPopoverCss,
@@ -390,7 +387,12 @@ class Select extends UI5Element implements IFormElement {
 	 * @name sap.ui.webc.main.Select.prototype.default
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+		individualSlots: true,
+	})
 	options!: Array<Option>;
 
 	/**
@@ -516,9 +518,8 @@ class Select extends UI5Element implements IFormElement {
 		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -603,7 +604,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _toggleRespPopover() {
+	_toggleRespPopover() {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -616,7 +617,7 @@ class Select extends UI5Element implements IFormElement {
 			return;
 		}
 
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
@@ -624,8 +625,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _attachRealDomRefs() {
-		this.responsivePopover = await this._respPopover();
+	_attachRealDomRefs() {
+		this.responsivePopover = this._respPopover();
 
 		this.options.forEach(option => {
 			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
@@ -1165,8 +1166,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		this.valueStatePopover = await this._getPopover() as Popover;
+	openValueStatePopover() {
+		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
 			this.valueStatePopover.showAt(this);
 		}
@@ -1188,9 +1189,8 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOption && this.selectedOption.icon;
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
+	_getPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]");
 	}
 
 	static async onDefine() {

@@ -1,4 +1,5 @@
 <section
+	root-element
 	style="{{styles.root}}"
 	class="{{classes.root}}"
 	role="{{_role}}"
@@ -30,4 +31,10 @@
 
 {{#*inline "afterContent"}}{{/inline}}
 
-
+<div class="ui5-block-layer"
+	block-layer
+	popover="manual"
+    tabindex="0"
+	@keydown="{{_preventBlockLayerFocus}}"
+    @mousedown="{{_preventBlockLayerFocus}}">
+</div>
