@@ -37,10 +37,10 @@
 		</ui5-textarea>
 
 		<ui5-list>
-			<ui5-li description="test for selection">alabala</ui5-li>
-			<ui5-li description="test for selection">alabala</ui5-li>
-			<ui5-li description="test for selection">alabala</ui5-li>
-			<ui5-li description="test for selection">alabala</ui5-li>
+			<ui5-li description="text in shadow root - test selection here">list item</ui5-li>
+			<ui5-li description="text in shadow root - test selection here">list item</ui5-li>
+			<ui5-li description="text in shadow root - test selection here">list item</ui5-li>
+			<ui5-li description="text in shadow root - test selection here">list item</ui5-li>
 		</ui5-list>
 
 		<div id="selection"></div>
@@ -88,8 +88,8 @@
 		}
 
 		function getCaretPosition(textArea) {
-			var start = textArea.selectionStart;
-			var end = textArea.selectionEnd;
+			var start = textArea.shadowRoot.querySelector("textarea").selectionStart;
+			var end = textArea.shadowRoot.querySelector("textarea").selectionEnd;
 			var copy = createCopy(textArea);
 			var range = document.createRange();
 			range.setStart(copy.firstChild, start);
@@ -99,8 +99,8 @@
 			selection.addRange(range);
 			var rect = range.getBoundingClientRect();
 			document.body.removeChild(copy);
-			textArea.selectionStart = start;
-			textArea.selectionEnd = end;
+			textArea.shadowRoot.querySelector("textarea").selectionStart = start;
+			textArea.shadowRoot.querySelector("textarea").selectionEnd = end;
 			textArea.focus();
 			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
 			return {
