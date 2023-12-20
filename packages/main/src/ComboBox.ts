@@ -55,7 +55,6 @@ import {
 
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
@@ -161,15 +160,14 @@ interface IComboBoxItem extends UI5Element {
 	tag: "ui5-combobox",
 	languageAware: true,
 	renderer: litRender,
-	styles: ComboBoxCss,
-	staticAreaStyles: [
+	styles: [
+		ComboBoxCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		ComboBoxPopoverCss,
 		SuggestionsCss,
 	],
 	template: ComboBoxTemplate,
-	staticAreaTemplate: ComboBoxPopoverTemplate,
 	dependencies: [
 		ComboBoxItem,
 		Icon,
@@ -474,15 +472,15 @@ class ComboBox extends UI5Element {
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${slottedIconsCount + arrowDownIconsCount}`);
 	}
 
-	async onAfterRendering() {
-		const picker: ResponsivePopover = await this._getPicker();
+	onAfterRendering() {
+		const picker: ResponsivePopover = this._getPicker();
 
 		if (isPhone() && picker.opened) {
 			// Set initial focus to the native input
 			this.inner.focus();
 		}
 
-		if ((await this.shouldClosePopover()) && !isPhone()) {
+		if (this.shouldClosePopover() && !isPhone()) {
 			picker.close(false, false, true);
 			this._clearFocus();
 			this._itemFocused = false;
@@ -501,8 +499,8 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	async shouldClosePopover(): Promise<boolean> {
-		const popover: ResponsivePopover = await this._getPicker();
+	shouldClosePopover(): boolean {
+		const popover: ResponsivePopover = this._getPicker();
 
 		return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
@@ -526,7 +524,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!(this.shadowRoot!.contains(toBeFocused)) && (this.staticAreaItem !== e.relatedTarget)) {
+		if (!(this.shadowRoot!.contains(toBeFocused))) { // && (this.staticAreaItem !== e.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}
@@ -552,8 +550,8 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	async _toggleRespPopover() {
-		const picker: ResponsivePopover = await this._getPicker();
+	_toggleRespPopover() {
+		const picker: ResponsivePopover = this._getPicker();
 
 		if (picker.opened) {
 			this._closeRespPopover();
@@ -562,9 +560,9 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	async storeResponsivePopoverWidth() {
+	storeResponsivePopoverWidth() {
 		if (this.open && !this._listWidth) {
-			this._listWidth = (await this._getPicker()).offsetWidth;
+			this._listWidth = this._getPicker().offsetWidth;
 		}
 	}
 
@@ -576,17 +574,16 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	async openValueStatePopover() {
-		(await this._getValueStatePopover())?.showAt(this);
+	openValueStatePopover() {
+		this._getValueStatePopover()?.showAt(this);
 	}
 
-	async closeValueStatePopover() {
-		(await this._getValueStatePopover())?.close();
+	closeValueStatePopover() {
+		this._getValueStatePopover()?.close();
 	}
 
-	async _getValueStatePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const popover: Popover = staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
+	_getValueStatePopover() {
+		const popover: Popover = this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -945,8 +942,8 @@ class ComboBox extends UI5Element {
 		picker?.close();
 	}
 
-	async _openRespPopover() {
-		(await this._getPicker()).showAt(this);
+	_openRespPopover() {
+		this._getPicker().showAt(this);
 	}
 
 	_filterItems(str: string) {
@@ -1102,9 +1099,8 @@ class ComboBox extends UI5Element {
 		return isPhone() ? this.responsivePopover!.querySelector(".ui5-input-inner-phone")! : this.shadowRoot!.querySelector("[inner-input]")!;
 	}
 
-	async _getPicker() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const picker = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_getPicker() {
+		const picker = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -1223,6 +1219,7 @@ class ComboBox extends UI5Element {
 				"min-width": `${this.offsetWidth || 0}px`,
 				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
+			popoverValueStateMessage: {},
 		};
 	}
 
