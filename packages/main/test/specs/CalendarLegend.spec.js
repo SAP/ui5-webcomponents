@@ -42,4 +42,44 @@ describe("Calendar Legend with standard items", () => {
 
 		assert.strictEqual(items.length, 2, "Selected item in Calendar Legend is hidden");
 	});
+
+	it("Focusing item in Calendar Legend filter the corresponding days in Calendar", async () => {
+		const legend = await browser.$("#calendarLegend");
+		const items = await legend.shadow$(".ui5-calendar-legend-root").$$("ui5-calendar-legend-item");
+		const calendar = await browser.$("#calendar1").shadow$(".ui5-cal-root");
+
+		await items[0].click();
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+
+		const dayPicker = await calendar.$("#ui5wc_22-daypicker");
+		const filteredDays = await dayPicker.shadow$$("[special-day]");
+
+		assert.strictEqual(filteredDays.length, 1, "Only one day is filtered");
+	});
+
+	it("Focusing item in the legend and then focus out, reset filtered days", async () => {
+		const legend = await browser.$("#calendarLegend");
+		const items = await legend.shadow$(".ui5-calendar-legend-root").$$("ui5-calendar-legend-item");
+		const calendar = await browser.$("#calendar1").shadow$(".ui5-cal-root");
+
+		await items[0].click();
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+
+		const dayPicker = await calendar.$("#ui5wc_22-daypicker");
+		let filteredDays = await dayPicker.shadow$$("[special-day]");
+
+		assert.strictEqual(filteredDays.length, 1, "Days are filtered");
+
+		await calendar.click();
+
+		// get the items again
+		filteredDays = await dayPicker.shadow$$("[special-day]");
+
+		assert.strictEqual(filteredDays.length, 20, "Days are un-filtered")
+	});
 })

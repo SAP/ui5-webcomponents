@@ -384,7 +384,6 @@ class Calendar extends CalendarPart {
 
 	_onCalendarLegendItemSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
 		const selectedItemType = e.detail.item.type;
-		e.detail.item.focus();
 		this._populateSpecialCalendarDates(selectedItemType);
 	}
 

@@ -201,6 +201,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_secondTimestamp?: number;
 
 	/**
+	 * Array of special calendar dates (if such are passed) from the calendar.
 	 * @private
 	 */
 	@property({ type: Object, multiple: true })
@@ -479,7 +480,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_selectDate(e: Event, isShift: boolean) {
 		let target = e.target as HTMLElement;
-		target = target.nodeName === "SPAN" ? target.parentNode as HTMLElement : target;
+		target = target.nodeName === "SPAN" || target.classList.contains("ui5-dp-specialday") ? target.parentNode as HTMLElement : target;
 
 		if (!this._isDayPressed(target)) {
 			return;

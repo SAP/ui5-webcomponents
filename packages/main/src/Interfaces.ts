@@ -143,6 +143,15 @@ const ISelectOption = "sap.ui.webc.main.ISelectOption";
 const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
 
 /**
+ * Interface for components that may be used as special dates inside <code>ui5-calendar</code>
+ *
+ * @name sap.ui.webc.main.ISpecialCalendarDate
+ * @interface
+ * @public
+ */
+const ISpecialCalendarDate = "sap.ui.webc.main.ISpecialCalendarDate";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
  *
  * @name sap.ui.webc.main.ITab
@@ -231,6 +240,7 @@ export {
 	ISegmentedButtonItem,
 	ISelectOption,
 	ISelectMenuOption,
+	ISpecialCalendarDate,
 	ITab,
 	ITableCell,
 	ITableColumn,

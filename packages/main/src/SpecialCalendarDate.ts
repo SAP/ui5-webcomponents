@@ -8,19 +8,29 @@ import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-date</code> component defines a special calendar date to be used inside <code>ui5-calendar</code>
+ * The <code>ui5-special-date</code> component defines a special calendar date to be used inside <code>ui5-calendar</code>,
+ * which is visually distinguished from the rest of the dates.
  *
  * @constructor
- * @implements { ISpecialCalendarDate }
+ * @author SAP SE
+ * @alias sap.ui.webc.main.SpecialCalendarDate
+ * @extends sap.ui.webc.main.CalendarDate
+ * @abstract
+ * @tagname ui5-special-date
+ * @implements sap.ui.webc.main.ISpecialCalendarDate
  * @public
  */
 @customElement("ui5-special-date")
 class SpecialCalendarDate extends CalendarDate {
 	/**
 	 * Defines the type of the special date.
+	 * @type {sap.ui.webc.main.types.CalendarLegendItemType}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.SpecialCalendarDate.prototype.type
 	 * @public
+	 * @since 1.22.0
 	 */
-	@property()
+	@property({ type: CalendarLegendItemType })
 	type!: `${CalendarLegendItemType}`;
 }
 

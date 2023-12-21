@@ -344,7 +344,7 @@
 }
 
 .ui5-dp-item--now .ui5-dp-specialday,
-.ui5-dp-item[special-day].ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-specialday {
+.ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-specialday {
 	height: 0.3125rem;
 	border-end-end-radius: var(--_ui5_daypicker_selected_item_now_special_day_border_bottom_radius_alternate);
 	border-end-start-radius: var(--_ui5_daypicker_selected_item_now_special_day_border_bottom_radius_alternate);
@@ -352,7 +352,7 @@
 	width: var(--_ui5_daypicker_item_now_specialday_width);
 }
 
-.ui5-dp-item[special-day]:not(:focus).ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-specialday {
+.ui5-dp-item:not(:focus).ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-specialday {
 	border-end-end-radius: var(--_ui5_daypicker_special_day_selected_not_focused_border_bottom); 
 	border-end-start-radius: var(--_ui5_daypicker_special_day_selected_not_focused_border_bottom);
 }
@@ -371,7 +371,7 @@
 	margin: var(--_ui5_daypicker_item_now_focus_margin);
 }
 
-.ui5-dp-item[special-day].ui5-dp-item--now:focus .ui5-dp-specialday {
+.ui5-dp-item.ui5-dp-item--now:focus .ui5-dp-specialday {
 	inset-block-start: var(--_ui5_daypicker_specialday_focused_top);
 	width: var(--_ui5_daypicker_specialday_focused_width);
 	border-end-end-radius: var(--_ui5_daypicker_specialday_focused_border_bottom);
@@ -394,7 +394,7 @@
 	inset: 0.1875rem;
 }
 
-.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item[special-day] .ui5-dp-specialday {
+.ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item .ui5-dp-specialday {
 	inset-block-start: var(--_ui5_daypicker_twocalendar_item_not_now_special_day_top);
 	inset-inline-end: var(--_ui5_daypicker_twocalendar_item_not_now_special_day_right);
 }
@@ -428,8 +428,8 @@
 }
 
 .ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item.ui5-dp-item--now:focus .ui5-dp-daytext {
-	margin-block-end: var(--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom); /* -0.25rem horizon compact, 0 cozy horizon */
-	padding-inline-end: var(--_ui5_daypicker_two_calendar_item_selected_focus_padding_right); /* 0.3125rem horizon compact, none cozy horizon */
+	margin-block-end: var(--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom);
+	padding-inline-end: var(--_ui5_daypicker_two_calendar_item_selected_focus_padding_right);
 }
 
 /* Colors for the different special days' types */
