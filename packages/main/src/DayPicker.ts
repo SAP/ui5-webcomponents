@@ -208,17 +208,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	specialCalendarDates!: Array<SpecialCalendarDateT>;
 
 	_autoFocus?: boolean;
-	_isFirstRender!: boolean;
-	_maxSpecialCalendarDatesLength!: number;
 
 	static i18nBundle: I18nBundle;
-
-	constructor() {
-		super();
-
-		this._isFirstRender = true;
-		this._maxSpecialCalendarDatesLength = 0;
-	}
 
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
@@ -413,17 +404,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
 
-		if (this._isFirstRender && this._specialCalendarDates && document.activeElement === focusedDay) {
-			// getting the max length of the special days array on the first render
-			// because only then we are 100% sure that the special days are not filtered yet
-			this._maxSpecialCalendarDatesLength = this._specialCalendarDates.length;
-			this._isFirstRender = false;
-		}
-
-		const areSpecialDaysFiltered = this._specialCalendarDates && this._specialCalendarDates.length < this._maxSpecialCalendarDatesLength;
-		const shouldFocus = !document.activeElement || document.activeElement === document.body;
-
-		if (focusedDay && ((shouldFocus && !areSpecialDaysFiltered) || (areSpecialDaysFiltered && document.activeElement !== focusedDay))) {
+		if (focusedDay && document.activeElement !== focusedDay && this._specialCalendarDates.length === 0) {
 			focusedDay.focus();
 		}
 	}
