@@ -39,7 +39,6 @@ type Metadata = {
 	slots?: Record<string, Slot>,
 	events?: EventData,
 	fastNavigation?: boolean,
-	isPopup?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
 };
@@ -220,14 +219,6 @@ class UI5ElementMetadata {
 	 */
 	supportsF6FastNavigation() {
 		return !!this.metadata.fastNavigation;
-	}
-
-	/**
-	 * Determines whether this control is popup
-	 * @public
-	 */
-	isPopup() {
-		return !!this.metadata.isPopup;
 	}
 
 	/**

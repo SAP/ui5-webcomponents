@@ -526,7 +526,7 @@ class Popover extends Popup {
 	}
 
 	_showOutsideViewport() {
-		this.showPopover();
+		this.isConnected && this.showPopover();
 
 		Object.assign(this.style, {
 			top: "-10000px",

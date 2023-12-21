@@ -81,7 +81,6 @@ type PopupBeforeCloseEventDetail = {
 	renderer: litRender,
 	styles: [popupStlyes, popupStaticAreaStyles],
 	template: PopupTemplate,
-	isPopup: true,
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
@@ -261,7 +260,7 @@ abstract class Popup extends UI5Element {
 		if (this._getBlockingLayer) {
 			if (!this.isOpen() || !this.isTopModalPopup) {
 				this._getBlockingLayer.hidePopover();
-			} else {
+			} else if (!this.shouldHideBackdrop) {
 				this._getBlockingLayer.showPopover();
 			}
 		}
@@ -272,6 +271,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	onEnterDOM() {
+		this.setAttribute("popover", "manual");
 		ResizeHandler.register(this, this._resizeHandler);
 	}
 
@@ -588,7 +588,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	_show() {
-		this.showPopover();
+		this.isConnected && this.showPopover();
 	}
 
 	/**
@@ -596,7 +596,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	hide() {
-		this.hidePopover();
+		this.isConnected && this.hidePopover();
 	}
 
 	/**

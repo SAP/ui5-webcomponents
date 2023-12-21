@@ -180,10 +180,6 @@ abstract class UI5Element extends HTMLElement {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
 		}
 
-		if (ctor.getMetadata().isPopup()) {
-			this.setAttribute("popover", "manual");
-		}
-
 		const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 
 		this._inDOM = true;
