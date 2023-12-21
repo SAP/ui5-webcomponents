@@ -616,13 +616,17 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @slot
 	 * @public
 	 */
-	@slot()
+	@slot({
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+		cloned: true,
+	})
 	valueStateMessage!: Array<HTMLElement>;
 
 	hasSuggestionItemSelected: boolean;
 	valueBeforeItemSelection: string;
 	valueBeforeItemPreview: string
-	suggestionSelectionCanceled: boolean;
+	suggestionSelectionCancelled: boolean;
 	previousValue: string;
 	firstRendering: boolean;
 	typedInValue: string;
@@ -660,7 +664,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = "";
 
 		// Indicates if the user selection has been canceled with [ESC].
-		this.suggestionSelectionCanceled = false;
+		this.suggestionSelectionCancelled = false;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = "";
@@ -866,7 +870,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_handleEnter(e: KeyboardEvent) {
-		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
+		const suggestionItemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
+
 		const innerInput = this.getInputDOMRefSync()!;
 		// Check for autocompleted item
 		const matchingItem = this.suggestionItems.find(item => {
@@ -877,7 +882,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			const itemText = matchingItem.text ? matchingItem.text : (matchingItem.textContent || "");
 
 			innerInput.setSelectionRange(itemText.length, itemText.length);
-			if (!itemPressed) {
+			if (!suggestionItemPressed) {
 				this.selectSuggestion(matchingItem, true);
 				this.open = false;
 			}
@@ -887,7 +892,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
-		if (!itemPressed) {
+		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
 
 			if (this.FormSupport) {
@@ -945,9 +950,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			// Restore the value.
 			this.value = this.typedInValue || this.valueBeforeItemPreview;
 
-			// Mark that the selection has been canceled, so the popover can close
+			// Mark that the selection has been cancelled, so the popover can close
 			// and not reopen, due to receiving focus.
-			this.suggestionSelectionCanceled = true;
+			this.suggestionSelectionCancelled = true;
 			this.focused = true;
 
 			return;
@@ -1096,7 +1101,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		];
 
 		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
-		this.suggestionSelectionCanceled = false;
+		this.suggestionSelectionCancelled = false;
 
 		if (e instanceof InputEvent) {
 			// ---- Special cases of numeric Input ----
@@ -1288,14 +1293,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.hasSuggestionItemSelected = true;
 
+		const valueOriginal = this.value;
+		const valueBeforeItemSelectionOriginal = this.valueBeforeItemSelection;
+		const lastConfirmedValueOriginal = this.lastConfirmedValue;
+		const performTextSelectionOriginal = this._performTextSelection;
+		const typedInValueOriginal = this.typedInValue;
+		const previousValueOriginal = this.previousValue;
+
 		if (fireInput) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 
 			this._performTextSelection = true;
-			this.hasSuggestionItemSelected = true;
-			this.value = itemText;
 
 			this.fireEvent(INPUT_EVENTS.CHANGE);
 
@@ -1309,9 +1319,29 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.valueBeforeItemPreview = "";
-		this.suggestionSelectionCanceled = false;
+		this.suggestionSelectionCancelled = false;
 
-		this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
+		// Fire suggestion-item-select event after input change events for backward compatibility, but revert all input properties set before suggestion was prevented.
+		// For v2.0 this code will be reworked.
+		const isCancelledByUser = !this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item }, true);
+
+		if (isCancelledByUser) {
+			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
+			this.hasSuggestionItemSelected = false;
+			this.suggestionSelectionCancelled = true;
+
+			if (fireInput) {
+				// revert properties set during fireInput
+				if (itemText === this.value) { // If no chnages were made to the input value after suggestion-item-select was prevented - revert value to the original text
+					this.value = valueOriginal;
+				}
+				this.valueBeforeItemSelection = valueBeforeItemSelectionOriginal;
+				this.lastConfirmedValue = lastConfirmedValueOriginal;
+				this._performTextSelection = performTextSelectionOriginal;
+				this.typedInValue = typedInValueOriginal;
+				this.previousValue = previousValueOriginal;
+			}
+		}
 
 		this.isTyping = false;
 		this.openOnMobile = false;

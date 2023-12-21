@@ -28,7 +28,7 @@ describe("Form support", () => {
 		await submitButton.click();
 
 		const formWasSubmitted = await browser.executeAsync(done => {
-			const expectedFormData = "?input=ok&ta=ok%0D%0Aok&dp=Apr+10%2C+2019&cb=on&radio=b&si=5";
+			const expectedFormData = "?input=ok&sel=condensed&ta=ok%0D%0Aok&dp=Apr+10%2C+2019&cb=on&radio=b&si=5";
 			done(location.href.endsWith(expectedFormData));
 		});
 		assert.ok(formWasSubmitted, "For was submitted and URL changed");

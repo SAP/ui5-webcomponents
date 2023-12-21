@@ -32,6 +32,7 @@ describe("Select general interaction", () => {
 
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once.");
 		const selectTextHtml = await selectText.getHTML(false);
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT, "The 'value' property is correct.");
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
 	});
 
@@ -47,6 +48,7 @@ describe("Select general interaction", () => {
 		await secondItem.click();
 
 		const selectTextHtml = await selectText.getHTML(false);
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT, "The 'value' property is correct.");
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is not changed (reverted on third item).");
 	});
 
@@ -91,6 +93,7 @@ describe("Select general interaction", () => {
 	it("fires change on selection with keyboard handling", async () => {
 		await browser.url(`test/pages/Select.html`);
 
+		const selectHost = await browser.$("#errorSelect")
 		const select = await browser.$("#errorSelect").shadow$(".ui5-select-root");
 		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
 		const inputResult = await browser.$("#inputResult");
@@ -104,6 +107,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once more.");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Select label is correct.");
+		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.click();
 		await select.keys("ArrowDown");
@@ -112,7 +116,7 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Fired change event is called once more.");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
-
+		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 	});
 
 	it("changes selection while closed with Arrow Up/Down", async () => {
@@ -131,10 +135,12 @@ describe("Select general interaction", () => {
 		await select.keys("ArrowUp");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.keys("ArrowDown");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Change event should have fired twice");
 	});
@@ -182,6 +188,33 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "3", "Change event should have fired twice");
 	});
 
+	it("remains closed and unchanged when read-only", async () => {
+		const select = await browser.$("#mySelectReadOnly");
+		const EXPECTED_SELECTION_TEXT = "Compact";
+		const selectOptionText = await select.shadow$(".ui5-select-label-root");
+
+		// act - try to open the dropdown
+		await select.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelectReadOnly");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// assert
+		assert.notOk(await popover.getProperty("opened"), "Select remains closed.");
+
+		// act - try to change selection when dropdown is closed
+		await select.keys("ArrowUp");
+		// assert
+		let selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains " + EXPECTED_SELECTION_TEXT);
+
+		// act - try to change selection when dropdown is closed
+		await select.keys("ArrowDown");
+		// assert
+		selectOptionTextHtml = await selectOptionText.getHTML(false);
+		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains" + EXPECTED_SELECTION_TEXT);
+	});
+
 	it("announces the selected value once Select Popover is opened", async () => {
 		await browser.url(`test/pages/Select.html`);
 
@@ -213,7 +246,7 @@ describe("Select general interaction", () => {
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Arrow Up should change selected item");
-
+		
 		const focusedElementId = await browser.executeAsync(done => {
 			done(document.activeElement.id);
 		});
@@ -304,6 +337,32 @@ describe("Select general interaction", () => {
 
 		const selectTextHtml = await selectText.getText();
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Typing text should change selection");
+	});
+
+	it("changes selection using 'value'", async () => {
+		const select = await browser.$("#mySelect7");
+		const btnSetValue = await browser.$("#btnSetValue");
+		const btnSetInvalidValue = await browser.$("#btnSetInvalidValue");
+		const selectText = await select.shadow$(".ui5-select-label-root");
+		const EXPECTED_SELECTION_TEXT1 = "Item1";
+		const EXPECTED_SELECTION_TEXT2 = "Item2";
+
+		
+		await btnSetValue.click();
+		let selectTextHtml = await selectText.getHTML(false);
+
+		assert.strictEqual(await select.getProperty("value"),
+			EXPECTED_SELECTION_TEXT2, "Second option is selected.");
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2,
+			"Select label is " + EXPECTED_SELECTION_TEXT2);
+		
+		await btnSetInvalidValue.click();
+		selectTextHtml = await selectText.getHTML(false);
+
+		assert.strictEqual(await select.getProperty("value"),
+			EXPECTED_SELECTION_TEXT1, "First option is selected as value did not match any options.");
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1,
+			"Select label is " + EXPECTED_SELECTION_TEXT1);
 	});
 
 	it("opens upon space", async () => {
@@ -573,5 +632,5 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
 		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
-	});
+ 	});
 });

@@ -6,7 +6,7 @@
 	<title>ui5-input</title>
 
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
@@ -118,6 +118,13 @@
 		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 		<ui5-li>CozyTwo</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3>Input with disabled autocomplete and preventable suggestion select</h3>
+	<ui5-input id="input-prevent-suggestion-select" show-suggestions no-typeahead="true">
+		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
 	</ui5-input>
@@ -449,7 +456,29 @@
 	<div>
 		Change event value: <span id="input-change-value-3"></span>
 	</div>
+
+	<br>
+
+	<ui5-input value-state="Error" id="dynamic-value-state">
+		<span slot="valueStateMessage" id="text">0</span>
+	</ui5-input>
+
+	<br>
+
+	<ui5-button id="dynamic-value-state-trigger">Trigger dynamic value state</ui5-button>
+
 	<script>
+		const dynamicValueState = document.getElementById("dynamic-value-state");
+		const dynamicValueStateTrigger = document.getElementById("dynamic-value-state-trigger");
+
+		dynamicValueStateTrigger.addEventListener("click", () => {
+			const valueState = dynamicValueState.querySelector("[slot='valueStateMessage']");
+
+			setInterval(() => {
+				valueState.textContent = parseInt(valueState.textContent) + 1;
+			}, 1000);
+		});
+
 		document.getElementById("submit-input").addEventListener("keypress", function(event) {
 			if (event.key === 'Enter') {
 				var formToSubmit = document.getElementById("submit-form");
@@ -730,6 +759,15 @@
 		});
 
 		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
+
+		const inputWithPreventableSelection = document.getElementById("input-prevent-suggestion-select");
+		inputWithPreventableSelection.addEventListener("ui5-suggestionItemSelect", (e) => {
+			const selectedItemText = e.detail.item.text || e.detail.item.textContent;
+			if(selectedItemText === "Cozy"){
+				e.preventDefault();
+				inputWithPreventableSelection.value = "test test";
+			}
+		});
 	</script>
 </body>
 </html>

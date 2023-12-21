@@ -287,6 +287,21 @@ class Select extends UI5Element implements IFormElement {
 	required!: boolean;
 
 	/**
+	 * Defines whether the component is read-only.
+	 * <br><br>
+	 * <b>Note:</b> A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Select.prototype.readonly
+	 * @defaultvalue false
+	 * @since 1.21.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
+	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
@@ -358,7 +373,6 @@ class Select extends UI5Element implements IFormElement {
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
-	value!: string;
 
 	selectMenu?: SelectMenu;
 
@@ -460,6 +474,9 @@ class Select extends UI5Element implements IFormElement {
 
 		if (menu) {
 			menu.value = this.value;
+			// To cause invalidation when the menu is used for another Select that could have the same value as the previous.
+			// Otherwise, the menu won't re-render.
+			menu.selectId = this.__id;
 		} else {
 			this._syncSelection();
 		}
@@ -502,6 +519,34 @@ class Select extends UI5Element implements IFormElement {
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	/**
+	 * Defines the value of the component:
+	 * <br>
+	 * - when get - returns the value of the component, e.g. the <code>value</code> property of the selected option or its text content.
+	 * <br>
+	 * - when set - selects the option with matching <code>value</code> property or text content.
+	 * <br><br>
+	 * <b>Note:</b> If the given value does not match any existing option,
+	 * the first option will get selected.
+	 *
+	 * @public
+	 * @type { string }
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Select.prototype.value
+	 * @since 1.20.0
+	 * @formProperty
+	 * @formEvents change liveChange
+	 */
+	set value(newValue: string) {
+		this.selectOptions.forEach(option => {
+			option.selected = !!((option.value || option.textContent) === newValue);
+		});
+	}
+
+	get value(): string {
+		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
 	/**
@@ -559,7 +604,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async _toggleRespPopover() {
-		if (this.disabled) {
+		if (this.disabled || this.readonly) {
 			return;
 		}
 
@@ -592,8 +637,7 @@ class Select extends UI5Element implements IFormElement {
 			firstEnabledOptionIndex = -1;
 		const options = this._filteredItems;
 		const syncOpts = options.map((opt, index) => {
-			if (opt.selected || opt.textContent === this.value) {
-				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
+			if (opt.selected) {
 				lastSelectedOptionIndex = index;
 			}
 			if (firstEnabledOptionIndex === -1) {
@@ -674,7 +718,7 @@ class Select extends UI5Element implements IFormElement {
 			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
 				const selectElement = (element as Select);
 				nativeInput.disabled = !!element.disabled;
-				nativeInput.value = selectElement._currentlySelectedOption ? selectElement._currentlySelectedOption.value : "";
+				nativeInput.value = selectElement.value;
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -710,7 +754,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleKeyboardNavigation(e: KeyboardEvent) {
-		if (isEnter(e)) {
+		if (isEnter(e) || this.readonly) {
 			return;
 		}
 
@@ -761,13 +805,22 @@ class Select extends UI5Element implements IFormElement {
 
 	_handleHomeKey(e: KeyboardEvent) {
 		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
 		this._changeSelectedItem(this._selectedIndex, 0);
 	}
 
 	_handleEndKey(e: KeyboardEvent) {
-		const lastIndex = this.selectOptions.length - 1;
-
 		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
+		const lastIndex = this.selectOptions.length - 1;
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
@@ -841,11 +894,16 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleArrowNavigation(e: KeyboardEvent) {
+		e.preventDefault();
+
+		if (this.readonly) {
+			return;
+		}
+
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
 		const isDownKey = isDown(e);
 
-		e.preventDefault();
 		if (isDownKey) {
 			nextIndex = this._getNextOptionIndex();
 		} else {

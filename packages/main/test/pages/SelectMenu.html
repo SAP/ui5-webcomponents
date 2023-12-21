@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>ui5-select-menu</title>
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/SelectMenu.css">
 </head>
 
@@ -18,6 +18,7 @@
 		<label id="lblLive"></label><br>
 		<label id="lblOpen"></label><br>
 		<label id="lblClose"></label><br>
+		<label id="lblValue"></label><br>
 
 		<div class="app-inner">
 			<section>
@@ -37,6 +38,8 @@
 				<ui5-select menu="selectOptions3" value-state="Information"></ui5-select>
 
 				<ui5-select menu="selectMultipleItems" value-state="Error"></ui5-select>
+
+				<ui5-select menu="selectReadOnly" readonly></ui5-select>
 			</section>
 			
 			<section>
@@ -52,7 +55,9 @@
 		
 				<ui5-button id="clearCounter">Reset counters</ui5-button>
 				<ui5-button id="btnFocusOut">Focus out</ui5-button>
-			</section>
+				<ui5-button id="btnSetValue">select.value = "item1"</ui5-button>
+				<ui5-button id="btnSetInvalidValue">select.value = "nan"</ui5-button>
+			</section> 
 
 			<section>
 				<ui5-title>Select + Option</ui5-title><br>
@@ -74,7 +79,7 @@
 
 	<ui5-select-menu id="selectOptions">
 
-		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S">
+		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S" value="tshirt">
 			<div class="selectMenuOption">
 				T-shirt [1]
 				<div>
@@ -84,7 +89,7 @@
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option data-display-text="Dress [2]" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
+		<ui5-select-menu-option data-display-text="Dress [2]" value="dress" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
 			<div class="selectMenuOption selectMenuOption--warning">
 				Dress [2]
 				<div>
@@ -94,7 +99,7 @@
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L" accessible-name="Skirt size L" selected>
+		<ui5-select-menu-option data-display-text="Skirt [3]" value="skirt" data-additional-text="L" accessible-name="Skirt size L" selected>
 			<div  class="selectMenuOption">
 				Skirt [3]
 				<div>
@@ -174,15 +179,15 @@
 	</ui5-select-menu>
 
 	<ui5-select-menu id="selectOptionsTest">
-		<ui5-select-menu-option id="selOption1" display-text="item1">
+		<ui5-select-menu-option id="selOption1" display-text="item1" value="item1">
 			<div>Item 1</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option id="selOption2" display-text="item2">
+		<ui5-select-menu-option id="selOption2" display-text="item2" value="item2">
 			<div>Item 2</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option id="selOption3" display-text="item3">
+		<ui5-select-menu-option id="selOption3" display-text="item3" value="item3">
 			<div>Item 3</div>
 		</ui5-select-menu-option>
 	</ui5-select-menu>
@@ -609,6 +614,40 @@
 		</ui5-select-menu-option>
 	</ui5-select-menu>
 
+	<ui5-select-menu id="selectReadOnly">
+
+		<ui5-select-menu-option display-text="Phone">
+			<div class="selectMenuOption">
+				Phone
+				<div>
+					<ui5-icon name="phone"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Tablet">
+			<div class="selectMenuOption">
+				Tablet
+				<div>
+					<ui5-icon name="ipad-2"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Desktop">
+			<div class="selectMenuOption">
+				Desktop
+				<div>
+					<ui5-icon name="laptop"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+	</ui5-select-menu>
+
 	<script>
 		let counter = 0;
 		let liveCounter = 0;
@@ -617,10 +656,12 @@
 
 		sel.addEventListener("ui5-change", function(e) {
 			lbl.innerHTML = "CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++counter) + ">";
+			lblValue.innerHTML = "Select value :: " + sel.value;
 		});
 
 		sel.addEventListener("ui5-live-change", function(e) {
 			lblLive.innerHTML = "PREVIEW CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
+			lblValue.innerHTML = "Select value :: " + sel.value;
 			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
 			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
 		});
@@ -662,6 +703,13 @@
 			testPreview.value = testPreviewCounter;
 			testOpen.value = testOpenCounter;
 			testClose.value = testCloseCounter;
+		});
+
+		btnSetValue.addEventListener("click", function(e) {
+			selTest.value = "item1";
+		});
+		btnSetInvalidValue.addEventListener("click", function(e) {
+			selTest.value = "nan";
 		});
 	</script>
 </html>

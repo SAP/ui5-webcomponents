@@ -7,6 +7,8 @@ import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
+import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
+import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -78,6 +80,13 @@ type CalculatedPlacement = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+ *
+ * <b>Note: </b> We recommend placing popup-like components (<code>ui5-dialog</code> and <code>ui5-popover</code>)
+ * outside any other components. Preferably, the popup-like components should be placed
+ * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
+ * the position and/or z-index management of the popup-like components.
+ *
+ * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>).
  *
  * @constructor
  * @author SAP SE
@@ -289,7 +298,7 @@ class Popover extends Popup {
 			if (this.opener instanceof HTMLElement) {
 				opener = this.opener;
 			} else if (typeof this.opener === "string") {
-				opener = (this.getRootNode() as Document).getElementById(this.opener);
+				opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
 			}
 
 			if (!opener) {
@@ -425,7 +434,7 @@ class Popover extends Popup {
 			this._openerRect = this._opener!.getBoundingClientRect();
 		}
 
-		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
+		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin() && this._oldPlacement) {
 			// reuse the old placement as the opener is not available,
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
@@ -438,7 +447,7 @@ class Popover extends Popup {
 		}
 
 		this._oldPlacement = placement;
-		this.actualPlacementType = placement!.placementType;
+		this.actualPlacementType = placement.placementType;
 
 		let left = clamp(
 			this._left!,
@@ -460,10 +469,13 @@ class Popover extends Popup {
 			top = Math.max(top, this._top!);
 		}
 
-		this.arrowTranslateX = placement!.arrow.x;
-		this.arrowTranslateY = placement!.arrow.y;
+		this.arrowTranslateX = placement.arrow.x;
+		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
+		const containingBlockClientLocation = this._getContainingBlockClientLocation();
+		left -= containingBlockClientLocation.left;
+		top -= containingBlockClientLocation.top;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -490,6 +502,20 @@ class Popover extends Popup {
 		const actualTop = Math.ceil(this.getBoundingClientRect().top);
 
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
+	}
+
+	_getContainingBlockClientLocation() {
+		let parentElement = getParentElement(this);
+
+		while (parentElement) {
+			if (isElementContainingBlock(parentElement)) {
+				return parentElement.getBoundingClientRect();
+			}
+
+			parentElement = getParentElement(parentElement);
+		}
+
+		return { left: 0, top: 0 };
 	}
 
 	getPopoverSize(): PopoverSize {

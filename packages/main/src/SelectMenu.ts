@@ -42,7 +42,7 @@ type SelectMenuChange = {
  *
  * The <code>ui5-select-menu</code> is meant to be used together with the <code>ui5-select</code> component as alternative
  * to define the select's dropdown. It acts as a popover on desktop and tablet, and as a Dialog on phone.
- * <br></br>
+ * </br></br>
  * The component gives the possibility to the user to customize the <code>ui5-select</code>'s dropdown
  * by slotting custom options and adding custom styles.
  *
@@ -50,7 +50,7 @@ type SelectMenuChange = {
  *
  * To use <code>ui5-select</code> with a <code>ui5-select-menu</code>,
  * you need to set the <code>ui5-select</code> <code>menu</code> property to reference <code>ui5-select-menu</code> either by ID or DOM reference.
- * <br></br>
+ * </br></br>
  *
  * For the <code>ui5-select-menu</code>
  * <h3>ES6 Module Import</h3>
@@ -135,8 +135,11 @@ class SelectMenu extends UI5Element {
 	@property()
 	valueStateText!: string;
 
-	@property()
+	@property({ type: String, noAttribute: true })
 	value!: string;
+
+	@property({ type: String, noAttribute: true })
+	selectId?: string;
 
 	valueStateMessageText: Array<Node>;
 
@@ -178,8 +181,7 @@ class SelectMenu extends UI5Element {
 			selectedIndex;
 		const options = this.options;
 		options.forEach((opt, index) => {
-			if (opt.selected || opt.textContent === this.value) {
-				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
+			if (opt.selected) {
 				lastSelectedOptionIndex = index;
 			}
 			if (firstEnabledOptionIndex === -1) {
@@ -266,8 +268,7 @@ class SelectMenu extends UI5Element {
 
 	get styles() {
 		return {
-			responsivePopoverHeader: {
-				"display": this.options.length && this.respPopover?.offsetWidth === 0 ? "none" : "inline-block",
+			valueStatePopover: {
 				"width": `${this.selectWidth!}px`,
 			},
 			responsivePopover: {

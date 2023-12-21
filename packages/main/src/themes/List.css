@@ -117,5 +117,7 @@
 }
 
 .ui5-list-end-marker {
-	display: inline-block;
+	/* When the list is placed inside a nested inline sized (inline-size, block-size) and flex-grow containers
+	the end-marker "loses" its "block" properties and its not detected by the IntersectionObserver */
+	/* display: inline-block; */
 }
