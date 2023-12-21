@@ -20,7 +20,6 @@ let index = 0;
 export default {
 	title: "Main/Table",
 	component: "Table",
-	subcomponents: {'TableColumn' : 'TableColumn', 'TableRow' : 'TableRow', 'TableGroupRow' : 'TableGroupRow', 'TableCell' : 'TableCell'},
 	parameters: {
 		docs: {
 		  page: DocsPage({ ...componentInfo, component })

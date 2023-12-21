@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.2...v1.21.0-rc.3) (2023-12-21)
+
+
+### Bug Fixes
+
+* declare webpackChunkName in more generated dynamic imports ([#8029](https://github.com/SAP/ui5-webcomponents/issues/8029)) ([c85fa23](https://github.com/SAP/ui5-webcomponents/commit/c85fa23bd32574434f537df95c7507a7f1a48b5e))
+
+
+
+
+
+# [1.21.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.1...v1.21.0-rc.2) (2023-12-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
 # [1.21.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.0...v1.21.0-rc.1) (2023-12-08)
 
 

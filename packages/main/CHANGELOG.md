@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.2...v1.21.0-rc.3) (2023-12-21)
+
+
+### Bug Fixes
+
+* **ui5-menu:** fix runtime js error on `getElementById` call ([#8021](https://github.com/SAP/ui5-webcomponents/issues/8021)) ([65a73d7](https://github.com/SAP/ui5-webcomponents/commit/65a73d71fcd44766431f8eb1e83ffbc8857681e5)), closes [#8017](https://github.com/SAP/ui5-webcomponents/issues/8017)
+* **ui5-toolbar:** remove unnecessary styles ([#7762](https://github.com/SAP/ui5-webcomponents/issues/7762)) ([db379bc](https://github.com/SAP/ui5-webcomponents/commit/db379bc9e449d63de23d74cf7cbda24ad7a89050))
+* value state message styles in input and combobox components ([#7876](https://github.com/SAP/ui5-webcomponents/issues/7876)) ([2443b8e](https://github.com/SAP/ui5-webcomponents/commit/2443b8e35464809c87047347e05edfe30479bca9))
+
+
+### Features
+
+* **tools:** Optimize build by switching css processing to esbuild ([#8008](https://github.com/SAP/ui5-webcomponents/issues/8008)) ([b4d411f](https://github.com/SAP/ui5-webcomponents/commit/b4d411f00f8d74ccecb2d02254126243faf53dfd))
+* **ui5-color-palette-popover:** introduce `open` and `opener` properties ([#7988](https://github.com/SAP/ui5-webcomponents/issues/7988)) ([d3bda7e](https://github.com/SAP/ui5-webcomponents/commit/d3bda7ea454c10a8724323aae0958757c03e24ca))
+* **ui5-select:** introduce `readonly` state ([#7950](https://github.com/SAP/ui5-webcomponents/issues/7950)) ([02ea9a4](https://github.com/SAP/ui5-webcomponents/commit/02ea9a451635b9b0d75833889e7cdf3c022cd137)), closes [#7727](https://github.com/SAP/ui5-webcomponents/issues/7727)
+
+
+
+
+
+# [1.21.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.1...v1.21.0-rc.2) (2023-12-14)
+
+
+### Bug Fixes
+
+* **ui5-date-time-picker:** load initial value correctly ([#7967](https://github.com/SAP/ui5-webcomponents/issues/7967)) ([e1d5969](https://github.com/SAP/ui5-webcomponents/commit/e1d5969fa506c48bbc5e71f31e36a96cd9996470)), closes [#7786](https://github.com/SAP/ui5-webcomponents/issues/7786)
+* **ui5-menu:** menu item text doesn't overflow submenu arrow ([#7991](https://github.com/SAP/ui5-webcomponents/issues/7991)) ([353ac1a](https://github.com/SAP/ui5-webcomponents/commit/353ac1a56ad56a6f7001e0d55c8bd0daf1000f8f))
+* **ui5-multi-combobox:** improve interaction when having invalid input ([#7893](https://github.com/SAP/ui5-webcomponents/issues/7893)) ([d63981a](https://github.com/SAP/ui5-webcomponents/commit/d63981ab2480688ec1d5e32308a69302c568db84)), closes [#7349](https://github.com/SAP/ui5-webcomponents/issues/7349) [#6968](https://github.com/SAP/ui5-webcomponents/issues/6968)
+
+
+### Features
+
+* **ui5-input:** prevent suggestion-item-select event per suggestion item ([#7940](https://github.com/SAP/ui5-webcomponents/issues/7940)) ([a265a65](https://github.com/SAP/ui5-webcomponents/commit/a265a65d8b48b4fcef84931a3ca0b7ad4278283e))
+* **ui5-tabcontainer:** add `tabstrip` Shadow Part ([#7989](https://github.com/SAP/ui5-webcomponents/issues/7989)) ([0cbbd16](https://github.com/SAP/ui5-webcomponents/commit/0cbbd160ba5b578795259e59aa187359385dc4b2)), closes [#6035](https://github.com/SAP/ui5-webcomponents/issues/6035)
+
+
+
+
+
 # [1.21.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.0...v1.21.0-rc.1) (2023-12-08)
 
 

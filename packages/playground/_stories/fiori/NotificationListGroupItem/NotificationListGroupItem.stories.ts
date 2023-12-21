@@ -14,7 +14,6 @@ const component = "ui5-li-notification-group";
 export default {
 	title: "Fiori/Notification List Group Item",
 	component: "NotificationListGroupItem",
-	subcomponents: { 'NotificationAction': 'NotificationAction' },
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

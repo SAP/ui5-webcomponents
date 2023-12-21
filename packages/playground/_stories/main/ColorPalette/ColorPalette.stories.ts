@@ -15,7 +15,6 @@ const component = "ui5-color-palette";
 export default {
 	title: "Main/ColorPalette",
 	component: "ColorPalette",
-	subcomponents: {'ColorPaletteItem' : 'ColorPaletteItem'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
