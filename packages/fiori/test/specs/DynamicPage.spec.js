@@ -24,7 +24,7 @@ describe("Page layout when content has 100% height", () => {
 
     it("content expands to fill the space between header and footer", async () => {
         const page = await browser.$("#page");
-        const content = await browser.$("#content");
+        const content = await page.shadow$(".ui5-dynamic-page-fit-content");
         const header = await browser.$("#page ui5-dynamic-page-header");
         const footerSpacer = await page.shadow$(".ui5-dynamic-page-spacer");
 

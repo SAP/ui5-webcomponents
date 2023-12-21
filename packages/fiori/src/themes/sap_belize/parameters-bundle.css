@@ -1,5 +1,5 @@
 @import "../base/sizes-parameters.css";
-@import "../base/DynamicPage-parameters.css";
+@import "./DynamicPage-parameters.css";
 @import "../base/DynamicPageTitle-parameters.css";
 @import "../base/DynamicPageHeader-parameters.css";
 @import "../base/Bar-parameters.css";
