@@ -115,7 +115,7 @@ enum INPUT_ACTIONS {
 }
 
 type InputEventDetail = {
-	inputType?: string;
+	inputType: string;
 }
 
 type InputSuggestionItemSelectEventDetail = {
@@ -1080,7 +1080,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType!)
+			|| (e.detail as InputEventDetail).inputType
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1811,4 +1811,5 @@ export type {
 	InputSuggestionScrollEventDetail,
 	InputSuggestionItemSelectEventDetail,
 	InputSuggestionItemPreviewEventDetail,
+	InputEventDetail,
 };

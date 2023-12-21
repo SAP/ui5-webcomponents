@@ -95,6 +95,18 @@ describe("Basic interaction", () => {
 		const dialogCloseButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 		await dialogCloseButton.click();
 	});
+
+	it("Should set clear icon to dialog's input", async () => {
+		const cb = await $("#clear-icon-cb");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#clear-icon-cb");
+
+		await cb.shadow$("input").click();
+
+		const resPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const dialogInput = await resPopover.$("[ui5-input]");
+
+		assert.ok(await dialogInput.getProperty("showClearIcon"), "Clear icon should be propagated to internal ui5-input")
+	});
 });
 
 describe("Typeahead", () => {

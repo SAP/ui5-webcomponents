@@ -1627,6 +1627,38 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.mcItemsLabelText, "Text should be 2 Items");
 			assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.mcNMoreLabelText, "Text should be 1 More");
 		});
+
+		it ("Should check clear icon availability", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+	
+			const cb = await $("#clear-icon-cb");
+			const inner = cb.shadow$("input");
+			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
+	
+			assert.notOk(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to false when mcb has no value");
+
+			await inner.click();
+			await inner.keys("c");
+	
+			assert.ok(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to true upon typing");
+		});
+	
+		it ("Should check clear icon events", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+	
+			const cb = await $("#clear-icon-cb");
+			
+			await cb.shadow$("input").click();
+			await cb.shadow$("input").keys("c");
+
+			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
+
+			// focus out the combo
+			await clearIcon.click();
+	
+			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
+			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
+		});
 	});
 
 	describe("MultiComboBox Truncated Token", () => {

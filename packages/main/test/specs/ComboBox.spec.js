@@ -571,6 +571,39 @@ describe("General interaction", () => {
 
 		assert.notEqual(initialListItems.length, updatedListItems.length, "item count should be updated");
 	});
+
+	it ("Should check clear icon availability", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cb = await $("#clear-icon-cb");
+		const inner = cb.shadow$("input");
+		const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
+
+		assert.ok(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to true when cb has a value");
+
+		await clearIcon.click();
+
+		assert.notOk(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to false when cb has no value");
+
+		await inner.click();
+		await inner.keys("c");
+
+		assert.ok(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to true upon typing");
+	});
+
+	it ("Should check clear icon events", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cb = await $("#clear-icon-cb");
+		const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
+
+		await clearIcon.click();
+		// focus out the combo
+		await $("#dynamic-items").click();
+
+		assert.strictEqual(await $("#clear-icon-change-count").getText(), "1", "change event is fired once");
+		assert.strictEqual(await $("#clear-icon-input-count").getText(), "1", "input event is fired once");
+	});
 });
 
 describe("Grouping", () => {
