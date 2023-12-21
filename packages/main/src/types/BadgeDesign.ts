@@ -9,21 +9,21 @@
  */
 enum BadgeDesign {
 	/**
-	 * Set1 design
+	 * Set1 of generic indication colors
 	 * @public
 	 * @type {Set1}
 	 */
 	Set1 = "Set1",
 
 	/**
-	 * Set2 design type
+	 * Set2 of generic indication colors
 	 * @public
 	 * @type {Set2}
 	 */
 	Set2 = "Set2",
 
 	/**
-	 * Set3 design type
+	 * Set3 of generic indication colors used in BTP design system
 	 * @public
 	 * @type {Set3}
 	 */
