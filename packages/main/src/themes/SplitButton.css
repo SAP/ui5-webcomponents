@@ -131,7 +131,7 @@
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
 	vertical-align: top;
-	width: inherit;
+	width: calc(100% - var(--_ui5_split_button_text_button_width));
 }
 
 .ui5-split-text-button:hover {
