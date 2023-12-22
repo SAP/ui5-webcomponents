@@ -113,7 +113,7 @@
 .ui5-split-button-root {
 	display: inline-block;
 	position: relative;
-	width: inherit;
+	width: 100%;
 }
 
 .ui5-split-button-root:focus,
