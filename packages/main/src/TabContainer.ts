@@ -34,9 +34,11 @@ import {
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
+import { getElementAtCoordinate } from "./util/DragAndDropHelper.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
+import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
@@ -54,6 +56,7 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import Orientation from "./types/Orientation.js";
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
@@ -171,6 +174,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 		Icon,
 		List,
 		ResponsivePopover,
+		DropIndicator,
 	],
 })
 /**
@@ -330,6 +334,16 @@ class TabContainer extends UI5Element {
 	@property({ type: Boolean })
 	reorderTabs!: boolean;
 
+	/**
+	 * Defines the maximum level of hierarchical nesting of tabs through drag and drop.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 0 })
+	maxNestingLevel!: number;
+
 	@property({ type: Object })
 	_selectedTab!: Tab;
 
@@ -455,6 +469,10 @@ class TabContainer extends UI5Element {
 	onAfterRendering() {
 		if (!this.items.length) {
 			return;
+		}
+
+		if (this.reorderTabs) {
+			this.dropIndicatorDOM._owner = this._getTabStrip();
 		}
 
 		this._setItemsForStrip();
@@ -1210,13 +1228,39 @@ class TabContainer extends UI5Element {
 	// 	// console.log(e.type, e)
 	// }
 
-	get dropIndicatorDOM(): HTMLElement {
-		return this.shadowRoot!.querySelector(".ui5-drop-indicator")!;
+	get dropIndicatorDOM(): DropIndicator {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]")!;
+	}
+
+	_onHeaderDragOver(e: DragEvent) {
+		const draggedElement = (e.target as HTMLElement)?.closest(`[role="tab"]`);
+		const dropIndicator = this.dropIndicatorDOM;
+		if (!draggedElement) {
+			dropIndicator.target = "";
+			return;
+		}
+
+		// the tab past this point qualifies to be dropped.
+		// calling prevent default allows the drop event to fire later
+		e.preventDefault();
+
+		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
+		const found = getElementAtCoordinate(
+			tabs,
+			e.clientX,
+			Orientation.Horizontal,
+		);
+
+		if (!found) {
+			return;
+		}
+
+		// draw drop indicator
+		dropIndicator.target = found.closestElement.id;
+		dropIndicator.placement = found.dropPlacement;
 	}
 
 	_onHeaderDrop(e: DragEvent) {
-		this.dropIndicatorDOM.style.left = "";
-
 		if (!e.dataTransfer) {
 			return;
 		}
@@ -1224,7 +1268,6 @@ class TabContainer extends UI5Element {
 		const id = e.dataTransfer.getData("text/plain");
 		const droppedElement = this.shadowRoot!.querySelector<ITab>(`[id="${id}"]`);
 		if (!droppedElement) {
-			console.warn("didnt find dropped tab in this tabcontainer");
 			return;
 		}
 
@@ -1233,14 +1276,14 @@ class TabContainer extends UI5Element {
 		const droppedTabSiblings = [...droppedTabParent.children];
 		const droppedTabIndex = droppedTabSiblings.indexOf(droppedTab);
 
-		const target = this._findTabAtCoordinates(
-			this.shadowRoot!.querySelector(`[id="${this._id}-tabStrip"]`)!,
+		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
+		const target = getElementAtCoordinate(
+			tabs,
 			e.clientX,
-			e.clientY,
-		)?.closestTab;
+			Orientation.Horizontal,
+		)?.closestElement;
 
 		if (!target) {
-			console.warn("didnt find target tab in this tabcontainer");
 			return;
 		}
 
@@ -1261,86 +1304,6 @@ class TabContainer extends UI5Element {
 		droppedTab.focus();
 	}
 
-	_onHeaderDragOver(e: DragEvent) {
-		const draggedElement = (e.target as HTMLElement)?.closest(`[role="tab"]`);
-		if (!draggedElement) {
-			this.dropIndicatorDOM.style.left = "";
-			return;
-		}
-
-		// the tab past this point qualifies to be dropped.
-		// prevent default to allow the drop event to fire
-		e.preventDefault();
-
-		const result = this._findTabAtCoordinates(
-			this.shadowRoot!.querySelector(`[id="${this._id}-tabStrip"]`)!,
-			e.clientX,
-			e.clientY,
-		);
-
-		if (!result) {
-			return;
-		}
-
-		// draw drop indicator
-		this.dropIndicatorDOM.style.left = `${result.dropIndicator.x}px`;
-		this.dropIndicatorDOM.setAttribute("data-ui5-drop-mode", result.dropIndicator.type);
-	}
-
-	_findTabAtCoordinates(container: HTMLElement, x: number, y: number) {
-		let closestOffset = Number.NEGATIVE_INFINITY,
-			dropIndicatorX = Number.NEGATIVE_INFINITY,
-			closestTab: Element | null = null;
-
-		// determine which tab is most closest to x
-		const tabs = [...container.querySelectorAll(`[role="tab"]:not([hidden])`)];
-		for (let i = 0; i < tabs.length; i++) {
-			const tab = tabs[i],
-				{ left, width } = tab.getBoundingClientRect(),
-				offset = x - left - width / 2;
-
-			if (offset <= 0 && offset > closestOffset) {
-				closestOffset = offset;
-				closestTab = tab;
-			}
-		}
-
-		if (!closestTab) {
-			return null;
-		}
-
-		const { left, /* width, */ right } = closestTab.getBoundingClientRect(),
-			distanceToLeftBorder = Math.abs(x - left),
-			// distanceToCenter = Math.abs((left + width / 2) - x),
-			distanceToRightBorder = Math.abs(right - x);
-
-		const smallestDistance = Math.min(
-			distanceToLeftBorder,
-			// distanceToCenter,
-			distanceToRightBorder,
-		);
-		switch (smallestDistance) {
-		case distanceToLeftBorder:
-			dropIndicatorX = left;
-			break;
-		// case distanceToCenter:
-		// 	dropIndicatorX = left + width / 2;
-		// 	break;
-		case distanceToRightBorder:
-			dropIndicatorX = right;
-			break;
-		}
-
-		return {
-			closestTab,
-			dropIndicator: {
-				x: dropIndicatorX,
-				type: "Between",
-				// type: smallestDistance === distanceToCenter ? "On" : "Between",
-			},
-		};
-	}
-
 	_onReorderItemsInOverflow(e: any) {
 		const { source, destination } = e.detail;
 
@@ -1358,6 +1321,11 @@ class TabContainer extends UI5Element {
 				index: targetTabIndex,
 			},
 		});
+	}
+
+	_onHeaderDragEndOrLeave() {
+		// reset drop indicator
+		this.dropIndicatorDOM.target = "";
 	}
 
 	async _respPopover() {

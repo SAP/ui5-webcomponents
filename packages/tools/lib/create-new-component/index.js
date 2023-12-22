@@ -5,8 +5,8 @@ const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
 
 /**
- * Hyphanates the given PascalCase string, f.e.:
- * Foo -> "my-foo" (adds preffix)
+ * Hyphenates the given PascalCase string, f.e.:
+ * Foo -> "my-foo" (adds prefix)
  * FooBar -> "foo-bar"
  */
 const hyphaneteComponentName = (componentName) => {

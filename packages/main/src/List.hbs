@@ -3,6 +3,8 @@
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
 	@drop="{{_ondrop}}"
+	@dragend="{{_ondragendorleave}}"
+	@dragleave="{{_ondragendorleave}}"
 	@dragover="{{_ondragover}}"
 	@ui5-_press={{onItemPress}}
 	@ui5-close={{onItemClose}}
@@ -77,6 +79,10 @@
 				data-sap-focus-ref
 			></ui5-busy-indicator>
 		</div>
+	{{/if}}
+
+	{{#if _reorderItems}}
+		<ui5-drop-indicator orientation="Horizontal" placement="Between" ._owner="{{this}}"></ui5-drop-indicator>
 	{{/if}}
 </div>
 

@@ -8,9 +8,8 @@
 		@focusin="{{_onHeaderFocusin}}"
 		@drop="{{_onHeaderDrop}}"
 		@dragover="{{_onHeaderDragOver}}"
-		{{!-- @dragenter="{{_onHeaderDragEnter}}"
-		@dragend="{{_onHeaderDragEnd}}"
-		@dragleave="{{_onHeaderDragLeave}}" --}}
+		@dragleave="{{_onHeaderDragEndOrLeave}}"
+		@dragend="{{_onHeaderDragEndOrLeave}}"
 		part="tabstrip"
 	>
 		<div
@@ -75,7 +74,7 @@
 	{{/if}}
 
 	{{#if reorderTabs}}
-		<div class="ui5-drop-indicator" data-ui5-indicator-orientation="Vertical"></div>
+		<ui5-drop-indicator orientation="Vertical"></ui5-drop-indicator>
 	{{/if}}
 </div>
 

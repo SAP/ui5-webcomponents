@@ -1,0 +1,47 @@
+:host {
+	position: absolute;
+	pointer-events: none;
+	z-index: 99;
+	background: var(--sapContent_DragAndDropActiveColor);
+}
+
+/* the needle */
+
+:host([orientation="Vertical"]) {
+	left: -1rem;
+	width: 0.125rem;
+	inset-block: 0;
+}
+
+:host([orientation="Horizontal"]) {
+	top: -1rem;
+	height: 0.125rem;
+	inset-inline: 0;
+}
+
+/* the ear of the needle */
+:host([orientation="Vertical"]):before {
+	top: -0.1875rem;
+	left: -0.1875rem;
+	content: "";
+	position: absolute;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
+	background-color: #fff; /* TODO find correct parameter for dark/high contrast themes */
+	pointer-events: none;
+}
+
+:host([orientation="Horizontal"]):before {
+	top: -0.1875rem;
+	left: -0.1875rem;
+	content: "";
+	position: absolute;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
+	background-color: #fff; /* TODO find correct parameter for dark/high contrast themes */
+	pointer-events: none;
+}

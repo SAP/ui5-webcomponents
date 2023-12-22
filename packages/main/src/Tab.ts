@@ -481,15 +481,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		}
 
 		const draggedTabInStrip = e.target as ITab;
-		// draggedTabInStrip.getTabInStripDomRef()!.setAttribute("data-ui5-dragging", "true");
 
 		e.dataTransfer.clearData();
 		e.dataTransfer.setData("text/plain", `${draggedTabInStrip.id}`);
 		e.dataTransfer.dropEffect = "move";
-	}
-
-	_onTabDragEnd(e: DragEvent) {
-		// e.target!.getTabInStripDomRef()!.removeAttribute("data-ui5-dragging");
 	}
 
 	get overflowState() {

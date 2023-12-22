@@ -34,6 +34,9 @@ import type {
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
+import DropIndicator from "./DropIndicator.js";
+import Orientation from "./types/Orientation.js";
+import { getElementAtCoordinate } from "./util/DragAndDropHelper.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
@@ -158,7 +161,10 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator],
+	dependencies: [
+		BusyIndicator,
+		DropIndicator,
+	],
 })
 /**
  * Fired when an item is activated, unless the item's <code>type</code> property
@@ -1159,13 +1165,39 @@ class List extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
+	_ondragendorleave() {
+		// this doesn't get rerendered when a list is in a popover, maybe similar to issue #7681
+		this.dropIndicatorDOM.target = "";
+	}
+
 	_ondragover(e: DragEvent) {
+		const dropIndicator = this.dropIndicatorDOM;
+		const draggedElement = (e.target as ListItemBase)?.closest("[ui5-li-custom]");
+		if (!draggedElement) {
+			dropIndicator.target = "";
+			return;
+		}
+
+		// the item past this point qualifies to be dropped.
+		// calling prevent default allows the drop event to fire later
 		e.preventDefault();
+
+		const found = getElementAtCoordinate(
+			this.items,
+			e.clientY,
+			Orientation.Vertical,
+		);
+
+		if (!found) {
+			return;
+		}
+
+		// draw drop indicator
+		dropIndicator.target = found.closestElement.id;
+		dropIndicator.placement = found.dropPlacement;
 	}
 
 	_ondrop(e: DragEvent) {
-		// this.dropIndicatorDOM.style.left = "";
-
 		if (!e.dataTransfer) {
 			return;
 		}
@@ -1174,13 +1206,13 @@ class List extends UI5Element {
 		const droppedItemIndex = this.items.findIndex(item => item.id === id);
 		const droppedItem = this.items[droppedItemIndex];
 		if (!droppedItem) {
-			console.warn("didnt find dropped tab in this tabcontainer");
 			return;
 		}
 
-		const result = this._findItemAtCoordinates(
-			e.clientX,
+		const result = getElementAtCoordinate(
+			this.items,
 			e.clientY,
+			Orientation.Vertical,
 		);
 
 		if (!result) {
@@ -1194,61 +1226,13 @@ class List extends UI5Element {
 			},
 			destination: {
 				element: this,
-				index: this.items.indexOf(result.closestItem),
+				index: this.items.indexOf(result.closestElement as ListItemBase),
 			},
 		});
 	}
 
-	_findItemAtCoordinates(x: number, y: number) {
-		let closestOffset = Number.NEGATIVE_INFINITY,
-			closestItem: Element | null = null;
-
-		// determine which item is most closest to x
-		for (let i = 0; i < this.items.length; i++) {
-			const item = this.items[i],
-				{ top, height } = item.getBoundingClientRect(),
-				offset = y - top - height / 2;
-
-			if (offset <= 0 && offset > closestOffset) {
-				closestOffset = offset;
-				closestItem = item;
-			}
-		}
-
-		if (!closestItem) {
-			return null;
-		}
-
-		const { top, /* width, */ bottom } = closestItem.getBoundingClientRect(),
-			distanceToTopBorder = Math.abs(y - top),
-			distanceToBottomBorder = Math.abs(top - y);
-
-		const smallestDistance = Math.min(
-			distanceToTopBorder,
-			distanceToBottomBorder,
-		);
-
-		let dropIndicatorY = Number.NEGATIVE_INFINITY;
-		switch (smallestDistance) {
-		case distanceToTopBorder:
-			dropIndicatorY = top;
-			break;
-		case distanceToBottomBorder:
-			dropIndicatorY = bottom;
-			break;
-		}
-
-		return {
-			closestItem: closestItem as ListItemBase,
-			dropIndicator: {
-				y: dropIndicatorY,
-				type: "Between",
-			},
-		};
-	}
-
-	get dropIndicatorDOM(): HTMLElement {
-		return this.shadowRoot!.querySelector(".ui5-drop-indicator")!;
+	get dropIndicatorDOM(): DropIndicator {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]")!;
 	}
 }
 
