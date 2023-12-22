@@ -342,8 +342,9 @@ class Calendar extends CalendarPart {
 	}
 
 	_isValidCalendarDate(dateString: string): boolean {
-		const date = new Date(dateString);
-		if (Number.isNaN(date.getTime())) {
+		const date = this.getFormat().parse(dateString);
+
+		if (!date) {
 			return false;
 		}
 		return true;
