@@ -9,21 +9,22 @@
  */
 enum BadgeDesign {
 	/**
-	 * Set1 of generic indication colors
+	 * Set1 of generic indication colors that are intended for industry-specific use cases
 	 * @public
 	 * @type {Set1}
 	 */
 	Set1 = "Set1",
 
 	/**
-	 * Set2 of generic indication colors
+	 * Set2 of generic indication colors that are intended for industry-specific use cases
 	 * @public
 	 * @type {Set2}
 	 */
 	Set2 = "Set2",
 
 	/**
-	 * Set3 of generic indication colors used in BTP design system
+	 * Set3 of generic indication colors that are
+	 * intended for industry-specific use cases. Used in SAP BTP design system.
 	 * @public
 	 * @type {Set3}
 	 */

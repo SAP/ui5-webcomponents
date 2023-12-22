@@ -35,7 +35,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-badge</code> is a component is a component which serves
+ * The <code>ui5-badge</code> is a component which serves
  * the purpose to attract the user attention to some piece
  * of information (state, quantity, condition, etc.).
  * It can contain icon and text information, and its design can be chosen from specific design types.
