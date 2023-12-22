@@ -37,22 +37,21 @@
 					{{/each}}
 				</ui5-input>
 				<ui5-toggle-button
-					slot="header"
-					class="ui5-multi-combobox-toggle-button"
-					icon="multiselect-all"
-					design="Transparent"
-					?pressed={{_showAllItemsButtonPressed}}
-					@click="{{filterSelectedItems}}"
-				></ui5-toggle-button>
-			</div>
-			{{#if hasValueStateMessage}}
-				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-					{{> valueStateMessage}}
-				</div>
-			{{/if}}
+						slot="header"
+						class="ui5-multi-combobox-toggle-button"
+						icon="multiselect-all"
+						design="Transparent"
+						?pressed={{_showAllItemsButtonPressed}}
+						@click="{{filterSelectedItems}}">
+				</ui5-toggle-button>
 			</div>
 		</div>
+		{{#if hasValueStateMessage}}
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
 	{{/if}}
 
 	{{#unless _isPhone}}

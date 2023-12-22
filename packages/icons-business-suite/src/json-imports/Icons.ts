@@ -4,9 +4,9 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
 	let iconData: CollectionData;
 
 	if (collection === "business-suite-v1") {
-		iconData = (await import("../generated/assets/v1/SAP-icons-business-suite.json")).default;
+		iconData = (await import(/* webpackChunkName: "ui5-webcomponents-sap-icons-business-suite-v1" */ "../generated/assets/v1/SAP-icons-business-suite.json")).default;
 	} else {
-		iconData = (await import("../generated/assets/v2/SAP-icons-business-suite.json")).default;
+		iconData = (await import(/* webpackChunkName: "ui5-webcomponents-sap-icons-business-suite-v2" */ "../generated/assets/v2/SAP-icons-business-suite.json")).default;
 	}
 
 	if (typeof iconData === "string" && (iconData as string).endsWith(".json")) {

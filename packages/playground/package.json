@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.21.0-rc.2",
+  "version": "1.21.0-rc.3",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -15,11 +15,11 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^7.0.20",
-    "@storybook/addon-essentials": "^7.0.20",
-    "@storybook/addon-links": "^7.0.20",
-    "@storybook/web-components": "^7.0.20",
-    "@storybook/web-components-vite": "^7.0.20",
+    "@storybook/addon-actions": "^7.6.0",
+    "@storybook/addon-essentials": "^7.6.0",
+    "@storybook/addon-links": "^7.6.0",
+    "@storybook/web-components": "^7.6.0",
+    "@storybook/web-components-vite": "^7.6.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.11",
     "@whitespace/storybook-addon-html": "^5.1.0",
@@ -32,7 +32,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "^3.0.1",
     "rimraf": "^3.0.2",
-    "storybook": "^7.0.20",
+    "storybook": "^7.6.0",
     "typescript": "^5.2.2",
     "vite-node": "^0.29.8"
   },

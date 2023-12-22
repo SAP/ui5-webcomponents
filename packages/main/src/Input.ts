@@ -1612,8 +1612,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	get classes(): ClassMap {
 		return {
 			popover: {
-				"ui5-suggestions-popover": !this._isPhone && this.showSuggestions,
-				"ui5-suggestions-popover-with-value-state-header": !this._isPhone && this.showSuggestions && this.hasValueStateMessage,
+				"ui5-suggestions-popover": this.showSuggestions,
+				"ui5-popover-with-value-state-header-phone": this._isPhone && this.showSuggestions && this.hasValueStateMessage,
+				"ui5-popover-with-value-state-header": !this._isPhone && this.showSuggestions && this.hasValueStateMessage,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
