@@ -640,6 +640,22 @@ describe("Grouping", () => {
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
 		assert.strictEqual(await combo.getProperty("value"), "", "Temp value should be reset to the initial filter value - no autocomplete");
 	});
+
+	it ("Pressing enter on a group item should not close the picker", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await input.click();
+		await input.keys("a");
+		await input.keys("ArrowDown");
+		await input.keys("Enter");
+
+		assert.ok(await popover.getProperty("open"), "Popover remains open");
+	});
 });
 
 describe("Accessibility", async () => {

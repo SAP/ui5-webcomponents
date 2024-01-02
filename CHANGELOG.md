@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.3...v1.21.0-rc.4) (2023-12-28)
+
+
+### Bug Fixes
+
+* **ui5-table:** correct alignment of popin in multiselect mode ([#8034](https://github.com/SAP/ui5-webcomponents/issues/8034)) ([9a0eab0](https://github.com/SAP/ui5-webcomponents/commit/9a0eab05d0f6b3940ce8cc87af3c9ddd9465965b))
+
+
+
+
+
 # [1.21.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.2...v1.21.0-rc.3) (2023-12-21)
 
 
