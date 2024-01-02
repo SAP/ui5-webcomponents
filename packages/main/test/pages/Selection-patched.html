@@ -53,6 +53,7 @@
 	<div id="test" style="user-select: none; width: 2px; height: 1.2em; background: red; position: absolute;"></div>
 	<div id="test2" style="user-select: none; width: 2px; height: 1.2em; background: red; position: absolute;"></div>
 	<script>
+		let internalSelectionEvents = 0;
 
 		function createCopy(textArea) {
 			var copy = document.createElement('div');
@@ -90,6 +91,7 @@
 		function getCaretPosition(textArea) {
 			var start = textArea.shadowRoot.querySelector("textarea").selectionStart;
 			var end = textArea.shadowRoot.querySelector("textarea").selectionEnd;
+			var direction = window.getSelect;
 			var copy = createCopy(textArea);
 			var range = document.createRange();
 			range.setStart(copy.firstChild, start);
@@ -99,12 +101,20 @@
 			selection.addRange(range);
 			var rect = range.getBoundingClientRect();
 			document.body.removeChild(copy);
+			// the following lines will trigger a select event that should be skipped
+			if (start !== end) {
+				internalSelectionEvents += 1;
+			}
 			textArea.shadowRoot.querySelector("textarea").selectionStart = start;
+			// the following lines will trigger a select event that should be skipped
+			if (start !== end) {
+				internalSelectionEvents += 1;
+			}
 			textArea.shadowRoot.querySelector("textarea").selectionEnd = end;
 			textArea.focus();
 			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
 			return {
-				x: rect.left - innerTextArea.scrollLeft,
+				x: rect.right - innerTextArea.scrollLeft,
 				y: rect.top - innerTextArea.scrollTop
 			};
 		}
@@ -177,6 +187,22 @@
 		document.addEventListener("mouseup", () => {
 			test2.style.display = "block";
 		});
+
+		setTimeout(() => {
+			const innerTextArea = textArea.shadowRoot.querySelector("textarea");
+			innerTextArea.addEventListener("select", () => {
+				if (internalSelectionEvents) {
+					// was this triggered by the measurement copy? skip it
+					internalSelectionEvents -= 1;
+					return;
+				}
+				var position = getCaretPosition(textArea);
+				console.log({position})
+				test.style.left = position.x + 'px';
+				test.style.top = (position.y + window.scrollY) + 'px';
+				pop.showAt(test, true);
+			})
+		}, 1000);
 	</script>
 
 </body>
