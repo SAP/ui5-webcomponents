@@ -1095,4 +1095,48 @@ describe("Keyboard navigation", async () => {
 
 		assert.strictEqual(await input.getProperty("value"), "b", "Value is not autocompleted");
 	});
+
+	it ("Should scroll to items that are in the scroll area upon navigation", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await arrow.click();
+
+		let isInVisibleArea = await browser.executeAsync(async done => {
+			const combobox = document.getElementById("combo-grouping");
+			const picker = await combobox._getPicker();
+			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li:last-child");
+			const pickerRect = picker.getBoundingClientRect();
+			const listItemRect = listItem.getBoundingClientRect();
+
+			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.notOk(isInVisibleArea, "Item should not be displayed in the viewport");
+
+		// click ArrowDown 16 times
+		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
+		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
+
+		isInVisibleArea = await browser.executeAsync(async done => {
+			const combobox = document.getElementById("combo-grouping");
+			const picker = await combobox._getPicker();
+			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li:last-child");
+			const pickerRect = picker.getBoundingClientRect();
+			const listItemRect = listItem.getBoundingClientRect();
+
+			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
+
+			done(isListItemInVisibleArea);
+		});
+
+		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
+	});
 });
