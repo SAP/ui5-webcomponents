@@ -68,25 +68,23 @@ const getScripts = (options) => {
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
 		},
-		copyGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
 				default: `concurrently "nps build.styles.themes" "nps build.styles.components"`,
-				default2: `nps build.styles.themes build.styles.components`,
-				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
-				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
+				themes: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
+				components: `node "${LIB}/css-processors/css-processor-components.mjs"`,
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
-				json: `node "${LIB}/i18n/toJSON.js" src/i18n src/generated/assets/i18n`,
+				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
 				default: "mkdirp src/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js" src/generated/assets/themes src/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/generated/assets/i18n src/generated/json-imports`,
+				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes src/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n src/generated/json-imports`,
 			},
 			jsImports: {
 				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
@@ -112,11 +110,7 @@ const getScripts = (options) => {
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
-				components: {
-					default: 'concurrently "nps watch.styles.components.existingFiles" "nps watch.styles.components.newFiles"',
-					existingFiles: `nps "build.styles.components -w"`,
-					newFiles: `node "${LIB}/postcss-new-files/index.js" --srcFiles="src/themes/*.css"`,
-				},
+				components: `nps "build.styles.components -w"`,
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
 			api: 'chokidar "test/**/*.sample.html" -c "nps generateAPI"',
