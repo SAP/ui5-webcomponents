@@ -155,11 +155,6 @@ function processClass(ts, classNode, moduleDoc) {
 
 				if (member.privacy === "public") {
 					const JSDocErrors = getJSDocErrors();
-					if (member.readonly && !member.type) {
-						JSDocErrors.push(
-							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
-						);
-					}
 
 					if (!member.default) {
 						JSDocErrors.push(
@@ -187,37 +182,37 @@ function processClass(ts, classNode, moduleDoc) {
 			member.parameters?.forEach(param => {
 				// Treat every parameter that has respective @param tag as public
 				param._ui5privacy = findAllTags(memberParsedJsDoc, "param").some(tag => tag.name === param.name) ? "public" : "private";
-				const paramNode = classNodeMember.parameters?.find(parameter => parameter.name?.text === param.name);
-				let type;
+				if (param._ui5privacy === "public") {
+					const paramNode = classNodeMember.parameters?.find(parameter => parameter.name?.text === param.name);
+					let type;
 
-				if (param.optional) {
-					const filename = classNode.getSourceFile().fileName;
+					if (param.optional) {
+						const filename = classNode.getSourceFile().fileName;
 
-					const program = ts.createProgram([filename], {});
-					const sourceFile = program.getSourceFile(filename);
-					const typeChecker = program.getTypeChecker();
-					const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
-					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isMethodDeclaration(m) && m.name?.text === member.name);
-					const tsProgramParameter = tsProgramMember.parameters.find(p => ts.isParameter(p) && p.name?.text === param.name);
+						const sourceFile = typeProgram.getSourceFile(filename);
+						const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
+						const tsProgramMember = tsProgramClassNode.members.find(m => ts.isMethodDeclaration(m) && m.name?.text === member.name);
+						const tsProgramParameter = tsProgramMember.parameters.find(p => ts.isParameter(p) && p.name?.text === param.name);
 
-					if (tsProgramParameter) {
-						const typeName = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramParameter), tsProgramParameter);
+						if (tsProgramParameter) {
+							const typeName = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramParameter), tsProgramParameter);
 
-						if (!param.type) {
-							param.type = {};
-							param.type.text = typeName;
+							if (!param.type) {
+								param.type = {};
+								param.type.text = typeName;
+							}
+
+							type = typeName.replaceAll(/Array<|>|\[\]/g, "")
+								?.split("|");
 						}
-
-						type = typeName.replaceAll(/Array<|>|\[\]/g, "")
-							?.split("|");
 					}
-				}
 
-				const typeRefs = ((type || getTypeRefs(ts, (type || paramNode), param))
-					?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
+					const typeRefs = ((type || getTypeRefs(ts, (type || paramNode), param))
+						?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
-				if (typeRefs.length) {
-					param.type.references = typeRefs;
+					if (typeRefs.length) {
+						param.type.references = typeRefs;
+					}
 				}
 			});
 
@@ -350,9 +345,18 @@ const processPublicAPI = object => {
 	return false;
 };
 
+let typeChecker;
+let typeProgram;
+
 export default {
-	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
+	globs: ["src/!(*generated/)!(*bundle)*.ts"],
 	outdir: 'dist',
+	overrideModuleCreation: ({ ts, globs }) => {
+		typeProgram = ts.createProgram(globs, {});
+		typeChecker = typeProgram.getTypeChecker();
+
+		return typeProgram.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
+	},
 	plugins: [
 		{
 			name: 'my-plugin',
@@ -393,21 +397,21 @@ export default {
 					}
 				})
 			},
-			packageLinkPhase({customElementsManifest}) {
+			packageLinkPhase({ customElementsManifest }) {
 				// Uncomment and handle errors appropriately
-				// const JSDocErrors = getJSDocErrors();
-				// if (JSDocErrors.length > 0) {
-				// 	console.log(JSDocErrors.join("\n"));
-				// 	console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-				// 	throw new Error(`Invalid JSDoc.`);
-				// }
+				const JSDocErrors = getJSDocErrors();
+				if (JSDocErrors.length > 0) {
+					console.log(JSDocErrors.join("\n"));
+					console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
+					throw new Error(`Invalid JSDoc.`);
+				}
 
 				customElementsManifest.modules?.forEach(m => {
 					m.path = m.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
 
 					m.exports?.forEach(e => {
 						if (e.declaration && e.declaration.module)
-						e.declaration.module = e.declaration?.module?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+							e.declaration.module = e.declaration?.module?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
 					});
 				})
 			}
