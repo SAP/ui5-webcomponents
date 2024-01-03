@@ -111,9 +111,9 @@
 }
 
 .ui5-split-button-root {
-	display: inline-block;
+	display: inline-flex;
 	position: relative;
-	width: 100%;
+	width: inherit
 }
 
 .ui5-split-button-root:focus,
@@ -127,11 +127,10 @@
 	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
 	border-width: 0.0625rem;
 	border-right-width: var(--_ui5_split_button_text_button_right_border_width);
-	margin-right: var(--_ui5_split_button_text_button_width);
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
 	vertical-align: top;
-	width: calc(100% - var(--_ui5_split_button_text_button_width));
+	flex-grow: 1;
 }
 
 .ui5-split-text-button:hover {
@@ -213,18 +212,14 @@
 	outline: 0;
 }
 
-.ui5-split-arrow-button-wrapper {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
 .ui5-split-arrow-button {
 	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
 	width: 2.25rem;
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
+	position: relative;
+	overflow: visible;
 }
 
 .ui5-split-text-button[dir="rtl"]:hover {
@@ -275,10 +270,9 @@
 .ui5-split-arrow-button[design="Emphasized"]:hover {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
-	border-left-width: var(--sapButton_BorderWidth);
 }
 
-.ui5-split-arrow-button-wrapper[dir="rtl"] .ui5-split-arrow-button[design="Emphasized"]:hover {
+.ui5-split-arrow-button[design="Emphasized"][dir="rtl"]:hover {
 	border-left-width: var(--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl);
 	border-right-width: var(--sapButton_BorderWidth);
 }
@@ -308,12 +302,11 @@
 	position: absolute;
 	box-sizing: border-box;
 	pointer-events: none;
+	width: 0.0625rem;
+	background-color: var(--sapButton_TextColor);
 	left: var(--_ui5_split_button_middle_separator_left);
 	top: var(--_ui5_split_button_middle_separator_top);
-	right: 0;
 	height: var(--_ui5_split_button_middle_separator_height);
-	border: 0 solid var(--sapButton_TextColor);
-	border-left-width: 0.0625rem;
 }
 
 .ui5-split-arrow-button[design="Emphasized"]:before {
@@ -343,46 +336,39 @@
 	border-left-width: 0;
 }
 
-.ui5-split-text-button:hover + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button:before,
+.ui5-split-text-button:hover + .ui5-split-arrow-button:before,
 .ui5-split-arrow-button:hover:before {
 	display: var(--_ui5_split_button_middle_separator_hover_display);
 }
 
 /* separator colors */
 .ui5-split-arrow-button[design="Transparent"]:before {
-	border-color: var(--sapButton_Lite_TextColor);
+	background-color: var(--sapButton_Lite_TextColor);
 }
 
 .ui5-split-arrow-button[design="Emphasized"]:before {
-	border-color: var(--sapButton_Emphasized_TextColor);
+	background-color: var(--sapButton_Emphasized_TextColor);
 }
 
 .ui5-split-arrow-button[design="Positive"]:before {
-	border-color: var(--sapButton_Accept_TextColor);
+	background-color: var(--sapButton_Accept_TextColor);
 }
 
 .ui5-split-arrow-button[design="Negative"]:before {
-	border-color: var(--sapButton_Reject_TextColor);
+	background-color: var(--sapButton_Reject_TextColor);
 }
 
 .ui5-split-arrow-button[design="Attention"]:before {
-	border-color: var(--_ui5_split_button_attention_separator_color_default);
+	background-color: var(--_ui5_split_button_attention_separator_color_default);
 }
 
 .ui5-split-text-button[dir="rtl"] {
 	border-radius: 0 var(--_ui5_button_border_radius) var(--_ui5_button_border_radius) 0;
 	border-width: var(--sapButton_BorderWidth);
-	margin-right: 0;
-	margin-left: var(--_ui5_split_button_text_button_width);
 }
 
 .ui5-split-text-button[design="Emphasized"][dir="rtl"] {
 	border-width: var(--_ui5_split_text_button_emphasized_border_width_rtl);
-}
-
-.ui5-split-arrow-button-wrapper[dir="rtl"] {
-	left: 0;
-	right: auto;
 }
 
 [dir="rtl"] .ui5-split-arrow-button {
@@ -438,30 +424,30 @@
 
 :host([active-arrow-button]) .ui5-split-arrow-button::before,
 .ui5-split-arrow-button[active]::before,
-.ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
-	border-color: transparent;
+.ui5-split-text-button[active] + .ui5-split-arrow-button::before {
+	background-color: transparent;
 }
 
 :host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button::before,
 :host([design="Emphasized"]) .ui5-split-arrow-button[active]::before,
-:host([design="Emphasized"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
-	border-color: var(--_ui5_split_button_emphasized_separator_color);
+:host([design="Emphasized"]) .ui5-split-text-button[active] + .ui5-split-arrow-button::before {
+	background-color: var(--_ui5_split_button_emphasized_separator_color);
 }
 
 :host([design="Positive"][active-arrow-button]) .ui5-split-arrow-button::before,
 :host([design="Positive"]) .ui5-split-arrow-button[active]::before,
-:host([design="Positive"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
-	border-color: var(--_ui5_split_button_positive_separator_color);
+:host([design="Positive"]) .ui5-split-text-button[active] + .ui5-split-arrow-button::before {
+	background-color: var(--_ui5_split_button_positive_separator_color);
 }
 
 :host([design="Negative"][active-arrow-button]) .ui5-split-arrow-button::before,
 :host([design="Negative"]) .ui5-split-arrow-button[active]::before,
-:host([design="Negative"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
-	border-color: var(--_ui5_split_button_negative_separator_color);
+:host([design="Negative"]) .ui5-split-text-button[active] + .ui5-split-arrow-button::before {
+	background-color: var(--_ui5_split_button_negative_separator_color);
 }
 
 :host([design="Attention"][active-arrow-button]) .ui5-split-arrow-button::before,
 :host([design="Attention"]) .ui5-split-arrow-button[active]::before,
-:host([design="Attention"]) .ui5-split-text-button[active] + .ui5-split-arrow-button-wrapper > .ui5-split-arrow-button::before {
-	border-color: var(--_ui5_split_button_attention_separator_color);
+:host([design="Attention"]) .ui5-split-text-button[active] + .ui5-split-arrow-button::before {
+	background-color: var(--_ui5_split_button_attention_separator_color);
 }
