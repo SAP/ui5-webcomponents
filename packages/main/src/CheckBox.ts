@@ -66,6 +66,7 @@ let activeCb: CheckBox;
  * The <code>ui5-checkbox</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>root - Used to style the outermost wrapper of the <code>ui5-checkbox</code></li>
+ * <li>label - Used to style the label of the <code>ui5-checkbox</code></li>
  * </ul>
  *
  * <br><br>
