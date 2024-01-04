@@ -1,1 +1,12 @@
-<slot></slot>
+<div class="ui5-form-item-root">
+	<div class="ui5-form-item-label">
+		{{#if hasLabelContent}}
+			<slot name="labelContent"></slot>
+		{{else}}
+			<ui5-label>{{ label }}:</ui5-label>
+		{{/if}}
+	</div>
+	<div class="ui5-form-item-content">
+		<slot></slot>
+	</div>
+</div>

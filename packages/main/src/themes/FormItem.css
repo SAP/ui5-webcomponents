@@ -1,3 +1,18 @@
-:host() {
-	background-color:aliceblue;
+.ui5-form-item-root {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	align-items: center;
+}
+
+.ui5-form-item-label {
+	padding-inline-end: 0.85rem;
+	justify-self: end;
+}
+
+:host([labelCells="12"]) .ui5-form-item-root {
+	grid-template-columns: 1fr;
+}
+
+:host([labelCells="12"]) .ui5-form-item-label {
+	justify-self: start;
 }

@@ -41,6 +41,9 @@ import type FormGroup from "./FormGroup.js";
 	dependencies: [Title],
 })
 class Form extends UI5Element {
+	@property({ type: Boolean })
+	editable!: boolean;
+
 	@property()
 	headerText!: string;
 

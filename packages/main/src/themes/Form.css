@@ -21,8 +21,11 @@
 	padding: 1rem 0.75rem;
 }
 
-.ui5-form-layout-item {
-	background-color:aliceblue;
+:host([editable]) .ui5-form-layout-item {
+	min-height: 2.75rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    box-sizing: border-box;
 }
 
 /* 
@@ -73,6 +76,10 @@
 	}
 	:host([columns-l="3"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.ui5-form-layout-item {
+		grid-template-columns: 1fr;
 	}
 }
 

@@ -1,4 +1,4 @@
-<div class="ui5-form-root" role="form" aria-labelledby="_ariaLabelledBy">
+<div class="ui5-form-root" role="form" aria-labelledby="_ariaLabelledBy" ?editable="{{editable}}">
 	<div class="ui5-form-header" part="header">
 		{{#if hasCustomHeader}}
 			<slot name="header"></slot>
@@ -10,11 +10,7 @@
 	<div class="ui5-form-layout" part="layout">
 		{{#each items}}
 			<div class="ui5-form-layout-item">
-				{{#if label}}
-					<ui5-label class="ui5-form-item-lbl">{{ label }}:</ui5-label>
-				{{/if}}
 				<slot name="{{this._individualSlot}}"></slot>
-			</div>
 		{{/each}}
 	</div>
 </div>

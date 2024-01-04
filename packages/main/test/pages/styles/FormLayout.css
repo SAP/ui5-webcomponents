@@ -24,3 +24,9 @@
 section, ui5-title {
     margin-bottom: 2rem;
 }
+
+.controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
