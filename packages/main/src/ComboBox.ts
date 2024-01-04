@@ -516,7 +516,6 @@ class ComboBox extends UI5Element {
 		if (isPhone()) {
 			this.value = this.inner.value;
 			this._selectMatchingItem();
-			this.fireEvent("input");
 		}
 	}
 
@@ -536,6 +535,12 @@ class ComboBox extends UI5Element {
 	_focusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
 		const focusedOutToValueStateMessage = toBeFocused?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+		const clearIconWrapper = this.shadowRoot!.querySelector(".ui5-input-clear-icon-wrapper");
+		const focusedOutToClearIcon = clearIconWrapper === toBeFocused || clearIconWrapper?.contains(toBeFocused);
+
+		if (this._effectiveShowClearIcon && focusedOutToClearIcon) {
+			return;
+		}
 
 		this._fireChangeEvent();
 
@@ -635,6 +640,8 @@ class ComboBox extends UI5Element {
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
 		const { target } = e;
 		this.filterValue = (target as Input).value;
+		this.value = (target as Input).value;
+		this.fireEvent("input");
 	}
 
 	_input(e: InputEvent) {
@@ -1107,6 +1114,12 @@ class ComboBox extends UI5Element {
 	}
 
 	_clear() {
+		const selectedItem = this.items.find(item => item.selected) as (ComboBoxItem | undefined);
+
+		if (selectedItem?.text === this.value) {
+			this.fireEvent("change");
+		}
+
 		this.value = "";
 		this.fireEvent("input");
 

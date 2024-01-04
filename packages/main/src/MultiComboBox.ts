@@ -228,8 +228,7 @@ type MultiComboboxItemWithSelection = {
 @event("open-change")
 
 /**
- * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+ * Fired when selection is changed by user interaction.
  *
  * @event sap.ui.webc.main.MultiComboBox#selection-change
  * @param {Array} items an array of the selected items.
@@ -401,6 +400,9 @@ class MultiComboBox extends UI5Element {
 	@property({ type: Boolean })
 	_open!: boolean;
 
+	@property()
+	_valueBeforeOpen!: string;
+
 	@property({ type: Object, noAttribute: true, multiple: true })
 	_filteredItems!: Array<IMultiComboBoxItem>;
 
@@ -483,7 +485,6 @@ class MultiComboBox extends UI5Element {
 
 	selectedValues: Array<IMultiComboBoxItem>;
 	_inputLastValue: string;
-	_valueBeforeOpen: string
 	_deleting: boolean;
 	_validationTimeout: Timeout | null;
 	_handleResizeBound: ResizeObserverCallback;
@@ -553,8 +554,29 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_inputChange() {
-		if (!this._clearingValue) {
+		if (!this._clearingValue && this._lastValue !== this.value) {
+			this._lastValue = this.value;
 			this.fireEvent("change");
+		}
+	}
+
+	async _mobileInputChange(e:CustomEvent) {
+		this._inputChange.call(this);
+		const { value } = (e.target as Input);
+		const matchingItem = this.items.find(item => item.text === value);
+
+		if (!matchingItem) {
+			return;
+		}
+
+		const initiallySelected = matchingItem?.selected;
+		const changePrevented = this.fireSelectionChange();
+
+		if (!changePrevented) {
+			matchingItem.selected = !initiallySelected;
+			(await this._getResponsivePopover()).close();
+			this._valueBeforeOpen = value;
+			this.value = "";
 		}
 	}
 
@@ -1662,13 +1684,17 @@ class MultiComboBox extends UI5Element {
 			token.selected = false;
 		});
 
-		this._lastValue = this.value;
 		this.valueBeforeAutoComplete = "";
 	}
 
 	inputFocusOut(e: FocusEvent) {
-		if (!this.shadowRoot!.contains(e.relatedTarget as Node) && !this._deleting) {
+		if (!this.shadowRoot!.contains(e.relatedTarget as Node) && !this._deleting && !this._clearingValue) {
 			this.focused = false;
+
+			if (this._lastValue !== this.value) {
+				this._inputChange();
+			}
+
 			this._tokenizer.expanded = this.open;
 			// remove the value if user focus out the input and focus is not going in the popover
 			if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== e.relatedTarget)) {
