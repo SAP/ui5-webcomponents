@@ -44,9 +44,6 @@ class Form extends UI5Element {
 	@property({ type: Boolean })
 	editable!: boolean;
 
-	@property()
-	headerText!: string;
-
 	@property({ validator: Integer, defaultValue: 1 })
 	columnsM!: number;
 
@@ -55,6 +52,9 @@ class Form extends UI5Element {
 
 	@property({ validator: Integer, defaultValue: 2 })
 	columnsXL!: number;
+
+	@property()
+	headerText!: string;
 
 	@slot({ type: HTMLElement })
 	header!: Array<HTMLElement>;

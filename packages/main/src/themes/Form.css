@@ -39,7 +39,7 @@
 		grid-template-columns: 1fr;
 	}
 
-	::slotted() {
+	::slotted(*) {
 		justify-self: start;
 	}
 	::slotted(:nth-child(2n)){

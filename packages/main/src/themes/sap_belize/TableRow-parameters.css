@@ -2,4 +2,5 @@
 
 :root {
 	--ui5_table_row_height: 3rem;
+	--ui5_table_multiselect_popin_row_padding: 3.5rem;
 }

@@ -44,6 +44,13 @@ class FormItem extends UI5Element {
 	@slot()
 	labelContent!: Array<HTMLElement>;
 
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		individualSlots: true,
+	})
+	items!: Array<HTMLElement>;
+
 	get hasLabelContent(): boolean {
 		return !!this.labelContent.length;
 	}

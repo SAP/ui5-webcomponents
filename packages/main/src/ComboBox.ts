@@ -873,9 +873,13 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(e)) {
+			const focusedItem = this._filteredItems.find(item => {
+				return item.focused;
+			});
+
 			this._fireChangeEvent();
 
-			if (picker?.opened) {
+			if (picker?.opened && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {
@@ -1229,8 +1233,9 @@ class ComboBox extends UI5Element {
 	get classes() {
 		return {
 			popover: {
-				"ui5-suggestions-popover": !this._isPhone,
-				"ui5-suggestions-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
+				"ui5-suggestions-popover": true,
+				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
+				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-header": true,

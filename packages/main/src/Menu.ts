@@ -384,10 +384,9 @@ class Menu extends UI5Element {
 		if (!this.opener) {
 			return;
 		}
-		if (this.open) {
-			const rootNode = this.getRootNode() as Document;
-			const opener = this.opener instanceof HTMLElement ? this.opener : rootNode && rootNode.getElementById(this.opener);
 
+		if (this.open) {
+			const opener = this.getOpener();
 			if (opener) {
 				this.showAt(opener);
 			}
@@ -442,6 +441,11 @@ class Menu extends UI5Element {
 		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
 		this._popover = staticAreaItemDomRef!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this._popover;
+	}
+
+	getOpener() {
+		const rootNode = this.getRootNode() as Document;
+		return this.opener instanceof HTMLElement ? this.opener : rootNode?.getElementById?.(this.opener);
 	}
 
 	_navigateBack() {

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.4...v1.21.0-rc.5) (2024-01-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.21.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.3...v1.21.0-rc.4) (2023-12-28)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.21.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.2...v1.21.0-rc.3) (2023-12-21)
+
+
+### Features
+
+* **ui5-select:** introduce `readonly` state ([#7950](https://github.com/SAP/ui5-webcomponents/issues/7950)) ([02ea9a4](https://github.com/SAP/ui5-webcomponents/commit/02ea9a451635b9b0d75833889e7cdf3c022cd137)), closes [#7727](https://github.com/SAP/ui5-webcomponents/issues/7727)
+
+
+
+
+
 # [1.21.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.1...v1.21.0-rc.2) (2023-12-14)
 
 

@@ -7,6 +7,10 @@
 		{{/if}}
 	</div>
 	<div class="ui5-form-item-content">
-		<slot></slot>
+		{{#each items}}
+		<div class="ui5-form-item-content-child">
+			<slot name="{{this._individualSlot}}"></slot>
+		</div>
+		{{/each}}
 	</div>
 </div>
