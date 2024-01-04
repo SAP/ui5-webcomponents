@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.4...v1.21.0-rc.5) (2024-01-04)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** keep picker open on group selection ([#8039](https://github.com/SAP/ui5-webcomponents/issues/8039)) ([c72433e](https://github.com/SAP/ui5-webcomponents/commit/c72433e94b5e2302b5cba7028c80450e556be83f))
+* **ui5-tree:** correct item indentation ([#8051](https://github.com/SAP/ui5-webcomponents/issues/8051)) ([5e3662f](https://github.com/SAP/ui5-webcomponents/commit/5e3662ff57e3a932fa7b32b276b25f5552913f75))
+
+
+### Features
+
+* **ui5-checkbox:** add css shadow part to the label ([#8046](https://github.com/SAP/ui5-webcomponents/issues/8046)) ([0ea504e](https://github.com/SAP/ui5-webcomponents/commit/0ea504ed6bf2bcce8df4789829be859e1745b3e4))
+
+
+
+
+
 # [1.21.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.3...v1.21.0-rc.4) (2023-12-28)
 
 
