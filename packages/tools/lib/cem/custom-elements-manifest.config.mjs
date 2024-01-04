@@ -1,5 +1,7 @@
 import { parse } from "comment-parser";
 import processEvent from "./event.mjs";
+import path from "path";
+import fs from 'fs';
 import {
 	getDeprecatedStatus,
 	getSinceStatus,
@@ -352,10 +354,31 @@ export default {
 	globs: ["src/!(*generated/)!(*bundle)*.ts"],
 	outdir: 'dist',
 	overrideModuleCreation: ({ ts, globs }) => {
-		typeProgram = ts.createProgram(globs, {});
+		typeProgram = ts.createProgram(globs, {
+			noEmitOnError: false,
+			allowJs: true,
+			experimentalDecorators: true,
+			target: 99,
+			downlevelIteration: true,
+			module: 99,
+			strictNullChecks: true,
+			moduleResolution: 2,
+			esModuleInterop: true,
+			noEmit: true,
+			pretty: true,
+			allowSyntheticDefaultImports: true,
+			allowUnreachableCode: true,
+			allowUnusedLabels: true,
+			skipLibCheck: true,
+		});
 		typeChecker = typeProgram.getTypeChecker();
 
-		return typeProgram.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
+		return globs.map((glob) => {
+			const fullPath = path.resolve(process.cwd(), glob);
+			const source = fs.readFileSync(fullPath).toString();
+
+			return ts.createSourceFile(glob, source, ts.ScriptTarget.ES2015, true);
+		});
 	},
 	plugins: [
 		{
