@@ -1,0 +1,5 @@
+@import "../base/BusyIndicator-parameters.css";
+
+:root {
+	--_ui5_busy_indicator_color: #00a4eb;
+}
