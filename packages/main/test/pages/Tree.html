@@ -79,6 +79,20 @@
 		</ui5-tree-item>
 
 	</ui5-tree>
+
+	<ui5-button id="btn">Add</ui5-button>
+	<ui5-tree>
+		<div slot="header">
+			<ui5-title>Add item on deeper level</ui5-title>
+		</div>
+		<ui5-tree-item text="1-0-0" expanded>
+			<ui5-tree-item id="treeItem" text="1-1-0" expanded>
+				<ui5-tree-item text="1-1-1"></ui5-tree-item>
+			</ui5-tree-item>
+			<ui5-tree-item text="1-2-0"></ui5-tree-item>
+			<ui5-tree-item text="1-3-0"></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
 	Mouseover counter
 	<ui5-input id="mouseover-counter" value="0"></ui5-input>
 	Mouseout counter
@@ -191,7 +205,6 @@
 			<ui5-tree-item text="Should have checkbox"></ui5-tree-item>
 		</ui5-tree-item>
 	</ui5-tree>
-	
 	<script>
 		const mouseOverInput = document.getElementById("mouseover-counter");
 		const mouseOutInput = document.getElementById("mouseout-counter");
@@ -298,6 +311,16 @@
 		indetereminateTree.addEventListener("ui5-selection-change", function(event) {
 			selectionChangeTargetItemResult.value = event.detail.targetItem.id;
 		});
+
+		const btn = document.getElementById("btn");
+		const treeItem = document.getElementById("treeItem");
+
+		btn.addEventListener("click", () => {
+			const newTreeItem = document.createElement("ui5-tree-item");
+			newTreeItem.text = `1-1-${treeItem.querySelectorAll("[ui5-tree-item]").length + 1}`
+
+			treeItem.appendChild(newTreeItem);
+		})
 
 	</script>
 </body>

@@ -76,6 +76,7 @@ let activeCb: CheckBox;
  * @extends UI5Element
  * @public
  * @csspart root - Used to style the outermost wrapper of the <code>ui5-checkbox</code>
+ * @csspart label - Used to style the label of the <code>ui5-checkbox</code>
  */
 @customElement({
 	tag: "ui5-checkbox",
