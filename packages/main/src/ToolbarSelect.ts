@@ -34,7 +34,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @abstract
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarSelect
- * @extends sap.ui.webc.base.UI5Element
+ * @extends sap.ui.webc.main.ToolbarItem
  * @tagname ui5-toolbar-select
  * @appenddocs sap.ui.webc.main.ToolbarSelectOption
  * @public
