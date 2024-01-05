@@ -26,5 +26,4 @@
 		inset 0 -0.0625rem 0 var(--sapButton_BorderColor),
 		inset -0.0625rem 0 0 var(--sapButton_BorderColor),
 		inset 0 0.0625rem 0 var(--sapButton_BorderColor);
-	/* --_ui5_split_button_middle_separator_hover_display_emphasized: none; */
 }
