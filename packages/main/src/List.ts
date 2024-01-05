@@ -1172,7 +1172,8 @@ class List extends UI5Element {
 
 	_ondragover(e: DragEvent) {
 		const dropIndicator = this.dropIndicatorDOM;
-		const draggedElement = (e.target as ListItemBase)?.closest("[ui5-li-custom]");
+		// to do: properly find the dragged list item
+		const draggedElement = (e.target as ListItemBase)?.closest("[ui5-li]") || (e.target as ListItemBase)?.closest("[ui5-li-custom]");
 		if (!draggedElement) {
 			dropIndicator.target = "";
 			return;
