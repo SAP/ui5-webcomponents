@@ -1098,12 +1098,14 @@ describe("Keyboard navigation", async () => {
 
 	it ("Should scroll to items that are in the scroll area upon navigation", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
+		await browser.setWindowSize(1000, 400);
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await combo.scrollIntoView();
+
 
 		await arrow.click();
 
@@ -1111,10 +1113,21 @@ describe("Keyboard navigation", async () => {
 			const combobox = document.getElementById("combo-grouping");
 			const picker = await combobox._getPicker();
 			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li:last-child");
-			const pickerRect = picker.getBoundingClientRect();
-			const listItemRect = listItem.getBoundingClientRect();
+			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+			const elementRect = listItem.getBoundingClientRect();
 
-			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+		);
 
 			done(isListItemInVisibleArea);
 		});
@@ -1129,10 +1142,21 @@ describe("Keyboard navigation", async () => {
 			const combobox = document.getElementById("combo-grouping");
 			const picker = await combobox._getPicker();
 			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li:last-child");
-			const pickerRect = picker.getBoundingClientRect();
-			const listItemRect = listItem.getBoundingClientRect();
+			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+			const elementRect = listItem.getBoundingClientRect();
 
-			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
+			// Check if the element is within the visible area
+			const isElementAboveViewport = elementRect.bottom < scrollableRect.top;
+			const isElementBelowViewport = elementRect.top > scrollableRect.bottom;
+			const isElementLeftOfViewport = elementRect.right < scrollableRect.left;
+			const isElementRightOfViewport = elementRect.left > scrollableRect.right;
+
+			const isListItemInVisibleArea =  (
+				!isElementAboveViewport &&
+				!isElementBelowViewport &&
+				!isElementLeftOfViewport &&
+				!isElementRightOfViewport
+		);
 
 			done(isListItemInVisibleArea);
 		});

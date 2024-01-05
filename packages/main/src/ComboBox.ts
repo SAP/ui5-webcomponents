@@ -750,7 +750,7 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 
 		this._announceSelectedItem(indexOfItem);
-		this._scrollToItem(indexOfItem);
+		this._scrollToItem(indexOfItem, isForward);
 
 		if (isGroupItem && isOpen) {
 			return;
@@ -1087,7 +1087,7 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	async _scrollToItem(indexOfItem: number) {
+	async _scrollToItem(indexOfItem: number, forward: boolean) {
 		const picker = await this._getPicker();
 		const list = picker.querySelector(".ui5-combobox-items-list") as List;
 		const listItem = list?.items[indexOfItem];
@@ -1098,7 +1098,7 @@ class ComboBox extends UI5Element {
 			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
 
 			if (!isListItemInVisibleArea) {
-				listItem.scrollIntoView({ behavior: "instant", block: "center", inline: "nearest" });
+				listItem.scrollIntoView({ behavior: "instant", block: forward ? "end" : "start", inline: "nearest" });
 			}
 		}
 	}
