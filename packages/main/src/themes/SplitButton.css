@@ -2,7 +2,7 @@
 @import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
-	display: inline-block;
+	display: inline-flex;
 	height: 100%;
 	border-radius: var(--_ui5_button_border_radius);
 	background-color: var(--sapButton_Background);
@@ -97,10 +97,10 @@
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
-	left: 0.125rem;
-	top: 0.125rem;
-	right: 0.125rem;
-	bottom: 0.125rem;
+	inset-inline-start: 0.125rem;
+	inset-block-start: 0.125rem;
+	inset-inline-end: 0.125rem;
+	inset-block-end: 0.125rem;
 	border: var(--_ui5_split_button_focused_border);
 	pointer-events: none;
 	border-radius: var(--_ui5_split_button_focused_border_radius);
@@ -113,7 +113,7 @@
 .ui5-split-button-root {
 	display: inline-flex;
 	position: relative;
-	width: inherit
+	width: inherit;
 }
 
 .ui5-split-button-root:focus,
@@ -123,10 +123,10 @@
 }
 
 .ui5-split-text-button {
-	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
-	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-end-radius: var(--_ui5_split_button_hover_border_radius);
+	border-end-end-radius: var(--_ui5_split_button_hover_border_radius);
 	border-width: 0.0625rem;
-	border-right-width: var(--_ui5_split_button_text_button_right_border_width);
+	border-inline-end-width: var(--_ui5_split_button_text_button_right_border_width);
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
 	vertical-align: top;
@@ -134,13 +134,12 @@
 }
 
 .ui5-split-text-button:hover {
-	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
-	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-end-radius: var(--_ui5_split_button_hover_border_radius);
+	border-end-end-radius: var(--_ui5_split_button_hover_border_radius);
 	background-color: var(--sapButton_Hover_Background);
 	box-shadow: none;
 	border: var(--_ui5_split_text_button_hover_border);
-	border-right: var(--_ui5_split_text_button_hover_border_right);
-	border-left: var(--_ui5_split_text_button_hover_border_left);
+	border-inline-end: var(--_ui5_split_text_button_hover_border_right);
 }
 .ui5-split-text-button[design="Emphasized"] {
 	border: var(--_ui5_split_text_button_emphasized_border);
@@ -148,33 +147,26 @@
 }
 .ui5-split-text-button[design="Emphasized"]:hover {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
-	border: var(--_ui5_split_text_button_emphasized_hover_border);
-	border-right: var(--_ui5_split_text_button_emphasized_hover_border_right);
-	border-left: var(--_ui5_split_text_button_emphasized_hover_border_left);
 }
 .ui5-split-text-button[design="Positive"]:hover {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border: var(--_ui5_split_text_button_positive_hover_border);
-	border-right: var(--_ui5_split_text_button_positive_hover_border_right);
-	border-left: var(--_ui5_split_text_button_positive_hover_border_left);
+	border-inline-end: var(--_ui5_split_text_button_positive_hover_border_right);
 }
 .ui5-split-text-button[design="Negative"]:hover {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border: var(--_ui5_split_text_button_negative_hover_border);
-	border-right: var(--_ui5_split_text_button_negative_hover_border_right);
-	border-left: var(--_ui5_split_text_button_negative_hover_border_left);
+	border-inline-end: var(--_ui5_split_text_button_negative_hover_border_right);
 }
 .ui5-split-text-button[design="Attention"]:hover {
 	background-color: var(--sapButton_Attention_Hover_Background);
 	border: var(--_ui5_split_text_button_attention_hover_border);
-	border-right: var(--_ui5_split_text_button_attention_hover_border_right);
-	border-left: var(--_ui5_split_text_button_attention_hover_border_left);
+	border-inline-end: var(--_ui5_split_text_button_attention_hover_border_right);
 }
 .ui5-split-text-button[design="Transparent"]:hover {
 	background-color: var(--_ui5_split_button_transparent_hover_background);
 	border: var(--_ui5_split_text_button_transparent_hover_border);
-	border-right: var(--_ui5_split_text_button_transparent_hover_border_right);
-	border-left: var(--_ui5_split_text_button_transparent_hover_border_left);
+	border-inline-end: var(--_ui5_split_text_button_transparent_hover_border_right);
 }
 
 .ui5-split-text-button[active][design="Emphasized"] {
@@ -213,55 +205,19 @@
 }
 
 .ui5-split-arrow-button {
-	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
-	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-start-radius: var(--_ui5_split_button_hover_border_radius);
+	border-end-start-radius: var(--_ui5_split_button_hover_border_radius);
 	width: 2.25rem;
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
 	position: relative;
+	border-width: 0.0625rem;
 	overflow: visible;
 }
 
-.ui5-split-text-button[dir="rtl"]:hover {
-	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
-	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
-	border-left: var(--_ui5_split_text_button_hover_border_left_rtl);
-	border-right: var(--_ui5_split_text_button_hover_border_right_rtl);
-}
-
-.ui5-split-text-button[design="Emphasized"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_emphasized_hover_border_left_rtl);
-	border-right: var(--_ui5_split_text_button_emphasized_hover_border_right_rtl);
-}
-
-.ui5-split-text-button[design="Positive"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_positive_hover_border_left_rtl);
-	border-right: var(--_ui5_split_text_button_positive_hover_border_right_rtl);
-}
-
-.ui5-split-text-button[design="Negative"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_negative_hover_border_left_rtl);
-	border-right: var(--_ui5_split_text_button_negative_hover_border_right_rtl);
-}
-
-.ui5-split-text-button[design="Attention"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_attention_hover_border_left_rtl);
-	border-right: var(--_ui5_split_text_button_attention_hover_border_right_rtl);
-}
-
-.ui5-split-text-button[design="Transparent"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_transparent_hover_border_left_rtl);
-	border-right: var(--_ui5_split_text_button_transparent_hover_border_right_rtl);
-}
-
-[dir="rtl"] .ui5-split-arrow-button:hover {
-	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
-	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
-}
-
 .ui5-split-arrow-button:hover {
-	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
-	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
+	border-start-start-radius: var(--_ui5_split_button_hover_border_radius);
+	border-end-start-radius: var(--_ui5_split_button_hover_border_radius);
 	background-color: var(--sapButton_Hover_Background);
 	box-shadow: none;
 	border: var(--_ui5_split_arrow_button_hover_border);
@@ -270,11 +226,7 @@
 .ui5-split-arrow-button[design="Emphasized"]:hover {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
-}
-
-.ui5-split-arrow-button[design="Emphasized"][dir="rtl"]:hover {
-	border-left-width: var(--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl);
-	border-right-width: var(--sapButton_BorderWidth);
+	box-shadow: var(--_ui5_split_arrow_button_emphasized_hoved_box_shadow, none)
 }
 
 .ui5-split-arrow-button[design="Positive"]:hover {
@@ -304,8 +256,8 @@
 	pointer-events: none;
 	width: 0.0625rem;
 	background-color: var(--sapButton_TextColor);
-	left: var(--_ui5_split_button_middle_separator_left);
-	top: var(--_ui5_split_button_middle_separator_top);
+	inset-inline-start: var(--_ui5_split_button_middle_separator_left);
+	inset-block-start: var(--_ui5_split_button_middle_separator_top);
 	height: var(--_ui5_split_button_middle_separator_height);
 }
 
@@ -314,31 +266,21 @@
 	position: absolute;
 	box-sizing: border-box;
 	pointer-events: none;
-	left: var(--_ui5_split_button_middle_separator_left);
-	top: var(--_ui5_split_button_middle_separator_top);
-	right: 0;
+	inset-inline-start: var(--_ui5_split_button_middle_separator_left);
+	inset-block-start: var(--_ui5_split_button_middle_separator_top);
+	inset-inline-end: 0;
 	height: var(--_ui5_split_button_middle_separator_height);
-	border: 0 solid var(--sapButton_TextColor);
-	border-left-width: 0.0625rem;
-}
-
-[dir="rtl"] .ui5-split-arrow-button:before {
-	content: "";
-	position: absolute;
-	box-sizing: border-box;
-	pointer-events: none;
-	right: var(--_ui5_split_button_middle_separator_left);
-	top: var(--_ui5_split_button_middle_separator_top);
-	left: 0;
-	height: var(--_ui5_split_button_middle_separator_height);
-	border: 0 solid var(--sapButton_TextColor);
-	border-right-width: 0.0625rem;
-	border-left-width: 0;
+	border: 0 solid var(--sapButton_Emphasized_TextColor);
+	border-inline-start-width: 0.0625rem;
 }
 
 .ui5-split-text-button:hover + .ui5-split-arrow-button:before,
 .ui5-split-arrow-button:hover:before {
 	display: var(--_ui5_split_button_middle_separator_hover_display);
+}
+
+.ui5-split-arrow-button[design="Emphasized"]:hover:before {
+	display: var(--_ui5_split_button_middle_separator_hover_display_emphasized);
 }
 
 /* separator colors */
@@ -362,43 +304,16 @@
 	background-color: var(--_ui5_split_button_attention_separator_color_default);
 }
 
-.ui5-split-text-button[dir="rtl"] {
-	border-radius: 0 var(--_ui5_button_border_radius) var(--_ui5_button_border_radius) 0;
-	border-width: var(--sapButton_BorderWidth);
-}
-
-.ui5-split-text-button[design="Emphasized"][dir="rtl"] {
-	border-width: var(--_ui5_split_text_button_emphasized_border_width_rtl);
-}
-
-[dir="rtl"] .ui5-split-arrow-button {
-	border-radius: var(--_ui5_button_border_radius) 0 0 var(--_ui5_button_border_radius);
-}
-
 
 
 .ui5-split-arrow-button[focused]::part(button)::after {
-	border-top-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
+	border-start-start-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
+	border-end-start-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 }
 
 .ui5-split-text-button[focused]::part(button)::after {
-	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-}
-
-[dir="rtl"] .ui5-split-arrow-button[focused]::part(button)::after {
-	border-top-left-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
-	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
-	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-}
-
-.ui5-split-text-button[dir="rtl"][focused]::part(button)::after {
-	border-top-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
-	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
+	border-start-end-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
+	border-end-end-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 }
 
 .ui5-split-text-button[active][design="Emphasized"] {
@@ -425,7 +340,7 @@
 :host([active-arrow-button]) .ui5-split-arrow-button::before,
 .ui5-split-arrow-button[active]::before,
 .ui5-split-text-button[active] + .ui5-split-arrow-button::before {
-	background-color: transparent;
+	background-color: var(--sapButton_TextColor);
 }
 
 :host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button::before,
