@@ -514,7 +514,6 @@ class MultiComboBox extends UI5Element {
 		this.selectedValues = [];
 		this._itemsBeforeOpen = [];
 		this._inputLastValue = "";
-		this._valueBeforeOpen = "";
 		this._deleting = false;
 		this._validationTimeout = null;
 		this._handleResizeBound = this._handleResize.bind(this);
@@ -575,7 +574,6 @@ class MultiComboBox extends UI5Element {
 		if (!changePrevented) {
 			matchingItem.selected = !initiallySelected;
 			(await this._getResponsivePopover()).close();
-			this._valueBeforeOpen = value;
 			this.value = "";
 		}
 	}
@@ -1460,6 +1458,9 @@ class MultiComboBox extends UI5Element {
 
 		this._valueBeforeOpen = this.value;
 		this._dialogInputValueState = this.valueState;
+
+		// in order to use the autocomplete feature of the input we should not set value in state
+		this._innerInput.value = this.value;
 
 		if (this.filterSelected) {
 			const selectedItems = this._filteredItems.filter(item => item.selected);
