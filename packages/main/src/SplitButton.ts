@@ -141,7 +141,7 @@ class SplitButton extends UI5Element {
 	 * @name sap.ui.webc.main.SplitButton.prototype.activeArrowButton
 	 * @defaultvalue false
 	 * @public
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
 	activeArrowButton!: boolean;
