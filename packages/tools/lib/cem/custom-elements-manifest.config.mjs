@@ -19,21 +19,45 @@ import {
 	formatArrays
 } from "./utils.mjs";
 
+const isClass = text => {
+	return text.includes("@abstract") || text.includes("@class") || text.includes("@constructor");
+};
+
+const extractClassNodeJSDoc = node => {
+	const fileContent = node.getFullText();
+	const allJSDocsRegExp = new RegExp(`\\/\\*\\*(.|\\n)+?\\s+\\*\\/`, "gm");
+	let allJSDocs = [...fileContent.matchAll(allJSDocsRegExp)];
+	allJSDocs = allJSDocs.map(match => match[0]); // all /** ..... */ comments
+
+	// Find where the class is defined in the original file
+	const tsClassDefinitionRegExp = new RegExp(`^\\s*(abstract\\s*)?class [\\w\\d_]+`, "gm");
+	let tsClassDefinitionMatch = fileContent.match(tsClassDefinitionRegExp);
+	if (!tsClassDefinitionMatch) {
+		return; // no class defined in this .ts file
+	}
+	const tsClassDefinition = tsClassDefinitionMatch[0];
+	const tsClassDefinitionIndex = fileContent.indexOf(tsClassDefinition);
+
+	return allJSDocs.find(JSDoc => {
+		return isClass(JSDoc) && (fileContent.indexOf(JSDoc) < tsClassDefinitionIndex)
+	});
+}
+
 function processClass(ts, classNode, moduleDoc) {
 	const className = classNode?.name?.text;
 	const currClass = moduleDoc?.declarations?.find(declaration => declaration?.name === className);
-	const currClassJSdoc = classNode?.jsDoc?.[0] || classNode?.jsDoc?.find(jsDoc => jsDoc?.[0]?.getText?.()?.includes("@class"));
+	const currClassJSdoc = extractClassNodeJSDoc(classNode);
 
 	if (!currClassJSdoc) return;
 
 	const customElementDecorator = findDecorator(classNode, "customElement");
-	const classParsedJsDoc = parse(currClassJSdoc?.getText(), { spacing: 'preserve' })[0];
+	const classParsedJsDoc = parse(currClassJSdoc, { spacing: 'preserve' })[0];
 
 	validateJSDocComment("class", classParsedJsDoc, classNode.name?.text, moduleDoc);
 
 	const decoratorArg = customElementDecorator?.expression?.arguments[0];
 	currClass.tagName = decoratorArg?.text || (decoratorArg?.properties.find(property => property.name.text === "tag")?.initializer?.text);
-	currClass.customElement = !!decoratorArg;
+	currClass.customElement = !!decoratorArg || className === "UI5Element" || undefined;
 	currClass.kind = "class";
 	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
@@ -48,6 +72,10 @@ function processClass(ts, classNode, moduleDoc) {
 	if (hasTag(classParsedJsDoc, "extends")) {
 		const superclassTag = findTag(classParsedJsDoc, "extends");
 		currClass.superclass = getReference(ts, superclassTag.name, classNode, moduleDoc.path);
+
+		if (currClass.superclass?.name === "UI5Element") {
+			currClass.customElement = true;
+		}
 	}
 
 	if (!currClass._ui5implements.length) delete currClass._ui5implements;
@@ -405,10 +433,14 @@ export default {
 					}
 				}
 
+				if (moduleDoc.exports) {
+					moduleDoc.exports = moduleDoc.exports.filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
+				}
+
 				moduleDoc.exports?.forEach(e => {
 					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
 
-					if (classNode?.customElement && e.kind !== "custom-element-definition") {
+					if (classNode?.customElement && classNode.tagName && e.kind !== "custom-element-definition") {
 						moduleDoc.exports.push({
 							kind: "custom-element-definition",
 							name: classNode.tagName,

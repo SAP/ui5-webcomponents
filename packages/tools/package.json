@@ -52,7 +52,6 @@
     "is-port-reachable": "^3.1.0",
     "jsdoc": "^3.6.6",
     "json-beautify": "^1.1.1",
-    "json-schema-to-typescript": "^13.1.1",
     "mkdirp": "^1.0.4",
     "nps": "^5.10.0",
     "postcss": "^8.4.5",

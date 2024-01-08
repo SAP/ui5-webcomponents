@@ -354,7 +354,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @since 1.0.0-rc.7
 	 * @public
-	 * @default []
 	 */
 	@slot({ type: HTMLElement })
 	valueStateMessage!: Array<HTMLElement>;
