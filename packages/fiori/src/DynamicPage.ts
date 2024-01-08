@@ -160,11 +160,15 @@ class DynamicPage extends UI5Element {
 
 			const scrollTop = this.scrollContainer!.scrollTop;
 
-			if (this.iPreviousScrollAmount === scrollTop || this.headerPinned) {
+			if (this.iPreviousScrollAmount === scrollTop) {
 				return;
 			}
 
 			this.iPreviousScrollAmount = scrollTop;
+
+			if (this.headerPinned) {
+				return;
+			}
 
 			if (this.isExpanding) {
 				this.isExpanding = false;
