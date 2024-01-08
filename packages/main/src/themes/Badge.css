@@ -12,8 +12,8 @@
 }
 
 :host([_is-tag-design]) {
-	font-size: var(--sapFontBoldFamily);
-	font-family: var(--sapFontSmallSize);
+	font-family: var(--sapFontBoldFamily);
+	font-size: var(--sapFontSmallSize);
 }
 
 .ui5-badge-root {
