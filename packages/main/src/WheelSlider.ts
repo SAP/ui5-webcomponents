@@ -265,6 +265,10 @@ class WheelSlider extends UI5Element {
 			return Math.floor(this._currentElementIndex / this._items.length);
 		}
 
+		if (this._items.length > 0 && this.cyclic) {
+			return 1;
+		}
+
 		return 0;
 	}
 

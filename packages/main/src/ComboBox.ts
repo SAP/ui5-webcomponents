@@ -750,6 +750,7 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 
 		this._announceSelectedItem(indexOfItem);
+		this._scrollToItem(indexOfItem, isForward);
 
 		if (isGroupItem && isOpen) {
 			return;
@@ -873,9 +874,13 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(e)) {
+			const focusedItem = this._filteredItems.find(item => {
+				return item.focused;
+			});
+
 			this._fireChangeEvent();
 
-			if (picker?.opened) {
+			if (picker?.opened && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {
@@ -1082,6 +1087,22 @@ class ComboBox extends UI5Element {
 		}
 	}
 
+	async _scrollToItem(indexOfItem: number, forward: boolean) {
+		const picker = await this._getPicker();
+		const list = picker.querySelector(".ui5-combobox-items-list") as List;
+		const listItem = list?.items[indexOfItem];
+
+		if (listItem) {
+			const pickerRect = picker.getBoundingClientRect();
+			const listItemRect = listItem.getBoundingClientRect();
+			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
+
+			if (!isListItemInVisibleArea) {
+				listItem.scrollIntoView({ behavior: "instant", block: forward ? "end" : "start", inline: "nearest" });
+			}
+		}
+	}
+
 	_announceValueStateText() {
 		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
 
@@ -1229,8 +1250,9 @@ class ComboBox extends UI5Element {
 	get classes() {
 		return {
 			popover: {
-				"ui5-suggestions-popover": !this._isPhone,
-				"ui5-suggestions-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
+				"ui5-suggestions-popover": true,
+				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
+				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-header": true,

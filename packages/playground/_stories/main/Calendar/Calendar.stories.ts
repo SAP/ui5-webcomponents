@@ -10,7 +10,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type Calendar from "@ui5/webcomponents/dist/Calendar.js";
-import CalendarSelectionMode from "@ui5/webcomponents/dist/types/CalendarSelectionMode.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 
 
@@ -19,7 +18,6 @@ const component = "ui5-calendar";
 export default {
 	title: "Main/Calendar",
 	component: "Calendar",
-	subcomponents: {'CalendarDate' : 'CalendarDate'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -45,7 +43,7 @@ export const Basic = Template.bind({});
 export const Bounds = Template.bind({});
 Bounds.storyName = "Formatted Date Range";
 Bounds.args = {
-	minDate: "7/10/2020", 
+	minDate: "7/10/2020",
 	maxDate: "20/10/2020",
 	formatPattern: "dd/MM/yyyy",
 };

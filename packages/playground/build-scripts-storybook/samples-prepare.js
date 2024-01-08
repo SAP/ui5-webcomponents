@@ -25,6 +25,16 @@ const main = async () => {
 				const componentPath = path.join(packagePath, component);
 				const componentStats = await fs.stat(componentPath);
 				if (componentStats.isDirectory()) {
+					const folderContent = await fs.readdir(componentPath);
+					await Promise.all(folderContent.map(async (subComponent, index) => {
+						const subComponentPath = path.join(componentPath, subComponent);
+						const subComponentStats = await fs.stat(subComponentPath);
+
+						if (subComponentStats.isDirectory()) {
+							generateStoryDoc(subComponentPath, subComponent, api, package);
+						}
+					}))
+
 					generateStoryDoc(componentPath, component, api, package);
 				}
 			}

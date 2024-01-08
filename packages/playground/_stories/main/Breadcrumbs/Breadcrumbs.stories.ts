@@ -10,14 +10,12 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type Breadcrumbs from "@ui5/webcomponents/dist/Breadcrumbs.js";
-import BreadcrumbsDesign from "@ui5/webcomponents/dist/types/BreadcrumbsDesign.js";
 
 const component = "ui5-breadcrumbs";
 
 export default {
     title: "Main/Breadcrumbs",
     component: "Breadcrumbs",
-    subcomponents: { BreadcrumbsItem: "BreadcrumbsItem" },
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),

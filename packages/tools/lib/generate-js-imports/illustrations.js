@@ -1,12 +1,14 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-const generateDynamicImportLines = (fileNames, location, exclusionPatterns = []) => {
+const generateDynamicImportLines = async (fileNames, location, exclusionPatterns = []) => {
+  const packageName = JSON.parse(await fs.readFile("package.json")).name;
   return fileNames
     .filter((fileName) => !exclusionPatterns.some((pattern) => fileName.startsWith(pattern)))
     .map((fileName) => {
-      const illustrationPath = `${location}/${fileName.replace(".js", "")}`;
-      return `\t\tcase "${fileName.replace('.js', '')}": return (await import("${illustrationPath}.js")).default;`;
+      const illustrationName = fileName.replace(".js", "");
+      const illustrationPath = `${location}/${illustrationName}`;
+      return `\t\tcase "${fileName.replace('.js', '')}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-${illustrationName.toLowerCase()}" */ "${illustrationPath}.js")).default;`;
     })
     .join("\n");
 };
@@ -57,7 +59,7 @@ const generateIllustrations = async (config) => {
 
   const illustrations = await getMatchingFiles(normalizedInputFolder, /^.*\.js$/);
 
-  const dynamicImports = generateDynamicImportLines(illustrations, location, filterOut);
+  const dynamicImports = await generateDynamicImportLines(illustrations, location, filterOut);
   const availableIllustrations = generateAvailableIllustrationsArray(illustrations, filterOut);
 
   const contentDynamic = generateDynamicImportsFileContent(dynamicImports, availableIllustrations, collection, prefix);
