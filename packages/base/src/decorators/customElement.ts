@@ -9,7 +9,7 @@ import type { ComponentStylesData as Styles } from "../types.js";
  * @param { string | object } tagNameOrComponentSettings
  * @returns { ClassDecorator }
  */
-const customElement = (tagNameOrComponentSettings: string | {
+const customElement = (tagNameOrComponentSettings?: string | {
 	tag?: string,
 	renderer?: Renderer,
 	styles?: Styles,
@@ -24,6 +24,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};
+		}
+
+		if (!tagNameOrComponentSettings) {
+			return;
 		}
 
 		if (typeof tagNameOrComponentSettings === "string") {

@@ -1,4 +1,3 @@
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -18,10 +17,7 @@ import DateComponentBase from "./DateComponentBase.js";
  * @extends DateComponentBase
  * @public
  */
-@customElement({
-	languageAware: true,
-	renderer: litRender,
-})
+@customElement()
 class CalendarPart extends DateComponentBase {
 	/**
 	 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
