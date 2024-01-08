@@ -110,6 +110,9 @@ class Card extends UI5Element {
 				"ui5-card--interactive": this._hasHeader && this.header[0].interactive,
 				"ui5-card--nocontent": !this.content.length,
 			},
+			content: {
+				"ui5-card-content-root": true,
+			},
 		};
 	}
 
