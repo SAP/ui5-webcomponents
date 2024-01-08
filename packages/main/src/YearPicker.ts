@@ -63,7 +63,7 @@ type YearPickerNavigateEventDetail = {
  *
  * @constructor
  * @extends CalendarPart
- * @public
+ * @private
  */
 @customElement({
 	tag: "ui5-yearpicker",

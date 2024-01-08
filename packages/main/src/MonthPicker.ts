@@ -69,7 +69,7 @@ type MonthPickerNavigateEventDetail = {
  *
  * @constructor
  * @extends CalendarPart
- * @public
+ * @private
  */
 @customElement({
 	tag: "ui5-monthpicker",

@@ -39,7 +39,7 @@ type WheelSliderSelectEventDetail = { value: string };
  *
  * @constructor
  * @extends UI5Element
- * @public
+ * @private
  * @since 1.0.0-rc.6
  */
 @customElement({
