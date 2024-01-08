@@ -13,13 +13,7 @@
       {{/if}}
 
       {{#if actionsInTitle}}
-      <ui5-dynamic-page-header-actions
-        ?snapped="{{headerSnapped}}"
-        ?pinned="{{headerPinned}}"
-        .accessibilityAttributes="{{_accAttributesForHeaderActions}}"
-        @ui5-expand-button-click={{onExpandClick}}
-        @ui5-pin-button-click={{onPinClick}}
-      ></ui5-dynamic-page-header-actions>
+        {{> header-actions}}
       {{/if}}
 
    </header>
@@ -29,17 +23,16 @@
     {{/if}}
 
     {{#unless actionsInTitle}}
-      <ui5-dynamic-page-header-actions
-          ?snapped="{{headerSnapped}}"
-          ?pinned="{{headerPinned}}"
-          .accessibilityAttributes="{{_accAttributesForHeaderActions}}"
-          @ui5-expand-button-click={{onExpandClick}}
-          @ui5-pin-button-click={{onPinClick}}
-        ></ui5-dynamic-page-header-actions>
+      {{> header-actions}}
     {{/unless}}
 
     <div class="{{classes.content}}">
-      <slot></slot>
+      <div class="{{classes.fitContent}}">
+        <slot></slot>
+        {{#if showFooter}}
+          <div class="{{classes.spacer}}"></div>
+        {{/if}}
+      </div>
     </div>
   </div>
 
@@ -47,3 +40,12 @@
       <slot name="footer"></slot>
     </div>
 </div>
+{{#*inline "header-actions"}}
+    <ui5-dynamic-page-header-actions
+      ?snapped="{{headerSnapped}}"
+      ?pinned="{{headerPinned}}"
+      .accessibilityAttributes="{{_accAttributesForHeaderActions}}"
+      @ui5-expand-button-click={{onExpandClick}}
+      @ui5-pin-button-click={{onPinClick}}
+  ></ui5-dynamic-page-header-actions>
+  {{/inline}}

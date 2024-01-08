@@ -4,11 +4,12 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: var(--sapObjectHeader_Background);
+    background-color: var(--_ui5_dynamic_page_header_background_color);
     min-height: var(--_ui5_dynamic_page_title_min_height);
     word-wrap: break-word;
     padding-top: var(--_ui5_dynamic_page_title_padding_top);
     padding-bottom: var(--_ui5_dynamic_page_title_padding_bottom);
+    border-bottom: var(--_ui5_dynamic_page_title_border);
 }
 
 :host .ui5-dynamic-page-title-root {
@@ -19,8 +20,9 @@
 }
 
 :host(:hover) {
-    background-color: var(--sapObjectHeader_Hover_Background);
+    background-color: var(--_ui5_dynamic_page_title_hover_background);
     cursor: pointer;
+    border-bottom: var(--_ui5_dynamic_page_title_hover_border);
 }
 
 :host([snapped]) {
@@ -40,6 +42,7 @@
     font-family: var(--sapObjectHeader_Title_FontFamily);
     color: var(--sapObjectHeader_Title_TextColor);
     padding: var(--_ui5_dynamic_page_title_heading_padding_top) 0 0 0;
+    margin: var(--_ui5_dynamic_page_title_heading_margin);
 }
 
 ::slotted([ui5-title][slot="expandedHeading"]),
@@ -63,7 +66,7 @@
 
 /* actions */
 ::slotted([ui5-toolbar][slot="actions"]) {
-    /* padding: 0 0 0 1rem; */
+    padding: 0 0 0 1rem;
 }
 
 .ui5-dynamic-page-title--wrapper {
@@ -87,6 +90,7 @@
     min-width: 3rem;
     flex-grow: 1;
     display: flex;
+    align-items: center;
 }
 
 .ui5-dynamic-page-title--actions ::slotted([slot="actions"]) {
@@ -104,13 +108,19 @@
         width: 0.0625rem;
         vertical-align: middle;
         background: var(--sapToolbar_SeparatorColor);
-        margin: 0 0.5rem;
+        margin: 0 0.5rem 0 0.25rem;
     }
 }
 
 ::slotted([slot="navigationActions"]) {
     border: none;
     flex: 0 1;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+::slotted([slot="breadcrumbs"]) {
+    margin-bottom: -0.5rem;
 }
 
 .ui5-dynamic-page-title--top-area {
@@ -125,11 +135,16 @@
 
 /* focus */
 :host([focused]) {
-    /* separate change adds proper parameters */
+/* separate change adds proper parameters */
     outline: 0.0625rem dotted black;
     outline-offset: -0.0625rem;
 }
 
 .ui5-dynamic-page-title-focus-area {
     outline: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

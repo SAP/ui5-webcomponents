@@ -122,8 +122,14 @@ class DynamicPage extends UI5Element {
 			content: {
 				"ui5-dynamic-page-content": true,
 			},
+			fitContent: {
+				"ui5-dynamic-page-fit-content": true,
+			},
 			footer: {
 				"ui5-dynamic-page-footer": true,
+			},
+			spacer: {
+				"ui5-dynamic-page-spacer": true,
 			},
 		};
 	}
@@ -202,14 +208,14 @@ class DynamicPage extends UI5Element {
 	async onExpandClick() {
 		this._toggleHeader();
 		await renderFinished();
-		this.headerActions!.focusExpandButton();
+		this.headerActions?.focusExpandButton();
 		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
 		await renderFinished();
-		this.headerActions!.focusPinButton();
+		this.headerActions?.focusPinButton();
 	}
 
 	async onToggleTitle() {
