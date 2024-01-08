@@ -188,3 +188,27 @@ describe("Tree has screen reader support", () => {
 	});
 
 });
+
+
+describe("Tree slots", () => {
+	before(async () => {
+		await browser.url(`test/pages/Tree.html`);
+	});
+
+	it.only("items slot", async () => {
+		const treeItem = await browser.$("#treeItem");
+		const btn = await browser.$("#btn");
+
+		let items = await treeItem.getProperty("items");
+		assert.strictEqual(items.length, 1, "Correct items count");
+
+		await btn.click();
+
+		items = await treeItem.getProperty("items");
+		const newlyAddedItem = await treeItem.$('#treeItem [ui5-tree-item]:last-child');
+
+		assert.strictEqual(items.length, 2, "Dynamic item is added correctly");
+		assert.strictEqual(await newlyAddedItem.getProperty("text"), "1-1-2", "Dynamic item is added correctly");
+		assert.strictEqual(await newlyAddedItem.getProperty("level"), 3, "Dynamic item is displayed correctly");
+	});
+});

@@ -254,7 +254,14 @@ class TreeItemBase extends ListItem {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		invalidateOnChildChange: {
+			properties: false,
+			slots: ["default"],
+		},
+		"default": true,
+	})
 	items!: Array<TreeItemBase>;
 
 	onBeforeRendering() {
