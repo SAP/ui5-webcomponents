@@ -9,7 +9,7 @@
 
 	<div class="ui5-form-layout" part="layout">
 		{{#each items}}
-			<div class="ui5-form-layout-item">
+			<div class="ui5-form-layout-item" style="grid-column: span 2">
 				<slot name="{{this._individualSlot}}"></slot>
 			</div>
 		{{/each}}

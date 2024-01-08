@@ -1,16 +1,14 @@
 <div class="ui5-form-item-root">
-	<div class="ui5-form-item-label">
-		{{#if hasLabelContent}}
+	<div class="ui5-form-item-layout">
+		<div class="ui5-form-item-label">
 			<slot name="labelContent"></slot>
-		{{else}}
-			<ui5-label>{{ label }}:</ui5-label>
-		{{/if}}
-	</div>
-	<div class="ui5-form-item-content">
-		{{#each items}}
-		<div class="ui5-form-item-content-child">
-			<slot name="{{this._individualSlot}}"></slot>
 		</div>
-		{{/each}}
+		<div class="ui5-form-item-content">
+			{{#each fields}}
+				<div class="ui5-form-item-content-child">
+					<slot name="{{this._individualSlot}}"></slot>
+				</div>
+			{{/each}}
+		</div>
 	</div>
 </div>

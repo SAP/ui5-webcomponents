@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Label from "./Label.js";
 
@@ -38,9 +38,6 @@ import FormItemCss from "./generated/themes/FormItem.css.js";
 	dependencies: [Label],
 })
 class FormItem extends UI5Element {
-	@property()
-	label!: string;
-
 	@slot()
 	labelContent!: Array<HTMLElement>;
 
@@ -49,10 +46,14 @@ class FormItem extends UI5Element {
 		"default": true,
 		individualSlots: true,
 	})
-	items!: Array<HTMLElement>;
+	fields!: Array<HTMLElement>;
 
-	get hasLabelContent(): boolean {
-		return !!this.labelContent.length;
+	get isGroup() {
+		return false;
+	}
+
+	get formItemRepresentation() {
+		return executeTemplate(FormItemTemplate, this);
 	}
 }
 

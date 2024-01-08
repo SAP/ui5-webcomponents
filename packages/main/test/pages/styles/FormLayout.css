@@ -21,7 +21,7 @@
     color: var(--sapTextColor);
 }
 
-section, ui5-title {
+    ui5-title {
     margin-bottom: 2rem;
 }
 
@@ -29,4 +29,8 @@ section, ui5-title {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.controls > * {
+    margin: 0 0.25rem;
 }
