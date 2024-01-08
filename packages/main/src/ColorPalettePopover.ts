@@ -188,7 +188,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
 	 *
 	 * @param opener the element that the popover is shown at
 	 * @public

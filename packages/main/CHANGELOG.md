@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.5...v1.21.0) (2024-01-05)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** scroll to item upon keyboard navigation ([#8044](https://github.com/SAP/ui5-webcomponents/issues/8044)) ([8dc384e](https://github.com/SAP/ui5-webcomponents/commit/8dc384e6381283fdcc1097b132c2f98d49ea6102)), closes [#3994](https://github.com/SAP/ui5-webcomponents/issues/3994)
+
+
+
+
+
 # [1.21.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.4...v1.21.0-rc.5) (2024-01-04)
 
 

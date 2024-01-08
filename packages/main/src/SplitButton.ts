@@ -130,7 +130,7 @@ class SplitButton extends UI5Element {
 	 *
 	 * @default false
 	 * @public
-	 * @since 1.20.0
+	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
 	activeArrowButton!: boolean;

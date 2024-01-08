@@ -32,7 +32,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
  * @constructor
  * @abstract
- * @extends UI5Element
+ * @extends ToolbarItem
  * @public
  * @since 1.17.0
  */
