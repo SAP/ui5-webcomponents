@@ -15,6 +15,10 @@ import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate
 import staticAreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
 import staticAreaMenuCss from "./generated/themes/Menu.css.js";
 
+import {
+	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
+
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -127,6 +131,9 @@ class NavigationMenu extends Menu {
 			// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
+	}
+	get accSideNavigationPopoverHiddenText() {
+		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
 }
 

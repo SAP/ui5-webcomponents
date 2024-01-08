@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 .ui5-navigation-menu .ui5-navigation-menu-main {
 	padding: var(--_ui5_side_navigation_parent_popup_padding);
 }
@@ -24,6 +26,7 @@
 	color: var(--sapList_TextColor);
     font-weight: bold;
     font-size: var(--sapFontSize);
+    border-bottom: none;
 }
 
 .ui5-navigation-menu .ui5-navigation-menu-item a {

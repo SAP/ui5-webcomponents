@@ -7,7 +7,9 @@
 	@ui5-after-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
 	@ui5-after-close={{_afterPopoverClose}}
+    accessible-name-ref="{{_id}}-navigationMenuPopoverText"
 >
+<span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 {{#if isPhone}}
 	<div
 		slot="header"
@@ -63,7 +65,7 @@
                 accessible-name={{this.item.ariaLabelledByText}}
                 accessible-role="none"
                 .additionalText="{{this.item._additionalText}}"
-                ._ariaHasPopup={{this.ariaHasPopup}}
+                .ariaHasPopup={{this.ariaHasPopup}}
                 ?disabled={{this.item.disabled}}
                 ?starts-section={{this.item.startsSection}}
                 ?selected={{this.item.subMenuOpened}}
@@ -106,7 +108,7 @@
                     accessible-name={{this.item.ariaLabelledByText}}
                     accessible-role="treeitem"
                     .additionalText="{{this.item._additionalText}}"
-                    ._ariaHasPopup={{this.ariaHasPopup}}
+                    .ariaHasPopup={{this.ariaHasPopup}}
                     ?disabled={{this.item.disabled}}
                     ?starts-section={{this.item.startsSection}}
                     ?selected={{this.item.subMenuOpened}}
