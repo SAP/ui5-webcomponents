@@ -97,10 +97,7 @@
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
-	inset-inline-start: 0.125rem;
-	inset-block-start: 0.125rem;
-	inset-inline-end: 0.125rem;
-	inset-block-end: 0.125rem;
+	inset: 0.125rem;
 	border: var(--_ui5_split_button_focused_border);
 	pointer-events: none;
 	border-radius: var(--_ui5_split_button_focused_border_radius);
@@ -226,7 +223,10 @@
 .ui5-split-arrow-button[design="Emphasized"]:hover {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
-	box-shadow: var(--_ui5_split_arrow_button_emphasized_hoved_box_shadow, none)
+	box-shadow: var(--_ui5_split_arrow_button_emphasized_hover_box_shadow, none)
+}
+[dir="rtl"].ui5-split-arrow-button[design="Emphasized"]:hover {
+	box-shadow: var(--_ui5_split_arrow_button_emphasized_hover_box_shadow_rtl, none);
 }
 
 .ui5-split-arrow-button[design="Positive"]:hover {
@@ -261,7 +261,7 @@
 	height: var(--_ui5_split_button_middle_separator_height);
 }
 
-.ui5-split-arrow-button[design="Emphasized"]:before {
+.ui5-split-arrow-button[design="Emphasized"]::before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -270,8 +270,7 @@
 	inset-block-start: var(--_ui5_split_button_middle_separator_top);
 	inset-inline-end: 0;
 	height: var(--_ui5_split_button_middle_separator_height);
-	border: 0 solid var(--sapButton_Emphasized_TextColor);
-	border-inline-start-width: 0.0625rem;
+	width: 0.0625rem;
 }
 
 .ui5-split-text-button:hover + .ui5-split-arrow-button:before,
@@ -284,23 +283,23 @@
 }
 
 /* separator colors */
-.ui5-split-arrow-button[design="Transparent"]:before {
+.ui5-split-arrow-button[design="Transparent"]::before {
 	background-color: var(--sapButton_Lite_TextColor);
 }
 
-.ui5-split-arrow-button[design="Emphasized"]:before {
+.ui5-split-arrow-button[design="Emphasized"]::before {
 	background-color: var(--sapButton_Emphasized_TextColor);
 }
 
-.ui5-split-arrow-button[design="Positive"]:before {
+.ui5-split-arrow-button[design="Positive"]::before {
 	background-color: var(--sapButton_Accept_TextColor);
 }
 
-.ui5-split-arrow-button[design="Negative"]:before {
+.ui5-split-arrow-button[design="Negative"]::before {
 	background-color: var(--sapButton_Reject_TextColor);
 }
 
-.ui5-split-arrow-button[design="Attention"]:before {
+.ui5-split-arrow-button[design="Attention"]::before {
 	background-color: var(--_ui5_split_button_attention_separator_color_default);
 }
 
