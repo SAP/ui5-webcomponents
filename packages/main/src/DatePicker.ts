@@ -235,6 +235,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	valueState!: `${ValueState}`;
 
+	// @property({ type: ValueState, defaultValue: ValueState.None, noAttribute: true })
+	// _valueState!: `${ValueState}`;
+
 	/**
 	 * Defines whether the component is required.
 	 *
@@ -384,10 +387,25 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	formSupport!: Array<HTMLElement>;
 
 	responsivePopover?: ResponsivePopover;
+	_internallySetValueState!: boolean;
 
 	FormSupport?: typeof FormSupportT;
 
 	static i18nBundle: I18nBundle;
+
+	constructor() {
+		super();
+		this._internallySetValueState = false;
+	}
+
+	set _valueState(value: `${ValueState}`) {
+		this._internallySetValueState = false;
+		this.valueState = value;
+	}
+
+	get _valueState() {
+		return this.valueState;
+	}
 
 	/**
 	 * @protected
@@ -561,10 +579,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	_updateValueState() {
 		const isValid = this._checkValueValidity(this.value);
 
-		if (isValid && this.valueState === ValueState.Error) { // If not valid - always set Error regardless of the current value state
-			this.valueState = ValueState.None;
-		} else if (!isValid) { // However if valid, change only Error (but not the others) to None
+		if (!isValid && (this.valueState === ValueState.None || this._internallySetValueState)) {
 			this.valueState = ValueState.Error;
+			this._internallySetValueState = true;
+		} else if (isValid && this.valueState === ValueState.Error && this._internallySetValueState) {
+			this.valueState = ValueState.None;
 		}
 	}
 
