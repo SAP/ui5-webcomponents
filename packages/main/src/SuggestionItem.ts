@@ -14,6 +14,7 @@ import type { IInputSuggestionItem } from "./Interfaces.js";
  * @constructor
  * @extends UI5Element
  * @abstract
+ * @implements { IInputSuggestionItem }
  * @public
  */
 @customElement({

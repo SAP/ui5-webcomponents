@@ -13,6 +13,7 @@ import type { IInputSuggestionItem } from "./Interfaces.js";
  * @extends UI5Element
  * @abstract
  * @public
+ * @implements { IInputSuggestionItem }
  * @since 1.0.0-rc.15
  */
 @customElement({
