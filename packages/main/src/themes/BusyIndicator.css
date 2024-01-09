@@ -166,6 +166,6 @@
 		opacity: 1;
 	}
 	50% {
-		opacity: 0.1;
+		opacity: var(--_ui5_busy_indicator_animation_opacity);
 	}
 }

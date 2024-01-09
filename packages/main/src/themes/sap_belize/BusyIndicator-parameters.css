@@ -2,4 +2,5 @@
 
 :root {
 	--_ui5_busy_indicator_color: #00a4eb;
+	--_ui5_busy_indicator_animation_opacity: 0.1;
 }
