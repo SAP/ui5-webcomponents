@@ -1155,7 +1155,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _filteredItems() {
-		return this.options.filter(option => !option.getAttribute("disabled"));
+		return this.options.filter(option => !option.disabled);
 	}
 
 	itemSelectionAnnounce() {
