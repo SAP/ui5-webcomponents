@@ -17,8 +17,6 @@
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
 }
 
 .ui5-card-root.ui5-card--interactive:hover {
@@ -27,15 +25,6 @@
 
 .ui5-card-root.ui5-card--interactive:active {
 	box-shadow: var(--_ui5_card_box_shadow);
-}
-
-.ui5-card-root .ui5-card-header-root {
-	flex-shrink: 0
-}
-
-.ui5-card-root .ui5-card-content-root {
-	overflow: auto;
-	flex-grow: 1;
 }
 
 /* Card with no content */

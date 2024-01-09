@@ -1,13 +1,14 @@
 <div
 	class="{{classes.root}}"
 	role="region"
-	aria-label="{{_getAriaLabel}}">
+	aria-label="{{_getAriaLabel}}"
+	part="root">
 	{{#if _hasHeader}}
 		<div class="ui5-card-header-root">
 			<slot name="header"></slot>
 		</div>
 	{{/if}}
-	<div role="group" aria-label="{{_ariaCardContentLabel}}" class="{{classes.content}}">
+	<div role="group" aria-label="{{_ariaCardContentLabel}}" part="content">
 		<slot></slot>
 	</div>
 </div>
