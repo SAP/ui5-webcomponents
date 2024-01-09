@@ -29,7 +29,7 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  *
  * @constructor
  * @extends ToggleButton
- * @implements { ISelectedButtonItem }
+ * @implements { ISegmentedButtonItem }
  * @abstract
  * @public
  */

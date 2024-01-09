@@ -12,7 +12,7 @@ import type { IOption } from "./Interfaces.js";
  *
  * @constructor
  * @extends UI5Element
- * @implements {ISelectOption}
+ * @implements {IOption}
  * @public
  */
 @customElement("ui5-option")
