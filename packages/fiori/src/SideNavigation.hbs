@@ -214,12 +214,15 @@
 {{/inline}}
 
 {{#*inline overflowItem}}
-	<div id="{{_id}}"
+	<div id="{{_id}}-sn-overflow-item"
 				class="ui5-sn-item ui5-sn-item-level1 ui5-sn-item-overflow"
-				role="menuitemradio"
+				role="menuitem"
 				data-sap-focus-ref
+				@keydown="{{_onkeydownOverflow}}"
+				@keyup="{{_onkeyupOverflow}}"
 				@click="{{_handleOverflowClick}}"
 				aria-haspopup="menu"
+				tabindex="0"
 			>
 				<ui5-icon
 					class="ui5-sn-item-overflow-icon"

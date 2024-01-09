@@ -41,7 +41,7 @@ class NavigationMenuItem extends MenuItem {
 	 * @public
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.NavigationMenu.prototype.href
+	 * @name sap.ui.webc.main.NavigationMenuItem.prototype.href
 	 * @since 1.22.0
 	 */
 	@property()
@@ -65,7 +65,7 @@ class NavigationMenuItem extends MenuItem {
 	 * @public
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.NavigationMenu.prototype.target
+	 * @name sap.ui.webc.main.NavigationMenuItem.prototype.target
 	 * @since 1.22.0
 	 */
 	@property()

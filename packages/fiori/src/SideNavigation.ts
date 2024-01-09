@@ -17,12 +17,15 @@ import {
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isSpace,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -124,7 +127,6 @@ type NavigationMenuClickEventDetail = {
 		SideNavigationItem,
 		SideNavigationSubItem,
 		Icon,
-		Button,
 		NavigationMenu,
 	],
 })
@@ -363,6 +365,7 @@ class SideNavigation extends UI5Element {
 		if (!this._overflowDom) {
 			return this.getEnabledItems(this.items);
 		}
+		this._overflowDom._tabIndex = "0";
 		return [...this.getEnabledItems(this.items), this._overflowDom];
 	}
 
@@ -460,36 +463,36 @@ class SideNavigation extends UI5Element {
 
 		overflowItemRef.classList.add("ui5-sn-item-hidden");
 
-		const aItemsRefs = [...domRef.querySelectorAll<HTMLElement>(".ui5-sn-flexible .ui5-sn-item-level1:not(.ui5-sn-item-overflow")];
+		const itemsRefs = [...domRef.querySelectorAll<HTMLElement>(".ui5-sn-flexible .ui5-sn-item-level1:not(.ui5-sn-item-overflow)")];
 
-		let iItemsHeight = aItemsRefs.reduce<number>((iSum, oItemRef) => {
-			oItemRef.classList.remove("ui5-sn-item-hidden");
-			return iSum + oItemRef.offsetHeight;
+		let itemsHeight = itemsRefs.reduce<number>((sum, itemRef) => {
+			itemRef.classList.remove("ui5-sn-item-hidden");
+			return sum + itemRef.offsetHeight;
 		}, 0);
 
 		const { paddingTop, paddingBottom } = window.getComputedStyle(flexibleContentDomRef);
-		const iListHeight = flexibleContentDomRef?.offsetHeight - parseInt(paddingTop) - parseInt(paddingBottom);
+		const listHeight = flexibleContentDomRef?.offsetHeight - parseInt(paddingTop) - parseInt(paddingBottom);
 
 		overflowItemRef.classList.remove("ui5-sn-item-hidden");
 
-		iItemsHeight = overflowItemRef.offsetHeight;
+		itemsHeight = overflowItemRef.offsetHeight;
 		const oSelectedItemRef = domRef.querySelector(".ui5-sn-item-selected") as HTMLElement;
 		if (oSelectedItemRef) {
 			const { marginTop, marginBottom } = window.getComputedStyle(oSelectedItemRef);
 
-			iItemsHeight += oSelectedItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			itemsHeight += oSelectedItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 		}
 
-		aItemsRefs.forEach(oItemRef => {
-			if (oItemRef === oSelectedItemRef) {
+		itemsRefs.forEach(itemRef => {
+			if (itemRef === oSelectedItemRef) {
 				return;
 			}
 
-			const { marginTop, marginBottom } = window.getComputedStyle(oItemRef);
-			iItemsHeight += oItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			const { marginTop, marginBottom } = window.getComputedStyle(itemRef);
+			itemsHeight += itemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 
-			if (iItemsHeight >= iListHeight) {
-				oItemRef.classList.add("ui5-sn-item-hidden");
+			if (itemsHeight >= listHeight) {
+				itemRef.classList.add("ui5-sn-item-hidden");
 			}
 		});
 	}
@@ -607,11 +610,27 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _overflowDom() {
-		return this.shadowRoot!.querySelector<Button>(".ui5-sn-item-overflow");
+		return this.shadowRoot!.querySelector<SideNavigationItem>(".ui5-sn-item-overflow");
 	}
 
 	get isOverflow() {
 		return this._isOverflow;
+	}
+
+	_onkeydownOverflow(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this._handleOverflowClick();
+		}
+	}
+
+	_onkeyupOverflow(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._handleOverflowClick();
+		}
 	}
 	static async onDefine() {
 		[SideNavigation.i18nBundle] = await Promise.all([
