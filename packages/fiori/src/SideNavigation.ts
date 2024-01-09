@@ -36,6 +36,7 @@ import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
+	SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -258,6 +259,10 @@ class SideNavigation extends UI5Element {
 		}
 
 		return SideNavigation.i18nBundle.getText(key);
+	}
+
+	get overflowAccessibleName() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
 	handlePopupItemClick(e: PopupClickEventDetail) {

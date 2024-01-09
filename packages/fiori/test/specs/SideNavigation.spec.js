@@ -14,13 +14,6 @@ async function getRootItemInPopover() {
 	return rootItem;
 }
 
-async function getOverflowPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const rootItem = await browser.$(`>>>.${staticAreaItemClassName} ui5-responsive-popover`);
-
-
-	return items;
-}
 describe("Component Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/SideNavigation.html`);
@@ -264,31 +257,10 @@ describe("Component Behavior", () => {
 			assert.ok(await overflowItem.isDisplayed(), "Overflow button should be available");
 
 			// Act: apply new height
-			await browser.setWindowSize(500, 800);
+			await browser.setWindowSize(500, 1000);
 
 			assert.notOk(await overflowItem.isDisplayed(), "Overflow button should not be available");
 
 		});
-
-		// it("Test overflow menu selection", async () => {
-
-		// 	await browser.url(`test/pages/SideNavigation.html`);
-		// 	const sideNavigation = await browser.$("#sn1"),
-		// 		sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
-
-		// 	await sideNavigation.setProperty("collapsed", true);
-			
-	
-		// 	// Act: apply new height
-		// 	await browser.setWindowSize(500, 300);
-	
-		// 	// Check
-		// 	const overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
-		// 	// await overflowItem.click();
-			
-	
-		// 	// Check
-		// 	assert.strictEqual(await overflowItem.getAttribute("icon"), "overflow", "There are proper count of menu items in the top level menu");
-		// });
 	});
 });
