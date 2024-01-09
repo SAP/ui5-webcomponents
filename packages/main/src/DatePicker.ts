@@ -345,6 +345,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
 
+	/**
+	 * Stops ValueState validation
+	 */
+	@property({ type: Boolean })
+	stopValueStateValidation!: boolean;
+
 	@property({ type: Boolean, noAttribute: true })
 	_isPickerOpen!: boolean;
 
@@ -560,6 +566,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_updateValueState() {
 		const isValid = this._checkValueValidity(this.value);
+
+		if (this.stopValueStateValidation) {
+			return;
+		}
 
 		if (isValid && this.valueState === ValueState.Error) { // If not valid - always set Error regardless of the current value state
 			this.valueState = ValueState.None;
