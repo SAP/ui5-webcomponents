@@ -455,13 +455,16 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Selects/deselects a day.
-	 * @param { Event} e
-	 * @param { boolean} isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
+	 * @param { Event } e
+	 * @param { boolean } isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
 	 * @private
 	 */
 	_selectDate(e: Event, isShift: boolean) {
 		let target = e.target as HTMLElement;
-		target = target.nodeName === "SPAN" || target.classList.contains("ui5-dp-specialday") ? target.parentNode as HTMLElement : target;
+
+		if (!target.hasAttribute("data-sap-timestamp")) {
+			target = target.parentNode as HTMLElement;
+		}
 
 		if (!this._isDayPressed(target)) {
 			return;

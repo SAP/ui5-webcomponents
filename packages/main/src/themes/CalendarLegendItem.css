@@ -155,6 +155,6 @@
 }
 
 .ui5-calendar-legend-item-root:focus {
-	outline: var(--_ui5-calendar-legend-item-root-focus-brd);
-	border-radius: var(--_ui5-calendar-legend-item-root-focus-brd-radius);
+	outline: var(--_ui5-calendar-legend-item-root-focus-border);
+	border-radius: var(--_ui5-calendar-legend-item-root-focus-border-radius);
 }

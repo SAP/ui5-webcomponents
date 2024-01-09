@@ -52,7 +52,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	template: CalendarLegendTemplate,
 	dependencies: [CalendarLegendItem],
 })
-@event("_calendar-legend-item-selection-change", {
+@event("_calendar-legend-selection-change", {
 	detail: {
 		item: { type: CalendarLegendItem },
 	},
@@ -136,7 +136,7 @@ class CalendarLegend extends UI5Element {
 	_onFocusIn(e: MouseEvent) {
 		const target = e.target as CalendarLegendItem;
 
-		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-item-selection-change", {
+		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
 			item: target,
 		});
 	}

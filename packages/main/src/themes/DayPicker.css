@@ -353,8 +353,8 @@
 }
 
 .ui5-dp-item:not(:focus).ui5-dp-item--selected.ui5-dp-item--now .ui5-dp-specialday {
-	border-end-end-radius: var(--_ui5_daypicker_special_day_selected_not_focused_border_bottom); 
-	border-end-start-radius: var(--_ui5_daypicker_special_day_selected_not_focused_border_bottom);
+	border-end-end-radius: var(--_ui5_daypicker_special_day_selected_border_radius_bottom); 
+	border-end-start-radius: var(--_ui5_daypicker_special_day_selected_border_radius_bottom);
 }
 
 .ui5-dp-item--now .ui5-dp-specialday {
@@ -395,12 +395,12 @@
 }
 
 .ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item .ui5-dp-specialday {
-	inset-block-start: var(--_ui5_daypicker_twocalendar_item_not_now_special_day_top);
-	inset-inline-end: var(--_ui5_daypicker_twocalendar_item_not_now_special_day_right);
+	inset-block-start: var(--_ui5_daypicker_twocalendar_item_special_day_top);
+	inset-inline-end: var(--_ui5_daypicker_twocalendar_item_special_day_right);
 }
 
 .ui5-dp-root.ui5-dp-twocalendartypes .ui5-dp-item:not(.ui5-dp-item--now) .ui5-dp-daysectext {
-	padding-block: var(--_ui5_dp_two_calendar_item_not_now_secondary_text_padding_block);
+	padding-block: var(--_ui5_dp_two_calendar_item_secondary_text_padding);
 }
 
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now.ui5-dp-item--withsecondtype:focus .ui5-dp-specialday {
