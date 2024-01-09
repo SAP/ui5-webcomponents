@@ -57,7 +57,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 	const decoratorArg = customElementDecorator?.expression?.arguments[0];
 	currClass.tagName = decoratorArg?.text || (decoratorArg?.properties.find(property => property.name.text === "tag")?.initializer?.text);
-	currClass.customElement = !!decoratorArg || className === "UI5Element" || undefined;
+	currClass.customElement = !!customElementDecorator || className === "UI5Element" || undefined;
 	currClass.kind = "class";
 	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
