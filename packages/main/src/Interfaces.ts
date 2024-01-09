@@ -1,9 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import type { TableColumnInfo } from "./Table.js";
 import type TableMode from "./types/TableMode.js";
 import type SemanticColor from "./types/SemanticColor.js";
 import type Tab from "./Tab.js";
+import type ListItemType from "./types/ListItemType.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
@@ -143,6 +145,17 @@ interface ITab extends UI5Element {
 	_style?: Record<string, any>;
 }
 
+interface IInputSuggestionItem extends UI5Element{
+	text: string;
+	groupItem: boolean;
+	description?: string;
+	image?: string;
+	icon?: string;
+	additionalText?: string;
+	additionalTextState?: `${ValueState}`;
+	type?: `${ListItemType}`;
+}
+
 /**
  * Interface for components that may be slotted inside a <code>ui5-table</code> as rows
  *
@@ -181,6 +194,7 @@ export {
 	IInput,
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
+	IInputSuggestionItem,
 	IOption,
 	ITab,
 	ITableRow,

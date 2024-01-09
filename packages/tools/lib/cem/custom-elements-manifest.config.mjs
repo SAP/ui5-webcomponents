@@ -16,12 +16,10 @@ import {
 	getJSDocErrors,
 	getTypeRefs,
 	normalizeDescription,
-	formatArrays
+	formatArrays,
+	isClass,
+	normalizeTagType
 } from "./utils.mjs";
-
-const isClass = text => {
-	return text.includes("@abstract") || text.includes("@class") || text.includes("@constructor");
-};
 
 const extractClassNodeJSDoc = node => {
 	const fileContent = node.getFullText();
@@ -65,7 +63,7 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
 	currClass.description = normalizeDescription(classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description);
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
-		.map(tag => getReference(ts, tag.type, classNode, moduleDoc.path))
+		.map(tag => getReference(ts, normalizeTagType(tag.type), classNode, moduleDoc.path))
 		.filter(Boolean);
 
 
@@ -89,13 +87,13 @@ function processClass(ts, classNode, moduleDoc) {
 		currClass.slots.forEach(slot => {
 			const tag = slotTags.find(tag => tag.name === slot.name);
 
-			const typeRefs = (tag.type
+			const typeRefs = (normalizeTagType(tag.type)
 				?.replaceAll(/Array<|>|\[\]/g, "")
 				?.split("|")
 				?.map(e => getReference(ts, e.trim(), classNode, moduleDoc.path)).filter(Boolean));
 
 			slot._ui5privacy = "public";
-			slot._ui5type = { text: formatArrays(tag.type) };
+			slot._ui5type = { text: formatArrays(normalizeTagType(tag.type)) };
 			slot.description = normalizeDescription(tag.description)
 
 			if (typeRefs && typeRefs.length) {

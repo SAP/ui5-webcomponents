@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SuggestionListItem from "./SuggestionListItem.js";
 import ListItemType from "./types/ListItemType.js";
+import type { IInputSuggestionItem } from "./Interfaces.js";
 
 /**
  * @class
@@ -19,7 +20,7 @@ import ListItemType from "./types/ListItemType.js";
 	tag: "ui5-suggestion-item",
 	dependencies: [SuggestionListItem],
 })
-class SuggestionItem extends UI5Element {
+class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	/**
 	 * Defines the text of the component.
 	 *

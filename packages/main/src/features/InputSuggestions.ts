@@ -23,6 +23,7 @@ import {
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
+import type { IInputSuggestionItem } from "../Interfaces.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;
@@ -31,7 +32,7 @@ interface SuggestionComponent extends UI5Element {
 	value: string;
 	typedInValue: string;
 	hasValueStateMessage: boolean;
-	suggestionItems: Array<SuggestionItem>;
+	suggestionItems: Array<IInputSuggestionItem>;
 	open: boolean;
 	onItemMouseOver: (e: MouseEvent) => void;
 	onItemMouseOut: (e: MouseEvent) => void;
@@ -41,12 +42,12 @@ interface SuggestionComponent extends UI5Element {
 
 type InputSuggestion = {
 	text: string;
-	description: string;
+	description?: string;
 	image?: string;
 	icon?: string;
-	type: `${ListItemType}`;
+	type?: `${ListItemType}`;
 	additionalText?: string;
-	additionalTextState: `${ValueState}`;
+	additionalTextState?: `${ValueState}`;
 	groupItem: boolean;
 	key: number;
 }
@@ -115,7 +116,7 @@ class Suggestions {
 		const highlight = this.highlight && !!hightlightValue;
 		const suggestions: Array<InputSuggestion> = [];
 
-		inputSuggestionItems.map((suggestion: SuggestionItem, idx: number) => {
+		inputSuggestionItems.map((suggestion: IInputSuggestionItem, idx: number) => {
 			const text = highlight ? this.getHighlightedText(suggestion, hightlightValue) : this.getRowText(suggestion);
 			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
 
@@ -608,21 +609,21 @@ class Suggestions {
 		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
 	}
 
-	getRowText(suggestion: SuggestionItem) {
+	getRowText(suggestion: IInputSuggestionItem) {
 		return this.sanitizeText(suggestion.text || suggestion.textContent || "");
 	}
 
-	getRowDesc(suggestion: SuggestionItem) {
+	getRowDesc(suggestion: IInputSuggestionItem) {
 		return this.sanitizeText(suggestion.description || "");
 	}
 
-	getHighlightedText(suggestion: SuggestionItem, input: string) {
+	getHighlightedText(suggestion: IInputSuggestionItem, input: string) {
 		const text = suggestion.text || suggestion.textContent || "";
 		return this.hightlightInput(text, input);
 	}
 
-	getHighlightedDesc(suggestion: SuggestionItem, input: string) {
-		const text = suggestion.description;
+	getHighlightedDesc(suggestion: IInputSuggestionItem, input: string) {
+		const text = suggestion.description || "";
 		return this.hightlightInput(text, input);
 	}
 

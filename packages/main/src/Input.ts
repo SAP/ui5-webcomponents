@@ -55,7 +55,7 @@ import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
-import type { IIcon } from "./Interfaces.js";
+import type { IIcon, IInputSuggestionItem } from "./Interfaces.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -120,11 +120,11 @@ type InputEventDetail = {
 }
 
 type InputSuggestionItemSelectEventDetail = {
-	item: SuggestionItem;
+	item: IInputSuggestionItem;
 }
 
 type InputSuggestionItemPreviewEventDetail = {
-	item: SuggestionItem;
+	item: IInputSuggestionItem;
 	targetRef: SuggestionListItem;
 }
 
@@ -555,7 +555,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	suggestionItems!: Array<SuggestionItem>;
+	suggestionItems!: Array<IInputSuggestionItem>;
 
 	/**
 	 * Defines the icon to be displayed in the component.
@@ -1130,7 +1130,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.isTyping = true;
 	}
 
-	_startsWithMatchingItems(str: string): Array<SuggestionItem> {
+	_startsWithMatchingItems(str: string): Array<IInputSuggestionItem> {
 		const textProp = this.suggestionItems[0].text ? "text" : "textContent";
 
 		return StartsWith(str, this.suggestionItems, textProp);
@@ -1148,7 +1148,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 	}
 
-	_handleTypeAhead(item: SuggestionItem) {
+	_handleTypeAhead(item: IInputSuggestionItem) {
 		const value = item.text ? item.text : item.textContent || "";
 
 		this._innerValue = value;
@@ -1250,7 +1250,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 	}
 
-	selectSuggestion(item: SuggestionItem, keyboardUsed: boolean) {
+	selectSuggestion(item: IInputSuggestionItem, keyboardUsed: boolean) {
 		if (item.groupItem) {
 			return;
 		}
@@ -1341,7 +1341,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @default null
 	 * @public
 	 */
-	get previewItem() : SuggestionItem | null {
+	get previewItem() : IInputSuggestionItem | null {
 		if (!this._previewItem) {
 			return null;
 		}
@@ -1412,7 +1412,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.getInputId();
 	}
 
-	getSuggestionByListItem(item: SuggestionListItem): SuggestionItem {
+	getSuggestionByListItem(item: SuggestionListItem): IInputSuggestionItem {
 		const key = parseInt(item.getAttribute("data-ui5-key")!);
 		return this.suggestionItems[key];
 	}

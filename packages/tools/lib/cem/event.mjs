@@ -9,7 +9,8 @@ import {
 	findTag,
 	findAllTags,
 	getReference,
-	normalizeDescription
+	normalizeDescription,
+	normalizeTagType
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
@@ -26,7 +27,7 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 
 		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text, moduleDoc);
 
-		const { typeName, name } = getType(commentParam?.type);
+		const { typeName, name } = getType(normalizeTagType(commentParam?.type));
 		let type;
 
 		if (typeName) {

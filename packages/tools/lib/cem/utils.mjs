@@ -149,6 +149,15 @@ const findImportPath = (ts, sourceFile, typeName, packageJSON, modulePath) => {
     }
 };
 
+
+const isClass = text => {
+	return text.includes("@abstract") || text.includes("@class") || text.includes("@constructor");
+};
+
+const normalizeTagType = (type) => {
+	return type?.trim();
+}
+
 const getReference = (ts, type, classNode, modulePath) => {
     let sourceFile = classNode.parent;
 
@@ -160,7 +169,7 @@ const getReference = (ts, type, classNode, modulePath) => {
 
     const typeName =
         typeof type === "string"
-            ? type
+            ? normalizeTagType(type)
             : type.class?.expression?.text ||
             type.typeExpression?.type?.getText() ||
             type.typeExpression?.type?.elementType?.typeName?.text;
@@ -181,7 +190,7 @@ const getReference = (ts, type, classNode, modulePath) => {
 };
 
 const getType = (type) => {
-    const typeName = typeof type === "string" ? type : type?.type;
+    const typeName = typeof type === "string" ? normalizeTagType(type) : type?.type;
 
     const multiple =
         typeName?.endsWith("[]") || typeName?.startsWith("Array<");
@@ -340,5 +349,7 @@ export {
     getJSDocErrors,
     getTypeRefs,
     normalizeDescription,
-    formatArrays
+    formatArrays,
+    isClass,
+    normalizeTagType
 };
