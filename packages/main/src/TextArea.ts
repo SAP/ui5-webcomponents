@@ -114,6 +114,8 @@ type ExceededText = {
  */
 @event("input")
 
+@event("selection-finished")
+
 class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value of the component.
@@ -312,7 +314,7 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * @private
 	 */
-	 @property({ type: Boolean })
+	@property({ type: Boolean })
 	exceeding!: boolean;
 
 	/**
@@ -358,8 +360,8 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @slot
 	 * @private
 	 */
-	 @slot()
-	 formSupport!: Array<HTMLElement>;
+	@slot()
+	formSupport!: Array<HTMLElement>;
 
 	_fnOnResize: ResizeObserverCallback;
 	_firstRendering: boolean;
@@ -467,6 +469,10 @@ class TextArea extends UI5Element implements IFormElement {
 		this.fireEvent("change", {});
 	}
 
+	_onselect() {
+		this.fireEvent("selection-finished", {});
+	}
+
 	_oninput(e: InputEvent) {
 		const nativeTextArea = this.getInputDomRef()!;
 
@@ -567,6 +573,22 @@ class TextArea extends UI5Element implements IFormElement {
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
+	}
+
+	get selectionStart() {
+		return this.shadowRoot!.querySelector("textarea")!.selectionStart;
+	}
+
+	set selectionStart(sel) {
+		this.shadowRoot!.querySelector("textarea")!.selectionStart = sel;
+	}
+
+	get selectionEnd() {
+		return this.shadowRoot!.querySelector("textarea")!.selectionEnd;
+	}
+
+	set selectionEnd(sel) {
+		this.shadowRoot!.querySelector("textarea")!.selectionEnd = sel;
 	}
 
 	get classes() {

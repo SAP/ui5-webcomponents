@@ -1,8 +1,0 @@
-{
-    "eslint.workingDirectories": [
-        "./packages/base",
-        "./packages/localization",
-        "./packages/main",
-        "./packages/fiori",
-    ]
-}

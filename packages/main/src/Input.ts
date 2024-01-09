@@ -258,6 +258,9 @@ type InputSuggestionScrollEventDetail = {
 		scrollContainer: { type: HTMLElement },
 	},
 })
+
+@event("selection-finished")
+
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines whether the component is in disabled state.
@@ -1054,6 +1057,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.previousValue = this.value;
 			this.typedInValue = this.value;
 		}
+	}
+
+	_handleSelect() {
+		this.fireEvent("selection-finished", {});
 	}
 
 	_clear() {

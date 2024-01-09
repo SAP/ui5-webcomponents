@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>TextArea</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+    <script>
+        // delete Document.prototype.adoptedStyleSheets
+    </script>
+
+
+    <script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="./styles/TextArea.css">
+</head>
+
+<body class="textarea1auto">
+
+
+    <section class="group">
+        <ui5-title>Simple TextArea</ui5-title>
+        <ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
+    </section>
+
+    <input class="group">
+    <ui5-title>Simple Input</ui5-title>
+    <ui5-input id="basic-input" placeholder="Basic text area"></ui5-input>
+    <input></input>
+    </section>
+
+    <ui5-popover id="pop" opener="test" placement-type="Bottom">
+        <div>Test<ui5-icon name="ai"></ui5-icon></div>
+    </ui5-popover>
+    <div id="test" style="user-select: none; width: 2px; height: 1.2em; background-color: red; position: absolute;">
+    </div>
+    <script>
+
+        const textArea = document.getElementById("basic-textarea")
+
+        textArea.addEventListener("ui5-selection-finished", function () {
+            var position = window["sap-ui-webcomponents-bundle"].getTextAreaSelection(textArea);
+            test.style.left = position.x + 'px';
+            test.style.top = (position.y + window.scrollY) + 'px';
+            pop.showAt(test, true);
+        })
+
+        const input = document.getElementById("basic-input")
+
+        input.addEventListener("ui5-selection-finished", function () {
+            var position = window["sap-ui-webcomponents-bundle"].getTextAreaSelection(input);
+            test.style.left = position.x + 'px';
+            test.style.top = (position.y + window.scrollY) + 'px';
+            pop.showAt(test, true);
+        })
+    </script>
+
+</body>
+
+</html>
