@@ -18,7 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
-import type { IIcon } from "./Interfaces.js";
+import type { IIcon, IToken } from "./Interfaces.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
@@ -74,7 +74,7 @@ type TokenDeleteEventDetail = {
 	},
 })
 
-class Token extends UI5Element {
+class Token extends UI5Element implements IToken {
 	/**
 	 * Defines the text of the token.
 	 *

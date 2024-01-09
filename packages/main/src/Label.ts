@@ -35,6 +35,8 @@ import labelCss from "./generated/themes/Label.css.js";
  * @extends UI5Element
  * @public
  * @slot {Array<Node>} default - Defines the text of the component.
+ * <br>
+ * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-label",
