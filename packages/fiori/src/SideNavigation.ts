@@ -58,7 +58,7 @@ type PopupClickEventDetail = {
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type MenuClickEventDetail = {
+type NavigationMenuClickEventDetail = {
 	detail: {
 		item: {
 			associatedItem: SideNavigationItemBase
@@ -271,7 +271,7 @@ class SideNavigation extends UI5Element {
 		this.closePicker();
 	}
 
-	handleOverflowItemClick(e: MenuClickEventDetail) {
+	handleOverflowItemClick(e: NavigationMenuClickEventDetail) {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -281,7 +281,15 @@ class SideNavigation extends UI5Element {
 		}
 
 		this._selectItem(associatedItem);
-		this._flexibleItemNavigation.setCurrentItem(associatedItem);
+
+		// When subitem is selected in collapsed mode parent element should be focused
+		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
+			const parent = associatedItem.parentElement as SideNavigationItem;
+			this._flexibleItemNavigation.setCurrentItem(parent);
+		} else {
+			this._flexibleItemNavigation.setCurrentItem(associatedItem);
+		}
+
 		this.closeMenu();
 	}
 
@@ -566,14 +574,6 @@ class SideNavigation extends UI5Element {
 			}
 		});
 		return result;
-	}
-
-	async _beforeMenuOpen() {
-		const menu = await this.getOverflowPopover();
-		if (menu?._popover) {
-			menu._popover.verticalAlign = "Top";
-			menu._popover.placementType = "Right";
-		}
 	}
 
 	async _afterMenuClose() {
