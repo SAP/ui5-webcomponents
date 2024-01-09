@@ -580,10 +580,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const isValid = this._checkValueValidity(this.value);
 
 		if (!isValid && (this.valueState === ValueState.None || this._internallySetValueState)) {
-			this.valueState = ValueState.Error;
+			this._valueState = ValueState.Error;
 			this._internallySetValueState = true;
 		} else if (isValid && this.valueState === ValueState.Error && this._internallySetValueState) {
-			this.valueState = ValueState.None;
+			this._valueState = ValueState.None;
 		}
 	}
 
