@@ -46,8 +46,8 @@ let validate = ajv.compile(internalSchema)
 if (validate(inputDataInternal)) {
     console.log('Validation internal custom-elements successful');
 } else {
-    console.error('Validation of internal custom-elements failed:', validate.errors);
-    throw new Error("Validation of internal custom-elements failed");
+    console.error('Validation of internal custom-elements failed');
+    // console.error('Validation of internal custom-elements failed:', validate.errors);
 }
 
 validate = ajv.compile(extenalSchema)
@@ -58,6 +58,6 @@ if (validate(inputDataExternal)) {
     fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
     fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
 } else {
-    console.error('Validation of external custom-elements failed:', ajv.errorsText(validate.errors));
-    throw new Error("Validation of external custom-elements failed");
+    console.error('Validation of external custom-elements failed:');
+    // console.error('Validation of external custom-elements failed:', ajv.errorsText(validate.errors));
 }

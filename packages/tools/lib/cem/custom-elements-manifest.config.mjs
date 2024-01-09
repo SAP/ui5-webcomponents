@@ -379,7 +379,7 @@ let typeChecker;
 let typeProgram;
 
 export default {
-	globs: ["src/!(*generated/)!(*bundle)*.ts"],
+	globs: ["src/!(*generated)/*.ts", "src/!(*bundle)*.ts"],
 	outdir: 'dist',
 	overrideModuleCreation: ({ ts, globs }) => {
 		typeProgram = ts.createProgram(globs, {
