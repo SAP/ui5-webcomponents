@@ -356,16 +356,6 @@ const processPublicAPI = object => {
 				}
 				if (object[key].length === 0) {
 					delete object[key];
-				} else {
-					object[key].sort(function (a, b) {
-						if (a.name < b.name) {
-							return -1;
-						}
-						if (a.name > b.name) {
-							return 1;
-						}
-						return 0;
-					});
 				}
 			}
 		}
