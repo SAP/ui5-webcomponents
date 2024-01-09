@@ -106,7 +106,7 @@ type NavigationMenuClickEventDetail = {
  * @alias sap.ui.webc.fiori.SideNavigation
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-side-navigation
- * @since
+ * @since 1.0.0-rc.8
  * @appenddocs sap.ui.webc.fiori.SideNavigationItem sap.ui.webc.fiori.SideNavigationSubItem
  * @public
  */

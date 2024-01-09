@@ -214,12 +214,17 @@
 {{/inline}}
 
 {{#*inline overflowItem}}
-	<ui5-button id="{{_id}}"
-					class="ui5-sn-item ui5-sn-item-level1 ui5-sn-item-overflow"
-					role="menuitemradio"
-					@click="{{_handleOverflowClick}}"
-					design="Transparent"
-					icon="overflow"
+	<div id="{{_id}}"
+				class="ui5-sn-item ui5-sn-item-level1 ui5-sn-item-overflow"
+				role="menuitemradio"
+				data-sap-focus-ref
+				@click="{{_handleOverflowClick}}"
+				aria-haspopup="menu"
+			>
+				<ui5-icon
+					class="ui5-sn-item-overflow-icon"
+					name="overflow"
 				>
-		</ui5-button>	
+				</ui5-icon>
+			</div>	
 {{/inline}}

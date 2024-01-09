@@ -27,7 +27,7 @@ import MenuItem from "./MenuItem.js";
  * @abstract
  * @tagname ui5-navigation-menu-item
  * @implements sap.ui.webc.main.INavigationMenuItem
- * @since
+ * @since 1.22.0
  * @public
  */
 @customElement("ui5-navigation-menu-item")
@@ -42,7 +42,7 @@ class NavigationMenuItem extends MenuItem {
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @name sap.ui.webc.main.NavigationMenu.prototype.href
-	 * @since 1.19.0
+	 * @since 1.22.0
 	 */
 	@property()
 	href!: string;
@@ -66,7 +66,7 @@ class NavigationMenuItem extends MenuItem {
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @name sap.ui.webc.main.NavigationMenu.prototype.target
-	 * @since 1.19.0
+	 * @since 1.22.0
 	 */
 	@property()
 	target!: string;

@@ -302,12 +302,10 @@
 	line-height: var(--_ui5_side_navigation_popup_title_line_height);
 }
 
-.ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow:hover {
-	border: none;
+.ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow {
+	margin-top: auto;
 }
 
-.ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow {
-	border: none;
+.ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow .ui5-sn-item-overflow-icon {
 	color: var(--_ui5_side_navigation_icon_color);
-	margin-top: auto;
 }
