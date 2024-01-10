@@ -422,6 +422,8 @@ class Select extends UI5Element implements IFormElement {
 		this._onMenuChange = this.onMenuChange.bind(this);
 		this._attachMenuListeners = this.attachMenuListeners.bind(this);
 		this._detachMenuListeners = this.detachMenuListeners.bind(this);
+
+		this._upgradeProperty("value");
 	}
 
 	onBeforeRendering() {
@@ -493,8 +495,11 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		this.selectOptions.forEach(option => {
-			option.selected = !!((option.value || option.textContent) === newValue);
+		const menu = this._getSelectMenu();
+		const selectOptions = Array.from(menu ? menu.children : this.children).filter(option => !option.getAttribute("disabled")) as Array<IOption>;
+
+		selectOptions.forEach(option => {
+			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
 		});
 	}
 
