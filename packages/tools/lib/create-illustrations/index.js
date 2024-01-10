@@ -127,6 +127,16 @@ export {
 };`
 	};
 
+	const illustrationTypeDefinition = illustrationName => {
+		return `declare const dialogSvg: string;
+declare const sceneSvg: string;
+declare const spotSvg: string;
+declare const _default: "${illustrationName}";
+
+export default _default;
+export { dialogSvg, sceneSvg, spotSvg };`
+	};
+
 	await fs.mkdir(destPath, { recursive: true });
 
 	const illustrationFileNames = await fs.readdir(path.normalize(srcPath));
@@ -144,6 +154,7 @@ export {
 
 	for (let illustrationName of fileNames) {
 		promises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
+		promises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
 	}
 
 	return Promise.all(promises);
