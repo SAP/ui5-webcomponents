@@ -12,6 +12,12 @@ import DynamicPageHeaderActionsTemplate from "./generated/templates/DynamicPageH
 // Styles
 import DynamicPageHeaderActionsCss from "./generated/themes/DynamicPageHeaderActions.css.js";
 
+// Texts
+import {
+	DYNAMIC_PAGE_ARIA_LABEL_EXPAND_HEADER,
+	DYNAMIC_PAGE_ARIA_LABEL_SNAP_HEADER,
+	DYNAMIC_PAGE_ARIA_LABEL_PIN_HEADER,
+} from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -47,6 +53,9 @@ class DynamicPageHeaderActions extends UI5Element {
 	@property({ type: Boolean })
 	snapped!: boolean;
 
+	@property({ type: Object })
+	accessibilityAttributes!: {controls: string};
+
 	get classes() {
 		return {
 			root: {
@@ -72,6 +81,16 @@ class DynamicPageHeaderActions extends UI5Element {
 
 	get pinButton(): HTMLElement | null | undefined {
 		return this.getDomRef()?.querySelector(".ui5-dynamic-page-header-action-pin");
+	}
+
+	get pinLabel() {
+		return DynamicPageHeaderActions.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_PIN_HEADER);
+	}
+
+	get expandLabel() {
+		return this.snapped
+			? DynamicPageHeaderActions.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_EXPAND_HEADER)
+			: DynamicPageHeaderActions.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_SNAP_HEADER);
 	}
 
 	focusExpandButton() {

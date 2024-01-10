@@ -17,6 +17,11 @@ import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemp
 // Styles
 import DynamicPageTitleCss from "./generated/themes/DynamicPageTitle.css.js";
 
+// Texts
+import {
+	DYNAMIC_PAGE_ARIA_DESCR_TOGGLE_HEADER,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @class
  *
@@ -119,6 +124,21 @@ class DynamicPageTitle extends UI5Element {
 		return !this.snapped ? "expandedContent" : "snappedContent";
 	}
 
+	get _headerExpanded() {
+		return !this.snapped;
+	}
+
+	get _ariaDescribedbyText() {
+		return DynamicPageTitle.i18nBundle.getText(DYNAMIC_PAGE_ARIA_DESCR_TOGGLE_HEADER);
+	}
+
+	get _ariaLabelledBy() {
+		const hasAnyHeading = this[this.headingSlotName].length;
+		if (hasAnyHeading) {
+			return `${this._id}-heading`;
+		}
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -206,15 +226,15 @@ class DynamicPageTitle extends UI5Element {
 		this.focused = true;
 	}
 
-	_onclick() {
-		this.fireEvent("_toggle-title");
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
 			this.fireEvent("_toggle-title");
 		}
+	}
+
+	_onclick() {
+		this.fireEvent("_toggle-title");
 	}
 }
 

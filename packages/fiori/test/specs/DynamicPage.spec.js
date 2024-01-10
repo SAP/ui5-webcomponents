@@ -86,3 +86,87 @@ describe("Page layout when content oveflows", () => {
         assert.ok(contentBottom <= footerTop, "No overlap");
     });
 });
+
+describe("ARIA attributes", () => {
+    before(async () => {
+        await browser.url(`test/pages/DynamicPage.html`);
+    });
+
+    it("sets expanded state attributes", async () => {
+        const page = await browser.$("#page");
+        const title = await browser.$("#page ui5-dynamic-page-title");
+        const titleFocusArea = await title.shadow$(".ui5-dynamic-page-title-focus-area");
+        const headerWrapper = await page.shadow$(".ui5-dynamic-page-title-header-wrapper");
+        const headerActions = await page.shadow$("ui5-dynamic-page-header-actions");
+        const expandButton = await headerActions.shadow$("ui5-button.ui5-dynamic-page-header-action-expand");
+        const pinButton = await headerActions.shadow$("ui5-toggle-button.ui5-dynamic-page-header-action-pin");
+
+        // assert init state
+        assert.strictEqual(await page.getProperty("headerSnapped"), false, "Header is expanded");
+
+        // check ARIA attribute values
+        assert.strictEqual(await headerWrapper.getAttribute("aria-label"), "Header Expanded",
+            "aria-label value is correct");
+        assert.strictEqual(await headerWrapper.getAttribute("aria-expanded"), "true",
+            "aria-expanded value is correct");
+        assert.strictEqual(await headerWrapper.getAttribute("role"), "region",
+            "header role is correct");
+
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "true",
+            "aria-expanded value is correct");
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), "toggle-description",
+            "aria-describedby is correct");
+        assert.strictEqual(await titleFocusArea.getAttribute("role"), "button",
+            "title focus area role is correct");
+
+        assert.strictEqual(await expandButton.getProperty("accessibleName"), "Snap Header",
+            "expand button accessible-name is correct");
+        assert.strictEqual(await expandButton.getProperty("title"), "Snap Header",
+            "expand button accessible-name is correct");
+
+        assert.strictEqual(await pinButton.getProperty("accessibleName"), "Pin Header",
+            "pin button accessible-name is correct");
+        assert.strictEqual(await pinButton.getProperty("title"), "Pin Header",
+            "pin button accessible-name is correct");
+
+        assert.exists(await title.shadow$("#toggle-description"));
+    });
+
+    it("sets snapped state attributes", async () => {
+        const page = await browser.$("#page");
+        const title = await browser.$("#page ui5-dynamic-page-title");
+        const titleFocusArea = await title.shadow$(".ui5-dynamic-page-title-focus-area");
+        const headerWrapper = await page.shadow$(".ui5-dynamic-page-title-header-wrapper");
+        const headerActions = await page.shadow$("ui5-dynamic-page-header-actions");
+        const expandButton = await headerActions.shadow$("ui5-button.ui5-dynamic-page-header-action-expand");
+
+        // snap the header
+        await page.setProperty("headerSnapped", true);
+
+        // check ARIA attribute values
+        assert.strictEqual(await headerWrapper.getAttribute("aria-label"), "Header Snapped",
+            "aria-label value is correct");
+        assert.strictEqual(await headerWrapper.getAttribute("aria-expanded"), "false",
+            "aria-expanded value is correct");
+        assert.strictEqual(await headerWrapper.getAttribute("role"), "region",
+            "role is correct");
+
+        // snap the title
+        await title.setProperty("snapped", true);
+
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "false",
+            "aria-expanded value is correct");
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), "toggle-description",
+            "aria-describedby is correct");
+        assert.strictEqual(await titleFocusArea.getAttribute("role"), "button",
+            "title focus area role is correct");
+
+        assert.strictEqual(await expandButton.getProperty("accessibleName"), "Expand Header",
+            "expand button accessible-name is correct");
+        assert.strictEqual(await expandButton.getProperty("title"), "Expand Header",
+            "expand button accessible-name is correct");
+
+        assert.exists(await title.shadow$("#toggle-description"));
+    });
+
+});

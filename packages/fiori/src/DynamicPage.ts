@@ -7,6 +7,8 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
@@ -20,6 +22,12 @@ import DynamicPageCss from "./generated/themes/DynamicPage.css.js";
 import DynamicPageHeader from "./DynamicPageHeader.js";
 import DynamicPageTitle from "./DynamicPageTitle.js";
 import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
+
+// Texts
+import {
+	DYNAMIC_PAGE_ARIA_LABEL_EXPANDED_HEADER,
+	DYNAMIC_PAGE_ARIA_LABEL_SNAPPED_HEADER,
+} from "./generated/i18n/i18n-defaults.js";
 
 const SCROLL_DEBOUNCE_RATE = 0; // ms
 
@@ -53,7 +61,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	static async onDefine() {
-		DynamicPage.i18nBundle = await getI18nBundle("INIT_PACKAGE_VAR_NAME");
+		DynamicPage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	@property({ type: Boolean })
@@ -152,6 +160,22 @@ class DynamicPage extends UI5Element {
 		return !this.headerSnapped && !this.headerInTitle;
 	}
 
+	get _headerLabel() {
+		return this.headerSnapped
+			? DynamicPage.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_SNAPPED_HEADER)
+			: DynamicPage.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_EXPANDED_HEADER);
+	}
+
+	get _headerExpanded() {
+		return !this.headerSnapped;
+	}
+
+	get _accAttributesForHeaderActions() {
+		return {
+			controls: `${this._id}-header`,
+		};
+	}
+
 	snapOnScroll() {
 		this._debounce(() => {
 			if (!this.dynamicPageTitle || !this.dynamicPageHeader) {
@@ -185,6 +209,7 @@ class DynamicPage extends UI5Element {
 		this._toggleHeader();
 		await renderFinished();
 		this.headerActions?.focusExpandButton();
+		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
 	async onPinClick() {
