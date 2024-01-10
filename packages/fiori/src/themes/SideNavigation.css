@@ -8,6 +8,15 @@
 	border-radius: var(--_ui5_side_navigation_border_radius);
 }
 
+:host([collapsed]) {
+	min-width: var(--_ui5_side_navigation_collapsed_width);
+	width: var(--_ui5_side_navigation_collapsed_width);
+}
+
+:host([is-touch]) {
+	border-radius: var(--_ui5_side_navigation_phone_border_radius);
+}
+
 .ui5-sn-root {
 	height: 100%;
 	display: flex;
@@ -19,16 +28,6 @@
 	border-inline-end: var(--_ui5_side_navigation_border_right);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	border-radius: inherit;
-}
-
-:host([collapsed]) {
-	min-width: var(--_ui5_side_navigation_collapsed_width);
-	width: var(--_ui5_side_navigation_collapsed_width);
-}
-
-.ui5-sn-root.ui5-sn-phone .ui5-sn-root,
-.ui5-sn-root.ui5-sn-tablet:not(.ui5-sn-combi) .ui5-sn-root {
-	border-radius: var(--_ui5_side_navigation_phone_border_radius);
 }
 
 .ui5-sn-spacer {

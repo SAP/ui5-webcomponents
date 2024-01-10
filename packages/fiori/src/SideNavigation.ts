@@ -199,6 +199,12 @@ class SideNavigation extends UI5Element {
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems!: Array<HTMLElement>;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isTouch!: boolean;
+
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -422,6 +428,8 @@ class SideNavigation extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+
+		this.isTouch = isPhone() || (isTablet() && !isCombi());
 	}
 
 	onExitDOM() {
