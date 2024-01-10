@@ -17,22 +17,11 @@ import tableColumnStyles from "./generated/themes/TableColumn.css.js";
  * The <code>ui5-table-column</code> component allows to define column specific properties that are applied
  * when rendering the <code>ui5-table</code> component.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-table-column</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>column - Used to style the native <code>th</code> element</li>
- * </ul>
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableColumn
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-column
- * @implements sap.ui.webc.main.ITableColumn
+ * @extends UI5Element
  * @public
+ * @slot {Node[]} default - Defines the content of the column header
+ * @csspart column - Used to style the native <code>th</code> element
  */
 @customElement({
 	tag: "ui5-table-column",
@@ -49,9 +38,7 @@ class TableColumn extends UI5Element {
 	 * <br>
 	 * For further responsive design options, see <code>demandPopin</code> property.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.TableColumn.prototype.minWidth
-	 * @defaultvalue Infinity
+	 * @default Infinity
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: Infinity })
@@ -60,9 +47,7 @@ class TableColumn extends UI5Element {
 	/**
 	 * The text for the column when it pops in.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.TableColumn.prototype.popinText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -74,9 +59,7 @@ class TableColumn extends UI5Element {
 	 * <br><br>
 	 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TableColumn.prototype.demandPopin
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -93,9 +76,7 @@ class TableColumn extends UI5Element {
 	 * <li><code>Inline</code></li>
 	 * </ul>
 	 *
-	 * @type {TableColumnPopinDisplay}
-	 * @name sap.ui.webc.main.TableColumn.prototype.popinDisplay
-	 * @defaultvalue "Block"
+	 * @default "Block"
 	 * @public
 	 */
 	@property({ type: TableColumnPopinDisplay, defaultValue: TableColumnPopinDisplay.Block })
@@ -112,15 +93,6 @@ class TableColumn extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	last!: boolean;
-
-	/**
-	 * Defines the content of the column header.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @name sap.ui.webc.main.TableColumn.prototype.default
-	 * @public
-	 */
 }
 
 TableColumn.define();

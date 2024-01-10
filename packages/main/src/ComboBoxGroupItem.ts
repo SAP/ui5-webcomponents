@@ -9,13 +9,10 @@ import type { IComboBoxItem } from "./ComboBox.js";
  * that can be used to split the <code>ui5-combobox</code> suggestions into groups.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ComboBoxGroupItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-cb-group-item
  * @public
- * @implements sap.ui.webc.main.IComboBoxItem
+ * @implements {IComboBoxItem}
  * @since 1.0.0-rc.15
  */
 @customElement("ui5-cb-group-item")
@@ -23,9 +20,7 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		/**
 		 * Defines the text of the component.
 		 *
-		 * @type {string}
-		 * @name sap.ui.webc.main.ComboBoxGroupItem.prototype.text
-		 * @defaultvalue ""
+		 * @default ""
 		 * @public
 		 */
 		@property()

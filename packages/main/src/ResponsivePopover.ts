@@ -30,24 +30,13 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * <h3>Usage</h3>
  * Use it when you want to make sure that all the content is visible on any device.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-responsive-popover</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>header - Used to style the header of the component</li>
- * <li>content - Used to style the content of the component</li>
- * <li>footer - Used to style the footer of the component</li>
- * </ul>
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ResponsivePopover
- * @extends sap.ui.webc.main.Popover
- * @tagname ui5-responsive-popover
+ * @extends Popover
  * @since 1.0.0-rc.6
  * @public
+ * @csspart header - Used to style the header of the component
+ * @csspart content - Used to style the content of the component
+ * @csspart footer - Used to style the footer of the component
  */
 @customElement({
 	tag: "ui5-responsive-popover",
@@ -81,8 +70,7 @@ class ResponsivePopover extends Popover {
 	 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
 	 *
 	 * @private
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
@@ -96,15 +84,12 @@ class ResponsivePopover extends Popover {
 
 	/**
 	 * Shows popover on desktop and dialog on mobile.
-	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
+	 * @param opener the element that the popover is shown at
+	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
-	 * @async
-	 * @method
-	 * @name sap.ui.webc.main.ResponsivePopover#showAt
-	 * @returns {Promise} Resolves when the responsive popover is open
+	 * @returns Resolves when the responsive popover is open
 	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false) {
+	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
 		if (!isPhone()) {
 			await super.showAt(opener, preventInitialFocus);
 		} else {
@@ -122,11 +107,8 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Closes the popover/dialog.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.ResponsivePopover#close
-	 * @returns {void}
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
+	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
 		if (!isPhone()) {
 			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
@@ -145,11 +127,8 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Tells if the responsive popover is open.
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.ResponsivePopover#isOpen
-	 * @returns {boolean}
 	 */
-	isOpen() {
+	isOpen() : boolean {
 		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
 	}
 
