@@ -54,11 +54,9 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * <code>import "@ui5/webcomponents/dist/BusyIndicator";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.BusyIndicator
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-busy-indicator
+ * @extends UI5Element
  * @public
+ * @slot {Array<Node>} default - Determines the content over which the component will appear.
  * @since 0.12.0
  */
 @customElement({
@@ -72,10 +70,8 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 class BusyIndicator extends UI5Element {
 	/**
 	 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
-	 * @type {string}
-	 * @name sap.ui.webc.main.BusyIndicator.prototype.text
 	 * @public
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
@@ -84,9 +80,7 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines the size of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.BusyIndicatorSize}
-	 * @name sap.ui.webc.main.BusyIndicator.prototype.size
-	 * @defaultvalue "Medium"
+	 * @default "Medium"
 	 * @public
 	 */
 	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
@@ -95,9 +89,7 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.BusyIndicator.prototype.active
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -106,9 +98,7 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.BusyIndicator.prototype.delay
-	 * @defaultValue 1000
+	 * @default 1000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
@@ -120,15 +110,6 @@ class BusyIndicator extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	_isBusy!: boolean;
-
-	/**
-	 * Determines the content over which the component will appear.
-	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.BusyIndicator.prototype.default
-	 * @slot
-	 * @public
-	 */
 
 	_keydownHandler: (e: KeyboardEvent) => void;
 	_preventEventHandler: (e: KeyboardEvent) => void;

@@ -7,6 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import type { IIcon } from "./Interfaces.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/sys-help-2.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -51,10 +52,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * <code>import "@ui5/webcomponents/dist/Badge";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Badge
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-badge
+ * @extends UI5Element
  * @since 0.12.0
  * @public
  */
@@ -72,7 +70,6 @@ import badgeCss from "./generated/themes/Badge.css.js";
 /**
  * Fired when the user clicks on an interactive badge.
  * <b>Note:</b> The event will be fired if the <code>interactive</code> property is <code>true</code>
- * @event sap.ui.webc.main.Badge#click
  * @public
  * @since 1.20
  */
@@ -80,9 +77,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
 class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Badge.prototype.design
-	 * @defaultvalue "Set3"
+	 * @default "Set3"
 	 * @public
 	 * @since 1.20
 	 */
@@ -95,9 +90,7 @@ class Badge extends UI5Element {
 	 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 	 * <br><br>
 	 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Badge.prototype.colorScheme
-	 * @defaultvalue "1"
+	 * @default "1"
 	 * @public
 	 */
 	@property({ defaultValue: "1" })
@@ -105,9 +98,7 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines if the default state icon is shown.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Badge.prototype.hideStateIcon
-	 * @defaultValue false
+	 * @default false
 	 * @public
 	 * @since 1.20
 	 */
@@ -118,9 +109,7 @@ class Badge extends UI5Element {
 	 * Defines if the component is interactive (focusable and pressable).
 	 * <br><b>Note:</b> The badge cannot be <code>interactive</code>
 	 * when <code>design</code> property is <code>BadgeDesign.Set3</code>
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Badge.prototype.interactive
-	 * @defaultValue false
+	 * @default false
 	 * @public
 	 * @since 1.20
 	 */
@@ -132,9 +121,7 @@ class Badge extends UI5Element {
 	 * <br><b>Note:</b> For option "Normal" the text will wrap and the
 	 * words will not be broken based on hyphenation.
 	 *
-	 * @name sap.ui.webc.main.Badge.prototype.wrappingType
-	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 * @since 1.20
 	 */
@@ -166,9 +153,6 @@ class Badge extends UI5Element {
 	 * Defines the text of the component.
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.Badge.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -177,13 +161,10 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 *
-	 * @type {sap.ui.webc.main.IIcon[]}
-	 * @name sap.ui.webc.main.Badge.prototype.icon
-	 * @slot
 	 * @public
 	 */
 	@slot()
-	icon!: Array<HTMLElement>;
+	icon!: Array<IIcon>;
 
 	static i18nBundle: I18nBundle;
 

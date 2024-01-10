@@ -74,11 +74,8 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
  * and <ui5-time-selection-inputs> components and should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimePickerInternals
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-time-picker-internals
  * @since 1.15.0
  * @private
  */
@@ -100,9 +97,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Defines a formatted time value.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.value
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -116,9 +111,7 @@ class TimePickerInternals extends UI5Element {
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
 
-	 * @type {string}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -127,8 +120,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * The index of the active Clock/TogleSpinButton.
 	 *
-	 * @type {integer}
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
@@ -137,7 +129,6 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Contains calendar type.
 	 *
-	 * @type {CalendarType}
 	 * @private
 	 */
 	@property({ type: CalendarType })
@@ -146,7 +137,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Contains currently available Time Picker components depending on time format.
 	 *
-	 * @type {Array}
+	 * @private
 	 */
 	@property({ type: Object, multiple: true })
 	_entities!: Array<TimePickerEntityProperties>;
@@ -154,7 +145,6 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Contains component-to-index map.
 	 *
-	 * @type {TimePickerComponentIndexMap}
 	 * @private
 	 */
 	@property({ type: Object })
@@ -163,7 +153,6 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Contains currently available Button components depending on time format.
 	 *
-	 * @type {Array}
 	 * @private
 	 */
 	@property({ type: Object, multiple: true })
@@ -172,7 +161,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Id of the cooldown interval
 	 *
-	 * @type {ReturnType}
+	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true })
 	_typeCooldownId?: ReturnType<typeof setTimeout>;
@@ -180,7 +169,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Exact match number buffer
 	 *
-	 * @type {integer}
+	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true })
 	_exactMatch?: number;
@@ -188,7 +177,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Buffer for entered by keyboard numbers
 	 *
-	 * @type {string}
+	 * @private
 	 */
 	@property({ defaultValue: "", noAttribute: true })
 	_keyboardBuffer!: string;
@@ -375,9 +364,9 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Returns name of the clock or button from the id of the event target.
 	 *
-	 * @returns {string | undefined} name of the clock/button
+	 * @returns name of the clock/button
 	 */
-	_getNameFromId(id: string) {
+	_getNameFromId(id: string): string | undefined {
 		const parts = id.split("_");
 
 		return parts.length ? parts[parts.length - 1] : undefined;
@@ -386,9 +375,9 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Returns index of the clock or button from the id of the event target.
 	 *
-	 * @returns {number} index of the clock/button
+	 * @returns index of the clock/button
 	 */
-	_getIndexFromId(id: string) {
+	_getIndexFromId(id: string): number {
 		const name = this._getNameFromId(id);
 
 		return name ? this._indexFromName(name) : 0;
@@ -397,7 +386,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Changes hours value.
 	 *
-	 * @param {hours} number new hours value
+	 * @param hours new hours value
 	 */
 	_hoursChange(hours: number) {
 		if (this._hoursConfiguration.isTwelveHoursFormat) {
@@ -413,7 +402,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Changes minutes value.
 	 *
-	 * @param {minutes} number new minutes value
+	 * @param minutes new minutes value
 	 */
 	_minutesChange(minutes: number) {
 		const date = this.validDateValue;
@@ -425,7 +414,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Changes seconds value.
 	 *
-	 * @param {seconds} number new seconds value
+	 * @param seconds new seconds value
 	 */
 	_secondsChange(seconds: number) {
 		const date = this.validDateValue;
@@ -473,10 +462,10 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Shifts hours value with +/- 12 depending on hour value and day period.
 	 *
-	 * @param {number} hours current hours
-	 * @returns {number} shifted hours
+	 * @param hours current hours
+	 * @returns shifted hours
 	 */
-	_shiftHours(hours: number) {
+	_shiftHours(hours: number): number {
 		if (this._period === this.periodsArray[0]) { // AM
 			hours = hours === 12 ? 0 : hours;
 		} else if (this._period === this.periodsArray[1]) { // PM
@@ -488,7 +477,7 @@ class TimePickerInternals extends UI5Element {
 	/**
 	 * Clears the currently existing cooldown period and starts new one if requested.
 	 *
-	 * @param {boolean} startNewCooldown whether to start new cooldown period after clearing previous one
+	 * @param startNewCooldown whether to start new cooldown period after clearing previous one
 	 */
 	_resetCooldown(startNewCooldown: boolean) {
 		if (!TYPE_COOLDOWN_DELAY) {

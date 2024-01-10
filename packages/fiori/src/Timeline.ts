@@ -12,6 +12,7 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
+import type { ITimelineItem } from "./Interfaces.js";
 
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
@@ -32,11 +33,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * while the social timeline offers a high level of interaction and collaboration, and is integrated within SAP Jam.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.Timeline
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-timeline
- * @appenddocs sap.ui.webc.fiori.TimelineItem
+ * @extends UI5Element
  * @public
  * @since 0.8.0
  */
@@ -60,9 +57,7 @@ class Timeline extends UI5Element {
 	 * <li><code>Horizontal</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.fiori.types.TimelineLayout}
-	 * @name sap.ui.webc.fiori.Timeline.prototype.layout
-	 * @defaultvalue "Vertical"
+	 * @default "Vertical"
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -72,9 +67,7 @@ class Timeline extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.Timeline.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -84,13 +77,10 @@ class Timeline extends UI5Element {
 	/**
 	 * Determines the content of the <code>ui5-timeline</code>.
 	 *
-	 * @type {sap.ui.webc.fiori.ITimelineItem[]}
-	 * @name sap.ui.webc.fiori.Timeline.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })
-	items!: Array<TimelineItem>;
+	items!: Array<ITimelineItem>;
 
 	static i18nBundle: I18nBundle;
 
@@ -148,7 +138,7 @@ class Timeline extends UI5Element {
 	_handleTabNextOrPrevious(e: KeyboardEvent, isNext?: boolean) {
 		const target = e.target as TimelineItem;
 		const nextTargetIndex = isNext ? this.items.indexOf(target) + 1 : this.items.indexOf(target) - 1;
-		const nextTarget = this.items[nextTargetIndex];
+		const nextTarget = this.items[nextTargetIndex] as TimelineItem;
 		if (!nextTarget) {
 			return;
 		}

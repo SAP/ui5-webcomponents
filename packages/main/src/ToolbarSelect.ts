@@ -14,7 +14,7 @@ import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSe
 import ToolbarItem from "./ToolbarItem.js";
 import Select from "./Select.js";
 import Option from "./Option.js";
-import "./ToolbarSelectOption.js";
+import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
 type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
@@ -32,13 +32,8 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
  * @constructor
  * @abstract
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarSelect
- * @extends sap.ui.webc.main.ToolbarItem
- * @tagname ui5-toolbar-select
- * @appenddocs sap.ui.webc.main.ToolbarSelectOption
+ * @extends ToolbarItem
  * @public
- * @implements sap.ui.webc.main.IToolbarItem
  * @since 1.17.0
  */
 @customElement({
@@ -49,13 +44,15 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 /**
  * Fired when the selected option changes.
  *
- * @event sap.ui.webc.main.ToolbarSelect#change
  * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
 @event("change", {
 	detail: {
+		/**
+		* @public
+		*/
 		selectedOption: { type: HTMLElement },
 	},
 })
@@ -63,14 +60,12 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 /**
  * Fired after the component's dropdown menu opens.
  *
- * @event sap.ui.webc.main.ToolbarSelect#open
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
  *
- * @event sap.ui.webc.main.ToolbarSelect#close
  * @public
  */
 @event("close")
@@ -82,9 +77,7 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.width
-	 * @defaultvalue undefined
-	 * @type { sap.ui.webc.base.types.CSSSize }
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: CSSSize })
@@ -99,21 +92,16 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
-	 * @type {sap.ui.webc.main.ISelectOption[]}
-	 * @slot options
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.default
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<Option>;
+	options!: Array<ToolbarSelectOption>;
 
 	/**
 	 * Defines the value state of the component.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.valueState
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -124,9 +112,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.disabled
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -135,10 +121,8 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
 	 * @public
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.accessibleName
+	 * @default ""
 	 */
 	@property()
 	accessibleName!: string;
@@ -146,9 +130,7 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ToolbarSelect.prototype.accessibleNameRef
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -206,7 +188,7 @@ class ToolbarSelect extends ToolbarItem {
 			// update options
 			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
 			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-			this.options.forEach((option: Option, index: number) => {
+			this.options.forEach((option: ToolbarSelectOption, index: number) => {
 				if (index === selectedOptionIndex) {
 					option.setAttribute("selected", "");
 				} else {

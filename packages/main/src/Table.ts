@@ -55,6 +55,7 @@ import {
 	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
+import type { ITableRow } from "./Interfaces.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
@@ -65,17 +66,6 @@ import tableStyles from "./generated/themes/Table.css.js";
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 20;
-
-interface ITableRow extends UI5Element {
-	mode: `${TableMode}`,
-	selected: boolean,
-	_busy: boolean,
-	_tabIndex: string,
-	_ariaPosition: string,
-	_columnsInfoString: string,
-	_columnsInfo: Array<TableColumnInfo>,
-	_tabbables: Array<HTMLElement>,
-}
 
 type TableColumnInfo = {
 	cell?: TableCell,
@@ -171,11 +161,7 @@ enum TableFocusTargetElement {
  * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Table
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table
- * @appenddocs sap.ui.webc.main.TableColumn sap.ui.webc.main.TableRow sap.ui.webc.main.TableGroupRow sap.ui.webc.main.TableCell
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -188,12 +174,14 @@ enum TableFocusTargetElement {
 })
 /** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 *
-* @event sap.ui.webc.main.Table#row-click
 * @param {HTMLElement} row the activated row.
 * @public
 */
 @event("row-click", {
 	detail: {
+		/**
+		* @public
+		*/
 		row: { type: HTMLElement },
 	},
 })
@@ -201,13 +189,15 @@ enum TableFocusTargetElement {
 /**
 * Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 *
-* @event sap.ui.webc.main.Table#popin-change
 * @param {Array} poppedColumns popped-in columns.
 * @since 1.0.0-rc.6
 * @public
 */
 @event("popin-change", {
 	detail: {
+		/**
+		* @public
+		*/
 		poppedColumns: {
 			type: Array,
 		},
@@ -219,7 +209,6 @@ enum TableFocusTargetElement {
 * <br><br>
 *
 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
-* @event sap.ui.webc.main.Table#load-more
 * @public
 * @since 1.0.0-rc.11
 */
@@ -229,7 +218,6 @@ enum TableFocusTargetElement {
 * Fired when selection is changed by user interaction
 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 *
-* @event sap.ui.webc.main.Table#selection-change
 * @param {Array} selectedRows An array of the selected rows.
 * @param {Array} previouslySelectedRows An array of the previously selected rows.
 * @public
@@ -237,7 +225,13 @@ enum TableFocusTargetElement {
 */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedRows: { type: Array },
+		/**
+		 * @public
+		 */
 		previouslySelectedRows: { type: Array },
 	},
 })
@@ -245,9 +239,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is not present.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.noDataText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -262,9 +254,7 @@ class Table extends UI5Element {
 	 * <br>
 	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.growingButtonText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -277,9 +267,7 @@ class Table extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.growingButtonSubtext
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -289,9 +277,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Table.prototype.hideNoData
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -314,9 +300,8 @@ class Table extends UI5Element {
 	 *
 	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 	 * and the component will fallback to <code>growing="Button"</code>.
-	 * @type {sap.ui.webc.main.types.TableGrowingMode}
-	 * @name sap.ui.webc.main.Table.prototype.growing
-	 * @defaultvalue "None"
+	 *
+	 * @default "None"
 	 * @since 1.0.0-rc.12
 	 * @public
 	 */
@@ -329,9 +314,8 @@ class Table extends UI5Element {
 	 *
 	 * In this state the component's opacity is reduced
 	 * and busy indicator is displayed at the bottom of the table.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Table.prototype.busy
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @since 1.0.0-rc.12
 	 * @public
 	 */
@@ -341,9 +325,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Table.prototype.busyDelay
-	 * @defaultValue 1000
+	 * @default 1000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
@@ -371,9 +353,7 @@ class Table extends UI5Element {
 	 * </li>
 	 * </ul>
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Table.prototype.stickyColumnHeader
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -382,9 +362,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines the mode of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.TableMode}
-	 * @name sap.ui.webc.main.Table.prototype.mode
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -394,9 +372,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default undefined
 	 * @public
 	 * @since 1.3.0
 	 */
@@ -406,9 +382,7 @@ class Table extends UI5Element {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Table.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.3.0
 	 */
@@ -444,8 +418,8 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
 	 */
@@ -457,9 +431,6 @@ class Table extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITableRow[]}
-	 * @name sap.ui.webc.main.Table.prototype.default
-	 * @slot rows
 	 * @public
 	 */
 	@slot({
@@ -475,9 +446,6 @@ class Table extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITableColumn[]}
-	 * @name sap.ui.webc.main.Table.prototype.columns
-	 * @slot
 	 * @public
 	 */
 	@slot({
@@ -771,7 +739,6 @@ class Table extends UI5Element {
 	 * Handles Alt + Up/Down.
 	 * Switches focus between column header, last focused item, and "More" button (if applicable).
 	 * @private
-	 * @param { KeyboardEvent } e
 	 */
 	_handleArrowAlt(e: KeyboardEvent) {
 		const shouldMoveUp: boolean = isUpAlt(e);
@@ -812,8 +779,6 @@ class Table extends UI5Element {
 	/**
 	 * Determines the type of the currently focused element.
 	 * @private
-	 * @param {object} element The DOM element
-	 * @returns {("columnHeader"|"tableRow"|"tableGroupRow"|"moreButton")} A string identifier
 	 */
 	getFocusedElementType(element: HTMLElement): TableFocusTargetElement | undefined {
 		if (element === this.columnHeader) {
@@ -833,7 +798,6 @@ class Table extends UI5Element {
 	/**
 	 * Toggles focus between the table row's root and the last focused nested element.
 	 * @private
-	 * @param { CustomEvent } e "ui5-f7-pressed"
 	 */
 	_handleF7(e: CustomEvent<TableRowF7PressEventDetail>) {
 		const row = e.detail.row;
@@ -1156,9 +1120,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Gets settings to be propagated from columns to rows.
-	 *
-	 * @returns { array }
-	 * @memberof Table
 	 */
 	getColumnPropagationSettings(): Array<TableColumnInfo> {
 		return this.columns.map((column, index) => {

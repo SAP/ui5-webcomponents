@@ -10,6 +10,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
+import type { IIcon } from "./Interfaces.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
@@ -90,16 +91,6 @@ const PRESENTATION_ROLE = "presentation";
  * <code>&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon></code>
  *
  * <br><br>
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-icon</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>root - Used to style the outermost wrapper of the <code>ui5-icon</code></li>
- * </ul>
- *
- * <br><br>
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -111,12 +102,11 @@ const PRESENTATION_ROLE = "presentation";
  *
  * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
  *
+ * @csspart root - Used to style the outermost wrapper of the <code>ui5-icon</code>.
+ *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Icon
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-icon
- * @implements sap.ui.webc.main.IIcon
+ * @extends UI5Element
+ * @implements {IIcon}
  * @public
  */
 @customElement({
@@ -135,13 +125,11 @@ const PRESENTATION_ROLE = "presentation";
  * @since 1.0.0-rc.8
  */
 @event("click")
-class Icon extends UI5Element {
+class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
 	 *
-	 * @type {sap.ui.webc.main.types.IconDesign}
-	 * @name sap.ui.webc.main.Icon.prototype.design
-	 * @defaultvalue "Default"
+	 * @default "Default"
 	 * @public
 	 * @since 1.9.2
 	 */
@@ -150,9 +138,7 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
-	 * @name sap.ui.webc.main.Icon.prototype.interactive
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
 	 */
@@ -190,9 +176,7 @@ class Icon extends UI5Element {
 	 * Example:
 	 * <br>
 	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
-	 * @name sap.ui.webc.main.Icon.prototype.name
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -205,9 +189,7 @@ class Icon extends UI5Element {
 	 * <b>Note:</b> Every icon should have a text alternative in order to
 	 * calculate its accessible name.
 	 *
-	 * @name sap.ui.webc.main.Icon.prototype.accessibleName
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -218,9 +200,7 @@ class Icon extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The tooltip text should be provided via the <code>accessible-name</code> property.
 	 *
-	 * @name sap.ui.webc.main.Icon.prototype.showTooltip
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -228,9 +208,7 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines the accessibility role of the component.
-	 * @name sap.ui.webc.main.Icon.prototype.accessibleRole
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.1.0
 	 */
