@@ -59,7 +59,7 @@ const generate = async () => {
 	const destPath = process.argv[6];
 	const collection = process.argv[7];
 	const fileNamePattern = new RegExp(`${illustrationsPrefix}-.+-(.+).svg`);
-// collect each illustration name because each one should have Sample.js file
+	// collect each illustration name because each one should have Sample.js file
 	const fileNames = new Set();
 
 	try {
@@ -75,7 +75,7 @@ const generate = async () => {
 		return `export default \`${svgContent}\`;`
 	};
 	const svgToJs = async fileName => {
-		const svg = await fs.readFile(path.join(srcPath, fileName), {encoding: "utf-8"});
+		const svg = await fs.readFile(path.join(srcPath, fileName), { encoding: "utf-8" });
 		const fileContent = svgImportTemplate(svg);
 		fileName = fileName.replace(/\.svg$/, ".js");
 
@@ -94,53 +94,32 @@ const generate = async () => {
 
 		const illustrationNameUpperCase = illustrationNameForTranslation.toUpperCase();
 
-		return defaultText ? `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+		return `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
 import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
-import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
-import {
+import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";${
+	defaultText ? `import {
 	IM_TITLE_${illustrationNameUpperCase},
 	IM_SUBTITLE_${illustrationNameUpperCase},
-} from "../generated/i18n/i18n-defaults.js";
+} from "../generated/i18n/i18n-defaults.js";` : ``}
 
 const name = "${illustrationName}";
 const set = "${illustrationSet}";
-const collection = "${collection}";
+const collection = "${collection}";${defaultText ? `
 const title = IM_TITLE_${illustrationNameUpperCase};
-const subtitle = IM_SUBTITLE_${illustrationNameUpperCase};
+const subtitle = IM_SUBTITLE_${illustrationNameUpperCase};` : ``}
 
 registerIllustration(name, {
 	dialogSvg,
 	sceneSvg,
-	spotSvg,
+	spotSvg,${defaultText ? `
 	title,
-	subtitle,
+	subtitle,` : ``}
 	set,
 	collection,
 });
 
-export {
-	dialogSvg,
-	sceneSvg,
-	spotSvg,
-};` :
-			`import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
-import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
-import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
-
-const name = "${illustrationName}";
-const set = "${illustrationSet}";
-const collection = "${collection}";
-
-registerIllustration(name, {
-	dialogSvg,
-	sceneSvg,
-	spotSvg,
-	set,
-	collection,
-});
-
+export default name;
 export {
 	dialogSvg,
 	sceneSvg,
