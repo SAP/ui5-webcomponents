@@ -131,7 +131,7 @@ export {
 		return `declare const dialogSvg: string;
 declare const sceneSvg: string;
 declare const spotSvg: string;
-declare const _default: "${illustrationName}";
+declare const _default: "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
 
 export default _default;
 export { dialogSvg, sceneSvg, spotSvg };`

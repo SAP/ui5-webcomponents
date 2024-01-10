@@ -50,21 +50,14 @@ const getCollection = () => {
  */
 const processName = (name: string) => {
 	let collection = getCollection();
-	const isTnt = name.startsWith("Tnt");
-	const set = isTnt ? "tnt" : "fiori";
-
-	let registryKey = `${set}/${collection}/${name}`;
-	let loaderKey = `${collection}/${name}`;
+	const [set, illustrationName] = name.split("/");
+	let registryKey = `${set}/${collection}/${illustrationName}`;
+	let loaderKey = `${collection}/${illustrationName}`;
 
 	if (!loaders.has(loaderKey) && collection !== FALLBACK_COLLECTION) {
 		collection = FALLBACK_COLLECTION;
-		loaderKey = `${collection}/${name}`;
-		registryKey = `${set}/${collection}/${name}`;
-	}
-
-	if (isTnt) {
-		name = name.replace(/^Tnt/, "");
-		registryKey = `${set}/${collection}/${name}`;
+		loaderKey = `${collection}/${illustrationName}`;
+		registryKey = `${set}/${collection}/${illustrationName}`;
 	}
 
 	return {
@@ -94,7 +87,7 @@ const _loadIllustrationOnce = (illustrationName: string) => {
 
 	if (!illustrationPromises.has(loaderKey)) {
 		if (!loaders.has(loaderKey)) {
-			const illustrationPath = illustrationName.startsWith("Tnt") ? `tnt/${illustrationName.replace(/^Tnt/, "")}` : illustrationName;
+			const illustrationPath = illustrationName;
 			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" module. Or you can import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module that will make all illustrations available, but fetch only the ones used.`);
 		}
 
