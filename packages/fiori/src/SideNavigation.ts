@@ -203,7 +203,7 @@ class SideNavigation extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	isTouch!: boolean;
+	isTouchDevice!: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -346,9 +346,6 @@ class SideNavigation extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-sn-phone": isPhone(),
-				"ui5-sn-tablet": isTablet(),
-				"ui5-sn-combi": isCombi(),
 				"ui5-sn-collapsed": this.collapsed,
 				"ui5-sn-in-popover": this._inPopover,
 			},
@@ -429,7 +426,7 @@ class SideNavigation extends UI5Element {
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
 
-		this.isTouch = isPhone() || (isTablet() && !isCombi());
+		this.isTouchDevice = isPhone() || (isTablet() && !isCombi());
 	}
 
 	onExitDOM() {

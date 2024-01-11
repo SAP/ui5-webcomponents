@@ -13,7 +13,7 @@
 	width: var(--_ui5_side_navigation_collapsed_width);
 }
 
-:host([is-touch]) {
+:host([is-touch-device]) {
 	border-radius: var(--_ui5_side_navigation_phone_border_radius);
 }
 
