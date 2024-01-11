@@ -183,6 +183,9 @@ class TimeSelection extends UI5Element {
 	@property({ type: CalendarType })
 	_calendarType!: CalendarType;
 
+	@property()
+	_density!: string;
+
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
