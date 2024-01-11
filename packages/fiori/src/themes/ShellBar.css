@@ -10,6 +10,8 @@
 	--_ui5_input_border_radius: var(--_ui5_shellbar_input_border_radius);
 	--_ui5_input_focus_border_radius: var(--_ui5_shellbar_input_focus_border_radius);
 	--_ui5_input_background_color: var(--_ui5_shellbar_input_background_color);
+	--_ui5_input_bottom_border_color: var(--_ui5_shellbar_input_bottom_border_color);
+	--_ui5_input_focus_outline_color: var(--_ui5_shellbar_input_focus_outline_color);
 }
 
 .ui5-shellbar-root {
@@ -436,6 +438,7 @@ slot[name="profile"] {
 ::slotted([ui5-input]) {
 	background: var(--_ui5_shellbar_search_field_background);
 	border: var(--_ui5_shellbar_search_field_border);
+	box-shadow: var(--_ui5_shellbar_search_field_box_shadow);
 	color: var(--_ui5_shellbar_search_field_color);
 	height: 2.25rem;
 	width: 100%;
