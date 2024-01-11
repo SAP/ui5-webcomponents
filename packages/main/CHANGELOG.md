@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.1](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.21.1) (2024-01-11)
+
+
+### Bug Fixes
+
+* **ui5-select:** correct "value" setter to operate on the light DOM ([#8067](https://github.com/SAP/ui5-webcomponents/issues/8067)) ([4567d8a](https://github.com/SAP/ui5-webcomponents/commit/4567d8a76ca7d52e44ba55e4adf5888d9753a406))
+
+
+
+
+
 # [1.21.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.5...v1.21.0) (2024-01-05)
 
 
