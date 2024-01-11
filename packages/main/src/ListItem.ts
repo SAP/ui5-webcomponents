@@ -213,9 +213,6 @@ abstract class ListItem extends ListItemBase {
 	@property({ type: HasPopup, noAttribute: true })
 	ariaHaspopup?: `${HasPopup}`;
 
-	@property({ type: Integer })
-	_level?: number;
-
 	/**
 	 * Used in UploadCollectionItem
 	 * @private
@@ -489,7 +486,7 @@ abstract class ListItem extends ListItemBase {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
-			ariaLevel: this._level || undefined,
+			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
