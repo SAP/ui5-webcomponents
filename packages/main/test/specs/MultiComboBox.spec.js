@@ -594,7 +594,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should select all items", async () => {
-			const cb = await $("#mcb-select-all");
+			const cb = await $("#mcb-select-all-vs");
 			const arrow = await cb.shadow$("[input-icon]");
 			const spanRef = await $("#select-all-event");
 
@@ -616,7 +616,7 @@ describe("MultiComboBox general interaction", () => {
 		it ("should select a few items and show Select All in selected items Popover", async () => {
 			await browser.setWindowSize(1920, 1080);
 
-			const cb = await $("#mcb-select-all");
+			const cb = await $("#mcb-select-all-vs");
 			const arrow = await cb.shadow$("[input-icon]");
 			const spanRef = await $("#select-all-event");
 
@@ -647,7 +647,7 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await spanRef.getText(), "Selected items count: 5");
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
 			const popover = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 			const tokenizerNMore = await cb.shadow$("[ui5-tokenizer]");

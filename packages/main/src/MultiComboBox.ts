@@ -942,7 +942,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isArrowUp || isUpCtrl(e)) {
-			if (e.target === this.valueStateHeader) {
+			if (e.target === this.valueStateHeader || !this.valueStateHeader) {
 				this._shouldAutocomplete = true;
 				return this._inputDom.focus();
 			}
@@ -962,6 +962,10 @@ class MultiComboBox extends UI5Element {
 			this.selectedItems?.forEach(item => {
 				item.selected = (e.target as CheckBox).checked;
 			});
+
+			if (!(e.target as CheckBox).checked) {
+				this.filterSelected = false;
+			}
 
 			const changePrevented = this.fireSelectionChange();
 
@@ -1364,6 +1368,10 @@ class MultiComboBox extends UI5Element {
 
 		// casted to KeyboardEvent since isSpace and isSpaceCtrl accepts KeyboardEvent only
 		const castedEvent = { key: e.detail.key } as KeyboardEvent;
+
+		if (!e.detail.selectedItems.length && this.filterSelected) {
+			this.filterSelected = false;
+		}
 
 		if (!e.detail.selectionComponentPressed && !isSpace(castedEvent) && !isSpaceCtrl(castedEvent)) {
 			this.allItemsPopover?.close();
