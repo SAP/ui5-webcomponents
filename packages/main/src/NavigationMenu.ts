@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isDesktop,
@@ -9,6 +10,7 @@ import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
+import type NavigationMenuItem from "./NavigationMenuItem.js";
 import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
@@ -43,12 +45,8 @@ type MenuItemClickEventDetail = {
  * <code>import "@ui5/webcomponents/dist/NavigationMenu.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.NavigationMenu
- * @extends sap.ui.webc.main.Menu
- * @tagname ui5-menu
- * @appenddocs sap.ui.webc.main.NavigationMenuItem
- * @since 1.3.0
+ * @extends Menu
+ * @since 1.22.0
  * @public
  */
 @customElement({
@@ -56,12 +54,19 @@ type MenuItemClickEventDetail = {
 	renderer: litRender,
 	staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
 	staticAreaTemplate: staticAreaMenuTemplate,
-	dependencies: [
-		Menu,
-	],
 })
 
 class NavigationMenu extends Menu {
+	/**
+	 * Defines the items of this component.
+	 * <br><br>
+	 * <b>Note:</b> Use <code>ui5-navigation-menu-item</code> for the intended design.
+	 *
+	 * @public
+	 */
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	items!: Array<NavigationMenuItem>;
+
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop

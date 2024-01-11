@@ -21,12 +21,8 @@ import MenuItem from "./MenuItem.js";
  * <code>import "@ui5/webcomponents/dist/NavigationMenuItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.NavigationMenuItem
- * @extends sap.ui.webc.main.MenuItem
+ * @extends MenuItem
  * @abstract
- * @tagname ui5-navigation-menu-item
- * @implements sap.ui.webc.main.INavigationMenuItem
  * @since 1.22.0
  * @public
  */
@@ -39,9 +35,7 @@ class NavigationMenuItem extends MenuItem {
 	 * for the <code>click</code> event should be registered.
 	 *
 	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.NavigationMenuItem.prototype.href
+	 * @default ""
 	 * @since 1.22.0
 	 */
 	@property()
@@ -63,9 +57,7 @@ class NavigationMenuItem extends MenuItem {
 	 * <b>This property must only be used when the <code>href</code> property is set.</b>
 	 *
 	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.NavigationMenuItem.prototype.target
+	 * @default ""
 	 * @since 1.22.0
 	 */
 	@property()
