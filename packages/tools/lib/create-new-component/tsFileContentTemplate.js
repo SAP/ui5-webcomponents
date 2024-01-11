@@ -25,10 +25,7 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  * <code>import ${packageName}/dist/${componentName}.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.${library}.${componentName}
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ${tagName}
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -43,7 +40,6 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  * Example custom event.
  * Please keep in mind that all public events should be documented in the API Reference as shown below.
  *
- * @event sap.ui.webc.${library}.${componentName}#interact
  * @public
  */
 @event("interact", { detail: { /* event payload ( optional ) */ } })
@@ -51,9 +47,7 @@ class ${componentName} extends UI5Element {
 	/**
 	 * Defines the value of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.${library}.${componentName}.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -62,9 +56,6 @@ class ${componentName} extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.${library}.${componentName}.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
