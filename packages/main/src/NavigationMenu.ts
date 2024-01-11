@@ -47,7 +47,7 @@ type MenuItemClickEventDetail = {
  * @constructor
  * @extends Menu
  * @since 1.22.0
- * @public
+ * @private
  */
 @customElement({
 	tag: "ui5-navigation-menu",

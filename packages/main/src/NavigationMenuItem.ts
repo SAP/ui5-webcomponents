@@ -24,7 +24,7 @@ import MenuItem from "./MenuItem.js";
  * @extends MenuItem
  * @abstract
  * @since 1.22.0
- * @public
+ * @private
  */
 @customElement("ui5-navigation-menu-item")
 class NavigationMenuItem extends MenuItem {
