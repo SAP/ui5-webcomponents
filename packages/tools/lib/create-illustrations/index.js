@@ -119,7 +119,7 @@ registerIllustration(name, {
 	collection,
 });
 
-export default name;
+export default "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
 export {
 	dialogSvg,
 	sceneSvg,
