@@ -61,6 +61,8 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
  *
  * <code>import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
  *
+ * @csspart subtitle - Used to style the subtitle wrapper of the <code>ui5-illustrated-message</code>
+ *
  * @constructor
  * @extends UI5Element
  * @public
