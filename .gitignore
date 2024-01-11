@@ -1,3 +1,4 @@
+generated-tracked
 # Ignore .gitignore, target, dist and tmp folders
 .gitignore
 !packages/create-package/template/.gitignore

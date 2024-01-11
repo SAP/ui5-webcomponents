@@ -4,9 +4,11 @@ const path = require("path");
 const collectionName = process.argv[2] || "SAP-icons-v4";
 const collectionVersion = process.argv[3];
 const srcFile = collectionVersion ? path.normalize(`src/${collectionVersion}/${collectionName}.json`) : path.normalize(`src/${collectionName}.json`);
-const destDir = collectionVersion ? path.normalize(`dist/${collectionVersion}/`) : path.normalize("dist/");
+const destDir = collectionVersion ? path.normalize(`src/generated-tracked/${collectionVersion}/`) : path.normalize("src/generated-tracked/");
+const destDirTypes = collectionVersion ? path.normalize(`dist/${collectionVersion}/`) : path.normalize("dist/");
 
-const iconTemplate = (name, pathData, ltr, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+const iconTemplate = (name, pathData, ltr, collection, packageName) => `// @ts-nocheck
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
@@ -22,7 +24,7 @@ export { pathData, ltr, accData };`;
 
 
 const iconAccTemplate = (name, pathData, ltr, accData, collection, packageName) => `import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { ${accData.key} } from "../generated/i18n/i18n-defaults.js";
+import { ${accData.key} } from "../../generated/i18n/i18n-defaults.js";
 
 const name = "${name}";
 const pathData = "${pathData}";
@@ -71,6 +73,7 @@ const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewB
 
 const createIcons = async (file) => {
 	await fs.mkdir(destDir, { recursive: true });
+	await fs.mkdir(destDirTypes, { recursive: true });
 
 	const json = JSON.parse(await fs.readFile(file));
 
@@ -85,13 +88,13 @@ const createIcons = async (file) => {
 
 		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, collection, packageName) : iconTemplate(name, pathData, ltr, collection, packageName);
 
-		promises.push(fs.writeFile(path.join(destDir, `${name}.js`), content));
+		promises.push(fs.writeFile(path.join(destDir, `${name}.ts`), content));
 		promises.push(fs.writeFile(path.join(destDir, `${name}.svg`), svgTemplate(pathData)));
-		promises.push(fs.writeFile(path.join(destDir, `${name}.d.ts`), typeDefinitionTemplate(name, acc, collection)));
+		// promises.push(fs.writeFile(path.join(destDir, `${name}.d.ts`), typeDefinitionTemplate(name, acc, collection)));
 
 		// For versioned icons collections, the script creates top level (unversioned) module that internally imports the versioned ones.
 		// For example, the top level "@ui5/ui5-webcomponents-icons/dist/accept.js" imports:
-		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js" 
+		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js"
 		// - "@ui5/ui5-webcomponents-icons/dist/v4/accept.js"
 
 		if (json.version) {
@@ -100,8 +103,8 @@ const createIcons = async (file) => {
 			// For the default collection (SAPIcons) we export just the icon name - "export default { 'accept' }"
 			// For non-default collections (SAPTNTIcons and SAPBSIcons) we export the full name - "export default { 'tnt/actor' }"
 			const effectiveName = isDefaultCollection(collection) ? name : getUnversionedFullIconName(name, collection);
-			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name, json.versions, effectiveName)));
-            promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(effectiveName, acc)));
+			promises.push(fs.writeFile(path.join(path.normalize("src/generated-tracked/"), `${name}.ts`), collectionTemplate(name, json.versions, effectiveName)));
+            // promises.push(fs.writeFile(path.join(path.normalize("src/generated-tracked/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(effectiveName, acc)));
 		}
 	}
 

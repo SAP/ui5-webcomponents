@@ -13,6 +13,19 @@ const toPosixPath = (pathStr) => {
 }
 
 const customResolver = (id, source, options) => {
+	if (id.startsWith("@ui5/webcomponents-icons")) {
+		const importedPath = id.replace(/\@ui5\/(webcomponents-icons.*)\/dist\//, "");
+		const iconPackage = id.match(/\@ui5\/webcomponents-(icons.*?)\//)[1]
+		const resolvedPath = path.join(process.cwd(), "packages", iconPackage, "src/generated-tracked", importedPath).replace(".js", ".ts")
+		// console.log({importedPath, iconPackage, resolvedPath, source})
+		if (existsSync(resolvedPath)) {
+			return resolvedPath;
+		} else {
+			// default resolve
+			return;
+		}
+	}
+
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
@@ -20,13 +33,13 @@ const customResolver = (id, source, options) => {
 		return resolved;
 	}
 
-	if (isIconImporter && id.startsWith("../generated")) {
-		let absoluteId = join(dirname(source), id);
-		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
-		absoluteId = toPosixPath(absoluteId);
-		const resolved = absoluteId.replace("/dist/", "/src/").replace(/\.js$/, ".ts");
-		return resolved;
-	}
+	// if (isIconImporter && id.startsWith("../generated")) {
+	// 	let absoluteId = join(dirname(source), id.replace("../generated", "../../generated"));
+	// 	// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+	// 	absoluteId = toPosixPath(absoluteId);
+	// 	const resolved = absoluteId.replace("/dist/", "/src/").replace(/\.js$/, ".ts");
+	// 	return resolved;
+	// }
 
 	// json files are always in dist, this saves a separate copy task
 	if (id.endsWith(".json")) {
