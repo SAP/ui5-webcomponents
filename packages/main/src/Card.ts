@@ -28,6 +28,15 @@ import cardCss from "./generated/themes/Card.css.js";
  *
  * Note: We recommend the usage of <code>ui5-card-header</code> for the header slot, so advantage can be taken for keyboard handling, styling and accessibility.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>root - Used to style the root DOM element of the card component</li>
+ * <li>content - Used to style the content of the card</li>
+ * </ul>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
