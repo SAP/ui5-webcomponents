@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.2](https://github.com/SAP/ui5-webcomponents/compare/v1.21.1...v1.21.2) (2024-01-12)
+
+
+### Bug Fixes
+
+* sync all packages cross references to point to 1.21.2 ([c73d552](https://github.com/SAP/ui5-webcomponents/commit/c73d552c7aed7e2fbc3fca85a324cdd84c5b5b11))
+
+
+
+
+
 # [1.21.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.5...v1.21.0) (2024-01-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-theming
