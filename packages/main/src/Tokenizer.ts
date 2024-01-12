@@ -230,19 +230,18 @@ class Tokenizer extends UI5Element {
 	}
 
 	async _handleNMoreClick() {
+		this.expanded = true;
+
 		if (!this.preventPopoverOpen) {
 			await this.openMorePopover();
-		}
-
-		this.expanded = true;
-		setTimeout(() => {
 			this.scrollToEnd();
-		}, 0);
+		}
 
 		this.fireEvent("show-more-items-press");
 	}
 
 	async openMorePopover() {
+		// the morePopoverProperty is an object so it will always return 'true', so we check for keys
 		const popoverOpener = Object.keys(this.morePopoverOpener).length === 0 ? this : this.morePopoverOpener;
 
 		(await this.getPopover()).showAt(popoverOpener);
@@ -294,6 +293,10 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom! : this.narrowContentDom;
+
+		if (this.expanded) {
+			this._expandedScrollWidth = this.expandedContentDom!.scrollWidth;
+		}
 	}
 
 	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
@@ -557,17 +560,26 @@ class Tokenizer extends UI5Element {
 			this.showMore = false;
 		}
 
+		const relatedTarget = e.relatedTarget as HTMLElement;
+		const target = e.target as HTMLElement;
+
+		if (target.hasAttribute("ui5-token")) {
+			target.focus();
+			return;
+		}
+
 		// When standalone tokenizer is getting focused and no token is clicked (with TAB) - focus the first token
-		if (e.relatedTarget && e.relatedTarget.tagName !== "INPUT" && !this.focused) {
+		if (e.relatedTarget && !relatedTarget.hasAttribute("ui5-input")) {
 			this.focused = true;
 			this.scrollToStart();
+
 			this.tokens[0].focus();
 		}
 	}
 
 	_onfocusout() {
+		this.showMore = true;
 		this.expanded = false;
-		this.showMore = !this.showMore;
 	}
 
 	_toggleTokenSelection(tokens: Array<Token>) {

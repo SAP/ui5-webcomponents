@@ -197,11 +197,12 @@ class MultiInput extends Input {
 
 		if (e.relatedTarget === this.nativeInput) {
 			this.tokenizer.closeMorePopover();
+			this.tokenizer.expanded = true;
+			return;
 		}
-	}
 
-	// Tokenizer should not be expanded when focused in the context of MultiInput
-	_tokenizerFocusIn() {
+		this.tokenizer.expanded = false;
+		this.tokenizer.showMore = true;
 	}
 
 	valueHelpMouseUp() {
@@ -365,7 +366,6 @@ class MultiInput extends Input {
 		await super.onAfterRendering();
 
 		if (this.tokenizer.expanded) {
-			this.tokenizer._expandedScrollWidth = this.tokenizer.expandedContentDom!.scrollWidth;
 			this.tokenizer.scrollToEnd();
 		}
 
