@@ -49,10 +49,7 @@ import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
  * </ul>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DateRangePicker
- * @extends sap.ui.webc.main.DatePicker
- * @tagname ui5-daterange-picker
+ * @extends DatePicker
  * @since 1.0.0-rc.8
  * @public
  */
@@ -65,9 +62,7 @@ class DateRangePicker extends DatePicker {
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.delimiter
-	 * @defaultvalue "-"
+	 * @default "-"
 	 * @public
 	 */
 	@property({ defaultValue: "-" })
@@ -91,24 +86,20 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
 	 *
-	 * @readonly
-	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.dateValue
+	 * @default null
 	 */
-	get dateValue() {
+	get dateValue(): Date | null {
 		return null;
 	}
 
 	/**
 	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
 	 *
-	 * @readonly
-	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.dateValueUTC
+	 * @default null
 	 */
-	get dateValueUTC() {
+	get dateValueUTC(): Date | null {
 		return null;
 	}
 
@@ -157,24 +148,20 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * Returns the start date of the currently selected range as JavaScript Date instance.
 	 *
-	 * @readonly
-	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.startDateValue
+	 * @default null
 	 */
-	get startDateValue() {
+	get startDateValue(): Date | null {
 		return CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000).toLocalJSDate();
 	}
 
 	/**
 	 * Returns the end date of the currently selected range as JavaScript Date instance.
 	 *
-	 * @readonly
-	 * @type {Date}
 	 * @public
-	 * @name sap.ui.webc.main.DateRangePicker.prototype.endDateValue
+	 * @default null
 	 */
-	get endDateValue() {
+	get endDateValue(): Date | null {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();
 	}
 

@@ -9,15 +9,10 @@ To run the [UI5 Web Components Storybook app](https://sap.github.io/ui5-webcompo
 ### 1. In the root folder of the project, run the following command:
 
 ```bash
-yarn build # this step needs to be performed only the first time you run the project, to build the project initially
+yarn start:playground
 ```
 
-### 2. Go to the playground package.
-```bash
-cd packages/playground
-yarn storybook # to run the storybook app
-```
-Note that these steps are required only for running the Storybook app locally and not for general development.
+<b>Note:</b> This are required only for running the Storybook app locally and not for general development.
 
 ## What's a Story
 A story is a documentation of a UI component that captures its rendered state in various scenarios. Stories are useful for documenting all the potential states that a component can display, and they allow developers to test UI components in isolation.
@@ -115,7 +110,7 @@ The above example includes only the `indeterminate`, `checked` properties in the
 
 
 ## Documentation
-The documentation for each component is automatically produced using the `custom-elements.json` file. Additionally, there is an `argTypes.ts` file located beside each `.stories.ts` file. It is generated during build time and contains extra properties that enhance the documentation beyond what is available in the `custom-elements.json` file. This file should not be edited directly, as it can only be modified by the `packages/playground/build-scripts-storybook/samples-prepare.js` script.
+The documentation for each component is automatically produced using the `custom-elements.json` file. Additionally, there is an `argTypes.ts` file located beside each `.stories.ts` file. It is generated during build time and contains extra properties that enhance the documentation beyond what is available in the `custom-elements.json` file. This file should not be edited directly, as it can only be modified by the `packages/playground/build-scripts-storybook/samples-prepare.ts` script.
 
 ### Docs page
 Every story has a `docs` page in the storybook's sidebar. Usually, this page is generated automatically by storybook but it can be customized by adding a `docs` property to the story parameters. 
@@ -148,5 +143,4 @@ Several build scripts are used to generate the stories documentation. They are l
 ## Troubleshooting
 If you encounter an error when running yarn storybook, try the following:
 
-- Make sure you have built the sources by running `yarn build`.
 - Storybook parses the documentation from the `docs` folder. Files are transformed from `.md` to `.mdx` format. If you encounter an error, check if it is mdx related, locate the errored file and use the [MDX Playground](https://mdxjs.com/playground/) to fix it. 

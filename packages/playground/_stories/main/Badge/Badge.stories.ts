@@ -7,6 +7,8 @@ import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Badge from "@ui5/webcomponents/dist/Badge.js";
+import BadgeDesign from "@ui5/webcomponents/dist/types/BadgeDesign.js";
+import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 
 const component = "ui5-badge";
 
@@ -24,7 +26,11 @@ export default {
 const Template: UI5StoryArgs<Badge, StoryArgsSlots> = (args) => {
 	return html`
 <ui5-badge
+	design="${ifDefined(args.design)}"
 	color-scheme="${ifDefined(args.colorScheme)}"
+	?interactive="${ifDefined(args.interactive)}"
+	?hide-state-icon="${ifDefined(args.hideStateIcon)}"
+	wrapping-type="${ifDefined(args.wrappingType)}"
 	style="${ifDefined(args.style)}"
 >
 	${unsafeHTML(args.icon)}
@@ -35,42 +41,108 @@ const Template: UI5StoryArgs<Badge, StoryArgsSlots> = (args) => {
 export const Basic = Template.bind({});
 Basic.args = {
 	colorScheme: "6",
-	icon: `<ui5-icon name="pending" slot="icon"></ui5-icon>`,
-	default: "Pending"
+	default: "Badge Text"
 };
 
-export const Truncating = Template.bind({});
-Truncating.args = {
-	default: "This would truncate as it is too long",
-	style: "width: 200px",
+export const Interactive = Template.bind({});
+Interactive.args = {
+	design: BadgeDesign.Positive,
+	interactive: true,
+	default: "Success"
 };
 
-const getIconHTML = (name: string): string => `<ui5-icon name="${name}" slot="icon"></ui5-icon>`;
-const AllColorSchemesBadges = [
-	{ icon: getIconHTML("accept"), default: "" },
-	{ icon: getIconHTML("sap-ui5"), default: "" },
-	{ icon: getIconHTML("add-equipment"), default: "In progress" },
-	{ icon: getIconHTML("lab"), default: "" },
-	{ icon: getIconHTML("email-read"), default: "" },
-	{ icon: "", default: "Pending" },
-	{ icon: getIconHTML("lightbulb"), default: "New idea" },
-	{ icon: getIconHTML("locked"), default: "Locked" },
-	{ icon: getIconHTML("flight"), default: "En route" },
-	{ icon: "", default: "Archived" },
+export const WrappingTypes = Template.bind({});
+WrappingTypes.decorators = [
+	(story, {args}) => {
+		return html`
+<div style="display: flex; flex-direction: column; align-items: start; gap: 1rem">
+	${story({
+		args: {
+			...args,
+			default: args.default || "This would truncate as it is too long",
+			wrappingType: args.wrappingType || WrappingType.None,
+			style: "width: 200px"
+		}
+	})}
+	${story({
+		args: {
+			...args,
+			default: args.default || "This would wrap as it is too long",
+			wrappingType: args.wrappingType ||  WrappingType.Normal,
+			style: "width: 200px"
+		}
+	})}
+</div>`;
+	},
 ];
 
-export const AllColorSchemes = Template.bind({});
-AllColorSchemes.decorators = [
+export const Designs = Template.bind({});
+Designs.decorators = [
 	(story, ctx) => {
 		return html`
-			${AllColorSchemesBadges.map((badge, i) => {
+<div style="display: flex; flex-direction: column; align-items: start; gap: 1rem">
+		${[BadgeDesign.Neutral, BadgeDesign.Information, BadgeDesign.Positive, BadgeDesign.Negative, BadgeDesign.Critical, BadgeDesign.Set1, BadgeDesign.Set2, BadgeDesign.Set3].map((value) => {
 			return story({
 				args: {
-					colorScheme: ctx.args.colorScheme || (i + 1).toString(),
-					icon: ctx.args.icon || badge.icon,
-					default: ctx.args.default || badge.default,
+					design: ctx.args.design || value,
+					default: ctx.args.default || value,
 				}
 			});
-		})}`;
+		})}
+</div>`;
+	}
+];
+
+export const Set1 = Template.bind({});
+Set1.decorators = [
+	(story, ctx) => {
+		return html`
+<div style="display: flex; flex-direction: column; align-items: start; gap: 1rem">
+		${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
+			return story({
+				args: {
+					design: ctx.args.design || BadgeDesign.Set1,
+					colorScheme: ctx.args.colorScheme || value.toString(),
+					default: ctx.args.default || "Color Scheme " +  value,
+				}
+			});
+		})}
+</div>`;
+	}
+];
+
+export const Set2 = Template.bind({});
+Set2.decorators = [
+	(story, ctx) => {
+		return html`
+<div style="display: flex; flex-direction: column; align-items: start; gap: 1rem">
+		${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
+			return story({
+				args: {
+					design: ctx.args.design || BadgeDesign.Set2,
+					colorScheme: ctx.args.colorScheme || value.toString(),
+					default: ctx.args.default || "Color Scheme " +  value,
+				}
+			});
+		})}
+</div>`;
+	}
+];
+
+export const Set3 = Template.bind({});
+Set3.decorators = [
+	(story, ctx) => {
+		return html`
+<div style="display: flex; flex-direction: column; align-items: start; gap: 1rem">
+		${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
+			return story({
+				args: {
+					design: ctx.args.design || BadgeDesign.Set3,
+					colorScheme: ctx.args.colorScheme || value.toString(),
+					default: ctx.args.default || "Color Scheme " +  value,
+				}
+			});
+		})}
+</div>`;
 	}
 ];

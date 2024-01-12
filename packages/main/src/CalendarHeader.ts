@@ -42,9 +42,9 @@ class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's timestamp.
 	 * <b>Note:</b> set by the Calendar component
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.CalendarHeader.prototype.timestamp
+	 *
 	 * @public
+	 * @default undefined
 	 */
 	@property({ validator: Integer })
 	timestamp?: number;
@@ -52,9 +52,9 @@ class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's primary calendar type.
 	 * <b>Note:</b> set by the Calendar component
-	 * @type {sap.ui.webc.base.types.CalendarType}
-	 * @name sap.ui.webc.main.CalendarHeader.prototype.primaryCalendarType
+	 *
 	 * @public
+	 * @default undefined
 	 */
 	@property({ type: CalendarType })
 	primaryCalendarType?: `${CalendarType}`;
@@ -62,10 +62,9 @@ class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's secondary calendar type.
 	 * <b>Note:</b> set by the Calendar component
-	 * @sience 1.0.0-rc.16
-	 * @defaultvalue undefined
-	 * @type {sap.ui.webc.base.types.CalendarType}
-	 * @name sap.ui.webc.main.CalendarHeader.prototype.secondaryCalendarType
+	 *
+	 * @since 1.0.0-rc.16
+	 * @default undefined
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -73,7 +72,7 @@ class CalendarHeader extends UI5Element {
 
 	/**
 	 * Stores information for month button for secondary calendar type
-	 * @type {object}
+	 *
 	 * @private
 	*/
 	@property({ type: Object })

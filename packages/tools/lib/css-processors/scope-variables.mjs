@@ -1,15 +1,15 @@
-const path = require("path");
-const name = "postcss-scope-vars";
-
-const escapeVersion = version => "v" + version?.replaceAll(/[^0-9A-Za-z\-_]/g, "-");
+import * as path from "path";
 
 /**
  * Tries to detect an override for a package
  * @param {*} filePath For example: /my_project/src/themes/overrides/@ui5/webcomponents/my_custom_theme/parameters-bundle.css
- * @returns 
+ * @returns
  */
 const getOverrideVersion = filePath => {
-	console.log(filePath);
+    if (!filePath) {
+        return;
+    }
+
 	if (!filePath.includes(`overrides${path.sep}`)) {
 		return; // The "overrides/" directory is the marker
 	}
@@ -33,27 +33,14 @@ const getOverrideVersion = filePath => {
 	return overrideVersion;
 }
 
-module.exports = (options) => {
-	return {
-		postcssPlugin: name,
-		prepare(opts) {
-			const filePath = opts.root.source.input.file;
-			const versionStr = escapeVersion(getOverrideVersion(filePath) || options?.version);
+const scopeVariables = (cssText, packageJSON, inputFile) => {
+    const escapeVersion = version => "v" + version?.replaceAll(/[^0-9A-Za-z\-_]/g, "-");
+    const versionStr = escapeVersion(getOverrideVersion(inputFile) || packageJSON.version);
 
-			return {
-				Declaration: (declaration) => {
-					if (declaration.__ui5_replaced) {
-						return;
-					}
-					// add version after ui5
-					const expr = /(--_?ui5)([^\,\:\)\s]+)/g
-					declaration.prop = declaration.prop.replaceAll(expr, `$1-${versionStr}$2`)
-					declaration.value = declaration.value.replaceAll(expr, `$1-${versionStr}$2`)
-					declaration.__ui5_replaced = true;
-				},
-			};
-		},
-	};
-};
+    const expr = /(--_?ui5)([^\,\:\)\s]+)/g;
 
-module.exports.postcss = true;
+    return cssText.replaceAll(expr, `$1-${versionStr}$2`);
+}
+
+export default scopeVariables;
+

@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { ITab } from "./Interfaces.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -18,12 +18,9 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
  * The <code>ui5-tab-separator</code> represents a vertical line to separate tabs inside a <code>ui5-tabcontainer</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TabSeparator
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-tab-separator
- * @implements sap.ui.webc.main.ITab
+ * @implements {ITab}
  * @public
  */
 @customElement({
@@ -57,11 +54,9 @@ class TabSeparator extends UI5Element implements ITab {
 	 * Returns the DOM reference of the separator that is placed in the header.
 	 * <b>Note:</b> Tabs and separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return <code>null</code>.
 	 *
-	 * @function
 	 * @public
-	 * @name sap.ui.webc.main.TabSeparator.prototype.getTabInStripDomRef
 	 */
-	getTabInStripDomRef() {
+	getTabInStripDomRef(): ITab | null {
 		if (this._getElementInStrip) {
 			return this._getElementInStrip();
 		}

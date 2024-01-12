@@ -75,12 +75,13 @@ document.addEventListener("keydown", handleGlobalKeydown);
  * <code>import "@ui5/webcomponents/dist/Toast";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Toast
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-toast
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
+ * @slot {Array<Node>} default
+ * Defines the text of the component.
+ * <br><br>
+ * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-toast",
@@ -96,9 +97,7 @@ class Toast extends UI5Element {
 	 * <b>Note:</b> The minimum supported value is <code>500</code> ms
 	 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.Toast.prototype.duration
-	 * @defaultvalue 3000
+	 * @default 3000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 3000 })
@@ -108,9 +107,7 @@ class Toast extends UI5Element {
 	 * Defines the placement of the component.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.main.types.ToastPlacement}
-	 * @name sap.ui.webc.main.Toast.prototype.placement
-	 * @defaultvalue "BottomCenter"
+	 * @default "BottomCenter"
 	 * @public
 	 */
 	@property({ type: ToastPlacement, defaultValue: ToastPlacement.BottomCenter })
@@ -118,7 +115,7 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is open (visible).
-	 * @type {boolean}
+	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -126,7 +123,7 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is hovered.
-	 * @type {boolean}
+	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -134,7 +131,7 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component DOM is rendered.
-	 * @type {boolean}
+	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -143,7 +140,7 @@ class Toast extends UI5Element {
 	/**
 	 * Indicates whether the toast could be focused
 	 * This happens when ctr / command + shift + m is pressed
-	 * @type {boolean}
+	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -152,22 +149,11 @@ class Toast extends UI5Element {
 	/**
 	 * Indicates whether the toast is focused
 	 * This happens when ctr / command + shift + m is pressed
-	 * @type {boolean}
+	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
 	focused!: boolean;
-
-	/**
-	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @public
-	 * @name sap.ui.webc.main.Toast.prototype.default
-	 */
 
 	_reopen: boolean;
 
@@ -188,7 +174,7 @@ class Toast extends UI5Element {
 	 * Shows the component.
 	 * @public
 	 */
-	show() {
+	show(): void {
 		if (this.open) {
 			// If the Toast is already opened, we set the _reopen flag to true, in
 			// order to trigger re-rendering after an animation frame
@@ -215,7 +201,6 @@ class Toast extends UI5Element {
 	 * If the minimum duration is lower than 500ms, we force
 	 * it to be 500ms, as described in the documentation.
 	 * @private
-	 * @returns {*}
 	 */
 	get effectiveDuration() {
 		return this.duration < MIN_DURATION ? MIN_DURATION : this.duration;

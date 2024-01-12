@@ -25,6 +25,14 @@ export const enhanceArgTypes = <TRenderer extends Renderer>(
           ) as typeof userArgTypes)
         : userArgTypes;
 
+    Object.keys(withExtractedTypes)
+    .filter(key => key.startsWith("_ui5"))
+    .forEach(argType => {
+        withExtractedTypes[argType].name = withExtractedTypes[argType].name.replaceAll("_ui5", "");
+
+        withExtractedTypes[argType].control = "text"
+    })
+
     // enhance descriptions
     enhanceArgTypesDescriptions(withExtractedTypes);
     return withExtractedTypes;

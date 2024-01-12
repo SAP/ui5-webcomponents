@@ -39,11 +39,8 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
  * This component should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelectionInputs
- * @extends sap.ui.webc.main.TimePickerInternals
+ * @extends TimePickerInternals
  * @abstract
- * @tagname ui5-time-selection-inputs
  * @since 1.18.0
  * @private
  */
@@ -109,10 +106,10 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Returns Input component by index or name.
 	 *
-	 * @param {number | string} indexOrName the index or name of the component
-	 * @returns { Input | undefined} component (if exists) or undefined
+	 * @param indexOrName the index or name of the component
+	 * @returns component (if exists) or undefined
 	 */
-	_inputComponent(indexOrName: number | string) {
+	_inputComponent(indexOrName: number | string): Input | undefined | null {
 		const index = typeof indexOrName === "string" ? this._indexFromName(indexOrName) : indexOrName;
 		const entity = this._entities[index].entity;
 		return entity ? this.shadowRoot?.querySelector<Input>(`#${this._id}_input_${entity}`) : undefined;
@@ -121,10 +118,10 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Returns the inner input element DOM reference.
 	 *
-	 * @param { Input } input the Input component
-	 * @returns { HTMLElement } inner input element
+	 * @param input the Input component
+	 * @returns inner input element
 	 */
-	_innerInput(input: Input) {
+	_innerInput(input: Input): HTMLInputElement | null {
 		return input && input.getInputDOMRefSync();
 	}
 
@@ -201,7 +198,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Switches to the specific input.
 	 *
-	 * @param {number} index the index (in _entities array) of the input
+	 * @param index the index (in _entities array) of the input
 	 * @private
 	 */
 	_switchInput(index: number) {
@@ -214,7 +211,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Switches to the next input that can de focused.
 	 *
-	 * @param {boolean} wrapAround whether to start with first clock after reaching the last one, or not
+	 * @param wrapAround whether to start with first clock after reaching the last one, or not
 	 * @private
 	 */
 	_switchNextInput(wrapAround = false) {
@@ -240,13 +237,12 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Return a value as string, formatted and prepended with zero if necessary.
 	 *
-	 * @param {number} num A number to format
-	 * @param {boolean} prependZero Whether to prepend with zero or not
-	 * @param {number} max Max value of the number for this clock
-	 * @returns {string} Formatted value
+	 * @param num A number to format
+	 * @param prependZero Whether to prepend with zero or not
+	 * @returns Formatted value
 	 * @private
 	 */
-	_formatNumberToString(num: number, prependZero: boolean) {
+	_formatNumberToString(num: number, prependZero: boolean): string {
 		return num < 10 && prependZero ? `0${num}` : num.toString();
 	}
 
@@ -290,7 +286,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	/**
 	 * Input 'change' event handler.
 	 *
-	 * @param {value} number new value to set on active input
+	 * @param value new value to set on active input
 	 */
 	_inputChange(value: number) {
 		const stringValue = this._formatNumberToString(value, this._entities[this._activeIndex].prependZero);

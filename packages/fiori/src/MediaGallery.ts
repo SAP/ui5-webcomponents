@@ -19,6 +19,7 @@ import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
 import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
 import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
+import type IMediaGalleryItem from "./MediaGalleryItem.js";
 
 // Styles
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
@@ -75,11 +76,7 @@ const COLUMNS_COUNT: Record<string, number> = {
  * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.MediaGallery
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-media-gallery
- * @appenddocs sap.ui.webc.fiori.MediaGalleryItem
+ * @extends UI5Element
  * @public
  * @since 1.1.0
  */
@@ -99,12 +96,14 @@ const COLUMNS_COUNT: Record<string, number> = {
 /**
  * Fired when selection is changed by user interaction.
  *
- * @event sap.ui.webc.fiori.MediaGallery#selection-change
  * @param {HTMLElement} item the selected item.
  * @public
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -112,7 +111,6 @@ const COLUMNS_COUNT: Record<string, number> = {
 /**
  * Fired when the thumbnails overflow button is clicked.
  *
- * @event sap.ui.webc.fiori.MediaGallery#overflow-click
  * @public
  */
 @event("overflow-click")
@@ -122,7 +120,6 @@ const COLUMNS_COUNT: Record<string, number> = {
  * The display area is the central area that contains
  * the enlarged content of the currently selected item.
  *
- * @event sap.ui.webc.fiori.MediaGallery#display-area-click
  * @public
  */
 @event("display-area-click")
@@ -133,9 +130,7 @@ class MediaGallery extends UI5Element {
 	 * If <code>false</code>, only up to five thumbnails are rendered, followed by
 	 * an overflow button that shows the count of the remaining thumbnails.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.showAllThumbnails
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -148,9 +143,7 @@ class MediaGallery extends UI5Element {
 	 * The display area is the central area that contains
 	 * the enlarged content of the currently selected item.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.interactiveDisplayArea
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -159,9 +152,7 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the layout of the component.
 	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.layout
-	 * @defaultvalue "Auto"
+	 * @default "Auto"
 	 * @public
 	 */
 	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Auto })
@@ -171,9 +162,7 @@ class MediaGallery extends UI5Element {
 	 * Determines the horizontal alignment of the thumbnails menu
 	 * vs. the central display area.
 	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuHorizontalAlign}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuHorizontalAlign
-	 * @defaultvalue "Left"
+	 * @default "Left"
 	 * @public
 	 */
 	@property({ type: MediaGalleryMenuHorizontalAlign, defaultValue: MediaGalleryMenuHorizontalAlign.Left })
@@ -183,9 +172,7 @@ class MediaGallery extends UI5Element {
 	 * Determines the vertical alignment of the thumbnails menu
 	 * vs. the central display area.
 	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuVerticalAlign}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuVerticalAlign
-	 * @defaultvalue "Bottom"
+	 * @default "Bottom"
 	 * @public
 	 */
 	@property({ type: MediaGalleryMenuVerticalAlign, defaultValue: MediaGalleryMenuVerticalAlign.Bottom })
@@ -196,8 +183,7 @@ class MediaGallery extends UI5Element {
 	 * (esp. needed when the app did not specify a fixed layout type
 	 * but selected <code>Auto</code> layout type).
 	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-	 * @defaultvalue "Vertical"
+	 * @default "Vertical"
 	 * @private
 	 */
 	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Vertical })
@@ -228,9 +214,6 @@ class MediaGallery extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
 	 *
-	 * @type {sap.ui.webc.fiori.IMediaGalleryItem[]}
-	 * @name sap.ui.webc.fiori.MediaGallery.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({
@@ -239,7 +222,7 @@ class MediaGallery extends UI5Element {
 		invalidateOnChildChange: true,
 		"default": true,
 	})
-	items!: Array<MediaGalleryItem>;
+	items!: Array<IMediaGalleryItem>;
 
 	_itemNavigation: ItemNavigation;
 	_onResize: () => void;
