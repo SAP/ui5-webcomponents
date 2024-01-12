@@ -8,7 +8,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 
 | Setting                                       | Values                                                                                                                                                                                                                                                                                         | Default Value | Description                                                            | Applies To                                                     |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |---------------| ---------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                                             | `sap_horizon` | Visual theme to be applied                                             | All components                                                 |
+| [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                      | `sap_horizon` | Visual theme to be applied                                             | All components                                                 |
 | [language](#language)                         | `ar`, `bg`, `ca`, `cs`, `cy`, `da`, `de`, `el`, `en`, `en_GB`, `es`, `es_MX`, `et`, `fi`, `fr`, `fr_CA`, `hi`, `hr`, `hu`, `in`, `it`, `iw`, `ja`, `kk`, `ko`, `lt`, `lv`, `ms`, `nl`, `no`, `pl`, `pt_PT`, `pt`, `ro`, `ru`, `sh`, `sk`, `sl`, `sv`, `th`, `tr`, `uk`, `vi`, `zh_CN`, `zh_TW` | N/A (`null`)  | Language to be used for translatable texts                             | Components and icons with translatable texts                   |
 | [animationMode](#animationMode)               | `full`, `basic`, `minimal`, `none`                                                                                                                                                                                                                                                             | `full`        | Amount/intensity of animations to be played for some components        | Components with animations (`ui5-panel`, `ui5-carousel`, etc.) |
 | [calendarType](#calendarType)                 | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `Gregorian`   | Default calendar type to be used for date-related components           | Date/time components (`ui5-date-picker`, etc.)                 |
@@ -60,12 +60,11 @@ setTheme(getDefaultTheme());
 
 **Note: Deprecated themes**
 
-The following themes are deprecated and no longer maintained.
-The themes will work until the next major version (2.0) and will be removed afterwards.
-- The `sap_belize` is known as `Belize`.
-- The `sap_belize_hcb` is known as `High Contrast Black`.
-- The `sap_belize_hcw` is known as `High Contrast White`.
-
+The following themes are deprecated and no longer developed. We recommend using `Quartz` (sap_fiori_3) and `Horizon` (sap_horizon) theme families.
+- The `sap_belize` is known as `Belize` [deprecated since 1.21].
+- The `sap_belize_hcb` is known as `High Contrast Black` [deprecated since 1.21].
+- The `sap_belize_hcw` is known as `High Contrast White` [deprecated since 1.21].
+* the themes will work until the next major version (2.0) and will be removed afterwards.
 
 ### language
 <a name="language"></a>
