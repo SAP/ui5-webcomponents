@@ -8,10 +8,29 @@
 	</div>
 
 	<div class="ui5-form-layout" part="layout">
-		{{#each items}}
-			<div class="ui5-form-layout-item" style="grid-column: span 2">
-				<slot name="{{this._individualSlot}}"></slot>
-			</div>
-		{{/each}}
+			{{#if this.hasGroups}}
+					{{#each itemsInfo}}
+						<div class="ui5-form-column {{this.classes}}">
+
+							<div class="ui5-form-group">
+								{{#if this.item.heading}}
+									<div class="ui5-form-group-heading">
+										<ui5-title level="H5">{{ this.item.heading }}</ui5-title>
+									</div>
+								{{/if}}
+
+								<div class="ui5-form-group-layout">
+										<slot name="{{this.item._individualSlot}}"></slot>
+								</div>
+							</div>
+						</div>
+					{{/each}}
+			{{else}}
+				{{#each items}}
+					<div class="ui5-form-column">
+						<slot name="{{this._individualSlot}}"></slot>
+					</div>
+				{{/each}}
+			{{/if}}
 	</div>
 </div>

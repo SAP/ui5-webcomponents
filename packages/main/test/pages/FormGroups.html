@@ -18,10 +18,10 @@
 			var oLayout1 = new sap.ui.layout.form.ColumnLayout("L1", {
 				columnsM: 2,
 				columnsL: 3,
-				columnsXL: 3
+				columnsXL: 4,
 			});
 			var oForm1 = new sap.ui.layout.form.Form("F1",{
-				title: "SAPUI5 Form :: Display",
+				title: "SAPUI5 Form :: Supplier",
 				editable: false,
 				layout: oLayout1,
 				formContainers: [
@@ -84,7 +84,7 @@
 						]
 					}),
 					new sap.ui.layout.form.FormContainer("C13",{
-						title: "Address",
+						title: "Other Info",
 						formElements: [
 							new sap.ui.layout.form.FormElement({
 								label: new sap.m.Label({text:"Name"}),
@@ -151,7 +151,7 @@
 		</div>
 		
 		<section>
-			<ui5-form id="addressForm" header-text="WebC Form :: Display" columns-xl="4">
+			<ui5-form id="addressForm" header-text="WebC Form :: Supplier" columns-m="2" columns-l="3" columns-xl="4">
 
 				<ui5-form-group heading="Address">
 					<ui5-form-item>
@@ -218,7 +218,7 @@
 
 				</ui5-form-group>
 			
-				<ui5-form-group heading="Address">
+				<ui5-form-group heading="Other info">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Name:</ui5-label>
 						<span class="text">Red Point Stores</span>

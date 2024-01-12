@@ -96,7 +96,9 @@
 			oForm2.placeAt("sapui5content2");
 
 			window.oLayout1 = oLayout1;
+			window.oForm1 = oForm1;
 			window.oLayout2 = oLayout2;
+			window.oForm2 = oForm2;
         });
     </script>
 
@@ -134,7 +136,6 @@
 	
 			<ui5-label>Editable</ui5-label>
 			<ui5-switch id="swEditable"></ui5-switch>
-			<!-- <ui5-toggle-button icon="edit" id="toggleEdit">Edit</ui5-toggle-button> -->
 		</div>
 		
 		<section>
@@ -296,27 +297,8 @@
 
 		swEditable.addEventListener("ui5-change", function (event) {
 			addressForm.editable = event.target.checked;
-			addressFormEdit.editable = event.target.checked;
+			oForm1.setEditable(event.target.checked);
 		});
-
-		// toggleEdit.addEventListener("click", function (event) {
-		// 	while (addressForm.lastElementChild) {
-		// 		addressForm.removeChild(addressForm.lastElementChild);
-  		// 	}
-
-		// 	const template = event.target.pressed ? editTemplate : displayTemplate;
-		// 	const text = event.target.pressed ? 'save' : "edit";
-		// 	toggleEdit.innerHTML = text;
-		// 	addressForm.insertAdjacentHTML("afterbegin", editTemplate);
-		// 	addressForm.editable = !event.target.pressed;
-		// 	swEditable.checked = addressForm.editable;
-		// });
 	</script>
-
-	<!-- <style>
-		ui5-form::part(layout) {
-			grid-template-columns: 1fr;
-		}
-	</style> -->
 </body>
 </html>

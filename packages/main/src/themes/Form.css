@@ -20,8 +20,11 @@
 	row-gap: 0.125rem;
 	padding: 1rem 0.75rem;
 }
+.ui5-form-column {
+	background-color: rgb(231, 243, 251);
+}
 
-:host([editable]) .ui5-form-layout-item {
+:host([editable]) .ui5-form-column {
 	min-height: 2.75rem;
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
@@ -47,7 +50,7 @@
 	}
 }
 
-/* M  - 1 column by defaultm, up to 2 columns */
+/* M  - 1 column by default, up to 2 columns */
 @container (width > 599px) and (width < 1022px) {
 	.ui5-form-layout {
 		grid-template-columns: 1fr;
@@ -78,8 +81,22 @@
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 
-	.ui5-form-layout-item {
+	.ui5-form-column {
 		grid-template-columns: 1fr;
+	}
+
+	.ui5-form-column-spanL-2 {
+		grid-column: span 2;
+	}
+	.ui5-form-column-spanL-2 .ui5-form-group-layout {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.ui5-form-column-spanL-3 {
+		grid-column: span 3;
+	}
+	.ui5-form-column-spanL-3 .ui5-form-group-layout {
+		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
 
@@ -101,4 +118,35 @@
 	:host([columns-xl="4"]) .ui5-form-layout {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
+
+	.ui5-form-column-spanXL-2 {
+		grid-column: span 2;
+	}
+	.ui5-form-column-spanXL-2 .ui5-form-group-layout {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.ui5-form-column-spanXL-3 {
+		grid-column: span 3;
+	}
+	.ui5-form-column-spanXL-3 .ui5-form-group-layout {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.ui5-form-column-spanXL-4 {
+		grid-column: span 4;
+	}
+	.ui5-form-column-spanXL-4 .ui5-form-group-layout {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+	}
+}
+
+
+::slotted([ui5-form-group]) {
+	display: contents;
+}
+
+.ui5-form-group-layout {
+	display: grid;
 }

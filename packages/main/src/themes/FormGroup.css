@@ -1,8 +1,8 @@
-.ui5-form-group-layout {
+/* .ui5-form-group-layout {
 	display: grid;
-}
+} */
 
-:host([cols-xl="1"]) .ui5-form-group-layout {
+/* :host([cols-xl="1"]) .ui5-form-group-layout {
 	grid-template-columns: 1fr;
 }
 
@@ -16,4 +16,4 @@
 
 :host([cols-xl="4"]) .ui5-form-group-layout {
 	grid-template-columns: 1fr 1fr 1fr 1fr;
-}
+} */

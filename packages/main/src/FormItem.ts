@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Label from "./Label.js";
 
@@ -50,10 +49,6 @@ class FormItem extends UI5Element {
 
 	get isGroup() {
 		return false;
-	}
-
-	get formItemRepresentation() {
-		return executeTemplate(FormItemTemplate, this);
 	}
 }
 

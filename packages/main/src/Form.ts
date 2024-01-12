@@ -3,19 +3,23 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Title from "./Title.js";
-
-import FormTemplate from "./generated/templates/FormTemplate.lit.js";
 
 // Template
-import FormGroupTemplate from "./generated/templates/FormGroupTemplate.lit.js";
+import FormTemplate from "./generated/templates/FormTemplate.lit.js";
 
 // Styles
 import FormCss from "./generated/themes/Form.css.js";
+
+import Title from "./Title.js";
 import type FormItem from "./FormItem.js";
 import type FormGroup from "./FormGroup.js";
+
+type ItemsInfo = {
+	item: FormGroup | FormItem,
+	classes: string,
+	items: Array<FormItem>
+}
 
 /**
  * @class
@@ -67,32 +71,30 @@ class Form extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		individualSlots: true,
-		invalidateOnChildChange: true,
 	})
 	items!: Array<FormItem | FormGroup>;
 
 	onAfterRendering() {
 		this.calcGroupsDistribution();
-		this.calcGroupsDistributionL();
 	}
 
 	calcGroupsDistribution() {
 		if (this.items.length === 0 || !this.hasGroups) {
-			return;
+			return this.items;
 		}
 
 		// The number of available columns is less than number of the groups
 		// For example: 4 columns - 5 groups, 3 columns - 4 groups, 2 columns - 3 groups, 1 column - 2 groups
 		if (this.columnsXl < this.items.length) {
 			console.warn(`Number of columns ${this.columnsXl} is less than the groups - groups that don't fit will be displayed on a second row`); // eslint-disable-line
-			return;
+			return this.items;
 		}
 
 		// The number of available columns match the number of groups, or only 1 column is available - each group takes 1 column.
 		// For example: 1 column - 1 group, 2 columns - 2 groups, 3 columns - 3 groups, 4columns - 4 groups
 		if (this.columnsXl === 1 || this.columnsXl === this.items.length) {
-			this.balancedDistribution(1 /* 1 column */);
-			return;
+			this.balancedDistribution(/* 1 column */);
+			return this.items;
 		}
 
 		// The number of available columns IS multiple of the number of groups - groups won't take even number of columns and it's subject to further calculation.
@@ -101,86 +103,28 @@ class Form extends UI5Element {
 		if (this.columnsXl - this.items.length === 1) {
 			this.unbalancedDistribution();
 		}
-	}
 
-	calcGroupsDistributionL() {
-		if (this.items.length === 0 || !this.hasGroups) {
-			return;
-		}
-
-		// The number of available columns is less than number of the groups
-		// For example: 4 columns - 5 groups, 3 columns - 4 groups, 2 columns - 3 groups, 1 column - 2 groups
-		if (this.columnsL < this.items.length) {
-			console.warn(`Number of columns ${this.columnsL} is less than the groups - groups that don't fit will be displayed on a second row`); // eslint-disable-line
-			return;
-		}
-
-		// The number of available columns match the number of groups, or only 1 column is available - each group takes 1 column.
-		// For example: 1 column - 1 group, 2 columns - 2 groups, 3 columns - 3 groups, 4columns - 4 groups
-		if (this.columnsL === 1 || this.columnsL === this.items.length) {
-			this.balancedDistributionL(1 /* 1 column */);
-			return;
-		}
-
-		// The number of available columns IS multiple of the number of groups - groups won't take even number of columns and it's subject to further calculation.
-		// Groups with more fields should take more columns. In case of parity the first group will get priority.
-		// For example: 4 columns - 3 groups, 3 columns - 2 groups
-		if (this.columnsL - this.items.length === 1) {
-			this.unbalancedDistributionL();
-		}
+		return this.items;
 	}
 
 	balancedDistribution(cols = 1) {
 		this.items.forEach((formGroup: FormGroup | FormItem) => {
-			(formGroup as FormGroup).colsXL = cols;
-		});
-	}
-	balancedDistributionL(cols = 1) {
-		this.items.forEach((formGroup: FormGroup | FormItem) => {
-			(formGroup as FormGroup).colsL = cols;
+			(formGroup as FormGroup).colsXl = cols;
 		});
 	}
 
 	unbalancedDistribution() {
 		const sortedItems = [...this.items].sort((itemA: FormGroup | FormItem, itemB: FormGroup | FormItem) => {
-			console.log((itemA as FormGroup).children.length);// eslint-disable-line
-			console.log((itemB as FormGroup).children.length);// eslint-disable-line
 			return (itemB as FormGroup)?.children?.length - (itemA as FormGroup)?.children?.length;
 		});
 
 		sortedItems.forEach((formGroup: FormGroup | FormItem, idx: number) => {
 			if (idx === 0) {
-				(formGroup as FormGroup).colsXL = 2;
-				(formGroup as FormGroup).wide = true;
+				(formGroup as FormGroup).colsXl = 2;
 			} else {
-				(formGroup as FormGroup).colsXL = 1;
+				(formGroup as FormGroup).colsXl = 1;
 			}
 		});
-	}
-
-	unbalancedDistributionL() {
-		const sortedItems = [...this.items].sort((itemA: FormGroup | FormItem, itemB: FormGroup | FormItem) => {
-			console.log((itemA as FormGroup).children.length);// eslint-disable-line
-			console.log((itemB as FormGroup).children.length);// eslint-disable-line
-			return (itemB as FormGroup)?.children?.length - (itemA as FormGroup)?.children?.length;
-		});
-
-		sortedItems.forEach((formGroup: FormGroup | FormItem, idx: number) => {
-			if (idx === 0) {
-				(formGroup as FormGroup).colsL = 2;
-				(formGroup as FormGroup).wide = true;
-			} else {
-				(formGroup as FormGroup).colsL = 1;
-			}
-		});
-	}
-
-	get styles() {
-		return {
-			item: {
-				// "grid-column": true ? "span 2" : "span 1",
-			},
-		};
 	}
 
 	get hasGroups(): boolean {
@@ -195,8 +139,16 @@ class Form extends UI5Element {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
 
-	get formGroupRepresentation() {
-		return executeTemplate(FormGroupTemplate, this);
+	get itemsInfo() {
+		const info: Array<ItemsInfo> = this.calcGroupsDistribution().map((item: FormGroup | FormItem) => {
+			return {
+				item,
+				classes: `ui5-form-column-spanL-${(item as FormGroup).colsL || 1} ui5-form-column-spanXL-${(item as FormGroup).colsXl || 1}`,
+				items: Array.from((item as FormGroup).children) as Array<FormItem>,
+			};
+		});
+
+		return info;
 	}
 }
 
