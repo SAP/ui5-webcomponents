@@ -83,6 +83,7 @@ import {
 	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
+	SHOW_SELECTED_BUTTON,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
@@ -1710,6 +1711,10 @@ class MultiComboBox extends UI5Element {
 
 	get _iconAccessibleNameText() {
 		return MultiComboBox.i18nBundle.getText(SELECT_OPTIONS);
+	}
+
+	get _showSelectedButtonAccessibleNameText() {
+		return MultiComboBox.i18nBundle.getText(SHOW_SELECTED_BUTTON);
 	}
 
 	get _dialogOkButton() {
