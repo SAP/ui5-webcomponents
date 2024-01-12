@@ -5,50 +5,44 @@ const path = require("path");
 const inputDir = process.argv[2];
 const outputDir = process.argv[3];
 
-const camelToKebabMap = new Map();
-const apiIndex = new Map();
-const forbiddenAttributeTypes = ["object", "array"];
-
-const camelToKebabCase = string => {
-	if (!camelToKebabMap.has(string)) {
-		const result = string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-		camelToKebabMap.set(string, result);
-	}
-	return camelToKebabMap.get(string);
-};
-
 const generateJavaScriptExport = entity => {
 	return {
-		declaration: generateRefenrece(entity.name),
-		deprecated: !!entity.deprecated,
+		declaration: {
+			name: entity.basename,
+			module: entity.resource,
+		},
 		kind: "js",
 		name: "default",
 	};
 };
 
 const generateCustomElementExport = entity => {
+	if (!entity.tagname) return;
+
 	return {
 		declaration: {
 			name: entity.basename,
-			module: `${entity.module}.js`,
+			module: entity.resource,
 		},
-		deprecated: !!entity.deprecated,
 		kind: "custom-element-definition",
 		name: entity.tagname,
 	};
 };
 
 const generateJavaScriptModule = entity => {
+	const exports = [generateJavaScriptExport(entity)];
+
+	if (entity.tagname) {
+		exports.push(generateCustomElementExport(entity));
+	}
+
 	return {
 		kind: "javascript-module",
-		path: `${entity.basename}.js`,
+		path: entity.resource,
 		declarations: [
 			generateCustomElementDeclaration(entity),
 		],
-		exports: [
-			generateJavaScriptExport(entity),
-			generateCustomElementExport(entity),
-		],
+		exports
 	};
 };
 
@@ -150,40 +144,9 @@ const generateMembers = (classFields, classMethods) => {
 };
 
 const generateType = type => {
-	const dataType = apiIndex.get(type);
-
 	return {
-		text: dataType && dataType.name.includes(".types.") ?
-			filterPublicApi(dataType.properties)
-				.map(prop => `"${prop.name}"`)
-				.join(" | ") : type,
+		text: type,
 	};
-};
-
-const generateSingleAttribute = attribute => {
-	let generatedAttribute = {
-		default: attribute.defaultValue,
-		deprecated: !!attribute.deprecated,
-		fieldName: attribute.name,
-		name: camelToKebabCase(attribute.name),
-		type: generateType(attribute.type),
-	};
-
-	if (attribute.description) {
-		generatedAttribute.description = attribute.description;
-	}
-
-	return generatedAttribute;
-};
-
-const generateAttributes = attributes => {
-	attributes = attributes.reduce((newAttributesArray, attribute) => {
-		newAttributesArray.push(generateSingleAttribute(attribute));
-
-		return newAttributesArray;
-	}, []);
-
-	return attributes;
 };
 
 const generateSingleEvent = event => {
@@ -232,7 +195,7 @@ const generateCustomElementDeclaration = entity => {
 	let generatedCustomElementDeclaration = {
 		deprecated: !!entity.deprecated,
 		customElement: true,
-		kind: entity.basename,
+		kind: entity.kind,
 		name: entity.basename,
 		tagName: entity.tagname,
 	};
@@ -241,9 +204,6 @@ const generateCustomElementDeclaration = entity => {
 	const events = filterPublicApi(entity.events);
 	const classFields = filterPublicApi(entity.properties);
 	const classMethods = filterPublicApi(entity.methods);
-	const attributes = classFields.filter(property => {
-		return property.noattribute !== "true" && property.readonly !== "true" && !forbiddenAttributeTypes.includes(property.type.toLowerCase());
-	});
 
 	if (slots.length) {
 		generatedCustomElementDeclaration.slots = generateSlots(slots);
@@ -251,10 +211,6 @@ const generateCustomElementDeclaration = entity => {
 
 	if (events.length) {
 		generatedCustomElementDeclaration.events = generateEvents(events);
-	}
-
-	if (attributes.length) {
-		generatedCustomElementDeclaration.attributes = generateAttributes(attributes);
 	}
 
 	if (entity.description) {
@@ -273,31 +229,8 @@ const generateCustomElementDeclaration = entity => {
 };
 
 const generateRefenrece = (entityName) => {
-	let packageName;
-	let basename;
-
-	if (!entityName) {
-		throw new Error("JSDoc error: entity not found in api.json.");
-	}
-
-	if (entityName.includes(".")) {
-		basename = entityName.split(".").pop();
-	} else {
-		basename = entityName
-	}
-
-	if (entityName.includes("sap.ui.webc.main")) {
-		packageName = "@ui5/webcomponents";
-	} else if (entityName.includes("sap.ui.webc.fiori")) {
-		packageName = "@ui5/webcomponents-fiori";
-	} else if (entityName.includes("sap.ui.webc.base")) {
-		packageName = "@ui5/webcomponents-base";
-	}
-
 	return {
-		module: `${basename}.js`,
-		name: `${basename}`,
-		package: packageName,
+		name: entityName,
 	};
 };
 
@@ -313,7 +246,7 @@ const generate = async () => {
 		modules: [],
 	};
 
-	file.symbols.forEach(entity => {
+	filterPublicApi(file.symbols).forEach(entity => {
 		if (entity.tagname || entity.kind === "class") {
 			customElementsManifest.modules.push(generateJavaScriptModule(entity));
 		}
