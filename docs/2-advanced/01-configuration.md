@@ -60,11 +60,11 @@ setTheme(getDefaultTheme());
 
 **Note: Deprecated themes**
 
-The following themes are deprecated and no longer developed. We recommend using `Quartz` (sap_fiori_3) and `Horizon` (sap_horizon) theme families.
-- The `sap_belize` is known as `Belize` [deprecated since 1.21].
-- The `sap_belize_hcb` is known as `High Contrast Black` [deprecated since 1.21].
-- The `sap_belize_hcw` is known as `High Contrast White` [deprecated since 1.21].
-* the themes will work until the next major version (2.0) and will be removed afterwards.
+The following themes are deprecated and no longer maintained - out of maintenance and left for compatibility only. The themes will be removed in the next major version.
+We recommend using `Horizon` (sap_horizon) and `Quartz` (sap_fiori_3) theme families.
+- The `sap_belize` is known as `Belize` [deprecated since 1.22].
+- The `sap_belize_hcb` is known as `High Contrast Black` [deprecated since 1.22].
+- The `sap_belize_hcw` is known as `High Contrast White` [deprecated since 1.22].
 
 ### language
 <a name="language"></a>
