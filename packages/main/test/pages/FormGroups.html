@@ -144,6 +144,8 @@
 				<ui5-option value="2">columnsXL=2</ui5-option>
 				<ui5-option value="3">columnsXL=3</ui5-option>
 				<ui5-option value="4" selected>columnsXL=4</ui5-option>
+				<ui5-option value="5">columnsXL=5</ui5-option>
+				<ui5-option value="6">columnsXL=6</ui5-option>
 			</ui5-select>
 	
 			<ui5-label>Editable</ui5-label>
@@ -322,7 +324,7 @@
 		});
 
 		swEditable.addEventListener("ui5-change", function (event) {
-			addressForm.editable = event.target.checked;
+			addressForm.itemSpacing = event.target.checked ? "Large" : "Normal";
 		});
 	</script>
 </body>

@@ -296,7 +296,7 @@
 		});
 
 		swEditable.addEventListener("ui5-change", function (event) {
-			addressForm.editable = event.target.checked;
+			addressForm.itemSpacing = event.target.checked ? "Large" : "Normal";
 			oForm1.setEditable(event.target.checked);
 		});
 	</script>

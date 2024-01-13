@@ -20,14 +20,27 @@
 	row-gap: 0.125rem;
 	padding: 1rem 0.75rem;
 }
-.ui5-form-column {
+
+.ui5-form-column, .ui5-form-item {
 	background-color: rgb(231, 243, 251);
 }
 
-:host([editable]) .ui5-form-column {
+:host([item-spacing="Large"]) .ui5-form-item {
 	min-height: 2.75rem;
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
+    box-sizing: border-box;
+}
+
+.ui5-form-group-layout {
+	display: grid;
+}
+
+.ui5-form-column {
+	padding-top: 0.5rem;
+    padding-inline-start: 0.75rem;
+    padding-inline-end: 0.75rem;
+    padding-bottom: 1rem;
     box-sizing: border-box;
 }
 
@@ -51,16 +64,15 @@
 }
 
 /* M  - 1 column by default, up to 2 columns */
-@container (width > 599px) and (width < 1022px) {
+@container (width > 599px) and (width < 1024px) {
 	.ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
-
 	:host([columns-m="1"]) .ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
 	:host([columns-m="2"]) .ui5-form-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
@@ -68,85 +80,100 @@
 @container (width > 1023px) and (width < 1439px) {
 
 	.ui5-form-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.ui5-form-column {
+		grid-template-columns: 1fr;
 	}
 
 	:host([columns-l="1"]) .ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
 	:host([columns-l="2"]) .ui5-form-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
 	}
 	:host([columns-l="3"]) .ui5-form-layout {
-		grid-template-columns: 1fr 1fr 1fr;
-	}
-
-	.ui5-form-column {
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(3, 1fr);
 	}
 
 	.ui5-form-column-spanL-2 {
 		grid-column: span 2;
 	}
 	.ui5-form-column-spanL-2 .ui5-form-group-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.ui5-form-column-spanL-3 {
 		grid-column: span 3;
 	}
 	.ui5-form-column-spanL-3 .ui5-form-group-layout {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: repeat(3, 1fr);
 	}
 }
 
-/* XL - 2 columns by default, up to 4 */
+/* XL - 2 columns by default, up to 6 */
 @container (min-width: 1440px) {
 	.ui5-form-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	:host([columns-xl="1"]) .ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
 	:host([columns-xl="2"]) .ui5-form-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);
 	}
 	:host([columns-xl="3"]) .ui5-form-layout {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: repeat(3, 1fr);
 	}
 	:host([columns-xl="4"]) .ui5-form-layout {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: repeat(4, 1fr);
+	}
+	:host([columns-xl="5"]) .ui5-form-layout {
+		grid-template-columns: repeat(5, 1fr);
+	}
+	:host([columns-xl="6"]) .ui5-form-layout {
+		grid-template-columns: repeat(6, 1fr);
 	}
 
 	.ui5-form-column-spanXL-2 {
 		grid-column: span 2;
 	}
 	.ui5-form-column-spanXL-2 .ui5-form-group-layout {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, 1fr);;
 	}
 
 	.ui5-form-column-spanXL-3 {
 		grid-column: span 3;
 	}
 	.ui5-form-column-spanXL-3 .ui5-form-group-layout {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: repeat(3, 1fr);;
 	}
 
 	.ui5-form-column-spanXL-4 {
 		grid-column: span 4;
 	}
 	.ui5-form-column-spanXL-4 .ui5-form-group-layout {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-columns: repeat(4, 1fr);;
 
+	}
+
+	.ui5-form-column-spanXL-5 {
+		grid-column: span 5;
+	}
+	.ui5-form-column-spanXL-5 .ui5-form-group-layout {
+		grid-template-columns: repeat(5, 1fr);;
+
+	}
+
+	.ui5-form-column-spanXL-6 {
+		grid-column: span 6;
+	}
+	.ui5-form-column-spanXL-6 .ui5-form-group-layout {
+		grid-template-columns: repeat(6, 1fr);;
 	}
 }
 
-
 ::slotted([ui5-form-group]) {
 	display: contents;
-}
-
-.ui5-form-group-layout {
-	display: grid;
 }

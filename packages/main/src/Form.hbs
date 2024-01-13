@@ -1,4 +1,4 @@
-<div class="ui5-form-root" role="form" aria-labelledby="_ariaLabelledBy" ?editable="{{editable}}">
+<div class="ui5-form-root" role="form" aria-labelledby="{{_ariaLabelledBy}}">
 	<div class="ui5-form-header" part="header">
 		{{#if hasCustomHeader}}
 			<slot name="header"></slot>
@@ -11,7 +11,6 @@
 			{{#if this.hasGroups}}
 					{{#each itemsInfo}}
 						<div class="ui5-form-column {{this.classes}}">
-
 							<div class="ui5-form-group">
 								{{#if this.item.heading}}
 									<div class="ui5-form-group-heading">
@@ -20,14 +19,14 @@
 								{{/if}}
 
 								<div class="ui5-form-group-layout">
-										<slot name="{{this.item._individualSlot}}"></slot>
+									<slot name="{{this.item._individualSlot}}"></slot>
 								</div>
 							</div>
 						</div>
 					{{/each}}
 			{{else}}
 				{{#each items}}
-					<div class="ui5-form-column">
+					<div class="ui5-form-item">
 						<slot name="{{this._individualSlot}}"></slot>
 					</div>
 				{{/each}}

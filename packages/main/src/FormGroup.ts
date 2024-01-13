@@ -29,10 +29,7 @@ import FormGroupTemplate from "./generated/templates/FormGroupTemplate.lit.js";
  * @tagname ui5-form-group
  * @public
  */
-@customElement({
-	tag: "ui5-form-group",
-	dependencies: [],
-})
+@customElement("ui5-form-group")
 class FormGroup extends UI5Element {
 	@property()
 	heading!: string;
