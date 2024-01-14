@@ -34,7 +34,7 @@ class FormStep extends UI5Element {
 	 * @public
 	 */
 	@property()
-	breakpoint!: string; // or minWidth
+	minWidth!: string; // or breakpoint
 
 	/**
 	 * Defines number of columns for the current form step.

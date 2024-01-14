@@ -23,7 +23,7 @@ import {
 
 // Styles
 import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
-import type ProductSwitchItem from "./ProductSwitchItem.js";
+import type IProductSwitchItem from "./ProductSwitchItem.js";
 
 /**
  * @class
@@ -51,11 +51,7 @@ import type ProductSwitchItem from "./ProductSwitchItem.js";
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.ProductSwitch
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-product-switch
- * @appenddocs sap.ui.webc.fiori.ProductSwitchItem
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.5
  */
@@ -90,13 +86,10 @@ class ProductSwitch extends UI5Element {
 	/**
 	 * Defines the items of the <code>ui5-product-switch</code>.
 	 *
-	 * @type {sap.ui.webc.fiori.IProductSwitchItem[]}
-	 * @name sap.ui.webc.fiori.ProductSwitch.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<ProductSwitchItem>
+	items!: Array<IProductSwitchItem>
 
 	_itemNavigation: ItemNavigation;
 	_currentIndex: number;
@@ -146,11 +139,11 @@ class ProductSwitch extends UI5Element {
 
 	handleProductSwitchItemClick(e: MouseEvent) {
 		this.items.forEach(item => { item.selected = false; });
-		(e.target as ProductSwitchItem).selected = true;
+		(e.target as IProductSwitchItem).selected = true;
 	}
 
 	_onfocusin(e: FocusEvent) {
-		const target = e.target as ProductSwitchItem;
+		const target = e.target as IProductSwitchItem;
 
 		this._itemNavigation.setCurrentItem(target);
 		this._currentIndex = this.items.indexOf(target);

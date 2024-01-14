@@ -6,9 +6,6 @@ import DataType from "./DataType.js";
  * Float data type.
  *
  * @constructor
- * @extends sap.ui.webc.base.types.DataType
- * @author SAP SE
- * @alias sap.ui.webc.base.types.Float
  * @public
  */
 class Float extends DataType {

@@ -9,7 +9,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import type NotificationListItem from "./NotificationListItem.js";
+import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -37,8 +37,6 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
 
-import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
-
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
 };
@@ -63,28 +61,14 @@ type NotificationListGroupItemToggleEventDetail = {
  * <h3>Usage</h3>
  * The component can be used in a standard <code>ui5-list</code>.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-li-notification-group</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>title-text - Used to style the titleText of the notification list group item</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
  * <br>
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.NotificationListGroupItem
- * @extends sap.ui.webc.fiori.NotificationListItemBase
- * @tagname ui5-li-notification-group
+ * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
- * @appenddocs sap.ui.webc.fiori.NotificationAction
- * @implements sap.ui.webc.main.IListItem
  * @public
  */
 @customElement({
@@ -105,15 +89,12 @@ type NotificationListGroupItemToggleEventDetail = {
  * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
  *
  * @public
- * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
  */
 @event("toggle")
 class NotificationListGroupItem extends NotificationListItemBase {
 	/**
 	 * Defines if the group is collapsed or expanded.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.collapsed
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -121,9 +102,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	/**
 	 * Defines if the items <code>counter</code> would be displayed.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.showCounter
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -133,13 +112,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * Defines the items of the <code>ui5-li-notification-group</code>,
 	 * usually <code>ui5-li-notification</code> items.
 	 *
-	 * @type {sap.ui.webc.fiori.INotificationListItem[]}
-	 * @slot items
-	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.default
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<NotificationListItem>
+	items!: Array<NotificationListItemBase>
 
 	onBeforeRendering() {
 		if (this.busy) {

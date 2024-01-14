@@ -62,11 +62,9 @@ type LinkClickEventDetail = {
  * <code>import "@ui5/webcomponents/dist/Link";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Link
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-link
+ * @extends UI5Element
  * @public
+ * @slot {Array<Node>} default - Defines the text of the component. <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-link",
@@ -79,19 +77,30 @@ type LinkClickEventDetail = {
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
  *
- * @event sap.ui.webc.main.Link#click
  * @public
  * @allowPreventDefault
- * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
- * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
- * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
- * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		altKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		ctrlKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		metaKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		shiftKey: { type: Boolean },
 	},
 })
@@ -101,9 +110,7 @@ class Link extends UI5Element implements ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> When disabled, the click event cannot be triggered by the user.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Link.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -111,10 +118,8 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
-	 * @name sap.ui.webc.main.Link.prototype.title
 	 * @since 1.18.0
 	 */
 	 @property()
@@ -125,9 +130,7 @@ class Link extends UI5Element implements ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Standard hyperlink behavior is supported.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Link.prototype.href
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -148,9 +151,7 @@ class Link extends UI5Element implements ITabbable {
 	 *
 	 * <b>This property must only be used when the <code>href</code> property is set.</b>
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Link.prototype.target
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -161,9 +162,7 @@ class Link extends UI5Element implements ITabbable {
 	 * <br><br>
 	 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 	 *
-	 * @type {sap.ui.webc.main.types.LinkDesign}
-	 * @name sap.ui.webc.main.Link.prototype.design
-	 * @defaultvalue "Default"
+	 * @default "Default"
 	 * @public
 	 */
 	@property({ type: LinkDesign, defaultValue: LinkDesign.Default })
@@ -173,9 +172,7 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @name sap.ui.webc.main.Link.prototype.wrappingType
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
@@ -184,9 +181,7 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Link.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -196,9 +191,7 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Receives id(or many ids) of the elements that label the input
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Link.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -210,9 +203,7 @@ class Link extends UI5Element implements ITabbable {
 	 *
 	 * <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Link.prototype.accessibleRole
-	 * @defaultvalue "link"
+	 * @default "link"
 	 * @public
 	 * @since 1.9.0
 	 */
@@ -242,10 +233,10 @@ class Link extends UI5Element implements ITabbable {
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
-	 * @type {object}
-	 * @name sap.ui.webc.main.Link.prototype.accessibilityAttributes
+	 *
 	 * @public
 	 * @since 1.1.0
+	 * @default {}
 	 */
 	@property({ type: Object })
 	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };
@@ -262,16 +253,6 @@ class Link extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Boolean })
 	focused!: boolean
-
-	/**
-	 * Defines the text of the component.
-	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.Link.prototype.default
-	 * @slot
-	 * @public
-	 */
 
 	_dummyAnchor: HTMLAnchorElement;
 

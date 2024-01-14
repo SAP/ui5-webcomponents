@@ -27,9 +27,8 @@ class I18nBundle {
 	 * Returns a text in the currently loaded language
 	 *
 	 * @public
-	 * @param {Object|String} textObj key/defaultText pair or just the key
+	 * @param textObj key/defaultText pair or just the key
 	 * @param params Values for the placeholders
-	 * @returns {string}
 	 */
 	getText(textObj: I18nText | string, ...params: Array<number | string>): string {
 		if (typeof textObj === "string") {
@@ -56,7 +55,6 @@ class I18nBundle {
  *
  * @public
  * @param packageName
- * @returns { I18nBundle }
  */
 const getI18nBundleSync = (packageName: string): I18nBundle => {
 	if (I18nBundleInstances.has(packageName)) {
@@ -73,7 +71,6 @@ const getI18nBundleSync = (packageName: string): I18nBundle => {
  *
  * @public
  * @param packageName
- * @returns { Promise<I18nBundle> }
  */
 const getI18nBundle = async (packageName: string): Promise<I18nBundle> => {
 	if (customGetI18nBundle) {
@@ -92,7 +89,7 @@ const getI18nBundle = async (packageName: string): Promise<I18nBundle> => {
  * @public
  * @param customGet the function to use instead of the standard getI18nBundle implementation
  */
-const registerCustomI18nBundleGetter = (customGet: I18nBundleGetter) => {
+const registerCustomI18nBundleGetter = (customGet: I18nBundleGetter): void => {
 	customGetI18nBundle = customGet;
 };
 

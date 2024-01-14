@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* **ui5-busy-indicator:** correct appearance in Belize theme ([#8054](https://github.com/SAP/ui5-webcomponents/issues/8054)) ([f41d505](https://github.com/SAP/ui5-webcomponents/commit/f41d5056590f63ac956a5ad9624993d835765e9d)), closes [#7901](https://github.com/SAP/ui5-webcomponents/issues/7901)
+
+
+### Features
+
+* **ui5-badge:** add different design types ([#7564](https://github.com/SAP/ui5-webcomponents/issues/7564)) ([e5895f7](https://github.com/SAP/ui5-webcomponents/commit/e5895f7d5076406769b516967137ba58f3567935))
+* **ui5-side-navigation:** Add new overflow behaviour to collapsed mode ([#8019](https://github.com/SAP/ui5-webcomponents/issues/8019)) ([e5f8edd](https://github.com/SAP/ui5-webcomponents/commit/e5f8eddcdc9f1139d002585cdb014b47a0687b62))
+
+
+
+
+
+# [1.21.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.5...v1.21.0) (2024-01-05)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** scroll to item upon keyboard navigation ([#8044](https://github.com/SAP/ui5-webcomponents/issues/8044)) ([8dc384e](https://github.com/SAP/ui5-webcomponents/commit/8dc384e6381283fdcc1097b132c2f98d49ea6102)), closes [#3994](https://github.com/SAP/ui5-webcomponents/issues/3994)
+
+
+
+
+
 # [1.21.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.4...v1.21.0-rc.5) (2024-01-04)
 
 

@@ -8,8 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
-import type CardHeader from "./CardHeader.js";
-
+import type { ICardHeader } from "./CardHeader.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
@@ -29,6 +28,15 @@ import cardCss from "./generated/themes/Card.css.js";
  *
  * Note: We recommend the usage of <code>ui5-card-header</code> for the header slot, so advantage can be taken for keyboard handling, styling and accessibility.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>root - Used to style the root DOM element of the card component</li>
+ * <li>content - Used to style the content of the card</li>
+ * </ul>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
@@ -36,12 +44,8 @@ import cardCss from "./generated/themes/Card.css.js";
  * <code>import "@ui5/webcomponents/dist/CardHeader.js";</code> (for <code>ui5-card-header</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Card
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-card
+ * @extends UI5Element
  * @public
- * @appenddocs sap.ui.webc.main.CardHeader
  */
 @customElement({
 	tag: "ui5-card",
@@ -57,9 +61,7 @@ class Card extends UI5Element {
 	 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
 	 *
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.accessibleName
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
@@ -69,9 +71,7 @@ class Card extends UI5Element {
 	/**
 	 * Defines the IDs of the elements that label the component.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.accessibleNameRef
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
@@ -80,9 +80,6 @@ class Card extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {HTMLElement[]}
-	 * @slot content
-	 * @name sap.ui.webc.main.Card.prototype.default
 	 * @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
@@ -92,14 +89,11 @@ class Card extends UI5Element {
 	 * Defines the header of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-	 * @type {sap.ui.webc.main.ICardHeader[]}
 	 * @since 1.0.0-rc.15
-	 * @slot header
-	 * @name sap.ui.webc.main.Card.prototype.header
 	 * @public
 	*/
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	header!: Array<CardHeader>;
+	header!: Array<ICardHeader>;
 
 	static i18nBundle: I18nBundle;
 

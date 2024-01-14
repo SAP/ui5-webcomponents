@@ -1,3 +1,4 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -13,16 +14,14 @@ import DateComponentBase from "./DateComponentBase.js";
  *  - other common code
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CalendarPart
- * @extends sap.ui.webc.main.DateComponentBase
+ * @extends DateComponentBase
  * @public
  */
+@customElement()
 class CalendarPart extends DateComponentBase {
 	/**
 	 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 	 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
-	 * @type {sap.ui.webc.base.types.Integer}
 	 * @protected
 	 */
 	@property({ validator: Integer })

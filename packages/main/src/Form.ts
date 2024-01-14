@@ -16,6 +16,8 @@ import type FormItem from "./FormItem.js";
 import type FormGroup from "./FormGroup.js";
 import type FormStep from "./FormStep.js";
 
+const constructableStyleMap = new Map<string, CSSStyleSheet>();
+
 type ItemsInfo = {
 	item: FormGroup | FormItem,
 	classes: string,
@@ -27,7 +29,7 @@ enum ItemSpacing {
 	"Large" = "Large",
 }
 
-enum FormItemLabelPlacement {
+enum FormLabelPlacement {
 	"Auto" = "Auto",
 	"Side" = "Side",
 	"Top" = "Top"
@@ -69,13 +71,13 @@ enum FormItemLabelPlacement {
  * <li> S (< 600px) – 1 column</li>
  * </ul>
  *
- * <h5>Layout definition</h5>
+ * <h5>Layout</h5>
  *
  * By default, the Form content will be distributed into 2 columns for "XL" and "L" breakpoints
  * and inside 1 column for "M" and "S" breakpoints.
  * To change the layout, use the <code>layout</code> property - f.e. layout="S1 M2 L3 XL6".
  *
- * <h5>FormGroups distribution</h5>
+ * <h5>Groups distribution</h5>
  *
  * To make better use of screen space, there is built-in logic to calculate
  * how many columns should a FormGroup occupy.
@@ -110,6 +112,8 @@ enum FormItemLabelPlacement {
  * If there is enough space, the labels are next to the fields, otherwise above the fields.
  * However, you can enforce "Inline" or "Vertical" placement via the <code>labelPlacement</code> property.
  *
+ * <h3>Custom Responinsiveness</h3>
+ *
  * <h3>Usage</h3>
  *
  * <h3>ES6 Module Import</h3>
@@ -129,39 +133,6 @@ enum FormItemLabelPlacement {
 	dependencies: [Title],
 })
 class Form extends UI5Element {
-	/**
-	 * Defines header text of the component.
-	 * <br><br>
-	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
-	 *
-	 * @defaultvalue ""
-	 * @public
-	 */
-	@property()
-	headerText!: string;
-
-	/**
-	 * Defines the vertical spacing between form items:
-	 * <ul>
-	 * <li> "Normal" - </li>
-	 * <li> "Large" - </li>
-	 * </ul>
-	 *
-	 * @defaultvalue "Normal"
-	 * @public
-	 */
-	@property({ type: ItemSpacing, defaultValue: ItemSpacing.Normal })
-	itemSpacing!: ItemSpacing;
-
-	@property({ validator: Integer, defaultValue: 1 })
-	columnsM!: number;
-
-	@property({ validator: Integer, defaultValue: 2 })
-	columnsL!: number;
-
-	@property({ validator: Integer, defaultValue: 2 })
-	columnsXl!: number;
-
 	/**
 	 * Defines the number of columns to distribute the content by breakpoint.
 	 * <br><br>
@@ -194,6 +165,53 @@ class Form extends UI5Element {
 	labelSpan!: string;
 
 	/**
+	 * Defines header text of the component.
+	 * <br><br>
+	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
+	 *
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	headerText!: string;
+
+	/**
+	 * Defines the vertical spacing between form items:
+	 * <ul>
+	 * <li> "Normal" - </li>
+	 * <li> "Large" - </li>
+	 * </ul>
+	 *
+	 * @defaultvalue "Normal"
+	 * @public
+	 */
+	@property({ type: ItemSpacing, defaultValue: ItemSpacing.Normal })
+	itemSpacing!: ItemSpacing;
+
+	/**
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	columnsS!: number;
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanS!: number;
+
+	@property({ validator: Integer, defaultValue: 1 })
+	columnsM!: number;
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanM!: number;
+
+	@property({ validator: Integer, defaultValue: 2 })
+	columnsL!: number;
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanL!: number;
+
+	@property({ validator: Integer, defaultValue: 2 })
+	columnsXl!: number;
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanXl!: number;
+
+	/**
 	 * Defines the placement of the labels of the FormItems.
 	 *
 	 * <ul>
@@ -204,8 +222,8 @@ class Form extends UI5Element {
 	 * @defaultvalue "Auto"
 	 * @public
 	 */
-	@property({ type: FormItemLabelPlacement, defaultValue: FormItemLabelPlacement.Auto })
-	labelPlacement!: FormItemLabelPlacement;
+	@property({ type: FormLabelPlacement, defaultValue: FormLabelPlacement.Auto })
+	labelPlacement!: FormLabelPlacement;
 
 	/**
 	 * Defines the component header area.
@@ -258,60 +276,141 @@ class Form extends UI5Element {
 	@slot()
 	steps!: Array<FormStep>;
 
-	onAfterRendering() {
-		this.calcGroupsDistribution();
+	onBeforeRendering(): void {
+		if (this.steps.length) {
+			this.parseSteps();
+		} else {
+			this.parseLayout(this.layout);
+		}
+		this.setLabelSpans();
+		this.setLabelPlacement();
+		this.setGroupsColSpan();
 	}
 
-	calcGroupsDistribution() {
-		if (this.items.length === 0 || !this.hasGroups) {
-			return this.items;
+	onAfterRendering(): void {
+		if (this.steps.length) {
+			this.createStepCSSStyleSheet();
 		}
-
-		// The number of available columns is less than number of the groups
-		// For example: 4 columns - 5 groups, 3 columns - 4 groups, 2 columns - 3 groups, 1 column - 2 groups
-		if (this.columnsXl < this.items.length) {
-			console.warn(`Number of columns ${this.columnsXl} is less than the groups - groups that don't fit will be displayed on a second row`); // eslint-disable-line
-			return this.items;
-		}
-
-		// The number of available columns match the number of groups, or only 1 column is available - each group takes 1 column.
-		// For example: 1 column - 1 group, 2 columns - 2 groups, 3 columns - 3 groups, 4columns - 4 groups
-		if (this.columnsXl === 1 || this.columnsXl === this.items.length) {
-			this.balancedDistribution(/* 1 column */);
-			return this.items;
-		}
-
-		if (this.columnsXl % this.items.length === 0) {
-			this.balancedDistribution(this.columnsXl / this.items.length);
-			return this.items;
-		}
-
-		// The number of available columns IS multiple of the number of groups - groups won't take even number of columns and it's subject to further calculation.
-		// Groups with more fields should take more columns. In case of parity the first group will get priority.
-		// For example: 4 columns - 3 groups, 3 columns - 2 groups
-		if (this.columnsXl - this.items.length >= 1) {
-			this.unbalancedDistribution(this.columnsXl - this.items.length);
-		}
-
-		return this.items;
 	}
 
-	balancedDistribution(cols = 1) {
-		this.items.forEach((formGroup: FormGroup | FormItem) => {
-			(formGroup as FormGroup).colsXl = cols;
+	parseSteps() {
+		this.steps.forEach((step: FormStep) => {
+			if (step.minWidth === "M") {
+				this.columnsM = step.columns;
+			} else if (step.minWidth === "L") {
+				this.columnsL = step.columns;
+			} else if (step.minWidth === "XL") {
+				this.columnsXl = step.columns;
+			}
 		});
 	}
 
-	unbalancedDistribution(delta: number) {
+	parseLayout(layout: string) {
+		const layoutArr = layout.split(" ");
+		layoutArr.forEach((breakpont: string) => {
+			if (breakpont.startsWith("M")) {
+				this.columnsM = parseInt(breakpont.slice(1));
+			} else if (breakpont.startsWith("L")) {
+				this.columnsL = parseInt(breakpont.slice(1));
+			} else if (breakpont.startsWith("XL")) {
+				this.columnsXl = parseInt(breakpont.slice(2));
+			}
+		});
+	}
+
+	setLabelSpans() {
+		this.labelSpan.split(" ").forEach((breakpont: string) => {
+			if (breakpont.startsWith("S")) {
+				this.labelSpanS = parseInt(breakpont.slice(1));
+			} else if (breakpont.startsWith("M")) {
+				this.labelSpanM = parseInt(breakpont.slice(1));
+			} else if (breakpont.startsWith("L")) {
+				this.labelSpanL = parseInt(breakpont.slice(1));
+			} else if (breakpont.startsWith("XL")) {
+				this.labelSpanXl = parseInt(breakpont.slice(2));
+			}
+		});
+
+		this.items.forEach((item: FormItem | FormGroup) => {
+			item.labelSpanS = this.labelSpanS;
+			item.labelSpanM = this.labelSpanM;
+			item.labelSpanL = this.labelSpanL;
+			item.labelSpanXl = this.labelSpanXl;
+		});
+	}
+
+	setLabelPlacement() {
+		this.items.forEach((item: FormItem | FormGroup) => {
+			item.labelPlacement = this.labelPlacement;
+		});
+	}
+
+	getGroupsColumnsSpan() {
+		const itemsCount = this.items.length;
+		let colsXl: number | undefined,
+			colsL: number | undefined,
+			colsM: number | undefined;
+
+		// The number of available columns match the number of groups, or only 1 column is available - each group takes 1 column.
+		// For example: 1 column - 1 group, 2 columns - 2 groups, 3 columns - 3 groups, 4columns - 4 groups
+		if (this.columnsXl === 1 || this.columnsXl <= itemsCount) {
+			colsXl = 1;
+		}
+		if (this.columnsL === 1 || this.columnsL <= itemsCount) {
+			colsL = 1;
+		}
+		if (this.columnsM === 1 || this.columnsM <= itemsCount) {
+			colsM = 1;
+		}
+
+		// The number of available columns IS multiple of the number of groups.
+		// For example: 2 column - 1 group, 3 columns - 1 groups, 4 columns - 1 group, 4 columns - 2 groups
+		if (!colsXl && this.columnsXl % itemsCount === 0) {
+			colsXl = this.columnsXl / itemsCount;
+		}
+		if (!colsL && this.columnsL % itemsCount === 0) {
+			colsL = this.columnsL / itemsCount;
+		}
+		if (!colsM && this.columnsM % itemsCount === 0) {
+			colsM = this.columnsM / itemsCount;
+		}
+
+		// The number of available columns IS NOT multiple of the number of groups.
+		// For example: 5 columns - 3 groups, 5 columns - 4 groups, 4 columns - 3 groups, 3 columns - 2 groups
+		// Items will be sorted by the number of fields and ones with more fields will be given more columns.
+
+		return { colsM, colsL, colsXl };
+	}
+
+	setGroupsColSpan() {
+		if (!this.hasGroups) {
+			return;
+		}
+
+		const { colsM, colsL, colsXl } = this.getGroupsColumnsSpan();
+		const itemsCount = this.items.length;
+
 		const sortedItems = [...this.items].sort((itemA: FormGroup | FormItem, itemB: FormGroup | FormItem) => {
 			return (itemB as FormGroup)?.children?.length - (itemA as FormGroup)?.children?.length;
 		});
 
-		sortedItems.forEach((formGroup: FormGroup | FormItem, idx: number) => {
-			if (idx + 1 <= delta) {
-				(formGroup as FormGroup).colsXl = 2;
+		sortedItems.forEach((formGroup: FormGroup | FormItem, index: number) => {
+			if (colsXl) {
+				(formGroup as FormGroup).colsXl = colsXl;
 			} else {
-				(formGroup as FormGroup).colsXl = 1;
+				(formGroup as FormGroup).colsXl = index < this.columnsXl - itemsCount ? 2 : 1;
+			}
+
+			if (colsL) {
+				(formGroup as FormGroup).colsL = colsL;
+			} else {
+				(formGroup as FormGroup).colsL = index < this.columnsL - itemsCount ? 2 : 1;
+			}
+
+			if (colsM) {
+				(formGroup as FormGroup).colsM = colsM;
+			} else {
+				(formGroup as FormGroup).colsM = index < this.columnsM - itemsCount ? 2 : 1;
 			}
 		});
 	}
@@ -328,19 +427,73 @@ class Form extends UI5Element {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
 
-	get itemsInfo() {
-		const info: Array<ItemsInfo> = this.calcGroupsDistribution().map((item: FormGroup | FormItem) => {
+	get itemsInfo(): Array<ItemsInfo> {
+		return this.items.map((item: FormGroup | FormItem) => {
 			return {
 				item,
 				classes: `ui5-form-column-spanL-${(item as FormGroup).colsL || 1} ui5-form-column-spanXL-${(item as FormGroup).colsXl || 1}`,
 				items: Array.from((item as FormGroup).children) as Array<FormItem>,
 			};
 		});
+	}
 
-		return info;
+	createStepCSSStyleSheet() {
+		if (this.columnsM > 2) {
+			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("M", this.columnsM));
+		}
+		if (this.columnsL > 3) {
+			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("L", this.columnsL));
+		}
+		if (this.columnsXl > 6) {
+			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("XL", this.columnsXl));
+		}
+	}
+
+	getStepCSSStyleSheet(step: string, cols: number) {
+		const css = this.getStepCSS(step, cols);
+		const key = `${step}-${cols}`;
+
+		if (!constructableStyleMap.has(key)) {
+			const style = new CSSStyleSheet();
+			style.replaceSync(css);
+			constructableStyleMap.set(key, style);
+		}
+		return constructableStyleMap.get(key)!;
+	}
+
+	getStepCSS(step: string, cols: number) {
+		let containerQuery;
+
+		if (step === "XL") {
+			containerQuery = `@container (min-width: 1440px) {`;
+		} else if (step === "L") {
+			containerQuery = `@container (width > 1023px) and (width < 1439px) {`;
+		} else if (step === "M") {
+			containerQuery = `@container (width > 599px) and (width < 1024px) {`;
+		} else if (step === "S") {
+			containerQuery = `@container (max-width: 599px) {`;
+		}
+
+		return `
+			${containerQuery}
+			:host([columns-${step.toLocaleLowerCase()}="${cols}"]) .ui5-form-layout {
+				grid-template-columns: repeat(${cols}, 1fr);
+			}
+			
+			.ui5-form-column-span${step}-${cols} {
+					grid-column: span ${cols};
+			}
+			
+			.ui5-form-column-span${step}-${cols}.ui5-form-group-layout {
+					grid-template-columns: repeat(${cols}, 1fr);
+			}
+		}`;
 	}
 }
 
 Form.define();
 
 export default Form;
+export {
+	FormLabelPlacement,
+};

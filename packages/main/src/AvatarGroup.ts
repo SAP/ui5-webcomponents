@@ -14,7 +14,7 @@ import {
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
-import type Avatar from "./Avatar.js";
+import type IAvatar from "./Avatar.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
@@ -32,6 +32,7 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
+import { IButton } from "./Interfaces.js";
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -132,10 +133,7 @@ type AvatarGroupClickEventDetail = {
  * <br>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.AvatarGroup
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-avatar-group
+ * @extends UI5Element
  * @since 1.0.0-rc.11
  * @public
  */
@@ -152,13 +150,18 @@ type AvatarGroupClickEventDetail = {
 * click/tap or by using the Enter or Space key.
 * @param {HTMLElement} targetRef The DOM ref of the clicked item.
 * @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
-* @event sap.ui.webc.main.AvatarGroup#click
 * @public
 * @since 1.0.0-rc.11
 */
 @event("click", {
 	detail: {
+		/**
+		* @public
+		*/
 		targetRef: { type: HTMLElement },
+		/**
+		* @public
+		*/
 		overflowButtonClicked: { type: Boolean },
 	},
 })
@@ -166,19 +169,15 @@ type AvatarGroupClickEventDetail = {
 /**
 * Fired when the count of visible <code>ui5-avatar</code> elements in the
 * component has changed
-* @event sap.ui.webc.main.AvatarGroup#overflow
 * @public
 * @since 1.0.0-rc.13
 */
 @event("overflow")
-
 class AvatarGroup extends UI5Element {
 	/**
 	 * Defines the mode of the <code>AvatarGroup</code>.
 	 *
-	 * @type {sap.ui.webc.main.types.AvatarGroupType}
-	 * @name sap.ui.webc.main.AvatarGroup.prototype.type
-	 * @defaultValue "Group"
+	 * @default "Group"
 	 * @public
 	 */
 	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
@@ -192,8 +191,6 @@ class AvatarGroup extends UI5Element {
 	 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
 	 * </ul>
 	 * <br><br>
-	 * @type String
-	 * @name sap.ui.webc.main.AvatarGroup.prototype.ariaHaspopup
 	 * @since 1.0.0-rc.15
 	 * @protected
 	 */
@@ -212,13 +209,10 @@ class AvatarGroup extends UI5Element {
 	 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
 	 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 	 * as the built-in overflow action has "Circle" shape.
-	 * @type {sap.ui.webc.main.IAvatar[]}
-	 * @name sap.ui.webc.main.AvatarGroup.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<Avatar>;
+	items!: Array<IAvatar>;
 
 	/**
 	 * Defines the overflow button of the component.
@@ -226,14 +220,11 @@ class AvatarGroup extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If this slot is not used, the component will
 	 * display the built-in overflow button.
-	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.AvatarGroup.prototype.overflowButton
-	 * @slot overflowButton
 	 * @public
 	 * @since 1.0.0-rc.13
 	 */
 	@slot()
-	overflowButton!: Array<Button>;
+	overflowButton!: Array<IButton>;
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
@@ -260,25 +251,19 @@ class AvatarGroup extends UI5Element {
 
 	/**
 	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
-	 * @readonly
-	 * @type {HTMLElement[]}
-	 * @defaultValue []
-	 * @name sap.ui.webc.main.AvatarGroup.prototype.hiddenItems
+	 * @default []
 	 * @public
 	 */
-	get hiddenItems() {
+	get hiddenItems(): IAvatar[] {
 		return this.items.slice(this._hiddenStartIndex);
 	}
 
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
-	 * @readonly
-	 * @type {sap.ui.webc.main.types.AvatarColorScheme[]}
-	 * @name sap.ui.webc.main.AvatarGroup.prototype.colorScheme
-	 * @defaultValue []
+	 * @default []
 	 * @public
 	 */
-	get colorScheme() {
+	get colorScheme(): AvatarColorScheme[] {
 		return this.items.map(avatar => avatar._effectiveBackgroundColor);
 	}
 
@@ -499,14 +484,14 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this._itemNavigation.setCurrentItem(e.target as Avatar);
+		this._itemNavigation.setCurrentItem(e.target as IAvatar);
 	}
 
 	/**
 	 * Returns the total width to item excluding the item width
 	 * RTL/LTR aware
 	 * @private
-	 * @param {HTMLElement} item
+	 * @param item
 	 */
 	_getWidthToItem(item: HTMLElement) {
 		const isRTL = this.effectiveDir === "rtl";
@@ -541,7 +526,7 @@ class AvatarGroup extends UI5Element {
 		let hiddenItems = 0;
 
 		for (let index = 0; index < this._itemsCount; index++) {
-			const item: Avatar = this.items[index];
+			const item: IAvatar = this.items[index];
 
 			// show item to determine if it will fit the new container size
 			item.hidden = false;

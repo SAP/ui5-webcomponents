@@ -6,36 +6,30 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import type SideNavigation from "./SideNavigation.js";
 
 /**
+ * Fired when the component is activated either with a
+ * click/tap or by using the Enter or Space key.
+ *
+ * @public
+ */
+@event("click")
+
+/**
  * @class
  * A class to serve as a foundation
  * for the <code>SideNavigationItem</code> and <code>SideNavigationSubItem</code> classes.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.SideNavigationItemBase
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
  * @public
- * @implements sap.ui.webc.fiori.SideNavigationItemBase
  * @since 1.19.0
  */
-
-/**
- * Fired when the component is activated either with a
- * click/tap or by using the Enter or Space key.
- *
- * @event sap.ui.webc.fiori.SideNavigationItemBase#click
- * @public
- */
-@event("click")
 class SideNavigationItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text of the item.
 	 *
 	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.text
+	 * @default ""
 	 */
 	@property()
 	text!: string;
@@ -48,9 +42,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * <br>
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.icon
+	 * @default ""
 	 */
 	@property()
 	icon!: string;
@@ -59,9 +51,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * Defines whether the item is selected
 	 *
 	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.selected
+	 * @default false
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
@@ -73,9 +63,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * for the <code>click</code> event should be registered.
 	 *
 	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.href
+	 * @default ""
 	 * @since 1.19.0
 	 */
 	@property()
@@ -97,9 +85,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * <b>This property must only be used when the <code>href</code> property is set.</b>
 	 *
 	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.target
+	 * @default ""
 	 * @since 1.19.0
 	 */
 	@property()
@@ -110,9 +96,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.SideNavigationItemBase.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.19.0
 	 */
@@ -121,10 +105,8 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.title
 	 * @since 1.0.0-rc.16
 	 */
 	@property()

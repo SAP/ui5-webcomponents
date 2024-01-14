@@ -6,6 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type FormItem from "./FormItem.js";
+import { FormLabelPlacement } from "./Form.js";
 
 import FormGroupTemplate from "./generated/templates/FormGroupTemplate.lit.js";
 
@@ -43,11 +44,40 @@ class FormGroup extends UI5Element {
 	@property({ validator: Integer, defaultValue: 1 })
 	colsXl!: number;
 
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanS!: number;
+
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanM!: number;
+
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanL!: number;
+
+	@property({ validator: Integer, defaultValue: 4 })
+	labelSpanXl!: number;
+
+	@property({ type: FormLabelPlacement, defaultValue: FormLabelPlacement.Auto })
+	labelPlacement!: FormLabelPlacement;
+
 	@slot({
 		type: HTMLElement,
 		"default": true,
 	})
 	items!: Array<FormItem>;
+
+	onBeforeRendering(): void {
+		this.setLabelSpanAndPlacement();
+	}
+
+	setLabelSpanAndPlacement() {
+		this.items.forEach((item: FormItem | FormGroup) => {
+			item.labelSpanS = this.labelSpanS;
+			item.labelSpanM = this.labelSpanM;
+			item.labelSpanL = this.labelSpanL;
+			item.labelSpanXl = this.labelSpanXl;
+			item.labelPlacement = this.labelPlacement;
+		});
+	}
 
 	get isGroup() {
 		return true;

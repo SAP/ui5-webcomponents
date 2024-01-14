@@ -18,9 +18,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * for the <code>ListItem</code> and <code>GroupHeaderListItem</code> classes.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ListItemBase
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -34,9 +32,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
 class ListItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the <code>ListItem</code>.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItemBase.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -56,9 +52,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* Defines whether <code>ui5-li</code> is in disabled state.
 	* <br><br>
 	* <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
-	* @type {boolean}
-	* @name sap.ui.webc.main.ListItemBase.prototype.disabled
-	* @defaultvalue false
+	* @default false
 	* @protected
 	* @since 1.0.0-rc.12
 	*/
