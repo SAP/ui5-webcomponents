@@ -39,7 +39,7 @@
 	--_ui5_split_text_button_emphasized_border: var(--sapButton_BorderWidth) solid var(--sapButton_Emphasized_BorderColor);
 
 
-	--_ui5_split_text_button_emphasized_border_width: 0.0625rem 0 0.0625rem 0.0625rem;
+	--_ui5_split_text_button_emphasized_border_width: 0.0625rem;
 
 
 	--_ui5_split_text_button_hover_border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
