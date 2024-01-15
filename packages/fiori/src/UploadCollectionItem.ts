@@ -153,7 +153,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * @public
 	 */
 	@property({ type: Boolean, noAttribute: false })
-	disableDeleteButton!: boolean;
+	declare disableDeleteButton: boolean;
 
 	/**
 	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.

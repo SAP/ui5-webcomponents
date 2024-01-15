@@ -65,7 +65,7 @@ class NavigationMenu extends Menu {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<NavigationMenuItem>;
+	declare items: Array<NavigationMenuItem>;
 
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {

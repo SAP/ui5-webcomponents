@@ -213,30 +213,25 @@ abstract class ListItem extends ListItemBase {
 	ariaHaspopup?: `${HasPopup}`;
 
 	/**
-	 * Used in UploadCollectionItem
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	disableDeleteButton!: boolean;
-
-	/**
 	 * Defines the delete button, displayed in "Delete" mode.
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
 	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
 	 * @since 1.9.0
 	 * @public
-	 */
+	*/
 	@slot()
 	deleteButton!: Array<IButton>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase
+	// used in template, implemented in TreeItemBase, StandardListItem
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
+	// Used in UploadCollectionItem
+	disableDeleteButton?: boolean;
 
 	static i18nBundle: I18nBundle;
 
