@@ -123,7 +123,7 @@ class UploadCollection extends UI5Element {
 	 * Defines the mode of the <code>ui5-upload-collection</code>.
 	 *
 	 * <br><b>Note:</b>
-	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
+	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem
 	 *
 	 * @default "None"
 	 * @public
