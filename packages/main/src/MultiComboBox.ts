@@ -1585,7 +1585,7 @@ class MultiComboBox extends UI5Element {
 			this._tokenizer.expanded = true;
 			setTimeout(() => {
 				this._tokenizer.scrollToEnd();
-			}, 0)
+			}, 0);
 		} else {
 			this._innerInput.blur();
 		}
