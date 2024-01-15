@@ -39,9 +39,9 @@ const SCROLL_DEBOUNCE_RATE = 0; // ms
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webc.fiori.DynamicPage
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-dynamic-page
+ * @since 1.122
  * @public
  */
 @customElement({
@@ -68,9 +68,7 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines if the header is snapped.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.headerSnapped
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -79,9 +77,7 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines if the header is pinned.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.headerPinned
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -90,9 +86,7 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines if the footer is shown.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.showFooter
-	 * @defaultvalue false
+	 * @defaul false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -101,7 +95,6 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines the current media query size.
 	 *
-	 * @type {string}
 	 * @private
 	 */
 	@property()
@@ -110,7 +103,6 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines the content of the Dynamic Page.
 	 *
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.content
 	 * @slot
 	 * @public
 	 */
@@ -120,8 +112,6 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines the title HTML Element.
 	 *
-	 * @type {sap.ui.webc.fiori.DynamicPageTitle}
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.titleArea
 	 * @slot
 	 * @public
 	 */
@@ -131,8 +121,6 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines the title HTML Element.
 	 *
-	 * @type {sap.ui.webc.fiori.DynamicPageHeader}
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.headerArea
 	 * @slot
 	 * @public
 	 */
@@ -142,8 +130,6 @@ class DynamicPage extends UI5Element {
 	/**
 	 * Defines the title HTML Element.
 	 *
-	 * @type {sap.ui.webc.fiori.IBar}
-	 * @name sap.ui.webc.fiori.DynamicPage.prototype.footer
 	 * @slot
 	 * @public
 	 */

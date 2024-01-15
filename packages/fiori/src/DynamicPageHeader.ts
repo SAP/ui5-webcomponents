@@ -18,10 +18,9 @@ import DynamicPageHeaderCss from "./generated/themes/DynamicPageHeader.css.js";
  *
  *
  * @constructor
- * @alias sap.ui.webc.fiori.DynamicPageHeader
  * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-page-header
  * @public
+ * @since 1.122
  */
 @customElement({
 	tag: "ui5-dynamic-page-header",
@@ -35,9 +34,15 @@ class DynamicPageHeader extends UI5Element {
 	static async onDefine() {
 		DynamicPageHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
-
+	/**
+	 * Defines the content of the Dynamic Page Header.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
+
 	get classes() {
 		return {
 			root: {

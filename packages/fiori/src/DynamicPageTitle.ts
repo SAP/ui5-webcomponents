@@ -29,9 +29,7 @@ import {
  *
  *
  * @constructor
- * @alias sap.ui.webc.fiori.DynamicPageTitle
  * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-page-title
  * @public
  */
 @customElement({
@@ -48,37 +46,102 @@ class DynamicPageTitle extends UI5Element {
 		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	/**
+	 * Defines the content of the Heading of the Dynamic Page.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	heading!: HTMLElement[];
 
+	/**
+	 * Defines the heading that is shown only when the header is snapped.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	snappedHeading!: HTMLElement[];
 
+	/**
+	 * Defines the heading that is shown only when the header is expanded.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	expandedHeading!: HTMLElement[];
 
+	/**
+	 * Defines the actions in the Dynamic page title.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	actions!: HTMLElement[];
 
+	/**
+	 * Defines the navigation actions in the Dynamic page title.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	navigationActions!: HTMLElement[];
 
+	/**
+	 * Defines the content of the Dynamic page title.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
 
+	/**
+	 * Defines the content of the title that is shown only when the header is snapped.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	snappedContent!: HTMLElement[];
 
+	/**
+	 * Defines the content of the title that is shown only when the header is expanded.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	expandedContent!: HTMLElement[];
 
+	/**
+	 * Defines the content of the breadcrumbs inside Dynamic Page Title.
+	 *
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	breadcrumbs!: HTMLElement[];
 
+	/**
+	 * Defines if the title is snapped.
+	 *
+	 * @property
+	 * @public
+	 */
 	@property({ type: Boolean })
 	snapped!: boolean;
 
-	// private properties
+	/**
+	 * Defines if the mobileNavigationActions are shown.
+	 *
+	 * @property
+	 * @private
+	 */
 	@property({ type: Boolean })
 	mobileNavigationActions!: boolean;
 

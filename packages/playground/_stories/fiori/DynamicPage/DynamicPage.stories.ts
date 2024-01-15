@@ -151,7 +151,8 @@ Basic.args = {
                     <ui5-title level="H5">Supplier:</ui5-title>
                     <ui5-title level="H5" id="lblSupplier"
                         ><b>Titanium</b></ui5-title>
-                    <ui5-button id="scrollBtn">Scroll to bottom</ui5-button>
+                        <ui5-button id="scrollDownBtn">Scroll down</ui5-button>
+                        <ui5-button id="scrollToBottomBtn">Scroll to bottom</ui5-button>
                 </div>
             </div>
         </div>
@@ -859,6 +860,36 @@ Basic.args = {
     </ui5-bar>`,
 
 };
+
+Basic.decorators = [
+    (story) => html`
+    ${story()}
+<script>
+    const page = document.getElementById("page");
+    const scrollDownStep = 500;
+
+    function getScrollContainer() {
+        return page.shadowRoot.querySelector(".ui5-dynamic-page-scroll-container");
+    }
+
+    document.getElementById("toggleFooterBtn").addEventListener("click", () => {
+        page.showFooter = !page.showFooter;
+    });
+
+    document.getElementById("scrollDownBtn").addEventListener("click", () => {
+        const scrollContainer = getScrollContainer();
+        const scrollTop = scrollContainer.scrollTop;
+        scrollContainer.scrollTop = scrollTop + scrollDownStep;
+    });
+
+    document.getElementById("scrollToBottomBtn").addEventListener("click", () => {
+        const scrollContainer = getScrollContainer();
+        const newScrollTop = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+        scrollContainer.scrollTop = newScrollTop;
+    });
+</script>`,
+];
+
 Basic.parameters = {
   docs: {
     story: {
