@@ -1,5 +1,77 @@
 import { assert } from "chai";
 
+describe("API", () => {
+    before(async () => {
+        await browser.url(`test/pages/DynamicPage.html`);
+    });
+
+    it("toggles the header-snapped state with 'headerSnapped' property", async () => {
+        const page = await browser.$("#page");
+        const headerSlot = await page.shadow$("slot[name=headerArea]");
+
+        // assert init state
+        assert.strictEqual(await page.getProperty("headerSnapped"), false, "Header is initially expanded");
+        assert.ok(await headerSlot.isExisting(), "Header slot is rendered");
+
+        // act
+        await page.setProperty("headerSnapped", true);
+
+        // assert header is no longer rendered
+        assert.strictEqual(await headerSlot.isExisting(), false, "Header is not rendered");
+    });
+
+    it("propagates-down the 'headerSnapped' property", async () => {
+        const page = await browser.$("#page"),
+            headerActions = page.shadow$('ui5-dynamic-page-header-actions'),
+            title = await browser.$("#page ui5-dynamic-page-title");
+
+        // assert init state
+        assert.strictEqual(await page.getProperty("headerSnapped"), true, "Header is snapped");
+        assert.strictEqual(await headerActions.getProperty("snapped"), true, "Header action is snapped");
+        assert.strictEqual(await title.getProperty("snapped"), true, "Title is snapped");
+
+        // act
+        await page.setProperty("headerSnapped", false);
+
+        // assert property is propagated
+        assert.strictEqual(await headerActions.getProperty("snapped"), false, "Header action is expanded");
+        assert.strictEqual(await title.getProperty("snapped"), false, "Title is expanded");
+    });
+
+    it("toggles the header-pinned state with 'headerPinned' property", async () => {
+        const page = await browser.$("#page"),
+            headerInStickyArea = await page.shadow$('header.ui5-dynamic-page-title-header-wrapper > slot[name=headerArea]'),
+            headerInScrollableArea = await page.shadow$('.ui5-dynamic-page-scroll-container > slot[name=headerArea]');;
+
+        // assert init state
+        assert.strictEqual(await page.getProperty("headerPinned"), false, "Header is initially not pinned");
+        assert.strictEqual( await headerInStickyArea.isExisting(), false, "Header is not in the sticky area");
+        assert.strictEqual( await headerInScrollableArea.isExisting(), true, "Header is inside the scrollable area");
+
+        // act
+        await page.setProperty("headerPinned", true);
+
+        // assert header is pinned in DOM
+        assert.strictEqual(await headerInStickyArea.isExisting(), true, "Header is inside the sticky area");
+        assert.strictEqual(await headerInScrollableArea.isExisting(), false, "Header is not in the scrollable area");
+    });
+
+    it("propagates-down the 'headerPinned' property", async () => {
+        const page = await browser.$("#page"),
+            headerActions = page.shadow$('ui5-dynamic-page-header-actions');
+
+        // assert init state
+        assert.strictEqual(await page.getProperty("headerPinned"), true, "Header is pinned");
+        assert.strictEqual(await headerActions.getProperty("pinned"), true, "Pin header action is initially on");
+
+        // act
+        await page.setProperty("headerPinned", false);
+
+        // assert property is propagated
+        assert.strictEqual(await headerActions.getProperty("pinned"), false, "Pin header action is off");
+    });
+});
+
 describe("Page general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/DynamicPage.html`);
@@ -22,19 +94,16 @@ describe("Page general interaction", () => {
 
     it("snaps the header upon pressing the snap button", async () => {
         const dynamicPage = await browser.$("#page");
-        const headerSlot = await dynamicPage.shadow$("slot[name=headerArea]");
         const snapButton = await dynamicPage.shadow$("ui5-dynamic-page-header-actions").shadow$(".ui5-dynamic-page-header-action");
 
         // check initial state
         assert.strictEqual(await dynamicPage.getProperty("headerSnapped"), false, "Header is initially expanded");
-        assert.ok(await headerSlot.isExisting(), "Header slot is rendered");
         assert.ok(await snapButton.isExisting(), "Arrow button is found");
 
         // act: click to snap the header
         await snapButton.click();
 
         assert.strictEqual(await dynamicPage.getProperty("headerSnapped"), true, "Header is snapped");
-        assert.strictEqual(await dynamicPage.shadow$("slot[name=headerArea]").isExisting(), false, "Header slot is not rendered");
     });
 
     it("expands the header upon pressing the expand button", async () => {
@@ -314,8 +383,6 @@ describe("ARIA attributes", () => {
         const title = await browser.$("#page ui5-dynamic-page-title");
         const titleFocusArea = await title.shadow$(".ui5-dynamic-page-title-focus-area");
         const headerWrapper = await page.shadow$(".ui5-dynamic-page-title-header-wrapper");
-        const headerActions = await page.shadow$("ui5-dynamic-page-header-actions");
-        const expandButton = await headerActions.shadow$("ui5-button.ui5-dynamic-page-header-action-expand");
 
         // snap the header
         await page.setProperty("headerSnapped", true);
@@ -328,9 +395,6 @@ describe("ARIA attributes", () => {
         assert.strictEqual(await headerWrapper.getAttribute("role"), "region",
             "role is correct");
 
-        // snap the title
-        await title.setProperty("snapped", true);
-
         assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "false",
             "aria-expanded value is correct");
         assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), "toggle-description",
@@ -338,10 +402,14 @@ describe("ARIA attributes", () => {
         assert.strictEqual(await titleFocusArea.getAttribute("role"), "button",
             "title focus area role is correct");
 
+        const headerActions = await page.shadow$("ui5-dynamic-page-header-actions");
+        const expandButton = await headerActions.shadow$("ui5-button");
+
+        assert.ok(await expandButton.isExisting(), "expand button is rendered");
         assert.strictEqual(await expandButton.getProperty("accessibleName"), "Expand Header",
             "expand button accessible-name is correct");
         assert.strictEqual(await expandButton.getProperty("title"), "Expand Header",
-            "expand button accessible-name is correct");
+            "expand button tooltip is correct");
 
         assert.exists(await title.shadow$("#toggle-description"));
     });
