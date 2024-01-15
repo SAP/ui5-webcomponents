@@ -14,14 +14,32 @@ import DynamicPageHeaderCss from "./generated/themes/DynamicPageHeader.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * Header of the DynamicPage.
+ *
+ * <h3>Overview</h3>
+ *
+ * The DynamicPageHeader <code>ui5-dynamic-page-header</code> is part of the DynamicPage family
+ * and is used to serve as header of the <code>DynamicPage</code>.
+ *
+ * <h3>Usage</h3>
+ *
+ * The <code>DynamicPageHeader</code> can hold any layout control and has two states - expanded
+ * and collapsed (snapped). The switching between these states happens when:
+ *
+ * <ul><li>the user scrolls below its bottom margin</li>
+ * <li>the user clicks on the <code>DynamicPageTitle</code></li>
+ * <li>through the <code>DynamicPage</code> property <code>headerSnapped</code></li></ul>
+ *
+ * <h3>Responsive Behavior</h3>
+ *
+ * The responsive behavior of the <code>DynamicPageHeader</code> depends on the behavior of the
+ * content that is displayed.
  *
  *
  * @constructor
- * @alias sap.ui.webc.fiori.DynamicPageHeader
  * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-page-header
  * @public
+ * @since 1.122
  */
 @customElement({
 	tag: "ui5-dynamic-page-header",
@@ -35,9 +53,14 @@ class DynamicPageHeader extends UI5Element {
 	static async onDefine() {
 		DynamicPageHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
-
+	/**
+	 * Defines the content of the Dynamic Page Header.
+	 *
+	 * @public
+	 */
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
+
 	get classes() {
 		return {
 			root: {

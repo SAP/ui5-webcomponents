@@ -25,13 +25,34 @@ import {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * <h3>Overview</h3>
+ *
+ * Title of the <code>DynamicPage</code>.
+ *
+ * The <code>DynamicPageTitle</code> component is part of the <code>DynamicPage</code>
+ * family and is used to serve as title of the <code>DynamicPage</code>.
+ *
+ * <h3>Usage</h3>
+ *
+ * The <code>DynamicPageTitle</code> can hold any component and displays the most important
+ * information regarding the object that will always remain visible while scrolling.
+ *
+ * <b>Note:</b> The <code>actions</code> slot accepts any UI5 web component, but it`s
+ * recommended to use <code>ui5-toolbar</code>.
+ *
+ * The user can switch between the expanded/collapsed states of the
+ * <code>DynamicPage</code> by clicking on the <code>DynamicPageTitle</code>
+ * or by using the expand/collapse visual indicators, positioned at the bottom of the
+ * <code>DynamicPageTitle</code> and the <code>DynamicPageHeader</code> inside <code>ui5-dynamic-page-header-actions</code>.
+ *
+ * <h3>Responsive Behavior</h3>
+ *
+ * The responsive behavior of the <code>DynamicPageTitle</code> depends on the behavior of the
+ * content that is displayed.
  *
  *
  * @constructor
- * @alias sap.ui.webc.fiori.DynamicPageTitle
  * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-page-title
  * @public
  */
 @customElement({
@@ -48,37 +69,92 @@ class DynamicPageTitle extends UI5Element {
 		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	/**
+	 * Defines the content of the Heading of the Dynamic Page.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	heading!: HTMLElement[];
 
+	/**
+	 * Defines the heading that is shown only when the header is snapped.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	snappedHeading!: HTMLElement[];
 
+	/**
+	 * Defines the heading that is shown only when the header is expanded.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	expandedHeading!: HTMLElement[];
 
+	/**
+	 * Defines the actions in the Dynamic page title.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	actions!: HTMLElement[];
 
+	/**
+	 * Defines the navigation actions in the Dynamic page title.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	navigationActions!: HTMLElement[];
 
+	/**
+	 * Defines the content of the Dynamic page title.
+	 *
+	 * @public
+	 */
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
 
+	/**
+	 * Defines the content of the title that is shown only when the header is snapped.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	snappedContent!: HTMLElement[];
 
+	/**
+	 * Defines the content of the title that is shown only when the header is expanded.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	expandedContent!: HTMLElement[];
 
+	/**
+	 * Defines the content of the breadcrumbs inside Dynamic Page Title.
+	 *
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	breadcrumbs!: HTMLElement[];
 
+	/**
+	 * Defines if the title is snapped.
+	 *
+	 * @public
+	 * @default false
+	 */
 	@property({ type: Boolean })
 	snapped!: boolean;
 
-	// private properties
+	/**
+	 * Defines if the mobileNavigationActions are shown.
+	 *
+	 * @private
+	 */
 	@property({ type: Boolean })
 	mobileNavigationActions!: boolean;
 
