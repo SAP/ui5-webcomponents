@@ -1,7 +1,7 @@
 {
     "include": ["_stories/**/*", ".storybook/**/*", "global.d.ts", "build-scripts-storybook/**/*"],
     "compilerOptions": {
-      "target": "ES2022",
+      "target": "ES2021",
       "lib": ["DOM", "DOM.Iterable", "ES2023"],
       // Generate d.ts files
       "declaration": true,
