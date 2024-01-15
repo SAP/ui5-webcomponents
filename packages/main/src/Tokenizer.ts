@@ -375,7 +375,7 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
-		
+
 		// Standalone tokenizer should be able to delete tokens by itself
 		token.remove();
 	}
