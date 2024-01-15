@@ -140,6 +140,19 @@ class CheckBox extends UI5Element implements IFormElement {
 	readonly!: boolean;
 
 	/**
+	 * Determines whether the <code>ui5-checkbox</code> is in display only state.
+	 *
+	 * When set to <code>true</code>, the <code>ui5-checkbox</code> is not interactive, not editable, not focusable
+	 * and not in the tab chain. This setting is used for forms in review mode.
+	 *
+	 * <Note:> When the property <code>disabled</code> is set to <code>true</code> this property has no effect.
+	 * @since 1.22.0
+	 * @default false
+	 */
+	@property({ type: Boolean })
+	displayOnly!: boolean;
+
+	/**
 	 * Defines whether the component is required.
 	 *
 	 * @default false
@@ -346,7 +359,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	}
 
 	canToggle() {
-		return !(this.disabled || this.readonly);
+		return !(this.disabled || this.readonly || this.displayOnly);
 	}
 
 	valueStateTextMappings() {
@@ -370,7 +383,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	}
 
 	get ariaReadonly() {
-		return this.readonly ? "true" : undefined;
+		return this.readonly || this.displayOnly ? "true" : undefined;
 	}
 
 	get effectiveAriaDisabled() {
@@ -405,11 +418,25 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled ? undefined : tabindex || "0";
+		return this.disabled || this.displayOnly ? undefined : tabindex || "0";
 	}
 
 	get isCompletelyChecked() {
 		return this.checked && !this.indeterminate;
+	}
+
+	get isDisplayOnly() {
+		return this.displayOnly && !this.disabled;
+	}
+
+	get displayOnlyIcon() {
+		if (this.isCompletelyChecked) {
+			return "complete";
+		}
+		if (this.checked && this.indeterminate) {
+			return "tri-state";
+		}
+		return "border";
 	}
 
 	static async onDefine() {
