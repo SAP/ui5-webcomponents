@@ -206,9 +206,10 @@ In addition, you can define your own CSS Vars and provide different values for t
 | File                                                | Purpose                                                                                        |
 |-----------------------------------------------------|------------------------------------------------------------------------------------------------|
 | `src/themes/MyFirstComponent.css`                   | All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root. |
-| `src/themes/sap_belize/parameters-bundle.css`       | Values for the component-specific CSS Vars for the `sap_belize` theme                          |
-| `src/themes/sap_belize_hcb/parameters-bundle.css`   | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme                      |
-| `src/themes/sap_belize_hcw/parameters-bundle.css`   | Values for the component-specific CSS Vars for the `sap_belize_hcw` theme                      |
+| `src/themes/sap_horizon/parameters-bundle.css`      | Values for the component-specific CSS Vars for the `sap_horizon` theme                         |
+| `src/themes/sap_horizon_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_horizon_dark` theme                    |
+| `src/themes/sap_horizon_hcb/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_horizon_hcb` theme                     |
+| `src/themes/sap_horizon_hcw/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_horizon_hcw` theme                     |
 | `src/themes/sap_fiori_3/parameters-bundle.css`      | Values for the component-specific CSS Vars for the `sap_fiori_3` theme                         |
 | `src/themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme                    |
 | `src/themes/sap_fiori_3_hcb/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme                     |
