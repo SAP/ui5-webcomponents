@@ -73,6 +73,11 @@
 		>
 			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
 			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
 		</a>
 	{{else}}
 		<div id="{{_id}}"
@@ -226,9 +231,10 @@
 				title="{{overflowAccessibleName}}"
 			>
 				<ui5-icon
-					class="ui5-sn-item-overflow-icon"
+					class="ui5-sn-item-icon"
 					name="overflow"
 				>
 				</ui5-icon>
+				<div class="ui5-sn-item-text">{{overflowAccessibleName}}</div>
 			</div>	
 {{/inline}}
