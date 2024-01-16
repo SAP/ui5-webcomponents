@@ -145,7 +145,12 @@ interface ITab extends UI5Element {
 	_style?: Record<string, any>;
 }
 
-interface IInputSuggestionItem extends UI5Element{
+/**
+ * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
+ *
+ * @public
+ */
+interface IInputSuggestionItem extends UI5Element {
 	text: string;
 	groupItem: boolean;
 	description?: string;
