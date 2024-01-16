@@ -14,8 +14,12 @@ const convertImports = async (srcPath) => {
 		return;
 	}
 
-	if (srcPath.includes("LanguageTag")) {
+	const arr = ["Configuration", "Formatting", "Event", "Eventing", "LanguageTag", "Theming"];
+
+	console.log("File processing started", srcPath)
+	if (arr.some(a => srcPath.includes(a))) {
 		// esprima can't parse es2023. TODO: switch to acorn or similar tool.
+		console.log("Files skipped from processing", srcPath)
 		return;
 	}
 
