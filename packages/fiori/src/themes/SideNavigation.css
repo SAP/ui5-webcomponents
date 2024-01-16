@@ -244,8 +244,8 @@
 	display: none;
 }
 
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):hover,
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):focus {
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover,
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus {
 	width: var(--_ui5_side_navigation_item_collapsed_hover_focus_width);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 }
@@ -255,18 +255,18 @@
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):hover:not(.ui5-sn-item-with-expander),
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):focus:not(.ui5-sn-item-with-expander) {
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover:not(.ui5-sn-item-with-expander),
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus:not(.ui5-sn-item-with-expander) {
 	padding-right: var(--_ui5_side_navigation_item_collapsed_hover_focus_padding_right);
 }
 
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):hover .ui5-sn-item-text,
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):focus .ui5-sn-item-text {
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-text,
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-text {
 	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
 }
 
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):hover .ui5-sn-item-toggle-icon,
-.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):focus .ui5-sn-item-toggle-icon {
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
 	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
 }
 
