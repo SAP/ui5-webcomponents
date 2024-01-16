@@ -250,7 +250,7 @@ describe("Component Behavior", () => {
 			
 	
 			// Act: apply new height
-			await browser.setWindowSize(500, 300);
+			await browser.setWindowSize(500, 350);
 	
 			// Check
 			const overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
