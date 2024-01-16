@@ -150,7 +150,7 @@ interface ITab extends UI5Element {
  *
  * @public
  */
-interface IInputSuggestionItem {
+interface IInputSuggestionItem extends UI5Element {
 	text: string;
 	groupItem: boolean;
 	description?: string;
