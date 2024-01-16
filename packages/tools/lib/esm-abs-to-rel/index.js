@@ -8,10 +8,17 @@ const basePath = process.argv[2];
 const convertImports = async (srcPath) => {
 	let changed = false;
 	let code = (await fs.readFile(srcPath)).toString();
+
 	if (code.includes("import(")) {
 		// esprima can't parse this, but it's from the project files
 		return;
 	}
+
+	if (srcPath.includes("LanguageTag")) {
+		// esprima can't parse es2023. TODO: switch to acorn or similar tool.
+		return;
+	}
+
 	const tree = esprima.parseModule(code);
 	const importer = srcPath.replace(basePath, "");
 	const importerDir = path.dirname(importer);

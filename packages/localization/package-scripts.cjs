@@ -13,7 +13,7 @@ const scripts = {
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
 		"replace-export-true": `replace-in-file ", /* bExport= */ true" "" dist/**/*.js`,
 		"replace-export-false": `replace-in-file ", /* bExport= */ false" "" dist/**/*.js`,
-		"amd-to-es6": "amdtoes6 --src=dist --replace --glob=**/*.js",
+		"amd-to-es6": "amdtoes6 --dir=dist --out=dist",
 		"replace-global-core-usage": `node "${replaceGlobalCore}" dist/`,
 		"esm-abs-to-rel": `node "${esmAbsToRel}" dist/`,
 		typescript: "tsc --build",
