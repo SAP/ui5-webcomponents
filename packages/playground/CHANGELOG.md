@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
+
+
+### Features
+
+* **ui5-badge:** add different design types ([#7564](https://github.com/SAP/ui5-webcomponents/issues/7564)) ([e5895f7](https://github.com/SAP/ui5-webcomponents/commit/e5895f7d5076406769b516967137ba58f3567935))
+
+
+
+
+
+# [1.21.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.5...v1.21.0) (2024-01-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 # [1.21.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0-rc.4...v1.21.0-rc.5) (2024-01-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

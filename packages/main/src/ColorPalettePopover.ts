@@ -24,6 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
+import { IColorPaletteItem } from "./Interfaces.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -49,10 +50,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  * <code>import @ui5/webcomponents/dist/ColorPalettePopover.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ColorPalettePopover
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-color-palette-popover
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.16
  */
@@ -72,12 +70,14 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 /**
  * Fired when the user selects a color.
  *
- * @event sap.ui.webc.main.ColorPalettePopover#item-click
  * @public
  * @param {string} color the selected color
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		color: {
 			type: String,
 		},
@@ -85,7 +85,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 })
 /**
  * Fired when the <code>ui5-color-palette-popover</code> is closed due to user interaction.
- * @event sap.ui.webc.main.ColorPalettePopover#close
  * @since 1.21.0
  * @public
  */
@@ -93,9 +92,8 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.showRecentColors
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -104,9 +102,8 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can choose a custom color from a component.
 	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.showMoreColors
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -114,9 +111,8 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.showDefaultColor
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -125,8 +121,8 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines the default color of the component.
 	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-	 * @type {sap.ui.webc.base.types.CSSColor}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.defaultColor
+	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ validator: CSSColor })
@@ -135,9 +131,7 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines the open | closed state of the popover.
 	 * @public
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.open
-	 * @defaultvalue false
+	 * @default false
 	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
@@ -146,9 +140,7 @@ class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at.
 	 * @public
-	 * @type {sap.ui.webc.base.types.DOMReference}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.opener
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @since 1.21.0
 	 */
 	@property({ validator: DOMReference })
@@ -156,13 +148,11 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 * @type {sap.ui.webc.main.IColorPaletteItem[]}
-	 * @name sap.ui.webc.main.ColorPalettePopover.prototype.default
-	 * @slot colors
+	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
-	colors!: Array<ColorPaletteItem>;
+	colors!: Array<IColorPaletteItem>;
 
 	static i18nBundle: I18nBundle;
 
@@ -184,14 +174,13 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 * @param {HTMLElement} opener the element that the popover is shown at
+	 *
+	 * @param opener the element that the popover is shown at
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.ColorPalettePopover#showAt
 	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 * @since 1.1.1
 	 */
-	showAt(opener: HTMLElement) {
+	showAt(opener: HTMLElement): void {
 		console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
 		this.open = true;
 		this.opener = opener;
@@ -199,15 +188,13 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
-	 * @param {HTMLElement} opener the element that the popover is shown at
+	 *
+	 * @param opener the element that the popover is shown at
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.ColorPalettePopover#openPopover
 	 * @since 1.0.0-rc.16
 	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
 	 */
-	openPopover(opener: HTMLElement) {
+	openPopover(opener: HTMLElement): void {
 		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
 		this.showAt(opener);
 	}
@@ -231,7 +218,6 @@ class ColorPalettePopover extends UI5Element {
 	 *
 	 * @protected
 	 * @since 1.0.0-rc.16
-	 * @returns {boolean}
 	 */
 	isOpen() {
 		return this.open;

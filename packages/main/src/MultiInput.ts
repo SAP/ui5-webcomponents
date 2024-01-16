@@ -20,6 +20,7 @@ import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
+import type { IToken } from "./Interfaces.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
@@ -29,7 +30,7 @@ import type {
 } from "./Input.js";
 
 type MultiInputTokenDeleteEventDetail = {
-	token: Token;
+	token: IToken;
 }
 
 /**
@@ -49,11 +50,7 @@ type MultiInputTokenDeleteEventDetail = {
  * <code>import "@ui5/webcomponents/dist/MultiInput";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MultiInput
- * @extends sap.ui.webc.main.Input
- * @tagname ui5-multi-input
- * @appenddocs sap.ui.webc.main.Token
+ * @extends Input
  * @since 1.0.0-rc.9
  * @public
  */
@@ -73,7 +70,6 @@ type MultiInputTokenDeleteEventDetail = {
  * Fired when the value help icon is pressed
  * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
  *
- * @event sap.ui.webc.main.MultiInput#value-help-trigger
  * @public
  */
 @event("value-help-trigger")
@@ -81,12 +77,14 @@ type MultiInputTokenDeleteEventDetail = {
 /**
  * Fired when a token is about to be deleted.
  *
- * @event sap.ui.webc.main.MultiInput#token-delete
  * @param {HTMLElement} token deleted token.
  * @public
  */
 @event("token-delete", {
 	detail: {
+		/**
+		 * @public
+		 */
 		token: { type: HTMLElement },
 	},
 })
@@ -96,9 +94,7 @@ class MultiInput extends Input {
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire <code>value-help-trigger</code> event.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiInput.prototype.showValueHelpIcon
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -106,7 +102,8 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -114,7 +111,8 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer has tokens
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -123,13 +121,10 @@ class MultiInput extends Input {
 	/**
 	 * Defines the component tokens.
 	 *
-	 * @type {sap.ui.webc.main.IToken[]}
-	 * @name sap.ui.webc.main.MultiInput.prototype.tokens
-	 * @slot tokens
 	 * @public
 	 */
 	@slot()
-	tokens!: Array<Token>;
+	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;

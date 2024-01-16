@@ -9,6 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { ICardHeader } from "./Interfaces.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {
@@ -31,30 +32,19 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * <h3>Keyboard handling</h3>
  * In case you enable <code>interactive</code> property, you can press the <code>ui5-card-header</code> by Space and Enter keys.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-card-header</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>root - Used to style the root DOM element of the CardHeader</li>
- * <li>title - Used to style the title of the CardHeader</li>
- * <li>subtitle - Used to style the subtitle of the CardHeader</li>
- * <li>status - Used to style the status of the CardHeader</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/CardHeader";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CardHeader
- * @implements sap.ui.webc.main.ICardHeader
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-card-header
+ * @implements {ICardHeader}
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
+ * @csspart root - Used to style the root DOM element of the CardHeader
+ * @csspart title - Used to style the title of the CardHeader
+ * @csspart subtitle - Used to style the subtitle of the CardHeader
+ * @csspart status - Used to style the status of the CardHeader
  */
 @customElement({
 	tag: "ui5-card-header",
@@ -67,16 +57,13 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
  * <br><br>
  * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
- * @event sap.ui.webc.main.CardHeader#click
  * @public
  */
 @event("click")
-class CardHeader extends UI5Element {
+class CardHeader extends UI5Element implements ICardHeader {
 	/**
 	 * Defines the title text.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.CardHeader.prototype.titleText
+	 * @default ""
 	 * @public
 	*/
 	@property()
@@ -84,9 +71,7 @@ class CardHeader extends UI5Element {
 
 	/**
 	 * Defines the subtitle text.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.CardHeader.prototype.subtitleText
+	 * @default ""
 	 * @public
 	*/
 	@property()
@@ -94,9 +79,7 @@ class CardHeader extends UI5Element {
 
 	/**
 	 * Defines the status text.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.CardHeader.prototype.status
+	 * @default ""
 	 * @public
 	*/
 	@property()
@@ -105,9 +88,7 @@ class CardHeader extends UI5Element {
 	/**
 	 * Defines if the component would be interactive,
 	 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.CardHeader.prototype.interactive
+	 * @default false
 	 * @public
 	*/
 	@property({ type: Boolean })
@@ -117,8 +98,7 @@ class CardHeader extends UI5Element {
 	 * Define the <code>aria-level</code> attribute of the component
 	 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
 	 * @private
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultValue 3
+	 * @default 3
 	*/
 	@property({ validator: Integer, defaultValue: 3 })
 	_ariaLevel!: number;
@@ -128,9 +108,6 @@ class CardHeader extends UI5Element {
 
 	/**
 	 * Defines an avatar image, displayed in the left most part of the header.
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @name sap.ui.webc.main.CardHeader.prototype.avatar
 	 * @public
 	*/
 	@slot()
@@ -138,9 +115,6 @@ class CardHeader extends UI5Element {
 
 	/**
 	 * Defines an action, displayed in the right most part of the header.
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @name sap.ui.webc.main.CardHeader.prototype.action
 	 * @public
 	*/
 	@slot()
@@ -264,3 +238,6 @@ class CardHeader extends UI5Element {
 CardHeader.define();
 
 export default CardHeader;
+export type {
+	ICardHeader,
+};

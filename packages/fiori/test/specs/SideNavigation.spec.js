@@ -239,5 +239,28 @@ describe("Component Behavior", () => {
 			// clean up
 			await sideNavigation.setProperty("collapsed", false);
 		});
+
+		it("Test overflow behavior when collapsed", async () => {
+
+			await browser.url(`test/pages/SideNavigation.html`);
+			const sideNavigation = await browser.$("#sn1"),
+				sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
+
+			await sideNavigation.setProperty("collapsed", true);
+			
+	
+			// Act: apply new height
+			await browser.setWindowSize(500, 350);
+	
+			// Check
+			const overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
+			assert.ok(await overflowItem.isDisplayed(), "Overflow button should be available");
+
+			// Act: apply new height
+			await browser.setWindowSize(500, 1000);
+
+			assert.notOk(await overflowItem.isDisplayed(), "Overflow button should not be available");
+
+		});
 	});
 });

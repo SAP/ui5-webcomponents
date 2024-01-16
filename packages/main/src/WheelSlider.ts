@@ -38,11 +38,8 @@ type WheelSliderSelectEventDetail = { value: string };
  * <code>import "@ui5/webcomponents/dist/WheelSlider.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.WheelSlider
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-wheelslider
- * @public
+ * @extends UI5Element
+ * @private
  * @since 1.0.0-rc.6
  */
 @customElement({
@@ -54,10 +51,14 @@ type WheelSliderSelectEventDetail = { value: string };
 })
 /**
  * Fires when new value is selected.
- * @event sap.ui.webc.main.WheelSlider#select
+ * @public
+ * @param {string} value The selected value.
  */
 @event("select", {
 	detail: {
+		/**
+		 * @public
+		 */
 		value: {
 			type: String,
 		},
@@ -66,13 +67,13 @@ type WheelSliderSelectEventDetail = { value: string };
 
 /**
  * Fires when the wheel slider is expanded.
- * @event sap.ui.webc.main.WheelSlider#expand
+ * @public
  */
 @event("expand")
 
 /**
  * Fires when the wheel slider is collapsed.
- * @event sap.ui.webc.main.WheelSlider#collapse
+ * @public
  */
 @event("collapse")
 class WheelSlider extends UI5Element {
@@ -82,9 +83,7 @@ class WheelSlider extends UI5Element {
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.WheelSlider.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -92,9 +91,7 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Defines the currently selected value
-	 * @type {string}
-	 * @name sap.ui.webc.main.WheelSlider.prototype.value
-	 * @defaultvalue ""
+	 * @default "0"
 	 * @public
 	 */
 	@property({ defaultValue: "0" })
@@ -102,9 +99,7 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Defines the label of the wheelslider.
-	 * @type {string}
-	 * @name sap.ui.webc.main.WheelSlider.prototype.label
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property({ defaultValue: "" })
@@ -112,9 +107,7 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Indicates if the wheelslider is expanded.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.WheelSlider.prototype.expanded
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -122,9 +115,7 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * Indicates if the wheelslider has a cyclic behaviour.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.WheelSlider.prototype.cyclic
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -331,11 +322,10 @@ class WheelSlider extends UI5Element {
 	}
 
 	/**
-	 *
-	 * @param {event} e Wheel Event
-	 * @private
-	 *
 	 * The listener for this event can't be passive as it calls preventDefault()
+	 *
+	 * @param e Wheel Event
+	 * @private
 	 */
 	_handleWheel(e: WheelEvent) {
 		if (!e) {
