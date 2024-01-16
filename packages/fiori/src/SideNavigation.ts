@@ -357,7 +357,7 @@ class SideNavigation extends UI5Element {
 		if (!this._overflowDom) {
 			return this.getEnabledItems(this.items);
 		}
-		this._overflowDom._tabIndex = "0";
+
 		return [...this.getEnabledItems(this.items), this._overflowDom];
 	}
 
