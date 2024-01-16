@@ -29,7 +29,6 @@ const options = {
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/Illustrations.ts",
 				location: '../../illustrations',
-				prefix: "",
 				filterOut
 			}
 		},
@@ -43,7 +42,6 @@ const options = {
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/IllustrationsTNT.ts",
 				location: '../../illustrations/tnt',
-				prefix: "Tnt",
 				filterOut
 			}
 		},
@@ -57,7 +55,6 @@ const options = {
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/IllustrationsV5TNT.ts",
 				location: '../../illustrations-v5/tnt',
-				prefix: "Tnt",
 				filterOut
 			}
 		},
@@ -71,7 +68,6 @@ const options = {
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/IllustrationsV5TNTHC.ts",
 				location: '../../illustrations-v5/tnt/hc',
-				prefix: "Tnt",
 				filterOut
 			}
 		},
