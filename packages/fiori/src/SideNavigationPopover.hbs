@@ -1,7 +1,9 @@
 {{#if isOverflow}}
 <ui5-navigation-menu 
 	id="{{_id}}-side-navigation-overflow-menu"
-	@ui5-after-close={{_afterMenuClose}}
+	@ui5-after-close={{_onAfterMenuClose}}
+	@ui5-before-open="{{_onBeforeMenuOpen}}"
+	@ui5-before-close="{{_onBeforeMenuClose}}"
 	@ui5-item-click="{{handleOverflowItemClick}}"
 	class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu">
 	{{#each _menuPopoverItems}}
@@ -34,7 +36,9 @@
 	vertical-align="Top"
 	class="ui5-side-navigation-popover"
 	accessible-name-ref="{{_id}}-sideNavigationPopoverText"
-	@ui5-after-open="{{_onAfterOpen}}"
+	@ui5-after-open="{{_onAfterPopoverOpen}}"
+	@ui5-before-open="{{_onBeforePopoverOpen}}"
+	@ui5-before-close="{{_onBeforePopoverClose}}"
 >
 	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 		<ui5-side-navigation

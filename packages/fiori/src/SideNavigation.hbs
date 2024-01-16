@@ -95,6 +95,11 @@
 		>
 			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
 			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
 		</div>
 	{{/if}}
 {{/inline}}

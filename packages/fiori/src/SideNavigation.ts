@@ -222,7 +222,7 @@ class SideNavigation extends UI5Element {
 
 	_handleResizeBound: () => void;
 
-	async _onAfterOpen() {
+	async _onAfterPopoverOpen() {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
@@ -233,6 +233,33 @@ class SideNavigation extends UI5Element {
 		} else {
 			tree.items[0]?.focus();
 		}
+	}
+
+	async _onAfterMenuClose() {
+		const selectedItem = this._findSelectedItem(this.items)!;
+
+		await renderFinished();
+		selectedItem.getDomRef().focus();
+	}
+
+	async _onBeforePopoverOpen() {
+		const popover = await this.getPicker();
+		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
+	}
+
+	async _onBeforePopoverClose() {
+		const popover = await this.getPicker();
+		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
+	}
+
+	async _onBeforeMenuOpen() {
+		const popover = await this.getOverflowPopover();
+		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
+	}
+
+	async _onBeforeMenuClose() {
+		const popover = await this.getOverflowPopover();
+		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -296,14 +323,19 @@ class SideNavigation extends UI5Element {
 	}
 
 	async openPicker(opener: HTMLElement) {
+		opener.classList.add("ui5-sn-item-active");
+
 		const responsivePopover = await this.getPicker();
+		responsivePopover.opener = opener;
 		responsivePopover.showAt(opener);
 	}
 
 	async openOverflowMenu(opener: HTMLElement) {
+		opener.classList.add("ui5-sn-item-active");
+
 		const menu = await this.getOverflowPopover();
-		menu.showAt(opener);
 		menu.opener = opener;
+		menu.showAt(opener);
 	}
 
 	async closePicker() {
@@ -569,13 +601,6 @@ class SideNavigation extends UI5Element {
 			}
 		});
 		return result;
-	}
-
-	async _afterMenuClose() {
-		const selectedItem = this._findSelectedItem(this.items)!;
-
-		await renderFinished();
-		selectedItem.getDomRef().focus();
 	}
 
 	_selectItem(item: SideNavigationItemBase) {
