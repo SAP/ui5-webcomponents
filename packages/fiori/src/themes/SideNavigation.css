@@ -250,6 +250,11 @@
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 }
 
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item.ui5-sn-item-selected:hover,
+.ui5-sn-collapsed .ui5-sn-list .ui5-sn-item.ui5-sn-item-selected:focus {
+	background: var(--sapList_SelectionBackgroundColor);
+}
+
 .ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):hover:not(.ui5-sn-item-with-expander),
 .ui5-sn-collapsed .ui5-sn-list .ui5-sn-item:not(.ui5-sn-item-active):focus:not(.ui5-sn-item-with-expander) {
 	padding-right: var(--_ui5_side_navigation_item_collapsed_hover_focus_padding_right);
