@@ -22,6 +22,8 @@
 	--_ui5_shellbar_search_field_height: 2.25rem;
 	--_ui5_shellbar_search_field_background: var(--sapShell_InteractiveBackground);
 	--_ui5_shellbar_search_field_border: none;
+	--_ui5_shellbar_search_field_border_bottom: 0.0625rem solid var(--sapField_BorderColor);
+	--_ui5_shellbar_search_field_border_bottom_hover: 0.0625rem solid var(--sapField_Hover_BorderColor);
 	--_ui5_shellbar_search_field_color: var(--sapShell_InteractiveTextColor);
 	--_ui5_shellbar_search_field_background_hover: var(--sapShell_Hover_Background);
 	--_ui5_shellbar_search_field_box_shadow: var(--sapField_Shadow);
@@ -35,5 +37,4 @@
 	--_ui5_shellbar_input_border_radius: 1.125rem;
 	--_ui5_shellbar_input_focus_border_radius: 1.125rem;
 	--_ui5_shellbar_input_background_color: var(--sapShell_InteractiveBackground);
-	--_ui5_shellbar_input_bottom_border_color: var(--sapField_BorderColor);
 }
