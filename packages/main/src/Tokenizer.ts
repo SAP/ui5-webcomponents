@@ -328,8 +328,6 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
-		// Standalone tokenizer should be able to delete tokens by itself
-		token.remove();
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -375,9 +373,6 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
-
-		// Standalone tokenizer should be able to delete tokens by itself
-		token.remove();
 	}
 
 	async itemDelete(e: CustomEvent) {
@@ -397,8 +392,6 @@ class Tokenizer extends UI5Element {
 		} else {
 			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 		}
-
-		token.remove();
 	}
 
 	handleBeforeClose() {
