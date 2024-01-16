@@ -17,12 +17,12 @@ type IllustrationData = IllustrationProperties & {
 	collection: string,
 };
 
-enum IllustrationCollections {
-	"sap_horizon" = "V5",
-	"sap_horizon_dark" = "V5",
-	"sap_horizon_hcb" = "V5/HC",
-	"sap_horizon_hcw" = "V5/HC",
-}
+const IllustrationCollections = new Map([
+	["sap_horizon", "V5"],
+	["sap_horizon_dark", "V5"],
+	["sap_horizon_hcb", "V5/HC"],
+	["sap_horizon_hcw", "V5/HC"],
+]);
 
 const FALLBACK_COLLECTION = "V4";
 
@@ -31,10 +31,10 @@ const registry = getSharedResource<Map<string, IllustrationProperties>>("SVGIllu
 const illustrationPromises = getSharedResource<Map<string, Promise<IllustrationData>>>("SVGIllustration.promises", new Map());
 
 const getCollection = () => {
-	const theme = getTheme() as keyof typeof IllustrationCollections;
+	const theme = getTheme();
 
-	if (IllustrationCollections[theme]) {
-		return IllustrationCollections[theme];
+	if (IllustrationCollections.has(theme)) {
+		return IllustrationCollections.get(theme);
 	}
 
 	return FALLBACK_COLLECTION;
@@ -50,26 +50,16 @@ const getCollection = () => {
  */
 const processName = (name: string) => {
 	let collection = getCollection();
-	const isTnt = name.startsWith("Tnt");
-	const set = isTnt ? "tnt" : "fiori";
+	const [set, illustrationName] = name.split("/");
+	let registryKey = `${set}/${collection}/${illustrationName}`;
 
-	let registryKey = `${set}/${collection}/${name}`;
-	let loaderKey = `${collection}/${name}`;
-
-	if (!loaders.has(loaderKey) && collection !== FALLBACK_COLLECTION) {
+	if (!loaders.has(registryKey) && collection !== FALLBACK_COLLECTION) {
 		collection = FALLBACK_COLLECTION;
-		loaderKey = `${collection}/${name}`;
-		registryKey = `${set}/${collection}/${name}`;
-	}
-
-	if (isTnt) {
-		name = name.replace(/^Tnt/, "");
-		registryKey = `${set}/${collection}/${name}`;
+		registryKey = `${set}/${collection}/${illustrationName}`;
 	}
 
 	return {
 		registryKey,
-		loaderKey,
 		collection,
 	};
 };
@@ -90,18 +80,17 @@ const registerIllustrationLoader = (illustrationName: string, loader: Illustrati
 };
 
 const _loadIllustrationOnce = (illustrationName: string) => {
-	const { loaderKey } = processName(illustrationName);
-
-	if (!illustrationPromises.has(loaderKey)) {
-		if (!loaders.has(loaderKey)) {
-			const illustrationPath = illustrationName.startsWith("Tnt") ? `tnt/${illustrationName.replace(/^Tnt/, "")}` : illustrationName;
+	const { registryKey } = processName(illustrationName);
+	if (!illustrationPromises.has(registryKey)) {
+		if (!loaders.has(registryKey)) {
+			const illustrationPath = illustrationName.startsWith("fiori/") ? illustrationName.replace("fiori/", "") : illustrationName;
 			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" module. Or you can import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module that will make all illustrations available, but fetch only the ones used.`);
 		}
 
-		const loadIllustrations = loaders.get(loaderKey)!;
-		illustrationPromises.set(loaderKey, loadIllustrations(loaderKey));
+		const loadIllustrations = loaders.get(registryKey)!;
+		illustrationPromises.set(registryKey, loadIllustrations(registryKey));
 	}
-	return illustrationPromises.get(loaderKey);
+	return illustrationPromises.get(registryKey);
 };
 
 const getIllustrationDataSync = (illustrationName: string) => {

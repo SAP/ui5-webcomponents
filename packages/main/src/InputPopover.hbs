@@ -35,13 +35,13 @@
 					></ui5-input>
 				</div>
 			</div>
-			{{#if hasValueStateMessage}}
-				<div class="{{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
-					{{> valueStateMessage}}
-				</div>
-			{{/if}}
 		</div>
+		{{#if hasValueStateMessage}}
+			<div class="{{classes.popoverValueState}}" style="{{styles.suggestionPopoverHeader}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
+					{{> valueStateMessage}}
+			</div>
+		{{/if}}
 	{{/if}}
 
 	{{#unless _isPhone}}

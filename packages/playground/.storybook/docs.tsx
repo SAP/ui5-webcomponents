@@ -1,4 +1,6 @@
 import React from 'react';
+// @ts-ignore 
+import { Footer } from "@sb/components/footer/Footer.tsx";
 import {
     Title,
     Subtitle,
@@ -10,6 +12,7 @@ import {
 } from '@storybook/addon-docs';
 
 interface DocsPageArgs {
+    showDefaultStoryOnly?: boolean;
     component: string;
     package: string;
     since?: string;
@@ -29,13 +32,14 @@ export const DocsPage = (args: DocsPageArgs) => {
                 )}
             </header>
             <div className='sb-ui5-component-package'><b>{args.package}</b></div>
-            <div className='sb-ui5-control-tag'>&lt;{args.component}&gt;</div>
+            <h2 className='sb-ui5-control-tag'>&lt;{args.component}&gt;</h2>
             <Subtitle />
             <Description />
             <br />
             <Primary />
             <ArgsTable story={PRIMARY_STORY} />
-            <Stories />
+            { !args.showDefaultStoryOnly && <Stories />}
+			<Footer />
         </>
     )
 }

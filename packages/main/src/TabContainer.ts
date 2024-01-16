@@ -46,6 +46,7 @@ import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
 import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import type { IButton, ITab } from "./Interfaces.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -59,36 +60,8 @@ const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
-interface ITab extends UI5Element {
-	isSeparator: boolean;
-	getTabInStripDomRef: () => ITab | null;
-	stableDomRef: string;
-	additionalText?: string;
-	design?: `${SemanticColor}`;
-	disabled?: boolean;
-	icon?: string;
-	isSingleClickArea?: boolean;
-	requiresExpandButton?: boolean;
-	selected?: boolean;
-	subTabs?: Array<ITab>;
-	tabs?: Array<ITab>
-	text?: string;
-	_tabIndex?: string;
-	_hasOwnContent?: boolean;
-	_level?: number;
-	_selected?: boolean;
-	_getElementInStrip?: () => ITab | null;
-	_isInline?: boolean;
-	_mixedMode?: boolean;
-	_posinset?: number;
-	_setsize?: number;
-	_realTab?: Tab;
-	_isTopLevelTab?: boolean;
-	_style?: Record<string, any>;
-}
-
 type TabContainerTabSelectEventDetail = {
-	tab: Tab;
+	tab: ITab;
 	tabIndex: number;
 }
 
@@ -122,15 +95,6 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * to indicate the level of each nested tab. When a tab has both sub tabs and own content its click area is split
  * to allow the user to display the content or alternatively to expand / collapse the list of sub tabs.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-tabcontainer</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>content - Used to style the content of the component</li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  *
  * <h4>Fast Navigation</h4>
@@ -148,12 +112,10 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TabContainer
- * @extends sap.ui.webc.base.UI5Element
- * @appenddocs sap.ui.webc.main.Tab sap.ui.webc.main.TabSeparator
- * @tagname ui5-tabcontainer
+ * @extends UI5Element
  * @public
+ * @csspart content - Used to style the content of the component
+ * @csspart tabstrip - Used to style the tabstrip of the component
  */
 @customElement({
 	tag: "ui5-tabcontainer",
@@ -174,15 +136,20 @@ interface TabContainerTabInOverflow extends CustomListItem {
 /**
  * Fired when a tab is selected.
  *
- * @event sap.ui.webc.main.TabContainer#tab-select
- * @param {HTMLElement} tab The selected <code>tab</code>.
+ * @param {ITab} tab The selected <code>tab</code>.
  * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
  * @public
  * @allowPreventDefault
  */
 @event("tab-select", {
 	detail: {
+		/**
+		 * @public
+		 */
 		tab: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		tabIndex: { type: Number },
 	},
 })
@@ -191,9 +158,7 @@ class TabContainer extends UI5Element {
 	 * Defines whether the tabs are in a fixed state that is not
 	 * expandable/collapsible by user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TabContainer.prototype.fixed
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -202,9 +167,7 @@ class TabContainer extends UI5Element {
 	/**
 	 * Defines whether the tab content is collapsed.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TabContainer.prototype.collapsed
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -216,9 +179,7 @@ class TabContainer extends UI5Element {
 	 * The overflow select list represents a list, where all tabs are displayed
 	 * so that it's easier for the user to select a specific tab.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TabContainer.prototype.showOverflow
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
 	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the <code>overflowButton</code> and / or <code>startOverflowButton</code> slots.
@@ -234,9 +195,7 @@ class TabContainer extends UI5Element {
 	 * The content and the <code>additionalText</code> would be displayed vertically by default,
 	 * but when set to <code>Inline</code>, they would be displayed horizontally.
 	 *
-	 * @type {sap.ui.webc.main.types.TabLayout}
-	 * @name sap.ui.webc.main.TabContainer.prototype.tabLayout
-	 * @defaultvalue "Standard"
+	 * @default "Standard"
 	 * @public
 	 */
 	@property({ type: TabLayout, defaultValue: TabLayout.Standard })
@@ -251,9 +210,7 @@ class TabContainer extends UI5Element {
 	 * Only one overflow at the end would be displayed by default,
 	 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
 	 *
-	 * @type {sap.ui.webc.main.types.TabsOverflowMode}
-	 * @name sap.ui.webc.main.TabContainer.prototype.tabsOverflowMode
-	 * @defaultvalue "End"
+	 * @default "End"
 	 * @since 1.1.0
 	 * @public
 	 */
@@ -263,9 +220,7 @@ class TabContainer extends UI5Element {
 	/**
 	 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 	 *
-	 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
-	 * @name sap.ui.webc.main.TabContainer.prototype.headerBackgroundDesign
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @since 1.10.0
 	 * @public
 	 */
@@ -275,9 +230,7 @@ class TabContainer extends UI5Element {
 	/**
 	 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 	 *
-	 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
-	 * @name sap.ui.webc.main.TabContainer.prototype.contentBackgroundDesign
-	 * @defaultvalue "Solid"
+	 * @default "Solid"
 	 * @since 1.10.0
 	 * @public
 	 */
@@ -291,9 +244,7 @@ class TabContainer extends UI5Element {
 	 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
 	 * bottom of the page and you want the tab strip to act as a menu.
 	 *
-	 * @type {sap.ui.webc.main.types.TabContainerTabsPlacement}
-	 * @name sap.ui.webc.main.TabContainer.prototype.tabsPlacement
-	 * @defaultvalue "Top"
+	 * @default "Top"
 	 * @since 1.0.0-rc.7
 	 * @private
 	 */
@@ -326,10 +277,7 @@ class TabContainer extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.ITab[]}
 	 * @public
-	 * @slot items
-	 * @name sap.ui.webc.main.TabContainer.prototype.default
 	 */
 	@slot({
 		"default": true,
@@ -346,27 +294,21 @@ class TabContainer extends UI5Element {
 	 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
 	 * the default button will be used.
 	 *
-	 * @type {sap.ui.webc.main.IButton}
 	 * @public
-	 * @slot
 	 * @since 1.0.0-rc.9
-	 * @name sap.ui.webc.main.TabContainer.prototype.overflowButton
 	 */
 	@slot()
-	overflowButton!: Array<Button>;
+	overflowButton!: Array<IButton>;
 
 	/**
 	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
 	 * the default button will be used.
 	 *
-	 * @type {sap.ui.webc.main.IButton}
 	 * @public
-	 * @slot
 	 * @since 1.1.0
-	 * @name sap.ui.webc.main.TabContainer.prototype.startOverflowButton
 	 */
 	@slot()
-	startOverflowButton!: Array<Button>;
+	startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
 	_allItemsAndSubItems?: Array<ITab>;
@@ -642,11 +584,9 @@ class TabContainer extends UI5Element {
 	 * Calling <code>allItems</code> on this TabContainer will return the instances in the following order:
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
-	 * @readonly
-	 * @name sap.ui.webc.main.TabContainer.prototype.allItems
-	 * @returns {sap.ui.webc.main.ITab[]}
+	 * @default []
 	 */
-	get allItems() {
+	get allItems() : Array<ITab> {
 		return this._getAllSubItems(this.items);
 	}
 
@@ -730,9 +670,9 @@ class TabContainer extends UI5Element {
 	 * If the event is prevented, the current tab is not changed.
 	 * @private
 	 *
-	 * @param {sap.ui.webc.main.ITab} selectedTab selected tab instance
-	 * @param {number} selectedTabIndex selected tab index for an array containing all tabs and sub tabs. <b>Note:</b> Use the method <code>allTabs</code> to get this array.
-	 * @returns {boolean} true if the tab selection is successful, false if it was prevented
+	 * @param selectedTab selected tab instance
+	 * @param selectedTabIndex selected tab index for an array containing all tabs and sub tabs. <b>Note:</b> Use the method <code>allTabs</code> to get this array.
+	 * @returns true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {
 		if (!this.fireEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {

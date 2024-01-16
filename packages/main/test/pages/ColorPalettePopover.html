@@ -4,25 +4,17 @@
 	<meta charset="utf-8">
 	<title>Color Palette Popover</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-	<script data-ui5-config type="application/json">
-		{
-			"rtl": false
-		}
-	</script>
-
-
-	<script src="../../bundle.esm.js" type="module"></script>
-
-
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/ColorPalettePopover.css">
 </head>
 
 <body class="colorpalettepopover1auto">
 
 </body>
-	<ui5-button id="colorPaletteBtn" >Open ColorPalettePopover</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopover" show-recent-colors show-more-colors show-default-color default-color="green">
+
+	<ui5-title level="H5">Test case 1 - Default Color Button to be focused</ui5-title>
+	<ui5-button id="colorPaletteBtnTest">Open</ui5-button>
+	<ui5-color-palette-popover id="colorPalettePopoverTest" show-recent-colors show-more-colors show-default-color default-color="green">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -37,8 +29,9 @@
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette-popover>
 
-	<ui5-button id="colorPaletteBtn1" >Open ColorPalettePopover</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopover1" show-more-colors show-default-color default-color="green">
+	<ui5-title level="H5">Test case 2 - Default Color works</ui5-title>
+	<ui5-button id="colorPaletteBtnTest2">Open</ui5-button>
+	<ui5-color-palette-popover id="colorPalettePopoverTest2" show-recent-colors show-more-colors show-default-color default-color="green">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -53,8 +46,9 @@
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette-popover>
 
-	<ui5-button id="colorPaletteBtn2" >Open ColorPalettePopover</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopover2" show-recent-colors show-default-color default-color="green">
+	<ui5-title level="H5">Test case 3 - Arrow Down to select displayed color</ui5-title>
+	<ui5-button id="colorPaletteBtnTest3">Open</ui5-button>
+	<ui5-color-palette-popover id="colorPalettePopoverTest3" show-recent-colors show-more-colors show-default-color default-color="green">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -69,8 +63,10 @@
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette-popover>
 
-	<ui5-button id="colorPaletteBtn3" >Open ColorPalettePopover</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopover3" show-recent-colors show-more-colors>
+
+	<ui5-title level="H5">Test case 4 - Arrow Up focuses MoreColors button</ui5-title>
+	<ui5-button id="colorPaletteBtnTest4">Open</ui5-button>
+	<ui5-color-palette-popover id="colorPalettePopoverTest4" show-recent-colors show-more-colors  show-default-color default-color="green">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -85,8 +81,9 @@
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette-popover>
 
-	<ui5-button id="colorPaletteBtn4" >Open ColorPalettePopover</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopover4">
+	<ui5-title level="H5">Test case 5 - Tests navigation with recent colors</ui5-title>
+	<ui5-button id="colorPaletteBtnTest5">Open</ui5-button>
+	<ui5-color-palette-popover id="colorPalettePopoverTest5" show-recent-colors show-more-colors  show-default-color default-color="green">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -101,8 +98,11 @@
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette-popover>
 
-	<ui5-button id="colorPaletteBtn5" >Open ColorPalettePopover</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopover5" show-recent-colors show-default-color default-color="green">
+	<ui5-title level="H5">Test case 6 - close</ui5-title>
+	<ui5-button id="colorPaletteBtnTest6">Open</ui5-button>
+	<ui5-input id="inpOpenChangeCounter" placeholder="'close' event count"></ui5-input>
+	<ui5-button id="btnFocusOut">Press</ui5-button>
+	<ui5-color-palette-popover id="colorPalettePopoverTest6" show-recent-colors show-more-colors  show-default-color default-color="green">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -116,24 +116,121 @@
 		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
 	</ui5-color-palette-popover>
+
+	<ui5-title level="H5">Only Colors</ui5-title>
+	<ui5-button id="btnColPop1">Open</ui5-button>
+	<ui5-color-palette-popover id="ColPop1" opener="btnColPop1">
+		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette-popover>
+
+	<ui5-title level="H5">show-default-color</ui5-title>
+	<ui5-button id="btnColPop2">Open</ui5-button>
+	<ui5-color-palette-popover id="ColPop2" show-default-color default-color="green" opener="btnColPop2">
+		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette-popover>
+
+	<ui5-title level="H5">show-more-colors and show-default-color</ui5-title>
+	<ui5-button id="btnColPop3">Open</ui5-button>
+	<ui5-color-palette-popover id="ColPop3" show-more-colors show-default-color default-color="green" opener="btnColPop3">
+		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette-popover>
+
+	<ui5-title level="H5">show-recent-colors, show-more-colors and show-default-color</ui5-title>
+	<ui5-button id="btnColPop4">Open</ui5-button>
+	<ui5-color-palette-popover id="ColPop4" show-recent-colors show-more-colors show-default-color default-color="green" openr="btnColPop4">
+		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+		<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>
+		<ui5-color-palette-item value="green"></ui5-color-palette-item>
+		<ui5-color-palette-item value="darkred"></ui5-color-palette-item>
+		<ui5-color-palette-item value="yellow"></ui5-color-palette-item>
+		<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+		<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+		<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+		<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>
+	</ui5-color-palette-popover>
+
 	<script>
-		colorPaletteBtn.addEventListener("click", function(event) {
-			colorPalettePopover.showAt(this);
+		// Usage of "open" and "opener"
+		btnColPop1.addEventListener("click", function(event) {
+			ColPop1.open = !ColPop1.open;
 		});
-		colorPaletteBtn1.addEventListener("click", function(event) {
-			colorPalettePopover1.showAt(this);
+
+		btnColPop2.addEventListener("click", function(event) {
+			ColPop2.open = !ColPop2.open;
 		});
-		colorPaletteBtn2.addEventListener("click", function(event) {
-			colorPalettePopover2.showAt(this);
+
+		btnColPop3.addEventListener("click", function(event) {
+			ColPop3.open = !ColPop3.open;
 		});
-		colorPaletteBtn3.addEventListener("click", function(event) {
-			colorPalettePopover3.showAt(this);
+
+		btnColPop4.addEventListener("click", function(event) {
+			ColPop4.open = !ColPop4.open;
 		});
-		colorPaletteBtn4.addEventListener("click", function(event) {
-			colorPalettePopover4.showAt(this);
+
+		// Tests - default color btn should be on focus after open
+		colorPaletteBtnTest.addEventListener("click", function(event) {
+			colorPalettePopoverTest.showAt(this);
 		});
-		colorPaletteBtn5.addEventListener("click", function(event) {
-			colorPalettePopover5.showAt(this);
+
+		colorPaletteBtnTest2.addEventListener("click", function(event) {
+			colorPalettePopoverTest2.showAt(this)
+		});
+
+		colorPaletteBtnTest3.addEventListener("click", function(event) {
+			colorPalettePopoverTest3.showAt(this);
+		});
+
+		colorPaletteBtnTest4.addEventListener("click", function(event) {
+			colorPalettePopoverTest4.showAt(this);
+		});
+
+		colorPaletteBtnTest5.addEventListener("click", function(event) {
+			colorPalettePopoverTest5.showAt(this);
+		});
+
+		colorPaletteBtnTest6.addEventListener("click", function(event) {
+			colorPalettePopoverTest6.showAt(this);
+		});
+
+		let openChangeCounter = 0;
+		colorPalettePopoverTest6.addEventListener("ui5-close", function(event) {
+			inpOpenChangeCounter.value = ++openChangeCounter;
 		});
 	</script>
 </html>

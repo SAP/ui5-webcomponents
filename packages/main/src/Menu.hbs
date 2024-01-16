@@ -75,6 +75,7 @@
 				@mouseout={{../_itemMouseOut}}
 				@keydown={{../_itemKeyDown}}
 			>
+				<div class="ui5-menu-item-text">
 				{{#if this.item.hasDummyIcon}}
 					<div
 						class="ui5-menu-item-dummy-icon"
@@ -83,18 +84,23 @@
 				{{/if}}
 				{{this.item.text}}
 				{{#if this.item.hasSubmenu}}
-					<ui5-icon
-						part="icon"
-						name="slim-arrow-right"
-						class="ui5-menu-item-icon-end"
+					<div
+						class="ui5-menu-item-submenu-icon"
 					>
-					</ui5-icon>
+						<ui5-icon
+							part="subicon"
+							name="slim-arrow-right"
+							class="ui5-menu-item-icon-end"
+						>
+						</ui5-icon>
+					</div>
 				{{else if this.item._siblingsWithChildren}}
 					<div
 						class="ui5-menu-item-no-icon-end"
 					>
 					</div>
 				{{/if}}
+				</div>
 			</ui5-li>
 		{{/each}}
 		</ui5-list>

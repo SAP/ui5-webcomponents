@@ -6,7 +6,6 @@ const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/i
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
-const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
@@ -15,8 +14,9 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint .`,
-	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
-	typescript: "tsc",
+	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates",
+	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript",
+	typescript: "tsc -b",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -30,7 +30,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `nps prepare lint build.bundle`,
+		default: `nps prepare`,
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
@@ -42,21 +42,17 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
-		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
-		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
-		preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
-		jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
-		cleanup: "rimraf jsdoc-dist/"
+		default: "nps generateAPI.generateCEM generateAPI.validateCEM",
+		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+		validateCEM: `node "${LIB}/cem/validate.js"`,
 	},
 	watch: {
-		default: 'concurrently "nps watch.src" "nps watch.styles" "nps watch.typescript"',
-		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.typescript"',
+		default: 'concurrently "nps watch.src" "nps watch.styles"',
+		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
-		typescript: 'tsc --watch',
 		bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
-	start: "nps prepare watch.withBundle",
 	test: {
 		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2"',
 		ssr: `mocha test/ssr`,

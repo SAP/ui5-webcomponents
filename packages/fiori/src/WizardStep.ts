@@ -23,14 +23,11 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * and should not be used standalone.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.WizardStep
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-wizard-step
  * @since 1.0.0-rc.10
- * @implements sap.ui.webc.fiori.IWizardStep
  * @public
+ * @slot {Node[]} default - Defines the step content.
  */
 
 @customElement("ui5-wizard-step")
@@ -41,9 +38,7 @@ class WizardStep extends UI5Element {
 	 *
 	 * <b>Note:</b> The text is displayed in the <code>ui5-wizard</code> navigation header.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.titleText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -56,9 +51,7 @@ class WizardStep extends UI5Element {
 	 *
 	 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.subtitleText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -74,9 +67,7 @@ class WizardStep extends UI5Element {
 	 *
 	 * The SAP-icons font provides numerous options.
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.icon
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -90,9 +81,7 @@ class WizardStep extends UI5Element {
 	 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
 	 * In this case the <code>selected</code> property would take precedence.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -105,9 +94,7 @@ class WizardStep extends UI5Element {
 	 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
 	 * In this case the <code>selected</code> property would take precedence.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -121,22 +108,11 @@ class WizardStep extends UI5Element {
 	 * <b>Note:</b> It is recommended to use <code>branching</code> on the last known step
 	 * and later add new steps when it becomes clear how the wizard flow should continue.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.branching
-
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	branching!: boolean
-
-	/**
-	 * Defines the step content.
-	 * @type {Node[]}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.default
-	 * @slot
-	 * @public
-	 */
 
 	stretch?: boolean;
 	stepContentAriaLabel?: string;

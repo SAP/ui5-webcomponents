@@ -46,14 +46,14 @@
 					/>
 				</div>
 			</div>
-
-			{{#if hasValueStateText}}
-				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-					{{> valueStateMessage}}
-				</div>
-			{{/if}}
 		</div>
+		
+		{{#if hasValueStateText}}
+			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+				{{> valueStateMessage}}
+			</div>
+		{{/if}}
 	{{/if}}
 
 	{{#unless _isPhone}}
@@ -66,6 +66,7 @@
 	{{/unless}}
 
 	<ui5-list
+		class="ui5-combobox-items-list"
 		separators="None"
 		@ui5-item-click={{_selectItem}}
 		@ui5-item-focused={{_onItemFocus}}

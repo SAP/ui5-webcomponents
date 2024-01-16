@@ -41,30 +41,20 @@ import switchCss from "./generated/themes/Switch.css.js";
  *
  * <h3>Keyboard Handling</h3>
  * The state can be changed by pressing the Space and Enter keys.
- *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-switch</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>slider - Used to style the track, where the handle is being slid</li>
- * <li>text-on - Used to style the <code>textOn</code> property text</li>
- * <li>text-off - Used to style the <code>textOff</code> property text</li>
- * <li>handle - Used to style the handle of the switch</li>
- * </ul>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Switch";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Switch
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-switch
+ * @extends UI5Element
  * @public
  * @since 0.8.0
+ * @csspart slider - Used to style the track, where the handle is being slid
+ * @csspart text-on - Used to style the <code>textOn</code> property text
+ * @csspart text-off - Used to style the <code>textOff</code> property text
+ * @csspart handle - Used to style the handle of the switch
  */
 @customElement({
 	tag: "ui5-switch",
@@ -78,7 +68,6 @@ import switchCss from "./generated/themes/Switch.css.js";
  * Fired when the component checked state changes.
  *
  * @public
- * @event sap.ui.webc.main.Switch#change
  */
 @event("change")
 class Switch extends UI5Element implements IFormElement {
@@ -89,9 +78,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.main.types.SwitchDesign}
-	 * @name sap.ui.webc.main.Switch.prototype.design
-	 * @defaultValue "Textual"
+	 * @default "Textual"
 	 */
 	@property({ type: SwitchDesign, defaultValue: SwitchDesign.Textual })
 	design!: `${SwitchDesign}`;
@@ -101,9 +88,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> The property can be changed with user interaction,
 	 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.prototype.checked
-	 * @defaultvalue false
+	 * @default false
 	 * @formEvents change
 	 * @formProperty
 	 * @public
@@ -116,9 +101,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -130,9 +113,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.textOn
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -143,9 +124,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.textOff
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -156,9 +135,7 @@ class Switch extends UI5Element implements IFormElement {
 	 *
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -170,9 +147,7 @@ class Switch extends UI5Element implements IFormElement {
 	 *
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -183,9 +158,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * Defines the tooltip of the component.
 	 * <br>
 	 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.tooltip
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 * @since 1.9.0
 	 */
@@ -195,9 +168,7 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.16.0
 	 */
@@ -216,9 +187,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.prototype.name
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.16.0
 	 */
@@ -228,8 +197,6 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit, when <code>Switch</code> is a part of HTML form.
 	 *
-	 * @type {HTMLElement[]}
-	 * @slot
 	 * @private
 	 * @since 1.16.0
 	 */

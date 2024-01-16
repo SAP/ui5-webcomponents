@@ -192,6 +192,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-logo {
 	cursor: pointer;
+	padding: .25rem;
 	max-height: 2rem;
 }
 

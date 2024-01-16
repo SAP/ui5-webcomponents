@@ -10,7 +10,7 @@
 	</script>
 
 
-	<script src="../../bundle.esm.js" type="module"></script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
 <link rel="stylesheet" type="text/css" href="./styles/Select.css">
@@ -21,7 +21,6 @@
 	<ui5-button id="add-items-btn">Add new Items</ui5-button>
 	<ui5-button id="restore-items-btn">Restore Items</ui5-button>
 	<ui5-button id="myBtn2">click</ui5-button>
-
 
 	<h2>Content size</h2>
 	<ui5-label id="lblResult"></ui5-label>
@@ -68,6 +67,14 @@
 
 	<h2>Disabled Select</h2>
 	<ui5-select id="mySelect4" disabled value-state="Success"></ui5-select>
+
+	<h2>Readonly Select</h2>
+	<ui5-select id="mySelectReadOnly" readonly>
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
 
 	<h2> Input with suggestions</h2>
 	<ui5-input id="myInput" show-suggestions placeholder="Search for a country ..."></ui5-input>

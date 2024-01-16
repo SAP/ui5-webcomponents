@@ -56,12 +56,11 @@ const unobserve = (element: HTMLElement, callback: ResizeObserverCallback) => {
   */
 class ResizeHandler {
 	/**
-	 * @static
 	 * @public
-	 * @param {*} element UI5 Web Component or DOM Element to be observed
-	 * @param {*} callback Callback to be executed
+	 * @param element UI5 Web Component or DOM Element to be observed
+	 * @param callback Callback to be executed
 	 */
-	static register(element: HTMLElement, callback: ResizeObserverCallback) {
+	static register(element: HTMLElement, callback: ResizeObserverCallback): void {
 		let effectiveElement: HTMLElement | undefined = element;
 
 		if (instanceOfUI5Element(effectiveElement)) {
@@ -76,12 +75,11 @@ class ResizeHandler {
 	}
 
 	/**
-	 * @static
 	 * @public
-	 * @param {*} element UI5 Web Component or DOM Element to be unobserved
-	 * @param {*} callback Callback to be removed
+	 * @param element UI5 Web Component or DOM Element to be unobserved
+	 * @param callback Callback to be removed
 	 */
-	static deregister(element: HTMLElement, callback: ResizeObserverCallback) {
+	static deregister(element: HTMLElement, callback: ResizeObserverCallback): void {
 		let effectiveElement: HTMLElement | undefined = element;
 
 		if (instanceOfUI5Element(effectiveElement)) {

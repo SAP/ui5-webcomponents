@@ -154,22 +154,29 @@ module.exports = (options) => {
 							options.removeDuplicatedProperties ||
 							options.removeDuplicatedValues
 						) {
-							removeDupProperties(
-								destination,
-								options.removeDuplicatedValues,
-							);
+							// removeDupProperties(
+							// 	destination,
+							// 	options.removeDuplicatedValues,
+							// );
 						}
 					} else {
 						if (
 							options.removeDuplicatedProperties ||
 							options.removeDuplicatedValues
 						) {
-							removeDupProperties(rule, options.removeDuplicatedValues);
+							// removeDupProperties(rule, options.removeDuplicatedValues);
 						}
 						// add new selector to symbol table
 						map.set(selector, rule);
 					}
 				},
+				OnceExit(root) {
+					root.nodes.forEach(node => {
+						if (node.type === "rule") {
+							removeDupProperties(node, options.removeDuplicatedValues);
+						}
+					})
+				}
 			};
 		},
 	};

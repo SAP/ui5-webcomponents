@@ -14,9 +14,8 @@ import type SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 const component = "ui5-segmented-button";
 
 export default {
-	title: "Main/SegmentedButton",
+	title: "Main/Segmented Button",
 	component: "SegmentedButton",
-	subcomponents: {'SegmentedButtonItem' : 'SegmentedButtonItem'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

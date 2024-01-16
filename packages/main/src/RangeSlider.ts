@@ -58,17 +58,6 @@ type AffectedValue = "startValue" | "endValue";
  * <h3>Responsive Behavior</h3>
  * You can move the currently selected range by clicking on it and dragging it along the interval.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-range-slider</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-range-slider</code>.</li>
- * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.</li>
- * <li>handle - Used to style the handles of the <code>ui5-range-slider</code>.</li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -91,12 +80,12 @@ type AffectedValue = "startValue" | "endValue";
  *
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.RangeSlider
- * @extends sap.ui.webc.main.SliderBase
- * @tagname ui5-range-slider
+ * @extends SliderBase
  * @since 1.0.0-rc.11
  * @public
+ * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the <code>ui5-range-slider</code>.
+ * @csspart progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.
+ * @csspart handle - Used to style the handles of the <code>ui5-range-slider</code>.
  */
 @customElement({
 	tag: "ui5-range-slider",
@@ -110,9 +99,7 @@ class RangeSlider extends SliderBase {
 	 * Defines start point of a selection - position of a first handle on the slider.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.RangeSlider.prototype.startValue
-	 * @defaultvalue 0
+	 * @default 0
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
@@ -124,9 +111,7 @@ class RangeSlider extends SliderBase {
 	 * Defines end point of a selection - position of a second handle on the slider.
 	 * <br><br>
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.RangeSlider.prototype.endValue
-	 * @defaultvalue 100
+	 * @default 100
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
@@ -609,7 +594,7 @@ class RangeSlider extends SliderBase {
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
 	 *
-	 * @param {string} affectedValue The value that will get modified by the interaction
+	 * @param affectedValue The value that will get modified by the interaction
 	 * @private
 	 */
 	_setAffectedValue(affectedValue: AffectedValue | undefined) {
@@ -624,7 +609,7 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Flag if press action is made on the currently selected range of values
 	 *
-	 * @param {boolean} isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
+	 * @param isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
 	 * @private
 	 */
 	_setIsPressInCurrentRange(isPressInCurrentRange: boolean) {
@@ -679,8 +664,8 @@ class RangeSlider extends SliderBase {
 	 * Uses the change of the position of the start handle and adds the initially
 	 * selected range to it, to determine the whole range offset.
 	 *
-	 * @param {Integer} currentPageXPos The current horizontal position of the cursor/touch
-	 * @param {Integer} initialStartHandlePageXPos The initial horizontal position of the start handle
+	 * @param currentPageXPos The current horizontal position of the cursor/touch
+	 * @param initialStartHandlePageXPos The initial horizontal position of the start handle
 	 *
 	 * @private
 	 */
@@ -710,8 +695,8 @@ class RangeSlider extends SliderBase {
 	 * Computes the new value based on the difference of the current cursor location from the
 	 * start of the interaction.
 	 *
-	 * @param {Integer} currentPageXPos The current horizontal position of the cursor/touch
-	 * @param {Integer} initialStartHandlePageXPos The initial horizontal position of the start handle
+	 * @param currentPageXPos The current horizontal position of the cursor/touch
+	 * @param initialStartHandlePageXPos The initial horizontal position of the start handle
 	 *
 	 * @private
 	 */
