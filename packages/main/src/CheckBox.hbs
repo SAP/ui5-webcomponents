@@ -17,30 +17,37 @@
 	@click="{{_onclick}}"
 	@focusout="{{_onfocusout}}"
 >
+
+	{{#if isDisplayOnly}}
+		<div class="ui5-checkbox-display-only-icon-inner">
+			<ui5-icon aria-hidden="true" name={{displayOnlyIcon}} class="ui5-checkbox-display-only-icon"></ui5-icon>
+		</div>
+	{{else}}
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
 			{{#if isCompletelyChecked}}
 				<ui5-icon aria-hidden="true" name="accept" class="ui5-checkbox-icon"></ui5-icon>
 			{{/if}}
-
-			<input
-				id="{{_id}}-CB"
-				type='checkbox'
-				?checked="{{checked}}"
-				?readonly="{{readonly}}"
-				?disabled="{{disabled}}"
-				tabindex="-1"
-				aria-hidden="true"
-				data-sap-no-tab-ref
-			/>
 		</div>
+	{{/if}}
 
-		{{#if text}}
-			<ui5-label part="label" id="{{_id}}-label" class="ui5-checkbox-label" wrapping-type="{{wrappingType}}">{{text}}</ui5-label>
-		{{/if}}
+	<input
+		id="{{_id}}-CB"
+		type='checkbox'
+		?checked="{{checked}}"
+		?readonly="{{readonly}}"
+		?disabled="{{disabled}}"
+		tabindex="-1"
+		aria-hidden="true"
+		data-sap-no-tab-ref
+	/>
 
-		{{#if hasValueState}}
-			<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
-		{{/if}}
+	{{#if text}}
+		<ui5-label part="label" id="{{_id}}-label" class="ui5-checkbox-label" wrapping-type="{{wrappingType}}">{{text}}</ui5-label>
+	{{/if}}
 
-		<slot name="formSupport"></slot>
+	{{#if hasValueState}}
+		<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
+	{{/if}}
+
+	<slot name="formSupport"></slot>
 </div>
