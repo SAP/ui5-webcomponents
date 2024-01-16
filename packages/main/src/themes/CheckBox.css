@@ -259,7 +259,7 @@
 }
 
 :host([display-only]) .ui5-checkbox-display-only-icon-inner [ui5-icon] {
-	color: currentColor;
+	color: var(--sapTextColor);
 }
 
 :host([display-only]) .ui5-checkbox-display-only-icon-inner {
