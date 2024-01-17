@@ -34,7 +34,7 @@ import {
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
-import { getElementAtCoordinate } from "./util/DragAndDropHelper.js";
+import getElementAtCoordinate from "./util/DragAndDropHelper.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
@@ -1194,6 +1194,8 @@ class TabContainer extends UI5Element {
 		}
 
 		// draw drop indicator
+		this.dropIndicatorDOM.show();
+
 		dropIndicator.target = found.closestElement.id;
 		dropIndicator.placement = found.dropPlacement;
 	}
@@ -1239,6 +1241,7 @@ class TabContainer extends UI5Element {
 		});
 
 		droppedTab.focus();
+		this.dropIndicatorDOM.hide();
 	}
 
 	_onReorderItemsInOverflow(e: any) {

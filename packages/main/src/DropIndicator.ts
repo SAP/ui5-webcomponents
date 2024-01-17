@@ -81,6 +81,12 @@ class DropIndicator extends UI5Element {
 		return "top";
 	}
 
+	constructor() {
+		super();
+
+		this.hide();
+	}
+
 	onAfterRendering() {
 		if (!this.target) {
 			return;
@@ -98,10 +104,10 @@ class DropIndicator extends UI5Element {
 
 		const {
 			top: containerTop,
-			left: containerLeft,
 		} = container.getBoundingClientRect();
 
 		let position = 0;
+
 		if (this.orientation === Orientation.Vertical) {
 			switch (this.placement) {
 			case DropPlacement.Before:
@@ -114,8 +120,6 @@ class DropIndicator extends UI5Element {
 				position = right;
 				break;
 			}
-
-			position -= containerLeft;
 		}
 
 		if (this.orientation === Orientation.Horizontal) {
@@ -134,9 +138,15 @@ class DropIndicator extends UI5Element {
 			position -= containerTop;
 		}
 
-		const positionValue = position ? `${position}px` : "";
-		this.style[this._positionProperty] = positionValue;
-		console.log(this.style[this._positionProperty]);
+		this.style[this._positionProperty] = `${position}px`;
+	}
+
+	hide() {
+		this.style.display = "none";
+	}
+
+	show() {
+		this.style.display = "";
 	}
 }
 

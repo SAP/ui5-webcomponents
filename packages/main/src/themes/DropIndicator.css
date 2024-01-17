@@ -8,13 +8,11 @@
 /* the needle */
 
 :host([orientation="Vertical"]) {
-	left: -1rem;
 	width: 0.125rem;
 	inset-block: 0;
 }
 
 :host([orientation="Horizontal"]) {
-	top: -1rem;
 	height: 0.125rem;
 	inset-inline: 0;
 }

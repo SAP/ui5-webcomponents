@@ -36,7 +36,7 @@ import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
 import DropIndicator from "./DropIndicator.js";
 import Orientation from "./types/Orientation.js";
-import { getElementAtCoordinate } from "./util/DragAndDropHelper.js";
+import getElementAtCoordinate from "./util/DragAndDropHelper.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
@@ -1170,6 +1170,7 @@ class List extends UI5Element {
 		}
 
 		// draw drop indicator
+		dropIndicator.show();
 		dropIndicator.target = found.closestElement.id;
 		dropIndicator.placement = found.dropPlacement;
 	}
@@ -1204,8 +1205,11 @@ class List extends UI5Element {
 			destination: {
 				element: this,
 				index: this.items.indexOf(result.closestElement as ListItemBase),
+				dropPlacement: result.dropPlacement,
 			},
 		});
+
+		this.dropIndicatorDOM.hide();
 	}
 
 	get dropIndicatorDOM(): DropIndicator {
