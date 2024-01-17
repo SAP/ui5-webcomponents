@@ -15,7 +15,7 @@ const filterOut = [
 const options = {
 	port: 8081,
 	portStep: 2,
-	ui5package: true,
+	dev: true,
 	fioriPackage: true,
 	typescript: true,
 	noWatchTS: true,

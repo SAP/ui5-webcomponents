@@ -5,7 +5,7 @@ const options = {
 	portStep: 2,
 	typescript: true,
 	noWatchTS: true,
-	ui5package: true,
+	dev: true,
 };
 
 const scripts = getScripts(options);
