@@ -31,11 +31,7 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
  * <code>import "@ui5/webcomponents/dist/CalendarLegendItem.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CalendarLegendItem
- * @tagname ui5-calendar-legend-item
- * @extends sap.ui.webc.main.UI5Element
- * @implements sap.ui.webc.main.ICalendarLegendItem
+ * @extends UI5Element
  * @since 1.22.0
  * @public
  */
@@ -50,9 +46,7 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
 class CalendarLegendItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text content of the Calendar Legend Item.
-	 * @type {string}
-	 * @name sap.ui.webc.main.CalendarLegendItem.prototype.text
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -61,9 +55,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the type of the Calendar Legend Item.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.CalendarLegendItem.prototype.type
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()

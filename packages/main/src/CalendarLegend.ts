@@ -35,13 +35,10 @@ type CalendarLegendItemSelectionChangeEventDetail = {
  *
  * <code>import "@ui5/webcomponents/dist/CalendarLegend.js";</code>
  *
+ * @slot items - Defines the items of the component.
+ *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.CalendarLegend
- * @implements sap.ui.webc.main.ICalendarLegend
- * @extends sap.ui.webc.main.UI5Element
- * @tagname ui5-calendar-legend
- * @appenddocs sap.ui.webc.main.CalendarLegendItem
+ * @extends UI5Element
  * @public
  * @since 1.22.0
  */
@@ -60,8 +57,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Today item in the legend.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideToday
+	 *
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -70,8 +66,7 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Hides the Selected day item in the legend.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideSelectedDay
+	 *
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -80,8 +75,7 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Hides the Non-Working day item in the legend.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideNonWorkingDay
+	 *
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -90,8 +84,7 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Hides the Working day item in the legend.
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.CalendarLegend.prototype.hideWorkingDay
+	 *
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -100,8 +93,6 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Defines the items of the component.
-	 * @type {sap.ui.webc.main.ICalendarLegendItem[]}
-	 * @name sap.ui.webc.main.CalendarLegend.prototype.default
 	 * @slot items
 	 * @public
 	 */

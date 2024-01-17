@@ -12,21 +12,16 @@ import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
  * which is visually distinguished from the rest of the dates.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SpecialCalendarDate
- * @extends sap.ui.webc.main.CalendarDate
+ * @extends CalendarDate
  * @abstract
- * @tagname ui5-special-date
- * @implements sap.ui.webc.main.ISpecialCalendarDate
  * @public
  */
 @customElement("ui5-special-date")
 class SpecialCalendarDate extends CalendarDate {
 	/**
 	 * Defines the type of the special date.
-	 * @type {sap.ui.webc.main.types.CalendarLegendItemType}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.SpecialCalendarDate.prototype.type
+	 *
+	 * @default ""
 	 * @public
 	 * @since 1.22.0
 	 */
