@@ -26,6 +26,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
@@ -309,7 +310,7 @@ class TabContainer extends UI5Element {
 	_endOverflowText!: string;
 
 	@property({ type: Object, multiple: true })
-	_overflowItems!: Array<ITab>;
+	_popoverItems!: Array<ITab>;
 
 	@property({ validator: Integer, noAttribute: true })
 	_width?: number;
@@ -421,6 +422,10 @@ class TabContainer extends UI5Element {
 			const focusStart = this._getRootTab(this._selectedTab);
 			this._itemNavigation.setCurrentItem(focusStart);
 		}
+
+		if (this.responsivePopover?.opened) {
+			this._setPopoverItems(this.getPopoverOpenerItems());
+		}
 	}
 
 	onEnterDOM() {
@@ -484,10 +489,9 @@ class TabContainer extends UI5Element {
 		}
 
 		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
-			this._overflowItems = tab._realTab.subTabs;
-			this._addStyleIndent(this._overflowItems);
-
+			this._setPopoverItems(tab._realTab.subTabs);
 			this.responsivePopover = await this._respPopover();
+
 			if (this.responsivePopover.opened) {
 				this.responsivePopover.close();
 			} else {
@@ -499,6 +503,28 @@ class TabContainer extends UI5Element {
 		}
 
 		this._onHeaderItemSelect(tab);
+	}
+
+	getPopoverOpenerItems(opener?: HTMLElement) {
+		const _opener = opener || this.responsivePopover?._opener;
+
+		if (_opener === this._getStartOverflowBtnDOM()) {
+			return this.items.filter(item => {
+				const stripRef = item.getTabInStripDomRef();
+
+				return stripRef && stripRef.hasAttribute("start-overflow");
+			});
+		}
+
+		if (_opener === this._getEndOverflowBtnDOM()) {
+			return this.items.filter(item => {
+				const stripRef = item.getTabInStripDomRef();
+
+				return stripRef && stripRef.hasAttribute("end-overflow");
+			});
+		}
+
+		return (_opener!.parentElement!.parentElement as Tab)._realTab.subTabs;
 	}
 
 	async _onTabExpandButtonClick(e: Event) {
@@ -523,10 +549,9 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._overflowItems = tabInstance.subTabs;
-		this._addStyleIndent(this._overflowItems);
-
+		this._setPopoverItems(tabInstance.subTabs);
 		this.responsivePopover = await this._respPopover();
+
 		if (this.responsivePopover.isOpen()) {
 			this.responsivePopover.close();
 		} else {
@@ -747,15 +772,7 @@ class TabContainer extends UI5Element {
 
 		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
-		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
-
-		this._overflowItems = this.items.filter(item => {
-			const stripRef = item.getTabInStripDomRef();
-
-			return stripRef && stripRef.hasAttribute(overflowAttr);
-		});
-
-		this._addStyleIndent(this._overflowItems);
+		this._setPopoverItems(this.getPopoverOpenerItems(<Button>overflow.querySelector("[ui5-button]")));
 
 		let opener;
 		if (isEndOverflow) {
@@ -1251,7 +1268,7 @@ class TabContainer extends UI5Element {
 
 		const droppedTab = (source.element as ITab)._realTab!;
 		const droppedTabIndex = this.items.indexOf(droppedTab);
-		const targetTabIndex = this.items.indexOf(this._overflowItems[destination.index]);
+		const targetTabIndex = this.items.indexOf(this._popoverItems[destination.index]);
 
 		this.fireEvent("tab-reorder", {
 			source: {
@@ -1261,6 +1278,7 @@ class TabContainer extends UI5Element {
 			destination: {
 				element: this, // todo: support nesting
 				index: targetTabIndex,
+				dropPlacement: destination.dropPlacement,
 			},
 		});
 	}
@@ -1268,6 +1286,13 @@ class TabContainer extends UI5Element {
 	_onHeaderDragEndOrLeave() {
 		// reset drop indicator
 		this.dropIndicatorDOM.target = "";
+	}
+
+	_setPopoverItems(items: Array<ITab>) {
+		if (!arraysAreEqual(this._popoverItems, items)) {
+			this._popoverItems = items;
+			this._addStyleIndent(this._popoverItems);
+		}
 	}
 
 	async _respPopover() {
