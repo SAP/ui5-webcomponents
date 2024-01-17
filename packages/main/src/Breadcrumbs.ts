@@ -86,11 +86,7 @@ type FocusAdaptor = ITabbable & {
  * </ul>
  * <br>
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Breadcrumbs
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-breadcrumbs
- * @appenddocs sap.ui.webc.main.BreadcrumbsItem
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  */
@@ -117,7 +113,6 @@ type FocusAdaptor = ITabbable & {
  * Fires when a <code>BreadcrumbsItem</code> is clicked.
  * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
  *
- * @event sap.ui.webc.main.Breadcrumbs#item-click
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
@@ -128,10 +123,25 @@ type FocusAdaptor = ITabbable & {
  */
 @event("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
+		/**
+		 * @public
+		 */
 		altKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		ctrlKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		metaKey: { type: Boolean },
+		/**
+		 * @public
+		 */
 		shiftKey: { type: Boolean },
 	},
 })
@@ -142,9 +152,7 @@ class Breadcrumbs extends UI5Element {
 	 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
 	 * The last item contains only plain text and is not a link.
 	 *
-	 * @type {sap.ui.webc.main.types.BreadcrumbsDesign}
-	 * @name sap.ui.webc.main.Breadcrumbs.prototype.design
-	 * @defaultvalue "Standard"
+	 * @default "Standard"
 	 * @public
 	*/
 	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
@@ -153,9 +161,7 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
 	 *
-	 * @type {sap.ui.webc.main.types.BreadcrumbsSeparatorStyle}
-	 * @name sap.ui.webc.main.Breadcrumbs.prototype.separatorStyle
-	 * @defaultvalue "Slash"
+	 * @default "Slash"
 	 * @public
 	 */
 	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
@@ -164,8 +170,7 @@ class Breadcrumbs extends UI5Element {
 	/**
 	 * Holds the number of items in the overflow.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @default 0
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
@@ -176,9 +181,6 @@ class Breadcrumbs extends UI5Element {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
-	 * @type {sap.ui.webc.main.IBreadcrumbsItem[]}
-	 * @name sap.ui.webc.main.Breadcrumbs.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })

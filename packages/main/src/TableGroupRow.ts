@@ -5,7 +5,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CheckBox from "./CheckBox.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
@@ -26,23 +25,12 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
  *
  * The <code>ui5-table-group-row</code> component represents a group row in the <code>ui5-table</code>.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-table-group-row</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>group-row - Used to style the native <code>tr</code> element.</li>
- * </ul>
- *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TableGroupRow
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-table-group-row
  * @since 1.0.0-rc.15
- * @implements sap.ui.webc.main.ITableRow
+ * @implements {ITableRow}
  * @public
+ * @slot {Node[]} default - Defines the text of the component. <br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * @csspart group-row - Used to style the native <code>tr</code> element
  */
 @customElement({
 	tag: "ui5-table-group-row",
@@ -54,7 +42,7 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 	],
 })
 @event("_focused")
-class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
+class TableGroupRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the mode of the row
 	 *
@@ -66,8 +54,8 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	 * <li><code>SingleSelect</code></li>
 	 * <li><code>MultiSelect</code></li>
 	 * </ul>
-	 * @type {sap.ui.webc.main.types.TableMode}
-	 * @defaultvalue "None"
+	 *
+	 * @default "None"
 	 * @private
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
@@ -89,17 +77,6 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	selected = false;
 	_tabbables: Array<HTMLElement> = [];
 	_columnsInfoString = "";
-
-	/**
-	 * Defines the text of the component.
-	 * <br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @name sap.ui.webc.main.TableGroupRow.prototype.default
-	 * @slot
-	 * @public
-	 */
 
 	static i18nBundle: I18nBundle;
 

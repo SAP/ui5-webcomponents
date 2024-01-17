@@ -10,9 +10,7 @@ const pureTagName = "ui5-static-area-item";
 const popupIntegrationAttr = "data-sap-ui-integration-popup-content";
 
 /**
- *
  * @class
- * @author SAP SE
  * @private
  */
 class StaticAreaItem extends HTMLElement {
@@ -26,7 +24,7 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	/**
-	 * @param {UI5Element} ownerElement the UI5Element instance that owns this static area item
+	 * @param ownerElement the UI5Element instance that owns this static area item
 	 */
 	setOwnerElement(ownerElement: UI5Element) {
 		this.ownerElement = ownerElement;
@@ -83,8 +81,8 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	/**
-	 * @protected
 	 * Returns reference to the DOM element where the current fragment is added.
+	 * @protected
 	 */
 	async getDomRef() {
 		this.updateAdditionalProperties();

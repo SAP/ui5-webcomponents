@@ -15,13 +15,9 @@ import ToolbarItem from "./ToolbarItem.js";
  * It takes no space in calculating toolbar items width.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarSeparator
- * @extends sap.ui.webc.main.ToolbarItem
- * @tagname ui5-toolbar-separator
+ * @extends ToolbarItem
  * @since 1.17.0
  * @abstract
- * @implements sap.ui.webc.main.IToolbarItem
  * @public
  */
 @customElement({

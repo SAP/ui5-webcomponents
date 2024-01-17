@@ -19,10 +19,6 @@ let index = 0;
 export default {
 	title: "Main/Input",
 	component: "Input",
-	subcomponents: {
-		SuggestionItem: 'SuggestionItem',
-		SuggestionGroupItem : 'SuggestionGroupItem'
-	},
 	parameters: {
 		docs: {
 		  page: DocsPage({ ...componentInfo, component })

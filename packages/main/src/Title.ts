@@ -24,10 +24,11 @@ import titleCss from "./generated/themes/Title.css.js";
  * <code>import "@ui5/webcomponents/dist/Title";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Title
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-title
+ * @extends UI5Element
+ * @slot {Node[]} default - Defines the text of the component.
+ * This component supports nesting a <code>Link</code> component inside.
+ * <br><br>
+ * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @public
  */
 @customElement({
@@ -41,9 +42,7 @@ class Title extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
-	 * @name sap.ui.webc.main.Title.prototype.wrappingType
-	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
@@ -53,25 +52,11 @@ class Title extends UI5Element {
 	 * Defines the component level.
 	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 	 *
-	 * @name sap.ui.webc.main.Title.prototype.level
-	 * @type {sap.ui.webc.main.types.TitleLevel}
-	 * @defaultvalue "H2"
+	 * @default "H2"
 	 * @public
 	 */
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
 	level!: `${TitleLevel}`;
-
-	/**
-	 * Defines the text of the component.
-	 * This component supports nesting a <code>Link</code> component inside.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
-	 * @type {Node[]}
-	 * @slot
-	 * @name sap.ui.webc.main.Title.prototype.default
-	 * @public
-	 */
 
 	get normalizedLevel() {
 		return this.level.toLowerCase();

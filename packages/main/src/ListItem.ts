@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -16,6 +15,7 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
+import { IButton } from "./Interfaces.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -76,9 +76,7 @@ type AccessibilityAttributes = {
  * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ListItem
- * @extends sap.ui.webc.main.ListItemBase
+ * @extends ListItemBase
  * @public
  */
 @customElement({
@@ -93,7 +91,6 @@ type AccessibilityAttributes = {
 /**
  * Fired when the user clicks on the detail button when type is <code>Detail</code>.
  *
- * @event sap.ui.webc.main.ListItem#detail-click
  * @public
  */
 @event("detail-click")
@@ -108,9 +105,7 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 	 *
-	 * @type {sap.ui.webc.main.types.ListItemType}
-	 * @name sap.ui.webc.main.ListItem.prototype.type
-	 * @defaultvalue "Active"
+	 * @default "Active"
 	 * @public
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
@@ -132,8 +127,7 @@ abstract class ListItem extends ListItemBase {
 	 * 		</li>
 	 * </ul>
 	 *
-	 * @type {object}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibilityAttributes
+	 * @default {}
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -144,9 +138,8 @@ abstract class ListItem extends ListItemBase {
 	 * The navigated state of the list item.
 	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
 	 *
+	 * @default false
 	 * @public
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.navigated
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
@@ -155,8 +148,6 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.active
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -164,9 +155,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.title
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -176,8 +165,6 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.actionable
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -187,9 +174,7 @@ abstract class ListItem extends ListItemBase {
 	 * Used to define the role of the list item.
 	 *
 	 * @private
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.role
-	 * @defaultvalue "listitem"
+	 * @default "listitem"
 	 * @since 1.0.0-rc.9
 	 *
 	 */
@@ -199,9 +184,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRoleDescription
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ defaultValue: undefined, noAttribute: true })
@@ -211,9 +194,7 @@ abstract class ListItem extends ListItemBase {
 	 * Used to define the role of the list item.
 	 *
 	 * @private
-	 * @type {string}
-	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRole
-	 * @defaultvalue ""
+	 * @default ""
 	 * @since 1.3.0
 	 *
 	 */
@@ -225,23 +206,11 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @type {sap.ui.webc.main.types.HasPopup}
-	 * @name sap.ui.webc.main.ListItem.prototype.ariaHaspopup
 	 * @since 1.10.0
 	 * @private
 	 */
 	@property({ type: HasPopup, noAttribute: true })
 	ariaHaspopup?: `${HasPopup}`;
-
-	@property({ type: Integer })
-	_level?: number;
-
-	/**
-	 * Used in UploadCollectionItem
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	disableDeleteButton!: boolean;
 
 	/**
 	 * Used in TabInOverflow
@@ -255,22 +224,21 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
 	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
-	 * @type {sap.ui.webc.main.IButton}
-	 * @name sap.ui.webc.main.ListItem.prototype.deleteButton
 	 * @since 1.9.0
-	 * @slot
 	 * @public
-	 */
+	*/
 	@slot()
-	deleteButton!: Array<HTMLElement>;
+	deleteButton!: Array<IButton>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase
+	// used in template, implemented in TreeItemBase, StandardListItem
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
+	// Used in UploadCollectionItem
+	disableDeleteButton?: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -536,7 +504,7 @@ abstract class ListItem extends ListItemBase {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
-			ariaLevel: this._level || undefined,
+			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,

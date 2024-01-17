@@ -14,7 +14,6 @@ const component = "ui5-tabcontainer";
 export default {
 	title: "Main/Tab Container",
 	component: "TabContainer",
-	subcomponents: { "Tab": "Tab", "TabSeparator": "TabSeparator" },
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

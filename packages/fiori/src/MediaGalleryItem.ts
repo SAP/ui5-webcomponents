@@ -7,8 +7,8 @@ import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
+import type { IMediaGalleryItem } from "./Interfaces.js";
 
 // Styles
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
@@ -38,12 +38,9 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code> (comes with <code>ui5-media-gallery</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.MediaGalleryItem
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-media-gallery-item
+ * @extends UI5Element
  * @public
- * @implements sap.ui.webc.fiori.IMediaGalleryItem
+ * @implements {IMediaGalleryItem}
  * @since 1.1.0
  */
 @customElement({
@@ -53,13 +50,11 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
 	template: MediaGalleryItemTemplate,
 	dependencies: [Icon],
 })
-class MediaGalleryItem extends UI5Element implements ITabbable {
+class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	/**
 	 * Defines the selected state of the component.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -68,9 +63,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -85,9 +78,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * <li><code>Wide</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.fiori.types.MediaGalleryItemLayout}
-	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.layout
-	 * @defaultvalue "Square"
+	 * @default "Square"
 	 * @public
 	 */
 	@property({ type: MediaGalleryItemLayout, defaultValue: MediaGalleryItemLayout.Square })
@@ -144,9 +135,6 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the content of the component.
 	 *
-	 * @type {HTMLElement}
-	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.default
-	 * @slot content
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -155,9 +143,6 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the content of the thumbnail.
 	 *
-	 * @type {HTMLElement}
-	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.thumbnail
-	 * @slot thumbnail
 	 * @public
 	 */
 	@slot()
