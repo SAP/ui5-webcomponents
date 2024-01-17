@@ -28,3 +28,21 @@ html,
 	width: 15rem;
 	margin-bottom: .5rem;
 }
+
+[ui5-link][disabled] .linkIcon {
+	opacity: inherit;
+}
+
+.linkIcon,
+[ui5-link]:active .linkIcon,
+[ui5-link][design="Subtle"][focused] .linkIcon
+[ui5-link][focused] .linkIcon {
+	color: inherit;
+}
+
+.linkIcon {
+	vertical-align: middle;
+	width: var(--sapFontSize);
+	height: var(--sapFontSize);
+	padding-inline-end: 0.125rem;
+}
