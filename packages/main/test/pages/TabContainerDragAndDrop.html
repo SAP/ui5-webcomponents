@@ -75,15 +75,23 @@
 		el.addEventListener("tab-reorder", (e) => {
 			const { destination, source } = e.detail;
 
-			let insertBeforeElement = destination.element.children[destination.index];
-
-			destination.element.insertBefore(
-				source.element,
-				insertBeforeElement);
+			if (destination.dropPlacement === "Before") {
+				const insertBeforeElement = destination.element.children[destination.index];
+				destination.element.insertBefore(
+					source.element,
+					insertBeforeElement
+				);
+			} else if (destination.dropPlacement === "After") {
+				const insertAfterElement = destination.element.children[destination.index + 1] || null;
+				destination.element.insertBefore(
+					source.element,
+					insertAfterElement
+				);
+			}
 
 			setTimeout(() => {
 				source.element.getFocusDomRef().focus();
-			})
+			});
 		});
 
 		const densityCb = document.getElementById("density");

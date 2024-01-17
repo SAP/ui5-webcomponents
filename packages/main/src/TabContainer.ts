@@ -1217,11 +1217,12 @@ class TabContainer extends UI5Element {
 		const droppedTabIndex = droppedTabSiblings.indexOf(droppedTab);
 
 		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
-		const target = getElementAtCoordinate(
+		const result = getElementAtCoordinate(
 			tabs,
 			e.clientX,
 			Orientation.Horizontal,
-		)?.closestElement;
+		);
+		const target = result?.closestElement;
 
 		if (!target) {
 			return;
@@ -1237,6 +1238,7 @@ class TabContainer extends UI5Element {
 			destination: {
 				element: this, // todo: support nesting
 				index: targetTabIndex,
+				dropPlacement: result.dropPlacement,
 			},
 		});
 
