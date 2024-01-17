@@ -1,0 +1,33 @@
+diff --git a/node_modules/@custom-elements-manifest/analyzer/cli.js b/node_modules/@custom-elements-manifest/analyzer/cli.js
+index 49da928..1868c9b 100755
+--- a/node_modules/@custom-elements-manifest/analyzer/cli.js
++++ b/node_modules/@custom-elements-manifest/analyzer/cli.js
+@@ -63,7 +63,7 @@ export async function cli({ argv = process.argv, cwd = process.cwd(), noWrite }
+       let plugins = await addFrameworkPlugins(mergedOptions);
+       plugins = [...plugins, ...(userConfig?.plugins || [])];
+ 
+-      const context = { dev: mergedOptions.dev, thirdPartyCEMs };
++      const context = { dev: mergedOptions.dev, thirdPartyCEMs, ui5package: mergedOptions.ui5package };
+ 
+       /**
+        * Create the manifest
+diff --git a/node_modules/@custom-elements-manifest/analyzer/src/utils/cli-helpers.js b/node_modules/@custom-elements-manifest/analyzer/src/utils/cli-helpers.js
+index 30cfee9..ff27d8b 100644
+--- a/node_modules/@custom-elements-manifest/analyzer/src/utils/cli-helpers.js
++++ b/node_modules/@custom-elements-manifest/analyzer/src/utils/cli-helpers.js
+@@ -61,6 +61,7 @@ export const DEFAULTS = {
+   stencil: false,
+   fast: false,
+   catalyst: false,
++  ui5generation: false,
+   'catalyst-major-2': false,
+ }
+ 
+@@ -80,6 +81,7 @@ export function getCliConfig(argv) {
+     { name: 'fast', type: Boolean },
+     { name: 'catalyst', type: Boolean },
+     { name: 'catalyst-major-2', type: Boolean },
++    { name: 'ui5generation', type: Boolean },
+   ];
+ 
+   return commandLineArgs(optionDefinitions, { argv });

@@ -1,6 +1,10 @@
 const fs = require('fs');
 const Ajv = require('ajv');
 const path = require('path');
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+const argv = yargs(hideBin(process.argv))
+	.argv;
 
 // Load your JSON schema
 const extenalSchema = require('./schema.json');
@@ -46,8 +50,7 @@ let validate = ajv.compile(internalSchema)
 if (validate(inputDataInternal)) {
     console.log('Validation internal custom-elements successful');
 } else {
-    console.error('Validation of internal custom-elements failed');
-    // console.error('Validation of internal custom-elements failed:', validate.errors);
+    console.error('Validation of internal custom-elements failed:', argv.ui5package ? validate.errors : "");
 }
 
 validate = ajv.compile(extenalSchema)
@@ -58,6 +61,5 @@ if (validate(inputDataExternal)) {
     fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
     fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
 } else {
-    console.error('Validation of external custom-elements failed:');
-    // console.error('Validation of external custom-elements failed:', ajv.errorsText(validate.errors));
+    console.error('Validation of external custom-elements failed:', argv.ui5package ? validate.errors : "" );
 }
