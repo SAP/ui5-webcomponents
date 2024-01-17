@@ -59,6 +59,7 @@ type TimePickerEntityProperties = {
 	showInnerCircle?: boolean,
 	prependZero: boolean,
 	active?: boolean,
+	focused?: boolean,
 	hasSeparator?: boolean,
 	attributes?: TimePickerEntityAttributes,
 }

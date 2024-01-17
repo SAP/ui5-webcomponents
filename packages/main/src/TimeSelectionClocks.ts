@@ -70,6 +70,18 @@ class TimeSelectionClocks extends TimePickerInternals {
 	@property({ type: Boolean, noAttribute: true })
 	_spacePressed!: boolean;
 
+	/**
+	 * Flag for focused state of Clocks component
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_focused!: boolean;
+
+	/**
+	 * Flag for focused state of AM/PM segmented button
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_amPmFocused!: boolean;
+
 	onBeforeRendering() {
 		this._createComponents();
 	}
@@ -105,9 +117,14 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 */
 	_clocksFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
+		this._focused = true;
 		if (target.id === this._id) {
 			this._switchClock(this._activeIndex);
 		}
+	}
+
+	_clocksFocusOut() {
+		this._focused = false;
 	}
 
 	/**
@@ -121,6 +138,20 @@ class TimeSelectionClocks extends TimePickerInternals {
 		if (name) {
 			this._switchTo(name);
 		}
+	}
+
+	/**
+	 * AM/PM segmented button focusin event handler.
+	 */
+	_amPmFocusIn() {
+		this._amPmFocused = true;
+	}
+
+	/**
+	 * AM/PM segmented button focusout event handler.
+	 */
+	_amPmFocusOut() {
+		this._amPmFocused = false;
 	}
 
 	/**
@@ -155,7 +186,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 		} else if ((isUp(evt) || isDown(evt)) && !isUpAlt(evt) && !isDownAlt(evt)) {
 			// Arrows up/down increase/decrease currently active clock
 			clock = this._clockComponent(this._activeIndex);
-			clock && !clock.disabled && clock._modifyValue(isUp(evt));
+			clock && !clock.disabled && !this._amPmFocused && clock._modifyValue(isUp(evt));
 			evt.preventDefault();
 		} else if (isPageUp(evt) || isPageDown(evt)) {
 			// PageUp/PageDown increase/decrease hours clock
@@ -349,6 +380,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 			});
 		}
 		this._entities[this._activeIndex].active = true;
+		this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 		this._createPeriodComponent();
 	}
 
@@ -374,8 +406,10 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		if (this._entities.length && clockIndex < this._entities.length && newButton) {
 			this._entities[this._activeIndex].active = false;
+			this._entities[this._activeIndex].focused = false;
 			this._activeIndex = clockIndex;
 			this._entities[this._activeIndex].active = true;
+			this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 			newButton.focus();
 		}
 	}

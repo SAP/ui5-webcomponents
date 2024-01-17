@@ -40,16 +40,14 @@
 		{{/unless}}
 
 		{{#if showTimeView}}
-			<ui5-time-selection
-					id="{{_id}}-time-sel"
-					class="ui5-dt-time {{classes.dateTimeView}}"
-					value="{{_timeSelectionValue}}"
-					format-pattern="{{_formatPattern}}"
-					._currentSlider="{{_currentTimeSlider}}"
-					._calendarType="{{_primaryCalendarType}}"
-					@ui5-change="{{onTimeSelectionChange}}"
-					@ui5-slider-change="{{onTimeSliderChange}}"
-			></ui5-time-selection>
+			<ui5-time-selection-clocks
+				id="{{_id}}-time-sel"
+				class="ui5-dt-time {{classes.dateTimeView}}"
+				format-pattern="{{_formatPattern}}"
+				value="{{_timeSelectionValue}}"
+				@ui5-change="{{onTimeSelectionChange}}"
+				._calendarType="{{_primaryCalendarType}}"
+			></ui5-time-selection-clocks>
 		{{/if}}
 	</div>
 {{/inline}}

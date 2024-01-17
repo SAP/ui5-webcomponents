@@ -18,8 +18,8 @@ import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
 } from "./DatePicker.js";
-import TimeSelection from "./TimeSelection.js";
-import type { TimeSelectionChangeEventDetail, TimeSelectionSliderChangeEventDetail } from "./TimeSelection.js";
+import TimeSelectionClocks from "./TimeSelectionClocks.js";
+import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 // i18n texts
 import {
@@ -131,7 +131,7 @@ type PreviewValues = {
 		Button,
 		ToggleButton,
 		SegmentedButton,
-		TimeSelection,
+		TimeSelectionClocks,
 	],
 })
 class DateTimePicker extends DatePicker {
@@ -165,12 +165,6 @@ class DateTimePicker extends DatePicker {
 	@property({ type: Object })
 	_previewValues!: PreviewValues;
 
-	/**
-	 * @private
-	 */
-	@property({ defaultValue: "hours" })
-	_currentTimeSlider!: string;
-
 	_handleResizeBound: ResizeObserverCallback;
 
 	constructor() {
@@ -181,10 +175,13 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onResponsivePopoverAfterClose() {
+	async onResponsivePopoverAfterClose() {
 		super.onResponsivePopoverAfterClose();
 		this._showTimeView = false;
 		this._previewValues = {};
+		const popover = await this.getPicker();
+		const clocks = popover && popover.querySelector("[ui5-time-selection-clocks]") as TimeSelectionClocks;
+		clocks && clocks._switchClock(0);
 	}
 
 	/**
@@ -209,9 +206,8 @@ class DateTimePicker extends DatePicker {
 	 * @public
 	 */
 	async openPicker(): Promise<void> {
-		await super.openPicker();
-		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
+		await super.openPicker();
 	}
 
 	/**
@@ -328,10 +324,6 @@ class DateTimePicker extends DatePicker {
 		};
 	}
 
-	onTimeSliderChange(e: CustomEvent<TimeSelectionSliderChangeEventDetail>) {
-		this._currentTimeSlider = e.detail.slider;
-	}
-
 	/**
 	 * Handles document resize to switch between <code>phoneMode</code> and normal appearance.
 	 */
@@ -380,9 +372,6 @@ class DateTimePicker extends DatePicker {
 	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
 		const target = e.target as HTMLElement;
 		this._showTimeView = target.getAttribute("key") === "Time";
-		if (this._showTimeView) {
-			this._currentTimeSlider = "hours";
-		}
 	}
 
 	/**
