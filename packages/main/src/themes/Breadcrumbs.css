@@ -73,40 +73,40 @@
     right: 0;
 }
 
-/* links separator */
-li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "/"; /* default separator is "Slash" */
-    padding: 0 .25rem;
-    cursor: auto;
-    color: var(--sapContent_LabelColor);
-    display: inline-block;
-    font-family: "72override",var(--sapFontFamily);
-    font-size: var(--sapFontSize);
-}
-
 .ui5-breadcrumbs-popover-footer {
     display: flex;
     justify-content: flex-end;
     width: 100%;
 }
 
+/* links separator */
+.ui5-breadcrumbs-separator::after {
+	content: "/"; /* default separator is "Slash" */
+	padding: 0 .25rem;
+	cursor: auto;
+	color: var(--sapContent_LabelColor);
+	display: inline-block;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+}
+
 /* separator styles */
-:host([separator-style="BackSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "\\";
+:host([separator-style="DoubleSlash"]) .ui5-breadcrumbs-separator::after {
+	content: "//";
 }
 
-:host([separator-style="DoubleBackSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "\\\\";
+:host([separator-style="BackSlash"]) .ui5-breadcrumbs-separator::after {
+	content: "\\";
 }
 
-:host([separator-style="DoubleGreaterThan"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: ">>";
+:host([separator-style="DoubleBackSlash"]) .ui5-breadcrumbs-separator::after {
+	content: "\\\\";
 }
 
-:host([separator-style="DoubleSlash"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: "//";
+:host([separator-style="GreaterThan"]) .ui5-breadcrumbs-separator::after {
+	content: ">";
 }
 
-:host([separator-style="GreaterThan"]) li:not(.ui5-breadcrumbs-current-location)::after {
-    content: ">";
+:host([separator-style="DoubleGreaterThan"]) .ui5-breadcrumbs-separator::after {
+	content: ">>";
 }
