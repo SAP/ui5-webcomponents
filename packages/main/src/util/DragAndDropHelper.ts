@@ -8,7 +8,9 @@ const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, lay
 	// determine which element is most closest to the point
 	for (let i = 0; i < elements.length; i++) {
 		const el = elements[i];
-		const { left, width, top, height } = el.getBoundingClientRect();
+		const {
+			left, width, top, height,
+		} = el.getBoundingClientRect();
 
 		let offset = 0;
 		if (layoutOrientation === Orientation.Vertical) {
@@ -81,6 +83,4 @@ const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, lay
 	};
 };
 
-export {
-	getElementAtCoordinate,
-};
+export default getElementAtCoordinate;
