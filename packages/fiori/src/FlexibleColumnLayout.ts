@@ -151,7 +151,7 @@ type AccessibilityRoles = {
  * @param {boolean} resize Indicates if the layout is changed via resizing
  * @public
  */
-@event("layout-change", {
+@event<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 	detail: {
 		/**
 		* @public
@@ -178,9 +178,13 @@ type AccessibilityRoles = {
 		*/
 		arrowsUsed: { type: Boolean },
 		/**
-		* @public
+		 * @public
 		*/
 		resize: { type: Boolean },
+		/**
+		 * @private
+		*/
+		arrowUsed: { type: Boolean },
 	},
 })
 class FlexibleColumnLayout extends UI5Element {

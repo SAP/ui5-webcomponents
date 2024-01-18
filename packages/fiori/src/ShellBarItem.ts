@@ -34,7 +34,7 @@ type ShellBarItemClickEventDetail = {
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
-@event("click", {
+@event<ShellBarItemClickEventDetail>("click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},

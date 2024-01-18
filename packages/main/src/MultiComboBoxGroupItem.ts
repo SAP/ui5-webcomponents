@@ -9,6 +9,7 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
  * that can be used to split the <code>ui5-multi-combobox</code> suggestions into groups.
  *
  * @constructor
+ * @extends {UI5Element}
  * @abstract
  * @public
  * @implements {IMultiComboBoxItem}
