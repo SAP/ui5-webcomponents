@@ -441,7 +441,7 @@ export default {
 				})
 			},
 			packageLinkPhase({ customElementsManifest, context }) {
-				if (context.ui5package) {
+				if (context.dev) {
 					const JSDocErrors = getJSDocErrors();
 					if (JSDocErrors.length > 0) {
 						console.log(JSDocErrors.join("\n"));

@@ -44,7 +44,7 @@ const ajv = new Ajv({ allowUnionTypes: true, allError: true })
 let validate = ajv.compile(internalSchema)
 
 // Validate the JSON data against the schema
-if (argv.ui5package) {
+if (argv.dev) {
     if (validate(inputDataInternal)) {
         console.log('Internal custom  element manifest is validated successfully');
     } else {
@@ -61,7 +61,7 @@ if (validate(inputDataExternal)) {
     fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
     fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
 } else {
-    if (argv.ui5package) {
+    if (argv.dev) {
         throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
     }
 }
