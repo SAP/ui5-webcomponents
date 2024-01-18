@@ -3,7 +3,7 @@ import Orientation from "../types/Orientation.js";
 
 const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
 	let shortestDist = Number.POSITIVE_INFINITY,
-		closestElement: Element | null = null;
+		closestElement: HTMLElement | null = null;
 
 	// determine which element is most closest to the point
 	for (let i = 0; i < elements.length; i++) {

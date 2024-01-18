@@ -475,7 +475,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _onTabStripClick(e: Event) {
+	_onTabStripClick(e: Event) {
 		const tab = getTab(e.target as HTMLElement);
 		if (!tab || tab._realTab.disabled) {
 			return;
@@ -489,21 +489,41 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
-			this._setPopoverItems(tab._realTab.subTabs);
-			this.responsivePopover = await this._respPopover();
-
-			if (this.responsivePopover.opened) {
-				this.responsivePopover.close();
-			} else {
-				this._setPopoverInitialFocus();
-			}
-
-			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef()!);
+		if (this._isSingleClickTab(tab)) {
+			this._togglePopover(tab, tab._realTab.subTabs);
 			return;
 		}
 
 		this._onHeaderItemSelect(tab);
+	}
+
+	_isSingleClickTab(tab: Tab) {
+		return !tab._realTab._hasOwnContent && tab._realTab.tabs.length;
+	}
+
+	async _togglePopover(opener: HTMLElement, items: Array<ITab>, setInitialFocus = false) {
+		this.responsivePopover = await this._respPopover();
+
+		if (this.responsivePopover.isOpen()) {
+			this.responsivePopover.close();
+		} else {
+			this._showPopoverAt(opener, items, setInitialFocus);
+		}
+	}
+
+	async _showPopoverAt(opener: HTMLElement, items: Array<ITab>, setInitialFocus = false) {
+		this._setPopoverItems(items);
+		this.responsivePopover = await this._respPopover();
+
+		if (this.responsivePopover.isOpen() && this.responsivePopover._opener !== opener) {
+			this.responsivePopover.close();
+		}
+
+		if (setInitialFocus) {
+			this._setPopoverInitialFocus();
+		}
+
+		this.responsivePopover.showAt(opener);
 	}
 
 	getPopoverOpenerItems(opener?: HTMLElement) {
@@ -528,7 +548,7 @@ class TabContainer extends UI5Element {
 		return (_opener as Tab)._realTab.subTabs;
 	}
 
-	async _onTabExpandButtonClick(e: Event) {
+	_onTabExpandButtonClick(e: Event) {
 		e.stopPropagation();
 		e.preventDefault();
 
@@ -550,15 +570,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._setPopoverItems(tabInstance.subTabs);
-		this.responsivePopover = await this._respPopover();
-
-		if (this.responsivePopover.isOpen()) {
-			this.responsivePopover.close();
-		} else {
-			this._setPopoverInitialFocus();
-		}
-		this.responsivePopover.showAt(button);
+		this._togglePopover(button, tabInstance.subTabs, true);
 	}
 
 	_setPopoverInitialFocus() {
@@ -765,7 +777,7 @@ class TabContainer extends UI5Element {
 		return slideUp(element).promise();
 	}
 
-	async _onOverflowClick(e: Event) {
+	_onOverflowClick(e: Event) {
 		if ((e.target as HTMLElement).classList.contains("ui5-tc__overflow")) {
 			// the empty area in the overflow was clicked
 			return;
@@ -773,7 +785,7 @@ class TabContainer extends UI5Element {
 
 		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
-		this._setPopoverItems(this.getPopoverOpenerItems(<Button>overflow.querySelector("[ui5-button]")));
+		// this._setPopoverItems(this.getPopoverOpenerItems(<Button>overflow.querySelector("[ui5-button]")));
 
 		let opener;
 		if (isEndOverflow) {
@@ -782,13 +794,7 @@ class TabContainer extends UI5Element {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
-		this.responsivePopover = await this._respPopover();
-		if (this.responsivePopover.opened) {
-			this.responsivePopover.close();
-		} else {
-			this._setPopoverInitialFocus();
-			this.responsivePopover.showAt(opener);
-		}
+		this._togglePopover(opener, this.getPopoverOpenerItems(<Button>overflow.querySelector("[ui5-button]")), true);
 	}
 
 	_addStyleIndent(tabs: Array<ITab>) {
@@ -810,7 +816,7 @@ class TabContainer extends UI5Element {
 		});
 	}
 
-	async _onOverflowKeyDown(e: KeyboardEvent) {
+	_onOverflowKeyDown(e: KeyboardEvent) {
 		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
 		const isStartOverflow = overflow.classList.contains("ui5-tc__overflow--start");
@@ -818,7 +824,7 @@ class TabContainer extends UI5Element {
 		if (isDown(e) || (isStartOverflow && isLeft(e)) || (isEndOverflow && isRight(e))) {
 			e.stopPropagation();
 			e.preventDefault();
-			await this._onOverflowClick(e);
+			this._onOverflowClick(e);
 		}
 	}
 
@@ -1189,33 +1195,52 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderDragOver(e: DragEvent) {
-		const draggedElement = (e.target as HTMLElement)?.closest(`[role="tab"]`);
+		let dropTarget: HTMLElement | null;
 		const dropIndicator = this.dropIndicatorDOM;
-		if (!draggedElement) {
+		let opener;
+		let showPopover = false;
+
+		if (e.target === this._getEndOverflowBtnDOM()) {
+			dropTarget = this._getEndOverflowBtnDOM()!;
+			opener = dropTarget;
+			showPopover = true;
+		} else {
+			dropTarget = (e.target as HTMLElement)?.closest(`[role="tab"]`);
+			// the tab past this point qualifies to be dropped.
+			// calling prevent default allows the drop event to fire later
+			e.preventDefault();
+
+			const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
+			const found = getElementAtCoordinate(
+				tabs,
+				e.clientX,
+				Orientation.Horizontal,
+			);
+
+			if (!found) {
+				return;
+			}
+
+			opener = getTab(found.closestElement) as Tab;
+
+			// draw drop indicator
+			dropIndicator.show();
+			dropIndicator.target = found.closestElement.id;
+			dropIndicator.placement = found.dropPlacement;
+
+			if (opener._realTab.subTabs.length) {
+				showPopover = true;
+			}
+		}
+
+		if (!dropTarget) {
 			dropIndicator.target = "";
 			return;
 		}
 
-		// the tab past this point qualifies to be dropped.
-		// calling prevent default allows the drop event to fire later
-		e.preventDefault();
-
-		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
-		const found = getElementAtCoordinate(
-			tabs,
-			e.clientX,
-			Orientation.Horizontal,
-		);
-
-		if (!found) {
-			return;
+		if (showPopover) {
+			this._showPopoverAt(opener, this.getPopoverOpenerItems(opener));
 		}
-
-		// draw drop indicator
-		this.dropIndicatorDOM.show();
-
-		dropIndicator.target = found.closestElement.id;
-		dropIndicator.placement = found.dropPlacement;
 	}
 
 	_onHeaderDrop(e: DragEvent) {
@@ -1259,7 +1284,8 @@ class TabContainer extends UI5Element {
 				index: droppedTabIndex,
 			},
 			destination: {
-				element: this, // todo: support nesting
+				// eslint-disable-next-line no-warning-comments
+				element: this, // TODO: support nesting
 				index: targetTabIndex,
 				dropPlacement: result.dropPlacement,
 			},
@@ -1268,6 +1294,36 @@ class TabContainer extends UI5Element {
 		droppedTab.focus();
 		this.dropIndicatorDOM.hide();
 		(this.responsivePopover?.querySelector("[ui5-list]") as List).dropIndicatorDOM.hide();
+	}
+
+	_onPopoverDrop(e: DragEvent) {
+		// const listItem = e.target;
+		// TODO: Only handle drop from header ot list, avoid handling if item-reorder event from the list is fired
+		// TODO: or let the list handle drop from another container?
+		if (!e.dataTransfer) {
+			return;
+		}
+
+		const id = e.dataTransfer.getData("text/plain");
+		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]`)] as Array<Tab>;
+		const droppedTab = tabs.find(item => item.id === id)!._realTab;
+		const droppedTabIndex = this.items.indexOf(droppedTab);
+
+		let dropIn;
+		const targetTabIndex = this.items.indexOf(((e.target as HTMLElement)!.closest("[ui5-li-custom]") as Tab)._realTab);
+		const dropPlacement = DropPlacement.After;
+
+		this.fireEvent("tab-reorder", {
+			source: {
+				element: droppedTab,
+				index: droppedTabIndex,
+			},
+			destination: {
+				element: dropIn || this, // TODO: support nesting
+				index: targetTabIndex,
+				dropPlacement,
+			},
+		});
 	}
 
 	_onReorderItemsInPopover(e: CustomEvent<ListItemsReorderEventDetail>) {
