@@ -54,7 +54,7 @@ type WheelSliderSelectEventDetail = { value: string };
  * @public
  * @param {string} value The selected value.
  */
-@event("select", {
+@event<WheelSliderSelectEventDetail>("select", {
 	detail: {
 		/**
 		 * @public

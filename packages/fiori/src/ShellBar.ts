@@ -184,7 +184,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event("notifications-click", {
+@event<ShellBarNotificationsClickEventDetail>("notifications-click", {
 	detail: {
 		/**
 		 * @public
@@ -199,7 +199,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event("profile-click", {
+@event<ShellBarProfileClickEventDetail>("profile-click", {
 	detail: {
 		/**
 		 * @public
@@ -216,7 +216,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event("product-switch-click", {
+@event<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 	detail: {
 		/**
 		 * @public
@@ -232,7 +232,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event("logo-click", {
+@event<ShellBarLogoClickEventDetail>("logo-click", {
 	detail: {
 		/**
 		 * @public
@@ -248,7 +248,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event("co-pilot-click", {
+@event<ShellBarCoPilotClickEventDetail>("co-pilot-click", {
 	detail: {
 		/**
 		 * @public
@@ -265,7 +265,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event("menu-item-click", {
+@event<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 	detail: {
 		/**
 		 * @public

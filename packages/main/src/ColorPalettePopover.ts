@@ -73,7 +73,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  * @public
  * @param {string} color the selected color
  */
-@event("item-click", {
+@event<ColorPalettePopoverItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public
