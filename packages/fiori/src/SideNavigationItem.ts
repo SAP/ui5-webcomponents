@@ -168,7 +168,15 @@ class SideNavigationItem extends SideNavigationItemBase {
 		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	_onmouseout = () => {
+	_onmouseenter = () => {
+		if (!this.sideNavigation?.collapsed) {
+			return;
+		}
+
+		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+	}
+
+	_onmouseleave = () => {
 		if (!this.sideNavigation?.collapsed || !this._selected) {
 			return;
 		}

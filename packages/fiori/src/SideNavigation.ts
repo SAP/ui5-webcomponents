@@ -603,7 +603,7 @@ class SideNavigation extends UI5Element {
 		return result;
 	}
 
-	_selectItem(item: SideNavigationItemBase) {
+	async _selectItem(item: SideNavigationItemBase) {
 		if (item.disabled) {
 			return;
 		}
@@ -620,6 +620,9 @@ class SideNavigation extends UI5Element {
 		});
 
 		item.selected = true;
+
+		await renderFinished();
+		item.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
 
 		if (this.collapsed && item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
 			item.getDomRef().classList.remove("ui5-sn-item-hidden");
