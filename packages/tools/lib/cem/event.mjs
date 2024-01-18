@@ -11,7 +11,8 @@ import {
 	findAllTags,
 	getReference,
 	normalizeDescription,
-	normalizeTagType
+	normalizeTagType,
+	getJSDocErrors
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
@@ -55,8 +56,9 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 };
 
 function processEvent(ts, event, classNode, moduleDoc) {
+	const name = event?.expression?.arguments?.[0]?.text;
 	const result = {
-		name: event?.expression?.arguments?.[0]?.text,
+		name,
 		_ui5privacy: "private",
 		type: { text: "CustomEvent" }
 	};
@@ -69,7 +71,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 
 	const eventParsedComment = parse(comment, { spacing: 'preserve' })[0];
 
-	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text, moduleDoc);
+	validateJSDocComment("event", eventParsedComment, name, moduleDoc);
 
 	const deprecatedTag = findTag(eventParsedComment, "deprecated");
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
@@ -79,6 +81,14 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
+
+	if (event?.expression?.arguments?.[1] && !event?.expression?.typeArguments) {
+		const JSDocErrors = getJSDocErrors();
+
+		JSDocErrors.push(
+			`=== ERROR: Problem found with ${name}'s description in ${moduleDoc.path}: \n\t- Event details have to be described with type via generics type passed to the decorator ( @event<TypeForDetails>("example-name", {details}) ) `
+		);
+	}
 
 	result.description = description;
 	result._ui5allowPreventDefault = allowPreventDefault;
