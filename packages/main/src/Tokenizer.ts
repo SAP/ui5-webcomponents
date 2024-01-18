@@ -199,7 +199,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._nMoreCount = this.overflownTokens.length;
 		this._tokensCount = this._getTokens().length;
 
 		this._tokens.forEach(token => {
@@ -271,6 +270,8 @@ class Tokenizer extends UI5Element {
 	}
 
 	async onAfterRendering() {
+		this._nMoreCount = this.overflownTokens.length;
+
 		if (!this._getTokens().length) {
 			const popover = await this.getPopover();
 			popover.close();
