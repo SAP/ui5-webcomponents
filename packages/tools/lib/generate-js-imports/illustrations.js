@@ -21,12 +21,12 @@ const generateAvailableIllustrationsArray = (fileNames, exclusionPatterns = []) 
   );
 };
 
-const generateDynamicImportsFileContent = (dynamicImports, availableIllustrations, collection, prefix = "") => {
+const generateDynamicImportsFileContent = (dynamicImports, availableIllustrations, collection, set, prefix = "") => {
   return `// @ts-nocheck
   import { registerIllustrationLoader } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 
 export const loadIllustration = async (illustrationName) => {
-  const collectionAndPrefix = "${collection}/${prefix}";
+  const collectionAndPrefix = "${set}/${collection}/${prefix}";
   const cleanIllustrationName = illustrationName.startsWith(collectionAndPrefix) ? illustrationName.replace(collectionAndPrefix, "") : illustrationName;
   switch (cleanIllustrationName) {
 ${dynamicImports}
@@ -41,7 +41,7 @@ const loadAndCheck = async (illustrationName) => {
 };
 
 ${availableIllustrations}.forEach((illustrationName) =>
-  registerIllustrationLoader(\`${collection}/${prefix}\${illustrationName}\`, loadAndCheck)
+  registerIllustrationLoader(\`${set}/${collection}/${prefix}\${illustrationName}\`, loadAndCheck)
 );
 `;
 };
@@ -52,7 +52,7 @@ const getMatchingFiles = async (folder, pattern) => {
 };
 
 const generateIllustrations = async (config) => {
-  const { inputFolder, outputFile, collection, location, prefix, filterOut } = config;
+  const { inputFolder, outputFile, collection, location, prefix, filterOut, set } = config;
 
   const normalizedInputFolder = path.normalize(inputFolder);
   const normalizedOutputFile = path.normalize(outputFile);
@@ -62,7 +62,7 @@ const generateIllustrations = async (config) => {
   const dynamicImports = await generateDynamicImportLines(illustrations, location, filterOut);
   const availableIllustrations = generateAvailableIllustrationsArray(illustrations, filterOut);
 
-  const contentDynamic = generateDynamicImportsFileContent(dynamicImports, availableIllustrations, collection, prefix);
+  const contentDynamic = generateDynamicImportsFileContent(dynamicImports, availableIllustrations, collection, set, prefix);
 
   await fs.mkdir(path.dirname(normalizedOutputFile), { recursive: true });
   await fs.writeFile(normalizedOutputFile, contentDynamic);
@@ -74,10 +74,10 @@ const generateIllustrations = async (config) => {
 const config = {
   inputFolder: process.argv[2],
   outputFile: process.argv[3],
-  collection: process.argv[4],
-  location: process.argv[5],
-  prefix: process.argv[6],
-  filterOut: process.argv.slice(7),
+  set: process.argv[4],
+  collection: process.argv[5],
+  location: process.argv[6],
+  filterOut: process.argv.slice[7],
 };
 
 // Run the generation process

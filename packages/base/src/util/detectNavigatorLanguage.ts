@@ -1,6 +1,6 @@
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
-export default () => {
+const detectNavigatorLanguage = () => {
 	const browserLanguages = navigator.languages;
 
 	const navigatorLanguage = () => {
@@ -11,3 +11,5 @@ export default () => {
 
 	return rawLocale || DEFAULT_LANGUAGE;
 };
+
+export default detectNavigatorLanguage;
