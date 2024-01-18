@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import wrapUnsafeHTML from "../../../utils/wrapUnsafeHTML";
 import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -32,13 +32,13 @@ const Template: UI5StoryArgs<TabContainer, StoryArgsSlots> = (args) => {
 	content-background-design="${ifDefined(args.contentBackgroundDesign)}"
 	tabs-placement="${ifDefined(args.tabsPlacement)}"
 >
-	${unsafeHTML(args.default)}
+	${wrapUnsafeHTML(args.default)}
 </ui5-tabcontainer>`;
 };
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: `<ui5-tab icon="menu" text="Tab 1">
+	default: `<ui5-tab icon="menu text="Tab 1">
 	<ui5-label>Quibusdam, veniam! Architecto debitis iusto ad et, asperiores quisquam perferendis reprehenderit ipsa voluptate minus minima, perspiciatis cum. Totam harum necessitatibus numquam voluptatum.</ui5-label>
 </ui5-tab>
 <ui5-tab icon="activities" text="Tab 2" selected>
