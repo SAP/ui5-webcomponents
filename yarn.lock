@@ -2851,10 +2851,10 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@sap-theming/theming-base-content@11.9.0":
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.9.0.tgz#bd46458c7ed58cfb23e4e0ec620c9780a5711a5b"
-  integrity sha512-EOAYDx13SU9Wd18qgAR+FYTrywC5dk+IU3oM5NGAz0GxJLpiGQkSONYnAMJK/Gqk9QhU7uqWQsjrcnOcOl0fxA==
+"@sap-theming/theming-base-content@11.10.0":
+  version "11.10.0"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.10.0.tgz#214c5a4886149c6e9f9faa880c4a1ed101d51531"
+  integrity sha512-MPGq5pivR+MLzchyZTXwu+VM6ZAekaPxiMnEHYHTG3uorTpBzaW+JhP8mqV+yGD3mpIUuomjbBeWbedTHnB2nw==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
