@@ -83,6 +83,7 @@
 				);
 			} else if (destination.dropPlacement === "After") {
 				const insertAfterElement = destination.element.children[destination.index + 1] || null;
+				
 				destination.element.insertBefore(
 					source.element,
 					insertAfterElement

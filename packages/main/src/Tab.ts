@@ -249,7 +249,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _effectiveDraggable() {
-		return this._draggable || null;
+		return this._realTab._draggable || null;
 	}
 
 	/**

@@ -53,6 +53,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
+import DropPlacement from "./types/DropPlacement.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -86,6 +87,18 @@ type ListItemToggleEventDetail = {
 
 type ListItemClickEventDetail = {
 	item: ListItemBase,
+}
+
+type ListItemsReorderEventDetail = {
+	source: {
+		element: ListItemBase,
+		index: number,
+	},
+	destination: {
+		element: List,
+		index: number,
+		dropPlacement: DropPlacement,
+	}
 }
 
 /**
@@ -1197,7 +1210,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("item-reorder", {
+		this.fireEvent<ListItemsReorderEventDetail>("item-reorder", {
 			source: {
 				element: droppedItem,
 				index: droppedItemIndex,
@@ -1227,4 +1240,5 @@ export type {
 	ListItemCloseEventDetail,
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
+	ListItemsReorderEventDetail,
 };
