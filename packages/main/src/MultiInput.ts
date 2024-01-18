@@ -80,7 +80,7 @@ type MultiInputTokenDeleteEventDetail = {
  * @param {HTMLElement} token deleted token.
  * @public
  */
-@event("token-delete", {
+@event<MultiInputTokenDeleteEventDetail>("token-delete", {
 	detail: {
 		/**
 		 * @public

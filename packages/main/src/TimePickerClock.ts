@@ -98,7 +98,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  * @param { string } stringValue The new <code>value</code> of the clock, as string, zero-prepended when necessary.
  * @param { boolean } finalChange <code>true</code> when a value is selected and confirmed, <code>false</code> when a value is only selected but not confirmed.
  */
-@event("change", {
+@event<TimePickerClockChangeEventDetail>("change", {
 	detail: {
 		/**
 		 * @public

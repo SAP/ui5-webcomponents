@@ -141,7 +141,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * @public
  * @allowPreventDefault
  */
-@event("tab-select", {
+@event<TabContainerTabSelectEventDetail>("tab-select", {
 	detail: {
 		/**
 		 * @public

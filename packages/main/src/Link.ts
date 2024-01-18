@@ -84,7 +84,7 @@ type LinkClickEventDetail = {
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event("click", {
+@event<LinkClickEventDetail>("click", {
 	detail: {
 		/**
 		 * @public

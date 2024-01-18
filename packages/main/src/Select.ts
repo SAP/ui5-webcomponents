@@ -160,7 +160,7 @@ type SelectLiveChangeEventDetail = {
  * @param {IOption} selectedOption the selected option.
  * @public
  */
-@event("change", {
+@event<SelectChangeEventDetail>("change", {
 	detail: {
 		/**
 		* @public
@@ -176,7 +176,7 @@ type SelectLiveChangeEventDetail = {
  * @public
  * @since 1.17.0
  */
-@event("live-change", {
+@event<SelectLiveChangeEventDetail>("live-change", {
 	detail: {
 		/**
 		* @public

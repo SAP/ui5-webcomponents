@@ -4,6 +4,7 @@ import {
 	getDeprecatedStatus,
 	getSinceStatus,
 	getType,
+	getTypeRefs,
 	validateJSDocComment,
 	hasTag,
 	findTag,
@@ -84,6 +85,16 @@ function processEvent(ts, event, classNode, moduleDoc) {
 
 	if (native) {
 		result.type = { text: "Event" };
+	} else if (event?.expression?.typeArguments) {
+		const typesText = event?.expression?.typeArguments.map(type => type.typeName?.text).filter(Boolean).join(" | ");
+		const typeRefs = (getTypeRefs(ts, event.expression)
+			?.map(e => getReference(ts, e, event, moduleDoc.path)).filter(Boolean)) || [];
+
+		result.type = { text: `CustomEvent<${typesText}>` };
+
+		if (typeRefs.length) {
+			result.type.references = typeRefs;
+		}
 	}
 
 	if (privacy) {

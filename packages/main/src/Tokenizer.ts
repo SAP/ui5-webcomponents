@@ -121,10 +121,7 @@ enum ClipboardDataOperation {
 	},
 })
 
-@event("before-more-popover-open", {
-	detail: {},
-})
-
+@event("before-more-popover-open")
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;

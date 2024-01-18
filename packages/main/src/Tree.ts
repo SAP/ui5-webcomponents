@@ -112,7 +112,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @allowPreventDefault
  * @public
  */
-@event("item-toggle", {
+@event<TreeItemToggleEventDetail>("item-toggle", {
 	detail: {
 		/**
 		 * @public
@@ -126,7 +126,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @since 1.0.0-rc.16
  * @public
  */
-@event("item-mouseover", {
+@event<TreeItemMouseoverEventDetail>("item-mouseover", {
 	detail: {
 		/**
 		 * @public
@@ -140,7 +140,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @since 1.0.0-rc.16
  * @public
  */
-@event("item-mouseout", {
+@event<TreeItemMouseoutEventDetail>("item-mouseout", {
 	detail: {
 		/**
 		 * @public
@@ -155,7 +155,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item The clicked item.
  * @public
  */
-@event("item-click", {
+@event<TreeItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public
@@ -173,7 +173,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item the deleted item.
  * @public
  */
-@event("item-delete", {
+@event<TreeItemDeleteEventDetail>("item-delete", {
 	detail: {
 		/**
 		 * @public
@@ -191,7 +191,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} targetItem The item triggering the event.
  * @public
  */
-@event("selection-change", {
+@event<TreeSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public

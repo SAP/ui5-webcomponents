@@ -82,7 +82,7 @@ type ColorPaletteItemClickEventDetail = {
  * @since 1.0.0-rc.15
  * @param {string} color the selected color
  */
-@event("item-click", {
+@event<ColorPaletteItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public

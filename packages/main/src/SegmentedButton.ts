@@ -63,7 +63,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
  * @public
  */
-@event("selection-change", {
+@event<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public

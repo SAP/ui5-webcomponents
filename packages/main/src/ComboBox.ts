@@ -192,7 +192,7 @@ type ComboBoxSelectionChangeEventDetail = {
  * @param {IComboBoxItem} item item to be selected.
  * @public
  */
-@event("selection-change", {
+@event<ComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		* @public
