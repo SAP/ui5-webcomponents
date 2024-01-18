@@ -307,10 +307,16 @@ export interface Attribute {
   deprecated?: boolean | string;
 }
 
-export type EnumDeclaration = ClassDeclaration;
-export type InterfaceDeclaration = ClassDeclaration;
+export interface EnumDeclaration extends ClassDeclaration {
+  kind: "enum"
+};
+
+export interface InterfaceDeclaration extends ClassDeclaration {
+  kind: "interface"
+}
 
 export interface Event {
+  _ui5package?: string;
   _ui5parameters?: Parameter[]
   _ui5privacy?: Privacy
   /**
@@ -556,6 +562,7 @@ export interface ClassLike {
 }
 
 export interface ClassDeclaration extends ClassLike {
+  _ui5package?: string;
   kind: 'class';
 }
 
@@ -694,6 +701,7 @@ export interface ClassMethod extends FunctionLike {
  * ```
  */
 export interface MixinDeclaration extends ClassLike, FunctionLike {
+  _ui5package?: string;
   kind: 'mixin';
 }
 
@@ -707,12 +715,13 @@ export interface CustomElementMixinDeclaration
   CustomElement { }
 
 export interface VariableDeclaration extends PropertyLike {
+  _ui5package?: string;
   kind: 'variable';
   source?: SourceReference;
 }
 
 export interface FunctionDeclaration extends FunctionLike {
-  _ui5package?: string
+  _ui5package?: string;
   /**
    * Marks when the field was introduced
    */
