@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+
+### Features
+
+* update tnt/icons to v3.5 ([#8098](https://github.com/SAP/ui5-webcomponents/issues/8098)) ([745a9fa](https://github.com/SAP/ui5-webcomponents/commit/745a9faadcd484b49ace8bf24df47d0c892e43ec))
+
+
+
+
+
 # [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-tnt

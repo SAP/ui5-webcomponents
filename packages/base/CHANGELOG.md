@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+
+### Features
+
+* **illustration:** use illustration name as default module export ([#8074](https://github.com/SAP/ui5-webcomponents/issues/8074)) ([a9c0705](https://github.com/SAP/ui5-webcomponents/commit/a9c07055d4e06e4d1f69b7a2a48b36eb77fae4aa))
+
+
+
+
+
 # [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
