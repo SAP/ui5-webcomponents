@@ -440,14 +440,15 @@ export default {
 					}
 				})
 			},
-			packageLinkPhase({ customElementsManifest }) {
-				// Uncomment and handle errors appropriately
-				// const JSDocErrors = getJSDocErrors();
-				// if (JSDocErrors.length > 0) {
-				// 	console.log(JSDocErrors.join("\n"));
-				// 	console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-				// 	throw new Error(`Invalid JSDoc.`);
-				// }
+			packageLinkPhase({ customElementsManifest, context }) {
+				if (context.dev) {
+					const JSDocErrors = getJSDocErrors();
+					if (JSDocErrors.length > 0) {
+						console.log(JSDocErrors.join("\n"));
+						console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
+						throw new Error(`Invalid JSDoc.`);
+					}
+				}
 
 				customElementsManifest.modules?.forEach(m => {
 					m.path = m.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
