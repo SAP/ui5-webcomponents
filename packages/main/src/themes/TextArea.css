@@ -160,6 +160,7 @@
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
+	overflow-y: auto;
 }
 
 :host([style*="height"]) .ui5-textarea-root,
