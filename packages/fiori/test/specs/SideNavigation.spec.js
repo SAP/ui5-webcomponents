@@ -250,10 +250,11 @@ describe("Component Behavior", () => {
 			
 	
 			// Act: apply new height
-			await browser.setWindowSize(500, 350);
+			await browser.setWindowSize(500, 450);
 	
 			// Check
 			const overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
+			await overflowItem.waitForDisplayed();
 			assert.ok(await overflowItem.isDisplayed(), "Overflow button should be available");
 
 			// Act: apply new height
