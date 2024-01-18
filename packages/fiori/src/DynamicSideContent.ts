@@ -123,7 +123,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
  */
-@event("layout-change", {
+@event<DynamicSideContentLayoutChangeEventDetail>("layout-change", {
 	detail: {
 		/**
 		 * @public

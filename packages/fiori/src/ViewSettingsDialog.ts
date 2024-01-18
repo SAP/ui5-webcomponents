@@ -131,7 +131,7 @@ type VSDInternalSettings = {
  * @param {Array} filters The selected filters items.
  * @public
  */
-@event("confirm", {
+@event<ViewSettingsDialogConfirmEventDetail>("confirm", {
 	detail: {
 		/**
 		 * @public
@@ -166,7 +166,7 @@ type VSDInternalSettings = {
  * @param {Array} filters The selected filters items.
  * @public
  */
-@event("cancel", {
+@event<ViewSettingsDialogCancelEventDetail>("cancel", {
 	detail: {
 		/**
 		 * @public

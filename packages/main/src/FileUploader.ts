@@ -84,7 +84,7 @@ type FileUploaderChangeEventDetail = {
  * @param {FileList | null} files The current files.
  * @public
  */
-@event("change", {
+@event<FileUploaderChangeEventDetail>("change", {
 	detail: {
 		/**
 		 * @public
