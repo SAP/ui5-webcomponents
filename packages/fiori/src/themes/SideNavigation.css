@@ -1,6 +1,20 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	height: 100%;
+	min-width: var(--_ui5_side_navigation_width);
+	width: var(--_ui5_side_navigation_width);
+	max-width: 100%;
+	transition: width 0.3s, min-width 0.3s;
+	border-radius: var(--_ui5_side_navigation_border_radius);
+}
+
+:host([collapsed]) {
+	min-width: var(--_ui5_side_navigation_collapsed_width);
+	width: var(--_ui5_side_navigation_collapsed_width);
+}
+
+:host([is-touch-device]) {
+	border-radius: var(--_ui5_side_navigation_phone_border_radius);
 }
 
 .ui5-sn-root {
@@ -10,25 +24,10 @@
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
-
 	background: var(--sapList_Background);
 	border-inline-end: var(--_ui5_side_navigation_border_right);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
-	border-radius: var(--_ui5_side_navigation_border_radius);
-	min-width: var(--_ui5_side_navigation_width);
-	max-width: 100%;
-	width: var(--_ui5_side_navigation_width);
-	transition: width 0.3s, min-width 0.3s;
-}
-
-:host([collapsed]) .ui5-sn-root {
-	min-width: var(--_ui5_side_navigation_collapsed_width);
-	width: var(--_ui5_side_navigation_collapsed_width);
-}
-
-.ui5-sn-root.ui5-sn-phone .ui5-sn-root,
-.ui5-sn-root.ui5-sn-tablet:not(.ui5-sn-combi) .ui5-sn-root {
-	border-radius:  var(--_ui5_side_navigation_phone_border_radius);
+	border-radius: inherit;
 }
 
 .ui5-sn-spacer {
