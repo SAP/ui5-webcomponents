@@ -132,7 +132,7 @@ type NavigationMenuClickEventDetail = {
  * @allowPreventDefault
  * @public
  */
-@event<NavigationMenuClickEventDetail>("selection-change", {
+@event<SideNavigationSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
