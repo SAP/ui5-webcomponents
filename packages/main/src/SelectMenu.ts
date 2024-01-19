@@ -74,7 +74,7 @@ type SelectMenuChange = {
 		Button,
 	],
 })
-@event("option-click", {
+@event<SelectMenuOptionClick>("option-click", {
 	detail: {
 		option: { type: HTMLElement },
 		optionIndex: { type: Integer },
@@ -83,7 +83,7 @@ type SelectMenuChange = {
 @event("before-open")
 @event("after-open")
 @event("after-close")
-@event("menu-change", {
+@event<SelectMenuChange>("menu-change", {
 	detail: {
 		text: { type: String },
 		selectedIndex: { type: Integer },

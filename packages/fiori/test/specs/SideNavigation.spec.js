@@ -247,12 +247,14 @@ describe("Component Behavior", () => {
 			await sideNavigation.setProperty("collapsed", true);
 
 			// Act: apply new height
-			await browser.setWindowSize(500, 300);
+			await browser.setWindowSize(500, 450);
 
 			// Check
 			let sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
 			let overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
 
+			// Check
+			await overflowItem.waitForDisplayed();
 			assert.ok(await overflowItem.isDisplayed(), "Overflow button should be available");
 
 			// Act: apply new height

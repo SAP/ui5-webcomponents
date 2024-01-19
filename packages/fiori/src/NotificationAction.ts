@@ -26,7 +26,7 @@ type NotificationActionClickEventDetail = {
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
-@event("click", {
+@event<NotificationActionClickEventDetail>("click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},
