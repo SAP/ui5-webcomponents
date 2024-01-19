@@ -1,0 +1,5 @@
+@import "../base/Badge-parameters.css";
+
+:root {
+	--ui5-badge-text-shadow: var(--sapContent_ContrastTextShadow);
+}
