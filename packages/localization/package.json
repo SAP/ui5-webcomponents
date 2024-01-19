@@ -40,8 +40,7 @@
   },
   "resolutions": {
     "amd-to-es6/acorn": "^8.11.3",
-    "falafel/acorn": "^8.11.3",
-    "*/acorn": "^8.11.3"
+    "**/acorn": "^8.11.3"
   },
   "dependencies": {
     "@types/openui5": "^1.113.0",
