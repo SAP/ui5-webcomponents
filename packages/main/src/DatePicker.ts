@@ -222,7 +222,7 @@ type DatePickerInputEventDetail = {
 	},
 })
 /**
- * Fired before the value state of the component is updated.
+ * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
  *
@@ -230,7 +230,7 @@ type DatePickerInputEventDetail = {
  * @public
  * @param {boolean} isValid Indicates whether the current value of the component is considered valid.
  */
-@event("value-state-change", {
+@event<ValueStateChangeEventDetail>("value-state-change", {
 	detail: {
 		/**
 		 * @public
@@ -240,7 +240,6 @@ type DatePickerInputEventDetail = {
 		},
 	},
 })
-
 class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Defines a formatted date value.
@@ -567,14 +566,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_updateValueState() {
 		const isValid = this._checkValueValidity(this.value);
-		const eventPrevented = !this.fireEvent<ValueStateChangeEventDetail>("value-state-change", { isValid }, true);
+		const newValueState = isValid ? ValueState.None : ValueState.Error;
 
-		if (!eventPrevented) {
-			if (isValid && this.valueState === ValueState.Error) { // If not valid - always set Error regardless of the current value state
-				this.valueState = ValueState.None;
-			} else if (!isValid) { // However if valid, change only Error (but not the others) to None
-				this.valueState = ValueState.Error;
-			}
+		if (this.valueState !== newValueState) {
+			const eventPrevented = !this.fireEvent<ValueStateChangeEventDetail>("value-state-change", { isValid }, true);
+			this.valueState = eventPrevented ? this.valueState : newValueState;
 		}
 	}
 
