@@ -589,4 +589,12 @@ describe("List Tests", () => {
 	
 		assert.equal(newTabIndex , "0", "The tabIndex of the list item root should be '0' when inner element receives focus.");
 	});
+
+	it("End marker has correct CSS properties", async () => {
+		const list = await browser.$(".list_test_page2auto");
+		const endMarker = await list.shadow$(".ui5-list-end-marker");
+		const display = await endMarker.getCSSProperty("display");
+
+		assert.strictEqual(display.value, 'inline-block', "The end marker is displayed");
+	});
 });
