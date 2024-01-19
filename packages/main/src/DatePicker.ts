@@ -60,7 +60,7 @@ type DatePickerChangeEventDetail = {
 }
 
 type ValueStateChangeEventDetail = {
-	isValid: boolean,
+	newValueState: `${ValueState}`,
 }
 
 type DatePickerInputEventDetail = {
@@ -228,15 +228,15 @@ type DatePickerInputEventDetail = {
  *
  * @allowPreventDefault
  * @public
- * @param {boolean} isValid Indicates whether the current value of the component is considered valid.
+ * @param {string} newValueState The new <code>valueState</code> that will be set.
  */
 @event<ValueStateChangeEventDetail>("value-state-change", {
 	detail: {
 		/**
 		 * @public
 		 */
-		isValid: {
-			type: Boolean,
+		newValueState: {
+			type: String,
 		},
 	},
 })
@@ -569,7 +569,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const newValueState = isValid ? ValueState.None : ValueState.Error;
 
 		if (this.valueState !== newValueState) {
-			const eventPrevented = !this.fireEvent<ValueStateChangeEventDetail>("value-state-change", { isValid }, true);
+			const eventPrevented = !this.fireEvent<ValueStateChangeEventDetail>("value-state-change", { newValueState }, true);
 			this.valueState = eventPrevented ? this.valueState : newValueState;
 		}
 	}
