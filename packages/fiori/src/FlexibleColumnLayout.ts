@@ -51,11 +51,11 @@ const BREAKPOINTS = {
 	"TABLET": 1023,
 } as const;
 
-type ColumnLayout = Array<string | number>;
+type FlexibleColumnLayoutColumnLayout = Array<string | number>;
 
 type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	layout: `${FCLLayout}`,
-	columnLayout: ColumnLayout,
+	columnLayout: FlexibleColumnLayoutColumnLayout,
 	startColumnVisible: boolean,
 	midColumnVisible: boolean,
 	endColumnVisible: boolean,
@@ -64,7 +64,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	resize: boolean,
 };
 
-type AccessiblilityTexts = {
+type FlexibleColumnLayoutAccessibilityTexts = {
 	startColumnAccessibleName?: I18nText;
 	startArrowContainerAccessibleName?: I18nText;
 	startArrowLeftText?: I18nText;
@@ -76,7 +76,7 @@ type AccessiblilityTexts = {
 	endArrowLeftText?: I18nText;
 };
 
-type AccessibilityRoles = {
+type FlexibleColumnLayoutAccessibilityRoles = {
 	startColumnRole?: I18nText;
 	midColumnRole?: I18nText;
 	endColumnRole?: I18nText;
@@ -232,7 +232,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @since 1.0.0-rc.11
 	*/
 	@property({ type: Object })
-	accessibilityTexts!: AccessiblilityTexts;
+	accessibilityTexts!: FlexibleColumnLayoutAccessibilityTexts;
 
 	/**
 	* An object of strings that defines additional accessibility roles for further customization.
@@ -249,7 +249,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @since 1.1.0
 	*/
 	@property({ type: Object })
-	accessibilityRoles!: AccessibilityRoles;
+	accessibilityRoles!: FlexibleColumnLayoutAccessibilityRoles;
 
 	/**
 	* Defines the component width in px.
@@ -269,7 +269,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @private
 	*/
 	@property({ type: Object, defaultValue: undefined })
-	_columnLayout?: ColumnLayout;
+	_columnLayout?: FlexibleColumnLayoutColumnLayout;
 
 	/**
 	* Defines the visible columns count - 1, 2 or 3.
@@ -479,7 +479,7 @@ class FlexibleColumnLayout extends UI5Element {
 		return this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
-	calcVisibleColumns(colLayout: ColumnLayout) {
+	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
 		return colLayout.filter(colWidth => !this._isColumnHidden(colWidth)).length;
 	}
 
@@ -511,7 +511,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @default undefined
 	* @public
 	*/
-	get columnLayout(): ColumnLayout | undefined {
+	get columnLayout(): FlexibleColumnLayoutColumnLayout | undefined {
 		return this._columnLayout;
 	}
 
@@ -789,4 +789,7 @@ export default FlexibleColumnLayout;
 export type {
 	MEDIA,
 	FlexibleColumnLayoutLayoutChangeEventDetail,
+	FlexibleColumnLayoutAccessibilityTexts,
+	FlexibleColumnLayoutAccessibilityRoles,
+	FlexibleColumnLayoutColumnLayout,
 };
