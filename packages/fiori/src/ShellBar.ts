@@ -49,26 +49,26 @@ import {
 	SHELLBAR_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
-type AccessibilityRoles = {
+type ShellBarAccessibilityRoles = {
 	logoRole?: string;
 };
 
-type AccessibilityTexts = {
+type ShellBarAccessibilityTexts = {
 	logoTitle?: string;
 	profileButtonTitle?: string;
 };
 
-type AccessibilityAttributesValue = {
+type ShellBarAccessibilityAttributesValue = {
 	ariaHasPopup?: string;
 	expanded?: boolean;
 }
 
-type AccessibilityAttributes = {
-	notifications?: AccessibilityAttributesValue;
-	profile?: AccessibilityAttributesValue;
-	product?: AccessibilityAttributesValue;
-	search?: AccessibilityAttributesValue;
-	overflow?: AccessibilityAttributesValue;
+type ShellBarAccessibilityAttributes = {
+	notifications?: ShellBarAccessibilityAttributesValue;
+	profile?: ShellBarAccessibilityAttributesValue;
+	product?: ShellBarAccessibilityAttributesValue;
+	search?: ShellBarAccessibilityAttributesValue;
+	overflow?: ShellBarAccessibilityAttributesValue;
 };
 
 type ShellBarNotificationsClickEventDetail = {
@@ -349,7 +349,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.6.0
 	 */
 	@property({ type: Object })
-	accessibilityRoles!: AccessibilityRoles;
+	accessibilityRoles!: ShellBarAccessibilityRoles;
 
 	/**
 	 * An object of strings that defines several additional accessibility texts
@@ -364,7 +364,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@property({ type: Object })
-	accessibilityTexts!: AccessibilityTexts;
+	accessibilityTexts!: ShellBarAccessibilityTexts;
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values
@@ -394,7 +394,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.10.0
 	 */
 	 @property({ type: Object })
-	 accessibilityAttributes!: AccessibilityAttributes;
+	 accessibilityAttributes!: ShellBarAccessibilityAttributes;
 
 	/**
 	 * @private
@@ -1304,4 +1304,7 @@ export type {
 	ShellBarLogoClickEventDetail,
 	ShellBarCoPilotClickEventDetail,
 	ShellBarMenuItemClickEventDetail,
+	ShellBarAccessibilityAttributes,
+	ShellBarAccessibilityRoles,
+	ShellBarAccessibilityTexts,
 };

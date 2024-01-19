@@ -62,7 +62,7 @@ const getPrivacyStatus = (jsdocComment) => {
     return privacyTag?.tag || "private";
 };
 
-const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
+const findPackageName = (ts, sourceFile, typeName) => {
     const localStatements = [
         ts.SyntaxKind.EnumDeclaration,
         ts.SyntaxKind.InterfaceDeclaration,
@@ -102,7 +102,7 @@ const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
     }
 };
 
-const findImportPath = (ts, sourceFile, typeName, packageJSON, modulePath) => {
+const findImportPath = (ts, sourceFile, typeName, modulePath) => {
     const localStatements = [
         ts.SyntaxKind.EnumDeclaration,
         ts.SyntaxKind.InterfaceDeclaration,
@@ -158,6 +158,8 @@ const normalizeTagType = (type) => {
 	return type?.trim();
 }
 
+const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
 const getReference = (ts, type, classNode, modulePath) => {
     let sourceFile = classNode.parent;
 
@@ -165,20 +167,17 @@ const getReference = (ts, type, classNode, modulePath) => {
         sourceFile = sourceFile.parent;
     }
 
-    const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
-
     const typeName =
         typeof type === "string"
             ? normalizeTagType(type)
             : type.class?.expression?.text ||
             type.typeExpression?.type?.getText() ||
             type.typeExpression?.type?.elementType?.typeName?.text;
-    const packageName = findPackageName(ts, sourceFile, typeName, packageJSON);
+    const packageName = findPackageName(ts, sourceFile, typeName);
     const importPath = findImportPath(
         ts,
         sourceFile,
         typeName,
-        packageJSON,
         modulePath
     )?.replace(`${packageName}/`, "");
 
