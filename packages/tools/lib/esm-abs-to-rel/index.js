@@ -1,5 +1,5 @@
-const esprima = require("esprima");
-const escodegen = require("escodegen");
+const parser = require("@babel/parser");
+const generator = require("@babel/generator").default;
 
 const fs = require("fs").promises;
 const path = require("path");
@@ -8,28 +8,22 @@ const basePath = process.argv[2];
 const convertImports = async (srcPath) => {
 	let changed = false;
 	let code = (await fs.readFile(srcPath)).toString();
+	// console.log("File processing started: ", srcPath);
 
 	if (code.includes("import(")) {
 		// esprima can't parse this, but it's from the project files
 		return;
 	}
 
-	const arr = ["Configuration", "Formatting", "Event", "Eventing", "LanguageTag", "Theming"];
-
-	console.log("File processing started", srcPath)
-	if (arr.some(a => srcPath.includes(a))) {
-		// esprima can't parse es2023. TODO: switch to acorn or similar tool.
-		console.log("Files skipped from processing", srcPath)
-		return;
-	}
-
-	const tree = esprima.parseModule(code);
+	const tree = parser.parse(code, {sourceType: "module"});
 	const importer = srcPath.replace(basePath, "");
 	const importerDir = path.dirname(importer);
-	// console.log("-> ", importer);
-	tree.body.forEach(node => {
+	// console.log("Importer -> ", importer);
+
+	tree?.program?.body?.forEach(node => {
 		if (node.type === "ImportDeclaration") {
 			let importee = node.source.value;
+			console.log(importee);
 			if (importee.startsWith(".")) {
 				// add .js extension if missing
 				if (!importee.endsWith(".js")) {
@@ -57,7 +51,10 @@ const convertImports = async (srcPath) => {
 	});
 
 	if (changed) {
-		return fs.writeFile(srcPath, escodegen.generate(tree));
+		const code = generator(tree).code;
+		// console.log(code);
+
+		return fs.writeFile(srcPath, code);
 	}
 }
 

@@ -18,8 +18,9 @@ const scripts = {
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript",
 	typescript: "tsc -b",
 	integrate: {
-		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
+		default: "nps integrate.copy-used-modules integrate.copy-overlay integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
+		"copy-overlay": `copy-and-watch "overlay/**/*.js" dist/`,
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
 		"amd-to-es6": "amdtoes6 --src=dist/ --replace --glob=**/*.js",
 		"esm-abs-to-rel": `node "${esmAbsToRel}" dist/ dist/`,
@@ -34,8 +35,9 @@ const scripts = {
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
-		default: "nps copy.src",
+		default: "nps copy.src copy.overlay",
 		src: `copy-and-watch "src/**/*.{js,css,d.ts}" dist/`,
+		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,

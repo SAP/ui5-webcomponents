@@ -4,13 +4,15 @@ const basePath = process.argv[2];
 
 const replaceGlobalCoreUsage = async (srcPath) => {
 
-	const original = (await fs.readFile(srcPath)).toString();
-	let replaced = original.replace(/sap\.ui\.getCore\(\)/g, `Core`);
+	if (!srcPath.includes("Configuration"))  {
+		const original = (await fs.readFile(srcPath)).toString();
+		let replaced = original.replace(/sap\.ui\.getCore\(\)/g, `Core`);
 
-	if (original !== replaced) {
-		replaced = `import Core from 'sap/ui/core/Core';
-		${replaced}`;
-		return fs.writeFile(srcPath, replaced);
+		if (original !== replaced) {
+			replaced = `import Core from 'sap/ui/core/Core';
+			${replaced}`;
+			return fs.writeFile(srcPath, replaced);
+		}
 	}
 };
 
