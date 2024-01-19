@@ -9,6 +9,7 @@ import DropIndicatorTemplate from "./generated/templates/DropIndicatorTemplate.l
 
 // Styles
 import DropIndicatorCss from "./generated/themes/DropIndicator.css.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 /**
  * @class
@@ -62,6 +63,15 @@ class DropIndicator extends UI5Element {
 	@property()
 	target!: string;
 
+	/**
+	 * Defines the id of the element where the drop indicator will be shown.
+	 *
+	 * @default ""
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: Number.POSITIVE_INFINITY })
+	maxNestingLevel!: number;
+
 	@property({ type: Object, defaultValue: undefined })
 	_owner!: Node;
 
@@ -107,6 +117,11 @@ class DropIndicator extends UI5Element {
 		} = container.getBoundingClientRect();
 
 		let position = 0;
+		const style = {
+			[this._positionProperty]: "",
+			width: "",
+			height: "",
+		};
 
 		if (this.orientation === Orientation.Vertical) {
 			switch (this.placement) {
@@ -114,7 +129,8 @@ class DropIndicator extends UI5Element {
 				position = left;
 				break;
 			case DropPlacement.On:
-				position = left + width / 2;
+				style.width = `${width}px`;
+				position = left;
 				break;
 			case DropPlacement.After:
 				position = right;
@@ -128,7 +144,8 @@ class DropIndicator extends UI5Element {
 				position = top;
 				break;
 			case DropPlacement.On:
-				position = top + height / 2;
+				style.height = `${height}px`;
+				position = top;
 				break;
 			case DropPlacement.After:
 				position = bottom;
@@ -138,7 +155,11 @@ class DropIndicator extends UI5Element {
 			position -= containerTop;
 		}
 
-		this.style[this._positionProperty] = `${position}px`;
+		style[this._positionProperty] = `${position}px`;
+		style.height = `${height}px`;
+		style.width = `${width}px`;
+
+		Object.assign(this.style, style);
 	}
 
 	hide() {
@@ -147,6 +168,15 @@ class DropIndicator extends UI5Element {
 
 	show() {
 		this.style.display = "";
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-di-rect": this.placement === DropPlacement.On,
+				"ui5-di-needle": this.placement !== DropPlacement.On,
+			},
+		};
 	}
 }
 

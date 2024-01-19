@@ -1,7 +1,7 @@
 import DropPlacement from "../types/DropPlacement.js";
 import Orientation from "../types/Orientation.js";
 
-const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
+const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation, maxNestingLevel = Number.POSITIVE_INFINITY) => {
 	let shortestDist = Number.POSITIVE_INFINITY,
 		closestElement: HTMLElement | null = null;
 
@@ -32,16 +32,18 @@ const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, lay
 	}
 
 	const {
-		left, width, right, top, bottom,
+		width, height, left, right, top, bottom,
 	} = closestElement.getBoundingClientRect();
 	let dropPlacement = DropPlacement.On;
 
 	if (layoutOrientation === Orientation.Vertical) {
 		const distanceToTopBorder = Math.abs(point - top),
-			distanceToBottomBorder = Math.abs(bottom - point);
+			distanceToCenter = Math.abs(point - (top + height / 2)),
+			distanceToBottomBorder = Math.abs(point - bottom);
 
 		const shortestDistance = Math.min(
 			distanceToTopBorder,
+			maxNestingLevel > 0 ? distanceToCenter : distanceToTopBorder, // TODO: integrate with DropIndicator
 			distanceToBottomBorder,
 		);
 
@@ -55,13 +57,13 @@ const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, lay
 		}
 	} else { // Horizontal
 		const distanceToLeftBorder = Math.abs(point - left),
-			distanceToCenter = Math.abs((left + width / 2) - point),
-			distanceToRightBorder = Math.abs(right - point);
+			distanceToCenter = Math.abs(point - (left + width / 2)),
+			distanceToRightBorder = Math.abs(point - right);
 
 		const shortestDistance = Math.min(
 			distanceToLeftBorder,
+			maxNestingLevel > 0 ? distanceToCenter : distanceToLeftBorder,
 			distanceToRightBorder,
-			// this.maxNestingLevel > 0 ? distanceToCenter : distanceToLeftBorder,
 		);
 
 		switch (shortestDistance) {

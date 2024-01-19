@@ -1,7 +1,7 @@
 /**
  * Determines where a drop indicator will be drawn.
  *
- * @private
+ * @public
  */
 enum DropPlacement {
 	/**
@@ -10,17 +10,17 @@ enum DropPlacement {
 	Between = "Between",
 
 	/**
-	 * @private
+	 * @public
 	 */
 	On = "On",
 
 	/**
-	 * @private
+	 * @public
 	 */
 	Before = "Before",
 
 	/**
-	 * @private
+	 * @public
 	 */
 	After = "After",
 }

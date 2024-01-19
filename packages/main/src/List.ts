@@ -1176,6 +1176,7 @@ class List extends UI5Element {
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
+			0,
 		);
 
 		if (!found) {
@@ -1204,6 +1205,7 @@ class List extends UI5Element {
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
+			0,
 		);
 
 		if (!result) {

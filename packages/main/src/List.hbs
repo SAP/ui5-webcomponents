@@ -82,7 +82,13 @@
 	{{/if}}
 
 	{{#if _reorderItems}}
-		<ui5-drop-indicator orientation="Horizontal" placement="Between" ._owner="{{this}}"></ui5-drop-indicator>
+		<ui5-drop-indicator
+			orientation="Horizontal"
+			placement="Between"
+			max-nesting-level="0"
+			._owner="{{this}}"
+			>
+		</ui5-drop-indicator>
 	{{/if}}
 </div>
 
