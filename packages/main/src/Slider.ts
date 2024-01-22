@@ -46,17 +46,6 @@ import {
  * <li>Click/tap on the range bar to move the handle to that location.</li>
  * </ul>
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-slider</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-slider</code>.</li>
- * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-slider</code>.</li>
- * <li>handle - Used to style the handle of the <code>ui5-slider</code>.</li>
- * </ul>
- *
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -78,12 +67,12 @@ import {
  * <code>import "@ui5/webcomponents/dist/Slider";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Slider
- * @extends sap.ui.webc.main.SliderBase
- * @tagname ui5-slider
+ * @extends SliderBase
  * @since 1.0.0-rc.11
  * @public
+ * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the <code>ui5-slider</code>.
+ * @csspart progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-slider</code>.
+ * @csspart handle - Used to style the handle of the <code>ui5-slider</code>.
  */
 @customElement({
 	tag: "ui5-slider",
@@ -95,9 +84,7 @@ class Slider extends SliderBase {
 	/**
 	 * Current value of the slider
 	 *
-	 * @type {sap.ui.webc.base.types.Float}
-	 * @name sap.ui.webc.main.Slider.prototype.value
-	 * @defaultvalue 0
+	 * @default 0
 	 * @formEvents change input
 	 * @formProperty
 	 * @public

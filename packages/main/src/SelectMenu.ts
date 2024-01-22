@@ -24,6 +24,7 @@ import Button from "./Button.js";
 // Types
 import type Select from "./Select.js";
 import type SelectMenuOption from "./SelectMenuOption.js";
+import { IOption } from "./Interfaces.js";
 
 type SelectMenuOptionClick = {
 	option: SelectMenuOption,
@@ -58,10 +59,7 @@ type SelectMenuChange = {
  * <code>import @ui5/webcomponents/dist/SelectMenu.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.SelectMenu
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-select-menu
+ * @extends UI5Element
  * @public
  * @since 1.17.0
  */
@@ -76,7 +74,7 @@ type SelectMenuChange = {
 		Button,
 	],
 })
-@event("option-click", {
+@event<SelectMenuOptionClick>("option-click", {
 	detail: {
 		option: { type: HTMLElement },
 		optionIndex: { type: Integer },
@@ -85,7 +83,7 @@ type SelectMenuChange = {
 @event("before-open")
 @event("after-open")
 @event("after-close")
-@event("menu-change", {
+@event<SelectMenuChange>("menu-change", {
 	detail: {
 		text: { type: String },
 		selectedIndex: { type: Integer },
@@ -101,9 +99,6 @@ class SelectMenu extends UI5Element {
 	/**
 	 * Defines the options of the component.
 	 *
-	 * @type {sap.ui.webc.main.ISelectMenuOption[]}
-	 * @name sap.ui.webc.main.SelectMenu.prototype.default
-	 * @slot
 	 * @public
 	 */
 	@slot({
@@ -111,13 +106,11 @@ class SelectMenu extends UI5Element {
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})
-	options!: Array<SelectMenuOption>;
+	options!: Array<IOption>;
 
 	/**
 	 * Defines the width of the component.
 	 *
-	 * @type { number }
-	 * @name sap.ui.webc.main.SelectMenu.prototype.selectWidth
 	 * @private
 	 */
 	@property({ validator: Integer })

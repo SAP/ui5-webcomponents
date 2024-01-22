@@ -104,12 +104,10 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * <code>import "@ui5/webcomponents-fiori/dist/DynamicSideContent";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.DynamicSideContent
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-side-content
+ * @extends UI5Element
  * @public
  * @since 1.1.0
+ * @slot {Array<HTMLElement>} default - Defines the main content.
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
@@ -119,24 +117,35 @@ type DynamicSideContentLayoutChangeEventDetail = {
 })
 /**
  * Fires when the current breakpoint has been changed.
- * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
  * @param {string} currentBreakpoint the current breakpoint.
  * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
  * @param {boolean} mainContentVisible visibility of the main content.
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
  */
-@event("layout-change", {
+@event<DynamicSideContentLayoutChangeEventDetail>("layout-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		currentBreakpoint: {
 			type: String,
 		},
+		/**
+		 * @public
+		 */
 		previousBreakpoint: {
 			type: String,
 		},
+		/**
+		 * @public
+		 */
 		mainContentVisible: {
 			type: Boolean,
 		},
+		/**
+		 * @public
+		 */
 		sideContentVisible: {
 			type: Boolean,
 		},
@@ -146,9 +155,7 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the visibility of the main content.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.hideMainContent
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 *
 	 */
@@ -158,9 +165,7 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the visibility of the side content.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.hideSideContent
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 *
 	 */
@@ -179,9 +184,7 @@ class DynamicSideContent extends UI5Element {
 	 * <li><code>End</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.fiori.types.SideContentPosition}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentPosition
-	 * @defaultvalue "End"
+	 * @default "End"
 	 * @public
 	 *
 	 */
@@ -202,9 +205,7 @@ class DynamicSideContent extends UI5Element {
 	 * <li><code>NeverShow</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.fiori.types.SideContentVisibility}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentVisibility
-	 * @defaultvalue "ShowAboveS"
+	 * @default "ShowAboveS"
 	 * @public
 	 *
 	 */
@@ -224,9 +225,7 @@ class DynamicSideContent extends UI5Element {
 	 * <li><code>OnMinimumWidth</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.fiori.types.SideContentFallDown}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentFallDown
-	 * @defaultvalue "OnMinimumWidth"
+	 * @default "OnMinimumWidth"
 	 * @public
 	 *
 	 */
@@ -239,9 +238,7 @@ class DynamicSideContent extends UI5Element {
 	 * except for phone, where the main and side contents are switching visibility
 	 * using the toggle method.
 	 *
-	 * @type {boolean}]
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.equalSplit
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 *
 	 */
@@ -273,20 +270,8 @@ class DynamicSideContent extends UI5Element {
 	_currentBreakpoint!: string;
 
 	/**
-	 * Defines the main content.
-	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.default
-	 * @slot
-	 * @public
-	 */
-
-	/**
 	 * Defines the side content.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContent
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -319,11 +304,10 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
+	 *
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.fiori.DynamicSideContent#toggleContents
 	 */
-	toggleContents() {
+	toggleContents(): void {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
 			this._toggled = !this._toggled;
 		}

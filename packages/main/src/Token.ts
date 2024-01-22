@@ -13,12 +13,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
+import type { IIcon, IToken } from "./Interfaces.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
@@ -40,12 +40,9 @@ type TokenDeleteEventDetail = {
  *
  * <code>import "@ui5/webcomponents/dist/Token.js";</code>
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Token
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-token
+ * @extends UI5Element
  * @since 1.0.0-rc.9
- * @implements sap.ui.webc.main.IToken
+ * @implements {IToken}
  * @public
  */
 @customElement({
@@ -59,7 +56,6 @@ type TokenDeleteEventDetail = {
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
  *
- * @event sap.ui.webc.main.Token#select
  * @public
  */
 @event("select")
@@ -67,25 +63,22 @@ type TokenDeleteEventDetail = {
 /**
  * Fired when the backspace, delete or close icon of the token is pressed
  *
- * @event
  * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
  */
-@event("delete", {
+@event<TokenDeleteEventDetail>("delete", {
 	detail: {
 		"backSpace": { type: Boolean },
 		"delete": { type: Boolean },
 	},
 })
 
-class Token extends UI5Element implements ITabbable {
+class Token extends UI5Element implements IToken {
 	/**
 	 * Defines the text of the token.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Token.prototype.text
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -97,9 +90,7 @@ class Token extends UI5Element implements ITabbable {
 	 * <b>Note:</b> A read-only component can not be deleted or selected,
 	 * but still provides visual feedback upon user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Token.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -108,9 +99,7 @@ class Token extends UI5Element implements ITabbable {
 	/**
 	 * Defines whether the component is selected or not.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.Token.prototype.selected
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -118,8 +107,8 @@ class Token extends UI5Element implements ITabbable {
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
-	 * @type {boolean}
-	 * @defaultvalue false
+	 *
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -131,8 +120,7 @@ class Token extends UI5Element implements ITabbable {
 	/**
 	 * Defines whether the component is focused or not.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -142,8 +130,7 @@ class Token extends UI5Element implements ITabbable {
 	 * Defines whether the token is being deleted
 	 * This flag is used in the ui5-multi-combobox
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -151,7 +138,7 @@ class Token extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tabIndex of the component.
-	 * @type {string}
+	 *
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
@@ -161,14 +148,11 @@ class Token extends UI5Element implements ITabbable {
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
 	 * Accepts <code>ui5-icon</code>.
 	 *
-	 * @type {sap.ui.webc.main.IIcon[]}
-	 * @name sap.ui.webc.main.Token.prototype.closeIcon
-	 * @slot closeIcon
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
 	@slot()
-	closeIcon!: Array<HTMLElement>;
+	closeIcon!: Array<IIcon>;
 
 	static i18nBundle: I18nBundle;
 

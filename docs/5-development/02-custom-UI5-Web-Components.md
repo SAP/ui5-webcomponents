@@ -238,8 +238,8 @@ Vars for each theme in the respective theme directory in `themes/`:
 
 File | Descriptions
 ------------|-------------
-`themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme.
-`themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme.
+`themes/sap_horizon/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_horizon` theme.
+`themes/sap_horizon_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_horizon_hcb` theme.
 `themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme.
 `themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme.
 
@@ -513,8 +513,8 @@ Let's inspect the following files (one with CSS declarations, the others with CS
 File | Purpose
 ------------|-------------
 `themes/Demo.css` | All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.
-`themes/sap_belize/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize` theme.
-`themes/sap_belize_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_belize_hcb` theme.
+`themes/sap_horizon/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_horizon` theme.
+`themes/sap_horizon_hcb/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_horizon_hcb` theme.
 `themes/sap_fiori_3/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3` theme.
 `themes/sap_fiori_3_dark/parameters-bundle.css` | Values for the component-specific CSS Vars for the `sap_fiori_3_dark` theme.
 

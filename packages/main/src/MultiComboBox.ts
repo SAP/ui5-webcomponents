@@ -64,6 +64,7 @@ import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
+import type { IIcon, IMultiComboBoxItem } from "./Interfaces.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -83,6 +84,7 @@ import {
 	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
+	SHOW_SELECTED_BUTTON,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 	MCB_SELECTED_ITEMS,
@@ -102,13 +104,6 @@ import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
-
-interface IMultiComboBoxItem extends UI5Element {
-	text: string,
-	selected: boolean,
-	isGroupItem?: boolean,
-	stableDomRef: string,
-}
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
@@ -157,28 +152,16 @@ type MultiComboboxItemWithSelection = {
  * <li> Backspace -  deletes the token and focus the next token. </li>
  * </ul>
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-multi-combobox</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)</li>
- * </ul>
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
  *
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.MultiComboBox
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-multi-combobox
+ * @extends UI5Element
  * @public
- * @appenddocs sap.ui.webc.main.MultiComboBoxItem sap.ui.webc.main.MultiComboBoxGroupItem
  * @since 0.11.0
+ * @csspart token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)
  */
 @customElement({
 	tag: "ui5-multi-combobox",
@@ -207,7 +190,6 @@ type MultiComboboxItemWithSelection = {
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
- * @event sap.ui.webc.main.MultiComboBox#change
  * @public
  */
 @event("change")
@@ -215,7 +197,6 @@ type MultiComboboxItemWithSelection = {
 /**
  * Fired when the value of the component changes at each keystroke.
  *
- * @event sap.ui.webc.main.MultiComboBox#input
  * @public
  */
 @event("input")
@@ -223,7 +204,6 @@ type MultiComboboxItemWithSelection = {
 /**
  * Fired when the dropdown is opened or closed.
  *
- * @event sap.ui.webc.main.MultiComboBox#open-change
  * @since 1.0.0-rc.5
  * @public
  */
@@ -233,13 +213,16 @@ type MultiComboboxItemWithSelection = {
  * Fired when selection is changed by user interaction
  * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
  *
- * @event sap.ui.webc.main.MultiComboBox#selection-change
- * @param {Array} items an array of the selected items.
+ * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
+ * @allowPreventDefault
  */
-@event("selection-change", {
+@event<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
-		items: { type: Array },
+		/**
+		 * @public
+		 */
+		items: { type: Array<IMultiComboBoxItem> },
 	},
 })
 
@@ -249,9 +232,7 @@ class MultiComboBox extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> The property is updated upon typing.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
@@ -262,9 +243,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines whether the value will be autcompleted to match an item
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.noTypeahead
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.4.0
 	 */
@@ -274,9 +253,8 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @type {string}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.placeholder
-	 * @defaultvalue ""
+	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -285,9 +263,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines if the user input will be prevented, if no matching item has been found
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.allowCustomValues
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -298,9 +274,7 @@ class MultiComboBox extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -311,9 +285,7 @@ class MultiComboBox extends UI5Element {
 	 * <br><br>
 	 * Available options are:
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.valueState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -325,9 +297,7 @@ class MultiComboBox extends UI5Element {
 	 * <b>Note:</b> A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -336,9 +306,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.5
 	 */
@@ -349,9 +317,7 @@ class MultiComboBox extends UI5Element {
 	 * Defines the filter type of the component.
 	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 	 *
-	 * @type {sap.ui.webc.main.types.ComboBoxFilter}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.filter
-	 * @defaultvalue "StartsWithPerTerm"
+	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
 	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
@@ -360,9 +326,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.4.0
 	 */
@@ -372,9 +336,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.4.0
 	 */
@@ -396,8 +358,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -443,9 +404,6 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines the component items.
 	 *
-	 * @type {sap.ui.webc.main.IMultiComboBoxItem[]}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -454,14 +412,11 @@ class MultiComboBox extends UI5Element {
 	/**
 	* Defines the icon to be displayed in the component.
 	*
-	* @type {sap.ui.webc.main.IIcon[]}
-	* @name sap.ui.webc.main.MultiComboBox.prototype.icon
-	* @slot
 	* @public
 	* @since 1.0.0-rc.9
 	*/
 	@slot()
-	icon!: Array<Icon>;
+	icon!: Array<IIcon>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -471,10 +426,8 @@ class MultiComboBox extends UI5Element {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.valueStateMessage
+	 *
 	 * @since 1.0.0-rc.9
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -564,13 +517,10 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.open
-	 * @defaultvalue false
-	 * @readonly
+	 * @default false
 	 * @public
 	 */
-	get open() {
+	get open(): boolean {
 		return this._open;
 	}
 
@@ -1836,6 +1786,10 @@ class MultiComboBox extends UI5Element {
 
 	get _iconAccessibleNameText() {
 		return MultiComboBox.i18nBundle.getText(SELECT_OPTIONS);
+	}
+
+	get _showSelectedButtonAccessibleNameText() {
+		return MultiComboBox.i18nBundle.getText(SHOW_SELECTED_BUTTON);
 	}
 
 	get _dialogOkButton() {

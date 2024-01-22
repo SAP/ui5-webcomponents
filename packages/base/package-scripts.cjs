@@ -6,7 +6,6 @@ const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/i
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
-const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
@@ -43,11 +42,9 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
-		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
-		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
-		preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
-		jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
-		cleanup: "rimraf jsdoc-dist/"
+		default: "nps generateAPI.generateCEM generateAPI.validateCEM",
+		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs" --dev`,
+		validateCEM: `node "${LIB}/cem/validate.js" --dev`,
 	},
 	watch: {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',

@@ -60,9 +60,7 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
  * @class
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimePickerBase
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
  */
@@ -86,17 +84,22 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 /**
  * Fired when the input operation has finished by clicking the "OK" button or
  * when the text in the input field has changed and the focus leaves the input field.
-*
-* @event sap.ui.webc.main.TimePickerBase#change
+ *
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
-@event("change", {
+@event<TimePickerBaseChangeEventDetail>("change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		value: {
 			type: String,
 		},
+		/**
+		 * @public
+		 */
 		valid: {
 			type: Boolean,
 		},
@@ -106,16 +109,21 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 /**
  * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
  *
- * @event sap.ui.webc.main.TimePickerBase#input
  * @public
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
-@event("input", {
+@event<TimePickerBaseInputEventDetail>("input", {
 	detail: {
+		/**
+		 * @public
+		 */
 		value: {
 			type: String,
 		},
+		/**
+		 * @public
+		 */
 		valid: {
 			type: Boolean,
 		},
@@ -125,9 +133,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Defines a formatted time value.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.TimePickerBase.prototype.value
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
@@ -147,9 +153,7 @@ class TimePickerBase extends UI5Element {
 	 * <li><code>Information</code></li>
 	 * </ul>
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.TimePickerBase.prototype.valueState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -158,9 +162,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TimePickerBase.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -169,9 +171,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Determines whether the <code>ui5-time-picker</code> is displayed as readonly.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.TimePickerBase.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -191,10 +191,8 @@ class TimePickerBase extends UI5Element {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.TimePickerBase.prototype.valueStateMessage
+	 *
 	 * @since 1.0.0-rc.8
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -216,7 +214,6 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * @abstract
 	 * @protected
 	 */
 	get _placeholder(): string | undefined {
@@ -224,7 +221,6 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * @abstract
 	 * @protected
 	 */
 	get _formatPattern(): string | undefined {
@@ -249,13 +245,10 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Opens the picker.
-	 * @async
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#openPicker
-	 * @returns {Promise} Resolves when the picker is open
+	 * @returns Resolves when the picker is open
 	 */
-	async openPicker() {
+	async openPicker(): Promise<void> {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
 		const responsivePopover = await this._getPopover();
 		responsivePopover.showAt(this);
@@ -264,11 +257,9 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Closes the picker
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#closePicker
-	 * @returns {Promise} Resolves when the picker is closed
+	 * @returns Resolves when the picker is closed
 	 */
-	async closePicker() {
+	async closePicker(): Promise<void> {
 		const responsivePopover = await this._getPopover();
 		responsivePopover.close();
 		this._isPickerOpen = false;
@@ -285,11 +276,8 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Checks if the picker is open
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#isOpen
-	 * @returns {boolean}
 	 */
-	isOpen() {
+	isOpen(): boolean {
 		return !!this._isPickerOpen;
 	}
 
@@ -310,13 +298,10 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Opens the Inputs popover.
-	 * @async
 	 * @private
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#openInputsPopover
-	 * @returns {Promise} Resolves when the Inputs popover is open
+	 * @returns Resolves when the Inputs popover is open
 	 */
-	async openInputsPopover() {
+	async openInputsPopover(): Promise<void> {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
 		const popover = await this._getInputsPopover();
 		popover.showAt(this);
@@ -326,11 +311,9 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Closes the Inputs popover
 	 * @private
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#closeInputsPopover
-	 * @returns {Promise} Resolves when the Inputs popover is closed
+	 * @returns Resolves when the Inputs popover is closed
 	 */
-	async closeInputsPopover() {
+	async closeInputsPopover(): Promise<void> {
 		const popover = await this._getInputsPopover();
 		popover.close();
 	}
@@ -346,11 +329,8 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Checks if the inputs popover is open
 	 * @private
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#isInputsPopoverOpen
-	 * @returns {boolean}
 	 */
-	isInputsPopoverOpen() {
+	isInputsPopoverOpen(): boolean {
 		return !!this._isInputsPopoverOpen;
 	}
 
@@ -513,13 +493,11 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {Date} date A Java Script date object to be formatted as string
+	 * @param date A Java Script date object to be formatted as string
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#formatValue
-	 * @returns {string}
+	 * @returns formatted value
 	 */
-	formatValue(date: Date) {
+	formatValue(date: Date): string {
 		return this.getFormat().format(date);
 	}
 
@@ -528,13 +506,10 @@ class TimePickerBase extends UI5Element {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> an empty string is considered as valid value.
-	 * @param {string} value The value to be tested against the current date format
+	 * @param value The value to be tested against the current date format
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#isValid
-	 * @returns {boolean}
 	 */
-	isValid(value: string | undefined) {
+	isValid(value: string | undefined): boolean {
 		if (value === "") {
 			return true;
 		}
@@ -567,11 +542,10 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 *
-	 * @param {event} e Wheel Event
-	 * @private
-	 *
 	 * The listener for this event can't be passive as it calls preventDefault()
+	 *
+	 * @param e Wheel Event
+	 * @private
 	 */
 	_handleWheel(e: WheelEvent) {
 		e.preventDefault();
