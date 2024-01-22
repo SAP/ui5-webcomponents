@@ -482,7 +482,7 @@ export default {
 				})
 
 				moduleDoc.exports = moduleDoc.exports.
-					filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "class", "variable", "enum"].includes(d.kind)) || e.name === "default");
+					filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
 			},
 			packageLinkPhase({ context }) {
 				if (context.dev) {
