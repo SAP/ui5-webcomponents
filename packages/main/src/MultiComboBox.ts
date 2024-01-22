@@ -193,7 +193,7 @@ type MultiComboboxItemWithSelection = {
 @event("change")
 
 /**
- * Fired when the value of the component changes at each keystroke.
+ * Fired when the value of the component changes at each keystroke or clear icon is pressed.
  *
  * @public
  */
@@ -323,7 +323,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines whether the clear icon of the multi-combobox will be shown.
 	 *
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.20.1
 	 */

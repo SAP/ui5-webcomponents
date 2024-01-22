@@ -185,7 +185,7 @@ type ComboBoxSelectionChangeEventDetail = {
 @event("change")
 
 /**
- * Fired when typing in input.
+ * Fired when typing in input or clear icon is pressed.
  * <br><br>
  * <b>Note:</b> filterValue property is updated, input is changed.
  * @public
@@ -314,7 +314,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines whether the clear icon of the combobox will be shown.
 	 *
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.20.1
 	 */
