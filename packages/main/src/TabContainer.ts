@@ -343,7 +343,7 @@ class TabContainer extends UI5Element {
 		individualSlots: true,
 		invalidateOnChildChange: {
 			properties: true,
-			slots: false,
+			slots: true,
 		},
 	})
 	items!: Array<ITab>;
@@ -439,7 +439,13 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this.responsivePopover?.opened) {
-			this._setPopoverItems(this.getPopoverOpenerItems());
+			const popoverItems = this.getPopoverOpenerItems();
+
+			if (popoverItems.length) {
+				this._setPopoverItems(popoverItems);
+			} else {
+				this.responsivePopover.close();
+			}
 		}
 	}
 
