@@ -28,6 +28,15 @@ const customResolver = (id, source, options) => {
 		return resolved;
 	}
 
+	// json files are always in dist, this saves a separate copy task
+	if (id.endsWith(".json")) {
+		let absoluteId = join(dirname(source), id);
+		// join returns paths with \\ on windows, so the replaces won't work unless converted to posix paths /
+		absoluteId = toPosixPath(absoluteId);
+		const resolved = absoluteId.replace("/src/", "/dist/");
+		return resolved;
+	}
+
 	if (id.startsWith("./") || id.startsWith("../")) {
 		//   `/sap/base/` and `sap/ui/core/` files imported from `src` are actually in dist
 		//   except 4 files with are ts files in src and could be imported from `dist`

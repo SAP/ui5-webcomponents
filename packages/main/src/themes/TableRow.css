@@ -31,6 +31,10 @@
 	padding-inline-start: 1rem;
 }
 
+:host([mode="MultiSelect"]) .ui5-table-popin-row td:not(.ui5-table-row-navigated) {
+	padding-inline-start: var(--ui5_table_multiselect_popin_row_padding);
+}
+
 .ui5-table-popin-row:last-child td {
 	padding-bottom: .5rem;
 }

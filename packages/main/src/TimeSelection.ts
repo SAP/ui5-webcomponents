@@ -52,10 +52,7 @@ type TimeSelectionSliderChangeEventDetail = {
  * @class
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.TimeSelection
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-time-selection
+ * @extends UI5Element
  * @private
  * @since 1.0.0-rc.12
  */
@@ -71,7 +68,7 @@ type TimeSelectionSliderChangeEventDetail = {
 /**
  * Fired when the value changes due to user interaction with the sliders
  */
-@event("change", {
+@event<TimeSelectionChangeEventDetail>("change", {
 	detail: {
 		value: { type: String },
 		valid: { type: Boolean },
@@ -81,7 +78,7 @@ type TimeSelectionSliderChangeEventDetail = {
 /**
  * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
  */
-@event("sliderChange", {
+@event<TimeSelectionSliderChangeEventDetail>("sliderChange", {
 	detail: {
 		slider: { type: String },
 	},
@@ -90,9 +87,7 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Defines a formatted time value.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.TimeSelection.prototype.value
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @public
 	 */
 	@property({ defaultValue: undefined })
@@ -106,9 +101,7 @@ class TimeSelection extends UI5Element {
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.TimeSelection.prototype.formatPattern
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -117,9 +110,9 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 *
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.hideHours
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideHours!: boolean;
@@ -127,9 +120,9 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 *
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.hideMinutes
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideMinutes!: boolean;
@@ -137,36 +130,36 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 *
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.hideSeconds
-	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideSeconds!: boolean;
 
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
+	 *
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.maxHours
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxHours?: number;
 
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
+	 *
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.maxMinutes
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxMinutes?: number;
 
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
+	 *
+	 * @default undefined
 	 * @public
-	 * @name sap.ui.webc.main.TimeSelection.prototype.maxSeconds
-	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxSeconds?: number;
@@ -182,6 +175,9 @@ class TimeSelection extends UI5Element {
 
 	@property({ type: CalendarType })
 	_calendarType!: CalendarType;
+
+	@property()
+	_density!: string;
 
 	static i18nBundle: I18nBundle;
 
@@ -379,7 +375,7 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * Event handler for the "click" and "focusin" events of the sliders
-	 * @param event
+	 * @param e
 	 */
 	selectSlider(e: MouseEvent | FocusEvent) {
 		const target = e.target as HTMLElement;

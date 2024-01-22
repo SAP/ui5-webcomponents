@@ -8,6 +8,12 @@ type ShellBarItemClickEventDetail = {
 };
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
+ *
+ * @public
+ */
+
+/**
  * @class
  * The <code>ui5-shellbar-item</code> represents a custom item, that
  * might be added to the <code>ui5-shellbar</code>.
@@ -16,24 +22,19 @@ type ShellBarItemClickEventDetail = {
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.ShellBarItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
- * @tagname ui5-shellbar-item
- * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
  */
 @customElement("ui5-shellbar-item")
 /**
  * Fired, when the item is pressed.
  *
- * @event sap.ui.webc.fiori.ShellBarItem#click
  * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
-@event("click", {
+@event<ShellBarItemClickEventDetail>("click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},
@@ -42,9 +43,7 @@ type ShellBarItemClickEventDetail = {
 class ShellBarItem extends UI5Element {
 	/**
 	 * Defines the name of the item's icon.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.icon
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -54,9 +53,7 @@ class ShellBarItem extends UI5Element {
 	 * Defines the item text.
      * <br><br>
      * <b>Note:</b> The text is only displayed inside the overflow popover list view.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.text
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -64,9 +61,7 @@ class ShellBarItem extends UI5Element {
 
 	/**
 	 * Defines the count displayed in the top-right corner.
-	 * @type {string}
-	 * @defaultValue ""
-	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.count
+	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */

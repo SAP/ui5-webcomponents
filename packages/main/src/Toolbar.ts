@@ -28,7 +28,7 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 import HasPopup from "./types/HasPopup.js";
 
-import type ToolbarItem from "./ToolbarItem.js";
+import ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import {
@@ -73,11 +73,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/Toolbar";</code>
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Toolbar
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-toolbar
- * @appenddocs sap.ui.webc.main.ToolbarButton sap.ui.webc.main.ToolbarSelect sap.ui.webc.main.ToolbarSelectOption sap.ui.webc.main.ToolbarSeparator sap.ui.webc.main.ToolbarSpacer
+ * @extends UI5Element
  * @public
  * @since 1.17.0
  */
@@ -94,10 +90,8 @@ class Toolbar extends UI5Element {
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
 	 *
-	 * @type {sap.ui.webc.main.types.ToolbarAlign}
 	 * @public
-	 * @defaultvalue: "End"
-	 * @name sap.ui.webc.main.Toolbar.prototype.alignContent
+	 * @default "End"
 	 */
 	@property({ type: ToolbarAlign, defaultValue: ToolbarAlign.End })
 	alignContent!: `${ToolbarAlign}`;
@@ -105,27 +99,22 @@ class Toolbar extends UI5Element {
 	/**
 	 * Calculated width of the whole toolbar.
 	 * @private
-	 * @name sap.ui.webc.main.Toolbar.prototype.width
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue false
+	 * @default undefined
 	 */
-	@property({ type: Integer })
+	@property({ validator: Integer })
 	width?: number;
 
 	/**
 	 * Calculated width of the toolbar content.
 	 * @private
-	 * @name sap.ui.webc.main.Toolbar.prototype.contentWidth
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @defaultvalue 0
+	 * @default undefined
 	 */
-	@property({ type: Integer })
+	@property({ validator: Integer })
 	contentWidth?: number;
 
 	/**
 	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
 	 * @private
-	 * @type {Boolean}
 	 */
 	@property({ type: Boolean })
 	reverseOverflow!: boolean;
@@ -133,9 +122,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Toolbar.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -144,9 +131,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.Toolbar.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property({ defaultValue: "" })
@@ -157,9 +142,6 @@ class Toolbar extends UI5Element {
      *
      * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
 	 *
-	 * @type {sap.ui.webc.main.IToolbarItem[]}
-	 * @name sap.ui.webc.main.Toolbar.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -362,7 +344,6 @@ class Toolbar extends UI5Element {
 	 * Returns if the overflow popup is open.
 	 *
 	 * @public
-	 * @return { Promise<Boolean> }
 	 */
 	async isOverflowOpen(): Promise<boolean> {
 		const overflowPopover = await this.getOverflowPopover();

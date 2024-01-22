@@ -87,6 +87,7 @@ packages/playground/.storybook/custom-elements.json
 packages/playground/docs/storybook/**/*
 packages/playground/docs/storybook-pages/**/*
 !packages/playground/docs/storybook-pages/.gitkeep
+packages/playground/public/sitemap.xml
 
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js

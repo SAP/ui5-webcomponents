@@ -19,11 +19,8 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  * have spin button look and feel from accessibility point of view. This component should not be used separately.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ToggleSpinButton
- * @extends sap.ui.webc.base.UI5Element
+ * @extends ToggleButton
  * @abstract
- * @tagname ui5-toggle-spin-button
  * @since 1.15.0
  * @private
  */
@@ -38,9 +35,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemin of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueMin
-	 * @type {Integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueMin!: number;
@@ -48,9 +43,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemax of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueMax
-	 * @type {Integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueMax!: number;
@@ -58,9 +51,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuenow of the component.
 	 *
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueNow
-	 * @type {Integer}
-	 * @defaultvalue -1
+	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueNow!: number;
@@ -68,8 +59,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuetext of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueText
+	 * @default ""
 	 */
 	@property()
 	valueText?: string;

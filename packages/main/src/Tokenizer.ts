@@ -45,6 +45,7 @@ import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import type Token from "./Token.js";
+import type { IToken } from "./Interfaces.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -83,11 +84,7 @@ enum ClipboardDataOperation {
  * A container for tokens.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.Tokenizer
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-tokenizer
- * @usestextcontent
+ * @extends UI5Element
  * @private
  */
 @customElement({
@@ -124,10 +121,7 @@ enum ClipboardDataOperation {
 	},
 })
 
-@event("before-more-popover-open", {
-	detail: {},
-})
-
+@event("before-more-popover-open")
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;
@@ -160,8 +154,7 @@ class Tokenizer extends UI5Element {
 	/**
 	 * Indicates the value state of the related input component.
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @private
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -488,7 +481,7 @@ class Tokenizer extends UI5Element {
 		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
 	}
 
-	_calcNextTokenIndex(focusedToken: Token, tokens: Array<Token>, backwards: boolean) {
+	_calcNextTokenIndex(focusedToken: IToken, tokens: Array<IToken>, backwards: boolean) {
 		if (!tokens.length) {
 			return -1;
 		}
@@ -505,7 +498,7 @@ class Tokenizer extends UI5Element {
 		return nextIndex;
 	}
 
-	_handleArrowCtrl(e: KeyboardEvent, focusedToken: Token, tokens: Array<Token>, backwards: boolean) {
+	_handleArrowCtrl(e: KeyboardEvent, focusedToken: IToken, tokens: Array<IToken>, backwards: boolean) {
 		const nextIndex = this._calcNextTokenIndex(focusedToken, tokens, backwards);
 
 		e.preventDefault();
@@ -566,7 +559,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<Token>) {
+	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<IToken>) {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
 		/* fill clipboard with tokens' texts so parent can handle creation */
@@ -611,7 +604,7 @@ class Tokenizer extends UI5Element {
 	 * Adds 4 pixels to the scroll position to ensure padding and border visibility on both ends
 	 * @private
 	 */
-	_scrollToToken(token: Token) {
+	_scrollToToken(token: IToken) {
 		if (!this.expandedContentDom) {
 			return;
 		}
@@ -688,7 +681,7 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
-	get hasValueState() {
+	get noValueStatePopover() {
 		return this.valueState === ValueState.None || this.valueState === ValueState.Success;
 	}
 
@@ -730,9 +723,13 @@ class Tokenizer extends UI5Element {
 				"ui5-tokenizer-expanded--content": !this.showNMore,
 				"ui5-tokenizer-nmore--content": this.showNMore,
 			},
+			popover: {
+				"ui5-popover-with-value-state-header-phone": this._isPhone && !this.noValueStatePopover,
+				"ui5-popover-with-value-state-header": !this._isPhone && !this.noValueStatePopover,
+			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": true,
+				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,

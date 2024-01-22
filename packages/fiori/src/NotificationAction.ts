@@ -15,12 +15,7 @@ type NotificationActionClickEventDetail = {
  * used in the <code>ui5-li-notification</code> and the <code>ui5-li-notification-group</code> items.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.fiori.NotificationAction
- * @extends sap.ui.webc.base.UI5Element
- * @abstract
- * @tagname ui5-notification-action
- * @implements sap.ui.webc.fiori.INotificationAction
+ * @extends UI5Element
  * @public
  */
 @customElement("ui5-notification-action")
@@ -28,11 +23,10 @@ type NotificationActionClickEventDetail = {
 /**
  * Fired, when the action is pressed.
  *
- * @event sap.ui.webc.fiori.NotificationAction#click
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
-@event("click", {
+@event<NotificationActionClickEventDetail>("click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},
@@ -41,10 +35,8 @@ class NotificationAction extends UI5Element {
 	/**
 	 * Defines the text of the <code>ui5-notification-action</code>.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.text
 	 */
 	@property()
 	text!: string;
@@ -54,10 +46,8 @@ class NotificationAction extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.disabled
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
@@ -65,10 +55,8 @@ class NotificationAction extends UI5Element {
 	/**
 	 * Defines the action design.
 	 *
-	 * @type {sap.ui.webc.main.types.ButtonDesign}
-	 * @defaultvalue "Transparent"
+	 * @default "Transparent"
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.design
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
 	design!: `${ButtonDesign}`;
@@ -80,10 +68,8 @@ class NotificationAction extends UI5Element {
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
-	 * @name sap.ui.webc.fiori.NotificationAction.prototype.icon
 	 */
 	@property()
 	icon!: string;
@@ -92,9 +78,9 @@ class NotificationAction extends UI5Element {
 	 * Fires a custom event "click".
 	 * <b>Note:</b> Called by NotificationListItem and NotificationListGroupItem components.
 	 *
-	 * @param { MouseEvent } e
+	 * @param e
 	 * @protected
-	 * @returns { boolean } false, if the event was cancelled (preventDefault called), true otherwise
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireClickEvent(e: MouseEvent): boolean {
 		return this.fireEvent<NotificationActionClickEventDetail>("click", {

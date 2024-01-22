@@ -8,30 +8,18 @@ type IEventOptions = {
 	preventClosing: boolean;
 }
 
-interface IToolbarItem {
-	overflowPriority: `${ToolbarItemOverflowBehavior}`;
-	preventOverflowClosing: boolean;
-	ignoreSpace?: boolean;
-	isSeparator?: boolean;
-	containsText?: boolean;
-	hasFlexibleWidth?: boolean;
-	stableDomRef: string;
-}
-
 /**
  * @class
  *
  * Represents an abstract class for items, used in the <code>ui5-toolbar</code>.
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ToolbarItem
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @abstract
  * @public
  * @since 1.17.0
  */
-class ToolbarItem extends UI5Element implements IToolbarItem {
+class ToolbarItem extends UI5Element {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
@@ -42,9 +30,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * <li><code>Default</code></li>
 	 * </ul>
 	 * @public
-	 * @name sap.ui.webc.main.ToolbarItem.prototype.overflowPriority
-	 * @defaultvalue "Default"
-	 * @type {sap.ui.webc.main.types.ToolbarItemOverflowBehavior}
+	 * @default "Default"
 	 */
 	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
 	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
@@ -52,17 +38,14 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
 	 * It will close by default.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
-	 * @name sap.ui.webc.main.ToolbarItem.prototype.preventOverflowClosing
 	 */
 	@property({ type: Boolean })
 	preventOverflowClosing!: boolean;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
-	* @returns {boolean}
 	* @protected
 	*/
 	get ignoreSpace(): boolean {
@@ -73,7 +56,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item contains text. Used to position the text properly inside the popover.
 	 * Aligned left if the item has text, default aligned otherwise.
 	 * @protected
-	 * @returns {boolean}
 	 */
 	get containsText(): boolean {
 		return false;
@@ -83,7 +65,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item is flexible. An item that is returning true for this property will make
 	 * the toolbar expand to fill the 100% width of its container.
 	 * @protected
-	 * @returns {Boolean}
 	 */
 	get hasFlexibleWidth(): boolean {
 		return false;
@@ -94,7 +75,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * This value is used to determinate if the toolbar should have its accessibility role and attributes set.
 	 * At least two interactive items are needed for the toolbar to have the role="toolbar" attribute set.
 	 * @protected
-	 * @returns {boolean}
 	 */
 	get isInteractive(): boolean {
 		return true;
@@ -103,7 +83,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns if the item is separator.
 	 * @protected
-	 * @returns {boolean}
 	 */
 	get isSeparator() {
 		return false;
@@ -112,7 +91,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns the template for the toolbar item.
 	 * @protected
-	 * @returns {TemplateFunction}
 	 */
 	static get toolbarTemplate(): TemplateFunction {
 		throw new Error("Template must be defined");
@@ -121,7 +99,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns the template for the toolbar item popover.
 	 * @protected
-	 * @returns {TemplateFunction}
 	 */
 	static get toolbarPopoverTemplate(): TemplateFunction {
 		throw new Error("Popover template must be defined");
@@ -130,7 +107,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Returns the events that the item is subscribed to.
 	 * @protected
-	 * @returns {Map}
 	 */
 	get subscribedEvents(): Map<string, IEventOptions> {
 		return new Map();
@@ -141,8 +117,5 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	}
 }
 
-export type {
-	IToolbarItem,
-	IEventOptions,
-};
+export type { IEventOptions };
 export default ToolbarItem;

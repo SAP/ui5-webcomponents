@@ -36,6 +36,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IIcon, IComboBoxItem } from "./Interfaces.js";
 import * as Filters from "./Filters.js";
 
 import {
@@ -99,14 +100,6 @@ type ComboBoxSelectionChangeEventDetail = {
 	item: ComboBoxItem,
 };
 
-interface IComboBoxItem extends UI5Element {
-	text: string,
-	focused: boolean,
-	isGroupItem: boolean,
-	selected?: boolean,
-	additionalText?: string,
-}
-
 /**
  * @class
  *
@@ -149,11 +142,7 @@ interface IComboBoxItem extends UI5Element {
  *
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.ComboBox
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-combobox
- * @appenddocs sap.ui.webc.main.ComboBoxItem sap.ui.webc.main.ComboBoxGroupItem
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
  */
@@ -186,7 +175,6 @@ interface IComboBoxItem extends UI5Element {
 /**
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
  *
- * @event sap.ui.webc.main.ComboBox#change
  * @public
  */
 @event("change")
@@ -195,19 +183,20 @@ interface IComboBoxItem extends UI5Element {
  * Fired when typing in input.
  * <br><br>
  * <b>Note:</b> filterValue property is updated, input is changed.
- * @event sap.ui.webc.main.ComboBox#input
  * @public
  */
 @event("input")
 /**
  * Fired when selection is changed by user interaction
  *
- * @event sap.ui.webc.main.ComboBox#selection-change
- * @param {sap.ui.webc.main.IComboBoxItem} item item to be selected.
+ * @param {IComboBoxItem} item item to be selected.
  * @public
  */
-@event("selection-change", {
+@event<ComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
+		/**
+		* @public
+		*/
 		item: { type: HTMLElement },
 	},
 })
@@ -216,9 +205,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the value of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBox.prototype.value
-	 * @defaultvalue ""
+	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
@@ -229,9 +216,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines whether the value will be autocompleted to match an item
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ComboBox.prototype.noTypeahead
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.19.0
 	 */
@@ -246,8 +231,7 @@ class ComboBox extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Initially the filter value is synced with value.
 	 *
-	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @private
 	 */
 	@property()
@@ -256,9 +240,8 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBox.prototype.placeholder
-	 * @defaultvalue ""
+	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -269,9 +252,7 @@ class ComboBox extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ComboBox.prototype.disabled
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -280,9 +261,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.ComboBox.prototype.valueState
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -294,9 +273,7 @@ class ComboBox extends UI5Element {
 	 * <b>Note:</b> A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ComboBox.prototype.readonly
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -305,9 +282,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines whether the component is required.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ComboBox.prototype.required
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -316,9 +291,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Indicates whether a loading indicator should be shown in the picker.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ComboBox.prototype.loading
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -327,9 +300,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the filter type of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.ComboBoxFilter}
-	 * @name sap.ui.webc.main.ComboBox.prototype.filter
-	 * @defaultvalue "StartsWithPerTerm"
+	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
 	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
@@ -352,9 +323,7 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBox.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -363,9 +332,7 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component
-	 * @type {string}
-	 * @name sap.ui.webc.main.ComboBox.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -384,9 +351,6 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the component items.
 	 *
-	 * @type {sap.ui.webc.main.IComboBoxItem[]}
-	 * @name sap.ui.webc.main.ComboBox.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -400,10 +364,7 @@ class ComboBox extends UI5Element {
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the <code>ui5-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.ComboBox.prototype.valueStateMessage
 	 * @since 1.0.0-rc.9
-	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -412,14 +373,11 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the input field.
 	 *
-	 * @type {sap.ui.webc.main.IIcon[]}
-	 * @name sap.ui.webc.main.ComboBox.prototype.icon
-	 * @slot
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
 	@slot()
-	icon!: Array<Icon>;
+	icon!: Array<IIcon>;
 
 	_initialRendering: boolean;
 	_itemFocused: boolean;
@@ -750,6 +708,7 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 
 		this._announceSelectedItem(indexOfItem);
+		this._scrollToItem(indexOfItem, isForward);
 
 		if (isGroupItem && isOpen) {
 			return;
@@ -873,9 +832,13 @@ class ComboBox extends UI5Element {
 		}
 
 		if (isEnter(e)) {
+			const focusedItem = this._filteredItems.find(item => {
+				return item.focused;
+			});
+
 			this._fireChangeEvent();
 
-			if (picker?.opened) {
+			if (picker?.opened && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 			} else if (this.FormSupport) {
@@ -1082,6 +1045,22 @@ class ComboBox extends UI5Element {
 		}
 	}
 
+	async _scrollToItem(indexOfItem: number, forward: boolean) {
+		const picker = await this._getPicker();
+		const list = picker.querySelector(".ui5-combobox-items-list") as List;
+		const listItem = list?.items[indexOfItem];
+
+		if (listItem) {
+			const pickerRect = picker.getBoundingClientRect();
+			const listItemRect = listItem.getBoundingClientRect();
+			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
+
+			if (!isListItemInVisibleArea) {
+				listItem.scrollIntoView({ behavior: "instant", block: forward ? "end" : "start", inline: "nearest" });
+			}
+		}
+	}
+
 	_announceValueStateText() {
 		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
 
@@ -1229,8 +1208,9 @@ class ComboBox extends UI5Element {
 	get classes() {
 		return {
 			popover: {
-				"ui5-suggestions-popover": !this._isPhone,
-				"ui5-suggestions-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
+				"ui5-suggestions-popover": true,
+				"ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
+				"ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-header": true,

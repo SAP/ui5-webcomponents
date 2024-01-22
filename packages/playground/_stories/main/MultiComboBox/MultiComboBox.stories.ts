@@ -17,7 +17,6 @@ const component = "ui5-multi-combobox";
 export default {
     title: "Main/Multi-Combo Box",
     component: "MultiComboBox",
-    subcomponents: {'MultiComboBoxItem' : 'MultiComboBoxItem', 'MultiComboBoxGroupItem' : 'MultiComboBoxGroupItem'},
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

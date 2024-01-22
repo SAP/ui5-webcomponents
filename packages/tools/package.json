@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.21.0-rc.1",
+  "version": "1.22.0-rc.1",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -21,6 +21,7 @@
     "directory": "packages/tools"
   },
   "dependencies": {
+    "@custom-elements-manifest/analyzer": "^0.8.4",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@wdio/cli": "^7.19.7",
@@ -29,14 +30,15 @@
     "@wdio/mocha-framework": "^7.19.7",
     "@wdio/spec-reporter": "^7.19.7",
     "@wdio/static-server-service": "^7.19.5",
+    "ajv": "^8.12.0",
     "chai": "^4.3.4",
     "child_process": "^1.0.2",
     "chokidar": "^3.5.1",
     "chokidar-cli": "^3.0.0",
     "command-line-args": "^5.1.1",
+    "comment-parser": "^1.4.0",
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
-    "cssnano": "^6.0.1",
     "escodegen": "^2.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -54,7 +56,6 @@
     "nps": "^5.10.0",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
-    "postcss-import": "^14.0.2",
     "postcss-selector-parser": "^6.0.10",
     "prompts": "^2.4.2",
     "properties-reader": "^2.2.0",
@@ -63,8 +64,7 @@
     "rimraf": "^3.0.2",
     "slash": "3.0.0",
     "vite": "^4.4.9",
-    "wdio-chromedriver-service": "^7.3.2",
-    "zx": "^7.2.3"
+    "wdio-chromedriver-service": "^7.3.2"
   },
   "peerDependencies": {
     "chromedriver": "*",
@@ -76,6 +76,7 @@
     }
   },
   "devDependencies": {
+    "esbuild": "^0.19.9",
     "yargs": "^17.5.1"
   }
 }

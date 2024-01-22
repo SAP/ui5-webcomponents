@@ -16,7 +16,6 @@ const component = "ui5-multi-input";
 export default {
     title: "Main/Multi Input",
     component: "MultiInput",
-    subcomponents: {'Token' : 'Token'},
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

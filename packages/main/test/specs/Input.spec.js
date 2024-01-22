@@ -735,8 +735,6 @@ describe("Input general interaction", () => {
 	});
 
 	it("Tests disabled autocomplete(type-ahead)", async () => {
-		let hasSelection;
-
 		const input = await browser.$("#input-disabled-autocomplete").shadow$("input");
 
 		await input.click();
@@ -1519,6 +1517,66 @@ describe("XSS tests for suggestions", () => {
 	});
 });
 
+describe("Prevent suggestion-item-select event", () => {
+    let input;
+    let SUGGESTION_TEXT;
+    const INPUT_ID_SELECTOR = "#input-prevent-suggestion-select";
+
+    beforeEach(async () => {
+        await browser.url(`test/pages/Input.html`);
+
+        input = await browser.$(INPUT_ID_SELECTOR);
+    });
+
+    it("User can prevent suggested-item-select on desired item", async () => {
+        SUGGESTION_TEXT = "Cozy";
+
+        await input.click();
+        await input.keys(SUGGESTION_TEXT.at(0));
+
+        const staticAreaItemClassName =
+            await browser.getStaticAreaItemClassName(INPUT_ID_SELECTOR);
+        const respPopover = await browser
+            .$(`.${staticAreaItemClassName}`)
+            .shadow$("ui5-responsive-popover");
+
+        // Select first suggestion item that has event prevent
+        const firstSuggestion = await respPopover
+            .$("ui5-list")
+            .$("ui5-li-suggestion-item");
+        await firstSuggestion.click();
+
+        assert.strictEqual(
+            await input.getProperty("value"),
+            "test test",
+            "Prevent suggestion-item-select event does not work"
+        );
+    });
+
+    it("Suggestion selection works as usual for items that do not match event prevent criterias defined by user", async () => {
+        SUGGESTION_TEXT = "Compact";
+
+        await input.click();
+        await input.keys(SUGGESTION_TEXT.at(0));
+
+        const staticAreaItemClassName =
+            await browser.getStaticAreaItemClassName(INPUT_ID_SELECTOR);
+        const respPopover = await browser
+            .$(`.${staticAreaItemClassName}`)
+            .shadow$("ui5-responsive-popover");
+
+        const secondSuggestion = await respPopover
+            .$("ui5-list")
+            .$$("ui5-li-suggestion-item")[1];
+        await secondSuggestion.click();
+
+        assert.strictEqual(
+            await input.getProperty("value"),
+            SUGGESTION_TEXT,
+            "Event suggestion-item-select works as expected for items without event prevention"
+        );
+    });
+});
 
 describe("Lazy loading", () => {
 	beforeEach(async () => {
