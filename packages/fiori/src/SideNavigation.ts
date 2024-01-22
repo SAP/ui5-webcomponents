@@ -51,13 +51,13 @@ type SideNavigationPopoverContents = {
 };
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: SideNavigationItemBase;
+	item: SideNavigationItemBase,
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type PopupClickEventDetail = {
 	target: {
-		associatedItem: SideNavigationItemBase
+		associatedItem: SideNavigationItemBase,
 	}
 };
 
@@ -65,7 +65,7 @@ type PopupClickEventDetail = {
 type NavigationMenuClickEventDetail = {
 	detail: {
 		item: {
-			associatedItem: SideNavigationItemBase
+			associatedItem: SideNavigationItemBase,
 		}
 	}
 };
