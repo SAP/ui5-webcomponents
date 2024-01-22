@@ -63,8 +63,10 @@ type PopupClickEventDetail = {
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type NavigationMenuClickEventDetail = {
-	item: {
-		associatedItem: SideNavigationItemBase
+	detail: {
+		item: {
+			associatedItem: SideNavigationItemBase
+		}
 	}
 };
 
@@ -269,8 +271,8 @@ class SideNavigation extends UI5Element {
 		this.closePicker();
 	}
 
-	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
-		const associatedItem = e.detail?.item.associatedItem;
+	handleOverflowItemClick(e: NavigationMenuClickEventDetail) {
+		const associatedItem = e.detail.item.associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
