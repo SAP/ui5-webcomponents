@@ -16,11 +16,7 @@ export default {
   title: "Main/Select/Select Menu",
   component: "SelectMenu",
   argTypes,
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-    },
-  },
+  
 } as Meta<SelectMenu>;
 
 const Template: UI5StoryArgs<SelectMenu, StoryArgsSlots> = (args) => {

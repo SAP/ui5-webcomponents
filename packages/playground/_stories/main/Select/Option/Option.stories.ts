@@ -17,11 +17,7 @@ export default {
   title: "Main/Select/Option",
   component: "Option",
   argTypes,
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-    },
-  },
+  
 } as Meta<Option>;
 
 const Template: UI5StoryArgs<Option, StoryArgsSlots> = (args) => {
