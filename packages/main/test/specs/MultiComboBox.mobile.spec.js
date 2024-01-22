@@ -265,8 +265,8 @@ describe("Items selection", () => {
 	});
 
 	it ("should select all items when clicking select all", async () => {
-		const cb = await $("#mcb-select-all");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all");
+		const cb = await $("#mcb-select-all-vs");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
 		const popover = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const spanRef = await $("#select-all-event");
 

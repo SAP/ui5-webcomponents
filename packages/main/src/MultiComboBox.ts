@@ -347,7 +347,7 @@ class MultiComboBox extends UI5Element {
 	 * Determines if the select all checkbox is visible on top of suggestions.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
