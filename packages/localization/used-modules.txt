@@ -1,10 +1,10 @@
 # Needed files from OpenUI5 - the commented ones are currently overlaid, therefore should not be copied
 
 # ./ui5loader-autoconfig.js
-sap/base/Log.js
+# sap/base/Log.js
 sap/base/i18n/Formatting.js
 sap/base/assert.js
-sap/base/config.js
+# sap/base/config.js
 sap/base/config/MemoryConfigurationProvider.js
 sap/base/Event.js
 sap/base/Eventing.js
@@ -38,6 +38,7 @@ sap/ui/core/Locale.js
 sap/ui/core/LocaleData.js
 sap/ui/core/Theming.js
 sap/ui/core/date/CalendarWeekNumbering.js
+sap/ui/core/date/_Calendars.js
 sap/ui/core/date/Buddhist.js
 sap/ui/core/date/CalendarUtils.js
 sap/ui/core/date/CalendarWeekNumbering.js
