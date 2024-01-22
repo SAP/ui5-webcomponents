@@ -164,6 +164,12 @@ class DynamicPage extends UI5Element {
 		ResizeHandler.deregister(this, this._updateMediaRange);
 	}
 
+	onBeforeRendering(): void {
+		if (this.dynamicPageTitle) {
+			this.dynamicPageTitle.snapped = this.headerSnapped;
+		}
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -287,9 +293,6 @@ class DynamicPage extends UI5Element {
 	_toggleHeader() {
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
 		this.headerSnapped = !this.headerSnapped;
-		if (this.dynamicPageTitle) {
-			this.dynamicPageTitle.snapped = this.headerSnapped;
-		}
 
 		this.isExpanding = true;
 		this.headerPinned = false;
