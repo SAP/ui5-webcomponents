@@ -92,11 +92,10 @@ type ListItemClickEventDetail = {
 type ListItemsReorderEventDetail = {
 	source: {
 		element: ListItemBase,
-		index: number,
 	},
 	destination: {
 		element: List,
-		index: number,
+		index?: number,
 		dropPlacement: DropPlacement,
 	}
 }
@@ -1222,7 +1221,6 @@ class List extends UI5Element {
 		this.fireEvent<ListItemsReorderEventDetail>("item-reorder", {
 			source: {
 				element: droppedItem,
-				index: droppedItemIndex,
 			},
 			destination: {
 				element: this,

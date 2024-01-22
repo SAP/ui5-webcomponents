@@ -4,8 +4,10 @@
  * @public
  */
 enum DropPlacement {
+	// TODO: delete?
 	/**
 	 * @private
+	 *
 	 */
 	Between = "Between",
 
