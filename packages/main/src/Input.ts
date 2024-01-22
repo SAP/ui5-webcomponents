@@ -213,6 +213,7 @@ type InputSuggestionScrollEventDetail = {
  *
  * @param {HTMLElement} item The selected item.
  * @public
+ * @allowPreventDefault
  */
 @event<InputSuggestionItemSelectEventDetail>("suggestion-item-select", {
 	detail: {
