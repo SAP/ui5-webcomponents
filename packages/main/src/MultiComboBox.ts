@@ -211,6 +211,7 @@ type MultiComboboxItemWithSelection = {
  *
  * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
+ * @allowPreventDefault
  */
 @event<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
