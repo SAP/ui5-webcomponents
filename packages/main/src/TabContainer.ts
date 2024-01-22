@@ -292,8 +292,8 @@ class TabContainer extends UI5Element {
 	 * @defaultvalue false
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	maxNestingLevel!: number;
+	@property({ validator: Integer })
+	maxNestingLevel = 0;
 
 	@property({ type: Object })
 	_selectedTab!: Tab;
@@ -1215,6 +1215,7 @@ class TabContainer extends UI5Element {
 				tabs,
 				e.clientX,
 				Orientation.Horizontal,
+				this.maxNestingLevel,
 			);
 
 			if (!found) {
@@ -1269,11 +1270,16 @@ class TabContainer extends UI5Element {
 			tabs,
 			e.clientX,
 			Orientation.Horizontal,
+			this.maxNestingLevel,
 		);
 		const target = result?.closestElement;
 
 		if (!target) {
 			return;
+		}
+
+		if (result.dropPlacement === DropPlacement.On) {
+			droppedTab.slot = "subTabs"; // TODO: is this our  concern?
 		}
 
 		const targetTabIndex = [...droppedTabParent.children].indexOf((target as ITab)._realTab!);
@@ -1285,7 +1291,7 @@ class TabContainer extends UI5Element {
 			},
 			destination: {
 				// eslint-disable-next-line no-warning-comments
-				element: this, // TODO: support nesting
+				element: result.dropPlacement === DropPlacement.On ? (target as Tab)._realTab : this,
 				index: targetTabIndex,
 				dropPlacement: result.dropPlacement,
 			},
@@ -1293,18 +1299,22 @@ class TabContainer extends UI5Element {
 
 		droppedTab.focus();
 		this.dropIndicatorDOM.hide();
-		(this.responsivePopover?.querySelector("[ui5-list]") as List).dropIndicatorDOM.hide();
+		(this.responsivePopover?.querySelector("[ui5-list]") as List)?.dropIndicatorDOM.hide();
 	}
 
 	_onPopoverDrop(e: DragEvent) {
-		// const listItem = e.target;
-		// TODO: Only handle drop from header ot list, avoid handling if item-reorder event from the list is fired
-		// TODO: or let the list handle drop from another container?
 		if (!e.dataTransfer) {
 			return;
 		}
 
 		const id = e.dataTransfer.getData("text/plain");
+
+		// Only handle drop from header to list
+		// TODO: or let the list handle drop from another container?
+		if (id.endsWith("-li")) {
+			return;
+		}
+
 		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]`)] as Array<Tab>;
 		const droppedTab = tabs.find(item => item.id === id)!._realTab;
 		const droppedTabIndex = this.items.indexOf(droppedTab);
@@ -1336,8 +1346,10 @@ class TabContainer extends UI5Element {
 		let targetTabIndex;
 		let dropPlacement = destination.dropPlacement;
 
-		// nesting
-		if (listItem._realTab !== this._getRootTab(listItem._realTab)) {
+		if (destination.dropPlacement === DropPlacement.On) {
+			dropIn = listItem._realTab;
+			droppedTab.slot = "subTabs"; // TODO: is this our  concern?
+		} else if (listItem._realTab !== this._getRootTab(listItem._realTab)) { // nesting
 			dropIn = listItem._realTab;
 
 			// TODO: fine tuning
@@ -1355,7 +1367,8 @@ class TabContainer extends UI5Element {
 			if (listItem._realTab !== rootTab) {
 				dropPlacement = DropPlacement.After;
 			}
-			droppedTab.slot = "";
+
+			droppedTab.slot = ""; // TODO: is this our  concern?
 		}
 
 		this.fireEvent("tab-reorder", {

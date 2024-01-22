@@ -16,7 +16,7 @@
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs>
+		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs max-nesting-level="100">
 			<ui5-tab design="Positive" text="One"></ui5-tab>
 			<ui5-tab design="Negative" text="Two" disabled>
 				<ui5-tab slot="subTabs" text="2.1"></ui5-tab>
@@ -88,6 +88,8 @@
 					source.element,
 					insertAfterElement
 				);
+			} else if (destination.dropPlacement === "On") {
+				destination.element.prepend(source.element);
 			}
 
 			setTimeout(() => {

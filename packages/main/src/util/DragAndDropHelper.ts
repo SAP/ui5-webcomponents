@@ -1,7 +1,7 @@
 import DropPlacement from "../types/DropPlacement.js";
 import Orientation from "../types/Orientation.js";
 
-const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation, maxNestingLevel = Number.POSITIVE_INFINITY) => {
+const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation, maxNestingLevel: number) => {
 	let shortestDist = Number.POSITIVE_INFINITY,
 		closestElement: HTMLElement | null = null;
 

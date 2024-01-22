@@ -455,6 +455,13 @@ class List extends UI5Element {
 	_reorderItems!: boolean;
 
 	/**
+	 * Used in TabContainerPopover
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_maxNestingLevel = 0;
+
+	/**
 	 * Defines the items of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
@@ -1176,7 +1183,7 @@ class List extends UI5Element {
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
-			0,
+			this._maxNestingLevel,
 		);
 
 		if (!found) {
@@ -1205,7 +1212,7 @@ class List extends UI5Element {
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
-			0,
+			this._maxNestingLevel,
 		);
 
 		if (!result) {
