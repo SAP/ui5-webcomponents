@@ -406,3 +406,31 @@ describe("Validation", () => {
 	});
 
 });
+
+describe("Accessibility", () => {
+	before(async () => {
+		await browser.url("test/pages/MultiComboBox.html");
+		await browser.emulateDevice('iPhone X');
+	});
+
+	it("Show selected toggle button should has accessibleName attribute", async () => {
+		const multiCombo = await browser.$("#multi1");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+		let resourceBundleText = null;
+
+		await multiCombo.scrollIntoView();
+		await multiCombo.shadow$('input').click();
+
+		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+
+		resourceBundleText = await browser.executeAsync(done => {
+			const mcb = document.getElementById("multi1");
+			done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SHOW_SELECTED_BUTTON));
+		});
+		
+		assert.ok(await toggleSelectedButton.isDisplayed(), "Toggle selected items button is displayed");
+		assert.strictEqual(await toggleSelectedButton.getAttribute("accessible-name"), "Show Selected Items Only", "Correct value is applied")
+		
+	});
+
+});

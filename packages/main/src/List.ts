@@ -145,11 +145,7 @@ type ListItemClickEventDetail = {
  * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-groupheader</code>)
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.List
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-list
- * @appenddocs sap.ui.webc.main.StandardListItem sap.ui.webc.main.CustomListItem sap.ui.webc.main.GroupHeaderListItem
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -164,13 +160,15 @@ type ListItemClickEventDetail = {
  * Fired when an item is activated, unless the item's <code>type</code> property
  * is set to <code>Inactive</code>.
  *
- * @event sap.ui.webc.main.List#item-click
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
-@event("item-click", {
+@event<ListItemClickEventDetail>("item-click", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -181,13 +179,15 @@ type ListItemClickEventDetail = {
  * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
  * not to be confused with <code>item-delete</code>.
  *
- * @event sap.ui.webc.main.List#item-close
  * @param {HTMLElement} item the item about to be closed.
  * @public
  * @since 1.0.0-rc.8
  */
-@event("item-close", {
+@event<ListItemCloseEventDetail>("item-close", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -197,13 +197,15 @@ type ListItemClickEventDetail = {
  * <br><br>
  * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
  *
- * @event sap.ui.webc.main.List#item-toggle
  * @param {HTMLElement} item the toggled item.
  * @public
  * @since 1.0.0-rc.8
  */
-@event("item-toggle", {
+@event<ListItemToggleEventDetail>("item-toggle", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -214,12 +216,14 @@ type ListItemClickEventDetail = {
  * <b>Note:</b> A Delete button is displayed on each item,
  * when the component <code>mode</code> property is set to <code>Delete</code>.
  *
- * @event sap.ui.webc.main.List#item-delete
  * @param {HTMLElement} item the deleted item.
  * @public
  */
-@event("item-delete", {
+@event<ListItemDeleteEventDetail>("item-delete", {
 	detail: {
+		/**
+		 * @public
+		 */
 		item: { type: HTMLElement },
 	},
 })
@@ -228,18 +232,35 @@ type ListItemClickEventDetail = {
  * Fired when selection is changed by user interaction
  * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
  *
- * @event sap.ui.webc.main.List#selection-change
  * @allowPreventDefault
- * @param {Array} selectedItems An array of the selected items.
- * @param {Array} previouslySelectedItems An array of the previously selected items.
+ * @param {Array<ListItemBase>} selectedItems An array of the selected items.
+ * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
  * @public
  */
-@event("selection-change", {
+@event<ListSelectionChangeEventDetail>("selection-change", {
 	detail: {
+		/**
+		 * @public
+		 */
 		selectedItems: { type: Array },
+		/**
+		 * @public
+		 */
 		previouslySelectedItems: { type: Array },
-		targetItem: { type: HTMLElement }, // protected, holds the event target item
-		selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
+		/**
+		 * protected, holds the event target item
+		 * @protected
+		 */
+		targetItem: { type: HTMLElement },
+		/**
+		 * protected, indicates if the user used the selection components to change the selection
+		 * @protected
+		 */
+		selectionComponentPressed: { type: Boolean },
+		/**
+		 * @private
+		 */
+		key: { type: String },
 	},
 })
 
@@ -248,7 +269,6 @@ type ListItemClickEventDetail = {
  * <br><br>
  * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
  *
- * @event sap.ui.webc.main.List#load-more
  * @public
  * @since 1.0.0-rc.6
  */
@@ -257,7 +277,7 @@ type ListItemClickEventDetail = {
 /**
  * @private
  */
-@event("item-focused", {
+@event<ListItemFocusEventDetail>("item-focused", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -268,9 +288,7 @@ class List extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.headerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -279,9 +297,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the footer text.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.footerText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -290,9 +306,7 @@ class List extends UI5Element {
 	/**
 	 * Determines whether the component is indented.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.List.prototype.indent
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -301,9 +315,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the mode of the component.
 	 *
-	 * @type {sap.ui.webc.main.types.ListMode}
-	 * @name sap.ui.webc.main.List.prototype.mode
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
@@ -312,9 +324,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the text that is displayed when the component contains no items.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.noDataText
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -323,9 +333,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the item separator style that is used.
 	 *
-	 * @type {sap.ui.webc.main.types.ListSeparators}
-	 * @name sap.ui.webc.main.List.prototype.separators
-	 * @defaultvalue "All"
+	 * @default "All"
 	 * @public
 	 */
 	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
@@ -337,9 +345,7 @@ class List extends UI5Element {
 	 * <br><br>
 	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 	 * on IE the component will fallback to <code>growing="Button"</code>.
-	 * @type {sap.ui.webc.main.types.ListGrowingMode}
-	 * @name sap.ui.webc.main.List.prototype.growing
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @since 1.0.0-rc.13
 	 * @public
 	 */
@@ -349,9 +355,7 @@ class List extends UI5Element {
 	/**
 	 * Defines if the component would display a loading indicator over the list.
 	 *
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.List.prototype.busy
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.6
 	 */
@@ -361,9 +365,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 *
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.List.prototype.busyDelay
-	 * @defaultValue 1000
+	 * @default 1000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
@@ -372,9 +374,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the accessible name of the component.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -384,9 +384,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the IDs of the elements that label the input.
 	 *
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -397,9 +395,7 @@ class List extends UI5Element {
 	 * Defines the accessible role of the component.
 	 * <br><br>
 	 * @public
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.accessibleRole
-	 * @defaultvalue "list"
+	 * @default "list"
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ defaultValue: "list" })
@@ -408,9 +404,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
-	 * @type {string}
-	 * @name sap.ui.webc.main.List.prototype.accessibleRoleDescription
-	 * @defaultvalue undefined
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ defaultValue: undefined, noAttribute: true })
@@ -435,9 +429,6 @@ class List extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 	 *
-	 * @type {sap.ui.webc.main.IListItem[]}
-	 * @name sap.ui.webc.main.List.prototype.default
-	 * @slot items
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -449,9 +440,6 @@ class List extends UI5Element {
 	 * <b>Note:</b> When <code>header</code> is set, the
 	 * <code>headerText</code> property is ignored.
 	 *
-	 * @type {HTMLElement[]}
-	 * @name sap.ui.webc.main.List.prototype.header
-	 * @slot
 	 * @public
 	 */
 	@slot()

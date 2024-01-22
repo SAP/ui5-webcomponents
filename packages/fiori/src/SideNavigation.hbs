@@ -10,6 +10,7 @@
 			{{#each items}}
 				{{> menuitem }}
 			{{/each}}
+			{{> overflowItem}}
 		</div>
 	{{else}}
 		<ul role="tree"
@@ -210,4 +211,24 @@
 			</ul>
 		{{/if}}
 	</li>
+{{/inline}}
+
+{{#*inline overflowItem}}
+	<div id="{{_id}}-sn-overflow-item"
+				class="ui5-sn-item ui5-sn-item-level1 ui5-sn-item-overflow"
+				role="menuitem"
+				data-sap-focus-ref
+				@keydown="{{_onkeydownOverflow}}"
+				@keyup="{{_onkeyupOverflow}}"
+				@click="{{_handleOverflowClick}}"
+				aria-haspopup="menu"
+				tabindex="0"
+				title="{{overflowAccessibleName}}"
+			>
+				<ui5-icon
+					class="ui5-sn-item-overflow-icon"
+					name="overflow"
+				>
+				</ui5-icon>
+			</div>	
 {{/inline}}

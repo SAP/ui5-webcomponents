@@ -4,6 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
@@ -110,10 +111,7 @@ type PreviewValues = {
  * <code>import "@ui5/webcomponents/dist/DateTimePicker.js";</code>
  *
  * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.DateTimePicker
- * @extends sap.ui.webc.main.DatePicker
- * @tagname ui5-datetime-picker
+ * @extends DatePicker
  * @since 1.0.0-rc.7
  * @public
  */
@@ -144,8 +142,7 @@ class DateTimePicker extends DatePicker {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> The date view would be displayed by default.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -156,8 +153,7 @@ class DateTimePicker extends DatePicker {
 	 * The phone mode turns on when the component is used on small screens or phone devices.
 	 * In phone mode the user can see either the calendar view, or the time view
 	 * and can switch between the views via toggle buttons.
-	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -210,9 +206,10 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Opens the picker.
+	 *
 	 * @public
 	 */
-	async openPicker() {
+	async openPicker(): Promise<void> {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
 		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
@@ -299,6 +296,7 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Defines whether the dialog on mobile should have header
+	 *
 	 * @private
 	 */
 	get _shouldHideHeader() {
@@ -352,6 +350,10 @@ class DateTimePicker extends DatePicker {
 		return !this._calendarSelectedDates || !this._calendarSelectedDates.length;
 	}
 
+	get _density() {
+		return getEffectiveContentDensity(this);
+	}
+
 	/**
 	 * Handles clicking on the <code>submit</code> button, within the picker`s footer.
 	 */
@@ -377,7 +379,8 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * Handles the date/time switch available in <code>phoneMode</code> to switch
 	 * between the date and time views.
-	 * @param {Event} e
+	 *
+	 * @param e
 	 */
 	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
 		const target = e.target as HTMLElement;
