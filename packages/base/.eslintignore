@@ -14,4 +14,3 @@ package-scripts.cjs
 .eslintrc.cjs
 src/renderer/directives/style-map.js
 src/util/metaUrl.js
-overlay

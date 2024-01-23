@@ -34,9 +34,8 @@ const scripts = {
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
-		default: "nps copy.src copy.overlay",
+		default: "nps copy.src",
 		src: `copy-and-watch "src/**/*.{js,css,d.ts}" dist/`,
-		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,

@@ -23,7 +23,7 @@ const convertImports = async (srcPath) => {
 	tree?.program?.body?.forEach(node => {
 		if (node.type === "ImportDeclaration") {
 			let importee = node.source.value;
-			console.log(importee);
+			// console.log(importee);
 			if (importee.startsWith(".")) {
 				// add .js extension if missing
 				if (!importee.endsWith(".js")) {
