@@ -18,9 +18,8 @@ const scripts = {
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript",
 	typescript: "tsc -b",
 	integrate: {
-		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.third-party",
+		default: "nps integrate.copy-used-modules integrate.amd-to-es6 integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
-		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
 		"amd-to-es6": `node "${amdToES6}" dist/`,
 		"third-party": {
 			default: "nps integrate.third-party.copy integrate.third-party.fix",

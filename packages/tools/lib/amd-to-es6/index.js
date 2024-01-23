@@ -1,16 +1,14 @@
-const babelCore = require("@babel/core");
-const replaceAsync = require('replace-in-file');
-const babelParser = require("@babel/parser");
-const babelGenerator = require("@babel/generator").default;
 const fs = require("fs").promises;
 const path = require("path");
 const basePath = process.argv[2];
+const babelCore = require("@babel/core");
+const babelParser = require("@babel/parser");
+const babelGenerator = require("@babel/generator").default;
+const replaceAsync = require('replace-in-file');
 
 const convertSAPUIDefineToDefine = async (filePath) => {
 	return replaceAsync({
 		files: filePath,
-		from: "sap.ui.define",
-		to: "define",
 		processor: (input) => {
 			return input.replace("sap.ui.define", "define").replace(", /* bExport= */ false", "").replace(", /* bExport= */ true", "");
 		}
