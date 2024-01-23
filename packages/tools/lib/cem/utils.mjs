@@ -18,7 +18,7 @@ const normalizeDescription = (description) => {
 	return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, ""): description;
 }
 
-const getTypeRefs = (ts, classNodeMember, member) => {
+const getTypeRefs = (ts, node, member) => {
     const extractTypeRefs = (type) => {
         if (type?.kind === ts.SyntaxKind.TypeReference) {
             return type.typeArguments?.length
@@ -29,7 +29,7 @@ const getTypeRefs = (ts, classNodeMember, member) => {
                 .map((type) => extractTypeRefs(type))
                 .flat(1);
         } else if (type?.kind === ts.SyntaxKind.TemplateLiteralType) {
-            if (member.type) {
+            if (member?.type) {
                 member.type.text = member.type.text.replaceAll?.(/`|\${|}/g, "");
             }
 
@@ -39,7 +39,7 @@ const getTypeRefs = (ts, classNodeMember, member) => {
         }
     };
 
-    let typeRefs = extractTypeRefs(classNodeMember.type);
+    let typeRefs = extractTypeRefs(node.type) || node?.typeArguments?.map(n => extractTypeRefs(n)).flat(2);
 
     if (typeRefs) {
         typeRefs = typeRefs.filter((e) => !!e);
@@ -62,7 +62,7 @@ const getPrivacyStatus = (jsdocComment) => {
     return privacyTag?.tag || "private";
 };
 
-const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
+const findPackageName = (ts, sourceFile, typeName) => {
     const localStatements = [
         ts.SyntaxKind.EnumDeclaration,
         ts.SyntaxKind.InterfaceDeclaration,
@@ -102,7 +102,7 @@ const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
     }
 };
 
-const findImportPath = (ts, sourceFile, typeName, packageJSON, modulePath) => {
+const findImportPath = (ts, sourceFile, typeName, modulePath) => {
     const localStatements = [
         ts.SyntaxKind.EnumDeclaration,
         ts.SyntaxKind.InterfaceDeclaration,
@@ -158,6 +158,8 @@ const normalizeTagType = (type) => {
 	return type?.trim();
 }
 
+const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
 const getReference = (ts, type, classNode, modulePath) => {
     let sourceFile = classNode.parent;
 
@@ -165,22 +167,19 @@ const getReference = (ts, type, classNode, modulePath) => {
         sourceFile = sourceFile.parent;
     }
 
-    const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
-
     const typeName =
         typeof type === "string"
             ? normalizeTagType(type)
             : type.class?.expression?.text ||
             type.typeExpression?.type?.getText() ||
             type.typeExpression?.type?.elementType?.typeName?.text;
-    const packageName = findPackageName(ts, sourceFile, typeName, packageJSON);
+    const packageName = findPackageName(ts, sourceFile, typeName);
     const importPath = findImportPath(
         ts,
         sourceFile,
         typeName,
-        packageJSON,
         modulePath
-    );
+    )?.replace(`${packageName}/`, "");
 
     return packageName && {
         name: typeName,

@@ -164,7 +164,7 @@ type ListItemClickEventDetail = {
  * @param {HTMLElement} item The clicked item.
  * @public
  */
-@event("item-click", {
+@event<ListItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public
@@ -183,7 +183,7 @@ type ListItemClickEventDetail = {
  * @public
  * @since 1.0.0-rc.8
  */
-@event("item-close", {
+@event<ListItemCloseEventDetail>("item-close", {
 	detail: {
 		/**
 		 * @public
@@ -201,7 +201,7 @@ type ListItemClickEventDetail = {
  * @public
  * @since 1.0.0-rc.8
  */
-@event("item-toggle", {
+@event<ListItemToggleEventDetail>("item-toggle", {
 	detail: {
 		/**
 		 * @public
@@ -219,7 +219,7 @@ type ListItemClickEventDetail = {
  * @param {HTMLElement} item the deleted item.
  * @public
  */
-@event("item-delete", {
+@event<ListItemDeleteEventDetail>("item-delete", {
 	detail: {
 		/**
 		 * @public
@@ -237,7 +237,7 @@ type ListItemClickEventDetail = {
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
  * @public
  */
-@event("selection-change", {
+@event<ListSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -247,8 +247,20 @@ type ListItemClickEventDetail = {
 		 * @public
 		 */
 		previouslySelectedItems: { type: Array },
-		targetItem: { type: HTMLElement }, // protected, holds the event target item
-		selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
+		/**
+		 * protected, holds the event target item
+		 * @protected
+		 */
+		targetItem: { type: HTMLElement },
+		/**
+		 * protected, indicates if the user used the selection components to change the selection
+		 * @protected
+		 */
+		selectionComponentPressed: { type: Boolean },
+		/**
+		 * @private
+		 */
+		key: { type: String },
 	},
 })
 
@@ -265,7 +277,7 @@ type ListItemClickEventDetail = {
 /**
  * @private
  */
-@event("item-focused", {
+@event<ListItemFocusEventDetail>("item-focused", {
 	detail: {
 		item: { type: HTMLElement },
 	},

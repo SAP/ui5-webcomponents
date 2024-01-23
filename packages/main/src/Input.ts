@@ -213,8 +213,9 @@ type InputSuggestionScrollEventDetail = {
  *
  * @param {HTMLElement} item The selected item.
  * @public
+ * @allowPreventDefault
  */
-@event("suggestion-item-select", {
+@event<InputSuggestionItemSelectEventDetail>("suggestion-item-select", {
 	detail: {
 		/**
 	 	* @public
@@ -232,7 +233,7 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 1.0.0-rc.8
  */
-@event("suggestion-item-preview", {
+@event<InputSuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 	detail: {
 		/**
 	 	* @public
@@ -253,7 +254,7 @@ type InputSuggestionScrollEventDetail = {
  * @protected
  * @since 1.0.0-rc.8
  */
-@event("suggestion-scroll", {
+@event<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 	detail: {
 		/**
 	 	* @public

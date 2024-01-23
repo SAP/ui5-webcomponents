@@ -22,6 +22,18 @@ import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js"
 // Template
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 
+const getEffectiveIllustrationName = (name: string): string => {
+	if (name.startsWith("Tnt")) {
+		return name.replace("Tnt", "tnt/");
+	}
+
+	if (name.includes("/")) {
+		return name;
+	}
+
+	return `fiori/${name}`;
+};
+
 /**
  * @class
  *
@@ -81,22 +93,34 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
 class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the illustration name that will be displayed in the component.
-	* <br><br>
-	* <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
 	* <br>
+	* Example:
+	* <br>
+	* <code>name='BeforeSearch'</code>, <code>name='UnableToUpload'</code>, etc..
+	* <br>
+	* <br>
+	* <b>Note:</b> To use the TNT illustrations,
+	* you need to set the <code>tnt</code> or <code>Tnt</code> prefix in front of the icon's name.
+	* <br>
+	* Example:
+	* <br>
+	* <code>name='tnt/Avatar'</code> or <code>name='TntAvatar'</code>.
+	* <br>
+	* <br>
+	* <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
 	* When using an illustration type, other than the default, it should be loaded in addition:
 	* <br>
 	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
-	* <br><br>
-	* <b>Note:</b> TNT illustrations cointain <code>Tnt</code> prefix in their name.
-	* You can import them removing the <code>Tnt</code> prefix like this:
+	* <br>
+	* <br>
+	* For TNT illustrations:
 	* <br>
 	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
 	* @default "BeforeSearch"
 	* @public
 	*/
-	@property({ type: IllustrationMessageType, defaultValue: IllustrationMessageType.BeforeSearch })
-	name!: `${IllustrationMessageType}`;
+	@property({ type: String, defaultValue: IllustrationMessageType.BeforeSearch })
+	name!: string;
 
 	/**
 	* Determines which illustration breakpoint variant is used.
@@ -267,18 +291,18 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	async onBeforeRendering() {
-		let illustrationData = getIllustrationDataSync(this.name);
-
 		// Gets the current illustration name given in the "name" attribute
-		const currentIllustration = this.getAttribute("name") as IllustrationMessageType;
+		let effectiveName = getEffectiveIllustrationName(this.name);
+		let illustrationData = getIllustrationDataSync(effectiveName);
 
-		if (this.hasAttribute("name") && !this.isValidIllustration(currentIllustration)) {
+		if (this.hasAttribute("name") && !this.isValidIllustration(effectiveName)) {
+			effectiveName = getEffectiveIllustrationName(IllustrationMessageType.BeforeSearch);
 			// eslint-disable-next-line
-			console.warn(`The illustration "${currentIllustration!}" does not exist. The default illustration "${IllustrationMessageType.BeforeSearch}" is loaded instead.`);
+			console.warn(`The illustration "${effectiveName!}" does not exist. The default illustration "${IllustrationMessageType.BeforeSearch}" is loaded instead.`);
 		}
 
 		if (illustrationData === undefined) {
-			illustrationData = await getIllustrationData(this.name);
+			illustrationData = await getIllustrationData(effectiveName);
 		}
 
 		this.spotSvg = illustrationData!.spotSvg;
@@ -439,7 +463,9 @@ class IllustratedMessage extends UI5Element {
 		return !!this.actions.length && this.media !== IllustratedMessage.MEDIA.BASE;
 	}
 
-	isValidIllustration(currentIllustration: `${IllustrationMessageType}`): boolean {
+	isValidIllustration(currentIllustration: string): boolean {
+		currentIllustration = currentIllustration.startsWith("tnt/") ? currentIllustration.replace("tnt/", "Tnt") : currentIllustration.replace("fiori/", "");
+
 		return currentIllustration in IllustrationMessageType;
 	}
 }

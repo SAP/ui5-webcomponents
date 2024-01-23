@@ -9,6 +9,7 @@
 		<ui5-wheelslider
 				label = "{{hoursSliderTitle}}"
 				._items="{{hoursArray}}"
+				._density="{{_density}}"
 				data-sap-focus-ref
 				?expanded="{{_hoursSliderFocused}}"
 				value="{{_hours}}"
@@ -23,6 +24,7 @@
 		<ui5-wheelslider
 				label = "{{minutesSliderTitle}}"
 				._items="{{minutesArray}}"
+				._density="{{_density}}"
 				?expanded="{{_minutesSliderFocused}}"
 				value="{{_minutes}}"
 				@ui5-select="{{onMinutesChange}}"
@@ -36,6 +38,7 @@
 		<ui5-wheelslider
 				label = "{{secondsSliderTitle}}"
 				._items="{{secondsArray}}"
+				._density="{{_density}}"
 				?expanded="{{_secondsSliderFocused}}"
 				value="{{_seconds}}"
 				@ui5-select="{{onSecondsChange}}"
@@ -49,6 +52,7 @@
 		<ui5-wheelslider
 				label = "{{periodSliderTitle}}"
 				._items="{{periodsArray}}"
+				._density="{{_density}}"
 				?expanded="{{_periodSliderFocused}}"
 				value="{{_period}}"
 				@ui5-select="{{onPeriodChange}}"

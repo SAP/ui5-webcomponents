@@ -121,7 +121,7 @@ type FocusAdaptor = ITabbable & {
  * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  * @public
  */
-@event("item-click", {
+@event<BreadcrumbsItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** logo aligned with visual specification ([#8109](https://github.com/SAP/ui5-webcomponents/issues/8109)) ([4430869](https://github.com/SAP/ui5-webcomponents/commit/443086969a3d09b02fe0807366089dcf5e042c45)), closes [#8058](https://github.com/SAP/ui5-webcomponents/issues/8058)
+
+
+### Features
+
+* **illustration:** use illustration name as default module export ([#8074](https://github.com/SAP/ui5-webcomponents/issues/8074)) ([a9c0705](https://github.com/SAP/ui5-webcomponents/commit/a9c07055d4e06e4d1f69b7a2a48b36eb77fae4aa))
+* **ui5-illustrated-message:** add subtitle css part ([#8088](https://github.com/SAP/ui5-webcomponents/issues/8088)) ([351e570](https://github.com/SAP/ui5-webcomponents/commit/351e57042b25be66c2b47d72a89afd890dda063e))
+
+
+
+
+
 # [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
 
 
