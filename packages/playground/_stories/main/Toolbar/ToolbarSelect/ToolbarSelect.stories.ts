@@ -5,23 +5,14 @@ import type { Meta } from "@storybook/web-components";
 
 import type ToolbarSelect from "@ui5/webcomponents/dist/ToolbarSelect.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs.js";
-
-const component = "ui5-toolbar-select";
 
 export default {
 	title: "Main/Toolbar/Toolbar Select",
 	component: "ToolbarSelect",
 	argTypes,
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 } as Meta<ToolbarSelect>;
 
 const Template: UI5StoryArgs<ToolbarSelect, StoryArgsSlots> = (args) => {

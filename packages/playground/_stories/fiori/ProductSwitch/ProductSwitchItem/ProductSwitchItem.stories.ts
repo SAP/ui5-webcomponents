@@ -1,26 +1,17 @@
 import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs";
 
 // @ts-ignore
 import type ProductSwitchItem from "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-const component = "ui5-product-switch-item";
-
 export default {
     title: "Fiori/Product Switch/Product Switch Item",
     component: "ProductSwitchItem",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true }),
-        },
-    },
     argTypes,
 } as Meta<ProductSwitchItem>;
 

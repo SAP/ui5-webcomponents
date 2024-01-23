@@ -1,23 +1,13 @@
 import { html } from "lit";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
+import argTypes from "./argTypes.js";
 // @ts-ignore
 import type Wizard from "@ui5/webcomponents-fiori/dist/Wizard.js";
-
-const component = "ui5-wizard";
 
 export default {
 	title: "Fiori/Wizard",
 	component: "Wizard",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<Wizard>;
 

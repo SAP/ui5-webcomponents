@@ -81,7 +81,7 @@ const main = async () => {
 						const subComponentStats = await fs.stat(subComponentPath);
 
 						if (subComponentStats.isDirectory()) {
-							generateStoryDoc(subComponentPath, subComponent, api, currPackage);
+							generateStoryDoc(subComponentPath, subComponent, api, currPackage, true);
 						}
 					}))
 
@@ -92,7 +92,7 @@ const main = async () => {
 	}
 };
 
-const generateStoryDoc = async (componentPath: string, component: string, api: Package, componentPackage: string) => {
+const generateStoryDoc = async (componentPath: string, component: string, api: Package, componentPackage: string, isSubComponent?: boolean) => {
 	console.log(`Generating argTypes for story ${component}`);
 	const apiData = getAPIData(api, component, componentPackage);
 
@@ -101,9 +101,13 @@ const generateStoryDoc = async (componentPath: string, component: string, api: P
 	}
 
 	const { storyArgsTypes, slotNames, info } = apiData;
+	const componentInfo = {
+		...info,
+		showDefaultStoryOnly: isSubComponent
+	}
 
 	await fs.writeFile(componentPath + '/argTypes.ts', `export default ${storyArgsTypes};
-export const componentInfo = ${JSON.stringify(info, null, 4)};
+export const componentInfo = ${JSON.stringify(componentInfo, null, 4)};
 export type StoryArgsSlots = {
 	${slotNames.map(slotName => `${slotName}: string;`).join('\n	')}
 }`);

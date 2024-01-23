@@ -2,26 +2,18 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Decorator, Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import { DocsPage } from "../../../.storybook/docs";
 
 import UploadCollection from "@ui5/webcomponents-fiori/dist/UploadCollection.js";
 import UploadState from "@ui5/webcomponents-fiori/dist/types/UploadState.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 
-const component = "ui5-upload-collection";
-
 export default {
 	title: "Fiori/Upload Collection",
 	component: "UploadCollection",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component }),
-		},
-	},
 	argTypes,
 } as Meta<UploadCollection>;
 
