@@ -444,6 +444,41 @@
 		</ui5-multi-combobox>
 	</div>
 
+	<div class="sample-container column">
+		<ui5-multi-combobox id="clear-icon-cb" show-clear-icon>
+			<ui5-mcb-item text="Algeria"></ui5-mcb-item>
+			<ui5-mcb-item text="Argentina"></ui5-mcb-item>
+			<ui5-mcb-item text="Australia"></ui5-mcb-item>
+			<ui5-mcb-item text="Austria"></ui5-mcb-item>
+			<ui5-mcb-item text="Bahrain"></ui5-mcb-item>
+			<ui5-mcb-item text="Belgium"></ui5-mcb-item>
+			<ui5-mcb-item text="Brazil"></ui5-mcb-item>
+			<ui5-mcb-item text="Bulgaria" selected></ui5-mcb-item>
+			<ui5-mcb-item text="Canada"></ui5-mcb-item>
+			<ui5-mcb-item text="Chile"></ui5-mcb-item>
+		</ui5-multi-combobox>
+		<br>
+		<span>Change event calls: <span id="clear-icon-change-count">0</span></span>
+		<br>
+		<span>Input event calls: <span id="clear-icon-input-count">0</span></span>
+
+		<script>
+			const clearIconCb = document.getElementById("clear-icon-cb");
+
+			clearIconCb.addEventListener("ui5-change", () => {
+				const changeCountEl = document.getElementById("clear-icon-change-count");
+
+				changeCountEl.innerText = parseInt(changeCountEl.innerText) + 1;
+			});
+
+			clearIconCb.addEventListener("ui5-input", () => {
+				const inputCountEl = document.getElementById("clear-icon-input-count");
+
+				inputCountEl.innerText = parseInt(inputCountEl.innerText) + 1;
+			});
+		</script>
+	</div>
+
 	<script>
 		let selectionChangeEventsFired = 0;
 		var eventNameInput = document.getElementById("events-input");
