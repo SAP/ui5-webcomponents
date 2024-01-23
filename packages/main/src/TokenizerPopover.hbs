@@ -44,7 +44,8 @@
 	{{/if}}
 	<ui5-list
 		class="ui5-tokenizer-list"
-		mode="Delete"
+		mode={{_nMoreListMode}}
+		separators="None"
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}

@@ -760,6 +760,13 @@ class Tokenizer extends UI5Element {
 	get _selectedTokens() {
 		return this._getTokens().filter(token => token.selected);
 	}
+	get _nMoreListMode() {
+		if (this.disabled) {
+			return "None";
+		}
+
+		return "Delete";
+	}
 
 	get classes(): ClassMap {
 		return {
