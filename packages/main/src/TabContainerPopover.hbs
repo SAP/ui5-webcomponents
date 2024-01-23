@@ -14,6 +14,7 @@
 		separators="None"
 		@ui5-item-click="{{_onOverflowListItemClick}}"
 		@ui5-item-reorder="{{_onReorderItemsInPopover}}"
+		@ui5-before-item-reorder="{{_onBeforeReorderItemsInPopover}}"
 		@drop="{{_onPopoverDrop}}"
 	>
 		{{#each _popoverItems}}

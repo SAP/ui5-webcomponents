@@ -100,6 +100,13 @@ type ListItemsReorderEventDetail = {
 	}
 }
 
+type ListBeforeItemsReorderEventDetail = {
+	destination: {
+		element: List,
+		index: number
+	}
+}
+
 /**
  * @class
  *
@@ -292,7 +299,24 @@ type ListItemsReorderEventDetail = {
 /**
  * @private
  */
-@event("item-reorder", {
+@event("item-reorder", { // ui5-drop?
+	detail: {
+		source: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
+		destination: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
+	},
+})
+
+/**
+ * @private
+ * @allowPreventDefault
+ */
+@event("before-item-reorder", { // ui5-dragover?
 	detail: {
 		source: {
 			element: { type: HTMLElement },
@@ -1165,34 +1189,48 @@ class List extends UI5Element {
 		this.dropIndicatorDOM.target = "";
 	}
 
-	_ondragover(e: DragEvent) {
-		const dropIndicator = this.dropIndicatorDOM;
-		// to do: properly find the dragged list item
-		const draggedElement = (e.target as ListItemBase)?.closest("[ui5-li]") || (e.target as ListItemBase)?.closest("[ui5-li-custom]");
-		if (!draggedElement) {
-			dropIndicator.target = "";
-			return;
-		}
-
-		// the item past this point qualifies to be dropped.
-		// calling prevent default allows the drop event to fire later
+	_ondragenter(e: DragEvent) {
 		e.preventDefault();
+	}
 
-		const found = getElementAtCoordinate(
+	_ondragover(e: DragEvent) {
+		const coordinateInfo = getElementAtCoordinate(
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
 			this._maxNestingLevel,
 		);
 
-		if (!found) {
+		if (!coordinateInfo) {
+			this.dropIndicatorDOM.target = "";
 			return;
 		}
 
+		const dragOverElement = coordinateInfo.closestElement as ListItemBase;
+
+		if (!dragOverElement) {
+			this.dropIndicatorDOM.target = "";
+			return;
+		}
+
+		const dragOverPrevented = !this.fireEvent<ListBeforeItemsReorderEventDetail>("before-item-reorder", {
+			destination: {
+				element: this,
+				index: this.items.indexOf(dragOverElement),
+			},
+		}, true);
+
+		if (dragOverPrevented) {
+			return;
+		}
+
+		// calling prevent default allows the drop event to fire later
+		e.preventDefault();
+
 		// draw drop indicator
-		dropIndicator.show();
-		dropIndicator.target = found.closestElement.id;
-		dropIndicator.placement = found.dropPlacement;
+		this.dropIndicatorDOM.show();
+		this.dropIndicatorDOM.target = coordinateInfo.closestElement.id;
+		this.dropIndicatorDOM.placement = coordinateInfo.dropPlacement;
 	}
 
 	_ondrop(e: DragEvent) {
@@ -1207,14 +1245,18 @@ class List extends UI5Element {
 			return;
 		}
 
-		const result = getElementAtCoordinate(
+		const coordinateInfo = getElementAtCoordinate(
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
 			this._maxNestingLevel,
 		);
 
-		if (!result) {
+		if (!coordinateInfo) {
+			return;
+		}
+
+		if (this._findItemLevel(coordinateInfo.closestElement as ListItemBase) - 1 > this._maxNestingLevel) {
 			return;
 		}
 
@@ -1224,8 +1266,8 @@ class List extends UI5Element {
 			},
 			destination: {
 				element: this,
-				index: this.items.indexOf(result.closestElement as ListItemBase),
-				dropPlacement: result.dropPlacement,
+				index: this.items.indexOf(coordinateInfo.closestElement as ListItemBase),
+				dropPlacement: coordinateInfo.dropPlacement,
 			},
 		});
 
@@ -1234,6 +1276,20 @@ class List extends UI5Element {
 
 	get dropIndicatorDOM(): DropIndicator {
 		return this.shadowRoot!.querySelector("[ui5-drop-indicator]")!;
+	}
+
+	_findItemLevel(item: ListItemBase): number {
+		const parent = item.parentElement?.closest("[ui5-li],[ui5-li-custom],[ui5-list]");
+
+		if (!parent) {
+			return 0;
+		}
+
+		if (parent?.hasAttribute("[ui5-list]")) {
+			return 1;
+		}
+
+		return 1 + this._findItemLevel(parent as ListItemBase);
 	}
 }
 
@@ -1248,4 +1304,5 @@ export type {
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
 	ListItemsReorderEventDetail,
+	ListBeforeItemsReorderEventDetail,
 };

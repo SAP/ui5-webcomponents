@@ -41,7 +41,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
-import type { ListItemClickEventDetail, ListItemsReorderEventDetail } from "./List.js";
+import type { ListBeforeItemsReorderEventDetail, ListItemClickEventDetail, ListItemsReorderEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -78,6 +78,13 @@ type TabContainerTabReorderEventDetail = {
 		element: HTMLElement;
 		index?: number;
 		dropPlacement: DropPlacement;
+	}
+}
+
+type TabContainerBeforeTabReorderEventDetail = {
+	destination: {
+		element: HTMLElement;
+		index: number;
 	}
 }
 
@@ -185,6 +192,19 @@ interface TabContainerTabInOverflow extends CustomListItem {
 			element: { type: HTMLElement },
 			index: { type: Number },
 			dropPlacement: { type: DropPlacement },
+		},
+	},
+})
+/**
+ * todo
+ *
+ * @public
+ */
+@event("before-tab-reorder", {
+	detail: {
+		destination: {
+			element: { type: HTMLElement },
+			index: { type: Number },
 		},
 	},
 })
@@ -835,7 +855,6 @@ class TabContainer extends UI5Element {
 				level += 1;
 			}
 
-			console.error("STYLE", tab._id, level)
 			tab._style = {
 				[getScopedVarName("--_ui5-tab-indentation-level")]: level,
 				[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
@@ -1222,46 +1241,63 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderDragOver(e: DragEvent) {
-		let dropTarget: HTMLElement | null;
+		let dragOverElement: HTMLElement | null;
 		const dropIndicator = this.dropIndicatorDOM;
 		let opener;
 		let showPopover = false;
 
+		// TODO: startoverflow
 		if (e.target === this._getEndOverflowBtnDOM()) {
-			dropTarget = this._getEndOverflowBtnDOM()!;
-			opener = dropTarget;
+			dragOverElement = this._getEndOverflowBtnDOM()!;
+			opener = dragOverElement;
 			showPopover = true;
 		} else {
-			dropTarget = (e.target as HTMLElement)?.closest(`[role="tab"]`);
-			// the tab past this point qualifies to be dropped.
-			// calling prevent default allows the drop event to fire later
-			e.preventDefault();
-
 			const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
-			const found = getElementAtCoordinate(
+			const coordinateInfo = getElementAtCoordinate(
 				tabs,
 				e.clientX,
 				Orientation.Horizontal,
 				this.maxNestingLevel,
 			);
 
-			if (!found) {
+			if (!coordinateInfo) {
 				return;
 			}
 
-			opener = getTab(found.closestElement) as Tab;
+			dragOverElement = coordinateInfo.closestElement;
+
+			if (!dragOverElement) {
+				return;
+			}
+
+			// TODO: allow and handle forbidden drag over from header to popover
+			const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabReorderEventDetail>("before-tab-reorder", {
+				destination: {
+					element: this,
+					index: this.items.indexOf((dragOverElement as Tab)._realTab),
+				},
+			}, true);
+
+			if (dragOverPrevented) {
+				return;
+			}
+
+			// calling prevent default allows the drop event to fire later
+			e.preventDefault();
+
+			opener = getTab(coordinateInfo.closestElement) as Tab;
 
 			// draw drop indicator
 			dropIndicator.show();
-			dropIndicator.target = found.closestElement.id;
-			dropIndicator.placement = found.dropPlacement;
+			dropIndicator.target = coordinateInfo.closestElement.id;
+			dropIndicator.placement = coordinateInfo.dropPlacement;
 
 			if (opener._realTab.subTabs.length) {
 				showPopover = true;
 			}
 		}
 
-		if (!dropTarget) {
+		if (!dragOverElement) {
 			dropIndicator.target = "";
 			return;
 		}
@@ -1294,13 +1330,13 @@ class TabContainer extends UI5Element {
 
 		const droppedTab = droppedElement._realTab!;
 		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
-		const result = getElementAtCoordinate(
+		const coordinateInfo = getElementAtCoordinate(
 			tabs,
 			e.clientX,
 			Orientation.Horizontal,
 			this.maxNestingLevel,
 		);
-		const target = result?.closestElement;
+		const target = coordinateInfo?.closestElement;
 
 		if (!target) {
 			return;
@@ -1308,7 +1344,7 @@ class TabContainer extends UI5Element {
 
 		const targetTabIndex = this.items.indexOf((target as ITab)._realTab!);
 
-		if (result.dropPlacement === DropPlacement.On) {
+		if (coordinateInfo.dropPlacement === DropPlacement.On) {
 			droppedTab.slot = "subTabs"; // TODO: is this our  concern?
 		} else {
 			droppedTab.slot = "";
@@ -1319,9 +1355,9 @@ class TabContainer extends UI5Element {
 				element: droppedTab,
 			},
 			destination: {
-				element: result.dropPlacement === DropPlacement.On ? (target as Tab)._realTab : this,
+				element: coordinateInfo.dropPlacement === DropPlacement.On ? (target as Tab)._realTab : this,
 				index: targetTabIndex,
-				dropPlacement: result.dropPlacement,
+				dropPlacement: coordinateInfo.dropPlacement,
 			},
 		});
 
@@ -1400,10 +1436,19 @@ class TabContainer extends UI5Element {
 		});
 	}
 
+	_onBeforeReorderItemsInPopover(e: CustomEvent<ListBeforeItemsReorderEventDetail>) {
+		const { destination } = e.detail;
+		const dragOverTab = (destination.element.items[destination.index] as unknown as ITab)._realTab as ITab; // TODO: store _realTab reference as custom data
+
+		if (dragOverTab._level! > this.maxNestingLevel) {
+			e.preventDefault();
+		}
+	}
+
 	_onReorderItemsInPopover(e: CustomEvent<ListItemsReorderEventDetail>) {
 		const { source, destination } = e.detail;
 		const droppedTab = (source.element as unknown as Tab)._realTab; // TODO: store _realTab reference as custom data
-		const destinationItemIndex = destination.index;
+		const destinationItemIndex = destination.index!;
 		const listItem = destination.element.children[destinationItemIndex] as Tab;
 		let dropIn;
 		let targetTabIndex;

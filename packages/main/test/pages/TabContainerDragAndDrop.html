@@ -13,10 +13,11 @@
 <body class="tabcontainer1auto">
 	<ui5-checkbox id="reorder" text="Reorder tabs" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
+	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel" value="1"></ui5-step-input>
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs max-nesting-level="100">
+		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs max-nesting-level="1">
 			<ui5-tab design="Positive" text="One"></ui5-tab>
 			<ui5-tab design="Negative" text="Two" disabled>
 				<ui5-tab slot="subTabs" text="2.1"></ui5-tab>
@@ -28,7 +29,7 @@
 
 				content
 			</ui5-tab>
-			<ui5-tab text="Four"></ui5-tab>
+			<ui5-tab id="tabFour" text="Four (forbids nesting)"></ui5-tab>
 
 			<ui5-tab text="Five">
 				<ui5-tab slot="subTabs" text="nested in Five">
@@ -71,8 +72,8 @@
 	</section>
 
 	<script>
-		const el = document.getElementById("tabContainerDnd");
-		el.addEventListener("tab-reorder", (e) => {
+		const tc = document.getElementById("tabContainerDnd");
+		tc.addEventListener("tab-reorder", (e) => {
 			const { destination, source } = e.detail;
 
 			if (destination.dropPlacement === "Before") {
@@ -83,7 +84,7 @@
 				);
 			} else if (destination.dropPlacement === "After") {
 				const insertAfterElement = destination.element.children[destination.index + 1] || null;
-				
+
 				destination.element.insertBefore(
 					source.element,
 					insertAfterElement
@@ -97,6 +98,14 @@
 			});
 		});
 
+		tc.addEventListener("before-tab-reorder", (e) => {
+			const { destination } = e.detail;
+
+			if (destination.element.children[destination.index].id === "tabFour") {
+				e.preventDefault();
+			}
+		});
+
 		const densityCb = document.getElementById("density");
 		densityCb.addEventListener("change", e => {
 			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
@@ -104,7 +113,12 @@
 
 		const reorderCb = document.getElementById("reorder");
 		reorderCb.addEventListener("change", e => {
-			el.toggleAttribute("reorder-tabs", e.target.checked);
+			tc.toggleAttribute("reorder-tabs", e.target.checked);
+		});
+
+		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
+		maxNestingLevelInput.addEventListener("ui5-change", (event) => {
+			tc.maxNestingLevel = event.target.value;
 		});
 	</script>
 </body>
