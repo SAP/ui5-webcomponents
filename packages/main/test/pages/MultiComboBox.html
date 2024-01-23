@@ -200,6 +200,84 @@
 	</div>
 
 	<div class="demo-section">
+		<span>Select all</span>
+
+		<br>
+		<ui5-multi-combobox show-select-all id="mcb-select-all-vs" value-state="Error">
+			<ui5-mcb-item text="Qui minim"></ui5-mcb-item>
+			<ui5-mcb-item text="minim amet"></ui5-mcb-item>
+			<ui5-mcb-item text="amet mollit"></ui5-mcb-item>
+			<ui5-mcb-item text="mollit pariatur"></ui5-mcb-item>
+			<ui5-mcb-item text="pariatur"></ui5-mcb-item>
+			<ui5-mcb-item text="In"></ui5-mcb-item>
+			<ui5-mcb-item text="irure"></ui5-mcb-item>
+			<ui5-mcb-item text="minim"></ui5-mcb-item>
+			<ui5-mcb-item text="tempor"></ui5-mcb-item>
+			<ui5-mcb-item text="ipsum"></ui5-mcb-item>
+			<ui5-mcb-item text="consequat"></ui5-mcb-item>
+			<ui5-mcb-item text="est"></ui5-mcb-item>
+			<ui5-mcb-item text="nostrud"></ui5-mcb-item>
+			<ui5-mcb-item text="dolor"></ui5-mcb-item>
+			<ui5-mcb-item text="Ad"></ui5-mcb-item>
+			<ui5-mcb-item text="minim"></ui5-mcb-item>
+			<ui5-mcb-item text="esse"></ui5-mcb-item>
+			<ui5-mcb-item text="anim"></ui5-mcb-item>
+			<ui5-mcb-item text="veniam"></ui5-mcb-item>
+			<ui5-mcb-item text="veniam"></ui5-mcb-item>
+			<ui5-mcb-item text="non"></ui5-mcb-item>
+			<ui5-mcb-item text="id"></ui5-mcb-item>
+			<ui5-mcb-item text="esse"></ui5-mcb-item>
+			<ui5-mcb-item text="do"></ui5-mcb-item>
+			<ui5-mcb-item text="irure"></ui5-mcb-item>
+			<ui5-mcb-item text="sint"></ui5-mcb-item>
+			<ui5-mcb-item text="est"></ui5-mcb-item>
+		</ui5-multi-combobox>
+
+		<br>
+
+		<ui5-multi-combobox show-select-all id="mcb-select-all">
+			<ui5-mcb-item text="Qui minim"></ui5-mcb-item>
+			<ui5-mcb-item text="minim amet"></ui5-mcb-item>
+			<ui5-mcb-item text="amet mollit"></ui5-mcb-item>
+			<ui5-mcb-item text="mollit pariatur"></ui5-mcb-item>
+			<ui5-mcb-item text="pariatur"></ui5-mcb-item>
+			<ui5-mcb-item text="In"></ui5-mcb-item>
+			<ui5-mcb-item text="irure"></ui5-mcb-item>
+			<ui5-mcb-item text="minim"></ui5-mcb-item>
+			<ui5-mcb-item text="tempor"></ui5-mcb-item>
+			<ui5-mcb-item text="ipsum"></ui5-mcb-item>
+			<ui5-mcb-item text="consequat"></ui5-mcb-item>
+			<ui5-mcb-item text="est"></ui5-mcb-item>
+			<ui5-mcb-item text="nostrud"></ui5-mcb-item>
+			<ui5-mcb-item text="dolor"></ui5-mcb-item>
+			<ui5-mcb-item text="Ad"></ui5-mcb-item>
+			<ui5-mcb-item text="minim"></ui5-mcb-item>
+			<ui5-mcb-item text="esse"></ui5-mcb-item>
+			<ui5-mcb-item text="anim"></ui5-mcb-item>
+			<ui5-mcb-item text="veniam"></ui5-mcb-item>
+			<ui5-mcb-item text="veniam"></ui5-mcb-item>
+			<ui5-mcb-item text="non"></ui5-mcb-item>
+			<ui5-mcb-item text="id"></ui5-mcb-item>
+			<ui5-mcb-item text="esse"></ui5-mcb-item>
+			<ui5-mcb-item text="do"></ui5-mcb-item>
+			<ui5-mcb-item text="irure"></ui5-mcb-item>
+			<ui5-mcb-item text="sint"></ui5-mcb-item>
+			<ui5-mcb-item text="est"></ui5-mcb-item>
+		</ui5-multi-combobox>
+
+		<br>
+
+		<span id="select-all-event">Selected items count: <span>0</span></span>
+
+		<script>
+			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selectionChange", e => {
+				console.log("selection change")
+				document.querySelector("#select-all-event span").textContent = e.detail.items.length;
+			});
+		</script>
+	</div>
+
+	<div class="demo-section">
 		<span>MultiComboBox with items</span>
 
 		<br>
