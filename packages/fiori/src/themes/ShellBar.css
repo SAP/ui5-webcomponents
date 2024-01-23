@@ -77,7 +77,7 @@
 	border-top-color: var(--_ui5_shellbar_button_active_color);
 }
 
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus:not(:active) {
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
