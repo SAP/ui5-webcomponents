@@ -49,7 +49,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	template: CalendarLegendTemplate,
 	dependencies: [CalendarLegendItem],
 })
-@event("_calendar-legend-selection-change", {
+@event<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
 	detail: {
 		item: { type: CalendarLegendItem },
 	},
