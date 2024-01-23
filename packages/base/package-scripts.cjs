@@ -6,6 +6,7 @@ const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/i
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
+const amdToES6 = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/index.js");
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
@@ -21,7 +22,7 @@ const scripts = {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
-		"amd-to-es6": "amdtoes6 --src=dist/ --replace --glob=**/*.js",
+		"amd-to-es6": `node "${amdToES6}" dist/`,
 		"esm-abs-to-rel": `node "${esmAbsToRel}" dist/ dist/`,
 		"third-party": {
 			default: "nps integrate.third-party.copy integrate.third-party.fix",
