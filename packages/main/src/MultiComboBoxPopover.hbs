@@ -52,15 +52,19 @@
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
+
+		{{> selectAllWrapper}}
 	{{/if}}
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" @keydown="{{_onValueStateKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+			<div slot="header" @keydown="{{_onListHeaderKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
+
+		{{> selectAllWrapper}}
 	{{/unless}}
 
 	{{#if filterSelected}}
@@ -134,4 +138,12 @@
 	>
 		{{this.text}}
 	</ui5-li>
+{{/inline}}
+
+{{#*inline "selectAllWrapper"}}
+	{{#if showSelectAll}}
+		<div class="ui5-mcb-select-all-header" @keydown="{{_onListHeaderKeydown}}" tabindex="0">
+			<ui5-checkbox ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
+		</div>
+	{{/if}}
 {{/inline}}

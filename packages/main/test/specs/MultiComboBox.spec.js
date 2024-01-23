@@ -573,7 +573,7 @@ describe("MultiComboBox general interaction", () => {
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 1, "should have one token");
-        });
+		});
 
 		it ("should prevent selection-change on CTRL+A", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
@@ -591,6 +591,85 @@ describe("MultiComboBox general interaction", () => {
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 1, "Should have 1 token.");
+		});
+
+		it ("should select all items", async () => {
+			const cb = await $("#mcb-select-all-vs");
+			const arrow = await cb.shadow$("[input-icon]");
+			const spanRef = await $("#select-all-event");
+
+			await arrow.click();
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+
+			// select all items
+			await browser.keys("Space");
+
+			assert.strictEqual(await spanRef.getText(), "Selected items count: 27");
+
+			// deselect all items
+			await browser.keys("Space");
+
+			assert.strictEqual(await spanRef.getText(), "Selected items count: 0");
+		});
+
+		it ("should select a few items and show Select All in selected items Popover", async () => {
+			await browser.setWindowSize(1920, 1080);
+
+			const cb = await $("#mcb-select-all-vs");
+			const arrow = await cb.shadow$("[input-icon]");
+			const spanRef = await $("#select-all-event");
+
+			await arrow.click();
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+
+			// select Item 1
+			await browser.keys("Space");
+
+			// select Item 2
+			await browser.keys("ArrowDown");
+			await browser.keys("Space");
+
+			// select Item 3
+			await browser.keys("ArrowDown");
+			await browser.keys("Space");
+
+			// select Item 4
+			await browser.keys("ArrowDown");
+			await browser.keys("Space");
+
+			// select Item 5
+			await browser.keys("ArrowDown");
+			await browser.keys("Enter");
+			await browser.keys("Tab");
+
+			assert.strictEqual(await spanRef.getText(), "Selected items count: 5");
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+			const tokenizerNMore = await cb.shadow$("[ui5-tokenizer]");
+			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
+			
+			await nMoreLabel.click();
+
+			assert.ok(await popover.$(".ui5-mcb-select-all-checkbox").getProperty("checked"), "Select All CheckBox should be selected");
+
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+			await browser.keys("Space");
+
+			assert.notOk(await popover.$(".ui5-mcb-select-all-checkbox").getProperty("checked"), "Select All CheckBox should not be selected");
+			assert.strictEqual(await spanRef.getText(), "Selected items count: 4");
+
+			await browser.keys("ArrowUp");
+			await browser.keys("Space");
+
+			assert.ok(await popover.$(".ui5-mcb-select-all-checkbox").getProperty("checked"), "Select All CheckBox should be selected");
+			assert.strictEqual(await spanRef.getText(), "Selected items count: 5");
 		});
 	});
 

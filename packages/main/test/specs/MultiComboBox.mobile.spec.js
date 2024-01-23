@@ -275,6 +275,26 @@ describe("Items selection", () => {
 		const tokens = await multiCombo.shadow$("ui5-tokenizer").$$("ui5-token");
 		assert.strictEqual(tokens.length, 3, "No deselection was performed");
 	});
+
+	it ("should select all items when clicking select all", async () => {
+		const cb = await $("#mcb-select-all-vs");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
+		const popover = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const spanRef = await $("#select-all-event");
+
+		await cb.click();
+
+		await popover.$(".ui5-mcb-select-all-checkbox").click();
+		// ok button
+		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
+		assert.strictEqual(await spanRef.getText(), "Selected items count: 27");
+
+		await cb.click();
+		await popover.$(".ui5-mcb-select-all-checkbox").click();
+		// ok button
+		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
+		assert.strictEqual(await spanRef.getText(), "Selected items count: 0");
+	});
 });
 
 describe("Value state header", () => {
