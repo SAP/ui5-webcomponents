@@ -94,7 +94,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
-@event("item-delete", {
+@event<UploadCollectionItemDeleteEventDetail>("item-delete", {
 	detail: {
 		/**
 		 * @public
@@ -110,7 +110,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
-@event("selection-change", {
+@event<UploadCollectionSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -123,7 +123,7 @@ class UploadCollection extends UI5Element {
 	 * Defines the mode of the <code>ui5-upload-collection</code>.
 	 *
 	 * <br><b>Note:</b>
-	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
+	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem
 	 *
 	 * @default "None"
 	 * @public

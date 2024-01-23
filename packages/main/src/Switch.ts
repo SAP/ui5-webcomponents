@@ -68,6 +68,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * Fired when the component checked state changes.
  *
  * @public
+ * @allowPreventDefault
  */
 @event("change")
 class Switch extends UI5Element implements IFormElement {

@@ -46,7 +46,7 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
+	declare design: `${ButtonDesign}`;
 
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -55,7 +55,7 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean;
+	declare iconEnd: boolean;
 
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -64,7 +64,7 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	submits!: boolean;
+	declare submits: boolean;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
