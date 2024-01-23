@@ -35,7 +35,7 @@ const loadManifest = () => {
     let customElementsBase = {};
 
     try {
-        customElementsMain = require("@ui5/webcomponents/custom-elements.json");
+        customElementsMain = require("@ui5/webcomponents/custom-elements-internal.json");
 
         customElementsMain.modules.forEach(module => {
             applyPackageToDeclarations(module, "@ui5/webcomponents")
@@ -45,7 +45,7 @@ const loadManifest = () => {
     }
 
     try {
-        customElementsFiori = require("@ui5/webcomponents-fiori/custom-elements.json");
+        customElementsFiori = require("@ui5/webcomponents-fiori/custom-elements-internal.json");
 
         customElementsFiori.modules.forEach(module => {
             applyPackageToDeclarations(module, "@ui5/webcomponents-fiori")
@@ -55,7 +55,7 @@ const loadManifest = () => {
     }
 
     try {
-        customElementsBase = require("@ui5/webcomponents-base/custom-elements.json");
+        customElementsBase = require("@ui5/webcomponents-base/custom-elements-internal.json");
 
         customElementsBase.modules.forEach(module => {
             applyPackageToDeclarations(module, "@ui5/webcomponents-base")

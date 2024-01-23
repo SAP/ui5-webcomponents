@@ -184,7 +184,7 @@ type CalendarSelectedDatesChangeEventDetail = {
  * @param {Array<number>} dates The selected dates as UTC timestamps
  * @public
  */
-@event("selected-dates-change", {
+@event<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", {
 	detail: {
 		/**
 		 * @public
@@ -194,6 +194,8 @@ type CalendarSelectedDatesChangeEventDetail = {
 		 * @public
 		 */
 		values: { type: Array },
+
+		timestamp: { type: Number },
 	},
 })
 

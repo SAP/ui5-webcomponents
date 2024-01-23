@@ -48,7 +48,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
-@event("change", {
+@event<ToolbarSelectChangeEventDetail>("change", {
 	detail: {
 		/**
 		* @public

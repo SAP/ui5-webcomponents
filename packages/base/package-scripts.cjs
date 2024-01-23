@@ -43,8 +43,8 @@ const scripts = {
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
 		default: "nps generateAPI.generateCEM generateAPI.validateCEM",
-		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
-		validateCEM: `node "${LIB}/cem/validate.js"`,
+		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs" --dev`,
+		validateCEM: `node "${LIB}/cem/validate.js" --dev`,
 	},
 	watch: {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',

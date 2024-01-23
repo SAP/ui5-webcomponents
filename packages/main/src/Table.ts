@@ -177,7 +177,7 @@ enum TableFocusTargetElement {
 * @param {HTMLElement} row the activated row.
 * @public
 */
-@event("row-click", {
+@event<TableRowClickEventDetail>("row-click", {
 	detail: {
 		/**
 		* @public
@@ -193,7 +193,7 @@ enum TableFocusTargetElement {
 * @since 1.0.0-rc.6
 * @public
 */
-@event("popin-change", {
+@event<TablePopinChangeEventDetail>("popin-change", {
 	detail: {
 		/**
 		* @public
@@ -223,7 +223,7 @@ enum TableFocusTargetElement {
 * @public
 * @since 1.0.0-rc.15
 */
-@event("selection-change", {
+@event<TableSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
