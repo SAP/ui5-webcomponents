@@ -38,6 +38,10 @@ import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTempla
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/da.js";
+import "@ui5/webcomponents-icons/dist/da-2.js";
+
 import {
 	SHELLBAR_LABEL,
 	SHELLBAR_LOGO,
