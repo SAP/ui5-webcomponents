@@ -16,6 +16,7 @@
 
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
+	<ui5-button id="btnCompact">Toggle sapUiSizeCompact</ui5-button>
 
 	<ui5-list id="notificationList" header-text="Notifications grouped">
 		<ui5-li-notification-group
@@ -307,6 +308,10 @@
 		notificationListTop.addEventListener("ui5-item-close", function (event) {
 				wcToastBS.textContent = event.detail.item.titleText;
 				wcToastBS.show();
+		});
+
+		btnCompact.addEventListener("click", function() {
+			document.getElementsByTagName("body")[0].classList.toggle("sapUiSizeCompact");
 		});
 	</script>
 </body>
