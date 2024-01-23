@@ -175,13 +175,10 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	async onResponsivePopoverAfterClose() {
+	onResponsivePopoverAfterClose() {
 		super.onResponsivePopoverAfterClose();
 		this._showTimeView = false;
 		this._previewValues = {};
-		const popover = await this.getPicker();
-		const clocks = popover && popover.querySelector("[ui5-time-selection-clocks]") as TimeSelectionClocks;
-		clocks && clocks._switchClock(0);
 	}
 
 	/**
