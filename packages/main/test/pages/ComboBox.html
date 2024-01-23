@@ -321,6 +321,41 @@
 		</script>
 	</div>
 
+	<div class="demo-section">
+		<ui5-combobox id="clear-icon-cb" value="Clear Icon" show-clear-icon>
+			<ui5-cb-item text="Algeria"></ui5-cb-item>
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="Australia"></ui5-cb-item>
+			<ui5-cb-item text="Austria"></ui5-cb-item>
+			<ui5-cb-item text="Bahrain"></ui5-cb-item>
+			<ui5-cb-item text="Belgium"></ui5-cb-item>
+			<ui5-cb-item text="Brazil"></ui5-cb-item>
+			<ui5-cb-item text="Bulgaria"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Chile"></ui5-cb-item>
+		</ui5-combobox>
+		<br>
+		<span>Change event calls: <span id="clear-icon-change-count">0</span></span>
+		<br>
+		<span>Input event calls: <span id="clear-icon-input-count">0</span></span>
+
+		<script>
+			const clearIconCb = document.getElementById("clear-icon-cb");
+
+			clearIconCb.addEventListener("ui5-change", () => {
+				const changeCountEl = document.getElementById("clear-icon-change-count");
+
+				changeCountEl.innerText = parseInt(changeCountEl.innerText) + 1;
+			});
+
+			clearIconCb.addEventListener("ui5-input", () => {
+				const inputCountEl = document.getElementById("clear-icon-input-count");
+
+				inputCountEl.innerText = parseInt(inputCountEl.innerText) + 1;
+			});
+		</script>
+	</div>
+
 	<script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
 			const { value } = event.target;

@@ -23,22 +23,18 @@
 				</ui5-button>
 			</div>
 			<div class="row">
-				<div
-					slot="header"
-					class="input-root-phone"
-					value-state="{{valueState}}"
+				<ui5-input
+					@ui5-input="{{_handleMobileInput}}"
+					@ui5-change="{{_mobileInputChange}}"
+					placeholder="{{placeholder}}"
+					value-state="{{_dialogInputValueState}}"
+					?show-clear-icon="{{showClearIcon}}"
+					?no-typeahead="{{noTypeahead}}"
 				>
-					<input
-						.value="{{value}}"
-						inner-input
-						placeholder="{{placeholder}}"
-						value-state="{{valueState}}"
-						@input="{{_inputLiveChange}}"
-						@change={{_inputChange}}
-						@keydown={{_onkeydown}}
-						aria-autocomplete="both"
-						/>
-				</div>
+					{{#each _filteredItems}}
+						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
+					{{/each}}
+				</ui5-input>
 				<ui5-toggle-button
 						slot="header"
 						class="ui5-multi-combobox-toggle-button"
