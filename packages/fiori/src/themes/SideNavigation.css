@@ -250,6 +250,11 @@
 	font-weight: var(--_ui5_side_navigation_group_text_weight);
 }
 
+.ui5-sn-item-level1:not(:has(> .ui5-sn-item-icon)),
+.ui5-sn-item-level1.ui5-sn-item-selected:not(:has(> .ui5-sn-item-icon)) {
+	padding-inline-start: var(--_ui5_side_navigation_item_padding_left);
+}
+
 .ui5-sn-item-with-expander .ui5-sn-item-icon::after {
 	display: var(--_ui5_side_navigation_triangle_display);
 	content: "";
