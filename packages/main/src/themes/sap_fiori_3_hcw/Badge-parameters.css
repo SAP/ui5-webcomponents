@@ -40,4 +40,7 @@
 	--ui5-badge-color-scheme-10-background: var(--sapGroup_ContentBackground);
 	--ui5-badge-color-scheme-10-border: var(--sapGroup_ContentBorderColor);
 	--ui5-badge-color-scheme-10-color: var(--sapTextColor);
+
+	--ui5-badge-text-shadow: none;
+	--ui5-badge-contrast-text-shadow: none;
 }

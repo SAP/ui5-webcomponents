@@ -155,10 +155,10 @@ describe("Clear icon", () => {
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 
-		assert.strictEqual(await dialogInput.getAttribute("effective-show-clear-icon"), null, "There is no clear icon initially");
+		assert.strictEqual(await dialogInput.getAttribute("_effective-show-clear-icon"), null, "There is no clear icon initially");
 		await dialogInput.keys("t");
 
-		assert.strictEqual(await dialogInput.getAttribute("effective-show-clear-icon"), "", "Clear icon is shown");
+		assert.strictEqual(await dialogInput.getAttribute("_effective-show-clear-icon"), "", "Clear icon is shown");
 	});
 });
 

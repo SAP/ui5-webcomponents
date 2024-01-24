@@ -57,7 +57,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the toggled item.
  * @protected
  */
-@event("toggle", {
+@event<TreeItemBaseToggleEventDetail>("toggle", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -69,7 +69,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
-@event("step-in", {
+@event<TreeItemBaseStepInEventDetail>("step-in", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -81,7 +81,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
-@event("step-out", {
+@event<TreeItemBaseStepOutEventDetail>("step-out", {
 	detail: {
 		item: { type: HTMLElement },
 	},

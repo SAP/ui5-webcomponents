@@ -63,10 +63,8 @@ type PopupClickEventDetail = {
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type NavigationMenuClickEventDetail = {
-	detail: {
-		item: {
-			associatedItem: SideNavigationItemBase
-		}
+	item: {
+		associatedItem: SideNavigationItemBase
 	}
 };
 
@@ -134,7 +132,7 @@ type NavigationMenuClickEventDetail = {
  * @allowPreventDefault
  * @public
  */
-@event("selection-change", {
+@event<SideNavigationSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -198,6 +196,12 @@ class SideNavigation extends UI5Element {
 
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems!: Array<HTMLElement>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isTouchDevice!: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -295,7 +299,7 @@ class SideNavigation extends UI5Element {
 		this._popoverContents.item.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	handleOverflowItemClick(e: NavigationMenuClickEventDetail) {
+	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -375,9 +379,6 @@ class SideNavigation extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-sn-phone": isPhone(),
-				"ui5-sn-tablet": isTablet(),
-				"ui5-sn-combi": isCombi(),
 				"ui5-sn-collapsed": this.collapsed,
 				"ui5-sn-in-popover": this._inPopover,
 			},
@@ -457,6 +458,8 @@ class SideNavigation extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+
+		this.isTouchDevice = isPhone() || (isTablet() && !isCombi());
 	}
 
 	onExitDOM() {

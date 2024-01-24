@@ -68,7 +68,7 @@ type TimeSelectionSliderChangeEventDetail = {
 /**
  * Fired when the value changes due to user interaction with the sliders
  */
-@event("change", {
+@event<TimeSelectionChangeEventDetail>("change", {
 	detail: {
 		value: { type: String },
 		valid: { type: Boolean },
@@ -78,7 +78,7 @@ type TimeSelectionSliderChangeEventDetail = {
 /**
  * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
  */
-@event("sliderChange", {
+@event<TimeSelectionSliderChangeEventDetail>("sliderChange", {
 	detail: {
 		slider: { type: String },
 	},
@@ -175,6 +175,9 @@ class TimeSelection extends UI5Element {
 
 	@property({ type: CalendarType })
 	_calendarType!: CalendarType;
+
+	@property()
+	_density!: string;
 
 	static i18nBundle: I18nBundle;
 

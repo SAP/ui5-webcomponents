@@ -136,8 +136,8 @@ const getScripts = (options) => {
 		},
 		generateAPI: {
 			default: `nps ${ tsOption ? "generateAPI.generateCEM generateAPI.validateCEM" : "generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest"}`,
-			generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
-			validateCEM: `node "${LIB}/cem/validate.js"`,
+			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
+			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
 			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
 			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
 			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
