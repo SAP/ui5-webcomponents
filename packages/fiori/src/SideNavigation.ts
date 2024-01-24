@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -62,7 +63,7 @@ type PopupClickEventDetail = {
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type NavigationMenuClickEventDetail = {
+type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	detail: {
 		item: {
 			associatedItem: SideNavigationItemBase,
