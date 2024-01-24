@@ -329,7 +329,7 @@ describe("Calendar general interaction", () => {
 		const yearButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
 
 		assert.strictEqual(await monthButton[0].getText(), "Rajab", "first month set in the header");
-		assert.strictEqual(await monthButton[1].getText(), "Sep – Oct", "Second month set in the header");
+		assert.strictEqual(await monthButton[1].getText(), "Sep – Oct", "Second month set in the header");
 
 		assert.strictEqual(await yearButton[0].getText(), "1421 AH", "first year set in the header");
 		assert.strictEqual(await yearButton[1].getText(), "2000", "Second year set in the header");
@@ -345,7 +345,7 @@ describe("Calendar general interaction", () => {
 
 		assert.strictEqual(await montInfo.length, 2, "Month is rendered with two text")
 		assert.strictEqual(await montInfo[0].getText(), "Muharram", "First text of month set in the button")
-		assert.strictEqual(await montInfo[1].getText(), "Apr – May", "Second text of month set in the button")
+		assert.strictEqual(await montInfo[1].getText(), "Apr – May", "Second text of month set in the button")
 	});
 
 	it("Calendar render two type for Year when YaerPicker is opened", async () => {

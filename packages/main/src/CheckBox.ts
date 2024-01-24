@@ -151,6 +151,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	 *
 	 * <Note:> When the property <code>disabled</code> is set to <code>true</code> this property has no effect.
 	 * @since 1.22.0
+	 * @public
 	 * @default false
 	 */
 	@property({ type: Boolean })
