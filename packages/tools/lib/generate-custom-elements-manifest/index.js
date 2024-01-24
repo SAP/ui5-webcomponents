@@ -5,11 +5,13 @@ const path = require("path");
 const inputDir = process.argv[2];
 const outputDir = process.argv[3];
 
+const moduleDeclarations = new Map();
+
 const generateJavaScriptExport = entity => {
 	return {
 		declaration: {
 			name: entity.basename,
-			module: entity.resource,
+			module: `dist/${entity.resource}`,
 		},
 		kind: "js",
 		name: "default",
@@ -22,38 +24,21 @@ const generateCustomElementExport = entity => {
 	return {
 		declaration: {
 			name: entity.basename,
-			module: entity.resource,
+			module: `dist/${entity.resource}`,
 		},
 		kind: "custom-element-definition",
-		name: entity.tagname,
-	};
-};
-
-const generateJavaScriptModule = entity => {
-	const exports = [generateJavaScriptExport(entity)];
-
-	if (entity.tagname) {
-		exports.push(generateCustomElementExport(entity));
-	}
-
-	return {
-		kind: "javascript-module",
-		path: entity.resource,
-		declarations: [
-			generateCustomElementDeclaration(entity),
-		],
-		exports
+		name: entity.basename,
 	};
 };
 
 const generateSingleClassField = classField => {
 	let generatedClassField = {
-		deprecated: !!classField.deprecated,
 		kind: "field",
 		name: classField.name,
-		privacy: classField.visibility,
-		static: !!classField.static,
 		type: generateType(classField.type),
+		privacy: classField.visibility,
+		deprecated: !!classField.deprecated || undefined,
+		static: !!classField.static || undefined,
 	};
 
 	if (classField.defaultValue) {
@@ -69,7 +54,7 @@ const generateSingleClassField = classField => {
 
 const generateSingleParameter = parameter => {
 	let generatedParameter = {
-		deprecated: !!parameter.deprecated,
+		deprecated: !!parameter.deprecated || undefined,
 		name: parameter.name,
 		type: generateType(parameter.type),
 	};
@@ -80,6 +65,7 @@ const generateSingleParameter = parameter => {
 
 	if (parameter.optional) {
 		generatedParameter.optional = parameter.optional;
+		generatedParameter.default = parameter.defaultValue;
 	}
 
 	return generatedParameter;
@@ -95,7 +81,7 @@ const generateParameters = (parameters) => {
 
 const generateSingleClassMethod = classMethod => {
 	let generatedClassMethod = {
-		deprecated: !!classMethod.deprecated,
+		deprecated: !!classMethod.deprecated || undefined,
 		kind: "method",
 		name: classMethod.name,
 		privacy: classMethod.visibility,
@@ -116,7 +102,7 @@ const generateSingleClassMethod = classMethod => {
 		};
 
 		if (classMethod.returnValue.description) {
-			generatedClassMethod.return.description = classMethod.returnValue.type;
+			generatedClassMethod.return.description = classMethod.returnValue.description;
 		}
 	}
 
@@ -151,9 +137,9 @@ const generateType = type => {
 
 const generateSingleEvent = event => {
 	let generatedEvent = {
-		deprecated: !!event.deprecated,
+		deprecated: !!event.deprecated || undefined,
 		name: event.name,
-		type: event.native === "true" ? "NativeEvent" : "CustomEvent",
+		type: generateType(event.native === "true" ? "NativeEvent" : "CustomEvent")
 	};
 
 	if (event.description) {
@@ -175,7 +161,7 @@ const generateEvents = events => {
 
 const generateSingleSlot = slot => {
 	return {
-		deprecated: !!slot.deprecated,
+		deprecated: !!slot.deprecated || undefined,
 		description: slot.description,
 		name: slot.name,
 	};
@@ -193,7 +179,7 @@ const generateSlots = slots => {
 
 const generateCustomElementDeclaration = entity => {
 	let generatedCustomElementDeclaration = {
-		deprecated: !!entity.deprecated,
+		deprecated: !!entity.deprecated || undefined,
 		customElement: true,
 		kind: entity.kind,
 		name: entity.basename,
@@ -247,10 +233,35 @@ const generate = async () => {
 	};
 
 	filterPublicApi(file.symbols).forEach(entity => {
-		if (entity.tagname || entity.kind === "class") {
-			customElementsManifest.modules.push(generateJavaScriptModule(entity));
+		let declaration = moduleDeclarations.get(entity.resource);
+
+		if (!declaration) {
+			moduleDeclarations.set(entity.resource, {
+				declarations: [],
+				exports: [],
+			});
+			declaration = moduleDeclarations.get(entity.resource);
+		}
+
+		if (entity.kind === "class" && entity.tagname) {
+			declaration.declarations.push(generateCustomElementDeclaration(entity));
+			declaration.exports.push(generateJavaScriptExport(entity));
+			declaration.exports.push(generateCustomElementExport(entity));
+		} else if (entity.kind === "class" && entity.static) {
+			declaration.exports.push(generateJavaScriptExport(entity));
 		}
 	});
+
+	[...moduleDeclarations.keys()].forEach(key => {
+		let declaration = moduleDeclarations.get(key);
+
+		customElementsManifest.modules.push({
+			kind: "javascript-module",
+			path: `dist/${key}`,
+			declarations: declaration.declarations,
+			exports: declaration.exports
+		})
+	})
 
 	await fs.writeFile(path.join(outputDir, "custom-elements.json"), JSON.stringify(customElementsManifest));
 };
