@@ -1,25 +1,44 @@
 # Needed files from OpenUI5 - the commented ones are currently overlaid, therefore should not be copied
 
-sap/base/Log.js
+# ./ui5loader-autoconfig.js
+# sap/base/Log.js
+sap/base/i18n/Formatting.js
 sap/base/assert.js
+# sap/base/config.js
+sap/base/config/MemoryConfigurationProvider.js
+sap/base/Event.js
+sap/base/Eventing.js
+sap/ui/base/DataType.js
 sap/base/i18n/LanguageTag.js
 sap/base/i18n/date/CalendarWeekNumbering.js
 sap/base/i18n/date/TimezoneUtils.js
 sap/base/i18n/date/CalendarType.js
+sap/base/i18n/Localization.js
 sap/base/strings/formatMessage.js
+sap/base/strings/camelize.js
 sap/base/util/ObjectPath.js
+sap/base/util/resolveReference.js
 sap/base/util/array/uniqueSort.js
 sap/base/util/deepEqual.js
 sap/base/util/isPlainObject.js
+sap/base/util/isEmptyObject.js
 sap/base/util/now.js
+sap/base/util/uid.js
 sap/base/util/_merge.js
 sap/base/util/extend.js
+sap/base/util/deepClone.js
+sap/base/util/Version.js
 sap/ui/base/Interface.js
 sap/ui/base/Metadata.js
 sap/ui/base/Object.js
 sap/ui/core/CalendarType.js
+sap/ui/core/Configuration.js
+sap/ui/core/Supportability.js
 sap/ui/core/Locale.js
 sap/ui/core/LocaleData.js
+sap/ui/core/Theming.js
+sap/ui/core/date/CalendarWeekNumbering.js
+sap/ui/core/date/_Calendars.js
 sap/ui/core/date/Buddhist.js
 sap/ui/core/date/CalendarUtils.js
 sap/ui/core/date/CalendarWeekNumbering.js

@@ -116,7 +116,7 @@ enum INPUT_ACTIONS {
 }
 
 type InputEventDetail = {
-	inputType?: string;
+	inputType: string;
 }
 
 type InputSuggestionItemSelectEventDetail = {
@@ -463,7 +463,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.2.0
 	 */
 	@property({ type: Boolean })
-	effectiveShowClearIcon!: boolean;
+	_effectiveShowClearIcon!: boolean;
 
 	/**
 	 * @private
@@ -684,7 +684,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.suggestionObjects = this.Suggestions!.defaultSlotProperties(this.typedInValue);
 		}
 
-		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
+		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
@@ -969,7 +969,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this._keepInnerValue = false;
 
-		if (this.showClearIcon && !this.effectiveShowClearIcon) {
+		if (this.showClearIcon && !this._effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
 		}
@@ -1054,7 +1054,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType!)
+			|| (e.detail as InputEventDetail).inputType
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1572,7 +1572,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get iconsCount(): number {
 		const slottedIconsCount = this.icon ? this.icon.length : 0;
-		const clearIconCount = Number(this.effectiveShowClearIcon) ?? 0;
+		const clearIconCount = Number(this._effectiveShowClearIcon) ?? 0;
 		return slottedIconsCount + clearIconCount;
 	}
 
@@ -1778,4 +1778,5 @@ export type {
 	InputSuggestionScrollEventDetail,
 	InputSuggestionItemSelectEventDetail,
 	InputSuggestionItemPreviewEventDetail,
+	InputEventDetail,
 };
