@@ -22,12 +22,10 @@
 	--_ui5_shellbar_search_field_height: 2.25rem;
 	--_ui5_shellbar_search_field_background: var(--sapShell_InteractiveBackground);
 	--_ui5_shellbar_search_field_border: none;
-	--_ui5_shellbar_search_field_border_bottom: 0.0625rem solid var(--sapField_BorderColor);
-	--_ui5_shellbar_search_field_border_bottom_hover: 0.0625rem solid var(--sapField_Hover_BorderColor);
 	--_ui5_shellbar_search_field_color: var(--sapShell_InteractiveTextColor);
 	--_ui5_shellbar_search_field_background_hover: var(--sapShell_Hover_Background);
-	--_ui5_shellbar_search_field_box_shadow: var(--sapField_Shadow);
-	--_ui5_shellbar_search_field_box_shadow_hover: var(--sapField_Hover_Shadow);
+	--_ui5_shellbar_search_field_box_shadow: var(--sapField_Shadow), inset 0 -.0625rem var(--sapField_BorderColor);
+	--_ui5_shellbar_search_field_box_shadow_hover: var(--sapField_Hover_Shadow), inset 0 -.0625rem var(--sapField_Hover_BorderColor);
 	--_ui5_shellbar_input_focus_outline_color: var(--sapField_Active_BorderColor);
 	--_ui5_shellbar_overflow_container_middle_height: 3rem;
 	--_ui5_shellbar_menu_button_title_font_size: var(--sapFontHeader5Size);
