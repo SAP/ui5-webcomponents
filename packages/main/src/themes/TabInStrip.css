@@ -79,7 +79,7 @@
 	position: relative;
 	width: 0.0625rem;
 	right: -0.0625rem;
-	height: 1rem;
+	height: 0.625rem;
 	background: var(--sapTextColor);
 	margin-inline-start: 0.0625rem;
 	z-index: 2;
