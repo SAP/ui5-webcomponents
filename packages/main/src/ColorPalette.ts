@@ -30,6 +30,7 @@ import type { IColorPaletteItem } from "./Interfaces.js";
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
+	COLOR_PALETTE_DEFAULT_COLOR_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -422,8 +423,12 @@ class ColorPalette extends UI5Element {
 		return ColorPalette.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
 	}
 
-	get colorPaleteMoreColorsText() {
+	get colorPaletteMoreColorsText() {
 		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
+	}
+
+	get colorPaletteDefaultColorText() {
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DEFAULT_COLOR_TEXT);
 	}
 
 	get _showMoreColors() {
