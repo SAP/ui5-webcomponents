@@ -1,17 +1,19 @@
 const fs = require('fs');
 const Ajv = require('ajv');
 const path = require('path');
-
-const isExternalOnly = process.argv[2] === "--external-only";
-
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+const argv = yargs(hideBin(process.argv))
+	.argv;
 
 // Load your JSON schema
 const extenalSchema = require('./schema.json');
+const internalSchema = require('./schema-internal.json');
 
 // Load your JSON data from the input file
 const inputFilePath = path.join(process.cwd(), "dist/custom-elements.json"); // Update with your file path
 const customManifest = fs.readFileSync(inputFilePath, 'utf8');
-let inputData = JSON.parse(customManifest);
+const inputDataInternal = JSON.parse(customManifest);
 
 const clearProps = (data) => {
     if (Array.isArray(data)) {
@@ -39,34 +41,25 @@ const clearProps = (data) => {
 }
 
 const ajv = new Ajv({ allowUnionTypes: true, allError: true })
-let validate;
+let validate = ajv.compile(internalSchema)
 
-if (!isExternalOnly) {
-    const internalSchema = require('./schema-internal.json');
-    validate = ajv.compile(internalSchema)
-
-    // Validate the JSON data against the schema
-    if (validate(inputData)) {
-        console.log('Validation internal custom-elements successful');
+// Validate the JSON data against the schema
+if (argv.dev) {
+    if (validate(inputDataInternal)) {
+        console.log('Internal custom  element manifest is validated successfully');
     } else {
-        console.error('Validation of internal custom-elements failed');
-        // console.error('Validation of internal custom-elements failed:', validate.errors);
+        throw new Error(`Validation of internal custom elements manifest failed: ${validate.errors}`);
     }
 }
 
-
-const inputDataExternal = clearProps(JSON.parse(JSON.stringify(inputData)));
+const inputDataExternal = clearProps(JSON.parse(JSON.stringify(inputDataInternal)));
 validate = ajv.compile(extenalSchema)
 
 // Validate the JSON data against the schema
 if (validate(inputDataExternal)) {
-    console.log('Validation external custom-elements successful');
+    console.log('Custom element manifest is validated successfully');
     fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
-
-    if (!isExternalOnly) {
-        fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputData, null, 2), 'utf8');
+    fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
+} else if (argv.dev) {
+    throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
     }
-} else {
-    console.error('Validation of external custom-elements failed:');
-    // console.error('Validation of external custom-elements failed:', ajv.errorsText(validate.errors));
-}

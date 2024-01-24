@@ -20,15 +20,15 @@
 	--_ui5_split_text_button_emphasized_hover_border_right: 0.125rem solid var(--sapButton_Emphasized_BorderColor);
 	--_ui5_split_text_button_emphasized_hover_border_left: 0.125rem solid var(--sapButton_Emphasized_BorderColor);
 	
-	--_ui5_split_arrow_button_emphasized_hover_border: 0.125rem solid var(--sapButton_Emphasized_BorderColor);
+	--_ui5_split_arrow_button_emphasized_hover_border: 0.0625rem solid var(--sapButton_Emphasized_BorderColor);
 	--_ui5_split_arrow_button_emphasized_hover_border_left: var(--sapButton_BorderWidth);
-
-	/* RTL */
-	
-	--_ui5_split_text_button_emphasized_border_width_rtl: 0.125rem;
-
-	--_ui5_split_text_button_emphasized_hover_border_left_rtl: 0.125rem solid var(--sapButton_Emphasized_BorderColor);
-	--_ui5_split_text_button_emphasized_hover_border_right_rtl: 0.125rem solid var(--sapButton_Emphasized_BorderColor);
-
-	--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl: 0.125rem;
+	--_ui5_split_button_middle_separator_hover_display_emphasized: none;
+	--_ui5_split_arrow_button_emphasized_hover_box_shadow:
+		inset 0 -0.0625rem 0 var(--sapButton_BorderColor),
+		inset -0.0625rem 0 0 var(--sapButton_BorderColor),
+		inset 0 0.0625rem 0 var(--sapButton_BorderColor);
+	--_ui5_split_arrow_button_emphasized_hover_box_shadow_rtl:
+	inset 0 -0.0625rem 0 var(--sapButton_BorderColor),
+	inset 0.0625rem 0 0 var(--sapButton_BorderColor),
+	inset 0 0.0625rem 0 var(--sapButton_BorderColor);
 }

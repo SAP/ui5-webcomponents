@@ -99,7 +99,7 @@ const COLUMNS_COUNT: Record<string, number> = {
  * @param {HTMLElement} item the selected item.
  * @public
  */
-@event("selection-change", {
+@event<MediaGallerySelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public

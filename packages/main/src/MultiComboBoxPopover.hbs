@@ -23,29 +23,26 @@
 				</ui5-button>
 			</div>
 			<div class="row">
-				<div
-					slot="header"
-					class="input-root-phone"
-					value-state="{{valueState}}"
+				<ui5-input
+					@ui5-input="{{_handleMobileInput}}"
+					@ui5-change="{{_mobileInputChange}}"
+					placeholder="{{placeholder}}"
+					value-state="{{_dialogInputValueState}}"
+					?show-clear-icon="{{showClearIcon}}"
+					?no-typeahead="{{noTypeahead}}"
 				>
-					<input
-						.value="{{value}}"
-						inner-input
-						placeholder="{{placeholder}}"
-						value-state="{{valueState}}"
-						@input="{{_inputLiveChange}}"
-						@change={{_inputChange}}
-						@keydown={{_onkeydown}}
-						aria-autocomplete="both"
-						/>
-				</div>
+					{{#each _filteredItems}}
+						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
+					{{/each}}
+				</ui5-input>
 				<ui5-toggle-button
 						slot="header"
 						class="ui5-multi-combobox-toggle-button"
 						icon="multiselect-all"
 						design="Transparent"
 						?pressed={{_showAllItemsButtonPressed}}
-						@click="{{filterSelectedItems}}">
+						@click="{{filterSelectedItems}}"
+						accessible-name="{{_showSelectedButtonAccessibleNameText}}">
 				</ui5-toggle-button>
 			</div>
 		</div>
@@ -55,15 +52,19 @@
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
+
+		{{> selectAllWrapper}}
 	{{/if}}
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
-			<div slot="header" @keydown="{{_onValueStateKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
+			<div slot="header" @keydown="{{_onListHeaderKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{> valueStateMessage}}
 			</div>
 		{{/if}}
+
+		{{> selectAllWrapper}}
 	{{/unless}}
 
 	{{#if filterSelected}}
@@ -137,4 +138,12 @@
 	>
 		{{this.text}}
 	</ui5-li>
+{{/inline}}
+
+{{#*inline "selectAllWrapper"}}
+	{{#if showSelectAll}}
+		<div class="ui5-mcb-select-all-header" @keydown="{{_onListHeaderKeydown}}" tabindex="0">
+			<ui5-checkbox ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
+		</div>
+	{{/if}}
 {{/inline}}

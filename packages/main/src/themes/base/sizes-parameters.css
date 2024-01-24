@@ -132,7 +132,7 @@
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -1.9375rem;
 
 	/* SplitButton */
-	--_ui5_split_button_middle_separator_top: 0;
+	--_ui5_split_button_middle_separator_top: -0.0625rem;
 	--_ui5_split_button_middle_separator_height: 2.25rem;
 
 	/* Toolbar */
@@ -304,7 +304,6 @@
 	--_ui5_slider_outer_height: 1.3125rem;
 
 	/* SplitButton */
-	--_ui5_split_button_middle_separator_top: 0;
 	--_ui5_split_button_middle_separator_height: 1.625rem;
 
 	/* StepInput */
