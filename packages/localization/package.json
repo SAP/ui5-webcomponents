@@ -28,8 +28,12 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
-    "@openui5/sap.ui.core": "1.112.0",
     "@ui5/webcomponents-tools": "1.14.6",
+    "@babel/core": "^7.23.7",
+    "@babel/generator": "^7.23.6",
+    "@babel/parser": "^7.23.6",
+    "@openui5/sap.ui.core": "1.120.3",
+    "babel-plugin-amd-to-esm": "^2.0.3",
     "chromedriver": "113.0.0",
     "mkdirp": "^1.0.4",
     "resolve": "^1.20.0"
