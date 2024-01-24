@@ -774,4 +774,5 @@ export default ViewSettingsDialog;
 export type {
 	ViewSettingsDialogConfirmEventDetail,
 	ViewSettingsDialogCancelEventDetail,
+	VSDSettings,
 };
