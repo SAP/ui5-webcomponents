@@ -425,29 +425,27 @@ export default {
 
 				moduleDoc.path = moduleDoc.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
 
-				if (moduleDoc.exports) {
-					moduleDoc.exports = moduleDoc.exports.
-						filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
+				moduleDoc.exports = moduleDoc.exports.
+					filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
 
-					moduleDoc.exports?.forEach(e => {
-						const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
+				moduleDoc.exports.forEach(e => {
+					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
 
-						if (e.declaration && e.declaration.module) {
-							e.declaration.module = e.declaration.module.replace(/^src/, "dist").replace(/\.ts$/, ".js");
-						}
+					if (e.declaration && e.declaration.module) {
+						e.declaration.module = e.declaration.module.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+					}
 
-						if (classNode?.customElement && classNode.tagName && e.kind !== "custom-element-definition") {
-							moduleDoc.exports.push({
-								kind: "custom-element-definition",
-								name: classNode.tagName,
-								declaration: {
-									name: e.declaration.name,
-									module: e.declaration.module
-								}
-							})
-						}
-					})
-				}
+					if (classNode?.customElement && classNode.tagName && e.kind !== "custom-element-definition") {
+						moduleDoc.exports.push({
+							kind: "custom-element-definition",
+							name: classNode.tagName,
+							declaration: {
+								name: e.declaration.name,
+								module: e.declaration.module
+							}
+						})
+					}
+				})
 
 				const typeReferences = new Set();
 				const registerTypeReference = reference => typeReferences.add(JSON.stringify(reference))
@@ -470,9 +468,8 @@ export default {
 					})
 				});
 
-				for (let reference in typeReferences) {
+				typeReferences.forEach(reference => {
 					reference = JSON.parse(reference);
-
 					if (reference.package === packageJSON?.name && reference.module === moduleDoc.path) {
 						const hasExport = moduleDoc.exports.some(e => e.declaration?.name === reference.name && e.declaration?.module === reference.module)
 
@@ -482,7 +479,10 @@ export default {
 								`=== ERROR: Problem found with ${reference.name} type reference in ${moduleDoc.path?.replace(/^dist/, "src").replace(/\.js$/, ".ts")}: \n\t- ${reference.name} is used as type of public API, but it's not exported`)
 						}
 					}
-				}
+				})
+
+				moduleDoc.exports = moduleDoc.exports.
+					filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
 			},
 			packageLinkPhase({ context }) {
 				if (context.dev) {
