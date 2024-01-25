@@ -9,6 +9,7 @@
     "ui5"
   ],
   "scripts": {
+    "ci:releasebuild": "yarn build",
     "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles",
     "build:bundles": "npm-run-all --parallel bundle:main bundle:fiori",
     "build:prerequisitesWithLint": "npm-run-all build:base build:prerequisites prepare:main prepare:fiori lint:main lint:fiori",
