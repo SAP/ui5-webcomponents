@@ -7,7 +7,6 @@ import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/d
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDateComponent from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
-import { getTimezone as getConfigTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isF4,
@@ -352,9 +351,6 @@ class Calendar extends CalendarPart {
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
-
-		const a = getConfigTimezone();
-		console.log(a);
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
