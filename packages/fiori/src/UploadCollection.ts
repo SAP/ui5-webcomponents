@@ -94,7 +94,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
-@event("item-delete", {
+@event<UploadCollectionItemDeleteEventDetail>("item-delete", {
 	detail: {
 		/**
 		 * @public
@@ -110,7 +110,7 @@ type UploadCollectionItemDeleteEventDetail = {
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
-@event("selection-change", {
+@event<UploadCollectionSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public

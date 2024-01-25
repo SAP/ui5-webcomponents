@@ -21,6 +21,8 @@ import {
 	normalizeTagType
 } from "./utils.mjs";
 
+const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
 const extractClassNodeJSDoc = node => {
 	const fileContent = node.getFullText();
 	const allJSDocsRegExp = new RegExp(`\\/\\*\\*(.|\\n)+?\\s+\\*\\/`, "gm");
@@ -421,12 +423,17 @@ export default {
 					}
 				}
 
-				if (moduleDoc.exports) {
-					moduleDoc.exports = moduleDoc.exports.filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
-				}
+				moduleDoc.path = moduleDoc.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
 
-				moduleDoc.exports?.forEach(e => {
+				moduleDoc.exports = moduleDoc.exports.
+					filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
+
+				moduleDoc.exports.forEach(e => {
 					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
+
+					if (e.declaration && e.declaration.module) {
+						e.declaration.module = e.declaration.module.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+					}
 
 					if (classNode?.customElement && classNode.tagName && e.kind !== "custom-element-definition") {
 						moduleDoc.exports.push({
@@ -439,24 +446,53 @@ export default {
 						})
 					}
 				})
-			},
-			packageLinkPhase({ customElementsManifest }) {
-				// Uncomment and handle errors appropriately
-				// const JSDocErrors = getJSDocErrors();
-				// if (JSDocErrors.length > 0) {
-				// 	console.log(JSDocErrors.join("\n"));
-				// 	console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-				// 	throw new Error(`Invalid JSDoc.`);
-				// }
 
-				customElementsManifest.modules?.forEach(m => {
-					m.path = m.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+				const typeReferences = new Set();
+				const registerTypeReference = reference => typeReferences.add(JSON.stringify(reference))
 
-					m.exports?.forEach(e => {
-						if (e.declaration && e.declaration.module)
-							e.declaration.module = e.declaration?.module?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
-					});
+				moduleDoc.declarations.forEach(declaration => {
+					["events", "slots", "members"].forEach(memberType => {
+						declaration[memberType]?.forEach(member => {
+							if (member.type?.references) {
+								member.type.references.forEach(registerTypeReference)
+							} else if (member._ui5type?.references) {
+								member._ui5type.references.forEach(registerTypeReference)
+							} else if (member.kind === "method") {
+								member.return?.type?.references?.forEach(registerTypeReference)
+
+								member.parameters?.forEach(parameter => {
+									parameter.type?.references?.forEach(registerTypeReference)
+								})
+							}
+						})
+					})
+				});
+
+				typeReferences.forEach(reference => {
+					reference = JSON.parse(reference);
+					if (reference.package === packageJSON?.name && reference.module === moduleDoc.path) {
+						const hasExport = moduleDoc.exports.some(e => e.declaration?.name === reference.name && e.declaration?.module === reference.module)
+
+						if (!hasExport) {
+							const JSDocErrors = getJSDocErrors();
+							JSDocErrors.push(
+								`=== ERROR: Problem found with ${reference.name} type reference in ${moduleDoc.path?.replace(/^dist/, "src").replace(/\.js$/, ".ts")}: \n\t- ${reference.name} is used as type of public API, but it's not exported`)
+						}
+					}
 				})
+
+				moduleDoc.exports = moduleDoc.exports.
+					filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
+			},
+			packageLinkPhase({ context }) {
+				if (context.dev) {
+					const JSDocErrors = getJSDocErrors();
+					if (JSDocErrors.length > 0) {
+						console.log(JSDocErrors.join("\n"));
+						console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
+						throw new Error(`Invalid JSDoc.`);
+					}
+				}
 			}
 		},
 	],
