@@ -13,12 +13,13 @@ import {
 	hasTag,
 	findTag,
 	findAllTags,
-	getJSDocErrors,
 	getTypeRefs,
 	normalizeDescription,
 	formatArrays,
 	isClass,
-	normalizeTagType
+	normalizeTagType,
+	logDocumentationError,
+	displayDocumentationErrors
 } from "./utils.mjs";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
@@ -183,24 +184,14 @@ function processClass(ts, classNode, moduleDoc) {
 					member.default = tagValue;
 				}
 
-				if (member.privacy === "public") {
-					const JSDocErrors = getJSDocErrors();
-
-					if (!member.default) {
-						JSDocErrors.push(
-							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Default value is missing`
-						);
-					}
+				if (member.privacy === "public" && !member.default) {
+					logDocumentationError(moduleDoc.path, `Missing default value for '${member.name}'.`)
 				}
 
 				// Getters are treated as fields so they should not have return, instead of return they should have default value defined with @default
 				if (member.readonly) {
 					if (member.privacy === "public" && !member.type) {
-						const JSDocErrors = getJSDocErrors();
-
-						JSDocErrors.push(
-							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
-						);
+						logDocumentationError(moduleDoc.path, `Missing return type for read-only field '${member.name}'.`)
 					}
 
 					delete member.return;
@@ -256,14 +247,12 @@ function processClass(ts, classNode, moduleDoc) {
 				if (typeRefs.length) {
 					member.return.type.references = typeRefs;
 				}
-			}
 
-			if (member.privacy === "public" && !member.return) {
-				const JSDocErrors = getJSDocErrors();
-
-				JSDocErrors.push(
-					`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
-				);
+				if (member.privacy === "public" && !member.return.type.text) {
+					logDocumentationError(moduleDoc.path, `Missing return type for function '${member.name}'.`)
+				}
+			} else if (member.privacy === "public") {
+				logDocumentationError(moduleDoc.path, `Missing return type for function '${member.name}'.`)
 			}
 		}
 	}
@@ -474,9 +463,7 @@ export default {
 						const hasExport = moduleDoc.exports.some(e => e.declaration?.name === reference.name && e.declaration?.module === reference.module)
 
 						if (!hasExport) {
-							const JSDocErrors = getJSDocErrors();
-							JSDocErrors.push(
-								`=== ERROR: Problem found with ${reference.name} type reference in ${moduleDoc.path?.replace(/^dist/, "src").replace(/\.js$/, ".ts")}: \n\t- ${reference.name} is used as type of public API, but it's not exported`)
+							logDocumentationError(moduleDoc.path?.replace(/^dist/, "src").replace(/\.js$/, ".ts"), `Type '${reference.name}' is used to describe a public API but is not exported.`,)
 						}
 					}
 				})
@@ -486,12 +473,7 @@ export default {
 			},
 			packageLinkPhase({ context }) {
 				if (context.dev) {
-					const JSDocErrors = getJSDocErrors();
-					if (JSDocErrors.length > 0) {
-						console.log(JSDocErrors.join("\n"));
-						console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-						throw new Error(`Invalid JSDoc.`);
-					}
+					displayDocumentationErrors();
 				}
 			}
 		},
