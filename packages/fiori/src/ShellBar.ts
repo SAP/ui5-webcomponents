@@ -563,10 +563,12 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		this.menuPopover!.close();
-		this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+		const shouldContinue = this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 			item: e.detail.selectedItems[0],
 		}, true);
+		if (shouldContinue) {
+			this.menuPopover!.close();
+		}
 	}
 
 	_logoPress() {

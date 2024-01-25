@@ -65,16 +65,34 @@ describe("Component Behavior", () => {
 	});
 
 	describe("ui5-shellbar menu", () => {
+		it("tests prevents close on content click", async () => {
+			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
+			const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
+			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
+			const checkBox = await browser.$("#checkKeepPopoverOpen");
+
+			await checkBox.setProperty("checked", true);
+
+			await primaryTitle.click();
+			await firstMenuItem.click();
+
+			assert.strictEqual(await menuPopover.getProperty("opened"), true, "Popover remains open");
+		});
+
 		it("tests close on content click", async () => {
 			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 			const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
+			const checkBox = await browser.$("#checkKeepPopoverOpen");
+
+			await checkBox.setProperty("checked", false);
 
 			await primaryTitle.click();
 			await firstMenuItem.click();
 
-			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
+			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Popover is closed");
 		});
 	});
 
