@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** allow overstyling of width and border-radius ([#8081](https://github.com/SAP/ui5-webcomponents/issues/8081)) ([392f118](https://github.com/SAP/ui5-webcomponents/commit/392f11815b5e85d22949b4008f0a95c64e16d694))
+* **ui5-side-navigation:** correct text placement on items without icon ([#8154](https://github.com/SAP/ui5-webcomponents/issues/8154)) ([6bb45a9](https://github.com/SAP/ui5-webcomponents/commit/6bb45a94e5e52fc64fe8b816d1135e97ef6d85f3)), closes [#8131](https://github.com/SAP/ui5-webcomponents/issues/8131)
+
+
+### Features
+
+* **ui5-side-navigation:** display full item in collapsed mode on hover and focus ([#8112](https://github.com/SAP/ui5-webcomponents/issues/8112)) ([e0be298](https://github.com/SAP/ui5-webcomponents/commit/e0be29821a50d6c01f25d671565d0af4863e3d1e))
+
+
+
+
+
 # [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
 
 
