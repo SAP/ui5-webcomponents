@@ -167,6 +167,7 @@ import ToolbarButton from "./ToolbarButton.js";
 import ToolbarSeparator from "./ToolbarSeparator.js";
 import ToolbarSpacer from "./ToolbarSpacer.js";
 import ToolbarSelect from "./ToolbarSelect.js";
+import ToolbarSelectOption from "./ToolbarSelectOption.js";
 import Tree from "./Tree.js";
 import TreeList from "./TreeList.js";
 import TreeItem from "./TreeItem.js";
