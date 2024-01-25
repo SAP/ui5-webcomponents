@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* add [@allow](https://github.com/allow)PreventDefault where needed ([#8148](https://github.com/SAP/ui5-webcomponents/issues/8148)) ([5d6eb44](https://github.com/SAP/ui5-webcomponents/commit/5d6eb442dc433bdc2000a5845b8087915c8e1097))
+* **ui5-badge:** correct text-shadow for Quartz dark and Quartz high contrast themes ([#8142](https://github.com/SAP/ui5-webcomponents/issues/8142)) ([e1f4e82](https://github.com/SAP/ui5-webcomponents/commit/e1f4e82be6bc244e3a1fcbdbb4bf133603e4565b)), closes [#8126](https://github.com/SAP/ui5-webcomponents/issues/8126)
+* **ui5-color-palette:** add i18n text for default color button's text ([#8157](https://github.com/SAP/ui5-webcomponents/issues/8157)) ([7b4dac3](https://github.com/SAP/ui5-webcomponents/commit/7b4dac34928b70adf1f67481854329fff3838e46))
+* **ui5-date-time-picker:** align calculations with density change ([#8090](https://github.com/SAP/ui5-webcomponents/issues/8090)) ([bc035bb](https://github.com/SAP/ui5-webcomponents/commit/bc035bbc10b2ca2055d5c8698cc3054da12bf794)), closes [#7992](https://github.com/SAP/ui5-webcomponents/issues/7992)
+* **ui5-list:** load-more event fired correctly ([#8143](https://github.com/SAP/ui5-webcomponents/issues/8143)) ([c483a28](https://github.com/SAP/ui5-webcomponents/commit/c483a2889e749e1b464b386ba8dc098633ff3c3c))
+* **ui5-multi-combobox:** select all implementation ([#8066](https://github.com/SAP/ui5-webcomponents/issues/8066)) ([7e8a355](https://github.com/SAP/ui5-webcomponents/commit/7e8a3552c047f71d8e08a4dfaaa15dd4af7343c4))
+* **ui5-multi-input:** fix multiple token addition ([#8144](https://github.com/SAP/ui5-webcomponents/issues/8144)) ([94590e1](https://github.com/SAP/ui5-webcomponents/commit/94590e127cb58e4f29a4d93955a984aad89873c0)), closes [#8049](https://github.com/SAP/ui5-webcomponents/issues/8049)
+* **ui5-textarea:** prevent page height from growing on large input ([#8118](https://github.com/SAP/ui5-webcomponents/issues/8118)) ([7a819c8](https://github.com/SAP/ui5-webcomponents/commit/7a819c88b17ce0ad5ed349381a779f3964da61c9)), closes [#8082](https://github.com/SAP/ui5-webcomponents/issues/8082)
+
+
+### Features
+
+* **ui5-combobox, ui5-multi-combobox:** clear icon implementation ([#8038](https://github.com/SAP/ui5-webcomponents/issues/8038)) ([d3ad83b](https://github.com/SAP/ui5-webcomponents/commit/d3ad83b0c255f1f41bb5260feeb27306cf5f1f44))
+
+
+
+
+
 # [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
 
 
