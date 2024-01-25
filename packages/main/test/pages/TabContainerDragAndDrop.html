@@ -51,7 +51,7 @@
 			<ui5-tab text="Fourteen"></ui5-tab>
 			<ui5-tab text="Fifteen"></ui5-tab>
 			<ui5-tab text="Sixteen"></ui5-tab>
-			<ui5-tab text="Seventeen"></ui5-tab>
+			<ui5-tab id="tabSeventeen" text="Seventeen (forbids nesting)"></ui5-tab>
 			<ui5-tab text="Eighteen"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
 			<ui5-tab text="Nineteen"></ui5-tab>
@@ -93,6 +93,8 @@
 				destination.element.prepend(source.element);
 			}
 
+			source.element.slot = destination.slot;
+
 			setTimeout(() => {
 				source.element.getFocusDomRef().focus();
 			});
@@ -101,7 +103,7 @@
 		tc.addEventListener("before-tab-reorder", (e) => {
 			const { destination } = e.detail;
 
-			if (destination.element.children[destination.index].id === "tabFour") {
+			if (destination.element.children[destination.index].id === "tabFour" || destination.element.children[destination.index].id === "tabSeventeen" ) {
 				e.preventDefault();
 			}
 		});

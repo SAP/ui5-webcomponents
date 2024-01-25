@@ -78,6 +78,7 @@ type TabContainerTabReorderEventDetail = {
 		element: HTMLElement;
 		index?: number;
 		dropPlacement: DropPlacement;
+		slot: string;
 	}
 }
 
@@ -183,6 +184,22 @@ interface TabContainerTabInOverflow extends CustomListItem {
  *
  * @public
  */
+@event("before-tab-reorder", {
+	detail: {
+		// TODO: add "source" if possible, to let apps determine which element is dragged
+		// THe problem is that dragover event doesn't have info about the dragged element
+		destination: {
+			element: { type: HTMLElement },
+			index: { type: Number },
+		},
+	},
+})
+
+/**
+ * todo
+ *
+ * @public
+ */
 @event("tab-reorder", {
 	detail: {
 		source: {
@@ -192,19 +209,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 			element: { type: HTMLElement },
 			index: { type: Number },
 			dropPlacement: { type: DropPlacement },
-		},
-	},
-})
-/**
- * todo
- *
- * @public
- */
-@event("before-tab-reorder", {
-	detail: {
-		destination: {
-			element: { type: HTMLElement },
-			index: { type: Number },
+			slot: { type: String },
 		},
 	},
 })
@@ -1270,7 +1275,6 @@ class TabContainer extends UI5Element {
 				return;
 			}
 
-			// TODO: allow and handle forbidden drag over from header to popover
 			const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabReorderEventDetail>("before-tab-reorder", {
 				destination: {
 					element: this,
@@ -1344,12 +1348,6 @@ class TabContainer extends UI5Element {
 
 		const targetTabIndex = this.items.indexOf((target as ITab)._realTab!);
 
-		if (coordinateInfo.dropPlacement === DropPlacement.On) {
-			droppedTab.slot = "subTabs"; // TODO: is this our  concern?
-		} else {
-			droppedTab.slot = "";
-		}
-
 		this.fireEvent<TabContainerTabReorderEventDetail>("tab-reorder", {
 			source: {
 				element: droppedTab,
@@ -1358,6 +1356,7 @@ class TabContainer extends UI5Element {
 				element: coordinateInfo.dropPlacement === DropPlacement.On ? (target as Tab)._realTab : this,
 				index: targetTabIndex,
 				dropPlacement: coordinateInfo.dropPlacement,
+				slot: coordinateInfo.dropPlacement === DropPlacement.On ? "subTabs" : "",
 			},
 		});
 
@@ -1398,10 +1397,11 @@ class TabContainer extends UI5Element {
 		}
 
 		let dropPlacement = coordinateInfo.dropPlacement;
+		let targetSlot = "";
 
 		if (coordinateInfo.dropPlacement === DropPlacement.On) {
 			dropIn = popoverTab._realTab;
-			droppedTab.slot = "subTabs"; // TODO: is this our  concern?
+			targetSlot = "subTabs";
 		} else if (popoverTab._realTab !== this._getRootTab(popoverTab._realTab)) { // nesting
 			dropIn = popoverTab._realTab;
 
@@ -1412,7 +1412,7 @@ class TabContainer extends UI5Element {
 
 			const nestedListItem = <ITab> (this.responsivePopover!.querySelector("[ui5-list]") as List).children[dropPlacement === DropPlacement.After ? destinationItemIndex + 1 : destinationItemIndex];
 			targetTabIndex = dropIn.subTabs.indexOf((nestedListItem as unknown as Tab)._realTab);
-			droppedTab.slot = "subTabs"; // TODO: is this our concern?
+			targetSlot = "subTabs";
 		} else {
 			const rootTab = this._getRootTab(popoverTab._realTab);
 			targetTabIndex = this.items.indexOf(rootTab);
@@ -1421,7 +1421,7 @@ class TabContainer extends UI5Element {
 				dropPlacement = DropPlacement.After;
 			}
 
-			droppedTab.slot = ""; // TODO: is this our  concern?
+			droppedTab.slot = "";
 		}
 
 		this.fireEvent<TabContainerTabReorderEventDetail>("tab-reorder", {
@@ -1432,6 +1432,7 @@ class TabContainer extends UI5Element {
 				element: dropIn || this,
 				index: targetTabIndex,
 				dropPlacement,
+				slot: targetSlot,
 			},
 		});
 	}
@@ -1441,6 +1442,23 @@ class TabContainer extends UI5Element {
 		const dragOverTab = (destination.element.items[destination.index] as unknown as ITab)._realTab as ITab; // TODO: store _realTab reference as custom data
 
 		if (dragOverTab._level! > this.maxNestingLevel) {
+			e.preventDefault();
+		}
+
+		let dragIn;
+
+		if (dragOverTab !== this._getRootTab(dragOverTab as Tab)) {
+			dragIn = dragOverTab.parentElement as Tab;
+		}
+
+		const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabReorderEventDetail>("before-tab-reorder", {
+			destination: {
+				element: dragIn || this,
+				index: dragIn ? dragIn.subTabs.indexOf(dragOverTab) : this.items.indexOf(dragOverTab),
+			},
+		}, true);
+
+		if (dragOverPrevented) {
 			e.preventDefault();
 		}
 	}
@@ -1453,10 +1471,11 @@ class TabContainer extends UI5Element {
 		let dropIn;
 		let targetTabIndex;
 		let dropPlacement = destination.dropPlacement;
+		let targetSlot = "";
 
 		if (destination.dropPlacement === DropPlacement.On) {
 			dropIn = listItem._realTab;
-			droppedTab.slot = "subTabs"; // TODO: is this our  concern?
+			targetSlot = "subTabs";
 		} else if (listItem._realTab !== this._getRootTab(listItem._realTab)) { // nesting
 			dropIn = listItem._realTab;
 
@@ -1467,7 +1486,7 @@ class TabContainer extends UI5Element {
 
 			const nestedListItem = <ITab> destination.element.children[destination.dropPlacement === DropPlacement.After ? destinationItemIndex + 1 : destinationItemIndex];
 			targetTabIndex = dropIn.subTabs.indexOf((nestedListItem as unknown as Tab)._realTab);
-			droppedTab.slot = "subTabs"; // TODO: is this our concern?
+			targetSlot = "subTabs";
 		} else {
 			const rootTab = this._getRootTab(listItem._realTab);
 			targetTabIndex = this.items.indexOf(rootTab);
@@ -1476,7 +1495,7 @@ class TabContainer extends UI5Element {
 				dropPlacement = DropPlacement.After;
 			}
 
-			droppedTab.slot = ""; // TODO: is this our concern?
+			targetSlot = "";
 		}
 
 		this.fireEvent<TabContainerTabReorderEventDetail>("tab-reorder", {
@@ -1487,6 +1506,7 @@ class TabContainer extends UI5Element {
 				element: dropIn || this,
 				index: targetTabIndex,
 				dropPlacement,
+				slot: targetSlot,
 			},
 		});
 	}

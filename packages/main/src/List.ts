@@ -89,6 +89,13 @@ type ListItemClickEventDetail = {
 	item: ListItemBase,
 }
 
+type ListBeforeItemsReorderEventDetail = {
+	destination: {
+		element: List,
+		index: number
+	}
+}
+
 type ListItemsReorderEventDetail = {
 	source: {
 		element: ListItemBase,
@@ -97,13 +104,7 @@ type ListItemsReorderEventDetail = {
 		element: List,
 		index?: number,
 		dropPlacement: DropPlacement,
-	}
-}
-
-type ListBeforeItemsReorderEventDetail = {
-	destination: {
-		element: List,
-		index: number
+		slot: string,
 	}
 }
 
@@ -298,8 +299,9 @@ type ListBeforeItemsReorderEventDetail = {
 
 /**
  * @private
+ * @allowPreventDefault
  */
-@event("item-reorder", { // ui5-drop?
+@event("before-item-reorder", { // ui5-dragover?
 	detail: {
 		source: {
 			element: { type: HTMLElement },
@@ -314,9 +316,8 @@ type ListBeforeItemsReorderEventDetail = {
 
 /**
  * @private
- * @allowPreventDefault
  */
-@event("before-item-reorder", { // ui5-dragover?
+@event("item-reorder", { // ui5-drop?
 	detail: {
 		source: {
 			element: { type: HTMLElement },
@@ -325,6 +326,7 @@ type ListBeforeItemsReorderEventDetail = {
 		destination: {
 			element: { type: HTMLElement },
 			index: { type: Number },
+			slot: { type: String },
 		},
 	},
 })
@@ -1239,6 +1241,7 @@ class List extends UI5Element {
 		}
 
 		const id = e.dataTransfer.getData("text/plain");
+		// TODO: ? allow drop from another container (tab container's header) and refactor TabContainer
 		const droppedItemIndex = this.items.findIndex(item => item.id === id);
 		const droppedItem = this.items[droppedItemIndex];
 		if (!droppedItem) {
@@ -1268,6 +1271,7 @@ class List extends UI5Element {
 				element: this,
 				index: this.items.indexOf(coordinateInfo.closestElement as ListItemBase),
 				dropPlacement: coordinateInfo.dropPlacement,
+				slot: "",
 			},
 		});
 
