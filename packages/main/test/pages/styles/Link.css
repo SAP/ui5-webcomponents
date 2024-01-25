@@ -46,3 +46,7 @@ html,
 	height: var(--sapFontSize);
 	padding-inline-end: 0.125rem;
 }
+
+.linkIconEnd {
+	padding-inline-start: 0.125rem;
+}
