@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.7](https://github.com/SAP/ui5-webcomponents/compare/v1.14.6...v1.14.7) (2024-01-25)
+
+
+### Bug Fixes
+
+* **framework:** update openi5/core to 1.120.3 ([#8122](https://github.com/SAP/ui5-webcomponents/issues/8122)) ([da3e3bc](https://github.com/SAP/ui5-webcomponents/commit/da3e3bc9d8abf37fef62ea433e7dc35fb997a53d))
+* **framework:** update openi5/core to 1.120.3 ([#8122](https://github.com/SAP/ui5-webcomponents/issues/8122)) ([727ef13](https://github.com/SAP/ui5-webcomponents/commit/727ef13ab0aed2dc93b9dc185e2341e55992ebc1))
+
+
+
+
+
 ## [1.14.6](https://github.com/SAP/ui5-webcomponents/compare/v1.14.5...v1.14.6) (2023-11-22)
 
 

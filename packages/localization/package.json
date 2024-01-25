@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-localization",
-  "version": "1.14.6",
+  "version": "1.14.7",
   "description": "Localization for UI5 Web Components",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -28,11 +28,11 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.14.6",
     "@babel/core": "^7.23.7",
     "@babel/generator": "^7.23.6",
     "@babel/parser": "^7.23.6",
     "@openui5/sap.ui.core": "1.120.3",
+    "@ui5/webcomponents-tools": "1.14.7",
     "babel-plugin-amd-to-esm": "^2.0.3",
     "chromedriver": "113.0.0",
     "mkdirp": "^1.0.4",
@@ -40,6 +40,6 @@
   },
   "dependencies": {
     "@types/openui5": "^1.113.0",
-    "@ui5/webcomponents-base": "1.14.6"
+    "@ui5/webcomponents-base": "1.14.7"
   }
 }
