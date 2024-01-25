@@ -6,6 +6,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDateComponent from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import { getTimezone as getConfigTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isF4,
@@ -288,7 +290,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true)); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -350,6 +352,9 @@ class Calendar extends CalendarPart {
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
+
+		const a = getConfigTimezone();
+		console.log(a);
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
@@ -419,7 +424,7 @@ class Calendar extends CalendarPart {
 			return;
 		}
 
-		const localDate = new Date(this._timestamp * 1000);
+		const localDate = UI5Date.getInstance(this._timestamp * 1000);
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);

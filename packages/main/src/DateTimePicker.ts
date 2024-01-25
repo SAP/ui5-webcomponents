@@ -7,6 +7,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -212,7 +213,7 @@ class DateTimePicker extends DatePicker {
 	async openPicker(): Promise<void> {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
-		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
+		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(UI5Date.getInstance());
 	}
 
 	/**

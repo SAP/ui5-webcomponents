@@ -6,6 +6,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
@@ -229,11 +230,11 @@ class TimePickerInternals extends UI5Element {
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : new Date();
+		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : UI5Date.getInstance();
 	}
 
 	get validDateValue() {
-		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : UI5Date.getInstance();
 	}
 
 	get periodsArray() {

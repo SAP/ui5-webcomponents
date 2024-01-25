@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -217,7 +218,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
-		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
+		const todayDate = CalendarDate.fromLocalJSDate(UI5Date.getInstance(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
 		const minDate = this._minDate; // store the _minDate (expensive getter)
 		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
