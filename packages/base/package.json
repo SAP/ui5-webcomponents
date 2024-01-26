@@ -19,7 +19,8 @@
   "exports": {
     "./dist/ssr-dom.js": {
       "browser": "./dist/ssr-dom.js",
-      "node": "./dist/ssr-dom-shim.js"
+      "node": "./dist/ssr-dom-shim.js",
+      "default": "./dist/ssr-dom.js"
     },
     ".": "./index.js",
     "./dist/*": "./dist/*",
