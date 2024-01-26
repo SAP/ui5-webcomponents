@@ -6,7 +6,7 @@ import { writeFile, mkdir } from "fs/promises";
 import scopeVariables from "./scope-variables.mjs";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
-const inputFiles = await globby("src/styles/*.css");
+const inputFiles = await globby("src/styles/*.module.css");
 const restArgs = process.argv.slice(2);
 
 let componentStylesPlugin = {
@@ -20,7 +20,7 @@ let componentStylesPlugin = {
                 const newText = scopeVariables(f.text, packageJSON);
                 await mkdir(path.dirname(f.path), {recursive: true});
                 writeFile(f.path, newText);
-                writeFile(f.path.replace(".css", ".module.css"), newText);
+                writeFile(f.path.replace(".module.css", ".css"), newText);
             });
         })
     },
