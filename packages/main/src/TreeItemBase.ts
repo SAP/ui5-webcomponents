@@ -24,8 +24,6 @@ import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
 
-import HasPopup from "./types/HasPopup.js";
-
 type TreeItemBaseEventDetail = {
 	item: TreeItemBase,
 }
@@ -59,7 +57,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the toggled item.
  * @protected
  */
-@event("toggle", {
+@event<TreeItemBaseToggleEventDetail>("toggle", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -71,7 +69,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
-@event("step-in", {
+@event<TreeItemBaseStepInEventDetail>("step-in", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -83,7 +81,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
-@event("step-out", {
+@event<TreeItemBaseStepOutEventDetail>("step-out", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -143,7 +141,7 @@ class TreeItemBase extends ListItem {
 	* @since 1.1.0
 	*/
 	@property({ type: Boolean })
-	indeterminate!: boolean;
+	declare indeterminate: boolean;
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
@@ -177,7 +175,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleName!: string;
+	declare accessibleName: string;
 
 	/**
 	 * @private
@@ -194,15 +192,6 @@ class TreeItemBase extends ListItem {
 	_posinset!: number;
 
 	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ type: String, defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
-
-	/**
 	 * Defines if the item should be collapsible or not.
 	 * @private
 	 * @default false
@@ -210,14 +199,6 @@ class TreeItemBase extends ListItem {
 	 */
 	@property({ type: Boolean })
 	_fixed!: boolean;
-
-	/**
-	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @since 1.10.0
-	 * @private
-	 */
-	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: `${HasPopup}`;
 
 	/**
 	 * Defines the items of the component.

@@ -2,6 +2,9 @@
     background-color: var(--sapBackgroundColor);
 }
 
+:not(:defined) {
+    display: none;
+}
 .banner {height: 1rem;container-type: inline-size; margin: 1rem 0}
 .banner-inner {height: 1rem;background-color: red;}
 @container (max-width: 599px) {.banner-inner {background-color: darkred;}}

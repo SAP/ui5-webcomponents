@@ -153,7 +153,7 @@ type AvatarGroupClickEventDetail = {
 * @public
 * @since 1.0.0-rc.11
 */
-@event("click", {
+@event<AvatarGroupClickEventDetail>("click", {
 	detail: {
 		/**
 		* @public

@@ -118,7 +118,7 @@
 	flex-direction: column;
 }
 
-.ui5-popover-with-value-state-header-phone .ui5-valuestatemessage-root + [ui5-list] {
+.ui5-popover-with-value-state-header-phone [ui5-list] {
 	overflow: auto;
 }
 

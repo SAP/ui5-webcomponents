@@ -8,7 +8,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 
 | Setting                                       | Values                                                                                                                                                                                                                                                                                         | Default Value | Description                                                            | Applies To                                                     |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |---------------| ---------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_belize`, `sap_belize_hcb`, `sap_belize_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                                             | `sap_horizon` | Visual theme to be applied                                             | All components                                                 |
+| [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                      | `sap_horizon` | Visual theme to be applied                                             | All components                                                 |
 | [language](#language)                         | `ar`, `bg`, `ca`, `cs`, `cy`, `da`, `de`, `el`, `en`, `en_GB`, `es`, `es_MX`, `et`, `fi`, `fr`, `fr_CA`, `hi`, `hr`, `hu`, `in`, `it`, `iw`, `ja`, `kk`, `ko`, `lt`, `lv`, `ms`, `nl`, `no`, `pl`, `pt_PT`, `pt`, `ro`, `ru`, `sh`, `sk`, `sl`, `sv`, `th`, `tr`, `uk`, `vi`, `zh_CN`, `zh_TW` | N/A (`null`)  | Language to be used for translatable texts                             | Components and icons with translatable texts                   |
 | [animationMode](#animationMode)               | `full`, `basic`, `minimal`, `none`                                                                                                                                                                                                                                                             | `full`        | Amount/intensity of animations to be played for some components        | Components with animations (`ui5-panel`, `ui5-carousel`, etc.) |
 | [calendarType](#calendarType)                 | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `Gregorian`   | Default calendar type to be used for date-related components           | Date/time components (`ui5-date-picker`, etc.)                 |
@@ -29,9 +29,7 @@ The `theme` setting values above are the technical names of the supported themes
 - The `sap_fiori_3_dark` is known as `Quartz Dark`.
 - The `sap_fiori_3_hcb` is known as `Quartz High Contrast Black`.
 - The `sap_fiori_3_hcw` is known as `Quartz High Contrast White`.
-- The `sap_belize` is known as `Belize`.
-- The `sap_belize_hcb` is known as `High Contrast Black`.
-- The `sap_belize_hcw` is known as `High Contrast White`.
+
 
 The default theme (`sap_horizon`) is built in all UI5 Web Components. Thus, components are always themed.
 Configuring another theme will additionally fetch and use that theme. Any theme is fetched just once.
@@ -51,7 +49,7 @@ For more about assets, see the dedicated [Assets](../1-getting-started/05-using-
 Example:
 ```js
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
-setTheme("sap_belize_hcb");
+setTheme("sap_horizon_hcb");
 ```
 
 - To reset the theme to the default one:
@@ -59,6 +57,14 @@ setTheme("sap_belize_hcb");
 import { setTheme, getDefaultTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme(getDefaultTheme());
 ```
+
+**Note: Deprecated themes**
+
+The following themes are deprecated and no longer maintained - out of maintenance and left for compatibility only. The themes will be removed in the next major version.
+We recommend using `Horizon` (sap_horizon) and `Quartz` (sap_fiori_3) theme families.
+- The `sap_belize` is known as `Belize` [deprecated since 1.22].
+- The `sap_belize_hcb` is known as `High Contrast Black` [deprecated since 1.22].
+- The `sap_belize_hcw` is known as `High Contrast White` [deprecated since 1.22].
 
 ### language
 <a name="language"></a>

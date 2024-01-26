@@ -9,20 +9,52 @@
 }
 
 .ui5-form-item-label {
-	padding: 0.125rem 0;
-	padding-inline-end: 0.85rem;
-	justify-self: end;
+	padding: var(--ui5-form-item-label-padding);
+	padding-inline-end: var(--ui5-form-item-label-padding-end);
+	justify-self: var(--ui5-form-item-label-justify);
 }
 
 .ui5-form-item-content {
 	display: flex;
-	padding: 0.125rem 0;
+	padding: 0 0.25rem;
 }
 
 .ui5-form-item-content-child {
-	padding: 0 0.25rem;
+	padding-inline-end: 0.5rem;
 	box-sizing: border-box;
 	width: 100%;
+}
+
+:host([item-spacing="Large"]) .ui5-form-item-layout {
+	min-height: 2.5rem;
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
+	box-sizing: border-box;
+}
+
+/* S - 1 column */
+@container (max-width: 599px) {
+	.ui5-form-item-layout {
+		--ui5-form-item-layout: 1fr;
+	}
+
+	.ui5-form-item-label {
+		padding: var(--ui5-form-item-label-padding-span12);
+		justify-self: var(--ui5-form-item-label-justify-span12);
+	}
+
+	:host([item-spacing="Large"]) .ui5-form-item-layout {
+		min-height: initial;
+		padding-top: 0;
+		padding-bottom: 0;
+		box-sizing: border-box;
+	}
+
+	:host([item-spacing="Large"]) .ui5-form-item-content {
+		min-height: 2.625rem;
+		padding-top: 0.65rem;
+		box-sizing: border-box;
+	}
 }
 
 ::slotted([ui5-input]) {
@@ -31,55 +63,3 @@
 ::slotted([ui5-select]) {
 	width: 100%;
 }
-
-:host([label-placement="Top"]) .ui5-form-item-layout {
-	grid-template-columns: 1fr;
-}
-
-:host([label-placement="Top"]) .ui5-form-item-label {
-	padding: 0.625rem 0.25rem 0 0.25rem;
-	justify-self: start;
-}
-
-:host([label-placement="Top"]) .ui5-form-item-content-child {
-	padding: 0 0.25rem;
-}
-
-/* S - 1 column */
-@container (max-width: 599px) {
-	:host([label-placement="Auto"]) .ui5-form-item-layout,
-	:host(:not([label-placement])) .ui5-form-item-layout,
-	:host([label-placement="Auto"]) .ui5-form-item-layout,
-	:host(:not([label-placement])) .ui5-form-item-layout,
-	:host([label-placement="Auto"]) .ui5-form-item-layout,
-	:host(:not([label-placement])) .ui5-form-item-layout,
-	:host([label-placement="Auto"]) .ui5-form-item-layout,
-	:host(:not([label-placement])) .ui5-form-item-layout {
-		--ui5-form-item-layout: 1fr;
-	}
-
-	:host([label-placement="Auto"]) .ui5-form-item-label,
-	:host(:not([label-placement])) .ui5-form-item-label,
-	:host([label-placement="Auto"]) .ui5-form-item-label,
-	:host(:not([label-placement])) .ui5-form-item-label,
-	:host([label-placement="Auto"]) .ui5-form-item-label,
-	:host(:not([label-placement])) .ui5-form-item-label,
-	:host([label-placement="Auto"]) .ui5-form-item-label,
-	:host(:not([label-placement])) .ui5-form-item-label {
-		padding: 0.625rem 0.25rem 0 0.25rem;
-		justify-self: start;
-	}
-
-	:host([label-placement="Auto"]) .ui5-form-item-content-child,
-	:host(:not([label-placement])) .ui5-form-item-content-child,
-	:host([label-placement="Auto"]) .ui5-form-item-content-child,
-	:host(:not([label-placement])) .ui5-form-item-content-child,
-	:host([label-placement="Auto"]) .ui5-form-item-content-child,
-	:host(:not([label-placement])) .ui5-form-item-content-child,
-	:host([label-placement="Auto"]) .ui5-form-item-content-child,
-	:host(:not([label-placement])) .ui5-form-item-content-child {
-		padding: 0 0.25rem;
-	}
-}
-
-

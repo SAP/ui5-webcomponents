@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -213,16 +212,6 @@ abstract class ListItem extends ListItemBase {
 	@property({ type: HasPopup, noAttribute: true })
 	ariaHaspopup?: `${HasPopup}`;
 
-	@property({ type: Integer })
-	_level?: number;
-
-	/**
-	 * Used in UploadCollectionItem
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	disableDeleteButton!: boolean;
-
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
 	 * <b>Note:</b> While the slot allows custom buttons, to match
@@ -230,17 +219,19 @@ abstract class ListItem extends ListItemBase {
 	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
 	 * @since 1.9.0
 	 * @public
-	 */
+	*/
 	@slot()
 	deleteButton!: Array<IButton>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase
+	// used in template, implemented in TreeItemBase, StandardListItem
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
+	// Used in UploadCollectionItem
+	disableDeleteButton?: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -489,7 +480,7 @@ abstract class ListItem extends ListItemBase {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
-			ariaLevel: this._level || undefined,
+			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,

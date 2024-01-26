@@ -217,7 +217,7 @@ type StepInfo = {
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
  * @public
  */
-@event("step-change", {
+@event<WizardStepChangeEventDetail>("step-change", {
 	detail: {
 		/**
 		* @public
@@ -230,7 +230,7 @@ type StepInfo = {
 		/**
 		* @public
 		*/
-		changeWithClick: { Boolean },
+		changeWithClick: { type: Boolean },
 	},
 })
 

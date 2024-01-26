@@ -1,40 +1,66 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type FormItem from "./FormItem.js";
-import { FormLabelPlacement } from "./Form.js";
-
-import FormGroupTemplate from "./generated/templates/FormGroupTemplate.lit.js";
 
 /**
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The FormGroup (ui5-form-group) represents a group inside the Form (ui5-form) component
+ * and it consists of FormItem (ui5-form-item) components.
+ *
+ * The layout of the FormGroup is mostly defined and controlled by the overarching Form (ui5-form) component.
+ * Still, one can influence the layout via the FormGroup's <code>columnSpan</code> property,
+ * that defines how many columns the group should expand to.
  *
  * <h3>Usage</h3>
+ * Use the FormGroup (ui5-form-group) allows to split a Form into groups,
+ * e.g to group form items that logically belong together.
  *
- * For the <code>ui5-form-group</code>
  * <h3>ES6 Module Import</h3>
- *
  * <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
  *
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.main.FormGroup
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-form-group
  * @public
+ * @since 1.23.0
  */
 @customElement("ui5-form-group")
 class FormGroup extends UI5Element {
+	/**
+	 * Defines header text of the component.
+	 *
+	 * @default ""
+	 * @public
+	 */
 	@property()
-	heading!: string;
+	headerText!: string;
 
+	/**
+	 * Defines header text of the component.
+	 *
+	 * @default undefined
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: undefined })
+	columnSpan!: number;
+
+	/**
+	 * Defines the items of the component.
+	 * @public
+	 */
+	@slot({
+		type: HTMLElement,
+		"default": true,
+	})
+	items!: Array<FormItem>;
+
+	/**
+	 * @private
+	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	colsM!: number;
 
@@ -56,35 +82,25 @@ class FormGroup extends UI5Element {
 	@property({ validator: Integer, defaultValue: 4 })
 	labelSpanXl!: number;
 
-	@property({ type: FormLabelPlacement, defaultValue: FormLabelPlacement.Auto })
-	labelPlacement!: FormLabelPlacement;
+	@property()
+	itemSpacing!: string;
 
-	@slot({
-		type: HTMLElement,
-		"default": true,
-	})
-	items!: Array<FormItem>;
-
-	onBeforeRendering(): void {
-		this.setLabelSpanAndPlacement();
+	onBeforeRendering() {
+		this.processFormItems();
 	}
 
-	setLabelSpanAndPlacement() {
-		this.items.forEach((item: FormItem | FormGroup) => {
+	processFormItems() {
+		this.items.forEach((item: FormItem) => {
 			item.labelSpanS = this.labelSpanS;
 			item.labelSpanM = this.labelSpanM;
 			item.labelSpanL = this.labelSpanL;
 			item.labelSpanXl = this.labelSpanXl;
-			item.labelPlacement = this.labelPlacement;
+			item.itemSpacing = this.itemSpacing;
 		});
 	}
 
 	get isGroup() {
 		return true;
-	}
-
-	get formGroupRepresentation() {
-		return executeTemplate(FormGroupTemplate, this);
 	}
 }
 

@@ -49,26 +49,26 @@ import {
 	SHELLBAR_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
-type AccessibilityRoles = {
+type ShellBarAccessibilityRoles = {
 	logoRole?: string;
 };
 
-type AccessibilityTexts = {
+type ShellBarAccessibilityTexts = {
 	logoTitle?: string;
 	profileButtonTitle?: string;
 };
 
-type AccessibilityAttributesValue = {
+type ShellBarAccessibilityAttributesValue = {
 	ariaHasPopup?: string;
 	expanded?: boolean;
 }
 
-type AccessibilityAttributes = {
-	notifications?: AccessibilityAttributesValue;
-	profile?: AccessibilityAttributesValue;
-	product?: AccessibilityAttributesValue;
-	search?: AccessibilityAttributesValue;
-	overflow?: AccessibilityAttributesValue;
+type ShellBarAccessibilityAttributes = {
+	notifications?: ShellBarAccessibilityAttributesValue;
+	profile?: ShellBarAccessibilityAttributesValue;
+	product?: ShellBarAccessibilityAttributesValue;
+	search?: ShellBarAccessibilityAttributesValue;
+	overflow?: ShellBarAccessibilityAttributesValue;
 };
 
 type ShellBarNotificationsClickEventDetail = {
@@ -184,7 +184,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event("notifications-click", {
+@event<ShellBarNotificationsClickEventDetail>("notifications-click", {
 	detail: {
 		/**
 		 * @public
@@ -199,7 +199,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event("profile-click", {
+@event<ShellBarProfileClickEventDetail>("profile-click", {
 	detail: {
 		/**
 		 * @public
@@ -216,7 +216,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event("product-switch-click", {
+@event<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 	detail: {
 		/**
 		 * @public
@@ -232,7 +232,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event("logo-click", {
+@event<ShellBarLogoClickEventDetail>("logo-click", {
 	detail: {
 		/**
 		 * @public
@@ -248,7 +248,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event("co-pilot-click", {
+@event<ShellBarCoPilotClickEventDetail>("co-pilot-click", {
 	detail: {
 		/**
 		 * @public
@@ -265,7 +265,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event("menu-item-click", {
+@event<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 	detail: {
 		/**
 		 * @public
@@ -349,7 +349,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.6.0
 	 */
 	@property({ type: Object })
-	accessibilityRoles!: AccessibilityRoles;
+	accessibilityRoles!: ShellBarAccessibilityRoles;
 
 	/**
 	 * An object of strings that defines several additional accessibility texts
@@ -364,7 +364,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@property({ type: Object })
-	accessibilityTexts!: AccessibilityTexts;
+	accessibilityTexts!: ShellBarAccessibilityTexts;
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values
@@ -394,7 +394,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.10.0
 	 */
 	 @property({ type: Object })
-	 accessibilityAttributes!: AccessibilityAttributes;
+	 accessibilityAttributes!: ShellBarAccessibilityAttributes;
 
 	/**
 	 * @private
@@ -1304,4 +1304,7 @@ export type {
 	ShellBarLogoClickEventDetail,
 	ShellBarCoPilotClickEventDetail,
 	ShellBarMenuItemClickEventDetail,
+	ShellBarAccessibilityAttributes,
+	ShellBarAccessibilityRoles,
+	ShellBarAccessibilityTexts,
 };

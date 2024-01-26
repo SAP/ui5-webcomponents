@@ -40,7 +40,8 @@ describe("Date Picker Tests", () => {
 		await setDateButton.click();
 
 		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getValue(), "11 декември 2018 г.");
+		// \u202f is Narrow No-Break Space, coming with latest CLDR updates
+		assert.equal(await innerInput.getValue(), "11 декември 2018\u202fг.");
 	});
 
 	it("custom formatting", async () => {

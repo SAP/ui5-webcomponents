@@ -91,7 +91,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
  */
-@event("scan-success", {
+@event<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
 	detail: {
 		/**
 		* @public
@@ -110,7 +110,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @param {string} message the error message
  * @public
  */
-@event("scan-error", {
+@event<BarcodeScannerDialogScanErrorEventDetail>("scan-error", {
 	detail: {
 		/**
 		* @public

@@ -60,12 +60,14 @@ type NotificationListItemBaseCloseEventDetail = {
  * @param {HTMLElement} item the closed item.
  * @public
  */
-@event("close", {
+@event<NotificationListItemBaseCloseEventDetail>("close", {
 	 detail: {
 		/**
 		 * @public
 		 */
-		item: HTMLElement,
+		item: {
+			type: HTMLElement,
+		},
 	},
 })
 class NotificationListItemBase extends ListItemBase {

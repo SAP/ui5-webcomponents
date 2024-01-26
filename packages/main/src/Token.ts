@@ -67,7 +67,7 @@ type TokenDeleteEventDetail = {
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
  */
-@event("delete", {
+@event<TokenDeleteEventDetail>("delete", {
 	detail: {
 		"backSpace": { type: Boolean },
 		"delete": { type: Boolean },

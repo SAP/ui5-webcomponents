@@ -1,5 +1,3 @@
-import { EventData } from "../UI5ElementMetadata.js";
-
 /**
  * Returns an event class decorator.
  *
@@ -7,7 +5,7 @@ import { EventData } from "../UI5ElementMetadata.js";
  * @param { EventData } data the event data
  * @returns { ClassDecorator }
  */
-const event = (name: string, data: EventData = {}): ClassDecorator => {
+const event = <EventDetail>(name: string, data: { detail?: Record<keyof EventDetail, { type: any }> } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};

@@ -177,7 +177,7 @@ type DatePickerInputEventDetail = {
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
-@event("change", {
+@event<DatePickerChangeEventDetail>("change", {
 	detail: {
 		/**
 		 * @public
@@ -201,7 +201,7 @@ type DatePickerInputEventDetail = {
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
-@event("input", {
+@event<DatePickerInputEventDetail>("input", {
 	detail: {
 		/**
 		 * @public

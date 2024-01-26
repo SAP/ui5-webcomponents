@@ -8,10 +8,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * 
- *
  * <h3>Usage</h3>
- *
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -32,14 +29,16 @@ class FormStep extends UI5Element {
 	 * </ul>
 	 *
 	 * @public
+	 * @default undefined
 	 */
 	@property()
-	minWidth!: string; // or breakpoint
+	minWidth?: string; // or breakpoint
 
 	/**
 	 * Defines number of columns for the current form step.
 	 *
 	 * @public
+	 * @default "1"
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	columns!: number;
