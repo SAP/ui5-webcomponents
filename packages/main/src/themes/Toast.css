@@ -12,10 +12,6 @@
 	border-radius: var(--sapElement_BorderCornerRadius);
 	transition-property: opacity;
 	opacity: 1;
-	font-family: inherit;
-	color: inherit;
-	font-weight: inherit;
-	font-size: inherit;
 	word-wrap: break-word;
 	text-align: center;
 	text-overflow: ellipsis;
