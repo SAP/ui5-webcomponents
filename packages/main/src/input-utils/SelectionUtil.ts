@@ -4,6 +4,7 @@ type CopyOptions = {
 	textArea: UI5Element;
 }
 
+/*
 type CaretPosition = {
 	x: number;
 	y: number;
@@ -89,8 +90,8 @@ const getTextAreaSelection = (textArea: UI5Element): CaretPosition => {
 	const copy = createCopy({ textArea });
 
 	const range = document.createRange();
-	range.setStart(copy.firstChild!, start);
-	range.setEnd(copy.firstChild!, end);
+	range.setStart(copy.firstChild!, start!);
+	range.setEnd(copy.firstChild!, end!);
 
 	const selection = document.getSelection()!;
 	selection.removeAllRanges();
@@ -105,7 +106,7 @@ const getTextAreaSelection = (textArea: UI5Element): CaretPosition => {
 
 	textArea.focus();
 	// Adjust based on scroll direction
-	const x = getDirection === "left-to-right" ? rect.right - innerElement.scrollLeft : rect.left - innerElement.scrollLeft;
+	const x = getDirection() === "LTR" ? rect.right - innerElement.scrollLeft : rect.left - innerElement.scrollLeft;
 
 	return {
 		x,
@@ -116,13 +117,51 @@ const getTextAreaSelection = (textArea: UI5Element): CaretPosition => {
 const getDirection = () => {
 	const selection = window.getSelection();
 	const range = document.createRange();
-	range.setStart(selection.anchorNode, selection.anchorOffset);
-	range.setEnd(selection.focusNode, selection.focusOffset);
+	range.setStart(selection!.anchorNode!, selection!.anchorOffset);
+	range.setEnd(selection!.focusNode!, selection!.focusOffset);
 
-	return range.collapsed ? "backward" : "forward";
+	return range.collapsed ? "RTE" : "LTR";
+};
+*/
+
+type Selection = {
+    startX: number;
+    startY: number;
+    endX: number;
+    endY: number;
+    text: string;
+	direction: string
+}
+
+const getTextAreaSelection = (textArea: UI5Element, direction: string): Selection => {
+	const innerElement = textArea.shadowRoot!.querySelector("textarea");
+
+	if (!innerElement) {
+		throw new Error("Inner element not found");
+	}
+
+	const { selectionStart, selectionEnd } = innerElement;
+
+	const selectionRange = document.getSelection()!;
+
+	return {
+		startX: selectionStart,
+		startY: 0,
+		endX: selectionEnd,
+		endY: 0,
+		text: getSelectedText(innerElement),
+		direction,
+	};
+};
+
+const getSelectedText = (textarea: HTMLTextAreaElement | null): string => {
+	if (!textarea) {
+		return "";
+	}
+	const { selectionStart, selectionEnd } = textarea;
+	return textarea.value.substring(selectionStart, selectionEnd);
 };
 
 export {
-	getTextAreaSelection,
-	createCopy,
+	getTextAreaSelection, Selection,
 };

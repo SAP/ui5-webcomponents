@@ -424,8 +424,9 @@ class TextArea extends UI5Element implements IFormElement {
 		this.fireEvent("change", {});
 	}
 
-	_onselect() {
-		this.fireEvent("selection-finished", {});
+	_onselect(e: any) {
+		const direction: string = e && e.currentTarget ? e.currentTarget.selectionDirection : "none";
+		this.fireEvent("selection-finished", { direction });
 	}
 
 	_oninput(e: InputEvent) {

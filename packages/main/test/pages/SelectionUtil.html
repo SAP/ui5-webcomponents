@@ -30,38 +30,35 @@
 
     <section class="group">
         <ui5-title>Simple TextArea</ui5-title>
-        <ui5-textarea id="basic-textarea" placeholder="Basic text area"></ui5-textarea>
-    </section>
+        <ui5-textarea id="basic-textarea" growing="true" value="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of 'de Finibus Bonorum et Malorum' (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, 'Lorem ipsum dolor sit amet..', comes from a line in section 1.10.32.
 
-    <input class="group">
-    <ui5-title>Simple Input</ui5-title>
-    <ui5-input id="basic-input" placeholder="Basic text area"></ui5-input>
-    <input></input>
+            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from 'de Finibus Bonorum et Malorum' by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham." >
+        </ui5-textarea>
     </section>
 
     <ui5-popover id="pop" opener="test" placement-type="Bottom">
-        <div>Test<ui5-icon name="ai"></ui5-icon></div>
+        <div slot="header">Selected Text<ui5-icon name="ai"></ui5-icon></div>
+        <div id="txtSelection"></div>
     </ui5-popover>
+
     <div id="test" style="user-select: none; width: 2px; height: 1.2em; background-color: red; position: absolute;">
     </div>
     <script>
 
-        const textArea = document.getElementById("basic-textarea")
+        const textArea = document.getElementById("basic-textarea");
+        const popover = document.querySelector("#pop");
 
-        textArea.addEventListener("ui5-selection-finished", function () {
-            var position = window["sap-ui-webcomponents-bundle"].getTextAreaSelection(textArea);
-            test.style.left = position.x + 'px';
-            test.style.top = (position.y + window.scrollY) + 'px';
-            pop.showAt(test, true);
-        })
 
-        const input = document.getElementById("basic-input")
+        textArea.addEventListener("ui5-selection-finished", function (e) {
+            var selection = window["sap-ui-webcomponents-bundle"].getTextAreaSelection(textArea, e.detail.direction);
+            //alert(selection);
+            test.style.left = '50px';
+            test.style.top = '400px';
 
-        input.addEventListener("ui5-selection-finished", function () {
-            var position = window["sap-ui-webcomponents-bundle"].getTextAreaSelection(input);
-            test.style.left = position.x + 'px';
-            test.style.top = (position.y + window.scrollY) + 'px';
-            pop.showAt(test, true);
+            const txtDiv = document.querySelector("#txtSelection");
+            txtDiv.innerHTML = selection.text;
+
+            popover.showAt(test, true);
         })
     </script>
 

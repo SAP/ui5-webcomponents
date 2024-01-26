@@ -185,7 +185,6 @@ import "./features/InputSuggestions.js";
 
 import {
 	getTextAreaSelection,
-	createCopy,
 } from "./input-utils/SelectionUtil.js";
 
 // @ts-ignore
