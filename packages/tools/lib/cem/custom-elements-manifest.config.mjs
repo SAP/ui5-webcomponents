@@ -166,6 +166,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 				if (propertyDecorator) {
 					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
+					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind  === ts.SyntaxKind.TrueKeyword || undefined;
 				}
 
 				if (hasTag(memberParsedJsDoc, "formProperty")) {
