@@ -9,7 +9,6 @@ import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import CalendarPickersMode from "./types/CalendarPickersMode.js";
 
 import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
