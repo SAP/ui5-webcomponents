@@ -73,7 +73,22 @@
 
 	<script>
 		const tc = document.getElementById("tabContainerDnd");
+
+		tc.addEventListener("before-tab-reorder", (e) => {
+			// TODO: validate source.element
+			const { source, destination } = e.detail;
+
+			console.error(`Dragging "${source.element.id}" in "${destination.element.id}" ${destination.dropPlacement.toLowerCase()} index ${destination.index}`);
+
+			if (destination.dropPlacement === "On" && (
+				destination.element.children[destination.index].id === "tabFour" || destination.element.children[destination.index].id === "tabSeventeen"
+			)) {
+				e.preventDefault();
+			}
+		});
+
 		tc.addEventListener("tab-reorder", (e) => {
+			// TODO: validate source.element
 			const { destination, source } = e.detail;
 
 			if (destination.dropPlacement === "Before") {
@@ -98,14 +113,6 @@
 			setTimeout(() => {
 				source.element.getFocusDomRef().focus();
 			});
-		});
-
-		tc.addEventListener("before-tab-reorder", (e) => {
-			const { destination } = e.detail;
-
-			if (destination.element.children[destination.index].id === "tabFour" || destination.element.children[destination.index].id === "tabSeventeen" ) {
-				e.preventDefault();
-			}
 		});
 
 		const densityCb = document.getElementById("density");

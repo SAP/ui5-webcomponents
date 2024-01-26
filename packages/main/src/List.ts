@@ -54,6 +54,7 @@ import {
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
 import DropPlacement from "./types/DropPlacement.js";
+import { getDraggedElement } from "./util/DragAndDrop.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -90,19 +91,23 @@ type ListItemClickEventDetail = {
 }
 
 type ListBeforeItemsReorderEventDetail = {
+	source: {
+		element: UI5Element,
+	}
 	destination: {
-		element: List,
-		index: number
+		element: UI5Element,
+		index: number,
+		dropPlacement: DropPlacement,
 	}
 }
 
 type ListItemsReorderEventDetail = {
 	source: {
-		element: ListItemBase,
+		element: UI5Element,
 	},
 	destination: {
 		element: List,
-		index?: number,
+		index: number,
 		dropPlacement: DropPlacement,
 		slot: string,
 	}
@@ -1196,6 +1201,7 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
+		// TODO: add validation if the dropped element is known, for example avoid links or other element to be dropped, or let the the app dev do it?
 		const coordinateInfo = getElementAtCoordinate(
 			this.items,
 			e.clientY,
@@ -1215,14 +1221,20 @@ class List extends UI5Element {
 			return;
 		}
 
-		const dragOverPrevented = !this.fireEvent<ListBeforeItemsReorderEventDetail>("before-item-reorder", {
+		const parentElement = dragOverElement.parentElement?.closest("[ui5-list],[ui5-li],[ui5-li-custom]") as UI5Element;
+
+		const beforeItemReorderPrevented = !this.fireEvent<ListBeforeItemsReorderEventDetail>("before-item-reorder", {
+			source: {
+				element: getDraggedElement()!,
+			},
 			destination: {
-				element: this,
-				index: this.items.indexOf(dragOverElement),
+				element: parentElement,
+				index: Array.from(parentElement.children).indexOf(dragOverElement),
+				dropPlacement: coordinateInfo.dropPlacement,
 			},
 		}, true);
 
-		if (dragOverPrevented) {
+		if (beforeItemReorderPrevented) {
 			return;
 		}
 
@@ -1236,15 +1248,8 @@ class List extends UI5Element {
 	}
 
 	_ondrop(e: DragEvent) {
+		// TODO: add validation if the dropped element is known, for example avoid links or other element to be dropped, or let the the app dev do it?
 		if (!e.dataTransfer) {
-			return;
-		}
-
-		const id = e.dataTransfer.getData("text/plain");
-		// TODO: ? allow drop from another container (tab container's header) and refactor TabContainer
-		const droppedItemIndex = this.items.findIndex(item => item.id === id);
-		const droppedItem = this.items[droppedItemIndex];
-		if (!droppedItem) {
 			return;
 		}
 
@@ -1265,7 +1270,7 @@ class List extends UI5Element {
 
 		this.fireEvent<ListItemsReorderEventDetail>("item-reorder", {
 			source: {
-				element: droppedItem,
+				element: getDraggedElement()!,
 			},
 			destination: {
 				element: this,

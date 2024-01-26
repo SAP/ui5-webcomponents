@@ -60,6 +60,7 @@ import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import Orientation from "./types/Orientation.js";
 import DropPlacement from "./types/DropPlacement.js";
+import { getDraggedElement } from "./util/DragAndDrop.js";
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
@@ -83,9 +84,13 @@ type TabContainerTabReorderEventDetail = {
 }
 
 type TabContainerBeforeTabReorderEventDetail = {
+	source: {
+		element: UI5Element;
+	}
 	destination: {
-		element: HTMLElement;
+		element: UI5Element;
 		index: number;
+		dropPlacement: DropPlacement;
 	}
 }
 
@@ -186,11 +191,12 @@ interface TabContainerTabInOverflow extends CustomListItem {
  */
 @event("before-tab-reorder", {
 	detail: {
-		// TODO: add "source" if possible, to let apps determine which element is dragged
-		// THe problem is that dragover event doesn't have info about the dragged element
+		source: {
+			element: { type: HTMLElement },
+
+		},
 		destination: {
 			element: { type: HTMLElement },
-			index: { type: Number },
 		},
 	},
 })
@@ -1269,16 +1275,28 @@ class TabContainer extends UI5Element {
 				return;
 			}
 
-			dragOverElement = coordinateInfo.closestElement;
+			dragOverElement = (coordinateInfo?.closestElement as Tab)._realTab;
 
 			if (!dragOverElement) {
 				return;
 			}
 
+			const parentElement = dragOverElement.parentElement as UI5Element;
+
+			let draggedElement = getDraggedElement()!;
+
+			if ((draggedElement as Tab)._realTab) {
+				draggedElement = (draggedElement as Tab)._realTab;
+			}
+
 			const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabReorderEventDetail>("before-tab-reorder", {
+				source: {
+					element: draggedElement,
+				},
 				destination: {
-					element: this,
-					index: this.items.indexOf((dragOverElement as Tab)._realTab),
+					element: parentElement,
+					index: Array.from(parentElement.children).indexOf(dragOverElement),
+					dropPlacement: coordinateInfo.dropPlacement,
 				},
 			}, true);
 
@@ -1316,23 +1334,16 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		let id = e.dataTransfer.getData("text/plain");
+		let droppedElement = getDraggedElement()!;
 
-		if (id.endsWith("-li")) {
-			id = id.substring(0, id.length - 3);
-		}
-
-		let droppedElement = this.shadowRoot!.querySelector<ITab>(`[id="${id}"]`);
-
-		if (!droppedElement) {
-			droppedElement = this._popoverItemsFlat.find(item => item._id === id) ?? null;
+		if ((droppedElement as Tab)._realTab) {
+			droppedElement = (droppedElement as Tab)._realTab;
 		}
 
 		if (!droppedElement) {
 			return;
 		}
 
-		const droppedTab = droppedElement._realTab!;
 		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
 		const coordinateInfo = getElementAtCoordinate(
 			tabs,
@@ -1350,7 +1361,7 @@ class TabContainer extends UI5Element {
 
 		this.fireEvent<TabContainerTabReorderEventDetail>("tab-reorder", {
 			source: {
-				element: droppedTab,
+				element: droppedElement,
 			},
 			destination: {
 				element: coordinateInfo.dropPlacement === DropPlacement.On ? (target as Tab)._realTab : this,
@@ -1360,105 +1371,38 @@ class TabContainer extends UI5Element {
 			},
 		});
 
-		droppedTab.focus();
 		this.dropIndicatorDOM.hide();
 		(this.responsivePopover?.querySelector("[ui5-list]") as List)?.dropIndicatorDOM.hide();
 	}
 
-	_onPopoverDrop(e: DragEvent) {
-		if (!e.dataTransfer) {
-			return;
-		}
-
-		const id = e.dataTransfer.getData("text/plain");
-
-		// Only handle drop from header to list
-		if (id.endsWith("-li")) {
-			return;
-		}
-
-		const tabs = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]`)] as Array<Tab>;
-		const droppedTab = tabs.find(item => item.id === id)!._realTab;
-		const listItem = (e.target as HTMLElement).closest("[ui5-li-custom]") as CustomListItem;
-		const destinationItemIndex = (this.responsivePopover!.querySelector("[ui5-list]") as List).items.indexOf(listItem);
-		const popoverTab = listItem as unknown as Tab;
-
-		let dropIn;
-		let targetTabIndex = this.items.indexOf(((e.target as HTMLElement)!.closest("[ui5-li-custom]") as Tab)._realTab);
-		const coordinateInfo = getElementAtCoordinate(
-			(this.responsivePopover!.querySelector("[ui5-list]") as List).items,
-			e.clientY,
-			Orientation.Vertical,
-			this.maxNestingLevel,
-		);
-
-		if (!coordinateInfo) {
-			return;
-		}
-
-		let dropPlacement = coordinateInfo.dropPlacement;
-		let targetSlot = "";
-
-		if (coordinateInfo.dropPlacement === DropPlacement.On) {
-			dropIn = popoverTab._realTab;
-			targetSlot = "subTabs";
-		} else if (popoverTab._realTab !== this._getRootTab(popoverTab._realTab)) { // nesting
-			dropIn = popoverTab._realTab;
-
-			// TODO: fine tune
-			if (coordinateInfo.dropPlacement === DropPlacement.Before) {
-				dropIn = popoverTab._realTab.parentElement! as Tab;
-			}
-
-			const nestedListItem = <ITab> (this.responsivePopover!.querySelector("[ui5-list]") as List).children[dropPlacement === DropPlacement.After ? destinationItemIndex + 1 : destinationItemIndex];
-			targetTabIndex = dropIn.subTabs.indexOf((nestedListItem as unknown as Tab)._realTab);
-			targetSlot = "subTabs";
-		} else {
-			const rootTab = this._getRootTab(popoverTab._realTab);
-			targetTabIndex = this.items.indexOf(rootTab);
-
-			if (popoverTab._realTab !== rootTab) {
-				dropPlacement = DropPlacement.After;
-			}
-
-			droppedTab.slot = "";
-		}
-
-		this.fireEvent<TabContainerTabReorderEventDetail>("tab-reorder", {
-			source: {
-				element: droppedTab,
-			},
-			destination: {
-				element: dropIn || this,
-				index: targetTabIndex,
-				dropPlacement,
-				slot: targetSlot,
-			},
-		});
-	}
-
 	_onBeforeReorderItemsInPopover(e: CustomEvent<ListBeforeItemsReorderEventDetail>) {
-		const { destination } = e.detail;
-		const dragOverTab = (destination.element.items[destination.index] as unknown as ITab)._realTab as ITab; // TODO: store _realTab reference as custom data
+		const { source, destination } = e.detail;
 
-		if (dragOverTab._level! > this.maxNestingLevel) {
+		const dragOverTab = (destination.element.children[destination.index] as Tab)._realTab;
+
+		if (!dragOverTab) {
+			e.preventDefault();
+			return;
+		}
+
+		if ((dragOverTab as ITab)._level! > this.maxNestingLevel) {
 			e.preventDefault();
 		}
 
-		let dragIn;
+		const parentElement = dragOverTab.parentElement as UI5Element;
 
-		if (dragOverTab !== this._getRootTab(dragOverTab as Tab)) {
-			dragIn = dragOverTab.parentElement as Tab;
-		}
-
-		const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabReorderEventDetail>("before-tab-reorder", {
+		const beforeTabReorderPrevented = !this.fireEvent<TabContainerBeforeTabReorderEventDetail>("before-tab-reorder", {
+			source: {
+				element: (source.element as Tab)._realTab,
+			},
 			destination: {
-				element: dragIn || this,
-				index: dragIn ? dragIn.subTabs.indexOf(dragOverTab) : this.items.indexOf(dragOverTab),
+				element: parentElement,
+				index: Array.from(parentElement.children).indexOf(dragOverTab),
+				dropPlacement: destination.dropPlacement,
 			},
 		}, true);
 
-		if (dragOverPrevented) {
+		if (beforeTabReorderPrevented) {
 			e.preventDefault();
 		}
 	}
@@ -1466,7 +1410,7 @@ class TabContainer extends UI5Element {
 	_onReorderItemsInPopover(e: CustomEvent<ListItemsReorderEventDetail>) {
 		const { source, destination } = e.detail;
 		const droppedTab = (source.element as unknown as Tab)._realTab; // TODO: store _realTab reference as custom data
-		const destinationItemIndex = destination.index!;
+		const destinationItemIndex = destination.index;
 		const listItem = destination.element.children[destinationItemIndex] as Tab;
 		let dropIn;
 		let targetTabIndex;

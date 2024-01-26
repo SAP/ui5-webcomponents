@@ -37,6 +37,7 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
+import { setDraggedElement } from "./util/DragAndDrop.js";
 
 const DESIGN_DESCRIPTIONS = {
 	[SemanticColor.Positive]: TAB_ARIA_DESIGN_POSITIVE,
@@ -462,6 +463,13 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		e.dataTransfer.clearData();
 		e.dataTransfer.setData("text/plain", `${draggedTabInStrip.id}`);
 		e.dataTransfer.dropEffect = "move";
+
+		// TODO: replace dataTransfer usage with setDraggedElement and other APIs
+		setDraggedElement(draggedTabInStrip._realTab!);
+	}
+
+	_onTabDragEnd() {
+		setDraggedElement(null);
 	}
 
 	get overflowState() {

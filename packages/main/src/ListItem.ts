@@ -30,6 +30,7 @@ import HasPopup from "./types/HasPopup.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import { setDraggedElement } from "./util/DragAndDrop.js";
 
 interface IAccessibleListItem {
 	accessibleName?: string;
@@ -354,6 +355,9 @@ abstract class ListItem extends ListItemBase {
 		e.dataTransfer.clearData();
 		e.dataTransfer.setData("text/plain", this.id);
 		e.dataTransfer.dropEffect = "move";
+
+		// TODO: replace dataTransfer usage with setDraggedElement and other APIs
+		setDraggedElement(this);
 	}
 
 	/*

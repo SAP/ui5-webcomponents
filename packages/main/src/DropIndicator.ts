@@ -163,6 +163,7 @@ class DropIndicator extends UI5Element {
 	}
 
 	hide() {
+		// TODO: properly hide the indicator if it doesn't have target
 		this.style.display = "none";
 	}
 
