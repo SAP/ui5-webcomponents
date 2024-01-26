@@ -16,6 +16,7 @@ import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/Lis
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Interfaces.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
@@ -36,6 +37,10 @@ import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTempla
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
+
+// Icons
+import "@ui5/webcomponents-icons/dist/da.js";
+import "@ui5/webcomponents-icons/dist/da-2.js";
 
 import {
 	SHELLBAR_LABEL,
@@ -406,12 +411,6 @@ class ShellBar extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	coPilotActive!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
 	withLogo!: boolean;
 
 	@property({ type: Object })
@@ -428,6 +427,12 @@ class ShellBar extends UI5Element {
 
 	@property({ type: Boolean, noAttribute: true })
 	_fullWidthSearch!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_coPilotPressed!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_isXXLBreakpoint!: boolean;
 
 	/**
 	 * Defines the <code>ui5-shellbar</code> aditional items.
@@ -498,10 +503,19 @@ class ShellBar extends UI5Element {
 	_defaultItemPressPrevented: boolean;
 	menuItemsObserver: MutationObserver;
 	coPilot?: ShellBarCoPilot;
+	_coPilotIcon: string;
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_headerPress: () => Promise<void>;
+
+	static get CO_PILOT_ICON_PRESSED() {
+		return "sap-icon://da-2";
+	}
+
+	static get CO_PILOT_ICON_UNPRESSED() {
+		return "sap-icon://da";
+	}
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -528,6 +542,7 @@ class ShellBar extends UI5Element {
 
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
+		this._coPilotIcon = ShellBar.CO_PILOT_ICON_UNPRESSED;
 
 		// marks if preventDefault() is called in item's press handler
 		this._defaultItemPressPrevented = false;
@@ -552,6 +567,12 @@ class ShellBar extends UI5Element {
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
+	}
+
+	_toggleCoPilotIcon(button: ToggleButton) {
+		this._coPilotIcon = !this._coPilotPressed ? ShellBar.CO_PILOT_ICON_PRESSED : ShellBar.CO_PILOT_ICON_UNPRESSED;
+		button.icon = this._coPilotIcon;
+		this._coPilotPressed = !this._coPilotPressed;
 	}
 
 	_debounce(fn: () => Promise<void>, delay: number) {
@@ -616,34 +637,15 @@ class ShellBar extends UI5Element {
 		}
 	}
 
-	_fireCoPilotClick() {
+	_fireCoPilotClick(e: Event) {
 		this.fireEvent<ShellBarCoPilotClickEventDetail>("co-pilot-click", {
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-coPilot")!,
 		});
+		this._toggleCoPilotIcon(e.target as ToggleButton);
 	}
 
-	_coPilotClick() {
-		this._fireCoPilotClick();
-	}
-
-	_coPilotKeydown(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			this.coPilotActive = true;
-			e.preventDefault();
-			return;
-		}
-
-		if (isEnter(e)) {
-			this.coPilotActive = true;
-			this._fireCoPilotClick();
-		}
-	}
-
-	_coPilotKeyup(e: KeyboardEvent) {
-		if (isSpace(e)) {
-			this._fireCoPilotClick();
-		}
-		this.coPilotActive = false;
+	_coPilotClick(e: MouseEvent) {
+		this._fireCoPilotClick(e);
 	}
 
 	onBeforeRendering() {
@@ -693,6 +695,7 @@ class ShellBar extends UI5Element {
 			this.breakpointSize = mappedSize;
 		}
 
+		this._isXXLBreakpoint = this.breakpointSize === "XXL";
 		return mappedSize;
 	}
 
@@ -953,6 +956,19 @@ class ShellBar extends UI5Element {
 				press: this._handleSearchIconPress.bind(this),
 				show: !!this.searchField.length,
 			},
+			{
+				icon: this._coPilotIcon,
+				text: this._copilotText,
+				classes: `${this.showCoPilot ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
+				priority: 4,
+				domOrder: this.showCoPilot ? (++domOrder) : -1,
+				styles: {
+					order: this.showCoPilot ? 1 : -10,
+				},
+				id: `${this.id}-item-coPilot`,
+				press: this._coPilotClick.bind(this),
+				show: !!this.showCoPilot,
+			},
 			...this.items.map((item: ShellBarItem) => {
 				item._getRealDomRef = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 				return {
@@ -1107,6 +1123,9 @@ class ShellBar extends UI5Element {
 				},
 				search: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("search"),
+				},
+				copilot: {
+					"ui5-shellbar-hidden-button": this.isIconHidden(this._coPilotIcon),
 				},
 				overflow: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("overflow"),
