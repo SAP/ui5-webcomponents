@@ -55,6 +55,30 @@
 	color: var(--_ui5_monthpicker_item_selected_text_color);
 }
 
+.ui5-mp-item.ui5-mp-item--selected-between,
+.ui5-mp-item[hovered] {
+	border-radius: var(--_ui5_monthpicker_item_selected_between_border);
+	background: var(--_ui5_monthpicker_item_selected_between_background);
+}
+
+.ui5-mp-item.ui5-mp-item--selected-between .ui5-dp-monthtext,
+.ui5-mp-item[hovered] .ui5-dp-monthtext {
+	border: var(--_ui5_monthpicker_item_select_between_border);
+	border-radius: var(--_ui5_monthpicker_item_border_radius);
+	background-color: var(--_ui5_monthpicker_item_selected_between_text_background);
+	color: var(--sapTextColor);
+	font-weight: var(--_ui5_monthpicker_item_selected_between_text_font);
+}
+
+.ui5-dp-monthtext {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
 .ui5-mp-item.ui5-mp-item--disabled {
 	pointer-events: none;
 	opacity: 0.5;

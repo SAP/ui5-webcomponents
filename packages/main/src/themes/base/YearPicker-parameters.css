@@ -13,4 +13,6 @@
 	--_ui5_yearpicker_item_selected_text_color: var(--sapContent_ContrastTextColor);
 	--_ui5_yearpicker_item_selected_box_shadow: none;
 	--_ui5_yearpicker_item_focus_after_outline: none;
+	--_ui5_yearpicker_item_selected_between_border: 5%;
+	--_ui5_yearpicker_item_selected_between_background: transparent;
 }

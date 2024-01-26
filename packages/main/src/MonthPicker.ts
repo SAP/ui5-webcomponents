@@ -34,7 +34,9 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 
 // Styles
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
+const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const PAGE_SIZE = 12; // total months on a single page
 const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
 
@@ -53,6 +55,7 @@ type Month = {
 type MonthInterval = Array<Array<Month>>;
 
 type MonthPickerChangeEventDetail = {
+	dates: Array<number>,
 	timestamp: number,
 }
 
@@ -80,7 +83,7 @@ type MonthPickerNavigateEventDetail = {
  * Fired when the user selects a month via "Space", "Enter" or click.
  * @public
  */
- @event("change")
+@event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
@@ -102,11 +105,34 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	})
 	selectedDates!: Array<number>;
 
+	/**
+	 * Defines the type of selection used in the day picker component.
+	 * Accepted property values are:<br>
+	 * <ul>
+	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
+	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
+	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
+	 * </ul>
+	 *
+	 * @default "Single"
+	 * @public
+	 */
+	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
+	selectionMode!: `${CalendarSelectionMode}`;
+
 	@property({ type: Object, multiple: true })
 	_months!: MonthInterval;
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden!: boolean;
+
+	/**
+	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
+	 *
+	 * @private
+	 */
+	@property()
+	_secondTimestamp?: number;
 
 	static i18nBundle: I18nBundle;
 
@@ -154,6 +180,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 			});
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth();
 			const isDisabled = this._isOutOfSelectableRange(tempDate, minDate, maxDate);
+			const isSelectedBetween = this._isMonthInsideSelectionRange(timestamp);
 
 			const month: Month = {
 				timestamp: timestamp.toString(),
@@ -169,6 +196,10 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelected) {
 				month.classes += " ui5-mp-item--selected";
+			}
+
+			if (isSelectedBetween) {
+				month.classes += " ui5-mp-item--selected-between";
 			}
 
 			if (isDisabled) {
@@ -190,6 +221,27 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	_getDisplayedSecondaryMonthText(timestamp: number) {
 		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
 		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this.secondaryCalendarType);
+	}
+
+	/**
+	  * Tells if the month is inside a selection range (light blue).
+	  *
+	  * @param timestamp
+	  * @private
+	  */
+	_isMonthInsideSelectionRange(timestamp: number): boolean {
+		// No selection at all (or not in range selection mode)
+		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
+			return false;
+		}
+
+		// Only one date selected - the user is hovering with the mouse or navigating with the keyboard to select the second one
+		if (this.selectedDates.length === 1 && this._secondTimestamp) {
+			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
+		}
+
+		// Two dates selected - stable range
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -247,6 +299,32 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
+	 * During range selection, when the user is navigating with the keyboard,
+	 * the currently focused day is considered the "second day".
+	 *
+	 * @private
+	 */
+	_updateSecondTimestamp() {
+		if (this.selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
+			this._secondTimestamp = this.timestamp;
+		}
+	}
+
+	/**
+	 * Set the hovered day as the "_secondTimestamp".
+	 *
+	 * @param e
+	 * @private
+	 */
+	_onmouseover(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const hoveredItem = target.closest(".ui5-mp-item") as HTMLElement;
+		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
+		}
+	}
+
+	/**
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
 	 * @param amount
@@ -256,6 +334,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "month", preserveDate);
+		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
@@ -274,14 +353,32 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_selectMonth(e: Event) {
 		e.preventDefault();
-
 		const target = e.target as HTMLElement;
 
-		if (target.className.indexOf("ui5-mp-item") > -1) {
-			const timestamp = this._getTimestampFromDom(target);
-			this._safelySetTimestamp(timestamp);
-			this.fireEvent<MonthPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
+		if (target.className.indexOf("ui5-mp-item") === -1) {
+			return;
 		}
+
+		const timestamp = this._getTimestampFromDom(target); // this.timestamp
+		this._safelySetTimestamp(timestamp);
+		this._updateSecondTimestamp();
+
+		if (this.selectionMode === CalendarSelectionMode.Single) {
+			this.selectedDates = [timestamp];
+		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			if (this.selectedDates.length > 0) {
+				// this._multipleSelection(timestamp);
+			} else {
+				// this._toggleTimestampInSelection(timestamp);
+			}
+		} else {
+			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp] as Array<number> : [timestamp] as Array<number>;
+		}
+
+		this.fireEvent<MonthPickerChangeEventDetail>("change", {
+			timestamp: this.timestamp!,
+			dates: this.selectedDates,
+		});
 	}
 
 	/**

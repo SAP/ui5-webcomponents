@@ -4,6 +4,7 @@
 	aria-roledescription="{{roleDescription}}"
 	aria-readonly="false"
 	aria-multiselectable="false"
+	@mouseover={{_onmouseover}}
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
 	@click={{_selectYear}}
@@ -19,7 +20,7 @@
 					role="gridcell"
 					aria-selected="{{this.ariaSelected}}"
 				>
-					<span>
+					<span class="ui5-dp-yeartext">
 						{{this.year}}
 					</span>
 					{{#if this.yearInSecType}}

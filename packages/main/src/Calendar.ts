@@ -475,7 +475,7 @@ class Calendar extends CalendarPart {
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
-			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
 		this._currentPickerDOM._autoFocus = true;
@@ -489,7 +489,7 @@ class Calendar extends CalendarPart {
 		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
-			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
 		this._currentPickerDOM._autoFocus = true;

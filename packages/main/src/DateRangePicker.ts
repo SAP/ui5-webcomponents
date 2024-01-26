@@ -348,13 +348,6 @@ class DateRangePicker extends DatePicker {
 
 		return "";
 	}
-
-	/**
-	 * @override
-	 */
-	get _calendarPickersMode() {
-		return CalendarPickersMode.DAY_MONTH_YEAR;
-	}
 }
 
 DateRangePicker.define();

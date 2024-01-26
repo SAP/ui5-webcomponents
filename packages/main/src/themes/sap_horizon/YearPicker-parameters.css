@@ -12,4 +12,7 @@
 	--_ui5_yearpicker_item_selected_box_shadow: none;
 	--_ui5_yearpicker_item_selected_hover_color: var(--sapList_Hover_Background);
 	--_ui5_yearpicker_item_focus_after_outline: none;
+	--_ui5_yearpicker_item_selected_between_border: 0.5rem;
+	--_ui5_yearpicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_yearpicker_item_selected_between_background: var(--sapList_SelectionBackgroundColor);
 }

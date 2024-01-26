@@ -66,6 +66,30 @@
 	font-weight: bold;
 }
 
+.ui5-yp-item.ui5-yp-item--selected-between,
+.ui5-yp-item[hovered] {
+	border-radius: var(--_ui5_yearpicker_item_selected_between_border);
+	background: var(--_ui5_yearpicker_item_selected_between_background);
+}
+
+.ui5-yp-item.ui5-yp-item--selected-between .ui5-dp-yeartext,
+.ui5-yp-item[hovered] .ui5-dp-yeartext {
+	border: var(--_ui5_yearpicker_item_select_between_border);
+	border-radius: var(--_ui5_yearpicker_item_border_radius);
+	background-color: var(--_ui5_yearpicker_item_selected_between_text_background);
+	color: var(--sapTextColor);
+	font-weight: var(--_ui5_yearpicker_item_selected_between_text_font);
+}
+
+.ui5-dp-yeartext {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
 .ui5-yp-item.ui5-yp-item--disabled {
 	pointer-events: none;
 	opacity: 0.5;

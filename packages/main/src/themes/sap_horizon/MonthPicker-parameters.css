@@ -13,4 +13,8 @@
 	--_ui5_monthpicker_item_selected_box_shadow: none;
 	--_ui5_monthpicker_item_focus_after_outline: 0.125rem  solid var(--sapSelectedColor);
 	--_ui5_monthpicker_item_selected_font_wieght: bold;
+	--_ui5_monthpicker_item_selected_between_border: 0.5rem;
+	--_ui5_monthpicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_monthpicker_item_selected_between_background: var(--sapList_SelectionBackgroundColor);
+	--_ui5_monthpicker_item_selected_between_text_background: transparent;
 }

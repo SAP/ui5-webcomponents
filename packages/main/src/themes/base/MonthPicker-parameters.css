@@ -13,4 +13,6 @@
 	--_ui5_monthpicker_item_selected_box_shadow: none;
 	--_ui5_monthpicker_item_focus_after_outline: none;
 	--_ui5_monthpicker_item_selected_font_wieght: inherit;
+	--_ui5_monthpicker_item_selected_between_border: 5%;
+	--_ui5_monthpicker_item_selected_between_background: transparent;
 }
