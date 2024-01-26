@@ -24,6 +24,8 @@ const getTypeRefs = (ts, node, member) => {
             return type.typeArguments?.length
                 ? type.typeArguments.map((typeRef) => typeRef.typeName?.text)
                 : [type.typeName?.text];
+        } else if (type?.kind === ts.SyntaxKind.ArrayType) {
+            return [type.elementType?.typeName?.text];
         } else if (type?.kind === ts.SyntaxKind.UnionType) {
             return type.types
                 .map((type) => extractTypeRefs(type))
@@ -352,7 +354,7 @@ const displayDocumentationErrors = () => {
 }
 
 const formatArrays = (typeText) => {
-	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+	return typeText?.replaceAll(/(\S+)\[\]/g, "Array<$1>")
 }
 
 export {
