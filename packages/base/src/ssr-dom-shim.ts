@@ -10,4 +10,3 @@ globalThis.Node ??= NodeShim as object as typeof Node;
 
 class FileListShim {}
 globalThis.FileList ??= FileListShim as object as typeof FileList;
-// console.log("shim-node")

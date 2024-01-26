@@ -17,8 +17,8 @@
     "directory": "packages/base"
   },
   "exports": {
-    "./dist/ssr-dom-shim.js": {
-      "browser": "./dist/ssr-dom-shim-browser.js",
+    "./dist/ssr-dom.js": {
+      "browser": "./dist/ssr-dom.js",
       "node": "./dist/ssr-dom-shim.js"
     },
     ".": "./index.js",
