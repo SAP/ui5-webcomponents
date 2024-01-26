@@ -17,6 +17,10 @@
     "directory": "packages/base"
   },
   "exports": {
+    "./dist/ssr-dom-shim.js": {
+      "browser": "./dist/ssr-dom-shim-browser.js",
+      "node": "./dist/ssr-dom-shim.js"
+    },
     ".": "./index.js",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
@@ -35,6 +39,7 @@
     "prepublishOnly": "tsc"
   },
   "dependencies": {
+    "@lit-labs/ssr-dom-shim": "^1.1.2",
     "lit-html": "^2.0.1"
   },
   "devDependencies": {
