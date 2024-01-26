@@ -183,6 +183,11 @@ import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 
+import {
+	getTextAreaSelection,
+	createCopy,
+} from "./input-utils/SelectionUtil.js";
+
 // @ts-ignore
 window.sanitizeHTML = sanitizeHTML;
 // @ts-ignore
@@ -217,6 +222,7 @@ const testAssets = {
 	invisibleMessage: {
 		announce,
 	},
+	getTextAreaSelection,
 	getLocaleData,
 	applyDirection,
 	attachDirectionChange,
