@@ -215,7 +215,7 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_usaNativePopover!: boolean;
+	_useNativePopover!: boolean;
 
 	@property({ type: Boolean })
 	_blockLayerHidden!: boolean;
@@ -256,7 +256,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._usaNativePopover = getUseNativePopovers();
+		this._useNativePopover = getUseNativePopovers();
 
 		if (getUseNativePopovers()) {
 			if (this._getBlockingLayer) {

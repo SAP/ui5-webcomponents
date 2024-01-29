@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 
-:host(:not([_usa-native-popover])) {
+:host(:not([_use-native-popover])) {
     display: none;
 }
 

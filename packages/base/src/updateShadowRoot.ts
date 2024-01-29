@@ -1,4 +1,3 @@
-import { html } from "./renderer/LitRenderer.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import getEffectiveLinksHrefs from "./theming/getEffectiveLinksHrefs.js";
@@ -20,7 +19,7 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 	if (!getUseNativePopovers() && forStaticArea) {
 		renderResult = element.renderStatic(); // this is checked before calling updateShadowRoot
 	} else if (getUseNativePopovers() && ctor._needsStaticArea()) {
-		renderResult = html`${element.render()} ${element.renderStatic()}`; // this is checked before calling updateShadowRoot
+		renderResult = [element.render(), element.renderStatic()]; // this is checked before calling updateShadowRoot
 	} else {
 		renderResult = element.render(); // this is checked before calling updateShadowRoot
 	}
