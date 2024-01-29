@@ -35,7 +35,7 @@
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
-    "test": "wc-dev test && yarn test:ssr",
+    "test": "wc-dev test",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc"
