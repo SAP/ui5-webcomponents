@@ -5,6 +5,8 @@ import { StyleData, StyleDataCSP } from "./types.js";
 import { isSafari } from "./Device.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "./Runtimes.js";
 
+const isSSR = typeof document === "undefined";
+
 const getStyleId = (name: string, value: string) => {
 	return value ? `${name}|${value}` : name;
 };
@@ -106,6 +108,9 @@ const updateStyle = (data: StyleData, name: string, value = "", theme?: string) 
 };
 
 const hasStyle = (name: string, value = ""): boolean => {
+	if (isSSR) {
+		return true;
+	}
 	if (shouldUseLinks()) {
 		return !!document.querySelector(`head>link[${name}="${value}"]`);
 	}
