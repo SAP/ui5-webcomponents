@@ -241,7 +241,7 @@ function processClass(ts, classNode, moduleDoc) {
 			if (member.return) {
 				const returnTag = findTag(memberParsedJsDoc, "returns");
 				member.return.description = returnTag?.description ? `${returnTag.name} ${returnTag.description}` : returnTag?.name;
-				member.return.type.text = classNodeMember?.type?.getFullText?.()?.trim();
+				member.return.type.text = formatArrays(classNodeMember?.type?.getFullText?.()?.trim());
 				const typeRefs = (getTypeRefs(ts, classNodeMember, member.return)
 					?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
