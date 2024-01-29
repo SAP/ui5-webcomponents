@@ -72,17 +72,8 @@ const customResolver = (id, source, options) => {
 	}
 
 	// base package
-	if (id.startsWith("@ui5/webcomponents-base/dist")) {
-		if (id.endsWith("ssr-dom.js")) {
-			const resolved = join("packages/base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
-			console.log("HERE HERE 1", resolved)
-			return resolved;
-		}
-		if (id.endsWith("ssr-dom-shim.js")) {
-			const resolved = join("packages/base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
-			console.log("HERE HERE 2", resolved)
-			return resolved;
-		}
+	if (id.startsWith("@ui5/webcomponents-base/dist") && (id.endsWith("ssr-dom.js") || id.endsWith("ssr-dom-shim.js"))) {
+		return join("packages/base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
 	}
 
 	
