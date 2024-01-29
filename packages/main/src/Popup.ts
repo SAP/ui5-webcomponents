@@ -589,8 +589,6 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	_show() {
-		this.isConnected && this.showPopover();
-
 		if (getUseNativePopovers()) {
 			this.isConnected && this.showPopover();
 		} else {
