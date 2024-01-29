@@ -41,7 +41,6 @@
 	box-sizing: border-box;
 }
 
-/* focused */
 :host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;
 }
