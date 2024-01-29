@@ -65,16 +65,34 @@ describe("Component Behavior", () => {
 	});
 
 	describe("ui5-shellbar menu", () => {
+		it("tests prevents close on content click", async () => {
+			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
+			const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
+			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
+			const checkBox = await browser.$("#checkKeepPopoverOpen");
+
+			await checkBox.setProperty("checked", true);
+
+			await primaryTitle.click();
+			await firstMenuItem.click();
+
+			assert.strictEqual(await menuPopover.getProperty("opened"), true, "Popover remains open");
+		});
+
 		it("tests close on content click", async () => {
 			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 			const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
+			const checkBox = await browser.$("#checkKeepPopoverOpen");
+
+			await checkBox.setProperty("checked", false);
 
 			await primaryTitle.click();
 			await firstMenuItem.click();
 
-			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
+			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Popover is closed");
 		});
 	});
 
@@ -433,9 +451,10 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
 
-				await shellBar.setProperty('showSearchField', true);
-				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
-				await shellBar.setProperty('showSearchField', false); // Clean Up
+			it("tests if searchfield is in the middle", async () => {
+				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-container-middle").shadow$("slot[name=searchField]");
+
+				assert.ok(await searchField.isExisting(), "Search slot is inside middle container");
 			});
 		});
 
@@ -466,7 +485,7 @@ describe("Component Behavior", () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
-				const notificationListItem = await overflowPopover.$("ui5-list ui5-li:nth-child(4)");
+				const notificationListItem = await overflowPopover.$("ui5-list ui5-li:nth-child(5)");
 				const input = await browser.$("#press-input");
 
 				await overflowButton.click();
@@ -488,7 +507,7 @@ describe("Component Behavior", () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
-				const productSwitchIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(5)");
+				const productSwitchIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(6)");
 				const input = await browser.$("#press-input");
 
 				await overflowButton.click();
@@ -554,7 +573,7 @@ describe("Component Behavior", () => {
 				const popover = await getOverflowPopover("shellbar");
 				const items = await popover.$$("ui5-li");
 
-				psButtonText = await [...items][4].getText();
+				psButtonText = await [...items][5].getText();
 
 				assert.strictEqual(psButtonText, await shellBar.getProperty("_productsText"), "Product switch button text is translated in overflow popover");
 

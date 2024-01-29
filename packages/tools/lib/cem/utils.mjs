@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-let JSDocErrors = [];
+let documentationErrors = new Map();
 
 const getDeprecatedStatus = (jsdocComment) => {
     const deprecatedTag = findTag(jsdocComment, "deprecated");
@@ -18,18 +18,20 @@ const normalizeDescription = (description) => {
 	return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, ""): description;
 }
 
-const getTypeRefs = (ts, classNodeMember, member) => {
+const getTypeRefs = (ts, node, member) => {
     const extractTypeRefs = (type) => {
         if (type?.kind === ts.SyntaxKind.TypeReference) {
             return type.typeArguments?.length
                 ? type.typeArguments.map((typeRef) => typeRef.typeName?.text)
                 : [type.typeName?.text];
+        } else if (type?.kind === ts.SyntaxKind.ArrayType) {
+            return [type.elementType?.typeName?.text];
         } else if (type?.kind === ts.SyntaxKind.UnionType) {
             return type.types
                 .map((type) => extractTypeRefs(type))
                 .flat(1);
         } else if (type?.kind === ts.SyntaxKind.TemplateLiteralType) {
-            if (member.type) {
+            if (member?.type) {
                 member.type.text = member.type.text.replaceAll?.(/`|\${|}/g, "");
             }
 
@@ -39,7 +41,7 @@ const getTypeRefs = (ts, classNodeMember, member) => {
         }
     };
 
-    let typeRefs = extractTypeRefs(classNodeMember.type);
+    let typeRefs = extractTypeRefs(node.type) || node?.typeArguments?.map(n => extractTypeRefs(n)).flat(2);
 
     if (typeRefs) {
         typeRefs = typeRefs.filter((e) => !!e);
@@ -62,7 +64,7 @@ const getPrivacyStatus = (jsdocComment) => {
     return privacyTag?.tag || "private";
 };
 
-const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
+const findPackageName = (ts, sourceFile, typeName) => {
     const localStatements = [
         ts.SyntaxKind.EnumDeclaration,
         ts.SyntaxKind.InterfaceDeclaration,
@@ -102,7 +104,7 @@ const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
     }
 };
 
-const findImportPath = (ts, sourceFile, typeName, packageJSON, modulePath) => {
+const findImportPath = (ts, sourceFile, typeName, modulePath) => {
     const localStatements = [
         ts.SyntaxKind.EnumDeclaration,
         ts.SyntaxKind.InterfaceDeclaration,
@@ -158,6 +160,8 @@ const normalizeTagType = (type) => {
 	return type?.trim();
 }
 
+const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
+
 const getReference = (ts, type, classNode, modulePath) => {
     let sourceFile = classNode.parent;
 
@@ -165,22 +169,19 @@ const getReference = (ts, type, classNode, modulePath) => {
         sourceFile = sourceFile.parent;
     }
 
-    const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
-
     const typeName =
         typeof type === "string"
             ? normalizeTagType(type)
             : type.class?.expression?.text ||
             type.typeExpression?.type?.getText() ||
             type.typeExpression?.type?.elementType?.typeName?.text;
-    const packageName = findPackageName(ts, sourceFile, typeName, packageJSON);
+    const packageName = findPackageName(ts, sourceFile, typeName);
     const importPath = findImportPath(
         ts,
         sourceFile,
         typeName,
-        packageJSON,
         modulePath
-    );
+    )?.replace(`${packageName}/`, "");
 
     return packageName && {
         name: typeName,
@@ -317,21 +318,43 @@ const validateJSDocComment = (fieldType, jsdocComment, node, moduleDoc) => {
         }
 
         if (!isValid) {
-            JSDocErrors.push(
-                `=== ERROR: Problem found with ${node}'s JSDoc comment in ${moduleDoc.path}: \n\t- @${tag.tag} tag is being used wrong or it's not part of ${fieldType} JSDoc tags`
-            );
+            logDocumentationError(moduleDoc.path, `Incorrect use of @${tag.tag}. Ensure it is part of ${fieldType} JSDoc tags.`)
         }
 
         return !!isValid;
     });
 };
 
-const getJSDocErrors = () => {
-    return JSDocErrors;
-};
+const logDocumentationError = (modulePath, message) => {
+    let moduleErrors = documentationErrors.get(modulePath);
+
+    if (!moduleErrors) {
+        documentationErrors.set(modulePath, []);
+        moduleErrors = documentationErrors.get(modulePath);
+    }
+
+    moduleErrors.push(message);
+}
+
+const displayDocumentationErrors = () => {
+    let errorsCount = 0;
+    [...documentationErrors.keys()].forEach(modulePath => {
+        const moduleErrors = documentationErrors.get(modulePath);
+
+        console.log(`=== ERROR: ${moduleErrors.length > 1 ? `${moduleErrors.length} problems` :  "Problem"} found in file: ${modulePath}:`)
+        moduleErrors.forEach(moduleError => {
+            errorsCount++;
+            console.log(`\t- ${moduleError}`)
+        })
+    })
+
+    if(errorsCount) {
+        throw new Error(`Found ${errorsCount} errors in the description of the public API.`);
+    }
+}
 
 const formatArrays = (typeText) => {
-	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+	return typeText?.replaceAll(/(\S+)\[\]/g, "Array<$1>")
 }
 
 export {
@@ -346,10 +369,11 @@ export {
     hasTag,
     findTag,
     findAllTags,
-    getJSDocErrors,
     getTypeRefs,
     normalizeDescription,
     formatArrays,
     isClass,
-    normalizeTagType
+    normalizeTagType,
+    displayDocumentationErrors,
+    logDocumentationError,
 };

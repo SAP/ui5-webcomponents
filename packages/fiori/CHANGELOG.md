@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** allow overstyling of width and border-radius ([#8081](https://github.com/SAP/ui5-webcomponents/issues/8081)) ([392f118](https://github.com/SAP/ui5-webcomponents/commit/392f11815b5e85d22949b4008f0a95c64e16d694))
+* **ui5-side-navigation:** correct text placement on items without icon ([#8154](https://github.com/SAP/ui5-webcomponents/issues/8154)) ([6bb45a9](https://github.com/SAP/ui5-webcomponents/commit/6bb45a94e5e52fc64fe8b816d1135e97ef6d85f3)), closes [#8131](https://github.com/SAP/ui5-webcomponents/issues/8131)
+
+
+### Features
+
+* **ui5-side-navigation:** display full item in collapsed mode on hover and focus ([#8112](https://github.com/SAP/ui5-webcomponents/issues/8112)) ([e0be298](https://github.com/SAP/ui5-webcomponents/commit/e0be29821a50d6c01f25d671565d0af4863e3d1e))
+
+
+
+
+
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** logo aligned with visual specification ([#8109](https://github.com/SAP/ui5-webcomponents/issues/8109)) ([4430869](https://github.com/SAP/ui5-webcomponents/commit/443086969a3d09b02fe0807366089dcf5e042c45)), closes [#8058](https://github.com/SAP/ui5-webcomponents/issues/8058)
+
+
+### Features
+
+* **illustration:** use illustration name as default module export ([#8074](https://github.com/SAP/ui5-webcomponents/issues/8074)) ([a9c0705](https://github.com/SAP/ui5-webcomponents/commit/a9c07055d4e06e4d1f69b7a2a48b36eb77fae4aa))
+* **ui5-illustrated-message:** add subtitle css part ([#8088](https://github.com/SAP/ui5-webcomponents/issues/8088)) ([351e570](https://github.com/SAP/ui5-webcomponents/commit/351e57042b25be66c2b47d72a89afd890dda063e))
+
+
+
+
+
 # [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
 
 

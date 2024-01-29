@@ -40,7 +40,8 @@ describe("Date Picker Tests", () => {
 		await setDateButton.click();
 
 		const innerInput = await datepicker.getInnerInput();
-		assert.equal(await innerInput.getValue(), "11 декември 2018 г.");
+		// \u202f is Narrow No-Break Space, coming with latest CLDR updates
+		assert.equal(await innerInput.getValue(), "11 декември 2018\u202fг.");
 	});
 
 	it("custom formatting", async () => {
@@ -1329,5 +1330,19 @@ describe("Date Picker Tests", () => {
 
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2025 is not disabled");
+	});
+
+	it("Value state is not changed, when value-state-change is prevented", async () => {
+		datepicker.id = "#dpVsChangePrevented";
+
+		const input = await datepicker.getInput();
+
+		const valueState = await input.getProperty("valueState");
+		await input.click();
+		await browser.keys("Jan 29, 2019");
+
+		await browser.$("#dpVsChangePrevented").shadow$("ui5-input").shadow$("input").click(); // click elsewhere to focusout
+
+		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
 	});
 });

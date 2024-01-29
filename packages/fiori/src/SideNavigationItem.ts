@@ -159,6 +159,30 @@ class SideNavigationItem extends SideNavigationItemBase {
 
 		super._onclick(e);
 	}
+
+	_onfocusout = () => {
+		if (!this.sideNavigation?.collapsed) {
+			return;
+		}
+
+		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+	}
+
+	_onmouseenter = () => {
+		if (!this.sideNavigation?.collapsed) {
+			return;
+		}
+
+		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+	}
+
+	_onmouseleave = () => {
+		if (!this.sideNavigation?.collapsed || !this._selected) {
+			return;
+		}
+
+		this.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
+	}
 }
 
 SideNavigationItem.define();

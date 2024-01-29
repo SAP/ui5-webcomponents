@@ -4,13 +4,15 @@ import {
 	getDeprecatedStatus,
 	getSinceStatus,
 	getType,
+	getTypeRefs,
 	validateJSDocComment,
 	hasTag,
 	findTag,
 	findAllTags,
 	getReference,
 	normalizeDescription,
-	normalizeTagType
+	normalizeTagType,
+	logDocumentationError
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
@@ -54,8 +56,9 @@ const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 };
 
 function processEvent(ts, event, classNode, moduleDoc) {
+	const name = event?.expression?.arguments?.[0]?.text;
 	const result = {
-		name: event?.expression?.arguments?.[0]?.text,
+		name,
 		_ui5privacy: "private",
 		type: { text: "CustomEvent" }
 	};
@@ -68,7 +71,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 
 	const eventParsedComment = parse(comment, { spacing: 'preserve' })[0];
 
-	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text, moduleDoc);
+	validateJSDocComment("event", eventParsedComment, name, moduleDoc);
 
 	const deprecatedTag = findTag(eventParsedComment, "deprecated");
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
@@ -79,11 +82,25 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 
+	if (event?.expression?.arguments?.[1] && !event?.expression?.typeArguments) {
+		logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described using generics. Add type via generics to the decorator: @event<TypeForDetails>("${name}", {details}).`)
+	}
+
 	result.description = description;
 	result._ui5allowPreventDefault = allowPreventDefault;
 
 	if (native) {
 		result.type = { text: "Event" };
+	} else if (event?.expression?.typeArguments) {
+		const typesText = event?.expression?.typeArguments.map(type => type.typeName?.text).filter(Boolean).join(" | ");
+		const typeRefs = (getTypeRefs(ts, event.expression)
+			?.map(e => getReference(ts, e, event, moduleDoc.path)).filter(Boolean)) || [];
+
+		result.type = { text: `CustomEvent<${typesText}>` };
+
+		if (typeRefs.length) {
+			result.type.references = typeRefs;
+		}
 	}
 
 	if (privacy) {

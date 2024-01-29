@@ -32,21 +32,21 @@ describe("Toolbar general interaction", () => {
 		assert.strictEqual(accessibleNameRef, "title", "Select accessible name ref is correct");
 	});
 
-	// // Events
+	// Events
 
-	// it.only("Should fire change event on selection change", async () => {
-	// 	const toolbar = await browser.$("ui5-toolbar");
-	// 	const select = await toolbar.shadow$("ui5-select");
-	// 	const selectResult = await browser.$("input[placeholder='Changed']");
+	it("Should fire change event on selection change", async () => {
+		const toolbar = await browser.$("ui5-toolbar");
+		const select = await toolbar.shadow$("ui5-select");
+		const selectResult = await browser.$("input[placeholder='Changed']");
 
-	// 	await select.click();
-	// 	await select.keys("ArrowDown");
-	// 	await select.keys("Enter");
+		await select.click();
+		await select.keys("ArrowUp");
+		await select.keys("Enter");
 
-	// 	const selectResultText = await selectResult.getValue();
+		const selectResultText = await selectResult.getValue();
 
-	// 	assert.strictEqual(selectResultText, "1", "Select change event is fired correctly");
-	// });
+		assert.strictEqual(selectResultText, "1", "Select change event is fired correctly");
+	});
 
 	// Popover
 

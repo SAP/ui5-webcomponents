@@ -61,6 +61,12 @@
 		data-sap-focus-ref
 	/>
 
+	{{#if _effectiveShowClearIcon}}
+		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper" input-icon tabindex="-1" @mousedown={{_iconMouseDown}}>
+			<ui5-icon tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
+		</div>
+	{{/if}}
+
 	{{#if icon}}
 		<slot name="icon"></slot>
 	{{/if}}

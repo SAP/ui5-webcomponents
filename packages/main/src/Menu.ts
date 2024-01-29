@@ -116,7 +116,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @param { string } text The text of the currently clicked menu item.
  * @public
  */
-@event("item-click", {
+@event<MenuItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public
@@ -143,7 +143,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @since 1.10.0
  * @param { HTMLElement } item The <code>ui5-menu-item</code> that triggers opening of the sub-menu or undefined when fired upon root menu opening. <b>Note:</b> available since 1.14.0.
  */
-@event("before-open", {
+@event<MenuBeforeOpenEventDetail>("before-open", {
 	detail: {
 		/**
 		 * @public
@@ -170,7 +170,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
  * @since 1.10.0
  */
-@event("before-close", {
+@event<MenuBeforeCloseEventDetail>("before-close", {
 	detail: {
 		/**
 		 * @public

@@ -449,6 +449,31 @@ z-index: 1;
 	<span id="createAndRemoveResult" style="display: none;"></span>
 	<br>
 	<br>
+
+	<ui5-button id="btn-footer-position">Open ResponsivePopover with Footer and Content</ui5-button>
+	<ui5-responsive-popover style="height: 500px;" id="popover-footer-position">
+		<div>Content</div>
+		<div slot="footer">Footer</div>
+	</ui5-responsive-popover>
+	<ui5-button id="btn2-footer-position">Open Popover with Footer and Content</ui5-button>
+	<ui5-popover style="height: 500px;" id="popover2-footer-position">
+		<div>Content</div>
+		<div slot="footer" style="height: 2.75rem;">Footer</div>
+	</ui5-popover>
+	<ui5-button id="btn3-footer-position">Open Popover with Header and Content</ui5-button>
+	<ui5-popover style="height: 500px;" id="popover3-footer-position">
+		<div slot="header">Header</div>
+		<div>Content</div>
+	</ui5-popover>
+	<ui5-button id="btn4-footer-position">Open Popover with Header, Footer and Content</ui5-button>
+	<ui5-popover style="height: 500px;" id="popover4-footer-position">
+		<div slot="header">Header</div>
+		<div>Content</div>
+		<div slot="footer">Footer</div>
+	</ui5-popover>
+	<br>
+	<br>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -668,6 +693,22 @@ z-index: 1;
 
 		openPopoverInsideContainingBlockButton.addEventListener("click", function () {
 			popoverInsideContainingBlock.showAt(openPopoverInsideContainingBlockButton);
+		});
+
+		document.getElementById("btn-footer-position").addEventListener("click", (e) => {
+		document.getElementById("popover-footer-position").showAt(e.currentTarget);
+		});
+
+		document.getElementById("btn2-footer-position").addEventListener("click", (e) => {
+		document.getElementById("popover2-footer-position").showAt(e.currentTarget);
+		});
+
+		document.getElementById("btn3-footer-position").addEventListener("click", (e) => {
+		document.getElementById("popover3-footer-position").showAt(e.currentTarget);
+		});
+
+		document.getElementById("btn4-footer-position").addEventListener("click", (e) => {
+		document.getElementById("popover4-footer-position").showAt(e.currentTarget);
 		});
 
 	</script>
