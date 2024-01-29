@@ -1237,18 +1237,6 @@ class TabContainer extends UI5Element {
 		return this._getEndOverflow().querySelector<Button>("[ui5-button]");
 	}
 
-	// _onHeaderDragEnter(e: DragEvent) {
-	// 	// console.log(e.type, e)
-	// }
-
-	// _onHeaderDragLeave(e: DragEvent) {
-	// 	// console.log(e.type, e)
-	// }
-
-	// _onHeaderDragEnd(e: DragEvent) {
-	// 	// console.log(e.type, e)
-	// }
-
 	get dropIndicatorDOM(): DropIndicator {
 		return this.shadowRoot!.querySelector("[ui5-drop-indicator]")!;
 	}
@@ -1436,6 +1424,7 @@ class TabContainer extends UI5Element {
 	_onHeaderDragEndOrLeave() {
 		// reset drop indicator
 		this.dropIndicatorDOM.target = "";
+		this.dropIndicatorDOM.hide();
 	}
 
 	_setPopoverItems(items: Array<ITab>) {

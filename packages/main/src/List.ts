@@ -1194,6 +1194,7 @@ class List extends UI5Element {
 	_ondragendorleave() {
 		// this doesn't get rerendered when a list is in a popover, maybe similar to issue #7681
 		this.dropIndicatorDOM.target = "";
+		this.dropIndicatorDOM.hide();
 	}
 
 	_ondragenter(e: DragEvent) {
