@@ -36,6 +36,8 @@
 	<ui5-date-picker id="dp13"></ui5-date-picker>
 	<ui5-date-picker id="dp16" format-pattern="long"></ui5-date-picker>
 	<ui5-date-picker value="Invalid value" id="dp20"></ui5-date-picker>
+	<h3> DatePicker value-state-change event prevented </h3>
+	<ui5-date-picker id="dpVsChangePrevented" value-state="Error"></ui5-date-picker>
 	<ui5-button id="b1" design="Default">Set date</ui5-button>
 
 
@@ -101,6 +103,12 @@
 
 		document.getElementById('b1').addEventListener("click", function(e) {
 			dp16.setAttribute("value", dp16.formatValue(new Date(2018, 11, 11)));
+		});
+
+		const datePickerValueStateChangePrevented = document.getElementById("dpVsChangePrevented");
+
+		datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
 		});
 	</script>
 </body>

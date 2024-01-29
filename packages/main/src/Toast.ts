@@ -20,6 +20,7 @@ const MAX_DURATION = 1000;
 const openedToasts: Array<Toast> = [];
 let opener: HTMLElement | null;
 
+let globalListenerAdded = false;
 const handleGlobalKeydown = (e: KeyboardEvent) => {
 	const isCtrl = e.metaKey || (!isMac() && e.ctrlKey);
 	const isMKey = e.key.toLowerCase() === "m";
@@ -42,8 +43,6 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
 		}
 	}
 };
-
-document.addEventListener("keydown", handleGlobalKeydown);
 
 /**
  * @class
@@ -179,6 +178,11 @@ class Toast extends UI5Element {
 		this.style.transitionDelay = this.open ? `${this.effectiveDuration - transitionDuration}ms` : "";
 		this.style.opacity = this.open && !this.hover && !this.focused ? "0" : "";
 		this.style.zIndex = `${getNextZIndex()}`;
+
+		if (!globalListenerAdded) {
+			document.addEventListener("keydown", handleGlobalKeydown);
+			globalListenerAdded = true;
+		}
 	}
 
 	onAfterRendering() {

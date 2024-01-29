@@ -99,15 +99,9 @@ type TableRowF7PressEventDetail = {
 class TableRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the visual indication and behavior of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Active</code></li>
-	 * <li><code>Inactive</code></li>
-	 * </ul>
-	 * <br><br>
+	 *
 	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
-	 * while with type <code>Inactive</code> - will not.
+	 * while with type <code>Inactive</code>-will not.
 	 *
 	 * @default "Inactive"
 	 * @since 1.0.0-rc.15

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-let JSDocErrors = [];
+let documentationErrors = new Map();
 
 const getDeprecatedStatus = (jsdocComment) => {
     const deprecatedTag = findTag(jsdocComment, "deprecated");
@@ -24,6 +24,8 @@ const getTypeRefs = (ts, node, member) => {
             return type.typeArguments?.length
                 ? type.typeArguments.map((typeRef) => typeRef.typeName?.text)
                 : [type.typeName?.text];
+        } else if (type?.kind === ts.SyntaxKind.ArrayType) {
+            return [type.elementType?.typeName?.text];
         } else if (type?.kind === ts.SyntaxKind.UnionType) {
             return type.types
                 .map((type) => extractTypeRefs(type))
@@ -316,21 +318,43 @@ const validateJSDocComment = (fieldType, jsdocComment, node, moduleDoc) => {
         }
 
         if (!isValid) {
-            JSDocErrors.push(
-                `=== ERROR: Problem found with ${node}'s JSDoc comment in ${moduleDoc.path}: \n\t- @${tag.tag} tag is being used wrong or it's not part of ${fieldType} JSDoc tags`
-            );
+            logDocumentationError(moduleDoc.path, `Incorrect use of @${tag.tag}. Ensure it is part of ${fieldType} JSDoc tags.`)
         }
 
         return !!isValid;
     });
 };
 
-const getJSDocErrors = () => {
-    return JSDocErrors;
-};
+const logDocumentationError = (modulePath, message) => {
+    let moduleErrors = documentationErrors.get(modulePath);
+
+    if (!moduleErrors) {
+        documentationErrors.set(modulePath, []);
+        moduleErrors = documentationErrors.get(modulePath);
+    }
+
+    moduleErrors.push(message);
+}
+
+const displayDocumentationErrors = () => {
+    let errorsCount = 0;
+    [...documentationErrors.keys()].forEach(modulePath => {
+        const moduleErrors = documentationErrors.get(modulePath);
+
+        console.log(`=== ERROR: ${moduleErrors.length > 1 ? `${moduleErrors.length} problems` :  "Problem"} found in file: ${modulePath}:`)
+        moduleErrors.forEach(moduleError => {
+            errorsCount++;
+            console.log(`\t- ${moduleError}`)
+        })
+    })
+
+    if(errorsCount) {
+        throw new Error(`Found ${errorsCount} errors in the description of the public API.`);
+    }
+}
 
 const formatArrays = (typeText) => {
-	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+	return typeText?.replaceAll(/(\S+)\[\]/g, "Array<$1>")
 }
 
 export {
@@ -345,10 +369,11 @@ export {
     hasTag,
     findTag,
     findAllTags,
-    getJSDocErrors,
     getTypeRefs,
     normalizeDescription,
     formatArrays,
     isClass,
-    normalizeTagType
+    normalizeTagType,
+    displayDocumentationErrors,
+    logDocumentationError,
 };

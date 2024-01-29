@@ -474,4 +474,5 @@ export type {
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
 	TreeSelectionChangeEventDetail,
+	WalkCallback,
 };

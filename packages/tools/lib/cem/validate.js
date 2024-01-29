@@ -60,8 +60,6 @@ if (validate(inputDataExternal)) {
     console.log('Custom element manifest is validated successfully');
     fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
     fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
-} else {
-    if (argv.dev) {
-        throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
+} else if (argv.dev) {
+    throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
     }
-}

@@ -602,6 +602,7 @@ export interface PropertyLike {
 }
 
 export interface ClassField extends PropertyLike {
+  _ui5noAttribute?: boolean;
   _ui5validator?: string
   _ui5formProperty?: boolean
   _ui5formEvents?: string

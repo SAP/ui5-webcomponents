@@ -153,8 +153,6 @@ class Panel extends UI5Element {
 	/**
 	 * Defines the "aria-level" of component heading,
 	 * set by the <code>headerText</code>.
-	 * <br><br>
-	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 	 *
 	 * @default "H2"
 	 * @public

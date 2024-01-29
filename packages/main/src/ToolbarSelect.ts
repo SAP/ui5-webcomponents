@@ -150,9 +150,9 @@ class ToolbarSelect extends ToolbarItem {
 		const map = new Map();
 
 		map.set("click", { preventClosing: true });
-		map.set("change", { preventClosing: false });
-		map.set("open", { preventClosing: true });
-		map.set("close", { preventClosing: true });
+		map.set("ui5-change", { preventClosing: false });
+		map.set("ui5-open", { preventClosing: true });
+		map.set("ui5-close", { preventClosing: true });
 
 		return map;
 	}
@@ -184,7 +184,7 @@ class ToolbarSelect extends ToolbarItem {
 	}
 
 	_onEventHandler(e: Event): void {
-		if (e.type === "change") {
+		if (e.type === "ui5-change") {
 			// update options
 			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
 			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
