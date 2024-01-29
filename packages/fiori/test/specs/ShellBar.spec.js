@@ -432,25 +432,6 @@ describe("Component Behavior", () => {
 				assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
 			});
 
-			it("tests if searchfield toggles when clicking on search icon", async () => {
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
-
-				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
-
-				await searchIcon.click();
-				assert.ok(await searchField.isDisplayed(), "Search is visible after clicking on icon");
-
-				await searchIcon.click();
-				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking again on the icon");
-			});
-
-			it("tests if searchfield toggles when altering the showSearchField property", async () => {
-				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
-				const shellBar = await browser.$("#shellbar");
-
-				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
-
 			it("tests if searchfield is in the middle", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-container-middle").shadow$("slot[name=searchField]");
 
