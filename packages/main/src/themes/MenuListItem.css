@@ -1,0 +1,20 @@
+:host(.ui5-menu-item[disabled]) {
+	pointer-events: initial;
+}
+
+/* selected and active */
+:host(.ui5-menu-item[active][actionable]) {
+	background: var(--ui5-listitem-background-color);
+}
+
+/* active */
+:host(.ui5-menu-item[active][actionable]) .ui5-li-root .ui5-li-icon {
+	color: var(--sapList_TextColor);
+}
+
+/* [ui5-li]: title, description, additionalTextState */
+:host(.ui5-menu-item[active][actionable]) .ui5-li-title,
+:host(.ui5-menu-item[active][actionable]) .ui5-li-desc,
+:host(.ui5-menu-item[active][actionable]) .ui5-li-additional-text {
+	color: var(--sapList_TextColor);;
+}

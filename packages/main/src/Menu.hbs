@@ -58,7 +58,7 @@
 			@mouseover="{{_busyMouseOver}}"
 		>
 		{{#each _currentItems}}
-			<ui5-li
+			<ui5-li-menu
 				.associatedItem="{{this.item}}"
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
@@ -101,7 +101,7 @@
 					</div>
 				{{/if}}
 				</div>
-			</ui5-li>
+			</ui5-li-menu>
 		{{/each}}
 		</ui5-list>
 	{{else if busy}}

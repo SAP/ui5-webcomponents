@@ -24,7 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import MenuListItem from "./MenuListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
@@ -55,7 +55,7 @@ type MenuItemClickEventDetail = {
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
-type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
+type OpenerStandardListItem = MenuListItem & { associatedItem: MenuItem };
 
 /**
  * @class
@@ -100,7 +100,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		ResponsivePopover,
 		Button,
 		List,
-		StandardListItem,
+		MenuListItem,
 		Icon,
 		BusyIndicator,
 	],
