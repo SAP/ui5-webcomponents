@@ -25,7 +25,7 @@
     "generateAPI": "nps generateAPI",
     "build": "wc-dev build",
     "bundle": "nps build.bundle",
-    "test": "wc-dev test",
+    "test": "wc-dev test && yarn test:ssr",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "test:suite-1": "wc-dev test-suite-1",
     "test:suite-2": "wc-dev test-suite-2",
@@ -57,6 +57,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.22.0-rc.2",
-    "chromedriver": "119.0.1"
+    "chromedriver": "120.0.0"
   }
 }
