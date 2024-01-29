@@ -295,6 +295,30 @@ class TextArea extends UI5Element implements IFormElement {
 	_width?: number;
 
 	/**
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_selectionStartX?: number;
+
+	/**
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_selectionStartY?: number;
+
+	/**
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_selectionEndX?: number;
+
+	/**
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_selectionEndY?: number;
+
+	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
 	 * <br><br>
@@ -344,10 +368,16 @@ class TextArea extends UI5Element implements IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._fnOnResize);
+		const nativeTextArea = this.getInputDomRef()!;
+		nativeTextArea.addEventListener("mousedown", e => this._onmousedown(e), { passive: true });
+		nativeTextArea.addEventListener("mouseup", e => this._onmouseup(e), { passive: true });
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._fnOnResize);
+		const nativeTextArea = this.getInputDomRef()!;
+		nativeTextArea.removeEventListener("mousedown", e => this._onmousedown(e));
+		nativeTextArea.removeEventListener("mouseup", e => this._onmouseup(e));
 	}
 
 	onBeforeRendering() {
@@ -426,7 +456,19 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onselect(e: any) {
 		const direction: string = e && e.currentTarget ? e.currentTarget.selectionDirection : "none";
-		this.fireEvent("selection-finished", { direction });
+		const start: any = { x: this._selectionStartX, y: this._selectionStartY };
+		const end: any = { x: this._selectionEndX, y: this._selectionEndY };
+		this.fireEvent("selection-finished", { rect: { start, end }, direction });
+	}
+
+	_onmousedown(e: MouseEvent) {
+		this._selectionStartX = e.pageX;
+		this._selectionStartY = e.pageY;
+	}
+
+	_onmouseup(e: MouseEvent) {
+		this._selectionEndX = e.pageX;
+		this._selectionEndY = e.pageY;
 	}
 
 	_oninput(e: InputEvent) {

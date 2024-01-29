@@ -125,6 +125,8 @@ const getDirection = () => {
 */
 
 type Selection = {
+	selectionStart: number,
+	selectionEnd: number,
     startX: number;
     startY: number;
     endX: number;
@@ -133,7 +135,8 @@ type Selection = {
 	direction: string
 }
 
-const getTextAreaSelection = (textArea: UI5Element, direction: string): Selection => {
+// const getTextAreaSelection = (textArea: UI5Element, direction: string, rect: any): Selection => {
+const getTextAreaSelection = (e: any, textArea: UI5Element): Selection => {
 	const innerElement = textArea.shadowRoot!.querySelector("textarea");
 
 	if (!innerElement) {
@@ -142,15 +145,17 @@ const getTextAreaSelection = (textArea: UI5Element, direction: string): Selectio
 
 	const { selectionStart, selectionEnd } = innerElement;
 
-	const selectionRange = document.getSelection()!;
+	const { rect, direction } = e.detail;
 
 	return {
-		startX: selectionStart,
-		startY: 0,
-		endX: selectionEnd,
-		endY: 0,
-		text: getSelectedText(innerElement),
+		selectionStart,
+		selectionEnd,
 		direction,
+		startX: rect.start.x,
+		startY: rect.start.y - innerElement.scrollTop,
+		endX: rect.end.x,
+		endY: rect.end.y - innerElement.scrollTop,
+		text: getSelectedText(innerElement),
 	};
 };
 
