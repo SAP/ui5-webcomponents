@@ -289,7 +289,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 
-@event("search-button-click", {
+@event<ShellBarSearchButtonEventDetail>("search-button-click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 		isVisible: { type: Boolean },
