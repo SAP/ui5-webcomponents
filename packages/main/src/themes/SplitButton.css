@@ -32,7 +32,7 @@
 
 :host([active-arrow-button][design="Emphasized"]) .ui5-split-arrow-button,
 :host([design="Emphasized"]) .ui5-split-arrow-button[active] {
-	background-color: var(--sapButton_Selected_Background);
+	background-color: var(--sapButton_Emphasized_Active_Background);
 	border: 0.0625rem solid var(--sapButton_Emphasized_Active_BorderColor);
 }
 
@@ -41,7 +41,7 @@
 :host([design="Transparent"]) .ui5-split-arrow-button[active],
 :host([design="Default"]) .ui5-split-arrow-button[active],
 .ui5-split-arrow-button[active], .ui5-split-arrow-button[active]:hover {
-	background-color: var(--sapButton_Selected_Background);
+	background-color: var(--sapButton_Active_Background);
 	border: 0.0625rem solid var(--sapButton_Lite_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 }
@@ -317,7 +317,7 @@
 
 .ui5-split-text-button[active][design="Emphasized"] {
 	color: var(--sapButton_Emphasized_Active_TextColor);
-	background-color: var(--sapButton_Selected_Background);
+	background-color: var(--sapButton_Emphasized_Active_Background);
 }
 
 :host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button,
