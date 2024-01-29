@@ -396,6 +396,24 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await inputData.getValue(), "key2", "The user defined attributes are available.");
 			});
 
+			it("tests search-button-click event", async () => {
+				const searchButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-button");
+				const input = await browser.$("#press-input");
+
+				await searchButton.click();
+				assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
+			});
+
+			it("tests preventDefault of search-button-click event", async () => {
+				const searchButton = await browser.$("#sb").shadow$(".ui5-shellbar-button");
+				const searchField = await browser.$("#sb").shadow$(".ui5-shellbar-search-field");
+
+				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
+
+				await searchButton.click();
+				assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
+			});
+
 			it("tests if searchfield toggles when clicking on search icon", async () => {
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");

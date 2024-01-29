@@ -95,6 +95,11 @@ type ShellBarMenuItemClickEventDetail = {
 	item: HTMLElement;
 };
 
+type ShellBarSearchButtonEventDetail = {
+	targetRef: HTMLElement;
+	isVisible: boolean;
+};
+
 type ShellBarCoPilot = {
 	animated?: boolean,
 	animationValues?: string,
@@ -271,6 +276,23 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 * @public
 		 */
 		item: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when the search button is activated.
+ * <b>Note:</b> You can prevent expanding/collapsing of the search field by calling <code>event.preventDefault()</code>.
+ *
+ * @allowPreventDefault
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @param {Boolean} isVisible whether the search field is visible
+ * @public
+ */
+
+@event("search-button-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+		isVisible: { type: Boolean },
 	},
 })
 
@@ -791,6 +813,16 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSearchIconPress() {
+		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button")!;
+		const bDefaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+			targetRef: searchButtonRef,
+			isVisible: this.showSearchField,
+		}, true);
+
+		if (bDefaultPrevented) {
+			return;
+		}
+
 		this.showSearchField = !this.showSearchField;
 
 		if (!this.showSearchField) {
@@ -1304,4 +1336,5 @@ export type {
 	ShellBarLogoClickEventDetail,
 	ShellBarCoPilotClickEventDetail,
 	ShellBarMenuItemClickEventDetail,
+	ShellBarSearchButtonEventDetail,
 };
