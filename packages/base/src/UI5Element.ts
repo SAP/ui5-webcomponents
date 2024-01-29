@@ -29,6 +29,7 @@ import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import { getUseNativePopovers } from "./config/NativePopover.js";
 
 let autoId = 0;
 
@@ -218,7 +219,7 @@ abstract class UI5Element extends HTMLElement {
 			this._fullyConnected = false;
 		}
 
-		if (this.staticAreaItem && this.staticAreaItem.parentElement) {
+		if (!getUseNativePopovers() && this.staticAreaItem && this.staticAreaItem.parentElement) {
 			this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
 		}
 
@@ -706,7 +707,7 @@ abstract class UI5Element extends HTMLElement {
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
-		if (this.staticAreaItem) {
+		if (!getUseNativePopovers() && this.staticAreaItem) {
 			this.staticAreaItem.update();
 		}
 
@@ -931,6 +932,10 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
+		if (getUseNativePopovers()) {
+			return Promise.resolve(this.shadowRoot);
+		}
+
 		if (!(this.constructor as typeof UI5Element)._needsStaticArea()) {
 			throw new Error("This component does not use the static area");
 		}

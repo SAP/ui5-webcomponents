@@ -63,6 +63,7 @@ import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base
 import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { setUseNativePopovers, getUseNativePopovers } from "@ui5/webcomponents-base/dist/config/NativePopover.js";
 import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
@@ -183,6 +184,8 @@ import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 
+// setUseNativePopovers(true); // "true" forces all popups to be placed directly inside the component's shadow root.
+
 // @ts-ignore
 window.sanitizeHTML = sanitizeHTML;
 // @ts-ignore
@@ -213,6 +216,8 @@ const testAssets = {
 		getFirstDayOfWeek,
 		getTimezone,
 		setTimezone,
+		getUseNativePopovers,
+		setUseNativePopovers,
 	},
 	invisibleMessage: {
 		announce,

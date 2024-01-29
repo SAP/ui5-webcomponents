@@ -1,13 +1,18 @@
 import { getUrl } from "../CSP.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import type UI5Element from "../UI5Element.js";
+import { getUseNativePopovers } from "../config/NativePopover.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import type { ComponentStylesData, StyleDataCSP } from "../types.js";
 
 const MAX_DEPTH_INHERITED_CLASSES = 10; // TypeScript complains about Infinity and big numbers
 
 const getEffectiveLinksHrefs = (ElementClass: typeof UI5Element, forStaticArea = false) => {
-	const stylesData: ComponentStylesData = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
+	let stylesData: ComponentStylesData = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
+
+	if (getUseNativePopovers() && ElementClass._needsStaticArea()) {
+		stylesData = [stylesData, ElementClass.staticAreaStyles].flat(MAX_DEPTH_INHERITED_CLASSES);
+	}
 
 	if (!stylesData) {
 		return;

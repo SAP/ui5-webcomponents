@@ -3,6 +3,7 @@ import getStylesString from "./getStylesString.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import type UI5Element from "../UI5Element.js";
 import OpenUI5Enablement from "../features/OpenUI5Enablement.js";
+import { getUseNativePopovers } from "../config/NativePopover.js";
 
 const effectiveStyleMap = new Map<string, string>();
 
@@ -27,7 +28,12 @@ const getEffectiveStyle = (ElementClass: typeof UI5Element, forStaticArea = fals
 			effectiveStyle = getStylesString(ElementClass.staticAreaStyles);
 		} else {
 			const customStyle = getCustomCSS(tag) || "";
-			const builtInStyles = getStylesString(ElementClass.styles);
+			let builtInStyles = getStylesString(ElementClass.styles);
+
+			if (getUseNativePopovers() && ElementClass._needsStaticArea()) {
+				builtInStyles += getStylesString(ElementClass.staticAreaStyles);
+			}
+
 			effectiveStyle = `${builtInStyles} ${customStyle}`;
 		}
 

@@ -102,6 +102,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,

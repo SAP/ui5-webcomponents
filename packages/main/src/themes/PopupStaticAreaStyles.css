@@ -1,16 +1,26 @@
 .ui5-block-layer {
-	display: none;
 	position: fixed;
 	background-color: var(--_ui5_popup_block_layer_background);
 	top: -500px;
 	left: -500px;
 	right: -500px;
+	width: auto;
+	height: auto;
 	bottom: -500px;
 	outline: none;
 	pointer-events: all;
+}
+
+:host(:not([_usa-native-popover])) .ui5-block-layer {
+	display: none;
 	z-index: -1;
 }
 
-.ui5-block-layer:not([hidden]) {
+:host([_usa-native-popover]) .ui5-block-layer {
+	width: auto;
+	height: auto;
+}
+
+:host(:not([_usa-native-popover])) .ui5-block-layer:not([hidden]) {
 	display: inline-block;
 }

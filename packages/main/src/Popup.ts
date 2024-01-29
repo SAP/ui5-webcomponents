@@ -4,6 +4,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import { getUseNativePopovers } from "@ui5/webcomponents-base/dist/config/NativePopover.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
@@ -210,6 +211,12 @@ abstract class Popup extends UI5Element {
 	@property({ type: Boolean })
 	_disableInitialFocus!: boolean;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_usaNativePopover!: boolean;
+
 	@property({ type: Boolean })
 	_blockLayerHidden!: boolean;
 
@@ -240,10 +247,28 @@ abstract class Popup extends UI5Element {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
+
+		if (getUseNativePopovers()) {
+			this._getRealDomRef = () => {
+				return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
+			};
+		}
 	}
 
 	onBeforeRendering() {
-		this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
+		this._usaNativePopover = getUseNativePopovers();
+
+		if (getUseNativePopovers()) {
+			if (this._getBlockingLayer) {
+				if (!this.isOpen() || !this.isTopModalPopup) {
+					this._getBlockingLayer.hidePopover();
+				} else if (!this.shouldHideBackdrop) {
+					this._getBlockingLayer.showPopover();
+				}
+			}
+		} else {
+			this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
+		}
 	}
 
 	onAfterRendering() {
@@ -251,6 +276,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (getUseNativePopovers()) {
+			this.setAttribute("popover", "manual");
+		}
 		ResizeHandler.register(this, this._resizeHandler);
 	}
 
@@ -434,6 +462,10 @@ abstract class Popup extends UI5Element {
 		return isFocusedElementWithinNode(this._root);
 	}
 
+	get _getBlockingLayer() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-block-layer")!;
+	}
+
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
@@ -446,13 +478,19 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
-			this.getStaticAreaItemDomRef();
+			if (getUseNativePopovers()) {
+				this._getBlockingLayer.showPopover();
+			} else {
+				this.getStaticAreaItemDomRef();
+			}
 			this._blockLayerHidden = false;
 			Popup.blockPageScrolling(this);
 		}
 
-		this._zIndex = getNextZIndex();
-		this.style.zIndex = this._zIndex?.toString() || "";
+		if (!getUseNativePopovers()) {
+			this._zIndex = getNextZIndex();
+			this.style.zIndex = this._zIndex?.toString() || "";
+		}
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 
@@ -504,6 +542,9 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
+			if (getUseNativePopovers()) {
+				this._getBlockingLayer.hidePopover();
+			}
 			Popup.unblockPageScrolling(this);
 		}
 
@@ -548,7 +589,13 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	_show() {
-		this.style.display = this._displayProp;
+		this.isConnected && this.showPopover();
+
+		if (getUseNativePopovers()) {
+			this.isConnected && this.showPopover();
+		} else {
+			this.style.display = this._displayProp;
+		}
 	}
 
 	/**
@@ -556,7 +603,11 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	hide() {
-		this.style.display = "none";
+		if (getUseNativePopovers()) {
+			this.isConnected && this.hidePopover();
+		} else {
+			this.style.display = "none";
+		}
 	}
 
 	/**
@@ -609,7 +660,7 @@ abstract class Popup extends UI5Element {
 			root: {},
 			content: {},
 			blockLayer: {
-				"zIndex": this._zIndex ? this._zIndex - 1 : "",
+				"zIndex": !getUseNativePopovers() && this._zIndex ? this._zIndex - 1 : "",
 			},
 		};
 	}

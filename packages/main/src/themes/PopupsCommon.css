@@ -1,10 +1,13 @@
 :host {
-    display: none;
     position: fixed;
     background: var(--sapGroup_ContentBackground);
     border-radius: var(--_ui5_popup_border_radius);
     min-height: 2rem;
     box-sizing: border-box;
+}
+
+:host(:not([_usa-native-popover])) {
+    display: none;
 }
 
 .ui5-popup-root {

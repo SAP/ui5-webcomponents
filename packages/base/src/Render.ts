@@ -147,7 +147,7 @@ const _resolveTaskPromise = () => {
  * @param {object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
  * @returns {Promise<void>}
  */
-const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolean, languageAware?: boolean, themeAware?: boolean}) => {
+const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolean, languageAware?: boolean, themeAware?: boolean, staticAreaAware?: boolean}) => {
 	registeredElements.forEach((element: UI5Element) => {
 		const ctor = element.constructor as typeof UI5Element;
 		const tag = ctor.getMetadata().getTag();

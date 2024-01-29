@@ -1,6 +1,7 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { getUseNativePopovers } from "@ui5/webcomponents-base/dist/config/NativePopover.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
@@ -88,6 +89,7 @@ type CalculatedPlacement = {
 @customElement({
 	tag: "ui5-popover",
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		PopoverCss,
@@ -433,9 +435,12 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
-		const containingBlockClientLocation = this._getContainingBlockClientLocation();
-		left -= containingBlockClientLocation.left;
-		top -= containingBlockClientLocation.top;
+
+		if (!getUseNativePopovers()) {
+			const containingBlockClientLocation = this._getContainingBlockClientLocation();
+			left -= containingBlockClientLocation.left;
+			top -= containingBlockClientLocation.top;
+		}
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -487,11 +492,20 @@ class Popover extends Popup {
 	}
 
 	_showOutsideViewport() {
-		Object.assign(this.style, {
-			display: this._displayProp,
-			top: "-10000px",
-			left: "-10000px",
-		});
+		if (getUseNativePopovers()) {
+			this.isConnected && this.showPopover();
+
+			Object.assign(this.style, {
+				top: "-10000px",
+				left: "-10000px",
+			});
+		} else {
+			Object.assign(this.style, {
+				display: this._displayProp,
+				top: "-10000px",
+				left: "-10000px",
+			});
+		}
 	}
 
 	get arrowDOM() {
