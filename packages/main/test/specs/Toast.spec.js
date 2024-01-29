@@ -205,7 +205,7 @@ describe("Customisation", async () => {
 		await browser.url(`test/pages/Toast.html`);
 	});
 
-	it.only ("should check sizes to the toast", async () => {
+	it("should check sizes to the toast", async () => {
 		const btn = await $("#wcBtnShowToastStyled");
 		const styledToast = await $("#wcToastStyled")
 
