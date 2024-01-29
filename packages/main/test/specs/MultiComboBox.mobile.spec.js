@@ -13,7 +13,7 @@ describe("Basic interaction", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$('input').click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("input");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input");
 		assert.ok(await dialogInput.isDisplayed(), "Input is displayed");
 
 		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
@@ -61,7 +61,7 @@ describe("Basic interaction", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("input");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input");
 		assert.strictEqual(await dialogInput.getAttribute("placeholder"), await multiCombo.getAttribute("placeholder"), "Correct placeholder shown");
 
 		const dialogCloseButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
@@ -95,6 +95,18 @@ describe("Basic interaction", () => {
 		const dialogCloseButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 		await dialogCloseButton.click();
 	});
+
+	it("Should set clear icon to dialog's input", async () => {
+		const cb = await $("#clear-icon-cb");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#clear-icon-cb");
+
+		await cb.shadow$("input").click();
+
+		const resPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const dialogInput = await resPopover.$("[ui5-input]");
+
+		assert.ok(await dialogInput.getProperty("showClearIcon"), "Clear icon should be propagated to internal ui5-input")
+	});
 });
 
 describe("Typeahead", () => {
@@ -111,12 +123,12 @@ describe("Typeahead", () => {
 
 		await mcbInput.click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input").shadow$("input");
 
 		await dialogInput.click();
 		await dialogInput.keys("c");
 
-		assert.strictEqual(await mcb.getProperty("value"), sExpected, "Value is autocompleted");
+		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
 	});
 
 	it("Should not perform typeahead when it is disabled", async () => {
@@ -128,7 +140,7 @@ describe("Typeahead", () => {
 
 		await mcbInput.click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input").shadow$("input");
 
 		await dialogInput.click();
 		await dialogInput.keys("c");
@@ -147,7 +159,7 @@ describe("Typeahead", () => {
 
 		await mcbInput.click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input").shadow$("input");
 
 		await dialogInput.click();
 		await dialogInput.keys("c");
@@ -281,7 +293,7 @@ describe("Value state header", () => {
 		const dialogStateHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-valuestatemessage-header");
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input");
 		assert.strictEqual(await dialogInput.getAttribute("value-state"), "Error", "Inner input's value state is correct");
 	});
 });
@@ -383,14 +395,42 @@ describe("Validation", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$("ui5-icon").click();
 
-		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
-		await dialogInput.click();
-		await dialogInput.keys("m");
+		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input")
+		await dialogInput.shadow$("input").click();
+		await dialogInput.shadow$("input").keys("m");
 
 		const dialogStateHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-valuestatemessage-header");
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 		assert.strictEqual(await dialogInput.getAttribute("value-state"), "Error", "Inner input's value state is correct");
-		assert.strictEqual(await dialogInput.getValue(), "com", "Additional input was not allowed");
+		assert.strictEqual(await dialogInput.getValue(), "comm", "Additional input is allowed, but value state is error");
+	});
+
+});
+
+describe("Accessibility", () => {
+	before(async () => {
+		await browser.url("test/pages/MultiComboBox.html");
+		await browser.emulateDevice('iPhone X');
+	});
+
+	it("Show selected toggle button should has accessibleName attribute", async () => {
+		const multiCombo = await browser.$("#multi1");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+		let resourceBundleText = null;
+
+		await multiCombo.scrollIntoView();
+		await multiCombo.shadow$('input').click();
+
+		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+
+		resourceBundleText = await browser.executeAsync(done => {
+			const mcb = document.getElementById("multi1");
+			done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SHOW_SELECTED_BUTTON));
+		});
+		
+		assert.ok(await toggleSelectedButton.isDisplayed(), "Toggle selected items button is displayed");
+		assert.strictEqual(await toggleSelectedButton.getAttribute("accessible-name"), "Show Selected Items Only", "Correct value is applied")
+		
 	});
 
 });

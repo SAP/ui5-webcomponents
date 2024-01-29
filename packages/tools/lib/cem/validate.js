@@ -1,6 +1,10 @@
 const fs = require('fs');
 const Ajv = require('ajv');
 const path = require('path');
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+const argv = yargs(hideBin(process.argv))
+	.argv;
 
 // Load your JSON schema
 const extenalSchema = require('./schema.json');
@@ -36,28 +40,28 @@ const clearProps = (data) => {
     return data;
 }
 
-const inputDataExternal = clearProps(JSON.parse(JSON.stringify(inputDataInternal)));
-
 const ajv = new Ajv({ allowUnionTypes: true, allError: true })
-
 let validate = ajv.compile(internalSchema)
 
 // Validate the JSON data against the schema
-if (validate(inputDataInternal)) {
-    console.log('Validation internal custom-elements successful');
-} else {
-    console.error('Validation of internal custom-elements failed');
-    // console.error('Validation of internal custom-elements failed:', validate.errors);
+if (argv.dev) {
+    if (validate(inputDataInternal)) {
+        console.log('Internal custom  element manifest is validated successfully');
+    } else {
+        throw new Error(`Validation of internal custom elements manifest failed: ${validate.errors}`);
+    }
 }
 
+const inputDataExternal = clearProps(JSON.parse(JSON.stringify(inputDataInternal)));
 validate = ajv.compile(extenalSchema)
 
 // Validate the JSON data against the schema
 if (validate(inputDataExternal)) {
-    console.log('Validation external custom-elements successful');
+    console.log('Custom element manifest is validated successfully');
     fs.writeFileSync(inputFilePath, JSON.stringify(inputDataExternal, null, 2), 'utf8');
     fs.writeFileSync(inputFilePath.replace("custom-elements", "custom-elements-internal"), JSON.stringify(inputDataInternal, null, 2), 'utf8');
 } else {
-    console.error('Validation of external custom-elements failed:');
-    // console.error('Validation of external custom-elements failed:', ajv.errorsText(validate.errors));
+    if (argv.dev) {
+        throw new Error(`Validation of public custom elements manifest failed: ${validate.errors}`);
+    }
 }

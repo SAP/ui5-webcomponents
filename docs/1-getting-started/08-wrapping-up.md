@@ -60,9 +60,9 @@ npm install @ui5/webcomponents-icons
 
  5) Test the assets.
 
-  Try running the test page with the following URL parameters: `sap-ui-theme=sap_belize_hcb&sap-ui-language=de`
+  Try running the test page with the following URL parameters: `sap-ui-theme=sap_horizon_hcb&sap-ui-language=de`
 
-  [http://localhost:3000/?sap-ui-theme=sap_belize_hcb&sap-ui-language=de](http://localhost:3000/?sap-ui-theme=sap_belize_hcb&sap-ui-language=de)
+  [http://localhost:3000/?sap-ui-theme=sap_horizon_hcb&sap-ui-language=de](http://localhost:3000/?sap-ui-theme=sap_horizon_hcb&sap-ui-language=de)
   
   You should be able to see the page with an accessibility theme, and in German language.
   

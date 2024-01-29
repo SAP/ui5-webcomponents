@@ -90,6 +90,20 @@ describe("MultiInput general interaction", () => {
 		assert.notOk(await allTokens[1].getProperty("overflows"), "Token should not overflow");
 	});
 
+	it ("adds multiple tokens to multi input", async () => {
+		const mi = await browser.$("#no-tokens2");
+		const btn = await browser.$("#add-multiple-tokens");
+
+		await btn.click();
+
+		assert.strictEqual((await mi.$$("ui5-token")).length, 2, "should have 2 tokens");
+
+		let allTokens = await mi.$$("ui5-token");
+
+		assert.notOk(await allTokens[0].getProperty("overflows"), "Token 1 should not overflow");
+		assert.notOk(await allTokens[1].getProperty("overflows"), "Token 2 should not overflow");
+	});
+
 	it ("adds an overflowing token to multi input", async () => {
 		const mi = await browser.$("#multiple-token");
 		const btn = await browser.$("#add-to-multiple");

@@ -89,7 +89,7 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
-@event("change", {
+@event<TimePickerBaseChangeEventDetail>("change", {
 	detail: {
 		/**
 		 * @public
@@ -113,7 +113,7 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
-@event("input", {
+@event<TimePickerBaseInputEventDetail>("input", {
 	detail: {
 		/**
 		 * @public

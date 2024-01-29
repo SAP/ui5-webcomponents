@@ -121,10 +121,7 @@ enum ClipboardDataOperation {
 	},
 })
 
-@event("before-more-popover-open", {
-	detail: {},
-})
-
+@event("before-more-popover-open")
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;
@@ -199,7 +196,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._nMoreCount = this.overflownTokens.length;
 		this._tokensCount = this._getTokens().length;
 
 		this._tokens.forEach(token => {
@@ -271,6 +267,8 @@ class Tokenizer extends UI5Element {
 	}
 
 	async onAfterRendering() {
+		this._nMoreCount = this.overflownTokens.length;
+
 		if (!this._getTokens().length) {
 			const popover = await this.getPopover();
 			popover.close();
@@ -627,6 +625,10 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
+		if (!this._nMoreCount) {
+			return;
+		}
+
 		if (this._getVisibleTokens().length) {
 			return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
 		}
