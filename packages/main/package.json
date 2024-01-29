@@ -26,7 +26,8 @@
     "build": "wc-dev build",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
-    "test:suite-1": "wc-dev test-suite-1",
+    "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
+    "test:suite-1": "wc-dev test-suite-1 && yarn test:ssr",
     "test:suite-2": "wc-dev test-suite-2",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc"

@@ -63,6 +63,9 @@ const customResolver = (id, source, options) => {
 			if (resolved.endsWith("dist/sap/base/util/LoaderExtensions.js")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
+			if (resolved.endsWith("dist/sap/base/util/ObjectPath.js")) {
+				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
+			}
 			return resolved;
 		}
 	}
