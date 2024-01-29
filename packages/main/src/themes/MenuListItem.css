@@ -16,5 +16,5 @@
 :host(.ui5-menu-item[active][actionable]) .ui5-li-title,
 :host(.ui5-menu-item[active][actionable]) .ui5-li-desc,
 :host(.ui5-menu-item[active][actionable]) .ui5-li-additional-text {
-	color: var(--sapList_TextColor);;
+	color: var(--sapList_TextColor);
 }

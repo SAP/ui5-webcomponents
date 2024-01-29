@@ -9,7 +9,7 @@ import menuListItemCss from "./generated/themes/MenuListItem.css.js";
  * @class
  *
  * @constructor
- * @extends ListItemBase
+ * @extends StandardListItem
  * @since 1.21.3
  * @private
  */
