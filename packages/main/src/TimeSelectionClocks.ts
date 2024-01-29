@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
@@ -31,6 +32,11 @@ import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionCloc
 
 // Styles
 import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.js";
+
+/**
+ * Fired when the picker is being closed.
+ */
+@event("close-picker")
 
 /**
  * @class
