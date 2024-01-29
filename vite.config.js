@@ -71,9 +71,10 @@ const customResolver = (id, source, options) => {
 		
 	}
 
-	// base package
-	if (id.startsWith("@ui5/webcomponents-base/dist") && (id.endsWith("ssr-dom.js") || id.endsWith("ssr-dom-shim.js"))) {
-		return join("packages/base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
+	// The `base/package.json` has exports that resolves the absolute import to "dist/ssr-dom.js".
+	// However, in development, the file is not present in `dist`. Instead, load `ssr-dom.ts` from `src`.
+	if (id === "@ui5/webcomponents-base/dist/ssr-dom.js") {
+		return join("packages/base/src/ssr-dom.ts");
 	}
 
 	
