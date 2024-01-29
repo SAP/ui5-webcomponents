@@ -77,7 +77,7 @@ type TabContainerTabReorderEventDetail = {
 	},
 	destination: {
 		element: HTMLElement;
-		index?: number;
+		index: number;
 		dropPlacement: DropPlacement;
 		slot: string;
 	}
@@ -197,6 +197,8 @@ interface TabContainerTabInOverflow extends CustomListItem {
 		},
 		destination: {
 			element: { type: HTMLElement },
+			index: { type: Number },
+			dropPlacement: { type: DropPlacement },
 		},
 	},
 })
@@ -1410,36 +1412,12 @@ class TabContainer extends UI5Element {
 	_onReorderItemsInPopover(e: CustomEvent<ListItemsReorderEventDetail>) {
 		const { source, destination } = e.detail;
 		const droppedTab = (source.element as unknown as Tab)._realTab; // TODO: store _realTab reference as custom data
-		const destinationItemIndex = destination.index;
-		const listItem = destination.element.children[destinationItemIndex] as Tab;
-		let dropIn;
-		let targetTabIndex;
-		let dropPlacement = destination.dropPlacement;
+		const listItem = destination.element.children[destination.index] as Tab;
+		const targetTabIndex = Array.from(listItem._realTab.parentElement!.children).indexOf(listItem._realTab);
 		let targetSlot = "";
 
-		if (destination.dropPlacement === DropPlacement.On) {
-			dropIn = listItem._realTab;
+		if (listItem._realTab !== this._getRootTab(listItem._realTab) || destination.dropPlacement === DropPlacement.On) {
 			targetSlot = "subTabs";
-		} else if (listItem._realTab !== this._getRootTab(listItem._realTab)) { // nesting
-			dropIn = listItem._realTab;
-
-			// TODO: fine tune
-			if (dropPlacement === DropPlacement.Before) {
-				dropIn = listItem._realTab.parentElement! as Tab;
-			}
-
-			const nestedListItem = <ITab> destination.element.children[destination.dropPlacement === DropPlacement.After ? destinationItemIndex + 1 : destinationItemIndex];
-			targetTabIndex = dropIn.subTabs.indexOf((nestedListItem as unknown as Tab)._realTab);
-			targetSlot = "subTabs";
-		} else {
-			const rootTab = this._getRootTab(listItem._realTab);
-			targetTabIndex = this.items.indexOf(rootTab);
-
-			if (listItem._realTab !== rootTab) {
-				dropPlacement = DropPlacement.After;
-			}
-
-			targetSlot = "";
 		}
 
 		this.fireEvent<TabContainerTabReorderEventDetail>("tab-reorder", {
@@ -1447,9 +1425,9 @@ class TabContainer extends UI5Element {
 				element: droppedTab,
 			},
 			destination: {
-				element: dropIn || this,
+				element: listItem._realTab.parentElement!,
 				index: targetTabIndex,
-				dropPlacement,
+				dropPlacement: destination.dropPlacement,
 				slot: targetSlot,
 			},
 		});

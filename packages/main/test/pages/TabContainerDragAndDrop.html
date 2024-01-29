@@ -18,11 +18,11 @@
 	<section>
 		<h2>Drag and drop</h2>
 		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs max-nesting-level="1">
-			<ui5-tab design="Positive" text="One"></ui5-tab>
-			<ui5-tab design="Negative" text="Two" disabled>
+			<ui5-tab id="tabOne" design="Positive" text="One"></ui5-tab>
+			<ui5-tab id="tabTwo" design="Negative" text="Two" disabled>
 				<ui5-tab slot="subTabs" text="2.1"></ui5-tab>
 			</ui5-tab>
-			<ui5-tab design="Critical" text="Three">
+			<ui5-tab id="tabThree" design="Critical" text="Three">
 				<ui5-tab slot="subTabs" design="Positive" text="3.1">
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
@@ -31,20 +31,20 @@
 			</ui5-tab>
 			<ui5-tab id="tabFour" text="Four (forbids nesting)"></ui5-tab>
 
-			<ui5-tab text="Five">
+			<ui5-tab id="tabFive" text="Five">
 				<ui5-tab slot="subTabs" text="nested in Five">
 					<ui5-tab slot="subTabs" text="nested deeper in Five">text</ui5-tab>
 					text
 				</ui5-tab>
 			</ui5-tab>
 
-			<ui5-tab text="Six"></ui5-tab>
-			<ui5-tab text="Seven"></ui5-tab>
+			<ui5-tab id="tabSix" text="Six"></ui5-tab>
+			<ui5-tab id="tabSeven" text="Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab design="Positive" text="Eight"></ui5-tab>
-			<ui5-tab design="Negative" text="Nine"></ui5-tab>
-			<ui5-tab design="Critical" text="Ten"></ui5-tab>
-			<ui5-tab text="Eleven"></ui5-tab>
+			<ui5-tab id="tabEight" design="Positive" text="Eight"></ui5-tab>
+			<ui5-tab id="tabNine" design="Negative" text="Nine"></ui5-tab>
+			<ui5-tab id="tabTen" design="Critical" text="Ten"></ui5-tab>
+			<ui5-tab id="tabEleven" text="Eleven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
 			<ui5-tab text="Twelve"></ui5-tab>
 			<ui5-tab text="Thirteen" selected></ui5-tab>
@@ -105,11 +105,13 @@
 					insertAfterElement
 				);
 			} else if (destination.dropPlacement === "On") {
-				destination.element.prepend(source.element);
+				destination.element.children[destination.index].prepend(source.element);
+				console.error(`Dropped "${source.element.id} in ${destination.element.id} on index ${destination.index}"`);
 			}
 
 			source.element.slot = destination.slot;
 
+			// TODO: discuss how to focus
 			setTimeout(() => {
 				source.element.getFocusDomRef().focus();
 			});
