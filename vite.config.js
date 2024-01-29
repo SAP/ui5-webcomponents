@@ -68,8 +68,24 @@ const customResolver = (id, source, options) => {
 			}
 			return resolved;
 		}
+		
 	}
 
+	// base package
+	if (id.startsWith("@ui5/webcomponents-base/dist")) {
+		if (id.endsWith("ssr-dom.js")) {
+			const resolved = join("packages/base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
+			console.log("HERE HERE 1", resolved)
+			return resolved;
+		}
+		if (id.endsWith("ssr-dom-shim.js")) {
+			const resolved = join("packages/base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
+			console.log("HERE HERE 2", resolved)
+			return resolved;
+		}
+	}
+
+	
 	// relative imports from fiori src that are to a folder starting with `illustrations` are in dist
 	if (source.includes("fiori/src/") && id.includes("/illustrations") && !id.includes("AllIllustrations") && id.startsWith(".")) {
 		let absoluteId = resolve(dirname(source), id);
