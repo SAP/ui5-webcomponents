@@ -1,10 +1,6 @@
 .shellBar::part(root) {
     padding-inline-start: 0.75rem;
     padding-inline-end: 1.25rem;
-    border-radius: 0.5rem;
-    box-shadow:
-        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
-        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
 }
 
 .toolLayout {
@@ -16,17 +12,19 @@
     grid-template-columns: auto 1fr;
 }
 
-.toolLayout > * {
-    z-index: 1;
-}
-
-.shellBar {
+.header {
     grid-column: 1 / span 2;
     grid-row: 1 / 2;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
 }
 
-.sideNavigation {
-    border-radius: 0.5rem 0.5rem 0 0.5rem;
+.sideBar {
+    border-radius: 0.5rem 0.5rem 0 0;
+    overflow: hidden;
 }
 
 .content {
