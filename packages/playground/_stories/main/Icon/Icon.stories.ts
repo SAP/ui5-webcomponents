@@ -2,25 +2,15 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type Icon from "@ui5/webcomponents/dist/Icon.js";
 import IconDesign from "@ui5/webcomponents/dist/types/IconDesign.js";
-
-const component = "ui5-icon";
 
 export default {
 	title: "Main/Icon",
 	component: "Icon",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component }),
-		},
-	},
 	argTypes,
 } as Meta<Icon>;
 

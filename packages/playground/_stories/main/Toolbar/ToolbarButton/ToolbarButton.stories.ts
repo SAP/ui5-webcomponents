@@ -5,23 +5,14 @@ import type { Meta } from "@storybook/web-components";
 
 import type ToolbarButton from "@ui5/webcomponents/dist/ToolbarButton.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs.js";
-
-const component = "ui5-toolbar-button";
 
 export default {
 	title: "Main/Toolbar/Toolbar Button",
 	component: "ToolbarButton",
 	argTypes,
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 } as Meta<ToolbarButton>;
 
 const Template: UI5StoryArgs<ToolbarButton, StoryArgsSlots> = (args) => {

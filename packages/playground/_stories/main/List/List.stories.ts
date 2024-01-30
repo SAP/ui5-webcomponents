@@ -7,22 +7,12 @@ import type List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
-const component = "ui5-list";
-
 export default {
   title: "Main/List",
   component: "List",
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component })
-    },
-  },
   argTypes,
 } as Meta<List>;
 
