@@ -115,6 +115,9 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;
 
+	@property({ type: Boolean })
+	_externalLink!: boolean;
+
 	get _tooltip() {
 		return this.title || this.text;
 	}
@@ -163,6 +166,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		}
 
 		return this._tabIndex;
+	}
+
+	get _isExternalLink() {
+		return this.href && this._target === "_blank";
 	}
 
 	get sideNavigation() : SideNavigation | undefined {

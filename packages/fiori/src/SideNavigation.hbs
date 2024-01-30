@@ -73,12 +73,18 @@
 		   title="{{_tooltip}}"
 		   href="{{_href}}"
 		   target="{{_target}}"
+		   externalLink="{{_isExternalLink}}"
 		>
 			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
 			<div class="ui5-sn-item-text">{{text}}</div>
 			{{#if items.length}}
 				<ui5-icon class="ui5-sn-item-toggle-icon"
 						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
+			{{#if _isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
 				></ui5-icon>
 			{{/if}}
 		</a>
@@ -106,6 +112,11 @@
 						  name="navigation-right-arrow"
 				></ui5-icon>
 			{{/if}}
+			{{#if _isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
+				></ui5-icon>
+			{{/if}}
 		</div>
 	{{/if}}
 {{/inline}}
@@ -127,6 +138,7 @@
 			   aria-owns="{{_groupId}}"
 			   href="{{_href}}"
 			   target="{{_target}}"
+			   externalLink="{{_isExternalLink}}"
 			>
 				{{#if icon}}
 					<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
@@ -135,11 +147,10 @@
 				<ui5-icon class="ui5-sn-item-selection-icon"
 						  name="circle-task-2"
 				></ui5-icon>
-				{{#if items.length}}
-					<ui5-icon class="ui5-sn-item-toggle-icon"
-							  name="{{_toggleIconName}}"
-							  @click="{{_onToggleClick}}"
-					></ui5-icon>
+				{{#if _isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
+				></ui5-icon>
 				{{/if}}
 			</a>
 		{{else}}
@@ -167,6 +178,11 @@
 					<ui5-icon class="ui5-sn-item-toggle-icon"
 							  name="{{_toggleIconName}}"
 							  @click="{{_onToggleClick}}"
+					></ui5-icon>
+				{{/if}}
+				{{#if _isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
 					></ui5-icon>
 				{{/if}}
 			</div>
@@ -200,6 +216,11 @@
 								<ui5-icon class="ui5-sn-item-selection-icon"
 										  name="circle-task-2"
 								></ui5-icon>
+								{{#if _isExternalLink}}
+								<ui5-icon class="ui5-sn-item-external-link-icon"
+							 			  name="arrow-right"
+								></ui5-icon>
+								{{/if}}
 							</a>
 						{{else}}
 							<div class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
@@ -248,5 +269,5 @@
 				>
 				</ui5-icon>
 				<div class="ui5-sn-item-text">{{overflowAccessibleName}}</div>
-			</div>	
+			</div>
 {{/inline}}
