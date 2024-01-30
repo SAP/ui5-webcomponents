@@ -180,6 +180,11 @@ enum IllustrationMessageType {
 	 */
 	SearchFolder = "SearchFolder",
 	/**
+	 * "Sign Out" illustration type.
+	 * @public
+	 */
+	SignOut = "SignOut",
+	/**
 	 * "Simple Balloon" illustration type.
 	 * @public
 	 */
