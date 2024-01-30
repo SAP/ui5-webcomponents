@@ -817,7 +817,7 @@ describe("Table keyboard interaction", async () => {
 		assert.strictEqual(await thirdRow.getProperty("selected"), false, "The third row is unselected");
 	});
 
-	it.only("CTRL + HOME/END", async () => {
+	it("CTRL + HOME/END", async () => {
 		await browser.url(`test/pages/TableSelection.html`);
 
 		const table = await browser.$("#multi");
