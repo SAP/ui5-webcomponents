@@ -4,23 +4,15 @@ import type { Meta } from "@storybook/web-components";
 
 import type SelectMenu from "@ui5/webcomponents/dist/SelectMenu.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs";
-
-const component = "ui5-select-menu";
 
 export default {
   title: "Main/Select/Select Menu",
   component: "SelectMenu",
   argTypes,
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-    },
-  },
+  
 } as Meta<SelectMenu>;
 
 const Template: UI5StoryArgs<SelectMenu, StoryArgsSlots> = (args) => {

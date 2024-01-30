@@ -5,23 +5,14 @@ import type { Meta } from "@storybook/web-components";
 
 import type ToolbarSpacer from "@ui5/webcomponents/dist/ToolbarSpacer.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs.js";
-
-const component = "ui5-toolbar-spacer";
 
 export default {
 	title: "Main/Toolbar/Toolbar Spacer",
 	component: "ToolbarSpacer",
 	argTypes,
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 } as Meta<ToolbarSpacer>;
 
 const Template: UI5StoryArgs<ToolbarSpacer, StoryArgsSlots> = (args) => {

@@ -2,24 +2,15 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
 
-import { DocsPage } from "../../../../.storybook/docs";
-
 import type FilterItemOption from "@ui5/webcomponents-fiori/dist/FilterItemOption.js";
-
-const component = "ui5-filter-item-option";
 
 export default {
 	title: "Fiori/View Settings Dialog/Filter Item Option",
 	component: "FilterItemOption",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<FilterItemOption>;
 

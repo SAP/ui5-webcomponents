@@ -3,25 +3,15 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-
-const component = "ui5-toggle-button";
 
 export default {
 	title: "Main/ToggleButton",
 	component: "ToggleButton",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<ToggleButton>;
 

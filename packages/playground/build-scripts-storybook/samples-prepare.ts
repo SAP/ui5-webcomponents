@@ -52,6 +52,7 @@ type APIData = {
 	info: {
 		package: string;
 		since: string | undefined;
+		tagName?: string;
 	};
 	slotNames: Array<string>;
 	storyArgsTypes: string;
@@ -80,7 +81,7 @@ const main = async () => {
 						const subComponentStats = await fs.stat(subComponentPath);
 
 						if (subComponentStats.isDirectory()) {
-							generateStoryDoc(subComponentPath, subComponent, api, currPackage);
+							generateStoryDoc(subComponentPath, subComponent, api, currPackage, true);
 						}
 					}))
 
@@ -91,7 +92,7 @@ const main = async () => {
 	}
 };
 
-const generateStoryDoc = async (componentPath: string, component: string, api: Package, componentPackage: string) => {
+const generateStoryDoc = async (componentPath: string, component: string, api: Package, componentPackage: string, isSubComponent?: boolean) => {
 	console.log(`Generating argTypes for story ${component}`);
 	const apiData = getAPIData(api, component, componentPackage);
 
@@ -100,9 +101,13 @@ const generateStoryDoc = async (componentPath: string, component: string, api: P
 	}
 
 	const { storyArgsTypes, slotNames, info } = apiData;
+	const componentInfo = {
+		...info,
+		showDefaultStoryOnly: isSubComponent
+	}
 
 	await fs.writeFile(componentPath + '/argTypes.ts', `export default ${storyArgsTypes};
-export const componentInfo = ${JSON.stringify(info, null, 4)};
+export const componentInfo = ${JSON.stringify(componentInfo, null, 4)};
 export type StoryArgsSlots = {
 	${slotNames.map(slotName => `${slotName}: string;`).join('\n	')}
 }`);
@@ -111,7 +116,8 @@ export type StoryArgsSlots = {
 const getAPIData = (api: Package, module: string, componentPackage: string): APIData | undefined => {
 	const moduleAPI = api.modules?.find(currModule => currModule.declarations?.find(s => s.name === module && s._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`));
 	const declaration = moduleAPI?.declarations?.find(s => s.name === module && s._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`);
-
+	const exportedAs = moduleAPI?.exports?.find(s => s.kind === "custom-element-definition");
+	
 	if (!declaration) {
 		return;
 	}
@@ -121,7 +127,8 @@ const getAPIData = (api: Package, module: string, componentPackage: string): API
 	return {
 		info: {
 			package: `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`,
-			since: (declaration as CustomElementDeclaration)?._ui5since
+			since: (declaration as CustomElementDeclaration)?._ui5since,
+			tagName: exportedAs?.name
 		},
 		slotNames: data.slotNames,
 		storyArgsTypes: JSON.stringify(data.args, null, "\t")

@@ -3,24 +3,14 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type Breadcrumbs from "@ui5/webcomponents/dist/Breadcrumbs.js";
-
-const component = "ui5-breadcrumbs";
 
 export default {
     title: "Main/Breadcrumbs",
     component: "Breadcrumbs",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 } as Meta<Breadcrumbs>;
 
