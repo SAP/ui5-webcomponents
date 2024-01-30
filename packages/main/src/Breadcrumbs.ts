@@ -374,7 +374,7 @@ class Breadcrumbs extends UI5Element {
 		// ensure the first visible link is focusable
 		const focusableItems = this._getFocusableItems();
 		if (!focusableItems.some(x => x.forcedTabIndex === "0")) {
-			this.forcedTabIndex.setCurrentItem(focusableItems[0]);
+			this._itemNavigation.setCurrentItem(focusableItems[0]);
 		}
 	}
 
