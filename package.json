@@ -32,7 +32,9 @@
     "test:main": "yarn workspace @ui5/webcomponents test",
     "test:main:suite-1": "yarn workspace @ui5/webcomponents test:suite-1",
     "test:main:suite-2": "yarn workspace @ui5/webcomponents test:suite-2",
+    "test:main:ssr": "yarn workspace @ui5/webcomponents test:ssr",
     "test:fiori": "yarn workspace @ui5/webcomponents-fiori test",
+    "test:fiori:ssr": "yarn workspace @ui5/webcomponents-fiori test:ssr",
     "test": "yarn wsrun --exclude-missing test",
 
     "build": "yarn ci:releasebuild",
