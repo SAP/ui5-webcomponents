@@ -2,7 +2,8 @@ import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
-import type { UI5StoryArgs } from "../../../../types.js";import type CardHeader from "@ui5/webcomponents/dist/CardHeader.js";
+import type { UI5StoryArgs } from "../../../../types.js";
+import type CardHeader from "@ui5/webcomponents/dist/CardHeader.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 

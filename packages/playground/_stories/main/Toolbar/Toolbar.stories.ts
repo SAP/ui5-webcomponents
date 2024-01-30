@@ -8,7 +8,8 @@ import ToolbarAlign from "@ui5/webcomponents/dist/types/ToolbarAlign.js";
 
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
-import type { UI5StoryArgs } from "../../../types.js";import TemplateToolbarTypes from "./TemplateToolbarTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import TemplateToolbarTypes from "./TemplateToolbarTypes.js";
 
 export default {
 	title: "Main/Toolbar",

@@ -4,7 +4,8 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
-import type { UI5StoryArgs } from "../../../../types.js";import type NotificationAction from "@ui5/webcomponents-fiori/dist/NotificationAction.js";
+import type { UI5StoryArgs } from "../../../../types.js";
+import type NotificationAction from "@ui5/webcomponents-fiori/dist/NotificationAction.js";
 
 export default {
 	title: "Fiori/Notification List Group Item/Notification Action",

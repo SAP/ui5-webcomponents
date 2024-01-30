@@ -4,7 +4,8 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
-import type { UI5StoryArgs } from "../../../types.js";import MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";
 import MessageStripDesign from "@ui5/webcomponents/dist/types/MessageStripDesign.js";
 
 export default {

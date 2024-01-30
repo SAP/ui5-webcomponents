@@ -4,7 +4,8 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
-import type { UI5StoryArgs } from "../../../../types.js";import type TabSeparator from "@ui5/webcomponents/dist/TabSeparator.js";
+import type { UI5StoryArgs } from "../../../../types.js";
+import type TabSeparator from "@ui5/webcomponents/dist/TabSeparator.js";
 
 export default {
 	title: "Main/Tab Container/Tab Separator",

@@ -4,7 +4,8 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
-import type { UI5StoryArgs } from "../../../../types.js";import type Tab from "@ui5/webcomponents/dist/Tab.js";
+import type { UI5StoryArgs } from "../../../../types.js";
+import type Tab from "@ui5/webcomponents/dist/Tab.js";
 import TabLayout from "@ui5/webcomponents/dist/types/TabLayout.js";
 
 export default {
