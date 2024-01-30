@@ -108,7 +108,7 @@
 	color: var(--sapList_Active_TextColor);
 }
 
-.ui5-menu-item[focused]:not([active]) {
+.ui5-menu-item[focused]:not([active]):not([disabled]) {
 	background-color: var(--sapList_Hover_Background);
 }
 
