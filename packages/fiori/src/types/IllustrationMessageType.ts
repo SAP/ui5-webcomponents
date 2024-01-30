@@ -10,6 +10,11 @@ enum IllustrationMessageType {
 	 */
 	BeforeSearch = "BeforeSearch",
 	/**
+	 * "New Mail" illustration type.
+	 * @public
+	 */
+	NewMail = "NewMail",
+	/**
 	 * "No Activities" illustration type.
 	 * @public
 	 */
