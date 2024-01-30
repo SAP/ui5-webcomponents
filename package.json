@@ -32,9 +32,6 @@
     "build": "yarn ci:releasebuild",
     "test": "yarn wsrun --exclude-missing test",
 
-    "test:main": "yarn workspace @ui5/webcomponents test",
-    "test:fiori": "yarn workspace @ui5/webcomponents-fiori test",
-    
     "ci:releasebuild": "npm-run-all --sequential generate ts generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts bundle",
