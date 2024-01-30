@@ -11,7 +11,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { IAvatar } from "./Interfaces.js";
+import type { IAvatarGroupItem } from "./AvatarGroup.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -56,7 +56,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.6
- * @implements {IAvatar}
+ * @implements {IAvatarGroupItem}
  * @public
  */
 @customElement({
@@ -75,7 +75,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 * @since 1.0.0-rc.11
 */
 @event("click")
-class Avatar extends UI5Element implements ITabbable, IAvatar {
+class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
@@ -227,7 +227,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	ariaHaspopup!: string;
 
 	@property({ noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
 	_hasImage!: boolean;
@@ -288,7 +288,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	}
 
 	get tabindex() {
-		return this._tabIndex || (this._interactive ? "0" : "-1");
+		return this.forcedTabIndex || (this._interactive ? "0" : "-1");
 	}
 
 	/**
@@ -296,7 +296,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "S"
 	 * @private
 	 */
-	get _effectiveSize(): AvatarSize {
+	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
 		return this.getAttribute("size") as AvatarSize || this._size;
 	}
@@ -306,7 +306,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "Accent6"
 	 * @private
 	 */
-	get _effectiveBackgroundColor(): AvatarColorScheme {
+	get еffectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
 		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}

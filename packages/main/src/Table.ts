@@ -55,13 +55,27 @@ import {
 	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
-import type { ITableRow } from "./Interfaces.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
+
+/**
+ * Interface for components that may be slotted inside a <code>ui5-table</code> as rows
+ *
+ * @public
+ */
+interface ITableRow extends HTMLElement, ITabbable {
+	mode: `${TableMode}`,
+	selected: boolean,
+	_busy: boolean,
+	_ariaPosition: string,
+	_columnsInfoString: string,
+	_columnsInfo: Array<TableColumnInfo>,
+	_tabbables: Array<HTMLElement>,
+}
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -487,10 +501,10 @@ class Table extends UI5Element {
 		super();
 
 		this.visibleColumns = []; // template loop should always have a defined array
-		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
+		// The ItemNavigation requires each item to 1) have a "forcedTabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
 		this._columnHeader = {
 			id: `${this._id}-columnHeader`,
-			_tabIndex: "0",
+			forcedTabIndex: "0",
 		};
 
 		this._itemNavigation = new ItemNavigation(this, {

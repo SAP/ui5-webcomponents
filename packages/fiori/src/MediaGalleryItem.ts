@@ -8,7 +8,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
-import type { IMediaGalleryItem } from "./Interfaces.js";
+import type { IMediaGalleryItem } from "./MediaGallery.js";
 
 // Styles
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
@@ -124,7 +124,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	 * @private
 	 */
 	@property()
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * @private
@@ -189,7 +189,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	get effectiveTabIndex() {
-		return this.disabled ? undefined : this._tabIndex;
+		return this.disabled ? undefined : this.forcedTabIndex;
 	}
 
 	get _showBackgroundIcon() {

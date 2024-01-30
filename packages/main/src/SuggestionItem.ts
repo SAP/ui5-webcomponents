@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SuggestionListItem from "./SuggestionListItem.js";
 import ListItemType from "./types/ListItemType.js";
-import type { IInputSuggestionItem } from "./Interfaces.js";
+import type { IInputSuggestionItem } from "./Input.js";
 
 /**
  * @class

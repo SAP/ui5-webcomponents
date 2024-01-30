@@ -30,7 +30,7 @@ import {
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type { IUploadCollectionItem } from "./Interfaces.js";
+import type { IUploadCollectionItem } from "./UploadCollection.js";
 
 // Template
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";

@@ -10,7 +10,8 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
 import type { AccessibilityAttributes } from "./ListItem.js";
-import { IButton, IOption } from "./Interfaces.js";
+import type { IButton } from "./Button.js";
+import type { IOption } from "./Select.js";
 
 /**
  * @class

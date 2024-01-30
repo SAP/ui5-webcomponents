@@ -72,7 +72,25 @@ import type { IFormElement, NativeFormElement } from "./features/InputElementsFo
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
-import { IOption } from "./Interfaces.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-select</code> as options
+ *
+ * @public
+ */
+interface IOption extends UI5Element {
+	selected: boolean,
+	disabled: boolean,
+	title: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	_focused?: boolean,
+	focused?: boolean,
+	text?: Array<Node>,
+	stableDomRef: string,
+	displayText?: string,
+}
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,

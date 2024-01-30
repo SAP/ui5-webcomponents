@@ -14,6 +14,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
+ * @abstract
  */
 @customElement("ui5-breadcrumbs-item")
 class BreadcrumbsItem extends UI5Element {

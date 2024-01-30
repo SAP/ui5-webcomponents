@@ -28,6 +28,11 @@ type LinkClickEventDetail = {
 	shiftKey: boolean;
 }
 
+type AccessibilityAttributes = {
+	expanded?: boolean,
+	hasPopup?: "dialog" | "grid" | "listbox" | "menu" | "tree",
+};
+
 /**
  * @class
  *
@@ -225,11 +230,11 @@ class Link extends UI5Element implements ITabbable {
 	 * 		</li>
 	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
 	 * 			<ul>
-	 *				<li><code>Dialog</code></li>
-	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
-	 *				<li><code>Menu</code></li>
-	 *				<li><code>Tree</code></li>
+	 *				<li><code>dialog</code></li>
+	 *				<li><code>grid</code></li>
+	 *				<li><code>listbox</code></li>
+	 *				<li><code>menu</code></li>
+	 *				<li><code>tree</code></li>
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
@@ -239,13 +244,13 @@ class Link extends UI5Element implements ITabbable {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
 
 	@property({ noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Indicates if the element is on focus.
@@ -282,8 +287,8 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		if (this._tabIndex) {
-			return this._tabIndex;
+		if (this.forcedTabIndex) {
+			return this.forcedTabIndex;
 		}
 		return (this.disabled || !this.textContent?.length) ? "-1" : "0";
 	}
@@ -382,4 +387,7 @@ Link.define();
 
 export default Link;
 
-export type { LinkClickEventDetail };
+export type {
+	LinkClickEventDetail,
+	AccessibilityAttributes,
+};

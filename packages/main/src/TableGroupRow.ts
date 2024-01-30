@@ -57,7 +57,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	_columnsInfo!: Array<TableColumnInfo>;
 
 	@property({ defaultValue: "-1" })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
 	_busy!: boolean;
