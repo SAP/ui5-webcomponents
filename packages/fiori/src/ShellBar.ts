@@ -818,7 +818,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSearchIconPress() {
-		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button")!;
+		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
 		const bDefaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
 			targetRef: searchButtonRef,
 			isVisible: this.showSearchField,
