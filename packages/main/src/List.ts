@@ -1023,7 +1023,7 @@ class List extends UI5Element {
 	 */
 	focusFirstItem() {
 		// only enabled items are focusable
-		const firstItem = this.getFirstItem(() => true);
+		const firstItem = this.getFirstItem(x => x._focusable);
 
 		if (firstItem) {
 			firstItem.focus();
