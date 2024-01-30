@@ -349,6 +349,23 @@ describe("Component Behavior", () => {
 				assert.ok(await menuPopover.isDisplayedInViewport(), "Menu should be shown");
 			});
 
+			it("tests search-button-click event", async () => {
+				const searchButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const input = await browser.$("#press-input");
+
+				await searchButton.click();
+				assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
+			});
+
+			it("tests preventDefault of search-button-click event", async () => {
+				const searchButton  = await browser.$("#sbEvent").shadow$(".ui5-shellbar-search-button");
+				const searchField  = await browser.$("#sbEvent").shadow$(".ui5-shellbar-search-field");
+				assert.strictEqual(await searchField .isDisplayed(), false, "Search is hidden by default");
+
+				await searchButton .click();
+				assert.notOk(await searchField .isDisplayed(), "Search field should not be opened");
+			});
+
 			it("tests notificationsClick event", async () => {
 				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 				const input = await browser.$("#press-input");
