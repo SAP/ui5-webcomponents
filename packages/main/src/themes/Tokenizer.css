@@ -7,6 +7,11 @@
 	height: 2.25rem;
 }
 
+:host([disabled]) {
+	opacity: 40%;
+	pointer-events: none;
+}
+
 .ui5-tokenizer-root {
 	height: 100%;
 	display: flex;

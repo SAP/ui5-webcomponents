@@ -8,7 +8,6 @@
 	@before-open="{{handleBeforeOpen}}"
 >
 	{{#unless _isPhone}}
-		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
 			{{#unless noValueStatePopover}}
 				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>

@@ -136,6 +136,9 @@ class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	disabled!: boolean;
 
+	@property({ type: Boolean })
+	readonly!: boolean;
+
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
 	 *
@@ -214,6 +217,9 @@ class Tokenizer extends UI5Element {
 
 		this._tokens.forEach(token => {
 			token.singleToken = this._tokens.length === 1;
+			if ((this.readonly || this.disabled) && !token.readonly) {
+				token.readonly = true;
+			}
 		});
 
 		if (!this._tokens.length) {
@@ -230,6 +236,10 @@ class Tokenizer extends UI5Element {
 	}
 
 	async _handleNMoreClick() {
+		if (this.disabled) {
+			return;
+		}
+
 		this.expanded = true;
 
 		if (!this.preventPopoverOpen) {
@@ -556,13 +566,18 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onfocusin(e: FocusEvent) {
+		const relatedTarget = e.relatedTarget as HTMLElement;
+		const target = e.target as HTMLElement;
+
+		if (this.disabled) {
+			this.focused = false;
+			return;
+		}
+
 		if (!this.expanded) {
 			this.expanded = true;
 			this.showMore = false;
 		}
-
-		const relatedTarget = e.relatedTarget as HTMLElement;
-		const target = e.target as HTMLElement;
 
 		if (target.hasAttribute("ui5-token")) {
 			target.focus();
@@ -761,7 +776,7 @@ class Tokenizer extends UI5Element {
 		return this._getTokens().filter(token => token.selected);
 	}
 	get _nMoreListMode() {
-		if (this.disabled) {
+		if (this.readonly || this.disabled) {
 			return "None";
 		}
 
