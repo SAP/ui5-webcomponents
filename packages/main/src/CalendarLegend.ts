@@ -35,7 +35,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
  *
  * <code>import "@ui5/webcomponents/dist/CalendarLegend.js";</code>
  *
- * @slot items - Defines the items of the component.
+ * @slot {Array<Node>} default - Defines the items of the component.
  *
  * @constructor
  * @extends UI5Element
@@ -58,7 +58,7 @@ class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Today item in the legend.
 	 *
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -67,7 +67,7 @@ class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Selected day item in the legend.
 	 *
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -76,7 +76,7 @@ class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Non-Working day item in the legend.
 	 *
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -85,7 +85,7 @@ class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Working day item in the legend.
 	 *
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })

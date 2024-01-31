@@ -449,8 +449,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Selects/deselects a day.
-	 * @param { Event } e
-	 * @param { boolean } isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
+	 * @param e
+	 * @param isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
 	 * @private
 	 */
 	_selectDate(e: Event, isShift: boolean) {
