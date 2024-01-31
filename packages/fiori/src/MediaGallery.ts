@@ -35,7 +35,7 @@ interface IMediaGalleryItem extends HTMLElement, ITabbable {
 	selected: boolean,
 	disabled: boolean,
 	focused: boolean,
-	_content: HTMLElement | null;
+	displayedContent: HTMLElement | null;
 	layout: `${MediaGalleryItemLayout}`
 }
 
@@ -422,8 +422,8 @@ class MediaGallery extends UI5Element {
 	_displayContent(item: IMediaGalleryItem) {
 		let clone;
 		const mainItem = this._mainItem,
-			oldContent = mainItem!._content,
-			newContent = item._content;
+			oldContent = mainItem!.displayedContent,
+			newContent = item.displayedContent;
 
 		mainItem!._thumbnailDesign = false;
 		oldContent && oldContent.remove();

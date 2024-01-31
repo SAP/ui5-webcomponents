@@ -28,7 +28,7 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 	renderer: litRender,
 })
 class TabSeparator extends UI5Element implements ITab {
-	_getElementInStrip?: () => ITab | null;
+	getElementInStrip?: () => ITab | null;
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -57,8 +57,8 @@ class TabSeparator extends UI5Element implements ITab {
 	 * @public
 	 */
 	getTabInStripDomRef(): ITab | null {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
+		if (this.getElementInStrip) {
+			return this.getElementInStrip();
 		}
 
 		return null;

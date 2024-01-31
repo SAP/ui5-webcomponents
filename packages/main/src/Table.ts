@@ -70,11 +70,11 @@ import tableStyles from "./generated/themes/Table.css.js";
 interface ITableRow extends HTMLElement, ITabbable {
 	mode: `${TableMode}`,
 	selected: boolean,
-	_busy: boolean,
-	_ariaPosition: string,
+	forcedBusy: boolean,
+	forcedAriaPosition: string,
 	_columnsInfoString: string,
 	_columnsInfo: Array<TableColumnInfo>,
-	_tabbables: Array<HTMLElement>,
+	tabbableElements: Array<HTMLElement>,
 }
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
@@ -542,8 +542,8 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
-			row._busy = this.busy;
+			row.forcedAriaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
+			row.forcedBusy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
@@ -815,12 +815,12 @@ class Table extends UI5Element {
 	 */
 	_handleF7(e: CustomEvent<TableRowF7PressEventDetail>) {
 		const row = e.detail.row;
-		row._tabbables = getTabbableElements(row);
+		row.tabbableElements = getTabbableElements(row);
 		const activeElement = getActiveElement();
-		const lastFocusedElement = row._tabbables[this._prevNestedElementIndex] || row._tabbables[0];
-		const targetIndex = row._tabbables.indexOf(activeElement as HTMLElement);
+		const lastFocusedElement = row.tabbableElements[this._prevNestedElementIndex] || row.tabbableElements[0];
+		const targetIndex = row.tabbableElements.indexOf(activeElement as HTMLElement);
 
-		if (!row._tabbables.length) {
+		if (!row.tabbableElements.length) {
 			return;
 		}
 

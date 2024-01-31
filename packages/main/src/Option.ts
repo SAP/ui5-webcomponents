@@ -84,7 +84,7 @@ class Option extends UI5Element implements IOption {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_focused!: boolean;
+	focused!: boolean;
 
 	/**
 	 * Defines the text of the component.
