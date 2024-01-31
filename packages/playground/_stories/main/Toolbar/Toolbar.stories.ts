@@ -6,24 +6,15 @@ import type { Meta, StoryFn } from "@storybook/web-components";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarAlign from "@ui5/webcomponents/dist/types/ToolbarAlign.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
 import TemplateToolbarTypes from "./TemplateToolbarTypes.js";
-
-const component = "ui5-toolbar";
 
 export default {
 	title: "Main/Toolbar",
 	component: "Toolbar",
 	argTypes,
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 } as Meta<Toolbar>;
 
 const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
