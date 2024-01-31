@@ -79,7 +79,12 @@ class UI5ElementMetadata {
 			} else if (props[propName].multiple) {
 				initialState[propName] = [];
 			} else if (propType === Object) {
-				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+				Object.defineProperty(initialState, propName, {
+					enumerable: true,
+					get() {
+					  return "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+					},
+				  });
 			} else if (propType === String) {
 				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
 			} else {
