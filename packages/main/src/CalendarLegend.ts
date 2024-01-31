@@ -93,7 +93,6 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Defines the items of the component.
-	 * @slot items
 	 * @public
 	 */
 	@slot({
