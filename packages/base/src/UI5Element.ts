@@ -33,6 +33,8 @@ import { getUseNativePopovers } from "./config/NativePopover.js";
 
 let autoId = 0;
 
+const TEMPLATE_DIVIDER_TEXT = "UI5_DIVIDER";
+
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
@@ -757,7 +759,19 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		const children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
+		// Find the index of UI5_DIVIDER comment
+		const dividerIndex = [...this.shadowRoot.childNodes].findIndex(child => child.nodeType === Node.COMMENT_NODE && child.textContent === TEMPLATE_DIVIDER_TEXT);
+
+		let children;
+
+		if (dividerIndex !== -1) {
+			// Work with childNodes array to get correct child nodes before the comment.
+			// Filter child nodes before comment to guarantee that we're working only with elements.
+			children = [...this.shadowRoot.childNodes].slice(0, dividerIndex).filter(child => (child as Element).localName && !["link", "style"].includes((child as Element).localName));
+		} else {
+			children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
+		}
+
 		if (children.length !== 1) {
 			console.warn(`The shadow DOM for ${(this.constructor as typeof UI5Element).getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
 		}
@@ -1182,7 +1196,10 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 };
 
 export default UI5Element;
-export { instanceOfUI5Element };
+export {
+	instanceOfUI5Element,
+	TEMPLATE_DIVIDER_TEXT,
+};
 export type {
 	ChangeInfo,
 	Renderer,
