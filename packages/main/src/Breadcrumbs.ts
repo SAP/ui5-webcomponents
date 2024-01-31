@@ -376,6 +376,11 @@ class Breadcrumbs extends UI5Element {
 			shiftKey,
 		}, true)) {
 			e.preventDefault();
+			return;
+		}
+
+		if (item._isCurrentPageItem) {
+			window.location.reload();
 		}
 	}
 
