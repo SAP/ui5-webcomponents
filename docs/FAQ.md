@@ -2,7 +2,7 @@
 
 **Q: How can I play with UI5 Web Components easily?**
 
-**A:** Use this [CodeSandBox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html) or this [Stackblitz](https://stackblitz.com/edit/js-vsrpnb?file=index.js,index.html).
+**A:** Use this [Stackblitz](https://stackblitz.com/edit/js-vsrpnb?file=index.js,index.html).
 
 
 **Q: Where is the documentation?**
