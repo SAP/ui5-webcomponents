@@ -109,9 +109,10 @@ const getScripts = (options) => {
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
-				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
+				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"  "nps watch.styles.componentStyles" ',
 				themes: 'nps "build.styles.themes -w"',
 				components: `nps "build.styles.components -w"`,
+				componentStyles: `nps "build.styles.componentStyles -w"`,
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
 			api: 'chokidar "test/**/*.sample.html" -c "nps generateAPI"',
