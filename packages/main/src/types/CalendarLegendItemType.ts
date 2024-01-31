@@ -14,6 +14,11 @@ enum CalendarLegendItemType {
 	 */
 	Selected = "Selected",
 	/**
+	 * Set when no type is set.
+	 * @public
+	 */
+	None = "None",
+	/**
 	 * Represents the "Working" item in the calendar legend.
 	 * @public
 	 */

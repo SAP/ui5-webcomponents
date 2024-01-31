@@ -28,6 +28,7 @@ import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
 import SpecialCalendarDate from "./SpecialCalendarDate.js";
+import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -268,12 +269,10 @@ class Calendar extends CalendarPart {
 
 	_valueIsProcessed!: boolean
 
-	@property({ type: Object, multiple: true })
-	_specialCalendarDates!: Array<SpecialCalendarDateT>;
-
 	/**
 	 * Defines the calendar legend of the component.
 	 * @public
+	 * @since 1.22.0
 	 */
 	@slot({ type: HTMLElement })
 	calendarLegend!: CalendarLegend;
@@ -290,9 +289,17 @@ class Calendar extends CalendarPart {
 	/**
 	 * Defines the special dates, visually emphasized in the calendar.
 	 * @public
+	 * @since 1.22.0
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	specialDates!: Array<SpecialCalendarDate>;
+
+	/**
+	 * Defines the selected item type of the calendar legend item (if such exists).
+	 * @private
+	 */
+	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
+	_selectedItemType!: `${CalendarLegendItemType}`;
 
 	/**
 	 * @private
@@ -309,8 +316,8 @@ class Calendar extends CalendarPart {
 		super();
 
 		this._valueIsProcessed = false;
-		this._specialCalendarDates = [];
 	}
+
 	/**
 	 * @private
 	 */
@@ -336,17 +343,16 @@ class Calendar extends CalendarPart {
 		return !!date;
 	}
 
-	_populateSpecialCalendarDates(selectedItemType?: string): void {
+	get _specialCalendarDates() {
 		const validSpecialDates = this._specialDates.filter(date => {
 			const dateType = date.type;
 			const dateValue = date.value;
-			// if selectedItemType is provided filter by it otherwise, include all types
-			const isTypeMatch = selectedItemType ? dateType === selectedItemType : true;
+			const isTypeMatch = this._selectedItemType !== "None" ? dateType === this._selectedItemType : true;
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
 
 		if (validSpecialDates.length === 0) {
-			return;
+			this._selectedItemType = "None";
 		}
 
 		const uniqueDates = new Set();
@@ -364,12 +370,11 @@ class Calendar extends CalendarPart {
 			}
 		});
 
-		this._specialCalendarDates = uniqueSpecialDates;
+		return uniqueSpecialDates;
 	}
 
 	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
-		const selectedItemType = e.detail.item.type;
-		this._populateSpecialCalendarDates(selectedItemType);
+		this._selectedItemType = e.detail.item.type;
 	}
 
 	/**
@@ -418,10 +423,6 @@ class Calendar extends CalendarPart {
 		}
 
 		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
-	}
-
-	onEnterDOM() {
-		this._populateSpecialCalendarDates();
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
@@ -582,7 +583,18 @@ class Calendar extends CalendarPart {
 	}
 
 	_onLegendFocusOut() {
-		this._populateSpecialCalendarDates();
+		this._selectedItemType = "None";
+
+		// focus the focusable day in the daypicker
+		const focusedDay = this._dayPicker.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
+
+		if (focusedDay && document.activeElement !== focusedDay) {
+			focusedDay.focus();
+		}
+	}
+
+	get _dayPicker() {
+		return this.shadowRoot!.querySelector("[ui5-daypicker]") as DayPicker;
 	}
 
 	get _specialDates() {

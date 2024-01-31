@@ -55,10 +55,10 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the type of the Calendar Legend Item.
 	 *
-	 * @default ""
+	 * @default "None"
 	 * @public
 	 */
-	@property()
+	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
 	type!: `${CalendarLegendItemType}`;
 
 	/**

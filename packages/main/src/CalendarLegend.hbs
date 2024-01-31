@@ -5,19 +5,20 @@
 				type={{this.type}}
 				@focusin="{{../_onFocusIn}}"
 				@keydown="{{../_onItemKeyDown}}"
-				@mousedown="{{_onMouseDown}}"
+				@mousedown="{{../_onMouseDown}}"
 			>
 			</ui5-calendar-legend-item>
 		{{/unless}}
 	{{/each}}
 
 	{{#each legendItems}}
-		<div
+		<ui5-calendar-legend-item 
+			type={{this.type}}
+			text={{this.text}}
 			@focusin="{{../_onFocusIn}}"
 			@keydown="{{../_onItemKeyDown}}"
 			@mousedown="{{../_onMouseDown}}"
 		>
-			<slot name="{{this._individualSlot}}"></slot>
-		</div>
+		</ui5-calendar-legend-item>
 	{{/each}}
 </div>

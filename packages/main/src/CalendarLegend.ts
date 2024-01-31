@@ -99,21 +99,24 @@ class CalendarLegend extends UI5Element {
 	@slot({
 		type: HTMLElement,
 		invalidateOnChildChange: true,
-		individualSlots: true,
 		"default": true,
 	 })
 	items!: Array<CalendarLegendItem>;
 
-	_itemNavigation: ItemNavigation;
+	_itemNavigation!: ItemNavigation;
 
 	constructor() {
 		super();
+	}
 
-		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
-			behavior: ItemNavigationBehavior.Static,
-			getItemsCallback: () => this.focusableElements,
-		});
+	onAfterRendering(): void {
+		if (!this._itemNavigation) {
+			this._itemNavigation = new ItemNavigation(this, {
+				navigationMode: NavigationMode.Horizontal,
+				behavior: ItemNavigationBehavior.Static,
+				getItemsCallback: () => this.focusableElements,
+			});
+		}
 	}
 
 	_onMouseDown(e: MouseEvent) {
@@ -160,21 +163,7 @@ class CalendarLegend extends UI5Element {
 	}
 
 	get focusableElements() {
-		let allFocusableItems = [...this.shadowRoot!.querySelectorAll<CalendarLegendItem>("[ui5-calendar-legend-item]"), ...this.legendItems];
-		const rearrangedItems: Array<CalendarLegendItem> = [];
-
-		/**
-		 * Rearrange items for better keyboard navigation.
-		 * Resolves uneven indexing in the 2-column display (e.g., [0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9]),
-		 * which ensures a linear and logical navigation sequence
-		 * for the desired itemNavigation behaviour.
-		 */
-		allFocusableItems.forEach(item => rearrangedItems.push(item));
-
-		const itemsFirstColumn = rearrangedItems.filter((item, index) => index % 2 === 0);
-		const itemsSecondColumn = rearrangedItems.filter((item, index) => index % 2 !== 0);
-
-		allFocusableItems = [...itemsFirstColumn, ...itemsSecondColumn];
+		const allFocusableItems = [...this.shadowRoot!.querySelectorAll<CalendarLegendItem>("[ui5-calendar-legend-item]"), ...this.legendItems];
 		return allFocusableItems;
 	}
 

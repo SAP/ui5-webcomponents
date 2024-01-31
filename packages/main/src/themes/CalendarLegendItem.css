@@ -15,6 +15,8 @@
 	height: 1rem;
 	width: 1rem;
 	margin: var(--_ui5-calendar-legend-item-box-margin);
+	background: var(--sapLegend_WorkingBackground);
+	border: 0.0625rem solid var(--sapContent_ForegroundBorderColor);
 }
 
 .ui5-calendar-legend-item-text {
@@ -40,11 +42,6 @@
 :host([type="Selected"]) .ui5-calendar-legend-item-box {
 	background: var(--sapContent_Selected_Background);
 	border: 0.0625rem solid var(--sapContent_FocusColor);
-}
-
-:host([type="Working"]) .ui5-calendar-legend-item-box {
-	background: var(--sapLegend_WorkingBackground);
-	border: 0.0625rem solid var(--sapContent_ForegroundBorderColor);
 }
 
 :host([type="NonWorking"]) .ui5-calendar-legend-item-box {
@@ -156,5 +153,6 @@
 
 .ui5-calendar-legend-item-root:focus {
 	outline: var(--_ui5-calendar-legend-item-root-focus-border);
+	outline-offset: -.0625rem;
 	border-radius: var(--_ui5-calendar-legend-item-root-focus-border-radius);
 }
