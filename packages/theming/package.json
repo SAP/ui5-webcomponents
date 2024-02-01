@@ -22,7 +22,7 @@
     "generate": "nps generate",
     "start": "nps start",
     "verify": "node ./lib/verify-vars/index.js",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "repository": {
     "type": "git",

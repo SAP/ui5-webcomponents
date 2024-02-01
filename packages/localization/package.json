@@ -26,7 +26,7 @@
     "start": "nps start",
     "build": "nps build",
     "generate": "nps generate",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
