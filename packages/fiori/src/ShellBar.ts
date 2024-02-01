@@ -102,7 +102,7 @@ type ShellBarMenuItemClickEventDetail = {
 
 type ShellBarSearchButtonEventDetail = {
 	targetRef: HTMLElement;
-	isVisible: boolean;
+	searchFieldVisible: boolean;
 };
 
 type ShellBarCoPilot = {
@@ -290,14 +290,14 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  *
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
- * @param {Boolean} isVisible whether the search field is visible
+ * @param {Boolean} searchFieldVisible whether the search field is visible
  * @public
  */
 
 @event<ShellBarSearchButtonEventDetail>("search-button-click", {
 	detail: {
 		targetRef: { type: HTMLElement },
-		isVisible: { type: Boolean },
+		searchFieldVisible: { type: Boolean },
 	},
 })
 
@@ -819,12 +819,12 @@ class ShellBar extends UI5Element {
 
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
-		const bDefaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+		const defaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
 			targetRef: searchButtonRef,
-			isVisible: this.showSearchField,
+			searchFieldVisible: this.showSearchField,
 		}, true);
 
-		if (bDefaultPrevented) {
+		if (defaultPrevented) {
 			return;
 		}
 		this.showSearchField = !this.showSearchField;
