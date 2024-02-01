@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0-rc.4) (2024-02-01)
+
+
+### Features
+
+* **ui5-shellbar:** new event added ([#8197](https://github.com/SAP/ui5-webcomponents/issues/8197)) ([4e864e9](https://github.com/SAP/ui5-webcomponents/commit/4e864e913597cdcc5d783012b8866afc1cde51a1)), closes [#6273](https://github.com/SAP/ui5-webcomponents/issues/6273)
+
+
+
+
+
 # [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
 
 
