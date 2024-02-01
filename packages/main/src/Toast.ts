@@ -23,7 +23,7 @@ let opener: HTMLElement | null;
 let globalListenerAdded = false;
 const handleGlobalKeydown = (e: KeyboardEvent) => {
 	const isCtrl = e.metaKey || (!isMac() && e.ctrlKey);
-	const isMKey = e.key.toLowerCase() === "m";
+	const isMKey = e.key && e.key.toLowerCase() === "m";
 	const isCombinationPressed = isCtrl && e.shiftKey && isMKey;
 	const hasOpenToast = openedToasts.length;
 
