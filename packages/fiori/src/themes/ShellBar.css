@@ -149,7 +149,8 @@ slot[name="profile"] {
 	width: 0;
 }
 
-:host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {
+:host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle,
+:host([force-search-field-in-middle]:not([breakpoint-size="S"])) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {
 	width: 35rem;
 }
 
@@ -267,7 +268,8 @@ slot[name="profile"] {
 	margin-inline-end: 0.5rem;
 }
 
-:host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-left {
+:host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-left,
+:host([force-search-field-in-middle]:not([breakpoint-size="S"])) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 18.25rem);
 }

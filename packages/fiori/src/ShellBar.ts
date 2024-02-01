@@ -345,6 +345,13 @@ class ShellBar extends UI5Element {
 	showSearchField!: boolean;
 
 	/**
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	forceSearchFieldInMiddle!: boolean;
+
+	/**
 	 * An object of strings that defines additional accessibility roles for further customization.
 	 *
 	 * It supports the following fields:
@@ -1293,6 +1300,10 @@ class ShellBar extends UI5Element {
 	get _productsHasPopup() {
 		const productsAccAttributes = this.accessibilityAttributes.product;
 		return productsAccAttributes ? productsAccAttributes.ariaHasPopup : null;
+	}
+
+	get _renderSearchFieldInMiddle() {
+		return this._isXXLBreakpoint || (this.forceSearchFieldInMiddle && this.breakpointSize !== "S");
 	}
 
 	get _searchHasPopup() {

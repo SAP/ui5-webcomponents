@@ -90,7 +90,7 @@
 	</div>
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
-		{{#if _isXXLBreakpoint}}
+		{{#if _renderSearchFieldInMiddle }}
 			{{#if hasSearchField}}
 				<slot name="searchField"></slot>
 			{{/if}}
@@ -100,7 +100,7 @@
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 		<div class="ui5-shellbar-overflow-container-right-child">
 
-		{{#unless _isXXLBreakpoint }}
+		{{#unless _renderSearchFieldInMiddle }}
 			{{#if hasSearchField}}
 				{{#if _fullWidthSearch}}
 					<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
