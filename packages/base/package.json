@@ -37,7 +37,7 @@
     "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
     "test": "nps test",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "dependencies": {
     "@lit-labs/ssr-dom-shim": "^1.1.2",
