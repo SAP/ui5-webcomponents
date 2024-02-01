@@ -12,6 +12,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import HasPopup from "./types/HasPopup.js";
 
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
@@ -29,8 +30,8 @@ type LinkClickEventDetail = {
 }
 
 type AccessibilityAttributes = {
-	expanded?: boolean,
-	hasPopup?: "dialog" | "grid" | "listbox" | "menu" | "tree",
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: `${HasPopup}`,
 };
 
 /**

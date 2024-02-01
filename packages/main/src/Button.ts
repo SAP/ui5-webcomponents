@@ -28,6 +28,7 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
+import HasPopup from "./types/HasPopup.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -48,8 +49,8 @@ let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
 type AccessibilityAttributes = {
-	expanded?: boolean,
-	hasPopup?: "dialog" | "grid" | "listbox" | "menu" | "tree",
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: `${HasPopup}`,
 	controls?: string
 };
 

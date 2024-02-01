@@ -64,8 +64,8 @@ type ShellBarAccessibilityTexts = {
 };
 
 type ShellBarAccessibilityAttributesValue = {
-	ariaHasPopup?: string;
-	expanded?: boolean;
+	expanded?: "true" | "false" | boolean,
+	ariaHasPopup?: `${HasPopup}`,
 }
 
 type ShellBarAccessibilityAttributes = {
