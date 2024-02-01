@@ -7,26 +7,16 @@ import type Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
 import AvatarShape from "@ui5/webcomponents/dist/types/AvatarShape.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
 import TemplateAvatarTypesAndSizes from "./TemplateAvatarTypesandSizes.js"
 
-
-import { DocsPage } from "../../../.storybook/docs";
-
-const component = "ui5-avatar";
-
 export default {
   title: "Main/Avatar",
   component: "Avatar",
   argTypes,
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component })
-    },
-  },
 } as Meta<Avatar>;
 
 const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>

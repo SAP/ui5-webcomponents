@@ -23,7 +23,7 @@ let opener: HTMLElement | null;
 let globalListenerAdded = false;
 const handleGlobalKeydown = (e: KeyboardEvent) => {
 	const isCtrl = e.metaKey || (!isMac() && e.ctrlKey);
-	const isMKey = e.key.toLowerCase() === "m";
+	const isMKey = e.key && e.key.toLowerCase() === "m";
 	const isCombinationPressed = isCtrl && e.shiftKey && isMKey;
 	const hasOpenToast = openedToasts.length;
 
@@ -161,6 +161,24 @@ class Toast extends UI5Element {
 
 		this._reopen = false;
 
+		this.addEventListener("focusin", this._onfocusin.bind(this));
+		this.addEventListener("focusout", this._onfocusout.bind(this));
+		this.addEventListener("keydown", this._onkeydown.bind(this));
+		this.addEventListener("mouseover", this._onmouseover.bind(this));
+		this.addEventListener("mouseleave", this._onmouseleave.bind(this));
+		this.addEventListener("transitionend", this._ontransitionend.bind(this));
+	}
+
+	onBeforeRendering() {
+		// Transition duration (animation) should be a third of the duration
+		// property, but not bigger than the maximum allowed (1000ms).
+		const transitionDuration = Math.min(this.effectiveDuration / 3, MAX_DURATION);
+
+		this.style.transitionDuration = this.open ? `${transitionDuration}ms` : "";
+		this.style.transitionDelay = this.open ? `${this.effectiveDuration - transitionDuration}ms` : "";
+		this.style.opacity = this.open && !this.hover && !this.focused ? "0" : "";
+		this.style.zIndex = `${getNextZIndex()}`;
+
 		if (!globalListenerAdded) {
 			document.addEventListener("keydown", handleGlobalKeydown);
 			globalListenerAdded = true;
@@ -210,27 +228,6 @@ class Toast extends UI5Element {
 		return this.duration < MIN_DURATION ? MIN_DURATION : this.duration;
 	}
 
-	get styles() {
-		// Transition duration (animation) should be a third of the duration
-		// property, but not bigger than the maximum allowed (1000ms).
-		const transitionDuration = Math.min(this.effectiveDuration / 3, MAX_DURATION);
-
-		return {
-			root: {
-				"transition-duration": this.open ? `${transitionDuration}ms` : "",
-
-				// Transition delay is the duration property minus the
-				// transition duration (animation).
-				"transition-delay": this.open ? `${this.effectiveDuration - transitionDuration}ms` : "",
-
-				// We alter the opacity property, in order to trigger transition
-				"opacity": this.open && !this.hover && !this.focused ? "0" : "",
-
-				"z-index": getNextZIndex(),
-			},
-		};
-	}
-
 	_initiateOpening() {
 		this.domRendered = true;
 		requestAnimationFrame(() => {
@@ -248,7 +245,6 @@ class Toast extends UI5Element {
 		this.open = false;
 		this.focusable = false;
 		this.focused = false;
-		openedToasts.pop();
 	}
 
 	_onmouseover() {

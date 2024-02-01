@@ -2,25 +2,15 @@ import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 // @ts-ignore
 import type ProductSwitch from "@ui5/webcomponents-fiori/dist/ProductSwitch.js";
-
-const component = "ui5-product-switch";
 
 export default {
     title: "Fiori/Product Switch",
     component: "ProductSwitch",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 } as Meta<ProductSwitch>;
 

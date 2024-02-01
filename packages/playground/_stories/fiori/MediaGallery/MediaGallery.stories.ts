@@ -4,16 +4,11 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 import type { PartialStoryFn } from "@storybook/types";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import MediaGallery from "@ui5/webcomponents-fiori/dist/MediaGallery.js";
 import TemplateMediaGalleryTypes from "./TemplateMediaGalleryTypes.js";
-
-const component = "ui5-media-gallery";
 
 const stylesDecorator = (storyFn: PartialStoryFn) => html`
     <style>
@@ -33,11 +28,6 @@ const stylesDecorator = (storyFn: PartialStoryFn) => html`
 export default {
     title: "Fiori/Media Gallery",
     component: "MediaGallery",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     decorators: [stylesDecorator],
     argTypes,
 } as Meta<MediaGallery>;

@@ -4,25 +4,15 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type TextArea from "@ui5/webcomponents/dist/TextArea.js";
-
-const component = "ui5-textarea";
 let index = 0;
 
 export default {
     title: "Main/Text Area",
     component: "TextArea",
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 } as Meta<TextArea>;
 

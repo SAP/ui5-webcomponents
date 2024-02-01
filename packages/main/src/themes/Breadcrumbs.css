@@ -6,7 +6,7 @@
 .ui5-breadcrumbs-root {
     white-space: nowrap;
     outline: none;
-    margin: 0 0 0.5rem 0;
+    margin:var(--_ui5_breadcrumbs_margin);
 }
 
 .ui5-breadcrumbs-root > ol {
@@ -20,21 +20,6 @@
 
 .ui5-breadcrumbs-root > ol > li {
     display: inline;
-}
-
-.ui5-breadcrumbs-current-location {
-    min-width: 1%;
-    -webkit-flex: 1;
-    -webkit-box-flex: 1;
-    flex: 1 1 auto;
-    /* Fix extra height in ul -> li element */
-    font-size: 0;
-    align-self: center;
-}
-
-.ui5-breadcrumbs-current-location > span:focus {
-    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-    border-radius: var(--_ui5_breadcrumbs_current_location_focus_border_radius);
 }
 
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper[hidden] {

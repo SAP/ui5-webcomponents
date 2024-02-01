@@ -149,10 +149,10 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("standard breadcrumb with single item shows location", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsWithSingleItem"),
-			label = (await breadcrumbs.shadow$("ui5-label"));
+			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
 
 		// Check
-		assert.strictEqual(await label.getText(), "Location", "label is displayed");
+		assert.strictEqual(await link.getText(), "Location", "label is displayed");
 	});
 
 	it("opens upon space", async () => {
@@ -362,4 +362,44 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), 1, "Max stack of calling not hit for invalidation of control");
 	});
 
+});
+
+describe("Breadcrumbs with item for current page", () => {
+	before(async () => {
+		await browser.url(`test/pages/Breadcrumbs.html`);
+	});
+
+	it("renders current page item as link", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs2"),
+			link = (await breadcrumbs.shadow$("li:last-child ui5-link"));
+
+		// assert
+		assert.ok(await link.isExisting(), "item for current page is a link");
+		assert.strictEqual(await link.getText(), "Location",
+			"item for current page has correct text");
+	});
+
+	it("sets correct design to link for current page", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbs2"),
+			link = (await breadcrumbs.shadow$("li:last-child ui5-link"));
+
+		// assert
+		assert.strictEqual(await link.getProperty("design"), "Emphasized",
+			"link has correct design");
+	});
+
+	it("does not render separator after link to current page", async () => {
+		const breadcrumbWithCurrentPage = await browser.$("#breadcrumbs2"),
+			breadcrumbWithNoCurrentPage = await browser.$("#breadcrumbs3"),
+			separatorAfterCurrentPageLink =
+				(await breadcrumbWithCurrentPage.shadow$("li:last-child span.ui5-breadcrumbs-separator")),
+			separatorAfterNonCurrentPageLink =
+				(await breadcrumbWithNoCurrentPage.shadow$("li:last-child span.ui5-breadcrumbs-separator"));
+
+		// assert
+		assert.ok(await separatorAfterNonCurrentPageLink.isExisting(),
+			"renders separator after link to another page");
+		assert.notOk(await separatorAfterCurrentPageLink.isExisting(),
+			"does not render separator after link to current page");
+	});
 });
