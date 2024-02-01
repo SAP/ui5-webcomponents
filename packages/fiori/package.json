@@ -38,7 +38,7 @@
     "test": "wc-dev test",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "create-ui5-element": "wc-create-ui5-element",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "repository": {
     "type": "git",

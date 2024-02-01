@@ -20,7 +20,7 @@
     "clean": "wc-dev clean",
     "build": "wc-dev build",
     "generate": "nps generate",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "repository": {
     "type": "git",
