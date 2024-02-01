@@ -203,8 +203,11 @@ class DateTimePicker extends DatePicker {
 	 * @public
 	 */
 	async openPicker(): Promise<void> {
-		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
 		await super.openPicker();
+		this._previewValues = {
+			...this._previewValues,
+			timeSelectionValue: this.value || this.getFormat().format(new Date()),
+		};
 	}
 
 	/**
