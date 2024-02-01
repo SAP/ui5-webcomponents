@@ -8,7 +8,7 @@ jobs:
   reset-gh-pages:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
         fetch-depth: 0
