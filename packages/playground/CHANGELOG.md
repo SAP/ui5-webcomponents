@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+
+### Features
+
+* **ui5-shellbar:** introducing Joule ([#8036](https://github.com/SAP/ui5-webcomponents/issues/8036)) ([ed5c20f](https://github.com/SAP/ui5-webcomponents/commit/ed5c20ffb42dd5f3eb81f77819fd40a9f7abbe08))
+
+
+
+
+
 # [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground
