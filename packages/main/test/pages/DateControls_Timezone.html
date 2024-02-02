@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+
+		<script>
+			// delete Document.prototype.adoptedStyleSheets;
+		</script>
+		<link rel="stylesheet" type="text/css" href="./styles/TimePicker.css">
+		<script data-ui5-config type="application/json">
+			{
+				"language": "EN",
+				"timezone" : "Asia/Tokyo"
+			}
+		</script>
+
+		<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	</head>
+	<body class="timepicker1auto">
+
+		<div class="samples">
+			<div class="sample-box-1">
+		        <ui5-time-picker id="timepickerNow" value="now"></ui5-time-picker>
+				<br>
+			</div>
+            <div class="sample-box-1">
+		        <ui5-date-picker value="now"></ui5-date-picker>
+				<br>
+			</div>
+            <div class="sample-box-1">
+		        <ui5-datetime-picker value="now"></ui5-datetime-picker>
+				<br>
+			</div>
+            <div class="sample-box-1">
+                <ui5-calendar id="calendar1"></ui5-calendar>
+				<br>
+			</div>
+		</div>
+
+	</body>
+</html>
