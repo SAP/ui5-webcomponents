@@ -113,7 +113,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	title!: string;
 
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	get _tooltip() {
 		return this.title || this.text;
@@ -162,7 +162,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 			return undefined;
 		}
 
-		return this._tabIndex;
+		return this.forcedTabIndex;
 	}
 
 	get sideNavigation() : SideNavigation | undefined {

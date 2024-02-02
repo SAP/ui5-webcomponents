@@ -138,7 +138,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ defaultValue: "-1" })
-	_tabIndex!: string
+	forcedTabIndex!: string
 
 	_wizardTabAccInfo? : WizardTabInfo
 
@@ -164,7 +164,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	}
 
 	get tabIndex() {
-		return Number(this._tabIndex);
+		return Number(this.forcedTabIndex);
 	}
 
 	get hasTexts() {

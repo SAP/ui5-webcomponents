@@ -5,7 +5,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import BarDesign from "./types/BarDesign.js";
-import type { IBar } from "./Interfaces.js";
 
 // Template
 import BarTemplate from "./generated/templates/BarTemplate.lit.js";
@@ -45,7 +44,6 @@ import BarCss from "./generated/themes/Bar.css.js";
  *
  * @csspart bar - Used to style the wrapper of the content of the component
  * @constructor
- * @implements { IBar }
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.11
@@ -57,7 +55,7 @@ import BarCss from "./generated/themes/Bar.css.js";
 	styles: BarCss,
 	template: BarTemplate,
 })
-class Bar extends UI5Element implements IBar {
+class Bar extends UI5Element {
 	/**
 	 * Defines the component's design.
 	 *

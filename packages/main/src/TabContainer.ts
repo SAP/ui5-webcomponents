@@ -46,7 +46,7 @@ import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
 import TabsOverflowMode from "./types/TabsOverflowMode.js";
-import type { IButton, ITab } from "./Interfaces.js";
+import type { IButton } from "./Button.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -55,6 +55,37 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-tabcontainer</code> as items
+ *
+ * @public
+ */
+interface ITab extends UI5Element {
+	isSeparator: boolean;
+	getTabInStripDomRef: () => ITab | null;
+	additionalText?: string;
+	design?: `${SemanticColor}`;
+	disabled?: boolean;
+	icon?: string;
+	isSingleClickArea?: boolean;
+	requiresExpandButton?: boolean;
+	selected?: boolean;
+	subTabs?: Array<ITab>;
+	tabs?: Array<ITab>
+	text?: string;
+	hasOwnContent?: boolean;
+	forcedLevel?: number;
+	forcedSelected?: boolean;
+	getElementInStrip?: () => ITab | null;
+	isInline?: boolean;
+	forcedMixedMode?: boolean;
+	forcedPosinset?: number;
+	forcedSetsize?: number;
+	realTabReference?: Tab;
+	isTopLevelTab?: boolean;
+	forcedStyle?: Record<string, any>;
+}
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
@@ -70,7 +101,7 @@ interface TabContainerExpandButton extends Button {
 }
 
 interface TabContainerTabInOverflow extends CustomListItem {
-	_realTab: Tab;
+	realTabReference: Tab;
 }
 
 /**
@@ -346,11 +377,11 @@ class TabContainer extends UI5Element {
 		// update selected tab
 		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected) as Array<Tab>;
 		if (selectedTabs.length) {
-			this._selectedTab._selected = false;
+			this._selectedTab.forcedSelected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
 			this._selectedTab = this._allItemsAndSubItems[0] as Tab;
-			this._selectedTab._selected = true;
+			this._selectedTab.forcedSelected = true;
 		}
 
 		this._setItemsPrivateProperties(this.items);
@@ -397,19 +428,19 @@ class TabContainer extends UI5Element {
 	_setItemsPrivateProperties(items: Array<ITab>) {
 		// set real dom ref to all items, then return only the tabs for further processing
 		const allTabs = items.filter(item => {
-			item._getElementInStrip = () => this.getDomRef()!.querySelector(`[id="${item._id}"]`);
+			item.getElementInStrip = () => this.getDomRef()!.querySelector(`[id="${item._id}"]`);
 			return !item.isSeparator;
 		});
 
 		allTabs.forEach((tab, index, arr) => {
-			tab._isInline = this.tabLayout === TabLayout.Inline;
-			tab._mixedMode = this.mixedMode;
-			tab._posinset = index + 1;
-			tab._setsize = arr.length;
-			tab._realTab = this._selectedTab;
-			tab._isTopLevelTab = items.some(i => i === tab);
+			tab.isInline = this.tabLayout === TabLayout.Inline;
+			tab.forcedMixedMode = this.mixedMode;
+			tab.forcedPosinset = index + 1;
+			tab.forcedSetsize = arr.length;
+			tab.realTabReference = this._selectedTab;
+			tab.isTopLevelTab = items.some(i => i === tab);
 			walk(items, _tab => {
-				_tab._realTab = tab._realTab;
+				_tab.realTabReference = tab.realTabReference;
 			});
 		});
 	}
@@ -418,13 +449,13 @@ class TabContainer extends UI5Element {
 		const tab = getTab(e.target as HTMLElement);
 
 		if (tab) {
-			this._itemNavigation.setCurrentItem(tab._realTab);
+			this._itemNavigation.setCurrentItem(tab.realTabReference);
 		}
 	}
 
 	async _onTabStripClick(e: Event) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab.disabled) {
+		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
 
@@ -436,8 +467,8 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
-			this._overflowItems = tab._realTab.subTabs;
+		if (!tab.realTabReference.hasOwnContent && tab.realTabReference.tabs.length) {
+			this._overflowItems = tab.realTabReference.subTabs;
 			this._addStyleIndent(this._overflowItems);
 
 			this.responsivePopover = await this._respPopover();
@@ -447,7 +478,7 @@ class TabContainer extends UI5Element {
 				this._setPopoverInitialFocus();
 			}
 
-			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef()!);
+			this.responsivePopover.showAt(tab.realTabReference.getTabInStripDomRef()!);
 			return;
 		}
 
@@ -465,9 +496,9 @@ class TabContainer extends UI5Element {
 			tabInstance.focus();
 		}
 
-		if (e.type === "keydown" && !(e.target as Tab)._realTab.isSingleClickArea) {
+		if (e.type === "keydown" && !(e.target as Tab).realTabReference.isSingleClickArea) {
 			button = (e.target as Tab).querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
-			tabInstance = (e.target as Tab)._realTab;
+			tabInstance = (e.target as Tab).realTabReference;
 		}
 
 		// if clicked between the expand button and the tab
@@ -492,12 +523,12 @@ class TabContainer extends UI5Element {
 		const selectedTabInOverflow = this._getSelectedTabInOverflow();
 		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
 
-		this.responsivePopover!.initialFocus = `${tab._realTab._id}-li`;
+		this.responsivePopover!.initialFocus = `${tab.realTabReference._id}-li`;
 	}
 
 	_getSelectedTabInOverflow() {
 		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
-			return (<TabContainerTabInOverflow>item)._realTab && (<TabContainerTabInOverflow>item)._realTab.selected;
+			return (<TabContainerTabInOverflow>item).realTabReference && (<TabContainerTabInOverflow>item).realTabReference.selected;
 		});
 	}
 
@@ -507,12 +538,12 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab.disabled) {
+		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
 
 		if (isEnter(e)) {
-			if (tab._realTab.isSingleClickArea) {
+			if (tab.realTabReference.isSingleClickArea) {
 				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
@@ -524,10 +555,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isDown(e) || isUp(e)) {
-			if (tab._realTab.requiresExpandButton) {
+			if (tab.realTabReference.requiresExpandButton) {
 				this._onTabExpandButtonClick(e);
 			}
-			if (tab._realTab.isSingleClickArea) {
+			if (tab.realTabReference.isSingleClickArea) {
 				this._onTabStripClick(e);
 			}
 		}
@@ -535,13 +566,13 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyUp(e: KeyboardEvent) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab.disabled) {
+		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
 
 		if (isSpace(e)) {
 			e.preventDefault();
-			if (tab._realTab.isSingleClickArea) {
+			if (tab.realTabReference.isSingleClickArea) {
 				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
@@ -593,7 +624,7 @@ class TabContainer extends UI5Element {
 	_getAllSubItems(items: Array<ITab>, result: Array<ITab> = [], level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
-				item._level = level;
+				item.forcedLevel = level;
 				result.push(item);
 
 				if (item.subTabs) {
@@ -620,8 +651,8 @@ class TabContainer extends UI5Element {
 			const selected = selectedTabIndex === index;
 			item.selected = selected;
 
-			if (item._selected) {
-				item._selected = false;
+			if (item.forcedSelected) {
+				item.forcedSelected = false;
 			}
 		});
 
@@ -732,13 +763,13 @@ class TabContainer extends UI5Element {
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
 		walk(tabs, tab => {
-			let level = tab._level! - 1;
+			let level = tab.forcedLevel! - 1;
 
 			if (tab.isSeparator) {
 				level += 1;
 			}
 
-			tab._style = {
+			tab.forcedStyle = {
 				[getScopedVarName("--_ui5-tab-indentation-level")]: level,
 				[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
 			};

@@ -4,7 +4,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -23,7 +23,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./Interfaces.js";
+import type { ITab } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -136,13 +136,13 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	selected!: boolean;
 
 	@property({ type: Boolean })
-	_selected!: boolean;
+	forcedSelected!: boolean;
 
 	@property({ type: Object })
-	_realTab!: Tab;
+	realTabReference!: Tab;
 
 	@property({ type: Boolean })
-	_isTopLevelTab!: boolean;
+	isTopLevelTab!: boolean;
 
 	/**
 	 * Holds the content associated with this tab.
@@ -176,25 +176,25 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	})
 	subTabs!: Array<ITab>
 
-	_isInline?: boolean;
-	_mixedMode?: boolean;
-	_getElementInStrip?: () => ITab | null;
+	isInline?: boolean;
+	forcedMixedMode?: boolean;
+	getElementInStrip?: () => ITab | null;
 	_individualSlot!: string;
 
 	static i18nBundle: I18nBundle;
 
-	set _tabIndex(val: string) {
+	set forcedTabIndex(val: string) {
 		this.getTabInStripDomRef()!.setAttribute("tabindex", val);
 	}
 
-	get _tabIndex() {
+	get forcedTabIndex() {
 		return this.getTabInStripDomRef()!.getAttribute("tabindex")!;
 	}
 
 	get displayText() {
 		let text = this.text;
 
-		if (this._isInline && this.additionalText) {
+		if (this.isInline && this.additionalText) {
 			text += ` (${this.additionalText})`;
 		}
 
@@ -218,19 +218,19 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isSingleClickArea() {
-		return this.subTabs.length > 0 && this._isTopLevelTab && !this._hasOwnContent;
+		return this.subTabs.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
 	}
 
 	get isTwoClickArea() {
-		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isOnSelectedTabPath(): boolean {
-		return this._realTab === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+		return this.realTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
 	get _effectiveSlotName() {
@@ -238,10 +238,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _defaultSlotName() {
-		return this._realTab === this ? "" : "disabled-slot";
+		return this.realTabReference === this ? "" : "disabled-slot";
 	}
 
-	get _hasOwnContent() {
+	get hasOwnContent() {
 		return willShowContent(this.content);
 	}
 
@@ -254,8 +254,8 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef(): ITab | null {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
+		if (this.getElementInStrip) {
+			return this.getElementInStrip();
 		}
 
 		return null;
@@ -264,19 +264,19 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
-		if (this._getElementInStrip && this._getElementInStrip()) {
-			focusedDomRef = this._getElementInStrip()!;
+		if (this.getElementInStrip && this.getElementInStrip()) {
+			focusedDomRef = this.getElementInStrip()!;
 		}
 
 		return focusedDomRef;
 	}
 
 	get isMixedModeTab() {
-		return !this.icon && this._mixedMode;
+		return !this.icon && this.forcedMixedMode;
 	}
 
 	get isTextOnlyTab() {
-		return !this.icon && !this._mixedMode;
+		return !this.icon && !this.forcedMixedMode;
 	}
 
 	get isIconTab() {
@@ -289,7 +289,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get effectiveSelected() {
 		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
-		return this.selected || this._selected || subItemSelected;
+		return this.selected || this.forcedSelected || subItemSelected;
 	}
 
 	get effectiveHidden() {
@@ -333,7 +333,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--disabled");
 		}
 
-		if (this._isInline) {
+		if (this.isInline) {
 			classes.push("ui5-tab-strip-item--inline");
 		}
 
@@ -341,7 +341,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withAdditionalText");
 		}
 
-		if (!this.icon && !this._mixedMode) {
+		if (!this.icon && !this.forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--textOnly");
 		}
 
@@ -349,7 +349,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withIcon");
 		}
 
-		if (!this.icon && this._mixedMode) {
+		if (!this.icon && this.forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--mixedMode");
 		}
 

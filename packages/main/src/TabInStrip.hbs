@@ -4,14 +4,14 @@
 	role="tab"
 	aria-roledescription="{{_roleDescription}}"
 	aria-haspopup="{{_ariaHasPopup}}"
-	aria-posinset="{{this._posinset}}"
-	aria-setsize="{{this._setsize}}"
+	aria-posinset="{{this.forcedPosinset}}"
+	aria-setsize="{{this.forcedSetsize}}"
 	aria-controls="ui5-tc-content"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-disabled="{{this.effectiveDisabled}}"
 	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
-	._realTab="{{this}}"
+	.realTabReference="{{this}}"
 >
 	{{#if this.icon}}
 		<div class="ui5-tab-strip-item-icon-outer">

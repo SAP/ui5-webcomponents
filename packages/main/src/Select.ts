@@ -72,7 +72,24 @@ import type { IFormElement, NativeFormElement } from "./features/InputElementsFo
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
-import { IOption } from "./Interfaces.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-select</code> as options
+ *
+ * @public
+ */
+interface IOption extends UI5Element {
+	selected: boolean,
+	disabled: boolean,
+	title: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	focused?: boolean,
+	text?: Array<Node>,
+	stableDomRef: string,
+	displayText?: string,
+}
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -601,11 +618,11 @@ class Select extends UI5Element implements IFormElement {
 			}
 
 			opt.selected = false;
-			opt._focused = false;
+			opt.focused = false;
 
 			return {
 				selected: false,
-				_focused: false,
+				focused: false,
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
@@ -618,9 +635,9 @@ class Select extends UI5Element implements IFormElement {
 
 		if (lastSelectedOptionIndex > -1) {
 			syncOpts[lastSelectedOptionIndex].selected = true;
-			syncOpts[lastSelectedOptionIndex]._focused = true;
+			syncOpts[lastSelectedOptionIndex].focused = true;
 			options[lastSelectedOptionIndex].selected = true;
-			options[lastSelectedOptionIndex]._focused = true;
+			options[lastSelectedOptionIndex].focused = true;
 			this._text = syncOpts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
@@ -628,9 +645,9 @@ class Select extends UI5Element implements IFormElement {
 			this._selectedIndex = -1;
 			if (syncOpts[firstEnabledOptionIndex]) {
 				syncOpts[firstEnabledOptionIndex].selected = true;
-				syncOpts[firstEnabledOptionIndex]._focused = true;
+				syncOpts[firstEnabledOptionIndex].focused = true;
 				options[firstEnabledOptionIndex].selected = true;
-				options[firstEnabledOptionIndex]._focused = true;
+				options[firstEnabledOptionIndex].focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
 				this._text = options[firstEnabledOptionIndex].textContent;
 			}
@@ -882,12 +899,10 @@ class Select extends UI5Element implements IFormElement {
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
-		previousOption._focused = false;
 		previousOption.focused = false;
 
 		const nextOption = options[newIndex];
 		nextOption.selected = true;
-		nextOption._focused = true;
 		nextOption.focused = true;
 
 		this._selectedIndex = newIndex;
