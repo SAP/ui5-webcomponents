@@ -531,9 +531,9 @@ class SideNavigation extends UI5Element {
 		let focusedItem;
 
 		if (this.collapsed) {
-			focusedItem = items.find(item => item._tabIndex === "0");
+			focusedItem = items.find(item => item.forcedTabIndex === "0");
 		} else {
-			focusedItem = this._getWithNestedItems(items, true).find(item => item._tabIndex === "0");
+			focusedItem = this._getWithNestedItems(items, true).find(item => item.forcedTabIndex === "0");
 		}
 
 		return focusedItem;

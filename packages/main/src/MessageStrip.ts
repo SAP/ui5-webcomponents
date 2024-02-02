@@ -15,7 +15,7 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
-import type { IIcon } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import {

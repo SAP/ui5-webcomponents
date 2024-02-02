@@ -53,7 +53,6 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
  *
  * @constructor
  * @extends TimePickerInternals
- * @abstract
  * @since 1.15.0
  * @private
  */

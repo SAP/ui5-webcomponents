@@ -15,6 +15,7 @@ import LinkDesign from "./types/LinkDesign.js";
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
+ * @abstract
  */
 @customElement("ui5-breadcrumbs-item")
 class BreadcrumbsItem extends UI5Element {

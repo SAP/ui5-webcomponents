@@ -336,7 +336,7 @@ class Breadcrumbs extends UI5Element {
 		// if the last focused link has done into the overflow =>
 		// ensure the first visible link is focusable
 		const focusableItems = this._getFocusableItems();
-		if (!focusableItems.some(x => x._tabIndex === "0")) {
+		if (!focusableItems.some(x => x.forcedTabIndex === "0")) {
 			this._itemNavigation.setCurrentItem(focusableItems[0]);
 		}
 	}
@@ -465,7 +465,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _isDropdownArrowFocused() {
-		return this._dropdownArrowLink._tabIndex === "0";
+		return this._dropdownArrowLink.forcedTabIndex === "0";
 	}
 
 	/**

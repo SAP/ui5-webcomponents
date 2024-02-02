@@ -8,6 +8,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -25,9 +26,9 @@ import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.j
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import type { IButton } from "./Interfaces.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
+import HasPopup from "./types/HasPopup.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -35,8 +36,23 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 import buttonCss from "./generated/themes/Button.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 
+/**
+ * Interface for components that may be used as a button inside numerous higher-order components
+ *
+ * @public
+ */
+interface IButton extends HTMLElement, ITabbable {
+	nonInteractive: boolean;
+}
+
 let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
+
+type AccessibilityAttributes = {
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: `${HasPopup}`,
+	controls?: string
+};
 
 /**
  * @class
@@ -199,11 +215,11 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * 		</li>
 	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
 	 * 			<ul>
-	 *				<li><code>Dialog</code></li>
-	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
-	 *				<li><code>Menu</code></li>
-	 *				<li><code>Tree</code></li>
+	 *				<li><code>dialog</code></li>
+	 *				<li><code>grid</code></li>
+	 *				<li><code>listbox</code></li>
+	 *				<li><code>menu</code></li>
+	 *				<li><code>tree</code></li>
 	 * 			</ul>
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
@@ -214,7 +230,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	/**
 	 * Defines whether the button has special form-related functionality.
@@ -283,7 +299,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @private
 	 */
 	@property({ defaultValue: "0", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * @since 1.0.0-rc.13
@@ -492,7 +508,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 			return tabindex;
 		}
 
-		return this.nonInteractive ? "-1" : this._tabIndex;
+		return this.nonInteractive ? "-1" : this.forcedTabIndex;
 	}
 
 	get showIconTooltip() {
@@ -519,3 +535,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 Button.define();
 
 export default Button;
+export type {
+	AccessibilityAttributes,
+	IButton,
+};
