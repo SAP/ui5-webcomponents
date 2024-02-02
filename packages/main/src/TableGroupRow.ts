@@ -47,15 +47,6 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the mode of the row
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>MultiSelect</code></li>
-	 * </ul>
-	 *
 	 * @default "None"
 	 * @private
 	 */

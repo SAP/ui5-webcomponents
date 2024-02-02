@@ -283,8 +283,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
 	 *
 	 * @default "None"
 	 * @public
@@ -316,7 +314,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines the filter type of the component.
-	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 	 *
 	 * @default "StartsWithPerTerm"
 	 * @public

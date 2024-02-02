@@ -5,6 +5,7 @@
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
 	@focusin={{_clocksFocusIn}}
+	@focusout={{_clocksFocusOut}}
 	format-pattern="{{formatPattern}}"
 >
 	<div
@@ -16,13 +17,14 @@
 		{{/if}}
 		<ui5-toggle-spin-button
 			id="{{../_id}}_button_{{this.entity}}"
+			data-sap-clock="{{this.entity}}"
 			.valueMin="{{this.attributes.min}}"
 			.valueMax="{{this.attributes.max}}"
 			.valueNow="{{this.value}}"
 			.valueText="{{this.textValue}}"
 			.accessibleName="{{this.label}}"
 			.pressed="{{this.active}}"
-			?focused="{{this.active}}"
+			?focused="{{this.focused}}"
 			@focusin="{{../_buttonFocusIn}}"
 		>{{this.stringValue}}</ui5-toggle-spin-button>
 	{{/each}}
@@ -31,6 +33,8 @@
 		<ui5-segmented-button
 			id="{{_id}}_AmPm"
 			@click={{_periodChange}}
+			@focusin={{_amPmFocusIn}}
+			@focusout={{_amPmFocusOut}}
 		>
 		{{#each _periods}}
     		<ui5-segmented-button-item

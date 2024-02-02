@@ -6,13 +6,20 @@ import type TableMode from "./types/TableMode.js";
 import type SemanticColor from "./types/SemanticColor.js";
 import type Tab from "./Tab.js";
 import type ListItemType from "./types/ListItemType.js";
+import type AvatarColorScheme from "./types/AvatarColorScheme.js";
+import AvatarSize from "./types/AvatarSize.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
  *
  * @public
  */
-interface IAvatar extends HTMLElement {}
+interface IAvatar extends HTMLElement, ITabbable {
+	_effectiveBackgroundColor: AvatarColorScheme;
+	size: `${AvatarSize}`;
+	_effectiveSize: AvatarSize;
+	interactive: boolean;
+}
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components

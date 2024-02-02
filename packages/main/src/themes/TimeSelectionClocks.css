@@ -1,8 +1,7 @@
 .ui5-time-picker-tsc-container {
 	margin: 0 auto;
 	box-sizing: border-box;
-	width: 20rem;
-	height: 23.75rem;
+	width: 100%;
 	padding: 1rem;
 	text-align: center;
 }
@@ -16,7 +15,7 @@
 	justify-content: center;
 	align-items: center;
 	padding-bottom: 1rem;
-	width: 18rem;
+	width: 100%;
 }
 
 .ui5-time-picker-tsc-buttons span[separator] {
@@ -31,7 +30,6 @@
 .ui5-time-picker-tsc-clocks {
     display: block;
     text-align: center;
-    width: 18rem;
-    height: 18rem;
+    width: 100%;
     touch-action: none;
 }

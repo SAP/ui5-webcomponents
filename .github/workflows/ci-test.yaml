@@ -12,9 +12,9 @@ jobs:
       matrix:
         suite: ['base', 'main:suite-1', 'main:suite-2', 'fiori']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4.0.1
       with:
         node-version: 18
         cache: 'yarn'
@@ -26,4 +26,4 @@ jobs:
       run: yarn ci:testbuild
 
     - name: Test
-      run: yarn test:${{ matrix.suite }}
+      run: yarn ci:test:${{ matrix.suite }}

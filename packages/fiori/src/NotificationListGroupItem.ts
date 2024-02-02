@@ -206,6 +206,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return !this.collapsed;
 	}
 
+	get groupCollapsedIcon() {
+		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
+	}
+
 	/**
 	 * Event handlers
 	 *

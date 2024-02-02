@@ -10,6 +10,11 @@ enum IllustrationMessageType {
 	 */
 	BeforeSearch = "BeforeSearch",
 	/**
+	 * "New Mail" illustration type.
+	 * @public
+	 */
+	NewMail = "NewMail",
+	/**
 	 * "No Activities" illustration type.
 	 * @public
 	 */
@@ -179,6 +184,11 @@ enum IllustrationMessageType {
 	 * @public
 	 */
 	SearchFolder = "SearchFolder",
+	/**
+	 * "Sign Out" illustration type.
+	 * @public
+	 */
+	SignOut = "SignOut",
 	/**
 	 * "Simple Balloon" illustration type.
 	 * @public

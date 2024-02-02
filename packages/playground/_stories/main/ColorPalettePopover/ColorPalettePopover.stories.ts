@@ -3,24 +3,14 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type ColorPalettePopover from "@ui5/webcomponents/dist/ColorPalettePopover.js";
-
-const component = "ui5-color-palette-popover";
 
 export default {
 	title: "Main/ColorPalettePopover",
 	component: "ColorPalettePopover",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<ColorPalettePopover>;
 

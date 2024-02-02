@@ -29,6 +29,7 @@
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "./PopupsCommon-parameters.css";
+@import "../base/PopupStaticAreaStyles-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";

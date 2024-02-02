@@ -62,6 +62,11 @@
 	--_ui5_side_navigation_popup_title_text_size: var(--sapFontSize);
 	--_ui5_side_navigation_popup_title_line_height: normal;
 	--_ui5_side_navigation_selection_indicator_display: none;
+
+	--_ui5_side_navigation_item_collapsed_icon_padding: 0;
+	--_ui5_side_navigation_item_collapsed_hover_focus_width: 100%;
+	--_ui5_side_navigation_item_collapsed_hover_focus_display: none;
+	--_ui5_side_navigation_item_collapsed_hover_focus_padding_right: 0;
 }
 
 [data-ui5-compact-size],

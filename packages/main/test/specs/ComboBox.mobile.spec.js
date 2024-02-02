@@ -216,7 +216,12 @@ describe("Typeahead", () => {
 		await combo.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("[ui5-input]");
-		await dialogInput.keys("Bu");
+
+		await dialogInput.shadow$("input").click();
+
+		await browser.keys("B");
+		await browser.keys("u");
+
 		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
 	});
 

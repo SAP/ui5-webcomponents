@@ -1,26 +1,17 @@
 import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs";
 
 import type TableRow from "@ui5/webcomponents/dist/TableRow.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
-const component = "ui5-table-row";
-
 export default {
 	title: "Main/Table/Table Row",
 	component: "TableRow",
-	parameters: {
-		docs: {
-		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<TableRow>;
 

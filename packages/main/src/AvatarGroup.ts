@@ -14,7 +14,7 @@ import {
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
-import type IAvatar from "./Avatar.js";
+import type { IAvatar } from "./Interfaces.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
@@ -373,11 +373,11 @@ class AvatarGroup extends UI5Element {
 		return {
 			overflowButton: {
 				"ui5-avatar-group-overflow-btn": true,
-				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === "XS",
-				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === "S",
-				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === "M",
-				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === "L",
-				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === "XL",
+				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === AvatarSize.XS,
+				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === AvatarSize.S,
+				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === AvatarSize.M,
+				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === AvatarSize.L,
+				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === AvatarSize.XL,
 			},
 		};
 	}

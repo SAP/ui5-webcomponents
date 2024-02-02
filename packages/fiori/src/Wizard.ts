@@ -185,8 +185,8 @@ type StepInfo = {
  * @extends UI5Element
  * @since 1.0.0-rc.10
  * @public
- * @csspart navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
- * @csspart step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
+ * @csspart navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.
+ * @csspart step-content - Used to style a <code>ui5-wizard-step</code> container.
  */
 @customElement({
 	tag: "ui5-wizard",
