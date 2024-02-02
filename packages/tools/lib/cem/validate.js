@@ -15,6 +15,11 @@ const inputFilePath = path.join(process.cwd(), "dist/custom-elements.json"); // 
 const customManifest = fs.readFileSync(inputFilePath, 'utf8');
 const inputDataInternal = JSON.parse(customManifest);
 
+inputDataInternal.modules.forEach(moduleDoc => {
+    moduleDoc.exports = moduleDoc.exports.
+    filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
+})
+
 const clearProps = (data) => {
     if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
