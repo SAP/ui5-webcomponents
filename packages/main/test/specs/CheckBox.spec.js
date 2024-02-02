@@ -23,7 +23,7 @@ describe("CheckBox general interaction", () => {
 	});
 
 	it("tests readonly space and enter keys active state", async () => {
-		const checkBox = await browser.$("#cbError");
+		const checkBox = await browser.$("#cbReadonly");
 
 		await checkBox.click();
 		await checkBox.keys("Space");
