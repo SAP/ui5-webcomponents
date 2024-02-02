@@ -166,7 +166,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 				if (propertyDecorator) {
 					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
-					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind  === ts.SyntaxKind.TrueKeyword || undefined;
+					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind === ts.SyntaxKind.TrueKeyword || undefined;
 				}
 
 				if (hasTag(memberParsedJsDoc, "formProperty")) {
@@ -468,9 +468,6 @@ export default {
 						}
 					}
 				})
-
-				moduleDoc.exports = moduleDoc.exports.
-					filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
 			},
 			packageLinkPhase({ context }) {
 				if (context.dev) {
