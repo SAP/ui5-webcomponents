@@ -91,6 +91,15 @@
 	</div>
 
 	<div>
+		<h3>StepInput with valueStateChange Prevented</h3>
+		<ui5-step-input id="stepInputValueStateChange"
+			placeholder="Enter number"
+			value-state="Error"
+			class="stepinput2auto"
+		></ui5-step-input>
+	</div>
+
+	<div>
 		<h3>StepInput with valueState=None</h3>
 		<ui5-step-input id="stepInputNone"
 			placeholder="Enter number"
@@ -181,6 +190,9 @@
 
 		stepInputChange2.addEventListener('ui5-change', displayChange);
 
+		stepInputValueStateChange.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
+		});
 	</script>
 
 </body>
