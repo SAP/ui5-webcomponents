@@ -2,24 +2,16 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import { DocsPage } from "../../../.storybook/docs";
 import type Badge from "@ui5/webcomponents/dist/Badge.js";
 import BadgeDesign from "@ui5/webcomponents/dist/types/BadgeDesign.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 
-const component = "ui5-badge";
-
 export default {
 	title: "Main/Badge",
 	component: "Badge",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<Badge>;
 

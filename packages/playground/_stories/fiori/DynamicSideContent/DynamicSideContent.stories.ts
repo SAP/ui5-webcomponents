@@ -3,27 +3,17 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type DynamicSideContent from "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";
 import SideContentPosition from "@ui5/webcomponents-fiori/dist/types/SideContentPosition.js";
 import SideContentFallDown from "@ui5/webcomponents-fiori/dist/types/SideContentFallDown.js";
 import SideContentVisibility from "@ui5/webcomponents-fiori/dist/types/SideContentVisibility.js";
 
-const component = "ui5-dynamic-side-content";
-
 export default {
     title: "Fiori/DynamicSideContent",
     component: "DynamicSideContent",
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 } as Meta<DynamicSideContent>;
 
