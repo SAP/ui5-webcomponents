@@ -464,6 +464,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		e.dataTransfer.setData("text/plain", `${draggedTabInStrip.id}`);
 		e.dataTransfer.dropEffect = "move";
 
+		// eslint-disable-next-line no-warning-comments
 		// TODO: replace dataTransfer usage with setDraggedElement and other APIs
 		setDraggedElement(draggedTabInStrip._realTab!);
 	}

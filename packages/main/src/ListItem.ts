@@ -356,6 +356,7 @@ abstract class ListItem extends ListItemBase {
 		e.dataTransfer.setData("text/plain", this.id);
 		e.dataTransfer.dropEffect = "move";
 
+		// eslint-disable-next-line no-warning-comments
 		// TODO: replace dataTransfer usage with setDraggedElement and other APIs
 		setDraggedElement(this);
 	}

@@ -163,6 +163,7 @@ class DropIndicator extends UI5Element {
 	}
 
 	hide() {
+		// eslint-disable-next-line no-warning-comments
 		// TODO: properly hide the indicator if it doesn't have target
 		this.style.display = "none";
 	}

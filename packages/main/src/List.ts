@@ -1202,6 +1202,7 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
+		// eslint-disable-next-line no-warning-comments
 		// TODO: add validation if the dropped element is known, for example avoid links or other element to be dropped, or let the the app dev do it?
 		const coordinateInfo = getElementAtCoordinate(
 			this.items,
@@ -1249,6 +1250,7 @@ class List extends UI5Element {
 	}
 
 	_ondrop(e: DragEvent) {
+		// eslint-disable-next-line no-warning-comments
 		// TODO: add validation if the dropped element is known, for example avoid links or other element to be dropped, or let the the app dev do it?
 		if (!e.dataTransfer) {
 			return;
