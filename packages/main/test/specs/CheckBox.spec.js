@@ -22,6 +22,16 @@ describe("CheckBox general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should be fired 3 times");
 	});
 
+	it("tests readonly space and enter keys active state", async () => {
+		const checkBox = await browser.$("#cbError");
+
+		await checkBox.click();
+		await checkBox.keys("Space");
+		await checkBox.keys("Enter");
+
+		assert.strictEqual(await checkBox.getAttribute("active"), null, "Click, Space or Enter doesn't trigger active attr");
+	});
+
 	it("tests change event not fired, when disabled", async () => {
 		const checkBox = await browser.$("#cb2");
 		const field = await browser.$("#field");
