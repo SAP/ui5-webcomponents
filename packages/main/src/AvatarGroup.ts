@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -14,10 +15,10 @@ import {
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
-import type { IAvatar } from "./Interfaces.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
+import type { IButton } from "./Button.js";
 
 import {
 	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
@@ -32,7 +33,18 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
-import { IButton } from "./Interfaces.js";
+
+/**
+ * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as <code>ui5-avatar-group</code>
+ *
+ * @public
+ */
+interface IAvatarGroupItem extends HTMLElement, ITabbable {
+	еffectiveBackgroundColor: AvatarColorScheme;
+	size: `${AvatarSize}`;
+	effectiveSize: AvatarSize;
+	interactive: boolean;
+}
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -212,7 +224,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<IAvatar>;
+	items!: Array<IAvatarGroupItem>;
 
 	/**
 	 * Defines the overflow button of the component.
@@ -254,7 +266,7 @@ class AvatarGroup extends UI5Element {
 	 * @default []
 	 * @public
 	 */
-	get hiddenItems(): IAvatar[] {
+	get hiddenItems(): IAvatarGroupItem[] {
 		return this.items.slice(this._hiddenStartIndex);
 	}
 
@@ -264,7 +276,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	get colorScheme(): AvatarColorScheme[] {
-		return this.items.map(avatar => avatar._effectiveBackgroundColor);
+		return this.items.map(avatar => avatar.еffectiveBackgroundColor);
 	}
 
 	get _customOverflowButton() {
@@ -478,13 +490,13 @@ class AvatarGroup extends UI5Element {
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
 			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				// based on RTL the browser automatically sets left or right margin to avatars
-				avatar.style.marginInlineEnd = offsets[avatar._effectiveSize][this.type];
+				avatar.style.marginInlineEnd = offsets[avatar.effectiveSize][this.type];
 			}
 		});
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this._itemNavigation.setCurrentItem(e.target as IAvatar);
+		this._itemNavigation.setCurrentItem(e.target as IAvatarGroupItem);
 	}
 
 	/**
@@ -526,7 +538,7 @@ class AvatarGroup extends UI5Element {
 		let hiddenItems = 0;
 
 		for (let index = 0; index < this._itemsCount; index++) {
-			const item: IAvatar = this.items[index];
+			const item: IAvatarGroupItem = this.items[index];
 
 			// show item to determine if it will fit the new container size
 			item.hidden = false;
@@ -587,4 +599,5 @@ AvatarGroup.define();
 export default AvatarGroup;
 export type {
 	AvatarGroupClickEventDetail,
+	IAvatarGroupItem,
 };

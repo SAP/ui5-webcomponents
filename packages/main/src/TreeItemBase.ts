@@ -182,14 +182,14 @@ class TreeItemBase extends ListItem {
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	_setsize!: number;
+	forcedSetsize!: number;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	_posinset!: number;
+	forcedPosinset!: number;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -262,8 +262,8 @@ class TreeItemBase extends ListItem {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
-			posinset: this._posinset,
-			setsize: this._setsize,
+			posinset: this.forcedPosinset,
+			setsize: this.forcedSetsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,

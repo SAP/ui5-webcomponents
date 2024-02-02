@@ -64,7 +64,7 @@ import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
-import type { IIcon, IMultiComboBoxItem } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -106,6 +106,18 @@ import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input, { InputEventDetail } from "./Input.js";
+
+/**
+ * Interface for components that may be slotted inside a <code>ui5-multi-combobox</code> as items
+ *
+ * @public
+ */
+interface IMultiComboBoxItem extends UI5Element {
+	text: string,
+	selected: boolean,
+	isGroupItem?: boolean,
+	stableDomRef: string,
+}
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;

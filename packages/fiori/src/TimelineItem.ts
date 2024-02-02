@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
-import type { ITimelineItem } from "./Interfaces.js";
+import type { ITimelineItem } from "./Timeline.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
@@ -97,7 +97,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	subtitleText!: string;
 
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Defines the items orientation.
@@ -114,7 +114,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property()
-	_lineWidth!: string;
+	forcedLineWidth!: string;
 
 	constructor() {
 		super();
@@ -135,8 +135,8 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		return {
 			indicator: {
 				"ui5-tli-indicator": true,
-				"ui5-tli-indicator-short-line": this._lineWidth === SHORT_LINE_WIDTH,
-				"ui5-tli-indicator-large-line": this._lineWidth === LARGE_LINE_WIDTH,
+				"ui5-tli-indicator-short-line": this.forcedLineWidth === SHORT_LINE_WIDTH,
+				"ui5-tli-indicator-large-line": this.forcedLineWidth === LARGE_LINE_WIDTH,
 			},
 			bubbleArrowPosition: {
 				"ui5-tli-bubble-arrow": true,

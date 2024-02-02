@@ -36,7 +36,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { IIcon, IComboBoxItem } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
 import * as Filters from "./Filters.js";
 
 import {
@@ -84,6 +84,19 @@ import Input, { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
 
 const SKIP_ITEMS_SIZE = 10;
+
+/**
+ * Interface for components that may be slotted inside a <code>ui5-combobox</code>
+ *
+ * @public
+ */
+interface IComboBoxItem {
+	text: string,
+	focused: boolean,
+	isGroupItem: boolean,
+	selected?: boolean,
+	additionalText?: string,
+}
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;

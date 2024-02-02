@@ -18,7 +18,7 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
-import type { IButton } from "@ui5/webcomponents/dist/Interfaces.js";
+import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -64,8 +64,8 @@ type ShellBarAccessibilityTexts = {
 };
 
 type ShellBarAccessibilityAttributesValue = {
-	ariaHasPopup?: string;
-	expanded?: boolean;
+	expanded?: "true" | "false" | boolean,
+	ariaHasPopup?: `${HasPopup}`,
 }
 
 type ShellBarAccessibilityAttributes = {

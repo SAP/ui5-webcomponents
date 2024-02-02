@@ -6,10 +6,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
+import type { IProductSwitchItem } from "./ProductSwitch.js";
 
 // Styles
 import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
-import type { IProductSwitchItem } from "./Interfaces.js";
 
 /**
  * @class
@@ -147,7 +147,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * Defines the component tabindex.
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	_deactivate: () => void;
 

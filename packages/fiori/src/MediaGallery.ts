@@ -19,7 +19,6 @@ import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
 import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
 import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
-import type IMediaGalleryItem from "./MediaGalleryItem.js";
 
 // Styles
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
@@ -27,8 +26,21 @@ import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 // Template
 import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
 
+/**
+ * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
+ *
+ * @public
+ */
+interface IMediaGalleryItem extends HTMLElement, ITabbable {
+	selected: boolean,
+	disabled: boolean,
+	focused: boolean,
+	displayedContent: HTMLElement | null;
+	layout: `${MediaGalleryItemLayout}`
+}
+
 type MediaGallerySelectionChangeEventDetail = {
-	item: MediaGalleryItem;
+	item: IMediaGalleryItem;
 }
 
 // The allowed number of thumbnail columns on each size
@@ -226,7 +238,7 @@ class MediaGallery extends UI5Element {
 
 	_itemNavigation: ItemNavigation;
 	_onResize: () => void;
-	_selectedItem?: MediaGalleryItem;
+	_selectedItem?: IMediaGalleryItem;
 
 	constructor() {
 		super();
@@ -261,7 +273,7 @@ class MediaGallery extends UI5Element {
 		}
 	}
 
-	_isSelectableItem(this: void, item: MediaGalleryItem) {
+	_isSelectableItem(this: void, item: IMediaGalleryItem) {
 		return !item.disabled && !item.hidden;
 	}
 
@@ -376,7 +388,7 @@ class MediaGallery extends UI5Element {
 		return items;
 	}
 
-	_selectItem(item: MediaGalleryItem, userInteraction = false) {
+	_selectItem(item: IMediaGalleryItem, userInteraction = false) {
 		if (item === this._selectedItem) {
 			return;
 		}
@@ -396,22 +408,22 @@ class MediaGallery extends UI5Element {
 		}
 	}
 
-	_updateSelectedFlag(itemToSelect: MediaGalleryItem) {
+	_updateSelectedFlag(itemToSelect: IMediaGalleryItem) {
 		this.items.forEach(next => { next.selected = false; });
 		itemToSelect.selected = true;
 	}
 
-	_selectItemOnPhone(item: MediaGalleryItem) {
+	_selectItemOnPhone(item: IMediaGalleryItem) {
 		const selectableItemIndex = this._selectableItems.indexOf(item),
 			carousel = this._carousel;
 		carousel && carousel.navigateTo(selectableItemIndex);
 	}
 
-	_displayContent(item: MediaGalleryItem) {
+	_displayContent(item: IMediaGalleryItem) {
 		let clone;
 		const mainItem = this._mainItem,
-			oldContent = mainItem!._content,
-			newContent = item._content;
+			oldContent = mainItem!.displayedContent,
+			newContent = item.displayedContent;
 
 		mainItem!._thumbnailDesign = false;
 		oldContent && oldContent.remove();
@@ -425,7 +437,7 @@ class MediaGallery extends UI5Element {
 
 	_onThumbnailClick(e: MouseEvent) {
 		const target = e.target as HTMLElement;
-		const item = target.closest<MediaGalleryItem>("[ui5-media-gallery-item]")!;
+		const item = target.closest<IMediaGalleryItem>("[ui5-media-gallery-item]")!;
 
 		if (item.disabled) {
 			return;
@@ -528,4 +540,7 @@ MediaGallery.define();
 
 export default MediaGallery;
 
-export type { MediaGallerySelectionChangeEventDetail };
+export type {
+	MediaGallerySelectionChangeEventDetail,
+	IMediaGalleryItem,
+};

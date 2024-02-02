@@ -15,7 +15,7 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
-import { IButton } from "./Interfaces.js";
+import type { IButton } from "./Button.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -66,8 +66,8 @@ type AccInfo = {
 }
 
 type AccessibilityAttributes = {
-	ariaSetsize: number,
-	ariaPosinset: number,
+	ariaSetsize?: number,
+	ariaPosinset?: number,
 }
 
 /**
@@ -76,6 +76,7 @@ type AccessibilityAttributes = {
  * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
  *
  * @constructor
+ * @abstract
  * @extends ListItemBase
  * @public
  */
