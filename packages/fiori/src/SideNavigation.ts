@@ -55,19 +55,12 @@ type SideNavigationSelectionChangeEventDetail = {
 	item: SideNavigationItemBase,
 };
 
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type PopupClickEventDetail = {
-	target: {
-		associatedItem: SideNavigationItemBase,
-	}
-};
+type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNavigationItemBase };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
-	detail: {
-		item: {
-			associatedItem: SideNavigationItemBase,
-		}
+	item: Pick<MenuItemClickEventDetail, "item"> & {
+		associatedItem: SideNavigationItemBase,
 	}
 };
 
@@ -286,8 +279,8 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	async handlePopupItemClick(e: PopupClickEventDetail) {
-		const associatedItem = e.target.associatedItem;
+	async handlePopupItemClick(e: PointerEvent) {
+		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
@@ -302,7 +295,7 @@ class SideNavigation extends UI5Element {
 		this._popoverContents.item.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	handleOverflowItemClick(e: NavigationMenuClickEventDetail) {
+	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail.item.associatedItem;
 
 		associatedItem.fireEvent("click");
