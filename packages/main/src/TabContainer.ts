@@ -734,6 +734,7 @@ class TabContainer extends UI5Element {
 		return this._getAllSubItems(this.items);
 	}
 
+	// eslint-disable-next-line no-warning-comments
 	// TODO: refactor this method - it is getter but has side effect
 	_getAllSubItems(items: Array<ITab>, result: Array<ITab> = [], level = 1) {
 		items.forEach(item => {
@@ -1247,6 +1248,7 @@ class TabContainer extends UI5Element {
 		let opener;
 		let showPopover = false;
 
+		// eslint-disable-next-line no-warning-comments
 		// TODO: startoverflow
 		if (e.target === this._getEndOverflowBtnDOM()) {
 			dragOverElement = this._getEndOverflowBtnDOM()!;
@@ -1399,6 +1401,7 @@ class TabContainer extends UI5Element {
 
 	_onReorderItemsInPopover(e: CustomEvent<ListItemsReorderEventDetail>) {
 		const { source, destination } = e.detail;
+		// eslint-disable-next-line no-warning-comments
 		const droppedTab = (source.element as unknown as Tab)._realTab; // TODO: store _realTab reference as custom data
 		const listItem = destination.element.children[destination.index] as Tab;
 		const targetTabIndex = Array.from(listItem._realTab.parentElement!.children).indexOf(listItem._realTab);
@@ -1439,7 +1442,8 @@ class TabContainer extends UI5Element {
 
 		if (!arraysAreEqual(this._popoverItemsFlat, _flattenedNewItems)) {
 			this._popoverItemsFlat = _flattenedNewItems;
-			this._popoverItems = items; // TODO: get tid of _popoverItems in favor or _popoverItemsFlat
+			// eslint-disable-next-line no-warning-comments
+			this._popoverItems = items; // TODO: get rid of _popoverItems in favor or _popoverItemsFlat
 			this._addStyleIndent(this._popoverItems);
 		}
 	}

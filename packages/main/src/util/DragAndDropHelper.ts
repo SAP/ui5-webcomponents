@@ -43,6 +43,7 @@ const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, lay
 
 		const shortestDistance = Math.min(
 			distanceToTopBorder,
+			// eslint-disable-next-line no-warning-comments
 			maxNestingLevel > 0 ? distanceToCenter : distanceToTopBorder, // TODO: integrate with DropIndicator
 			distanceToBottomBorder,
 		);
