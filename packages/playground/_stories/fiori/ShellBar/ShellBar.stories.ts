@@ -3,24 +3,14 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type ShellBar from "@ui5/webcomponents-fiori/dist/ShellBar.js";
-
-const component = "ui5-shellbar";
 
 export default {
     title: "Fiori/ShellBar",
     component: "ShellBar",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 } as Meta<ShellBar>;
 
@@ -31,7 +21,6 @@ const Template: UI5StoryArgs<ShellBar, StoryArgsSlots> = (
     secondary-title="${ifDefined(args.secondaryTitle)}"
     notifications-count="${ifDefined(args.notificationsCount)}"
     ?show-notifications="${ifDefined(args.showNotifications)}"
-    ?show-product-switch="${ifDefined(args.showProductSwitch)}"
     ?show-co-pilot="${ifDefined(args.showCoPilot)}"
     ?show-search-field="${ifDefined(args.showSearchField)}"
     .accessibilityRoles="${ifDefined(args.accessibilityRoles)}"
@@ -69,8 +58,8 @@ Search.args = {
     searchField: `<ui5-input slot="searchField" placeholder="Enter service..."></ui5-input>`,
 };
 
-export const WithCoPilot = Template.bind({});
-WithCoPilot.args = {
+export const WithJoule = Template.bind({});
+WithJoule.args = {
     primaryTitle: "Corporate Portal",
     secondaryTitle: "secondary title",
     showCoPilot: true,
@@ -91,7 +80,6 @@ export const Advanced: StoryFn = () => {
             secondary-title="secondary title"
             notifications-count="99+"
             show-notifications=""
-            show-product-switch=""
             show-co-pilot=""
         >
             <ui5-avatar slot="profile">

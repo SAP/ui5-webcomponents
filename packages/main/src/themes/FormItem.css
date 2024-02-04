@@ -26,9 +26,9 @@
 }
 
 :host([item-spacing="Large"]) .ui5-form-item-layout {
-	min-height: 2.5rem;
-	padding-top: 0.625rem;
-	padding-bottom: 0.625rem;
+	min-height: var(--_ui5_form_item_min_height);
+	padding-top: var(--_ui5_form_item_padding);
+	padding-bottom: var(--_ui5_form_item_padding);
 	box-sizing: border-box;
 }
 
@@ -51,8 +51,8 @@
 	}
 
 	:host([item-spacing="Large"]) .ui5-form-item-content {
-		min-height: 2.625rem;
-		padding-top: 0.65rem;
+		min-height: var(--_ui5_form_item_min_height);
+		padding-top: var(--_ui5_form_item_padding);
 		box-sizing: border-box;
 	}
 }

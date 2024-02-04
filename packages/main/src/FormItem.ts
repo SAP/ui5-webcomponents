@@ -16,7 +16,7 @@ import FormItemCss from "./generated/themes/FormItem.css.js";
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The FormItem (ui5-form-item) represents combination of a label and
+ * The FormItem (ui5-form-item) represents pair of a label and
  * one or more components (text or text fields), associated to it.
  *
  * <h3>Usage</h3>
@@ -39,15 +39,14 @@ import FormItemCss from "./generated/themes/FormItem.css.js";
 class FormItem extends UI5Element {
 	/**
 	 * Defines the label of the component.
-	 *
 	 * @public
 	 */
 	@slot()
 	labelContent!: Array<HTMLElement>;
 
 	/**
-	 * Defines the content of the component, assotiated to <code>labelContent</code>.
-	 *
+	 * Defines the content of the component,
+	 * assotiated to <code>labelContent</code>.
 	 * @public
 	 */
 	@slot({

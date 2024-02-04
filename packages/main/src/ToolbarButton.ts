@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Button from "./Button.js";
+import type { AccessibilityAttributes as ButtonAccessibilityAttributes } from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
@@ -13,6 +14,8 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
 import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
+
+type AccessibilityAttributes = ButtonAccessibilityAttributes;
 
 /**
  * @class
@@ -143,7 +146,7 @@ class ToolbarButton extends ToolbarItem {
 	 * 			<ul>
 	 *				<li><code>Dialog</code></li>
 	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
+	 *				<li><code>Listbox</code></li>
 	 *				<li><code>Menu</code></li>
 	 *				<li><code>Tree</code></li>
 	 * 			</ul>
@@ -154,7 +157,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	/**
 	 * Button text
@@ -211,3 +214,7 @@ registerToolbarItem(ToolbarButton);
 ToolbarButton.define();
 
 export default ToolbarButton;
+
+export type {
+	AccessibilityAttributes,
+};

@@ -5,61 +5,40 @@ const path = require("path");
 const inputDir = process.argv[2];
 const outputDir = process.argv[3];
 
-const camelToKebabMap = new Map();
-const apiIndex = new Map();
-const forbiddenAttributeTypes = ["object", "array"];
-
-const camelToKebabCase = string => {
-	if (!camelToKebabMap.has(string)) {
-		const result = string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-		camelToKebabMap.set(string, result);
-	}
-	return camelToKebabMap.get(string);
-};
+const moduleDeclarations = new Map();
 
 const generateJavaScriptExport = entity => {
 	return {
-		declaration: generateRefenrece(entity.name),
-		deprecated: !!entity.deprecated,
+		declaration: {
+			name: entity.basename,
+			module: `dist/${entity.resource}`,
+		},
 		kind: "js",
 		name: "default",
 	};
 };
 
 const generateCustomElementExport = entity => {
+	if (!entity.tagname) return;
+
 	return {
 		declaration: {
 			name: entity.basename,
-			module: `${entity.module}.js`,
+			module: `dist/${entity.resource}`,
 		},
-		deprecated: !!entity.deprecated,
 		kind: "custom-element-definition",
-		name: entity.tagname,
-	};
-};
-
-const generateJavaScriptModule = entity => {
-	return {
-		kind: "javascript-module",
-		path: `${entity.basename}.js`,
-		declarations: [
-			generateCustomElementDeclaration(entity),
-		],
-		exports: [
-			generateJavaScriptExport(entity),
-			generateCustomElementExport(entity),
-		],
+		name: entity.basename,
 	};
 };
 
 const generateSingleClassField = classField => {
 	let generatedClassField = {
-		deprecated: !!classField.deprecated,
 		kind: "field",
 		name: classField.name,
-		privacy: classField.visibility,
-		static: !!classField.static,
 		type: generateType(classField.type),
+		privacy: classField.visibility,
+		deprecated: !!classField.deprecated || undefined,
+		static: !!classField.static || undefined,
 	};
 
 	if (classField.defaultValue) {
@@ -75,7 +54,7 @@ const generateSingleClassField = classField => {
 
 const generateSingleParameter = parameter => {
 	let generatedParameter = {
-		deprecated: !!parameter.deprecated,
+		deprecated: !!parameter.deprecated || undefined,
 		name: parameter.name,
 		type: generateType(parameter.type),
 	};
@@ -86,6 +65,7 @@ const generateSingleParameter = parameter => {
 
 	if (parameter.optional) {
 		generatedParameter.optional = parameter.optional;
+		generatedParameter.default = parameter.defaultValue;
 	}
 
 	return generatedParameter;
@@ -101,7 +81,7 @@ const generateParameters = (parameters) => {
 
 const generateSingleClassMethod = classMethod => {
 	let generatedClassMethod = {
-		deprecated: !!classMethod.deprecated,
+		deprecated: !!classMethod.deprecated || undefined,
 		kind: "method",
 		name: classMethod.name,
 		privacy: classMethod.visibility,
@@ -122,7 +102,7 @@ const generateSingleClassMethod = classMethod => {
 		};
 
 		if (classMethod.returnValue.description) {
-			generatedClassMethod.return.description = classMethod.returnValue.type;
+			generatedClassMethod.return.description = classMethod.returnValue.description;
 		}
 	}
 
@@ -150,47 +130,16 @@ const generateMembers = (classFields, classMethods) => {
 };
 
 const generateType = type => {
-	const dataType = apiIndex.get(type);
-
 	return {
-		text: dataType && dataType.name.includes(".types.") ?
-			filterPublicApi(dataType.properties)
-				.map(prop => `"${prop.name}"`)
-				.join(" | ") : type,
+		text: type,
 	};
-};
-
-const generateSingleAttribute = attribute => {
-	let generatedAttribute = {
-		default: attribute.defaultValue,
-		deprecated: !!attribute.deprecated,
-		fieldName: attribute.name,
-		name: camelToKebabCase(attribute.name),
-		type: generateType(attribute.type),
-	};
-
-	if (attribute.description) {
-		generatedAttribute.description = attribute.description;
-	}
-
-	return generatedAttribute;
-};
-
-const generateAttributes = attributes => {
-	attributes = attributes.reduce((newAttributesArray, attribute) => {
-		newAttributesArray.push(generateSingleAttribute(attribute));
-
-		return newAttributesArray;
-	}, []);
-
-	return attributes;
 };
 
 const generateSingleEvent = event => {
 	let generatedEvent = {
-		deprecated: !!event.deprecated,
+		deprecated: !!event.deprecated || undefined,
 		name: event.name,
-		type: event.native === "true" ? "NativeEvent" : "CustomEvent",
+		type: generateType(event.native === "true" ? "NativeEvent" : "CustomEvent")
 	};
 
 	if (event.description) {
@@ -212,7 +161,7 @@ const generateEvents = events => {
 
 const generateSingleSlot = slot => {
 	return {
-		deprecated: !!slot.deprecated,
+		deprecated: !!slot.deprecated || undefined,
 		description: slot.description,
 		name: slot.name,
 	};
@@ -230,9 +179,9 @@ const generateSlots = slots => {
 
 const generateCustomElementDeclaration = entity => {
 	let generatedCustomElementDeclaration = {
-		deprecated: !!entity.deprecated,
+		deprecated: !!entity.deprecated || undefined,
 		customElement: true,
-		kind: entity.basename,
+		kind: entity.kind,
 		name: entity.basename,
 		tagName: entity.tagname,
 	};
@@ -241,9 +190,6 @@ const generateCustomElementDeclaration = entity => {
 	const events = filterPublicApi(entity.events);
 	const classFields = filterPublicApi(entity.properties);
 	const classMethods = filterPublicApi(entity.methods);
-	const attributes = classFields.filter(property => {
-		return property.noattribute !== "true" && property.readonly !== "true" && !forbiddenAttributeTypes.includes(property.type.toLowerCase());
-	});
 
 	if (slots.length) {
 		generatedCustomElementDeclaration.slots = generateSlots(slots);
@@ -251,10 +197,6 @@ const generateCustomElementDeclaration = entity => {
 
 	if (events.length) {
 		generatedCustomElementDeclaration.events = generateEvents(events);
-	}
-
-	if (attributes.length) {
-		generatedCustomElementDeclaration.attributes = generateAttributes(attributes);
 	}
 
 	if (entity.description) {
@@ -273,31 +215,8 @@ const generateCustomElementDeclaration = entity => {
 };
 
 const generateRefenrece = (entityName) => {
-	let packageName;
-	let basename;
-
-	if (!entityName) {
-		throw new Error("JSDoc error: entity not found in api.json.");
-	}
-
-	if (entityName.includes(".")) {
-		basename = entityName.split(".").pop();
-	} else {
-		basename = entityName
-	}
-
-	if (entityName.includes("sap.ui.webc.main")) {
-		packageName = "@ui5/webcomponents";
-	} else if (entityName.includes("sap.ui.webc.fiori")) {
-		packageName = "@ui5/webcomponents-fiori";
-	} else if (entityName.includes("sap.ui.webc.base")) {
-		packageName = "@ui5/webcomponents-base";
-	}
-
 	return {
-		module: `${basename}.js`,
-		name: `${basename}`,
-		package: packageName,
+		name: entityName,
 	};
 };
 
@@ -313,11 +232,36 @@ const generate = async () => {
 		modules: [],
 	};
 
-	file.symbols.forEach(entity => {
-		if (entity.tagname || entity.kind === "class") {
-			customElementsManifest.modules.push(generateJavaScriptModule(entity));
+	filterPublicApi(file.symbols).forEach(entity => {
+		let declaration = moduleDeclarations.get(entity.resource);
+
+		if (!declaration) {
+			moduleDeclarations.set(entity.resource, {
+				declarations: [],
+				exports: [],
+			});
+			declaration = moduleDeclarations.get(entity.resource);
+		}
+
+		if (entity.kind === "class" && entity.tagname) {
+			declaration.declarations.push(generateCustomElementDeclaration(entity));
+			declaration.exports.push(generateJavaScriptExport(entity));
+			declaration.exports.push(generateCustomElementExport(entity));
+		} else if (entity.kind === "class" && entity.static) {
+			declaration.exports.push(generateJavaScriptExport(entity));
 		}
 	});
+
+	[...moduleDeclarations.keys()].forEach(key => {
+		let declaration = moduleDeclarations.get(key);
+
+		customElementsManifest.modules.push({
+			kind: "javascript-module",
+			path: `dist/${key}`,
+			declarations: declaration.declarations,
+			exports: declaration.exports
+		})
+	})
 
 	await fs.writeFile(path.join(outputDir, "custom-elements.json"), JSON.stringify(customElementsManifest));
 };

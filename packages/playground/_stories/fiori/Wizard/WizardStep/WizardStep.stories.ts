@@ -5,22 +5,13 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import argTypes, { StoryArgsSlots, componentInfo } from "./argTypes.js";
 
-import { DocsPage } from "../../../../.storybook/docs";
-
 // @ts-ignore
 import type WizardStep from "@ui5/webcomponents-fiori/dist/WizardStep.js";
 import { UI5StoryArgs } from "../../../../types.js";
 
-const component = "ui5-wizard-step";
-
 export default {
 	title: "Fiori/Wizard/Wizard Step",
 	component: "WizardStep",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<WizardStep>;
 

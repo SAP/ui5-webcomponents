@@ -35,6 +35,8 @@
 	--_ui5_datetime_timeview_width: 17rem;
 	--_ui5_datetime_timeview_phonemode_width: 19.5rem;
 	--_ui5_datetime_timeview_padding: 1rem;
+	--_ui5_datetime_timeview_phonemode_clocks_width: 24.5rem;
+	--_ui5_datetime_dateview_phonemode_margin_bottom: 0;
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.75rem;
@@ -62,6 +64,10 @@
 	--_ui5_list_busy_row_height: 3rem;
 	--_ui5_month_picker_item_height: 3rem;
 	--_ui5_list_buttons_left_space: 0.125rem;
+
+	/* Form */
+	--_ui5_form_item_min_height: 2.813rem;
+	--_ui5_form_item_padding:  0.65rem;
 
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.75rem;
@@ -198,15 +204,21 @@
 	--_ui5_dp_two_calendar_item_text_padding_top: 0;
 
 	/* DateTimePicker */
-	--_ui5_datetime_picker_height: 17rem;
-	--_ui5_datetime_picker_width: 34.0625rem;
+	--_ui5_datetime_picker_height: 20.5rem;
+	--_ui5_datetime_picker_width: 35.5rem;
 	--_ui5_datetime_timeview_width: 17rem;
 	--_ui5_datetime_timeview_phonemode_width: 18.5rem;
 	--_ui5_datetime_timeview_padding: 0.5rem;
+	--_ui5_datetime_timeview_phonemode_clocks_width: 21.125rem;
+	--_ui5_datetime_dateview_phonemode_margin_bottom: 3.125rem;
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.5rem;
 	--_ui5_dialog_footer_height: 2.5rem;
+
+	/* Form */
+	--_ui5_form_item_min_height: 2rem;
+	--_ui5_form_item_padding:  0.25rem;
 
 	/* Input */
 	--_ui5_input_height: var(--sapElement_Compact_Height);

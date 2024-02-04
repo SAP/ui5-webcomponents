@@ -4,10 +4,10 @@ import type Form from "@ui5/webcomponents/dist/Form.js";
 import type { UI5StoryArgs } from "../../../types.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 
-
 const FormEditTemplate: UI5StoryArgs<Form, StoryArgsSlots> = (args) => html`
-<ui5-toggle-button id="tbEdit">Edit</ui5-toggle-button>
-<ui5-form id="addressForm" header-text="Address :: Display" item-spacing="Large">
+
+<ui5-toggle-button id="tbEdit" slot="endContent">Edit</ui5-toggle-button>
+<ui5-form id="addressForm" header-text="Address" item-spacing="Large">
 	${unsafeHTML(args.default)}
 </ui5-form>
 
@@ -70,22 +70,22 @@ const getTemplate = (edit) => {
 	:
 	\`<ui5-form-item>
 	<ui5-label slot="labelContent">Name:</ui5-label>
-		<span class="text">Red Point Stores</span>
+		<span>Red Point Stores</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
-		<span class="text">411 Maintown</span>
+		<span>411 Maintown</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Street:</ui5-label>
-		<span class="text">Main St 1618</span>
+		<span>Main St 1618</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Country:</ui5-label>
-		<span class="text">Germany</span>
+		<span>Germany</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
@@ -95,10 +95,9 @@ const getTemplate = (edit) => {
 
 	<ui5-form-item>
 		<ui5-label for="delInp" slot="labelContent">Delivery address:</ui5-label>
-		<span class="text">Newtown</span>
+		<span>Newtown</span>
 	</ui5-form-item>\`;
 };
-
 
 
 editToggleBtn.addEventListener("click", function (event) {
@@ -112,22 +111,22 @@ FormEdit.args = {
 	default: `
 		<ui5-form-item>
 			<ui5-label slot="labelContent">Name:</ui5-label>
-			<span class="text">Red Point Stores</span>
+			<span>Red Point Stores</span>
 		</ui5-form-item>
 
 		<ui5-form-item>
 			<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
-			<span class="text">411 Maintown</span>
+			<span>411 Maintown</span>
 		</ui5-form-item>
 
 		<ui5-form-item>
 			<ui5-label slot="labelContent">Street:</ui5-label>
-			<span class="text">Main St 1618</span>
+			<span>Main St 1618</span>
 		</ui5-form-item>
 
 		<ui5-form-item>
 			<ui5-label slot="labelContent">Country:</ui5-label>
-			<span class="text">Germany</span>
+			<span>Germany</span>
 		</ui5-form-item>
 		<ui5-form-item>
 			<ui5-label for="wsInp" slot="labelContent">WebSite:</ui5-label>
@@ -136,7 +135,7 @@ FormEdit.args = {
 
 		<ui5-form-item>
 			<ui5-label for="delInp" slot="labelContent">Delivery address:</ui5-label>
-			<span class="text">Newtown</span>
+			<span>Newtown</span>
 		</ui5-form-item>`
 };
 

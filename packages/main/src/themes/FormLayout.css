@@ -28,6 +28,14 @@
 	:host([columns-m="2"]) .ui5-form-layout {
 		grid-template-columns: repeat(2, 1fr);
 	}
+
+	.ui5-form-column-spanM-2 {
+		grid-column: span 2;
+	}
+
+	.ui5-form-column-spanM-2 .ui5-form-group-layout {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 /* L - 2 columns by default, up to 3 columns */

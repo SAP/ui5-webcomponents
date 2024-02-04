@@ -8,7 +8,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
-import type { IMediaGalleryItem } from "./Interfaces.js";
+import type { IMediaGalleryItem } from "./MediaGallery.js";
 
 // Styles
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
@@ -124,7 +124,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	 * @private
 	 */
 	@property()
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * @private
@@ -168,7 +168,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 		return this.thumbnail.length ? this.thumbnail[0] : null;
 	}
 
-	get _content() {
+	get displayedContent() {
 		return this.content.length ? this.content[0] : null;
 	}
 
@@ -177,7 +177,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	get _isContentAvailable() {
-		return this._content && !this._contentImageNotFound;
+		return this.displayedContent && !this._contentImageNotFound;
 	}
 
 	get _useThumbnail() {
@@ -189,7 +189,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	get effectiveTabIndex() {
-		return this.disabled ? undefined : this._tabIndex;
+		return this.disabled ? undefined : this.forcedTabIndex;
 	}
 
 	get _showBackgroundIcon() {
@@ -221,11 +221,11 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 			success = this._attachListeners(this._thumbnail as HTMLImageElement, callback);
 			success && (this._monitoredThumbnail = this._thumbnail);
 		}
-		if (!this._useThumbnail && this.content.length && (this._monitoredContent !== this._content)) {
+		if (!this._useThumbnail && this.content.length && (this._monitoredContent !== this.displayedContent)) {
 			this._contentImageNotFound = false; // reset flag
 			callback = this._updateContentImageLoaded.bind(this);
-			success = this._attachListeners(this._content as HTMLImageElement, callback);
-			success && (this._monitoredContent = this._content);
+			success = this._attachListeners(this.displayedContent as HTMLImageElement, callback);
+			success && (this._monitoredContent = this.displayedContent);
 		}
 	}
 

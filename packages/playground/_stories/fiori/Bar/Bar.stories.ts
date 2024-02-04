@@ -3,25 +3,15 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type Bar from "@ui5/webcomponents-fiori/dist/Bar.js";
 import BarDesign from "@ui5/webcomponents-fiori/dist/types/BarDesign.js";
-
-const component = "ui5-bar";
 
 export default {
 	title: "Fiori/Bar",
 	component: "Bar",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<Bar>;
 

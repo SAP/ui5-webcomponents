@@ -71,37 +71,58 @@
 
 /* M  - 4 cells by default, up to 12 cells */
 @container (width > 599px) and (width < 1024px) {
-	:host([label-span-m="1"]) .ui5-form-item {
+	:host([label-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="1"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
 	}
-	:host([label-span-m="2"]) .ui5-form-item {
+
+	:host([label-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="2"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span2);
 	}
-	:host([label-span-m="3"]) .ui5-form-item {
+
+	:host([label-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="3"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span3);
 	}
-	:host([label-span-m="4"]) .ui5-form-item {
+
+	:host([label-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="4"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span4);
 	}
-	:host([label-span-m="5"]) .ui5-form-item {
+
+	:host([label-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="5"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span5);
 	}
-	:host([label-span-m="6"]) .ui5-form-item {
+
+	:host([label-span-m="6"]) .ui5-form-item,
+	:host([label-span-m="6"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span6);
 	}
-	:host([label-span-m="7"]) .ui5-form-item {
+
+	:host([label-span-m="7"]) .ui5-form-item,
+	:host([label-span-m="7"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span7);
 	}
-	:host([label-span-m="8"]) .ui5-form-item {
+
+	:host([label-span-m="8"]) .ui5-form-item,
+	:host([label-span-m="8"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span8);
 	}
-	:host([label-span-m="9"]) .ui5-form-item {
+
+	:host([label-span-m="9"]) .ui5-form-item,
+	:host([label-span-m="9"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span9);
 	}
-	:host([label-span-m="10"]) .ui5-form-item {
+
+	:host([label-span-m="10"]) .ui5-form-item,
+	:host([label-span-m="10"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
 	}
-	:host([label-span-m="11"]) .ui5-form-item {
+
+	:host([label-span-m="11"]) .ui5-form-item,
+	:host([label-span-m="11"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 
@@ -115,37 +136,58 @@
 
 /* L - 4 cells by default, up to 12 cells */
 @container (width > 1023px) and (width < 1439px) {
-	:host([label-span-l="1"]) .ui5-form-item {
+	:host([label-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="1"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
 	}
-	:host([label-span-l="2"]) .ui5-form-item {
+
+	:host([label-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="2"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span2);
 	}
-	:host([label-span-l="3"]) .ui5-form-item {
+
+	:host([label-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="3"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span3);
 	}
-	:host([label-span-l="4"]) .ui5-form-item {
+
+	:host([label-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="4"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span4);
 	}
-	:host([label-span-l="5"]) .ui5-form-item {
+
+	:host([label-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="5"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span5);
 	}
-	:host([label-span-l="6"]) .ui5-form-item {
+
+	:host([label-span-l="6"]) .ui5-form-item,
+	:host([label-span-l="6"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span6);
 	}
-	:host([label-span-l="7"]) .ui5-form-item {
+
+	:host([label-span-l="7"]) .ui5-form-item,
+	:host([label-span-l="7"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span7);
 	}
-	:host([label-span-l="8"]) .ui5-form-item {
+
+	:host([label-span-l="8"]) .ui5-form-item,
+	:host([label-span-l="8"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span8);
 	}
-	:host([label-span-l="9"]) .ui5-form-item {
+
+	:host([label-span-l="9"]) .ui5-form-item,
+	:host([label-span-l="9"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span9);
 	}
-	:host([label-span-l="10"]) .ui5-form-item {
+
+	:host([label-span-l="10"]) .ui5-form-item,
+	:host([label-span-l="10"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
 	}
-	:host([label-span-l="11"]) .ui5-form-item {
+
+	:host([label-span-l="11"]) .ui5-form-item,
+	:host([label-span-l="11"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 

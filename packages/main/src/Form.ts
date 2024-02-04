@@ -14,14 +14,16 @@ import FormCss from "./generated/themes/Form.css.js";
 import Title from "./Title.js";
 import type FormItem from "./FormItem.js";
 import type FormGroup from "./FormGroup.js";
-import type FormStep from "./FormStep.js";
 import FormItemSpacing from "./types/FormItemSpacing.js";
 
 const constructableStyleMap = new Map<string, CSSStyleSheet>();
-const MAX_COLS_S = 1;
-const MAX_COLS_L = 2;
-const MAX_COLS_M = 2;
-const MAX_COLS_XL = 6;
+
+const StepColumn = {
+	"S": 1,
+	"M": 2,
+	"L": 3,
+	"XL": 6,
+};
 
 type ItemsInfo = {
 	item: FormGroup | FormItem,
@@ -32,9 +34,10 @@ type ItemsInfo = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * <b>Note:</b> THE COMPONENT IS <b>EXPERIMENTAL</b> AND SUBJECT TO API AND INTERACTION CHANGES.
+ * <br><br>
  *
- * <b>Note:</b> The component is experimental and its subject to API changes.
+ * <h3 class="comment-api-title">Overview</h3>
  *
  * The Form is a layout component that arranges labels and form fields (like input fields) pairs
  * into specific number of columns.
@@ -43,13 +46,12 @@ type ItemsInfo = {
  *
  * <ul>
  * <li><b>Form</b> (<code>ui5-form</code>) is the top-level container component, responsible for the content layout and the resposiveness.</li>
- * <li><b>FormGroup</b> (<code>ui5-form-group</code>)  enables the grouping of the Form content.</li>
+ * <li><b>FormGroup</b> (<code>ui5-form-group</code>) enables the grouping of the Form content.</li>
  * <li><b>FormItem</b> (<code>ui5-form-item</code>) is a pair of label and form field and can be used directly in a Form, or as part of a FormGroup.</li>
  * </ul>
  *
  * The simplest Form (<code>ui5-form</code>) consists of a header area on top,
- * displaying a header text (see the <code>headingText</code> property) or a custom header
- * and content below - arbitrary number of FormItems (ui5-form-item),
+ * displaying a header text (see the <code>headingText</code> property) and content below - arbitrary number of FormItems (ui5-form-item),
  * representing the pairs of label and form field.
  *
  * And, there is also "grouping" available to assist the implementation of richer UIs.
@@ -61,14 +63,14 @@ type ItemsInfo = {
  * The Form component reacts and changes its layout on perdefined breakpoints.
  * Depending on its size, the Form content (FormGroups and FormItems) gets divided into one or more columns as follows:
  * <ul>
- * <li> XL (> 1439px) – up to 6 columns (default: 2)</li>
- * <li> L (1023px - 1439px) - up to 3 columns (default: 2)</li>
- * <li> M (600px - 1022px) – up to 2 columns (default: 1)</li>
- * <li> S (< 600px) – 1 column</li>
+ * <li> <b>S</b> (< 600px) – 1 column</li>
+ * <li> <b>M</b> (600px - 1022px) – up to 2 columns (default: 1)</li>
+ * <li> <b>L</b> (1023px - 1439px) - up to 3 columns (default: 2)</li>
+ * <li> <b>XL</b> (> 1439px) – up to 6 columns (default: 2)</li>
  * </ul>
  * To change the layout, use the <code>layout</code> property - f.e. layout="S1 M2 L3 XL6".
  *
- * <h5>Groups distribution</h5>
+ * <h4>Groups distribution</h4>
  *
  * To make better use of screen space, there is built-in logic to calculate
  * how many columns should a FormGroup occupy.
@@ -82,6 +84,7 @@ type ItemsInfo = {
  * Example #2 (balanced distribution):
  * <br>
  * 4 columns and 2 groups: each group will use 2 columns.
+ * 6 columns and 2 groups: each group will use 3 columns.
  * <br>
  *
  * Example #3 (unbalanced distribution):
@@ -97,9 +100,13 @@ type ItemsInfo = {
  * <br>
  * 3 columns and 4 groups: each FormGroup uses only 1 column, the last FormGroup will wrap on the second row.
  *
- * <h5>Group column-span</h5>
+ * <h4>Group column-span</h4>
  *
- * <h5>Label placement</h5>
+ * To influence the built-in group distribution, you can use the FormGroup's <code>columnSpan</code> property,
+ * that defines how many columns the group should expand to.
+ *
+ *
+ * <h4>Label placement</h4>
  *
  * The placement of the labels depends on the size of the used column.
  * If there is enough space, the labels are next to their associated fields, otherwise  - above the fields.
@@ -107,16 +114,12 @@ type ItemsInfo = {
  * You can control what space the labels should take via the <code>labelSpan</code> property
  * <b>For example:</b> To always place the labels on top set: <code>labelSpan="S12 M12 L12 XL12"</code> property.
  *
- * <h3>Custom Responinsiveness</h3>
- *
- * <h3>Usage</h3>
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/Form.js";</code>
- * <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
- * <code>import @ui5/webcomponents/dist/FormItem.js";</code>
- * <code>import @ui5/webcomponents/dist/FormStep.js";</code>
+ * <code>import @ui5/webcomponents/dist/Form.js";</code><br>
+ * <code>import @ui5/webcomponents/dist/FormGroup.js";</code><br>
+ * <code>import @ui5/webcomponents/dist/FormItem.js";</code><br>
  *
  * @public
  * @since 1.23
@@ -135,10 +138,10 @@ class Form extends UI5Element {
 	 *
 	 * Supported values:
 	 * <ul>
-	 * <li>for S - always 1 column, e.g. S1.</li>
-	 * <li>for M - up to 2 columns, e.g. M1 and M2.</li>
-	 * <li>for L - up to 3 columns, e.g. L1, L2 and L3.</li>
-	 * <li>for XL - up to 6 columns, e.g. XL1, XL2...XL6.</li>
+	 * <li>for S - 1 column by default (1 column is recommended)</li>
+	 * <li>for M - 1 column by default (up to 2 columns are recommended)</li>
+	 * <li>for L - 2 columns by default (up to 3 columns are recommended)</li>
+	 * <li>for XL - 2 columns by default (up to 6 columns  are recommended)</li>
 	 * </ul>
 	 *
 	 * @default "S1 M1 L2 XL2"
@@ -183,7 +186,7 @@ class Form extends UI5Element {
 	 * <li> "Normal" - smaller vertical space between form items </li>
 	 * <li> "Large" - greater vertical space between form items </li>
 	 * </ul>
-	 * <br><br>
+	 * <br>
 	 *
 	 * <b>Note:</b> If the Form is meant to be switched between "non-edit" (display only) and "edit" modes,
 	 * we recommend using "Large" item spacing in "non-edit" mode, and "Normal" - for "edit" mode,
@@ -221,32 +224,6 @@ class Form extends UI5Element {
 	items!: Array<FormItem | FormGroup>;
 
 	/**
-	 * Defines custom responsive steps - breakpoint and/or number of columns.
-	 * <br><br>
-	 *
-	 * <b>Example:</b> Re-define the colmns for the existing breakpoints
-	 * <br><br>
-	 * &lt;ui5-form-step breakpoint="S" columns="1">&lt;/>
-	 * &lt;ui5-form-step breakpoint="M" columns="3" (normally up to 2 columns)
-	 * &lt;ui5-form-step breakpoint="L" columns="4" (normally up to 3 columns)
-	 * &lt;ui5-form-step breakpoint="XL" columns="6"
-	 * <br><br>
-	 *
-	 * <b>Example:</b> Comletely redefine the resposnsiveness by defininf both the breakpoints and the respective number of columns.
-	 * <br><br>
-	 * &lt;ui5-form-step breakpoint="700px" columns="1">&lt/ui5-form-step>
-	 * &lt;ui5-form-step breakpoint="1100px" columns="3">&lt/ui5-form-step>
-	 * &lt;ui5-form-step breakpoint="1400px" columns="5">&lt/ui5-form-step>
-	 * &lt;ui5-form-step breakpoint="XL" columns="6">&lt/ui5-form-step>
-	 * <br><br>
-	 *
-	 * <b>Note:</b> When <code>steps</code> is used, the <code>layout</code> property will be ignored.
-	 * @public
-	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	steps!: Array<FormStep>;
-
-	/**
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
@@ -270,36 +247,25 @@ class Form extends UI5Element {
 	labelSpanXl!: number;
 
 	onBeforeRendering() {
+		// Parse the layout="" and set it to the FormGroups/FormItems.
 		this.setColumnLayout();
-		this.setLabelSpan();
-		this.setGroupsColSpan();
-	}
 
-	onAfterRendering() {
-		if (this.hasCustomSteps) {
-			this.createStepCSSStyleSheet();
-		}
+		// Parse the label-span="" and set it to the FormGroups/FormItems..
+		this.setLabelSpan();
+
+		// Define how many columns a group should take
+		this.setGroupsColSpan();
+
+		// Create additional CSS for number of columns that are not supported by default
+		this.createStepCSSStyleSheet();
 	}
 
 	setColumnLayout() {
-		if (this.hasCustomSteps) {
-			this.steps.forEach((step: FormStep) => {
-				if (step.minWidth === "S") {
-					this.columnsS = step.columns;
-				} else if (step.minWidth === "M") {
-					this.columnsM = step.columns;
-				} else if (step.minWidth === "L") {
-					this.columnsL = step.columns;
-				} else if (step.minWidth === "XL") {
-					this.columnsXl = step.columns;
-				}
-			});
-			return;
-		}
-
 		const layoutArr = this.layout.split(" ");
 		layoutArr.forEach((breakpont: string) => {
-			if (breakpont.startsWith("M")) {
+			if (breakpont.startsWith("S")) {
+				this.columnsS = parseInt(breakpont.slice(1));
+			} else if (breakpont.startsWith("M")) {
 				this.columnsM = parseInt(breakpont.slice(1));
 			} else if (breakpont.startsWith("L")) {
 				this.columnsL = parseInt(breakpont.slice(1));
@@ -345,27 +311,29 @@ class Form extends UI5Element {
 			(item as FormGroup).colsXl = this.getGroupsColSpan(this.columnsXl, itemsCount, idx, (item as FormGroup));
 			(item as FormGroup).colsL = this.getGroupsColSpan(this.columnsL, itemsCount, idx, (item as FormGroup));
 			(item as FormGroup).colsM = this.getGroupsColSpan(this.columnsM, itemsCount, idx, (item as FormGroup));
+			(item as FormGroup).colsS = this.getGroupsColSpan(this.columnsS, itemsCount, idx, (item as FormGroup));
 		});
 	}
 
 	getGroupsColSpan(cols: number, groups: number, index: number, group: FormGroup): number {
+		// Case 0: column span is set from outside.
 		if (group.columnSpan) {
 			return group.columnSpan;
 		}
 
-		// The number of available columns match the number of groups, or only 1 column is available - each group takes 1 column.
+		// CASE 1: The number of available columns match the number of groups, or only 1 column is available - each group takes 1 column.
 		// For example: 1 column - 1 group, 2 columns - 2 groups, 3 columns - 3 groups, 4columns - 4 groups
 		if (cols === 1 || cols <= groups) {
 			return 1;
 		}
 
-		// The number of available columns IS multiple of the number of groups.
+		// CASE 2: The number of available columns IS multiple of the number of groups.
 		// For example: 2 column - 1 group, 3 columns - 1 groups, 4 columns - 1 group, 4 columns - 2 groups
 		if (cols % groups === 0) {
 			return cols / groups;
 		}
 
-		// The number of available columns IS NOT multiple of the number of groups.
+		// CASE 3: The number of available columns IS NOT multiple of the number of groups.
 		const MIN_COL_SPAN = 1;
 		const delta = cols - groups;
 
@@ -386,10 +354,6 @@ class Form extends UI5Element {
 		return !!this.header.length;
 	}
 
-	get hasCustomSteps(): boolean {
-		return !!this.steps.length;
-	}
-
 	get ariaLabelledByID(): string | undefined {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
@@ -398,80 +362,76 @@ class Form extends UI5Element {
 		return this.items.map((item: FormGroup | FormItem) => {
 			return {
 				item,
-				classes: `ui5-form-column-spanL-${(item as FormGroup).colsL} ui5-form-column-spanXL-${(item as FormGroup).colsXl} ui5-form-column-spanМ-${(item as FormGroup).colsM}`,
+				classes: `ui5-form-column-spanL-${(item as FormGroup).colsL} ui5-form-column-spanXL-${(item as FormGroup).colsXl} ui5-form-column-spanM-${(item as FormGroup).colsM} ui5-form-column-spanS-${(item as FormGroup).colsS}`,
 				items: Array.from((item as FormGroup).children) as Array<FormItem>,
 			};
 		});
 	}
 
 	createStepCSSStyleSheet() {
-		if (this.columnsS > 1) {
-			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("S", this.columnsS));
-		}
-		if (this.columnsM > 2) {
-			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("M", this.columnsM));
-		}
-		if (this.columnsL > 3) {
-			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("L", this.columnsL));
-		}
-		if (this.columnsXl > 6) {
-			this.shadowRoot!.adoptedStyleSheets.push(this.getStepCSSStyleSheet("XL", this.columnsXl));
-		}
+		[
+			{ breakpoint: "S", columns: this.columnsS },
+			{ breakpoint: "M", columns: this.columnsM },
+			{ breakpoint: "L", columns: this.columnsL },
+			{ breakpoint: "XL", columns: this.columnsXl },
+		].forEach(step => {
+			const styleSheet = this.getStepCSSStyleSheet(step.breakpoint, step.columns);
+			if (styleSheet) {
+				this.shadowRoot!.adoptedStyleSheets.push(styleSheet);
+			}
+		});
 	}
 
-	getStepCSSStyleSheet(step: string, cols: number) {
-		const css = this.getStepCSS(step, cols);
-		const key = `${step}-${cols}`;
+	getStepCSSStyleSheet(step: string, colsNumber: number): CSSStyleSheet | undefined {
+		if (StepColumn[step as keyof typeof StepColumn] <= colsNumber) {
+			return;
+		}
+
+		const key = `${step}-${colsNumber}`;
 
 		if (!constructableStyleMap.has(key)) {
+			let containerQuery;
+			let supporedColumnsNumber!: number;
+			let stepSpanCSS = "";
+			let cols = colsNumber;
+
+			if (step === "S") {
+				supporedColumnsNumber = StepColumn.S;
+				containerQuery = `@container (max-width: 599px) {`;
+			} else if (step === "M") {
+				supporedColumnsNumber = StepColumn.M;
+				containerQuery = `@container (width > 599px) and (width < 1024px) {`;
+			} else if (step === "L") {
+				supporedColumnsNumber = StepColumn.L;
+				containerQuery = `@container (width > 1023px) and (width < 1439px) {`;
+			} else if (step === "XL") {
+				containerQuery = `@container (min-width: 1440px) {`;
+				supporedColumnsNumber = StepColumn.XL;
+			}
+
+			while (cols > supporedColumnsNumber) {
+				stepSpanCSS += `
+				:host([columns-${step.toLocaleLowerCase()}="${cols}"]) .ui5-form-layout {
+					grid-template-columns: repeat(${cols}, 1fr);
+				}
+				
+				.ui5-form-column-span${step}-${cols} {
+					grid-column: span ${cols};
+				}
+				.ui5-form-column-span${step}-${cols} .ui5-form-group-layout {
+					grid-template-columns: repeat(${cols}, 1fr);
+				}
+				`;
+				cols--;
+			}
+
+			const css = `${containerQuery}${stepSpanCSS}}`;
 			const style = new CSSStyleSheet();
 			style.replaceSync(css);
 			constructableStyleMap.set(key, style);
 		}
+
 		return constructableStyleMap.get(key)!;
-	}
-
-	getStepCSS(step: string, colsNumber: number) {
-		let containerQuery;
-		let maxSupported!: number;
-
-		if (step === "XL") {
-			maxSupported = MAX_COLS_XL;
-			containerQuery = `@container (min-width: 1440px) {`;
-		} else if (step === "L") {
-			maxSupported = MAX_COLS_L;
-			containerQuery = `@container (width > 1023px) and (width < 1439px) {`;
-		} else if (step === "M") {
-			maxSupported = MAX_COLS_M;
-			containerQuery = `@container (width > 599px) and (width < 1024px) {`;
-		} else if (step === "S") {
-			maxSupported = MAX_COLS_S;
-			containerQuery = `@container (max-width: 599px) {`;
-		}
-
-		let stepSpanCSS = "";
-		let cols = colsNumber;
-
-		while (cols > maxSupported) {
-			stepSpanCSS += `
-			.ui5-form-column-span${step}-${cols} {
-				grid-column: span ${cols};
-			}
-			.ui5-form-column-span${step}-${cols} .ui5-form-group-layout {
-				grid-template-columns: repeat(${cols}, 1fr);
-			}
-			`;
-			cols--;
-		}
-
-		return `
-			${containerQuery}
-			:host([columns-${step.toLocaleLowerCase()}="${cols}"]) .ui5-form-layout {
-				grid-template-columns: repeat(${cols}, 1fr);
-			}
-			
-			${stepSpanCSS}
-		}`;
 	}
 }
 

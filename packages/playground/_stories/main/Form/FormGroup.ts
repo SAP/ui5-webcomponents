@@ -5,18 +5,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 
 const FormGroupTemplate: UI5StoryArgs<Form, StoryArgsSlots> = (args) => html`
-<style>
-	.text {
-		display: inline-block;
-		font-size: var(--sapFontSize);
-		font-family: var(--sapFontFamily);
-		color: var(--sapTextColor);
-		line-height: normal;
-		white-space: pre-line;
-		word-wrap: break-word;
-		cursor: text;
-}
-</style>
 <ui5-form header-text="Address" layout="S1 M2 L3 XL4">
 	${unsafeHTML(args.default)}
 </ui5-form>`;
@@ -27,22 +15,22 @@ FormGroup.args = {
 	<ui5-form-group header-text="Address">
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Name:</ui5-label>
-		<span class="text">Red Point Stores</span>
+		<span>Red Point Stores</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
-		<span class="text">411 Maintown</span>
+		<span>411 Maintown</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Street:</ui5-label>
-		<span class="text">Main St 1618</span>
+		<span>Main St 1618</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Country:</ui5-label>
-		<span class="text">Germany</span>
+		<span>Germany</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
@@ -54,22 +42,22 @@ FormGroup.args = {
 <ui5-form-group header-text="Contact">
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Twitter:</ui5-label>
-		<span class="text">@sap</span>
+		<span>@sap</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Email:</ui5-label>
-		<span class="text">john.smith@sap.com</span>
+		<span>john.smith@sap.com</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Tel:</ui5-label>
-		<span class="text">+49 6227 747474</span>
+		<span>+49 6227 747474</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">SMS:</ui5-label>
-		<span class="text">+49 6227 747474</span>
+		<span>+49 6227 747474</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
@@ -92,22 +80,22 @@ FormGroup.args = {
 <ui5-form-group header-text="Other info">
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Name:</ui5-label>
-		<span class="text">Red Point Stores</span>
+		<span>Red Point Stores</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
-		<span class="text">411 Maintown</span>
+		<span>411 Maintown</span>
 	</ui5-form-item>
 	
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Street:</ui5-label>
-		<span class="text">Main St 1618</span>
+		<span>Main St 1618</span>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Country:</ui5-label>
-		<span class="text">Germany</span>
+		<span>Germany</span>
 	</ui5-form-item>
 
 	<ui5-form-item>

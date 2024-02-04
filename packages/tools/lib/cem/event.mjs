@@ -12,7 +12,7 @@ import {
 	getReference,
 	normalizeDescription,
 	normalizeTagType,
-	getJSDocErrors
+	logDocumentationError
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
@@ -83,11 +83,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 
 	if (event?.expression?.arguments?.[1] && !event?.expression?.typeArguments) {
-		const JSDocErrors = getJSDocErrors();
-
-		JSDocErrors.push(
-			`=== ERROR: Problem found with ${name}'s description in ${moduleDoc.path}: \n\t- Event details have to be described with type via generics type passed to the decorator ( @event<TypeForDetails>("example-name", {details}) ) `
-		);
+		logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described using generics. Add type via generics to the decorator: @event<TypeForDetails>("${name}", {details}).`)
 	}
 
 	result.description = description;

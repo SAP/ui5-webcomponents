@@ -119,11 +119,6 @@ Every story has a `docs` page in the storybook's sidebar. Usually, this page is 
 export default {
     title: "Main/Button",
     component,
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 } as Meta<Button>;
 ```

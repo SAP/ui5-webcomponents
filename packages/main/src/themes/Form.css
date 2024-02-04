@@ -1,6 +1,10 @@
 @import "./FormLayout.css";
 @import "./FormLabelSpan.css";
 
+:host {
+	display: block;
+}
+
 .ui5-form-root {
 	display: flex;
 	flex-direction: column;

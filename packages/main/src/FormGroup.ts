@@ -19,10 +19,12 @@ import type FormItem from "./FormItem.js";
  * that defines how many columns the group should expand to.
  *
  * <h3>Usage</h3>
- * Use the FormGroup (ui5-form-group) allows to split a Form into groups,
- * e.g to group form items that logically belong together.
+ *
+ * Тhe FormGroup (ui5-form-group) allows to split a Form into groups,
+ * e.g to group FormItems that logically belong together.
  *
  * <h3>ES6 Module Import</h3>
+ *
  * <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
  *
  * @public
@@ -61,6 +63,9 @@ class FormGroup extends UI5Element {
 	/**
 	 * @private
 	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	colsS!: number;
+
 	@property({ validator: Integer, defaultValue: 1 })
 	colsM!: number;
 

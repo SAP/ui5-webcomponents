@@ -421,26 +421,22 @@ describe("Acc", () => {
 	});
 });
 
-describe("Horizontal Alignment", () => {
-	before(async () => {
-		await browser.url(`test/pages/Popover.html`);
-	});
-
+describe("Alignment", () => {
 	const EPS = 2; // 2px
 
-	const isHorizontallyCentered = async (popover, opener) => {
-		const popoverRect = {
-			...await popover.getLocation(),
-			...await popover.getSize()
+	const isHorizontallyCentered = async (element, opener) => {
+		const elemRect = {
+			...await element.getLocation(),
+			...await element.getSize()
 		};
 		const openerRect = {
 			...await opener.getLocation(),
 			...await opener.getSize()
 		};
 		const openerCenter = openerRect.x + openerRect.width / 2;
-		const expectedPopoverLeft = openerCenter - popoverRect.width / 2;
+		const expectedElemX = openerCenter - elemRect.width / 2;
 
-		return Math.abs(popoverRect.x - expectedPopoverLeft) < EPS;
+		return Math.abs(elemRect.x - expectedElemX) < EPS;
 	}
 
 	const isHorizontallyLeftAligned = async (popover, opener) => {
@@ -471,59 +467,104 @@ describe("Horizontal Alignment", () => {
 		return Math.abs(openerRight - popoverRight) < EPS;
 	}
 
-	it("Center", async () => {
-		await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Center']").click();
-		await browser.$("#horizontalAlignBtn").click();
-		const popover = await browser.$("#popoverHorizontalAlign");
-		const opener = await browser.$("#targetOpener");
+	describe("Horizontal Alignment", () => {
+		before(async () => {
+			await browser.url(`test/pages/Popover.html`);
+		});
 
-		assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
+		it("Center", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Center']").click();
+			await browser.$("#horizontalAlignBtn").click();
+			const popover = await browser.$("#popoverHorizontalAlign");
+			const opener = await browser.$("#targetOpener");
+
+			assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
+		});
+
+		it("Left", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
+			await browser.$("#horizontalAlignBtn").click();
+			const popover = await browser.$("#popoverHorizontalAlign");
+			const opener = await browser.$("#targetOpener");
+
+			assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned`);
+		});
+
+		it("Right", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
+			await browser.$("#horizontalAlignBtn").click();
+			const popover = await browser.$("#popoverHorizontalAlign");
+			const opener = await browser.$("#targetOpener");
+
+			assert.ok(await isHorizontallyRightAligned(popover, opener), `Popover should be right aligned`);
+		});
+
+		it("Center, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Center']").click();
+			await browser.$("#rtlCb").click();
+			await browser.$("#horizontalAlignBtn").click();
+			const popover = await browser.$("#popoverHorizontalAlign");
+			const opener = await browser.$("#targetOpener");
+
+			assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
+		});
+
+		it("Left, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
+			await browser.$("#horizontalAlignBtn").click();
+			const popover = await browser.$("#popoverHorizontalAlign");
+			const opener = await browser.$("#targetOpener");
+
+			assert.ok(isHorizontallyRightAligned(popover, opener), `Popover should be right aligned, flipped by RTL direction`);
+		});
+
+		it("Right, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
+			await browser.$("#horizontalAlignBtn").click();
+			const popover = await browser.$("#popoverHorizontalAlign");
+			const opener = await browser.$("#targetOpener");
+
+			assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned, flipped by RTL direction`);
+		});
 	});
 
-	it("Left", async () => {
-		await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
-		await browser.$("#horizontalAlignBtn").click();
-		const popover = await browser.$("#popoverHorizontalAlign");
-		const opener = await browser.$("#targetOpener");
+	describe("Arrow Horizontal Alignment", () => {
+		before(async () => {
+			await browser.url(`test/pages/Popover.html`);
+		});
 
-		assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned`);
-	});
+		it("Arrow centering when opener has big width", async () => {
+			const opener = await browser.$("#btnFullWidthTop");
+			await opener.click();
+			const popover = await browser.$("#popFullWidthTop");
+			const arrow = await popover.shadow$(".ui5-popover-arrow");
 
-	it("Right", async () => {
-		await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
-		await browser.$("#horizontalAlignBtn").click();
-		const popover = await browser.$("#popoverHorizontalAlign");
-		const opener = await browser.$("#targetOpener");
+			assert.ok(await isHorizontallyCentered(arrow, opener), `Arrow should be centered`);
 
-		assert.ok(await isHorizontallyRightAligned(popover, opener), `Popover should be right aligned`);
-	});
+			await browser.keys("Escape");
+		});
 
-	it("Center, in RTL", async () => {
-		await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Center']").click();
-		await browser.$("#rtlCb").click();
-		await browser.$("#horizontalAlignBtn").click();
-		const popover = await browser.$("#popoverHorizontalAlign");
-		const opener = await browser.$("#targetOpener");
+		it("Arrow centering when opener is to the left edge", async () => {
+			const opener = await browser.$("#btnLeftEdgeTop");
+			await opener.click();
+			const popover = await browser.$("#popFullWidthTop");
+			const arrow = await popover.shadow$(".ui5-popover-arrow");
 
-		assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
-	});
+			assert.ok(await isHorizontallyCentered(arrow, opener), `Arrow should be centered`);
 
-	it("Left, in RTL", async () => {
-		await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
-		await browser.$("#horizontalAlignBtn").click();
-		const popover = await browser.$("#popoverHorizontalAlign");
-		const opener = await browser.$("#targetOpener");
+			await browser.keys("Escape");
+		});
 
-		assert.ok(isHorizontallyRightAligned(popover, opener), `Popover should be right aligned, flipped by RTL direction`);
-	});
+		it("Arrow centering when opener is to the right edge", async () => {
+			const opener = await browser.$("#btnRightEdgeTop");
+			await opener.click();
+			const popover = await browser.$("#popFullWidthTop");
+			const arrow = await popover.shadow$(".ui5-popover-arrow");
 
-	it("Right, in RTL", async () => {
-		await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
-		await browser.$("#horizontalAlignBtn").click();
-		const popover = await browser.$("#popoverHorizontalAlign");
-		const opener = await browser.$("#targetOpener");
+			assert.ok(await isHorizontallyCentered(arrow, opener), `Arrow should be centered`);
 
-		assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned, flipped by RTL direction`);
+			await browser.keys("Escape");
+		});
 	});
 });
 

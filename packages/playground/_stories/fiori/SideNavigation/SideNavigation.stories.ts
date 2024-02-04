@@ -2,24 +2,14 @@ import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Decorator, Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type SideNavigation from "@ui5/webcomponents-fiori/dist/SideNavigation.js";
-
-const component = "ui5-side-navigation";
 
 export default {
 	title: "Fiori/Side Navigation",
 	component: "SideNavigation",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<SideNavigation>;
 

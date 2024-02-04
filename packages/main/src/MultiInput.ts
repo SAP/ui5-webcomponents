@@ -12,6 +12,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
@@ -20,7 +21,6 @@ import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
-import type { IToken } from "./Interfaces.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
@@ -28,6 +28,13 @@ import type {
 	InputSuggestionItemSelectEventDetail as MultiInputSuggestionItemSelectEventDetail,
 	InputSuggestionItemPreviewEventDetail as MultiInputSuggestionItemPreviewEventDetail,
 } from "./Input.js";
+
+interface IToken extends HTMLElement, ITabbable {
+	text: string;
+	readonly: boolean,
+	selected: boolean,
+	isTruncatable: boolean,
+}
 
 type MultiInputTokenDeleteEventDetail = {
 	token: IToken;
@@ -408,6 +415,7 @@ MultiInput.define();
 
 export default MultiInput;
 export type {
+	IToken,
 	MultiInputTokenDeleteEventDetail,
 	MultiInputSuggestionItemSelectEventDetail,
 	MultiInputSuggestionItemPreviewEventDetail,

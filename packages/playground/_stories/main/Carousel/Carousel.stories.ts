@@ -4,25 +4,15 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type Carousel from "@ui5/webcomponents/dist/Carousel.js";
 import CarouselArrowsPlacement from "@ui5/webcomponents/dist/types/CarouselArrowsPlacement.js";
-
-const component = "ui5-carousel";
 
 export default {
 	title: "Main/Carousel",
 	component: "Carousel",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<Carousel>;
 
