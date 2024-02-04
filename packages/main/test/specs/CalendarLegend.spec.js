@@ -15,7 +15,7 @@ describe("Calendar Legend with standard items", () => {
 		const legend = await browser.$("#calendarLegend").shadow$(".ui5-calendar-legend-root");
 		const items = await legend.$$("ui5-calendar-legend-item");
 	
-		assert.strictEqual(items.length, 24, "Calendar Legend items are rendered");
+		assert.strictEqual(items.length, 4, "Calendar Legend items are rendered");
 	});
 	
 
@@ -28,7 +28,7 @@ describe("Calendar Legend with standard items", () => {
 		// get the items again
 		items = await legend.shadow$(".ui5-calendar-legend-root").$$("ui5-calendar-legend-item");
 
-		assert.strictEqual(items.length, 23, "Today item in Calendar Legend is hidden");
+		assert.strictEqual(items.length, 3, "Today item in Calendar Legend is hidden");
 	});
 
 	it("Calendar legend hides Selected, when hideSelectedDay property provided", async () => {
@@ -40,7 +40,7 @@ describe("Calendar Legend with standard items", () => {
 		// get the items again
 		items = await legend.shadow$(".ui5-calendar-legend-root").$$("ui5-calendar-legend-item");
 
-		assert.strictEqual(items.length, 22, "Selected item in Calendar Legend is hidden");
+		assert.strictEqual(items.length, 2, "Selected item in Calendar Legend is hidden");
 	});
 
 	it("Focusing item in Calendar Legend filter the corresponding days in Calendar", async () => {

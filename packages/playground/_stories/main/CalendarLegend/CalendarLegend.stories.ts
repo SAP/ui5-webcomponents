@@ -7,7 +7,7 @@ import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
-import { DocsPage } from "../../../.storybook/docs";
+import { DocsPage } from "../../../.storybook/docs.js";
 
 import type CalendarLegend from "@ui5/webcomponents/dist/CalendarLegend.js";
 

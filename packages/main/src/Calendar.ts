@@ -57,7 +57,7 @@ type CalendarSelectedDatesChangeEventDetail = {
 
 type SpecialCalendarDateT = {
 	specialDateTimestamp: number;
-	dateType: string;
+	dateType: `${CalendarLegendItemType}`;
 };
 
 /**
@@ -375,6 +375,7 @@ class Calendar extends CalendarPart {
 
 	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
 		this._selectedItemType = e.detail.item.type;
+		this._currentPickerDOM._autoFocus = false;
 	}
 
 	/**
@@ -459,6 +460,10 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderPreviousPress() {
 		this._currentPickerDOM._showPreviousPage();
+
+		if (this.calendarLegend) {
+			this._currentPickerDOM._autoFocus = true;
+		}
 	}
 
 	/**
@@ -466,6 +471,10 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderNextPress() {
 		this._currentPickerDOM._showNextPage();
+
+		if (this.calendarLegend) {
+			this._currentPickerDOM._autoFocus = true;
+		}
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
@@ -584,13 +593,6 @@ class Calendar extends CalendarPart {
 
 	_onLegendFocusOut() {
 		this._selectedItemType = "None";
-
-		// focus the focusable day in the daypicker
-		const focusedDay = this._dayPicker.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
-
-		if (focusedDay && document.activeElement !== focusedDay) {
-			focusedDay.focus();
-		}
 	}
 
 	get _dayPicker() {

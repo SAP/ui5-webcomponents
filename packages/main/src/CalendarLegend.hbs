@@ -1,24 +1,16 @@
-<div class="ui5-calendar-legend-root">
+<div class="ui5-calendar-legend-root"
+		@focusout="{{_onFocusOut}}"
+		@focusin="{{_onFocusIn}}"
+		@keydown="{{_onItemKeyDown}}"
+		@mousedown="{{_onMouseDown}}"
+	>
 	{{#each defaultItemsMapping}}
 		{{#unless this.hide}}
-			<ui5-calendar-legend-item 
-				type={{this.type}}
-				@focusin="{{../_onFocusIn}}"
-				@keydown="{{../_onItemKeyDown}}"
-				@mousedown="{{../_onMouseDown}}"
-			>
-			</ui5-calendar-legend-item>
+			<ui5-calendar-legend-item type={{this.type}}></ui5-calendar-legend-item>
 		{{/unless}}
 	{{/each}}
 
 	{{#each legendItems}}
-		<ui5-calendar-legend-item 
-			type={{this.type}}
-			text={{this.text}}
-			@focusin="{{../_onFocusIn}}"
-			@keydown="{{../_onItemKeyDown}}"
-			@mousedown="{{../_onMouseDown}}"
-		>
-		</ui5-calendar-legend-item>
+		<slot name="{{this._individualSlot}}"></slot>
 	{{/each}}
 </div>

@@ -35,8 +35,6 @@ type CalendarLegendItemSelectionChangeEventDetail = {
  *
  * <code>import "@ui5/webcomponents/dist/CalendarLegend.js";</code>
  *
- * @slot {Array<Node>} default - Defines the items of the component.
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -54,6 +52,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 		item: { type: CalendarLegendItem },
 	},
 })
+@event("_calendar-legend-focus-out")
 class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Today item in the legend.
@@ -98,6 +97,7 @@ class CalendarLegend extends UI5Element {
 	@slot({
 		type: HTMLElement,
 		invalidateOnChildChange: true,
+		individualSlots: true,
 		"default": true,
 	 })
 	items!: Array<CalendarLegendItem>;
@@ -126,12 +126,16 @@ class CalendarLegend extends UI5Element {
 		this._itemNavigation._focusCurrentItem();
 	}
 
-	_onFocusIn(e: MouseEvent) {
+	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
 		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
 			item: target,
 		});
+	}
+
+	_onFocusOut() {
+		this.fireEvent("_calendar-legend-focus-out");
 	}
 
 	_onItemKeyDown(e: KeyboardEvent) {
