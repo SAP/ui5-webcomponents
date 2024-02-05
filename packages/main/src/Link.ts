@@ -321,7 +321,7 @@ class Link extends UI5Element implements ITabbable {
 		return this.accessibleRole.toLowerCase();
 	}
 
-	_hasPopup() {
+	get _hasPopup() {
 		return this.accessibilityAttributes.hasPopup?.toLowerCase();
 	}
 
