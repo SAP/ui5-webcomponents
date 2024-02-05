@@ -117,6 +117,7 @@ type StepInputValueStateChangeEventDetail = {
  * prevented, the component will not update the value state.
  *
  * @allowPreventDefault
+ * @since 1.23.0
  * @public
  * @param {string} valueState The new <code>valueState</code> that will be set.
  * @param {boolean} valid Indicator if the value is in between the min and max value.
