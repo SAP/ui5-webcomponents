@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="popover1auto">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Popover</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webc.main"
+		}
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/Popover.css">
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+</head>
+
+<body style="transform:scale(0.7); margin: 0px; background-color:gray; outline: 1px solid red;">
+	<div style="height: 1000px;">
+		<ui5-button id="openDialogButton">Open Popover</ui5-button>
+	</div>
+	<ui5-button id="openHighPopover">Open Popover</ui5-button>
+    <br />
+
+    <ui5-popover id="hello-dialog" header-text="Dialogs are easy!" placement-type="Top">
+      <div stype="padding: 2rem; display:flex; justify-content: center;">
+        Hello World!
+		<div style="height: 500px;">
+
+		</div>
+        <ui5-button id="closeDialogButton">Dismiss</ui5-button>
+      </div>
+    </ui5-popover>
+
+	<script>
+		const openBtn = document.getElementById("openDialogButton");
+		const closeBtn = document.getElementById("closeDialogButton");
+		const dialog = document.getElementById("hello-dialog");
+		openBtn.addEventListener("click", () => {
+			dialog.showAt(openBtn);
+		});
+		closeBtn.addEventListener("click", () => {
+			dialog.close();
+		});
+
+		document.getElementById("openHighPopover").addEventListener("click", (e) => {
+			document.getElementById("hello-dialog").showAt(e.target);
+		});
+	</script>
+
+
+	<!-- <div style="border: 1px solid red; width: 300px; height: 200px; top: 500px; position: fixed;"> -->
+
+	</div>
+</body>
+
+</html>

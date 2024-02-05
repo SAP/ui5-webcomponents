@@ -24,8 +24,41 @@
 	</script>
 </head>
 
-<body class="popover2auto">
+<body class="popover2auto" style="transform: scale(0.7); outline: 1px solid red; margin: 0;">
 	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
+
+	<ui5-tabcontainer>
+		<ui5-tab text="tab 1">
+			<ui5-button id="popbtn">Open Popover</ui5-button>
+
+			<ui5-popover placement-type="Bottom" hide-arrow id="danger">
+
+				<ui5-list>
+					<ui5-li>Hello</ui5-li>
+					<ui5-li>World</ui5-li>
+					<ui5-li>Again</ui5-li>
+				</ui5-list>
+
+				<br>
+				<br>
+
+				<ui5-button id="bigDanger">Super Danger !</ui5-button>
+
+				<ui5-popover id="bigDangerPop">
+					<ui5-list>
+						<ui5-li>Hello</ui5-li>
+						<ui5-li>World</ui5-li>
+						<ui5-li>Again</ui5-li>
+					</ui5-list>
+				</ui5-popover>
+			</ui5-popover>
+		</ui5-tab>
+		<ui5-tab text="tab 2">
+
+		</ui5-tab>
+	</ui5-tabcontainer>
+
+
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
@@ -42,9 +75,9 @@
 		<br>
 		<br>
 
-		<ui5-button id="popbtn">Open Popover</ui5-button>
+		<!-- <ui5-button id="popbtn">Open Popover</ui5-button> -->
 
-		<ui5-popover placement-type="Bottom" hide-arrow id="danger">
+		<!-- <ui5-popover placement-type="Bottom" hide-arrow id="danger">
 
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
@@ -64,7 +97,7 @@
 					<ui5-li>Again</ui5-li>
 				</ui5-list>
 			</ui5-popover>
-		</ui5-popover>
+		</ui5-popover> -->
 
 		<br>
 		<br>

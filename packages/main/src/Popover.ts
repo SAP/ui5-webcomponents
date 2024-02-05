@@ -9,6 +9,7 @@ import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUti
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
+import { calculateOrigCoordinates } from "@ui5/webcomponents-base/dist/util/PopoverHelper.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
@@ -23,6 +24,7 @@ import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
+const scale = 1;
 const ARROW_SIZE = 8;
 
 type PopoverSize = {
@@ -412,18 +414,21 @@ class Popover extends Popup {
 		let left = clamp(
 			this._left!,
 			Popover.VIEWPORT_MARGIN,
-			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
+			document.documentElement.clientWidth * scale - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
 		if (this.actualPlacementType === PopoverPlacementType.Right) {
 			left = Math.max(left, this._left!);
 		}
 
+		console.error("top: ", this._top!)
 		let top = clamp(
 			this._top!,
 			Popover.VIEWPORT_MARGIN,
 			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
+		// let top = this._top!;
+		console.error("clamped top: ", top)
 
 		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
 			top = Math.max(top, this._top!);
@@ -433,9 +438,25 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
-		const containingBlockClientLocation = this._getContainingBlockClientLocation();
-		left -= containingBlockClientLocation.left;
-		top -= containingBlockClientLocation.top;
+
+		const transformedParent = this._findTransformedParent(); // body
+		const containingBlockClientLocation = this._getContainingBlockClientLocation(); // body
+		const { x: stackingLeft, y: stackingTop } = calculateOrigCoordinates(containingBlockClientLocation.left, containingBlockClientLocation.top, transformedParent);
+		// const stackingContextOffset = this._getStackingContextOffset();
+		// const { x: stackingLeft, y: stackingTop } = calculateOrigCoordinates(stackingContextOffset.left, stackingContextOffset.top, transformedParent);
+		left -= stackingLeft;
+		top -= stackingTop;
+		// left -= containingBlockClientLocation.left;
+		// top -= containingBlockClientLocation.top;
+		console.error("context relative top: ", top, "context relative left: ", left);
+
+		// containingNode
+		if (transformedParent) {
+			const { x, y } = calculateOrigCoordinates(left, top, transformedParent);
+			left = x;
+			top = y;
+			console.error("descaled top: ", top, "descaled left: ", left);
+		}
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -444,6 +465,16 @@ class Popover extends Popup {
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
+		}
+	}
+
+	_findTransformedParent() {
+		let parent = this.parentElement;
+		while (parent) {
+			if (window.getComputedStyle(parent).transform) {
+				return parent;
+			}
+			parent = parent.parentElement;
 		}
 	}
 
@@ -478,6 +509,23 @@ class Popover extends Popup {
 		return { left: 0, top: 0 };
 	}
 
+	_getStackingContextOffset() {
+		let parentNode = this.parentElement ? this.parentNode as HTMLElement : (this.parentNode as ShadowRoot).host as HTMLElement;
+
+		while (parentNode) {
+			const computedStyle = getComputedStyle(parentNode);
+
+			if (["size", "inline-size"].indexOf(computedStyle.containerType) > -1
+				|| computedStyle.transform !== "none") {
+				return parentNode.getBoundingClientRect();
+			}
+
+			parentNode = parentNode.parentElement ? parentNode.parentNode as HTMLElement : (parentNode.parentNode as ShadowRoot).host as HTMLElement;
+		}
+
+		return { left: 0, top: 0 };
+	}
+
 	getPopoverSize(): PopoverSize {
 		const rect = this.getBoundingClientRect(),
 			width = rect.width,
@@ -506,8 +554,8 @@ class Popover extends Popup {
 		let top = 0;
 		const allowTargetOverlap = this.allowTargetOverlap;
 
-		const clientWidth = document.documentElement.clientWidth;
-		const clientHeight = document.documentElement.clientHeight;
+		const clientWidth = document.documentElement.clientWidth * scale;
+		const clientHeight = document.documentElement.clientHeight * scale;
 
 		let maxHeight = clientHeight;
 		let maxWidth = clientWidth;
@@ -532,7 +580,7 @@ class Popover extends Popup {
 		switch (placementType) {
 		case PopoverPlacementType.Top:
 			left = this.getVerticalLeft(targetRect, popoverSize);
-			top = Math.max(targetRect.top - popoverSize.height - arrowOffset, 0);
+			top = Math.max(targetRect.top - popoverSize.height * scale - arrowOffset, 0);
 
 			if (!allowTargetOverlap) {
 				maxHeight = targetRect.top - arrowOffset;
@@ -686,8 +734,8 @@ class Popover extends Popup {
 		const placementType = this.placementType;
 		let actualPlacementType = placementType;
 
-		const clientWidth = document.documentElement.clientWidth;
-		const clientHeight = document.documentElement.clientHeight;
+		const clientWidth = document.documentElement.clientWidth * scale;
+		const clientHeight = document.documentElement.clientHeight * scale;
 
 		switch (placementType) {
 		case PopoverPlacementType.Top:
