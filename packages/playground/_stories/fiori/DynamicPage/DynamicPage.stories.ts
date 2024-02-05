@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import type { Meta } from "@storybook/web-components";
+import type { Meta, StoryFn } from "@storybook/web-components";
 import type { PartialStoryFn } from "@storybook/types";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -11,6 +11,11 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs.js";
 
 import type DynamicPage from "@ui5/webcomponents-fiori/dist/DynamicPage.js";
+
+import DynamicPageTitleTemplate from "./DynamicPageTitleTemplate.js"
+import DynamicPageHeaderTemplate from "./DynamicPageHeaderTemplate.js"
+
+
 
 const component = "ui5-dynamic-page";
 
@@ -28,7 +33,7 @@ const stylesDecorator = (storyFn: PartialStoryFn) => html`
 `;
 
 export default {
-  title: "Fiori/Dynamic Page",
+  title: "Fiori/Dynamic page",
   component: "DynamicPage",
   parameters: {
     docs: {
@@ -39,16 +44,17 @@ export default {
   argTypes,
 } as Meta<DynamicPage>;
 
+
 const Template: UI5StoryArgs<DynamicPage, StoryArgsSlots> = (args) => {
   return html`
     <ui5-dynamic-page id="page"
-    headerSnapped = ${ifDefined(args.headerSnapped)}
-    headerPinned = ${ifDefined(args.headerPinned)}
-    showFooter = ${ifDefined(args.showFooter)}
+    ?header-snapped = ${ifDefined(args.headerSnapped)}
+    ?header-pinned = ${ifDefined(args.headerPinned)}
+    ?show-footer = ${ifDefined(args.showFooter)}
     >
       ${unsafeHTML(args.headerArea)}
       ${unsafeHTML(args.titleArea)}
-      ${unsafeHTML(args.content)}
+      ${unsafeHTML(args.default)}
       ${unsafeHTML(args.footer)}
     </ui5-dynamic-page>
 `;
@@ -56,118 +62,10 @@ const Template: UI5StoryArgs<DynamicPage, StoryArgsSlots> = (args) => {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  titleArea: `
-    <ui5-dynamic-page-title slot="titleArea">
-        <ui5-breadcrumbs slot="breadcrumbs">
-            <ui5-breadcrumbs-item href="https://www.sap.com"
-                >Link1
-            </ui5-breadcrumbs-item>
-            <ui5-breadcrumbs-item
-                href="https://www.sap.com"
-                target="_blank"
-                >Link2</ui5-breadcrumbs-item
-            >
-            <ui5-breadcrumbs-item href="#">Link3</ui5-breadcrumbs-item>
-            <ui5-breadcrumbs-item href="#">Link4</ui5-breadcrumbs-item>
-            <ui5-breadcrumbs-item href="#">Link5</ui5-breadcrumbs-item>
-            <ui5-breadcrumbs-item href="#">Link6</ui5-breadcrumbs-item>
-            <ui5-breadcrumbs-item href="#">Link7</ui5-breadcrumbs-item>
-            <ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
-        </ui5-breadcrumbs>
-
-        <ui5-title slot="expandedHeading">Expanded Heading</ui5-title>
-
-        <ui5-title slot="snappedHeading">Snapped Heading</ui5-title>
-
-        <div slot="expandedContent">
-            <ui5-title level="H6"
-                >This is an expanded subheading</ui5-title
-            >
-        </div>
-
-        <div slot="snappedContent">
-            <ui5-title level="H6"
-                >This is a snapped subheading</ui5-title
-            >
-        </div>
-
-        <ui5-toolbar style="border: none" align-content="Start">
-            <ui5-toolbar-button overflow-priority="NeverOverflow"
-                text="KPI Generic tag"
-            ></ui5-toolbar-button>
-        </ui5-toolbar>
-
-        <ui5-toolbar slot="actions">
-            <ui5-toolbar-button id="toggleFooterBtn" text="Toggle Footer"></ui5-toolbar-button>
-            <ui5-toolbar-button text="Edit" overflow-priority="NeverOverflow"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="delete"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="copy"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="share"></ui5-toolbar-button>
-        </ui5-toolbar>
-
-        <ui5-toolbar slot="navigationActions">
-            <ui5-toolbar-button icon="full-screen"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="decline"></ui5-toolbar-button>
-        </ui5-toolbar>
-    </ui5-dynamic-page-title>`,
-    headerArea: `
-    <ui5-dynamic-page-header slot="headerArea">
-    <div
-        style="
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        "
-    >
-        <div
-            style="
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            "
-        >
-            <ui5-avatar
-                id="avatar"
-                icon="laptop"
-                color-scheme="Accent5"
-                size="XL"
-                style="margin: 0 1rem; min-width: 7rem"
-            >
-            </ui5-avatar>
-            <div>
-                <div class="productInfo">
-                    <ui5-title level="H5">Product:</ui5-title>
-                    <ui5-title level="H5" id="lblName"></ui5-title>
-                </div>
-                <br />
-                <div class="productInfo">
-                    <ui5-title level="H5">Description:</ui5-title>
-                    <ui5-title level="H5" id="lblDesc"></ui5-title>
-                </div>
-                <br />
-                <div class="productInfo">
-                    <ui5-title level="H5">Supplier:</ui5-title>
-                    <ui5-title level="H5" id="lblSupplier"
-                        ><b>Titanium</b></ui5-title>
-                    <ui5-button id="scrollBtn">Scroll to bottom</ui5-button>
-                </div>
-            </div>
-        </div>
-        <div class="productInfo" style="align-self: start">
-            <ui5-title level="H5">Progress:</ui5-title>
-            <ui5-progress-indicator
-                id="progress"
-                accessible-name="Hello World"
-                value="40"
-                style="width: 9rem"
-            ></ui5-rating-indicator>
-        </div>
-        <span></span>
-    </div>
-    </ui5-dynamic-page-header>`,
-    content: `
+    showFooter: true,
+    titleArea: DynamicPageTitleTemplate,
+    headerArea: DynamicPageHeaderTemplate,
+    default: `
     <ui5-list
     id="col1list"
     header-text="Products (13)"
@@ -859,6 +757,12 @@ Basic.args = {
     </ui5-bar>`,
 
 };
+
+Basic.decorators = [
+    (story) => html`
+    ${story()}`,
+];
+
 Basic.parameters = {
   docs: {
     story: {

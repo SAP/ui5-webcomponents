@@ -23,12 +23,17 @@ import {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>DynamicPageHeaderActions</code> component is part of the <code>DynamicPage</code>
+ * family and is holding the action buttons behind the <code>DynamicPageTitle</code> and the <code>DynamicPageHeader</code>.
+ *
+ * The "pin" action is used to attach the header to a certain state (expanded/collapsed).
+ * The expand/collapse action is used to switch between the two states of <code>DynamicPageHeader</code>.
+ *
  *
  * @constructor
- * @alias sap.ui.webc.fiori.DynamicPageHeaderActions
  * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-dynamic-page-header-actions
- * @public
+ * @private
+ * @since 1.122
  */
 @customElement({
 	tag: "ui5-dynamic-page-header-actions",
@@ -37,7 +42,18 @@ import {
 	template: DynamicPageHeaderActionsTemplate,
 })
 
+/**
+ * Event that is being fired by clicking on the expand button.
+ *
+ * @public
+ */
 @event("expand-button-click")
+
+/**
+ * Event that is being fired by clicking on the pin button.
+ *
+ * @public
+ */
 @event("pin-button-click")
 
 class DynamicPageHeaderActions extends UI5Element {
@@ -47,12 +63,30 @@ class DynamicPageHeaderActions extends UI5Element {
 		DynamicPageHeaderActions.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	/**
+	 * Defines whether the header is pinned.
+	 *
+	 * @public
+	 * @default false
+	 */
 	@property({ type: Boolean })
 	pinned!: boolean;
 
+	/**
+	 * Defines whether the header is snapped.
+	 *
+	 * @public
+	 * @default false
+	 */
 	@property({ type: Boolean })
 	snapped!: boolean;
 
+	/**
+	 * Contains attributes to be added to HTML to gain accessibility.
+	 *
+	 * @public
+	 * @default {}
+	 */
 	@property({ type: Object })
 	accessibilityAttributes!: {controls: string};
 
