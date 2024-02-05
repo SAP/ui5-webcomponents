@@ -89,7 +89,7 @@ const generateInterfacesSection = (interfaces: Array<EnhancedInterfaceDeclartion
 		content += `| Name | Description | Implementations |
 | --- | --- | --- |
 ${interfaces.map((interfaceE) => {
-			return `| ${interfaceE.name} | ${interfaceE.description} | ${interfaceE.implementations?.join("<br /><br />")}`;
+			return `| <b>${interfaceE.name}</b> | ${interfaceE.description}${renderSince(interfaceE._ui5since)}${renderDeprecated(interfaceE.deprecated)} | ${interfaceE.implementations?.join("<br /><br />")}`;
 		}).join("\n")}`
 	}
 
@@ -121,23 +121,39 @@ const renderDescription = (description?: string): string => {
 	return description ? `<br />${description.trim().replaceAll(/\n/g, "<br />")}` : "";
 }
 
+// const generateEnumsSection = (enums: Array<EnumDeclaration>) => {
+// 	let content = "";
+
+// 	if (enums.length) {
+// 		content += enums.map((enumDeclaration) => {
+// 			return `### ${enumDeclaration.name}
+
+// ${enumDeclaration.description}
+
+// Available enum fields:
+// <ul>
+// ${enumDeclaration.members?.map(member => {
+// 				return `<li><b>${enumDeclaration.name}.${member.name}</b>${renderDescription(member.description)}${renderSince(member._ui5since)}${renderDeprecated(member.deprecated)}</li>`
+// 			}).join("\n")}
+// </ul>
+
+// `}).join("\n")
+// 	}
+
+// 	return content
+// }
+
+
+
 const generateEnumsSection = (enums: Array<EnumDeclaration>) => {
 	let content = "";
 
 	if (enums.length) {
+		content += `| Name | Description | Available fields |
+| --- | --- | --- |
+`
 		content += enums.map((enumDeclaration) => {
-			return `### ${enumDeclaration.name}
-
-${enumDeclaration.description}
-
-Available enum fields:
-<ul>
-${enumDeclaration.members?.map(member => {
-				return `<li><b>${enumDeclaration.name}.${member.name}</b>${renderDescription(member.description)}${renderSince(member._ui5since)}${renderDeprecated(member.deprecated)}</li>`
-			}).join("\n")}
-</ul>
-
-`}).join("\n")
+			return `| <b>${enumDeclaration.name}</b> | ${enumDeclaration.description}${renderSince(enumDeclaration._ui5since)}${renderDeprecated(enumDeclaration.deprecated)} | <ul>${enumDeclaration.members?.map(member => {return `<li>${enumDeclaration.name}.<b>${member.name}</b>${renderDescription(member.description)}${renderSince(member._ui5since)}${renderDeprecated(member.deprecated)}</li>`}).join(" ")}</ul> |`}).join("\n")
 	}
 
 	return content
