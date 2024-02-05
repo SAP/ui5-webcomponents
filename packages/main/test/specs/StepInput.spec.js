@@ -457,8 +457,6 @@ describe("'change' event firing", () => {
 	});
 
 	it("Value state is not changed, when value-state-change is prevented", async () => {
-		datepicker.id = "#stepInputValueStateChange";
-
 		const input = await browser.$("#stepInputValueStateChange").shadow$("ui5-input").shadow$("input");
 
 		const valueState = await input.getProperty("valueState");
