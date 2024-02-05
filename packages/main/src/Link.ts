@@ -321,6 +321,10 @@ class Link extends UI5Element implements ITabbable {
 		return this.accessibleRole.toLowerCase();
 	}
 
+	_hasPopup() {
+		return this.accessibilityAttributes.hasPopup?.toLowerCase();
+	}
+
 	static async onDefine() {
 		Link.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
