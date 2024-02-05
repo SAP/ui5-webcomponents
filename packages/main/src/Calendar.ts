@@ -595,10 +595,6 @@ class Calendar extends CalendarPart {
 		this._selectedItemType = "None";
 	}
 
-	get _dayPicker() {
-		return this.shadowRoot!.querySelector("[ui5-daypicker]") as DayPicker;
-	}
-
 	get _specialDates() {
 		return this.getSlottedNodes<SpecialCalendarDate>("specialDates");
 	}
