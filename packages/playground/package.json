@@ -57,7 +57,8 @@
     "prepare:overviews": "vite-node ./build-scripts-storybook/overviews-prepare.ts",
     "storybook": "npm-run-all --parallel prepare:* && storybook dev -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:build:* prepare:* && tsc && storybook build -o ./dist/playground",
-    "build-sitemap": "vite-node ./build-scripts-storybook/sitemap-prepare.ts"
+    "build-sitemap": "vite-node ./build-scripts-storybook/sitemap-prepare.ts",
+    "build-types": "vite-node ./build-scripts-storybook/types-prepare.ts"
   },
   "dependencies": {
     "xmlbuilder": "^15.1.1"
