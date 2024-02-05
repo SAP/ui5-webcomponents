@@ -11,63 +11,62 @@
 </head>
 
 <body class="tabcontainer1auto">
-	<ui5-checkbox id="reorder" text="Reorder tabs" checked></ui5-checkbox>
+	<ui5-checkbox id="reorder" text="Draggable tabs" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
 	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel" value="1"></ui5-step-input>
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed reorder-tabs max-nesting-level="1">
-			<ui5-tab id="tabOne" design="Positive" text="One"></ui5-tab>
-			<ui5-tab id="tabTwo" design="Negative" text="Two" disabled>
-				<ui5-tab slot="subTabs" text="2.1"></ui5-tab>
+		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed max-nesting-level="1">
+			<ui5-tab id="tabOne" draggable="true" design="Positive" text="One"></ui5-tab>
+			<ui5-tab id="tabTwo" draggable="true" design="Negative" text="Two" disabled>
+				<ui5-tab slot="subTabs" draggable="true" text="2.1"></ui5-tab>
 			</ui5-tab>
-			<ui5-tab id="tabThree" design="Critical" text="Three">
-				<ui5-tab slot="subTabs" design="Positive" text="3.1">
+			<ui5-tab id="tabThree" draggable="true" design="Critical" text="Three">
+				<ui5-tab slot="subTabs" draggable="true" design="Positive" text="3.1">
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
-
 				content
 			</ui5-tab>
-			<ui5-tab id="tabFour" text="Four (forbids nesting)"></ui5-tab>
+			<ui5-tab id="tabFour" draggable="true" text="Four (forbids nesting)"></ui5-tab>
 
-			<ui5-tab id="tabFive" text="Five">
-				<ui5-tab slot="subTabs" text="nested in Five">
-					<ui5-tab slot="subTabs" text="nested deeper in Five">text</ui5-tab>
+			<ui5-tab id="tabFive" draggable="true" text="Five">
+				<ui5-tab slot="subTabs" draggable="true" text="nested in Five">
+					<ui5-tab slot="subTabs" draggable="true" text="nested deeper in Five">text</ui5-tab>
 					text
 				</ui5-tab>
 			</ui5-tab>
 
-			<ui5-tab id="tabSix" text="Six"></ui5-tab>
-			<ui5-tab id="tabSeven" text="Seven"></ui5-tab>
+			<ui5-tab id="tabSix" draggable="true" text="Six"></ui5-tab>
+			<ui5-tab id="tabSeven" draggable="true" text="Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabEight" design="Positive" text="Eight"></ui5-tab>
-			<ui5-tab id="tabNine" design="Negative" text="Nine"></ui5-tab>
-			<ui5-tab id="tabTen" design="Critical" text="Ten"></ui5-tab>
-			<ui5-tab id="tabEleven" text="Eleven"></ui5-tab>
+			<ui5-tab id="tabEight" draggable="true" design="Positive" text="Eight"></ui5-tab>
+			<ui5-tab id="tabNine" draggable="true" design="Negative" text="Nine"></ui5-tab>
+			<ui5-tab id="tabTen" draggable="true" design="Critical" text="Ten"></ui5-tab>
+			<ui5-tab id="tabEleven" draggable="true" text="Eleven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab text="Twelve"></ui5-tab>
-			<ui5-tab text="Thirteen" selected></ui5-tab>
-			<ui5-tab text="Fourteen"></ui5-tab>
-			<ui5-tab text="Fifteen"></ui5-tab>
-			<ui5-tab text="Sixteen"></ui5-tab>
-			<ui5-tab id="tabSeventeen" text="Seventeen (forbids nesting)"></ui5-tab>
-			<ui5-tab text="Eighteen"></ui5-tab>
+			<ui5-tab id="tabTwelve" draggable="true" text="Twelve"></ui5-tab>
+			<ui5-tab id="tabThirteen" draggable="true" text="Thirteen" selected></ui5-tab>
+			<ui5-tab id="tabFourteen" draggable="true" text="Fourteen"></ui5-tab>
+			<ui5-tab id="tabFifteen" draggable="true" text="Fifteen"></ui5-tab>
+			<ui5-tab id="tabSixteen" draggable="true" text="Sixteen"></ui5-tab>
+			<ui5-tab id="tabSeventeen" draggable="true" text="Seventeen (forbids nesting)"></ui5-tab>
+			<ui5-tab id="tabEighteen" draggable="true" text="Eighteen"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab text="Nineteen"></ui5-tab>
-			<ui5-tab text="Twenty"></ui5-tab>
-			<ui5-tab text="Twenty One"></ui5-tab>
-			<ui5-tab text="Twenty Two"></ui5-tab>
-			<ui5-tab text="Twenty Three"></ui5-tab>
-			<ui5-tab text="Twenty Four"></ui5-tab>
+			<ui5-tab id="tabNinteen" draggable="true" text="Nineteen"></ui5-tab>
+			<ui5-tab id="tabTwenty" draggable="true" text="Twenty"></ui5-tab>
+			<ui5-tab id="tabTwentyOne" draggable="true" text="Twenty One"></ui5-tab>
+			<ui5-tab id="tabTwentyTwo" draggable="true" text="Twenty Two"></ui5-tab>
+			<ui5-tab id="tabTwentyThree" draggable="true" text="Twenty Three"></ui5-tab>
+			<ui5-tab id="tabTwentyFour" draggable="true" text="Twenty Four"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab text="Twenty Five"></ui5-tab>
-			<ui5-tab text="Twenty Six"></ui5-tab>
-			<ui5-tab text="Twenty Seven"></ui5-tab>
+			<ui5-tab id="tabTwnetyFive" draggable="true" text="Twenty Five"></ui5-tab>
+			<ui5-tab id="tabTwnetySix" draggable="true" text="Twenty Six"></ui5-tab>
+			<ui5-tab id="tabTwnetySeven" draggable="true" text="Twenty Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab text="Twenty Eight"></ui5-tab>
-			<ui5-tab text="Twenty Nine"></ui5-tab>
-			<ui5-tab text="Thirty"></ui5-tab>
+			<ui5-tab id="tabTwentyEight" draggable="true" text="Twenty Eight"></ui5-tab>
+			<ui5-tab id="tabTwentyNine" draggable="true" text="Twenty Nine"></ui5-tab>
+			<ui5-tab id="tabThirty" draggable="true" text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
@@ -124,7 +123,7 @@
 
 		const reorderCb = document.getElementById("reorder");
 		reorderCb.addEventListener("change", e => {
-			tc.toggleAttribute("reorder-tabs", e.target.checked);
+			// TODO: iterate all tabs and set their "draggable"
 		});
 
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");

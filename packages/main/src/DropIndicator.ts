@@ -39,10 +39,10 @@ class DropIndicator extends UI5Element {
 	/**
 	 * Defines the placement of the indicator relative to the item.
 	 *
-	 * @default "Between"
+	 * @default "Before"
 	 * @public
 	 */
-	@property({ type: DropPlacement, defaultValue: DropPlacement.Between })
+	@property({ type: DropPlacement, defaultValue: DropPlacement.Before })
 	placement!: `${DropPlacement}`;
 
 	/**

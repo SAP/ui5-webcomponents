@@ -11,9 +11,7 @@
 	aria-disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
 	?disabled="{{this.effectiveDisabled}}"
-	draggable="{{this._effectiveDraggable}}"
-	@dragstart="{{_onTabDragStart}}"
-	@dragend="{{_onTabDragEnd}}"
+	draggable="{{this.draggable}}"
 	._realTab="{{this}}"
 >
 	{{#if this.icon}}

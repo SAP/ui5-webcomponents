@@ -60,7 +60,7 @@ import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import Orientation from "./types/Orientation.js";
 import DropPlacement from "./types/DropPlacement.js";
-import { getDraggedElement } from "./util/DragAndDrop.js";
+import { getDraggedComponent, setDraggedComponent } from "./util/DragAndDrop.js";
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
@@ -320,16 +320,6 @@ class TabContainer extends UI5Element {
 	tabsPlacement!: `${TabContainerTabsPlacement}`;
 
 	/**
-	 * Defines whether the tabs can be reordered using drag and drop.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	reorderTabs!: boolean;
-
-	/**
 	 * Defines the maximum level of hierarchical nesting of tabs through drag and drop.
 	 *
 	 * @type {boolean}
@@ -460,10 +450,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (this.reorderTabs) {
-			this.dropIndicatorDOM._owner = this._getTabStrip();
-		}
-
+		this.dropIndicatorDOM._owner = this._getTabStrip();
 		this._setItemsForStrip();
 
 		if (!this.shadowRoot!.contains(document.activeElement)) {
@@ -509,7 +496,6 @@ class TabContainer extends UI5Element {
 		stripTabs.forEach((tab, index, arr) => {
 			tab._isInline = this.tabLayout === TabLayout.Inline;
 			tab._mixedMode = this.mixedMode;
-			tab._draggable = this.reorderTabs;
 			tab._posinset = index + 1;
 			tab._setsize = arr.length;
 			tab._realTab = tab as Tab;
@@ -519,7 +505,6 @@ class TabContainer extends UI5Element {
 				walk(tab.subTabs, _tab => {
 					if (!tab.isSeparator) {
 						_tab._realTab = _tab as Tab;
-						_tab._draggable = this.reorderTabs;
 					}
 				});
 			}
@@ -1242,6 +1227,17 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot!.querySelector("[ui5-drop-indicator]")!;
 	}
 
+	_onHeaderDragStart(e: DragEvent) {
+		if (!e.dataTransfer || !e.target) {
+			return;
+		}
+
+		const draggedTabInStrip = e.target as ITab;
+
+		e.dataTransfer.dropEffect = "move";
+		setDraggedComponent(draggedTabInStrip._realTab!);
+	}
+
 	_onHeaderDragOver(e: DragEvent) {
 		let dragOverElement: HTMLElement | null;
 		const dropIndicator = this.dropIndicatorDOM;
@@ -1275,7 +1271,7 @@ class TabContainer extends UI5Element {
 
 			const parentElement = dragOverElement.parentElement as UI5Element;
 
-			let draggedElement = getDraggedElement()!;
+			let draggedElement = getDraggedComponent()!;
 
 			if ((draggedElement as Tab)._realTab) {
 				draggedElement = (draggedElement as Tab)._realTab;
@@ -1326,7 +1322,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		let droppedElement = getDraggedElement()!;
+		let droppedElement = getDraggedComponent()!;
 
 		if ((droppedElement as Tab)._realTab) {
 			droppedElement = (droppedElement as Tab)._realTab;
@@ -1424,10 +1420,14 @@ class TabContainer extends UI5Element {
 		});
 	}
 
-	_onHeaderDragEndOrLeave() {
+	_onHeaderDragLeave() {
 		// reset drop indicator
 		this.dropIndicatorDOM.target = "";
 		this.dropIndicatorDOM.hide();
+	}
+
+	_onHeaderDragEnd() {
+		setDraggedComponent(null);
 	}
 
 	_setPopoverItems(items: Array<ITab>) {

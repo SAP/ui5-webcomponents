@@ -10,24 +10,25 @@
 </head>
 
 <body class="tabcontainer1auto">
-	<ui5-checkbox id="reorder" text="Reorder items" checked></ui5-checkbox>
+	<ui5-checkbox id="reorder" text="Draggable items" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
 	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel" value="1"></ui5-step-input>
+	<a href="http://sap.com">http://sap.com</a>
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-list id="listDnd1" _reorder-items header-text="List 1">
-			<ui5-li _draggable id="bg1">1. Bulgaria</ui5-li>
-			<ui5-li _draggable id="de1">1. Germany</ui5-li>
-			<ui5-li _draggable id="es1">1. Spain</ui5-li>
+		<ui5-list id="listDnd1" header-text="List 1">
+			<ui5-li draggable="true" id="bg1">1. Bulgaria</ui5-li>
+			<ui5-li draggable="true" id="de1">1. Germany</ui5-li>
+			<ui5-li draggable="true" id="es1">1. Spain</ui5-li>
 		</ui5-list>
 	</section>
 
 	<section>
-		<ui5-list id="listDnd2" _reorder-items header-text="List 2">
-			<ui5-li _draggable id="bg2">2. Bulgaria</ui5-li>
-			<ui5-li _draggable id="de2">2. Germany</ui5-li>
-			<ui5-li _draggable id="es2">2. Spain</ui5-li>
+		<ui5-list id="listDnd2" header-text="List 2">
+			<ui5-li draggable="true" id="bg2">2. Bulgaria</ui5-li>
+			<ui5-li draggable="true" id="de2">2. Germany</ui5-li>
+			<ui5-li draggable="true" id="es2">2. Spain</ui5-li>
 		</ui5-list>
 	</section>
 
@@ -80,8 +81,8 @@
 
 		const reorderCb = document.getElementById("reorder");
 		reorderCb.addEventListener("change", e => {
-			list1.toggleAttribute("_reorder-items", e.target.checked);
-			list2.toggleAttribute("_reorder-items", e.target.checked);
+			list1.items.forEach((item) => item.draggable = e.target.checked);
+			list2.items.forEach((item) => item.draggable = e.target.checked);
 		});
 
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");

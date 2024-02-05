@@ -37,7 +37,6 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
-import { setDraggedElement } from "./util/DragAndDrop.js";
 
 const DESIGN_DESCRIPTIONS = {
 	[SemanticColor.Positive]: TAB_ARIA_DESIGN_POSITIVE,
@@ -145,9 +144,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Boolean })
 	_isTopLevelTab!: boolean;
 
-	@property({ type: Boolean })
-	_draggable!: boolean;
-
 	/**
 	 * Holds the content associated with this tab.
 	 *
@@ -248,11 +244,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	get _hasOwnContent() {
 		return willShowContent(this.content);
 	}
-
-	get _effectiveDraggable() {
-		return this._realTab._draggable || null;
-	}
-
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
@@ -451,26 +442,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		}
 
 		return classes.join(" ");
-	}
-
-	_onTabDragStart(e: DragEvent) {
-		if (!e.dataTransfer || !e.target) {
-			return;
-		}
-
-		const draggedTabInStrip = e.target as ITab;
-
-		e.dataTransfer.clearData();
-		e.dataTransfer.setData("text/plain", `${draggedTabInStrip.id}`);
-		e.dataTransfer.dropEffect = "move";
-
-		// eslint-disable-next-line no-warning-comments
-		// TODO: replace dataTransfer usage with setDraggedElement and other APIs
-		setDraggedElement(draggedTabInStrip._realTab!);
-	}
-
-	_onTabDragEnd() {
-		setDraggedElement(null);
 	}
 
 	get overflowState() {

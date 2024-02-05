@@ -27,7 +27,7 @@ import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.j
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
-import type ListItem from "./ListItem.js";
+import ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
 	PressEventDetail,
@@ -54,7 +54,7 @@ import {
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
 import DropPlacement from "./types/DropPlacement.js";
-import { getDraggedElement } from "./util/DragAndDrop.js";
+import { getDraggedComponent, getDraggedEventTarget, setDraggedComponent } from "./util/DragAndDrop.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -92,7 +92,7 @@ type ListItemClickEventDetail = {
 
 type ListBeforeItemsReorderEventDetail = {
 	source: {
-		element: UI5Element,
+		element: EventTarget,
 	}
 	destination: {
 		element: UI5Element,
@@ -103,7 +103,7 @@ type ListBeforeItemsReorderEventDetail = {
 
 type ListItemsReorderEventDetail = {
 	source: {
-		element: UI5Element,
+		element: EventTarget,
 	},
 	destination: {
 		element: List,
@@ -309,7 +309,7 @@ type ListItemsReorderEventDetail = {
 @event("before-item-reorder", { // ui5-dragover?
 	detail: {
 		source: {
-			element: { type: HTMLElement },
+			element: { type: EventTarget },
 			index: { type: Number },
 		},
 		destination: {
@@ -325,7 +325,7 @@ type ListItemsReorderEventDetail = {
 @event("item-reorder", { // ui5-drop?
 	detail: {
 		source: {
-			element: { type: HTMLElement },
+			element: { type: EventTarget },
 			index: { type: Number },
 		},
 		destination: {
@@ -476,13 +476,6 @@ class List extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	_loadMoreActive!: boolean;
-
-	/**
-	 * Used in TabContainerPopover
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_reorderItems!: boolean;
 
 	/**
 	 * Used in TabContainerPopover
@@ -1191,10 +1184,24 @@ class List extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
-	_ondragendorleave() {
-		// this doesn't get rerendered when a list is in a popover, maybe similar to issue #7681
+	_ondragend() {
+		setDraggedComponent(null);
+	}
+
+	_ondragleave() {
 		this.dropIndicatorDOM.target = "";
 		this.dropIndicatorDOM.hide();
+	}
+
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer || !e.target) {
+			return;
+		}
+
+		if (e.target instanceof ListItem && this.items.includes(e.target)) {
+			e.dataTransfer.dropEffect = "move";
+			setDraggedComponent(e.target);
+		}
 	}
 
 	_ondragenter(e: DragEvent) {
@@ -1202,8 +1209,10 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
-		// eslint-disable-next-line no-warning-comments
-		// TODO: add validation if the dropped element is known, for example avoid links or other element to be dropped, or let the the app dev do it?
+		if (!getDraggedComponent() && !getDraggedEventTarget()) {
+			return;
+		}
+
 		const coordinateInfo = getElementAtCoordinate(
 			this.items,
 			e.clientY,
@@ -1227,7 +1236,7 @@ class List extends UI5Element {
 
 		const beforeItemReorderPrevented = !this.fireEvent<ListBeforeItemsReorderEventDetail>("before-item-reorder", {
 			source: {
-				element: getDraggedElement()!,
+				element: getDraggedComponent() || getDraggedEventTarget()!,
 			},
 			destination: {
 				element: parentElement,
@@ -1250,9 +1259,7 @@ class List extends UI5Element {
 	}
 
 	_ondrop(e: DragEvent) {
-		// eslint-disable-next-line no-warning-comments
-		// TODO: add validation if the dropped element is known, for example avoid links or other element to be dropped, or let the the app dev do it?
-		if (!e.dataTransfer) {
+		if (!getDraggedComponent() && !getDraggedEventTarget()) {
 			return;
 		}
 
@@ -1273,7 +1280,7 @@ class List extends UI5Element {
 
 		this.fireEvent<ListItemsReorderEventDetail>("item-reorder", {
 			source: {
-				element: getDraggedElement()!,
+				element: getDraggedComponent() || getDraggedEventTarget()!,
 			},
 			destination: {
 				element: this,

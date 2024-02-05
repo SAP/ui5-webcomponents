@@ -7,9 +7,10 @@
 		id="{{_id}}-header"
 		@focusin="{{_onHeaderFocusin}}"
 		@drop="{{_onHeaderDrop}}"
+		@dragstart="{{_onHeaderDragStart}}"
 		@dragover="{{_onHeaderDragOver}}"
-		@dragleave="{{_onHeaderDragEndOrLeave}}"
-		@dragend="{{_onHeaderDragEndOrLeave}}"
+		@dragleave="{{_onHeaderDragLeave}}"
+		@dragend="{{_onHeaderDragEnd}}"
 		part="tabstrip"
 	>
 		<div
@@ -73,9 +74,7 @@
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	{{/if}}
 
-	{{#if reorderTabs}}
-		<ui5-drop-indicator orientation="Vertical"></ui5-drop-indicator>
-	{{/if}}
+	<ui5-drop-indicator orientation="Vertical"></ui5-drop-indicator>
 </div>
 
 {{#*inline "contentArea"}}

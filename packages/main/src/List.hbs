@@ -2,11 +2,12 @@
 	class="{{classes.root}}"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
-	@drop="{{_ondrop}}"
-	@dragend="{{_ondragendorleave}}"
-	@dragleave="{{_ondragendorleave}}"
-	@dragover="{{_ondragover}}"
+	@dragstart="{{_ondragstart}}"
 	@dragenter="{{_ondragenter}}"
+	@dragover="{{_ondragover}}"
+	@drop="{{_ondrop}}"
+	@dragleave="{{_ondragleave}}"
+	@dragend="{{_ondragend}}"
 	@ui5-_press={{onItemPress}}
 	@ui5-close={{onItemClose}}
 	@ui5-toggle={{onItemToggle}}
@@ -82,15 +83,13 @@
 		</div>
 	{{/if}}
 
-	{{#if _reorderItems}}
-		<ui5-drop-indicator
-			orientation="Horizontal"
-			placement="Between"
-			max-nesting-level="0"
-			._owner="{{this}}"
-			>
-		</ui5-drop-indicator>
-	{{/if}}
+	<ui5-drop-indicator
+		orientation="Horizontal"
+		placement="Between"
+		max-nesting-level="0"
+		._owner="{{this}}"
+		>
+	</ui5-drop-indicator>
 </div>
 
 
