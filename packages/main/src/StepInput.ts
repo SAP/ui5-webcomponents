@@ -119,7 +119,7 @@ type StepInputValueStateChangeEventDetail = {
  * @allowPreventDefault
  * @public
  * @param {string} valueState The new <code>valueState</code> that will be set.
- * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+ * @param {boolean} valid Indicator if the value is in between the min and max value.
  */
 @event<StepInputValueStateChangeEventDetail>("value-state-change", {
 	detail: {
