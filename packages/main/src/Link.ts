@@ -12,6 +12,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import HasPopup from "./types/HasPopup.js";
 
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
@@ -27,6 +28,11 @@ type LinkClickEventDetail = {
 	metaKey: boolean;
 	shiftKey: boolean;
 }
+
+type AccessibilityAttributes = {
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: `${HasPopup}`,
+};
 
 /**
  * @class
@@ -227,7 +233,7 @@ class Link extends UI5Element implements ITabbable {
 	 * 			<ul>
 	 *				<li><code>Dialog</code></li>
 	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
+	 *				<li><code>Listbox</code></li>
 	 *				<li><code>Menu</code></li>
 	 *				<li><code>Tree</code></li>
 	 * 			</ul>
@@ -239,13 +245,13 @@ class Link extends UI5Element implements ITabbable {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
 
 	@property({ noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Indicates if the element is on focus.
@@ -282,8 +288,8 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		if (this._tabIndex) {
-			return this._tabIndex;
+		if (this.forcedTabIndex) {
+			return this.forcedTabIndex;
 		}
 		return (this.disabled || !this.textContent?.length) ? "-1" : "0";
 	}
@@ -382,4 +388,7 @@ Link.define();
 
 export default Link;
 
-export type { LinkClickEventDetail };
+export type {
+	LinkClickEventDetail,
+	AccessibilityAttributes,
+};

@@ -99,15 +99,9 @@ type TableRowF7PressEventDetail = {
 class TableRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the visual indication and behavior of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Active</code></li>
-	 * <li><code>Inactive</code></li>
-	 * </ul>
-	 * <br><br>
+	 *
 	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
-	 * while with type <code>Inactive</code> - will not.
+	 * while with type <code>Inactive</code>-will not.
 	 *
 	 * @default "Inactive"
 	 * @since 1.0.0-rc.15
@@ -160,13 +154,13 @@ class TableRow extends UI5Element implements ITableRow {
 	_columnsInfo!: Array<TableColumnInfo>;
 
 	@property({ defaultValue: "-1" })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
-	_busy!: boolean;
+	forcedBusy!: boolean;
 
 	@property({ defaultValue: "", noAttribute: true })
-	_ariaPosition!: string;
+	forcedAriaPosition!: string;
 
 	/**
 	 * Defines the cells of the component.
@@ -186,7 +180,7 @@ class TableRow extends UI5Element implements ITableRow {
 	_ontouchstart: PassiveEventListenerObject;
 
 	// Properties, set and handled by the Table
-	_tabbables: Array<HTMLElement> = [];
+	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
 	constructor() {
@@ -406,10 +400,10 @@ class TableRow extends UI5Element implements ITableRow {
 		}).join(" ");
 
 		if (isRowSelectable) {
-			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
+			return `${ariaLabel}. ${this.forcedAriaPosition}. ${isSelected}`;
 		}
 
-		return `${ariaLabel}. ${this._ariaPosition}`;
+		return `${ariaLabel}. ${this.forcedAriaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {

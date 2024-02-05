@@ -45,6 +45,11 @@
 	--_ui5_side_navigation_popup_title_text_size: 1.25rem;
 	--_ui5_side_navigation_popup_title_line_height: 1.5rem;
 	--_ui5_side_navigation_selection_indicator_display: block;
+
+	--_ui5_side_navigation_item_collapsed_icon_padding: 0 0.25rem;
+	--_ui5_side_navigation_item_collapsed_hover_focus_width: fit-content;
+	--_ui5_side_navigation_item_collapsed_hover_focus_display: block;
+	--_ui5_side_navigation_item_collapsed_hover_focus_padding_right: 1rem;
 }
 
 [data-ui5-compact-size],
@@ -54,4 +59,6 @@
 	--_ui5_side_navigation_padding: var(--_ui5_side_navigation_padding_compact);
 	--_ui5_side_navigation_item_bottom_margin: var(--_ui5_side_navigation_item_bottom_margin_compact);
 	--_ui5_side_navigation_item_height: 2rem;
+	--_ui5_side_navigation_item_collapsed_icon_padding: 0;
+	--_ui5_side_navigation_item_collapsed_hover_focus_padding_right: 0.5rem;
 }

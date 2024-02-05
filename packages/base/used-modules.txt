@@ -1,7 +1,11 @@
 # Needed files from OpenUI5
 
+# ./ui5loader-autoconfig.js
 sap/base/util/now.js
+sap/base/util/uid.js
 sap/base/Log.js
+# sap/base/config.js
+sap/base/config/MemoryConfigurationProvider.js
 sap/base/assert.js
 sap/base/security/URLListValidator.js
 sap/base/security/sanitizeHTML.js

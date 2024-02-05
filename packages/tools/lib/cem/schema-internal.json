@@ -245,6 +245,9 @@
     "ClassField": {
       "additionalProperties": false,
       "properties": {
+        "_ui5noAttribute": {
+          "type": "boolean"
+        },
         "_ui5validator": {
           "type": "string"
         },

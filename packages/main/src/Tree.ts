@@ -405,8 +405,8 @@ class Tree extends UI5Element {
 
 			item.setAttribute("level", level.toString());
 
-			item._setsize = ariaSetSize;
-			item._posinset = index + 1;
+			item.forcedSetsize = ariaSetSize;
+			item.forcedPosinset = index + 1;
 		});
 	}
 
@@ -474,4 +474,5 @@ export type {
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
 	TreeSelectionChangeEventDetail,
+	WalkCallback,
 };

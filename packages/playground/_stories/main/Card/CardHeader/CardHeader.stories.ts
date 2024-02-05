@@ -1,23 +1,15 @@
 import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-import { DocsPage } from "../../../../.storybook/docs.js";
 import type CardHeader from "@ui5/webcomponents/dist/CardHeader.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-const component = "ui5-card-header";
-
 export default {
 	title: "Main/Card/Card Header",
 	component: "CardHeader",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<CardHeader>;
 

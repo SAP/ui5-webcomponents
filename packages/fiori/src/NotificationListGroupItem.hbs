@@ -4,13 +4,13 @@
 	@focusout="{{_onfocusout}}"
 	@keydown="{{_onkeydown}}"
 	role="listitem"
-	tabindex="{{_tabIndex}}"
+	tabindex="{{forcedTabIndex}}"
 	aria-expanded="{{_ariaExpanded}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 >
 	<div class="ui5-nli-group-header">
 		<ui5-button
-			icon="navigation-right-arrow"
+			icon={{groupCollapsedIcon}}
 			design="Transparent"
 			@click="{{_onBtnToggleClick}}"
 			class="ui5-nli-group-toggle-btn"
