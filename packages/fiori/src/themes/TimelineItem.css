@@ -240,47 +240,56 @@
 	padding-top: var(--_ui5_TimelineItem_bubble_content_description_padding_top);
 }
 
-[dir=rtl] .ui5-tli-bubble-arrow--left {
+:dir(rtl) .ui5-tli-bubble-arrow--left {
+/* [dir=rtl] .ui5-tli-bubble-arrow--left { */
 	right: calc(-1 * var(--_ui5_TimelineItem_arrow_size));
 	left: auto;
 	transform: scale(-1, 1);
 }
 
-[dir=rtl] .ui5-tli-bubble-arrow--top {
+:dir(rtl) .ui5-tli-bubble-arrow--top {
+/* [dir=rtl] .ui5-tli-bubble-arrow--top { */
 	right: 0;
 	left: auto;
 	transform: scale(-1, 1);
 }
 
-[dir=rtl] .ui5-tli-bubble {
+:dir(rtl) .ui5-tli-bubble {
+/* [dir=rtl] .ui5-tli-bubble { */
 	margin-left: auto;
 	margin-right: .5rem;
 }
 
-:host([layout="Horizontal"]) [dir=rtl] .ui5-tli-bubble {
+:host([layout="Horizontal"]:dir(rtl)) .ui5-tli-bubble {
+/* :host([layout="Horizontal"]) [dir=rtl] .ui5-tli-bubble { */
 	margin-right: 0;
 }
 
-[dir=rtl] .ui5-tli-bubble:focus::after {
+:dir(rtl) .ui5-tli-bubble:focus::after {
+/* [dir=rtl] .ui5-tli-bubble:focus::after { */
 	left: var(--_ui5_TimelineItem_bubble_rtl_left_offset);
 	right: var(--_ui5_TimelineItem_bubble_rtl_right_offset);
 }
 
-:host([layout="Horizontal"]) [dir=rtl]  .ui5-tli-bubble:focus::after {
+:host([layout="Horizontal"]:dir(rtl))  .ui5-tli-bubble:focus::after {
+/* :host([layout="Horizontal"]) [dir=rtl]  .ui5-tli-bubble:focus::after { */
 	right: 0
 }
 
-:host([layout="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::after {
+:host([layout="Horizontal"]:not([icon]):dir(rtl)) .ui5-tli-indicator::after {
+/* :host([layout="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::after { */
 	right: 0.625rem;
 }
 
 /* Line when no Icon is provided in horizontal*/
-:host([layout="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::before {
+:host([layout="Horizontal"]:not([icon]):dir(rtl)) .ui5-tli-indicator::before {
+/* :host([layout="Horizontal"]:not([icon])) [dir=rtl] .ui5-tli-indicator::before { */
 	right: 1.9375rem;
 	left: var(--_ui5_timeline_tli_indicator_before_right);
 }
 
-:host([layout="Horizontal"]) [dir=rtl] .ui5-tli-indicator::before {
+:host([layout="Horizontal"]:dir(rtl)) .ui5-tli-indicator::before {
+/* :host([layout="Horizontal"]) [dir=rtl] .ui5-tli-indicator::before { */
 	left: var(--_ui5_timeline_tli_indicator_before_right);
 	right: 2.125rem;
 }
