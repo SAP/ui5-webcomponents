@@ -2,25 +2,15 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
-
-const component = "ui5-checkbox";
 
 export default {
     title: "Main/Check Box",
     component: "CheckBox",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 } as Meta<CheckBox>;
 

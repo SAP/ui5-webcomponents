@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "1.22.0-rc.1",
+  "version": "1.22.0",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -17,6 +17,11 @@
     "directory": "packages/base"
   },
   "exports": {
+    "./dist/ssr-dom.js": {
+      "browser": "./dist/ssr-dom.js",
+      "node": "./dist/ssr-dom-shim.js",
+      "default": "./dist/ssr-dom.js"
+    },
     ".": "./index.js",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
@@ -32,9 +37,10 @@
     "generateAPI": "nps generateAPI",
     "bundle": "nps build.bundle",
     "test": "nps test",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "dependencies": {
+    "@lit-labs/ssr-dom-shim": "^1.1.2",
     "lit-html": "^2.0.1"
   },
   "devDependencies": {

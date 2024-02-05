@@ -35,11 +35,19 @@ const getCancelButton = async id => {
 	return picker.$("#cancel");
 };
 
-const getTimeSlidersCount = async id => {
+const getTimeSelectionClocksCount = async id => {
 	const picker = await getPicker(id);
 
 	return await browser.executeAsync( (picker, done) => {
-		done(picker.querySelector("ui5-time-selection").shadowRoot.querySelectorAll("ui5-wheelslider").length);
+		done(picker.querySelector("ui5-time-selection-clocks").shadowRoot.querySelectorAll("ui5-time-picker-clock").length);
+	}, picker);
+};
+
+const getPeriodSegmentedButtonCount = async id => {
+	const picker = await getPicker(id);
+
+	return await browser.executeAsync( (picker, done) => {
+		done(picker.querySelector("ui5-time-selection-clocks").shadowRoot.querySelectorAll("ui5-segmented-button").length);
 	}, picker);
 };
 
@@ -83,26 +91,26 @@ describe("DateTimePicker general interaction", () => {
 		await browser.keys("Space");
 
 		// select new time
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown"); // select 01
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="hours"]`).click();
+		await browser.keys("ArrowDown"); // select 02
 
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown"); // select 0
-		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 02
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="minutes"]`).click();
+		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 14
 
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown"); // select 0
-		await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); await browser.keys("ArrowDown"); // select 03
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="seconds"]`).click();
+		await browser.keys("ArrowUp"); await browser.keys("ArrowUp"); await browser.keys("ArrowUp"); // select 19
+
+		await browser.keys("p"); // select PM
 
 		await picker.$("#ok").click();
 
 		// assert
 		const newValue = await dtPicker.shadow$("ui5-input").getValue();
-		assert.strictEqual(newValue.toUpperCase(), "14/04/2020, 01:02:03 AM", "The new date/time is correctly selected.");
+		assert.strictEqual(newValue.toUpperCase(), "14/04/2020, 02:14:19 PM", "The new date/time is correctly selected.");
 	});
 
 	it("tests selection of new date without changing the time section", async () => {
-		const PREVIOUS_VALUE = "14/04/2020, 01:02:03 AM";
+		const PREVIOUS_VALUE = "14/04/2020, 02:14:19 PM";
 		const dtPicker = await browser.$("#dtSeconds");
 		// assert
 		const currentValue = await dtPicker.shadow$("ui5-input").getValue();
@@ -171,16 +179,21 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests time controls displayed according to format", async () => {
-		const expectedHoursMinSlidersCount = 3;
-		const expectedHoursMinSecSlidersCount = 4;
+		const expectedHoursMinClocksCount = 2;
+		const expectedHoursMinSecClocksCount = 3;
+		const expectedHoursMinPeriodCount = 1;
+		const expectedHoursMinSecPeriodCount = 1;
 
 		// act
 		await openPickerById("dtSeconds");
 
 		// assert
-		const hoursMinSecSliders = await getTimeSlidersCount("dtSeconds");
-		assert.strictEqual(hoursMinSecSliders, expectedHoursMinSecSlidersCount,
-			"The picker have 4 sliders - hours, minutes, seconds and periods sliders.");
+		const hoursMinSecClocks = await getTimeSelectionClocksCount("dtSeconds");
+		const hoursMinSecPeriod = await getPeriodSegmentedButtonCount("dtSeconds");
+		assert.strictEqual(hoursMinSecClocks, expectedHoursMinSecClocksCount,
+			"The picker have 3 clocks - hours, minutes, seconds clocks.");
+		assert.strictEqual(hoursMinSecPeriod, expectedHoursMinSecPeriodCount,
+			"The picker have 1 Period Selector");
 
 		await closePickerById("dtSeconds");
 
@@ -188,26 +201,29 @@ describe("DateTimePicker general interaction", () => {
 		await openPickerById("dtMinutes");
 
 		// assert
-		const hoursMinSliders = await getTimeSlidersCount("dtMinutes");
-		assert.strictEqual(hoursMinSliders,	expectedHoursMinSlidersCount,
-			"The picker have 3 sliders - hours, minutes and periods sliders.");
+		const hoursMinClocks = await getTimeSelectionClocksCount("dtMinutes");
+		const hoursMinPeriod = await getPeriodSegmentedButtonCount("dtMinutes");
+		assert.strictEqual(hoursMinClocks,	expectedHoursMinClocksCount,
+			"The picker have 2 clocks - hours, and minutes clocks.");
+		assert.strictEqual(hoursMinPeriod, expectedHoursMinPeriodCount,
+				"The picker have 1 Period Selector");
 
 		await closePickerById("dtMinutes");
 	});
 
-	it("tests hours slider is expanded", async () => {
+	it("tests hours clock is active on picker open", async () => {
 		// act
 		await openPickerById("dt");
 
 		// assert
 		const picker = await getPicker("dt");
-		const expanded = await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getProperty("expanded");
-		assert.ok(expanded, "The  hours slider is expanded.");
+		const active = await picker.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="hours"]`).getProperty("active");
+		assert.ok(active, "The hours clock is active.");
 
 		await closePickerById("dt");
 	});
 
-	it("tests selection of 12:00:00 AM", async () => {
+	it("tests selection of 12:34:56 AM", async () => {
 		const dtPicker = await browser.$("#dtTest12AM");
 
 		// act
@@ -216,26 +232,18 @@ describe("DateTimePicker general interaction", () => {
 		const picker = await getPicker("dtTest12AM");
 
 		// select new time
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageUp"); // select 12
-
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown");// select 00
-
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown");// select 00
-
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown");// select AM
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="hours"]`).click();
+		await browser.keys("123456a"); // select 12:34:56 AM
 
 		await picker.$("#ok").click();
 
 		// assert
 		const newValue = await dtPicker.shadow$("ui5-input").getValue();
-		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 AM", "The new date/time is correctly selected.");
+		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:34:56 AM", "The new date/time is correctly selected.");
 	});
 
-	it("tests selection of 12:00:00 PM", async () => {
+
+	it("tests selection of 12:34:56 PM", async () => {
 		const dtPicker = await browser.$("#dtTest12PM");
 
 		// act
@@ -244,24 +252,14 @@ describe("DateTimePicker general interaction", () => {
 		const picker = await getPicker("dtTest12PM");
 
 		// select new time
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageUp"); // select 12
-
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown");// select 00
-
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown");// select 00
-
-		await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageUp");// select PM
-
+		await picker.$("ui5-time-selection-clocks").shadow$(`ui5-toggle-spin-button[data-sap-clock="hours"]`).click();
+		await browser.keys("123456p"); // select 12:34:56 PM
 
 		await picker.$("#ok").click();
 
 		// assert
 		const newValue = await dtPicker.shadow$("ui5-input").getValue();
-		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 PM", "The new date/time is correctly selected.");
+		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:34:56 PM", "The new date/time is correctly selected.");
 	});
 
 	it("tests change event is prevented on submit when prevent default is called", async () => {

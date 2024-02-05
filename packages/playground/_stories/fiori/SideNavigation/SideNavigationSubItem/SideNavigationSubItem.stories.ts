@@ -1,24 +1,15 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
 
-import { DocsPage } from "../../../../.storybook/docs";
-
 import type SideNavigationSubItem from "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";
-
-const component = "ui5-side-navigation-sub-item";
 
 export default {
 	title: "Fiori/Side Navigation/Side Navigation Sub Item",
 	component: "SideNavigationSubItem",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<SideNavigationSubItem>;
 

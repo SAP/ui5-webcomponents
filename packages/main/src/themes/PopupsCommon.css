@@ -17,6 +17,7 @@
     flex-direction: column;
     overflow: hidden;
     outline: none;
+    justify-content: space-between;
 }
 
 .ui5-popup-root .ui5-popup-header-root {
@@ -27,6 +28,7 @@
 
 .ui5-popup-content {
     color: var(--sapTextColor);
+    flex: auto;
 }
 
 .ui5-popup-footer-root {

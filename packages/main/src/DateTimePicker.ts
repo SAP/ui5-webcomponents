@@ -4,7 +4,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
@@ -19,8 +18,8 @@ import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
 } from "./DatePicker.js";
-import TimeSelection from "./TimeSelection.js";
-import type { TimeSelectionChangeEventDetail, TimeSelectionSliderChangeEventDetail } from "./TimeSelection.js";
+import TimeSelectionClocks from "./TimeSelectionClocks.js";
+import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 // i18n texts
 import {
@@ -132,7 +131,7 @@ type PreviewValues = {
 		Button,
 		ToggleButton,
 		SegmentedButton,
-		TimeSelection,
+		TimeSelectionClocks,
 	],
 })
 class DateTimePicker extends DatePicker {
@@ -165,12 +164,6 @@ class DateTimePicker extends DatePicker {
 	 */
 	@property({ type: Object })
 	_previewValues!: PreviewValues;
-
-	/**
-	 * @private
-	 */
-	@property({ defaultValue: "hours" })
-	_currentTimeSlider!: string;
 
 	_handleResizeBound: ResizeObserverCallback;
 
@@ -211,8 +204,10 @@ class DateTimePicker extends DatePicker {
 	 */
 	async openPicker(): Promise<void> {
 		await super.openPicker();
-		this._currentTimeSlider = "hours";
-		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
+		this._previewValues = {
+			...this._previewValues,
+			timeSelectionValue: this.value || this.getFormat().format(new Date()),
+		};
 	}
 
 	/**
@@ -329,10 +324,6 @@ class DateTimePicker extends DatePicker {
 		};
 	}
 
-	onTimeSliderChange(e: CustomEvent<TimeSelectionSliderChangeEventDetail>) {
-		this._currentTimeSlider = e.detail.slider;
-	}
-
 	/**
 	 * Handles document resize to switch between <code>phoneMode</code> and normal appearance.
 	 */
@@ -348,10 +339,6 @@ class DateTimePicker extends DatePicker {
 
 	get _submitDisabled() {
 		return !this._calendarSelectedDates || !this._calendarSelectedDates.length;
-	}
-
-	get _density() {
-		return getEffectiveContentDensity(this);
 	}
 
 	/**
@@ -385,9 +372,6 @@ class DateTimePicker extends DatePicker {
 	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
 		const target = e.target as HTMLElement;
 		this._showTimeView = target.getAttribute("key") === "Time";
-		if (this._showTimeView) {
-			this._currentTimeSlider = "hours";
-		}
 	}
 
 	/**

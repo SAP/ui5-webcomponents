@@ -64,6 +64,9 @@
 		   @keyup="{{_onkeyup}}"
 		   @click="{{_onclick}}"
 		   @focusin="{{_onfocusin}}"
+		   @focusout="{{_onfocusout}}"
+		   @mouseenter="{{_onmouseenter}}"
+		   @mouseleave="{{_onmouseleave}}"
 		   tabindex="{{_effectiveTabIndex}}"
 		   aria-haspopup="{{_ariaHasPopup}}"
 		   aria-checked="{{selected}}"
@@ -73,6 +76,11 @@
 		>
 			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
 			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
 		</a>
 	{{else}}
 		<div id="{{_id}}"
@@ -83,6 +91,9 @@
 			 @keyup="{{_onkeyup}}"
 			 @click="{{_onclick}}"
 			 @focusin="{{_onfocusin}}"
+			 @focusout="{{_onfocusout}}"
+			 @mouseenter="{{_onmouseenter}}"
+			 @mouseleave="{{_onmouseleave}}"
 			 tabindex="{{_effectiveTabIndex}}"
 			 aria-haspopup="{{_ariaHasPopup}}"
 			 aria-checked="{{selected}}"
@@ -90,6 +101,11 @@
 		>
 			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
 			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
 		</div>
 	{{/if}}
 {{/inline}}
@@ -226,9 +242,11 @@
 				title="{{overflowAccessibleName}}"
 			>
 				<ui5-icon
-					class="ui5-sn-item-overflow-icon"
+					class="ui5-sn-item-icon"
+					accessible-role="presentation"
 					name="overflow"
 				>
 				</ui5-icon>
+				<div class="ui5-sn-item-text">{{overflowAccessibleName}}</div>
 			</div>	
 {{/inline}}

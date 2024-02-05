@@ -835,7 +835,7 @@ describe("Table keyboard interaction", async () => {
 
 		await browser.keys(["Control", "End"]);
 
-		assert.strictEqual(await fourthRow.getAttribute("_tab-index"), "0", "The last row is focused");
+		assert.strictEqual(await fourthRow.getAttribute("forced-tab-index"), "0", "The last row is focused");
 	});
 
 	it("SHIFT + HOME/END", async () => {

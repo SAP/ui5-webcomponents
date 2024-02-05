@@ -2,24 +2,15 @@ import { html } from "lit";
 import type { Meta, StoryFn } from "@storybook/web-components";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
 import MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";
 import MessageStripDesign from "@ui5/webcomponents/dist/types/MessageStripDesign.js";
-
-const component = "ui5-message-strip";
 
 export default {
     title: "Main/Message Strip",
     component: "MessageStrip",
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 } as Meta<MessageStrip>;
 

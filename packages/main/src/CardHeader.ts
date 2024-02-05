@@ -9,7 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { ICardHeader } from "./Interfaces.js";
+import type { ICardHeader } from "./Card.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {

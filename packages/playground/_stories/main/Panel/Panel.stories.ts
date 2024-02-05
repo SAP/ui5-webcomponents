@@ -3,28 +3,18 @@ import { ifDefined } from "lit/directives/if-defined.js"
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type Panel from "@ui5/webcomponents/dist/Panel.js";
 import PanelAccessibleRole from "@ui5/webcomponents/dist/types/PanelAccessibleRole.js";
 import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 
-
-const component = "ui5-panel";
 let index = 0;
 
 export default {
     title: "Main/Panel",
     component: "Panel",
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 } as Meta<Panel>;
 

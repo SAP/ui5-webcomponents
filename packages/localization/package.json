@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-localization",
-  "version": "1.22.0-rc.1",
+  "version": "1.22.0",
   "description": "Localization for UI5 Web Components",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -26,7 +26,7 @@
     "start": "nps start",
     "build": "nps build",
     "generate": "nps generate",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc -b"
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.116.0",
@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "@types/openui5": "^1.113.0",
-    "@ui5/webcomponents-base": "1.22.0-rc.1"
+    "@ui5/webcomponents-base": "1.22.0"
   }
 }

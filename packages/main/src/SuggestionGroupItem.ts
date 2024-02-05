@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
-import type { IInputSuggestionItem } from "./Interfaces.js";
+import type { IInputSuggestionItem } from "./Input.js";
 
 /**
  * @class

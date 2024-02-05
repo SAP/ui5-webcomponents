@@ -151,6 +151,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	 *
 	 * <Note:> When the property <code>disabled</code> is set to <code>true</code> this property has no effect.
 	 * @since 1.22.0
+	 * @public
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -320,13 +321,17 @@ class CheckBox extends UI5Element implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
-			this.active = true;
+		}
+
+		if (this.readonly || this.disabled) {
+			return;
 		}
 
 		if (isEnter(e)) {
 			this.toggle();
-			this.active = true;
 		}
+
+		this.active = true;
 	}
 
 	_onkeyup(e: KeyboardEvent) {

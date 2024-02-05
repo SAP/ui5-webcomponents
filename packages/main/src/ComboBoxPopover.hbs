@@ -1,7 +1,6 @@
 <ui5-responsive-popover
 	class="{{classes.popover}}"
 	hide-arrow
-	_disable-initial-focus
 	placement-type="Bottom"
 	horizontal-align="Left"
 	style="{{styles.suggestionsPopover}}"
@@ -29,22 +28,19 @@
 			</div>
 
 			<div class="row">
-				<div
-					class="input-root-phone"
+				<ui5-input
+					.value="{{value}}"
+					@ui5-input="{{_handleMobileInput}}"
+					@ui5-change="{{_inputChange}}"
+					placeholder="{{placeholder}}"
 					value-state="{{valueState}}"
+					?show-clear-icon="{{showClearIcon}}"
+					?no-typeahead="{{noTypeahead}}"
 				>
-					<input
-						class="ui5-input-inner-phone"
-						.value="{{value}}"
-						inner-input
-						placeholder="{{placeholder}}"
-						value-state="{{valueState}}"
-						@input="{{_input}}"
-						@change="{{_inputChange}}"
-						@keydown="{{_keydown}}"
-						aria-autocomplete="both"
-					/>
-				</div>
+					{{#each _filteredItems}}
+						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
+					{{/each}}
+				</ui5-input>
 			</div>
 		</div>
 		

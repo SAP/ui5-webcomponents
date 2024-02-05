@@ -6,7 +6,7 @@
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		tabindex={{_tabIndex}}
+		tabindex={{forcedTabIndex}}
 		href="{{targetSrc}}"
 		target="{{target}}">
 		{{> item}}
@@ -21,7 +21,7 @@
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		tabindex={{_tabIndex}}>
+		tabindex={{forcedTabIndex}}>
 		{{> item}}
 	</div>
 {{/if}}

@@ -489,14 +489,14 @@ class Toolbar extends UI5Element {
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "false";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
 		}
 	}
 
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "true";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = true;
 		}
 	}
 
@@ -512,7 +512,6 @@ class Toolbar extends UI5Element {
 	onInteract(e: CustomEvent) {
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
-		const eventType: string = e.type;
 
 		if (target === this.overflowButtonDOM) {
 			this.toggleOverflow();
@@ -527,6 +526,7 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
+			const eventType: string = e.type.replace("ui5-", "");
 			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
 			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
 

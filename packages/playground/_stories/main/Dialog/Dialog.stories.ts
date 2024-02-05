@@ -3,13 +3,10 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import { DocsPage } from "../../../.storybook/docs";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-
-const component = "ui5-dialog";
 
 export default {
 	title: "Main/Dialog",
@@ -21,7 +18,6 @@ export default {
 				iframeHeight: "800px",
 				inline: false,
 			},
-			page: DocsPage({ ...componentInfo, component }),
 		},
 	},
 } as Meta<Dialog>;
