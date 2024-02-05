@@ -53,7 +53,7 @@
     "@zxing/library": "^0.17.1"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.22.0-rc.1",
+    "@ui5/webcomponents-tools": "1.22.0",
     "chromedriver": "120.0.0"
   }
 }

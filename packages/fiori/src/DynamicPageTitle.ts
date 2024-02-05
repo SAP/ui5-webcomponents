@@ -10,6 +10,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
+import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
 
 // Template
 import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
@@ -174,10 +175,6 @@ class DynamicPageTitle extends UI5Element {
 		this._handleResize = this.handleResize.bind(this);
 	}
 
-	get hasBreadcrumb() {
-		return !!this.breadcrumbs.length;
-	}
-
 	get hasContent() {
 		return !!this.content.length;
 	}
@@ -225,9 +222,6 @@ class DynamicPageTitle extends UI5Element {
 			},
 			topArea: {
 				"ui5-dynamic-page-title--top-area": true,
-			},
-			breadcrumbs: {
-				"ui5-dynamic-page-title--breadcrumbs": true,
 			},
 			wrapper: {
 				"ui5-dynamic-page-title--wrapper": true,
@@ -277,7 +271,7 @@ class DynamicPageTitle extends UI5Element {
 			return;
 		}
 		navigationActions.items.forEach(action => {
-			action.overflowPriority = "NeverOverflow";
+			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
 		});
 	}
 

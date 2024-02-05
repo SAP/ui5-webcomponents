@@ -11,7 +11,8 @@ import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
 // Template
 import DynamicPageTemplate from "./generated/templates/DynamicPageTemplate.lit.js";
@@ -29,7 +30,7 @@ import {
 	DYNAMIC_PAGE_ARIA_LABEL_SNAPPED_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
 
-const SCROLL_DEBOUNCE_RATE = 0; // ms
+const SCROLL_DEBOUNCE_RATE = 25; // ms
 
 /**
  * @class
@@ -186,9 +187,7 @@ class DynamicPage extends UI5Element {
 	@slot({ type: HTMLElement })
 	footer!: HTMLElement[];
 
-	isExpanding = false;
-	iPreviousScrollAmount = 0;
-	_debounceInterval?: Timeout | null;
+	skipSnapOnScroll = false;
 	showHeaderInStickArea = false;
 	_updateMediaRange: ResizeObserverCallback;
 
@@ -275,36 +274,29 @@ class DynamicPage extends UI5Element {
 	}
 
 	snapOnScroll() {
-		this._debounce(() => {
-			if (!this.dynamicPageTitle || !this.dynamicPageHeader) {
-				return;
-			}
+		debounce(() => this.snapTitleByScroll(), SCROLL_DEBOUNCE_RATE);
+	}
 
-			const scrollTop = this.scrollContainer!.scrollTop;
+	snapTitleByScroll() {
+		if (!this.dynamicPageTitle || !this.dynamicPageHeader || this.headerPinned) {
+			return;
+		}
 
-			if (this.iPreviousScrollAmount === scrollTop) {
-				return;
-			}
+		const scrollTop = this.scrollContainer!.scrollTop;
 
-			this.iPreviousScrollAmount = scrollTop;
+		if (this.skipSnapOnScroll) {
+			this.skipSnapOnScroll = false;
+			return;
+		}
 
-			if (this.headerPinned) {
-				return;
-			}
+		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
+			this.headerSnapped = true;
+			this.showHeaderInStickArea = false;
+		} else {
+			this.headerSnapped = false;
+		}
 
-			if (this.isExpanding) {
-				this.isExpanding = false;
-				return;
-			}
-
-			if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
-				this.headerSnapped = true;
-				this.showHeaderInStickArea = false;
-			} else {
-				this.headerSnapped = false;
-			}
-			this.dynamicPageTitle.snapped = this.headerSnapped;
-		}, SCROLL_DEBOUNCE_RATE);
+		this.dynamicPageTitle.snapped = this.headerSnapped;
 	}
 
 	async onExpandClick() {
@@ -330,18 +322,8 @@ class DynamicPage extends UI5Element {
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
 		this.headerSnapped = !this.headerSnapped;
 
-		this.isExpanding = true;
+		this.skipSnapOnScroll = true;
 		this.headerPinned = false;
-	}
-
-	///
-
-	_debounce(fn: () => void, delay: number) {
-		clearTimeout(this._debounceInterval!);
-		this._debounceInterval = setTimeout(() => {
-			this._debounceInterval = null;
-			fn();
-		}, delay);
 	}
 
 	updateMediaRange() {

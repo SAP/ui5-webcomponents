@@ -129,10 +129,6 @@
     align-items: center;
 }
 
-.ui5-dynamic-page-title--breadcrumbs {
-    width: 100%;
-}
-
 /* focus */
 :host([focused]) {
 /* separate change adds proper parameters */

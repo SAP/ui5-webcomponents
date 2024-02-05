@@ -88,7 +88,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: {controls: string};
+	accessibilityAttributes!: { controls: string };
 
 	get classes() {
 		return {

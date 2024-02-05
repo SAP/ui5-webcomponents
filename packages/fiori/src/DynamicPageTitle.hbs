@@ -9,14 +9,10 @@
     role="button"
     aria-expanded="{{_headerExpanded}}"
     aria-labelledby="{{_ariaLabelledBy}}"
-    aria-describedby="toggle-description">
+    aria-describedby="{{_id}}-toggle-description">
   </span>
   <div class="{{classes.topArea}}">
-    {{#if hasBreadcrumb}}
-      <div class="{{classes.breadcrumbs}}">
-        <slot name="breadcrumbs"></slot>
-      </div>
-    {{/if}}
+    <slot name="breadcrumbs"></slot>
 
     {{#if mobileNavigationActions}}
       <slot name="navigationActions"></slot>
@@ -24,7 +20,7 @@
   </div>
 
   <div class="{{classes.wrapper}}"
-  @ui5-_min-content-width-change={{onMinContentWidthChange}}>
+    @ui5-_min-content-width-change={{onMinContentWidthChange}}>
     <div id="{{_id}}-heading" class="{{classes.heading}}">
       <slot name="{{headingSlotName}}"></slot>
     </div>
@@ -47,5 +43,5 @@
   </div>
 
   <slot name="{{contentSlotName}}"></slot>
-  <span id="toggle-description" class="ui5-hidden-text">{{_ariaDescribedbyText}}</span>
+  <span id="{{_id}}-toggle-description" class="ui5-hidden-text">{{_ariaDescribedbyText}}</span>
 </div>
