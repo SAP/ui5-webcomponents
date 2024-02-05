@@ -130,10 +130,10 @@ const generateEnumsSection = (enums: Array<EnumDeclaration>) => {
 
 ${enumDeclaration.description}
 
-Available properties:
+Available enum fields:
 <ul>
 ${enumDeclaration.members?.map(member => {
-				return `<li><b>${member.name}</b>${renderDescription(member.description)}${renderSince(member._ui5since)}${renderDeprecated(member.deprecated)}</li>`
+				return `<li><b>${enumDeclaration.name}.${member.name}</b>${renderDescription(member.description)}${renderSince(member._ui5since)}${renderDeprecated(member.deprecated)}</li>`
 			}).join("\n")}
 </ul>
 
@@ -166,4 +166,4 @@ const generateContent = async () => {
 	}
 }
 
-prepareTypes().then(generateContent);
+prepareTypes().then(generateContent).then(() => console.log("Enums/interfaces documentation pages are generated"));
