@@ -15,18 +15,25 @@
 <link rel="stylesheet" type="text/css" href="./styles/TableGrowingWithScroll.css">
 
 <body class="tablegrowingwithscroll1auto">
-<pre><code>
-&lt;ui5-table growing="Scroll">&lt;/ui5-table>
+	<section>
+		<ui5-table id="tableThreeRows" growing="Scroll">
+				<ui5-table-column id="column-1" slot="columns">
+					<ui5-label>City</ui5-label>
+				</ui5-table-column>
+				<ui5-table-row>
+					<ui5-table-cell><span>Dublin</span><ui5-table-cell>
+				</ui5-table-row>
+				<ui5-table-row>
+					<ui5-table-cell><span>Sofia</span><ui5-table-cell>
+				</ui5-table-row>
+				<ui5-table-row >
+					<ui5-table-cell><span>London</span><ui5-table-cell>
+				</ui5-table-row>
+		</ui5-table>
+		<br><br>
+		<ui5-input id="inputLoadMoreInitialCounter" value="0"></ui5-input>
+	</section>
 
-table.addEventListener("ui5-load-more", () => {
-	table.busy = true; // set busy state
-
-	setTimeout(function() { // load items -  make take some time
-		loadMoreRows();
-		table.busy = false; // remove busy state
-	}, 1500);
-});
-</code></pre>
 	<br><br>
 	<ui5-input id="inputLoadMoreCounter"></ui5-input>
 	<br><br>
@@ -758,8 +765,10 @@ table.addEventListener("ui5-load-more", () => {
 		var INITIAL_ROWS = 20;
 		var NEW_ROWS = 8;
 		var table = document.getElementById("tbl");
+		var tableInitialScroll = document.getElementById("tableThreeRows");
 		var btnScroll = document.getElementById("btnScroll");
 		var loadMoreTracker = 1;
+		var loadMoreInitialTracker = 1;
 		var timeoutTracker = null;
 
 		function init(tbl, rows) {
@@ -789,6 +798,10 @@ table.addEventListener("ui5-load-more", () => {
 		}
 
 		table.addEventListener("ui5-load-more", loadMore);
+		tableInitialScroll.addEventListener("ui5-load-more", () => {
+			++loadMoreInitialTracker;
+			document.getElementById("inputLoadMoreInitialCounter").value = loadMoreInitialTracker - 1;
+		});
 
 		btnScroll.addEventListener("click", function() {
 			document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
