@@ -66,7 +66,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	static i18nBundle: I18nBundle;
 
