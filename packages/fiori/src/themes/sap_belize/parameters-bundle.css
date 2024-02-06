@@ -2,6 +2,7 @@
 @import "./DynamicPage-parameters.css";
 @import "../base/DynamicPageTitle-parameters.css";
 @import "../base/DynamicPageHeader-parameters.css";
+@import "../base/DynamicPageHeaderActions-parameters.css";
 @import "../base/Bar-parameters.css";
 @import "../base/FlexibleColumnLayout-parameters.css";
 @import "../base/MediaGallery-parameters.css";

@@ -1,51 +1,52 @@
 <div class="{{classes.root}}">
-  <div class="{{classes.scrollContainer}}"
-    @scroll="{{snapOnScroll}}">
-    <header class="{{classes.headerWrapper}}"
-      id="{{_id}}-header"
-      aria-label="{{_headerLabel}}"
-      aria-expanded="{{_headerExpanded}}"
-      role="region"
-      @ui5-_toggle-title={{onToggleTitle}}>
-      <slot name="titleArea"></slot>
-      {{#if headerInTitle}}
-        <slot name="headerArea"></slot>
-      {{/if}}
+	<div class="{{classes.scrollContainer}}" @scroll="{{snapOnScroll}}">
+		<header 
+			class="{{classes.headerWrapper}}"
+			id="{{_id}}-header"
+			aria-label="{{_headerLabel}}"
+			aria-expanded="{{_headerExpanded}}"
+			role="region"
+			@ui5-_toggle-title={{onToggleTitle}}
+		>
+			<slot name="titleArea"></slot>
+			{{#if headerInTitle}}
+				<slot name="headerArea"></slot>
+			{{/if}}
 
-      {{#if actionsInTitle}}
-        {{> header-actions}}
-      {{/if}}
+			{{#if actionsInTitle}}
+				{{> header-actions}}
+			{{/if}}
+		</header>
 
-   </header>
+		{{#if headerInContent}}
+			<slot name="headerArea"></slot>
+		{{/if}}
 
-    {{#if headerInContent}}
-      <slot name="headerArea"></slot>
-    {{/if}}
+		{{#unless actionsInTitle}}
+			{{> header-actions}}
+		{{/unless}}
 
-    {{#unless actionsInTitle}}
-      {{> header-actions}}
-    {{/unless}}
+		<div class="{{classes.content}}">
+			<div class="{{classes.fitContent}}">
+				<slot></slot>
+				{{#if showFooter}}
+					<div class="{{classes.spacer}}"></div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
 
-    <div class="{{classes.content}}">
-      <div class="{{classes.fitContent}}">
-        <slot></slot>
-        {{#if showFooter}}
-          <div class="{{classes.spacer}}"></div>
-        {{/if}}
-      </div>
-    </div>
-  </div>
-
-    <div class="{{classes.footer}}">
-      <slot name="footer"></slot>
-    </div>
+	<div class="{{classes.footer}}">
+		<slot name="footer"></slot>
+	</div>
 </div>
+
 {{#*inline "header-actions"}}
-    <ui5-dynamic-page-header-actions
-      ?snapped="{{headerSnapped}}"
-      ?pinned="{{headerPinned}}"
-      .accessibilityAttributes="{{_accAttributesForHeaderActions}}"
-      @ui5-expand-button-click={{onExpandClick}}
-      @ui5-pin-button-click={{onPinClick}}
-  ></ui5-dynamic-page-header-actions>
-  {{/inline}}
+	<ui5-dynamic-page-header-actions 
+		?snapped="{{headerSnapped}}"
+		?pinned="{{headerPinned}}"
+		.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
+		@ui5-expand-button-click={{onExpandClick}}
+		@ui5-pin-button-click={{onPinClick}}>
+	</ui5-dynamic-page-header-actions>
+{{/inline}}

@@ -95,7 +95,7 @@ const SCROLL_DEBOUNCE_RATE = 25; // ms
  * <code>import "@ui5/webcomponents-fiori/dist/DynamicPage.js";</code>
  *
  * @constructor
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @since 1.122
  * @public
  */
@@ -108,18 +108,6 @@ const SCROLL_DEBOUNCE_RATE = 25; // ms
 })
 
 class DynamicPage extends UI5Element {
-	static i18nBundle: I18nBundle;
-
-	constructor() {
-		super();
-
-		this._updateMediaRange = this.updateMediaRange.bind(this);
-	}
-
-	static async onDefine() {
-		DynamicPage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	/**
 	 * Defines if the header is snapped.
 	 *
@@ -169,7 +157,7 @@ class DynamicPage extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: DynamicPageTitle })
-	titleArea!: HTMLElement[];
+	titleArea!: Array<DynamicPageTitle>;
 
 	/**
 	 * Defines the title HTML Element.
@@ -177,7 +165,23 @@ class DynamicPage extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: DynamicPageHeader })
-	headerArea!: HTMLElement[];
+	headerArea!: Array<DynamicPageHeader>;
+
+	static i18nBundle: I18nBundle;
+
+	skipSnapOnScroll = false;
+	showHeaderInStickArea = false;
+	_updateMediaRange: ResizeObserverCallback;
+
+	constructor() {
+		super();
+
+		this._updateMediaRange = this.updateMediaRange.bind(this);
+	}
+
+	static async onDefine() {
+		DynamicPage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+	}
 
 	/**
 	 * Defines the title HTML Element.
@@ -187,10 +191,6 @@ class DynamicPage extends UI5Element {
 	@slot({ type: HTMLElement })
 	footer!: HTMLElement[];
 
-	skipSnapOnScroll = false;
-	showHeaderInStickArea = false;
-	_updateMediaRange: ResizeObserverCallback;
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._updateMediaRange);
 	}
@@ -199,7 +199,7 @@ class DynamicPage extends UI5Element {
 		ResizeHandler.deregister(this, this._updateMediaRange);
 	}
 
-	onBeforeRendering(): void {
+	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this.headerSnapped;
 		}
@@ -239,20 +239,22 @@ class DynamicPage extends UI5Element {
 		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
 	}
 
-	get scrollContainer(): HTMLElement | null | undefined {
-		return this.getDomRef()?.querySelector(".ui5-dynamic-page-scroll-container");
+	get scrollContainer(): HTMLElement | null {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-dynamic-page-scroll-container");
 	}
 
-	get headerActions(): DynamicPageHeaderActions | null | undefined {
-		return this.getDomRef()?.querySelector("ui5-dynamic-page-header-actions");
+	get headerActions(): DynamicPageHeaderActions | null {
+		return this.shadowRoot!.querySelector<DynamicPageHeaderActions>("ui5-dynamic-page-header-actions");
 	}
 
 	get actionsInTitle(): boolean {
 		return this.headerSnapped || this.showHeaderInStickArea || this.headerPinned;
 	}
+
 	get headerInTitle(): boolean {
 		return !this.headerSnapped && (this.showHeaderInStickArea || this.headerPinned);
 	}
+
 	get headerInContent(): boolean {
 		return !this.headerSnapped && !this.headerInTitle;
 	}

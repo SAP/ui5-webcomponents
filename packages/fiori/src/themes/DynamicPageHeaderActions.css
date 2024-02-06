@@ -11,7 +11,7 @@
 		height: 1.5rem;
 		background-color: var(--sapObjectHeader_Background);
 		border: 1px solid var(--sapButton_BorderColor);
-		box-shadow: var(--_ui5_dynamic_page_header-actions-boxshadow);
+		box-shadow: var(--_ui5_dynamic_page_header-actions-box-shadow);
 	}
 
 	.ui5-dynamic-page-header-actions--wrapper {
@@ -32,12 +32,12 @@
 
 		&:before {
 			right: 50%;
-			/*background: linear-gradient(to right, transparent, var(--sapObjectHeader_BorderColor));*/
+			background: linear-gradient(to right, transparent, var(--_ui5_dynamic_page_actions-lines-color));
 		}
 
 		&::after {
 			left: 50%;
-			/*background: linear-gradient(to left, transparent, var(--sapObjectHeader_BorderColor));*/
+			background: linear-gradient(to left, transparent, var(--_ui5_dynamic_page_actions-lines-color));
 		}
 	}
 }

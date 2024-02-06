@@ -119,10 +119,6 @@
     padding-right: 0;
 }
 
-::slotted([slot="breadcrumbs"]) {
-    margin-bottom: -0.5rem;
-}
-
 .ui5-dynamic-page-title--top-area {
     display: flex;
     justify-content: space-between;
@@ -131,8 +127,7 @@
 
 /* focus */
 :host([focused]) {
-/* separate change adds proper parameters */
-    outline: 0.0625rem dotted black;
+    outline: var(--_ui5_dynamic_page_title_focus_outline);
     outline-offset: -0.0625rem;
 }
 

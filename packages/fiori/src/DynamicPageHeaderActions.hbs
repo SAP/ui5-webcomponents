@@ -1,21 +1,23 @@
 <div class="{{classes.root}}">
     <div class="{{classes.wrapper}}">
         <ui5-button
+            class="{{classes.expandCollapseButton}}"
             @click="{{onExpandClick}}" 
             icon="{{arrowButtonIcon}}"
             accessible-name="{{expandLabel}}"
             .accessibilityAttributes="{{accessibilityAttributes}}"
             title="{{expandLabel}}"
-            class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-expand"></ui5-button>
-        {{#unless snapped}}
-            <ui5-toggle-button
-                @click="{{onPinClick}}"
-                icon="{{pinButtonIcon}}"
-                ?pressed="{{pinned}}"
-                .accessibilityAttributes="{{accessibilityAttributes}}"
-                accessible-name="{{pinLabel}}"
-                title="{{pinLabel}}"
-                class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-pin"></ui5-toggle-button>
-        {{/unless}}
+        ></ui5-button>
+    {{#unless snapped}}
+        <ui5-toggle-button
+            class="{{classes.pinButton}}"
+            @click="{{onPinClick}}"
+            icon="{{pinButtonIcon}}"
+            ?pressed="{{pinned}}"
+            .accessibilityAttributes="{{accessibilityAttributes}}"
+            accessible-name="{{pinLabel}}"
+            title="{{pinLabel}}"
+        ></ui5-toggle-button>
+    {{/unless}}
     </div>
 </div>

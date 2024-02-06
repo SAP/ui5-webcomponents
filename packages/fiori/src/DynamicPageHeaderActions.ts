@@ -5,6 +5,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
+import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 
 // Template
 import DynamicPageHeaderActionsTemplate from "./generated/templates/DynamicPageHeaderActionsTemplate.lit.js";
@@ -31,7 +33,7 @@ import {
  *
  *
  * @constructor
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @private
  * @since 1.122
  */
@@ -40,6 +42,7 @@ import {
 	renderer: litRender,
 	styles: DynamicPageHeaderActionsCss,
 	template: DynamicPageHeaderActionsTemplate,
+	dependencies: [Button, ToggleButton],
 })
 
 /**
@@ -57,12 +60,6 @@ import {
 @event("pin-button-click")
 
 class DynamicPageHeaderActions extends UI5Element {
-	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		DynamicPageHeaderActions.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	/**
 	 * Defines whether the header is pinned.
 	 *
@@ -90,6 +87,12 @@ class DynamicPageHeaderActions extends UI5Element {
 	@property({ type: Object })
 	accessibilityAttributes!: { controls: string };
 
+	static i18nBundle: I18nBundle;
+
+	static async onDefine() {
+		DynamicPageHeaderActions.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -97,6 +100,14 @@ class DynamicPageHeaderActions extends UI5Element {
 			},
 			wrapper: {
 				"ui5-dynamic-page-header-actions--wrapper": true,
+			},
+			expandCollapseButton: {
+				"ui5-dynamic-page-header-action": true,
+				"ui5-dynamic-page-header-action-expand": true,
+			},
+			pinButton: {
+				"ui5-dynamic-page-header-action": true,
+				"ui5-dynamic-page-header-action-pin": true,
 			},
 		};
 	}
@@ -109,12 +120,12 @@ class DynamicPageHeaderActions extends UI5Element {
 		return this.pinned ? "pushpin-on" : "pushpin-off";
 	}
 
-	get expandButton(): HTMLElement | null | undefined {
-		return this.getDomRef()?.querySelector(".ui5-dynamic-page-header-action-expand");
+	get expandButton(): Button | null {
+		return this.shadowRoot!.querySelector<Button>(".ui5-dynamic-page-header-action-expand");
 	}
 
-	get pinButton(): HTMLElement | null | undefined {
-		return this.getDomRef()?.querySelector(".ui5-dynamic-page-header-action-pin");
+	get pinButton(): ToggleButton | null {
+		return this.shadowRoot!.querySelector<ToggleButton>(".ui5-dynamic-page-header-action-pin");
 	}
 
 	get pinLabel() {

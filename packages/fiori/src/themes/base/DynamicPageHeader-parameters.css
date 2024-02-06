@@ -3,6 +3,6 @@
     --_ui5_dynamic_page_header_padding_bottom: 1rem;
 
     --_ui5_dynamic_page_header_background_color: var(--sapObjectHeader_Background);
-    --_ui5_dynamic_page_header-actions-boxshadow: var(--sapContent_Shadow0);
-    --_ui5_dynamic_page_header-boxshadow: var(--sapContent_HeaderShadow);
+    --_ui5_dynamic_page_header-actions-box-shadow: var(--sapContent_Shadow0);
+    --_ui5_dynamic_page_header-box-shadow: var(--sapContent_HeaderShadow);
 }

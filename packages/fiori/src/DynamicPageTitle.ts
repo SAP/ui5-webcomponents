@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -53,7 +54,7 @@ import {
  *
  *
  * @constructor
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  */
 @customElement({
@@ -63,12 +64,37 @@ import {
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
 })
-class DynamicPageTitle extends UI5Element {
-	static i18nBundle: I18nBundle;
 
-	static async onDefine() {
-		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
+/**
+ * Event is fired when the title is toggled.
+ * @private
+ */
+@event("_toggle-title")
+
+class DynamicPageTitle extends UI5Element {
+	/**
+	 * Defines if the title is snapped.
+	 *
+	 * @public
+	 * @default false
+	 */
+	@property({ type: Boolean })
+	snapped!: boolean;
+
+	/**
+	 * Defines if the mobileNavigationActions are shown.
+	 *
+	 * @private
+	 */
+	@property({ type: Boolean })
+	mobileNavigationActions!: boolean;
+
+	/**
+	 * Indicates if the elements is on focus
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	 * Defines the content of the Heading of the Dynamic Page.
@@ -142,29 +168,7 @@ class DynamicPageTitle extends UI5Element {
 	@slot({ type: HTMLElement })
 	breadcrumbs!: HTMLElement[];
 
-	/**
-	 * Defines if the title is snapped.
-	 *
-	 * @public
-	 * @default false
-	 */
-	@property({ type: Boolean })
-	snapped!: boolean;
-
-	/**
-	 * Defines if the mobileNavigationActions are shown.
-	 *
-	 * @private
-	 */
-	@property({ type: Boolean })
-	mobileNavigationActions!: boolean;
-
-	/**
-	 * Indicates if the elements is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
+	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
 	minContentWidth?: number;
@@ -175,41 +179,20 @@ class DynamicPageTitle extends UI5Element {
 		this._handleResize = this.handleResize.bind(this);
 	}
 
-	get hasContent() {
-		return !!this.content.length;
+	static async onDefine() {
+		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	get hasHeading() {
-		return !!this.heading.length;
+	onEnterDOM() {
+		ResizeHandler.register(this, this._handleResize);
 	}
 
-	get headingSlotName() {
-		if (this.hasHeading) {
-			return "heading";
-		}
-		if (!this.snapped) {
-			return "expandedHeading";
-		}
-		return "snappedHeading";
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._handleResize);
 	}
 
-	get contentSlotName() {
-		return !this.snapped ? "expandedContent" : "snappedContent";
-	}
-
-	get _headerExpanded() {
-		return !this.snapped;
-	}
-
-	get _ariaDescribedbyText() {
-		return DynamicPageTitle.i18nBundle.getText(DYNAMIC_PAGE_ARIA_DESCR_TOGGLE_HEADER);
-	}
-
-	get _ariaLabelledBy() {
-		const hasAnyHeading = this[this.headingSlotName].length;
-		if (hasAnyHeading) {
-			return `${this._id}-heading`;
-		}
+	onBeforeRendering() {
+		this.prepareLayoutActions();
 	}
 
 	get classes() {
@@ -252,16 +235,41 @@ class DynamicPageTitle extends UI5Element {
 		};
 	}
 
-	onEnterDOM() {
-		ResizeHandler.register(this, this._handleResize);
+	get hasContent() {
+		return !!this.content.length;
 	}
 
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._handleResize);
+	get hasHeading() {
+		return !!this.heading.length;
 	}
 
-	onBeforeRendering(): void {
-		this.prepareLayoutActions();
+	get headingSlotName() {
+		if (this.hasHeading) {
+			return "heading";
+		}
+		if (!this.snapped) {
+			return "expandedHeading";
+		}
+		return "snappedHeading";
+	}
+
+	get contentSlotName() {
+		return !this.snapped ? "expandedContent" : "snappedContent";
+	}
+
+	get _headerExpanded() {
+		return !this.snapped;
+	}
+
+	get _ariaDescribedbyText() {
+		return DynamicPageTitle.i18nBundle.getText(DYNAMIC_PAGE_ARIA_DESCR_TOGGLE_HEADER);
+	}
+
+	get _ariaLabelledBy() {
+		const hasAnyHeading = this[this.headingSlotName].length;
+		if (hasAnyHeading) {
+			return `${this._id}-heading`;
+		}
 	}
 
 	prepareLayoutActions() {
@@ -279,13 +287,17 @@ class DynamicPageTitle extends UI5Element {
 		this.mobileNavigationActions = this.offsetWidth < 1280;
 	}
 
-	onMinContentWidthChange(event: CustomEvent<ToolbarMinWidthChangeEventDetail>) {
-		const slotName = (<HTMLElement>event.target)?.assignedSlot?.name;
+	onMinContentWidthChange(e: CustomEvent<ToolbarMinWidthChangeEventDetail>) {
+		const slotName = (<HTMLElement>e.target)?.assignedSlot?.name;
 		if (!slotName || slotName === "content") {
-			this.minContentWidth = event.detail.minWidth;
+			this.minContentWidth = e.detail.minWidth;
 		} else if (slotName === "actions") {
-			this.minActionsWidth = event.detail.minWidth;
+			this.minActionsWidth = e.detail.minWidth;
 		}
+	}
+
+	onTitleClick() {
+		this.fireEvent("_toggle-title");
 	}
 
 	_onfocusout() {
@@ -301,10 +313,6 @@ class DynamicPageTitle extends UI5Element {
 			e.preventDefault();
 			this.fireEvent("_toggle-title");
 		}
-	}
-
-	_onclick() {
-		this.fireEvent("_toggle-title");
 	}
 }
 
