@@ -26,6 +26,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
@@ -300,6 +301,9 @@ class TabContainer extends UI5Element {
 	@property({ type: Object, multiple: true })
 	_overflowItems!: Array<ITab>;
 
+	@property({ type: Object, multiple: true })
+	_popoverItemsFlat!: Array<ITab>;
+
 	@property({ validator: Integer, noAttribute: true })
 	_width?: number;
 
@@ -316,7 +320,7 @@ class TabContainer extends UI5Element {
 		individualSlots: true,
 		invalidateOnChildChange: {
 			properties: true,
-			slots: false,
+			slots: true,
 		},
 	})
 	items!: Array<ITab>;
@@ -406,6 +410,16 @@ class TabContainer extends UI5Element {
 			const focusStart = this._getRootTab(this._selectedTab);
 			this._itemNavigation.setCurrentItem(focusStart);
 		}
+
+		if (this.responsivePopover?.opened) {
+			const popoverItems = this._getPopoverItems();
+
+			if (popoverItems.length) {
+				this._setPopoverItems(popoverItems);
+			} else {
+				this.responsivePopover.close();
+			}
+		}
 	}
 
 	onEnterDOM() {
@@ -468,17 +482,8 @@ class TabContainer extends UI5Element {
 		}
 
 		if (!tab.realTabReference.hasOwnContent && tab.realTabReference.tabs.length) {
-			this._overflowItems = tab.realTabReference.subTabs;
-			this._addStyleIndent(this._overflowItems);
+			await this._togglePopover(tab, tab.realTabReference.subTabs);
 
-			this.responsivePopover = await this._respPopover();
-			if (this.responsivePopover.opened) {
-				this.responsivePopover.close();
-			} else {
-				this._setPopoverInitialFocus();
-			}
-
-			this.responsivePopover.showAt(tab.realTabReference.getTabInStripDomRef()!);
 			return;
 		}
 
@@ -507,16 +512,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._overflowItems = tabInstance.subTabs;
-		this._addStyleIndent(this._overflowItems);
-
-		this.responsivePopover = await this._respPopover();
-		if (this.responsivePopover.isOpen()) {
-			this.responsivePopover.close();
-		} else {
-			this._setPopoverInitialFocus();
-		}
-		this.responsivePopover.showAt(button);
+		await this._togglePopover(button, tabInstance.subTabs, true);
 	}
 
 	_setPopoverInitialFocus() {
@@ -731,30 +727,15 @@ class TabContainer extends UI5Element {
 
 		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
-		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
-
-		this._overflowItems = this.items.filter(item => {
-			const stripRef = item.getTabInStripDomRef();
-
-			return stripRef && stripRef.hasAttribute(overflowAttr);
-		});
-
-		this._addStyleIndent(this._overflowItems);
-
 		let opener;
+
 		if (isEndOverflow) {
 			opener = this.overflowButton[0] || this._getEndOverflowBtnDOM();
 		} else {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
-		this.responsivePopover = await this._respPopover();
-		if (this.responsivePopover.opened) {
-			this.responsivePopover.close();
-		} else {
-			this._setPopoverInitialFocus();
-			this.responsivePopover.showAt(opener);
-		}
+		await this._togglePopover(opener, this._getPopoverItems(<Button>overflow.querySelector("[ui5-button]")), true);
 	}
 
 	_addStyleIndent(tabs: Array<ITab>) {
@@ -1104,6 +1085,71 @@ class TabContainer extends UI5Element {
 
 	_getTabs(): Array<Tab> {
 		return this.items.filter((item): item is Tab => !item.isSeparator);
+	}
+
+	_getPopoverItems(targetOpener?: HTMLElement) {
+		const opener = targetOpener || this.responsivePopover?._opener;
+
+		if (opener === this._getStartOverflowBtnDOM()) {
+			return this.items.filter(item => {
+				const stripRef = item.getTabInStripDomRef();
+
+				return stripRef && stripRef.hasAttribute("start-overflow");
+			});
+		}
+
+		if (opener === this._getEndOverflowBtnDOM()) {
+			return this.items.filter(item => {
+				const stripRef = item.getTabInStripDomRef();
+
+				return stripRef && stripRef.hasAttribute("end-overflow");
+			});
+		}
+
+		return (opener as Tab).realTabReference.subTabs;
+	}
+
+	_setPopoverItems(items: Array<ITab>) {
+		let _flattenedNewItems : Array<ITab> = [];
+
+		_flattenedNewItems = _flattenedNewItems.concat(items);
+		walk(items, tab => {
+			if (tab.subTabs) {
+				_flattenedNewItems = _flattenedNewItems.concat(tab.subTabs);
+			}
+		});
+
+		if (!arraysAreEqual(this._popoverItemsFlat, _flattenedNewItems)) {
+			this._popoverItemsFlat = _flattenedNewItems;
+			// eslint-disable-next-line no-warning-comments
+			this._overflowItems = items; // TODO: get rid of _popoverItems in favor or _popoverItemsFlat
+			this._addStyleIndent(this._overflowItems);
+		}
+	}
+
+	async _togglePopover(opener: HTMLElement, items: Array<ITab>, setInitialFocus = false) {
+		this.responsivePopover = await this._respPopover();
+
+		if (this.responsivePopover.isOpen()) {
+			this.responsivePopover.close();
+		} else {
+			this._showPopoverAt(opener, items, setInitialFocus);
+		}
+	}
+
+	async _showPopoverAt(opener: HTMLElement, items: Array<ITab>, setInitialFocus = false) {
+		this._setPopoverItems(items);
+		this.responsivePopover = await this._respPopover();
+
+		if (this.responsivePopover.isOpen() && this.responsivePopover._opener !== opener) {
+			this.responsivePopover.close();
+		}
+
+		if (setInitialFocus) {
+			this._setPopoverInitialFocus();
+		}
+
+		this.responsivePopover.showAt(opener);
 	}
 
 	get hasSubTabs(): boolean {

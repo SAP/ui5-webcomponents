@@ -321,4 +321,66 @@ describe("TabContainer general interaction", () => {
 		// Assert
 		assert.ok(productsTabDomRefInStrip.isEqual(productsTabDomRefInStripExpected) , "Tab dom ref in strip should be the first child of the tab container's strip");
 	});
+
+});
+
+describe("TabContainer popover", () => {
+	before(async () => {
+		await browser.url(`test/pages/TabContainer.html`);
+		await browser.setWindowSize(860, 1000);
+	});
+
+	it("tests popover after new tab is inserted", async () => {
+		const tabcontainer = await browser.$("#tabContainerEndOverflow");
+		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		await endOverflow.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItemsCount = await popover.$$("[ui5-li-custom]").length;
+
+		assert.ok(listItemsCount > 0, "There are items in the overflow");
+
+		// Act
+		await browser.executeAsync((done) => {
+			const newTab = document.createElement("ui5-tab");
+			newTab.setAttribute("text", "New Tab");
+			document.getElementById("tabContainerEndOverflow").insertBefore(newTab, null);
+			done();
+		});
+
+		// await browser.pause(50000)
+		const newListItemsCount = await popover.$$("[ui5-li-custom]").length;
+
+		assert.strictEqual(newListItemsCount, listItemsCount + 1, "Overflow list displays all its items");
+	});
+
+	it("tests popover items indentation", async () => {
+		const tabcontainer = await browser.$("#tabContainerNestedTabs");
+		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		await endOverflow.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const tabAssertions = [
+			{ tabText: "Ten", expectedIndent: 0 },
+			{ tabText: "Ten 1", expectedIndent: 8 },
+			{ tabText: "Ten 1.1", expectedIndent: 16 },
+			{ tabText: "Ten 1.1.1", expectedIndent: 24 },
+			{ tabText: "Ten 1.1.1.1", expectedIndent: 32 }
+		].map(async ({ tabText, expectedIndent}) => {
+			const tab = await popover.$(`[ui5-li-custom]=${tabText}`)
+			const wrapper = await tab.$(".ui5-tab-overflow-itemContent-wrapper")
+			const paddingLeft = await wrapper.getCSSProperty("padding-left");
+
+			console.error("``````````````````",paddingLeft)
+			assert.strictEqual(paddingLeft.parsed.value, expectedIndent, "Tab indentation is correct");
+
+			return paddingLeft.parsed.value;
+		});
+
+		const paddings = await Promise.all(tabAssertions);
+		const sortedPaddings = [...paddings].sort((a, b) => a - b);
+
+		assert.deepEqual(paddings, sortedPaddings, "Indentation hierarchy is correct");
+	});
 });
