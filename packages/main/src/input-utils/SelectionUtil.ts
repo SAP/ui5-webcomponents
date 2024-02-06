@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
+/*
 type CopyOptions = {
 	textArea: UI5Element;
 }
 
-/*
 type CaretPosition = {
 	x: number;
 	y: number;

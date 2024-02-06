@@ -319,6 +319,12 @@ class TextArea extends UI5Element implements IFormElement {
 	_selectionEndY?: number;
 
 	/**
+	 * @private
+	 */
+	@property({ type: String })
+	_selectionDirection?: string;
+
+	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
 	 * <br><br>
@@ -369,8 +375,8 @@ class TextArea extends UI5Element implements IFormElement {
 	onEnterDOM() {
 		ResizeHandler.register(this, this._fnOnResize);
 		const nativeTextArea = this.getInputDomRef()!;
-		nativeTextArea.addEventListener("mousedown", e => this._onmousedown(e), { passive: true });
-		nativeTextArea.addEventListener("mouseup", e => this._onmouseup(e), { passive: true });
+		nativeTextArea.addEventListener("mousedown", e => this._onmousedown(e));
+		nativeTextArea.addEventListener("mouseup", e => this._onmouseup(e));
 	}
 
 	onExitDOM() {
@@ -454,11 +460,10 @@ class TextArea extends UI5Element implements IFormElement {
 		this.fireEvent("change", {});
 	}
 
-	_onselect(e: any) {
-		const direction: string = e && e.currentTarget ? e.currentTarget.selectionDirection : "none";
+	_onselect() {
 		const start: any = { x: this._selectionStartX, y: this._selectionStartY };
 		const end: any = { x: this._selectionEndX, y: this._selectionEndY };
-		this.fireEvent("selection-finished", { rect: { start, end }, direction });
+		this.fireEvent("selection-finished", { rect: { start, end }, direction: this._selectionDirection });
 	}
 
 	_onmousedown(e: MouseEvent) {
@@ -469,6 +474,12 @@ class TextArea extends UI5Element implements IFormElement {
 	_onmouseup(e: MouseEvent) {
 		this._selectionEndX = e.pageX;
 		this._selectionEndY = e.pageY;
+
+		if (this._selectionStartY === this._selectionEndY) {
+			this._selectionDirection = this._selectionEndX > this._selectionStartX! ? "forward" : "backward";
+		} else {
+			this._selectionDirection = this._selectionEndY > this._selectionStartY! ? "forward" : "backward";
+		}
 	}
 
 	_oninput(e: InputEvent) {
