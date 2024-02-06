@@ -348,7 +348,6 @@ describe("TabContainer popover", () => {
 			done();
 		});
 
-		// await browser.pause(50000)
 		const newListItemsCount = await popover.$$("[ui5-li-custom]").length;
 
 		assert.strictEqual(newListItemsCount, listItemsCount + 1, "Overflow list displays all its items");
