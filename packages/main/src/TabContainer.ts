@@ -617,14 +617,25 @@ class TabContainer extends UI5Element {
 		return this._getAllSubItems(this.items);
 	}
 
-	_getAllSubItems(items: Array<ITab>, result: Array<ITab> = [], level = 1) {
+	_calcIndentLevels(items: Array<ITab>, level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item.forcedLevel = level;
+
+				if (item.subTabs) {
+					this._calcIndentLevels(item.subTabs, level + 1);
+				}
+			}
+		});
+	}
+
+	_getAllSubItems(items: Array<ITab>, result: Array<ITab> = []) {
+		items.forEach(item => {
+			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				result.push(item);
 
 				if (item.subTabs) {
-					this._getAllSubItems(item.subTabs, result, level + 1);
+					this._getAllSubItems(item.subTabs, result);
 				}
 			}
 		});
@@ -1123,6 +1134,7 @@ class TabContainer extends UI5Element {
 			this._popoverItemsFlat = _flattenedNewItems;
 			// eslint-disable-next-line no-warning-comments
 			this._overflowItems = items; // TODO: get rid of _popoverItems in favor or _popoverItemsFlat
+			this._calcIndentLevels(this._overflowItems);
 			this._addStyleIndent(this._overflowItems);
 		}
 	}
