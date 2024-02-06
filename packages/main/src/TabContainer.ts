@@ -346,7 +346,7 @@ class TabContainer extends UI5Element {
 	startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
-	_allItemsAndSubItems?: Array<ITab>;
+	_itemsFlat?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
 	_handleResizeBound: () => void;
 
@@ -373,18 +373,18 @@ class TabContainer extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._allItemsAndSubItems = this._getAllSubItems(this.items);
-		if (!this._allItemsAndSubItems.length) {
+		this._itemsFlat = this._flatten(this.items);
+		if (!this._itemsFlat.length) {
 			return;
 		}
 
 		// update selected tab
-		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected) as Array<Tab>;
+		const selectedTabs = this._itemsFlat.filter(tab => tab.selected) as Array<Tab>;
 		if (selectedTabs.length) {
 			this._selectedTab.forcedSelected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
-			this._selectedTab = this._allItemsAndSubItems[0] as Tab;
+			this._selectedTab = this._itemsFlat[0] as Tab;
 			this._selectedTab.forcedSelected = true;
 		}
 
@@ -614,7 +614,7 @@ class TabContainer extends UI5Element {
 	 * @default []
 	 */
 	get allItems() : Array<ITab> {
-		return this._getAllSubItems(this.items);
+		return this._flatten(this.items);
 	}
 
 	_calcIndentLevels(items: Array<ITab>, level = 1) {
@@ -629,14 +629,12 @@ class TabContainer extends UI5Element {
 		});
 	}
 
-	_getAllSubItems(items: Array<ITab>, result: Array<ITab> = []) {
-		items.forEach(item => {
+	_flatten(items: Array<ITab>) {
+		const result: Array<ITab> = [];
+
+		walk(items, item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				result.push(item);
-
-				if (item.subTabs) {
-					this._getAllSubItems(item.subTabs, result);
-				}
 			}
 		});
 
@@ -645,8 +643,8 @@ class TabContainer extends UI5Element {
 
 	_onItemSelect(selectedTabId: string) {
 		const previousTab = this._selectedTab;
-		const selectedTabIndex = this._allItemsAndSubItems!.findIndex(item => item.__id === selectedTabId);
-		const selectedTab = this._allItemsAndSubItems![selectedTabIndex] as Tab;
+		const selectedTabIndex = this._itemsFlat!.findIndex(item => item.__id === selectedTabId);
+		const selectedTab = this._itemsFlat![selectedTabIndex] as Tab;
 
 		const selectionSuccessful = this.selectTab(selectedTab, selectedTabIndex);
 		if (!selectionSuccessful) {
@@ -654,7 +652,7 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected property on all items
-		this._allItemsAndSubItems!.forEach((item, index) => {
+		this._itemsFlat!.forEach((item, index) => {
 			const selected = selectedTabIndex === index;
 			item.selected = selected;
 
@@ -750,7 +748,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_addStyleIndent(tabs: Array<ITab>) {
-		const extraIndent = this._getAllSubItems(tabs)
+		const extraIndent = this._flatten(tabs)
 			.filter(tab => !tab.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
