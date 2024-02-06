@@ -518,6 +518,12 @@ class ShellBar extends UI5Element {
 	@slot()
 	startButton!: Array<IButton>;
 
+	/**
+	 * @private
+	 */
+	@slot()
+	midContent!: Array<HTMLElement>;
+
 	static i18nBundle: I18nBundle;
 	overflowPopover?: Popover | null;
 	menuPopover?: Popover | null;
@@ -1221,6 +1227,10 @@ class ShellBar extends UI5Element {
 
 	get hasSearchField() {
 		return !!this.searchField.length;
+	}
+
+	get hasMidContent() {
+		return !!this.midContent.length;
 	}
 
 	get hasProfile() {
