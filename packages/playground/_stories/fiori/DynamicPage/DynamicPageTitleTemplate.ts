@@ -33,20 +33,20 @@ export default `<ui5-dynamic-page-title slot="titleArea">
         </div>
 
         <ui5-toolbar style="border: none" align-content="Start">
-            <ui5-toolbar-button overflow-priority="NeverOverflow"
+            <ui5-toolbar-button design="Transparent" overflow-priority="NeverOverflow"
                 text="KPI Generic tag"
             ></ui5-toolbar-button>
         </ui5-toolbar>
 
         <ui5-toolbar slot="actions">
-            <ui5-toolbar-button text="Edit" overflow-priority="NeverOverflow"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="delete"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="copy"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="share"></ui5-toolbar-button>
+            <ui5-toolbar-button design="Transparent" text="Edit" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+            <ui5-toolbar-button design="Transparent" icon="delete"></ui5-toolbar-button>
+            <ui5-toolbar-button design="Transparent" icon="copy"></ui5-toolbar-button>
+            <ui5-toolbar-button design="Transparent" icon="share"></ui5-toolbar-button>
         </ui5-toolbar>
 
         <ui5-toolbar slot="navigationActions">
-            <ui5-toolbar-button icon="full-screen"></ui5-toolbar-button>
-            <ui5-toolbar-button icon="decline"></ui5-toolbar-button>
+            <ui5-toolbar-button design="Transparent" icon="full-screen"></ui5-toolbar-button>
+            <ui5-toolbar-button design="Transparent" icon="decline"></ui5-toolbar-button>
         </ui5-toolbar>
     </ui5-dynamic-page-title>`

@@ -96,7 +96,7 @@ const SCROLL_DEBOUNCE_RATE = 25; // ms
  *
  * @constructor
  * @extends UI5Element
- * @since 1.122
+ * @since 1.23.0
  * @public
  */
 @customElement({

@@ -56,6 +56,7 @@ import {
  * @constructor
  * @extends UI5Element
  * @public
+ * @since 1.23.0
  */
 @customElement({
 	tag: "ui5-dynamic-page-title",

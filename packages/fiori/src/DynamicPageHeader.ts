@@ -37,7 +37,7 @@ import DynamicPageHeaderCss from "./generated/themes/DynamicPageHeader.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 1.122
+ * @since 1.23.0
  */
 @customElement({
 	tag: "ui5-dynamic-page-header",

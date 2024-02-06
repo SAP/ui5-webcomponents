@@ -126,7 +126,7 @@ describe("Page general interaction", () => {
         const scrollButton = await browser.$("#scrollDownBtn");
 
         // Act: scroll to hide the header
-        await dynamicPage.setProperty("isExpanding", false);
+        await dynamicPage.setProperty("skipSnapOnScroll", false);
         await scrollButton.click();
 
         await browser.waitUntil(async () => (await browser.$("#page").getProperty("headerSnapped")), {
@@ -163,14 +163,14 @@ describe("Page general interaction", () => {
 
     it("keeps the pinned header expanded during scroll", async () => {
         const page = await browser.$("#page");
-        const scrollTopBeforeScroll = await page.getProperty("iPreviousScrollAmount");
+        const scrollTopBeforeScroll = await page.shadow$(".ui5-dynamic-page-scroll-container").getProperty("scrollTop");
         const scrollButton = await browser.$("#scrollDownBtn");
 
-        // act: scroll the page down
+        // act: scroll the page down`````
         await scrollButton.click();
 
         // wait untill the page processes the scroll event
-        await browser.waitUntil(async () => (await browser.$("#page").getProperty("iPreviousScrollAmount")) > scrollTopBeforeScroll, {
+        await browser.waitUntil(async () => (await page.shadow$(".ui5-dynamic-page-scroll-container").getProperty("scrollTop")) > scrollTopBeforeScroll, {
             timeout: 2000,
             timeoutMsg: "The scroll handler must me called."
         });
@@ -307,7 +307,7 @@ describe("Page layout when content oveflows", () => {
         const page = await browser.$("#page");
         const content = await browser.$("#col1list");
         const footer = await browser.$("#footer");
-        const scrollTopBeforeScroll = await page.getProperty("iPreviousScrollAmount");
+        const scrollTopBeforeScroll = await page.shadow$(".ui5-dynamic-page-scroll-container").getProperty("scrollTop");
         const scrollButton = await browser.$("#scrollToBottomBtn");
 
         assert.ok(await page.getProperty("showFooter"), "Footer is shown");
@@ -316,7 +316,7 @@ describe("Page layout when content oveflows", () => {
         await scrollButton.click();
 
         // wait untill the page processes the scroll event
-        await browser.waitUntil(async () => (await browser.$("#page").getProperty("iPreviousScrollAmount")) > scrollTopBeforeScroll, {
+        await browser.waitUntil(async () => (await page.shadow$(".ui5-dynamic-page-scroll-container").getProperty("scrollTop")) > scrollTopBeforeScroll, {
             timeout: 2000,
             timeoutMsg: "The scroll handler must me called."
         });
@@ -360,7 +360,7 @@ describe("ARIA attributes", () => {
 
         assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "true",
             "aria-expanded value is correct");
-        assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), "toggle-description",
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), `${await title.getProperty("__id")}-toggle-description`,
             "aria-describedby is correct");
         assert.strictEqual(await titleFocusArea.getAttribute("role"), "button",
             "title focus area role is correct");
@@ -374,8 +374,6 @@ describe("ARIA attributes", () => {
             "pin button accessible-name is correct");
         assert.strictEqual(await pinButton.getProperty("title"), "Pin Header",
             "pin button accessible-name is correct");
-
-        assert.exists(await title.shadow$("#toggle-description"));
     });
 
     it("sets snapped state attributes", async () => {
@@ -397,7 +395,7 @@ describe("ARIA attributes", () => {
 
         assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "false",
             "aria-expanded value is correct");
-        assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), "toggle-description",
+        assert.strictEqual(await titleFocusArea.getAttribute("aria-describedby"), `${await title.getProperty("__id")}-toggle-description`,
             "aria-describedby is correct");
         assert.strictEqual(await titleFocusArea.getAttribute("role"), "button",
             "title focus area role is correct");
@@ -410,8 +408,6 @@ describe("ARIA attributes", () => {
             "expand button accessible-name is correct");
         assert.strictEqual(await expandButton.getProperty("title"), "Expand Header",
             "expand button tooltip is correct");
-
-        assert.exists(await title.shadow$("#toggle-description"));
     });
 
 });
