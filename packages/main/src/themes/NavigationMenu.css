@@ -69,7 +69,7 @@
 }
 
 .ui5-sn-item-external-link-icon {
-	color: var(--_ui5_side_navigation_expand_icon_color);
+	color: var(--_ui5_side_navigation_external_link_icon_color);
 	min-width: 2rem;
 	height: 0.875rem;
 }

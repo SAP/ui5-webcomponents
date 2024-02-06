@@ -17,6 +17,7 @@
 
 	--_ui5_side_navigation_icon_font_size: 1.125rem;
 	--_ui5_side_navigation_expand_icon_color: var(--sapContent_NonInteractiveIconColor);
+	--_ui5_side_navigation_external_link_icon_color: var(--sapContent_NonInteractiveIconColor);
 	--_ui5_side_navigation_item_height: 2.5rem;
 	--_ui5_side_navigation_item_bottom_margin: 0.25rem;
 	--_ui5_side_navigation_item_bottom_margin_compact: 0.5rem;

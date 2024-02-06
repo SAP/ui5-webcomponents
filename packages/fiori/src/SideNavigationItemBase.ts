@@ -169,7 +169,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get _isExternalLink() {
-		return this.href && this._target === "_blank";
+		return this.href && this.target === "_blank";
 	}
 
 	get sideNavigation() : SideNavigation | undefined {
