@@ -141,9 +141,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Object, defaultValue: null })
 	realTabReference!: Tab;
 
-	@property({ type: Object, defaultValue: null })
-	selectedTabReference!: Tab;
-
 	@property({ type: Boolean })
 	isTopLevelTab!: boolean;
 
@@ -233,7 +230,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get isOnSelectedTabPath(): boolean {
-		return this.selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+		return this.selected || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
 	get _effectiveSlotName() {
@@ -241,7 +238,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _defaultSlotName() {
-		return this.selectedTabReference === this ? "" : "disabled-slot";
+		return this.selected ? "" : "disabled-slot";
 	}
 
 	get hasOwnContent() {

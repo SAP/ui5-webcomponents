@@ -84,7 +84,6 @@ interface ITab extends UI5Element {
 	forcedPosinset?: number;
 	forcedSetsize?: number;
 	realTabReference?: Tab;
-	selectedTabReference?: Tab;
 	isTopLevelTab?: boolean;
 	forcedStyle?: Record<string, any>;
 }
@@ -452,13 +451,6 @@ class TabContainer extends UI5Element {
 			tab.forcedPosinset = index + 1;
 			tab.forcedSetsize = arr.length;
 			tab.isTopLevelTab = items.some(i => i === tab);
-			tab.selectedTabReference = this._selectedTab;
-
-			if (tab.subTabs) {
-				walk(tab.subTabs, _tab => {
-					_tab.selectedTabReference = this._selectedTab;
-				});
-			}
 		});
 
 		this._setIndentLevels(items);
