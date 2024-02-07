@@ -473,6 +473,10 @@ class Button extends UI5Element implements IFormElement, IButton {
 		this.active = active;
 	}
 
+	get _hasPopup() {
+		return this.accessibilityAttributes.hasPopup?.toLowerCase();
+	}
+
 	get hasButtonType() {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
