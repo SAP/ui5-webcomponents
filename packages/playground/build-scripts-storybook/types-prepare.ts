@@ -121,30 +121,6 @@ const renderDescription = (description?: string): string => {
 	return description ? `<br />${description.trim().replaceAll(/\n/g, "<br />")}` : "";
 }
 
-// const generateEnumsSection = (enums: Array<EnumDeclaration>) => {
-// 	let content = "";
-
-// 	if (enums.length) {
-// 		content += enums.map((enumDeclaration) => {
-// 			return `### ${enumDeclaration.name}
-
-// ${enumDeclaration.description}
-
-// Available enum fields:
-// <ul>
-// ${enumDeclaration.members?.map(member => {
-// 				return `<li><b>${enumDeclaration.name}.${member.name}</b>${renderDescription(member.description)}${renderSince(member._ui5since)}${renderDeprecated(member.deprecated)}</li>`
-// 			}).join("\n")}
-// </ul>
-
-// `}).join("\n")
-// 	}
-
-// 	return content
-// }
-
-
-
 const generateEnumsSection = (enums: Array<EnumDeclaration>) => {
 	let content = "";
 
