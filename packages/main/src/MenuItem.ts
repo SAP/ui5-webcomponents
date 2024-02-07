@@ -10,22 +10,6 @@ import HasPopup from "./types/HasPopup.js";
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
 
-type AccInfo = {
-	role: string;
-	ariaExpanded?: boolean;
-	ariaLevel?: number;
-	ariaLabel: string;
-	ariaLabelRadioButton: string;
-	ariaSelectedText?: string;
-	ariaHaspopup?: `${HasPopup}`;
-	posinset?: number;
-	setsize?: number;
-	ariaSelected?: boolean;
-	ariaChecked?: boolean;
-	listItemAriaLabel?: string;
-	ariaOwns?: string;
-}
-
 /**
  * @class
  *
@@ -187,11 +171,11 @@ class MenuItem extends CustomListItem {
 		return true;
 	}
 
-	get _accInfo() : AccInfo {
+	get _accInfo() {
 		const accInfoSettings = {
 			role: "menuitem",
 			listItemAriaLabel: this.text,
-			ariaHaspopup: this.hasSubmenu ? HasPopup.Menu : undefined,
+			ariaHaspopup: this.hasSubmenu ? HasPopup.Menu.toLowerCase() as Lowercase<HasPopup> : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
