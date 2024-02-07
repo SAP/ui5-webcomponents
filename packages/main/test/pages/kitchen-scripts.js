@@ -14,12 +14,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var btnTheme = document.getElementById("btnTheme");
 	var btnLightDark = document.getElementById("btnLightDark");
 
-	if (RTL) {
-		document.body.setAttribute("dir", "rtl");
-	} else {
-		document.body.removeAttribute("dir");
-	}
-
 	/* SideNav */
 	function toggleSideNav(toggle) {
 		if (toggle) {
@@ -50,10 +44,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	btnRTL.addEventListener('click', function(e) {
 		if (e.target.pressed) {
 			document.body.setAttribute("dir", "rtl");
-			window['sap-ui-webcomponents-bundle'].applyDirection();
 		} else {
 			document.body.removeAttribute("dir");
 		}
+		window['sap-ui-webcomponents-bundle'].applyDirection();
 	}, false);
 
 	btnCompact.addEventListener('click', function(e) {
