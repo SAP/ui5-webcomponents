@@ -5,7 +5,7 @@ import type {
 	Package,
 	EnumDeclaration,
 	InterfaceDeclaration,
-	Reference
+	Reference,
 } from "@ui5/webcomponents-tools/lib/cem/types-internal";
 
 const FIORI_INTERFACES_FILE_NAME = '../_stories/fiori/Interfaces.mdx';
@@ -13,9 +13,13 @@ const MAIN_INTERFACES_FILE_NAME = '../_stories/main/Interfaces.mdx';
 const FIORI_ENUM_FILE_NAME = '../_stories/fiori/Enums.mdx';
 const MAIN_ENUM_FILE_NAME = '../_stories/main/Enums.mdx';
 
-type EnhancedInterfaceDeclartion = InterfaceDeclaration & { implementations: string[] };
+type StorybookInterfaceDeclaration = InterfaceDeclaration & { _ui5package: string };
+type StorybookEnumDeclaration = EnumDeclaration & { _ui5package: string };
+type StorybookClassDeclaration = ClassDeclaration & { _ui5package: string };
+
+type EnhancedInterfaceDeclartion = StorybookInterfaceDeclaration & { implementations: string[] };
 const interfaceDeclarations: Map<string, EnhancedInterfaceDeclartion> = new Map();
-const enumDeclarations: Array<EnumDeclaration> = [];
+const enumDeclarations: Array<StorybookEnumDeclaration> = [];
 
 const generateFileContent = (content: string, kind: string) => {
 	return `import { Meta } from "@storybook/blocks";
@@ -38,7 +42,7 @@ ${content}
 <Footer />`
 }
 
-const registerDeclaration = (declaration: InterfaceDeclaration) => {
+const registerDeclaration = (declaration: StorybookInterfaceDeclaration) => {
 	const declarationName = `${declaration._ui5package}/${declaration.name}`;
 
 	(declaration as EnhancedInterfaceDeclartion).implementations = [];
@@ -46,7 +50,7 @@ const registerDeclaration = (declaration: InterfaceDeclaration) => {
 	interfaceDeclarations.set(declarationName, (declaration as EnhancedInterfaceDeclartion))
 };
 
-const processDeclaration = (classDeclaration: ClassDeclaration, reference: Reference) => {
+const processDeclaration = (classDeclaration: StorybookClassDeclaration, reference: Reference) => {
 	const declarationName = `${reference.package}/${reference.name}`;
 	const declaration = interfaceDeclarations.get(declarationName);
 
@@ -61,11 +65,11 @@ const prepareTypes = async () => {
 	api.modules.map(moduleDoc => {
 		moduleDoc.declarations?.forEach(declaration => {
 			if (declaration.kind === "interface") {
-				registerDeclaration(declaration);
+				registerDeclaration(declaration as StorybookInterfaceDeclaration);
 			}
 
 			if (declaration.kind === "enum") {
-				enumDeclarations.push(declaration)
+				enumDeclarations.push(declaration as StorybookEnumDeclaration)
 			}
 		});
 
@@ -74,7 +78,7 @@ const prepareTypes = async () => {
 		.map(moduleDoc => {
 			moduleDoc.declarations?.forEach(declaration => {
 				if (declaration.kind === "class" && declaration._ui5implements) {
-					declaration._ui5implements.forEach(interfaceDeclaration => processDeclaration(declaration, interfaceDeclaration))
+					declaration._ui5implements.forEach(interfaceDeclaration => processDeclaration(declaration as StorybookClassDeclaration, interfaceDeclaration))
 				}
 			});
 
