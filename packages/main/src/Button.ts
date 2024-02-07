@@ -356,6 +356,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 		this._isTouch = (isPhone() || isTablet()) && !isCombi();
 	}
 
@@ -446,10 +449,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		if (this.active) {
 			this._setActiveState(false);
 		}
-
-		if (isDesktop()) {
-			this.focused = false;
-		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -458,9 +457,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		if (isDesktop()) {
-			this.focused = true;
-		}
 	}
 
 	_setActiveState(active: boolean) {
