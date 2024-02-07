@@ -172,6 +172,12 @@ exports.config = {
 	 * @param {Array.<String>} specs List of spec file paths that are to be run
 	 */
 	before: async function (capabilities, specs) {
+		await browser.addCommand("matchesFocus", async function () {
+			return browser.executeAsync(function (elem, done) {
+				done(elem.matches(":focus"));
+			}, this);
+		}, true);
+
 		await browser.addCommand("isFocusedDeep", async function () {
 			return browser.executeAsync(function (elem, done) {
 				let activeElement = document.activeElement;
@@ -272,6 +278,7 @@ exports.config = {
 			"isFocused",
 			"isFocusedDeep", // custom
 			"isFocusedDeepElement", // custom
+			"matchesFocus", // custom
 			"shadow$",
 			"shadow$$",
 		];
