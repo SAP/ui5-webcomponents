@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var mainContent = document.getElementById("main-content");
 	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
 	var COMPACT_CLASS = "ui5-content-density-compact";
-	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
 	var FIORI3 = "sap_fiori_3";
@@ -45,12 +44,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		return currentURL.slice(0, currentURL.indexOf(".html")) + params;
 	}
 
-	btnRTL.pressed = !!RTL;
 	btnTheme.pressed = !!(THEME === HCB);
 	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
 	btnRTL.addEventListener('click', function(e) {
-		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, THEME);
+		if (e.target.pressed) {
+			document.body.setAttribute("dir", "rtl");
+			window['sap-ui-webcomponents-bundle'].applyDirection();
+		} else {
+			document.body.removeAttribute("dir");
+		}
 	}, false);
 
 	btnCompact.addEventListener('click', function(e) {

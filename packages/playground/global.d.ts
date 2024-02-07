@@ -8,7 +8,6 @@ declare global {
             configuration: {
                 setTheme: (theme: string) => void;
                 getTheme: () => string;
-                getRTL: () => string
             };
         }
     }
