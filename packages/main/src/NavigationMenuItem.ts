@@ -12,8 +12,8 @@ import MenuItem from "./MenuItem.js";
  *
  * <h3>Usage</h3>
  *
- * <code>ui5-navigation-menu-item</code> is an abstract element, representing a node in a <code>ui5-navigation-menu</code>. The navigation menu itself is rendered as a list,
- * and each <code>ui5-navigation-menu-item</code> is represented by a list item (<code>ui5-li</code>) in that list. Therefore, you should only use
+ * <code>ui5-navigation-menu-item</code> is representing a node in a <code>ui5-navigation-menu</code>. The navigation menu itself is rendered as a list,
+ * and each <code>ui5-navigation-menu-item</code> is represented by a list item in that list. Therefore, you should only use
  * <code>ui5-navigation-menu-item</code> directly in your apps. The <code>ui5-li</code> list item is internal for the list, and not intended for public use.
  *
  * <h3>ES6 Module Import</h3>
@@ -22,7 +22,6 @@ import MenuItem from "./MenuItem.js";
  *
  * @constructor
  * @extends MenuItem
- * @abstract
  * @since 1.22.0
  * @private
  */
