@@ -7,13 +7,9 @@ import type {
 	Parameter,
 	Type,
 	ClassField,
+	Declaration,
 	ClassMethod,
 	EnumDeclaration,
-	InterfaceDeclaration,
-	FunctionDeclaration,
-	CustomElementMixinDeclaration,
-	MixinDeclaration,
-	VariableDeclaration
 } from "@ui5/webcomponents-tools/lib/cem/types-internal";
 
 const STORIES_ROOT_FOLDER_NAME = '../_stories';
@@ -22,7 +18,7 @@ const isCustomElementDeclaration = (object: any): object is CustomElementDeclara
 	return "customElement" in object && object.customElement;
 };
 
-type Declaration = CustomElementDeclaration | EnumDeclaration | ClassDeclaration | InterfaceDeclaration | FunctionDeclaration | MixinDeclaration | VariableDeclaration | CustomElementMixinDeclaration
+type DeclarationT = Declaration & { _ui5package: string }
 
 type ControlType = "text" | "select" | "multi-select" | boolean;
 
@@ -114,10 +110,10 @@ export type StoryArgsSlots = {
 };
 
 const getAPIData = (api: Package, module: string, componentPackage: string): APIData | undefined => {
-	const moduleAPI = api.modules?.find(currModule => currModule.declarations?.find(s => s.name === module && s._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`));
-	const declaration = moduleAPI?.declarations?.find(s => s.name === module && s._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`);
+	const moduleAPI = api.modules?.find(currModule => currModule.declarations?.find(s => s.name === module && (s as DeclarationT)._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`));
+	const declaration = moduleAPI?.declarations?.find(s => s.name === module && (s as DeclarationT)._ui5package === `@ui5/webcomponents${componentPackage !== 'main' ? `-${componentPackage}` : ''}`);
 	const exportedAs = moduleAPI?.exports?.find(s => s.kind === "custom-element-definition");
-	
+
 	if (!declaration) {
 		return;
 	}
@@ -151,7 +147,7 @@ const getArgsTypes = (api: Package, moduleAPI: CustomElementDeclaration | ClassD
 					}
 
 					for (const s of currModule.declarations) {
-						if (s.name === prop.type?.references[0].name && s._ui5package === prop.type?.references[0].package && s.kind === "enum") {
+						if (s.name === prop.type?.references[0].name && (s as DeclarationT)._ui5package === prop.type?.references[0].package && s.kind === "enum") {
 							typeEnum = s;
 							break;
 						}
@@ -240,11 +236,11 @@ const getArgsTypes = (api: Package, moduleAPI: CustomElementDeclaration | ClassD
 				continue;
 			}
 
-			moduleAPIBeingExtended = findReference(currModule.declarations, moduleAPI.superclass?.name, moduleAPI.superclass.package);
+			moduleAPIBeingExtended = findReference(currModule.declarations as Array<DeclarationT>, moduleAPI.superclass?.name, moduleAPI.superclass.package);
 		}
 	}
 
-	const referencePackage = moduleAPIBeingExtended?._ui5package;
+	const referencePackage = (moduleAPIBeingExtended as DeclarationT)?._ui5package;
 
 	if (moduleAPIBeingExtended && referencePackage && packages.includes(referencePackage)) {
 		const { args: nextArgs, slotNames: nextSlotNames } = getArgsTypes(api, moduleAPIBeingExtended as ClassDeclaration);
@@ -258,8 +254,8 @@ const getArgsTypes = (api: Package, moduleAPI: CustomElementDeclaration | ClassD
 	};
 };
 
-const findReference = (something: Array<Declaration>, componentName: string, componentPackage: string): Declaration | undefined => {
-	return something.find(s => s.name === componentName && s._ui5package === componentPackage)
+const findReference = (something: Array<DeclarationT>, componentName: string, componentPackage: string): DeclarationT | undefined => {
+	return something.find(s => s.name === componentName && (s as DeclarationT)._ui5package === componentPackage)
 }
 
 main();
