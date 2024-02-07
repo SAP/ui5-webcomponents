@@ -3,23 +3,12 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-
 	<title>RTL and Language</title>
-	<script>
-		// delete Document.prototype.adoptedStyleSheets
-	</script>
-
-
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-
-
 	<link rel="stylesheet" type="text/css" href="./styles/RTL.css">
-
 </head>
 
 <body class="rtl1auto">
-
-
 	<div class="rtl2auto">
 		<ui5-segmented-button id="tb">
 			<ui5-toggle-button pressed>EN</ui5-toggle-button>
@@ -61,11 +50,11 @@
 	<section dir="rtl">
 		<ui5-title>This section defines dir=RTL</ui5-title>
 		<br>
-		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<ui5-checkbox id="cbRTL" text="Click me"></ui5-checkbox>
 		<br>
 		<ui5-checkbox text="Click me"></ui5-checkbox>
 		<br>
-		<ui5-checkbox text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
+		<ui5-checkbox id="cbLTR" text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
 	</section>
 
 	<ui5-date-picker></ui5-date-picker>
