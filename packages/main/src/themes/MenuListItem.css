@@ -1,0 +1,14 @@
+:host(.ui5-menu-item[disabled]) {
+	pointer-events: initial;
+}
+
+/* hovered, selected and active */
+:host(.ui5-menu-item[disabled][actionable]:not([active]):not([selected]):hover),
+:host(.ui5-menu-item[disabled][active][actionable]) {
+	background: var(--ui5-listitem-background-color);
+}
+
+/* active */
+:host(.ui5-menu-item[disabled][active][actionable]) .ui5-li-root .ui5-li-icon {
+	color: var(--sapContent_NonInteractiveIconColor);
+}
