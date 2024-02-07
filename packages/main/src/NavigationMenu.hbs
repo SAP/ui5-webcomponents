@@ -45,7 +45,7 @@
 		id="{{_id}}-menu-main"
         class="ui5-navigation-menu-main"
 	>
-	{{#if _currentItems.length}}
+	{{#if items.length}}
 		<ui5-list
             accessible-role="tree"
 			id="{{_id}}-menu-list"
@@ -54,92 +54,11 @@
 			busy-delay="{{busyDelay}}"
 			separators="None"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover={{_itemMouseOver}}
+			@mouseout={{_itemMouseOut}}
+			@keydown={{_itemKeyDown}}
 		>
-		{{#each _currentItems}}
-            {{#if this.item.href}}
-            <ui5-li
-                .associatedItem="{{this.item}}"
-                id="{{../_id}}-menu-item-{{@index}}"
-                .icon="{{this.item.icon}}"
-                accessible-name={{this.item.ariaLabelledByText}}
-                accessible-role="none"
-                .additionalText="{{this.item._additionalText}}"
-                .ariaHasPopup={{this.ariaHasPopup}}
-                ?disabled={{this.item.disabled}}
-                ?starts-section={{this.item.startsSection}}
-                ?selected={{this.item.subMenuOpened}}
-                ?is-phone={{../isPhone}}
-                @mouseover={{../_itemMouseOver}}
-                @mouseout={{../_itemMouseOut}}
-                @keydown={{../_itemKeyDown}}
-                class="ui5-menu-item ui5-navigation-menu-item">
-                        <a role="treeitem"
-                            href="{{this.item.href}}"
-                            target="{{this.item.target}}">
-                            {{#if this.item.hasDummyIcon}}
-                                <div
-                                    class="ui5-menu-item-dummy-icon"
-                                >
-                                </div>
-                            {{/if}}
-                            {{this.item.text}}
-                            {{#if this.item.hasSubmenu}}
-                                <ui5-icon
-                                    part="icon"
-                                    name="slim-arrow-right"
-                                    class="ui5-menu-item-icon-end"
-                                >
-                                </ui5-icon>
-                            {{else if this.item._siblingsWithChildren}}
-                                <div
-                                    class="ui5-menu-item-no-icon-end"
-                                >
-                                </div>
-                            {{/if}}
-                        </a>
-                    </ui5-li>
-            {{else}}
-                    <ui5-li
-                    .associatedItem="{{this.item}}"
-                    class="ui5-menu-item ui5-navigation-menu-item"
-                    id="{{../_id}}-menu-item-{{@index}}"
-                    .icon="{{this.item.icon}}"
-                    accessible-name={{this.item.ariaLabelledByText}}
-                    accessible-role="treeitem"
-                    .additionalText="{{this.item._additionalText}}"
-                    .ariaHasPopup={{this.ariaHasPopup}}
-                    ?disabled={{this.item.disabled}}
-                    ?starts-section={{this.item.startsSection}}
-                    ?selected={{this.item.subMenuOpened}}
-                    ?is-phone={{../isPhone}}
-                    @mouseover={{../_itemMouseOver}}
-                    @mouseout={{../_itemMouseOut}}
-                    @keydown={{../_itemKeyDown}}
-                >
-                    {{#if this.item.hasDummyIcon}}
-                        <div
-                            class="ui5-menu-item-dummy-icon"
-                        >
-                        </div>
-                    {{/if}}
-                    {{this.item.text}}
-                    {{#if this.item.hasSubmenu}}
-                        <ui5-icon
-                            part="icon"
-                            name="slim-arrow-right"
-                            class="ui5-menu-item-icon-end"
-                        >
-                        </ui5-icon>
-                    {{else if this.item._siblingsWithChildren}}
-                        <div
-                            class="ui5-menu-item-no-icon-end"
-                        >
-                        </div>
-                    {{/if}}
-			        </ui5-li>
-                {{/if}}
-		{{/each}}
+		<slot></slot>
 		</ui5-list>
 	{{else if busy}}
 		<ui5-busy-indicator

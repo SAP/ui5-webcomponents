@@ -1,0 +1,45 @@
+{{#if href}}
+	<a role="treeitem"
+		href="{{href}}"
+		target="{{target}}">
+		
+		{{>include "./ListItem.hbs"}}
+
+		{{#*inline "listItemContent"}}
+			{{#if text}}
+				<div class="ui5-li-text-wrapper">
+					<span part="title" class="ui5-li-title">
+						<div class="ui5-menu-item-text">{{text}}</div>
+					</span>
+				</div>
+			{{/if}}
+		{{/inline}}
+		
+		{{#*inline "iconBegin"}}
+			{{#if _siblingsWithIcon}}
+				{{#if hasIcon}}
+					<ui5-icon class="ui5-li-icon" name="{{icon}}"></ui5-icon>
+				{{else}}
+					<div class="ui5-menu-item-dummy-icon"></div>
+				{{/if}}
+			{{/if}}
+		{{/inline}}
+
+		{{#*inline "iconEnd"}}
+			{{#if hasSubmenu}}
+				<div
+					class="ui5-menu-item-submenu-icon"
+				>
+					<ui5-icon
+						part="subicon"
+						name="slim-arrow-right"
+						class="ui5-menu-item-icon-end"
+					>
+					</ui5-icon>
+				</div>
+			{{/if}}
+		{{/inline}}
+	</a>
+{{else}}
+	{{>include "./MenuItem.hbs"}}
+{{/if}}

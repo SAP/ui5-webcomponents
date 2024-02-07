@@ -62,6 +62,14 @@ class NavigationMenuItem extends MenuItem {
 	 */
 	@property()
 	target!: string;
+
+	get _accInfo() {
+		const accInfoSettings = {
+			role: this.href ? "none" : "treeitem",
+		};
+
+		return { ...super._accInfo, ...accInfoSettings };
+	}
 }
 
 NavigationMenuItem.define();
