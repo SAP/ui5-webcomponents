@@ -269,7 +269,6 @@ class TreeItemBase extends ListItem {
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
 			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
-			ariaSelected: this.selected,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
