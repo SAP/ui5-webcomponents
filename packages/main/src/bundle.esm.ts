@@ -178,6 +178,11 @@ import StandardListItem from "./StandardListItem.js";
 import CustomListItem from "./CustomListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
+import {
+	getTextAreaSelection,
+	createCopy,
+} from "./input-utils/SelectionUtil.js";
+
 // Features
 import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
@@ -217,6 +222,7 @@ const testAssets = {
 	invisibleMessage: {
 		announce,
 	},
+	getTextAreaSelection,
 	getLocaleData,
 	applyDirection,
 	attachDirectionChange,

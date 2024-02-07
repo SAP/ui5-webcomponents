@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>TextArea</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/TextArea.css">
+</head>
+
+<body class="textarea1auto">
+
+
+	<section class="group">
+		<div>
+			<h3>
+				Random text
+			</h3>
+			<p>
+				The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
+				Sections 1.10.32 and 1.10.33 from ....
+			</p>
+		</div>
+	</section>
+	<section class="group">
+		<ui5-title>Simple TextArea</ui5-title>
+		<ui5-textarea id="basic-textarea" growing="true"
+			value="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of 'de Finibus Bonorum et Malorum' (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, 'Lorem ipsum dolor sit amet..', comes from a line in section 1.10.32.
+            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from 'de Finibus Bonorum et Malorum' by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.">
+		</ui5-textarea>
+	</section>
+
+	<ui5-popover id="pop" opener="test" placement-type="Bottom">
+		<div slot="header">Selected Text<ui5-icon name="ai"></ui5-icon></div>
+		<div id="txtSelection"></div>
+	</ui5-popover>
+
+	<div id="test" style="user-select: none; width: 2px; height: 1.2em; background-color: red; position: absolute;">
+	</div>
+	<script>
+
+		const textArea = document.getElementById("basic-textarea");
+		const popover = document.querySelector("#pop");
+		const test = document.querySelector("#test");
+
+		textArea.addEventListener("ui5-selection-finished", function (e) {
+			var selection = e.detail;
+			test.style.left = selection.positionX + 'px';
+			test.style.top = (selection.positionY + window.scrollY) + 'px';
+
+			const txtDiv = document.querySelector("#txtSelection");
+            txtDiv.innerHTML = selection.text;
+
+			popover.showAt(test, true);
+		})
+	</script>
+
+</body>
+
+</html>

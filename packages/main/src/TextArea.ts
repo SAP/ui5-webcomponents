@@ -16,6 +16,8 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
+import type { SelectionEventDetails } from "./input-utils/SelectionUtil.js";
+import { SelectionDirection, getTextAreaSelection } from "./input-utils/SelectionUtil.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -100,6 +102,41 @@ type ExceededText = {
  * @public
  */
 @event("input")
+
+/**
+ * Fired when text is selected in the textarea
+ * @since 1.23.0
+ * @public
+ */
+@event<SelectionEventDetails>("selection-finished", {
+	detail: {
+		/**
+		 * @public
+		 */
+		text: { type: String },
+		/**
+		 * @public
+		 */
+		start: { type: Number },
+		/**
+		 * @public
+		 */
+		end: { type: Number },
+		/**
+		 * @public
+		 */
+		positionX: { type: Number },
+		/**
+		 * @public
+		 */
+		positionY: { type: Number },
+
+		/**
+		 * @public
+		 */
+		direction: { type: String },
+	},
+})
 
 class TextArea extends UI5Element implements IFormElement {
 	/**
@@ -295,6 +332,12 @@ class TextArea extends UI5Element implements IFormElement {
 	_width?: number;
 
 	/**
+	 * @private
+	 */
+	@property()
+	_selectionDirection: SelectionDirection;
+
+	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
 	 * <br><br>
@@ -323,6 +366,8 @@ class TextArea extends UI5Element implements IFormElement {
 	_openValueStateMsgPopover: boolean;
 	_exceededTextProps!: ExceededText;
 	_keyDown?: boolean;
+	_selectionStartX?: number;
+	_selectionStartY?: number;
 	FormSupport?: typeof FormSupportT;
 	previousValue: string;
 	valueStatePopover?: Popover;
@@ -340,14 +385,19 @@ class TextArea extends UI5Element implements IFormElement {
 		this._openValueStateMsgPopover = false;
 		this._fnOnResize = this._onResize.bind(this);
 		this.previousValue = "";
+		this._selectionDirection = SelectionDirection.None;
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._fnOnResize);
+		this.getInputDomRef().addEventListener("mousedown", e => this._onmousedown(e));
+		this.getInputDomRef().addEventListener("mouseup", e => this._onmouseup(e));
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._fnOnResize);
+		this.getInputDomRef().removeEventListener("mousedown", e => this._onmousedown(e));
+		this.getInputDomRef().removeEventListener("mouseup", e => this._onmouseup(e));
 	}
 
 	onBeforeRendering() {
@@ -445,6 +495,30 @@ class TextArea extends UI5Element implements IFormElement {
 		this.fireEvent("value-changed");
 	}
 
+	_onselect() {
+		const caretPosition = getTextAreaSelection(this);
+		this.fireEvent<SelectionEventDetails>("selection-finished", {
+			text: this.selectionText,
+			direction: this._selectionDirection,
+			start: this.selectionStart,
+			end: this.selectionEnd,
+			positionX: caretPosition.x,
+			positionY: caretPosition.y,
+		});
+	}
+
+	// We can call methods of the SelectionUtil in order to track mousedown and mouseup coordinates
+	_onmousedown(e: MouseEvent) {
+		this._selectionStartX = e.pageX;
+		this._selectionStartY = e.pageY;
+	}
+
+	_onmouseup(e: MouseEvent) {
+		this._calcSelectionDirection(e.pageX, e.pageY);
+		this._selectionStartX = undefined;
+		this._selectionStartY = undefined;
+	}
+
 	_onResize() {
 		if (this.displayValueStateMessagePopover) {
 			this._width = this.offsetWidth;
@@ -524,6 +598,36 @@ class TextArea extends UI5Element implements IFormElement {
 		return {
 			exceededText, leftCharactersCount, calcedMaxLength,
 		};
+	}
+
+	/* This method will not work as expected, because if the selection is in 1 row, its start Y point on mouse down could be at the bottom of a line
+	and the selection end Y point detected on mouse up can be smaller number.
+	Possible suggestion is to render the selected text in the copy div over the text area, the div will be 1 line and with hotizontal scroll
+	If horizontal scroll is present this means the original selection takes more than 1 line. If the selection is only 1 line
+	we can detect the direction from the X coordinate only. If the text selection is on more than 1 line - we check the Y coordinates only
+	in order to determine the selection direction */
+	_calcSelectionDirection(selectionEndX: number, selectionEndY: number): void {
+		if (this._selectionStartY === selectionEndY) {
+			this._selectionDirection = selectionEndX > this._selectionStartX! ? SelectionDirection.Forward : SelectionDirection.Backward;
+		} else {
+			this._selectionDirection = selectionEndY > this._selectionStartY! ? SelectionDirection.Forward : SelectionDirection.Backward;
+		}
+	}
+
+	get selectionStart(): number {
+		return this.getInputDomRef()!.selectionStart;
+	}
+
+	get selectionEnd(): number {
+		return this.getInputDomRef()!.selectionEnd;
+	}
+
+	get selectionDirection(): SelectionDirection {
+		return this._selectionDirection;
+	}
+
+	get selectionText() {
+		return this.getInputDomRef()!.value.substring(this.selectionStart, this.selectionEnd);
 	}
 
 	get classes() {
