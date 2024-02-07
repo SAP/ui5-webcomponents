@@ -1,5 +1,5 @@
 @import "./InvisibleTextStyles.css";
-
+/* 
 ui5-navigation-menu .ui5-navigation-menu-main {
 	padding: var(--_ui5_side_navigation_parent_popup_padding);
 }
@@ -66,4 +66,4 @@ ui5-navigation-menu ui5-navigation-menu-item::part(icon){
 
 ui5-navigation-menu ui5-menu-item[focused]:not([active]){
     background: none;
-}
+} */
