@@ -1,5 +1,4 @@
 <ui5-responsive-popover
-	id="{{_id}}-menu-rp"
 	class="ui5-menu-rp"
 	horizontal-align="Left"
 	placement-type={{placementType}}
@@ -46,7 +45,7 @@
 	<div
 		id="{{_id}}-menu-main"
 	>
-	{{#if _currentItems.length}}
+	{{#if items.length}}
 		<ui5-list
 			id="{{_id}}-menu-list"
 			mode="None"
@@ -55,54 +54,11 @@
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover={{_itemMouseOver}}
+			@mouseout={{_itemMouseOut}}
+			@keydown={{_itemKeyDown}}
 		>
-		{{#each _currentItems}}
-			<ui5-li-menu
-				.associatedItem="{{this.item}}"
-				class="ui5-menu-item"
-				id="{{../_id}}-menu-item-{{@index}}"
-				.icon="{{this.item.icon}}"
-				accessible-name={{this.item.ariaLabelledByText}}
-				accessible-role="menuitem"
-				.additionalText="{{this.item._additionalText}}"
-				._ariaHasPopup={{this.ariaHasPopup}}
-				?disabled={{this.item.disabled}}
-				?starts-section={{this.item.startsSection}}
-				?selected={{this.item.subMenuOpened}}
-				?is-phone={{../isPhone}}
-				@mouseover={{../_itemMouseOver}}
-				@mouseout={{../_itemMouseOut}}
-				@keydown={{../_itemKeyDown}}
-			>
-				<div class="ui5-menu-item-text">
-				{{#if this.item.hasDummyIcon}}
-					<div
-						class="ui5-menu-item-dummy-icon"
-					>
-					</div>
-				{{/if}}
-				{{this.item.text}}
-				{{#if this.item.hasSubmenu}}
-					<div
-						class="ui5-menu-item-submenu-icon"
-					>
-						<ui5-icon
-							part="subicon"
-							name="slim-arrow-right"
-							class="ui5-menu-item-icon-end"
-						>
-						</ui5-icon>
-					</div>
-				{{else if this.item._siblingsWithChildren}}
-					<div
-						class="ui5-menu-item-no-icon-end"
-					>
-					</div>
-				{{/if}}
-				</div>
-			</ui5-li-menu>
-		{{/each}}
+		<slot></slot>
 		</ui5-list>
 	{{else if busy}}
 		<ui5-busy-indicator

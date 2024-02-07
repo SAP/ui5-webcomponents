@@ -1,9 +1,30 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import CustomListItem from "./CustomListItem.js";
+import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import type Menu from "./Menu.js";
+import HasPopup from "./types/HasPopup.js";
+
+// Styles
+import menuItemCss from "./generated/themes/MenuItem.css.js";
+
+type AccInfo = {
+	role: string;
+	ariaExpanded?: boolean;
+	ariaLevel?: number;
+	ariaLabel: string;
+	ariaLabelRadioButton: string;
+	ariaSelectedText?: string;
+	ariaHaspopup?: `${HasPopup}`;
+	posinset?: number;
+	setsize?: number;
+	ariaSelected?: boolean;
+	ariaChecked?: boolean;
+	listItemAriaLabel?: string;
+	ariaOwns?: string;
+}
 
 /**
  * @class
@@ -24,13 +45,16 @@ import type Menu from "./Menu.js";
  * <code>import "@ui5/webcomponents/dist/MenuItem.js";</code>
  *
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends CustomListItem
  * @since 1.3.0
  * @public
  */
-@customElement("ui5-menu-item")
-class MenuItem extends UI5Element {
+@customElement({
+	tag: "ui5-menu-item",
+	template: MenuItemTemplate,
+	styles: [CustomListItem.styles, menuItemCss],
+})
+class MenuItem extends CustomListItem {
 	/**
 	 * Defines the text of the tree item.
 	 *
@@ -118,12 +142,6 @@ class MenuItem extends UI5Element {
 	accessibleName!: string;
 
 	/**
-	 * Indicates whether any of the element siblings have children items.
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithChildren!: boolean;
-
-	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -153,8 +171,8 @@ class MenuItem extends UI5Element {
 		return !!(this.items.length || this.busy);
 	}
 
-	get hasDummyIcon() {
-		return this._siblingsWithIcon && !this.icon;
+	get hasIcon() {
+		return !!this.icon;
 	}
 
 	get subMenuOpened() {
@@ -165,8 +183,18 @@ class MenuItem extends UI5Element {
 		return this.hasSubmenu ? "" : this.additionalText;
 	}
 
-	get ariaLabelledByText() {
-		return `${this.text} ${this.accessibleName}`.trim();
+	get _focusable() {
+		return true;
+	}
+
+	get _accInfo() : AccInfo {
+		const accInfoSettings = {
+			role: "menuitem",
+			listItemAriaLabel: this.text,
+			ariaHaspopup: this.hasSubmenu ? HasPopup.Menu : undefined,
+		};
+
+		return { ...super._accInfo, ...accInfoSettings };
 	}
 }
 

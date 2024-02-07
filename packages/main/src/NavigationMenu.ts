@@ -8,20 +8,18 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
-import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
-import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
+import AreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
-import staticAreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import AreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
+import AreaMenuCss from "./generated/themes/Menu.css.js";
 
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
-type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 type MenuItemClickEventDetail = {
 	item: MenuItem,
 	text: string,
@@ -52,8 +50,8 @@ type MenuItemClickEventDetail = {
 @customElement({
 	tag: "ui5-navigation-menu",
 	renderer: litRender,
-	staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: [AreaMenuCss, AreaNavigationMenuCss],
+	template: AreaMenuTemplate,
 })
 
 class NavigationMenu extends Menu {
@@ -70,46 +68,23 @@ class NavigationMenu extends Menu {
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
-			const opener = e.target as OpenerStandardListItem;
-			let item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id")!;
+			let item = e.target as MenuItem;
 
-			if (!item) {
+			if (item.tagName !== "ui5-menu-item") {
 				// for nested <a>
-				const test = opener.parentElement as any;
-				if (opener.parentElement) {
-					item = test.associatedItem;
-				}
+				item = item.parentElement as MenuItem;
 			}
 
 			// If there is a pending close operation, cancel it
 			this._clearTimeout();
 
 			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item, opener, hoverId);
+			this._startOpenTimeout(item);
 		}
 	}
 
-	_clonedItemsFragment(item: MenuItem) {
-		const fragment = document.createDocumentFragment();
-
-		for (let i = 0; i < item.items.length; ++i) {
-			const subItem = item.items[i] as any;
-
-			const clonedItem = item.items[i].cloneNode(true) as any;
-			if (subItem.associatedItem) {
-				clonedItem.associatedItem = subItem.associatedItem;
-			}
-			fragment.appendChild(clonedItem);
-		}
-
-		return fragment;
-	}
-
-	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const opener = e.detail.item as OpenerStandardListItem;
-		const item = opener.associatedItem;
-		const actionId = opener.getAttribute("id")!;
+	async _itemClick(e: CustomEvent<ListItemClickEventDetail>) {
+		const item = e.detail.item as MenuItem;
 		const mainMenu = this._findMainMenu(item);
 		const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
 			"item": item,
@@ -134,7 +109,7 @@ class NavigationMenu extends Menu {
 			this._prepareSubMenuPhone(item);
 		} else if (isTablet()) {
 			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener, actionId);
+			await this._prepareSubMenuDesktopTablet(item);
 		}
 	}
 	get accSideNavigationPopoverHiddenText() {

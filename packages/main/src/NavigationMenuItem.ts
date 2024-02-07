@@ -1,6 +1,23 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "./MenuItem.js";
+import HasPopup from "./types/HasPopup.js";
+
+type AccInfo = {
+	role: string;
+	ariaExpanded?: boolean;
+	ariaLevel?: number;
+	ariaLabel: string;
+	ariaLabelRadioButton: string;
+	ariaSelectedText?: string;
+	ariaHaspopup?: `${HasPopup}`;
+	posinset?: number;
+	setsize?: number;
+	ariaSelected?: boolean;
+	ariaChecked?: boolean;
+	listItemAriaLabel?: string;
+	ariaOwns?: string;
+}
 
 /**
  * @class
@@ -62,6 +79,14 @@ class NavigationMenuItem extends MenuItem {
 	 */
 	@property()
 	target!: string;
+
+	get _accInfo() : AccInfo {
+		const accInfoSettings = {
+			role: this.href ? "none" : "treeitem",
+		};
+
+		return { ...super._accInfo, ...accInfoSettings };
+	}
 }
 
 NavigationMenuItem.define();

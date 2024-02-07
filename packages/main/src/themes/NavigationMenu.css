@@ -1,19 +1,19 @@
 @import "./InvisibleTextStyles.css";
 
-.ui5-navigation-menu .ui5-navigation-menu-main {
+ui5-navigation-menu .ui5-navigation-menu-main {
 	padding: var(--_ui5_side_navigation_parent_popup_padding);
 }
 
-.ui5-navigation-menu .ui5-menu-item.ui5-navigation-menu-item::part(native-li) {
+ui5-navigation-menu ui5-navigation-menu-item::part(native-li) {
     padding-left: 0.5rem;
 	width: auto;
 }
-.ui5-navigation-menu .ui5-menu-item.ui5-navigation-menu-item::part(native-li)::after {
+ui5-navigation-menu ui5-navigation-menu-item::part(native-li)::after {
     border-radius: 0.375rem;
     inset: 0;
  }
 
-.ui5-navigation-menu .ui5-navigation-menu-item { 
+ui5-navigation-menu ui5-navigation-menu-item { 
     display: flex;
 	align-items: center;
 	width: 100%;
@@ -29,18 +29,18 @@
     border-bottom: none;
 }
 
-.ui5-navigation-menu .ui5-navigation-menu-item a {
+ui5-navigation-menu ui5-navigation-menu-item a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: var(--sapList_TextColor);
 }
 
-.ui5-navigation-menu[sub-menu] .ui5-navigation-menu-item {
+ui5-navigation-menu[sub-menu] ui5-navigation-menu-item {
     font-weight: normal;
 }
 
-.ui5-menu-rp.ui5-navigation-menu {
+ui5-menu-rp.ui5-navigation-menu {
     box-shadow: var(--_ui5_side_navigation_popup_box_shadow);
     width: auto;
     min-width: 10rem;
@@ -50,7 +50,7 @@
     border-radius: 0.75rem;
 }
 
-.ui5-navigation-menu .ui5-navigation-menu-item .ui5-menu-item-icon-end {
+ui5-navigation-menu ui5-navigation-menu-item .ui5-menu-item-icon-end {
     position: relative;
     inset-inline-end: auto;
     width: 0.75rem;
@@ -58,12 +58,12 @@
     color: var(--sapList_TextColor);
 }
 
-.ui5-navigation-menu .ui5-navigation-menu-item::part(icon){
+ui5-navigation-menu ui5-navigation-menu-item::part(icon){
     color: var(--sapList_TextColor);
     min-width: 1rem;
     min-height: 1rem;
 }
 
-.ui5-navigation-menu .ui5-menu-item[focused]:not([active]){
+ui5-navigation-menu ui5-menu-item[focused]:not([active]){
     background: none;
 }
