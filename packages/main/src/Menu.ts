@@ -364,7 +364,7 @@ class Menu extends UI5Element {
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 */
-	showAt(opener: HTMLElement) {
+	showAt(opener: HTMLElement): void {
 		if (isPhone()) {
 			this._parentItemsStack = [];
 		}
