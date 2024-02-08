@@ -79,6 +79,7 @@ describe("Menu interaction", () => {
 		const selectionInput = await browser.$("#selectionInput");
 
 		await menuItems[0].click({x: 1, y: 1});
+		await browser.pause(100);
 
 		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Click on first item fires an event");
 	});
@@ -92,6 +93,7 @@ describe("Menu interaction", () => {
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Space");
+		await browser.pause(100);
 
 		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Pressing [Space] on first item fires an event");
 	});
@@ -193,14 +195,11 @@ describe("Menu Accessibility", () => {
 
 		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const list = await popover.$("ui5-list");
-		const menuItems = await browser.$$("#menu > ui5-menu-item");
+		const menuItem = await browser.$("#menu > ui5-menu-item[text='Open']");
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
-		assert.strictEqual(await menuItems[0].$shadow("li").getAttribute("role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
-		assert.strictEqual(
-			await menuItems[0].getProperty("accessible-name"),
-			"Opens a file explorer",
-			"There is additional description added");
-		assert.strictEqual(await menuItems[2].$shadow("li").getAttribute("aria-haspopup"), "menu", "Popup attribute is properly set");
+		assert.strictEqual(await menuItem.$shadow("li").getAttribute("role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(await menuItem.$shadow("li").getAttribute("aria-haspopup"), "menu", "Popup attribute is properly set");
+		assert.strictEqual(await menuItem.getProperty("accessible-name"), "Choose platform", "Additional description is added");
 	});
 });
