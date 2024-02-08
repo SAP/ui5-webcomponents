@@ -103,12 +103,12 @@ class CalendarLegend extends UI5Element {
 	items!: Array<CalendarLegendItem>;
 
 	_itemNavigation!: ItemNavigation;
-	_lastFocusedIndex: number | null;
+	_lastFocusedItemIndex: number | null;
 
 	constructor() {
 		super();
 
-		this._lastFocusedIndex = null;
+		this._lastFocusedItemIndex = null;
 	}
 
 	onAfterRendering(): void {
@@ -119,8 +119,8 @@ class CalendarLegend extends UI5Element {
 				getItemsCallback: () => this.focusableElements,
 			});
 
-			const initialFocusIndex = this._lastFocusedIndex !== null ? this._lastFocusedIndex : 0;
-			this._itemNavigation.setCurrentItem(this.focusableElements[initialFocusIndex]);
+			const focusableItemIndex = this._lastFocusedItemIndex !== null ? this._lastFocusedItemIndex : 0;
+			this._itemNavigation.setCurrentItem(this.focusableElements[focusableItemIndex]);
 		}
 	}
 
@@ -130,7 +130,7 @@ class CalendarLegend extends UI5Element {
 
 		this._itemNavigation.setCurrentItem(target);
 		this._itemNavigation._focusCurrentItem();
-		this._lastFocusedIndex = this.focusableElements.indexOf(target);
+		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
 	}
 
 	_onFocusIn(e: FocusEvent) {
@@ -139,7 +139,7 @@ class CalendarLegend extends UI5Element {
 		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
 			item: target,
 		});
-		this._lastFocusedIndex = this.focusableElements.indexOf(target);
+		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
 	}
 
 	_onFocusOut() {
@@ -159,7 +159,7 @@ class CalendarLegend extends UI5Element {
 			if (nextIndex < itemsCount) {
 				this._itemNavigation.setCurrentItem(items[nextIndex]);
 				this._itemNavigation._focusCurrentItem();
-				this._lastFocusedIndex = nextIndex;
+				this._lastFocusedItemIndex = nextIndex;
 			}
 		}
 
@@ -170,7 +170,7 @@ class CalendarLegend extends UI5Element {
 			if (nextIndex >= 0) {
 				this._itemNavigation.setCurrentItem(items[nextIndex]);
 				this._itemNavigation._focusCurrentItem();
-				this._lastFocusedIndex = nextIndex;
+				this._lastFocusedItemIndex = nextIndex;
 			}
 		}
 	}
