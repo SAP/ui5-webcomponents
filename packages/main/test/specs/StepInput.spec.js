@@ -462,6 +462,7 @@ describe("'change' event firing", () => {
 		const valueState = await input.getProperty("valueState");
 		await input.click();
 		await browser.keys("2");
+ 		await browser.keys("Enter");
 
 		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
 	});
