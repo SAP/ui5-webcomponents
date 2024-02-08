@@ -163,11 +163,10 @@ describe("Menu interaction", () => {
 			openButton.click();
 
 			const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
-			const newFileItem = await popover.$("ui5-menu-item[text='New File']");
-			newFileItem.click();
-			await browser.pause(100);
+			const menuItem = await browser.$("#menu > ui5-menu-item[text='New File']");
+			menuItem.click();
 
-			assert.ok(await menuPopover.getProperty("open"), "Menu is still opened.");
+			assert.ok(await popover.getProperty("open"), "Menu is still opened.");
 
 			await browser.keys("Escape");
 		});
@@ -178,8 +177,7 @@ describe("Menu interaction", () => {
 			openButton.click();
 
 			const menuItem = await browser.$("#menu > ui5-menu-item[text='New Folder with very long title for a menu item']");
-
-			await browser.keys("ArrowDown");
+			menuItem.click();
 
 			assert.ok(await menuItem.getAttribute("disabled"), "The menu item is disabled");
 			assert.ok(await menuItem.getAttribute("focused"), "The menu item is focused");
