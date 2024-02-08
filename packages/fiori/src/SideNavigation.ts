@@ -26,7 +26,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import type SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
@@ -51,20 +51,20 @@ type SideNavigationPopoverContents = {
 };
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: SideNavigationItemBase;
+	item: SideNavigationSelectableItemBase;
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type PopupClickEventDetail = {
 	target: {
-		associatedItem: SideNavigationItemBase
+		associatedItem: SideNavigationSelectableItemBase
 	}
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type NavigationMenuClickEventDetail = {
 	item: {
-		associatedItem: SideNavigationItemBase
+		associatedItem: SideNavigationSelectableItemBase
 	}
 };
 
@@ -128,7 +128,7 @@ type NavigationMenuClickEventDetail = {
 /**
  * Fired when the selection has changed via user interaction
  *
- * @param {SideNavigationItemBase} item the clicked item.
+ * @param {SideNavigationSelectableItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
  */
@@ -416,7 +416,7 @@ class SideNavigation extends UI5Element {
 		return result;
 	}
 
-	focusItem(item: SideNavigationItemBase) {
+	focusItem(item: SideNavigationSelectableItemBase) {
 		if (item.isFixedItem) {
 			this._fixedItemNavigation.setCurrentItem(item);
 		} else {
@@ -527,7 +527,7 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
-	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
+	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationSelectableItemBase | undefined {
 		let focusedItem;
 
 		if (this.collapsed) {
@@ -539,8 +539,8 @@ class SideNavigation extends UI5Element {
 		return focusedItem;
 	}
 
-	_getWithNestedItems(items: Array<SideNavigationItem>, expandedOnly = false): Array<SideNavigationItemBase> {
-		let result = new Array<SideNavigationItemBase>();
+	_getWithNestedItems(items: Array<SideNavigationItem>, expandedOnly = false): Array<SideNavigationSelectableItemBase> {
+		let result = new Array<SideNavigationSelectableItemBase>();
 
 		items.forEach(item => {
 			result.push(item);
@@ -553,7 +553,7 @@ class SideNavigation extends UI5Element {
 		return result;
 	}
 
-	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | undefined {
+	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationSelectableItemBase | undefined {
 		let selectedItem;
 
 		if (this.collapsed) {
@@ -565,7 +565,7 @@ class SideNavigation extends UI5Element {
 		return selectedItem;
 	}
 
-	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {
+	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
 			item.fireEvent("click");
 			return;
@@ -609,7 +609,7 @@ class SideNavigation extends UI5Element {
 		return result;
 	}
 
-	_selectItem(item: SideNavigationItemBase) {
+	_selectItem(item: SideNavigationSelectableItemBase) {
 		if (item.disabled) {
 			return;
 		}

@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 
 /**
  * @class
@@ -13,13 +13,13 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
  *
  * @constructor
- * @extends SideNavigationItemBase
+ * @extends SideNavigationSelectableItemBase
  * @public
  * @abstract
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-sub-item")
-class SideNavigationSubItem extends SideNavigationItemBase {
+class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 	get isFixedItem() {
 		return this.parentElement?.slot === "fixedItems";
 	}

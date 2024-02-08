@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
@@ -19,13 +19,13 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
  *
  * @constructor
- * @extends SideNavigationItemBase
+ * @extends SideNavigationSelectableItemBase
  * @abstract
  * @public
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-item")
-class SideNavigationItem extends SideNavigationItemBase {
+class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**
 	 * Defines if the item is expanded
 	 *
