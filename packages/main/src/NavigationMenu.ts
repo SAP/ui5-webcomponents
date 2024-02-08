@@ -13,8 +13,8 @@ import type NavigationMenuItem from "./NavigationMenuItem.js";
 import AreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
-import AreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import AreaMenuCss from "./generated/themes/Menu.css.js";
+import areaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
+import areaMenuCss from "./generated/themes/Menu.css.js";
 
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
@@ -50,7 +50,7 @@ type MenuItemClickEventDetail = {
 @customElement({
 	tag: "ui5-navigation-menu",
 	renderer: litRender,
-	styles: [AreaMenuCss, AreaNavigationMenuCss],
+	styles: [areaMenuCss, areaNavigationMenuCss],
 	template: AreaMenuTemplate,
 })
 
