@@ -179,8 +179,8 @@ describe("Menu interaction", () => {
 			const menuItem = await browser.$("#menu > ui5-menu-item[text='New Folder with very long title for a menu item']");
 			menuItem.click();
 
-			assert.ok(await menuItem.getAttribute("disabled"), "The menu item is disabled");
-			assert.ok(await menuItem.getAttribute("focused"), "The menu item is focused");
+			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
+			assert.ok(await menuItem.getProperty("focused"), "The menu item is focused");
 		});
 	});
 
