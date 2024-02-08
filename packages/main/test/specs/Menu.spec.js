@@ -44,8 +44,7 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
-		const menuItems = await popover.$("ui5-list").$$("ui5-menu-item");
+		const menuItems = await browser.$$("#menu > ui5-menu-item");
 		const submenuList = await browser.$("#menu").shadow$(".ui5-menu-submenus");
 
 		menuItems[3].click(); // open sub-menu
@@ -76,8 +75,7 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
-		const menuItems = await popover.$("ui5-list").$$("ui5-menu-item");
+		const menuItems = await browser.$$("#menu > ui5-menu-item");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await menuItems[0].click({x: 1, y: 1});
@@ -170,6 +168,21 @@ describe("Menu interaction", () => {
 			await browser.pause(100);
 
 			assert.ok(await menuPopover.getProperty("open"), "Menu is still opened.");
+
+			await browser.keys("Escape");
+		});
+
+		it("Enable navigaion over disabled items", async () => {
+			await browser.url(`test/pages/Menu.html`);
+			const openButton = await browser.$("#btnOpen");
+			openButton.click();
+
+			const menuItem = await browser.$("#menu > ui5-menu-item[text='New Folder with very long title for a menu item']");
+
+			await browser.keys("ArrowDown");
+
+			assert.ok(await menuItem.getAttribute("disabled"), "The menu item is disabled");
+			assert.ok(await menuItem.getAttribute("focused"), "The menu item is focused");
 		});
 	});
 
@@ -182,7 +195,7 @@ describe("Menu Accessibility", () => {
 
 		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const list = await popover.$("ui5-list");
-		const menuItems = await popover.$("ui5-list").$$("ui5-li");
+		const menuItems = await browser.$$("#menu > ui5-menu-item");
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await menuItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
