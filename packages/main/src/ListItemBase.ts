@@ -11,6 +11,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
 /**
  * @class
@@ -24,7 +25,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  */
 @customElement({
 	renderer: litRender,
-	styles,
+	styles: [styles, draggableElementStyles],
 })
 @event("_request-tabindex-change")
 @event("_focused")

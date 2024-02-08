@@ -1,0 +1,59 @@
+:host {
+	position: absolute;
+	pointer-events: none;
+	z-index: 99;
+}
+
+/* the needle */
+:host([orientation="Vertical"]) .ui5-di-needle {
+	width: 0.125rem;
+	height: 100%;
+	inset-block: 0;
+	background: var(--sapContent_DragAndDropActiveColor);
+}
+
+:host([orientation="Horizontal"]) .ui5-di-needle {
+	height: 0.125rem;
+	width: 100%;
+	inset-inline: 0;
+	background: var(--sapContent_DragAndDropActiveColor);
+}
+
+/* the ear of the needle */
+:host([orientation="Vertical"]) .ui5-di-needle::before {
+	top: -0.1875rem;
+	left: -0.1875rem;
+	content: "";
+	position: absolute;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
+	background-color: #fff;
+	/* TODO find correct parameter for dark/high contrast themes */
+	pointer-events: none;
+}
+
+:host([orientation="Horizontal"]) .ui5-di-needle::before {
+	top: -0.1875rem;
+	left: -0.1875rem;
+	content: "";
+	position: absolute;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 0.25rem;
+	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
+	background-color: #fff;
+	/* TODO find correct parameter for dark/high contrast themes */
+	pointer-events: none;
+}
+
+:host .ui5-di-rect {
+	background: transparent;
+	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}

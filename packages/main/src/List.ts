@@ -16,6 +16,8 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getDraggedComponent, getDraggedEventTarget, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
+import getElementAtCoordinate from "@ui5/webcomponents-base/dist/util/DropHelper.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -24,9 +26,12 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
+import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
@@ -70,6 +75,27 @@ type ListSelectionChangeEventDetail = {
 
 type ListItemDeleteEventDetail = {
 	item: ListItemBase,
+}
+
+type ListBeforeItemMoveEventDetail = {
+	source: {
+		element: EventTarget,
+	},
+	destination: {
+		element: EventTarget,
+		placement: `${DropPlacement}`,
+	}
+}
+
+type ListItemMoveEventDetail = {
+	source: {
+		element: HTMLElement,
+	},
+	destination: {
+		element: HTMLElement,
+		placement: `${DropPlacement}`,
+		slot: string,
+	}
 }
 
 // ListItem-based events
@@ -154,7 +180,7 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator],
+	dependencies: [BusyIndicator, DropIndicator],
 })
 /**
  * Fired when an item is activated, unless the item's <code>type</code> property
@@ -537,6 +563,10 @@ class List extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-list-end-marker");
 	}
 
+	get dropIndicatorDOM(): DropIndicator | null {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
+	}
+
 	get hasData() {
 		return this.getItems().length !== 0;
 	}
@@ -895,6 +925,79 @@ class List extends UI5Element {
 		}
 
 		this.setForwardingFocus(false);
+	}
+
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer || !e.target) {
+			return;
+		}
+
+		if (this.items.includes(e.target as ListItemBase)) {
+			e.dataTransfer.dropEffect = "move";
+			setDraggedComponent(e.target as ListItemBase);
+		}
+	}
+
+	_ondragenter(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	_ondragend() {
+		setDraggedComponent(null);
+		this.dropIndicatorDOM!.targetReference = null;
+	}
+
+	_ondragleave() {
+		this.dropIndicatorDOM!.targetReference = null;
+	}
+
+	_ondragover(e: DragEvent) {
+		if (!getDraggedComponent() && !getDraggedEventTarget()) {
+			return;
+		}
+
+		const coordinateInfo = getElementAtCoordinate(
+			this.items,
+			e.clientY,
+			Orientation.Vertical,
+			1,
+		);
+
+		if (!coordinateInfo) {
+			this.dropIndicatorDOM!.targetReference = null;
+			return;
+		}
+
+		const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
+			source: {
+				element: getDraggedComponent() || getDraggedEventTarget()!,
+			},
+			destination: {
+				element: coordinateInfo.closestElement,
+				placement: coordinateInfo.dropPlacement,
+			},
+		}, true);
+
+		if (beforeItemMovePrevented) {
+			e.preventDefault();
+			this.dropIndicatorDOM!.targetReference = coordinateInfo.closestElement;
+			this.dropIndicatorDOM!.placement = coordinateInfo.dropPlacement;
+		} else {
+			this.dropIndicatorDOM!.targetReference = null;
+		}
+	}
+
+	_ondrop() {
+		this.fireEvent<ListItemMoveEventDetail>("item-move", {
+			source: {
+				element: getDraggedComponent() || getDraggedEventTarget()! as HTMLElement,
+			},
+			destination: {
+				element: this.dropIndicatorDOM!.targetReference!,
+				placement: this.dropIndicatorDOM!.placement,
+				slot: "",
+			},
+		});
 	}
 
 	isForwardElement(element: HTMLElement) {

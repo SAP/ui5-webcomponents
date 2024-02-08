@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>List Drag and Drop</title>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+
+<body class="tabcontainer1auto">
+	<ui5-checkbox id="reorder" text="Draggable items" checked></ui5-checkbox>
+	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
+	<a href="http://sap.com">http://sap.com</a>
+
+	<section>
+		<h2>Drag and drop</h2>
+		<ui5-list id="listDnd1" header-text="List 1">
+			<ui5-li draggable="true" id="bg1">1. Bulgaria</ui5-li>
+			<ui5-li draggable="true" id="de1">1. Germany</ui5-li>
+			<ui5-li draggable="true" id="es1">1. Spain</ui5-li>
+		</ui5-list>
+	</section>
+
+	<section>
+		<ui5-list id="listDnd2" header-text="List 2">
+			<ui5-li draggable="true" id="bg2">2. Bulgaria</ui5-li>
+			<ui5-li draggable="true" id="de2">2. Germany</ui5-li>
+			<ui5-li draggable="true" id="es2">2. Spain</ui5-li>
+		</ui5-list>
+	</section>
+
+	<script>
+		const list1 = document.getElementById("listDnd1");
+		const list2 = document.getElementById("listDnd2");
+		const handleBeforeItemMove = (e) => {
+			// TODO: validate source.element
+			const { destination, source } = e.detail;
+
+			if (destination.placement === "Before" || destination.placement === "After") {
+				e.preventDefault();
+			}
+
+			console.error(`Moving "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
+		};
+
+		const handleItemMove = (e) => {
+			const { destination, source } = e.detail;
+
+			if (destination.placement === "Before") {
+				const list = destination.element.closest("[ui5-list]");
+				list.insertBefore(
+					source.element,
+					destination.element
+				);
+			} else if (destination.placement === "After") {
+				const list = destination.element.closest("[ui5-list]");
+				const nextItem = list.items.at(list.items.indexOf(destination.element) + 1);
+
+				list.insertBefore(
+					source.element,
+					nextItem,
+				);
+			} else if (destination.placement === "On") {
+				const childItem = destination.element.children[destination.index];
+				childItem.prepend(source.element);
+			}
+
+			setTimeout(() => {
+				// TODO: discuss how focus will be handled
+				source.element.focus();
+			});
+		};
+
+		list1.addEventListener("before-item-move", handleBeforeItemMove);
+		list2.addEventListener("before-item-move", handleBeforeItemMove);
+		list1.addEventListener("item-move", handleItemMove);
+		list2.addEventListener("item-move", handleItemMove);
+
+		const densityCb = document.getElementById("density");
+		densityCb.addEventListener("change", e => {
+			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
+		});
+
+		const reorderCb = document.getElementById("reorder");
+		reorderCb.addEventListener("change", e => {
+			list1.items.forEach((item) => item.draggable = e.target.checked);
+			list2.items.forEach((item) => item.draggable = e.target.checked);
+		});
+	</script>
+</body>
+
+</html>

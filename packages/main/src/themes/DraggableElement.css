@@ -1,0 +1,7 @@
+:host([draggable=true]), [draggable=true] {
+	cursor: grab !important;
+}
+
+:host([draggable=true]:active), [draggable=true]:active {
+	cursor: grabbing !important;
+}
