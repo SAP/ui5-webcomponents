@@ -496,9 +496,6 @@ class Menu extends UI5Element {
 	}
 
 	_startOpenTimeout(item: MenuItem) {
-		// If theres already a timeout, clears it
-		this._clearTimeout();
-
 		// Sets the new timeout
 		this._timeout = setTimeout(() => {
 			this._prepareSubMenuDesktopTablet(item);
@@ -507,18 +504,12 @@ class Menu extends UI5Element {
 
 	_startCloseTimeout(item: MenuItem) {
 		// If theres already a timeout, clears it
-		this._clearTimeout();
+		clearTimeout(this._timeout);
 
 		// Sets the new timeout
 		this._timeout = setTimeout(() => {
 			this._closeItemSubMenu(item);
 		}, MENU_CLOSE_DELAY);
-	}
-
-	_clearTimeout() {
-		if (this._timeout) {
-			clearTimeout(this._timeout);
-		}
 	}
 
 	_itemMouseOver(e: MouseEvent) {
@@ -529,9 +520,6 @@ class Menu extends UI5Element {
 			const item = e.target as MenuItem;
 
 			item.focus();
-
-			// If there is a pending close operation, cancel it
-			this._clearTimeout();
 
 			// Opens submenu with 300ms delay
 			this._startOpenTimeout(item);
@@ -549,7 +537,7 @@ class Menu extends UI5Element {
 			const item = e.target as MenuItem;
 
 			// If there is a pending open operation, cancel it
-			this._clearTimeout();
+			clearTimeout(this._timeout);
 
 			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {

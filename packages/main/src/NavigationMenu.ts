@@ -75,9 +75,6 @@ class NavigationMenu extends Menu {
 				item = item.parentElement as MenuItem;
 			}
 
-			// If there is a pending close operation, cancel it
-			this._clearTimeout();
-
 			// Opens submenu with 300ms delay
 			this._startOpenTimeout(item);
 		}
