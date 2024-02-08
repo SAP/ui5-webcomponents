@@ -17,7 +17,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getDraggedComponent, getDraggedEventTarget, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
-import getElementAtCoordinate from "@ui5/webcomponents-base/dist/util/DropHelper.js";
+import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/DropHelper.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -94,7 +94,6 @@ type ListItemMoveEventDetail = {
 	destination: {
 		element: HTMLElement,
 		placement: `${DropPlacement}`,
-		slot: string,
 	}
 }
 
@@ -956,33 +955,39 @@ class List extends UI5Element {
 			return;
 		}
 
-		const coordinateInfo = getElementAtCoordinate(
+		const closestDropPosition = findClosestDropPosition(
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
-			1,
 		);
 
-		if (!coordinateInfo) {
+		if (!closestDropPosition) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;
 		}
 
-		const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
-			source: {
-				element: getDraggedComponent() || getDraggedEventTarget()!,
-			},
-			destination: {
-				element: coordinateInfo.closestElement,
-				placement: coordinateInfo.dropPlacement,
-			},
-		}, true);
+		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
+			const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
+				source: {
+					element: getDraggedComponent() || getDraggedEventTarget()!,
+				},
+				destination: {
+					element: closestDropPosition.element,
+					placement: dropPlacement,
+				},
+			}, true);
 
-		if (beforeItemMovePrevented) {
-			e.preventDefault();
-			this.dropIndicatorDOM!.targetReference = coordinateInfo.closestElement;
-			this.dropIndicatorDOM!.placement = coordinateInfo.dropPlacement;
-		} else {
+			if (beforeItemMovePrevented) {
+				e.preventDefault();
+				this.dropIndicatorDOM!.targetReference = closestDropPosition.element;
+				this.dropIndicatorDOM!.placement = dropPlacement;
+				return true;
+			}
+
+			return false;
+		});
+
+		if (!placementAccepted) {
 			this.dropIndicatorDOM!.targetReference = null;
 		}
 	}
@@ -995,7 +1000,6 @@ class List extends UI5Element {
 			destination: {
 				element: this.dropIndicatorDOM!.targetReference!,
 				placement: this.dropIndicatorDOM!.placement,
-				slot: "",
 			},
 		});
 	}

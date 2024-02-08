@@ -26,7 +26,7 @@
 	<section>
 		<ui5-list id="listDnd2" header-text="List 2">
 			<ui5-li draggable="true" id="bg2">2. Bulgaria</ui5-li>
-			<ui5-li draggable="true" id="de2">2. Germany</ui5-li>
+			<ui5-li draggable="true" id="de2" data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
 			<ui5-li draggable="true" id="es2">2. Spain</ui5-li>
 		</ui5-list>
 	</section>
@@ -39,6 +39,10 @@
 			const { destination, source } = e.detail;
 
 			if (destination.placement === "Before" || destination.placement === "After") {
+				e.preventDefault();
+			}
+
+			if (destination.placement === "On" && "allowsNesting" in destination.element.dataset) {
 				e.preventDefault();
 			}
 
@@ -63,14 +67,11 @@
 					nextItem,
 				);
 			} else if (destination.placement === "On") {
-				const childItem = destination.element.children[destination.index];
-				childItem.prepend(source.element);
+				destination.element.prepend(source.element);
 			}
 
-			setTimeout(() => {
-				// TODO: discuss how focus will be handled
-				source.element.focus();
-			});
+			// TODO: discuss how focus will be handled
+			source.element.focus();
 		};
 
 		list1.addEventListener("before-item-move", handleBeforeItemMove);

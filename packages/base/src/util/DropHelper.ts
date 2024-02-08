@@ -1,7 +1,33 @@
 import DropPlacement from "../types/DropPlacement.js";
 import Orientation from "../types/Orientation.js";
 
-const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation, maxNestingLevel: number) => {
+const closestPlacement = (point: number, beforePoint: number, centerPoint: number, afterPoint: number) => {
+	const distToBeforePoint = Math.abs(point - beforePoint);
+	const distToCenterPoint = Math.abs(point - centerPoint);
+	const distToAfterPoint = Math.abs(point - afterPoint);
+	const closestPoint = Math.min(
+		distToBeforePoint,
+		distToCenterPoint,
+		distToAfterPoint,
+	);
+	let dropPlacements: Array<DropPlacement> = [];
+
+	switch (closestPoint) {
+	case distToBeforePoint:
+		dropPlacements = [DropPlacement.Before];
+		break;
+	case distToCenterPoint:
+		dropPlacements = [DropPlacement.On, distToBeforePoint < distToAfterPoint ? DropPlacement.Before : DropPlacement.After];
+		break;
+	case distToAfterPoint:
+		dropPlacements = [DropPlacement.After];
+		break;
+	}
+
+	return dropPlacements;
+};
+
+const findClosestDropPosition = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
 	let shortestDist = Number.POSITIVE_INFINITY,
 		closestElement: HTMLElement | null = null;
 
@@ -34,56 +60,18 @@ const getElementAtCoordinate = (elements: Array<HTMLElement>, point: number, lay
 	const {
 		width, height, left, right, top, bottom,
 	} = closestElement.getBoundingClientRect();
-	let dropPlacement = DropPlacement.On;
+	let placements;
 
 	if (layoutOrientation === Orientation.Vertical) {
-		const distanceToTopBorder = Math.abs(point - top),
-			distanceToCenter = Math.abs(point - (top + height / 2)),
-			distanceToBottomBorder = Math.abs(point - bottom);
-
-		const shortestDistance = Math.min(
-			distanceToTopBorder,
-			// eslint-disable-next-line no-warning-comments
-			maxNestingLevel > 0 ? distanceToCenter : distanceToTopBorder, // TODO: integrate with DropIndicator
-			distanceToBottomBorder,
-		);
-
-		switch (shortestDistance) {
-		case distanceToTopBorder:
-			dropPlacement = DropPlacement.Before;
-			break;
-		case distanceToBottomBorder:
-			dropPlacement = DropPlacement.After;
-			break;
-		}
+		placements = closestPlacement(point, top, top + height / 2, bottom);
 	} else { // Horizontal
-		const distanceToLeftBorder = Math.abs(point - left),
-			distanceToCenter = Math.abs(point - (left + width / 2)),
-			distanceToRightBorder = Math.abs(point - right);
-
-		const shortestDistance = Math.min(
-			distanceToLeftBorder,
-			maxNestingLevel > 0 ? distanceToCenter : distanceToLeftBorder,
-			distanceToRightBorder,
-		);
-
-		switch (shortestDistance) {
-		case distanceToLeftBorder:
-			dropPlacement = DropPlacement.Before;
-			break;
-		case distanceToCenter:
-			dropPlacement = DropPlacement.On;
-			break;
-		case distanceToRightBorder:
-			dropPlacement = DropPlacement.After;
-			break;
-		}
+		placements = closestPlacement(point, left, left + width / 2, right);
 	}
 
 	return {
-		closestElement,
-		dropPlacement,
+		element: closestElement,
+		placements,
 	};
 };
 
-export default getElementAtCoordinate;
+export default findClosestDropPosition;
