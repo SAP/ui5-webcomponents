@@ -57,7 +57,7 @@ type CalendarSelectedDatesChangeEventDetail = {
 
 type SpecialCalendarDateT = {
 	specialDateTimestamp: number;
-	dateType: `${CalendarLegendItemType}`;
+	type: `${CalendarLegendItemType}`;
 };
 
 /**
@@ -272,7 +272,7 @@ class Calendar extends CalendarPart {
 	/**
 	 * Defines the calendar legend of the component.
 	 * @public
-	 * @since 1.22.0
+	 * @since 1.23.0
 	 */
 	@slot({ type: HTMLElement })
 	calendarLegend!: CalendarLegend;
@@ -289,7 +289,7 @@ class Calendar extends CalendarPart {
 	/**
 	 * Defines the special dates, visually emphasized in the calendar.
 	 * @public
-	 * @since 1.22.0
+	 * @since 1.23.0
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	specialDates!: Array<SpecialCalendarDate>;
@@ -365,8 +365,8 @@ class Calendar extends CalendarPart {
 			if (!uniqueDates.has(timestamp)) {
 				uniqueDates.add(timestamp);
 				const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
-				const dateType = date.type;
-				uniqueSpecialDates.push({ specialDateTimestamp, dateType });
+				const type = date.type;
+				uniqueSpecialDates.push({ specialDateTimestamp, type });
 			}
 		});
 

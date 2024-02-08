@@ -1,5 +1,6 @@
 /**
  * Enum for calendar legend items' types.
+ * @since 1.23.0
  * @public
  */
 enum CalendarLegendItemType {

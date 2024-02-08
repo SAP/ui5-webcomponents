@@ -15,7 +15,7 @@ import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
  * @extends CalendarDate
  * @abstract
  * @public
- * @since 1.22.0
+ * @since 1.23.0
  */
 @customElement("ui5-special-date")
 class SpecialCalendarDate extends CalendarDate {
@@ -24,7 +24,6 @@ class SpecialCalendarDate extends CalendarDate {
 	 *
 	 * @default "None"
 	 * @public
-	 * @since 1.22.0
 	 */
 	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
 	type!: `${CalendarLegendItemType}`;

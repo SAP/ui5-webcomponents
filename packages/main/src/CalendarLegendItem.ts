@@ -32,7 +32,7 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
  *
  * @constructor
  * @extends UI5Element
- * @since 1.22.0
+ * @since 1.23.0
  * @public
  */
 @customElement({
@@ -40,7 +40,6 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
 	renderer: litRender,
 	styles: CalendarLegendItemCss,
 	template: CalendarLegendItemTemplate,
-	dependencies: [],
 })
 
 class CalendarLegendItem extends UI5Element implements ITabbable {

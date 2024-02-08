@@ -38,7 +38,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
- * @since 1.22.0
+ * @since 1.23.0
  */
 @customElement({
 	tag: "ui5-calendar-legend",
@@ -103,9 +103,12 @@ class CalendarLegend extends UI5Element {
 	items!: Array<CalendarLegendItem>;
 
 	_itemNavigation!: ItemNavigation;
+	_lastFocusedIndex: number | null;
 
 	constructor() {
 		super();
+
+		this._lastFocusedIndex = null;
 	}
 
 	onAfterRendering(): void {
@@ -115,6 +118,9 @@ class CalendarLegend extends UI5Element {
 				behavior: ItemNavigationBehavior.Static,
 				getItemsCallback: () => this.focusableElements,
 			});
+
+			const initialFocusIndex = this._lastFocusedIndex !== null ? this._lastFocusedIndex : 0;
+			this._itemNavigation.setCurrentItem(this.focusableElements[initialFocusIndex]);
 		}
 	}
 
@@ -124,6 +130,7 @@ class CalendarLegend extends UI5Element {
 
 		this._itemNavigation.setCurrentItem(target);
 		this._itemNavigation._focusCurrentItem();
+		this._lastFocusedIndex = this.focusableElements.indexOf(target);
 	}
 
 	_onFocusIn(e: FocusEvent) {
@@ -132,6 +139,7 @@ class CalendarLegend extends UI5Element {
 		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
 			item: target,
 		});
+		this._lastFocusedIndex = this.focusableElements.indexOf(target);
 	}
 
 	_onFocusOut() {
@@ -151,6 +159,7 @@ class CalendarLegend extends UI5Element {
 			if (nextIndex < itemsCount) {
 				this._itemNavigation.setCurrentItem(items[nextIndex]);
 				this._itemNavigation._focusCurrentItem();
+				this._lastFocusedIndex = nextIndex;
 			}
 		}
 
@@ -161,6 +170,7 @@ class CalendarLegend extends UI5Element {
 			if (nextIndex >= 0) {
 				this._itemNavigation.setCurrentItem(items[nextIndex]);
 				this._itemNavigation._focusCurrentItem();
+				this._lastFocusedIndex = nextIndex;
 			}
 		}
 	}

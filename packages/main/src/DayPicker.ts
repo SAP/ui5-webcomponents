@@ -246,7 +246,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 
 			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
-			const specialDayType = specialCalendarDate ? specialCalendarDate.dateType : "";
+			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
