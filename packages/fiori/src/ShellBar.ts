@@ -1323,27 +1323,27 @@ class ShellBar extends UI5Element {
 
 	get _notificationsHasPopup() {
 		const notificationsAccAttributes = this.accessibilityAttributes.notifications;
-		return notificationsAccAttributes ? notificationsAccAttributes.ariaHasPopup : null;
+		return notificationsAccAttributes ? notificationsAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _profileHasPopup() {
 		const profileAccAttributes = this.accessibilityAttributes.profile;
-		return profileAccAttributes ? profileAccAttributes.ariaHasPopup : null;
+		return profileAccAttributes ? profileAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _productsHasPopup() {
 		const productsAccAttributes = this.accessibilityAttributes.product;
-		return productsAccAttributes ? productsAccAttributes.ariaHasPopup : null;
+		return productsAccAttributes ? productsAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _searchHasPopup() {
 		const searcAccAttributes = this.accessibilityAttributes.search;
-		return searcAccAttributes ? searcAccAttributes.ariaHasPopup : null;
+		return searcAccAttributes ? searcAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _overflowHasPopup() {
 		const overflowAccAttributes = this.accessibilityAttributes.overflow;
-		return overflowAccAttributes ? overflowAccAttributes.ariaHasPopup : HasPopup.Menu;
+		return overflowAccAttributes ? overflowAccAttributes.ariaHasPopup?.toLowerCase() : HasPopup.Menu.toLowerCase();
 	}
 
 	get accLogoRole() {

@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.22.0",
+  "version": "1.22.1-rc.0",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -54,6 +54,7 @@
     "prepare:samples": "vite-node ./build-scripts-storybook/samples-prepare.ts",
     "prepare:manifest": "node ./build-scripts-storybook/parse-manifest.js",
     "prepare:documentation": "vite-node ./build-scripts-storybook/documentation-prepare.ts",
+    "prepare:types": "vite-node ./build-scripts-storybook/types-prepare.ts",
     "prepare:overviews": "vite-node ./build-scripts-storybook/overviews-prepare.ts",
     "storybook": "npm-run-all --parallel prepare:* && storybook dev -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:build:* prepare:* && tsc && storybook build -o ./dist/playground",
