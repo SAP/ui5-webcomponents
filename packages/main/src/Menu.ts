@@ -375,7 +375,7 @@ class Menu extends UI5Element {
 		popover.initialFocus = "";
 		for (let index = 0; index < this.items.length; index++) {
 			if (!this.items[index].disabled) {
-				popover.initialFocus = `${this._id}-menu-item-${index}`;
+				popover.initialFocus = `${this._id}-menu-item-${index}`; // ????
 				break;
 			}
 		}

@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
-	isDesktop,
 	isPhone,
 	isTablet,
 } from "@ui5/webcomponents-base/dist/Device.js";
@@ -64,21 +63,6 @@ class NavigationMenu extends Menu {
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
-
-	_itemMouseOver(e: MouseEvent) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			let item = e.target as MenuItem;
-
-			if (item.tagName !== "ui5-menu-item") {
-				// for nested <a>
-				item = item.parentElement as MenuItem;
-			}
-
-			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item);
-		}
-	}
 
 	async _itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;

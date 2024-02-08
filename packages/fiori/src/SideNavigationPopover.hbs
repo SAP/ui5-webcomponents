@@ -6,7 +6,8 @@
 	@ui5-before-close="{{_onBeforeMenuClose}}"
 	@ui5-item-click="{{handleOverflowItemClick}}"
 	class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu">
-	{{#each _menuPopoverItems}}
+	<slot></slot>
+	{{!-- {{#each _menuPopoverItems}}
 		<ui5-navigation-menu-item 
 			text="{{text}}"
 			icon="{{icon}}"
@@ -29,7 +30,7 @@
 				</ui5-navigation-menu-item>
 				{{/each}}
 		</ui5-navigation-menu-item>
-	{{/each}}
+	{{/each}} --}}
 </ui5-navigation-menu>
 {{else}}
 <ui5-responsive-popover

@@ -198,8 +198,8 @@ describe("Menu Accessibility", () => {
 		const menuItem = await browser.$("#menu > ui5-menu-item[text='Open']");
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
-		assert.strictEqual(await menuItem.$shadow("li").getAttribute("role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
-		assert.strictEqual(await menuItem.$shadow("li").getAttribute("aria-haspopup"), "menu", "Popup attribute is properly set");
+		assert.strictEqual(await menuItem.shadow$("li").getAttribute("role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(await menuItem.shadow$("li").getAttribute("aria-haspopup"), "menu", "Popup attribute is properly set");
 		assert.strictEqual(await menuItem.getProperty("accessible-name"), "Choose platform", "Additional description is added");
 	});
 });
