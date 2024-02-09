@@ -36,6 +36,7 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 // Styles
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
 
 const DESIGN_DESCRIPTIONS = {
@@ -465,6 +466,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 Tab.define();
 
 TabContainer.registerTabStyles(stripCss);
+TabContainer.registerTabStyles(draggableElementStyles);
 TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default Tab;
