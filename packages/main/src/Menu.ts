@@ -238,13 +238,6 @@ class Menu extends UI5Element {
 	_isSubMenu!: boolean;
 
 	/**
-	 * Stores id of a list item that opened sub-menu.
-	 * @private
-	 */
-	@property()
-	_subMenuOpenerId!: string;
-
-	/**
 	 * Stores the ResponsivePopover instance
 	 */
 	@property({ type: Object, defaultValue: undefined })
@@ -391,6 +384,10 @@ class Menu extends UI5Element {
 	}
 
 	async _createSubMenu(item: MenuItem) {
+		if (item._subMenu) {
+			return;
+		}
+
 		const ctor = this.constructor as typeof Menu;
 		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
 
@@ -443,10 +440,7 @@ class Menu extends UI5Element {
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
 				subMenu.close();
-				subMenu.remove();
-				parentItem._subMenu = undefined;
 				this._openedSubMenuItem = undefined;
-				this._subMenuOpenerId = "";
 			}
 		}
 	}

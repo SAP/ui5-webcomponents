@@ -53,7 +53,6 @@ type AccInfo = {
 	role: string;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
-	title?: string;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
@@ -488,7 +487,6 @@ abstract class ListItem extends ListItemBase {
 			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
-			title: this.title,
 		};
 	}
 
