@@ -3,8 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 
-
-
 /**
  * @class
  * A class to serve as a foundation
