@@ -54,20 +54,6 @@ type SideNavigationSelectionChangeEventDetail = {
 	item: SideNavigationItemBase;
 };
 
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type PopupClickEventDetail = {
-	target: {
-		associatedItem: SideNavigationItemBase
-	}
-};
-
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type NavigationMenuClickEventDetail = {
-	item: {
-		associatedItem: SideNavigationItemBase
-	}
-};
-
 /**
  * @class
  *
@@ -243,7 +229,7 @@ class SideNavigation extends UI5Element {
 		const selectedItem = this._findSelectedItem(this.items)!;
 
 		await renderFinished();
-		selectedItem.getDomRef().focus();
+		selectedItem?.getDomRef().focus();
 	}
 
 	async _onBeforePopoverOpen() {
@@ -283,39 +269,39 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	async handlePopupItemClick(e: PopupClickEventDetail) {
-		const associatedItem = e.target.associatedItem;
+	async handlePopupItemClick(e: SideNavigationSelectionChangeEventDetail) {
+		const item = e.item;
 
-		associatedItem.fireEvent("click");
-		if (associatedItem.selected) {
+		item.fireEvent("click");
+		if (item.selected) {
 			this.closePicker();
 			return;
 		}
 
-		this._selectItem(associatedItem);
+		this._selectItem(item);
 		this.closePicker();
 
 		await renderFinished();
 		this._popoverContents.item.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
-		const associatedItem = e.detail?.item.associatedItem;
+	handleOverflowItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
+		const item = e.detail?.item;
 
-		associatedItem.fireEvent("click");
-		if (associatedItem.selected) {
+		item.fireEvent("click");
+		if (item.selected) {
 			this.closeMenu();
 			return;
 		}
 
-		this._selectItem(associatedItem);
+		this._selectItem(item);
 
 		// When subitem is selected in collapsed mode parent element should be focused
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
+		if (item.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
+			const parent = item.parentElement as SideNavigationItem;
 			this._flexibleItemNavigation.setCurrentItem(parent);
 		} else {
-			this._flexibleItemNavigation.setCurrentItem(associatedItem);
+			this._flexibleItemNavigation.setCurrentItem(item);
 		}
 
 		this.closeMenu();
