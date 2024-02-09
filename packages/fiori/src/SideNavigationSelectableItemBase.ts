@@ -1,6 +1,16 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+
+/**
+ * Fired when the component is activated either with a
+ * click/tap or by using the Enter or Space key.
+ *
+ * @public
+ */
+@event("click")
 
 /**
  * @class
@@ -13,6 +23,7 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * @public
  * @since 1.19.0
  */
+@customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Defines the icon of the item.
@@ -70,10 +81,6 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 */
 	@property()
 	target!: string;
-
-	get _tooltip() {
-		return this.title || this.text;
-	}
 
 	get _href() {
 		return (!this.disabled && this.href) ? this.href : undefined;
