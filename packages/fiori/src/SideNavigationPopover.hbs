@@ -6,8 +6,7 @@
 	@ui5-before-close="{{_onBeforeMenuClose}}"
 	@ui5-item-click="{{handleOverflowItemClick}}"
 	class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu">
-	<slot></slot>
-	{{!-- {{#each _menuPopoverItems}}
+	{{#each _menuPopoverItems}}
 		<ui5-navigation-menu-item 
 			text="{{text}}"
 			icon="{{icon}}"
@@ -15,14 +14,12 @@
 			expanded="true"
 			href="{{href}}"
 			target="{{target}}"
-			title="{{title}}"
-			.associatedItem="{{this}}">
+			title="{{title}}">
 				{{#each this.items}}
 				<ui5-navigation-menu-item
 					text="{{text}}"
 					icon="{{icon}}"
 					?disabled="{{disabled}}"
-					.associatedItem="{{this}}"
 					expanded="true"
 					href="{{href}}"
 					target="{{target}}"
@@ -30,7 +27,7 @@
 				</ui5-navigation-menu-item>
 				{{/each}}
 		</ui5-navigation-menu-item>
-	{{/each}} --}}
+	{{/each}}
 </ui5-navigation-menu>
 {{else}}
 <ui5-responsive-popover

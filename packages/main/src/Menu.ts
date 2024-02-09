@@ -11,7 +11,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
-	isTablet,
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -246,13 +245,6 @@ class Menu extends UI5Element {
 	_subMenuOpenerId!: string;
 
 	/**
-	 * Stores a list of parent menu items for each sub-menu (on phone).
-	 * @private
-	 */
-	@property({ type: Object, multiple: true })
-	_parentItemsStack!: Array<MenuItem>;
-
-	/**
 	 * Stores the ResponsivePopover instance
 	 */
 	@property({ type: Object, defaultValue: undefined })
@@ -365,20 +357,10 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	showAt(opener: HTMLElement): void {
-		if (isPhone()) {
-			this._parentItemsStack = [];
-		}
 		if (!this._isSubMenu) {
 			this._parentMenuItem = undefined;
 		}
 		const popover = this._createPopover();
-		popover.initialFocus = "";
-		for (let index = 0; index < this.items.length; index++) {
-			if (!this.items[index].disabled) {
-				popover.initialFocus = `${this._id}-menu-item-${index}`; // ????
-				break;
-			}
-		}
 		popover.showAt(opener);
 	}
 
@@ -389,9 +371,6 @@ class Menu extends UI5Element {
 	 */
 	close(): void {
 		if (this._popover) {
-			if (isPhone()) {
-				this._parentItemsStack = [];
-			}
 			this._popover.close();
 			this._popover.resetFocus();
 		}
@@ -408,12 +387,7 @@ class Menu extends UI5Element {
 	}
 
 	_navigateBack() {
-		const parentMenuItem = this._parentItemsStack.pop();
-
-		this.focus();
-		if (parentMenuItem) {
-			this._parentMenuItem = this._parentItemsStack.length ? this._parentItemsStack[this._parentItemsStack.length - 1] : undefined;
-		}
+		this._closeItemSubMenu(this._parentMenuItem as MenuItem, true);
 	}
 
 	async _createSubMenu(item: MenuItem) {
@@ -488,11 +462,6 @@ class Menu extends UI5Element {
 		if (this._parentMenuItem) {
 			this._parentMenuItem._preventSubMenuClose = true;
 		}
-	}
-
-	_prepareSubMenuPhone(item: MenuItem) {
-		this._parentMenuItem = item;
-		this._parentItemsStack.push(item);
 	}
 
 	_startOpenTimeout(item: MenuItem) {
@@ -570,9 +539,6 @@ class Menu extends UI5Element {
 		if (!item.hasSubmenu) {
 			// click on an item that doesn't have sub-items fires an "item-click" event
 			if (!this._isSubMenu) {
-				if (isPhone()) {
-					this._parentMenuItem = undefined;
-				}
 				// fire event if the click is on top-level menu item
 				const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 					"item": item,
@@ -602,11 +568,7 @@ class Menu extends UI5Element {
 					mainMenu._popover!.close();
 				}
 			}
-		} else if (isPhone()) {
-			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item);
-		} else if (isTablet()) {
-			// prepares and opens sub-menu on tablet
+		} else {
 			await this._prepareSubMenuDesktopTablet(item);
 		}
 	}

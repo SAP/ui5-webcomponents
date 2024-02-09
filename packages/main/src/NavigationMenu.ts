@@ -1,10 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import {
-	isPhone,
-	isTablet,
-} from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
@@ -84,14 +80,7 @@ class NavigationMenu extends Menu {
 
 			mainMenu._popover!.close();
 		}
-
-		if (isPhone()) {
-			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item);
-		} else if (isTablet()) {
-			// prepares and opens sub-menu on tablet
-			await this._prepareSubMenuDesktopTablet(item);
-		}
+		await this._prepareSubMenuDesktopTablet(item);
 	}
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
