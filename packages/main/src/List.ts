@@ -16,7 +16,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import getDraggedElement from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
+import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/DropHelper.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -926,6 +926,14 @@ class List extends UI5Element {
 		this.setForwardingFocus(false);
 	}
 
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer || !(e.target instanceof ListItemBase)) {
+			return;
+		}
+
+		setDraggedComponent(e.target);
+	}
+
 	_ondragenter(e: DragEvent) {
 		e.preventDefault();
 	}
@@ -939,7 +947,7 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!getDraggedElement()) {
+		if (!(e.target instanceof HTMLElement)) {
 			return;
 		}
 
@@ -957,7 +965,7 @@ class List extends UI5Element {
 		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
 				source: {
-					element: getDraggedElement()!,
+					element: getDraggedElement() ?? e.target as HTMLElement,
 				},
 				destination: {
 					element: closestDropPosition.element,
@@ -985,13 +993,15 @@ class List extends UI5Element {
 
 		this.fireEvent<ListItemMoveEventDetail>("item-move", {
 			source: {
-				element: getDraggedElement()!,
+				element: getDraggedElement() ?? e.target as HTMLElement,
 			},
 			destination: {
 				element: this.dropIndicatorDOM!.targetReference!,
 				placement: this.dropIndicatorDOM!.placement,
 			},
 		});
+
+		this.dropIndicatorDOM!.targetReference = null;
 	}
 
 	isForwardElement(element: HTMLElement) {
@@ -1232,4 +1242,6 @@ export type {
 	ListItemCloseEventDetail,
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
+	ListBeforeItemMoveEventDetail,
+	ListItemMoveEventDetail,
 };

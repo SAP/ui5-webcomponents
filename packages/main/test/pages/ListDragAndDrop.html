@@ -51,16 +51,15 @@
 
 		const handleItemMove = (e) => {
 			const { destination, source } = e.detail;
+			const parent = destination.element.closest("[ui5-list]");
 
 			if (destination.placement === "Before") {
-				const list = destination.element.closest("[ui5-list]");
-				list.insertBefore(
+				parent.insertBefore(
 					source.element,
 					destination.element
 				);
 			} else if (destination.placement === "After") {
-				const list = destination.element.closest("[ui5-list]");
-				const nextItem = list.items.at(list.items.indexOf(destination.element) + 1);
+				const nextItem = parent.items.at(list.items.indexOf(destination.element) + 1);
 
 				list.insertBefore(
 					source.element,

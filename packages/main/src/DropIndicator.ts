@@ -60,7 +60,7 @@ class DropIndicator extends UI5Element {
 	placement!: `${DropPlacement}`;
 
 	/**
-	 * Orientation of the owner items.
+	 * Orientation of the indicator.
 	 *
 	 * @default "Vertical"
 	 * @public

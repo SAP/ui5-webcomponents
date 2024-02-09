@@ -60,9 +60,9 @@
 			<ui5-tab id="tabTwentyThree" draggable="true" text="Twenty Three"></ui5-tab>
 			<ui5-tab id="tabTwentyFour" draggable="true" text="Twenty Four"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabTwnetyFive" draggable="true" text="Twenty Five"></ui5-tab>
-			<ui5-tab id="tabTwnetySix" draggable="true" text="Twenty Six"></ui5-tab>
-			<ui5-tab id="tabTwnetySeven" draggable="true" text="Twenty Seven"></ui5-tab>
+			<ui5-tab id="tabTwentyFive" draggable="true" text="Twenty Five"></ui5-tab>
+			<ui5-tab id="tabTwentySix" draggable="true" text="Twenty Six"></ui5-tab>
+			<ui5-tab id="tabTwentySeven" draggable="true" text="Twenty Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
 			<ui5-tab id="tabTwentyEight" draggable="true" text="Twenty Eight"></ui5-tab>
 			<ui5-tab id="tabTwentyNine" draggable="true" text="Twenty Nine"></ui5-tab>
@@ -73,47 +73,49 @@
 	<script>
 		const tc = document.getElementById("tabContainerDnd");
 
-		tc.addEventListener("before-tab-reorder", (e) => {
+		tc.addEventListener("before-tab-move", (e) => {
 			// TODO: validate source.element
 			const { source, destination } = e.detail;
 
-			console.error(`Dragging "${source.element.id}" in "${destination.element.id}" ${destination.dropPlacement.toLowerCase()} index ${destination.index}`);
+			console.error(`Dragging "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
 
-			if (destination.dropPlacement === "On" && (
-				destination.element.children[destination.index].id === "tabFour" || destination.element.children[destination.index].id === "tabSeventeen"
-			)) {
-				e.preventDefault();
+			if (destination.placement === "On" && (destination.element.id === "tabFour" || destination.element.id === "tabSeventeen")) {
+				return;
 			}
+
+			e.preventDefault();
 		});
 
-		tc.addEventListener("tab-reorder", (e) => {
+		tc.addEventListener("tab-move", (e) => {
 			// TODO: validate source.element
 			const { destination, source } = e.detail;
+			const currentParent = destination.element.parentElement;
 
-			if (destination.dropPlacement === "Before") {
-				const insertBeforeElement = destination.element.children[destination.index];
-				destination.element.insertBefore(
+			if (destination.placement === "Before") {
+				currentParent.insertBefore(
 					source.element,
-					insertBeforeElement
+					destination.element
 				);
-			} else if (destination.dropPlacement === "After") {
-				const insertAfterElement = destination.element.children[destination.index + 1] || null;
-
-				destination.element.insertBefore(
+			} else if (destination.placement === "After") {
+				const nextElement = Array.from(currentParent.children).at(Array.from(currentParent.children).indexOf(destination.element) + 1);
+				currentParent.insertBefore(
 					source.element,
-					insertAfterElement
+					nextElement
 				);
-			} else if (destination.dropPlacement === "On") {
-				destination.element.children[destination.index].prepend(source.element);
-				console.error(`Dropped "${source.element.id} in ${destination.element.id} on index ${destination.index}"`);
+			} else if (destination.placement === "On") {
+				destination.element.prepend(source.element);
 			}
 
-			source.element.slot = destination.slot;
+			const newParent = source.element.parentElement;
+
+			if (newParent.hasAttribute("ui5-tab")) {
+				source.element.slot = "subTabs";
+			} else {
+				source.element.slot = "";
+			}
 
 			// TODO: discuss how to focus
-			setTimeout(() => {
-				source.element.getFocusDomRef().focus();
-			});
+			source.element.getFocusDomRef().focus();
 		});
 
 		const densityCb = document.getElementById("density");
@@ -123,7 +125,7 @@
 
 		const reorderCb = document.getElementById("reorder");
 		reorderCb.addEventListener("change", e => {
-			// TODO: iterate all tabs and set their "draggable"
+			document.querySelectorAll("[ui5-tab]").forEach((tab) => tab.draggable = e.target.checked);
 		});
 
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");

@@ -6,6 +6,12 @@
 		class="{{classes.header}}"
 		id="{{_id}}-header"
 		@focusin="{{_onHeaderFocusin}}"
+		@dragstart="{{_onHeaderDragStart}}"
+		@dragenter="{{_onHeaderDragEnter}}"
+		@dragover="{{_onHeaderDragOver}}"
+		@drop="{{_onHeaderDrop}}"
+		@dragleave="{{_onHeaderDragLeave}}"
+		@dragend="{{_onHeaderDragEnd}}"
 		part="tabstrip"
 	>
 		<div
@@ -59,6 +65,11 @@
 					icon-end>{{this._endOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
+
+		<ui5-drop-indicator
+			orientation="Vertical"
+			.ownerReference="{{this}}"
+		></ui5-drop-indicator>
 	</div>
 
 	{{#unless tabsAtTheBottom}}
