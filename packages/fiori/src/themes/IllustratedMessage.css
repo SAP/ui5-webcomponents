@@ -91,6 +91,7 @@
 
 :host([media="spot"]) .ui5-illustrated-message-illustration {
     margin-bottom: 0.5rem;
+    margin-top: 0;
 }
 
 :host([media="spot"]) .ui5-illustrated-message-title {
