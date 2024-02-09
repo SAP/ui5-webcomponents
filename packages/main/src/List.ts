@@ -16,7 +16,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getDraggedComponent, getDraggedEventTarget, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
+import getDraggedElement from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/DropHelper.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -79,10 +79,10 @@ type ListItemDeleteEventDetail = {
 
 type ListBeforeItemMoveEventDetail = {
 	source: {
-		element: EventTarget,
+		element: HTMLElement,
 	},
 	destination: {
-		element: EventTarget,
+		element: HTMLElement,
 		placement: `${DropPlacement}`,
 	}
 }
@@ -926,23 +926,11 @@ class List extends UI5Element {
 		this.setForwardingFocus(false);
 	}
 
-	_ondragstart(e: DragEvent) {
-		if (!e.dataTransfer || !e.target) {
-			return;
-		}
-
-		if (this.items.includes(e.target as ListItemBase)) {
-			e.dataTransfer.dropEffect = "move";
-			setDraggedComponent(e.target as ListItemBase);
-		}
-	}
-
 	_ondragenter(e: DragEvent) {
 		e.preventDefault();
 	}
 
 	_ondragend() {
-		setDraggedComponent(null);
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
@@ -951,7 +939,7 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!getDraggedComponent() && !getDraggedEventTarget()) {
+		if (!getDraggedElement()) {
 			return;
 		}
 
@@ -969,7 +957,7 @@ class List extends UI5Element {
 		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
 				source: {
-					element: getDraggedComponent() || getDraggedEventTarget()!,
+					element: getDraggedElement()!,
 				},
 				destination: {
 					element: closestDropPosition.element,
@@ -992,10 +980,12 @@ class List extends UI5Element {
 		}
 	}
 
-	_ondrop() {
+	_ondrop(e: DragEvent) {
+		e.preventDefault();
+
 		this.fireEvent<ListItemMoveEventDetail>("item-move", {
 			source: {
-				element: getDraggedComponent() || getDraggedEventTarget()! as HTMLElement,
+				element: getDraggedElement()!,
 			},
 			destination: {
 				element: this.dropIndicatorDOM!.targetReference!,

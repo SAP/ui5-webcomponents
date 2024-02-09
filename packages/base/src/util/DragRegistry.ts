@@ -1,30 +1,27 @@
-import type UI5Element from "../UI5Element";
+let draggedElement: HTMLElement | null = null;
 
-let draggedElement: UI5Element | null = null;
-let eventTarget: EventTarget | null = null;
-
-const setDraggedComponent = (element: UI5Element | null) => {
+const setDraggedElement = (element: HTMLElement | null) => {
 	draggedElement = element;
 };
 
-const getDraggedComponent = () => {
+const getDraggedElement = () => {
 	return draggedElement;
 };
 
-const getDraggedEventTarget = () => {
-	return eventTarget;
-};
-
 document.documentElement.addEventListener("dragstart", (e: DragEvent) => {
-	if (e.dataTransfer) {
-		eventTarget = e.target;
+	if (e.dataTransfer && e.target instanceof HTMLElement) {
 		e.dataTransfer.dropEffect = "move";
 		e.dataTransfer.effectAllowed = "move";
+		setDraggedElement(e.target);
 	}
 });
 
-export {
-	setDraggedComponent,
-	getDraggedComponent,
-	getDraggedEventTarget,
-};
+document.documentElement.addEventListener("dragend", () => {
+	setDraggedElement(null);
+});
+
+document.documentElement.addEventListener("drop", () => {
+	setDraggedElement(null);
+});
+
+export default getDraggedElement;
