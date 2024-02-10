@@ -301,8 +301,8 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
-	get isSubMenuOpened() {
-		return !!this._parentMenuItem;
+	get isSubMenuOpen() {
+		return this._popover && this._popover.isOpen();
 	}
 
 	get menuHeaderTextPhone() {
@@ -335,7 +335,7 @@ class Menu extends UI5Element {
 
 		if (this.open) {
 			const opener = this.getOpener();
-			if (opener) {
+			if (opener && !this.isSubMenuOpen) {
 				this.showAt(opener);
 			}
 		} else {
@@ -354,7 +354,11 @@ class Menu extends UI5Element {
 			this._parentMenuItem = undefined;
 		}
 		const popover = this._createPopover();
-		popover.showAt(opener);
+		popover.showAt(opener, true);
+
+		if (this.items.length) {
+			this.items[0].focus();
+		}
 	}
 
 	/**
@@ -363,10 +367,7 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	close(): void {
-		if (this._popover) {
-			this._popover.close();
-			this._popover.resetFocus();
-		}
+		this._popover?.close(false, false, true);
 	}
 
 	_createPopover() {
@@ -381,6 +382,11 @@ class Menu extends UI5Element {
 
 	_navigateBack() {
 		this._closeItemSubMenu(this._parentMenuItem as MenuItem, true);
+	}
+
+	_closeAll() {
+		const mainMenu = this._findMainMenu(this);
+		mainMenu.close();
 	}
 
 	async _createSubMenu(item: MenuItem) {
@@ -440,15 +446,17 @@ class Menu extends UI5Element {
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
 				subMenu.close();
+				this._openedSubMenuItem?.focus();
 				this._openedSubMenuItem = undefined;
 			}
 		}
 	}
 
 	async _prepareSubMenuDesktopTablet(item: MenuItem) {
+		// close opened sub-menu if there is any opened
+		this._closeItemSubMenu(this._openedSubMenuItem!, true);
+
 		if (item && item.hasSubmenu) {
-			// close opened sub-menu if there is any opened
-			this._closeItemSubMenu(this._openedSubMenuItem!, true);
 			// create new sub-menu
 			await this._createSubMenu(item);
 			this._openItemSubMenu(item);
@@ -459,6 +467,9 @@ class Menu extends UI5Element {
 	}
 
 	_startOpenTimeout(item: MenuItem) {
+		// If theres already a timeout, clears it
+		clearTimeout(this._timeout);
+
 		// Sets the new timeout
 		this._timeout = setTimeout(() => {
 			this._prepareSubMenuDesktopTablet(item);
@@ -499,9 +510,6 @@ class Menu extends UI5Element {
 		if (isDesktop()) {
 			const item = e.target as MenuItem;
 
-			// If there is a pending open operation, cancel it
-			clearTimeout(this._timeout);
-
 			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
@@ -512,18 +520,18 @@ class Menu extends UI5Element {
 	}
 
 	async _itemKeyDown(e: KeyboardEvent) {
-		const isMenuClose = this.isRtl ? isRight(e) : isLeft(e);
-		const isMenuOpen = this.isRtl ? isLeft(e) : isRight(e);
+		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
+		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 
 		if (isEnter(e)) {
 			e.preventDefault();
 		}
-		if (isMenuOpen) {
+		if (shouldOpenMenu) {
 			const item = e.target as MenuItem;
 			item.hasSubmenu && await this._prepareSubMenuDesktopTablet(item);
-		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
-			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
-			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true);
+		} else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
+			const parentItemMenu = this._parentMenuItem.parentElement as Menu;
+			parentItemMenu._closeItemSubMenu(this._parentMenuItem, true);
 		}
 	}
 
@@ -567,8 +575,10 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_findMainMenu(item: MenuItem) {
-		let parentMenu = item.parentElement as Menu;
+	_findMainMenu(element: MenuItem | Menu) {
+		let parentMenu = element.tagName.toLocaleLowerCase() === "ui5-menu"
+			? element as Menu
+			: element.parentElement as Menu;
 		while (parentMenu._parentMenuItem) {
 			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
 		}

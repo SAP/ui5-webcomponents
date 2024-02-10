@@ -16,7 +16,7 @@
 		slot="header"
 		class="ui5-menu-dialog-header"
 	>
-	{{#if isSubMenuOpened}}
+	{{#if isSubMenuOpen}}
 		<ui5-button
 			icon="nav-back"
 			class="ui5-menu-back-button"
@@ -37,7 +37,7 @@
 			icon="decline"
 			design="Transparent"
 			aria-label="{{labelClose}}"
-			@click={{close}}
+			@click={{_closeAll}}
 		>
 		</ui5-button>
 	</div>
