@@ -429,24 +429,26 @@ class Menu extends UI5Element {
 		this._openedSubMenuItem = item;
 	}
 
-	_closeItemSubMenu(item: MenuItem, forceClose = false) {
+	_closeItemSubMenu(item: MenuItem, forceClose = false, keyboard = false) {
 		if (item) {
 			if (forceClose) {
 				item._preventSubMenuClose = false;
-				this._closeSubMenuPopover(item._subMenu!, true);
+				this._closeSubMenuPopover(item._subMenu!, forceClose, keyboard);
 			} else {
 				setTimeout(() => this._closeSubMenuPopover(item._subMenu!), 0);
 			}
 		}
 	}
 
-	_closeSubMenuPopover(subMenu: Menu, forceClose = false) {
+	_closeSubMenuPopover(subMenu: Menu, forceClose = false, keyboard = false) {
 		if (subMenu) {
 			const parentItem = subMenu._parentMenuItem!;
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
 				subMenu.close();
-				this._openedSubMenuItem?.focus();
+				if (keyboard) {
+					this._openedSubMenuItem?.focus();
+				}
 				this._openedSubMenuItem = undefined;
 			}
 		}
@@ -531,7 +533,7 @@ class Menu extends UI5Element {
 			item.hasSubmenu && await this._prepareSubMenuDesktopTablet(item);
 		} else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
 			const parentItemMenu = this._parentMenuItem.parentElement as Menu;
-			parentItemMenu._closeItemSubMenu(this._parentMenuItem, true);
+			parentItemMenu._closeItemSubMenu(this._parentMenuItem, true, true);
 		}
 	}
 
