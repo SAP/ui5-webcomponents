@@ -54,6 +54,11 @@ type SideNavigationSelectionChangeEventDetail = {
 	item: SideNavigationItemBase;
 };
 
+// used for the inner side navigation used in the SideNavigationPopoverTemplate
+type PopupClickEventDetail = {
+	target: SideNavigationItemBase
+};
+
 /**
  * @class
  *
@@ -269,10 +274,9 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	async handlePopupItemClick(e: SideNavigationSelectionChangeEventDetail) {
-		const item = e.item;
+	async handlePopupItemClick(e: PopupClickEventDetail) {
+		const item = e.target;
 
-		item.fireEvent("click");
 		if (item.selected) {
 			this.closePicker();
 			return;

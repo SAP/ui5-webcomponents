@@ -64,6 +64,16 @@
     <ui5-menu opener="action2" id="menu2">
       <ui5-menu-item text="Some item"></ui5-menu-item>
     </ui5-menu>
+	<ui5-menu opener="action2" id="menu2">
+		<ui5-menu-item text="Some item"></ui5-menu-item>
+	</ui5-menu>
+
+	<ui5-button id="action3">Load menu</ui5-button>
+	<ui5-menu opener="action3" id="menu3">
+		<ui5-menu-item text="New File">
+			<ui5-menu-item text="Open" busy busy-delay="0"></ui5-menu-item>
+		</ui5-menu-item>
+	</ui5-menu>
 
 	<script>
 		btnOpen.accessibilityAttributes = {
@@ -152,6 +162,30 @@
 
 		menu2.addEventListener("after-close", () => {
 			menu2.removeAttribute("open");
+		});
+
+		const menu3 = document.getElementById("menu3");
+		const action3 = document.getElementById("action3");
+
+		action3.addEventListener("click", function() {
+			menu3.showAt(action3);
+		});
+
+		let fetched2 = false;
+
+		menu3.addEventListener("ui5-before-open", function(event) {
+			const item = event.detail.item;
+			if (item && item.text === "Open" && !fetched2) {
+				setTimeout(() => {
+					item.removeAttribute("busy");
+					let oneNode = document.createElement("ui5-menu-item");
+					oneNode.setAttribute("text", "Open from Amazon Cloud");
+					let twoNode = document.createElement("ui5-menu-item");
+					twoNode.setAttribute("text", "Open from Google Cloud");
+					item.append(oneNode, twoNode);
+					fetched2 = true;
+				}, 500);
+			}
 		});
 
 

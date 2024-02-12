@@ -26,7 +26,7 @@ describe("Menu interaction", () => {
 	it("Top level menu items appearance", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
+		const menuItems = await browser.$$("ui5-menu > ui5-menu-item");
 
 		openButton.click();
 
