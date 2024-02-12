@@ -1,10 +1,16 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationItemTemplate from "./generated/templates/SideNavigationItemTemplate.lit.js";
+
+// Styles
+import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
 
 /**
  * @class
@@ -24,7 +30,15 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @public
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-side-navigation-item")
+@customElement({
+	tag: "ui5-side-navigation-item",
+	renderer: litRender,
+	template: SideNavigationItemTemplate,
+	styles: SideNavigationItemCss,
+	dependencies: [
+		Icon,
+	],
+})
 class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**
 	 * Defines if the item is expanded
@@ -173,7 +187,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseenter = () => {
@@ -181,7 +195,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseleave = () => {
@@ -189,7 +203,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
+		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 }
 

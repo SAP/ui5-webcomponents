@@ -1,9 +1,15 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
+import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
+
+// Styles
+import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 
 /**
  * @class
@@ -22,7 +28,15 @@ import SideNavigationItem from "./SideNavigationItem.js";
  * @abstract
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-side-navigation-group")
+@customElement({
+	tag: "ui5-side-navigation-group",
+	renderer: litRender,
+	template: SideNavigationGroupTemplate,
+	styles: SideNavigationCss,
+	dependencies: [
+		Icon,
+	],
+})
 class SideNavigationGroup extends SideNavigationItemBase {
 	/**
 	 * Defines if the item is expanded
@@ -51,6 +65,26 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	get isFixedItem() {
 		return this.slot === "fixedItems";
+	}
+
+	get _groupId() {
+		if (!this.items.length) {
+			return undefined;
+		}
+
+		return `${this._id}-group`;
+	}
+
+	get _expanded() {
+		if (!this.items.length) {
+			return undefined;
+		}
+
+		return this.expanded;
+	}
+
+	get _toggleIconName() {
+		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
 
 	_onkeydown = (e: KeyboardEvent) => {

@@ -1,5 +1,11 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
+
+// Styles
+import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
 
 /**
  * @class
@@ -18,7 +24,15 @@ import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase
  * @abstract
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-side-navigation-sub-item")
+@customElement({
+	tag: "ui5-side-navigation-sub-item",
+	renderer: litRender,
+	template: SideNavigationSubItemTemplate,
+	styles: SideNavigationItemCss,
+	dependencies: [
+		Icon,
+	],
+})
 class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 	get isFixedItem() {
 		return this.parentElement?.slot === "fixedItems";

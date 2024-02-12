@@ -246,7 +246,7 @@ class SideNavigation extends UI5Element {
 		const selectedItem = this._findSelectedItem(this.items)!;
 
 		await renderFinished();
-		selectedItem.getDomRef().focus();
+		selectedItem.getDomRef()!.focus();
 	}
 
 	async _onBeforePopoverOpen() {
@@ -299,7 +299,7 @@ class SideNavigation extends UI5Element {
 		this.closePicker();
 
 		await renderFinished();
-		this._popoverContents.item.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
+		this._popoverContents.item.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
@@ -637,7 +637,7 @@ class SideNavigation extends UI5Element {
 		const result: Array<SideNavigationItem> = [];
 
 		this._getSelectableItems(this.items).forEach(item => {
-			if (item.getDomRef().classList.contains(overflowClass)) {
+			if (item.getDomRef()!.classList.contains(overflowClass)) {
 				 result.push(item);
 			}
 		});
@@ -663,7 +663,7 @@ class SideNavigation extends UI5Element {
 		item.selected = true;
 
 		if (this.collapsed && item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
-			item.getDomRef().classList.remove("ui5-sn-item-hidden");
+			item.getDomRef()?.classList.remove("ui5-sn-item-hidden");
 		}
 	}
 
