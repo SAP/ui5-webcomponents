@@ -1,5 +1,5 @@
-import DropPlacement from "../types/DropPlacement.js";
-import Orientation from "../types/Orientation.js";
+import DropPlacement from "../../types/DropPlacement.js";
+import Orientation from "../../types/Orientation.js";
 
 const closestPlacement = (point: number, beforePoint: number, centerPoint: number, afterPoint: number) => {
 	const distToBeforePoint = Math.abs(point - beforePoint);

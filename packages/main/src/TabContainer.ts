@@ -27,9 +27,10 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/DropHelper.js";
+import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import { longDragOverHandler, getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
+import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,

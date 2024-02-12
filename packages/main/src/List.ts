@@ -16,8 +16,8 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
-import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/DropHelper.js";
+import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
