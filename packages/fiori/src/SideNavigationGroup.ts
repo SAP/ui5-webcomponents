@@ -9,7 +9,7 @@ import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
 
 // Styles
-import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
+import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
 
 /**
  * @class
@@ -32,7 +32,7 @@ import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 	tag: "ui5-side-navigation-group",
 	renderer: litRender,
 	template: SideNavigationGroupTemplate,
-	styles: SideNavigationCss,
+	styles: SideNavigationItemCss,
 	dependencies: [
 		Icon,
 	],
