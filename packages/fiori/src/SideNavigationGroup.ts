@@ -53,7 +53,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return this.slot === "fixedItems";
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	_onkeydown = (e: KeyboardEvent) => {
 		if (isSpace(e)) {
 			e.preventDefault();
 		}
@@ -63,20 +63,20 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent) {
+	_onkeyup = (e: KeyboardEvent) => {
 		if (isSpace(e)) {
 			this._toggle();
 		}
 	}
 
-	_onclick() {
+	_onclick = () => {
 		this._toggle();
 	}
 
-	_onfocusin(e: FocusEvent) {
+	_onfocusin = (e: FocusEvent) => {
 		e.stopPropagation();
 
-		// this.sideNavigation?.focusItem(this);
+		this.sideNavigation?.focusItem(this);
 	}
 
 	_toggle() {
