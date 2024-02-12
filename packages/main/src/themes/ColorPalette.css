@@ -4,6 +4,7 @@
 
 :host(:not([hidden])[popup-mode]) {
 	width: 100%;
+	overflow: hidden;
 }
 
 
@@ -21,33 +22,54 @@
 }
 
 .ui5-cp-root.ui5-cp-root-phone .ui5-cp-item-container {
-	width: 100%;
-	max-width: 19.5rem;
-	max-height: 13rem;
 	padding: 0.375rem 0.625rem;
+	width: 95%;
+	max-width: 95%;
+	max-height: 100%;
 }
 
 .ui5-cp-root-phone .ui5-cp-default-color-button,
 .ui5-cp-root-phone .ui5-cp-more-colors {
 	color: var(--sapTextColor);
+	height: 2.875rem;
+}
+
+.ui5-cp-root-phone .ui5-cp-more-colors-wrapper,
+.ui5-cp-root-phone .ui5-cp-default-color-button-wrapper {
+	height: 2.875rem;
 }
 
 .ui5-cp-root-phone .ui5-cp-item-container{
 	display: grid;
-    grid-template-columns: auto auto auto auto auto;
-	grid-template-rows: auto auto auto;
+    grid-template-columns: 18% 18% 18% 18% 18%;
     grid-gap: 0.375rem;
+}
+
+.ui5-cp-root-phone .ui5-cp-recent-colors-container {
+	display: grid;
+    grid-template-columns: 18% 18% 18% 18% 18%;
+    grid-gap: 0.375rem;
+	width: 95%;
+}
+
+.ui5-cp-root-phone .ui5-cp-recent-colors-wrapper{
+	max-width: 100%;
+	padding: 0px;
 }
 
 .ui5-cp-recent-colors-wrapper {
 	display: flex;
-	align-items: center;
-	flex-direction: column;
+	justify-content: center;
+	max-width: var(--_ui5_color-palette-row-width);
+	flex-flow: wrap;
+	max-height: var(--_ui5_color-palette-row-height);
+	overflow: hidden;
+	padding: var(--_ui5_color-palette-swatch-container-padding);
 }
 
 .ui5-cp-root.ui5-cp-root-phone {
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
 }
 
 .ui5-cp-item-container {

@@ -92,6 +92,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	onBeforeRendering() {
 		this._disabled = !this.value;
 		this.phone = isPhone();
+		this.setAttribute("style", `background-color: ${this.value}`);
 	}
 
 	get colorLabel() {

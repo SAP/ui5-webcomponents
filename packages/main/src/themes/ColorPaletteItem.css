@@ -16,10 +16,8 @@
 }
 
 :host(:not([hidden])[phone]) {
-	height: 2.75rem;
-	/* padding-top:100%; */
 	width: 100%;
-	/* width: 2.75rem; */
+	padding-top: 97%;
 	border: 1px solid var(--sapContent_ForegroundBorderColor);
 	border-radius: 0.25rem;
 	display: inline-block;
