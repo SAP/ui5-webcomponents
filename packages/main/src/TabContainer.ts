@@ -499,21 +499,9 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	@longDragOverHandler()
-	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
+	@longDragOverHandler(element => element.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]"))
+	async _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
 		if (!(e.target instanceof HTMLElement)) {
-			return;
-		}
-
-		if (isLongDragOver && e.target === this._getStartOverflowBtnDOM()) {
-			const dragOverElement = this._getStartOverflowBtnDOM()!;
-			this._showPopoverAt(dragOverElement, false, true);
-			return;
-		}
-
-		if (isLongDragOver && e.target === this._getEndOverflowBtnDOM()) {
-			const dragOverElement = this._getEndOverflowBtnDOM()!;
-			this._showPopoverAt(dragOverElement, false, true);
 			return;
 		}
 
@@ -527,10 +515,18 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		let popoverTarget = null;
+
+		if (isLongDragOver && e.target === this._getStartOverflowBtnDOM()) {
+			popoverTarget = e.target;
+		}
+
+		if (isLongDragOver && e.target === this._getEndOverflowBtnDOM()) {
+			popoverTarget = e.target;
+		}
+
 		if (isLongDragOver && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
-			this._showPopoverAt(closestDropPosition.element, false, true);
-		} else {
-			this.responsivePopover?.close();
+			popoverTarget = closestDropPosition.element;
 		}
 
 		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
@@ -556,6 +552,12 @@ class TabContainer extends UI5Element {
 
 		if (!placementAccepted) {
 			this.dropIndicatorDOM!.targetReference = null;
+		}
+
+		if (popoverTarget) {
+			await this._showPopoverAt(closestDropPosition.element, false, true);
+		} else {
+			this.responsivePopover?.close();
 		}
 	}
 
@@ -1322,7 +1324,7 @@ class TabContainer extends UI5Element {
 		if (this.responsivePopover.isOpen()) {
 			this.responsivePopover.close();
 		} else {
-			this._showPopoverAt(opener, setInitialFocus);
+			await this._showPopoverAt(opener, setInitialFocus);
 		}
 	}
 
@@ -1338,7 +1340,7 @@ class TabContainer extends UI5Element {
 			this._setPopoverInitialFocus();
 		}
 
-		this.responsivePopover.showAt(opener, preventInitialFocus);
+		await this.responsivePopover.showAt(opener, preventInitialFocus);
 	}
 
 	get hasSubTabs(): boolean {
