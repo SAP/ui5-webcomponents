@@ -10,7 +10,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import type CalendarLegend from "@ui5/webcomponents/dist/CalendarLegend.js";
 
 export default {
-	title: "Main/CalendarLegend",
+	title: "Main/Calendar Legend",
 	component: "CalendarLegend",
 	argTypes,
 } as Meta<CalendarLegend>;
