@@ -53,6 +53,7 @@
 	display: inherit;
 	align-items: inherit;
 	flex: 1;
+	min-width: 0;
 }
 
 .ui5-card-header.ui5-card-header--interactive:hover {
@@ -67,6 +68,7 @@
 
 .ui5-card-header .ui5-card-header-text {
 	flex: 1;
+	min-width: 0;
 	pointer-events: none;
 }
 
@@ -140,7 +142,7 @@
 	text-align: start;
 	text-overflow: ellipsis;
 	white-space: normal;
-	overflow-wrap: anywhere;
+	word-wrap: break-word;
 	overflow: hidden;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
