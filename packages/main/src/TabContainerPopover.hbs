@@ -8,7 +8,7 @@
 	class="ui5-tab-container-responsive-popover"
 >
 	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
-		{{#each _overflowItems}}
+		{{#each _popoverItemsFlat}}
 			{{overflowPresentation}}
 		{{/each}}
 	</ui5-list>
