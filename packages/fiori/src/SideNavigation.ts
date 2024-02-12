@@ -565,7 +565,7 @@ class SideNavigation extends UI5Element {
 		return selectedItem;
 	}
 
-	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {
+	_handleItemClick(e: KeyboardEvent | PointerEvent | CustomEvent<NavigationMenuClickEventDetail>, item: SideNavigationItemBase) {
 		if (item.selected && !this.collapsed) {
 			item.fireEvent("click");
 			return;
