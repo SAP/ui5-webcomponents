@@ -49,7 +49,7 @@ describe("Menu interaction", () => {
 
 		menuItems[3].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu").waitForExist({
+		await submenuList.$("ui5-menu:nth-last-child(1)").waitForExist({
 			timeout: 1000,
 			timeoutMsg: "The second level sub-menu is should be created"
 		})
@@ -60,7 +60,7 @@ describe("Menu interaction", () => {
 		await browser.keys("ArrowUp"); // go to the next menu item (close sub-menu)
 		await browser.keys("Space"); // open sub-menu
 
-		await submenuList.$("ui5-menu").waitForExist({
+		await submenuList.$("ui5-menu:nth-last-child(2)").waitForExist({
 			timeout: 1000,
 			timeoutMsg: "Second sub-menu is created"
 		})
