@@ -17,7 +17,7 @@
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed max-nesting-level="1">
+		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed>
 			<ui5-tab id="tabOne" draggable="true" design="Positive" text="One"></ui5-tab>
 			<ui5-tab id="tabTwo" draggable="true" design="Negative" text="Two" disabled>
 				<ui5-tab slot="subTabs" draggable="true" text="2.1"></ui5-tab>
@@ -29,14 +29,12 @@
 				content
 			</ui5-tab>
 			<ui5-tab id="tabFour" draggable="true" text="Four (forbids nesting)"></ui5-tab>
-
 			<ui5-tab id="tabFive" draggable="true" text="Five">
 				<ui5-tab slot="subTabs" draggable="true" text="nested in Five">
 					<ui5-tab slot="subTabs" draggable="true" text="nested deeper in Five">text</ui5-tab>
 					text
 				</ui5-tab>
 			</ui5-tab>
-
 			<ui5-tab id="tabSix" draggable="true" text="Six"></ui5-tab>
 			<ui5-tab id="tabSeven" draggable="true" text="Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
@@ -72,6 +70,15 @@
 
 	<script>
 		const tc = document.getElementById("tabContainerDnd");
+		let maxNestingLevel = 1;
+
+		const getTabLevel = (element) => {
+			if (element.hasAttribute("ui5-tabcontainer")) {
+				return 0;
+			}
+
+			return 1 + getTabLevel(element.parentElement);
+		};
 
 		tc.addEventListener("before-tab-move", (e) => {
 			// TODO: validate source.element
@@ -80,6 +87,10 @@
 			console.error(`Dragging "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
 
 			if (destination.placement === "On" && (destination.element.id === "tabFour" || destination.element.id === "tabSeventeen")) {
+				return;
+			}
+
+			if (getTabLevel(destination.element) > maxNestingLevel) {
 				return;
 			}
 
@@ -129,8 +140,8 @@
 		});
 
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
-		maxNestingLevelInput.addEventListener("ui5-change", (event) => {
-			tc.maxNestingLevel = event.target.value;
+		maxNestingLevelInput.addEventListener("ui5-change", (e) => {
+			maxNestingLevel = e.target.value;
 		});
 	</script>
 </body>

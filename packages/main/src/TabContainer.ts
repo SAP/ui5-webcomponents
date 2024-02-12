@@ -555,7 +555,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (popoverTarget) {
-			await this._showPopoverAt(closestDropPosition.element, false, true);
+			await this._showPopoverAt(popoverTarget, false, true);
 		} else {
 			this.responsivePopover?.close();
 		}
