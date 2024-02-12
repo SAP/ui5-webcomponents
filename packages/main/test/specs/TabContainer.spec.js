@@ -324,6 +324,27 @@ describe("TabContainer general interaction", () => {
 
 });
 
+describe("TabContainer keyboard handling", () => {
+	before(async () => {
+		await browser.url(`test/pages/TabContainer.html`);
+	});
+
+	it("[Arrow Down] on two-click area tab", async () => {
+		const tabcontainer = await browser.$("#tabContainerNestedTabs");
+		const item = tabcontainer.shadow$$(".ui5-tab-strip-item")[3];
+
+		assert.strictEqual(await item.getProperty("innerText"), "Four", "Correct tab is found");
+
+		await item.click();
+		await item.keys("ArrowDown");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.ok(await popover.isDisplayed(), "Popover is opened");
+	});
+});
+
 describe("TabContainer popover", () => {
 	before(async () => {
 		await browser.url(`test/pages/TabContainer.html`);

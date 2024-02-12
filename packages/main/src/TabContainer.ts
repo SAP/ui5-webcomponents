@@ -491,25 +491,32 @@ class TabContainer extends UI5Element {
 		e.stopPropagation();
 		e.preventDefault();
 
-		let button = e.target as HTMLElement;
-		let tabInstance = (button as TabContainerExpandButton).tab;
+		let tabInstance: Tab;
+
+		if (isTabInStrip(e.target as HTMLElement)) {
+			tabInstance = e.target as Tab;
+		} else {
+			tabInstance = (e.target as TabContainerExpandButton).tab;
+		}
+
+		let opener = e.target as HTMLElement;
 
 		if (tabInstance) {
 			tabInstance.focus();
 		}
 
 		if (e.type === "keydown" && !(e.target as Tab).realTabReference.isSingleClickArea) {
-			button = (e.target as Tab).querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
+			opener = (e.target as Tab).querySelector<TabContainerExpandButton>(".ui5-tab-expand-button [ui5-button]")!;
 			tabInstance = (e.target as Tab).realTabReference;
 		}
 
 		// if clicked between the expand button and the tab
 		if (!tabInstance) {
-			this._onHeaderItemSelect(button.parentElement as HTMLElement);
+			this._onHeaderItemSelect(opener.parentElement as HTMLElement);
 			return;
 		}
 
-		await this._togglePopover(button, true);
+		await this._togglePopover(opener, true);
 	}
 
 	_setPopoverInitialFocus() {
