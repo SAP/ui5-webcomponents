@@ -117,6 +117,7 @@ import DateRangePicker from "./DateRangePicker.js";
 import DateTimePicker from "./DateTimePicker.js";
 import Dialog from "./Dialog.js";
 import FileUploader from "./FileUploader.js";
+import GridTable from "./GridTable.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import MultiInput from "./MultiInput.js";
