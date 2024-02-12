@@ -59,11 +59,11 @@
 					destination.element
 				);
 			} else if (destination.placement === "After") {
-				const nextItem = parent.items.at(list.items.indexOf(destination.element) + 1);
+				const nextElement = Array.from(parent.children).at(Array.from(parent.children).indexOf(destination.element) + 1);
 
-				list.insertBefore(
+				parent.insertBefore(
 					source.element,
-					nextItem,
+					nextElement,
 				);
 			} else if (destination.placement === "On") {
 				destination.element.prepend(source.element);
