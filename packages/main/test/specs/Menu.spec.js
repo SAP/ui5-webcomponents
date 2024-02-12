@@ -56,9 +56,7 @@ describe("Menu interaction", () => {
 
 		assert.ok(await submenuList.$("ui5-menu"), "The second level sub-menu is being created"); // new ui5-menu element is created for the sub-menu
 
-		await browser.keys("ArrowLeft"); // back to main menu
-		await browser.keys("ArrowDown"); // go to the next menu item (close sub-menu)
-		await browser.keys("Space"); // open sub-menu
+		menuItems[4].click(); // open sub-menu
 
 		await submenuList.$("ui5-menu:nth-of-type(2)").waitForExist({
 			timeout: 1000,
