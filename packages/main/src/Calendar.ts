@@ -275,7 +275,7 @@ class Calendar extends CalendarPart {
 	 * @since 1.23.0
 	 */
 	@slot({ type: HTMLElement })
-	calendarLegend!: CalendarLegend;
+	calendarLegend!: Array<CalendarLegend>;
 
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
