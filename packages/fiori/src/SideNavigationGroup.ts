@@ -4,7 +4,6 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
-import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual";
 
 /**
  * @class
