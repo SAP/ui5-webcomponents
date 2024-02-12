@@ -60,6 +60,22 @@ class NavigationMenu extends Menu {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
 
+	_clonedItemsFragment(item: MenuItem) {
+		const fragment = document.createDocumentFragment();
+
+		for (let i = 0; i < item.items.length; ++i) {
+			const subItem = item.items[i] as any;
+
+			const clonedItem = item.items[i].cloneNode(true) as any;
+			if (subItem.associatedItem) {
+				clonedItem.associatedItem = subItem.associatedItem;
+			}
+			fragment.appendChild(clonedItem);
+		}
+
+		return fragment;
+	}
+
 	async _itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 		const mainMenu = this._findMainMenu(item);
