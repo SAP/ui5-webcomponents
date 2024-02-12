@@ -103,7 +103,7 @@ export const globalTypes: GlobalTypes = {
   rtl: {
     name: "Direction",
     description: "Global rtl mode for components",
-    defaultValue: window["sap-ui-webcomponents-bundle"].configuration.getRTL(),
+    defaultValue: "LTR",
     toolbar: {
       icon: "",
       items: ["LTR", "RTL"],

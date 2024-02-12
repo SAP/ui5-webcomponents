@@ -14,7 +14,6 @@ type InitialConfig = {
 	animationMode: AnimationMode,
 	theme: string,
 	themeRoot: string | undefined,
-	rtl: boolean | undefined,
 	language: string | undefined,
 	calendarType: CalendarType | undefined,
 	secondaryCalendarType: CalendarType | undefined,
@@ -52,11 +51,6 @@ const getTheme = () => {
 const getThemeRoot = () => {
 	initConfiguration();
 	return initialConfig.themeRoot;
-};
-
-const getRTL = () => {
-	initConfiguration();
-	return initialConfig.rtl;
 };
 
 const getLanguage = () => {
@@ -216,7 +210,6 @@ export {
 	getAnimationMode,
 	getTheme,
 	getThemeRoot,
-	getRTL,
 	getLanguage,
 	getFetchDefaultLanguage,
 	getNoConflict,
