@@ -14,12 +14,14 @@
 			expanded="true"
 			href="{{href}}"
 			target="{{target}}"
-			title="{{title}}">
+			title="{{title}}"
+			.associatedItem="{{this}}">
 				{{#each this.items}}
 				<ui5-navigation-menu-item
 					text="{{text}}"
 					icon="{{icon}}"
 					?disabled="{{disabled}}"
+					.associatedItem="{{this}}"
 					expanded="true"
 					href="{{href}}"
 					target="{{target}}"
