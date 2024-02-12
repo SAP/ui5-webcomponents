@@ -62,15 +62,15 @@ describe("Component Behavior", () => {
 
 			await items[0].click();
 
-			assert.strictEqual(await input.getProperty("value"), "6", "Event is fired");
+			assert.strictEqual(await input.getProperty("value"), "5", "Event is fired");
 
 			await items[3].click();
 
-			assert.strictEqual(await input.getProperty("value"), "6", "Event is not fired");
+			assert.strictEqual(await input.getProperty("value"), "5", "Event is not fired");
 			assert.strictEqual(await items[3].getAttribute("aria-expanded"), "true" ,"Expanded is toggled");
 
 			await items[1].click();
-			assert.strictEqual(await input.getProperty("value"), "7", "Event is fired");
+			assert.strictEqual(await input.getProperty("value"), "6", "Event is fired");
 		});
 
 		it("Tests header visibility", async () => {
