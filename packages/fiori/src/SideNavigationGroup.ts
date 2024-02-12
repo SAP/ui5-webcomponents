@@ -4,6 +4,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual";
 
 /**
  * @class
@@ -40,6 +41,14 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
+
+	get selectableItems() : Array<SideNavigationItem> {
+		return this.items;
+	}
+
+	get focusableItems() : Array<SideNavigationItem | SideNavigationGroup> {
+		return [this, ...this.items];
+	}
 
 	get isFixedItem() {
 		return this.slot === "fixedItems";

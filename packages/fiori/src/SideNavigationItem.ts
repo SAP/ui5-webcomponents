@@ -65,6 +65,14 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@property({ type: Boolean })
 	wholeItemToggleable!: boolean;
 
+	get selectableItems() : Array<SideNavigationItem> {
+		return [this];
+	}
+
+	get focusableItems() : Array<SideNavigationItem> {
+		return [this];
+	}
+
 	get _ariaHasPopup() {
 		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
 			return "tree";

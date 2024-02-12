@@ -27,8 +27,10 @@ import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationGroup from "./SideNavigationGroup.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationPopoverTemplate.lit.js";
 
@@ -158,7 +160,18 @@ class SideNavigation extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<SideNavigationItem>;
+	items!: Array<SideNavigationItem | SideNavigationGroup>;
+
+	/**
+	 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
+	 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
+	 *
+	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	fixedItems!: Array<SideNavigationItem | SideNavigationGroup>;
 
 	/**
 	 * Defines the header of the <code>ui5-side-navigation</code>.
@@ -172,16 +185,6 @@ class SideNavigation extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
-	/**
-	 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-	 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
-	 *
-	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
-	 *
-	 * @public
-	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	fixedItems!: Array<SideNavigationItem>;
 	/**
 	 * @private
 	 */
@@ -397,10 +400,10 @@ class SideNavigation extends UI5Element {
 		return [...this.getEnabledItems(this.items), this._overflowDom];
 	}
 
-	getEnabledItems(items: Array<SideNavigationItem>) : Array<ITabbable> {
+	getEnabledItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<ITabbable> {
 		let result = new Array<ITabbable>();
 
-		items.forEach(item => {
+		this._getFocusableItems(items).forEach(item => {
 			if (item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
 				return;
 			}
@@ -413,10 +416,11 @@ class SideNavigation extends UI5Element {
 				result = result.concat(item.items.filter(el => !el.disabled));
 			}
 		});
+
 		return result;
 	}
 
-	focusItem(item: SideNavigationSelectableItemBase) {
+	focusItem(item: SideNavigationItemBase) {
 		if (item.isFixedItem) {
 			this._fixedItemNavigation.setCurrentItem(item);
 		} else {
@@ -527,25 +531,56 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
-	_findFocusedItem(items: Array<SideNavigationItem>) : SideNavigationSelectableItemBase | undefined {
+	_findFocusedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationItemBase | undefined {
 		let focusedItem;
 
 		if (this.collapsed) {
 			focusedItem = items.find(item => item.forcedTabIndex === "0");
 		} else {
-			focusedItem = this._getWithNestedItems(items, true).find(item => item.forcedTabIndex === "0");
+			focusedItem = this._getAllFocusableItems(items).find(item => item.forcedTabIndex === "0");
 		}
 
 		return focusedItem;
 	}
 
-	_getWithNestedItems(items: Array<SideNavigationItem>, expandedOnly = false): Array<SideNavigationSelectableItemBase> {
+	_getSelectableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItem> {
+		let result = new Array<SideNavigationItem>();
+
+		items.forEach(item => {
+			result = result.concat(item.selectableItems);
+		});
+
+		return result;
+	}
+
+	_getAllSelectableItems(items: Array<SideNavigationItem | SideNavigationGroup>): Array<SideNavigationSelectableItemBase> {
 		let result = new Array<SideNavigationSelectableItemBase>();
+
+		this._getSelectableItems(items).forEach(item => {
+			result.push(item);
+			result = result.concat(item.items);
+		});
+
+		return result;
+	}
+
+	_getFocusableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItem | SideNavigationGroup> {
+		let result = new Array<SideNavigationItem | SideNavigationGroup>();
+
+		items.forEach(item => {
+			result = result.concat(item.focusableItems);
+		});
+
+		return result;
+	}
+
+	_getAllFocusableItems(items: Array<SideNavigationItem | SideNavigationGroup>): Array<SideNavigationItemBase> {
+		let result = new Array<SideNavigationItemBase>();
 
 		items.forEach(item => {
 			result.push(item);
 
-			if (!expandedOnly || item.expanded) {
+			if (item.expanded) {
 				result = result.concat(item.items);
 			}
 		});
@@ -553,13 +588,13 @@ class SideNavigation extends UI5Element {
 		return result;
 	}
 
-	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationSelectableItemBase | undefined {
+	_findSelectedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationSelectableItemBase | undefined {
 		let selectedItem;
 
 		if (this.collapsed) {
-			selectedItem = items.find(item => item._selected);
+			selectedItem = this._getSelectableItems(items).find(item => item._selected);
 		} else {
-			selectedItem = this._getWithNestedItems(items).find(current => current.selected);
+			selectedItem = this._getAllSelectableItems(items).find(current => current.selected);
 		}
 
 		return selectedItem;
@@ -601,7 +636,7 @@ class SideNavigation extends UI5Element {
 		const overflowClass = "ui5-sn-item-hidden";
 		const result: Array<SideNavigationItem> = [];
 
-		this.items.forEach(item => {
+		this._getSelectableItems(this.items).forEach(item => {
 			if (item.getDomRef().classList.contains(overflowClass)) {
 				 result.push(item);
 			}
@@ -618,8 +653,8 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		let items = this._getWithNestedItems(this.items);
-		items = items.concat(this._getWithNestedItems(this.fixedItems));
+		let items = this._getAllSelectableItems(this.items);
+		items = items.concat(this._getAllSelectableItems(this.fixedItems));
 
 		items.forEach(current => {
 			current.selected = false;
