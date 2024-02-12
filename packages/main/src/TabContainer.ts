@@ -29,7 +29,7 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/DropHelper.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
+import { longDragOverHandler, getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/DragRegistry.js";
 import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
@@ -498,18 +498,19 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderDragOver(e: DragEvent) {
+	@longDragOverHandler()
+	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
 		if (!(e.target instanceof HTMLElement)) {
 			return;
 		}
 
-		if (e.target === this._getStartOverflowBtnDOM()) {
+		if (isLongDragOver && e.target === this._getStartOverflowBtnDOM()) {
 			const dragOverElement = this._getStartOverflowBtnDOM()!;
 			this._showPopoverAt(dragOverElement, false, true);
 			return;
 		}
 
-		if (e.target === this._getEndOverflowBtnDOM()) {
+		if (isLongDragOver && e.target === this._getEndOverflowBtnDOM()) {
 			const dragOverElement = this._getEndOverflowBtnDOM()!;
 			this._showPopoverAt(dragOverElement, false, true);
 			return;
@@ -525,7 +526,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if ((closestDropPosition.element as Tab).realTabReference.subTabs.length) {
+		if (isLongDragOver && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
 			this._showPopoverAt(closestDropPosition.element, false, true);
 		} else {
 			this.responsivePopover?.close();
