@@ -26,7 +26,7 @@ describe("Menu interaction", () => {
 	it("Top level menu items appearance", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-		const menuItems = await browser.$$("ui5-menu > ui5-menu-item");
+		const menuItems = await browser.$$("#menu > ui5-menu-item");
 
 		openButton.click();
 
@@ -61,7 +61,6 @@ describe("Menu interaction", () => {
 		await browser.keys("Space"); // open sub-menu
 
 		await submenuList.$("ui5-menu").waitForExist({
-			reverse: true,
 			timeout: 1000,
 			timeoutMsg: "Second sub-menu is created"
 		})
