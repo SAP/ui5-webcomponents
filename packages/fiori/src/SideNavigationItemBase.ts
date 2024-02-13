@@ -77,6 +77,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.forcedTabIndex;
 	}
 
+	get _isExternalLink() {
+		return this.href && this.target === "_blank";
+	}
+
 	get sideNavigation() : SideNavigation | undefined {
 		let parentElement = this.parentElement;
 
