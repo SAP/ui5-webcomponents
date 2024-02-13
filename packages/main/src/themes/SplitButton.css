@@ -225,7 +225,7 @@
 	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
 	box-shadow: var(--_ui5_split_arrow_button_emphasized_hover_box_shadow, none)
 }
-[dir="rtl"].ui5-split-arrow-button[design="Emphasized"]:hover {
+:dir(rtl).ui5-split-arrow-button[design="Emphasized"]:hover {
 	box-shadow: var(--_ui5_split_arrow_button_emphasized_hover_box_shadow_rtl, none);
 }
 

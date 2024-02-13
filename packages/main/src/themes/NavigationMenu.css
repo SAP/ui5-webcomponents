@@ -13,8 +13,8 @@
 	inset: 0;
  }
 
-.ui5-navigation-menu .ui5-navigation-menu-item { 
-	display: flex;
+.ui5-navigation-menu .ui5-navigation-menu-item {
+    display: flex;
 	align-items: center;
 	width: 100%;
 	box-sizing: border-box;
@@ -66,4 +66,10 @@
 
 .ui5-navigation-menu ::slotted([ui5-menu-item][focused]):not([active]){
 	background: none;
+}
+
+.ui5-sn-item-external-link-icon {
+	color: var(--_ui5_side_navigation_external_link_icon_color);
+	min-width: 2rem;
+	height: 0.875rem;
 }

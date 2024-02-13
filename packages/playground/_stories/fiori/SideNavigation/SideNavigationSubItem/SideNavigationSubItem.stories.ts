@@ -19,7 +19,6 @@ const Template: UI5StoryArgs<SideNavigationSubItem, StoryArgsSlots> = (args) => 
 	<ui5-side-navigation-item text="Events" icon="calendar" expanded>
 		<ui5-side-navigation-sub-item
 			text="${ifDefined(args.text)}"
-			icon="${ifDefined(args.icon)}"
 			href="${ifDefined(args.href)}"
 			?selected="${ifDefined(args.selected)}"
 			target="${ifDefined(args.target)}"

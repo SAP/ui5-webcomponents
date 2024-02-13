@@ -3,31 +3,20 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-
 	<title>RTL and Language</title>
-	<script>
-		// delete Document.prototype.adoptedStyleSheets
-	</script>
-
-
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-
-
 	<link rel="stylesheet" type="text/css" href="./styles/RTL.css">
-
 </head>
 
 <body class="rtl1auto">
-
-
 	<div class="rtl2auto">
 		<ui5-segmented-button id="tb">
-			<ui5-toggle-button pressed>EN</ui5-toggle-button>
-			<ui5-toggle-button>DE</ui5-toggle-button>
-			<ui5-toggle-button>BG</ui5-toggle-button>
-			<ui5-toggle-button>ES</ui5-toggle-button>
-			<ui5-toggle-button>HE</ui5-toggle-button>
-			<ui5-toggle-button>AR</ui5-toggle-button>
+			<ui5-segmented-button-item pressed>EN</ui5-segmented-button-item>
+			<ui5-segmented-button-item>DE</ui5-segmented-button-item>
+			<ui5-segmented-button-item>BG</ui5-segmented-button-item>
+			<ui5-segmented-button-item>ES</ui5-segmented-button-item>
+			<ui5-segmented-button-item>HE</ui5-segmented-button-item>
+			<ui5-segmented-button-item>AR</ui5-segmented-button-item>
 		</ui5-segmented-button>
 		<div class="rtl3auto"></div>
 		<ui5-label class="rtl4auto">Manually switch RTL:</ui5-label>
@@ -61,53 +50,49 @@
 	<section dir="rtl">
 		<ui5-title>This section defines dir=RTL</ui5-title>
 		<br>
-		<ui5-checkbox text="Click me"></ui5-checkbox>
+		<ui5-checkbox id="cbRTL" text="Click me"></ui5-checkbox>
 		<br>
 		<ui5-checkbox text="Click me"></ui5-checkbox>
 		<br>
-		<ui5-checkbox text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
+		<ui5-checkbox id="cbLTR" text="This checkbox however defines dir=ltr" dir="ltr"></ui5-checkbox>
 	</section>
 
 	<ui5-date-picker></ui5-date-picker>
 	<script>
 
-		setTimeout(function() {
-			window['sap-ui-webcomponents-bundle'].attachDirectionChange(function() {
+		let listenerAttached = false;
+
+		const attachDirChange = () => {
+			window['sap-ui-webcomponents-bundle'].attachDirectionChange(() => {
 				console.log("Direction changed");
 			});
-		}, 1000);
+		}
 
 		// Utility function to change RTL and apply the changes
-		function setDir(dir) {
+		const setDir = (dir) => {
+			if (!listenerAttached) {
+				attachDirChange();
+				listenerAttached = true;
+			}
+
 			document.body.dir = dir;
 			window['sap-ui-webcomponents-bundle'].applyDirection();
 		}
 
-		function setDirByLang(lang) {
-			if (lang === "he" || lang === "ar") {
-				setDir("rtl");
-			} else {
-				setDir("ltr");
-			}
-		}
-
-		function setLanguage(lang) {
+		const setLanguage = (lang) => {
 			return window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
 		}
 
-		document.getElementById("sw").addEventListener("ui5-click", function(e) {
-			if (e.target.checked) {
-				setDir("rtl");
-			} else {
-				setDir("ltr");
-			}
+		sw.addEventListener("ui5-change", (e) => {
+			setDir(e.target.checked ? "rtl" : "ltr");
 		});
 
-		document.getElementById("tb").addEventListener("ui5-selection-change", function(e) {
-			var lang = e.detail.selectedButton.textContent.toLowerCase();
+		tb.addEventListener("ui5-selection-change", function(e) {
+			var lang = e.detail.selectedItem.textContent.toLowerCase();
 
 			setLanguage(lang).then(function() {
-				setDirByLang(lang);
+				const rtlLang = lang === "he" || lang === "ar";
+				setDir(rtlLang ? "rtl" : "ltr");
 			});
 		});
 	</script>

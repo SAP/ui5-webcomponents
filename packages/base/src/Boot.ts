@@ -15,6 +15,10 @@ let booted = false;
 let bootPromise: Promise<void>;
 const eventProvider = new EventProvider<void, void>();
 
+const isBooted = (): boolean => {
+	return booted;
+};
+
 /**
  * Attaches a callback that will be executed after boot finishes.
  * <b>Note:</b> If the framework already booted, the callback will be immediately executed.
@@ -89,4 +93,5 @@ const onThemeRegistered = (theme: string) => {
 export {
 	boot,
 	attachBoot,
+	isBooted,
 };

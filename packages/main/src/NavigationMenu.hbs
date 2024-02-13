@@ -47,7 +47,7 @@
 	>
 	{{#if items.length}}
 		<ui5-list
-            accessible-role="tree"
+			accessible-role="tree"
 			id="{{_id}}-menu-list"
 			mode="None"
 			?busy="{{busy}}"
@@ -58,7 +58,7 @@
 			@mouseout={{_itemMouseOut}}
 			@keydown={{_itemKeyDown}}
 		>
-		<slot></slot>
+			<slot></slot>
 		</ui5-list>
 	{{else if busy}}
 		<ui5-busy-indicator
