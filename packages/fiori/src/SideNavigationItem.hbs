@@ -31,6 +31,11 @@
 						  name="navigation-right-arrow"
 				></ui5-icon>
 			{{/if}}
+			{{#if _isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
+				></ui5-icon>
+			{{/if}}
 		</a>
 	{{else}}
 		<div id="{{_id}}"
@@ -54,6 +59,11 @@
 			{{#if items.length}}
 				<ui5-icon class="ui5-sn-item-toggle-icon"
 						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
+			{{#if _isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
 				></ui5-icon>
 			{{/if}}
 		</div>
@@ -91,6 +101,11 @@
 							  @click="{{_onToggleClick}}"
 					></ui5-icon>
 				{{/if}}
+				{{#if _isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
+					></ui5-icon>
+				{{/if}}
 			</a>
 		{{else}}
 			<div class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
@@ -117,6 +132,11 @@
 					<ui5-icon class="ui5-sn-item-toggle-icon"
 							  name="{{_toggleIconName}}"
 							  @click="{{_onToggleClick}}"
+					></ui5-icon>
+				{{/if}}
+				{{#if _isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
 					></ui5-icon>
 				{{/if}}
 			</div>

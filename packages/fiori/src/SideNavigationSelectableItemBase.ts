@@ -90,6 +90,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return (!this.disabled && this.target) ? this.target : undefined;
 	}
 
+	get _isExternalLink() {
+		return this.href && this.target === "_blank";
+	}
+
 	get _selected() {
 		return this.selected;
 	}
