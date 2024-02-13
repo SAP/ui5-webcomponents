@@ -18,7 +18,7 @@ import { instanceOfUI5Element } from "../UI5Element.js";
 
 interface ITabbable {
 	id: string,
-	_tabIndex: string,
+	forcedTabIndex: string,
 }
 
 type ItemNavigationOptions = {
@@ -44,18 +44,18 @@ type ItemNavigationOptions = {
  * 1) Use the "getItemsCallback" constructor property to pass a callback to ItemNavigation, which, whenever called, will return the list of items to navigate among.
  *
  * Each item passed to ItemNavigation via "getItemsCallback" must be:
- *  - A) either a UI5Element with a "_tabIndex" property
- *  - B) or an Object with "id" and "_tabIndex" properties which represents a part of the root component's shadow DOM.
+ *  - A) either a UI5Element with a "forcedTabIndex" property
+ *  - B) or an Object with "id" and "forcedTabIndex" properties which represents a part of the root component's shadow DOM.
  *    The "id" must be a valid ID within the shadow root of the component ItemNavigation operates on.
  *    This object must not be a DOM object because, as said, ItemNavigation will not set "tabindex" on it. It must be a representation of a DOM object only
  *    and the developer has the responsibility to update the "tabindex" in the component's DOM.
  *  - C) a combination of the above
  *
- * Whenever the user navigates with the keyboard, ItemNavigation will modify the "_tabIndex" properties of the items.
- * It is the items' responsibilities to re-render themselves and apply the correct value of "tabindex" (i.e. to map the "_tabIndex" ItemNavigation set to them to the "tabindex" property).
- * If the items of the ItemNavigation are UI5Elements themselves, this can happen naturally since they will be invalidated by their "_tabIndex" property.
- * If the items are Objects with "id" and "_tabIndex" however, it is the developer's responsibility to apply these and the easiest way is to have the root component invalidated by ItemNavigation.
- * To do so, set the "affectedPropertiesNames" constructor property to point to one or more of the root component's properties that need refreshing when "_tabIndex" is changed deeply.
+ * Whenever the user navigates with the keyboard, ItemNavigation will modify the "forcedTabIndex" properties of the items.
+ * It is the items' responsibilities to re-render themselves and apply the correct value of "tabindex" (i.e. to map the "forcedTabIndex" ItemNavigation set to them to the "tabindex" property).
+ * If the items of the ItemNavigation are UI5Elements themselves, this can happen naturally since they will be invalidated by their "forcedTabIndex" property.
+ * If the items are Objects with "id" and "forcedTabIndex" however, it is the developer's responsibility to apply these and the easiest way is to have the root component invalidated by ItemNavigation.
+ * To do so, set the "affectedPropertiesNames" constructor property to point to one or more of the root component's properties that need refreshing when "forcedTabIndex" is changed deeply.
  *
  * 2) Call the "setCurrentItem" method of ItemNavigation whenever you want to change the current item.
  * This is most commonly required if the user for example clicks on an item and thus selects it directly.
@@ -151,7 +151,7 @@ class ItemNavigation {
 
 	_init() {
 		this._getItems().forEach((item, idx) => {
-			item._tabIndex = (idx === this._currentIndex) ? "0" : "-1";
+			item.forcedTabIndex = (idx === this._currentIndex) ? "0" : "-1";
 		});
 	}
 
@@ -327,7 +327,7 @@ class ItemNavigation {
 	_applyTabIndex() {
 		const items = this._getItems();
 		for (let i = 0; i < items.length; i++) {
-			items[i]._tabIndex = i === this._currentIndex ? "0" : "-1";
+			items[i].forcedTabIndex = i === this._currentIndex ? "0" : "-1";
 		}
 
 		this._affectedPropertiesNames.forEach(propName => {

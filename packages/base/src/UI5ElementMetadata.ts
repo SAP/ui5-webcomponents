@@ -77,9 +77,19 @@ class UI5ElementMetadata {
 					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
 				}
 			} else if (props[propName].multiple) {
-				initialState[propName] = [];
+				Object.defineProperty(initialState, propName, {
+					enumerable: true,
+					get() {
+					  return [];
+					},
+				  });
 			} else if (propType === Object) {
-				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+				Object.defineProperty(initialState, propName, {
+					enumerable: true,
+					get() {
+					  return "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+					},
+				  });
 			} else if (propType === String) {
 				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
 			} else {

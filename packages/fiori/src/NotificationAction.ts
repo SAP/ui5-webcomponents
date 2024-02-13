@@ -16,6 +16,7 @@ type NotificationActionClickEventDetail = {
  *
  * @constructor
  * @extends UI5Element
+ * @abstract
  * @public
  */
 @customElement("ui5-notification-action")

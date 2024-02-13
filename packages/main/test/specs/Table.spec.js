@@ -195,6 +195,16 @@ describe("Table general interaction", () => {
 				timeoutMsg: "The load-more event must be fired."
 			});
 		});
+
+		it("tests 'loadMore' event not fired initially when the table does not overflow", async () => {
+			await browser.url(`test/pages/TableGrowingWithScroll.html`);
+
+			await browser.pause(300);
+
+			const inputResult = await browser.$("#inputLoadMoreInitialCounter");
+
+			assert.strictEqual(await inputResult.getAttribute("value"), "0", "The event load-more has not been fired.");
+		});
 	});
 
 	describe("Table selection modes", async () => {
@@ -835,7 +845,7 @@ describe("Table keyboard interaction", async () => {
 
 		await browser.keys(["Control", "End"]);
 
-		assert.strictEqual(await fourthRow.getAttribute("_tab-index"), "0", "The last row is focused");
+		assert.strictEqual(await fourthRow.getAttribute("forced-tab-index"), "0", "The last row is focused");
 	});
 
 	it("SHIFT + HOME/END", async () => {

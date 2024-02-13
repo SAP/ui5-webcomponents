@@ -23,7 +23,7 @@ import {
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
-import type { IInputSuggestionItem } from "../Interfaces.js";
+import type { IInputSuggestionItem } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;

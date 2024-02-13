@@ -2,24 +2,16 @@ import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import { DocsPage } from "../../../.storybook/docs";
 import type Label from "@ui5/webcomponents/dist/Label.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type { Decorator } from "@storybook/web-components"
 
-const component = "ui5-label";
-
 export default {
 	title: "Main/Label",
 	component: "Label",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<Label>;
 

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-// import "@ui5/webcomponents-base/dist/ssr-dom.js";
+import "@ui5/webcomponents-base/dist/ssr-dom.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata, {

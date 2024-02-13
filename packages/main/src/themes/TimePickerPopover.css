@@ -1,3 +1,7 @@
+.ui5-time-picker-popover {
+	width: 20rem;
+}
+
 .ui5-time-picker-footer {
 	height: fit-content;
 	display: flex;

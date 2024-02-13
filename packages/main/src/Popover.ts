@@ -516,7 +516,7 @@ class Popover extends Popup {
 	 * @private
 	 */
 	calcPlacement(targetRect: DOMRect, popoverSize: PopoverSize): CalculatedPlacement {
-		let left = 0;
+		let left = Popover.VIEWPORT_MARGIN;
 		let top = 0;
 		const allowTargetOverlap = this.allowTargetOverlap;
 
@@ -584,10 +584,10 @@ class Popover extends Popup {
 
 		// correct popover positions
 		if (isVertical) {
-			if (popoverSize.width > clientWidth || left < 0) {
-				left = 0;
-			} else if (left + popoverSize.width > clientWidth) {
-				left -= left + popoverSize.width - clientWidth;
+			if (popoverSize.width > clientWidth || left < Popover.VIEWPORT_MARGIN) {
+				left = Popover.VIEWPORT_MARGIN;
+			} else if (left + popoverSize.width > clientWidth - Popover.VIEWPORT_MARGIN) {
+				left = clientWidth - Popover.VIEWPORT_MARGIN - popoverSize.width;
 			}
 		} else {
 			if (popoverSize.height > clientHeight || top < 0) { // eslint-disable-line
@@ -733,7 +733,7 @@ class Popover extends Popup {
 
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		const horizontalAlign = this._actualHorizontalAlign;
-		let left = 0;
+		let left = Popover.VIEWPORT_MARGIN;
 
 		switch (horizontalAlign) {
 		case PopoverHorizontalAlign.Center:

@@ -55,7 +55,8 @@ import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
-import type { IIcon, IInputSuggestionItem } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
+import type ListItemType from "./types/ListItemType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -83,6 +84,22 @@ import inputStyles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
+
+/**
+ * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
+ *
+ * @public
+ */
+interface IInputSuggestionItem extends UI5Element {
+	text: string;
+	groupItem: boolean;
+	description?: string;
+	image?: string;
+	icon?: string;
+	additionalText?: string;
+	additionalTextState?: `${ValueState}`;
+	type?: `${ListItemType}`;
+}
 
 type NativeInputAttributes = {
 	min?: number,
@@ -176,7 +193,6 @@ type InputSuggestionScrollEventDetail = {
  *
  * @constructor
  * @extends UI5Element
- * @implements {IInput}
  * @public
  */
 @customElement({
@@ -1775,6 +1791,7 @@ Input.define();
 
 export default Input;
 export type {
+	IInputSuggestionItem,
 	InputSuggestionScrollEventDetail,
 	InputSuggestionItemSelectEventDetail,
 	InputSuggestionItemPreviewEventDetail,

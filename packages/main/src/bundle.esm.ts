@@ -66,7 +66,6 @@ import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/La
 import { setUseNativePopovers, getUseNativePopovers } from "@ui5/webcomponents-base/dist/config/NativePopover.js";
 import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
-import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames, getIconAccessibleName, registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
@@ -212,7 +211,6 @@ const testAssets = {
 		getLanguage,
 		setLanguage,
 		setNoConflict,
-		getRTL,
 		getFirstDayOfWeek,
 		getTimezone,
 		setTimezone,

@@ -1,25 +1,16 @@
 import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs.js";
 
 import type SuggestionGroupItem from "@ui5/webcomponents/dist/SuggestionGroupItem.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 
-const component = "ui5-suggestion-group-item";
-
 export default {
 	title: "Main/Input/Suggestion Group Item",
 	component: "SuggestionGroupItem",
-	parameters: {
-		docs: {
-		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<SuggestionGroupItem>;
 
