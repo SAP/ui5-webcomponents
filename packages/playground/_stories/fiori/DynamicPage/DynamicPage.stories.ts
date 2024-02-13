@@ -44,7 +44,7 @@ const Template: UI5StoryArgs<DynamicPage, StoryArgsSlots> = (args) => {
       ${unsafeHTML(args.headerArea)}
       ${unsafeHTML(args.titleArea)}
       ${unsafeHTML(args.default)}
-      ${unsafeHTML(args.footer)}
+      ${unsafeHTML(args.footerArea)}
     </ui5-dynamic-page>
 `;
 };
@@ -740,7 +740,7 @@ Basic.args = {
         >Gladiator MX</ui5-li
     >
     </ui5-list>`,
-    footer: `<ui5-bar id="footer" slot="footer" design="FloatingFooter">
+    footerArea: `<ui5-bar id="footer" slot="footer" design="FloatingFooter">
     <ui5-button slot="endContent">Edit</ui5-button>
     <ui5-button slot="endContent">Close</ui5-button>
     </ui5-bar>`,
