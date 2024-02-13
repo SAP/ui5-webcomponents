@@ -16,12 +16,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import {
-	registerDropArea,
-	deregisterDropArea,
-	getDraggedElement,
-	setDraggedComponent,
-} from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -522,14 +517,14 @@ class List extends UI5Element {
 	}
 
 	onEnterDOM() {
-		registerDropArea(this);
+		DragRegistry.subscribe(this);
 	}
 
 	onExitDOM() {
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
-		deregisterDropArea(this);
+		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering() {
@@ -936,14 +931,6 @@ class List extends UI5Element {
 		this.setForwardingFocus(false);
 	}
 
-	_ondragstart(e: DragEvent) {
-		if (!e.dataTransfer || !(e.target instanceof ListItemBase)) {
-			return;
-		}
-
-		setDraggedComponent(e.target);
-	}
-
 	_ondragenter(e: DragEvent) {
 		e.preventDefault();
 	}
@@ -975,7 +962,7 @@ class List extends UI5Element {
 		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
 				source: {
-					element: getDraggedElement() ?? e.target as HTMLElement,
+					element: DragRegistry.getDraggedElement()!,
 				},
 				destination: {
 					element: closestDropPosition.element,
@@ -1003,7 +990,7 @@ class List extends UI5Element {
 
 		this.fireEvent<ListItemMoveEventDetail>("item-move", {
 			source: {
-				element: getDraggedElement() ?? e.target as HTMLElement,
+				element: DragRegistry.getDraggedElement()!,
 			},
 			destination: {
 				element: this.dropIndicatorDOM!.targetReference!,

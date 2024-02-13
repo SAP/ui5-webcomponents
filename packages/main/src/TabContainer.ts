@@ -29,12 +29,7 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import {
-	registerDropArea,
-	deregisterDropArea,
-	getDraggedElement,
-	setDraggedComponent,
-} from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
 import {
@@ -370,6 +365,7 @@ class TabContainer extends UI5Element {
 	_itemsFlat?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
 	_handleResizeBound: () => void;
+	_staticAreaItemListenerAttached = false;
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
@@ -445,12 +441,19 @@ class TabContainer extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
-		registerDropArea(this);
+		DragRegistry.subscribe(this);
+		DragRegistry.registerSelfManagedDragArea(this);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
-		deregisterDropArea(this);
+		DragRegistry.unsubscribe(this);
+		DragRegistry.deregisterSelfManagedDragArea(this);
+
+		if (this.staticAreaItem && this._staticAreaItemListenerAttached) {
+			DragRegistry.deregisterSelfManagedDragArea(this.staticAreaItem);
+			this._staticAreaItemListenerAttached = false;
+		}
 	}
 
 	_handleResize() {
@@ -493,17 +496,11 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		setDraggedComponent((e.target as Tab).realTabReference);
+		DragRegistry.setDraggedElement((e.target as Tab).realTabReference);
 	}
 
 	_onHeaderDragEnter(e: DragEvent) {
 		e.preventDefault();
-
-		const isSourceElemTabInOverflow = (this.responsivePopover?.content[0] as List)?.items.some(item => item === e.target);
-
-		if (isSourceElemTabInOverflow) {
-			setDraggedComponent((e.target as TabContainerTabInOverflow).realTabReference);
-		}
 	}
 
 	@longDragOverHandler(element => element.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]"))
@@ -539,7 +536,7 @@ class TabContainer extends UI5Element {
 		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
 			const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
 				source: {
-					element: getDraggedElement() ?? e.target as HTMLElement,
+					element: DragRegistry.getDraggedElement()!,
 				},
 				destination: {
 					element: (closestDropPosition.element as Tab).realTabReference,
@@ -573,7 +570,7 @@ class TabContainer extends UI5Element {
 
 		this.fireEvent<TabContainerBeforeTabMoveEventDetail>("tab-move", {
 			source: {
-				element: getDraggedElement() ?? e.target as HTMLElement,
+				element: DragRegistry.getDraggedElement()!,
 			},
 			destination: {
 				element: (this.dropIndicatorDOM!.targetReference as Tab).realTabReference,
@@ -593,16 +590,10 @@ class TabContainer extends UI5Element {
 	}
 
 	_onBeforeItemMoveInPopover(e: CustomEvent<ListBeforeItemMoveEventDetail>) {
-		const { source, destination } = e.detail;
-		const isSourceElemTabInOverflow = (this.responsivePopover!.content[0] as List).items.some(item => item === source.element);
-
-		if (isSourceElemTabInOverflow) {
-			setDraggedComponent((source.element as TabContainerTabInOverflow).realTabReference);
-		}
-
+		const { destination } = e.detail;
 		const placementAccepted = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
 			source: {
-				element: getDraggedElement()!,
+				element: DragRegistry.getDraggedElement()!,
 			},
 			destination: {
 				element: (destination.element as Tab).realTabReference,
@@ -618,18 +609,13 @@ class TabContainer extends UI5Element {
 	}
 
 	_onItemMoveInPopover(e: CustomEvent<ListItemMoveEventDetail>) {
-		const { source, destination } = e.detail;
-		const isSourceElemTabInOverflow = (this.responsivePopover!.content[0] as List).items.some(item => item === source.element);
-
-		if (isSourceElemTabInOverflow) {
-			setDraggedComponent((source.element as TabContainerTabInOverflow).realTabReference);
-		}
+		const { destination } = e.detail;
 
 		e.preventDefault();
 
 		this.fireEvent<TabContainerBeforeTabMoveEventDetail>("tab-move", {
 			source: {
-				element: getDraggedElement()!,
+				element: DragRegistry.getDraggedElement()!,
 			},
 			destination: {
 				element: (destination.element as Tab).realTabReference,
@@ -1383,8 +1369,17 @@ class TabContainer extends UI5Element {
 	}
 
 	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
+		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
+
+		if (!this._staticAreaItemListenerAttached) {
+			DragRegistry.registerSelfManagedDragArea(this.staticAreaItem!);
+			staticAreaItemDomRef!.addEventListener("dragstart", e => {
+				DragRegistry.setDraggedElement((e.target as Tab).realTabReference);
+			});
+			this._staticAreaItemListenerAttached = true;
+		}
+
+		return staticAreaItemDomRef!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
 	async _closeRespPopover() {

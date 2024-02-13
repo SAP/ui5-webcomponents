@@ -1,9 +1,9 @@
 import type UI5Element from "../../UI5Element";
 
 let draggedElement: HTMLElement | null = null;
-let draggedComponent: HTMLElement | null = null;
 let globalHandlersAttached = false;
-const dropAreas = new Set<UI5Element>();
+const subscribers = new Set<UI5Element>();
+const selfManagedDragAreas = new Set<HTMLElement | ShadowRoot>();
 
 const ondragstart = (e: DragEvent) => {
 	if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
@@ -13,25 +13,25 @@ const ondragstart = (e: DragEvent) => {
 	e.dataTransfer.dropEffect = "move";
 	e.dataTransfer.effectAllowed = "move";
 
-	draggedElement = e.target;
+	if (!selfManagedDragAreas.has(e.target)) {
+		draggedElement = e.target;
+	}
 };
 
 const ondragend = () => {
 	draggedElement = null;
-	draggedComponent = null;
 };
 
 const ondrop = () => {
 	draggedElement = null;
-	draggedComponent = null;
 };
 
-const setDraggedComponent = (component: HTMLElement | null) => {
-	draggedComponent = component;
+const setDraggedElement = (element: HTMLElement | null) => {
+	draggedElement = element;
 };
 
 const getDraggedElement = () => {
-	return draggedComponent ?? draggedElement;
+	return draggedElement;
 };
 
 const attachGlobalHandlers = () => {
@@ -51,25 +51,37 @@ const detachGlobalHandlers = () => {
 	globalHandlersAttached = false;
 };
 
-const registerDropArea = (area: UI5Element) => {
-	dropAreas.add(area);
-
+const subscribe = (subscriber: UI5Element) => {
+	subscribers.add(subscriber);
+	
 	if (!globalHandlersAttached) {
 		attachGlobalHandlers();
 	}
-};
+}
 
-const deregisterDropArea = (area: UI5Element) => {
-	dropAreas.delete(area);
-
-	if (dropAreas.size === 0 && globalHandlersAttached) {
+const unsubscribe = (subscriber: UI5Element) => {
+	subscribers.delete(subscriber);
+	
+	if (subscribers.size === 0 && globalHandlersAttached) {
 		detachGlobalHandlers();
 	}
+}
+
+const registerSelfManagedDragArea = (area: HTMLElement | ShadowRoot) => {
+	selfManagedDragAreas.add(area);
 };
 
-export {
-	registerDropArea,
-	deregisterDropArea,
-	getDraggedElement,
-	setDraggedComponent,
+const deregisterSelfManagedDragArea = (area: HTMLElement | ShadowRoot) => {
+	selfManagedDragAreas.delete(area);
 };
+
+const DragRegistry = {
+	subscribe,
+	unsubscribe,
+	registerSelfManagedDragArea,
+	deregisterSelfManagedDragArea,
+	getDraggedElement,
+	setDraggedElement,
+}
+
+export default DragRegistry;
