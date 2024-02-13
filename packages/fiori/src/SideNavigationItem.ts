@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -64,7 +65,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
 	/**
@@ -85,6 +86,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get focusableItems() : Array<SideNavigationItem> {
 		return [this];
+	}
+
+	get allItems() : Array<SideNavigationItemBase> {
+		return [this, ...this.items];
 	}
 
 	get _ariaHasPopup() {
@@ -130,7 +135,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavigation?.collapsed) {
+		if (this.sideNavCollapsed) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
@@ -170,7 +175,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onclick = (e: PointerEvent) => {
-		if (!this.sideNavigation?.collapsed
+		if (!this.sideNavCollapsed
 			&& this.wholeItemToggleable
 			&& e.pointerType === "mouse") {
 			e.preventDefault();
@@ -183,7 +188,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onfocusout = () => {
-		if (!this.sideNavigation?.collapsed) {
+		if (!this.sideNavCollapsed) {
 			return;
 		}
 
@@ -191,7 +196,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onmouseenter = () => {
-		if (!this.sideNavigation?.collapsed) {
+		if (!this.sideNavCollapsed) {
 			return;
 		}
 
@@ -199,7 +204,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onmouseleave = () => {
-		if (!this.sideNavigation?.collapsed || !this._selected) {
+		if (!this.sideNavCollapsed || !this._selected) {
 			return;
 		}
 

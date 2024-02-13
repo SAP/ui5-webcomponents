@@ -1,4 +1,4 @@
-{{#if sideNavExpanded}}
+{{#unless sideNavCollapsed}}
 	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
 		{{#if _href}}
 			<a class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
@@ -44,4 +44,4 @@
 			</div>
 		{{/if}}
 	</li>
-{{/if}}
+{{/unless}}

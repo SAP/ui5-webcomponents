@@ -52,7 +52,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<SideNavigationItem>;
 
 	get selectableItems() : Array<SideNavigationItem> {
@@ -61,6 +61,16 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	get focusableItems() : Array<SideNavigationItem | SideNavigationGroup> {
 		return [this, ...this.items];
+	}
+
+	get allItems() : Array<SideNavigationItemBase> {
+		let result = new Array<SideNavigationItemBase>(this);
+
+		this.items.forEach(item => {
+			result = result.concat(item.allItems);
+		});
+
+		return result;
 	}
 
 	get isFixedItem() {

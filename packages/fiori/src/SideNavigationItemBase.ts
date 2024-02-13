@@ -15,11 +15,6 @@ import type SideNavigation from "./SideNavigation.js";
  * @since 1.19.0
  */
 class SideNavigationItemBase extends UI5Element implements ITabbable {
-	constructor() {
-		super();
-
-		// this.sideNavExpanded = true;
-	}
 	/**
 	 * Defines the text of the item.
 	 *
@@ -53,8 +48,8 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	@property({ defaultValue: "-1", noAttribute: true })
 	forcedTabIndex!: string;
 
-	// @property({ type: Boolean, noAttribute: true })
-	// sideNavExpanded!: boolean;
+	@property({ type: Boolean })
+	sideNavCollapsed!: boolean;
 
 	get _tooltip() {
 		return this.title || this.text;
@@ -80,10 +75,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		}
 
 		return this.forcedTabIndex;
-	}
-
-	get sideNavExpanded() {
-		return !this.sideNavigation?.collapsed;
 	}
 
 	get sideNavigation() : SideNavigation | undefined {

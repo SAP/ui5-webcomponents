@@ -159,7 +159,7 @@ class SideNavigation extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<SideNavigationItem | SideNavigationGroup>;
 
 	/**
@@ -170,7 +170,7 @@ class SideNavigation extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	@slot({ type: HTMLElement })
 	fixedItems!: Array<SideNavigationItem | SideNavigationGroup>;
 
 	/**
@@ -228,6 +228,18 @@ class SideNavigation extends UI5Element {
 	}
 
 	_handleResizeBound: () => void;
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+
+		this._getAllItems(this.items).forEach(item => {
+			item.sideNavCollapsed = this.collapsed;
+		});
+
+		this._getAllItems(this.fixedItems).forEach(item => {
+			item.sideNavCollapsed = this.collapsed;
+		});
+	}
 
 	async _onAfterPopoverOpen() {
 		// as the tree/list inside the popover is never destroyed,
@@ -583,6 +595,16 @@ class SideNavigation extends UI5Element {
 			if (item.expanded) {
 				result = result.concat(item.items);
 			}
+		});
+
+		return result;
+	}
+
+	_getAllItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItemBase> {
+		let result = new Array<SideNavigationItemBase>();
+
+		items.forEach(item => {
+			result = result.concat(item.allItems);
 		});
 
 		return result;
