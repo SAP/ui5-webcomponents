@@ -126,7 +126,7 @@ class OpenUI5Support {
 			const Localization = window.sap.ui.require("sap/base/i18n/Localization") as Localization;
 			const Theming = window.sap.ui.require("sap/ui/core/Theming") as Theming;
 			const Formatting = window.sap.ui.require("sap/base/i18n/Formatting") as Formatting;
-			// const CalendarUtils = window.sap.ui.require("sap/ui/core/date/CalendarUtils") as CalendarUtils;
+			const CalendarUtils = window.sap.ui.require("sap/ui/core/date/CalendarUtils") as CalendarUtils;
 
 			return {
 				animationMode: ControlBehavior.getAnimationMode(),
@@ -137,7 +137,7 @@ class OpenUI5Support {
 				timezone: Localization.getTimezone(),
 				calendarType: Formatting.getCalendarType(),
 				formatSettings: {
-					// firstDayOfWeek: CalendarUtils.getWeekConfigurationValues().firstDayOfWeek,
+					firstDayOfWeek: CalendarUtils.getWeekConfigurationValues().firstDayOfWeek,
 					legacyDateCalendarCustomizing: Formatting.getCustomIslamicCalendarData?.()
 												?? Formatting.getLegacyDateCalendarCustomizing?.(),
 				},
