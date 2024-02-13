@@ -55,21 +55,21 @@
 .ui5-cp-root-phone .ui5-cp-recent-colors-wrapper{
 	max-width: 100%;
 	padding: 0px;
+	display: flex;
+	justify-content: center;
+	flex-flow: wrap;
+	max-height: var(--_ui5_color-palette-row-height);
+	overflow: hidden;
 }
 
 .ui5-cp-recent-colors-wrapper {
 	display: flex;
-	justify-content: center;
-	max-width: var(--_ui5_color-palette-row-width);
-	flex-flow: wrap;
-	max-height: var(--_ui5_color-palette-row-height);
-	overflow: hidden;
-	padding: var(--_ui5_color-palette-swatch-container-padding);
+	align-items: center;
+	flex-direction: column;
 }
 
 .ui5-cp-root.ui5-cp-root-phone {
 	display: flex;
-	/* align-items: center; */
 }
 
 .ui5-cp-item-container {
