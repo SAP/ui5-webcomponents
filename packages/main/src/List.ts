@@ -16,7 +16,12 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import {
+	registerDropArea,
+	deregisterDropArea,
+	getDraggedElement,
+	setDraggedComponent,
+} from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -516,10 +521,15 @@ class List extends UI5Element {
 		this.initialIntersection = true;
 	}
 
+	onEnterDOM() {
+		registerDropArea(this);
+	}
+
 	onExitDOM() {
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
+		deregisterDropArea(this);
 	}
 
 	onBeforeRendering() {

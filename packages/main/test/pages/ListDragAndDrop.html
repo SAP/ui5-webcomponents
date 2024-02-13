@@ -7,12 +7,13 @@
 	<title>List Drag and Drop</title>
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/List.css">
 </head>
 
-<body class="tabcontainer1auto">
+<body class="list1auto">
 	<ui5-checkbox id="reorder" text="Draggable items" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<a href="http://sap.com">http://sap.com</a>
+	<a id="link" href="http://sap.com">http://sap.com</a>
 
 	<section>
 		<h2>Drag and drop</h2>
@@ -23,7 +24,7 @@
 		</ui5-list>
 	</section>
 
-	<section>
+	<section class="largeTopMargin">
 		<ui5-list id="listDnd2" header-text="List 2">
 			<ui5-li draggable="true" id="bg2">2. Bulgaria</ui5-li>
 			<ui5-li draggable="true" id="de2" data-allows-nesting>2. Germany (Allows nesting)</ui5-li>

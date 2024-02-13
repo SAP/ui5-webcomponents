@@ -29,7 +29,12 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import { getDraggedElement, setDraggedComponent } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import {
+	registerDropArea,
+	deregisterDropArea,
+	getDraggedElement,
+	setDraggedComponent,
+} from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
 import {
@@ -440,10 +445,12 @@ class TabContainer extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
+		registerDropArea(this);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
+		deregisterDropArea(this);
 	}
 
 	_handleResize() {
