@@ -289,7 +289,6 @@ class TabContainer extends UI5Element {
 	/**
 	 * Defines the current media query size.
 	 *
-	 * @type {string}
 	 * @private
 	 */
 	@property()
