@@ -45,7 +45,7 @@ type ItemsInfo = {
  * <h3>Structure</h3>
  *
  * <ul>
- * <li><b>Form</b> (<code>ui5-form</code>) is the top-level container component, responsible for the content layout and the resposiveness.</li>
+ * <li><b>Form</b> (<code>ui5-form</code>) is the top-level container component, responsible for the content layout and the responsiveness.</li>
  * <li><b>FormGroup</b> (<code>ui5-form-group</code>) enables the grouping of the Form content.</li>
  * <li><b>FormItem</b> (<code>ui5-form-item</code>) is a pair of label and form field and can be used directly in a Form, or as part of a FormGroup.</li>
  * </ul>
@@ -60,13 +60,13 @@ type ItemsInfo = {
  *
  * <h3>Responsiveness</h3>
  *
- * The Form component reacts and changes its layout on perdefined breakpoints.
+ * The Form component reacts and changes its layout on predefined breakpoints.
  * Depending on its size, the Form content (FormGroups and FormItems) gets divided into one or more columns as follows:
  * <ul>
- * <li> <b>S</b> (< 600px) – 1 column</li>
- * <li> <b>M</b> (600px - 1022px) – up to 2 columns (default: 1)</li>
- * <li> <b>L</b> (1023px - 1439px) - up to 3 columns (default: 2)</li>
- * <li> <b>XL</b> (> 1439px) – up to 6 columns (default: 2)</li>
+ * <li> <b>S</b> (< 600px) – 1 column is recommended (default: 1)</li>
+ * <li> <b>M</b> (600px - 1022px) – up to 2 columns are recommended (default: 1)</li>
+ * <li> <b>L</b> (1023px - 1439px) - up to 3 columns are recommended (default: 2)</li>
+ * <li> <b>XL</b> (> 1439px) – up to 6 columns are recommended (default: 2)</li>
  * </ul>
  * To change the layout, use the <code>layout</code> property - f.e. layout="S1 M2 L3 XL6".
  *

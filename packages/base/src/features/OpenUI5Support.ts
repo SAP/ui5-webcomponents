@@ -137,7 +137,7 @@ class OpenUI5Support {
 				timezone: Localization.getTimezone(),
 				calendarType: Formatting.getCalendarType(),
 				formatSettings: {
-					firstDayOfWeek: CalendarUtils.getWeekConfigurationValues().firstDayOfWeek,
+					firstDayOfWeek: CalendarUtils?.getWeekConfigurationValues().firstDayOfWeek,
 					legacyDateCalendarCustomizing: Formatting.getCustomIslamicCalendarData?.()
 												?? Formatting.getLegacyDateCalendarCustomizing?.(),
 				},

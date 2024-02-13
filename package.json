@@ -46,7 +46,7 @@
     "lint:scope": "wsrun --exclude-missing lint:scope",
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
-    "copy-css": "copy-and-watch --silent \"packages/base/dist/css/**/*\" packages/main/test/pages/resources/css/base/ && copy-and-watch --silent \"packages/theming/dist/css/**/*\" packages/main/test/pages/resources/css/theming/ && copy-and-watch --silent \"packages/main/dist/css/**/*\" packages/main/test/pages/resources/css/main/ && copy-and-watch --silent \"packages/base/dist/css/**/*\" packages/fiori/test/pages/resources/css/base/ && copy-and-watch --silent \"packages/theming/dist/css/**/*\" packages/fiori/test/pages/resources/css/theming/ && copy-and-watch --silent \"packages/fiori/dist/css/**/*\" packages/fiori/test/pages/resources/css/fiori/ && copy-and-watch --silent \"packages/main/dist/css/**/*\" packages/fiori/test/pages/resources/css/main/",
+    "copy-css": "copy-and-watch \"packages/base/dist/css/**/*\" packages/main/test/pages/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/main/test/pages/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/main/test/pages/resources/css/main/ && copy-and-watch \"packages/base/dist/css/**/*\" packages/fiori/test/pages/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/fiori/test/pages/resources/css/theming/ && copy-and-watch \"packages/fiori/dist/css/**/*\" packages/fiori/test/pages/resources/css/fiori/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/fiori/test/pages/resources/css/main/",
     "release": "node ./.github/actions/release.js",
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
