@@ -14,7 +14,12 @@ import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
-import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
+import {
+	renderDeferred,
+	renderImmediately,
+	cancelRender,
+	renderFinished,
+} from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
@@ -945,8 +950,9 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @public
 	 */
-	getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
+	async getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
 		if (getUseNativePopovers()) {
+			await renderFinished();
 			return Promise.resolve(this.shadowRoot);
 		}
 

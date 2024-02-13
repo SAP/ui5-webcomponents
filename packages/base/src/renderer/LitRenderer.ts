@@ -30,7 +30,7 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 
 const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<TemplateFunctionResult>, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => {
 	if (Array.isArray(templateResult)) {
-		templateResult = effectiveHtml`${templateResult[0]} ${unsafeHTML(DIVIDER_COMMENT)} ${templateResult[1]}`;
+		templateResult = effectiveHtml`${templateResult[0]}${unsafeHTML(DIVIDER_COMMENT)}${templateResult[1]}`;
 	}
 
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
