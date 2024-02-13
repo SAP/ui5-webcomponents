@@ -1,7 +1,7 @@
-<div class="{{classes.root}}">
-	<div class="{{classes.scrollContainer}}" @scroll="{{snapOnScroll}}">
+<div class="ui5-dynamic-page-root">
+	<div class="ui5-dynamic-page-scroll-container" @scroll="{{snapOnScroll}}">
 		<header 
-			class="{{classes.headerWrapper}}"
+			class="ui5-dynamic-page-title-header-wrapper"
 			id="{{_id}}-header"
 			aria-label="{{_headerLabel}}"
 			aria-expanded="{{_headerExpanded}}"
@@ -26,17 +26,17 @@
 			{{> header-actions}}
 		{{/unless}}
 
-		<div class="{{classes.content}}">
-			<div class="{{classes.fitContent}}">
+		<div class="ui5-dynamic-page-content">
+			<div class="ui5-dynamic-page-fit-content">
 				<slot></slot>
 				{{#if showFooter}}
-					<div class="{{classes.spacer}}"></div>
+					<div class="ui5-dynamic-page-spacer"></div>
 				{{/if}}
 			</div>
 		</div>
 	</div>
 
-	<div class="{{classes.footer}}">
+	<div class="ui5-dynamic-page-footer">
 		<slot name="footer"></slot>
 	</div>
 </div>

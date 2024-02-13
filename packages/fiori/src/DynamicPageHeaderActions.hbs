@@ -1,7 +1,7 @@
-<div class="{{classes.root}}">
-    <div class="{{classes.wrapper}}">
+<div class="ui5-dynamic-page-header-actions-root">
+    <div class="ui5-dynamic-page-header-actions--wrapper">
         <ui5-button
-            class="{{classes.expandCollapseButton}}"
+            class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-expand"
             @click="{{onExpandClick}}" 
             icon="{{arrowButtonIcon}}"
             accessible-name="{{expandLabel}}"
@@ -10,7 +10,7 @@
         ></ui5-button>
     {{#unless snapped}}
         <ui5-toggle-button
-            class="{{classes.pinButton}}"
+            class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-pin"
             @click="{{onPinClick}}"
             icon="{{pinButtonIcon}}"
             ?pressed="{{pinned}}"

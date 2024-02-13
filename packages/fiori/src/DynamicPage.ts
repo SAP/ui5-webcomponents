@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -107,6 +108,27 @@ const SCROLL_DEBOUNCE_RATE = 25; // ms
 	dependencies: [DynamicPageHeader, DynamicPageTitle, DynamicPageHeaderActions],
 })
 
+/**
+ * Fired when the pin header button is clicked.
+ *
+ * @public
+ */
+@event("pin-click")
+
+/**
+ * Fired when the expand or collapse header button is clicked.
+ *
+ * @public
+ */
+@event("expand-click")
+
+/**
+ * Fired when the expand/collapse area of the title is clicked.
+ *
+ * @public
+ */
+@event("title-click")
+
 class DynamicPage extends UI5Element {
 	/**
 	 * Defines if the header is snapped.
@@ -160,12 +182,20 @@ class DynamicPage extends UI5Element {
 	titleArea!: Array<DynamicPageTitle>;
 
 	/**
-	 * Defines the title HTML Element.
+	 * Defines the header HTML Element.
 	 *
 	 * @public
 	 */
 	@slot({ type: DynamicPageHeader })
 	headerArea!: Array<DynamicPageHeader>;
+
+	/**
+	 * Defines the footer HTML Element.
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	footerArea!: HTMLElement[];
 
 	static i18nBundle: I18nBundle;
 
@@ -183,14 +213,6 @@ class DynamicPage extends UI5Element {
 		DynamicPage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	/**
-	 * Defines the title HTML Element.
-	 *
-	 * @public
-	 */
-	@slot({ type: HTMLElement })
-	footer!: HTMLElement[];
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._updateMediaRange);
 	}
@@ -203,32 +225,6 @@ class DynamicPage extends UI5Element {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this.headerSnapped;
 		}
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-dynamic-page-root": true,
-			},
-			scrollContainer: {
-				"ui5-dynamic-page-scroll-container": true,
-			},
-			headerWrapper: {
-				"ui5-dynamic-page-title-header-wrapper": true,
-			},
-			content: {
-				"ui5-dynamic-page-content": true,
-			},
-			fitContent: {
-				"ui5-dynamic-page-fit-content": true,
-			},
-			footer: {
-				"ui5-dynamic-page-footer": true,
-			},
-			spacer: {
-				"ui5-dynamic-page-spacer": true,
-			},
-		};
 	}
 
 	get dynamicPageTitle(): DynamicPageTitle | null {
@@ -302,6 +298,10 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onExpandClick() {
+		const prevented = !this.fireEvent("expand-click");
+		if (prevented) {
+			return;
+		}
 		this._toggleHeader();
 		await renderFinished();
 		this.headerActions?.focusExpandButton();
@@ -309,12 +309,20 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onPinClick() {
+		const prevented = !this.fireEvent("pin-click");
+		if (prevented) {
+			return;
+		}
 		this.headerPinned = !this.headerPinned;
 		await renderFinished();
 		this.headerActions?.focusPinButton();
 	}
 
 	async onToggleTitle() {
+		const prevented = !this.fireEvent("title-click");
+		if (prevented) {
+			return;
+		}
 		this._toggleHeader();
 		await renderFinished();
 		this.dynamicPageTitle!.focus();

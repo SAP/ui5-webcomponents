@@ -76,7 +76,7 @@ class DynamicPageTitle extends UI5Element {
 	/**
 	 * Defines if the title is snapped.
 	 *
-	 * @public
+	 * @protected
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -194,35 +194,6 @@ class DynamicPageTitle extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareLayoutActions();
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-dynamic-page-title-root": true,
-			},
-			focusArea: {
-				"ui5-dynamic-page-title-focus-area": true,
-			},
-			topArea: {
-				"ui5-dynamic-page-title--top-area": true,
-			},
-			wrapper: {
-				"ui5-dynamic-page-title--wrapper": true,
-			},
-			heading: {
-				"ui5-dynamic-page-title--heading": true,
-			},
-			content: {
-				"ui5-dynamic-page-title--content": true,
-			},
-			actions: {
-				"ui5-dynamic-page-title--actions": true,
-			},
-			actionsSeparator: {
-				"ui5-dynamic-page-title--actions-separator": true,
-			},
-		};
 	}
 
 	get styles() {

@@ -48,14 +48,14 @@ import {
 /**
  * Event that is being fired by clicking on the expand button.
  *
- * @public
+ * @protected
  */
 @event("expand-button-click")
 
 /**
  * Event that is being fired by clicking on the pin button.
  *
- * @public
+ * @protected
  */
 @event("pin-button-click")
 
@@ -63,7 +63,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	/**
 	 * Defines whether the header is pinned.
 	 *
-	 * @public
+	 * @protected
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -72,7 +72,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	/**
 	 * Defines whether the header is snapped.
 	 *
-	 * @public
+	 * @protected
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -81,7 +81,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	/**
 	 * Contains attributes to be added to HTML to gain accessibility.
 	 *
-	 * @public
+	 * @protected
 	 * @default {}
 	 */
 	@property({ type: Object })
@@ -91,25 +91,6 @@ class DynamicPageHeaderActions extends UI5Element {
 
 	static async onDefine() {
 		DynamicPageHeaderActions.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-dynamic-page-header-actions-root": true,
-			},
-			wrapper: {
-				"ui5-dynamic-page-header-actions--wrapper": true,
-			},
-			expandCollapseButton: {
-				"ui5-dynamic-page-header-action": true,
-				"ui5-dynamic-page-header-action-expand": true,
-			},
-			pinButton: {
-				"ui5-dynamic-page-header-action": true,
-				"ui5-dynamic-page-header-action-pin": true,
-			},
-		};
 	}
 
 	get arrowButtonIcon() {

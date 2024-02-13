@@ -53,14 +53,6 @@ class DynamicPageHeader extends UI5Element {
 	 */
 	@slot({ "default": true, type: HTMLElement })
 	content!: HTMLElement[];
-
-	get classes() {
-		return {
-			root: {
-				"ui5-dynamic-page-header-root": true,
-			},
-		};
-	}
 }
 
 DynamicPageHeader.define();
