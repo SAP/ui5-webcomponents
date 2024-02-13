@@ -217,7 +217,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * 			<ul>
 	 *				<li><code>Dialog</code></li>
 	 *				<li><code>Grid</code></li>
-	 *				<li><code>Listbox</code></li>
+	 *				<li><code>ListBox</code></li>
 	 *				<li><code>Menu</code></li>
 	 *				<li><code>Tree</code></li>
 	 * 			</ul>
@@ -471,6 +471,10 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		this.active = active;
+	}
+
+	get _hasPopup() {
+		return this.accessibilityAttributes.hasPopup?.toLowerCase();
 	}
 
 	get hasButtonType() {

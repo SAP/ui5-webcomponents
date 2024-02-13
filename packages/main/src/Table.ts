@@ -488,6 +488,7 @@ class Table extends UI5Element {
 	visibleColumnsCount?: number;
 	lastFocusedElement: HTMLElement | null;
 	growingIntersectionObserver?: IntersectionObserver | null;
+	initialIntersection: boolean;
 
 	_forwardingFocus: boolean;
 	_prevNestedElementIndex: number;
@@ -528,6 +529,10 @@ class Table extends UI5Element {
 
 		// Stores the last focused nested element index (within a table row) for F7 navigation.
 		this._prevNestedElementIndex = 0;
+
+		// Indicates the Table bottom most part has been detected by the IntersectionObserver
+		// for the first time.
+		this.initialIntersection = true;
 	}
 
 	onBeforeRendering() {
@@ -969,6 +974,11 @@ class Table extends UI5Element {
 	}
 
 	onInteresection(entries: Array<IntersectionObserverEntry>) {
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
+		}
+
 		if (entries.some(entry => entry.isIntersecting)) {
 			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
 		}
