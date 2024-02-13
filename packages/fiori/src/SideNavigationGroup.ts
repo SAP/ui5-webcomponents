@@ -73,10 +73,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return result;
 	}
 
-	get isFixedItem() {
-		return this.slot === "fixedItems";
-	}
-
 	get _groupId() {
 		if (!this.items.length) {
 			return undefined;

@@ -593,7 +593,7 @@ class SideNavigation extends UI5Element {
 			result.push(item);
 
 			if (item.expanded) {
-				result = result.concat(item.items);
+				result = result.concat(item.focusableItems);
 			}
 		});
 

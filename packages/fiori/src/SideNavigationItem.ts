@@ -142,10 +142,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
-	get isFixedItem() {
-		return this.slot === "fixedItems";
-	}
-
 	_onToggleClick = (e: PointerEvent) => {
 		e.stopPropagation();
 

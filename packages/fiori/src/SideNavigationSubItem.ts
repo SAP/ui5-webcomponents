@@ -34,10 +34,6 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
 	],
 })
 class SideNavigationSubItem extends SideNavigationSelectableItemBase {
-	get isFixedItem() {
-		return this.parentElement?.slot === "fixedItems";
-	}
-
 	_onkeydown = (e: KeyboardEvent) => {
 		super._onkeydown(e);
 	}

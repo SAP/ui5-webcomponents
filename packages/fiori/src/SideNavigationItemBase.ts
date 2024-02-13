@@ -90,7 +90,19 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get isFixedItem() {
-		return true;
+		let element : HTMLElement = this; // eslint-disable-line
+		let parentElement = element.parentElement;
+
+		while (parentElement) {
+			if (parentElement.hasAttribute("ui5-side-navigation")) {
+				break;
+			}
+
+			element = parentElement;
+			parentElement = element.parentElement;
+		}
+
+		return element?.slot === "fixedItems";
 	}
 }
 
