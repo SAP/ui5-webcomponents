@@ -23,7 +23,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 }
 
 /**
- * @class CalendarLegend
+ * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
