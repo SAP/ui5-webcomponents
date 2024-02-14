@@ -632,7 +632,7 @@
 		<section>
 			<ui5-form class="addressForm" header-text="WebC :: Supplier 2gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
 
-				<ui5-form-group header-text="Address">
+				<ui5-form-group id="testFormGroup4" header-text="Address">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Name:</ui5-label>
 						<span class="text">Red Point Stores</span>
@@ -659,7 +659,7 @@
 					</ui5-form-item>
 				</ui5-form-group>
 
-				<ui5-form-group header-text="Contact">
+				<ui5-form-group id="testFormGroup5" header-text="Contact">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Twitter:</ui5-label>
 						<span class="text">@sap</span>
@@ -705,7 +705,7 @@
 		<section>
 			<ui5-form class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
 
-				<ui5-form-group header-text="Address">
+				<ui5-form-group id="testFormGroup6" header-text="Address">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Name:</ui5-label>
 						<span class="text">Red Point Stores</span>
@@ -732,7 +732,7 @@
 					</ui5-form-item>
 				</ui5-form-group>
 
-				<ui5-form-group header-text="Contact">
+				<ui5-form-group id="testFormGroup7" header-text="Contact">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Twitter:</ui5-label>
 						<span class="text">@sap</span>
@@ -770,7 +770,7 @@
 
 				</ui5-form-group>
 			
-				<ui5-form-group header-text="Other info">
+				<ui5-form-group id="testFormGroup8" header-text="Other info">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Name:</ui5-label>
 						<span class="text">Red Point Stores</span>
@@ -904,9 +904,9 @@
 		<br><br><br>
 
 		<section>
-			<ui5-form id="testForm" class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
+			<ui5-form id="testForm1" class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
 
-				<ui5-form-group header-text="Address">
+				<ui5-form-group id="testFormGroup1" header-text="Address">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Name:</ui5-label>
 						<span class="text">Red Point Stores</span>
@@ -933,7 +933,7 @@
 					</ui5-form-item>
 				</ui5-form-group>
 
-				<ui5-form-group header-text="Contact">
+				<ui5-form-group id="testFormGroup2" header-text="Contact">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Twitter:</ui5-label>
 						<span class="text">@sap</span>
@@ -971,7 +971,7 @@
 
 				</ui5-form-group>
 			
-				<ui5-form-group header-text="Other info">
+				<ui5-form-group id="testFormGroup3" header-text="Other info">
 					<ui5-form-item>
 						<ui5-label slot="labelContent">Name:</ui5-label>
 						<span class="text">Red Point Stores</span>
@@ -1001,6 +1001,46 @@
 		</section>
 
 		<section id='sapui5content6'></section>
+
+		<section>
+			<ui5-form id="testForm2" header-text="Labels on top" layout="S1 M2 L2 XL3" label-span="S12 M12 L12 XL12">
+				<ui5-form-item>
+					<ui5-label for="nameInp" slot="labelContent">Name:</ui5-label>
+					<ui5-input value="Red Point Stores" id="nameInp"></ui5-input>
+				</ui5-form-item>
+				
+				<ui5-form-item>
+					<ui5-label id="cityLbl" for="cityInp" slot="labelContent">ZIPCode/City:</ui5-label>
+					<ui5-input id="cityInp" value="411" accessible-name-ref="cityLbl"></ui5-input>
+					<ui5-input value="Maintown" accessible-name-ref="cityLbl"></ui5-input>
+				</ui5-form-item>
+
+				<ui5-form-item>
+					<ui5-label id="streetLbl" for="streetInp" slot="labelContent">Street:</ui5-label>
+					<ui5-input id="streetInp" value="Main St" accessible-name-ref="streetLbl"></ui5-input>
+					<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl"></ui5-input>
+				</ui5-form-item>
+				
+				<ui5-form-item>
+					<ui5-label id="countryLbl" for="countrySel" slot="labelContent">Country:</ui5-label>
+					<ui5-select id="countrySel" accessible-name-ref="countryLbl">
+						<ui5-option>Australia</ui5-option>
+						<ui5-option selected>Germany</ui5-option>
+						<ui5-option>England</ui5-option>
+					</ui5-select>
+				</ui5-form-item>
+
+				<ui5-form-item>
+					<ui5-label for="wsInp" slot="labelContent">WebSite:</ui5-label>
+					<ui5-input value="sap.com" id="wsInp"></ui5-input>
+				</ui5-form-item>
+
+				<ui5-form-item>
+					<ui5-label for="delInp" slot="labelContent">Delivery address:</ui5-label>
+					<ui5-input value="Newtown" id="delInp"></ui5-input>
+				</ui5-form-item>
+			</ui5-form>
+		</section>
 	</section>
 
 

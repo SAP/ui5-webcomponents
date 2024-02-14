@@ -147,7 +147,7 @@ class Form extends UI5Element {
 	 * @default "S1 M1 L2 XL2"
 	 * @public
 	 */
-	@property()
+	@property({ defaultValue: "S1 M1 L2 XL2" })
 	layout!: string;
 
 	/**
@@ -166,7 +166,7 @@ class Form extends UI5Element {
 	 * @default "S12 M4 L4 XL4"
 	 * @public
 	 */
-	@property()
+	@property({ defaultValue: "S12 M4 L4 XL4" })
 	labelSpan!: string;
 
 	/**
@@ -228,7 +228,7 @@ class Form extends UI5Element {
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	columnsS!: number;
-	@property({ validator: Integer, defaultValue: 4 })
+	@property({ validator: Integer, defaultValue: 12 })
 	labelSpanS!: number;
 
 	@property({ validator: Integer, defaultValue: 1 })
