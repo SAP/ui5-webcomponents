@@ -456,6 +456,18 @@ describe("'change' event firing", () => {
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
 
+	it("Value state is not changed, when value-state-change is prevented", async () => {
+		await browser.url(`test/pages/StepInput.html`);
+		const input = await browser.$("#stepInputValueStateChange").shadow$("ui5-input").shadow$("input");
+
+		const valueState = await input.getProperty("valueState");
+		await input.click();
+		await browser.keys("2");
+ 		await browser.keys("Enter");
+
+		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
+	});
+
 });
 
 describe("Accessibility related parameters", async () => {

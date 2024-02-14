@@ -36,6 +36,8 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  *
  * <code>import "@ui5/webcomponents/dist/ProgressIndicator.js";</code>
  *
+ * @csspart remaining-bar - Used to style the remaining bar of the <code>ui5-progress-indicator</code>
+ *
  * @constructor
  * @extends UI5Element
  * @public
