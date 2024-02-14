@@ -36,7 +36,6 @@
 		const list1 = document.getElementById("listDnd1");
 		const list2 = document.getElementById("listDnd2");
 		const handleBeforeItemMove = (e) => {
-			// TODO: validate source.element
 			const { destination, source } = e.detail;
 
 			if (destination.placement === "Before" || destination.placement === "After") {
@@ -48,6 +47,20 @@
 			}
 
 			console.error(`Moving "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
+		};
+	
+		const list1HandleBeforeItemMove = (e) => {
+			const { destination, source } = e.detail;
+
+			if (!list1.contains(source.element) && !list2.contains(source.element)) {
+				return;
+			}
+
+			handleBeforeItemMove(e);
+		};
+
+		const list2HandleBeforeItemMove = (e) => {
+			handleBeforeItemMove(e);
 		};
 
 		const handleItemMove = (e) => {
@@ -70,22 +83,21 @@
 				destination.element.prepend(source.element);
 			}
 
-			// TODO: discuss how focus will be handled
 			source.element.focus();
 		};
 
-		list1.addEventListener("before-item-move", handleBeforeItemMove);
-		list2.addEventListener("before-item-move", handleBeforeItemMove);
-		list1.addEventListener("item-move", handleItemMove);
-		list2.addEventListener("item-move", handleItemMove);
+		list1.addEventListener("ui5-before-item-move", list1HandleBeforeItemMove);
+		list2.addEventListener("ui5-before-item-move", list2HandleBeforeItemMove);
+		list1.addEventListener("ui5-item-move", handleItemMove);
+		list2.addEventListener("ui5-item-move", handleItemMove);
 
 		const densityCb = document.getElementById("density");
-		densityCb.addEventListener("change", e => {
+		densityCb.addEventListener("ui5-change", e => {
 			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
 		});
 
 		const reorderCb = document.getElementById("reorder");
-		reorderCb.addEventListener("change", e => {
+		reorderCb.addEventListener("ui5-change", e => {
 			list1.items.forEach((item) => item.draggable = e.target.checked);
 			list2.items.forEach((item) => item.draggable = e.target.checked);
 		});

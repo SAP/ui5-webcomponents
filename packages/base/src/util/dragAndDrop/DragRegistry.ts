@@ -53,19 +53,19 @@ const detachGlobalHandlers = () => {
 
 const subscribe = (subscriber: UI5Element) => {
 	subscribers.add(subscriber);
-	
+
 	if (!globalHandlersAttached) {
 		attachGlobalHandlers();
 	}
-}
+};
 
 const unsubscribe = (subscriber: UI5Element) => {
 	subscribers.delete(subscriber);
-	
+
 	if (subscribers.size === 0 && globalHandlersAttached) {
 		detachGlobalHandlers();
 	}
-}
+};
 
 const registerSelfManagedDragArea = (area: HTMLElement | ShadowRoot) => {
 	selfManagedDragAreas.add(area);
@@ -82,6 +82,6 @@ const DragRegistry = {
 	deregisterSelfManagedDragArea,
 	getDraggedElement,
 	setDraggedElement,
-}
+};
 
 export default DragRegistry;
