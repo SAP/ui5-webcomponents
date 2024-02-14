@@ -188,13 +188,10 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * Fired when a tree item is focused.
  *
  * @param {HTMLElement} item The focused item.
- * @public
+ * @private
  */
 @event<TreeItemFocusEventDetail>("item-focus", {
 	detail: {
-		/**
-		 * @public
-		 */
 		item: { type: HTMLElement },
 	},
 })
