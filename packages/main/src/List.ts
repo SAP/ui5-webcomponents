@@ -1040,7 +1040,7 @@ class List extends UI5Element {
 
 	focusFirstSelectedItem() {
 		// only enabled items are focusable
-		const firstSelectedItem = this.getFirstItem(x => x.selected && !x._focusable);
+		const firstSelectedItem = this.getFirstItem(x => x.selected && x._focusable);
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();

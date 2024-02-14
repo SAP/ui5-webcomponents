@@ -24,7 +24,7 @@
 	border-bottom: none;
 }
 
-:host a {
+:host .ui5-navmenu-item-link {
 	text-decoration: none;
 	color: var(--sapList_TextColor);
 }

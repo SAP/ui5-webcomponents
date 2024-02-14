@@ -369,7 +369,9 @@ class Menu extends UI5Element {
 	}
 
 	_createPopover() {
-		this._popover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		if (!this._popover) {
+			this._popover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		}
 		return this._popover;
 	}
 
@@ -447,15 +449,14 @@ class Menu extends UI5Element {
 				subMenu.close();
 				parentItem.selected = false;
 				if (keyboard) {
-					this._openedSubMenuItem?.focus();
+					parentItem.focus();
 				}
 				this._openedSubMenuItem = undefined;
 			}
 		}
 	}
 
-	async _prepareSubMenuDesktopTablet(item: MenuItem) {
-		// close opened sub-menu if there is any opened
+	async _prepareSubMenuDesktopTablet(item: MenuItem): Promise<void> {
 		this._closeItemSubMenu(this._openedSubMenuItem!, true);
 
 		if (item && item.hasSubmenu) {
@@ -521,7 +522,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	async _itemKeyDown(e: KeyboardEvent) {
+	async _itemKeyDown(e: KeyboardEvent): Promise<void> {
 		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 
@@ -537,7 +538,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	async _itemClick(e: CustomEvent<ListItemClickEventDetail>) {
+	async _itemClick(e: CustomEvent<ListItemClickEventDetail>): Promise<void> {
 		const item = e.detail.item as MenuItem;
 
 		if (!item.hasSubmenu) {

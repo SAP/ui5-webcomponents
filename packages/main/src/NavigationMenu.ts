@@ -91,7 +91,7 @@ class NavigationMenu extends Menu {
 		return fragment;
 	}
 
-	async _itemClick(e: CustomEvent<ListItemClickEventDetail>) {
+	async _itemClick(e: CustomEvent<ListItemClickEventDetail>): Promise<void> {
 		const item = e.detail.item as MenuItem;
 		const mainMenu = this._findMainMenu(item);
 		const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
