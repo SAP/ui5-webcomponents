@@ -387,7 +387,7 @@ class Menu extends UI5Element {
 		mainMenu.close();
 	}
 
-	async _createSubMenu(item: MenuItem) {
+	async _createSubMenu(item: MenuItem): Promise<void> {
 		if (item._subMenu) {
 			return;
 		}
@@ -423,6 +423,7 @@ class Menu extends UI5Element {
 			item,
 		}, false, false);
 		item._subMenu!.showAt(item);
+		item.selected = true;
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
 	}
@@ -444,6 +445,7 @@ class Menu extends UI5Element {
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
 				subMenu.close();
+				parentItem.selected = false;
 				if (keyboard) {
 					this._openedSubMenuItem?.focus();
 				}

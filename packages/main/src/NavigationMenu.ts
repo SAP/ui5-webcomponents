@@ -1,6 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
@@ -59,6 +62,18 @@ class NavigationMenu extends Menu {
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
+
+	_itemMouseOver(e: MouseEvent) {
+		this._busyMouseOver();
+
+		if (isDesktop()) {
+			// respect mouseover only on desktop
+			const item = e.target as MenuItem;
+
+			// Opens submenu with 300ms delay
+			this._startOpenTimeout(item);
+		}
+	}
 
 	_clonedItemsFragment(item: MenuItem) {
 		const fragment = document.createDocumentFragment();

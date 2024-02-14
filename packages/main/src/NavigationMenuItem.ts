@@ -1,6 +1,11 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "./MenuItem.js";
+import NavigationMenuItemTemplate from "./generated/templates/NavigationMenuItemTemplate.lit.js";
+
+// Styles
+import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js";
 
 /**
  * @class
@@ -25,7 +30,11 @@ import MenuItem from "./MenuItem.js";
  * @since 1.22.0
  * @private
  */
-@customElement("ui5-navigation-menu-item")
+@customElement({
+	tag: "ui5-navigation-menu-item",
+	template: NavigationMenuItemTemplate,
+	styles: [MenuItem.styles, navigationMenuItemCss],
+})
 class NavigationMenuItem extends MenuItem {
 	/**
 	 * Defines the link target URI. Supports standard hyperlink behavior.
@@ -62,12 +71,24 @@ class NavigationMenuItem extends MenuItem {
 	@property()
 	target!: string;
 
+	get _href() {
+		return (!this.disabled && this.href) ? this.href : undefined;
+	}
+
 	get _accInfo() {
 		const accInfoSettings = {
 			role: this.href ? "none" : "treeitem",
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
+	}
+
+	get classes(): ClassMap {
+		const result = super.classes;
+
+		result.main["ui5-navigation-menu-item-root"] = true;
+
+		return result;
 	}
 }
 
