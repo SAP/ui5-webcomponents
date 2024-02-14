@@ -15,7 +15,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
-		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "grid", "aria-haspopup attribute is added.");
 		assert.notOk(await innerInput.getAttribute("aria-controls"), "aria-controls attribute isn't rendered.");
 		assert.notOk(await innerInput.getAttribute("aria-expanded"), "aria-expanded attribute isn't rendered.");
 	});

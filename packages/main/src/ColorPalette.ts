@@ -7,6 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -25,7 +26,6 @@ import Button from "./Button.js";
 import type Dialog from "./Dialog.js";
 import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
-import type { IColorPaletteItem } from "./Interfaces.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,
@@ -36,6 +36,16 @@ import {
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
 import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
+
+/**
+ * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
+ *
+ * @public
+ */
+interface IColorPaletteItem extends HTMLElement, ITabbable {
+	value?: string,
+	index?: number,
+}
 
 type ColorPaletteNavigationItem = IColorPaletteItem | Button;
 
@@ -508,4 +518,7 @@ class ColorPalette extends UI5Element {
 ColorPalette.define();
 
 export default ColorPalette;
-export type { ColorPaletteItemClickEventDetail };
+export type {
+	ColorPaletteItemClickEventDetail,
+	IColorPaletteItem,
+};

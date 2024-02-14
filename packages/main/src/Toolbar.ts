@@ -280,7 +280,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: HasPopup.Menu,
+					hasPopup: HasPopup.Menu.toLowerCase(),
 				},
 			},
 		};
@@ -468,14 +468,14 @@ class Toolbar extends UI5Element {
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "false";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
 		}
 	}
 
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "true";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = true;
 		}
 	}
 

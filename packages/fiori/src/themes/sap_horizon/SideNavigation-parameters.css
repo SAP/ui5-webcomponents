@@ -22,6 +22,7 @@
 	--_ui5_side_navigation_icon_color: var(--sapList_TextColor);
 	--_ui5_side_navigation_icon_font_size: 1.125rem;
 	--_ui5_side_navigation_expand_icon_color: var(--sapList_TextColor);
+	--_ui5_side_navigation_external_link_icon_color: var(--sapContent_LabelColor);
 	--_ui5_side_navigation_group_border_style_color: none;
 	--_ui5_side_navigation_item_height: 2.5rem;
 	--_ui5_side_navigation_item_border_radius: 0.375rem;

@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import type { IIcon } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/sys-help-2.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -71,7 +71,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * Fired when the user clicks on an interactive badge.
  * <b>Note:</b> The event will be fired if the <code>interactive</code> property is <code>true</code>
  * @public
- * @since 1.20
+ * @since 1.22.0
  */
 @event("click")
 class Badge extends UI5Element {
@@ -79,7 +79,7 @@ class Badge extends UI5Element {
 	 * Defines the design type of the component.
 	 * @default "Set3"
 	 * @public
-	 * @since 1.20
+	 * @since 1.22.0
 	 */
 	@property({ defaultValue: BadgeDesign.Set3 })
 	design!: `${BadgeDesign}`;
@@ -100,7 +100,7 @@ class Badge extends UI5Element {
 	 * Defines if the default state icon is shown.
 	 * @default false
 	 * @public
-	 * @since 1.20
+	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
 	hideStateIcon!: boolean;
@@ -111,7 +111,7 @@ class Badge extends UI5Element {
 	 * when <code>design</code> property is <code>BadgeDesign.Set3</code>
 	 * @default false
 	 * @public
-	 * @since 1.20
+	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
 	interactive!: boolean;
@@ -123,7 +123,7 @@ class Badge extends UI5Element {
 	 *
 	 * @default "None"
 	 * @public
-	 * @since 1.20
+	 * @since 1.22.0
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: `${WrappingType}`;

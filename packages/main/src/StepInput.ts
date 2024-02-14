@@ -46,6 +46,11 @@ const ACCELERATION = 0.8;
 const MIN_WAIT_TIMEOUT = 50; // milliseconds
 const INITIAL_SPEED = 120; // milliseconds
 
+type StepInputValueStateChangeEventDetail = {
+	valueState: `${ValueState}`,
+	valid: boolean,
+}
+
 /**
  * @class
  *
@@ -106,6 +111,33 @@ const INITIAL_SPEED = 120; // milliseconds
  * @public
  */
 @event("change")
+/**
+ * Fired before the value state of the component is updated internally.
+ * The event is preventable, meaning that if it's default action is
+ * prevented, the component will not update the value state.
+ *
+ * @allowPreventDefault
+ * @since 1.23.0
+ * @public
+ * @param {string} valueState The new <code>valueState</code> that will be set.
+ * @param {boolean} valid Indicator if the value is in between the min and max value.
+ */
+@event<StepInputValueStateChangeEventDetail>("value-state-change", {
+	detail: {
+		/**
+		 * @public
+		 */
+		valueState: {
+			type: String,
+		},
+		/**
+		 * @public
+		 */
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a value of the component.
@@ -405,9 +437,20 @@ class StepInput extends UI5Element implements IFormElement {
 			this._initialValueState = this.valueState;
 		}
 
-		this.valueState = ((this.min !== undefined && this.value < this.min)
-			|| (this.max !== undefined && this.value > this.max))
-			? ValueState.Error : this._initialValueState;
+		this._updateValueState();
+	}
+
+	_updateValueState() {
+		const valid = !((this.min !== undefined && this.value < this.min) || (this.max !== undefined && this.value > this.max));
+		const previousValueState = this.valueState;
+
+		this.valueState = valid ? ValueState.None : ValueState.Error;
+
+		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
+
+		if (eventPrevented) {
+			this.valueState = previousValueState;
+		}
 	}
 
 	_preciseValue(value: number) {
@@ -595,3 +638,6 @@ class StepInput extends UI5Element implements IFormElement {
 StepInput.define();
 
 export default StepInput;
+export type {
+	StepInputValueStateChangeEventDetail,
+};

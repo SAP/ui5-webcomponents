@@ -20,7 +20,6 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  *
  * @constructor
  * @extends ToggleButton
- * @abstract
  * @since 1.15.0
  * @private
  */

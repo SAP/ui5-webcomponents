@@ -18,7 +18,7 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
-import type { IButton } from "@ui5/webcomponents/dist/Interfaces.js";
+import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -64,8 +64,8 @@ type ShellBarAccessibilityTexts = {
 };
 
 type ShellBarAccessibilityAttributesValue = {
-	ariaHasPopup?: string;
-	expanded?: boolean;
+	expanded?: "true" | "false" | boolean,
+	ariaHasPopup?: `${HasPopup}`,
 }
 
 type ShellBarAccessibilityAttributes = {
@@ -98,6 +98,11 @@ type ShellBarCoPilotClickEventDetail = {
 
 type ShellBarMenuItemClickEventDetail = {
 	item: HTMLElement;
+};
+
+type ShellBarSearchButtonEventDetail = {
+	targetRef: HTMLElement;
+	searchFieldVisible: boolean;
 };
 
 type ShellBarCoPilot = {
@@ -276,6 +281,23 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 * @public
 		 */
 		item: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when the search button is activated.
+ * <b>Note:</b> You can prevent expanding/collapsing of the search field by calling <code>event.preventDefault()</code>.
+ *
+ * @allowPreventDefault
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @param {Boolean} searchFieldVisible whether the search field is visible
+ * @public
+ */
+
+@event<ShellBarSearchButtonEventDetail>("search-button-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+		searchFieldVisible: { type: Boolean },
 	},
 })
 
@@ -796,6 +818,15 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSearchIconPress() {
+		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
+		const defaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+			targetRef: searchButtonRef,
+			searchFieldVisible: this.showSearchField,
+		}, true);
+
+		if (defaultPrevented) {
+			return;
+		}
 		this.showSearchField = !this.showSearchField;
 
 		if (!this.showSearchField) {
@@ -1282,27 +1313,27 @@ class ShellBar extends UI5Element {
 
 	get _notificationsHasPopup() {
 		const notificationsAccAttributes = this.accessibilityAttributes.notifications;
-		return notificationsAccAttributes ? notificationsAccAttributes.ariaHasPopup : null;
+		return notificationsAccAttributes ? notificationsAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _profileHasPopup() {
 		const profileAccAttributes = this.accessibilityAttributes.profile;
-		return profileAccAttributes ? profileAccAttributes.ariaHasPopup : null;
+		return profileAccAttributes ? profileAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _productsHasPopup() {
 		const productsAccAttributes = this.accessibilityAttributes.product;
-		return productsAccAttributes ? productsAccAttributes.ariaHasPopup : null;
+		return productsAccAttributes ? productsAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _searchHasPopup() {
 		const searcAccAttributes = this.accessibilityAttributes.search;
-		return searcAccAttributes ? searcAccAttributes.ariaHasPopup : null;
+		return searcAccAttributes ? searcAccAttributes.ariaHasPopup?.toLowerCase() : null;
 	}
 
 	get _overflowHasPopup() {
 		const overflowAccAttributes = this.accessibilityAttributes.overflow;
-		return overflowAccAttributes ? overflowAccAttributes.ariaHasPopup : HasPopup.Menu;
+		return overflowAccAttributes ? overflowAccAttributes.ariaHasPopup?.toLowerCase() : HasPopup.Menu.toLowerCase();
 	}
 
 	get accLogoRole() {
@@ -1328,4 +1359,5 @@ export type {
 	ShellBarAccessibilityAttributes,
 	ShellBarAccessibilityRoles,
 	ShellBarAccessibilityTexts,
+	ShellBarSearchButtonEventDetail,
 };

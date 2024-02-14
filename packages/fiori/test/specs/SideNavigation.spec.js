@@ -265,5 +265,12 @@ describe("Component Behavior", () => {
 			assert.notOk(await overflowItem.isDisplayed(), "Overflow button should not be available");
 
 		});
+
+		it("Tests external link items", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			const items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item");
+
+			assert.ok(await items[4].$(".ui5-sn-item-external-link-icon").isExisting(), "External link icon is rendered");
+		});
 	});
 });

@@ -24,7 +24,7 @@ import Button from "./Button.js";
 // Types
 import type Select from "./Select.js";
 import type SelectMenuOption from "./SelectMenuOption.js";
-import { IOption } from "./Interfaces.js";
+import type { IOption } from "./Select.js";
 
 type SelectMenuOptionClick = {
 	option: SelectMenuOption,

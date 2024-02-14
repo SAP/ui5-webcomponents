@@ -10,10 +10,16 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
-import type { IIcon } from "./Interfaces.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
+
+/**
+ * Interface for components that represent an icon, usable in numerous higher-order components
+ *
+ * @public
+ */
+interface IIcon extends HTMLElement { }
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const PRESENTATION_ROLE = "presentation";
@@ -390,3 +396,6 @@ class Icon extends UI5Element implements IIcon {
 Icon.define();
 
 export default Icon;
+export type {
+	IIcon,
+};
