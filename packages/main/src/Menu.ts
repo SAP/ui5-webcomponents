@@ -579,9 +579,7 @@ class Menu extends UI5Element {
 	}
 
 	_findMainMenu(element: MenuItem | Menu) {
-		let parentMenu = element.tagName.toLocaleLowerCase() === "ui5-menu"
-			? element as Menu
-			: element.parentElement as Menu;
+		let parentMenu = element instanceof Menu ? element : element.parentElement as Menu;
 		while (parentMenu._parentMenuItem) {
 			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
 		}
