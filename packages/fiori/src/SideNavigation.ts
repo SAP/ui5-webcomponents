@@ -416,7 +416,7 @@ class SideNavigation extends UI5Element {
 		let result = new Array<ITabbable>();
 
 		this._getFocusableItems(items).forEach(item => {
-			if (item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
+			if (item.classList.contains("ui5-sn-item-hidden")) {
 				return;
 			}
 
@@ -509,7 +509,7 @@ class SideNavigation extends UI5Element {
 
 		overflowItemRef.classList.add("ui5-sn-item-hidden");
 
-		const itemsRefs = [...domRef.querySelectorAll<HTMLElement>(".ui5-sn-flexible .ui5-sn-item-level1:not(.ui5-sn-item-overflow)")];
+		const itemsRefs = this.flexibleItems;
 
 		let itemsHeight = itemsRefs.reduce<number>((sum, itemRef) => {
 			itemRef.classList.remove("ui5-sn-item-hidden");
@@ -622,6 +622,16 @@ class SideNavigation extends UI5Element {
 		return selectedItem;
 	}
 
+	get flexibleItems() : Array<SideNavigationItem> {
+		let result = new Array<SideNavigationItem>();
+
+		this.items.forEach(item => {
+			result = result.concat(item.selectableItems);
+		});
+
+		return result;
+	}
+
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
 			item.fireEvent("click");
@@ -658,11 +668,12 @@ class SideNavigation extends UI5Element {
 		const overflowClass = "ui5-sn-item-hidden";
 		const result: Array<SideNavigationItem> = [];
 
-		this._getSelectableItems(this.items).forEach(item => {
-			if (item.getDomRef()!.classList.contains(overflowClass)) {
+		this.flexibleItems.forEach(item => {
+			if (item.classList.contains(overflowClass)) {
 				 result.push(item);
 			}
 		});
+
 		return result;
 	}
 
@@ -684,8 +695,8 @@ class SideNavigation extends UI5Element {
 
 		item.selected = true;
 
-		if (this.collapsed && item.getDomRef()?.classList.contains("ui5-sn-item-hidden")) {
-			item.getDomRef()?.classList.remove("ui5-sn-item-hidden");
+		if (this.collapsed && item.classList.contains("ui5-sn-item-hidden")) {
+			item.classList.remove("ui5-sn-item-hidden");
 		}
 	}
 

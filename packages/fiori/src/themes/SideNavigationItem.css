@@ -21,9 +21,11 @@
 
 	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin);
 }
-.ui5-sn-item-hidden {
+
+:host(.ui5-sn-item-hidden[side-nav-collapsed]) {
 	display: none;
 }
+
 .ui5-sn-item:focus {
 	outline: none;
 }
