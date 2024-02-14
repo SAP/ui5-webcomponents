@@ -34,7 +34,10 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
-import type { ICalendarPicker } from "./Calendar.js";
+import type {
+	ICalendarPicker,
+	SpecialCalendarDateT,
+} from "./Calendar.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
@@ -72,6 +75,7 @@ type Day = {
 	secondDay?: number,
 	weekNum?: number,
 	isHidden?: boolean,
+	type?: string,
 }
 
 type WeekNumber = {
@@ -188,6 +192,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 @property()
 	_secondTimestamp?: number;
 
+	/**
+	 * Array of special calendar dates (if such are passed) from the calendar.
+	 * @private
+	 */
+	@property({ type: Object, multiple: true })
+	specialCalendarDates!: Array<SpecialCalendarDateT>;
+
 	_autoFocus?: boolean;
 
 	static i18nBundle: I18nBundle;
@@ -212,6 +223,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._weeks = [];
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
+		const specialCalendarDates = this._specialCalendarDates;
 		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType) as Array<string>;
 		const secondaryMonthsNames = this.hasSecondaryCalendarType ? localeData.getMonths("wide", this.secondaryCalendarType) as Array<string> : [];
 		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
@@ -232,6 +244,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			if (dayOfTheWeek < 0) {
 				dayOfTheWeek += DAYS_IN_WEEK;
 			}
+
+			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
+			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
@@ -266,6 +281,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				ariaSelected: isSelected ? "true" : "false",
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
+				type: specialDayType,
 			};
 
 			if (isFirstDayOfWeek) {
@@ -382,7 +398,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
 
-		if (focusedDay && document.activeElement !== focusedDay) {
+		if (focusedDay && document.activeElement !== focusedDay && this._specialCalendarDates.length === 0) {
 			focusedDay.focus();
 		}
 	}
@@ -433,13 +449,16 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Selects/deselects a day.
-	 *
 	 * @param e
 	 * @param isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
 	 * @private
 	 */
 	_selectDate(e: Event, isShift: boolean) {
-		const target = e.target as HTMLElement;
+		let target = e.target as HTMLElement;
+
+		if (!target.hasAttribute("data-sap-timestamp")) {
+			target = target.parentNode as HTMLElement;
+		}
 
 		if (!this._isDayPressed(target)) {
 			return;
@@ -736,6 +755,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		if (this.selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
 			this._secondTimestamp = this.timestamp;
 		}
+	}
+
+	get _specialCalendarDates() {
+		return this.specialCalendarDates;
 	}
 
 	get shouldHideWeekNumbers() {
