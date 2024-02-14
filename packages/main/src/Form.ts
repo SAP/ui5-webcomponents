@@ -247,16 +247,16 @@ class Form extends UI5Element {
 	labelSpanXl!: number;
 
 	onBeforeRendering() {
-		// Parse the layout="" and set it to the FormGroups/FormItems.
+		// Parse the layout and set it to the FormGroups/FormItems.
 		this.setColumnLayout();
 
-		// Parse the label-span="" and set it to the FormGroups/FormItems..
+		// Parse the labelSpan and set it to the FormGroups/FormItems.
 		this.setLabelSpan();
 
-		// Define how many columns a group should take
+		// Define how many columns a group should take.
 		this.setGroupsColSpan();
 
-		// Create additional CSS for number of columns that are not supported by default
+		// Create additional CSS for number of columns that are not supported by default.
 		this.createStepCSSStyleSheet();
 	}
 
