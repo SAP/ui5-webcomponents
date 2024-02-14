@@ -519,6 +519,11 @@ class ShellBar extends UI5Element {
 	startButton!: Array<IButton>;
 
 	/**
+	 * The container is positioned in the center of the <code>ui5-shellbar</code> and occupies one-third of the total length of the <code>ui5-shellbar</code>.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> If set, the <code>searchField</code> slot is not rendered.
+	 *
 	 * @private
 	 */
 	@slot()
@@ -978,21 +983,21 @@ class ShellBar extends UI5Element {
 	 */
 	_getAllItems(showOverflowButton: boolean) {
 		let domOrder = -1;
+		const search = {
+			icon: "search",
+			text: this._searchText,
+			classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
+			priority: 4,
+			domOrder: this.searchField.length ? (++domOrder) : -1,
+			styles: {
+				order: this.searchField.length ? 1 : -10,
+			},
+			id: `${this._id}-item-${1}`,
+			press: this._handleSearchIconPress.bind(this),
+			show: !!this.searchField.length,
+		};
 
 		const items: Array<IShelBarItemInfo> = [
-			{
-				icon: "search",
-				text: this._searchText,
-				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
-				priority: 4,
-				domOrder: this.searchField.length ? (++domOrder) : -1,
-				styles: {
-					order: this.searchField.length ? 1 : -10,
-				},
-				id: `${this._id}-item-${1}`,
-				press: this._handleSearchIconPress.bind(this),
-				show: !!this.searchField.length,
-			},
 			{
 				icon: this._coPilotIcon,
 				text: this._copilotText,
@@ -1081,6 +1086,9 @@ class ShellBar extends UI5Element {
 				press: this._handleProductSwitchPress.bind(this),
 			},
 		];
+		if (this.midContent.length < 1 && items[0].text !== this._searchText) {
+			items.unshift(search);
+		}
 		return items;
 	}
 
