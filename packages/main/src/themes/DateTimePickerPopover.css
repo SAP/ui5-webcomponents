@@ -68,8 +68,17 @@
 /* Phone mode */
 /* TODO: Improve that layouting */
 .ui5-dt-picker-content--phone.ui5-dt-picker-content {
-	min-width: auto;
+	min-width: 20rem;
 	height: calc(100% - 4rem);
+}
+
+.ui5-dt-picker-content--phone.ui5-dt-picker-content [ui5-time-selection-clocks] {
+	height: var(--_ui5_datetime_timeview_phonemode_clocks_width);
+	width: auto;
+}
+
+.ui5-dt-picker-content--phone.ui5-dt-picker-content [ui5-calendar] {
+	margin-bottom: var(--_ui5_datetime_dateview_phonemode_margin_bottom);
 }
 
 .ui5-dt-picker-content--phone .ui5-dt-cal {

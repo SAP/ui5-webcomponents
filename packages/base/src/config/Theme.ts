@@ -3,6 +3,7 @@ import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
+import { isBooted } from "../Boot.js";
 
 let curTheme: string;
 
@@ -32,9 +33,11 @@ const setTheme = async (theme: string): Promise<void> => {
 
 	curTheme = theme;
 
-	// Update CSS Custom Properties
-	await applyTheme(curTheme);
-	await reRenderAllUI5Elements({ themeAware: true });
+	if (isBooted()) {
+		// Update CSS Custom Properties
+		await applyTheme(curTheme);
+		await reRenderAllUI5Elements({ themeAware: true });
+	}
 };
 
 /**

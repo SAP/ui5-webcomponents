@@ -47,7 +47,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests acc custom roles", async () => {
-			const sb = await browser.$("#sbAccRoles");
+			const sb = await browser.$("#sb");
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
 			// assertHANDLE_RESIZE_DEBOUNCE_RATE_WAIT
@@ -56,7 +56,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests accessibilityAttributes property", async () => {
-			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "Dialog";
+			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "dialog";
 			const sb = await browser.$("#sbAccAttr");
 
 			assert.strictEqual(await sb.getProperty("_notificationsHasPopup"), NOTIFICATIONS_BTN_ARIA_HASPOPUP,
@@ -388,6 +388,30 @@ describe("Component Behavior", () => {
 				await coPilot.click();
 				assert.strictEqual(await input.getValue(), "CoPilot", "Input value is set by click event of CoPilot");
 			});
+
+			it("tests search-button-click event", async () => {
+				setTimeout(async () => {
+					const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+					const input = await browser.$("#press-input");
+
+					await searchIcon.click();
+					assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
+				}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+
+			});
+
+			it("tests search-button-click event", async () => {
+				setTimeout(async () => {
+					const searchButton  = await browser.$("#sb").shadow$(".ui5-shellbar-search-button");
+					const searchField  = await browser.$("#sb").shadow$(".ui5-shellbar-search-field");
+					assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
+
+					await searchButton .click();
+					assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
+				}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+
+			});
+
 
 			it("tests menuItemClick event", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");

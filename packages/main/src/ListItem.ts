@@ -15,7 +15,7 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
-import { IButton } from "./Interfaces.js";
+import type { IButton } from "./Button.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -56,7 +56,7 @@ type AccInfo = {
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${HasPopup}`;
+	ariaHaspopup?: `${Lowercase<HasPopup>}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;
@@ -66,8 +66,8 @@ type AccInfo = {
 }
 
 type AccessibilityAttributes = {
-	ariaSetsize: number,
-	ariaPosinset: number,
+	ariaSetsize?: number,
+	ariaPosinset?: number,
 }
 
 /**
@@ -76,6 +76,7 @@ type AccessibilityAttributes = {
  * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
  *
  * @constructor
+ * @abstract
  * @extends ListItemBase
  * @public
  */
@@ -101,8 +102,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
 	 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
-	 * <br><br>
-	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
+	 * <br><br> <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 	 *
 	 * @default "Active"
@@ -484,7 +484,7 @@ abstract class ListItem extends ListItemBase {
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup || undefined,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
 		};

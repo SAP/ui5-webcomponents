@@ -10,6 +10,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
+import type HasPopup from "./types/HasPopup.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -182,14 +183,14 @@ class TreeItemBase extends ListItem {
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	_setsize!: number;
+	forcedSetsize!: number;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	_posinset!: number;
+	forcedPosinset!: number;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -262,13 +263,12 @@ class TreeItemBase extends ListItem {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
-			posinset: this._posinset,
-			setsize: this._setsize,
+			posinset: this.forcedPosinset,
+			setsize: this.forcedSetsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
-			ariaHaspopup: this.ariaHaspopup || undefined,
-			ariaSelected: this.selected,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };

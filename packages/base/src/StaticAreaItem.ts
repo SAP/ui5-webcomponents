@@ -67,7 +67,7 @@ class StaticAreaItem extends HTMLElement {
 	_updateDirection() {
 		if (this.ownerElement) {
 			const dir = getEffectiveDir(this.ownerElement);
-			if (dir) {
+			if (dir === "rtl") {
 				this.setAttribute("dir", dir);
 			} else {
 				this.removeAttribute("dir");

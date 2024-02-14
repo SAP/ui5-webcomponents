@@ -116,7 +116,7 @@
 	white-space: nowrap;
 }
 
-.ui5-list-end-marker {
+:host([growing="Scroll"]) .ui5-list-end-marker {
 	/* Ensure the list-end-marker has a block property to always be stretched and "visible" on the screen */
 	display: inline-block;
 }

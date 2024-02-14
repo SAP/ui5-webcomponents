@@ -106,7 +106,6 @@ slot[name="profile"] {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: var(--sapShell_TextColor);
-	flex: auto;
 }
 
 :host(:not([primary-title])) .ui5-shellbar-menu-button {

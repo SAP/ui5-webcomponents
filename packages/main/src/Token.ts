@@ -18,7 +18,8 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
-import type { IIcon, IToken } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
+import type { IToken } from "./MultiInput.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
@@ -142,7 +143,7 @@ class Token extends UI5Element implements IToken {
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
