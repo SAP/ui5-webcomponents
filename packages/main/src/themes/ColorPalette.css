@@ -1,5 +1,6 @@
 :host(:not([hidden])) {
 	display: inline-block;
+	width: 100%;;
 }
 
 :host(:not([hidden])[popup-mode]) {
@@ -30,7 +31,6 @@
 
 .ui5-cp-root-phone .ui5-cp-default-color-button,
 .ui5-cp-root-phone .ui5-cp-more-colors {
-	color: var(--sapTextColor);
 	height: 2.875rem;
 }
 
