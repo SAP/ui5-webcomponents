@@ -8,7 +8,14 @@
 			 aria-roledescription="{{ariaRoleDescNavigationList}}"
 		>
 			<slot></slot>
-			{{> overflowItem}}
+			<ui5-side-navigation-item
+					id="{{_id}}-sn-overflow-item"
+					text="{{overflowAccessibleName}}"
+					@click="{{_handleOverflowClick}}"
+					class="ui5-sn-item-overflow"
+					side-nav-collapsed
+					icon="overflow">
+			</ui5-side-navigation-item>
 		</div>
 	{{else}}
 		<ul role="tree"
@@ -44,26 +51,4 @@
 	{{#if showHeader}}
 		<slot name="header"></slot>
 	{{/if}}
-{{/inline}}
-
-{{#*inline overflowItem}}
-	<div id="{{_id}}-sn-overflow-item"
-				class="ui5-sn-item ui5-sn-item-level1 ui5-sn-item-overflow"
-				role="menuitem"
-				data-sap-focus-ref
-				@keydown="{{_onkeydownOverflow}}"
-				@keyup="{{_onkeyupOverflow}}"
-				@click="{{_handleOverflowClick}}"
-				aria-haspopup="menu"
-				tabindex="0"
-				title="{{overflowAccessibleName}}"
-			>
-				<ui5-icon
-					class="ui5-sn-item-icon"
-					accessible-role="presentation"
-					name="overflow"
-				>
-				</ui5-icon>
-				<div class="ui5-sn-item-text">{{overflowAccessibleName}}</div>
-			</div>	
 {{/inline}}

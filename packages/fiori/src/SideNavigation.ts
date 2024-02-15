@@ -121,6 +121,7 @@ type NavigationMenuClickEventDetail = {
 	staticAreaStyles: SideNavigationPopoverCss,
 	dependencies: [
 		ResponsivePopover,
+		SideNavigationGroup,
 		SideNavigationItem,
 		SideNavigationSubItem,
 		Icon,
@@ -405,11 +406,11 @@ class SideNavigation extends UI5Element {
 	}
 
 	getEnabledFlexibleItems() : Array<ITabbable> {
-		if (!this._overflowDom) {
+		if (!this._overflowItem) {
 			return this.getEnabledItems(this.items);
 		}
 
-		return [...this.getEnabledItems(this.items), this._overflowDom];
+		return [...this.getEnabledItems(this.items), this._overflowItem];
 	}
 
 	getEnabledItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<ITabbable> {
@@ -467,6 +468,7 @@ class SideNavigation extends UI5Element {
 				}
 			}
 		}
+
 		if (this.collapsed) {
 			this.handleResize();
 		}
@@ -501,8 +503,8 @@ class SideNavigation extends UI5Element {
 			return null;
 		}
 
-		const overflowItemRef:HTMLElement = domRef.querySelector(".ui5-sn-item-overflow")!;
-		const flexibleContentDomRef:HTMLElement = domRef.querySelector(".ui5-sn-flexible")!;
+		const overflowItemRef = this._overflowItem!;
+		const flexibleContentDomRef : HTMLElement = domRef.querySelector(".ui5-sn-flexible")!;
 		if (!overflowItemRef) {
 			return null;
 		}
@@ -661,7 +663,7 @@ class SideNavigation extends UI5Element {
 		this._isOverflow = true;
 		this._menuPopoverItems = this._getOverflowItems();
 
-		this.openOverflowMenu(this._overflowDom as HTMLElement);
+		this.openOverflowMenu(this._overflowItem as HTMLElement);
 	}
 
 	_getOverflowItems(): Array<SideNavigationItem> {
@@ -700,7 +702,7 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	get _overflowDom() {
+	get _overflowItem() {
 		return this.shadowRoot!.querySelector<SideNavigationItem>(".ui5-sn-item-overflow");
 	}
 
