@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -16,7 +17,7 @@ import type FormItem from "./FormItem.js";
 import type FormGroup from "./FormGroup.js";
 import FormItemSpacing from "./types/FormItemSpacing.js";
 
-const constructableStyleMap = new Map<string, CSSStyleSheet>();
+const additionalStylesMap = new Map<string, string>();
 
 const StepColumn = {
 	"S": 1,
@@ -144,7 +145,7 @@ type ItemsInfo = {
 })
 class Form extends UI5Element {
 	/**
-	 * Defines the number of columns to distribute the content by breakpoint.
+	 * Defines the number of columns to distribute the form content by breakpoint.
 	 * <br><br>
 	 *
 	 * Supported values:
@@ -181,9 +182,9 @@ class Form extends UI5Element {
 	labelSpan!: string;
 
 	/**
-	 * Defines header text of the component.
+	 * Defines the header text of the component.
 	 * <br><br>
-	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
+	 * <b>Note:</b> The property gets overridden by the <code>header</code> slot.
 	 *
 	 * @default ""
 	 * @public
@@ -201,7 +202,8 @@ class Form extends UI5Element {
 	 *
 	 * <b>Note:</b> If the Form is meant to be switched between "non-edit" (display only) and "edit" modes,
 	 * we recommend using "Large" item spacing in "non-edit" mode, and "Normal" - for "edit" mode,
-	 * to avoid "jumping" effect, caused by different hights of the simple texts in "non-edit" mode and input components in "edit" mode.
+	 * to avoid "jumping" effect, caused by the hight difference between texts in "non-edit" mode and inputs in "edit" mode.
+	 *
 	 * @default "Normal"
 	 * @public
 	 */
@@ -219,10 +221,10 @@ class Form extends UI5Element {
 	header!: Array<HTMLElement>;
 
 	/**
-	 * Defines the component content by using FormGroups and/or FormItems.
+	 * Defines the component content - FormGroups or FormItems.
 	 * <br><br>
 	 *
-	 * <b>Note:</b>  Mixing FormGroups that consists of ForItems and standalone FormItems (not belonging to a group) is not supported.
+	 * <b>Note:</b> Mixing FormGroups and standalone FormItems (not belonging to a group) is not supported.
 	 * Either use FormGroups and make sure all FormItems are part of a FormGroup, or use just FormItems without any FormGroups.
 	 * @public
 	 */
@@ -266,7 +268,9 @@ class Form extends UI5Element {
 
 		// Define how many columns a group should take.
 		this.setGroupsColSpan();
+	}
 
+	onAfterRendering() {
 		// Create additional CSS for number of columns that are not supported by default.
 		this.createAdditionalCSSStyleSheet();
 	}
@@ -377,27 +381,34 @@ class Form extends UI5Element {
 	}
 
 	createAdditionalCSSStyleSheet() {
+		const useAdoptedStyleSheets = document.adoptedStyleSheets && !isSafari();
+
 		[
 			{ breakpoint: "S", columns: this.columnsS },
 			{ breakpoint: "M", columns: this.columnsM },
 			{ breakpoint: "L", columns: this.columnsL },
 			{ breakpoint: "XL", columns: this.columnsXl },
 		].forEach(step => {
-			const additionalStyleSheet = this.getAdditionalCSSStyleSheet(step.breakpoint, step.columns);
-			if (additionalStyleSheet) {
-				this.shadowRoot!.adoptedStyleSheets = [...this.shadowRoot!.adoptedStyleSheets, additionalStyleSheet];
+			const additionalStyle: string | undefined = this.getAdditionalCSS(step.breakpoint, step.columns);
+
+			if (additionalStyle) {
+				if (useAdoptedStyleSheets) {
+					this.shadowRoot!.adoptedStyleSheets = [...this.shadowRoot!.adoptedStyleSheets, this.getCSSStyleSheet(additionalStyle)];
+				} else {
+					this.shadowRoot!.children[0].append(additionalStyle);
+				}
 			}
 		});
 	}
 
-	getAdditionalCSSStyleSheet(step: string, colsNumber: number): CSSStyleSheet | undefined {
+	getAdditionalCSS(step: string, colsNumber: number): string | undefined {
 		if (StepColumn[step as keyof typeof StepColumn] >= colsNumber) {
 			return;
 		}
 
 		const key = `${step}-${colsNumber}`;
 
-		if (!constructableStyleMap.has(key)) {
+		if (!additionalStylesMap.has(key)) {
 			let containerQuery;
 			let supporedColumnsNumber!: number;
 			let stepSpanCSS = "";
@@ -434,12 +445,16 @@ class Form extends UI5Element {
 			}
 
 			const css = `${containerQuery}${stepSpanCSS}}`;
-			const style = new CSSStyleSheet();
-			style.replaceSync(css);
-			constructableStyleMap.set(key, style);
+			additionalStylesMap.set(key, css);
 		}
 
-		return constructableStyleMap.get(key)!;
+		return additionalStylesMap.get(key)!;
+	}
+
+	getCSSStyleSheet(cssText: string): CSSStyleSheet {
+		const style = new CSSStyleSheet();
+		style.replaceSync(cssText);
+		return style;
 	}
 }
 
