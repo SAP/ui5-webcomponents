@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* setting configuration before boot ([#8246](https://github.com/SAP/ui5-webcomponents/issues/8246)) ([d73834b](https://github.com/SAP/ui5-webcomponents/commit/d73834bd06516d5f663f14ecb516e92624191300))
+* **ui5-card-header:** truncate long single-word description ([#8247](https://github.com/SAP/ui5-webcomponents/issues/8247)) ([b79aef7](https://github.com/SAP/ui5-webcomponents/commit/b79aef7751bc4e562fd38ebc006c74bd93c1b33e)), closes [#8245](https://github.com/SAP/ui5-webcomponents/issues/8245)
+* **ui5-illustrated-message:** aligned with visual specification ([#8266](https://github.com/SAP/ui5-webcomponents/issues/8266)) ([143d4af](https://github.com/SAP/ui5-webcomponents/commit/143d4afccfa1046f08c17e591e2749304afcac49))
+* **ui5-tree-item:** fix background color on hover ([#8278](https://github.com/SAP/ui5-webcomponents/issues/8278)) ([1a28393](https://github.com/SAP/ui5-webcomponents/commit/1a2839351d0af3badc4331409b13f4ef67ebba50))
+
+
+### Features
+
+* **ui5-calendar-legend:** introduce ui5-calendar-legend component ([#7706](https://github.com/SAP/ui5-webcomponents/issues/7706)) ([909a602](https://github.com/SAP/ui5-webcomponents/commit/909a6028362b55e26fdb5ca7a1ed68c8c6197a6b))
+* **ui5-rating-indicator:** introduced "remaining-bar" CSS part ([#8276](https://github.com/SAP/ui5-webcomponents/issues/8276)) ([7f46b0b](https://github.com/SAP/ui5-webcomponents/commit/7f46b0b9a6f91b52f466b0c617d6ece9a541e950)), closes [#8213](https://github.com/SAP/ui5-webcomponents/issues/8213)
+* **ui5-side-navigation:** add external link icon ([#8199](https://github.com/SAP/ui5-webcomponents/issues/8199)) ([47e28c5](https://github.com/SAP/ui5-webcomponents/commit/47e28c5c50c824dfb743b79998c4d98f56be4beb))
+* **ui5-step-input:** add value-state-change event ([#8225](https://github.com/SAP/ui5-webcomponents/issues/8225)) ([8ab3ad1](https://github.com/SAP/ui5-webcomponents/commit/8ab3ad160d27bec5f9a77a41f534f480ec6481d0)), closes [#4791](https://github.com/SAP/ui5-webcomponents/issues/4791) [#5130](https://github.com/SAP/ui5-webcomponents/issues/5130)
+
+
+
+
+
 ## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
 
 

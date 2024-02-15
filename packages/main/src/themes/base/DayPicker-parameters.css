@@ -57,4 +57,33 @@
 	--_ui5_daypicker_two_calendar_item_no_select_focus_border_radius: 0.0625rem;
 	--_ui5_dp_two_calendar_item_secondary_text_border_radios: 0.25rem;
 	--_ui5_daypicker_two_calendar_item_now_selected_border_inset: 0.125rem;
+
+	--_ui5_daypicker_special_day_top: 2.5rem;
+	--_ui5_daypicker_special_day_border_bottom_radius: 0.25rem;
+	--_ui5_daypicker_special_day_before_border_color: var(--sapList_Background);
+	--_ui5_daypicker_selected_item_special_day_width: 100%;
+
+	--_ui5_daypicker_selected_item_now_special_day_top: 2.375rem;
+	--_ui5_daypicker_selected_item_now_special_day_width: calc(100% - 0.375rem);
+	--_ui5_daypicker_selected_item_now_special_day_border_bottom_radius: 0;
+	--_ui5-daypicker_item_selected_now_border_radius: 0.25rem;
+	--_ui5_daypicker_selected_item_now_special_day_border_bottom_radius_alternate: 0.0625rem;
+	--_ui5_daypicker_two_calendar_item_margin_bottom: 0;
+	--_ui5_daypicker_twocalendar_item_special_day_now_inset: 0.1875rem;
+	--_ui5_daypicker_twocalendar_item_special_day_now_border_radius: 0;
+	--_ui5_daypicker_item_now_focus_margin: 0.09375rem;
+	--_ui5_daypicker_special_day_border_top: 0.0625rem solid var(--_ui5_daypicker_special_day_before_border_color);
+	--_ui5_daypicker_special_day_selected_border_radius_bottom: 0.0625rem;
+
+	--_ui5_daypicker_specialday_focused_top: 2.375rem;
+	--_ui5_daypicker_specialday_focused_width: calc(100% - 0.375rem);
+	--_ui5_daypicker_specialday_focused_border_bottom: 0.0625rem;
+
+	--_ui5_daypicker_item_now_specialday_top: 2.375rem;
+	--_ui5_daypicker_item_now_specialday_width: calc(100% - 0.375rem);
+
+	--_ui5_daypicker_twocalendar_item_special_day_after_border_width: 0.125rem;
+	--_ui5_daypicker_twocalendar_item_special_day_dot: 0.375rem;
+	--_ui5_daypicker_twocalendar_item_special_day_top: 2rem;
+	--_ui5_daypicker_twocalendar_item_special_day_right: 1.4375rem;
 }
