@@ -451,7 +451,6 @@ class SideNavigation extends UI5Element {
 			}
 		}
 
-		const fixedDom = this.shadowRoot!.querySelector(".ui5-sn-fixed");
 		if (this._getAllItems(this.fixedItems).indexOf(activeElement) === -1) {
 			const selectedItem = this._findSelectedItem(this.fixedItems);
 			if (selectedItem) {
