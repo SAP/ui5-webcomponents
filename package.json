@@ -85,6 +85,7 @@
     "packages/icons-tnt",
     "packages/tools",
     "packages/playground",
+    "packages/documentation",
     "packages/create-package"
   ]
 }
