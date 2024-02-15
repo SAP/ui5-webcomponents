@@ -414,7 +414,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	getEnabledItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<ITabbable> {
-		let result = new Array<ITabbable>();
+		const result = new Array<ITabbable>();
 
 		this._getFocusableItems(items).forEach(item => {
 			if (item.classList.contains("ui5-sn-item-hidden")) {

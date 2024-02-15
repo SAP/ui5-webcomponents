@@ -1,16 +1,21 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { isSpace, isEnter, isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isLeft,
+	isRight,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
 
 // Styles
 import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
-import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase";
 
 /**
  * @class
