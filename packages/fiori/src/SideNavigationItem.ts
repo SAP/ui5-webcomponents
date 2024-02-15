@@ -65,7 +65,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
 	/**

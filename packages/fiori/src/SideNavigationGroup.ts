@@ -53,7 +53,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
 
 	get overflowItems() : Array<SideNavigationSelectableItemBase> {

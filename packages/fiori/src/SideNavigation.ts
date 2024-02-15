@@ -160,7 +160,7 @@ class SideNavigation extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem | SideNavigationGroup>;
 
 	/**
@@ -171,7 +171,7 @@ class SideNavigation extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem | SideNavigationGroup>;
 
 	/**
