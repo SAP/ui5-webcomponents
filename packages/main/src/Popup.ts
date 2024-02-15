@@ -590,7 +590,10 @@ abstract class Popup extends UI5Element {
 	 */
 	_show() {
 		if (getUseNativePopovers()) {
-			this.isConnected && this.showPopover();
+			if (this.isConnected) {
+				this.setAttribute("popover", "manual");
+				this.showPopover();
+			}
 		} else {
 			this.style.display = this._displayProp;
 		}

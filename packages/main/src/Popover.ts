@@ -493,7 +493,10 @@ class Popover extends Popup {
 
 	_showOutsideViewport() {
 		if (getUseNativePopovers()) {
-			this.isConnected && this.showPopover();
+			if (this.isConnected) {
+				this.setAttribute("popover", "manual");
+				this.showPopover();
+			}
 
 			Object.assign(this.style, {
 				top: "-10000px",
