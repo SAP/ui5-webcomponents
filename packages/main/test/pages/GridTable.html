@@ -11,10 +11,25 @@
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 </head>
-
+ 
 <body>
 	<div class="section">
-		<ui5-grid-table></ui5-grid-table>
+		<ui5-grid-table>
+			<ui5-grid-table-column slot="columns">Column 1</ui5-grid-table-column>
+			<ui5-grid-table-column width="300px" slot="columns">Column 2</ui5-grid-table-column>
+			<ui5-grid-table-column slot="columns">Column 3</ui5-grid-table-column>
+
+			<ui5-grid-table-row>
+				<ui5-grid-table-cell><span>Cell 1</span></ui5-grid-table-cell>
+				<ui5-grid-table-cell><span>Cell 2</span></ui5-grid-table-cell>
+				<ui5-grid-table-cell><span>Cell 3</span></ui5-grid-table-cell>
+			</ui5-grid-table-row>
+			<ui5-grid-table-row>
+				<ui5-grid-table-cell><span>Cell 1</span></ui5-grid-table-cell>
+				<ui5-grid-table-cell><span>Cell 2</span></ui5-grid-table-cell>
+				<ui5-grid-table-cell><span>Cell 3</span></ui5-grid-table-cell>
+			</ui5-grid-table-row>
+		</ui5-grid-table>
 	</div>
 </body>
 
