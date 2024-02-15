@@ -121,6 +121,31 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 class BarcodeScannerDialog extends UI5Element {
 	/**
+	 * Indicates whether the dialog is open.
+	 *
+	 * @public
+	 * @default false
+	 * @since 1.23.0
+	 */
+	get open(): boolean {
+		return this._open;
+	}
+
+	set open(value: boolean) {
+		const oldValue = this._open;
+
+		if (oldValue !== value) {
+			this._open = value;
+
+			if (value) {
+				this.show();
+			} else {
+				this.close();
+			}
+		}
+	}
+
+	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 *
 	 * @default false
@@ -130,11 +155,14 @@ class BarcodeScannerDialog extends UI5Element {
 	loading!: boolean;
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
+	_observer!: MutationObserver;
+	_open: boolean;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
+		this._open = false;
 		this._codeReader = new BrowserMultiFormatReader();
 	}
 
@@ -201,11 +229,17 @@ class BarcodeScannerDialog extends UI5Element {
 	async _showDialog() {
 		this.dialog = await this._getDialog();
 		this.dialog.show();
+
+		this._open = true;
+		this.setAttribute("open", "");
 	}
 
 	_closeDialog() {
 		if (this.dialog && this.dialog.opened) {
 			this.dialog.close();
+
+			this._open = false;
+			this.removeAttribute("open");
 		}
 	}
 
@@ -242,6 +276,26 @@ class BarcodeScannerDialog extends UI5Element {
 
 	get _busyIndicatorText() {
 		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
+	}
+
+	onEnterDOM() {
+		this._observer = new MutationObserver(mutations => {
+			mutations.forEach(mutation => {
+				if (mutation.type === "attributes" && mutation.attributeName === "open") {
+					this.open = this.hasAttribute("open");
+				}
+			});
+		});
+
+		this._observer.observe(this, {
+			attributes: true,
+		});
+	}
+
+	onExitDOM() {
+		if (this._observer) {
+			this._observer.disconnect();
+		}
 	}
 }
 
