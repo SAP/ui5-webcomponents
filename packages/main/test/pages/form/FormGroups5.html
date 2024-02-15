@@ -916,25 +916,25 @@
 	<script>
 		const setLayoutToSAPUI5Form = (layout) => {
 			const layoutArr = layout.split(" ");
-			layoutArr.forEach((breakpont) => {
-				if (breakpont.startsWith("M")) {
-					oLayout1.setColumnsM(parseInt(breakpont.slice(1)));
-					oLayout2.setColumnsM(parseInt(breakpont.slice(1)));
-				} else if (breakpont.startsWith("L")) {
-					oLayout1.setColumnsL(parseInt(breakpont.slice(1)));
-					oLayout2.setColumnsL(parseInt(breakpont.slice(1)));
-				} else if (breakpont.startsWith("XL")) {
-					oLayout1.setColumnsXL(parseInt(breakpont.slice(2)));
-					oLayout2.setColumnsXL(parseInt(breakpont.slice(2)));
+			layoutArr.forEach((breakpoint) => {
+				if (breakpoint.startsWith("M")) {
+					oLayout1.setColumnsM(parseInt(breakpoint.slice(1)));
+					oLayout2.setColumnsM(parseInt(breakpoint.slice(1)));
+				} else if (breakpoint.startsWith("L")) {
+					oLayout1.setColumnsL(parseInt(breakpoint.slice(1)));
+					oLayout2.setColumnsL(parseInt(breakpoint.slice(1)));
+				} else if (breakpoint.startsWith("XL")) {
+					oLayout1.setColumnsXL(parseInt(breakpoint.slice(2)));
+					oLayout2.setColumnsXL(parseInt(breakpoint.slice(2)));
 				}
 			});
 		}
 		const setLabelSpanToSAPUI5Form = (labelSpan) => {
 			const labelSpanArr = labelSpan.split(" ");
-			labelSpanArr.forEach((breakpont) => {
-				if (breakpont.startsWith("XL")) {
-					oLayout1.setLabelCellsLarge(parseInt(breakpont.slice(2)));
-					oLayout2.setLabelCellsLarge(parseInt(breakpont.slice(2)));
+			labelSpanArr.forEach((breakpoint) => {
+				if (breakpoint.startsWith("XL")) {
+					oLayout1.setLabelCellsLarge(parseInt(breakpoint.slice(2)));
+					oLayout2.setLabelCellsLarge(parseInt(breakpoint.slice(2)));
 				}
 			});
 		}

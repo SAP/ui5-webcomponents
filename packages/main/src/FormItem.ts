@@ -10,6 +10,9 @@ import FormItemTemplate from "./generated/templates/FormItemTemplate.lit.js";
 // Styles
 import FormItemCss from "./generated/themes/FormItem.css.js";
 
+import type { IFormItem } from "./Form.js";
+import FormItemSpacing from "./types/FormItemSpacing.js";
+
 /**
  * @class
  *
@@ -35,7 +38,7 @@ import FormItemCss from "./generated/themes/FormItem.css.js";
 	styles: FormItemCss,
 	template: FormItemTemplate,
 })
-class FormItem extends UI5Element {
+class FormItem extends UI5Element implements IFormItem {
 	/**
 	 * Defines the label of the component.
 	 * @public
@@ -45,7 +48,7 @@ class FormItem extends UI5Element {
 
 	/**
 	 * Defines the content of the component,
-	 * assotiated to <code>labelContent</code>.
+	 * associated to <code>labelContent</code>.
 	 * @public
 	 */
 	@slot({
@@ -61,8 +64,8 @@ class FormItem extends UI5Element {
 	@property({ defaultValue: "S12 M4 L4 XL4" })
 	labelSpan!: string;
 
-	@property()
-	itemSpacing!: string;
+	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
+	itemSpacing!: FormItemSpacing;
 
 	get isGroup() {
 		return false;

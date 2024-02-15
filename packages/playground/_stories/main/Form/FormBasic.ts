@@ -7,8 +7,9 @@ import type { UI5StoryArgs } from "../../../types.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 
 const Template: UI5StoryArgs<Form, StoryArgsSlots> = (args) => html`
-<ui5-slider id="slider" min="1" max="100" value="100"></ui5-slider>
-<div id="container" class="container" style="width: 1250px"; max-width: 100%>
+<ui5-slider id="slider" min="1" max="100" value="100" style="width: 1250px;"></ui5-slider>
+
+<div id="container" style="width: 1250px;">
 	<ui5-form header-text="${ifDefined(args.headerText)}" layout="${ifDefined(args.layout)}" label-span="${ifDefined(args.labelSpan)}" item-spacing="${ifDefined(args.itemSpacing)}">
 		${unsafeHTML(args.default)}
 	</ui5-form>

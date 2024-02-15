@@ -5,6 +5,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type FormItem from "./FormItem.js";
+import type { IFormItem } from "./Form.js";
+import FormItemSpacing from "./types/FormItemSpacing.js";
 
 /**
  * @class
@@ -31,7 +33,7 @@ import type FormItem from "./FormItem.js";
  * @since 1.23.0
  */
 @customElement("ui5-form-group")
-class FormGroup extends UI5Element {
+class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines header text of the component.
 	 *
@@ -42,7 +44,8 @@ class FormGroup extends UI5Element {
 	headerText!: string;
 
 	/**
-	 * Defines header text of the component.
+	 * Defines column span of the component,
+	 * e.g how many columns the group should span to.
 	 *
 	 * @default undefined
 	 * @public
@@ -75,8 +78,8 @@ class FormGroup extends UI5Element {
 	@property({ validator: Integer, defaultValue: 1 })
 	colsXl!: number;
 
-	@property()
-	itemSpacing!: string;
+	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
+	itemSpacing!: FormItemSpacing;
 
 	@property({ defaultValue: "S12 M4 L4 XL4" })
 	labelSpan!: string;
