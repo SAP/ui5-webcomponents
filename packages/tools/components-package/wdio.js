@@ -237,8 +237,10 @@ exports.config = {
 
 		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
 			return browser.executeAsync(async (selector, done) => {
-				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				done(staticAreaItem.host.classList[0]);
+				const component = await document.querySelector(selector);
+				const newClass = `${selector.replace(/[.#]/g, "").replace(/\s+/g, "-")}-test-class`;
+				component.classList.add(newClass)
+				done(newClass);
 			}, selector);
 		}, false);
 

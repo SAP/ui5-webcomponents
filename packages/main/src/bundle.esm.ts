@@ -183,7 +183,7 @@ import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 
-// setUseNativePopovers(true); // "true" forces all popups to be placed directly inside the component's shadow root.
+setUseNativePopovers(true); // "true" forces all popups to be placed directly inside the component's shadow root.
 
 // @ts-ignore
 window.sanitizeHTML = sanitizeHTML;
