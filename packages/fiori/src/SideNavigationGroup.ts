@@ -1,7 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
@@ -10,6 +10,7 @@ import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGro
 
 // Styles
 import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase";
 
 /**
  * @class
@@ -55,22 +56,36 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<SideNavigationItem>;
 
-	get selectableItems() : Array<SideNavigationItem> {
-		return this.items;
+	get overflowItems() : Array<SideNavigationSelectableItemBase> {
+		return this.items.reduce((result, item) => {
+			return result.concat(item.overflowItems);
+		}, new Array<SideNavigationSelectableItemBase>());
 	}
 
-	get focusableItems() : Array<SideNavigationItem | SideNavigationGroup> {
-		return [this, ...this.items];
+	get selectableItems() : Array<SideNavigationSelectableItemBase> {
+		return this.items.reduce((result, item) => {
+			return result.concat(item.selectableItems);
+		}, new Array<SideNavigationSelectableItemBase>());
+	}
+
+	get focusableItems() : Array<SideNavigationItemBase> {
+		if (this.sideNavCollapsed) {
+			return this.items;
+		}
+
+		if (this.expanded) {
+			return this.items.reduce((result, item) => {
+				return result.concat(item.focusableItems);
+			}, new Array<SideNavigationItemBase>(this));
+		}
+
+		return [this];
 	}
 
 	get allItems() : Array<SideNavigationItemBase> {
-		let result = new Array<SideNavigationItemBase>(this);
-
-		this.items.forEach(item => {
-			result = result.concat(item.allItems);
-		});
-
-		return result;
+		return this.items.reduce((result, item) => {
+			return result.concat(item.allItems);
+		}, new Array<SideNavigationItemBase>(this));
 	}
 
 	get _groupId() {
@@ -94,6 +109,16 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	_onkeydown = (e: KeyboardEvent) => {
+		if (isLeft(e)) {
+			this.expanded = false;
+			return;
+		}
+
+		if (isRight(e)) {
+			this.expanded = true;
+			return;
+		}
+
 		if (isSpace(e)) {
 			e.preventDefault();
 		}

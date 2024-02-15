@@ -424,10 +424,6 @@ class SideNavigation extends UI5Element {
 			if (!item.disabled) {
 				result.push(item);
 			}
-
-			if (!this.collapsed && item.expanded) {
-				result = result.concat(item.items.filter(el => !el.disabled));
-			}
 		});
 
 		return result;
@@ -546,92 +542,35 @@ class SideNavigation extends UI5Element {
 	}
 
 	_findFocusedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationItemBase | undefined {
-		let focusedItem;
-
-		if (this.collapsed) {
-			focusedItem = items.find(item => item.forcedTabIndex === "0");
-		} else {
-			focusedItem = this._getAllFocusableItems(items).find(item => item.forcedTabIndex === "0");
-		}
-
-		return focusedItem;
+		return this._getFocusableItems(items).find(item => item.forcedTabIndex === "0");
 	}
 
-	_getSelectableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItem> {
-		let result = new Array<SideNavigationItem>();
-
-		items.forEach(item => {
-			result = result.concat(item.selectableItems);
-		});
-
-		return result;
+	_getSelectableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationSelectableItemBase> {
+		return items.reduce((result, item) => {
+			return result.concat(item.selectableItems);
+		}, new Array<SideNavigationSelectableItemBase>());
 	}
 
-	_getAllSelectableItems(items: Array<SideNavigationItem | SideNavigationGroup>): Array<SideNavigationSelectableItemBase> {
-		let result = new Array<SideNavigationSelectableItemBase>();
-
-		this._getSelectableItems(items).forEach(item => {
-			result.push(item);
-			result = result.concat(item.items);
-		});
-
-		return result;
-	}
-
-	_getFocusableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItem | SideNavigationGroup> {
-		let result = new Array<SideNavigationItem | SideNavigationGroup>();
-
-		items.forEach(item => {
-			result = result.concat(item.focusableItems);
-		});
-
-		return result;
-	}
-
-	_getAllFocusableItems(items: Array<SideNavigationItem | SideNavigationGroup>): Array<SideNavigationItemBase> {
-		let result = new Array<SideNavigationItemBase>();
-
-		items.forEach(item => {
-			result.push(item);
-
-			if (item.expanded) {
-				result = result.concat(item.focusableItems);
-			}
-		});
-
-		return result;
+	_getFocusableItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItemBase> {
+		return items.reduce((result, item) => {
+			return result.concat(item.focusableItems);
+		}, new Array<SideNavigationItemBase>());
 	}
 
 	_getAllItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<SideNavigationItemBase> {
-		let result = new Array<SideNavigationItemBase>();
-
-		items.forEach(item => {
-			result = result.concat(item.allItems);
-		});
-
-		return result;
+		return items.reduce((result, item) => {
+			return result.concat(item.allItems);
+		}, new Array<SideNavigationItemBase>());
 	}
 
 	_findSelectedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationSelectableItemBase | undefined {
-		let selectedItem;
-
-		if (this.collapsed) {
-			selectedItem = this._getSelectableItems(items).find(item => item._selected);
-		} else {
-			selectedItem = this._getAllSelectableItems(items).find(current => current.selected);
-		}
-
-		return selectedItem;
+		return this._getSelectableItems(items).find(item => item._selected);
 	}
 
-	get flexibleItems() : Array<SideNavigationItem> {
-		let result = new Array<SideNavigationItem>();
-
-		this.items.forEach(item => {
-			result = result.concat(item.selectableItems);
-		});
-
-		return result;
+	get flexibleItems() : Array<SideNavigationSelectableItemBase> {
+		return this.items.reduce((result, item) => {
+			return result.concat(item.overflowItems);
+		}, new Array<SideNavigationSelectableItemBase>());
 	}
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
@@ -666,9 +605,9 @@ class SideNavigation extends UI5Element {
 		this.openOverflowMenu(this._overflowItem as HTMLElement);
 	}
 
-	_getOverflowItems(): Array<SideNavigationItem> {
+	_getOverflowItems(): Array<SideNavigationSelectableItemBase> {
 		const overflowClass = "ui5-sn-item-hidden";
-		const result: Array<SideNavigationItem> = [];
+		const result: Array<SideNavigationSelectableItemBase> = [];
 
 		this.flexibleItems.forEach(item => {
 			if (item.classList.contains(overflowClass)) {
@@ -688,8 +627,8 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		let items = this._getAllSelectableItems(this.items);
-		items = items.concat(this._getAllSelectableItems(this.fixedItems));
+		let items = this._getSelectableItems(this.items);
+		items = items.concat(this._getSelectableItems(this.fixedItems));
 
 		items.forEach(current => {
 			current.selected = false;

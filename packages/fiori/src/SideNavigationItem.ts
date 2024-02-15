@@ -80,11 +80,23 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@property({ type: Boolean })
 	wholeItemToggleable!: boolean;
 
-	get selectableItems() : Array<SideNavigationItem> {
+	get overflowItems() : Array<SideNavigationSelectableItemBase> {
 		return [this];
 	}
 
-	get focusableItems() : Array<SideNavigationItem> {
+	get selectableItems() : Array<SideNavigationSelectableItemBase> {
+		return [this, ...this.items];
+	}
+
+	get focusableItems() : Array<SideNavigationItemBase> {
+		if (this.sideNavCollapsed) {
+			return [this];
+		}
+
+		if (this.expanded) {
+			return [this, ...this.items];
+		}
+
 		return [this];
 	}
 
@@ -93,7 +105,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaHasPopup() {
-		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
+		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
 
