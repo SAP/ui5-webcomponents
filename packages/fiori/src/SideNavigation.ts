@@ -438,9 +438,8 @@ class SideNavigation extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const activeElement = this.shadowRoot!.activeElement;
-		const flexibleDom = this.shadowRoot!.querySelector(".ui5-sn-flexible")!;
-		if (!flexibleDom.contains(activeElement)) {
+		const activeElement = document.activeElement as SideNavigationItemBase;
+		if (this._getAllItems(this.items).indexOf(activeElement) === -1) {
 			const selectedItem = this._findSelectedItem(this.items);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
@@ -453,7 +452,7 @@ class SideNavigation extends UI5Element {
 		}
 
 		const fixedDom = this.shadowRoot!.querySelector(".ui5-sn-fixed");
-		if (!fixedDom?.contains(activeElement)) {
+		if (this._getAllItems(this.fixedItems).indexOf(activeElement) === -1) {
 			const selectedItem = this._findSelectedItem(this.fixedItems);
 			if (selectedItem) {
 				this._fixedItemNavigation.setCurrentItem(selectedItem);
@@ -507,7 +506,7 @@ class SideNavigation extends UI5Element {
 
 		overflowItemRef.classList.add("ui5-sn-item-hidden");
 
-		const itemsRefs = this.flexibleItems;
+		const itemsRefs = this.overflowItems;
 
 		let itemsHeight = itemsRefs.reduce<number>((sum, itemRef) => {
 			itemRef.classList.remove("ui5-sn-item-hidden");
@@ -567,7 +566,7 @@ class SideNavigation extends UI5Element {
 		return this._getSelectableItems(items).find(item => item._selected);
 	}
 
-	get flexibleItems() : Array<SideNavigationSelectableItemBase> {
+	get overflowItems() : Array<SideNavigationSelectableItemBase> {
 		return this.items.reduce((result, item) => {
 			return result.concat(item.overflowItems);
 		}, new Array<SideNavigationSelectableItemBase>());
@@ -609,7 +608,7 @@ class SideNavigation extends UI5Element {
 		const overflowClass = "ui5-sn-item-hidden";
 		const result: Array<SideNavigationSelectableItemBase> = [];
 
-		this.flexibleItems.forEach(item => {
+		this.overflowItems.forEach(item => {
 			if (item.classList.contains(overflowClass)) {
 				 result.push(item);
 			}
