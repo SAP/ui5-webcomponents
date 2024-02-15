@@ -1,0 +1,30 @@
+{{#each dataRows}}
+	<ui5-table-row>
+		<ui5-table-cell>
+			<div class="double-line-content">
+				<ui5-label>
+					<b>{{this.Name}}</b>
+				</ui5-label>
+				<ui5-label style="margin-top: 0.5rem">{{this.ProductId}}</ui5-label>
+			</div>
+		</ui5-table-cell>
+
+		<ui5-table-cell>
+				<ui5-label class="middle">{{this.SupplierName}}</ui5-label>
+		</ui5-table-cell>
+
+		<ui5-table-cell>
+				<ui5-label class="middle">{{this.Width}} x {{this.Depth}} x {{this.Height}}&nbsp;{{this.DimUnit}}</ui5-label>
+		</ui5-table-cell>
+
+		<ui5-table-cell>
+				<ui5-label style="color: #2b7c2b" class="middle">
+					<b>{{this.WeightMeasure}}</b>&nbsp;{{this.WeightUnit}}</ui5-label>
+		</ui5-table-cell>
+
+		<ui5-table-cell>
+				<ui5-label class="middle">
+					<b>{{this.Price}}</b>&nbsp;{{this.CurrencyCode}}</ui5-label>
+		</ui5-table-cell>
+	</ui5-table-row>
+{{/each}}

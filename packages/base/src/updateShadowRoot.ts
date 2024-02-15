@@ -10,13 +10,18 @@ import { isSafari } from "./Device.js";
  * @param element
  * @param forStaticArea
  */
-const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
+const updateShadowRoot = (element: UI5Element, forStaticArea = false, forChildren = false) => {
 	let styleStrOrHrefsArr;
 	const ctor = element.constructor as typeof UI5Element;
-	const shadowRoot = forStaticArea ? element.staticAreaItem!.shadowRoot : element.shadowRoot;
+	let shadowRoot: ShadowRoot | HTMLElement | null = forStaticArea ? element.staticAreaItem!.shadowRoot : element.shadowRoot;
+	if (forChildren) {
+		shadowRoot = element;
+	}
 	let renderResult;
 	if (forStaticArea) {
 		renderResult = element.renderStatic(); // this is checked before calling updateShadowRoot
+	} else if (forChildren) {
+		renderResult = element.renderChildren();
 	} else {
 		renderResult = element.render(); // this is checked before calling updateShadowRoot
 	}
@@ -26,12 +31,14 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 		return;
 	}
 
-	if (shouldUseLinks()) {
-		styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
-	} else if (document.adoptedStyleSheets && !isSafari()) { // Chrome
-		shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
-	} else { // FF, Safari
-		styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
+	if (shadowRoot instanceof ShadowRoot) {
+		if (shouldUseLinks()) {
+			styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
+		} else if (document.adoptedStyleSheets && !isSafari()) { // Chrome
+			shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
+		} else { // FF, Safari
+			styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
+		}
 	}
 
 	if (ctor.renderer) {

@@ -58,6 +58,7 @@ import {
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import TableChildrenTemplate from "./generated/templates/TableChildrenTemplate.lit.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
@@ -184,6 +185,7 @@ enum TableFocusTargetElement {
 	styles: tableStyles,
 	renderer: litRender,
 	template: TableTemplate,
+	childrenTemplate: TableChildrenTemplate,
 	dependencies: [BusyIndicator, CheckBox],
 })
 /** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
@@ -454,6 +456,9 @@ class Table extends UI5Element {
 		invalidateOnChildChange: true,
 	})
 	rows!: Array<ITableRow>;
+
+	@property({ type: Object, multiple: true })
+	dataRows!: Array<any>;
 
 	/**
 	 * Defines the configuration for the columns of the component.

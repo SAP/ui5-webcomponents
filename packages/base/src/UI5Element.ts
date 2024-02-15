@@ -107,6 +107,7 @@ abstract class UI5Element extends HTMLElement {
 
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
+	static childrenTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
 
 	/**
@@ -164,6 +165,11 @@ abstract class UI5Element extends HTMLElement {
 
 	renderStatic() {
 		const template = (this.constructor as typeof UI5Element).staticAreaTemplate;
+		return executeTemplate(template!, this);
+	}
+
+	renderChildren() {
+		const template = (this.constructor as typeof UI5Element).childrenTemplate;
 		return executeTemplate(template!, this);
 	}
 
@@ -705,6 +711,9 @@ abstract class UI5Element extends HTMLElement {
 		// Update shadow root and static area item
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
+		}
+		if (ctor.childrenTemplate) {
+			updateShadowRoot(this, false, true);
 		}
 		if (this.staticAreaItem) {
 			this.staticAreaItem.update();

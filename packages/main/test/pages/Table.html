@@ -61,98 +61,6 @@
 
 	<br><br>
 
-	<table border="1" class="table4auto">
-
-		<thead>
-			<tr>
-				<th>
-					<ui5-label>Product</ui5-label>
-				</th>
-				<th>
-					<ui5-label>Supplier</ui5-label>
-				</th>
-				<th>
-					<ui5-label>Dimensions</ui5-label>
-				</th>
-				<th>
-					<ui5-label>Weight</ui5-label>
-				</th>
-				<th>
-					<ui5-label>Price</ui5-label>
-				</th>
-			</tr>
-		</thead>
-	</table>
-
-	<br>
-	<br>
-	<br>
-
-	<ui5-table class="no-data-table" id="tableNoData" no-data-text="No Data" busy>
-		<ui5-table-column id="column-1" slot="columns">
-			<div class="column-content">
-				<ui5-label>Product</ui5-label>
-			</div>
-		</ui5-table-column>
-		<ui5-table-column id="column-2" slot="columns">
-			<div class="column-content">
-				<ui5-label>Supplier</ui5-label>
-			</div>
-		</ui5-table-column>
-	</ui5-table>
-
-	<ui5-table class="demo-table" accessible-name="Table label" id="tblLessCells">
-		<ui5-table-column id="column-1" slot="columns">
-			<ui5-label>City</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-row navigated>
-			<ui5-table-cell><span>Dublin</span> <ui5-button>click</ui5-button></ui5-table-cell>
-		</ui5-table-row>
-
-		<ui5-table-row>
-			<ui5-table-cell><ui5-label for="myInput">Sofia</ui5-label> <ui5-input id="myInput">click</ui5-input></ui5-table-cell>
-		</ui5-table-row>
-
-		<ui5-table-row >
-			<ui5-table-cell>London <input /> </ui5-table-cell>
-		</ui5-table-row>
-	</ui5-table>
-
-	<!-- Test row click -->
-	<ui5-title>Test row click</ui5-title>
-	<ui5-table class="demo-table" id="testRowClick">
-		<ui5-table-column id="column-1" slot="columns">
-			<ui5-label>City</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier">
-			<ui5-label>Supplier</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-3" slot="columns" min-width="500" popin-text="Country" demand-popin>
-			<div class="column-content">
-				<ui5-label>Country</ui5-label>
-			</div>
-		</ui5-table-column>
-
-		<ui5-table-row data-city="Dublin">
-			<ui5-table-cell><span id="testRowClickCell1">Dublin</span></ui5-table-cell>
-			<ui5-table-cell><span>J.M. Brothers</span></ui5-table-cell>
-			<ui5-table-cell><span>USA</span></ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row data-city="Sofia" id="rowWithEmptyCell">
-			<ui5-table-cell></ui5-table-cell>
-			<ui5-table-cell><span>J.M. Brothers</span></ui5-table-cell>
-			<ui5-table-cell><span>USA</span></ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row data-city="London">
-			<ui5-table-cell><div id="testRowClickCell2">London</div></ui5-table-cell>
-			<ui5-table-cell><span>J.M. Brothers</span></ui5-table-cell>
-			<ui5-table-cell><span>USA</span></ui5-table-cell>
-		</ui5-table-row>
-	</ui5-table>
-
 	<label id="testRowClickResult"></label>
 	<script>
 		"use strict";
@@ -2779,27 +2687,36 @@
 
 			html += test;
 		});
-		document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
 
-		document.getElementById("toggleSticky").addEventListener("click", function(event) {
-			document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
-		});
+		let tbl = document.getElementById("tbl");
+		let start = 0;
+		let length = 10;
+		setInterval(() => {
+			tbl.dataRows = products.ProductCollection.slice(start, start + length);
+			start = (start + 1) % (products.ProductCollection.length - length);
+		}, 100);
 
-		document.getElementById("size-btn-650").addEventListener("click", function(event) {
-			document.getElementById("tbl").style.width = "650px";
-		});
+		// document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
 
-		document.getElementById("size-btn-500").addEventListener("click", function(event) {
-			document.getElementById("tbl").style.width = "500px";
-		});
+		// document.getElementById("toggleSticky").addEventListener("click", function(event) {
+		// 	document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
+		// });
 
-		table.addEventListener("ui5-popin-change", function (e) {
-			tableLable.textContent = "Number of poppedColumns: " + e.detail.poppedColumns.length;
-		});
+		// document.getElementById("size-btn-650").addEventListener("click", function(event) {
+		// 	document.getElementById("tbl").style.width = "650px";
+		// });
 
-		testRowClick.addEventListener("ui5-row-click", function (e) {
-			testRowClickResult.textContent = e.detail.row.getAttribute("data-city");
-		});
+		// document.getElementById("size-btn-500").addEventListener("click", function(event) {
+		// 	document.getElementById("tbl").style.width = "500px";
+		// });
+
+		// table.addEventListener("ui5-popin-change", function (e) {
+		// 	tableLable.textContent = "Number of poppedColumns: " + e.detail.poppedColumns.length;
+		// });
+
+		// testRowClick.addEventListener("ui5-row-click", function (e) {
+		// 	testRowClickResult.textContent = e.detail.row.getAttribute("data-city");
+		// });
 	</script>
 </body>
 
