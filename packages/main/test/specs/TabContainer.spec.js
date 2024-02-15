@@ -1,4 +1,5 @@
 import { assert } from "chai";
+import tabContainer from "../pageobjects/TabContainerTestPage.js";
 
 describe("TabContainer general interaction", () => {
 	before(async () => {
@@ -403,4 +404,112 @@ describe("TabContainer popover", () => {
 
 		assert.deepEqual(paddings, sortedPaddings, "Indentation hierarchy is correct");
 	});
+});
+
+describe("TabContainer drag and drop tests", () => {
+	const getDragOffset = async (draggedElement, dropTargetElement, targetPosition) => {
+		const EXTRA_OFFSET = 30; // TODO
+		const draggedRectangle = {
+			...await draggedElement.getLocation(),
+			...await draggedElement.getSize()
+		};
+
+		const dropTargetElementRectangle = {
+			...await dropTargetElement.getLocation(),
+			...await dropTargetElement.getSize()
+		}
+
+		const draggedElementXCenter = (draggedRectangle.x + draggedRectangle.width / 2);
+		const draggedElementYCenter = (draggedRectangle.y + draggedRectangle.height / 2);
+		const droppedElementXCenter = (dropTargetElementRectangle.x + dropTargetElementRectangle.width / 2);
+		const droppedElementYCenter = (dropTargetElementRectangle.y + dropTargetElementRectangle.height / 2);
+
+		let offsetToXCenter = Math.round(droppedElementXCenter - draggedElementXCenter);
+		let offsetToYCenter = Math.round(droppedElementYCenter - draggedElementYCenter);
+
+		if (targetPosition === "Before") {
+			offsetToXCenter -= EXTRA_OFFSET;
+			offsetToYCenter -= EXTRA_OFFSET
+		} else if (targetPosition === "After") {
+			offsetToXCenter += EXTRA_OFFSET;
+			offsetToYCenter += EXTRA_OFFSET;
+		}
+
+		return {
+			x: offsetToXCenter,
+			y: offsetToYCenter
+		};
+	};
+
+	const compareItemsOrder = async (tabContainerId, expectedIds) => {
+		const items = await browser.$$(`#${tabContainerId} > *`);
+		const results = await Promise.all(expectedIds.map(async (expectedId, i) => {
+			const id = await items[i].getAttribute("id");
+
+			return id === expectedId;
+		}));
+
+		return results.every(value => value);
+	}
+
+	const moveElementById = (arr, id1, id2) => {
+		const newArr = [...arr];
+		const index1 = newArr.indexOf(id1);
+		const index2 = newArr.indexOf(id2);
+
+		const [item] = newArr.splice(index1, 1);
+		newArr.splice(index2, 0, item);
+
+		return newArr;
+	};
+
+	const dragAndDropInStrip = async (stripItemToDrag, stripDropTarget, placement) => {
+		const dragOffset = await getDragOffset(stripItemToDrag, stripDropTarget, placement);
+
+		await stripItemToDrag.dragAndDrop({ x: dragOffset.x, y: 0 });
+	}
+
+	before(async () => {
+		await browser.url(`test/pages/TabContainerDragAndDrop.html`);
+		await browser.setWindowSize(1024, 1000);
+	});
+
+	it("Moving item After another", async () => {
+		await browser.pause(5000); // TODO: this workaround avoids test crash. Find way to avoid it
+		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+		let firstStripItem = displayedStripItems[0];
+		const secondStripItem = displayedStripItems[1];
+		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
+
+		await dragAndDropInStrip(firstStripItem, secondStripItem, "After");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(firstStripItem), await tabContainer.getRealTabId(secondStripItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+		
+		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+		firstStripItem = displayedStripItems[1];
+		const lastStripItem = displayedStripItems[displayedStripItems.length - 1];
+		await dragAndDropInStrip(firstStripItem, lastStripItem, "After");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(firstStripItem), await tabContainer.getRealTabId(lastStripItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+	});
+
+	it("Moving item Before another", async () => {
+		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");	
+		const secondToLastStripItem = displayedStripItems[displayedStripItems.length - 2];
+		let lastStripItem = displayedStripItems[displayedStripItems.length - 1];
+		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
+
+		await dragAndDropInStrip(lastStripItem, secondToLastStripItem, "Before");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(lastStripItem), await tabContainer.getRealTabId(secondToLastStripItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+		
+		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+		const firstStripItem = displayedStripItems[0];
+		lastStripItem = displayedStripItems[displayedStripItems.length - 2];
+		await dragAndDropInStrip(lastStripItem, firstStripItem, "Before");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(lastStripItem), await tabContainer.getRealTabId(firstStripItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+	});
+
+	// TODO: 1) move inside the popover 2) move from strip to popover 3) move from popover to strip 4) long drag over
 });

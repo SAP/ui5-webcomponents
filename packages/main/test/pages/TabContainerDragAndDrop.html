@@ -13,11 +13,11 @@
 <body class="tabcontainer1auto">
 	<ui5-checkbox id="reorder" text="Draggable tabs" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel" value="1"></ui5-step-input>
+	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel" value="2"></ui5-step-input>
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed>
+		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed tabs-overflow-mode="StartAndEnd">
 			<ui5-tab id="tabOne" draggable="true" design="Positive" text="One"></ui5-tab>
 			<ui5-tab id="tabTwo" draggable="true" design="Negative" text="Two" disabled>
 				<ui5-tab slot="subTabs" draggable="true" text="2.1"></ui5-tab>
@@ -70,7 +70,9 @@
 
 	<script>
 		const tc = document.getElementById("tabContainerDnd");
-		let maxNestingLevel = 1;
+		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
+		let maxNestingLevel = 2;
+		maxNestingLevelInput.value = maxNestingLevel;
 
 		const getTabLevel = (element) => {
 			if (element.hasAttribute("ui5-tabcontainer")) {
@@ -80,9 +82,12 @@
 			return 1 + getTabLevel(element.parentElement);
 		};
 
-		tc.addEventListener("before-tab-move", (e) => {
-			// TODO: validate source.element
+		tc.addEventListener("ui5-before-tab-move", (e) => {
 			const { source, destination } = e.detail;
+
+			if (!tc.contains(source.element)) {
+				return;
+			}
 
 			console.error(`Dragging "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
 
@@ -90,14 +95,20 @@
 				return;
 			}
 
-			if (getTabLevel(destination.element) > maxNestingLevel) {
+			let potentialNestingLevel = getTabLevel(destination.element);
+
+			if (destination.placement === "On") {
+				potentialNestingLevel += 1;
+			}
+
+			if (potentialNestingLevel > maxNestingLevel + 1) {
 				return;
 			}
 
 			e.preventDefault();
 		});
 
-		tc.addEventListener("tab-move", (e) => {
+		tc.addEventListener("ui5-tab-move", (e) => {
 			// TODO: validate source.element
 			const { destination, source } = e.detail;
 			const currentParent = destination.element.parentElement;
@@ -125,21 +136,20 @@
 				source.element.slot = "";
 			}
 
-			// TODO: discuss how to focus
-			source.element.getFocusDomRef().focus();
+			// TODO: discuss whether this bug in the tabs
+			source.element.focus();
 		});
 
 		const densityCb = document.getElementById("density");
-		densityCb.addEventListener("change", e => {
+		densityCb.addEventListener("ui5-change", e => {
 			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
 		});
 
 		const reorderCb = document.getElementById("reorder");
-		reorderCb.addEventListener("change", e => {
+		reorderCb.addEventListener("ui5-change", e => {
 			document.querySelectorAll("[ui5-tab]").forEach((tab) => tab.draggable = e.target.checked);
 		});
 
-		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
 		maxNestingLevelInput.addEventListener("ui5-change", (e) => {
 			maxNestingLevel = e.target.value;
 		});

@@ -510,7 +510,7 @@ class TabContainer extends UI5Element {
 		}
 
 		const closestDropPosition = findClosestDropPosition(
-			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)],
+			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`), this._getEndOverflowBtnDOM()!],
 			e.clientX,
 			Orientation.Horizontal,
 		);
@@ -521,41 +521,39 @@ class TabContainer extends UI5Element {
 
 		let popoverTarget = null;
 
-		if (isLongDragOver && e.target === this._getStartOverflowBtnDOM()) {
+		if (isLongDragOver && closestDropPosition.element === this._getStartOverflowBtnDOM()) {
 			popoverTarget = e.target;
-		}
-
-		if (isLongDragOver && e.target === this._getEndOverflowBtnDOM()) {
+		} else if (isLongDragOver && closestDropPosition.element === this._getEndOverflowBtnDOM()) {
 			popoverTarget = e.target;
-		}
-
-		if (isLongDragOver && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
+		} else if (isLongDragOver && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
 			popoverTarget = closestDropPosition.element;
 		}
 
-		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
-			const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
-				source: {
-					element: DragRegistry.getDraggedElement()!,
-				},
-				destination: {
-					element: (closestDropPosition.element as Tab).realTabReference,
-					placement: dropPlacement,
-				},
-			}, true);
+		if (isTabInStrip(closestDropPosition.element)) {
+			const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
+				const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
+					source: {
+						element: DragRegistry.getDraggedElement()!,
+					},
+					destination: {
+						element: (closestDropPosition.element as Tab).realTabReference,
+						placement: dropPlacement,
+					},
+				}, true);
 
-			if (dragOverPrevented) {
-				e.preventDefault();
-				this.dropIndicatorDOM!.targetReference = closestDropPosition.element;
-				this.dropIndicatorDOM!.placement = dropPlacement;
-				return true;
+				if (dragOverPrevented) {
+					e.preventDefault();
+					this.dropIndicatorDOM!.targetReference = closestDropPosition.element;
+					this.dropIndicatorDOM!.placement = dropPlacement;
+					return true;
+				}
+
+				return false;
+			});
+
+			if (!placementAccepted) {
+				this.dropIndicatorDOM!.targetReference = null;
 			}
-
-			return false;
-		});
-
-		if (!placementAccepted) {
-			this.dropIndicatorDOM!.targetReference = null;
 		}
 
 		if (popoverTarget) {
