@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -59,17 +58,8 @@ class FormItem extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanS!: number;
-
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanM!: number;
-
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanL!: number;
-
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanXl!: number;
+	@property({ defaultValue: "S12 M4 L4 XL4" })
+	labelSpan!: string;
 
 	@property()
 	itemSpacing!: string;

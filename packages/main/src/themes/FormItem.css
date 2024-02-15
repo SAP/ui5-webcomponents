@@ -34,11 +34,11 @@
 
 /* S - 1 column */
 @container (max-width: 599px) {
-	.ui5-form-item-layout {
+	:host(:not([label-span])) .ui5-form-item-layout {
 		--ui5-form-item-layout: 1fr;
 	}
 
-	.ui5-form-item-label {
+	:host(:not([label-span])) .ui5-form-item-label {
 		padding: var(--ui5-form-item-label-padding-span12);
 		justify-self: var(--ui5-form-item-label-justify-span12);
 	}

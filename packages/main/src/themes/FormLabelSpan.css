@@ -61,6 +61,8 @@
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 
+	:host(:not([label-span-s])) .ui5-form-item,
+	:host(:not([label-span-s])) .ui5-form-group,
 	:host([label-span-s="12"]) .ui5-form-item,
 	:host([label-span-s="12"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span12);

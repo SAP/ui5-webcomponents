@@ -75,20 +75,11 @@ class FormGroup extends UI5Element {
 	@property({ validator: Integer, defaultValue: 1 })
 	colsXl!: number;
 
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanS!: number;
-
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanM!: number;
-
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanL!: number;
-
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanXl!: number;
-
 	@property()
 	itemSpacing!: string;
+
+	@property({ defaultValue: "S12 M4 L4 XL4" })
+	labelSpan!: string;
 
 	onBeforeRendering() {
 		this.processFormItems();
@@ -96,10 +87,7 @@ class FormGroup extends UI5Element {
 
 	processFormItems() {
 		this.items.forEach((item: FormItem) => {
-			item.labelSpanS = this.labelSpanS;
-			item.labelSpanM = this.labelSpanM;
-			item.labelSpanL = this.labelSpanL;
-			item.labelSpanXl = this.labelSpanXl;
+			item.labelSpan = this.labelSpan;
 			item.itemSpacing = this.itemSpacing;
 		});
 	}

@@ -289,10 +289,7 @@ class Form extends UI5Element {
 		});
 
 		this.items.forEach((item: FormItem | FormGroup) => {
-			item.labelSpanS = this.labelSpanS;
-			item.labelSpanM = this.labelSpanM;
-			item.labelSpanL = this.labelSpanL;
-			item.labelSpanXl = this.labelSpanXl;
+			item.labelSpan = this.labelSpan;
 			item.itemSpacing = this.itemSpacing;
 		});
 	}
