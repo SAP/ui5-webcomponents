@@ -23,6 +23,11 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * Each <code>ui5-calendar-legend-item</code> represents a legend item, displaying a color with a label.
+ * The color is determined by the <code>type</code> property and the label by the <code>text</code> property.
+ * If a <code>ui5-special-date</code> is used within the <code>ui5-calendar</code> and a type is set, clicking on a <code>ui5-calendar-legend-item</code>
+ * with the same type will emphasize the respective date(s) in the calendar.
+ *
  * <h3>Usage</h3>
  * The <code>ui5-calendar-legend-item</code> is intended to be used within the <code>ui5-calendar-legend</code> component.
  *

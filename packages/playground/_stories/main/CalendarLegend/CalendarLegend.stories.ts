@@ -15,34 +15,36 @@ export default {
 	argTypes,
 } as Meta<CalendarLegend>;
 
-const Template: UI5StoryArgs<CalendarLegend, StoryArgsSlots> = (args) => html`<ui5-calendar-legend
-	?hide-today="${ifDefined(args.hideToday)}"
-	?hide-selected-day="${ifDefined(args.hideSelectedDay)}"
-	?hide-non-working-day="${ifDefined(args.hideNonWorkingDay)}"
-	?hide-working-day="${ifDefined(args.hideWorkingDay)}"
-	slot="calendarLegend"
->
-	${unsafeHTML(args.default)}
-</ui5-calendar-legend>`;
+const Template: UI5StoryArgs<CalendarLegend, StoryArgsSlots> = (args) => html`
+		<ui5-calendar-legend
+			?hide-today="${ifDefined(args.hideToday)}"
+			?hide-selected-day="${ifDefined(args.hideSelectedDay)}"
+			?hide-non-working-day="${ifDefined(args.hideNonWorkingDay)}"
+			?hide-working-day="${ifDefined(args.hideWorkingDay)}"
+			slot="calendarLegend"
+		>
+			${unsafeHTML(args.default)}
+		</ui5-calendar-legend>
+`;
 
 export const Basic = Template.bind({});
 
 Basic.decorators = [
 	(story) => {
 		return html`
-			<ui5-calendar>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
-				${story()}
-			</ui5-calendar>
+<ui5-calendar>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+	${story()}
+</ui5-calendar>
 
-	<script>
+<script>
 	// Function that maps special dates to the current month
 	function updateSpecialDates() {
 		const currentDate = new Date();
@@ -76,8 +78,8 @@ Basic.decorators = [
 
 Basic.args = {
 	default: `
-		<ui5-calendar-legend-item type="Type05" text="Holiday"></ui5-calendar-legend-item>
-		<ui5-calendar-legend-item type="Type07" text="School Vacation"></ui5-calendar-legend-item>
-		<ui5-calendar-legend-item type="Type13" text="Wedding"></ui5-calendar-legend-item>
+			<ui5-calendar-legend-item type="Type05" text="Holiday"></ui5-calendar-legend-item>
+			<ui5-calendar-legend-item type="Type07" text="School Vacation"></ui5-calendar-legend-item>
+			<ui5-calendar-legend-item type="Type13" text="Wedding"></ui5-calendar-legend-item>
 	`,
 };
