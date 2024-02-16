@@ -408,7 +408,7 @@ describe("TabContainer popover", () => {
 
 describe("TabContainer drag and drop tests", () => {
 	const getDragOffset = async (draggedElement, dropTargetElement, targetPosition) => {
-		const EXTRA_OFFSET = 30; // TODO
+		const OFFSET = 5;
 		const draggedRectangle = {
 			...await draggedElement.getLocation(),
 			...await draggedElement.getSize()
@@ -417,27 +417,31 @@ describe("TabContainer drag and drop tests", () => {
 		const dropTargetElementRectangle = {
 			...await dropTargetElement.getLocation(),
 			...await dropTargetElement.getSize()
-		}
+		};
 
-		const draggedElementXCenter = (draggedRectangle.x + draggedRectangle.width / 2);
-		const draggedElementYCenter = (draggedRectangle.y + draggedRectangle.height / 2);
-		const droppedElementXCenter = (dropTargetElementRectangle.x + dropTargetElementRectangle.width / 2);
-		const droppedElementYCenter = (dropTargetElementRectangle.y + dropTargetElementRectangle.height / 2);
+		const draggedElementXCenter = draggedRectangle.x + draggedRectangle.width / 2;
+		const draggedElementYCenter = draggedRectangle.y + draggedRectangle.height / 2;
 
-		let offsetToXCenter = Math.round(droppedElementXCenter - draggedElementXCenter);
-		let offsetToYCenter = Math.round(droppedElementYCenter - draggedElementYCenter);
+		let dropTargetX;
+		let dropTargetY;
 
 		if (targetPosition === "Before") {
-			offsetToXCenter -= EXTRA_OFFSET;
-			offsetToYCenter -= EXTRA_OFFSET
+			dropTargetX = dropTargetElementRectangle.x + OFFSET;
+			dropTargetY = dropTargetElementRectangle.y + OFFSET;
 		} else if (targetPosition === "After") {
-			offsetToXCenter += EXTRA_OFFSET;
-			offsetToYCenter += EXTRA_OFFSET;
+			dropTargetX = dropTargetElementRectangle.x + dropTargetElementRectangle.width - OFFSET;
+			dropTargetY = dropTargetElementRectangle.y + dropTargetElementRectangle.height - OFFSET;
+		} else { // "On"
+			dropTargetX = dropTargetElementRectangle.x + dropTargetElementRectangle.width / 2;
+			dropTargetY = dropTargetElementRectangle.y + dropTargetElementRectangle.height / 2;
 		}
 
+		const offsetToX = Math.round(dropTargetX - draggedElementXCenter);
+		const offsetToY = Math.round(dropTargetY - draggedElementYCenter);
+
 		return {
-			x: offsetToXCenter,
-			y: offsetToYCenter
+			x: offsetToX,
+			y: offsetToY
 		};
 	};
 
@@ -469,6 +473,12 @@ describe("TabContainer drag and drop tests", () => {
 		await stripItemToDrag.dragAndDrop({ x: dragOffset.x, y: 0 });
 	}
 
+	const dragAndDropInPopover = async (popoverItemToDrag, popoverDropTarget, placement) => {
+		const dragOffset = await getDragOffset(popoverItemToDrag, popoverDropTarget, placement);
+
+		await popoverItemToDrag.dragAndDrop({ x: 0, y: dragOffset.y }, { duration: 5000});
+	}
+
 	before(async () => {
 		await browser.url(`test/pages/TabContainerDragAndDrop.html`);
 		await browser.setWindowSize(1024, 1000);
@@ -477,39 +487,90 @@ describe("TabContainer drag and drop tests", () => {
 	it("Moving item After another", async () => {
 		await browser.pause(5000); // TODO: this workaround avoids test crash. Find way to avoid it
 		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
-		let firstStripItem = displayedStripItems[0];
-		const secondStripItem = displayedStripItems[1];
+		let draggedStripItem = displayedStripItems[0];
+		let dropTargetStripItem = displayedStripItems[1];
 		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
 
-		await dragAndDropInStrip(firstStripItem, secondStripItem, "After");
-		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(firstStripItem), await tabContainer.getRealTabId(secondStripItem));
+		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "After");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
 		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
 		
 		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
-		firstStripItem = displayedStripItems[1];
-		const lastStripItem = displayedStripItems[displayedStripItems.length - 1];
-		await dragAndDropInStrip(firstStripItem, lastStripItem, "After");
-		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(firstStripItem), await tabContainer.getRealTabId(lastStripItem));
+		draggedStripItem = displayedStripItems[1];
+		dropTargetStripItem = displayedStripItems[displayedStripItems.length - 1];
+		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "After");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
 		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
 	});
 
 	it("Moving item Before another", async () => {
-		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");	
-		const secondToLastStripItem = displayedStripItems[displayedStripItems.length - 2];
-		let lastStripItem = displayedStripItems[displayedStripItems.length - 1];
+		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+		let draggedStripItem = displayedStripItems[displayedStripItems.length - 1];
+		let dropTargetStripItem = displayedStripItems[displayedStripItems.length - 2];
 		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
 
-		await dragAndDropInStrip(lastStripItem, secondToLastStripItem, "Before");
-		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(lastStripItem), await tabContainer.getRealTabId(secondToLastStripItem));
+		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
 		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
 		
 		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
-		const firstStripItem = displayedStripItems[0];
-		lastStripItem = displayedStripItems[displayedStripItems.length - 2];
-		await dragAndDropInStrip(lastStripItem, firstStripItem, "Before");
-		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(lastStripItem), await tabContainer.getRealTabId(firstStripItem));
+		draggedStripItem = displayedStripItems[displayedStripItems.length - 2];
+		dropTargetStripItem = displayedStripItems[0];
+		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
 		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
 	});
 
-	// TODO: 1) move inside the popover 2) move from strip to popover 3) move from popover to strip 4) long drag over
+	it ("Moving item On another", async () => {
+		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+		let draggedStripItem = displayedStripItems[1];
+		let draggedStripItemId = await tabContainer.getRealTabId(draggedStripItem);
+		let dropTargetStripItem = displayedStripItems[2];
+		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
+		
+		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "On");
+		expectedOrder = expectedOrder.filter(id => id !== draggedStripItemId);
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+	});
+
+	it("Moving item After another in end overflow popover", async () => {
+		await tabContainer.getEndOverflow("tabContainerDnd").click();
+
+		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		let draggedPopoverItem = displayedPopoverItems[1];
+		let dropTargetPopoverItem = displayedPopoverItems[2];
+		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
+
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+
+		displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		draggedPopoverItem = displayedPopoverItems[2];
+		dropTargetPopoverItem = displayedPopoverItems[7];
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+	});
+
+	it("Moving item Before another in end overflow popover", async () => {
+		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		let draggedPopoverItem = displayedPopoverItems[7];
+		let dropTargetPopoverItem = displayedPopoverItems[6];
+		let expectedOrder = await Promise.all(await browser.$$(`#tabContainerDnd > *`).map(e => e .getAttribute("id")));
+
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+
+		displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		draggedPopoverItem = displayedPopoverItems[2];
+		dropTargetPopoverItem = displayedPopoverItems[1]
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		assert.ok(await compareItemsOrder("tabContainerDnd", expectedOrder), "Items order has changed");
+
+		// close the popover
+		await tabContainer.getEndOverflow("tabContainerDnd").click();
+	});
 });

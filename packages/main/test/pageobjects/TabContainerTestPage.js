@@ -1,16 +1,4 @@
 class TabContainerTestPage {
-	async getRoot() {
-		return $(this._sut);
-	}
-
-	async getHeader() {
-		return browser.$(`${this._sut}`).shadow$(`header`);
-	}
-
-	async getItem(index) {
-		return (await browser.$$("#list1 ui5-li"))[index];
-	}
-
 	async getTabStripItems(tabContainerId) {
 		return browser.$(`#${tabContainerId}`).shadow$$(".ui5-tab-strip-item");
 	}
@@ -31,6 +19,17 @@ class TabContainerTestPage {
 		}, tabRepresentation);
 
 		return realTabId;
+	}
+
+	getEndOverflow(tabContainerId) {
+		return browser.$(`#${tabContainerId}`).shadow$(".ui5-tc__overflow--end [ui5-button]");
+	}
+
+	async getCurrentPopoverItems(tabContainerId) {
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${tabContainerId}`);
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		return popover.$$("[ui5-li-custom]");
 	}
 }
 
