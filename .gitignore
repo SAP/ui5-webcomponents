@@ -1,6 +1,7 @@
 # Ignore .gitignore, target, dist and tmp folders
 .gitignore
 !packages/create-package/template/.gitignore
+!packages/documentation/.gitignore
 tmp
 temp
 target

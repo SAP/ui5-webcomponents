@@ -1,13 +1,14 @@
 {
-  "name": "my-website",
+  "name": "@ui5/webcomponents-documentation",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "generate-api-reference": "rimraf ./docs/components && node ./build-scripts/api-reference-generation/index.mjs",
     "generate-documentation": "rimraf ./docs/documentation && node ./build-scripts/documentation-generation/index.mjs",
+    "generate-all": "yarn generate-api-reference && yarn generate-api-reference generate-documentation",
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "docusaurus build",
+    "start": "yarn generate-all && docusaurus start",
+    "build": "yarn generate-all && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
