@@ -367,7 +367,15 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	get _valuePrecisioned() {
-		return this.value.toFixed(this.valuePrecision);
+		if (this.value === 0 || !this.value.toString().includes(".") || (this.value.toString().split(".")[1].length <= this.valuePrecision)) {
+			return this.value.toFixed(this.valuePrecision);
+		}
+
+		if (this.value === Number(this.input.value)) {
+			return this.input.value;
+		}
+
+		return this.value.toString();
 	}
 
 	get accInfo() {
@@ -441,12 +449,19 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	_updateValueState() {
-		const valid = !((this.min !== undefined && this.value < this.min) || (this.max !== undefined && this.value > this.max));
+		const isWithinRange = (this.min === undefined || Number(this.input.value) >= this.min)
+							  && (this.max === undefined || Number(this.input.value) <= this.max);
+		const numberParts = this.input.value.split(".");
+		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
+		const isPrecisionValid = decimalPartLength === this.valuePrecision;
 		const previousValueState = this.valueState;
 
-		this.valueState = valid ? ValueState.None : ValueState.Error;
+		this.valueState = isWithinRange && isPrecisionValid ? ValueState.None : ValueState.Error;
 
-		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
+		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
+			valueState: this.valueState,
+			valid: isWithinRange && isPrecisionValid,
+		}, true);
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;
@@ -475,7 +490,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 */
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
-		this.value = this._preciseValue(parseFloat(this.input.value));
+		this.value = Number(this.input.value);
 		value = this.value + modifier;
 		if (this.min !== undefined && value < this.min) {
 			value = this.min;
@@ -486,6 +501,7 @@ class StepInput extends UI5Element implements IFormElement {
 		value = this._preciseValue(value);
 		if (value !== this.value) {
 			this.value = value;
+			this.input.value = value.toFixed(this.valuePrecision);
 			this._validate();
 			this._setButtonState();
 			this.focused = true;
@@ -514,10 +530,10 @@ class StepInput extends UI5Element implements IFormElement {
 
 	_onInputChange() {
 		if (this.input.value === "") {
-			this.input.value = (this.min || 0) as unknown as string;
+			this.input.value = (this.min || 0).toFixed(this.valuePrecision);
 		}
-		const inputValue = this._preciseValue(parseFloat(this.input.value));
-		if (this.value !== this._previousValue || this.value !== inputValue) {
+		const inputValue = Number(this.input.value);
+		if (this.value !== this._previousValue || this.value !== inputValue || inputValue === 0) {
 			this.value = inputValue;
 			this._validate();
 			this._setButtonState();
