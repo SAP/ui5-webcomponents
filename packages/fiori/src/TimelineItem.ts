@@ -131,6 +131,10 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();
 	}
 
+	get itemContent() {
+		return this.childNodes.length > 0;
+	}
+
 	get classes() {
 		return {
 			indicator: {
