@@ -143,6 +143,13 @@ class ColorPalette extends UI5Element {
 	popupMode!: boolean;
 
 	/**
+	 * Defines if the palette is rendered on phone.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
 	 * Defines the <code>ui5-color-palette-item</code> elements.
 	 * @public
 	 */
@@ -201,6 +208,8 @@ class ColorPalette extends UI5Element {
 				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
 		}
+
+		this.onPhone = isPhone();
 	}
 
 	onAfterRendering() {

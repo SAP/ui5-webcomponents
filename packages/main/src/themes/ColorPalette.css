@@ -1,9 +1,9 @@
 :host(:not([hidden])) {
 	display: inline-block;
-	width: 100%;;
 }
 
-:host(:not([hidden])[popup-mode]) {
+:host(:not([hidden])[popup-mode]),
+:host(:not([hidden])[on-phone]) {
 	width: 100%;
 	overflow: hidden;
 }
@@ -46,6 +46,7 @@
 }
 
 .ui5-cp-root-phone .ui5-cp-recent-colors-container {
+	padding: 0.375rem 0.625rem;
 	display: grid;
     grid-template-columns: 18% 18% 18% 18% 18%;
     grid-gap: 0.375rem;
