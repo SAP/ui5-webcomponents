@@ -113,11 +113,11 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaChecked() {
-		if (this.disabled && this.sideNavCollapsed && this.items.length) {
-			return "tree";
+		if (this.isOverflow) {
+			return undefined;
 		}
 
-		return undefined;
+		return this.selected;
 	}
 
 	get _groupId() {
