@@ -1,13 +1,14 @@
-<li role="none" class="ui5-sn-item-separator"></li>
 {{#if sideNavCollapsed}}
+	<div class="ui5-sn-item-separator"></div>
 	<slot></slot>
+	<div class="ui5-sn-item-separator"></div>
 {{else}}
 	{{> treeitem }}
 {{/if}}
-<li role="none" class="ui5-sn-item-separator"></li>
 
 {{#*inline treeitem}}
 	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
+		<div class="ui5-sn-item-separator"></div>
 		<div class="ui5-sn-item ui5-sn-item-group {{_classes}}"
 			 role="treeitem"
 			 data-sap-focus-ref
@@ -36,5 +37,6 @@
 				<slot></slot>
 			</ul>
 		{{/if}}
+		<div class="ui5-sn-item-separator"></div>
 	</li>
 {{/inline}}
