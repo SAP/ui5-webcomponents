@@ -71,7 +71,7 @@ class Label extends UI5Element {
 	 * Defines whether an asterisk character is added to the component text.
 	 * <br><br>
 	 * <b>Note:</b> Usually indicates that user input (bound with the <code>for</code> property) is required.
-	 * In that case the <code>required</> property of
+	 * In that case the <code>required</code> property of
 	 * the corresponding input should also be set.
 	 *
 	 * @default false
