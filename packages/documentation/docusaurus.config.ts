@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
@@ -74,7 +74,7 @@ const config: Config = {
           position: 'left',
           label: 'Samples',
         },
-        {to: '/blog', label: 'Blog', position: 'right'},
+        { to: '/blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -84,48 +84,88 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
+      copyright: `© Copyright ${new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors`,
+      logo: {
+        alt: 'Meta Open Source Logo',
+        src: 'https://sap.github.io/ui5-webcomponents/assets/footer/sap-1920-1440.svg',
+        href: 'https://opensource.fb.com',
+        width: 160,
+        height: 51,
+      },
       links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
-        },
         {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
               label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              to: 'docs/documentation/',
+            },
+            {
+              label: 'Slack',
+              to: 'docs/documentation/',
+            },
+            {
+              label: 'Youtube',
+              to: 'docs/documentation/',
+            },
+            {
+              label: 'GitHub',
+              to: 'docs/documentation/',
             },
           ],
         },
         {
-          title: 'More',
+          title: 'Docs',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Documentation',
+              to: 'docs/documentation/',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'FAQ',
+              to: 'docs/documentation/',
+            },
+          ],
+        },
+        {
+          title: 'Legal & Privacy',
+          items: [
+            {
+              label: 'Privacy',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            },
+            {
+              label: 'Terms of Use',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            },
+            {
+              label: 'Legal Disclosure',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            },
+            {
+              label: 'Trademarks',
+              href: 'https://discordapp.com/invite/docusaurus',
+            },
+          ],
+        },
+        {
+          title: 'Contact Us',
+          items: [
+            {
+              label: 'Report Issue',
+              to: 'docs/documentation/',
+            },
+            {
+              label: 'Technical Questions',
+              to: 'docs/documentation/',
+            },
+            {
+              label: 'Product Questions',
+              to: 'docs/documentation/',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

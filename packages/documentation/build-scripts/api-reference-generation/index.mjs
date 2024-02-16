@@ -33,16 +33,19 @@ packages.forEach(async (packageName, index) => {
         }
     }`)
 
-    const manifest = JSON.parse(await fs.readFile(path.resolve(`./build-scripts/api-reference-generation/custom-elements-internal-${packageName}.json`), { encoding: "utf-8" }));
+    const manifest = JSON.parse(await fs.readFile(path.resolve(`./../${packageName}/dist/custom-elements-internal.json`), { encoding: "utf-8" }));
 
     manifest.modules.forEach(_module => {
         _module.declarations.forEach(async (declaration) => {
             if (declaration.customElement && declaration.tagName) {
                 await fs.writeFile(path.join(`./docs/components/${packageName}/`, `${declaration.name}.mdx`), parseDeclaration(declaration))
+                await fs.writeFile(path.join(`./docs/components/${packageName}/`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
             } else if (declaration.kind === "enum") {
                 await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `${declaration.name}.mdx`), parseDeclaration(declaration))
+                await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
             } else if (declaration.kind === "interface") {
                 await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `${declaration.name}.mdx`), parseDeclaration(declaration))
+                await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
             }
         });
     });

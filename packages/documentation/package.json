@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "generate-api-reference": "rimraf ./docs/components/main && rimraf ./docs/components/fiori && node ./build-scripts/api-reference-generation/index.mjs",
+    "generate-api-reference": "rimraf ./docs/components && node ./build-scripts/api-reference-generation/index.mjs",
     "generate-documentation": "rimraf ./docs/documentation && node ./build-scripts/documentation-generation/index.mjs",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
