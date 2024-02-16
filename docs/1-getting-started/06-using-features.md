@@ -66,4 +66,4 @@ import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Input.js";
 ```
 
-Next: [Typescript Support](./07-typescript-support)
+Next: [Typescript Support](./07-typescript-support.md)
