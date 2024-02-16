@@ -509,24 +509,24 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		const dropPositions = Array.from(this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`));
+
+		if (this._getStartOverflowBtnDOM()) {
+			dropPositions.push(this._getStartOverflowBtnDOM()!);
+		}
+
+		if (this._getEndOverflowBtnDOM()) {
+			dropPositions.push(this._getEndOverflowBtnDOM()!);
+		}
+
 		const closestDropPosition = findClosestDropPosition(
-			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`), this._getEndOverflowBtnDOM()!],
+			dropPositions,
 			e.clientX,
 			Orientation.Horizontal,
 		);
 
 		if (!closestDropPosition) {
 			return;
-		}
-
-		let popoverTarget = null;
-
-		if (isLongDragOver && closestDropPosition.element === this._getStartOverflowBtnDOM()) {
-			popoverTarget = e.target;
-		} else if (isLongDragOver && closestDropPosition.element === this._getEndOverflowBtnDOM()) {
-			popoverTarget = e.target;
-		} else if (isLongDragOver && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
-			popoverTarget = closestDropPosition.element;
 		}
 
 		if (isTabInStrip(closestDropPosition.element)) {
@@ -556,7 +556,19 @@ class TabContainer extends UI5Element {
 			}
 		}
 
-		if (popoverTarget) {
+		let popoverTarget = null;
+
+		if (closestDropPosition.element === this._getStartOverflowBtnDOM()) {
+			e.preventDefault();
+			popoverTarget = e.target;
+		} else if (closestDropPosition.element === this._getEndOverflowBtnDOM()) {
+			e.preventDefault();
+			popoverTarget = e.target;
+		} else if ((closestDropPosition.element as Tab).realTabReference.subTabs.length) {
+			popoverTarget = closestDropPosition.element;
+		}
+
+		if (isLongDragOver && popoverTarget) {
 			await this._showPopoverAt(popoverTarget, false, true);
 		} else {
 			this.responsivePopover?.close();
