@@ -82,6 +82,21 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	@property()
 	target!: string;
 
+	/**
+	 * @private
+	 * @default false
+	 */
+	@property({ type: Boolean })
+	isOverflow!: boolean;
+
+	get ariaRole() {
+		if (this.sideNavCollapsed) {
+			return this.isOverflow ? "menuitem" : "menuitemradio";
+		}
+
+		return "treeitem";
+	}
+
 	get _href() {
 		return (!this.disabled && this.href) ? this.href : undefined;
 	}
@@ -151,7 +166,11 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_activate(e: KeyboardEvent | PointerEvent) {
-		this.sideNavigation?._handleItemClick(e, this);
+		if (this.isOverflow) {
+			this.fireEvent("click");
+		} else {
+			this.sideNavigation?._handleItemClick(e, this);
+		}
 	}
 }
 

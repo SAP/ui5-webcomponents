@@ -315,7 +315,7 @@ class SideNavigation extends UI5Element {
 		this._popoverContents.item.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
+	async handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -335,6 +335,9 @@ class SideNavigation extends UI5Element {
 		}
 
 		this.closeMenu();
+		await renderFinished();
+
+		associatedItem.focus();
 	}
 
 	async getOverflowPopover() {
@@ -505,9 +508,9 @@ class SideNavigation extends UI5Element {
 
 		overflowItemRef.classList.add("ui5-sn-item-hidden");
 
-		const itemsRefs = this.overflowItems;
+		const overflowItems = this.overflowItems;
 
-		let itemsHeight = itemsRefs.reduce<number>((sum, itemRef) => {
+		let itemsHeight = overflowItems.reduce<number>((sum, itemRef) => {
 			itemRef.classList.remove("ui5-sn-item-hidden");
 			return sum + itemRef.offsetHeight;
 		}, 0);
@@ -518,14 +521,14 @@ class SideNavigation extends UI5Element {
 		overflowItemRef.classList.remove("ui5-sn-item-hidden");
 
 		itemsHeight = overflowItemRef.offsetHeight;
-		const oSelectedItemRef = domRef.querySelector(".ui5-sn-item-selected") as HTMLElement;
+		const oSelectedItemRef = overflowItems.find(item => item._selected);
 		if (oSelectedItemRef) {
 			const { marginTop, marginBottom } = window.getComputedStyle(oSelectedItemRef);
 
 			itemsHeight += oSelectedItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
 		}
 
-		itemsRefs.forEach(itemRef => {
+		overflowItems.forEach(itemRef => {
 			if (itemRef === oSelectedItemRef) {
 				return;
 			}
@@ -600,7 +603,7 @@ class SideNavigation extends UI5Element {
 		this._isOverflow = true;
 		this._menuPopoverItems = this._getOverflowItems();
 
-		this.openOverflowMenu(this._overflowItem as HTMLElement);
+		this.openOverflowMenu(this._overflowItem!.getFocusDomRef() as HTMLElement);
 	}
 
 	_getOverflowItems(): Array<SideNavigationSelectableItemBase> {
@@ -633,10 +636,6 @@ class SideNavigation extends UI5Element {
 		});
 
 		item.selected = true;
-
-		if (this.collapsed && item.classList.contains("ui5-sn-item-hidden")) {
-			item.classList.remove("ui5-sn-item-hidden");
-		}
 	}
 
 	get _overflowItem() {

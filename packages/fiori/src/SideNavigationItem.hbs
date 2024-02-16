@@ -8,7 +8,7 @@
 	{{#if _href}}
 		<a id="{{_id}}"
 		   class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
-		   role="menuitemradio"
+		   role="{{ariaRole}}"
 		   data-sap-focus-ref
 		   @keydown="{{_onkeydown}}"
 		   @keyup="{{_onkeyup}}"
@@ -40,7 +40,7 @@
 	{{else}}
 		<div id="{{_id}}"
 			 class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
-			 role="menuitemradio"
+			 role="{{ariaRole}}"
 			 data-sap-focus-ref
 			 @keydown="{{_onkeydown}}"
 			 @keyup="{{_onkeyup}}"
@@ -74,7 +74,7 @@
 	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
 		{{#if _href}}
 			<a class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
-			   role="treeitem"
+			   role="{{ariaRole}}"
 			   data-sap-focus-ref
 			   @keydown="{{_onkeydown}}"
 			   @keyup="{{_onkeyup}}"
@@ -109,7 +109,7 @@
 			</a>
 		{{else}}
 			<div class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
-				 role="treeitem"
+				 role="{{ariaRole}}"
 				 data-sap-focus-ref
 				 @keydown="{{_onkeydown}}"
 				 @keyup="{{_onkeyup}}"
