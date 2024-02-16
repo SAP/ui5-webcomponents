@@ -63,18 +63,12 @@
 	overflow: hidden auto;
 }
 
-.ui5-sn-item-group {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
 .ui5-sn-collapsed .ui5-sn-list {
 	overflow: visible;
 	display: flex;
 	flex-direction: column;
 }
 
-.ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow {
+.ui5-sn-item-overflow {
 	margin-top: auto;
 }

@@ -1,4 +1,4 @@
-.ui5-sn-item-group {
+.ui5-sn-item-ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -20,6 +20,22 @@
 	transition: var(--_ui5_side_navigation_item_transition);
 
 	margin-block-end: var(--_ui5_side_navigation_item_bottom_margin);
+}
+
+.ui5-sn-item.ui5-sn-item-group {
+	height: 2rem;
+	min-height: 2rem;
+	padding-inline-start: 0.5rem;
+	gap: 0.4375rem;
+}
+
+.ui5-sn-item.ui5-sn-item-group .ui5-sn-item-toggle-icon {
+	display: none;
+}
+
+.ui5-sn-item.ui5-sn-item-group:hover .ui5-sn-item-toggle-icon,
+.ui5-sn-item.ui5-sn-item-group:focus .ui5-sn-item-toggle-icon {
+	display: block;
 }
 
 :host(.ui5-sn-item-hidden[side-nav-collapsed]) {
@@ -44,16 +60,18 @@
 	border: var(--_ui5_side_navigation_selected_and_focused_border_style_color);
 }
 
+.ui5-sn-item.ui5-sn-item-group::before,
 .ui5-sn-item.ui5-sn-item-level1::before {
 	border: var(--_ui5_side_navigation_group_border_style_color);
 	border-width: var(--_ui5_side_navigation_group_border_width);
 }
 
+.ui5-sn-item-group[aria-expanded="true"]::before,
 .ui5-sn-item-level1[aria-expanded="true"]::before {
 	border-width: var(--_ui5_side_navigation_group_expanded_border_width);
 }
 
-.ui5-sn-item-group .ui5-sn-list-li:last-child .ui5-sn-item.ui5-sn-item-level2:not(.ui5-sn-item-selected)::before {
+.ui5-sn-item-ul .ui5-sn-list-li:last-child .ui5-sn-item.ui5-sn-item-level2:not(.ui5-sn-item-selected)::before {
 	border: var(--_ui5_side_navigation_group_border_style_color);
 	border-width: var(--_ui5_side_navigation_group_border_width);
 }
@@ -136,7 +154,7 @@
 	border-radius: var(--_ui5_side_navigation_item_border_radius);
 }
 
-.ui5-sn-in-popover .ui5-sn-item-group .ui5-sn-list-li:last-child .ui5-sn-item:not(:hover):not(:active)::before {
+.ui5-sn-in-popover .ui5-sn-item-ul .ui5-sn-list-li:last-child .ui5-sn-item:not(:hover):not(:active)::before {
 	border: var(--_ui5_side_navigation_last_item_border_style);
 }
 
@@ -210,7 +228,7 @@
 	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
 }
 
-.ui5-sn-item[aria-expanded=false] + .ui5-sn-item-group {
+.ui5-sn-item[aria-expanded=false] + .ui5-sn-item-ul {
 	display: none;
 }
 
@@ -225,6 +243,12 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	color: var(--sapList_TextColor);
+}
+
+.ui5-sn-item-group .ui5-sn-item-text {
+	font-size: var(--sapFontSmallSize);
+	font-family: var(--sapFontSemiboldFamily);
+	color: var(--sapContent_LabelColor);
 }
 
 .ui5-sn-item-level1 .ui5-sn-item-text {
@@ -289,4 +313,8 @@
 
 .ui5-sn-item.ui5-sn-item-level1.ui5-sn-item-overflow {
 	margin-top: auto;
+}
+
+.ui5-sn-item-separator {
+	min-height: 0.75rem;
 }

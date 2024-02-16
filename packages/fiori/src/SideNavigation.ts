@@ -255,13 +255,6 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	async _onAfterMenuClose() {
-		const selectedItem = this._findSelectedItem(this.items)!;
-
-		await renderFinished();
-		selectedItem.getDomRef()!.focus();
-	}
-
 	async _onBeforePopoverOpen() {
 		const popover = await this.getPicker();
 		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
@@ -326,18 +319,18 @@ class SideNavigation extends UI5Element {
 
 		this._selectItem(associatedItem);
 
-		// When subitem is selected in collapsed mode parent element should be focused
-		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-			const parent = associatedItem.parentElement as SideNavigationItem;
-			this._flexibleItemNavigation.setCurrentItem(parent);
-		} else {
-			this._flexibleItemNavigation.setCurrentItem(associatedItem);
-		}
-
 		this.closeMenu();
 		await renderFinished();
 
-		associatedItem.focus();
+		// When subitem is selected in collapsed mode parent element should be focused
+		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
+			const parent = associatedItem.parentElement as SideNavigationItem;
+			this.focusItem(parent);
+			parent?.focus();
+		} else {
+			this.focusItem(associatedItem);
+			associatedItem?.focus();
+		}
 	}
 
 	async getOverflowPopover() {
