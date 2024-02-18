@@ -154,9 +154,9 @@ type SpecialCalendarDateT = {
  * <br>
  * <code>
  * &lt;script data-id="sap-ui-config" type="application/json"&gt;
- * {
+ * \{
  *	"calendarType": "Japanese"
- * }
+ * \}
  * &lt;/script&gt;
  * </code>
  *

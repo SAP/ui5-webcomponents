@@ -141,9 +141,9 @@ type DatePickerInputEventDetail = {
  * Or, you can use the global configuration and set the <code>calendarType</code> key:
  * <br>
  * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
- * {
+ * \{
  *	"calendarType": "Japanese"
- * }
+ * \}
  * &lt;/script&gt;</code></pre>
  *
  * <h3>ES6 Module Import</h3>

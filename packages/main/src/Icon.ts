@@ -66,7 +66,7 @@ const PRESENTATION_ROLE = "presentation";
  *
  * 3. <b>Then, import the desired icon</b>.
  * <br>
- * <code>import "@ui5/{package_name}/dist/{icon_name}.js";</code>
+ * <code>import "@ui5/\{package_name\}/dist/\{icon_name\}.js";</code>
  * <br><br>
  *
  * <b>For Example</b>:

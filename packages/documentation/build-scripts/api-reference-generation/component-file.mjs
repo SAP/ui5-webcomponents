@@ -1,4 +1,4 @@
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from "sanitize-html";
 
 const parseDeclarationDescription = (declaration) => {
     if (!declaration.description) {
@@ -32,7 +32,7 @@ const escapeText = (text) => {
         text = processTitles(text);
     }
 
-    return sanitizeHtml(text).replaceAll("{", "\\{").replaceAll("}", "\\}")
+    return sanitizeHtml(text);
 }
 
 const escapeTextDescription = (text) => {
@@ -71,10 +71,12 @@ const getTable = (kind) => {
             return `## Methods\n<MethodsTable declaration={declarationJSON} />`;
         case "event":
             return `## Events\n<EventsTable declaration={declarationJSON} />`;
-        case "slot":
-            return `## CSS Parts\n<SlotsTable declaration={declarationJSON} />`;
         case "cssPart":
-            return `## Slots\n<CssPartsTable declaration={declarationJSON} />`;
+            return `## CSS Parts\n<CssPartsTable declaration={declarationJSON} />`;
+        case "slot":
+            return `## Slots\n<SlotsTable declaration={declarationJSON} />`;
+        case "enum":
+            return `## Enum fields\n<EnumFieldsTable declaration={declarationJSON} />`;
         default:
             return "";
     }
@@ -89,28 +91,24 @@ const parseDeclaration = (declaration) => {
     let sections = []
 
     switch (declaration.kind) {
-        case "interface":
-            sections = [
-                parseDeclarationDescription(declaration),
-            ]
         case "enum":
             sections = [
-                parseDeclarationDescription(declaration),
-                parseEnumDeclarationFields(declaration),
+                getTable("enum")
             ]
-        default:
+
+            break;
+        case "class":
             sections = [
-                'field',
-                'slot',
-                'event',
-                'method',
-                'cssPart'
+                "field",
+                "slot",
+                "event",
+                "method",
+                "cssPart"
             ].map(fieldType => getTable(fieldType))
+            break;
+        }
 
-            sections.unshift(parseDeclarationDescription(declaration));
-
-    }
-
+    sections.unshift(parseDeclarationDescription(declaration));
     sections.unshift(`import declarationJSON from "./_${declaration.name}Declaration.json";`);
     return sections.join("\n\n")
 }

@@ -8,6 +8,7 @@ import MethodsTable from '@site/src/components/APIDocs/MethodsTable';
 import EventsTable from '@site/src/components/APIDocs/EventsTable';
 import SlotsTable from '@site/src/components/APIDocs/SlotsTable';
 import CssPartsTable from '@site/src/components/APIDocs/CssPartsTable';
+import EnumFieldsTable from "@site/src/components/APIDocs/EnumFieldsTable"
 
 export default {
   // Re-use the default mapping
@@ -19,4 +20,5 @@ export default {
   EventsTable,
   SlotsTable,
   CssPartsTable,
+  EnumFieldsTable
 };
