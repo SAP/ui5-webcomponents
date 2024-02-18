@@ -43,6 +43,7 @@
 @import "./TableRow-parameters.css";
 @import "./TableGroupRow-parameters.css";
 @import "./GrowingButton-parameters.css";
+@import "../base/Text-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";

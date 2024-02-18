@@ -1,0 +1,82 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import renderer, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import WrappingType from "./types/WrappingType.js";
+
+// Styles
+import textStyles from "./generated/themes/Text.css.js";
+
+/**
+ * @class
+ *
+ * <h3>Overview</h3>
+ *
+ * The Text component displays text that can be used in any content area of an application.
+ *
+ * <h3>Usage</h3>
+ *
+ * Use the Text component if you want to display text inside a form, table, or any other content area.
+ * Do not use the Text component if you need a label (use ui5-label), or vice versa.
+ *
+ * <h3>Responsive behavior</h3>
+ *
+ * The Text component is fully adaptive to all screen sizes.
+ * By default, the text will truncate when the space is not enough for the entire text.
+ * You can define whether the text should wrap or truncate via the <code>wrapping-type</code> property.
+ * You can also define the number of lines the text should wrap before it truncates via the <code>max-lines</code> property.
+ *
+ * <h3>ES6 Module Import</h3>
+ *
+ * <code>import "@ui5/webcomponents/dist/Text";</code>
+ *
+ * @constructor
+ * @extends UI5Element
+ * @public
+ * @slot {Array<Node>} default - Defines the text of the component.
+ * @since 1.23.0
+ */
+@customElement({
+	tag: "ui5-text",
+	renderer,
+	template: () => {
+		return html`<bdi><slot></slot></bdi>`;
+	},
+	styles: textStyles,
+})
+class Text extends UI5Element {
+	/**
+	 * Defines how the text of a component will be displayed,
+	 * when there is not enough space for the entire text.
+	 *
+	 * <ul>
+	 * <li>"None" - the text will truncate (default).</li>
+	 * <li>"Normal" - the text will wrap.</li>
+	 * </ul>
+	 *
+	 * @default "None"
+	 * @public
+	 */
+	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	wrappingType!: `${WrappingType}`;
+
+	/**
+	 * Defines the number of lines the text should wrap before it truncates.
+	 * <br><b>Note:</b> The property takes effect when <code>wrapping-type</code> is set to <code>Normal</code>.
+	 *
+	 * @default Infinity
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: Infinity })
+	maxLines!: number;
+
+	onBeforeRendering() {
+		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);
+	}
+}
+
+Text.define();
+
+export default Text;
