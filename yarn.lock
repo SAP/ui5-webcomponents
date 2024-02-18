@@ -1928,7 +1928,43 @@
 "@discoveryjs/json-ext@^0.5.3":
 =======
 "@discoveryjs/json-ext@0.5.7", "@discoveryjs/json-ext@^0.5.3":
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+"@cypress/request@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@cypress/request/-/request-3.0.1.tgz#72d7d5425236a2413bd3d8bb66d02d9dc3168960"
+  integrity sha512-TWivJlJi8ZDx2wGOw1dbLuHJKUYX7bWySw377nlnGOW3hP9/MUKIsEdXT/YngWxVdgNCHRBmFlBipE+5/2ZZlQ==
+  dependencies:
+    aws-sign2 "~0.7.0"
+    aws4 "^1.8.0"
+    caseless "~0.12.0"
+    combined-stream "~1.0.6"
+    extend "~3.0.2"
+    forever-agent "~0.6.1"
+    form-data "~2.3.2"
+    http-signature "~1.3.6"
+    is-typedarray "~1.0.0"
+    isstream "~0.1.2"
+    json-stringify-safe "~5.0.1"
+    mime-types "~2.1.19"
+    performance-now "^2.1.0"
+    qs "6.10.4"
+    safe-buffer "^5.1.2"
+    tough-cookie "^4.1.3"
+    tunnel-agent "^0.6.0"
+    uuid "^8.3.2"
+
+"@cypress/xvfb@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@cypress/xvfb/-/xvfb-1.2.4.tgz#2daf42e8275b39f4aa53c14214e557bd14e7748a"
+  integrity sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==
+  dependencies:
+    debug "^3.1.0"
+    lodash.once "^4.1.1"
+
+"@discoveryjs/json-ext@^0.5.3":
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
@@ -4992,7 +5028,10 @@
     defer-to-connect "^2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 "@szmarczak/http-timer@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-5.0.1.tgz#c7c1bf1141cdd4751b0399c8fc7b8b664cd5be3a"
@@ -5005,7 +5044,12 @@
   resolved "https://registry.yarnpkg.com/@testim/chrome-version/-/chrome-version-1.1.4.tgz#86e04e677cd6c05fa230dd15ac223fa72d1d7090"
   integrity sha512-kIhULpw9TrGYnHp/8VfdcneIcxKnLixmADtukQRtJUmsVlMg0niMkwV0xZmi8hqa57xqilIHjWFA0GKvEjVU5g==
 
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
@@ -5716,11 +5760,14 @@
     "@types/node" "*"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@types/sinonjs__fake-timers@8.1.1":
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-8.1.1.tgz#b49c2c70150141a15e0fa7e79cf1f92a72934ce3"
   integrity sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 "@types/serve-static@^1.13.10":
   version "1.15.5"
   resolved "https://registry.yarnpkg.com/@types/serve-static/-/serve-static-1.15.5.tgz#15e67500ec40789a1e8c9defc2d32a896f05b033"
@@ -5729,7 +5776,16 @@
     "@types/http-errors" "*"
     "@types/mime" "*"
     "@types/node" "*"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+"@types/sinonjs__fake-timers@8.1.1":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-8.1.1.tgz#b49c2c70150141a15e0fa7e79cf1f92a72934ce3"
+  integrity sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 "@types/sizzle@*":
   version "2.3.3"
@@ -5737,18 +5793,30 @@
   integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@types/sizzle@^2.3.2":
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.8.tgz#518609aefb797da19bf222feb199e8f653ff7627"
   integrity sha512-0vWLNK2D5MT9dg0iOo8GlKguPAU02QjmZitPEsXRuJXU/OGIOt9vT9Fc26wtYuavLxtO45v9PGleoL9Z0k1LHg==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 "@types/sockjs@^0.3.33":
   version "0.3.36"
   resolved "https://registry.yarnpkg.com/@types/sockjs/-/sockjs-0.3.36.tgz#ce322cf07bcc119d4cbf7f88954f3a3bd0f67535"
   integrity sha512-MK9V6NzAS1+Ud7JV9lJLFqW85VbC9dq3LmwZCuBe4wBDgKC0Kj/jd8Xl+nSviU+Qc3+m7umHHyHg//2KSa0a0Q==
   dependencies:
     "@types/node" "*"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+"@types/sizzle@^2.3.2":
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.8.tgz#518609aefb797da19bf222feb199e8f653ff7627"
+  integrity sha512-0vWLNK2D5MT9dg0iOo8GlKguPAU02QjmZitPEsXRuJXU/OGIOt9vT9Fc26wtYuavLxtO45v9PGleoL9Z0k1LHg==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
@@ -6927,7 +6995,10 @@ axios@^1.0.0:
     proxy-from-env "^1.1.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 axios@^1.6.5:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.7.tgz#7b48c2e27c96f9c68a2f8f31e2ab19f59b06b0a7"
@@ -6937,7 +7008,12 @@ axios@^1.6.5:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
+<<<<<<< HEAD
 >>>>>>> c15dfdeffc4 (chore: update chromedriver to 121 (#8334))
+=======
+=======
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 babar@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/babar/-/babar-0.2.0.tgz#79bc0f029721467207f2b6baedf96b3938ad7db0"
@@ -7057,6 +7133,7 @@ basic-auth@~2.0.1:
     safe-buffer "5.1.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
@@ -7064,6 +7141,8 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 batch@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
@@ -7073,7 +7152,18 @@ bcp-47-match@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/bcp-47-match/-/bcp-47-match-1.0.3.tgz#cb8d03071389a10aff2062b862d6575ffd7cd7ef"
   integrity sha512-LggQ4YTdjWQSKELZF5JwchnBa1u0pIQSZf5lSdOHEdbVP55h0qICA/FUp3+W99q0xqxYa1ZQizTUH87gecII5w==
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+bcrypt-pbkdf@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
+  integrity sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==
+  dependencies:
+    tweetnacl "^0.14.3"
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 before-after-hook@^2.2.0:
   version "2.2.3"
@@ -7703,11 +7793,14 @@ check-error@^1.0.2:
   integrity sha512-BrgHpW9NURQgzoNyjfq0Wu6VFO6D7IZEmJNdtgNqpzGG8RuNFHt2jQxWlAs4HMe119chBnv+34syEZtc6IhLtA==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 check-more-types@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/check-more-types/-/check-more-types-2.24.0.tgz#1420ffb10fd444dcfc79b43891bbfffd32a84600"
   integrity sha512-Pj779qHxV2tuapviy1bSZNEL1maXr13bPYpsvSDB68HlYcYuhlDrmGd63i0JHMCLKzc7rUSNIrpdJlhVlNwrxA==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 cheerio-select@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cheerio-select/-/cheerio-select-2.1.0.tgz#4d8673286b8126ca2a8e42740d5e3c4884ae21b4"
@@ -7732,7 +7825,16 @@ cheerio@^1.0.0-rc.12:
     htmlparser2 "^8.0.1"
     parse5 "^7.0.0"
     parse5-htmlparser2-tree-adapter "^7.0.0"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+check-more-types@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/check-more-types/-/check-more-types-2.24.0.tgz#1420ffb10fd444dcfc79b43891bbfffd32a84600"
+  integrity sha512-Pj779qHxV2tuapviy1bSZNEL1maXr13bPYpsvSDB68HlYcYuhlDrmGd63i0JHMCLKzc7rUSNIrpdJlhVlNwrxA==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 child_process@^1.0.2:
   version "1.0.2"
@@ -7826,8 +7928,11 @@ chrome-launcher@^0.15.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 chrome-trace-event@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
@@ -7847,7 +7952,12 @@ chromedriver@^121.0.2:
     proxy-from-env "^1.1.0"
     tcp-port-used "^1.0.2"
 
+<<<<<<< HEAD
 >>>>>>> c15dfdeffc4 (chore: update chromedriver to 121 (#8334))
+=======
+=======
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
@@ -7910,10 +8020,17 @@ cli-spinners@^2.1.0, cli-spinners@^2.5.0:
   integrity sha512-4/aL9X3Wh0yiMQlE+eeRhWP6vclO3QRtw1JHKIT0FFUs5FjpFmESqtMvYZ0+lbzBw900b95mS0hohy+qn2VK/g==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 cli-table3@^0.6.1, cli-table3@~0.6.1:
 =======
 cli-table3@^0.6.1, cli-table3@^0.6.3:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+cli-table3@^0.6.1, cli-table3@^0.6.3:
+=======
+cli-table3@^0.6.1, cli-table3@~0.6.1:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/cli-table3/-/cli-table3-0.6.3.tgz#61ab765aac156b52f222954ffc607a6f01dbeeb2"
   integrity sha512-w5Jac5SykAeZJKntOxJCrm63Eg5/4dhMWIcuTbo9rpE+brgaSZo0RuNJZeOyMgsUdhDeojvgyQLmjI+K50ZGyg==
@@ -8040,15 +8157,24 @@ color-support@^1.1.2, color-support@^1.1.3:
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 colorette@^2.0.16, colorette@^2.0.19:
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 colord@^2.9.1:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/colord/-/colord-2.9.3.tgz#4f8ce919de456f1d5c1c368c307fe20f3e59fb43"
   integrity sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==
 
 colorette@^2.0.10, colorette@^2.0.19:
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+colorette@^2.0.16, colorette@^2.0.19:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "2.0.20"
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.20.tgz#9eb793e6833067f7235902fcd3b09917a000a95a"
   integrity sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==
@@ -8072,15 +8198,24 @@ columnify@1.6.0:
     wcwidth "^1.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 combine-promises@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/combine-promises/-/combine-promises-1.2.0.tgz#5f2e68451862acf85761ded4d9e2af7769c2ca6a"
   integrity sha512-VcQB1ziGD0NXrhKxiwyNbCDmRzs/OShMs2GqW2DlU2A/Sd0nQxE1oWDAE5O0ygSx5mgQOn9eIFh7yKPgFRVkPQ==
 
 combined-stream@^1.0.8:
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
@@ -8168,15 +8303,24 @@ common-ancestor-path@^1.0.1:
   integrity sha512-L3sHRo1pXXEqX8VU28kfgUY+YGsk09hPqZiZmLacNib6XNTCM8ubYeT7ryXQw8asB1sKgcU5lkB7ONug08aB8w==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 common-tags@^1.4.0, common-tags@^1.8.0:
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 common-path-prefix@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/common-path-prefix/-/common-path-prefix-3.0.0.tgz#7d007a7e07c58c4b4d5f433131a19141b29f11e0"
   integrity sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==
 
 common-tags@^1.4.0:
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+common-tags@^1.4.0, common-tags@^1.8.0:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.2.tgz#94ebb3c076d26032745fd54face7f688ef5ac9c6"
   integrity sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==
@@ -8932,6 +9076,7 @@ dateformat@^3.0.0:
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 dayjs@^1.10.4:
   version "1.11.10"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.10.tgz#68acea85317a6e164457d6d6947564029a6a16a0"
@@ -8941,6 +9086,17 @@ debounce@1.2.1:
 =======
 debounce@1.2.1, debounce@^1.2.1:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+debounce@1.2.1, debounce@^1.2.1:
+=======
+dayjs@^1.10.4:
+  version "1.11.10"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.10.tgz#68acea85317a6e164457d6d6947564029a6a16a0"
+  integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
+
+debounce@1.2.1:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.1.tgz#38881d8f4166a5c5848020c11827b834bcb3e0a5"
   integrity sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==
@@ -10099,6 +10255,7 @@ event-target-shim@^5.0.0:
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 eventemitter2@6.4.7:
   version "6.4.7"
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.7.tgz#a7f6c4d7abf28a14c1ef3442f21cb306a054271d"
@@ -10108,6 +10265,17 @@ eventemitter3@^4.0.4:
 =======
 eventemitter3@^4.0.0, eventemitter3@^4.0.4:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+eventemitter3@^4.0.0, eventemitter3@^4.0.4:
+=======
+eventemitter2@6.4.7:
+  version "6.4.7"
+  resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.7.tgz#a7f6c4d7abf28a14c1ef3442f21cb306a054271d"
+  integrity sha512-tYUSVOGeQPKt/eC1ABfhHy5Xd96N3oIijJvN3O9+TsC28T5V9yX9oEfEK5faP0EFSNVOG97qtAS68GBrQB2hDg==
+
+eventemitter3@^4.0.4:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
@@ -10244,8 +10412,11 @@ express@^4.14.0, express@^4.17.3:
     vary "~1.1.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extend@^3.0.0, extend@~3.0.2:
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 extend-shallow@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/extend-shallow/-/extend-shallow-2.0.1.tgz#51af7d614ad9a9f610ea1bafbb989d6b1c56890f"
@@ -10254,7 +10425,13 @@ extend-shallow@^2.0.1:
     is-extendable "^0.1.0"
 
 extend@^3.0.0:
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+extend@^3.0.0, extend@~3.0.2:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
@@ -10605,10 +10782,17 @@ flow-parser@0.*:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.212.0.tgz#2b15a32bf0cc15fc81818fe849752dd70cb87871"
   integrity sha512-45eNySEs7n692jLN+eHQ6zvC9e1cqu9Dq1PpDHTcWRri2HFEs8is8Anmp1RcIhYxA5TZYD6RuESG2jdj6nkDJQ==
 
+<<<<<<< HEAD
 follow-redirects@^1.0.0, follow-redirects@^1.15.0, follow-redirects@^1.15.4:
   version "1.15.6"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
   integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
+=======
+follow-redirects@^1.15.0:
+  version "1.15.4"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.4.tgz#cdc7d308bf6493126b17ea2191ea0ccf3e535adf"
+  integrity sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -10626,11 +10810,14 @@ foreground-child@^3.1.0:
     signal-exit "^4.0.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 fork-ts-checker-webpack-plugin@^6.5.0:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-6.5.3.tgz#eda2eff6e22476a2688d10661688c47f611b37f3"
@@ -10654,7 +10841,16 @@ form-data-encoder@^2.1.2:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-2.1.4.tgz#261ea35d2a70d48d30ec7a9603130fa5515e9cd5"
   integrity sha512-yDYSgNMraqvnxiEXO4hi88+YZxaHC6QKzb5N84iRCTDeRO7ZALpir/lVmf/uXUhnwUr2O4HU8s/n6x+yNjQkHw==
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+forever-agent@~0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
+  integrity sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 form-data@^3.0.0:
   version "3.0.1"
@@ -11186,7 +11382,10 @@ global-dirs@^3.0.0:
     ini "2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 global-modules@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/global-modules/-/global-modules-2.0.0.tgz#997605ad2345f27f51539bea26574421215c7780"
@@ -11203,7 +11402,12 @@ global-prefix@^3.0.0:
     kind-of "^6.0.2"
     which "^1.3.1"
 
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 globals@^11.1.0:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
@@ -11894,6 +12098,7 @@ http-proxy-agent@^5.0.0:
     debug "4"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 http-signature@~1.3.6:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/http-signature/-/http-signature-1.3.6.tgz#cb6fbfdf86d1c974f343be94e87f7fc128662cf9"
@@ -11903,6 +12108,8 @@ http-signature@~1.3.6:
     jsprim "^2.0.2"
     sshpk "^1.14.1"
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 http-proxy-middleware@^2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-2.0.6.tgz#e1a4dd6979572c7ab5a4e4b55095d1f32a74963f"
@@ -11922,7 +12129,20 @@ http-proxy@^1.18.1:
     eventemitter3 "^4.0.0"
     follow-redirects "^1.0.0"
     requires-port "^1.0.0"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+http-signature@~1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/http-signature/-/http-signature-1.3.6.tgz#cb6fbfdf86d1c974f343be94e87f7fc128662cf9"
+  integrity sha512-3adrsD6zqo4GsTqtO7FyrejHNv+NgiIfAfv68+jVlFmSr9OGy7zrxONceFRLKvnnZA5jbxQBX1u9PpB6Wi32Gw==
+  dependencies:
+    assert-plus "^1.0.0"
+    jsprim "^2.0.2"
+    sshpk "^1.14.1"
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 http2-wrapper@^1.0.0-beta.5.2:
   version "1.0.3"
@@ -12143,10 +12363,17 @@ ini@2.0.0:
   integrity sha512-7PnF4oN3CvZF23ADhA5wRaYEQpJ8qygSkbtTXWBeXWXmEVRXK+1ITciHWwHhsjv1TmW0MgacIv6hEi5pX5NQdA==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ini@^1.3.2, ini@^1.3.4, ini@~1.3.0:
 =======
 ini@^1.3.2, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+ini@^1.3.2, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
+=======
+ini@^1.3.2, ini@^1.3.4, ini@~1.3.0:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
@@ -12367,10 +12594,17 @@ is-ci@2.0.0, is-ci@^2.0.0:
     ci-info "^2.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 is-ci@^3.0.0:
 =======
 is-ci@^3.0.1:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+is-ci@^3.0.1:
+=======
+is-ci@^3.0.0:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-3.0.1.tgz#db6ecbed1bd659c43dac0f45661e7674103d1867"
   integrity sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==
@@ -12481,10 +12715,17 @@ is-installed-globally@^0.3.1:
     is-path-inside "^3.0.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 is-installed-globally@~0.4.0:
 =======
 is-installed-globally@^0.4.0:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+is-installed-globally@^0.4.0:
+=======
+is-installed-globally@~0.4.0:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/is-installed-globally/-/is-installed-globally-0.4.0.tgz#9a0fd407949c30f86eb6959ef1b7994ed0b7b520"
   integrity sha512-iwGqO3J21aaSkC7jWnHP/difazwS7SFeIqxv6wEtLU8Y5KlzFTjyqcSIT0d8s4+dDhKytsk9PJZ2BkS5eZwQRQ==
@@ -13273,11 +13514,14 @@ latest-version@^5.0.0:
     package-json "^6.3.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 lazy-ass@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/lazy-ass/-/lazy-ass-1.6.0.tgz#7999655e8646c17f089fdd187d150d3324d54513"
   integrity sha512-cc8oEVoctTvsFZ/Oje/kGnHbpWHYBe8IAJe4C0QNc3t8uM/0Y8+erSz/7Y1ALuXTEZTMvxXwO6YbX1ey3ujiZw==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 latest-version@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/latest-version/-/latest-version-7.0.0.tgz#843201591ea81a4d404932eeb61240fe04e9e5da"
@@ -13292,7 +13536,16 @@ launch-editor@^2.6.0:
   dependencies:
     picocolors "^1.0.0"
     shell-quote "^1.8.1"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+lazy-ass@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/lazy-ass/-/lazy-ass-1.6.0.tgz#7999655e8646c17f089fdd187d150d3324d54513"
+  integrity sha512-cc8oEVoctTvsFZ/Oje/kGnHbpWHYBe8IAJe4C0QNc3t8uM/0Y8+erSz/7Y1ALuXTEZTMvxXwO6YbX1ey3ujiZw==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 lazy-universal-dotenv@^4.0.0:
   version "4.0.0"
@@ -15164,8 +15417,11 @@ mime-db@1.52.0, "mime-db@>= 1.43.0 < 2":
   integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 mime-types@^2.1.12, mime-types@^2.1.25, mime-types@~2.1.19, mime-types@~2.1.24, mime-types@~2.1.34:
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 mime-db@~1.33.0:
   version "1.33.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.33.0.tgz#a3492050a5cb9b63450541e39d9788d2272783db"
@@ -15179,7 +15435,13 @@ mime-types@2.1.18:
     mime-db "~1.33.0"
 
 mime-types@^2.1.12, mime-types@^2.1.25, mime-types@^2.1.27, mime-types@^2.1.31, mime-types@~2.1.17, mime-types@~2.1.24, mime-types@~2.1.34:
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+mime-types@^2.1.12, mime-types@^2.1.25, mime-types@~2.1.19, mime-types@~2.1.24, mime-types@~2.1.34:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "2.1.35"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
   integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
@@ -16686,11 +16948,14 @@ pend@~1.2.0:
   integrity sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 periscopic@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/periscopic/-/periscopic-3.1.0.tgz#7e9037bf51c5855bd33b48928828db4afa79d97a"
@@ -16699,7 +16964,16 @@ periscopic@^3.0.0:
     "@types/estree" "^1.0.0"
     estree-walker "^3.0.0"
     is-reference "^3.0.0"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+performance-now@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
+  integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 picocolors@^1.0.0:
   version "1.0.0"
@@ -17201,11 +17475,14 @@ prettier@^2.7.1, prettier@^2.8.0, prettier@^2.8.1:
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 pretty-bytes@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
   integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 pretty-error@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/pretty-error/-/pretty-error-4.0.0.tgz#90a703f46dd7234adb46d0f84823e9d1cb8f10d6"
@@ -17213,7 +17490,16 @@ pretty-error@^4.0.0:
   dependencies:
     lodash "^4.17.20"
     renderkid "^3.0.0"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+pretty-bytes@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
+  integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 pretty-format@29.4.3:
   version "29.4.3"
@@ -18568,10 +18854,17 @@ safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2, safe-buffer@~5.2.0:
 =======
 safe-buffer@5.2.1, safe-buffer@>=5.1.0, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+safe-buffer@5.2.1, safe-buffer@>=5.1.0, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
+=======
+safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2, safe-buffer@~5.2.0:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
@@ -19154,6 +19447,7 @@ sprintf-js@~1.0.2:
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 sshpk@^1.14.1:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.18.0.tgz#1663e55cddf4d688b86a46b77f0d5fe363aba028"
@@ -19169,11 +19463,32 @@ sshpk@^1.14.1:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 srcset@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/srcset/-/srcset-4.0.0.tgz#336816b665b14cd013ba545b6fe62357f86e65f4"
   integrity sha512-wvLeHgcVHKO8Sc/H/5lkGreJQVeYMm9rlmt8PuR1xE31rIuXhuzznUUqAt8MqLhB3MqJdFzlNAfpcWnxiFUcPw==
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+sshpk@^1.14.1:
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.18.0.tgz#1663e55cddf4d688b86a46b77f0d5fe363aba028"
+  integrity sha512-2p2KJZTSqQ/I3+HX42EpYOa2l3f8Erv8MWKsy2I9uf4wA7yFIkXRffYdsx86y6z4vHtV8u7g+pPlr8/4ouAxsQ==
+  dependencies:
+    asn1 "~0.2.3"
+    assert-plus "^1.0.0"
+    bcrypt-pbkdf "^1.0.0"
+    dashdash "^1.12.0"
+    ecc-jsbn "~0.1.1"
+    getpass "^0.1.1"
+    jsbn "~0.1.0"
+    safer-buffer "^2.0.2"
+    tweetnacl "~0.14.0"
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 ssri@9.0.1, ssri@^9.0.0:
   version "9.0.1"
@@ -19595,15 +19910,24 @@ tar@^6.1.11, tar@^6.1.13, tar@^6.1.2:
     yallist "^4.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 tcp-port-used@^1.0.1:
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 tarts@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/tarts/-/tarts-2.0.1.tgz#e5cb99c1db98acda2080199149d914757cb1851c"
   integrity sha512-24hWg+6mn/v6Z2ekwmYhzk7zZajzjIN5KNjaKe9qmU5HdsF21/KE0qmsXLie4suE3rjqxj5lT5cKpjt77w+LyQ==
 
 tcp-port-used@^1.0.1, tcp-port-used@^1.0.2:
+<<<<<<< HEAD
 >>>>>>> bc2cdef3093 (docs: introduce download of samples (#8457))
+=======
+=======
+tcp-port-used@^1.0.1:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/tcp-port-used/-/tcp-port-used-1.0.2.tgz#9652b7436eb1f4cfae111c79b558a25769f6faea"
   integrity sha512-l7ar8lLUD3XS1V2lfoJlCBaeoaWo/2xfYt81hM7VlvR4RrMVFqfmzfhLVk40hAb368uitje5gPtBRL1m/DGvLA==
@@ -19822,6 +20146,7 @@ toidentifier@1.0.1:
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 tough-cookie@^4.1.3:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.1.3.tgz#97b9adb0728b42280aa3d814b6b999b2ff0318bf"
@@ -19832,11 +20157,27 @@ tough-cookie@^4.1.3:
     universalify "^0.2.0"
     url-parse "^1.5.3"
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 totalist@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/totalist/-/totalist-3.0.1.tgz#ba3a3d600c915b1a97872348f79c127475f6acf8"
   integrity sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+tough-cookie@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.1.3.tgz#97b9adb0728b42280aa3d814b6b999b2ff0318bf"
+  integrity sha512-aX/y5pVRkfRnfmuX+OdbSdXvPe6ieKX/G2s7e98f4poJHnqH3281gDPm/metm6E/WRamfx7WC4HUqkWHfQHprw==
+  dependencies:
+    psl "^1.1.33"
+    punycode "^2.1.1"
+    universalify "^0.2.0"
+    url-parse "^1.5.3"
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 tr46@~0.0.3:
   version "0.0.3"
@@ -20675,6 +21016,7 @@ vary@~1.1.2:
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 verror@1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/verror/-/verror-1.10.0.tgz#3a105ca17053af55d6e270c1f8288682e18da400"
@@ -20684,6 +21026,8 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 =======
+=======
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 vfile-location@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/vfile-location/-/vfile-location-3.2.0.tgz#d8e41fbcbd406063669ebf6c33d56ae8721d0f3c"
@@ -20704,7 +21048,20 @@ vfile-message@^2.0.0:
   dependencies:
     "@types/unist" "^2.0.0"
     unist-util-stringify-position "^2.0.0"
+<<<<<<< HEAD
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+=======
+verror@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/verror/-/verror-1.10.0.tgz#3a105ca17053af55d6e270c1f8288682e18da400"
+  integrity sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==
+  dependencies:
+    assert-plus "^1.0.0"
+    core-util-is "1.0.2"
+    extsprintf "^1.2.0"
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
 
 vfile-message@^3.0.0:
   version "3.1.4"
@@ -21226,6 +21583,7 @@ wrap-ansi@^5.1.0:
     strip-ansi "^5.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
@@ -21239,6 +21597,21 @@ wrap-ansi@^8.1.0:
 =======
 wrap-ansi@^8.0.1, wrap-ansi@^8.1.0:
 >>>>>>> 4e381e57649 (docs: new LandingPage, Documentation and API Reference (#8291))
+=======
+wrap-ansi@^8.0.1, wrap-ansi@^8.1.0:
+=======
+wrap-ansi@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
+  integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^8.1.0:
+>>>>>>> 2f78d8f80b1 ([WIP] try to integrate cypress tests)
+>>>>>>> 28f353ca096 ([WIP] try to integrate cypress tests)
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-8.1.0.tgz#56dc22368ee570face1b49819975d9b9a5ead214"
   integrity sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==

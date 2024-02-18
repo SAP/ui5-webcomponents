@@ -42,6 +42,7 @@
     "cross-env": "^7.0.3",
     "cypress": "^13.6.4",
     "custom-element-jet-brains-integration": "^1.4.4",
+    "cypress": "^13.6.4",
     "escodegen": "^2.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
