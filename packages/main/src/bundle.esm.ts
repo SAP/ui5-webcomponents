@@ -120,6 +120,7 @@ import FileUploader from "./FileUploader.js";
 import GridTable from "./GridTable.js";
 import GridTableCell from "./GridTableCell.js";
 import GridTableColumn from "./GridTableColumn.js";
+import GridTableColumnRow from "./GridTableColumnRow.js";
 import GridTableRow from "./GridTableRow.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";

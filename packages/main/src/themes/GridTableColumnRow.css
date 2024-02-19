@@ -1,7 +1,6 @@
 :host {
     display: grid;
     grid-template-columns: subgrid;
-    grid-auto-rows: minmax(2rem, auto);
     grid-column: 1 / -1;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #a8b2bd;
 }

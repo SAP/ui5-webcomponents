@@ -8,7 +8,7 @@ import GridTableTemplate from "./generated/templates/GridTableTemplate.lit.js";
 // Styles
 import GridTableCss from "./generated/themes/GridTable.css.js";
 import GridTableRow from "./GridTableRow.js";
-import GridTableColumn from "./GridTableColumn.js";
+import GridTableColumnRow from "./GridTableColumnRow.js";
 
 /**
  * @class
@@ -37,34 +37,32 @@ import GridTableColumn from "./GridTableColumn.js";
 
 class GridTable extends UI5Element {
 	/**
-	 * Defines the component rows.
+	 * Defines the rows of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-table-row</code> for the intended design.
 	 *
 	 * @public
 	 */
-	@slot({
-		type: HTMLElement,
-		"default": true,
-		invalidateOnChildChange: true,
-	})
+	@slot({ type: HTMLElement, "default": true })
 	rows!: Array<GridTableRow>;
 
 	/**
-	 * Defines the configuration for the columns of the component.
+	 * Defines the column row of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-table-column-row</code> for the intended design.
 	 *
 	 * @public
 	 */
-	@slot({
-		type: HTMLElement,
-		invalidateOnChildChange: {
-			properties: true,
-			slots: false,
-		},
-	})
-	columns!: Array<GridTableColumn>;
+	@slot({ type: HTMLElement })
+	columnrow!: Array<GridTableColumnRow>;
+
+	onEnterDOM(): void {
+		this.setAttribute("role", "grid");
+	}
+
+	onBeforeRendering() {
+		debugger;
+	}
 }
 
 GridTable.define();

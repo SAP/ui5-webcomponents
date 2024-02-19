@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 import GridTableColumnTemplate from "./generated/templates/GridTableColumnTemplate.lit.js";
 
@@ -18,7 +17,7 @@ import GridTableColumnCss from "./generated/themes/GridTableColumn.css.js";
  *
  * <h3>Usage</h3>
  *
- * For the <code>grid-table-column</code>
+ * For the <code>ui5-grid-table-column</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/GridTableColumn.js";</code>
@@ -36,22 +35,19 @@ import GridTableColumnCss from "./generated/themes/GridTableColumn.css.js";
 })
 class GridTableColumn extends UI5Element {
 	/**
-	 * Defines the text of the component.
+	 * Defines the header of the component.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	header!: Array<HTMLElement>;
 
-	@property({ type: String, defaultValue: "200px" })
+	@property({ type: String, defaultValue: "auto" })
 	width!: string;
 
-	get classes(): ClassMap {
-		return {
-			cell: {
-				"ui5-grid-table-column": true,
-			},
-		};
+	onEnterDOM(): void {
+		this.setAttribute("role", "columnheader");
+		this.setAttribute("tabindex", "0");
 	}
 }
 

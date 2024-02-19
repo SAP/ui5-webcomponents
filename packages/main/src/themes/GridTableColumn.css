@@ -1,0 +1,9 @@
+:host {
+    font-weight: bold;
+    padding: 0.5rem;
+    overflow: clip;
+}
+
+:host(:empty) {
+    padding: 0;
+}

@@ -17,7 +17,7 @@ import GridTableCell from "./GridTableCell.js";
  *
  * <h3>Usage</h3>
  *
- * For the <code>grid-table-row</code>
+ * For the <code>ui5-grid-table-row</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/GridTableRow.js";</code>
@@ -44,12 +44,8 @@ class GridTableRow extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	cells!: Array<GridTableCell>;
 
-	get classes() {
-		return {
-			row: {
-				"ui5-grid-table-row": true,
-			},
-		};
+	onEnterDOM(): void {
+		this.setAttribute("role", "row");
 	}
 }
 
