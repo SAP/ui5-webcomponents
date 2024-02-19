@@ -38,7 +38,8 @@
 	display: block;
 }
 
-:host(.ui5-sn-item-hidden[side-nav-collapsed]) {
+:host(.ui5-sn-item-hidden[side-nav-collapsed]),
+:host([side-nav-collapsed]) .ui5-sn-item-hidden {
 	display: none;
 }
 
@@ -309,4 +310,10 @@
 
 .ui5-sn-item-separator {
 	min-height: 0.75rem;
+}
+
+:host(:first-child) .ui5-sn-list-li .ui5-sn-item-separator:first-child,
+:host(:last-child) .ui5-sn-list-li .ui5-sn-item-separator:last-child,
+.ui5-sn-item-group-below-group .ui5-sn-item-separator:first-child{
+	display: none;
 }

@@ -7,7 +7,7 @@
 {{/if}}
 
 {{#*inline treeitem}}
-	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
+	<li id="{{_id}}" class="ui5-sn-list-li {{belowGroupClassName}}" role="none">
 		<div class="ui5-sn-item-separator"></div>
 		<div class="ui5-sn-item ui5-sn-item-group {{_classes}}"
 			 role="treeitem"
@@ -16,7 +16,7 @@
 			 @keyup="{{_onkeyup}}"
 			 @click="{{_onclick}}"
 			 @focusin="{{_onfocusin}}"
-			 tabindex="{{_effectiveTabIndex}}"
+			 tabindex="{{effectiveTabIndex}}"
 			 aria-expanded="{{_expanded}}"
 			 title="{{_tooltip}}"
 			 aria-owns="{{_groupId}}"

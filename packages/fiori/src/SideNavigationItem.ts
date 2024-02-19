@@ -80,7 +80,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@property({ type: Boolean })
 	wholeItemToggleable!: boolean;
 
-	get overflowItems() : Array<SideNavigationSelectableItemBase> {
+	get overflowItems() : Array<HTMLElement> {
 		return [this];
 	}
 

@@ -72,7 +72,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.classesArray.join(" ");
 	}
 
-	get _effectiveTabIndex() {
+	get effectiveTabIndex() {
 		if (this.disabled) {
 			return undefined;
 		}

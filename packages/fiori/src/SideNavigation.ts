@@ -26,8 +26,8 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationGroup from "./SideNavigationGroup.js";
@@ -515,7 +515,9 @@ class SideNavigation extends UI5Element {
 		overflowItemRef.classList.remove("ui5-sn-item-hidden");
 
 		itemsHeight = overflowItemRef.offsetHeight;
-		const oSelectedItemRef = overflowItems.find(item => item._selected);
+		const oSelectedItemRef = overflowItems.find(item => {
+			return item instanceof SideNavigationSelectableItemBase && item._selected;
+		});
 		if (oSelectedItemRef) {
 			const { marginTop, marginBottom } = window.getComputedStyle(oSelectedItemRef);
 
@@ -562,10 +564,10 @@ class SideNavigation extends UI5Element {
 		return this._getSelectableItems(items).find(item => item._selected);
 	}
 
-	get overflowItems() : Array<SideNavigationSelectableItemBase> {
+	get overflowItems() : Array<HTMLElement> {
 		return this.items.reduce((result, item) => {
 			return result.concat(item.overflowItems);
-		}, new Array<SideNavigationSelectableItemBase>());
+		}, new Array<HTMLElement>());
 	}
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
@@ -605,7 +607,8 @@ class SideNavigation extends UI5Element {
 		const result: Array<SideNavigationSelectableItemBase> = [];
 
 		this.overflowItems.forEach(item => {
-			if (item.classList.contains(overflowClass)) {
+			if (item instanceof SideNavigationSelectableItemBase
+				&& item.classList.contains(overflowClass)) {
 				 result.push(item);
 			}
 		});

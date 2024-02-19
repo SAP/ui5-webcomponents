@@ -61,10 +61,12 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
 
-	get overflowItems() : Array<SideNavigationSelectableItemBase> {
+	get overflowItems() : Array<HTMLElement> {
 		return this.items.reduce((result, item) => {
-			return result.concat(item.overflowItems);
-		}, new Array<SideNavigationSelectableItemBase>());
+			const first = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as HTMLElement;
+			const last = this.shadowRoot!.querySelector(".ui5-sn-item-separator:last-child") as HTMLElement;
+			return result.concat([first, ...item.overflowItems, last]);
+		}, new Array<HTMLElement>());
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
@@ -111,6 +113,14 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
+	}
+
+	get belowGroupClassName() {
+		if (this.previousElementSibling instanceof SideNavigationGroup) {
+			return "ui5-sn-item-group-below-group";
+		}
+
+		return "";
 	}
 
 	_onkeydown = (e: KeyboardEvent) => {
