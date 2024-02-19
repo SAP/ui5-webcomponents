@@ -29,6 +29,7 @@ const Template: UI5StoryArgs<StandardListItem, StoryArgsSlots> = (args) => {
     ?navigated="${ifDefined(args.navigated)}"
     type="${ifDefined(args.type)}"
     ?selected="${ifDefined(args.selected)}"
+	tooltip="${ifDefined(args.tooltip)}"
   >
     ${unsafeHTML(args.default)}
     ${unsafeHTML(args.imageContent)}
