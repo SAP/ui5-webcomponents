@@ -3,5 +3,6 @@
     grid-template-columns: subgrid;
     grid-auto-rows: minmax(2rem, auto);
     grid-column: 1 / -1;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 0.0625rem solid var(--sapList_BorderColor);
+    background-color: var(--sapList_Background);
 }

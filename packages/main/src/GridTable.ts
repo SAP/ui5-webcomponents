@@ -61,7 +61,6 @@ class GridTable extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		debugger;
 	}
 }
 
