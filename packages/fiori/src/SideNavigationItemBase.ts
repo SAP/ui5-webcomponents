@@ -51,6 +51,9 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	sideNavCollapsed!: boolean;
 
+	@property({ type: Boolean })
+	inPopover!: boolean;
+
 	get _tooltip() {
 		return this.title || this.text;
 	}

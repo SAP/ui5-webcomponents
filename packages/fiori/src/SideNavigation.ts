@@ -193,7 +193,7 @@ class SideNavigation extends UI5Element {
 	_popoverContents!: SideNavigationPopoverContents;
 
 	@property({ type: Boolean })
-	_inPopover!: boolean;
+	inPopover!: boolean;
 	_isOverflow!: boolean;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
@@ -235,10 +235,12 @@ class SideNavigation extends UI5Element {
 
 		this._getAllItems(this.items).forEach(item => {
 			item.sideNavCollapsed = this.collapsed;
+			item.inPopover = this.inPopover;
 		});
 
 		this._getAllItems(this.fixedItems).forEach(item => {
 			item.sideNavCollapsed = this.collapsed;
+			item.inPopover = this.inPopover;
 		});
 	}
 
@@ -385,14 +387,13 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _rootRole() {
-		return this._inPopover ? "none" : undefined;
+		return this.inPopover ? "none" : undefined;
 	}
 
 	get classes() {
 		return {
 			root: {
 				"ui5-sn-collapsed": this.collapsed,
-				"ui5-sn-in-popover": this._inPopover,
 			},
 		};
 	}

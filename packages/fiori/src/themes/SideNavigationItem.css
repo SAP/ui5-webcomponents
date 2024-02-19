@@ -154,7 +154,10 @@
 	border-radius: var(--_ui5_side_navigation_item_border_radius);
 }
 
-.ui5-sn-in-popover .ui5-sn-item-ul .ui5-sn-list-li:last-child .ui5-sn-item:not(:hover):not(:active)::before {
+/*todo
+:host([in-popover]) .ui5-sn-item-ul .ui5-sn-list-li:last-child .ui5-sn-item:not(:hover):not(:active)::before {
+   */
+:host([in-popover]) .ui5-sn-item:not(:hover):not(:active)::before {
 	border: var(--_ui5_side_navigation_last_item_border_style);
 }
 
@@ -292,20 +295,16 @@
 	display: var(--_ui5_side_navigation_selection_indicator_display);
 }
 
-.ui5-sn-in-popover .ui5-sn-list {
-	padding: var(--_ui5_side_navigation_parent_popup_padding);
-}
-
-.ui5-sn-in-popover .ui5-sn-item {
+:host([in-popover]) .ui5-sn-item {
 	padding: var(--_ui5_side_navigation_popup_item_padding);
 	width: auto;
 }
 
-.ui5-sn-in-popover .ui5-sn-item-level1 {
+:host([in-popover]) .ui5-sn-item-level1 {
 	margin-bottom: var(--_ui5_side_navigation_group_bottom_margin_in_popup);
 }
 
-.ui5-sn-in-popover .ui5-sn-item-level1 .ui5-sn-item-text {
+:host([in-popover]) .ui5-sn-item-level1 .ui5-sn-item-text {
 	margin: 0 1rem 0 0;
 	font-size: var(--_ui5_side_navigation_popup_title_text_size);
 	line-height: var(--_ui5_side_navigation_popup_title_line_height);
