@@ -1,6 +1,6 @@
 import fs from "fs/promises"
 import path from "path"
-import parseDeclaration from "./component-file.mjs"
+import { parseDeclaration, parseComponentDeclaration } from "./component-file.mjs"
 
 const packages = ["main", "fiori"];
 const manifests = {};
@@ -40,10 +40,11 @@ packages.forEach(async (packageName, index) => {
     manifests[packageName].modules.forEach(_module => {
         _module.declarations.forEach(async (declaration) => {
             if (declaration.customElement && declaration.tagName) {
-                await fs.writeFile(path.join(`./docs/components/${packageName}/`, `${declaration.name}.mdx`), parseDeclaration(declaration))
+                const fileContent = await fs.readFile(path.join(`./docs/_components_pages/${packageName}/`, `${declaration.name}.mdx`), { encoding: "utf-8" })
+
+                await fs.writeFile(path.join(`./docs/components/${packageName}/`, `${declaration.name}.mdx`), parseComponentDeclaration(declaration, fileContent))
                 await fs.writeFile(path.join(`./docs/components/${packageName}/`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
             } else if (declaration.kind === "enum") {
-                debugger
                 await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `${declaration.name}.mdx`), parseDeclaration(declaration))
                 await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
             } else if (declaration.kind === "interface") {

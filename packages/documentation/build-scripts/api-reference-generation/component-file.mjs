@@ -85,32 +85,45 @@ const getTable = (kind) => {
 
 const parseDeclaration = (declaration) => {
     if (!declaration) {
-        return "Test description";
+        return "";
     }
 
-    let sections = []
+    let sections = [
+        `import declarationJSON from "./_${declaration.name}Declaration.json";`,
+        parseDeclarationDescription(declaration)
+    ]
 
-    switch (declaration.kind) {
-        case "enum":
-            sections = [
-                getTable("enum")
-            ]
+    if (declaration.kind === "enum") {
+        getTable("enum")
+    }
 
-            break;
-        case "class":
-            sections = [
-                "field",
-                "slot",
-                "event",
-                "method",
-                "cssPart"
-            ].map(fieldType => getTable(fieldType))
-            break;
-        }
-
-    sections.unshift(parseDeclarationDescription(declaration));
-    sections.unshift(`import declarationJSON from "./_${declaration.name}Declaration.json";`);
     return sections.join("\n\n")
 }
 
-export default parseDeclaration
+
+const parseComponentDeclaration = (declaration, fileContent) => {
+    if (!declaration || !fileContent) {
+        return "";
+    }
+
+    fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", [
+        `import declarationJSON from "./_${declaration.name}Declaration.json";`,
+        parseDeclarationDescription(declaration)
+    ].join("\n\n"))
+
+    fileContent = fileContent.replace("<%COMPONENT_METADATA%>", [
+        "field",
+        "slot",
+        "event",
+        "method",
+        "cssPart"
+    ].map(fieldType => getTable(fieldType))
+        .join("\n\n"));
+
+    return fileContent
+}
+
+export {
+    parseDeclaration,
+    parseComponentDeclaration,
+}
