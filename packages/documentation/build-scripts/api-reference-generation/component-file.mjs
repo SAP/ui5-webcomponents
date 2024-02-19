@@ -106,19 +106,19 @@ const parseComponentDeclaration = (declaration, fileContent) => {
         return "";
     }
 
-    fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", [
-        `import declarationJSON from "./_${declaration.name}Declaration.json";`,
-        parseDeclarationDescription(declaration)
-    ].join("\n\n"))
+    fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", parseDeclarationDescription(declaration))
 
-    fileContent = fileContent.replace("<%COMPONENT_METADATA%>", [
+    const metadataSections = [
         "field",
         "slot",
         "event",
         "method",
         "cssPart"
     ].map(fieldType => getTable(fieldType))
-        .join("\n\n"));
+
+    metadataSections.unshift(`import declarationJSON from "./_${declaration.name}Declaration.json";`)
+
+    fileContent = fileContent.replace("<%COMPONENT_METADATA%>", metadataSections.join("\n\n"));
 
     return fileContent
 }
