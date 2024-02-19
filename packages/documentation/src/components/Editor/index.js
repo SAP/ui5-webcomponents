@@ -31,6 +31,8 @@ export default function Editor({html, js}) {
   const tabBarRef = useRef(null);
   const fileEditorRef = useRef(null);
 
+  // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
+  const [iframeName, setIframeName] = useState(`${Date.now()}`)
   const [editorVisible, setEditorVisible] = useState(true);
   const [iframeHeight, setIframeHeight] = useState("150px");
 
@@ -40,22 +42,19 @@ export default function Editor({html, js}) {
 
   useEffect(() => {
     window.addEventListener("message", async (event) => {
-      console.log(event);
-      console.log(event.source.parent)
-      console.log(previewRef.current.contentWindow)
-      console.log(event.source == previewRef.current.contentWindow)
-      // console.log(previewRef.current);
-      if (event.data.height) {
-        // console.log(event.data.height);
+      console.log("equal names", event.data.name === iframeName)
+      if (event.data.height && event.data.name === iframeName) {
         previewRef.current.iframe.style.height = `${event.data.height}px`;
       }
     });
-    // console.log(projectRef.current)
     previewRef.current.project = projectRef.current;
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
 
     tabBarRef.current.editor = fileEditorRef.current;
+
+    // the name attribute on the iframe is accessible from the content as window.name
+    previewRef.current.iframe.name = iframeName;
   }, []);
 
   return (

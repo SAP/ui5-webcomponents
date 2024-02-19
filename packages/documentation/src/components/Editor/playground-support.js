@@ -4,7 +4,8 @@ const resizeObserver = new ResizeObserver((entries) => {
     entries.forEach(e => {
         // console.log({e})
         const htmlHeight = e.target.parentElement.getBoundingClientRect().height;
-        parent.postMessage({height: htmlHeight}, "*");
+        // window.name is assigned from the parent so it can identify which child the message is coming from
+        parent.postMessage({height: htmlHeight, name: window.name}, "*");
     })
 });
 resizeObserver.observe(document.body);
