@@ -62,6 +62,10 @@ class NavigationMenuItem extends MenuItem {
 	 */
 	@property()
 	target!: string;
+
+	get isExternalLink() {
+		return this.href && this.target === "_blank";
+	}
 }
 
 NavigationMenuItem.define();
