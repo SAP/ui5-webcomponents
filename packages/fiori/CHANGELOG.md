@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** improved story and documentation ([#8294](https://github.com/SAP/ui5-webcomponents/issues/8294)) ([9740fe2](https://github.com/SAP/ui5-webcomponents/commit/9740fe21baa34233a66a4aea02f261fe1f5992f2))
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** aligned with visual specification ([#8266](https://github.com/SAP/ui5-webcomponents/issues/8266)) ([143d4af](https://github.com/SAP/ui5-webcomponents/commit/143d4afccfa1046f08c17e591e2749304afcac49))
+
+
+### Features
+
+* **ui5-side-navigation:** add external link icon ([#8199](https://github.com/SAP/ui5-webcomponents/issues/8199)) ([47e28c5](https://github.com/SAP/ui5-webcomponents/commit/47e28c5c50c824dfb743b79998c4d98f56be4beb))
+
+
+
+
+
 ## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
 
 

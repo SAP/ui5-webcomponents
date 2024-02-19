@@ -38,7 +38,7 @@ const getTemplate = (edit) => {
 	</ui5-form-item>
 	
 	<ui5-form-item>
-		<ui5-label id="cityLbl" for="cityInp" slot="labelContent">ZIPCode/City:</ui5-label>
+		<ui5-label id="cityLbl" for="cityInp" slot="labelContent">ZIP Code/City:</ui5-label>
 		<ui5-input id="cityInp" value="411" accessible-name-ref="cityLbl"></ui5-input>
 		<ui5-input value="Maintown" accessible-name-ref="cityLbl"></ui5-input>
 	</ui5-form-item>
@@ -74,7 +74,7 @@ const getTemplate = (edit) => {
 	</ui5-form-item>
 	
 	<ui5-form-item>
-		<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
+		<ui5-label slot="labelContent">ZIP Code/City:</ui5-label>
 		<span>411 Maintown</span>
 	</ui5-form-item>
 	
@@ -115,7 +115,7 @@ FormEdit.args = {
 		</ui5-form-item>
 
 		<ui5-form-item>
-			<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
+			<ui5-label slot="labelContent">ZIP Code/City:</ui5-label>
 			<span>411 Maintown</span>
 		</ui5-form-item>
 

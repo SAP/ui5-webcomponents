@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-theming
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Features
+
+* **ui5-calendar-legend:** introduce ui5-calendar-legend component ([#7706](https://github.com/SAP/ui5-webcomponents/issues/7706)) ([909a602](https://github.com/SAP/ui5-webcomponents/commit/909a6028362b55e26fdb5ca7a1ed68c8c6197a6b))
+
+
+
+
+
 ## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-theming

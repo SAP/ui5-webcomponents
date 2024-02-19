@@ -19,7 +19,7 @@ FormGroupColumnSpan.args = {
 	</ui5-form-item>
 	
 	<ui5-form-item>
-		<ui5-label slot="labelContent">ZIPCode/City:</ui5-label>
+		<ui5-label slot="labelContent">ZIP Code/City:</ui5-label>
 		<span>411 Maintown</span>
 	</ui5-form-item>
 	

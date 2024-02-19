@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* setting configuration before boot ([#8246](https://github.com/SAP/ui5-webcomponents/issues/8246)) ([d73834b](https://github.com/SAP/ui5-webcomponents/commit/d73834bd06516d5f663f14ecb516e92624191300))
+
+
+
+
+
 ## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

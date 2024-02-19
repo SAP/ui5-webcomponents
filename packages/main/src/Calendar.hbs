@@ -8,6 +8,7 @@
 			?hidden="{{_isDayPickerHidden}}"
 			format-pattern="{{_formatPattern}}"
 			.selectedDates="{{_selectedDatesTimestamps}}"
+			.specialCalendarDates="{{_specialCalendarDates}}"
 			._hidden="{{_isDayPickerHidden}}"
 			.primaryCalendarType="{{_primaryCalendarType}}"
 			.secondaryCalendarType="{{_secondaryCalendarType}}"
@@ -69,4 +70,11 @@
 			@ui5-show-month-press="{{onHeaderShowMonthPress}}"
 			@ui5-show-year-press="{{onHeaderShowYearPress}}"
 	></ui5-calendar-header>
+</div>
+
+<div
+	@ui5-_calendar-legend-selection-change={{_onCalendarLegendSelectionChange}}
+	@ui5-_calendar-legend-focus-out={{_onLegendFocusOut}}
+>
+	<slot name="calendarLegend"></slot>
 </div>

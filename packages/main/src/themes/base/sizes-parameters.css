@@ -17,10 +17,17 @@
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
 	--_ui5_day_picker_item_justify_content: space-between;
-	--_ui5_dp_two_calendar_item_now_text_padding_top: 0.387rem;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 0.375rem;
+	--_ui5_daypicker_item_now_selected_two_calendar_focus_special_day_top: 2rem;
+	--_ui5_daypicker_item_now_selected_two_calendar_focus_special_day_right: 1.4375rem;
     --_ui5_dp_two_calendar_item_primary_text_height: 1.8125rem;
     --_ui5_dp_two_calendar_item_secondary_text_height: 1rem;
-	--_ui5_dp_two_calendar_item_text_padding_top: 0.575rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0.4375rem;
+	--_ui5_dp_two_calendar_item_secondary_text_padding_block: 0 0.5rem;
+	--_ui5_dp_two_calendar_item_secondary_text_padding: 0 0.5rem;
+	--_ui5_daypicker_item_now_selected_two_calendar_focus_secondary_text_padding_block: 0 0.5rem;
+	--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom: 0;
+	--_ui5_daypicker_two_calendar_item_selected_focus_padding_right: 0.4375rem;
 
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
@@ -164,6 +171,14 @@
 	--_ui5_calendar_header_arrow_button_width: 2rem;
 	--_ui5_calendar_header_padding: 0;
 
+	/* Calendar Legend */
+	--_ui5-calendar-legend-root-padding: 0.5rem;
+	--_ui5-calendar-legend-root-width: 16.75rem;
+
+	/* Calendar Legend Item */
+	--_ui5-calendar-legend-item-box-margin: 0.125rem 0.5rem 0.125rem 0.125rem;
+	--_ui5-calendar-legend-item-root-focus-margin: -0.125rem;
+
 	/* CheckBox */
 	--_ui5_checkbox_root_side_padding: var(--_ui5_checkbox_wrapped_focus_padding);
 	--_ui5_checkbox_wrapped_content_margin_top: var(--_ui5_checkbox_compact_wrapped_label_margin_top);
@@ -198,10 +213,25 @@
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
 	--_ui5_day_picker_item_justify_content: flex-end;
-	--_ui5_dp_two_calendar_item_now_text_padding_top: 0rem;
-    --_ui5_dp_two_calendar_item_primary_text_height: 1rem;
-    --_ui5_dp_two_calendar_item_secondary_text_height: 0.75rem;
-	--_ui5_dp_two_calendar_item_text_padding_top: 0;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 0.5rem;
+	--_ui5_dp_two_calendar_item_primary_text_height: 1rem;
+	--_ui5_dp_two_calendar_item_secondary_text_height: 0.75rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0.5rem;
+
+	--_ui5_daypicker_selected_item_now_special_day_top: 1.5625rem;
+	--_ui5_daypicker_specialday_focused_top: 1.5rem;
+	--_ui5_daypicker_special_day_top: 1.625rem;
+	--_ui5_daypicker_item_now_specialday_top: 1.5rem;
+	--_ui5_daypicker_twocalendar_item_special_day_top: 1.25rem;
+	--_ui5_daypicker_twocalendar_item_special_day_right: 1.25rem;
+	--_ui5_daypicker_two_calendar_item_margin_bottom: 0;
+	--_ui5_dp_two_calendar_item_secondary_text_padding_block: 0 0.625rem;
+	--_ui5_daypicker_item_now_selected_two_calendar_focus_special_day_top: 1.125rem;
+	--_ui5_daypicker_item_now_selected_two_calendar_focus_special_day_right: 1.125rem;
+	--_ui5_dp_two_calendar_item_secondary_text_padding: 0 0.375rem;
+	--_ui5_daypicker_item_now_selected_two_calendar_focus_secondary_text_padding_block: 0 1rem;
+	--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom: -0.25rem;
+	--_ui5_daypicker_two_calendar_item_selected_focus_padding_right: 0.4375rem;
 
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 20.5rem;
