@@ -3,4 +3,6 @@ import js from '!!raw-loader!./main.js';
 
 <Editor html={html} js={js} />
 
+<Editor html={html} js={js} />
+
 # Title
