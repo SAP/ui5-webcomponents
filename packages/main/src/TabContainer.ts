@@ -600,8 +600,10 @@ class TabContainer extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
-	_onHeaderDragLeave() {
-		this.dropIndicatorDOM!.targetReference = null;
+	_onHeaderDragLeave(e: DragEvent) {
+		if (e.relatedTarget instanceof Node && !this.shadowRoot!.contains(e.relatedTarget)) {
+			this.dropIndicatorDOM!.targetReference = null;
+		}
 	}
 
 	_onHeaderDragEnd() {
