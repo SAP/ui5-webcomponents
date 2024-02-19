@@ -27,7 +27,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
+import findDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findDropPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
@@ -519,7 +519,7 @@ class TabContainer extends UI5Element {
 			dropPositions.push(this._getEndOverflowBtnDOM()!);
 		}
 
-		const closestDropPosition = findClosestDropPosition(
+		const closestDropPosition = findDropPosition(
 			dropPositions,
 			e.clientX,
 			Orientation.Horizontal,

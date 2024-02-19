@@ -27,39 +27,35 @@ const closestPlacement = (point: number, beforePoint: number, centerPoint: numbe
 	return dropPlacements;
 };
 
-const findClosestDropPosition = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
-	let shortestDist = Number.POSITIVE_INFINITY,
-		closestElement: HTMLElement | null = null;
+const findDropPosition = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
+	let element: HTMLElement | null = null;
 
-	// determine which element is most closest to the point
+	// determine in which element is the point
 	for (let i = 0; i < elements.length; i++) {
 		const el = elements[i];
 		const {
 			left, width, top, height,
 		} = el.getBoundingClientRect();
+		let isInBounds;
 
-		let elemCenter;
 		if (layoutOrientation === Orientation.Vertical) {
-			elemCenter = top + height / 2;
+			isInBounds = point > top && point < top + height;
 		} else { // Horizontal
-			elemCenter = left + width / 2;
+			isInBounds = point > left && point < left + width;
 		}
 
-		const distanceToCenter = Math.abs(point - elemCenter);
-
-		if (distanceToCenter < shortestDist) {
-			shortestDist = distanceToCenter;
-			closestElement = el;
+		if (isInBounds) {
+			element = el;
 		}
 	}
 
-	if (!closestElement) {
+	if (!element) {
 		return null;
 	}
 
 	const {
 		width, height, left, right, top, bottom,
-	} = closestElement.getBoundingClientRect();
+	} = element.getBoundingClientRect();
 	let placements;
 
 	if (layoutOrientation === Orientation.Vertical) {
@@ -69,9 +65,9 @@ const findClosestDropPosition = (elements: Array<HTMLElement>, point: number, la
 	}
 
 	return {
-		element: closestElement,
+		element,
 		placements,
 	};
 };
 
-export default findClosestDropPosition;
+export default findDropPosition;

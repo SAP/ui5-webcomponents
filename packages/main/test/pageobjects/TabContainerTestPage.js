@@ -1,6 +1,8 @@
 class TabContainerTestPage {
-	async getTabStripItems(tabContainerId) {
-		return browser.$(`#${tabContainerId}`).shadow$$(".ui5-tab-strip-item");
+	async getItemsIds(tabContainerId) {
+		const items = await browser.$$(`#${tabContainerId} > *`);
+	
+		return Promise.all(items.map(item => item.getAttribute("id")));
 	}
 
 	async getDisplayedTabStripItems(tabContainerId) {
