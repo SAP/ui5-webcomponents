@@ -25,7 +25,7 @@ function toggleTheme () {
   setTheme(lightTheme ? "sap_horizon" : "sap_horizon_dark");
 };
 
-export default function Editor({html, js}) {
+export default function Editor({html, js, css }) {
   const projectRef = useRef(null);
   const previewRef = useRef(null);
   const tabBarRef = useRef(null);
@@ -80,6 +80,9 @@ export default function Editor({html, js}) {
 import "./playground-support.js";
 /* playground-hide-end */
 ${js}`}
+                  </script>
+                  <script type="sample/css" filename="main.css">
+                    {css}
                   </script>
               </playground-project>
               <playground-preview style={{height: "unset"}} ref={previewRef}></playground-preview>

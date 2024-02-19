@@ -1,0 +1,25 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <ui5-button id="openDialogButton">Open Dialog</ui5-button>
+    <ui5-dialog id="hello-dialog" header-text="Error">
+        <ui5-illustrated-message name="UnableToLoad"></ui5-illustrated-message>
+        <ui5-bar design="Footer" slot="footer">
+            <ui5-button id="closeDialogButton" design="Emphasized" slot="endContent">Close</ui5-button>
+        </ui5-bar>
+    </ui5-dialog>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->
