@@ -39,6 +39,7 @@ class DropIndicator extends UI5Element {
 	 * Element where the drop indicator will be shown.
 	 *
 	 * @public
+	 * @default null
 	 */
 	@property({ type: Object, defaultValue: null })
 	targetReference!: HTMLElement | null;
@@ -46,6 +47,7 @@ class DropIndicator extends UI5Element {
 	/**
 	 * Owner of the indicator and the target.
 	 * @public
+	 * @default null
 	 */
 	@property({ type: Object, defaultValue: null })
 	ownerReference!: HTMLElement | null;
