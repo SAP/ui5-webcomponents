@@ -69,7 +69,7 @@
 	pointer-events: none;
 }
 
-:host(:not([_disabled])) .ui5-cp-item:focus:not(:hover)::after {
+:host(:not([_disabled]):not([phone])) .ui5-cp-item:focus:not(:hover)::after {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
