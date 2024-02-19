@@ -54,7 +54,10 @@ export default function Editor({html, js}) {
     tabBarRef.current.editor = fileEditorRef.current;
 
     // the name attribute on the iframe is accessible from the content as window.name
-    previewRef.current.iframe.name = iframeName;
+    customElements.whenDefined("playground-preview").then(function () {
+      // iframe property available after element is defined
+      previewRef.current.iframe.name = iframeName;
+    })
   }, []);
 
   return (
