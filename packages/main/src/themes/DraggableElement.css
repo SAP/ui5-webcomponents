@@ -4,5 +4,5 @@
 
 :host([draggable=true]:active), [draggable=true]:active {
 	cursor: grabbing !important;
-	opacity: 0.5;
+	opacity: var(--sapContent_DisabledOpacity);
 }

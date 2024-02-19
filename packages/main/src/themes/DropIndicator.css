@@ -30,10 +30,10 @@
 	border-radius: 0.25rem;
 	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
 	background-color: #fff;
-	/* TODO find correct parameter for dark/high contrast themes */
 	pointer-events: none;
 }
 
+/* the ear of the needle */
 :host([orientation="Horizontal"]) .ui5-di-needle::before {
 	top: -0.1875rem;
 	left: -0.1875rem;
@@ -44,16 +44,25 @@
 	border-radius: 0.25rem;
 	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
 	background-color: #fff;
-	/* TODO find correct parameter for dark/high contrast themes */
 	pointer-events: none;
 }
 
 :host .ui5-di-rect {
-	background: transparent;
 	border: 0.125rem solid var(--sapContent_DragAndDropActiveColor);
 	position: absolute;
 	left: 0;
 	right: 0;
 	top: 0;
 	bottom: 0;
+}
+
+:host .ui5-di-rect::before {
+	content: " ";
+	position: absolute;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	background: var(--sapContent_DragAndDropActiveColor);
+	opacity: 0.05;
 }
