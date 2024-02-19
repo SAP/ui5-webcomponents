@@ -1,0 +1,43 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <ui5-upload-collection>
+        <div slot="header" class="header">
+            <ui5-title>Attachments (2)</ui5-title>
+        </div>
+
+        <ui5-upload-collection-item file-name="LaptopHT-1000.jpg" upload-state="Complete">
+            uploadState="Complete"
+            <img src="../assets/images/HT-1000.jpg" slot="thumbnail">
+        </ui5-upload-collection-item>
+
+        <ui5-upload-collection-item file-name="Laptop.jpg" upload-state="Uploading" type="Active" progress="37">
+            uploadState="Uploading"
+            <img src="../assets/images/HT-1000.jpg" slot="thumbnail">
+        </ui5-upload-collection-item>
+
+        <ui5-upload-collection-item file-name="latest-reports.pdf" upload-state="Error" type="Active" progress="59">
+            uploadState="Error"
+            <ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+        </ui5-upload-collection-item>
+
+        <ui5-upload-collection-item file-name="Notes.txt" upload-state="Ready">
+            uploadState="Ready" (default)
+            <ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+        </ui5-upload-collection-item>
+    </ui5-upload-collection>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->

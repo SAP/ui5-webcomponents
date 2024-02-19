@@ -1,0 +1,49 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <ui5-list header-text="Notifications">
+        <ui5-li-notification
+            title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+            priority="High" show-close>
+            <ui5-avatar size="XS" slot="avatar">
+                <img src="../assets/images/avatars/woman_avatar_1.png">
+            </ui5-avatar>
+            <span slot="footnotes">Monique Legrand</span>
+            <span slot="footnotes">2 Days</span>
+            And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec
+            elementum
+            lectus turpis at nunc.
+        </ui5-li-notification>
+        <ui5-li-notification show-close title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="High">
+            <ui5-avatar size="XS" slot="avatar">
+                <img src="../assets/images/avatars/man_avatar_1.png">
+            </ui5-avatar>
+            <span slot="footnotes">Alain Chevalier</span>
+            <span slot="footnotes">2 Days</span>
+            And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+        </ui5-li-notification>
+        <ui5-li-notification show-close title-text="New order (#2525) With a short title" priority="High" read>
+            <ui5-avatar size="XS" slot="avatar">
+                <img src="../assets/images/avatars/man_avatar_2.png">
+            </ui5-avatar>
+            <span slot="footnotes">John Doe</span>
+            <span slot="footnotes">2 Days</span>
+            And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+        </ui5-li-notification>
+    </ui5-list>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->

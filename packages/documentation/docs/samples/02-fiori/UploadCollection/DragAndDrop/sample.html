@@ -1,0 +1,30 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <ui5-upload-collection>
+        <div slot="header" class="header">
+            <ui5-title>Attachments</ui5-title>
+            <ui5-label show-colon>Add new files and press to start uploading pending files</ui5-label>
+            <ui5-button id="startUploading">Start</ui5-button>
+            <div class="spacer"></div>
+            <ui5-file-uploader id="fileUploader" hide-input multiple>
+                <ui5-button icon="add" design="Transparent"></ui5-button>
+            </ui5-file-uploader>
+        </div>
+    </ui5-upload-collection>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->

@@ -1,0 +1,48 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <ui5-button id="btnOpenDialog1">Open ViewSettingsDialog</ui5-button>
+    <ui5-view-settings-dialog id="vsd1" sort-descending>
+        <ui5-sort-item slot="sortItems" text="Name" selected=""></ui5-sort-item>
+        <ui5-sort-item slot="sortItems" text="Position"></ui5-sort-item>
+        <ui5-sort-item slot="sortItems" text="Company"></ui5-sort-item>
+        <ui5-sort-item slot="sortItems" text="Department"></ui5-sort-item>
+        <ui5-filter-item slot="filterItems" text="Position">
+            <ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+        </ui5-filter-item>
+        <ui5-filter-item slot="filterItems" text="Department">
+            <ui5-filter-item-option slot="values" text="Sales"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="Management"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="PR"></ui5-filter-item-option>
+        </ui5-filter-item>
+        <ui5-filter-item slot="filterItems" text="Location">
+            <ui5-filter-item-option slot="values" text="Walldorf"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="New York"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="London"></ui5-filter-item-option>
+        </ui5-filter-item>
+        <ui5-filter-item slot="filterItems" text="Reports to">
+            <ui5-filter-item-option slot="values" text="CTO"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="CPO"></ui5-filter-item-option>
+            <ui5-filter-item-option slot="values" text="VP"></ui5-filter-item-option>
+        </ui5-filter-item>
+    </ui5-view-settings-dialog>
+    <br />
+    <br />
+    <div id="vsdResults"></div>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->
