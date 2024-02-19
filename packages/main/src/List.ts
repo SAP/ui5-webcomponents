@@ -944,7 +944,9 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
-		if (!(e.target instanceof HTMLElement)) {
+		const draggedElement = DragRegistry.getDraggedElement();
+
+		if (!(e.target instanceof HTMLElement) || !draggedElement) {
 			return;
 		}
 
@@ -961,14 +963,14 @@ class List extends UI5Element {
 
 		let placements = closestDropPosition.placements;
 
-		if (closestDropPosition.element === DragRegistry.getDraggedElement()) {
+		if (closestDropPosition.element === draggedElement) {
 			placements = placements.filter(placement => placement !== DropPlacement.On);
 		}
 
 		const placementAccepted = placements.some(dropPlacement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
 				source: {
-					element: DragRegistry.getDraggedElement()!,
+					element: draggedElement,
 				},
 				destination: {
 					element: closestDropPosition.element,

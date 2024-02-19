@@ -505,7 +505,9 @@ class TabContainer extends UI5Element {
 
 	@longDragOverHandler(element => element.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]"))
 	async _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
-		if (!(e.target instanceof HTMLElement)) {
+		const draggedElement = DragRegistry.getDraggedElement();
+
+		if (!(e.target instanceof HTMLElement) || !draggedElement) {
 			return;
 		}
 
@@ -532,7 +534,7 @@ class TabContainer extends UI5Element {
 		const dropTarget = (closestDropPosition.element as Tab).realTabReference;
 		let placements = closestDropPosition.placements;
 
-		if (dropTarget === DragRegistry.getDraggedElement()) {
+		if (dropTarget === draggedElement) {
 			placements = placements.filter(placement => placement !== DropPlacement.On);
 		}
 
@@ -540,7 +542,7 @@ class TabContainer extends UI5Element {
 			const placementAccepted = placements.some(dropPlacement => {
 				const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
 					source: {
-						element: DragRegistry.getDraggedElement()!,
+						element: draggedElement,
 					},
 					destination: {
 						element: dropTarget,
