@@ -509,18 +509,18 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const dropPositions = Array.from(this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`));
+		const dropTargets = Array.from(this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`));
 
 		if (this._getStartOverflowBtnDOM()) {
-			dropPositions.push(this._getStartOverflowBtnDOM()!);
+			dropTargets.push(this._getStartOverflowBtnDOM()!);
 		}
 
 		if (this._getEndOverflowBtnDOM()) {
-			dropPositions.push(this._getEndOverflowBtnDOM()!);
+			dropTargets.push(this._getEndOverflowBtnDOM()!);
 		}
 
 		const closestDropPosition = findDropPosition(
-			dropPositions,
+			dropTargets,
 			e.clientX,
 			Orientation.Horizontal,
 		);
@@ -529,14 +529,21 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		const dropTarget = (closestDropPosition.element as Tab).realTabReference;
+		let placements = closestDropPosition.placements;
+
+		if (dropTarget === DragRegistry.getDraggedElement()) {
+			placements = placements.filter(placement => placement !== DropPlacement.On);
+		}
+
 		if (isTabInStrip(closestDropPosition.element)) {
-			const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
+			const placementAccepted = placements.some(dropPlacement => {
 				const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
 					source: {
 						element: DragRegistry.getDraggedElement()!,
 					},
 					destination: {
-						element: (closestDropPosition.element as Tab).realTabReference,
+						element: dropTarget,
 						placement: dropPlacement,
 					},
 				}, true);
@@ -601,12 +608,19 @@ class TabContainer extends UI5Element {
 
 	_onBeforeItemMoveInPopover(e: CustomEvent<ListBeforeItemMoveEventDetail>) {
 		const { destination } = e.detail;
+		const draggedElement = DragRegistry.getDraggedElement();
+		const dropTarget = (destination.element as Tab).realTabReference;
+
+		if (draggedElement === dropTarget && destination.placement === DropPlacement.On) {
+			return;
+		}
+
 		const placementAccepted = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
 			source: {
-				element: DragRegistry.getDraggedElement()!,
+				element: draggedElement!,
 			},
 			destination: {
-				element: (destination.element as Tab).realTabReference,
+				element: dropTarget,
 				placement: destination.placement,
 			},
 		}, true);

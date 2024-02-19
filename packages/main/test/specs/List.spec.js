@@ -664,6 +664,9 @@ describe("List drag and drop tests", () => {
 	it("Moving item ON another", async () => {
 		const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd2 [ui5-li]");
 
+		await firstItem.dragAndDrop({ x: 0, y: 0 });
+		assert.ok(await compareItemsOrder("listDnd2", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
+
 		const dragOffset = await getDragOffset(firstItem, secondItem);
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd2", [secondItem, thirdItem]), "Items order has changed");

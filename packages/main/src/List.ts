@@ -959,7 +959,13 @@ class List extends UI5Element {
 			return;
 		}
 
-		const placementAccepted = closestDropPosition.placements.some(dropPlacement => {
+		let placements = closestDropPosition.placements;
+
+		if (closestDropPosition.element === DragRegistry.getDraggedElement()) {
+			placements = placements.filter(placement => placement !== DropPlacement.On);
+		}
+
+		const placementAccepted = placements.some(dropPlacement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListBeforeItemMoveEventDetail>("before-item-move", {
 				source: {
 					element: DragRegistry.getDraggedElement()!,
