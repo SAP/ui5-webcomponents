@@ -167,12 +167,10 @@ enum TableFocusTargetElement {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Table.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
+ * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (<code>ui5-table-column</code>)
+ * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (<code>ui5-table-row</code>)
+ * <code>import "@ui5/webcomponents/dist/TableGroupRow.js";</code> (<code>ui5-table-group-row</code>)
+ * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (<code>ui5-table-cell</code>)
  *
  * @constructor
  * @extends UI5Element

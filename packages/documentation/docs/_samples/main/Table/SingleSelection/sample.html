@@ -1,0 +1,88 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<!-- playground-hide-end -->
+<ui5-table mode="SingleSelect">
+
+    <ui5-table-column slot="columns" popin-display="Inline">
+        <span>Product</span>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin popin-display="Inline">
+        <span>Supplier</span>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin popin-display="Inline">
+        <span>Dimensions</span>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin popin-display="Inline">
+        <span>Weight</span>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" popin-display="Inline">
+        <span>Price</span>
+    </ui5-table-column>
+
+    <ui5-table-row>
+        <ui5-table-cell>
+            <span>Notebook Basic 15</span>
+        </ui5-table-cell>
+        <ui5-table-cell>
+            <span>Very Best Screens</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span>30 x 18 x 3cm</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span><b>4.2</b>KG</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span><b>956</b>EUR</span>
+        </ui5-table-cell>
+    </ui5-table-row>
+
+    <ui5-table-row>
+        <ui5-table-cell>
+            <span>Notebook Basic 175</span>
+        </ui5-table-cell>
+        <ui5-table-cell>
+            <span>Very Best Screens</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span>29 x 17 x 3.1cm</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span><b>4.5</b>KG</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span><b>1249</b>EUR</span>
+        </ui5-table-cell>
+    </ui5-table-row>
+
+    <ui5-table-row>
+        <ui5-table-cell>
+            <span>Notebook Basic 18</span>
+        </ui5-table-cell>
+        <ui5-table-cell>
+            <span>Very Best Screens</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span>28 x 19 x 2.5cm</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span><b>4.2</b>KG</span>
+        </ui5-table-cell>
+        <ui5-table-cell style="text-align: right">
+            <span><b>1570</b>EUR</span>
+        </ui5-table-cell>
+    </ui5-table-row>
+
+</ui5-table>
+<!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-hide-end -->
