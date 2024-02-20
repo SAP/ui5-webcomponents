@@ -18,6 +18,7 @@ import type {
 import type {
 	ListItemClickEventDetail,
 	ListItemDeleteEventDetail,
+	ListItemFocusEventDetail,
 	ListSelectionChangeEventDetail,
 } from "./List.js";
 
@@ -35,6 +36,7 @@ type TreeItemMouseoverEventDetail = TreeItemEventDetail;
 type TreeItemMouseoutEventDetail = TreeItemEventDetail;
 type TreeItemClickEventDetail = TreeItemEventDetail;
 type TreeItemDeleteEventDetail = TreeItemEventDetail;
+type TreeItemFocusEventDetail = TreeItemEventDetail;
 type TreeSelectionChangeEventDetail = {
 	selectedItems: Array<TreeItemBase>;
 	previouslySelectedItems: Array<TreeItemBase>;
@@ -112,7 +114,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @allowPreventDefault
  * @public
  */
-@event("item-toggle", {
+@event<TreeItemToggleEventDetail>("item-toggle", {
 	detail: {
 		/**
 		 * @public
@@ -126,7 +128,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @since 1.0.0-rc.16
  * @public
  */
-@event("item-mouseover", {
+@event<TreeItemMouseoverEventDetail>("item-mouseover", {
 	detail: {
 		/**
 		 * @public
@@ -140,7 +142,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @since 1.0.0-rc.16
  * @public
  */
-@event("item-mouseout", {
+@event<TreeItemMouseoutEventDetail>("item-mouseout", {
 	detail: {
 		/**
 		 * @public
@@ -155,7 +157,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item The clicked item.
  * @public
  */
-@event("item-click", {
+@event<TreeItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public
@@ -173,11 +175,23 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item the deleted item.
  * @public
  */
-@event("item-delete", {
+@event<TreeItemDeleteEventDetail>("item-delete", {
 	detail: {
 		/**
 		 * @public
 		 */
+		item: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired when a tree item is focused.
+ *
+ * @param {HTMLElement} item The focused item.
+ * @private
+ */
+@event<TreeItemFocusEventDetail>("item-focus", {
+	detail: {
 		item: { type: HTMLElement },
 	},
 })
@@ -191,7 +205,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} targetItem The item triggering the event.
  * @public
  */
-@event("selection-change", {
+@event<TreeSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -362,6 +376,11 @@ class Tree extends UI5Element {
 		this.fireEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
 	}
 
+	_onListItemFocus(e: CustomEvent<ListItemFocusEventDetail>) {
+		const treeItem = e.detail.item as TreeItemBase;
+		this.fireEvent<TreeItemFocusEventDetail>("item-focus", { item: treeItem });
+	}
+
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
@@ -405,8 +424,8 @@ class Tree extends UI5Element {
 
 			item.setAttribute("level", level.toString());
 
-			item._setsize = ariaSetSize;
-			item._posinset = index + 1;
+			item.forcedSetsize = ariaSetSize;
+			item.forcedPosinset = index + 1;
 		});
 	}
 
@@ -473,5 +492,7 @@ export type {
 	TreeItemMouseoutEventDetail,
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
+	TreeItemFocusEventDetail,
 	TreeSelectionChangeEventDetail,
+	WalkCallback,
 };

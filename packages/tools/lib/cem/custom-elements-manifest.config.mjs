@@ -13,13 +13,16 @@ import {
 	hasTag,
 	findTag,
 	findAllTags,
-	getJSDocErrors,
 	getTypeRefs,
 	normalizeDescription,
 	formatArrays,
 	isClass,
-	normalizeTagType
+	normalizeTagType,
+	logDocumentationError,
+	displayDocumentationErrors
 } from "./utils.mjs";
+
+const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
 
 const extractClassNodeJSDoc = node => {
 	const fileContent = node.getFullText();
@@ -163,6 +166,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 				if (propertyDecorator) {
 					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
+					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind === ts.SyntaxKind.TrueKeyword || undefined;
 				}
 
 				if (hasTag(memberParsedJsDoc, "formProperty")) {
@@ -181,24 +185,14 @@ function processClass(ts, classNode, moduleDoc) {
 					member.default = tagValue;
 				}
 
-				if (member.privacy === "public") {
-					const JSDocErrors = getJSDocErrors();
-
-					if (!member.default) {
-						JSDocErrors.push(
-							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Default value is missing`
-						);
-					}
+				if (member.privacy === "public" && !member.default) {
+					logDocumentationError(moduleDoc.path, `Missing default value for '${member.name}'.`)
 				}
 
 				// Getters are treated as fields so they should not have return, instead of return they should have default value defined with @default
 				if (member.readonly) {
 					if (member.privacy === "public" && !member.type) {
-						const JSDocErrors = getJSDocErrors();
-
-						JSDocErrors.push(
-							`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
-						);
+						logDocumentationError(moduleDoc.path, `Missing return type for read-only field '${member.name}'.`)
 					}
 
 					delete member.return;
@@ -247,21 +241,19 @@ function processClass(ts, classNode, moduleDoc) {
 			if (member.return) {
 				const returnTag = findTag(memberParsedJsDoc, "returns");
 				member.return.description = returnTag?.description ? `${returnTag.name} ${returnTag.description}` : returnTag?.name;
-				member.return.type.text = classNodeMember?.type?.getFullText?.()?.trim();
+				member.return.type.text = formatArrays(classNodeMember?.type?.getFullText?.()?.trim());
 				const typeRefs = (getTypeRefs(ts, classNodeMember, member.return)
 					?.map(typeRef => getReference(ts, typeRef, classNodeMember, moduleDoc.path)).filter(Boolean)) || [];
 
 				if (typeRefs.length) {
 					member.return.type.references = typeRefs;
 				}
-			}
 
-			if (member.privacy === "public" && !member.return) {
-				const JSDocErrors = getJSDocErrors();
-
-				JSDocErrors.push(
-					`=== ERROR: Problem found with ${member.name}'s JSDoc comment in ${moduleDoc.path}: Missing return type`
-				);
+				if (member.privacy === "public" && !member.return.type.text) {
+					logDocumentationError(moduleDoc.path, `Missing return type for function '${member.name}'.`)
+				}
+			} else if (member.privacy === "public") {
+				logDocumentationError(moduleDoc.path, `Missing return type for function '${member.name}'.`)
 			}
 		}
 	}
@@ -421,12 +413,17 @@ export default {
 					}
 				}
 
-				if (moduleDoc.exports) {
-					moduleDoc.exports = moduleDoc.exports.filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
-				}
+				moduleDoc.path = moduleDoc.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
 
-				moduleDoc.exports?.forEach(e => {
+				moduleDoc.exports = moduleDoc.exports.
+					filter(e => !(e.kind === "custom-element-definition" && !moduleDoc.declarations?.find(d => d.name === e.name)?.tagName))
+
+				moduleDoc.exports.forEach(e => {
 					const classNode = moduleDoc.declarations.find(c => c.name === e.declaration.name);
+
+					if (e.declaration && e.declaration.module) {
+						e.declaration.module = e.declaration.module.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+					}
 
 					if (classNode?.customElement && classNode.tagName && e.kind !== "custom-element-definition") {
 						moduleDoc.exports.push({
@@ -439,24 +436,43 @@ export default {
 						})
 					}
 				})
-			},
-			packageLinkPhase({ customElementsManifest }) {
-				// Uncomment and handle errors appropriately
-				// const JSDocErrors = getJSDocErrors();
-				// if (JSDocErrors.length > 0) {
-				// 	console.log(JSDocErrors.join("\n"));
-				// 	console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
-				// 	throw new Error(`Invalid JSDoc.`);
-				// }
 
-				customElementsManifest.modules?.forEach(m => {
-					m.path = m.path?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
+				const typeReferences = new Set();
+				const registerTypeReference = reference => typeReferences.add(JSON.stringify(reference))
 
-					m.exports?.forEach(e => {
-						if (e.declaration && e.declaration.module)
-							e.declaration.module = e.declaration?.module?.replace(/^src/, "dist").replace(/\.ts$/, ".js");
-					});
+				moduleDoc.declarations.forEach(declaration => {
+					["events", "slots", "members"].forEach(memberType => {
+						declaration[memberType]?.forEach(member => {
+							if (member.type?.references) {
+								member.type.references.forEach(registerTypeReference)
+							} else if (member._ui5type?.references) {
+								member._ui5type.references.forEach(registerTypeReference)
+							} else if (member.kind === "method") {
+								member.return?.type?.references?.forEach(registerTypeReference)
+
+								member.parameters?.forEach(parameter => {
+									parameter.type?.references?.forEach(registerTypeReference)
+								})
+							}
+						})
+					})
+				});
+
+				typeReferences.forEach(reference => {
+					reference = JSON.parse(reference);
+					if (reference.package === packageJSON?.name && reference.module === moduleDoc.path) {
+						const hasExport = moduleDoc.exports.some(e => e.declaration?.name === reference.name && e.declaration?.module === reference.module)
+
+						if (!hasExport) {
+							logDocumentationError(moduleDoc.path?.replace(/^dist/, "src").replace(/\.js$/, ".ts"), `Type '${reference.name}' is used to describe a public API but is not exported.`,)
+						}
+					}
 				})
+			},
+			packageLinkPhase({ context }) {
+				if (context.dev) {
+					displayDocumentationErrors();
+				}
 			}
 		},
 	],

@@ -10,7 +10,8 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
 import type { AccessibilityAttributes } from "./ListItem.js";
-import { IButton, IOption } from "./Interfaces.js";
+import type { IButton } from "./Button.js";
+import type { IOption } from "./Select.js";
 
 /**
  * @class
@@ -58,7 +59,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	declare disabled: boolean;
 
 	/**
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
@@ -78,7 +79,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: `${ListItemType}`;
+	declare type: `${ListItemType}`;
 
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -88,7 +89,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	declare accessibilityAttributes: AccessibilityAttributes;
 
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -98,7 +99,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: Boolean })
-	navigated!: boolean;
+	declare navigated: boolean;
 
 	/**
 	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
@@ -107,7 +108,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@slot()
-	deleteButton!: Array<IButton>;
+	declare deleteButton: Array<IButton>;
 
 	get stableDomRef() {
 		return "";

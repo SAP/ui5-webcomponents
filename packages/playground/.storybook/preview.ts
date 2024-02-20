@@ -36,13 +36,55 @@ export const parameters: Parameters = {
         .replace(/^\s*[\r\n]/gm, ""),
   },
   options: {
-    storySort: {
-      order: [
-        "Docs",
-        "Main",
-        "Fiori"
-      ],
-    },
+    // @ts-ignore
+    storySort: (a, b) => {
+      // Define the sorting order
+      const sortOrder = {
+        "Docs": 1,
+        "Main": 2,
+        "Fiori": 3,
+      };
+
+      const sortSubOrder = ['Overview', 'Basic'];
+
+      // Function to get the order value for a given category
+      // @ts-ignore
+      function getOrder(category) {
+        // @ts-ignore
+        return sortOrder[category] || 4;
+      }
+
+      // Function to get sub-order for 'Main' and 'Fiori'
+      // @ts-ignore
+      function getSubOrder(title) {
+        let index = sortSubOrder.findIndex(keyword => title.endsWith(keyword));
+        return index === -1 ? sortSubOrder.length : index; // Default sub-order for titles not listed or found at the end
+      }
+
+      const aTitle = `${a.title}/${a.name}`;
+      const bTitle = `${b.title}/${b.name}`;
+
+      const partsA = aTitle.split('/');
+      const partsB = bTitle.split('/');
+
+      // Sort by primary category (Docs, Main, Fiori)
+      const orderA = getOrder(partsA[0]);
+      const orderB = getOrder(partsB[0]);
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+
+      // Within 'Main' and 'Fiori', sort by sub-order
+      if (partsA[0] === 'Main' || partsA[0] === 'Fiori') {
+        const subOrderA = getSubOrder(partsA[2]);
+        const subOrderB = getSubOrder(partsB[2]);
+        if (subOrderA !== subOrderB) {
+          return subOrderA - subOrderB;
+        }
+      }
+
+      return 1;
+    }
   },
 };
 
@@ -61,7 +103,7 @@ export const globalTypes: GlobalTypes = {
   rtl: {
     name: "Direction",
     description: "Global rtl mode for components",
-    defaultValue: window["sap-ui-webcomponents-bundle"].configuration.getRTL(),
+    defaultValue: "LTR",
     toolbar: {
       icon: "",
       items: ["LTR", "RTL"],

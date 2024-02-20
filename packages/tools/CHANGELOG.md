@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.1...v1.23.0-rc.2) (2024-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **tools:** fix usage of require in mjs ([#8258](https://github.com/SAP/ui5-webcomponents/issues/8258)) ([cbca059](https://github.com/SAP/ui5-webcomponents/commit/cbca059b926a8a5473d1f13690b6670239aafb8e))
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0) (2024-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+
+### Features
+
+* **illustration:** use illustration name as default module export ([#8074](https://github.com/SAP/ui5-webcomponents/issues/8074)) ([a9c0705](https://github.com/SAP/ui5-webcomponents/commit/a9c07055d4e06e4d1f69b7a2a48b36eb77fae4aa))
+
+
+
+
+
 # [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

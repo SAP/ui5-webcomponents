@@ -24,7 +24,7 @@ import Button from "./Button.js";
 // Types
 import type Select from "./Select.js";
 import type SelectMenuOption from "./SelectMenuOption.js";
-import { IOption } from "./Interfaces.js";
+import type { IOption } from "./Select.js";
 
 type SelectMenuOptionClick = {
 	option: SelectMenuOption,
@@ -74,7 +74,7 @@ type SelectMenuChange = {
 		Button,
 	],
 })
-@event("option-click", {
+@event<SelectMenuOptionClick>("option-click", {
 	detail: {
 		option: { type: HTMLElement },
 		optionIndex: { type: Integer },
@@ -83,7 +83,7 @@ type SelectMenuChange = {
 @event("before-open")
 @event("after-open")
 @event("after-close")
-@event("menu-change", {
+@event<SelectMenuChange>("menu-change", {
 	detail: {
 		text: { type: String },
 		selectedIndex: { type: Integer },

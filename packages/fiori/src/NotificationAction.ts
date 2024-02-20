@@ -16,6 +16,7 @@ type NotificationActionClickEventDetail = {
  *
  * @constructor
  * @extends UI5Element
+ * @abstract
  * @public
  */
 @customElement("ui5-notification-action")
@@ -26,7 +27,7 @@ type NotificationActionClickEventDetail = {
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
-@event("click", {
+@event<NotificationActionClickEventDetail>("click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},

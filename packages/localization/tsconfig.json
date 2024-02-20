@@ -2,7 +2,8 @@
 	"include": ["src/**/*"],
 	"compilerOptions": {
 		"target": "ES2021",
-		// Generate d.ts files
+		"lib": ["DOM", "DOM.Iterable", "ES2023"],
+		  // Generate d.ts files
 		"declaration": true,
 		"outDir": "dist",
 		"skipLibCheck": true,

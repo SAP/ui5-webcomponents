@@ -55,6 +55,20 @@ describe("TabContainer general interaction", () => {
 		await cbPrevent.click();
 	});
 
+	it("tests custom media ranges", async () => {
+		await browser.setWindowSize(520, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "S", "media-range=S");
+
+		await browser.setWindowSize(650, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "M", "media-range=M");
+
+		await browser.setWindowSize(1350, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "L", "media-range=L");
+
+		await browser.setWindowSize(1650, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "XL", "media-range=XL");
+	});
+
 	it("tests if content is scrollable when tabcontainer takes limited height by its parent", async () => {
 		const { tcHeight, tcScrollHeight } = await browser.executeAsync(done => {
 			const scrollableContent = document.getElementById("tc-scrollable-child");
@@ -320,5 +334,87 @@ describe("TabContainer general interaction", () => {
 
 		// Assert
 		assert.ok(productsTabDomRefInStrip.isEqual(productsTabDomRefInStripExpected) , "Tab dom ref in strip should be the first child of the tab container's strip");
+	});
+
+});
+
+describe("TabContainer keyboard handling", () => {
+	before(async () => {
+		await browser.url(`test/pages/TabContainer.html`);
+	});
+
+	it("[Arrow Down] on two-click area tab", async () => {
+		const tabcontainer = await browser.$("#tabContainerNestedTabs");
+		const item = tabcontainer.shadow$$(".ui5-tab-strip-item")[3];
+
+		assert.strictEqual(await item.getProperty("innerText"), "Four", "Correct tab is found");
+
+		await item.click();
+		await item.keys("ArrowDown");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.ok(await popover.isDisplayed(), "Popover is opened");
+	});
+});
+
+describe("TabContainer popover", () => {
+	before(async () => {
+		await browser.url(`test/pages/TabContainer.html`);
+		await browser.setWindowSize(860, 1000);
+	});
+
+	it("tests popover after new tab is inserted", async () => {
+		const tabcontainer = await browser.$("#tabContainerEndOverflow");
+		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		await endOverflow.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItemsCount = await popover.$$("[ui5-li-custom]").length;
+
+		assert.ok(listItemsCount > 0, "There are items in the overflow");
+
+		// Act
+		await browser.executeAsync((done) => {
+			const newTab = document.createElement("ui5-tab");
+			newTab.setAttribute("text", "New Tab");
+			document.getElementById("tabContainerEndOverflow").insertBefore(newTab, null);
+			done();
+		});
+
+		const newListItemsCount = await popover.$$("[ui5-li-custom]").length;
+
+		assert.strictEqual(newListItemsCount, listItemsCount + 1, "Overflow list displays all its items");
+	});
+
+	it("tests popover items indentation", async () => {
+		const tabcontainer = await browser.$("#tabContainerNestedTabs");
+		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		await endOverflow.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const tabAssertions = [
+			{ tabText: "Ten", expectedIndent: 0 },
+			{ tabText: "Ten 1", expectedIndent: 8 },
+			{ tabText: "Ten 1.1", expectedIndent: 16 },
+			{ tabText: "Ten 1.1.1", expectedIndent: 24 },
+			{ tabText: "Ten 1.1.1.1", expectedIndent: 32 }
+		].map(async ({ tabText, expectedIndent}) => {
+			const tab = await popover.$(`[ui5-li-custom]=${tabText}`)
+			const wrapper = await tab.$(".ui5-tab-overflow-itemContent-wrapper")
+			const paddingLeft = await wrapper.getCSSProperty("padding-left");
+
+			console.error("``````````````````",paddingLeft)
+			assert.strictEqual(paddingLeft.parsed.value, expectedIndent, "Tab indentation is correct");
+
+			return paddingLeft.parsed.value;
+		});
+
+		const paddings = await Promise.all(tabAssertions);
+		const sortedPaddings = [...paddings].sort((a, b) => a - b);
+
+		assert.deepEqual(paddings, sortedPaddings, "Indentation hierarchy is correct");
 	});
 });

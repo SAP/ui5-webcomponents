@@ -4,7 +4,7 @@
 	--_ui5_split_button_hover_border_radius: 0;
 	--_ui5_split_button_hover_border_radius: 0;
 	--_ui5_split_button_middle_separator_width: 0;
-	--_ui5_split_button_middle_separator_left: 0;
+	--_ui5_split_button_middle_separator_left: -0.0625rem;
 	--_ui5_split_button_middle_separator_hover_display: block;
 	--_ui5_split_button_text_button_width: 2.25rem;
 	--_ui5_split_button_text_button_right_border_width: 0;
@@ -39,7 +39,7 @@
 	--_ui5_split_text_button_emphasized_border: var(--sapButton_BorderWidth) solid var(--sapButton_Emphasized_BorderColor);
 
 
-	--_ui5_split_text_button_emphasized_border_width: 0.0625rem 0 0.0625rem 0.0625rem;
+	--_ui5_split_text_button_emphasized_border_width: 0.0625rem;
 
 
 	--_ui5_split_text_button_hover_border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
@@ -48,11 +48,6 @@
 	--_ui5_split_text_button_negative_hover_border: var(--sapButton_BorderWidth) solid var(--sapButton_Reject_BorderColor);
 	--_ui5_split_text_button_attention_hover_border: var(--sapButton_BorderWidth) solid var(--sapButton_Attention_BorderColor);
 	--_ui5_split_text_button_transparent_hover_border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
-
-
-	--_--_ui5_split_button_text_button_border_width_rtl: 0.0625rem 0.0625rem 0.0625rem 0;
-
-	--_ui5_split_text_button_emphasized_border_width_rtl: 0.0625rem;
 
 
 	--_ui5_split_arrow_button_hover_border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
@@ -77,21 +72,5 @@
 	--_ui5_split_text_button_attention_hover_border_left: var(--sapButton_BorderWidth) solid var(--sapButton_Attention_BorderColor);
 	--_ui5_split_text_button_transparent_hover_border_left: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 
-	/* RTL */
-
-	--_ui5_split_text_button_hover_border_left_rtl: var(--sapButton_BorderWidth) solid transparent;
-	--_ui5_split_text_button_emphasized_hover_border_left_rtl: var(--sapButton_BorderWidth) solid transparent;
-	--_ui5_split_text_button_positive_hover_border_left_rtl: var(--sapButton_BorderWidth) solid transparent;
-	--_ui5_split_text_button_negative_hover_border_left_rtl: var(--sapButton_BorderWidth) solid transparent;
-	--_ui5_split_text_button_attention_hover_border_left_rtl: var(--sapButton_BorderWidth) solid transparent;
-	--_ui5_split_text_button_transparent_hover_border_left_rtl: var(--sapButton_BorderWidth) solid transparent;
-
-	--_ui5_split_text_button_hover_border_right_rtl: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
-	--_ui5_split_text_button_emphasized_hover_border_right_rtl: var(--sapButton_BorderWidth) solid var(--sapButton_Emphasized_BorderColor);
-	--_ui5_split_text_button_positive_hover_border_right_rtl: var(--sapButton_BorderWidth) solid var(--sapButton_Accept_BorderColor);
-	--_ui5_split_text_button_negative_hover_border_right_rtl: var(--sapButton_BorderWidth) solid var(--sapButton_Reject_BorderColor);
-	--_ui5_split_text_button_attention_hover_border_right_rtl: var(--sapButton_BorderWidth) solid var(--sapButton_Attention_BorderColor);
-	--_ui5_split_text_button_transparent_hover_border_right_rtl: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
-
-	--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl: var(--sapButton_BorderWidth);
+	--_ui5_split_button_middle_separator_hover_display_emphasized: block;
 }

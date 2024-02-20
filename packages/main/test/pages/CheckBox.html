@@ -17,8 +17,8 @@
 
 <body class="checkbox1auto">
 	<ui5-checkbox text="Option"></ui5-checkbox>
-	<ui5-checkbox id="cbError" readonly text="Option"></ui5-checkbox>
-	<ui5-checkbox id="cbError" disabled text="Option"></ui5-checkbox>
+	<ui5-checkbox id="cbReadonly" readonly text="Option"></ui5-checkbox>
+	<ui5-checkbox id="cbDisabled" disabled text="Option"></ui5-checkbox>
 	<ui5-checkbox id="cbError" value-state="Error" text="Option"></ui5-checkbox>
 	<ui5-checkbox id="truncatingCb" text="Long long long text that should truncate at some point" class="checkbox2auto"></ui5-checkbox>
 	<ui5-checkbox text="Long long long text that should truncate at some point"></ui5-checkbox>
@@ -29,6 +29,9 @@
 		<ui5-checkbox checked text="Option B"></ui5-checkbox>
 		<ui5-checkbox text="Option C"></ui5-checkbox>
 		<ui5-checkbox text="Option D"></ui5-checkbox>
+		<ui5-checkbox display-only text="Display only"></ui5-checkbox>
+		<ui5-checkbox display-only checked text="Display only checked"></ui5-checkbox>
+		<ui5-checkbox display-only checked indeterminate text="Display only partially checked"></ui5-checkbox>
 	</div>
 
 	<br><br>
@@ -40,6 +43,7 @@
 	<ui5-title>Change Event Test</ui5-title>
 	<ui5-checkbox id="cb1" text="Long long long text"></ui5-checkbox>
 	<ui5-checkbox id="cb2" disabled></ui5-checkbox>
+	<ui5-checkbox id="displayOnlyCb" display-only></ui5-checkbox>
 	<ui5-input id="field"></ui5-input>
 
 	<br>
@@ -79,10 +83,11 @@
 		var input = document.querySelector("#field");
 		var checkBox1 = document.querySelector("#cb1");
 		var checkBox2 = document.querySelector("#cb2");
+		var displayOnlyCb = document.querySelector("#displayOnlyCb");
 		var cbFormSubmitted = document.querySelector("#cbFormSubmitted");
 		var counter = 0;
 
-		[checkBox1, checkBox2].forEach(function(el) {
+		[checkBox1, checkBox2, displayOnlyCb].forEach(function(el) {
 			el.addEventListener("ui5-change", function(event) {
 				counter += 1;
 				input.value = counter;

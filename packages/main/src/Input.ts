@@ -55,7 +55,8 @@ import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
-import type { IIcon, IInputSuggestionItem } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
+import type ListItemType from "./types/ListItemType.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
@@ -83,6 +84,22 @@ import inputStyles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
+
+/**
+ * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
+ *
+ * @public
+ */
+interface IInputSuggestionItem extends UI5Element {
+	text: string;
+	groupItem: boolean;
+	description?: string;
+	image?: string;
+	icon?: string;
+	additionalText?: string;
+	additionalTextState?: `${ValueState}`;
+	type?: `${ListItemType}`;
+}
 
 type NativeInputAttributes = {
 	min?: number,
@@ -116,7 +133,7 @@ enum INPUT_ACTIONS {
 }
 
 type InputEventDetail = {
-	inputType?: string;
+	inputType: string;
 }
 
 type InputSuggestionItemSelectEventDetail = {
@@ -176,7 +193,6 @@ type InputSuggestionScrollEventDetail = {
  *
  * @constructor
  * @extends UI5Element
- * @implements {IInput}
  * @public
  */
 @customElement({
@@ -213,8 +229,9 @@ type InputSuggestionScrollEventDetail = {
  *
  * @param {HTMLElement} item The selected item.
  * @public
+ * @allowPreventDefault
  */
-@event("suggestion-item-select", {
+@event<InputSuggestionItemSelectEventDetail>("suggestion-item-select", {
 	detail: {
 		/**
 	 	* @public
@@ -232,7 +249,7 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 1.0.0-rc.8
  */
-@event("suggestion-item-preview", {
+@event<InputSuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 	detail: {
 		/**
 	 	* @public
@@ -253,7 +270,7 @@ type InputSuggestionScrollEventDetail = {
  * @protected
  * @since 1.0.0-rc.8
  */
-@event("suggestion-scroll", {
+@event<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 	detail: {
 		/**
 	 	* @public
@@ -462,7 +479,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.2.0
 	 */
 	@property({ type: Boolean })
-	effectiveShowClearIcon!: boolean;
+	_effectiveShowClearIcon!: boolean;
 
 	/**
 	 * @private
@@ -683,7 +700,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.suggestionObjects = this.Suggestions!.defaultSlotProperties(this.typedInValue);
 		}
 
-		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
+		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
@@ -968,7 +985,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this._keepInnerValue = false;
 
-		if (this.showClearIcon && !this.effectiveShowClearIcon) {
+		if (this.showClearIcon && !this._effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
 		}
@@ -1053,7 +1070,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType!)
+			|| (e.detail as InputEventDetail).inputType
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1571,7 +1588,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get iconsCount(): number {
 		const slottedIconsCount = this.icon ? this.icon.length : 0;
-		const clearIconCount = Number(this.effectiveShowClearIcon) ?? 0;
+		const clearIconCount = Number(this._effectiveShowClearIcon) ?? 0;
 		return slottedIconsCount + clearIconCount;
 	}
 
@@ -1774,7 +1791,9 @@ Input.define();
 
 export default Input;
 export type {
+	IInputSuggestionItem,
 	InputSuggestionScrollEventDetail,
 	InputSuggestionItemSelectEventDetail,
 	InputSuggestionItemPreviewEventDetail,
+	InputEventDetail,
 };

@@ -1,8 +1,9 @@
 {
 	"include": ["src/**/*", "src/generated/**/*.json"],
 	"compilerOptions": {
-		"target": "es2022",
-		// Generate d.ts files
+		"target": "ES2021",
+		"lib": ["DOM", "DOM.Iterable", "ES2023"],
+		  // Generate d.ts files
 		"declaration": true,
 		"outDir": "dist",
 		"skipLibCheck": true,

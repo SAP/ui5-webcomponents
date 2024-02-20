@@ -241,26 +241,36 @@ describe("Component Behavior", () => {
 		});
 
 		it("Test overflow behavior when collapsed", async () => {
-
 			await browser.url(`test/pages/SideNavigation.html`);
-			const sideNavigation = await browser.$("#sn1"),
-				sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
+			const sideNavigation = await browser.$("#sn1");
 
 			await sideNavigation.setProperty("collapsed", true);
-			
-	
+
 			// Act: apply new height
-			await browser.setWindowSize(500, 300);
-	
+			await browser.setWindowSize(500, 450);
+
 			// Check
-			const overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
+			let sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
+			let overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
+
+			// Check
+			await overflowItem.waitForDisplayed();
 			assert.ok(await overflowItem.isDisplayed(), "Overflow button should be available");
 
 			// Act: apply new height
 			await browser.setWindowSize(500, 1000);
+			sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
+			overflowItem = await sideNavigationTree.shadow$(".ui5-sn-item-overflow");
 
 			assert.notOk(await overflowItem.isDisplayed(), "Overflow button should not be available");
 
+		});
+
+		it("Tests external link items", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			const items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item");
+
+			assert.ok(await items[4].$(".ui5-sn-item-external-link-icon").isExisting(), "External link icon is rendered");
 		});
 	});
 });

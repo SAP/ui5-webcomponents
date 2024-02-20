@@ -2,25 +2,16 @@ import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs";
 
 import type TreeItemCustom from "@ui5/webcomponents/dist/TreeItemCustom.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-const component = "ui5-tree-item-custom";
-
 export default {
     title: "Main/Tree/Tree Item Custom",
     component: "TreeItemCustom",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true }),
-        },
-    },
     argTypes,
 } as Meta<TreeItemCustom>;
 
@@ -37,6 +28,7 @@ const Template: UI5StoryArgs<TreeItemCustom, StoryArgsSlots> = (args) => html`<u
         navigated="${ifDefined(args.navigated)}"
         type="${ifDefined(args.type)}"
         selected="${ifDefined(args.selected)}"
+		tooltip="${ifDefined(args.tooltip)}"
     >
         ${unsafeHTML(args.content)}
         ${unsafeHTML(args.default)}

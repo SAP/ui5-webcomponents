@@ -21,7 +21,6 @@ import {
 	getFetchDefaultLanguage,
 } from "./dist/config/Language.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
-import { getRTL } from "./dist/config/RTL.js";
 import {
 	getTheme,
 	setTheme,
@@ -138,7 +137,6 @@ export {
 	getFetchDefaultLanguage,
 	getNoConflict,
 	setNoConflict,
-	getRTL,
 	getTheme,
 	setTheme,
 	getDefaultTheme,

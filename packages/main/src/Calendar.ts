@@ -25,6 +25,10 @@ import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import CalendarLegend from "./CalendarLegend.js";
+import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
+import SpecialCalendarDate from "./SpecialCalendarDate.js";
+import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -50,6 +54,11 @@ type CalendarSelectedDatesChangeEventDetail = {
 	dates: Array<number>,
 	timestamp: number | undefined,
 }
+
+type SpecialCalendarDateT = {
+	specialDateTimestamp: number;
+	type: `${CalendarLegendItemType}`;
+};
 
 /**
  * @class
@@ -172,6 +181,7 @@ type CalendarSelectedDatesChangeEventDetail = {
 		DayPicker,
 		MonthPicker,
 		YearPicker,
+		CalendarLegend,
 	],
 })
 /**
@@ -184,7 +194,7 @@ type CalendarSelectedDatesChangeEventDetail = {
  * @param {Array<number>} dates The selected dates as UTC timestamps
  * @public
  */
-@event("selected-dates-change", {
+@event<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", {
 	detail: {
 		/**
 		 * @public
@@ -194,6 +204,8 @@ type CalendarSelectedDatesChangeEventDetail = {
 		 * @public
 		 */
 		values: { type: Array },
+
+		timestamp: { type: Number },
 	},
 })
 
@@ -258,6 +270,14 @@ class Calendar extends CalendarPart {
 	_valueIsProcessed!: boolean
 
 	/**
+	 * Defines the calendar legend of the component.
+	 * @public
+	 * @since 1.23.0
+	 */
+	@slot({ type: HTMLElement })
+	calendarLegend!: Array<CalendarLegend>;
+
+	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
 	 *
@@ -265,6 +285,21 @@ class Calendar extends CalendarPart {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	dates!: Array<CalendarDate>;
+
+	/**
+	 * Defines the special dates, visually emphasized in the calendar.
+	 * @public
+	 * @since 1.23.0
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	specialDates!: Array<SpecialCalendarDate>;
+
+	/**
+	 * Defines the selected item type of the calendar legend item (if such exists).
+	 * @private
+	 */
+	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
+	_selectedItemType!: `${CalendarLegendItemType}`;
 
 	/**
 	 * @private
@@ -282,6 +317,7 @@ class Calendar extends CalendarPart {
 
 		this._valueIsProcessed = false;
 	}
+
 	/**
 	 * @private
 	 */
@@ -300,6 +336,46 @@ class Calendar extends CalendarPart {
 			dateElement.value = value;
 			this.appendChild(dateElement);
 		});
+	}
+
+	_isValidCalendarDate(dateString: string): boolean {
+		const date = this.getFormat().parse(dateString);
+		return !!date;
+	}
+
+	get _specialCalendarDates() {
+		const validSpecialDates = this._specialDates.filter(date => {
+			const dateType = date.type;
+			const dateValue = date.value;
+			const isTypeMatch = this._selectedItemType !== "None" ? dateType === this._selectedItemType : true;
+			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
+		});
+
+		if (validSpecialDates.length === 0) {
+			this._selectedItemType = "None";
+		}
+
+		const uniqueDates = new Set();
+		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
+
+		validSpecialDates.forEach(date => {
+			const dateFromValue = new Date(date.value);
+			const timestamp = dateFromValue.getTime();
+
+			if (!uniqueDates.has(timestamp)) {
+				uniqueDates.add(timestamp);
+				const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
+				const type = date.type;
+				uniqueSpecialDates.push({ specialDateTimestamp, type });
+			}
+		});
+
+		return uniqueSpecialDates;
+	}
+
+	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
+		this._selectedItemType = e.detail.item.type;
+		this._currentPickerDOM._autoFocus = false;
 	}
 
 	/**
@@ -384,6 +460,10 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderPreviousPress() {
 		this._currentPickerDOM._showPreviousPage();
+
+		if (this.calendarLegend) {
+			this._currentPickerDOM._autoFocus = true;
+		}
 	}
 
 	/**
@@ -391,6 +471,10 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderNextPress() {
 		this._currentPickerDOM._showNextPage();
+
+		if (this.calendarLegend) {
+			this._currentPickerDOM._autoFocus = true;
+		}
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
@@ -507,6 +591,14 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	_onLegendFocusOut() {
+		this._selectedItemType = "None";
+	}
+
+	get _specialDates() {
+		return this.getSlottedNodes<SpecialCalendarDate>("specialDates");
+	}
+
 	/**
 	 * Returns an array of UTC timestamps, representing the selected dates.
 	 * @protected
@@ -533,4 +625,5 @@ export default Calendar;
 export type {
 	ICalendarPicker,
 	CalendarSelectedDatesChangeEventDetail,
+	SpecialCalendarDateT,
 };

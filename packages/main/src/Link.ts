@@ -12,6 +12,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import HasPopup from "./types/HasPopup.js";
 
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
@@ -27,6 +28,11 @@ type LinkClickEventDetail = {
 	metaKey: boolean;
 	shiftKey: boolean;
 }
+
+type AccessibilityAttributes = {
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: `${HasPopup}`,
+};
 
 /**
  * @class
@@ -84,7 +90,7 @@ type LinkClickEventDetail = {
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event("click", {
+@event<LinkClickEventDetail>("click", {
 	detail: {
 		/**
 		 * @public
@@ -239,13 +245,13 @@ class Link extends UI5Element implements ITabbable {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
 
 	@property({ noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Indicates if the element is on focus.
@@ -282,8 +288,8 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	get effectiveTabIndex() {
-		if (this._tabIndex) {
-			return this._tabIndex;
+		if (this.forcedTabIndex) {
+			return this.forcedTabIndex;
 		}
 		return (this.disabled || !this.textContent?.length) ? "-1" : "0";
 	}
@@ -313,6 +319,10 @@ class Link extends UI5Element implements ITabbable {
 
 	get effectiveAccRole() {
 		return this.accessibleRole.toLowerCase();
+	}
+
+	get _hasPopup() {
+		return this.accessibilityAttributes.hasPopup?.toLowerCase();
 	}
 
 	static async onDefine() {
@@ -382,4 +392,7 @@ Link.define();
 
 export default Link;
 
-export type { LinkClickEventDetail };
+export type {
+	LinkClickEventDetail,
+	AccessibilityAttributes,
+};

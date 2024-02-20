@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.1...v1.23.0-rc.2) (2024-02-20)
+
+
+### Features
+
+* **ui5-li:** add tooltip support to list items ([#8301](https://github.com/SAP/ui5-webcomponents/issues/8301)) ([1bbf381](https://github.com/SAP/ui5-webcomponents/commit/1bbf38134dde26257bf95847ca9ab416ba7ab7ee)), closes [#7372](https://github.com/SAP/ui5-webcomponents/issues/7372)
+
+
+
+
+
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** improved story and documentation ([#8294](https://github.com/SAP/ui5-webcomponents/issues/8294)) ([9740fe2](https://github.com/SAP/ui5-webcomponents/commit/9740fe21baa34233a66a4aea02f261fe1f5992f2))
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Features
+
+* **ui5-calendar-legend:** introduce ui5-calendar-legend component ([#7706](https://github.com/SAP/ui5-webcomponents/issues/7706)) ([909a602](https://github.com/SAP/ui5-webcomponents/commit/909a6028362b55e26fdb5ca7a1ed68c8c6197a6b))
+* **ui5-side-navigation:** add external link icon ([#8199](https://github.com/SAP/ui5-webcomponents/issues/8199)) ([47e28c5](https://github.com/SAP/ui5-webcomponents/commit/47e28c5c50c824dfb743b79998c4d98f56be4beb))
+
+
+
+
+
+## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.22.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0) (2024-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+
+### Features
+
+* **ui5-shellbar:** introducing Joule ([#8036](https://github.com/SAP/ui5-webcomponents/issues/8036)) ([ed5c20f](https://github.com/SAP/ui5-webcomponents/commit/ed5c20ffb42dd5f3eb81f77819fd40a9f7abbe08))
+
+
+
+
+
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 # [1.22.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.21.0...v1.22.0-rc.0) (2024-01-11)
 
 

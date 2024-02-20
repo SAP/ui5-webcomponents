@@ -5,23 +5,14 @@ import type { Meta } from "@storybook/web-components";
 
 import type ToolbarSeparator from "@ui5/webcomponents/dist/ToolbarSeparator.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs.js";
-
-const component = "ui5-toolbar-separator";
 
 export default {
 	title: "Main/Toolbar/Toolbar Separator",
 	component: "ToolbarSeparator",
 	argTypes,
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 } as Meta<ToolbarSeparator>;
 
 const Template: UI5StoryArgs<ToolbarSeparator, StoryArgsSlots> = (args) => {

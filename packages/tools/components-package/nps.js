@@ -12,7 +12,7 @@ const getScripts = (options) => {
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
 	const tsOption = options.typescript;
 	const tsCommandOld = tsOption ? "tsc" : "";
@@ -135,13 +135,13 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: `nps ${ tsOption ? "generateAPI.generateCEM generateAPI.validateCEM" : "generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest"}`,
-			generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
-			validateCEM: `node "${LIB}/cem/validate.js"`,
+			default: `nps ${ tsOption ? "generateAPI.generateCEM generateAPI.validateCEM" : "generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest generateAPI.validateCEM"}`,
+			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
+			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
 			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
 			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
 			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
-			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
+			jsdoc: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 			cleanup: "rimraf jsdoc-dist/"
 		},
 	};

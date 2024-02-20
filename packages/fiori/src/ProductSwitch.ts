@@ -2,6 +2,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -23,7 +24,20 @@ import {
 
 // Styles
 import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
-import type IProductSwitchItem from "./ProductSwitchItem.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-product-switch</code> as items
+ *
+ * @public
+ */
+interface IProductSwitchItem extends HTMLElement, ITabbable {
+	titleText: string,
+	subtitleText: string,
+	icon: string,
+	target: string,
+	targetSrc: string,
+	selected: boolean,
+}
 
 /**
  * @class
@@ -179,3 +193,7 @@ class ProductSwitch extends UI5Element {
 ProductSwitch.define();
 
 export default ProductSwitch;
+
+export type {
+	IProductSwitchItem,
+};

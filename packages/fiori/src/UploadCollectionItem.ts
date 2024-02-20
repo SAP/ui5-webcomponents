@@ -30,7 +30,7 @@ import {
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type { IUploadCollectionItem } from "./Interfaces.js";
+import type { IUploadCollectionItem } from "./UploadCollection.js";
 
 // Template
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
@@ -153,7 +153,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * @public
 	 */
 	@property({ type: Boolean, noAttribute: false })
-	disableDeleteButton!: boolean;
+	declare disableDeleteButton: boolean;
 
 	/**
 	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.

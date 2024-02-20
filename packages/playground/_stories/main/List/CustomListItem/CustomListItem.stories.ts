@@ -5,22 +5,13 @@ import type { Meta, StoryFn } from "@storybook/web-components";
 
 import type CustomListItem from "@ui5/webcomponents/dist/CustomListItem.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-
-import { DocsPage } from "../../../../.storybook/docs.js";
-
-const component = "ui5-li-custom";
 
 export default {
   title: "Main/List/Custom List Item",
   component: "CustomListItem",
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-    },
-  },
   argTypes,
 } as Meta<CustomListItem>;
 
@@ -32,6 +23,7 @@ const Template: UI5StoryArgs<CustomListItem, StoryArgsSlots> = (args) => {
       ?navigated="${ifDefined(args.navigated)}"
       type="${ifDefined(args.type)}"
       ?selected="${ifDefined(args.selected)}"
+	  tooltip="${ifDefined(args.tooltip)}"
     >
       ${unsafeHTML(args.default)}
       ${unsafeHTML(args.deleteButton)}

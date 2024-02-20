@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import "@ui5/webcomponents-base/dist/ssr-dom.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata, {
@@ -338,9 +340,9 @@ abstract class UI5Element extends HTMLElement {
 				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
 
 				if (shouldWaitForCustomElement) {
-					const isDefined = window.customElements.get(localName);
+					const isDefined = customElements.get(localName);
 					if (!isDefined) {
-						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
 						let timeoutPromise = elementTimeouts.get(localName);
 						if (!timeoutPromise) {
 							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
@@ -348,7 +350,7 @@ abstract class UI5Element extends HTMLElement {
 						}
 						await Promise.race([whenDefinedPromise, timeoutPromise]);
 					}
-					window.customElements.upgrade(child);
+					customElements.upgrade(child);
 				}
 			}
 
@@ -1131,14 +1133,14 @@ abstract class UI5Element extends HTMLElement {
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = isTagRegistered(tag);
-		const definedGlobally = window.customElements.get(tag);
+		const definedGlobally = customElements.get(tag);
 
 		if (definedGlobally && !definedLocally) {
 			recordTagRegistrationFailure(tag);
 		} else if (!definedGlobally) {
 			this._generateAccessors();
 			registerTag(tag);
-			window.customElements.define(tag, this as unknown as CustomElementConstructor);
+			customElements.define(tag, this as unknown as CustomElementConstructor);
 			preloadLinks(this);
 		}
 		return this;

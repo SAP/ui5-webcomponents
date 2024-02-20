@@ -123,7 +123,7 @@ type CarouselNavigateEventDetail = {
  * @public
  * @since 1.0.0-rc.7
  */
-@event("navigate", {
+@event<CarouselNavigateEventDetail>("navigate", {
 	detail: {
 		/**
 		 * @public

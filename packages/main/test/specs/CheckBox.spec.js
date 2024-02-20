@@ -1,4 +1,8 @@
 import { assert } from "chai";
+const KEYS = {
+	ENTER: '\uE007',
+	SPACE: '\ue00D',
+}
 
 describe("CheckBox general interaction", () => {
 	before(async () => {
@@ -22,8 +26,45 @@ describe("CheckBox general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should be fired 3 times");
 	});
 
+	it("tests readonly space and enter keys active state", async () => {
+		const checkBox = await browser.$("#cbReadonly");
+
+		await checkBox.click(); // force focus
+
+		// Setup for SPACE Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.SPACE }],
+			}]);
+		// Action
+		assert.strictEqual(await checkBox.getAttribute("active"), null, "Space doesn't trigger active attr");
+		await browser.releaseActions();
+
+		// Setup for ENTER Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.ENTER }],
+			}]);
+		// Action
+		assert.strictEqual(await checkBox.getAttribute("active"), null, "Enter doesn't trigger active attr");
+		await browser.releaseActions();
+	});
+
 	it("tests change event not fired, when disabled", async () => {
 		const checkBox = await browser.$("#cb2");
+		const field = await browser.$("#field");
+
+		await checkBox.click();
+		await checkBox.keys("Space");
+		await checkBox.keys("Enter");
+
+		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more");
+	});
+
+	it("tests change events not fired when displayOnly", async () => {
+		const checkBox = await browser.$("#displayOnlyCb");
 		const field = await browser.$("#field");
 
 		await checkBox.click();
@@ -104,5 +145,40 @@ describe("CheckBox general interaction", () => {
 		await submitButton.click();
 
 		assert.strictEqual(await browser.$("#cbFormSubmitted").getValue(), "true", "Form is submitted");
+	});
+
+	it("tests displayOnly mode - checkbox cannot be toggled", async () => {
+		const checkBox = await browser.$("#displayOnlyCb");
+		const initialCheck = await checkBox.getProperty("checked");
+
+		await checkBox.click();
+
+		assert.strictEqual(await checkBox.getProperty("checked"), initialCheck, "Checkbox state should not be changed");
+	});
+
+	it("tests displayOnly mode - checkbox is not focusable", async () => {
+		const checkBox = await browser.$("#displayOnlyCb");
+
+		await checkBox.click();
+
+		assert.strictEqual(await checkBox.isFocused(), false, "Checkbox should not be focusable");
+	});
+
+	it("tests displayOnly mode - checkbox is not in the tab chain", async () => {
+		const checkbox = await browser.$("#displayOnlyCb").shadow$(".ui5-checkbox-root");
+		assert.strictEqual(await checkbox.getAttribute("tabindex"), null, "Checkbox should not be in the tab chain");
+	});
+
+	it("tests displayOnly mode - displays the correct icon", async () => {
+		const checkBox = await browser.$("#displayOnlyCb");
+		const icon = await checkBox.shadow$("ui5-icon");
+
+		assert.strictEqual(await icon.getAttribute("name"), "border", "Displays the correct icon for not checked");
+
+		await checkBox.setAttribute("checked", "true");
+		assert.strictEqual(await icon.getAttribute("name"), "complete", "Displays the correct icon for checked");
+
+		await checkBox.setAttribute("indeterminate", "true");
+		assert.strictEqual(await icon.getAttribute("name"), "tri-state", "Displays the correct icon for indeterminate checked");
 	});
 });

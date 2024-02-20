@@ -925,13 +925,13 @@ describe("Input general interaction", () => {
 		const changeCounter = await $("#clear-input-change-event-count");
 		const inputCounter = await $("#clear-input-input-event-count");
 
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should not be shown");
 
 		// type
 		await innerInput.click();
 		await innerInput.keys("a");
 
-		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
 		assert.strictEqual(await inputCounter.getText(), "1", "Input event called when typing");
 
@@ -941,7 +941,7 @@ describe("Input general interaction", () => {
 		await clearIcon.click();
 
 		assert.strictEqual(await input.getProperty("value"), "", "Clear icon clear the value");
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should not be shown");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should not be shown");
 		assert.strictEqual(await changeCounter.getText(), "0", "Change event should not be called on clearIcon click");
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when typing or clear action is done");
 	});
@@ -1010,16 +1010,16 @@ describe("Input general interaction", () => {
 		const disable = await $("#clear-icon-disabled-toggle");
 
 		await readonly.click();
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
 
 		await readonly.click();
-		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 
 		await disable.click();
-		assert.notOk(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be not be shown when disabled");
+		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be not be shown when disabled");
 
 		await disable.click();
-		assert.ok(await input.getProperty("effectiveShowClearIcon"), "Clear icon should be shown");
+		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 	});
 
 	it("Should open suggestions popover if openPicker() is called on focusin", async () => {

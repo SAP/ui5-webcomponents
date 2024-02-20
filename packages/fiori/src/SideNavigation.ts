@@ -63,10 +63,8 @@ type PopupClickEventDetail = {
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
 type NavigationMenuClickEventDetail = {
-	detail: {
-		item: {
-			associatedItem: SideNavigationItemBase
-		}
+	item: {
+		associatedItem: SideNavigationItemBase
 	}
 };
 
@@ -134,7 +132,7 @@ type NavigationMenuClickEventDetail = {
  * @allowPreventDefault
  * @public
  */
-@event("selection-change", {
+@event<SideNavigationSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -199,6 +197,12 @@ class SideNavigation extends UI5Element {
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems!: Array<HTMLElement>;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isTouchDevice!: boolean;
+
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -222,7 +226,7 @@ class SideNavigation extends UI5Element {
 
 	_handleResizeBound: () => void;
 
-	async _onAfterOpen() {
+	async _onAfterPopoverOpen() {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
@@ -233,6 +237,33 @@ class SideNavigation extends UI5Element {
 		} else {
 			tree.items[0]?.focus();
 		}
+	}
+
+	async _onAfterMenuClose() {
+		const selectedItem = this._findSelectedItem(this.items)!;
+
+		await renderFinished();
+		selectedItem.getDomRef().focus();
+	}
+
+	async _onBeforePopoverOpen() {
+		const popover = await this.getPicker();
+		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
+	}
+
+	async _onBeforePopoverClose() {
+		const popover = await this.getPicker();
+		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
+	}
+
+	async _onBeforeMenuOpen() {
+		const popover = await this.getOverflowPopover();
+		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
+	}
+
+	async _onBeforeMenuClose() {
+		const popover = await this.getOverflowPopover();
+		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -252,7 +283,7 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	handlePopupItemClick(e: PopupClickEventDetail) {
+	async handlePopupItemClick(e: PopupClickEventDetail) {
 		const associatedItem = e.target.associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -263,9 +294,12 @@ class SideNavigation extends UI5Element {
 
 		this._selectItem(associatedItem);
 		this.closePicker();
+
+		await renderFinished();
+		this._popoverContents.item.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	handleOverflowItemClick(e: NavigationMenuClickEventDetail) {
+	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -296,14 +330,19 @@ class SideNavigation extends UI5Element {
 	}
 
 	async openPicker(opener: HTMLElement) {
+		opener.classList.add("ui5-sn-item-active");
+
 		const responsivePopover = await this.getPicker();
+		responsivePopover.opener = opener;
 		responsivePopover.showAt(opener);
 	}
 
 	async openOverflowMenu(opener: HTMLElement) {
+		opener.classList.add("ui5-sn-item-active");
+
 		const menu = await this.getOverflowPopover();
-		menu.showAt(opener);
 		menu.opener = opener;
+		menu.showAt(opener);
 	}
 
 	async closePicker() {
@@ -340,9 +379,6 @@ class SideNavigation extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-sn-phone": isPhone(),
-				"ui5-sn-tablet": isTablet(),
-				"ui5-sn-combi": isCombi(),
 				"ui5-sn-collapsed": this.collapsed,
 				"ui5-sn-in-popover": this._inPopover,
 			},
@@ -357,7 +393,7 @@ class SideNavigation extends UI5Element {
 		if (!this._overflowDom) {
 			return this.getEnabledItems(this.items);
 		}
-		this._overflowDom._tabIndex = "0";
+
 		return [...this.getEnabledItems(this.items), this._overflowDom];
 	}
 
@@ -422,6 +458,8 @@ class SideNavigation extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+
+		this.isTouchDevice = isPhone() || (isTablet() && !isCombi());
 	}
 
 	onExitDOM() {
@@ -493,9 +531,9 @@ class SideNavigation extends UI5Element {
 		let focusedItem;
 
 		if (this.collapsed) {
-			focusedItem = items.find(item => item._tabIndex === "0");
+			focusedItem = items.find(item => item.forcedTabIndex === "0");
 		} else {
-			focusedItem = this._getWithNestedItems(items, true).find(item => item._tabIndex === "0");
+			focusedItem = this._getWithNestedItems(items, true).find(item => item.forcedTabIndex === "0");
 		}
 
 		return focusedItem;
@@ -527,7 +565,7 @@ class SideNavigation extends UI5Element {
 		return selectedItem;
 	}
 
-	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {
+	_handleItemClick(e: KeyboardEvent | PointerEvent | CustomEvent<NavigationMenuClickEventDetail>, item: SideNavigationItemBase) {
 		if (item.selected && !this.collapsed) {
 			item.fireEvent("click");
 			return;
@@ -569,13 +607,6 @@ class SideNavigation extends UI5Element {
 			}
 		});
 		return result;
-	}
-
-	async _afterMenuClose() {
-		const selectedItem = this._findSelectedItem(this.items)!;
-
-		await renderFinished();
-		selectedItem.getDomRef().focus();
 	}
 
 	_selectItem(item: SideNavigationItemBase) {

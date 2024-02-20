@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SuggestionListItem from "./SuggestionListItem.js";
 import ListItemType from "./types/ListItemType.js";
-import type { IInputSuggestionItem } from "./Interfaces.js";
+import type { IInputSuggestionItem } from "./Input.js";
 
 /**
  * @class
@@ -100,8 +100,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the state of the <code>additionalText</code>.
-	 * <br><br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
 	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.15

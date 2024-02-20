@@ -55,13 +55,27 @@ import {
 	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
-import type { ITableRow } from "./Interfaces.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
+
+/**
+ * Interface for components that may be slotted inside a <code>ui5-table</code> as rows
+ *
+ * @public
+ */
+interface ITableRow extends HTMLElement, ITabbable {
+	mode: `${TableMode}`,
+	selected: boolean,
+	forcedBusy: boolean,
+	forcedAriaPosition: string,
+	_columnsInfoString: string,
+	_columnsInfo: Array<TableColumnInfo>,
+	tabbableElements: Array<HTMLElement>,
+}
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -177,7 +191,7 @@ enum TableFocusTargetElement {
 * @param {HTMLElement} row the activated row.
 * @public
 */
-@event("row-click", {
+@event<TableRowClickEventDetail>("row-click", {
 	detail: {
 		/**
 		* @public
@@ -193,7 +207,7 @@ enum TableFocusTargetElement {
 * @since 1.0.0-rc.6
 * @public
 */
-@event("popin-change", {
+@event<TablePopinChangeEventDetail>("popin-change", {
 	detail: {
 		/**
 		* @public
@@ -223,7 +237,7 @@ enum TableFocusTargetElement {
 * @public
 * @since 1.0.0-rc.15
 */
-@event("selection-change", {
+@event<TableSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -474,6 +488,7 @@ class Table extends UI5Element {
 	visibleColumnsCount?: number;
 	lastFocusedElement: HTMLElement | null;
 	growingIntersectionObserver?: IntersectionObserver | null;
+	initialIntersection: boolean;
 
 	_forwardingFocus: boolean;
 	_prevNestedElementIndex: number;
@@ -487,10 +502,10 @@ class Table extends UI5Element {
 		super();
 
 		this.visibleColumns = []; // template loop should always have a defined array
-		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
+		// The ItemNavigation requires each item to 1) have a "forcedTabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
 		this._columnHeader = {
 			id: `${this._id}-columnHeader`,
-			_tabIndex: "0",
+			forcedTabIndex: "0",
 		};
 
 		this._itemNavigation = new ItemNavigation(this, {
@@ -514,6 +529,10 @@ class Table extends UI5Element {
 
 		// Stores the last focused nested element index (within a table row) for F7 navigation.
 		this._prevNestedElementIndex = 0;
+
+		// Indicates the Table bottom most part has been detected by the IntersectionObserver
+		// for the first time.
+		this.initialIntersection = true;
 	}
 
 	onBeforeRendering() {
@@ -528,8 +547,8 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
-			row._busy = this.busy;
+			row.forcedAriaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
+			row.forcedBusy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
@@ -801,12 +820,12 @@ class Table extends UI5Element {
 	 */
 	_handleF7(e: CustomEvent<TableRowF7PressEventDetail>) {
 		const row = e.detail.row;
-		row._tabbables = getTabbableElements(row);
+		row.tabbableElements = getTabbableElements(row);
 		const activeElement = getActiveElement();
-		const lastFocusedElement = row._tabbables[this._prevNestedElementIndex] || row._tabbables[0];
-		const targetIndex = row._tabbables.indexOf(activeElement as HTMLElement);
+		const lastFocusedElement = row.tabbableElements[this._prevNestedElementIndex] || row.tabbableElements[0];
+		const targetIndex = row.tabbableElements.indexOf(activeElement as HTMLElement);
 
-		if (!row._tabbables.length) {
+		if (!row.tabbableElements.length) {
 			return;
 		}
 
@@ -955,6 +974,11 @@ class Table extends UI5Element {
 	}
 
 	onInteresection(entries: Array<IntersectionObserverEntry>) {
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
+		}
+
 		if (entries.some(entry => entry.isIntersecting)) {
 			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
 		}

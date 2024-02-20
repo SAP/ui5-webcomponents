@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -15,13 +15,22 @@ import {
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonMode from "./types/SegmentedButtonMode.js";
-import type { ISegmentedButtonItem } from "./Interfaces.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
 
 // Styles
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
+ *
+ * @public
+ */
+interface ISegmentedButtonItem extends UI5Element, ITabbable {
+	disabled: boolean,
+	pressed: boolean,
+}
 
 type SegmentedButtonSelectionChangeEventDetail = {
 	selectedItem: ISegmentedButtonItem,
@@ -63,7 +72,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
  * @public
  */
-@event("selection-change", {
+@event<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -291,4 +300,5 @@ SegmentedButton.define();
 export default SegmentedButton;
 export type {
 	SegmentedButtonSelectionChangeEventDetail,
+	ISegmentedButtonItem,
 };

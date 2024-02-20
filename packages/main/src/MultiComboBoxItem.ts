@@ -22,7 +22,7 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	declare selected: boolean;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

@@ -224,7 +224,7 @@
 	height: var(--_ui5_checkbox_partially_icon_size);
 }
 
-.ui5-checkbox-inner input {
+:host input {
 	-webkit-appearance: none;
 	visibility: hidden;
 	width: 0;
@@ -253,4 +253,21 @@
 	transform: translate(-50%, -50%);
 }
 
+/* Display only mode */
+:host([display-only]) {
+	cursor: default;
+}
 
+:host([display-only]) .ui5-checkbox-display-only-icon-inner [ui5-icon] {
+	color: var(--sapTextColor);
+}
+
+:host([display-only]) .ui5-checkbox-display-only-icon-inner {
+	min-width: var(--_ui5_checkbox_inner_width_height);
+	max-width: var(--_ui5_checkbox_inner_width_height);
+	height: var(--_ui5_checkbox_inner_width_height);
+	max-height: var(--_ui5_checkbox_inner_width_height);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

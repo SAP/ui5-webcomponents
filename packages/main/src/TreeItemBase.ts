@@ -10,6 +10,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
+import type HasPopup from "./types/HasPopup.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -23,8 +24,6 @@ import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
-
-import HasPopup from "./types/HasPopup.js";
 
 type TreeItemBaseEventDetail = {
 	item: TreeItemBase,
@@ -59,7 +58,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the toggled item.
  * @protected
  */
-@event("toggle", {
+@event<TreeItemBaseToggleEventDetail>("toggle", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -71,7 +70,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
-@event("step-in", {
+@event<TreeItemBaseStepInEventDetail>("step-in", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -83,7 +82,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
-@event("step-out", {
+@event<TreeItemBaseStepOutEventDetail>("step-out", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -143,7 +142,7 @@ class TreeItemBase extends ListItem {
 	* @since 1.1.0
 	*/
 	@property({ type: Boolean })
-	indeterminate!: boolean;
+	declare indeterminate: boolean;
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
@@ -177,30 +176,21 @@ class TreeItemBase extends ListItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleName!: string;
+	declare accessibleName: string;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	_setsize!: number;
+	forcedSetsize!: number;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	_posinset!: number;
-
-	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ type: String, defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
+	forcedPosinset!: number;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -210,14 +200,6 @@ class TreeItemBase extends ListItem {
 	 */
 	@property({ type: Boolean })
 	_fixed!: boolean;
-
-	/**
-	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @since 1.10.0
-	 * @private
-	 */
-	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: `${HasPopup}`;
 
 	/**
 	 * Defines the items of the component.
@@ -281,13 +263,12 @@ class TreeItemBase extends ListItem {
 			role: "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
-			posinset: this._posinset,
-			setsize: this._setsize,
+			posinset: this.forcedPosinset,
+			setsize: this.forcedSetsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
-			ariaHaspopup: this.ariaHaspopup || undefined,
-			ariaSelected: this.selected,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };

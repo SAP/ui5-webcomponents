@@ -8,7 +8,6 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
-	isEnter,
 	isSpace,
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -29,7 +28,6 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
-import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
@@ -52,10 +50,6 @@ type BreadcrumbsItemClickEventDetail = {
 	ctrlKey: boolean;
 	metaKey: boolean;
 	shiftKey: boolean;
-}
-
-type FocusAdaptor = ITabbable & {
-	getlabelWrapper: () => Element | null;
 }
 
 /**
@@ -101,7 +95,6 @@ type FocusAdaptor = ITabbable & {
 	dependencies: [
 		BreadcrumbsItem,
 		Link,
-		Label,
 		ResponsivePopover,
 		List,
 		StandardListItem,
@@ -121,7 +114,7 @@ type FocusAdaptor = ITabbable & {
  * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  * @public
  */
-@event("item-click", {
+@event<BreadcrumbsItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public
@@ -194,7 +187,6 @@ class Breadcrumbs extends UI5Element {
 	// the width of the interactive element that opens the overflow
 	_dropdownArrowLinkWidth = 0;
 	responsivePopover?: ResponsivePopover;
-	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -206,19 +198,6 @@ class Breadcrumbs extends UI5Element {
 		});
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
-
-		this._labelFocusAdaptor = {
-			id: `${this._id}-labelWrapper`,
-			getlabelWrapper: this.getCurrentLocationLabelWrapper.bind(this),
-			set _tabIndex(value: string) {
-				const wrapper = this.getlabelWrapper();
-				wrapper && wrapper.setAttribute("tabindex", value);
-			},
-			get _tabIndex() {
-				const wrapper = this.getlabelWrapper();
-				return wrapper?.getAttribute("tabindex") || "";
-			},
-		};
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
@@ -275,16 +254,11 @@ class Breadcrumbs extends UI5Element {
 			items.unshift(this._dropdownArrowLink);
 		}
 
-		if (this._endsWithCurrentLocationLabel) {
-			items.push(this._labelFocusAdaptor);
-		}
 		return items;
 	}
 
 	_onfocusin(e: FocusEvent) {
-		const target = e.target,
-			labelWrapper = this.getCurrentLocationLabelWrapper(),
-			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target as Link;
+		const currentItem = e.target as Link;
 
 		this._itemNavigation.setCurrentItem(currentItem);
 	}
@@ -299,10 +273,6 @@ class Breadcrumbs extends UI5Element {
 		}
 		if (isSpace(e) && isDropdownArrowFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
 			e.preventDefault();
-			return;
-		}
-		if ((isEnter(e) || isSpace(e)) && this._isCurrentLocationLabelFocused) {
-			this._onLabelPress(e);
 		}
 	}
 
@@ -318,19 +288,12 @@ class Breadcrumbs extends UI5Element {
 	 */
 	_cacheWidths() {
 		const map = this._breadcrumbItemWidths,
-			items = this._getItems(),
-			label = this._currentLocationLabel;
+			items = this._getItems();
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
 				link = this.shadowRoot!.querySelector<HTMLElement>(`#${item._id}-link-wrapper`)!;
 			map.set(item, this._getElementWidth(link));
-		}
-
-		if (items.length && this._endsWithCurrentLocationLabel && label) {
-			const item = items[items.length - 1];
-
-			map.set(item, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
@@ -373,7 +336,7 @@ class Breadcrumbs extends UI5Element {
 		// if the last focused link has done into the overflow =>
 		// ensure the first visible link is focusable
 		const focusableItems = this._getFocusableItems();
-		if (!focusableItems.some(x => x._tabIndex === "0")) {
+		if (!focusableItems.some(x => x.forcedTabIndex === "0")) {
 			this._itemNavigation.setCurrentItem(focusableItems[0]);
 		}
 	}
@@ -413,26 +376,12 @@ class Breadcrumbs extends UI5Element {
 			shiftKey,
 		}, true)) {
 			e.preventDefault();
+			return;
 		}
-	}
 
-	_onLabelPress(e: MouseEvent | KeyboardEvent) {
-		const items = this._getItems(),
-			item = items[items.length - 1],
-			{
-				altKey,
-				ctrlKey,
-				metaKey,
-				shiftKey,
-			} = e;
-
-		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
-			item,
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
-		});
+		if (item._isCurrentPageItem) {
+			window.location.reload();
+		}
 	}
 
 	_onOverflowListItemSelect(e: CustomEvent<ListSelectionChangeEventDetail>) {
@@ -505,42 +454,18 @@ class Breadcrumbs extends UI5Element {
 		return text;
 	}
 
-	getCurrentLocationLabelWrapper() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-breadcrumbs-current-location > span");
-	}
-
 	get _visibleItems() {
 		return this._getItems()
 			.slice(this._overflowSize)
 			.filter(i => this._isItemVisible(i));
 	}
 
-	get _endsWithCurrentLocationLabel() {
+	get _endsWithCurrentPageItem() {
 		return this.design === BreadcrumbsDesign.Standard;
 	}
 
-	get _currentLocationText() {
-		const items = this._getItems();
-		if (this._endsWithCurrentLocationLabel && items.length) {
-			const item = items[items.length - 1];
-			if (this._isItemVisible(item)) {
-				return item.innerText;
-			}
-		}
-		return "";
-	}
-
-	get _currentLocationLabel() {
-		return this.shadowRoot!.querySelector<Label>(".ui5-breadcrumbs-current-location [ui5-label]");
-	}
-
 	get _isDropdownArrowFocused() {
-		return this._dropdownArrowLink._tabIndex === "0";
-	}
-
-	get _isCurrentLocationLabelFocused() {
-		const label = this.getCurrentLocationLabelWrapper();
-		return label && label.tabIndex === 0;
+		return this._dropdownArrowLink.forcedTabIndex === "0";
 	}
 
 	/**
@@ -576,39 +501,14 @@ class Breadcrumbs extends UI5Element {
 	 */
 	get _linksData() {
 		const items = this._visibleItems;
-		const itemsCount = items.length; // get size before removing of current location
-
-		if (this._endsWithCurrentLocationLabel) {
-			items.pop();
-		}
+		const itemsCount = items.length;
 
 		return items
 			.map((item, index) => {
 				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);
+				item._isCurrentPageItem = index === (itemsCount - 1) && this._endsWithCurrentPageItem;
 				return item;
 			});
-	}
-
-	/**
-	 * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
-	 */
-	get _currentLocationAccName() {
-		const items = this._visibleItems;
-
-		const positionText = this._getItemPositionText(items.length, items.length);
-		const lastItem = items[items.length - 1];
-
-		if (!lastItem) {
-			return positionText;
-		}
-
-		const lastItemText = lastItem.textContent || "";
-
-		if (lastItem.accessibleName) {
-			return `${lastItemText.trim()} ${lastItem.accessibleName} ${positionText}`;
-		}
-
-		return `${lastItemText.trim()} ${positionText}`;
 	}
 
 	/**

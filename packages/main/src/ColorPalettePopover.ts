@@ -22,9 +22,8 @@ import Button from "./Button.js";
 import Title from "./Title.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
-import type { ColorPaletteItemClickEventDetail } from "./ColorPalette.js";
+import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
-import { IColorPaletteItem } from "./Interfaces.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -73,7 +72,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  * @public
  * @param {string} color the selected color
  */
-@event("item-click", {
+@event<ColorPalettePopoverItemClickEventDetail>("item-click", {
 	detail: {
 		/**
 		 * @public

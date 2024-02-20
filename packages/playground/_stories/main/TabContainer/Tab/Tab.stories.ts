@@ -2,23 +2,15 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
-import { DocsPage } from "../../../../.storybook/docs.js";
 import type Tab from "@ui5/webcomponents/dist/Tab.js";
 import TabLayout from "@ui5/webcomponents/dist/types/TabLayout.js";
-
-const component = "ui5-tab";
 
 export default {
 	title: "Main/Tab Container/Tab",
 	component: "Tab",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<Tab>;
 

@@ -59,6 +59,7 @@ type TimePickerEntityProperties = {
 	showInnerCircle?: boolean,
 	prependZero: boolean,
 	active?: boolean,
+	focused?: boolean,
 	hasSeparator?: boolean,
 	attributes?: TimePickerEntityAttributes,
 }
@@ -86,7 +87,7 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
 /**
  * Fired when the value changes due to user interaction with the sliders.
  */
-@event("change", {
+@event<TimeSelectionChangeEventDetail>("change", {
 	detail: {
 		value: { type: String },
 		valid: { type: Boolean },

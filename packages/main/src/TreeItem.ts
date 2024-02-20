@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TreeItemBase from "./TreeItemBase.js";
 // Template
 import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";
@@ -51,17 +50,6 @@ class TreeItem extends TreeItemBase {
 	 */
 	@property()
 	additionalText!: string;
-
-	/**
-	 * Defines the state of the <code>additionalText</code>.
-	 * <br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-	 * @default "None"
-	 * @public
-	 * @since 1.0.0-rc.15
-	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: `${ValueState}`;
 
 	get _showTitle() {
 		return this.text.length;
