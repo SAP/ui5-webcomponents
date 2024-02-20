@@ -476,16 +476,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	handleResize() {
-		const domRef = this.getDomRef(),
-			overflowItemRef = domRef?.querySelector(".ui5-sn-item-overflow");
-
 		this._updateOverflowItems();
-
-		if (this._getOverflowItems().length > 0 && this.collapsed) {
-			overflowItemRef?.classList.remove("ui5-sn-item-hidden");
-		} else {
-			overflowItemRef?.classList.add("ui5-sn-item-hidden");
-		}
 	}
 
 	_updateOverflowItems() {
@@ -494,13 +485,13 @@ class SideNavigation extends UI5Element {
 			return null;
 		}
 
-		const overflowItemRef = this._overflowItem!;
+		const overflowItem = this._overflowItem!;
 		const flexibleContentDomRef : HTMLElement = domRef.querySelector(".ui5-sn-flexible")!;
-		if (!overflowItemRef) {
+		if (!overflowItem) {
 			return null;
 		}
 
-		overflowItemRef.classList.add("ui5-sn-item-hidden");
+		overflowItem.classList.add("ui5-sn-item-hidden");
 
 		const overflowItems = this.overflowItems;
 
@@ -512,28 +503,43 @@ class SideNavigation extends UI5Element {
 		const { paddingTop, paddingBottom } = window.getComputedStyle(flexibleContentDomRef);
 		const listHeight = flexibleContentDomRef?.offsetHeight - parseInt(paddingTop) - parseInt(paddingBottom);
 
-		overflowItemRef.classList.remove("ui5-sn-item-hidden");
-
-		itemsHeight = overflowItemRef.offsetHeight;
-		const oSelectedItemRef = overflowItems.find(item => {
-			return item instanceof SideNavigationSelectableItemBase && item._selected;
-		});
-		if (oSelectedItemRef) {
-			const { marginTop, marginBottom } = window.getComputedStyle(oSelectedItemRef);
-
-			itemsHeight += oSelectedItemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+		if (itemsHeight <= listHeight) {
+			return;
 		}
 
-		overflowItems.forEach(itemRef => {
-			if (itemRef === oSelectedItemRef) {
+		overflowItem.classList.remove("ui5-sn-item-hidden");
+
+		itemsHeight = overflowItem.offsetHeight;
+
+		const selectedItem = overflowItems.find(item => {
+			return item instanceof SideNavigationSelectableItemBase && item._selected;
+		});
+
+		if (selectedItem && selectedItem instanceof SideNavigationItemBase) {
+			const selectedItemDomRef = selectedItem.getDomRef();
+			const { marginTop, marginBottom } = window.getComputedStyle(selectedItemDomRef!);
+
+			itemsHeight += selectedItemDomRef!.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+		}
+
+		overflowItems.forEach(item => {
+			if (item === selectedItem) {
 				return;
 			}
 
-			const { marginTop, marginBottom } = window.getComputedStyle(itemRef);
-			itemsHeight += itemRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+			let itemDomRef;
 
-			if (itemsHeight >= listHeight) {
-				itemRef.classList.add("ui5-sn-item-hidden");
+			if (item instanceof SideNavigationItemBase) {
+				itemDomRef = item.getDomRef()!;
+			} else {
+				itemDomRef = item;
+			}
+
+			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
+			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
+
+			if (itemsHeight > listHeight) {
+				item.classList.add("ui5-sn-item-hidden");
 			}
 		});
 	}

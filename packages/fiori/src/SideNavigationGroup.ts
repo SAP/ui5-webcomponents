@@ -62,11 +62,14 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	items!: Array<SideNavigationItem>;
 
 	get overflowItems() : Array<HTMLElement> {
-		return this.items.reduce((result, item) => {
-			const first = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as HTMLElement;
-			const last = this.shadowRoot!.querySelector(".ui5-sn-item-separator:last-child") as HTMLElement;
-			return result.concat([first, ...item.overflowItems, last]);
+		const separator1 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as HTMLElement;
+		const separator2 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:last-child") as HTMLElement;
+
+		const overflowItems = this.items.reduce((result, item) => {
+			return result.concat(item.overflowItems);
 		}, new Array<HTMLElement>());
+
+		return [separator1, ...overflowItems, separator2];
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
