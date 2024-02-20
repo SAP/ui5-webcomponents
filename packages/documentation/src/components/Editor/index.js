@@ -33,7 +33,6 @@ export default function Editor({html, js, css }) {
 
   useEffect(() => {
     window.addEventListener("message", async (event) => {
-      console.log("equal names", event.data.name === iframeName)
       if (event.data.height && event.data.name === iframeName) {
         previewRef.current.iframe.style.height = `${event.data.height}px`;
       }
