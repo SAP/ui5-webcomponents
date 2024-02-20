@@ -1,6 +1,5 @@
 :host {
 	display: grid;
     font: var(--sapFontSize) var(--sapFontFamily);
-    font-weight: normal;
     color: var(--sapList_TextColor);
 }

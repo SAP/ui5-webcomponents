@@ -4,8 +4,8 @@
     overflow: clip;
 }
 
-:host(:first-of-type) {
-    padding-left: 1rem;;
+:host(:first-child) {
+    padding-inline-start: 1rem;;
 }
 
 :host(:empty) {

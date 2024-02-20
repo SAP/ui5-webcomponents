@@ -3,11 +3,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import GridTableColumnRowTemplate from "./generated/templates/GridTableColumnRowTemplate.lit.js";
+import GridHeaderRowTemplate from "./generated/templates/GridHeaderRowTemplate.lit.js";
 
 // Styles
-import GridTableColumnRowCss from "./generated/themes/GridTableColumnRow.css.js";
-import GridTableColumn from "./GridTableColumn.js";
+import GridHeaderRowCss from "./generated/themes/GridHeaderRow.css.js";
+import GridTableColumn from "./GridColumn.js";
 
 /**
  * @class
@@ -17,20 +17,20 @@ import GridTableColumn from "./GridTableColumn.js";
  *
  * <h3>Usage</h3>
  *
- * For the <code>grid-table-column-row</code>
+ * For the <code>grid-header-row</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/GridTableColumnRow.js";</code>
+ * <code>import @ui5/webcomponents/dist/GridHeaderRow.js";</code>
  *
  * @constructor
  * @extends UI5Element
  * @public
  */
 @customElement({
-	tag: "ui5-grid-table-column-row",
+	tag: "ui5-grid-header-row",
 	renderer: litRender,
-	styles: GridTableColumnRowCss,
-	template: GridTableColumnRowTemplate,
+	styles: GridHeaderRowCss,
+	template: GridHeaderRowTemplate,
 	dependencies: [],
 })
 
@@ -40,11 +40,11 @@ import GridTableColumn from "./GridTableColumn.js";
  *
  * @public
  */
-class GridTableColumnRow extends UI5Element {
+class GridHeaderRow extends UI5Element {
 	/**
 	 * Defines the configuration for the columns of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-table-column</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-column</code> for the intended design.
 	 *
 	 * @public
 	 */
@@ -67,6 +67,6 @@ class GridTableColumnRow extends UI5Element {
 	}
 }
 
-GridTableColumnRow.define();
+GridHeaderRow.define();
 
-export default GridTableColumnRow;
+export default GridHeaderRow;

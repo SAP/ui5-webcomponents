@@ -3,12 +3,12 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import GridTableTemplate from "./generated/templates/GridTableTemplate.lit.js";
+import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 
 // Styles
-import GridTableCss from "./generated/themes/GridTable.css.js";
-import GridTableRow from "./GridTableRow.js";
-import GridTableColumnRow from "./GridTableColumnRow.js";
+import GridCss from "./generated/themes/Grid.css.js";
+import GridRow from "./GridRow.js";
+import GridHeaderRow from "./GridHeaderRow.js";
 
 /**
  * @class
@@ -18,43 +18,43 @@ import GridTableColumnRow from "./GridTableColumnRow.js";
  *
  * <h3>Usage</h3>
  *
- * For the <code>grid-table</code>
+ * For the <code>grid</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/GridTable.js";</code>
+ * <code>import @ui5/webcomponents/dist/Grid.js";</code>
  *
  * @constructor
  * @extends UI5Element
  * @public
  */
 @customElement({
-	tag: "ui5-grid-table",
+	tag: "ui5-grid",
 	renderer: litRender,
-	styles: GridTableCss,
-	template: GridTableTemplate,
+	styles: GridCss,
+	template: GridTemplate,
 	dependencies: [],
 })
 
-class GridTable extends UI5Element {
+class Grid extends UI5Element {
 	/**
 	 * Defines the rows of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-table-row</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-row</code> for the intended design.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	rows!: Array<GridTableRow>;
+	rows!: Array<GridRow>;
 
 	/**
 	 * Defines the column row of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-table-column-row</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-column-row</code> for the intended design.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	columnrow!: Array<GridTableColumnRow>;
+	columnrow!: Array<GridHeaderRow>;
 
 	onEnterDOM(): void {
 		this.setAttribute("role", "grid");
@@ -64,6 +64,6 @@ class GridTable extends UI5Element {
 	}
 }
 
-GridTable.define();
+Grid.define();
 
-export default GridTable;
+export default Grid;

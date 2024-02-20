@@ -1,8 +1,8 @@
 :host {
     display: grid;
     grid-template-columns: subgrid;
-    grid-auto-rows: minmax(2rem, auto);
+    grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
     grid-column: 1 / -1;
-    border-bottom: 0.0625rem solid var(--sapList_BorderColor);
+    border-bottom: var(--_ui5_grid_row_border);
     background-color: var(--sapList_Background);
 }
