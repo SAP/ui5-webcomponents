@@ -90,19 +90,19 @@ const config: Config = {
           items: [
             {
               label: 'Twitter',
-              to: 'docs/documentation/',
+              to: 'https://twitter.com/ui5webcomps',
             },
             {
               label: 'Slack',
-              to: 'docs/documentation/',
+              to: 'https://openui5.slack.com/',
             },
             {
               label: 'Youtube',
-              to: 'docs/documentation/',
+              to: 'https://www.youtube.com/watch?v=9P5Jk4S3438&list=PLHUs_FUbq4dXkQpUt6b4eCXAAjiOg0IC-',
             },
             {
               label: 'GitHub',
-              to: 'docs/documentation/',
+              to: 'https://github.com/SAP/ui5-webcomponents/',
             },
           ],
         },
@@ -115,7 +115,7 @@ const config: Config = {
             },
             {
               label: 'FAQ',
-              to: 'docs/documentation/',
+              to: 'docs/documentation/FAQ/',
             },
           ],
         },
@@ -124,19 +124,11 @@ const config: Config = {
           items: [
             {
               label: 'Privacy',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Terms of Use',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              href: 'https://www.sap.com/about/legal/privacy.html',
             },
             {
               label: 'Legal Disclosure',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Trademarks',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://www.sap.com/about/legal/impressum.html',
             },
           ],
         },
@@ -145,15 +137,15 @@ const config: Config = {
           items: [
             {
               label: 'Report Issue',
-              to: 'docs/documentation/',
+              to: 'https://github.com/SAP/ui5-webcomponents/issues/new',
             },
             {
               label: 'Technical Questions',
-              to: 'docs/documentation/',
+              to: 'https://openui5.slack.com/',
             },
             {
               label: 'Product Questions',
-              to: 'docs/documentation/',
+              to: 'mailto:openui5@sap.com?subject=[UI5 Web Components]',
             },
           ],
         },

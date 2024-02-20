@@ -66,7 +66,7 @@ ${fields
 const getTable = (kind) => {
     switch (kind) {
         case "field":
-            return `## Fields\n<FieldsTable declaration={declarationJSON} />`;
+            return `## Properties\n<PropsTable declaration={declarationJSON} />`;
         case "method":
             return `## Methods\n<MethodsTable declaration={declarationJSON} />`;
         case "event":

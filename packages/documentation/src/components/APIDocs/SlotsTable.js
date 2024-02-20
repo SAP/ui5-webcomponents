@@ -24,8 +24,8 @@ export default function SlotsTable({ declaration }) {
         </thead>
         <tbody>
             {
-                slots.map(slot => {
-                    return <tr>
+                slots.map((slot, idx) => {
+                    return <tr key={"slot" + idx}>
                         <td>{slot.name}</td>
                         <td>{slot._ui5type?.text}</td>
                         <td dangerouslySetInnerHTML={{__html: slot.description}}></td>

@@ -38,8 +38,8 @@ export default function EventsTable({ declaration }) {
         </thead>
         <tbody>
             {
-                events.map(event => {
-                    return <tr>
+                events.map((event, idx) => {
+                    return <tr key={"event" + idx}>
                         <td>{event.name}</td>
                         <td>{event.type?.text || ""}</td>
                         <td dangerouslySetInnerHTML={{__html: event.description}}></td>

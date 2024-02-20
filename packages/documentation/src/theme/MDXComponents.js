@@ -3,7 +3,7 @@ import React from 'react';
 import MDXComponents from '@theme-original/MDXComponents';
 import Editor from '@site/src/components/Editor';
 import APIDocs from '@site/src/components/APIDocs';
-import FieldsTable from '@site/src/components/APIDocs/FieldsTable';
+import PropsTable from '@site/src/components/APIDocs/PropsTable';
 import MethodsTable from '@site/src/components/APIDocs/MethodsTable';
 import EventsTable from '@site/src/components/APIDocs/EventsTable';
 import SlotsTable from '@site/src/components/APIDocs/SlotsTable';
@@ -15,7 +15,7 @@ export default {
   ...MDXComponents,
   Editor,
   APIDocs,
-  FieldsTable,
+  PropsTable,
   MethodsTable,
   EventsTable,
   SlotsTable,

@@ -23,8 +23,8 @@ export default function CssPartsTable({ declaration }) {
         </thead>
         <tbody>
             {
-                cssParts.map(cssPart => {
-                    return <tr>
+                cssParts.map((cssPart, idx) => {
+                    return <tr key={"cssPart" + idx}>
                         <td>{cssPart.name}</td>
                         <td dangerouslySetInnerHTML={{__html: cssPart.description}}></td>
                     </tr>

@@ -55,8 +55,8 @@ export default function MethodsTable({ declaration }) {
         </thead>
         <tbody>
             {
-                methods.map(method => {
-                    return <tr>
+                methods.map((method, idx) => {
+                    return <tr key={"methods" + idx}>
                         <td>{method.name}</td>
                         <td>{method.return?.type?.text || ""}</td>
                         <td dangerouslySetInnerHTML={{__html: method.description}}></td>

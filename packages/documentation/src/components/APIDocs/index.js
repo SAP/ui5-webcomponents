@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldsTable from './FieldsTable';
+import PropsTable from './PropsTable';
 import MethodsTable from './MethodsTable';
 import EventsTable from './EventsTable';
 import SlotsTable from './SlotsTable';
@@ -11,7 +11,7 @@ export default function APIDocs({ declaration, kind }) {
     case "enum":
       return "enum";
     case "field":
-      return <FieldsTable declaration={declaration} />;
+      return <PropsTable declaration={declaration} />;
     case "method":
       return <MethodsTable declaration={declaration} />;
     case "event":
