@@ -57,20 +57,20 @@ export default function Editor({html, js, css }) {
             <>
               <button onClick={toggleEditor}>toggle editor</button>
               <playground-project ref={projectRef} id="btn-project" resizable>
-                  <script type="sample/html" filename="index.html">
+                  <script type="sample/html" filename="index.html" hidden={!html || undefined}>
                       {html}
                   </script>
 
                   <script type="sample/js" hidden filename="playground-support.js">
                     {playgroundSupportContent}
                   </script>
-                  <script type="sample/js" filename="main.js">
+                  <script type="sample/js" filename="main.js"  hidden={!js || undefined}>
                     {`/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
 ${js}`}
                   </script>
-                  <script type="sample/css" filename="main.css">
+                  <script type="sample/css" filename="main.css" hidden={!css || undefined}>
                     {css}
                   </script>
               </playground-project>
