@@ -68,11 +68,9 @@ const config: Config = {
           position: 'left',
           label: 'Components',
         },
-        { to: '/blog', label: 'Blog', position: 'right' },
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
-          position: 'right',
+          type: 'custom-themeNavbarItem',
+          position: "right",
         },
       ],
     },

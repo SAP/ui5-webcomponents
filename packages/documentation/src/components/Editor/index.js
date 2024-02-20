@@ -4,26 +4,17 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
 
+let playgroundSupportContent = playgroundSupport;
+
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
+
+  const storedTheme = localStorage.getItem("ui5-theme");
+  if (storedTheme) {
+    playgroundSupportContent = `setTheme("${storedTheme}");
+    ${playgroundSupport}`
+  }
 }
-
-let lightTheme = true;
-
-function setTheme(theme) {
-  [...document.querySelectorAll("playground-ide")].forEach(ide => {
-    ide.shadowRoot.querySelector("playground-preview").iframe.contentWindow.postMessage({theme}, "*");
-  });
-
-  [...document.querySelectorAll("playground-preview")].forEach(preview => {
-    preview.iframe.contentWindow.postMessage({theme}, "*");
-  })
-}
-
-function toggleTheme () {
-  lightTheme = !lightTheme;
-  setTheme(lightTheme ? "sap_horizon" : "sap_horizon_dark");
-};
 
 export default function Editor({html, js, css }) {
   const projectRef = useRef(null);
@@ -65,7 +56,6 @@ export default function Editor({html, js, css }) {
     //      {
     //          () =>
             <>
-              <button onClick={toggleTheme}>toggle theme</button>
               <button onClick={toggleEditor}>toggle editor</button>
               <playground-project ref={projectRef} id="btn-project" resizable>
                   <script type="sample/html" filename="index.html">
@@ -73,7 +63,7 @@ export default function Editor({html, js, css }) {
                   </script>
 
                   <script type="sample/js" hidden filename="playground-support.js">
-                    {playgroundSupport}
+                    {playgroundSupportContent}
                   </script>
                   <script type="sample/js" filename="main.js">
                     {`/* playground-hide */
