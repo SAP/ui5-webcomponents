@@ -11,8 +11,8 @@
 		mode="SingleSelect"
 		separators="None"
 		@ui5-item-click="{{_onOverflowListItemClick}}"
-		@ui5-before-item-move="{{_onBeforeItemMoveInPopover}}"
-		@ui5-item-move="{{_onItemMoveInPopover}}"
+		@ui5-move-over="{{_onPopoverListMoveOver}}"
+		@ui5-move="{{_onPopoverListMove}}"
 	>
 		{{#each _popoverItemsFlat}}
 			{{overflowPresentation}}

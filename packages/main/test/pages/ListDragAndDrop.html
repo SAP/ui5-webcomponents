@@ -13,22 +13,22 @@
 <body class="list1auto">
 	<ui5-checkbox id="reorder" text="Draggable items" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<a id="link" href="http://sap.com">http://sap.com</a>
+	<a id="link" href="http://sap.com" draggable="true">http://sap.com</a>
 
 	<section>
 		<h2>Drag and drop</h2>
 		<ui5-list id="listDnd1" header-text="List 1">
-			<ui5-li draggable="true" id="bg1">1. Bulgaria</ui5-li>
-			<ui5-li draggable="true" id="de1">1. Germany</ui5-li>
-			<ui5-li draggable="true" id="es1">1. Spain</ui5-li>
+			<ui5-li id="bg1" movable>1. Bulgaria</ui5-li>
+			<ui5-li id="de1" movable>1. Germany</ui5-li>
+			<ui5-li id="es1" movable>1. Spain</ui5-li>
 		</ui5-list>
 	</section>
 
 	<section class="largeTopMargin">
 		<ui5-list id="listDnd2" header-text="List 2">
-			<ui5-li draggable="true" id="bg2">2. Bulgaria</ui5-li>
-			<ui5-li draggable="true" id="de2" data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
-			<ui5-li draggable="true" id="es2">2. Spain</ui5-li>
+			<ui5-li id="bg2" movable>2. Bulgaria</ui5-li>
+			<ui5-li id="de2" movable data-allows-nesting>2. Germany (Allows nesting)</ui5-li>
+			<ui5-li id="es2" movable>2. Spain</ui5-li>
 		</ui5-list>
 	</section>
 
@@ -49,7 +49,7 @@
 			console.error(`Moving "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
 		};
 	
-		const list1HandleBeforeItemMove = (e) => {
+		const list1HandleMoveOver = (e) => {
 			const { destination, source } = e.detail;
 
 			if (!list1.contains(source.element) && !list2.contains(source.element)) {
@@ -59,11 +59,11 @@
 			handleBeforeItemMove(e);
 		};
 
-		const list2HandleBeforeItemMove = (e) => {
+		const list2HandleMoveOver = (e) => {
 			handleBeforeItemMove(e);
 		};
 
-		const handleItemMove = (e) => {
+		const handleMove = (e) => {
 			const { destination, source } = e.detail;
 			const parent = destination.element.closest("[ui5-list]");
 
@@ -86,10 +86,10 @@
 			source.element.focus();
 		};
 
-		list1.addEventListener("ui5-before-item-move", list1HandleBeforeItemMove);
-		list2.addEventListener("ui5-before-item-move", list2HandleBeforeItemMove);
-		list1.addEventListener("ui5-item-move", handleItemMove);
-		list2.addEventListener("ui5-item-move", handleItemMove);
+		list1.addEventListener("ui5-move-over", list1HandleMoveOver);
+		list1.addEventListener("ui5-move", handleMove);
+		list2.addEventListener("ui5-move-over", list2HandleMoveOver);
+		list2.addEventListener("ui5-move", handleMove);
 
 		const densityCb = document.getElementById("density");
 		densityCb.addEventListener("ui5-change", e => {

@@ -136,6 +136,15 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Boolean })
 	selected!: boolean;
 
+	/**
+	 * Defines if the tab is movable.
+	 *
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
+
 	@property({ type: Boolean })
 	forcedSelected!: boolean;
 

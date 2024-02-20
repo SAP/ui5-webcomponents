@@ -45,7 +45,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
-import type { ListBeforeItemMoveEventDetail, ListItemClickEventDetail, ListItemMoveEventDetail } from "./List.js";
+import type { ListMoveOverEventDetail, ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -105,7 +105,17 @@ type TabContainerTabSelectEventDetail = {
 	tabIndex: number;
 }
 
-type TabContainerBeforeTabMoveEventDetail = {
+type TabContainerMoveOverEventDetail = {
+	source: {
+		element: HTMLElement;
+	},
+	destination: {
+		element: HTMLElement;
+		placement: `${DropPlacement}`
+	}
+}
+
+type TabContainerMoveEventDetail = {
 	source: {
 		element: HTMLElement;
 	},
@@ -540,7 +550,7 @@ class TabContainer extends UI5Element {
 
 		if (isTabInStrip(closestDropPosition.element)) {
 			const placementAccepted = placements.some(dropPlacement => {
-				const dragOverPrevented = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
+				const dragOverPrevented = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
 					source: {
 						element: draggedElement,
 					},
@@ -587,7 +597,7 @@ class TabContainer extends UI5Element {
 	_onHeaderDrop(e: DragEvent) {
 		e.preventDefault();
 
-		this.fireEvent<TabContainerBeforeTabMoveEventDetail>("tab-move", {
+		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
 				element: DragRegistry.getDraggedElement()!,
 			},
@@ -610,7 +620,7 @@ class TabContainer extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
-	_onBeforeItemMoveInPopover(e: CustomEvent<ListBeforeItemMoveEventDetail>) {
+	_onPopoverListMoveOver(e: CustomEvent<ListMoveOverEventDetail>) {
 		const { destination } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement();
 		const dropTarget = (destination.element as Tab).realTabReference;
@@ -619,7 +629,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const placementAccepted = !this.fireEvent<TabContainerBeforeTabMoveEventDetail>("before-tab-move", {
+		const placementAccepted = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
 			source: {
 				element: draggedElement!,
 			},
@@ -636,12 +646,12 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onItemMoveInPopover(e: CustomEvent<ListItemMoveEventDetail>) {
+	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
 
 		e.preventDefault();
 
-		this.fireEvent<TabContainerBeforeTabMoveEventDetail>("tab-move", {
+		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
 				element: DragRegistry.getDraggedElement()!,
 			},
@@ -1533,4 +1543,6 @@ export default TabContainer;
 export type {
 	ITab,
 	TabContainerTabSelectEventDetail,
+	TabContainerMoveOverEventDetail,
+	TabContainerMoveEventDetail,
 };

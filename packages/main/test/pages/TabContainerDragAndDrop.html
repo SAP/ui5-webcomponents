@@ -18,53 +18,53 @@
 	<section>
 		<h2>Drag and drop</h2>
 		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed tabs-overflow-mode="StartAndEnd">
-			<ui5-tab id="tabOne" draggable="true" design="Positive" text="One"></ui5-tab>
-			<ui5-tab id="tabTwo" draggable="true" design="Negative" text="Two" disabled>
-				<ui5-tab slot="subTabs" draggable="true" text="2.1"></ui5-tab>
+			<ui5-tab id="tabOne" movable design="Positive" text="One"></ui5-tab>
+			<ui5-tab id="tabTwo" movable design="Negative" text="Two" disabled>
+				<ui5-tab slot="subTabs" movable text="2.1"></ui5-tab>
 			</ui5-tab>
-			<ui5-tab id="tabThree" draggable="true" design="Critical" text="Three">
-				<ui5-tab slot="subTabs" draggable="true" design="Positive" text="3.1">
+			<ui5-tab id="tabThree" movable design="Critical" text="Three">
+				<ui5-tab slot="subTabs" movable design="Positive" text="3.1">
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
 				content
 			</ui5-tab>
-			<ui5-tab id="tabFour" draggable="true" text="Four (forbids nesting)"></ui5-tab>
-			<ui5-tab id="tabFive" draggable="true" text="Five">
-				<ui5-tab slot="subTabs" draggable="true" text="nested in Five">
-					<ui5-tab slot="subTabs" draggable="true" text="nested deeper in Five">text</ui5-tab>
+			<ui5-tab id="tabFour" movable text="Four (forbids nesting)"></ui5-tab>
+			<ui5-tab id="tabFive" movable text="Five">
+				<ui5-tab slot="subTabs" movable text="nested in Five">
+					<ui5-tab slot="subTabs" movable text="nested deeper in Five">text</ui5-tab>
 					text
 				</ui5-tab>
 			</ui5-tab>
-			<ui5-tab id="tabSix" draggable="true" text="Six"></ui5-tab>
-			<ui5-tab id="tabSeven" draggable="true" text="Seven"></ui5-tab>
+			<ui5-tab id="tabSix" movable text="Six"></ui5-tab>
+			<ui5-tab id="tabSeven" movable text="Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabEight" draggable="true" design="Positive" text="Eight"></ui5-tab>
-			<ui5-tab id="tabNine" draggable="true" design="Negative" text="Nine"></ui5-tab>
-			<ui5-tab id="tabTen" draggable="true" design="Critical" text="Ten"></ui5-tab>
-			<ui5-tab id="tabEleven" draggable="true" text="Eleven"></ui5-tab>
+			<ui5-tab id="tabEight" movable design="Positive" text="Eight"></ui5-tab>
+			<ui5-tab id="tabNine" movable design="Negative" text="Nine"></ui5-tab>
+			<ui5-tab id="tabTen" movable design="Critical" text="Ten"></ui5-tab>
+			<ui5-tab id="tabEleven" movable text="Eleven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabTwelve" draggable="true" text="Twelve"></ui5-tab>
-			<ui5-tab id="tabThirteen" draggable="true" text="Thirteen" selected></ui5-tab>
-			<ui5-tab id="tabFourteen" draggable="true" text="Fourteen"></ui5-tab>
-			<ui5-tab id="tabFifteen" draggable="true" text="Fifteen"></ui5-tab>
-			<ui5-tab id="tabSixteen" draggable="true" text="Sixteen"></ui5-tab>
-			<ui5-tab id="tabSeventeen" draggable="true" text="Seventeen (forbids nesting)"></ui5-tab>
-			<ui5-tab id="tabEighteen" draggable="true" text="Eighteen"></ui5-tab>
+			<ui5-tab id="tabTwelve" movable text="Twelve"></ui5-tab>
+			<ui5-tab id="tabThirteen" movable text="Thirteen" selected></ui5-tab>
+			<ui5-tab id="tabFourteen" movable text="Fourteen"></ui5-tab>
+			<ui5-tab id="tabFifteen" movable text="Fifteen"></ui5-tab>
+			<ui5-tab id="tabSixteen" movable text="Sixteen"></ui5-tab>
+			<ui5-tab id="tabSeventeen" movable text="Seventeen (forbids nesting)"></ui5-tab>
+			<ui5-tab id="tabEighteen" movable text="Eighteen"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabNinteen" draggable="true" text="Nineteen"></ui5-tab>
-			<ui5-tab id="tabTwenty" draggable="true" text="Twenty"></ui5-tab>
-			<ui5-tab id="tabTwentyOne" draggable="true" text="Twenty One"></ui5-tab>
-			<ui5-tab id="tabTwentyTwo" draggable="true" text="Twenty Two"></ui5-tab>
-			<ui5-tab id="tabTwentyThree" draggable="true" text="Twenty Three"></ui5-tab>
-			<ui5-tab id="tabTwentyFour" draggable="true" text="Twenty Four"></ui5-tab>
+			<ui5-tab id="tabNinteen" movable text="Nineteen"></ui5-tab>
+			<ui5-tab id="tabTwenty" movable text="Twenty"></ui5-tab>
+			<ui5-tab id="tabTwentyOne" movable text="Twenty One"></ui5-tab>
+			<ui5-tab id="tabTwentyTwo" movable text="Twenty Two"></ui5-tab>
+			<ui5-tab id="tabTwentyThree" movable text="Twenty Three"></ui5-tab>
+			<ui5-tab id="tabTwentyFour" movable text="Twenty Four"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabTwentyFive" draggable="true" text="Twenty Five"></ui5-tab>
-			<ui5-tab id="tabTwentySix" draggable="true" text="Twenty Six"></ui5-tab>
-			<ui5-tab id="tabTwentySeven" draggable="true" text="Twenty Seven"></ui5-tab>
+			<ui5-tab id="tabTwentyFive" movable text="Twenty Five"></ui5-tab>
+			<ui5-tab id="tabTwentySix" movable text="Twenty Six"></ui5-tab>
+			<ui5-tab id="tabTwentySeven" movable text="Twenty Seven"></ui5-tab>
 			<ui5-tab-separator></ui5-tab-separator>
-			<ui5-tab id="tabTwentyEight" draggable="true" text="Twenty Eight"></ui5-tab>
-			<ui5-tab id="tabTwentyNine" draggable="true" text="Twenty Nine"></ui5-tab>
-			<ui5-tab id="tabThirty" draggable="true" text="Thirty"></ui5-tab>
+			<ui5-tab id="tabTwentyEight" movable text="Twenty Eight"></ui5-tab>
+			<ui5-tab id="tabTwentyNine" movable text="Twenty Nine"></ui5-tab>
+			<ui5-tab id="tabThirty" movable text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
@@ -82,7 +82,7 @@
 			return 1 + getTabLevel(element.parentElement);
 		};
 
-		tc.addEventListener("ui5-before-tab-move", (e) => {
+		tc.addEventListener("ui5-move-over", (e) => {
 			const { source, destination } = e.detail;
 
 			if (!tc.contains(source.element)) {
@@ -108,7 +108,7 @@
 			e.preventDefault();
 		});
 
-		tc.addEventListener("ui5-tab-move", (e) => {
+		tc.addEventListener("ui5-move", (e) => {
 			// TODO: validate source.element
 			const { destination, source } = e.detail;
 			const currentParent = destination.element.parentElement;
