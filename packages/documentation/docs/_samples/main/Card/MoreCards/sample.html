@@ -1,0 +1,63 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <div class="grid-container">
+        <ui5-card>
+            <ui5-card-header slot="header" title-text="David Williams" subtitle-text="Sales Manager">
+            </ui5-card-header>
+            <ui5-list separators="Inner" style="margin-block-end: 0.75rem;">
+                <ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
+                <ui5-li icon="wallet" icon-end>Finance</ui5-li>
+                <ui5-li icon="collaborate" icon-end>Communications Skills</ui5-li>
+            </ui5-list>
+        </ui5-card>
+        <ui5-card>
+            <ui5-card-header slot="header" title-text="Project Cloud Transformation"
+                subtitle-text="Revenue per Product | EUR" status="3 of 3">
+            </ui5-card-header>
+            <ui5-list separators="None" style="margin-block-end: 0.75rem;">
+                <ui5-li description="ID234522566-D44" additional-text="27.25K EUR"
+                    additional-text-state="Success">Avantel</ui5-li>
+                <ui5-li description="ID7125852785-A51" additional-text="22.89K EUR"
+                    additional-text-state="Warning">Telecomunicaciones Star</ui5-li>
+                <ui5-li description="ID123555587-I05" additional-text="7.85K EUR"
+                    additional-text-state="Error">Talpa</ui5-li>
+            </ui5-list>
+        </ui5-card>
+        <ui5-card>
+            <ui5-card-header slot="header" title-text="Donna Maria Moore" subtitle-text="Senior Sales Executive">
+                <img src="../assets/images/avatars/man_avatar_1.png" slot="avatar">
+            </ui5-card-header>
+            <div class="content content-padding">
+                <ui5-title level="H5" style="padding-block-end: 1rem;">Contact details</ui5-title>
+                <div class="content-group">
+                    <ui5-label show-colon>Company Name</ui5-label>
+                    <span>Company A</span>
+                </div>
+                <div class="content-group">
+                    <ui5-label show-colon>Address</ui5-label>
+                    <span>481 West Street, Anytown 45066, USA</span>
+                </div>
+                <div class="content-group">
+                    <ui5-label show-colon>Website</ui5-label>
+                    <ui5-link target="_blank">www.company_a.example.com</ui5-link>
+                </div>
+            </div>
+        </ui5-card>
+    </div>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->

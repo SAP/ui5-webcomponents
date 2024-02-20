@@ -1,0 +1,81 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <ui5-card>
+        <ui5-card-header slot="header" title-text="New Purchase Orders" subtitle-text="Today" status="3 of 15">
+        </ui5-card-header>
+
+        <ui5-table style="margin-block-end: 0.75rem;">
+            <ui5-table-column slot="columns">
+                <ui5-label>Sales Order</ui5-label>
+            </ui5-table-column>
+            <ui5-table-column slot="columns">
+                <ui5-label>Customer</ui5-label>
+            </ui5-table-column>
+            <ui5-table-column slot="columns">
+                <ui5-label>Net Amount</ui5-label>
+            </ui5-table-column>
+            <ui5-table-column slot="columns" min-width="450" popin-text="Status" demand-popin>
+                <ui5-label>Status</ui5-label>
+            </ui5-table-column>
+
+            <ui5-table-row>
+                <ui5-table-cell>
+                    <ui5-label>5000010050</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <ui5-label>Entertainment Argentina</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <ui5-label>6k USD</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <span class="status-success">Approved</span>
+                </ui5-table-cell>
+            </ui5-table-row>
+            <ui5-table-row>
+                <ui5-table-cell>
+                    <ui5-label>5000010051</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <ui5-label>Brazil Technologies</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <ui5-label>2k USD</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <span class="status-error">Rejected</span>
+                </ui5-table-cell>
+            </ui5-table-row>
+            <ui5-table-row>
+                <ui5-table-cell>
+                    <ui5-label>5000010052</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <ui5-label>Robert Brown Ent.</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <ui5-label>17k USD</ui5-label>
+                </ui5-table-cell>
+                <ui5-table-cell>
+                    <span class="status-warning">Pending</span>
+                </ui5-table-cell>
+            </ui5-table-row>
+        </ui5-table>
+    </ui5-card>
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->
