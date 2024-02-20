@@ -5,16 +5,16 @@
  */
 enum PopoverPlacementType {
 	/**
-	 * Popover will be placed at the left side of the reference element.
+	 * Popover will be placed at the start of the reference element.
 	 * @public
 	 */
-	Left = "Left",
+	Start = "Start",
 
 	/**
-	 * Popover will be placed at the right side of the reference element.
+	 * Popover will be placed at the end of the reference element.
 	 * @public
 	 */
-	Right = "Right",
+	End = "End",
 
 	/**
 	 * Popover will be placed at the top of the reference element.
