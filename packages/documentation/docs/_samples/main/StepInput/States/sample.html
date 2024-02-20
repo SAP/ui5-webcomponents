@@ -1,0 +1,27 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<div style="width: 15rem">
+<!-- playground-hide-end -->
+<ui5-step-input disabled value="5"></ui5-step-input><br><br>
+<ui5-step-input readonly value="5"></ui5-step-input><br><br>
+<ui5-step-input value-state="Success" value="5"></ui5-step-input><br><br>
+<ui5-step-input value-state="Information" value="5"></ui5-step-input><br><br>
+<ui5-step-input value-state="Warning" value="5"></ui5-step-input><br><br>
+<ui5-step-input value-state="Error" value="5"></ui5-step-input><br><br>
+<ui5-step-input value-state="Error" value="5" placeholder="Custom value-state message">
+    <div slot="valueStateMessage">Please provide valid value</div>
+</ui5-step-input>
+<!-- playground-hide -->
+</div>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-hide-end -->
+
