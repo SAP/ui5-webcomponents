@@ -1,0 +1,102 @@
+<!-- playground-hide -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-hide-end -->
+    <div class="individual">
+        <ui5-popover
+            header-text="Person Card"
+            class="personPopover"
+            style="width: 300px"
+            placement-type="Bottom"
+            prevent-focus-restore=""
+        >
+            <div class="avatar-slot" style="display: inline-block;">
+                <ui5-avatar id="popAvatar"></ui5-avatar>
+            </div>
+            <div class="title-slot" style="display: inline-block;">
+                <ui5-title level="H5">John Doe</ui5-title>
+                <ui5-title level="H5">Software Developer</ui5-title>
+            </div>
+        </ui5-popover>
+        <ui5-popover
+            header-text="My people"
+            class="peoplePopover"
+            style="width: 400px"
+            placement-type="Bottom"
+        >
+            <div
+                class="placeholder"
+                style="display: flex; flex-wrap: wrap;"
+            ></div>
+        </ui5-popover>
+        <ui5-slider
+            id="sliderIndividual"
+            min="1"
+            max="100"
+            value="60"
+        ></ui5-slider>
+        <ui5-avatar-group type="Individual">
+            <ui5-avatar size="M" icon="employee"></ui5-avatar>
+            <ui5-avatar size="M" icon="employee"></ui5-avatar>
+            <ui5-avatar size="M" initials="JD"></ui5-avatar>
+            <ui5-avatar size="M">
+                <img
+                    src="../assets/images/avatars/woman_avatar_5.png"
+                    alt="Woman Avatar 5"
+                />
+            </ui5-avatar>
+            <ui5-avatar size="M">
+                <img
+                    src="../assets/images/avatars/man_avatar_3.png"
+                    alt="Man Avatar 3"
+                />
+            </ui5-avatar>
+            <ui5-avatar size="M" icon="employee"></ui5-avatar>
+            <ui5-avatar size="M" icon="employee"></ui5-avatar>
+            <ui5-avatar size="M" initials="JD"></ui5-avatar>
+            <ui5-avatar size="M">
+                <img
+                    src="../assets/images/avatars/woman_avatar_5.png"
+                    alt="Woman Avatar 5"
+                />
+            </ui5-avatar>
+            <ui5-avatar size="M">
+                <img
+                    src="../assets/images/avatars/man_avatar_3.png"
+                    alt="Man Avatar 3"
+                />
+            </ui5-avatar>
+            <ui5-avatar size="M" icon="employee"></ui5-avatar>
+            <ui5-avatar size="M" icon="employee"></ui5-avatar>
+            <ui5-avatar size="M" initials="JD"></ui5-avatar>
+            <ui5-avatar size="M">
+                <img
+                    src="../assets/images/avatars/woman_avatar_5.png"
+                    alt="Woman Avatar 5"
+                />
+            </ui5-avatar>
+            <ui5-avatar size="M">
+                <img
+                    src="../assets/images/avatars/man_avatar_3.png"
+                    alt="Man Avatar 3"
+                />
+            </ui5-avatar>
+        </ui5-avatar-group>
+        <script>
+           
+        </script>
+    </div> 
+    <!-- playground-hide -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-hide-end -->

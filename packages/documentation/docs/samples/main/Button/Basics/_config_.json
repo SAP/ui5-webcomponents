@@ -1,0 +1,9 @@
+{
+    "sampleName": "Button basics",
+    "description": "Some text for description",
+    "files": [
+        "index.html",
+        "main.js",
+        "nested-folder/nested.js"
+    ]
+}

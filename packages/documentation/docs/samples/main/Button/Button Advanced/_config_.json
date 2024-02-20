@@ -1,0 +1,8 @@
+{
+    "sampleName": "Button advanced",
+    "description": "Some text for description",
+    "files": [
+        "index.html",
+        "main.js"
+    ]
+}

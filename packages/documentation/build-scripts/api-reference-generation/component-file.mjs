@@ -89,12 +89,12 @@ const parseDeclaration = (declaration) => {
     }
 
     let sections = [
-        `import declarationJSON from "./_${declaration.name}Declaration.json";`,
         parseDeclarationDescription(declaration)
     ]
 
     if (declaration.kind === "enum") {
-        getTable("enum")
+        sections.push(`import declarationJSON from "./_${declaration.name}Declaration.json";`);
+        sections.push(getTable("enum"));
     }
 
     return sections.join("\n\n")
