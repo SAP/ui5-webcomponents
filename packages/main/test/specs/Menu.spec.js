@@ -34,7 +34,7 @@ describe("Menu interaction", () => {
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 
 		assert.strictEqual(await menuItems.length, 7, "There are proper count of menu items in the top level menu");
 		assert.strictEqual(await listItems.length, 7, "There are proper count of list items in the top level menu popover list");
@@ -54,7 +54,7 @@ describe("Menu interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
 		const popover = staticAreaItem.shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 		const submenuList = await staticAreaItem.shadow$(".ui5-menu-submenus");
 
 		listItems[3].click(); // open sub-menu
@@ -87,7 +87,7 @@ describe("Menu interaction", () => {
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await listItems[0].click({x: 1, y: 1});
@@ -103,7 +103,6 @@ describe("Menu interaction", () => {
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Space");
@@ -119,7 +118,6 @@ describe("Menu interaction", () => {
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Enter");
@@ -182,11 +180,26 @@ describe("Menu interaction", () => {
 			await browser.pause(100);
 
 			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const newFileItem = await menuPopover.$("ui5-li[accessible-name='New File']");
+			const newFileItem = await menuPopover.$("ui5-menu-li[accessible-name='New File']");
 			newFileItem.click();
 			await browser.pause(100);
 
 			assert.ok(await menuPopover.getProperty("open"), "Menu is still opened.");
+		});
+
+		it("Enable navigaion over disabled items", async () => {
+			await browser.url(`test/pages/Menu.html`);
+			const openButton = await browser.$("#btnOpen");
+			openButton.click();
+			await browser.pause(100);
+
+			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+			const listItem = await menuPopover.$("ui5-menu-li[accessible-name='Preferences']");
+			listItem.click();
+			await browser.pause(100);
+
+			assert.ok(await listItem.getProperty("disabled"), "The menu item is disabled");
+			assert.ok(await listItem.getProperty("focused"), "The menu item is focused");
 		});
 	});
 
@@ -194,17 +207,18 @@ describe("Menu Accessibility", () => {
 	it("Menu and Menu items accessibility attributes", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
 
 		openButton.click();
 
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const list = await popover.$("ui5-list");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(await listItems[0].getAttribute("title"), "Select a file", "There is a tooltip");
+		assert.strictEqual(await listItems[0].shadow$(".ui5-li-root").getAttribute("aria-haspopup"), "menu", "There is an aria-haspopup attribute");
 		assert.strictEqual(
 			await listItems[0].getAttribute("accessible-name"),
 			"New File Opens a file explorer",
