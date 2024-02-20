@@ -21,6 +21,7 @@ import {
 	isLeft,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -285,6 +286,14 @@ class TabContainer extends UI5Element {
 	@property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })
 	tabsPlacement!: `${TabContainerTabsPlacement}`;
 
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @private
+	 */
+	@property()
+	mediaRange!: string;
+
 	@property({ type: Object })
 	_selectedTab!: Tab;
 
@@ -436,6 +445,11 @@ class TabContainer extends UI5Element {
 
 		// invalidate
 		this._width = this.offsetWidth;
+		this._updateMediaRange(this._width);
+	}
+
+	_updateMediaRange(width: number) {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	_setItemsPrivateProperties(items: Array<ITab>) {
