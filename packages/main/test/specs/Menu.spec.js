@@ -217,7 +217,7 @@ describe("Menu Accessibility", () => {
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
-		assert.strictEqual(await listItems[0].getAttribute("title"), "Select a file", "There is a tooltip");
+		assert.strictEqual(await listItems[0].getAttribute("tooltip"), "Select a file", "There is a tooltip");
 		assert.strictEqual(await listItems[0].shadow$(".ui5-li-root").getAttribute("aria-haspopup"), "menu", "There is an aria-haspopup attribute");
 		assert.strictEqual(
 			await listItems[0].getAttribute("accessible-name"),
