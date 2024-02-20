@@ -1,4 +1,4 @@
-export default `//import "@ui5/webcomponents/dist/Assets.js";
+export default (baseUrl) => `//import "@ui5/webcomponents/dist/Assets.js";
 
 const resizeObserver = new ResizeObserver((entries) => {
     entries.forEach(e => {

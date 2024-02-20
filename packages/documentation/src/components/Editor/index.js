@@ -3,8 +3,9 @@ import { useRef, useEffect, useState } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
-let playgroundSupportContent = playgroundSupport;
+let playgroundSupportContent = playgroundSupport("/");
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
@@ -12,7 +13,7 @@ if (ExecutionEnvironment.canUseDOM) {
   const storedTheme = localStorage.getItem("ui5-theme");
   if (storedTheme) {
     playgroundSupportContent = `setTheme("${storedTheme}");
-    ${playgroundSupport}`
+    ${playgroundSupport("/")}`
   }
 }
 
@@ -27,6 +28,12 @@ export default function Editor({html, js, css }) {
   const [editorVisible, setEditorVisible] = useState(true);
   const [iframeHeight, setIframeHeight] = useState("150px");
 
+  // samples should use the pattern "../assets/..." for their assets
+  // and it will be converted to the aboslute url of the documentation site
+  // and served from /static
+  function fixAssetPaths(html) {
+    return html.replaceAll("../assets/", `${new URL(useBaseUrl("/"), location.origin).toString()}`)
+  }
   function toggleEditor() {
     setEditorVisible(!editorVisible);
   }
@@ -58,11 +65,11 @@ export default function Editor({html, js, css }) {
               <button onClick={toggleEditor}>toggle editor</button>
               <playground-project ref={projectRef} id="btn-project" resizable>
                   <script type="sample/html" filename="index.html" hidden={!html || undefined}>
-                      {html}
+                      {fixAssetPaths(html)}
                   </script>
 
                   <script type="sample/js" hidden filename="playground-support.js">
-                    {playgroundSupportContent}
+                    {playgroundSupport(new URL(useBaseUrl("/"), location.origin).toString())}
                   </script>
                   <script type="sample/js" filename="main.js"  hidden={!js || undefined}>
                     {`/* playground-hide */
