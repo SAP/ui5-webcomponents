@@ -118,7 +118,7 @@ class MenuItem extends UI5Element {
 	accessibleName!: string;
 
 	/**
-	 * Defines the text of the tooltip that would be displayed for the menu item.
+	 * Defines the text of the tooltip for the menu item.
 	 *
 	 * @default ""
 	 * @public
