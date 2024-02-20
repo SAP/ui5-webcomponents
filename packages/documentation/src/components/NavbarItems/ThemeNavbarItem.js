@@ -1,18 +1,24 @@
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 export default function Item() {
     const [hidden, setHidden] = useState(false);
     const [currentTheme, setCurrentTheme] = useState(() => {
         // getting stored value
-        const initialValue = localStorage.getItem("ui5-theme");
+        let initialValue;
+        if (ExecutionEnvironment.canUseDOM) {
+            initialValue = localStorage.getItem("ui5-theme");
+        }
         return initialValue || "sap_horizon";
       })
     const {colorMode, setColorMode} = useColorMode();
 
     useEffect(() => {
-        localStorage.setItem('ui5-theme', currentTheme);
+        if (ExecutionEnvironment.canUseDOM) {
+            localStorage.setItem('ui5-theme', currentTheme);
+        }
         console.log("useEffect theme")
         sendThemeToFrame(currentTheme);
     }, [currentTheme]);

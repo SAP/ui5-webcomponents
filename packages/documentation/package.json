@@ -22,6 +22,7 @@
     "@docusaurus/preset-classic": "3.1.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
+    "docusaurus-lunr-search": "^3.3.2",
     "playground-elements": "^0.18.1",
     "prism-react-renderer": "^2.3.0",
     "raw-loader": "^4.0.2",

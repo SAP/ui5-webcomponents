@@ -45,6 +45,8 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  plugins: ['docusaurus-lunr-search'],
+
 
   themeConfig: {
     // Replace with your project's social card
