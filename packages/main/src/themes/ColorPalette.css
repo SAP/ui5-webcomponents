@@ -24,9 +24,10 @@
 
 .ui5-cp-root.ui5-cp-root-phone .ui5-cp-item-container {
 	padding: 0.375rem 0.625rem;
-	width: 95%;
-	max-width: 95%;
+	width: 100%;
+	max-width: 100%;
 	max-height: 100%;
+	box-sizing: border-box;
 }
 
 .ui5-cp-root-phone .ui5-cp-default-color-button,
@@ -41,16 +42,17 @@
 
 .ui5-cp-root-phone .ui5-cp-item-container{
 	display: grid;
-    grid-template-columns: 18% 18% 18% 18% 18%;
-    grid-gap: 0.375rem;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0.75rem;
 }
 
 .ui5-cp-root-phone .ui5-cp-recent-colors-container {
 	padding: 0.375rem 0.625rem;
 	display: grid;
-    grid-template-columns: 18% 18% 18% 18% 18%;
-    grid-gap: 0.375rem;
-	width: 95%;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0.75rem;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .ui5-cp-root-phone .ui5-cp-recent-colors-wrapper{
