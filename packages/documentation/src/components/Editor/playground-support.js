@@ -76,10 +76,27 @@ const loadAndCheck2 = async (themeName) => {
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-theming", themeName, loadAndCheck2));
 
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const setContentDensity = (contentDensity) => {
+    setTimeout(() => {
+        debugger;
+        console.log("Message received :: " + contentDensity)
+        if (contentDensity === "Compact") {
+            document.body.classList.add("ui5-content-density-compact");
+        } else {
+            document.body.classList.remove("ui5-content-density-compact");
+        }
+    })
+}
+
 //setTheme("sap_horizon_dark");
 window.addEventListener("message", async (event) => {
     if (event.data.theme) {
-    // await loadThemeProperties(event.data.theme);
-    setTheme(event.data.theme);
+        // await loadThemeProperties(event.data.theme);
+        setTheme(event.data.theme);
+    }
+
+    if (event.data.contentDensity) {
+        setContentDensity(event.data.contentDensity);
     }
 });`
