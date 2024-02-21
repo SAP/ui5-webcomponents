@@ -1,1 +1,1 @@
-import "@ui5/webcomponents/dist/SplitButton.js";
+import "@ui5/webcomponents/dist/Slider.js";
