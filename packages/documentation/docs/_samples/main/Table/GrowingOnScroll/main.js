@@ -36,7 +36,6 @@ const loadMore = () => {
 }
 
 // Listen for "load-more" the event
-debugger;
 growingTable.addEventListener("load-more", loadMore);
 
 // Use mock data
