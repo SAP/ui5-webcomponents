@@ -399,11 +399,13 @@ class SideNavigation extends UI5Element {
 	}
 
 	getEnabledFlexibleItems() : Array<ITabbable> {
-		if (!this._overflowItem) {
-			return this.getEnabledItems(this.items);
+		const items = this.getEnabledItems(this.items);
+
+		if (this._overflowItem) {
+			items.push(this._overflowItem);
 		}
 
-		return [...this.getEnabledItems(this.items), this._overflowItem];
+		return items;
 	}
 
 	getEnabledItems(items: Array<SideNavigationItem | SideNavigationGroup>) : Array<ITabbable> {
@@ -538,6 +540,8 @@ class SideNavigation extends UI5Element {
 				item.classList.add("ui5-sn-item-hidden");
 			}
 		});
+
+		this._flexibleItemNavigation._init();
 	}
 
 	_findFocusedItem(items: Array<SideNavigationItem | SideNavigationGroup>) : SideNavigationItemBase | undefined {
