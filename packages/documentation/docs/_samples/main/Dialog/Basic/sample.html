@@ -1,0 +1,45 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+    <ui5-button id="dialogOpener">Open Dialog</ui5-button>
+
+    <ui5-dialog id="dialog" header-text="Register Form">
+        <section class="login-form">
+            <div>
+                <ui5-label for="username" required show-colon>Username</ui5-label>
+                <ui5-input id="username"></ui5-input>
+            </div>
+            <div>
+                <ui5-label for="password" required show-colon>Password</ui5-label>
+                <ui5-input id="password" type="Password" value-state="Error"></ui5-input>
+            </div>
+            <div>
+                <ui5-label for="email" type="Email" required show-colon>Email</ui5-label>
+                <ui5-input id="email"></ui5-input>
+            </div>
+            <div>
+                <ui5-label for="address" show-colon>Address</ui5-label>
+                <ui5-input id="address"></ui5-input>
+            </div>
+        </section>
+        <div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
+            <div style="flex: 1;"></div>
+            <ui5-button class="dialogCloser" design="Emphasized">Register</ui5-button>
+        </div>
+    </ui5-dialog>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

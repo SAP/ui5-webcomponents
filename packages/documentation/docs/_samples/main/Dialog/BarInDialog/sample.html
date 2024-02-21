@@ -1,0 +1,34 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+    <ui5-button id="dialogOpener">Open Dialog</ui5-button>
+
+    <ui5-dialog id="dialog">
+        <ui5-bar slot="header" design="Header">
+            <ui5-title level="H5" slot="startContent">Bar used in Header and Footer</ui5-title>
+            <ui5-button class="dialogCloser" design="Transparent" id="closeDialogButton" slot="endContent"
+                icon="decline"></ui5-button>
+        </ui5-bar>
+        <p>Adding styles for the parts to remove the default Dialog's paddings when ui5-bar is used inside Header and
+            Footer</p>
+        <ui5-bar slot="footer" design="Footer">
+            <ui5-button class="dialogCloser" design="Emphasized" slot="endContent"
+                style="min-width: 4rem;">OK</ui5-button>
+        </ui5-bar>
+    </ui5-dialog>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
