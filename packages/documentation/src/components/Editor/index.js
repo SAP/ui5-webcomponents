@@ -81,7 +81,7 @@ export default function Editor({html, js, css }) {
                     {`/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
-${js}`}
+${fixAssetPaths(js)}`}
                   </script>
                   <script type="sample/css" filename="main.css" hidden={!css || undefined}>
                     {css}
