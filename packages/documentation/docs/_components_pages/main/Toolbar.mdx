@@ -1,5 +1,8 @@
 import Basic from "../../_samples/main/Toolbar/Basic/Basic.md";
-import Variations from "../../_samples/main/Toolbar/Variations/Variations.md";
+import AlwaysOverflowingItems from "../../_samples/main/Toolbar/AlwaysOverflowingItems/AlwaysOverflowingItems.md";
+import NeverOverflowingItems from "../../_samples/main/Toolbar/NeverOverflowingItems/NeverOverflowingItems.md";
+import SpacerAndSeparator from "../../_samples/main/Toolbar/SpacerAndSeparator/SpacerAndSeparator.md";
+import ItemsAlignment from "../../_samples/main/Toolbar/ItemsAlignment/ItemsAlignment.md";
 
 <%COMPONENT_OVERVIEW%>
 
@@ -10,5 +13,20 @@ import Variations from "../../_samples/main/Toolbar/Variations/Variations.md";
 
 ## More Samples
 
-### Variations
-<Variations />
+### Always Overflowing Items
+To force items into the overflow, set "overflow-priority='AlwaysOverflow'" on the Toolbar items.
+
+<AlwaysOverflowingItems />
+
+### Never Overflowing Items
+To force items staying always visible and never overflow, set "overflow-priority='NeverOverflow'" on the Toolbar items.
+
+<NeverOverflowingItems />
+
+### Spacers and Separators
+<SpacerAndSeparator />
+
+### Items Alignment
+You can align items to the Start, or to the End via the "align-content" property
+<ItemsAlignment />
+
