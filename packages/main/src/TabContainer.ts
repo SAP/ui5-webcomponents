@@ -535,37 +535,26 @@ class TabContainer extends UI5Element {
 		}
 
 		const draggedElement = DragRegistry.getDraggedElement();
-		const dropTargets = Array.from(this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`));
-
-		if (this._getStartOverflowBtnDOM()) {
-			dropTargets.push(this._getStartOverflowBtnDOM()!);
-		}
-
-		if (this._getEndOverflowBtnDOM()) {
-			dropTargets.push(this._getEndOverflowBtnDOM()!);
-		}
-
 		const closestDropPosition = findClosestDropPosition(
-			dropTargets,
+			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)],
 			e.clientX,
 			Orientation.Horizontal,
 		);
+		const overflowButton = e.target.closest<HTMLElement>("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end]");
+		let popoverTarget = null;
 
-		if (!closestDropPosition) {
-			return;
-		}
+		if (overflowButton) {
+			popoverTarget = overflowButton;
+			e.preventDefault();
+		} else if (closestDropPosition) {
+			const dropTarget = (closestDropPosition.element as Tab).realTabReference;
+			let placements = closestDropPosition.placements;
 
-		const dropTarget = (closestDropPosition.element as Tab).realTabReference;
-		let placements = closestDropPosition.placements;
+			if (dropTarget === draggedElement) {
+				placements = placements.filter(placement => placement !== DropPlacement.On);
+			}
 
-		if (dropTarget === draggedElement) {
-			placements = placements.filter(placement => placement !== DropPlacement.On);
-		}
-
-		let acceptedPlacement;
-
-		if (isTabInStrip(closestDropPosition.element)) {
-			acceptedPlacement = placements.find(dropPlacement => {
+			const acceptedPlacement = placements.find(dropPlacement => {
 				const dragOverPrevented = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
 					source: {
 						element: draggedElement!,
@@ -585,21 +574,13 @@ class TabContainer extends UI5Element {
 
 				return false;
 			});
+
+			if (acceptedPlacement === DropPlacement.On && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
+				popoverTarget = closestDropPosition.element;
+			}
 		}
 
-		let popoverTarget = null;
-
-		if (closestDropPosition.element === this._getStartOverflowBtnDOM()) {
-			e.preventDefault();
-			popoverTarget = closestDropPosition.element;
-		} else if (closestDropPosition.element === this._getEndOverflowBtnDOM()) {
-			e.preventDefault();
-			popoverTarget = closestDropPosition.element;
-		} else if ((closestDropPosition.element as Tab).realTabReference.subTabs.length && acceptedPlacement === DropPlacement.On) {
-			popoverTarget = closestDropPosition.element;
-		}
-
-		if (isLongDragOver && popoverTarget) {
+		if (popoverTarget && isLongDragOver) {
 			this._showPopoverAt(popoverTarget, false, true);
 		} else {
 			this.responsivePopover?.close();

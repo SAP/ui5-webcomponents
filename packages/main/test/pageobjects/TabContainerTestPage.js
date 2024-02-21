@@ -23,6 +23,10 @@ class TabContainerTestPage {
 		return realTabId;
 	}
 
+	getStartOverflow(tabContainerId) {
+		return browser.$(`#${tabContainerId}`).shadow$(".ui5-tc__overflow--start [ui5-button]");
+	}
+
 	getEndOverflow(tabContainerId) {
 		return browser.$(`#${tabContainerId}`).shadow$(".ui5-tc__overflow--end [ui5-button]");
 	}

@@ -486,7 +486,9 @@ describe("TabContainer drag and drop tests", () => {
 	});
 
 	it("Moving item After another", async () => {
-		await browser.pause(10000); // TODO: this workaround avoids test crash. Find way to avoid it
+		await browser.$("#tabContainerDnd")
+		await tabContainer.getStartOverflow("tabContainerDnd")
+		await tabContainer.getEndOverflow("tabContainerDnd")
 		let displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
 		let draggedStripItem = displayedStripItems[0];
 		let dropTargetStripItem = displayedStripItems[1];
