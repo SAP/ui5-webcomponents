@@ -1,4 +1,4 @@
-<!-- playground-hide -->
+<!-- playground-fold -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,9 +9,10 @@
 </head>
 
 <body style="background-color: var(--sapBackgroundColor)">
-    <!-- playground-hide-end -->
-    <ui5-shellbar id="shellbar" primary-title="Corporate Portal" secondary-title="home"
-        logo="../assets/images/sap-logo-svg.svg" show-product-switch show-co-pilot>
+    <!-- playground-fold-end -->
+    <ui5-shellbar id="shellbar" primary-title="Corporate Portal" secondary-title="home" show-product-switch
+        show-co-pilot>
+        <img src="../assets/images/sap-logo-svg.svg" alt="SAP Logo" slot="logo" />
     </ui5-shellbar>
     <ui5-popover id="productswitch-popover" placement-type="Bottom">
         <ui5-product-switch>
@@ -41,9 +42,9 @@
         </ui5-product-switch>
 
     </ui5-popover>
-    <!-- playground-hide -->
+    <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>
 
 </html>
-<!-- playground-hide-end -->
+<!-- playground-fold-end -->
