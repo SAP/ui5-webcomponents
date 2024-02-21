@@ -17,7 +17,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findDropPosition.js";
+import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -950,7 +950,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		const closestDropPosition = findDropPosition(
+		const closestDropPosition = findClosestDropPosition(
 			this.items,
 			e.clientY,
 			Orientation.Vertical,

@@ -1,31 +1,23 @@
 let lastTarget: HTMLElement | null = null;
 let lastTargetDragOverStart = Date.now();
-const longDragOverThreshold = 1000;
+const LONG_DRAG_OVER_THRESHOLD = 1000;
 
-const longDragOverHandler = (elementToTarget: (element: HTMLElement) => HTMLElement | null) => {
+const longDragOverHandler = (targetsSelector: string) => {
 	return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<(arg0: DragEvent, arg1: boolean) => any>) => {
 		const origHandler = descriptor.value!;
 
 		descriptor.value = function handleDragOver(e: DragEvent) {
-			if (!(e.target instanceof HTMLElement)) {
-				return;
-			}
-
-			const currentTarget = elementToTarget(e.target);
-
-			if (!currentTarget) {
-				return;
-			}
-
 			let isLongDragOver = false;
 
-			if (currentTarget === lastTarget && Date.now() - lastTargetDragOverStart >= longDragOverThreshold) {
-				isLongDragOver = true;
-			}
+			if (e.target instanceof HTMLElement) {
+				const currentTarget = e.target.closest<HTMLElement>(targetsSelector);
 
-			if (currentTarget !== lastTarget) {
-				lastTarget = currentTarget;
-				lastTargetDragOverStart = Date.now();
+				if (currentTarget === lastTarget && Date.now() - lastTargetDragOverStart >= LONG_DRAG_OVER_THRESHOLD) {
+					isLongDragOver = true;
+				} else if (currentTarget !== lastTarget) {
+					lastTarget = currentTarget;
+					lastTargetDragOverStart = Date.now();
+				}
 			}
 
 			origHandler.apply(this, [e, isLongDragOver]);

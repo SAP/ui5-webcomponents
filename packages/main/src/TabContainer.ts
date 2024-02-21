@@ -27,7 +27,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import findDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findDropPosition.js";
+import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
@@ -513,14 +513,14 @@ class TabContainer extends UI5Element {
 		e.preventDefault();
 	}
 
-	@longDragOverHandler(element => element.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]"))
+	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
 	async _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
-		const draggedElement = DragRegistry.getDraggedElement();
-
-		if (!(e.target instanceof HTMLElement) || !draggedElement) {
+		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
+			this.dropIndicatorDOM!.targetReference = null;
 			return;
 		}
 
+		const draggedElement = DragRegistry.getDraggedElement();
 		const dropTargets = Array.from(this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`));
 
 		if (this._getStartOverflowBtnDOM()) {
@@ -531,7 +531,7 @@ class TabContainer extends UI5Element {
 			dropTargets.push(this._getEndOverflowBtnDOM()!);
 		}
 
-		const closestDropPosition = findDropPosition(
+		const closestDropPosition = findClosestDropPosition(
 			dropTargets,
 			e.clientX,
 			Orientation.Horizontal,
@@ -552,7 +552,7 @@ class TabContainer extends UI5Element {
 			const placementAccepted = placements.some(dropPlacement => {
 				const dragOverPrevented = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
 					source: {
-						element: draggedElement,
+						element: draggedElement!,
 					},
 					destination: {
 						element: dropTarget,
@@ -623,9 +623,9 @@ class TabContainer extends UI5Element {
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveOverEventDetail>) {
 		const { destination } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement();
-		const dropTarget = (destination.element as Tab).realTabReference;
+		const dropTarget = (destination.element as ITab).realTabReference;
 
-		if (draggedElement === dropTarget && destination.placement === DropPlacement.On) {
+		if (destination.placement === DropPlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
 			return;
 		}
 
