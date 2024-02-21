@@ -4,6 +4,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 let playgroundSupportContent = playgroundSupport("/");
 
@@ -26,13 +27,17 @@ export default function Editor({html, js, css }) {
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const [iframeName, setIframeName] = useState(`${Date.now()}`)
   const [editorVisible, setEditorVisible] = useState(true);
-  const [iframeHeight, setIframeHeight] = useState("150px");
+  const {siteConfig, siteMetadata} = useDocusaurusContext();
 
   // samples should use the pattern "../assets/..." for their assets
   // and it will be converted to the aboslute url of the documentation site
   // and served from /static
   function fixAssetPaths(html) {
-    return html.replaceAll("../assets/", `${new URL(useBaseUrl("/"), location.origin).toString()}`)
+    let origin = siteConfig.url;
+    if (process.env.NODE_ENV === 'development') {
+      origin = location.origin;
+    }
+    return html.replaceAll("../assets/", `${new URL(useBaseUrl("/"), origin).toString()}`)
   }
   function toggleEditor() {
     setEditorVisible(!editorVisible);
@@ -69,7 +74,8 @@ export default function Editor({html, js, css }) {
                   </script>
 
                   <script type="sample/js" hidden filename="playground-support.js">
-                    {playgroundSupport(new URL(useBaseUrl("/"), location.origin).toString())}
+                    {playgroundSupport(siteConfig)}
+                    {/* {playgroundSupport(new URL(useBaseUrl("/")).toString())} */}
                   </script>
                   <script type="sample/js" filename="main.js"  hidden={!js || undefined}>
                     {`/* playground-hide */
