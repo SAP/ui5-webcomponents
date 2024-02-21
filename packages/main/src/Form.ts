@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -381,8 +380,6 @@ class Form extends UI5Element {
 	}
 
 	createAdditionalCSSStyleSheet() {
-		const useAdoptedStyleSheets = document.adoptedStyleSheets && !isSafari();
-
 		[
 			{ breakpoint: "S", columns: this.columnsS },
 			{ breakpoint: "M", columns: this.columnsM },
@@ -392,11 +389,7 @@ class Form extends UI5Element {
 			const additionalStyle: string | undefined = this.getAdditionalCSS(step.breakpoint, step.columns);
 
 			if (additionalStyle) {
-				if (useAdoptedStyleSheets) {
-					this.shadowRoot!.adoptedStyleSheets = [...this.shadowRoot!.adoptedStyleSheets, this.getCSSStyleSheet(additionalStyle)];
-				} else {
-					this.shadowRoot!.children[0].append(additionalStyle);
-				}
+				this.shadowRoot!.adoptedStyleSheets = [...this.shadowRoot!.adoptedStyleSheets, this.getCSSStyleSheet(additionalStyle)];
 			}
 		});
 	}
