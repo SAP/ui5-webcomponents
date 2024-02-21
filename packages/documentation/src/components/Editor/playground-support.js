@@ -76,17 +76,25 @@ const loadAndCheck2 = async (themeName) => {
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-theming", themeName, loadAndCheck2));
 
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 
+// Content Density
 const setContentDensity = (contentDensity) => {
-    setTimeout(() => {
-        debugger;
-        console.log("Message received :: " + contentDensity)
-        if (contentDensity === "Compact") {
-            document.body.classList.add("ui5-content-density-compact");
-        } else {
-            document.body.classList.remove("ui5-content-density-compact");
-        }
-    })
+    console.log("Message received :: " + contentDensity + " applied");
+
+    if (contentDensity === "Compact") {
+        document.body.classList.add("ui5-content-density-compact");
+    } else {
+        document.body.classList.remove("ui5-content-density-compact");
+    }
+}
+
+// Text Direction
+const setDirection = (direction) => {
+    console.log("Message received :: " + direction + " applied");
+
+    document.body.setAttribute("dir", direction === "LTR" ? "ltr" : "rtl");
+    applyDirection();
 }
 
 //setTheme("sap_horizon_dark");
@@ -98,5 +106,9 @@ window.addEventListener("message", async (event) => {
 
     if (event.data.contentDensity) {
         setContentDensity(event.data.contentDensity);
+    }
+
+    if (event.data.textDirection) {
+        setDirection(event.data.textDirection);
     }
 });`

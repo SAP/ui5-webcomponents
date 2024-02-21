@@ -79,6 +79,10 @@ const config: Config = {
           type: 'custom-contentDensityNavbarItem',
           position: "right",
         },
+        {
+          type: 'custom-TextDirectionNavbarItem',
+          position: "right",
+        },
       ],
     },
     footer: {

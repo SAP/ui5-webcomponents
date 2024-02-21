@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
-import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 export default function Item() {
     const [hidden, setHidden] = useState(false);
