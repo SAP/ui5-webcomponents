@@ -124,7 +124,7 @@ class MenuItem extends UI5Element {
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String, defaultValue: "" })
+	@property({ type: String })
 	tooltip!: string;
 
 	/**

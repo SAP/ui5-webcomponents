@@ -26,7 +26,7 @@ class MenuListItem extends StandardListItem {
 	 * Defines the associated MenuItem instance
 	 * @private
 	 */
-	@property({ type: Object, multiple: false })
+	@property({ type: Object })
 	associatedItem?: MenuItem;
 
 	get _focusable() {
