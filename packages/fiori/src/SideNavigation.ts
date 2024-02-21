@@ -233,14 +233,10 @@ class SideNavigation extends UI5Element {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
-		this._getAllItems(this.items).forEach(item => {
+		this._getAllItems(this.items).concat(this._getAllItems(this.fixedItems)).forEach(item => {
 			item.sideNavCollapsed = this.collapsed;
 			item.inPopover = this.inPopover;
-		});
-
-		this._getAllItems(this.fixedItems).forEach(item => {
-			item.sideNavCollapsed = this.collapsed;
-			item.inPopover = this.inPopover;
+			item.sideNavigation = this;
 		});
 	}
 
@@ -642,7 +638,12 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _overflowItem() {
-		return this.shadowRoot!.querySelector<SideNavigationItem>(".ui5-sn-item-overflow");
+		const overflowItem = this.shadowRoot!.querySelector<SideNavigationItem>(".ui5-sn-item-overflow");
+		if (overflowItem) {
+			overflowItem.sideNavigation = this;
+		}
+
+		return overflowItem;
 	}
 
 	get isOverflow() {

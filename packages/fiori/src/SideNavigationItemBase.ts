@@ -54,6 +54,8 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	inPopover!: boolean;
 
+	_sideNavigation!: SideNavigation;
+
 	get _tooltip() {
 		return this.title || this.text;
 	}
@@ -80,16 +82,12 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.forcedTabIndex;
 	}
 
-	get sideNavigation() : SideNavigation | undefined {
-		let parentElement = this.parentElement;
+	get sideNavigation() {
+		return this._sideNavigation;
+	}
 
-		while (parentElement) {
-			if (parentElement.hasAttribute("ui5-side-navigation")) {
-				return parentElement as SideNavigation;
-			}
-
-			parentElement = parentElement.parentElement;
-		}
+	set sideNavigation(sideNavigation) {
+		this._sideNavigation = sideNavigation;
 	}
 
 	get isFixedItem() {
