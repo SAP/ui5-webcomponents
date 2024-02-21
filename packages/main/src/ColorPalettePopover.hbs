@@ -25,11 +25,10 @@
 			{{/each}}
 		</ui5-color-palette>
 	</div>
-	<bar slot="footer" class="ui5-cp-footer">
+	<div slot="footer" class="ui5-cp-footer">
 		<ui5-button
 			design="Transparent"
 			@click="{{closePopover}}"
-			slot="endContent"
 		>{{_cancelButtonLabel}}</ui5-button>
-	</bar>
+	</div>
 </ui5-responsive-popover>

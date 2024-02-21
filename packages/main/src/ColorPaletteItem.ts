@@ -69,7 +69,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	phone!: boolean;
+	onPhone!: boolean;
 
 	/**
 	 * @private
@@ -90,7 +90,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	onBeforeRendering() {
 		this._disabled = !this.value;
-		this.phone = isPhone();
+		this.onPhone = isPhone();
 		this.setAttribute("style", `background-color: ${this.value}`);
 	}
 
