@@ -476,7 +476,7 @@ describe("TabContainer drag and drop tests", () => {
 
 	const dragAndDropInPopover = async (popoverItemToDrag, popoverDropTarget, placement) => {
 		const dragOffset = await getDragOffset(popoverItemToDrag, popoverDropTarget, placement);
-
+		console.error("DRAG IN DROP IN POPOVER   ", dragOffset.y)
 		await popoverItemToDrag.dragAndDrop({ x: 0, y: dragOffset.y });
 	}
 
@@ -546,39 +546,38 @@ describe("TabContainer drag and drop tests", () => {
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
 
-	// it("Moving item After another in end overflow popover", async () => {
-	// 	await tabContainer.getEndOverflow("tabContainerDnd").click();
+	it("Moving item After another in end overflow popover", async () => {
+		await tabContainer.getEndOverflow("tabContainerDnd").click();
 
-	// 	let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
-	// 	let draggedPopoverItem = displayedPopoverItems[0];
-	// 	let dropTargetPopoverItem = displayedPopoverItems[2];
-	// 	let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		let draggedPopoverItem = displayedPopoverItems[0];
+		let dropTargetPopoverItem = displayedPopoverItems[2];
+		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		
-	// 	await browser.pause(10000); // TODO: this workaround avoids test crash. Find way to avoid it
-	// 	await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
-	// 	console.error(currentOrder);
-	// 	let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
-	// 	currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
-	// 	console.error(currentOrder);
-	// 	console.error(expectedOrder);
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
+		console.error(currentOrder);
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		console.error(currentOrder);
+		console.error(expectedOrder);
 
-	// 	assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
-	// });
+		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
+	});
 
-	// it("Moving item Before another in end overflow popover", async () => {
-	// 	let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
-	// 	let draggedPopoverItem = displayedPopoverItems[2];
-	// 	let dropTargetPopoverItem = displayedPopoverItems[1];
-	// 	let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+	it("Moving item Before another in end overflow popover", async () => {
+		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		let draggedPopoverItem = displayedPopoverItems[2];
+		let dropTargetPopoverItem = displayedPopoverItems[1];
+		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
-	// 	await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
-	// 	await browser.pause(10000); // TODO: this workaround avoids test crash. Find way to avoid it
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
+		await browser.pause(10000); // TODO: this workaround avoids test crash. Find way to avoid it
 
-	// 	let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
-	// 	currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
-	// 	assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 
-	// 	// close the popover
-	// 	await tabContainer.getEndOverflow("tabContainerDnd").click();
-	// });
+		// close the popover
+		await tabContainer.getEndOverflow("tabContainerDnd").click();
+	});
 });
