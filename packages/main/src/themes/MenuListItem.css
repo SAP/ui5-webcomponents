@@ -1,5 +1,10 @@
 :host([disabled]) {
 	pointer-events: initial;
+	opacity: initial;
+}
+
+:host([disabled])::part(content) {
+    opacity: var(--_ui5-listitembase_disabled_opacity);
 }
 
 /* hovered and active */
