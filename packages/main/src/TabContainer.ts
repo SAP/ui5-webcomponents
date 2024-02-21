@@ -528,7 +528,7 @@ class TabContainer extends UI5Element {
 	}
 
 	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
-	async _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
+	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
 		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;
@@ -562,8 +562,10 @@ class TabContainer extends UI5Element {
 			placements = placements.filter(placement => placement !== DropPlacement.On);
 		}
 
+		let acceptedPlacement;
+
 		if (isTabInStrip(closestDropPosition.element)) {
-			const placementAccepted = placements.some(dropPlacement => {
+			acceptedPlacement = placements.find(dropPlacement => {
 				const dragOverPrevented = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
 					source: {
 						element: draggedElement!,
@@ -583,26 +585,22 @@ class TabContainer extends UI5Element {
 
 				return false;
 			});
-
-			if (!placementAccepted) {
-				this.dropIndicatorDOM!.targetReference = null;
-			}
 		}
 
 		let popoverTarget = null;
 
 		if (closestDropPosition.element === this._getStartOverflowBtnDOM()) {
 			e.preventDefault();
-			popoverTarget = e.target;
+			popoverTarget = closestDropPosition.element;
 		} else if (closestDropPosition.element === this._getEndOverflowBtnDOM()) {
 			e.preventDefault();
-			popoverTarget = e.target;
-		} else if ((closestDropPosition.element as Tab).realTabReference.subTabs.length) {
+			popoverTarget = closestDropPosition.element;
+		} else if ((closestDropPosition.element as Tab).realTabReference.subTabs.length && acceptedPlacement === DropPlacement.On) {
 			popoverTarget = closestDropPosition.element;
 		}
 
 		if (isLongDragOver && popoverTarget) {
-			await this._showPopoverAt(popoverTarget, false, true);
+			this._showPopoverAt(popoverTarget, false, true);
 		} else {
 			this.responsivePopover?.close();
 		}
