@@ -32,7 +32,7 @@ export default function Item() {
     return (
         <>
             <div className="navbar__item dropdown dropdown--hoverable dropdown--right">
-                <a href="#" aria-haspopup="true" aria-expanded="false" role="button" className="navbar__link">Direction</a>
+                <a aria-haspopup="true" aria-expanded="false" role="button" className="navbar__link" style={{cursor: "pointer"}}>Direction</a>
                     <ul className={clsx('dropdown__menu', {
                             'navbar-dropdown-hidden': hidden
                         })
