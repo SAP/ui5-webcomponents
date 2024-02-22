@@ -29,6 +29,31 @@ export default function Editor({html, js, css }) {
   const [editorVisible, setEditorVisible] = useState(true);
   const {siteConfig, siteMetadata} = useDocusaurusContext();
 
+  function addImportMap(html) {
+    return html.replace("<head>", `
+<head>
+    <script type="importmap">
+      {
+        "imports": {
+          "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
+          "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
+          "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
+          "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/",
+          "lit-html": "${getHostBaseUrl()}local-cdn/lit-html/lit-html.js",
+          "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/"
+        }
+      }
+    </script>
+`)
+  }
+
+  function getHostBaseUrl() {
+    let origin = siteConfig.url;
+    if (process.env.NODE_ENV === 'development') {
+      origin = location.origin;
+    }
+    return new URL(useBaseUrl("/"), origin).toString();
+  }
   // samples should use the pattern "../assets/..." for their assets
   // and it will be converted to the aboslute url of the documentation site
   // and served from /static
@@ -37,7 +62,7 @@ export default function Editor({html, js, css }) {
     if (process.env.NODE_ENV === 'development') {
       origin = location.origin;
     }
-    return html.replaceAll("../assets/", `${new URL(useBaseUrl("/"), origin).toString()}`)
+    return html.replaceAll("../assets/", getHostBaseUrl())
   }
   function toggleEditor() {
     setEditorVisible(!editorVisible);
@@ -60,6 +85,10 @@ export default function Editor({html, js, css }) {
       // iframe property available after element is defined
       previewRef.current.iframe.name = iframeName;
     })
+
+    return function () {
+      console.log("cleanup");
+    }
   }, []);
 
   return (
@@ -69,8 +98,18 @@ export default function Editor({html, js, css }) {
             <>
               <button onClick={toggleEditor}>toggle editor</button>
               <playground-project ref={projectRef} id="btn-project" resizable>
+                  <script type="sample/importmap">
+                    {`{
+                      "imports": {
+                        "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
+                        "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
+                        "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
+                        "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/"
+                      }
+                    }`}
+                  </script>
                   <script type="sample/html" filename="index.html" hidden={!html || undefined}>
-                      {fixAssetPaths(html)}
+                      {addImportMap(fixAssetPaths(html))}
                   </script>
 
                   <script type="sample/js" hidden filename="playground-support.js">

@@ -7,6 +7,7 @@
 /docs/components/main
 /docs/docs/
 /docs/samples/**/*.mdx
+/local-cdn
 
 # Generated files
 .docusaurus
