@@ -25,6 +25,11 @@
   justify-content: center;
 }
 
+.logoMain {
+  width: 9rem;
+  height: 9rem;
+}
+
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;

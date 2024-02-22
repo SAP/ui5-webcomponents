@@ -1,0 +1,72 @@
+.demo-apps {
+  margin-top: 10rem;
+  white-space: nowrap;
+  margin-bottom: 10rem;
+}
+
+.demo-apps .title {
+  font-weight: 700;
+  font-size: 2.25rem;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.demo-apps .frameworks {
+  display: flex;
+  justify-content: center;
+  flex-direction: center;
+}
+
+.demo-apps .frameworks .framework {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-inline-end: 10rem;
+  margin-bottom:  10rem;
+}
+
+.demo-apps .frameworks .framework:last-child {
+  margin-inline-end: 0;
+  margin-bottom:  10rem;
+}
+
+.demo-apps .frameworks .framework .logo {
+  width:  5.625rem;
+  height:  5.625rem;
+  margin-bottom: 1.125rem;
+}
+
+.demo-apps .frameworks .framework .link {
+  color: #3584BE;
+  text-align: center;
+  font-size: 0.875rem;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
+}
+
+.demo-apps .frameworks .framework .link:last-child {
+  margin-bottom: 0;
+}
+
+
+
+@media (max-width: 700px) {
+  .demo-apps .frameworks {
+    flex-direction: column;
+  }
+  .demo-apps .frameworks .framework {
+    margin: 4rem 0;
+  }
+
+  .demo-apps .frameworks .framework:last-child {
+    margin: 4rem 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .demo-apps .frameworks .framework {
+    margin: 4rem 2rem;
+  }
+}

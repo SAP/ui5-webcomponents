@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageCompatibility from '@site/src/components/HomepageCompatibility';
+import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
@@ -13,6 +14,8 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div  className={clsx('container', styles.container)}>
+
+        <img className={styles.logoMain} src="/ui5-webcomponents/img/compatibility-frameworks/UI5.svg" alt="UI5 Web Components"></img>
         <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
         <span className={styles.heroTitle__UI5}>UI5</span> Web Components
         </Heading>
@@ -41,6 +44,7 @@ export default function Home(): JSX.Element {
       <main>
         <HomepageFeatures />
         <HomepageCompatibility />
+        <HomepageDemoApps />
       </main>
 
     </Layout>

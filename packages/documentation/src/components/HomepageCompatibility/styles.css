@@ -1,18 +1,3 @@
-/* :root {
-  --compatibility-container-margin-top: 2rem;
-  --compatibility-container-margin-bottom: 2rem;
-  --compatibility-container-title-margin-bottom: 1rem;
-  --compatibility-container-title-font-size: 2.25rem;
-  --compatibility-flex-direction: row;
-  --compatibility-container-logo-margin-inline-end: 2rem;
-  --compatibility-container-margin-inline-end: 1rem;
-
-  --compatibility-container-logo-width: 2.25rem;
-  --compatibility-container-logo-height: 2.25rem;
-
-  --compatibility-container-logo-first-child-margin-inline-start: 2rem;
-} */
-
 .compatibility__article {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -24,8 +9,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .compatibility .compatibility__container {
@@ -48,15 +33,27 @@
   text-align: center;
   font-weight: 700;
   font-size: 2.25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 4rem;
 }
 
 .compatibility .compatibility__logo {
-  margin-inline-end: 2rem;
+  margin-inline-end: 9rem;
   width: 5.25rem;
   height: 5.25rem;
 }
 
 .compatibility .compatibility__logo:last-child {
   margin-inline-end: 0;
+}
+
+@media (max-width: 600px) {
+  .compatibility .compatibility__logo {
+    margin-inline-end: 2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .compatibility .compatibility__logo {
+    margin-inline-end: 4rem;
+  }
 }
