@@ -786,7 +786,7 @@ class List extends UI5Element {
 	}
 
 	getEnabledItems(): Array<ListItemBase> {
-		return this.getItems().filter(item => !item.disabled);
+		return this.getItems().filter(item => item._focusable);
 	}
 
 	getItems(): Array<ListItemBase> {
@@ -882,7 +882,7 @@ class List extends UI5Element {
 		}
 
 		if (lastTabbableEl === target) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
+			if (this.getFirstItem(x => x.selected && x._focusable)) {
 				this.focusFirstSelectedItem();
 			} else if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -1135,7 +1135,7 @@ class List extends UI5Element {
 	 */
 	focusFirstItem() {
 		// only enabled items are focusable
-		const firstItem = this.getFirstItem(x => !x.disabled);
+		const firstItem = this.getFirstItem(x => x._focusable);
 
 		if (firstItem) {
 			firstItem.focus();
@@ -1152,7 +1152,7 @@ class List extends UI5Element {
 
 	focusFirstSelectedItem() {
 		// only enabled items are focusable
-		const firstSelectedItem = this.getFirstItem(x => x.selected && !x.disabled);
+		const firstSelectedItem = this.getFirstItem(x => x.selected && x._focusable);
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
