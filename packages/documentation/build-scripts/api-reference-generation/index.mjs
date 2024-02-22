@@ -21,15 +21,6 @@ packages.forEach(async (packageName, index) => {
     await fs.mkdir(`./docs/components/${packageName}/enums`, { recursive: true })
     await fs.mkdir(`./docs/components/${packageName}/interfaces`, { recursive: true })
 
-    await fs.writeFile(path.join(`./docs/components/${packageName}/${packageName.charAt(0).toUpperCase() + packageName.slice(1)}.mdx`), `---
-title: ${packageName.charAt(0).toUpperCase() + packageName.slice(1)}
-sidebar_position: ${index}
----
-
-import DocCardList from '@theme/DocCardList';
-
-<DocCardList />`)
-
     Promise.all(["interfaces", "enums"].map(async typeName => {
         await fs.writeFile(path.join(`./docs/components/${packageName}/${typeName}/README.mdx`), `---
 title: ${typeName.charAt(0).toUpperCase() + typeName.slice(1)}
