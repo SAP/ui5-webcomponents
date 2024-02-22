@@ -31,6 +31,7 @@ import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js"
 import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
 import {
@@ -384,7 +385,8 @@ class TabContainer extends UI5Element {
 	_itemsFlat?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
 	_handleResizeBound: () => void;
-	_staticAreaItemListenerAttached = false;
+	_setDraggedElement?: SetDraggedElementFunction;
+	_setDraggedElementInStaticArea?: SetDraggedElementFunction;
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
@@ -461,17 +463,18 @@ class TabContainer extends UI5Element {
 	onEnterDOM() {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 		DragRegistry.subscribe(this);
-		DragRegistry.registerSelfManagedDragArea(this);
+		this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
 		DragRegistry.unsubscribe(this);
-		DragRegistry.deregisterSelfManagedDragArea(this);
+		DragRegistry.removeSelfManagedArea(this);
+		this._setDraggedElement = undefined;
 
-		if (this.staticAreaItem && this._staticAreaItemListenerAttached) {
-			DragRegistry.deregisterSelfManagedDragArea(this.staticAreaItem);
-			this._staticAreaItemListenerAttached = false;
+		if (this.staticAreaItem && this._setDraggedElementInStaticArea) {
+			DragRegistry.removeSelfManagedArea(this.staticAreaItem);
+			this._setDraggedElementInStaticArea = undefined;
 		}
 	}
 
@@ -520,7 +523,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		DragRegistry.setDraggedElement((e.target as Tab).realTabReference);
+		this._setDraggedElement!((e.target as Tab).realTabReference);
 	}
 
 	_onHeaderDragEnter(e: DragEvent) {
@@ -1402,12 +1405,11 @@ class TabContainer extends UI5Element {
 	async _respPopover() {
 		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
 
-		if (!this._staticAreaItemListenerAttached) {
-			DragRegistry.registerSelfManagedDragArea(this.staticAreaItem!);
+		if (!this._setDraggedElementInStaticArea) {
+			this._setDraggedElementInStaticArea = DragRegistry.addSelfManagedArea(this.staticAreaItem!);
 			staticAreaItemDomRef!.addEventListener("dragstart", e => {
-				DragRegistry.setDraggedElement((e.target as Tab).realTabReference);
+				this._setDraggedElementInStaticArea!((e.target as Tab).realTabReference);
 			});
-			this._staticAreaItemListenerAttached = true;
 		}
 
 		return staticAreaItemDomRef!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;

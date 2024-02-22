@@ -29,6 +29,7 @@ const ondrop = () => {
 const setDraggedElement = (element: HTMLElement | null) => {
 	draggedElement = element;
 };
+type SetDraggedElementFunction = typeof setDraggedElement;
 
 const getDraggedElement = () => {
 	return draggedElement;
@@ -67,21 +68,25 @@ const unsubscribe = (subscriber: UI5Element) => {
 	}
 };
 
-const registerSelfManagedDragArea = (area: HTMLElement | ShadowRoot) => {
+const addSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
 	selfManagedDragAreas.add(area);
+
+	return setDraggedElement;
 };
 
-const deregisterSelfManagedDragArea = (area: HTMLElement | ShadowRoot) => {
+const removeSelfManagedArea = (area: HTMLElement | ShadowRoot) => {
 	selfManagedDragAreas.delete(area);
 };
 
 const DragRegistry = {
 	subscribe,
 	unsubscribe,
-	registerSelfManagedDragArea,
-	deregisterSelfManagedDragArea,
+	addSelfManagedArea,
+	removeSelfManagedArea,
 	getDraggedElement,
-	setDraggedElement,
 };
 
 export default DragRegistry;
+export type {
+	SetDraggedElementFunction,
+};
