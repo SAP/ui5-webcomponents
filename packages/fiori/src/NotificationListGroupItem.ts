@@ -13,6 +13,7 @@ import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupI
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 
