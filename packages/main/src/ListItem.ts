@@ -386,7 +386,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive) {
+		if (this.isInactive || this.disabled) {
 			return;
 		}
 		if (isEnter(e as KeyboardEvent)) {
