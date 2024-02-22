@@ -21,3 +21,35 @@
   align-items: center;
   justify-content: center;
 }
+
+.container {
+  text-align: start;
+}
+
+.heroTitle__UI5 {
+  color: #333;
+}
+
+.heroSubtitle {
+  color: #ebedf0;
+  font-weight: bold;
+}
+
+.hero__subtitle__part1,
+.hero__subtitle__part2 {
+  color: #fff;
+  font-weight: bold;
+}
+
+
+@media screen and (min-width: 600px) {
+  .heroTitle {
+    font-weight: 800;
+    font-size: 4.5rem;
+  }
+  
+  .heroSubtitle {
+    width: 40%;
+  }
+}
+

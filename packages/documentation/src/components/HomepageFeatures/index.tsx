@@ -1,19 +1,25 @@
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
-import handURL from "@site/static/img/hand.png";
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+// import builidings from "@site/static/img/features/builidings.png";
+
+// @ts-ignore
+// import frame from "/img/features/Frame.png";
+// // @ts-ignore
+// import hand from "img/features/hand.png";
 
 type FeatureItem = {
   title: string;
-  img?:  React.ComponentType<React.ComponentProps<'img'>>;
-  Svg?: React.ComponentType<React.ComponentProps<'svg'>>;
+  src?: string;
   description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    src: require('@site/static/img/features/Frame.png').default,
     description: (
       <>
        Based on web standards - just HTML!
@@ -24,7 +30,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Lightweight',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    src: require('@site/static/img/features/hand.png').default,
     description: (
       <>
        Tiny - come with a minimal footprint.
@@ -35,7 +41,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Enterprise Ready',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    src: require('@site/static/img/features/buildings.png').default,
     description: (
       <>
        Implement the SAP Fiori design language.
@@ -46,11 +52,11 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, src, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <img className="feature__image "src={src} />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>

@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'UI5 Web Components',
-  tagline: 'Enterprise-flavored sugar on top of native APIs!',
+  tagline: 'An open-source UI library for building enterprise-ready apps!',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
