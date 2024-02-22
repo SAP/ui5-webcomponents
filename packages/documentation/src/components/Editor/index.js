@@ -26,7 +26,7 @@ export default function Editor({html, js, css }) {
 
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const [iframeName, setIframeName] = useState(`${Date.now()}`)
-  const [editorVisible, setEditorVisible] = useState(true);
+  const [editorVisible, setEditorVisible] = useState(false);
   const {siteConfig, siteMetadata} = useDocusaurusContext();
 
   function addImportMap(html) {
@@ -64,6 +64,7 @@ export default function Editor({html, js, css }) {
     }
     return html.replaceAll("../assets/", getHostBaseUrl())
   }
+
   function toggleEditor() {
     setEditorVisible(!editorVisible);
   }
@@ -96,7 +97,6 @@ export default function Editor({html, js, css }) {
     //      {
     //          () =>
             <>
-              <button onClick={toggleEditor}>toggle editor</button>
               <playground-project ref={projectRef} id="btn-project" resizable>
                   <script type="sample/importmap">
                     {`{
@@ -129,8 +129,9 @@ ${fixAssetPaths(js)}`}
               <playground-preview style={{height: "unset"}} ref={previewRef}></playground-preview>
                 <div style={{display: editorVisible ? "block" : "none"}}>
                   <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
-                  <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
+                  <playground-file-editor style={{border: "1px solid #ccc"}} line-numbers ref={fileEditorRef}></playground-file-editor>
                 </div>
+                <button className="button button--secondary" onClick={toggleEditor} style={{padding: "0.25rem 0.5rem", margin: "0.25rem 0"}}>Edit</button>
             </>
     //      }
     //  </BrowserOnly>
