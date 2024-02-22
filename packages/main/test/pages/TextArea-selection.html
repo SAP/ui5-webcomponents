@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TextArea selection</title>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+</head>
+<body class="sapUiSizeCompact">
+	<ui5-textarea id="button-area" style="height: 320px;" value="Ipsum enim esse ipsum cupidatat ex veniam labore quis irure. Eiusmod labore anim anim nulla aute ut. Aliqua officia non ex cupidatat consequat non magna eiusmod aliquip laborum aliqua excepteur exercitation. Pariatur deserunt dolore aute sint in minim nisi magna proident proident consequat exercitation consectetur nostrud. Sint voluptate consectetur eu mollit non ullamco minim. In enim velit ea Lorem fugiat nulla esse deserunt nulla cupidatat non. Excepteur proident non ad anim enim culpa occaecat magna incididunt consequat do. Enim minim quis nisi enim est voluptate irure laborum ea cillum eu. Aliquip labore officia amet non exercitation dolore enim incididunt ullamco irure nulla ad nulla et. Ipsum enim esse ipsum cupidatat ex veniam labore quis irure. Eiusmod labore anim anim nulla aute ut. Aliqua officia non ex cupidatat consequat non magna eiusmod aliquip laborum aliqua excepteur exercitation. Pariatur deserunt dolore aute sint in minim nisi magna proident proident consequat exercitation consectetur nostrud. Sint voluptate consectetur eu mollit non ullamco minim. In enim velit ea Lorem fugiat nulla esse deserunt nulla cupidatat non. Excepteur proident non ad anim enim culpa occaecat magna incididunt consequat do. Enim minim quis nisi enim est voluptate irure laborum ea cillum eu. Aliquip labore officia amet non exercitation dolore enim incididunt ullamco irure nulla ad nulla et."></ui5-textarea>
+	<ui5-button id="btn" icon="ai" id="btn" design="Emphasized"></ui5-button>
+	<br>
+	<br>
+	<ui5-textarea id="popover-area" style="height: 320px;" value="Ipsum enim esse ipsum cupidatat ex veniam labore quis irure. Eiusmod labore anim anim nulla aute ut. Aliqua officia non ex cupidatat consequat non magna eiusmod aliquip laborum aliqua excepteur exercitation. Pariatur deserunt dolore aute sint in minim nisi magna proident proident consequat exercitation consectetur nostrud. Sint voluptate consectetur eu mollit non ullamco minim. In enim velit ea Lorem fugiat nulla esse deserunt nulla cupidatat non. Excepteur proident non ad anim enim culpa occaecat magna incididunt consequat do. Enim minim quis nisi enim est voluptate irure laborum ea cillum eu. Aliquip labore officia amet non exercitation dolore enim incididunt ullamco irure nulla ad nulla et. Ipsum enim esse ipsum cupidatat ex veniam labore quis irure. Eiusmod labore anim anim nulla aute ut. Aliqua officia non ex cupidatat consequat non magna eiusmod aliquip laborum aliqua excepteur exercitation. Pariatur deserunt dolore aute sint in minim nisi magna proident proident consequat exercitation consectetur nostrud. Sint voluptate consectetur eu mollit non ullamco minim. In enim velit ea Lorem fugiat nulla esse deserunt nulla cupidatat non. Excepteur proident non ad anim enim culpa occaecat magna incididunt consequat do. Enim minim quis nisi enim est voluptate irure laborum ea cillum eu. Aliquip labore officia amet non exercitation dolore enim incididunt ullamco irure nulla ad nulla et."></ui5-textarea>
+	<div id="custom-opener"></div>
+	<ui5-popover id="popup" id="popup" placement-type="Bottom"></ui5-popover>
+
+	<script type="module">
+		const getTextAreaSelection = window["sap-ui-webcomponents-bundle"].getTextAreaSelection;
+		const popoverArea = document.getElementById("popover-area");
+		const buttonArea = document.getElementById("button-area");
+		const popup = document.getElementById("popup");
+		const button = document.getElementById("btn");
+		const opener = document.getElementById("custom-opener");
+		const repositionButton = (rect) => {
+			button.style.display = "block"
+			button.style.left = `${rect.left + rect.width - button.getBoundingClientRect().width}px`;
+			button.style.top = `${rect.top + rect.height}px`;
+			button.style.display = "inline-block"
+		};
+		const hideButton = () => {
+			button.style.display = "none";
+		};
+		const closePopover = () => {
+			popup.close();
+		};
+		const repositionPopover = (rect) => {
+			opener.style.display = "inline-block"
+			opener.style.left = `${rect.left + rect.width - (opener.getBoundingClientRect().width / 2)}px`;
+			opener.style.top = `${rect.top + rect.height}px`;
+			popup.showAt(opener, true);
+		};
+
+		buttonArea.addEventListener("ui5-select", () => {
+			console.log("select")
+			repositionButton(getTextAreaSelection(buttonArea));
+		});
+
+		buttonArea.addEventListener("click", (e) => {
+			hideButton();
+		});
+
+		buttonArea.addEventListener("ui5-scroll", (e) => {
+			hideButton();
+		});
+
+		buttonArea.addEventListener("focusout", (e) => {
+			if (e.relatedTarget !== button) {
+				hideButton();
+			}
+		});
+
+		popoverArea.addEventListener("ui5-select", () => {
+			repositionPopover(getTextAreaSelection(popoverArea));
+		});
+
+		popoverArea.addEventListener("click", (e) => {
+			closePopover();
+		});
+
+		popoverArea.addEventListener("ui5-scroll", (e) => {
+			closePopover();
+		});
+
+	</script>
+
+	<style>
+
+		#btn,
+		#custom-opener {
+			display: none;
+			position: absolute;
+		}
+
+		#custom-opener {
+			width: 5px;
+			height: 5px;
+			background-color: transparent;
+		}
+	</style>
+</html>
