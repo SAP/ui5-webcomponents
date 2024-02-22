@@ -6,6 +6,7 @@ import playgroundSupport from "./playground-support.js";
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
+console.log("EDITOR IMORTED");
 let playgroundSupportContent = playgroundSupport("/");
 
 if (ExecutionEnvironment.canUseDOM) {
@@ -25,7 +26,7 @@ export default function Editor({html, js, css }) {
   const fileEditorRef = useRef(null);
 
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
-  const [iframeName, setIframeName] = useState(`${Date.now()}`)
+  const [iframeName, setIframeName] = useState(`${performance.now()}`)
   const [editorVisible, setEditorVisible] = useState(false);
   const {siteConfig, siteMetadata} = useDocusaurusContext();
 
@@ -38,6 +39,7 @@ export default function Editor({html, js, css }) {
           "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
           "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
           "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
+          "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
           "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/",
           "lit-html": "${getHostBaseUrl()}local-cdn/lit-html/lit-html.js",
           "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/"
@@ -104,6 +106,7 @@ export default function Editor({html, js, css }) {
                         "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
                         "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
                         "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
+                        "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
                         "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/"
                       }
                     }`}
