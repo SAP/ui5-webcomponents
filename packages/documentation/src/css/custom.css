@@ -91,3 +91,7 @@
 .navbar-dropdown-hidden {
   display: none;
 }
+
+.hero--primary {
+  --ifm-hero-background-color: #fff;
+}
