@@ -104,14 +104,14 @@ type ExceededText = {
 /**
  * Fired when some text has been selected.
  *
- * @experimental
+ * @public
  */
 @event("select")
 
 /**
  * Fired when textarea is scrolled.
  *
- * @experimental
+ * @public
  */
 @event("scroll")
 
