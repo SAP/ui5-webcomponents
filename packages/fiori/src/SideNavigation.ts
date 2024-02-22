@@ -433,28 +433,30 @@ class SideNavigation extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const activeElement = document.activeElement as SideNavigationItemBase;
-		if (this._getAllItems(this.items).indexOf(activeElement) === -1) {
+		const shadowRootActiveElement = this.shadowRoot!.activeElement;
+		if (shadowRootActiveElement instanceof SideNavigationItem && shadowRootActiveElement.isOverflow) {
+			return;
+		}
+
+		let activeElement = document.activeElement;
+
+		if (activeElement
+			&& !(activeElement instanceof SideNavigationItemBase)
+			&& activeElement.shadowRoot) {
+			activeElement = activeElement.shadowRoot.activeElement;
+		}
+
+		if (!(activeElement instanceof SideNavigationItemBase) || this._getAllItems(this.items).indexOf(activeElement) === -1) {
 			const selectedItem = this._findSelectedItem(this.items);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
-			} else {
-				const focusedItem = this._findFocusedItem(this.items);
-				if (!focusedItem) {
-					this._flexibleItemNavigation.setCurrentItem(this.items[0]);
-				}
 			}
 		}
 
-		if (this._getAllItems(this.fixedItems).indexOf(activeElement) === -1) {
+		if (!(activeElement instanceof SideNavigationItemBase) || this._getAllItems(this.fixedItems).indexOf(activeElement) === -1) {
 			const selectedItem = this._findSelectedItem(this.fixedItems);
 			if (selectedItem) {
 				this._fixedItemNavigation.setCurrentItem(selectedItem);
-			} else {
-				const focusedItem = this._findFocusedItem(this.fixedItems);
-				if (!focusedItem) {
-					this._fixedItemNavigation.setCurrentItem(this.fixedItems[0]);
-				}
 			}
 		}
 
