@@ -45,7 +45,7 @@ class GridRow extends UI5Element {
 	cells!: Array<GridCell>;
 
 	onEnterDOM(): void {
-		this.setAttribute("role", "row");
+		this.role = "row";
 	}
 }
 

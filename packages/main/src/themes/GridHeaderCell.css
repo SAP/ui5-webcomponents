@@ -5,7 +5,7 @@
 }
 
 :host(:first-child) {
-    padding-inline-start: 1rem;;
+    padding-inline-start: 1rem;
 }
 
 :host(:empty) {

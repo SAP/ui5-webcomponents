@@ -7,7 +7,7 @@ import GridHeaderRowTemplate from "./generated/templates/GridHeaderRowTemplate.l
 
 // Styles
 import GridHeaderRowCss from "./generated/themes/GridHeaderRow.css.js";
-import GridTableColumn from "./GridColumn.js";
+import GridHeaderCell from "./GridHeaderCell.js";
 
 /**
  * @class
@@ -42,9 +42,9 @@ import GridTableColumn from "./GridColumn.js";
  */
 class GridHeaderRow extends UI5Element {
 	/**
-	 * Defines the configuration for the columns of the component.
+	 * Defines the cells of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-column</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-header-cell</code> for the intended design.
 	 *
 	 * @public
 	 */
@@ -56,14 +56,14 @@ class GridHeaderRow extends UI5Element {
 			slots: false,
 		},
 	})
-	columns!: Array<GridTableColumn>;
+	cells!: Array<GridHeaderCell>;
 
 	onEnterDOM(): void {
-		this.setAttribute("role", "row");
+		this.role = "row";
 	}
 
 	onBeforeRendering(): void {
-		this.parentElement!.style.gridTemplateColumns = this.columns.map(c => c.width || "auto").join(" ") || "";
+		this.parentElement!.style.gridTemplateColumns = this.cells.map(c => c.width || "auto").join(" ") || "";
 	}
 }
 

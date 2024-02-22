@@ -42,8 +42,8 @@ class GridCell extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onEnterDOM(): void {
-		this.setAttribute("role", "gridcell");
-		this.setAttribute("tabindex", "0");
+		this.role = "gridcell";
+		this.tabIndex = 0;
 	}
 }
 

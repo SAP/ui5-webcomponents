@@ -47,20 +47,17 @@ class Grid extends UI5Element {
 	rows!: Array<GridRow>;
 
 	/**
-	 * Defines the column row of the component.
+	 * Defines the header row of the component.
 	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-column-row</code> for the intended design.
+	 * <b>Note:</b> Use <code>ui5-grid-header-row</code> for the intended design.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	columnrow!: Array<GridHeaderRow>;
+	header!: Array<GridHeaderRow>;
 
 	onEnterDOM(): void {
-		this.setAttribute("role", "grid");
-	}
-
-	onBeforeRendering() {
+		this.role = "grid";
 	}
 }
 

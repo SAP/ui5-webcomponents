@@ -4,10 +4,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import GridColumnTemplate from "./generated/templates/GridColumnTemplate.lit.js";
+import GridHeaderCellTemplate from "./generated/templates/GridHeaderCellTemplate.lit.js";
 
 // Styles
-import GridColumnCss from "./generated/themes/GridColumn.css.js";
+import GridHeaderCellCss from "./generated/themes/GridHeaderCell.css.js";
 
 /**
  * @class
@@ -17,23 +17,23 @@ import GridColumnCss from "./generated/themes/GridColumn.css.js";
  *
  * <h3>Usage</h3>
  *
- * For the <code>ui5-grid-column</code>
+ * For the <code>ui5-grid-header-cell</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import @ui5/webcomponents/dist/GridColumn.js";</code>
+ * <code>import @ui5/webcomponents/dist/GridHeaderCell.js";</code>
  *
  * @constructor
  * @extends UI5Element
  * @public
  */
 @customElement({
-	tag: "ui5-grid-column",
+	tag: "ui5-grid-header-cell",
 	renderer: litRender,
-	styles: GridColumnCss,
-	template: GridColumnTemplate,
+	styles: GridHeaderCellCss,
+	template: GridHeaderCellTemplate,
 	dependencies: [],
 })
-class GridColumn extends UI5Element {
+class GridHeaderCell extends UI5Element {
 	/**
 	 * Defines the header of the component.
 	 *
@@ -46,11 +46,11 @@ class GridColumn extends UI5Element {
 	width!: string;
 
 	onEnterDOM(): void {
-		this.setAttribute("role", "columnheader");
-		this.setAttribute("tabindex", "0");
+		this.role = "columnheader";
+		this.tabIndex = 0;
 	}
 }
 
-GridColumn.define();
+GridHeaderCell.define();
 
-export default GridColumn;
+export default GridHeaderCell;
