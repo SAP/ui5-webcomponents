@@ -148,7 +148,7 @@ type DatePickerInputEventDetail = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
+ * <code>import "@ui5/webcomponents/dist/DatePicker.js";</code>
  *
  * @constructor
  * @extends DateComponentBase

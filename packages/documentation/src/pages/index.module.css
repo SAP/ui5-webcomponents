@@ -19,11 +19,6 @@
   color: var(--ifm-color-primary);
 }
 
-.hero__subtitle__part1,
-.hero__subtitle__part2 {
-  /* color: var(--ifm-color-primary); */
-}
-
 .buttons {
   display: flex;
   align-items: center;
