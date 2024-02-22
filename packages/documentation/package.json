@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "generate-api-reference": "rimraf ./docs/components && node ./build-scripts/api-reference-generation/index.mjs",
-    "generate-documentation": "rimraf ./docs/documentation && node ./build-scripts/documentation-generation/index.mjs",
+    "generate-api-reference": "rimraf ./docs/components/fiori && rimraf ./docs/components/main && node ./build-scripts/api-reference-generation/index.mjs",
+    "generate-documentation": "rimraf ./docs/docs && node ./build-scripts/documentation-generation/index.mjs",
     "generate-all": "yarn generate-api-reference && yarn generate-documentation",
     "docusaurus": "docusaurus",
     "start": "yarn generate-all && docusaurus start",

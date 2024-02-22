@@ -35,10 +35,8 @@ const config: Config = {
       'classic',
       {
         docs: {
+          routeBasePath: '/',
           sidebarPath: './sidebars.ts',
-        },
-        blog: {
-          showReadingTime: true,
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -60,16 +58,14 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'documentationSidebar',
-          position: 'left',
-          label: 'Docs',
+          to: 'docs',
+          label: 'Documentation',
+          activeBasePath: 'docs',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'componentsSidebar',
-          position: 'left',
+          to: 'components',
           label: 'Components',
+          activeBasePath: 'components',
         },
         {
           type: 'custom-themeNavbarItem',

@@ -58,4 +58,4 @@ function copyFolderRecursiveSync(source, target) {
 }
 
 
-copyFolderRecursiveSync(path.join(path.resolve(), "../../docs"), path.join(path.resolve(), "./docs/documentation"))
+copyFolderRecursiveSync(path.join(path.resolve(), "../../docs"), path.join(path.resolve(), "./docs/docs"))

@@ -3,8 +3,9 @@
 
 # Production
 /build
-/docs/components/
-/docs/documentation/
+/docs/components/fiori
+/docs/components/main
+/docs/docs/
 /docs/samples/**/*.mdx
 
 # Generated files
