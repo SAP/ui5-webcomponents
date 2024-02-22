@@ -1,1 +1,1 @@
-import "@ui5/webcomponents/dist/ColorPicker";
+import "@ui5/webcomponents/dist/ColorPicker.js";
