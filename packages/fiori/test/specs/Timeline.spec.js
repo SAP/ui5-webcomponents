@@ -18,4 +18,11 @@ describe("Timeline general interaction", () => {
 
 		assert.strictEqual(await timeline.shadow$("ul").getAttribute("aria-label"), "Timeline vertical", "Attribute is reflected");
 	});
+
+	it("Item within Timeline Item is rendered", async () => {
+		const timeline = await browser.$("#testTimeline");
+		const timelineItem = await timeline.$("#testTimelineItem").shadow$("ui5-tli-desc");
+
+		assert.ok(timelineItem, "Item within Timeline Item is rendered");
+	})
 });
