@@ -384,6 +384,7 @@ class TabContainer extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemsFlat?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
+	_hasScheduledPopoverOpen = false;
 	_handleResizeBound: () => void;
 	_setDraggedElement?: SetDraggedElementFunction;
 	_setDraggedElementInStaticArea?: SetDraggedElementFunction;
@@ -455,7 +456,7 @@ class TabContainer extends UI5Element {
 			if (popoverItems.length) {
 				this._setPopoverItems(popoverItems);
 			} else {
-				this.responsivePopover.close();
+				this._closePopover();
 			}
 		}
 	}
@@ -480,7 +481,7 @@ class TabContainer extends UI5Element {
 
 	_handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
-			this.responsivePopover.close();
+			this._closePopover();
 		}
 
 		// invalidate
@@ -586,7 +587,7 @@ class TabContainer extends UI5Element {
 		if (popoverTarget && isLongDragOver) {
 			this._showPopoverAt(popoverTarget, false, true);
 		} else {
-			this.responsivePopover?.close();
+			this._closePopover();
 		}
 	}
 
@@ -786,8 +787,7 @@ class TabContainer extends UI5Element {
 		e.preventDefault(); // cancel the item selection
 
 		this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id
-
-		this.responsivePopover!.close();
+		this._closePopover();
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
@@ -1349,25 +1349,24 @@ class TabContainer extends UI5Element {
 		this.responsivePopover = await this._respPopover();
 
 		if (this.responsivePopover.isOpen()) {
-			this.responsivePopover.close();
+			this._closePopover();
 		} else {
 			await this._showPopoverAt(opener, setInitialFocus);
 		}
 	}
 
 	async _showPopoverAt(opener: HTMLElement, setInitialFocus = false, preventInitialFocus = false) {
+		this._hasScheduledPopoverOpen = true;
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
-
-		if (this.responsivePopover.isOpen() && this.responsivePopover._opener !== opener) {
-			this.responsivePopover.close();
-		}
 
 		if (setInitialFocus) {
 			this._setPopoverInitialFocus();
 		}
 
-		await this.responsivePopover.showAt(opener, preventInitialFocus);
+		if (this._hasScheduledPopoverOpen) {
+			await this.responsivePopover.showAt(opener, preventInitialFocus);
+		}
 	}
 
 	get hasSubTabs(): boolean {
@@ -1415,9 +1414,9 @@ class TabContainer extends UI5Element {
 		return staticAreaItemDomRef!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
-	async _closeRespPopover() {
-		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.close();
+	_closePopover() {
+		this._hasScheduledPopoverOpen = false;
+		this.responsivePopover?.close();
 	}
 
 	get dropIndicatorDOM(): DropIndicator | null {
