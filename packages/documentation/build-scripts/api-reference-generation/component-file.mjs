@@ -43,26 +43,6 @@ const escapeTextDescription = (text) => {
     return escapeText(text).replaceAll(/<\s*br\s*>|<\s*br\s*\/>|<\/\s*br\s*>/g, "\n").replaceAll(/[^>]\n{2,}/g, "<br />").replaceAll("\n", "")
 }
 
-
-
-const parseEnumDeclarationFields = (declaration) => {
-    const fields = declaration.members?.filter(member => member.kind === "field")
-
-    if (!fields?.length) {
-        return "";
-    }
-
-    return `| Name | Description |
-| ---- | ----------- |
-${fields
-            .map(member => {
-                return `| ${member.name} | ${escapeTextDescription(member.description)} |`
-            })
-            .join("\n")
-        }
-`
-}
-
 const getTable = (kind) => {
     switch (kind) {
         case "field":
@@ -105,6 +85,11 @@ const parseComponentDeclaration = (declaration, fileContent) => {
     if (!declaration || !fileContent) {
         return "";
     }
+
+//     fileContent = `---
+// slug: ../${declaration.name}
+// ---
+// ${fileContent}`
 
     fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", parseDeclarationDescription(declaration))
 
