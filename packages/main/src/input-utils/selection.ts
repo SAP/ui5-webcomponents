@@ -59,7 +59,8 @@ const applyScrollPosition = (element: HTMLTextAreaElement, copiedElement: HTMLDi
 };
 
 const getSelectionCoordinates = (textArea: HTMLTextAreaElement, mirror: HTMLDivElement) => {
-	const { selectionEnd } = textArea;
+	const { selectionStart, selectionEnd } = textArea;
+	const selectedText = textArea.value.slice(selectionStart, textArea.selectionEnd);
 
 	// create the fake range
 	const range = document.createRange();
@@ -72,7 +73,7 @@ const getSelectionCoordinates = (textArea: HTMLTextAreaElement, mirror: HTMLDivE
 
 	document.body.removeChild(mirror);
 
-	return rect;
+	return { ...rect, selectedText };
 };
 
 const getTextAreaSelection = (textArea: TextArea) => {

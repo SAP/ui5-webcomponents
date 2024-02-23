@@ -44,8 +44,10 @@
 		};
 
 		buttonArea.addEventListener("ui5-select", () => {
-			console.log("select")
-			repositionButton(getTextAreaSelection(buttonArea));
+			const selection = getTextAreaSelection(buttonArea);
+
+			console.log(selection.selectedText)
+			repositionButton(selection);
 		});
 
 		buttonArea.addEventListener("click", (e) => {
