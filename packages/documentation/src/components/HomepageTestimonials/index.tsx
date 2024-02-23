@@ -23,13 +23,13 @@ const Testimonials: Array<Item> = [
   {
     Svg: require('@site/static/img/testimonials/sap-fieldglass.svg').default,
     title: "SAP Fieldglass",
-    text: `"UI5 Web Components keep our focus on delivering product features instead of re-implementing UI primitives while staying consistent with Fiori design. Great job!"`,
+    text: `"UI5 Web Components keep our focus on delivering product features instead of re-implementing UI primitives while staying consistent with SAP design. Great job!"`,
   },
 
   {
     Svg: require('@site/static/img/testimonials/sap-rbsc.svg').default,
     title: "SAP Repository-based shipment channel",
-    text: `"UI5 Web Components are a great set of UI elements that allow you to use the framework to easily build SAP Fiori compliant apps and deliver the best UX for your customers."`,
+    text: `"UI5 Web Components are a great set of UI elements that allow you to use the framework to easily build SAP Design compliant apps and deliver the best UX for your customers."`,
   },
 ];
 

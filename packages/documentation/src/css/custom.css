@@ -114,6 +114,10 @@
   top: 0;
 }
 
-.header-github-link:hover svg {
+.header-github-link svg path {
+  fill: var(--ifm-font-color-base);
+}
+
+.header-github-link:hover svg path {
   fill: var(--ifm-navbar-link-hover-color);
 }

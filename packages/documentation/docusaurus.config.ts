@@ -1,10 +1,11 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import packageJson from "./package.json";
 
 const config: Config = {
   title: 'UI5 Web Components',
-  tagline: 'An open-source UI library for building enterprise-ready apps!',
+  tagline: 'An open-source UI components library for building enterprise-ready applications!',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -85,6 +86,11 @@ const config: Config = {
           position: "right",
         },
         {
+          label: `v${packageJson.version}`,
+          position: "right",
+          to: 'https://github.com/SAP/ui5-webcomponents/releases/latest',
+        },
+        {
           type: 'custom-GitHubNavbarItem',
           position: "right",
         },
@@ -127,7 +133,7 @@ const config: Config = {
           items: [
             {
               label: 'Documentation',
-              to: 'docs/',
+              to: '/docs/getting-started/first-steps',
             },
             {
               label: 'FAQ',

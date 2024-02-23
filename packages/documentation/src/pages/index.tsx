@@ -21,7 +21,7 @@ function HomepageHeader() {
         <span className={styles.heroTitle__UI5}>UI5</span> Web Components
         </Heading>
         <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
-         An <span className={styles.hero__subtitle__part1}><b>open-source</b></span> UI library for building <span className={styles.hero__subtitle__part2}><b>enterprise-ready</b></span> apps!
+         An <span className={styles.hero__subtitle__part1}><b>open-source</b></span> UI components library for building <span className={styles.hero__subtitle__part2}><b>enterprise-ready</b></span> apps!
         </p>
         <div className={styles.buttons}>
           <Link

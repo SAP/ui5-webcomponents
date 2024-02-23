@@ -34,7 +34,7 @@ const FeatureList: FeatureItem[] = [
     src: require('@site/static/img/features/buildings.png').default,
     description: (
       <>
-       Implement the SAP Fiori design language.
+       Implements latest SAP Design language.
        Feature-rich.
        Secure, accessible, themeable, i18n-ready.
       </>
