@@ -79,7 +79,7 @@ type AccessibilityAttributes = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Button";</code>
+ * <code>import "@ui5/webcomponents/dist/Button.js";</code>
  *
  * @csspart button - Used to style the native button element
  * @constructor

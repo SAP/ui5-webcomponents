@@ -29,6 +29,12 @@ function HomepageHeader() {
             to="/docs/getting-started/first-steps">
             Get Started
           </Link>
+
+          <Link
+            className={clsx("button button--secondary button--lg button--getting-started", styles.buttonSecondary)}
+            to="/components/main">
+            Components
+          </Link>
         </div>
       </div>
     </header>
@@ -42,7 +48,7 @@ export default function Home(): JSX.Element {
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
-      <main>
+      <main className={styles.pageMain}>
         <HomepageFeatures />
         {/* <HomepageCompatibility /> */}
         <HomepageDemoApps />

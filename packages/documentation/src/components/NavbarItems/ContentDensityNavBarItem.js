@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function Item() {
     const [hidden, setHidden] = useState(false);
-    const [currentContentDensity, setCurrentContentDensity] = useState("Cozy");
+    const [currentContentDensity, setCurrentContentDensity] = useState("Compact");
 
     const setContentDensity = (contentDensity) => {
         setCurrentContentDensity(contentDensity);
@@ -15,6 +15,7 @@ export default function Item() {
 
     const sendContentDensityToFrame = (contentDensity) => {
         [...document.querySelectorAll("playground-ide")].forEach(ide => {
+            console.log("sending content density to frame:", {preview, contentDensity})
             ide.shadowRoot.querySelector("playground-preview").iframe.contentWindow.postMessage({contentDensity}, "*");
         });
 

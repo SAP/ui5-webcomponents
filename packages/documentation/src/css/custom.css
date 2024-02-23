@@ -98,3 +98,22 @@
 .hero--primary {
   --ifm-hero-background-color: var(--ifm-background-color);
 }
+
+
+.header-github-link {
+  position: relative;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.header-github-link svg {
+  height: 1.5rem;
+  width: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.header-github-link:hover svg {
+  fill: var(--ifm-navbar-link-hover-color);
+}

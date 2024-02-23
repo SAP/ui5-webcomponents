@@ -82,16 +82,6 @@
 }
 
 @media (min-width: 1400px) {
-  .demo-apps {
-    justify-content: center;
-    align-items: start;
-    flex-direction: row;
-  }
-
-  .demo-apps__frameworks {
-    width: 60%;
-  }
-
   .demo-apps__desc {
     width: 100%;
   }

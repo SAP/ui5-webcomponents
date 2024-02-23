@@ -84,6 +84,10 @@ const config: Config = {
           type: 'custom-TextDirectionNavbarItem',
           position: "right",
         },
+        {
+          type: 'custom-GitHubNavbarItem',
+          position: "right",
+        },
       ],
     },
     footer: {

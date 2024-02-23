@@ -163,7 +163,7 @@ type SpecialCalendarDateT = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Calendar";</code>
+ * <code>import "@ui5/webcomponents/dist/Calendar.js";</code>
  *
  * @constructor
  * @extends CalendarPart
