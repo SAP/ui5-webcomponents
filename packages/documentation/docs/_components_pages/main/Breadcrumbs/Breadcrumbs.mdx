@@ -1,8 +1,7 @@
-import Basic from "../../_samples/main/Calendar/Basic/Basic.md";
-import Bounds from "../../_samples/main/Calendar/Bounds/Bounds.md";
-import CalendarTypes from "../../_samples/main/Calendar/CalendarTypes/CalendarTypes.md";
-import CalendarWithLegend from "../../_samples/main/Calendar/CalendarWithLegend/CalendarWithLegend.md";
-import SelectionModes from "../../_samples/main/Calendar/SelectionModes/SelectionModes.md";
+import Basic from "../../../_samples/main/Breadcrumbs/Basic/Basic.md";
+import BreadcrumbsStyles from "../../../_samples/main/Breadcrumbs/BreadcrumbsStyles/BreadcrumbsStyles.md";
+import NoCurrentPage from "../../../_samples/main/Breadcrumbs/NoCurrentPage/NoCurrentPage.md";
+
 
 <%COMPONENT_OVERVIEW%>
 
@@ -13,22 +12,12 @@ import SelectionModes from "../../_samples/main/Calendar/SelectionModes/Selectio
 
 ## More Samples
 
-### Date Selection
-The Calendar supports Single, Multiple and Range selection.
+### Separator Styles
+Separator between the links can be easily changed.
 
-<SelectionModes />
+<BreadcrumbsStyles />
 
+### Current Page Appearance
+The Breadcrumbs supports two visual appearances for the "current page" - as a regular link or as prominent one.
 
-### Min and Max dates
-Min and Max dates can be set to restrict user selection.
-
-<Bounds />
-
-### Calendar Calendar
-Several calendars are supported: Gregorian, Islamic, Persian and Japanese.
-
-<CalendarTypes />
-
-### Calendar With Legend
-You can use the CalendarLegend component in addition to the Calendar to highlight specific days.
-<CalendarWithLegend />
+<NoCurrentPage />
