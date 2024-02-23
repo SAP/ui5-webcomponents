@@ -87,6 +87,9 @@
   --playground-preview-toolbar-foreground-color: rgb(255, 255, 255);
 }
 
+[data-theme='dark'] playground-preview {
+  background-color: rgb(40, 40, 40);
+}
 
 .navbar-dropdown-hidden {
   display: none;
