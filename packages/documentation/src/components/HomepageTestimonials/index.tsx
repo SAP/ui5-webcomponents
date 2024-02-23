@@ -49,7 +49,7 @@ export default function HomepageTestimonials(): JSX.Element {
     <article className="testimonials">
         <div className="testimonials__heading">
           <h2 className="testimonials__title">Testimonials</h2>
-          <p className="testimonials__desc">Discover what some of our customers have to say about their experiences with UI5 Web Components.</p>
+          <p className="testimonials__desc">Discover what some of our consumers have to say about their experiences with UI5 Web Components.</p>
         </div>
         <div className="testimonials__content">
             {Testimonials.map((props, idx) => (

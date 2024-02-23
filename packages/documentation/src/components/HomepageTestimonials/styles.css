@@ -53,16 +53,27 @@
   font-style: italic;
 }
 
-@media screen and (max-width: 700px) {
+
+@media screen and (max-width: 900px) {
   .testimonials__content {
     grid-template-columns: 1fr;
   }
 
   .testimonials {
-    margin: 0 5rem 0 5rem;
+    margin: 0 5rem 5rem 5rem;
+  }
+
+  .testimonials__title {
+    margin-bottom: 4rem;
   }
 
   .testimonials__desc {
     display: none;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .testimonials__content {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }

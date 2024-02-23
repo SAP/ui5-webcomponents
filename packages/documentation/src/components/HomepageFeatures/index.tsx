@@ -1,14 +1,4 @@
-import clsx from 'clsx';
-import Heading from '@theme/Heading';
-import styles from './styles.module.css';
-import useBaseUrl from '@docusaurus/useBaseUrl';
-
-// import builidings from "@site/static/img/features/builidings.png";
-
-// @ts-ignore
-// import frame from "/img/features/Frame.png";
-// // @ts-ignore
-// import hand from "img/features/hand.png";
+import './styles.css';
 
 type FeatureItem = {
   title: string;
@@ -54,27 +44,21 @@ const FeatureList: FeatureItem[] = [
 
 function Feature({title, src, description}: FeatureItem) {
   return (
-    <div className={clsx("feature", "col col--4")}>
-      <div className="text--center">
-        <img className="feature__image "src={src} />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
+    <div className="feature">
+      <img className="feature__image" src={src} />
+      <h3 className="feature__title">{title}</h3>
+      <p className="feature__desc">{description}</p>
     </div>
   );
 }
 
 export default function HomepageFeatures(): JSX.Element {
   return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
+    <section className="features">
+      <div className="features__container">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
-        </div>
       </div>
     </section>
   );
