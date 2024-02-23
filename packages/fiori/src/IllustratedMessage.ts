@@ -173,6 +173,10 @@ class IllustratedMessage extends UI5Element {
 	*
 	* <b>Note:</b> Used for accessibility purposes only.
 	*
+	* <br/>
+	*
+	* <b>Note:</b> Doesn't take effect when <code>title</code> slot is being used.
+	*
 	* @default "H2"
 	* @public
 	* @since 1.20.0
