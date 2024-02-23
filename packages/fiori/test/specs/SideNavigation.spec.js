@@ -30,29 +30,27 @@ describe("Component Behavior", () => {
 		it("Tests selection-change event", async () => {
 			const input = await browser.$("#counter");
 			const sideNavigation = await browser.$("#sn1");
-			let items = await browser.$$("#sn1 [ui5-side-navigation-item]:not([slot='fixedItems']), #sn1 [ui5-side-navigation-item]:not([slot='fixedItems']) [ui5-side-navigation-sub-item]");
-			const fixedItems = await browser.$$("#sn1 [slot='fixedItems'], #sn1 [slot='fixedItems'] [ui5-side-navigation-sub-item]");
 
-			await items[0].click();
-			await items[3].click();
+			await browser.$("#item1").click();
+			await browser.$("#item21").click();
 
 			assert.strictEqual(await input.getProperty("value"), "2", "Event is fired");
 
-			await fixedItems[0].click();
+			await browser.$("#fixedItem1").click();
 
 			assert.strictEqual(await input.getProperty("value"), "3", "Event is fired");
 
 			await sideNavigation.setAttribute("collapsed", "true");
 
-			await items[0].click();
+			await browser.$("#item1").click();
 
 			assert.strictEqual(await input.getProperty("value"), "4", "Event is fired");
 
-			await items[1].click();
+			await browser.$("#item2").click();
 
 			assert.strictEqual(await input.getProperty("value"), "4", "Event is not fired");
 
-			items = await getTreeItemsInPopover();
+			let items = await getTreeItemsInPopover();
 
 			await items[1].click();
 
@@ -69,6 +67,7 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await input.getProperty("value"), "6", "Event is fired");
 
 			const item = await browser.$("#item3");
+			await item.scrollIntoView();
 			await item.click();
 
 			const itemRef = await item.shadow$(".ui5-sn-item");
@@ -76,6 +75,7 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await input.getProperty("value"), "6", "Event is not fired");
 			assert.strictEqual(await itemRef.getAttribute("aria-expanded"), "true" ,"Expanded is toggled");
 
+			await browser.$("#item2").scrollIntoView();
 			await browser.$("#item2").click();
 			assert.strictEqual(await input.getProperty("value"), "7", "Event is fired");
 		});
@@ -98,25 +98,24 @@ describe("Component Behavior", () => {
 		});
 
 		it("Tests tooltips when expanded", async () => {
-			const sideNavigation = await browser.$("#sn1");
-			const renderedItems = await browser.$$(">>>#sn1 .ui5-sn-item");
+			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
 
 			// items
-			assert.strictEqual(await renderedItems[0].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
-			assert.strictEqual(await renderedItems[1].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
+			assert.strictEqual(await items[0].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(await items[1].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
 
 			// sub items
-			assert.strictEqual(await renderedItems[2].getAttribute("title"), await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
-			assert.strictEqual(await renderedItems[3].getAttribute("title"), await browser.$("#item22").getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
+			assert.strictEqual(await items[2].getAttribute("title"), await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.strictEqual(await items[3].getAttribute("title"), await browser.$("#item22").getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
 		});
 
 		it("Tests tooltips when collapsed", async () => {
 			await browser.$("#sn1").setProperty("collapsed", true);
 
-			const renderedItems = await browser.$$(">>>#sn1 .ui5-sn-item");
+			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
 
-			assert.strictEqual(await renderedItems[1].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
-			assert.strictEqual(await renderedItems[2].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
+			assert.strictEqual(await items[1].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(await items[2].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
 
 			await browser.$("#item2").click();
 
@@ -130,12 +129,12 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests the prevention of the ui5-selection-change event", async () => {
-			const renderedItems = await browser.$$(">>>#sn1 .ui5-sn-item");
+			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
 
 			await browser.$("#item21").click();
 
 			assert.ok(await browser.$("#item21").getProperty("selected"), "new item is selected");
-			assert.strictEqual(await renderedItems[2].getAttribute("aria-current"), "page", "aria-current is set");
+			assert.strictEqual(await items[2].getAttribute("aria-current"), "page", "aria-current is set");
 
 			const selectionChangeCheckbox = await browser.$("#prevent-selection");
 			await selectionChangeCheckbox.click();
@@ -143,10 +142,10 @@ describe("Component Behavior", () => {
 			await browser.$("#item1").click();
 
 			assert.notOk(await browser.$("#item1").getProperty("selected"), "new item is not selected");
-			assert.notExists(await renderedItems[0].getAttribute("aria-current"),  "aria-current is not changed");
+			assert.notExists(await items[0].getAttribute("aria-current"),  "aria-current is not changed");
 
 			assert.ok(await browser.$("#item21").getProperty("selected"), "initially selected item has not changed");
-			assert.strictEqual(await renderedItems[2].getAttribute("aria-current"), "page", "aria-current is not changed");
+			assert.strictEqual(await items[2].getAttribute("aria-current"), "page", "aria-current is not changed");
 
 			await selectionChangeCheckbox.click();
 		});
@@ -156,13 +155,12 @@ describe("Component Behavior", () => {
 			await sideNavigation.setAttribute("collapsed", "true");
 
 			const input = await browser.$("#counter");
-			const items = await browser.$$("#sn1 [ui5-side-navigation-item]");
 
-			await items[0].click();
+			await browser.$("#item1").click();
 
 			const beforeClickingSelectedItem = await input.getProperty("value");
 
-			await items[0].click();
+			await browser.$("#item1").click();
 
 			const afterClickingSelectedItem = await input.getProperty("value");
 
