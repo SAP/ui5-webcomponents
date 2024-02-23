@@ -41,6 +41,18 @@ class MenuListItem extends StandardListItem {
 
 		return { ...super._accInfo, ...accInfoSettings };
 	}
+
+	_onfocusin(e: FocusEvent): void {
+		super._onfocusin(e);
+
+		this.fireEvent("item-focusin", { item: e.target });
+	}
+
+	override _onfocusout(e: FocusEvent): void {
+		super._onfocusout(e);
+
+		this.fireEvent("item-focusout", { item: e.target });
+	}
 }
 
 MenuListItem.define();

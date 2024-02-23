@@ -60,6 +60,8 @@
 	<ui5-title level="H5" class="header-title">Event logger</ui5-title>
 	<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
 
+	<ui5-popover id="test"></ui5-popover>
+
 	<script>
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "Menu",
@@ -105,6 +107,26 @@
 			if (item && item.text === "New File") {
 				event.preventDefault();
 			}
+		});
+
+		let i = 0;
+
+		menu.addEventListener("ui5-item-focusin2", function(event) {
+			const test = document.getElementById("test");
+
+			if (test.isOpen()) {
+				test.close();
+			}
+
+			test.showAt(event.detail.realDomRef, true)
+			test.innerHTML = event.detail.menuItem.text;
+		});
+
+
+		menu.addEventListener("ui5-item-focusout", function(event) {
+			const test = document.getElementById("test");
+
+			test.close();
 		});
 
 		menu.addEventListener("ui5-before-open", function(event) {

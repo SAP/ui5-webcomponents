@@ -67,7 +67,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	_onfocusin(e: FocusEvent) {
+	_onfocusin(e: FocusEvent): void {
 		this.fireEvent("_request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
 			return;
@@ -77,7 +77,8 @@ class ListItemBase extends UI5Element implements ITabbable {
 		this.fireEvent("_focused", e);
 	}
 
-	_onfocusout() {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	_onfocusout(e: FocusEvent) {
 		this.focused = false;
 	}
 

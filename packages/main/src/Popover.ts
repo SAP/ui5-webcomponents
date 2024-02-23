@@ -299,6 +299,14 @@ class Popover extends Popup {
 	 * @returns Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
+		if (this._opener !== opener) {
+			this._opener = opener;
+			this._openerRect = opener.getBoundingClientRect();
+
+			await super._open(preventInitialFocus);
+			return;
+		}
+
 		if (!opener || this.opened) {
 			return;
 		}

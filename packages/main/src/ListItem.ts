@@ -339,8 +339,8 @@ abstract class ListItem extends ListItemBase {
 		this._onmouseup(e as unknown as MouseEvent);
 	}
 
-	_onfocusout() {
-		super._onfocusout();
+	_onfocusout(e: FocusEvent) {
+		super._onfocusout(e);
 		this.deactivate();
 	}
 

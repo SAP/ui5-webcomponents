@@ -468,6 +468,15 @@ class Menu extends UI5Element {
 		subMenu._parentMenuItem = item;
 		subMenu.busy = item.busy;
 		subMenu.busyDelay = item.busyDelay;
+
+		subMenu.addEventListener("ui5-item-focusin2", (e: CustomEvent<any>) => {
+			this.fireEvent("ui5-item-focusin2", e.detail)
+		})
+
+		subMenu.addEventListener("ui5-item-focusin2", (e: CustomEvent<any>) => {
+			this.fireEvent("ui5-item-focusin2", e.detail)
+		})
+
 		const fragment = this._clonedItemsFragment(item);
 		subMenu.appendChild(fragment);
 		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
@@ -534,6 +543,17 @@ class Menu extends UI5Element {
 		if (this._parentMenuItem) {
 			this._parentMenuItem._preventSubMenuClose = true;
 		}
+	}
+
+	_test(e: CustomEvent<any>) {
+		const target = e.target;
+
+		this.fireEvent("ui5-item-focusin2", { realDomRef: target, menuItem: (target as any).associatedItem });
+	}
+
+	_test2(e: CustomEvent<any>) {
+		const target = e.target;
+		this.fireEvent("ui5-item-focusin2", { realDomRef: target, menuItem: (target as any).associatedItem });
 	}
 
 	_prepareSubMenuPhone(item: MenuItem) {
