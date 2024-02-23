@@ -97,7 +97,8 @@ const generate = async () => {
 		return `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
 import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
-import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";${
+import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
+import dotSvg from "./${illustrationsPrefix}-Dot-${illustrationName}.js";${
 	defaultText ? `import {
 	IM_TITLE_${illustrationNameUpperCase},
 	IM_SUBTITLE_${illustrationNameUpperCase},
@@ -112,7 +113,8 @@ const subtitle = IM_SUBTITLE_${illustrationNameUpperCase};` : ``}
 registerIllustration(name, {
 	dialogSvg,
 	sceneSvg,
-	spotSvg,${defaultText ? `
+	spotSvg,
+	dotSvg,${defaultText ? `
 	title,
 	subtitle,` : ``}
 	set,
@@ -124,6 +126,7 @@ export {
 	dialogSvg,
 	sceneSvg,
 	spotSvg,
+	dotSvg,
 };`
 	};
 
@@ -131,10 +134,11 @@ export {
 		return `declare const dialogSvg: string;
 declare const sceneSvg: string;
 declare const spotSvg: string;
+declare const dotSvg: string;
 declare const _default: "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
 
 export default _default;
-export { dialogSvg, sceneSvg, spotSvg };`
+export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 	};
 
 	await fs.mkdir(destPath, { recursive: true });

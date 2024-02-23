@@ -185,6 +185,15 @@ class IllustratedMessage extends UI5Element {
 	titleLevel!: `${TitleLevel}`;
 
 	/**
+	* Illustration breakpoint variant for the <code>Dot</code> size.
+	*
+	* @private
+	* @since 2.2.0
+	*/
+	@property({ noAttribute: true })
+	dotSvg!: string;
+
+	/**
 	* Illustration breakpoint variant for the <code>Spot</code> size.
 	*
 	* @private
@@ -273,7 +282,8 @@ class IllustratedMessage extends UI5Element {
 		return {
 			DIALOG: 679,
 			SPOT: 319,
-			BASE: 259,
+			DOT: 259,
+			BASE: 159,
 		};
 	}
 
@@ -281,6 +291,7 @@ class IllustratedMessage extends UI5Element {
 		return {
 			DIALOG: 451,
 			SPOT: 296,
+			DOT: 154,
 			BASE: 87,
 		};
 	}
@@ -288,6 +299,7 @@ class IllustratedMessage extends UI5Element {
 	static get MEDIA() {
 		return {
 			BASE: "base",
+			DOT: "dot",
 			SPOT: "spot",
 			DIALOG: "dialog",
 			SCENE: "scene",
@@ -309,6 +321,7 @@ class IllustratedMessage extends UI5Element {
 			illustrationData = await getIllustrationData(effectiveName);
 		}
 
+		this.dotSvg = illustrationData!.dotSvg;
 		this.spotSvg = illustrationData!.spotSvg;
 		this.dialogSvg = illustrationData!.dialogSvg;
 		this.sceneSvg = illustrationData!.sceneSvg;
@@ -349,6 +362,8 @@ class IllustratedMessage extends UI5Element {
 
 		if (size <= oBreakpounts.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
+		} else if (size <= oBreakpounts.DOT) {
+			newMedia = IllustratedMessage.MEDIA.DOT;
 		} else if (size <= oBreakpounts.SPOT) {
 			newMedia = IllustratedMessage.MEDIA.SPOT;
 		} else if (size <= oBreakpounts.DIALOG) {
@@ -411,6 +426,9 @@ class IllustratedMessage extends UI5Element {
 		case IllustrationMessageSize.Base:
 			this.media = IllustratedMessage.MEDIA.BASE;
 			return;
+		case IllustrationMessageSize.Dot:
+			this.media = IllustratedMessage.MEDIA.DOT;
+			return;
 		case IllustrationMessageSize.Spot:
 			this.media = IllustratedMessage.MEDIA.SPOT;
 			return;
@@ -428,6 +446,8 @@ class IllustratedMessage extends UI5Element {
 
 	get effectiveIllustration(): string {
 		switch (this.media) {
+		case IllustratedMessage.MEDIA.DOT:
+			return this.dotSvg;
 		case IllustratedMessage.MEDIA.SPOT:
 			return this.spotSvg;
 		case IllustratedMessage.MEDIA.DIALOG:
