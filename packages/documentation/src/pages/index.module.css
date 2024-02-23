@@ -12,7 +12,8 @@
 
 .heroTitle,
 .heroSubtitle  {
-  color: #333;
+  word-wrap: normal;
+  color: var(--ifm-font-color-base);
 }
 
 .heroTitle__UI5 {

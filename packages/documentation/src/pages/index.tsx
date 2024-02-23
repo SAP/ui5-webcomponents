@@ -5,6 +5,7 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageCompatibility from '@site/src/components/HomepageCompatibility';
 import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
+import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
@@ -43,8 +44,9 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        <HomepageCompatibility />
+        {/* <HomepageCompatibility /> */}
         <HomepageDemoApps />
+        <HomepageTestimonials />
       </main>
 
     </Layout>

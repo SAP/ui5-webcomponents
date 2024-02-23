@@ -8,10 +8,10 @@ type Item = {
 
 const BrowserList: Array<Item> = [
   {
-    Svg:  require('@site/static/img/compatibility-browsers/Chrome.svg').default,
+    Svg:  require('@site/static/img/browsers/chrome.svg').default,
   },
   {
-    Svg:  require('@site/static/img/compatibility-browsers/Edge.svg').default,
+    Svg:  require('@site/static/img/browsers/firefox.svg').default,
   },
   {
     Svg:  require('@site/static/img/compatibility-browsers/Safari.svg').default,
@@ -21,47 +21,36 @@ const BrowserList: Array<Item> = [
   },
 ];
 
-const FramaworksList: Array<Item> = [
-  {
-    Svg:  require('@site/static/img/compatibility-frameworks/Angular.svg').default,
-  },
-  {
-    Svg:  require('@site/static/img/compatibility-frameworks/React.svg').default,
-  },
-  {
-    Svg:  require('@site/static/img/compatibility-frameworks/UI5.svg').default,
-  },
-  {
-    Svg:  require('@site/static/img/compatibility-frameworks/Vue.svg').default,
-  },
-];
-
 const Browser = ({ Svg }: Item) => {
   return (
     <Svg className="compatibility__logo"/>
   );
 }
 
-const Framework = ({ Svg }: Item) => {
-  return (
-    <Svg className="compatibility__logo"/>
-  );
-}
+// const FramaworksList: Array<Item> = [
+//   {
+//     Svg:  require('@site/static/img/compatibility-frameworks/Angular.svg').default,
+//   },
+//   {
+//     Svg:  require('@site/static/img/compatibility-frameworks/React.svg').default,
+//   },
+//   {
+//     Svg:  require('@site/static/img/compatibility-frameworks/UI5.svg').default,
+//   },
+//   {
+//     Svg:  require('@site/static/img/compatibility-frameworks/Vue.svg').default,
+//   },
+// ];
+
+// const Framework = ({ Svg }: Item) => {
+//   return (
+//     <Svg className="compatibility__logo"/>
+//   );
+// }
 
 export default function HomepageCompatibility(): JSX.Element {
   return (
     <article className="compatibility__article">
-      <section className="compatibility">
-        <div className="compatibility__container">
-            <h2 className="compatibility__title">Framework Compatibility</h2>
-            <div >
-              {FramaworksList.map((props, idx) => (
-                  <Framework key={idx} {...props} />
-                ))}
-            </div>
-        </div>
-      </section>
-
       <section className="compatibility">
         <div className="compatibility__container">
             <h2 className="compatibility__title">Browser Compatibility</h2>

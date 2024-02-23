@@ -1,8 +1,15 @@
 .features {
   display: flex;
   align-items: center;
+  margin-top: 4rem;
   padding: 4rem 0;
   width: 100%;
+  background-color: #f3f3f3;
+  color: #242526;
+}
+
+.container {
+  margin-top: 4rem;
 }
 
 .featureSvg {

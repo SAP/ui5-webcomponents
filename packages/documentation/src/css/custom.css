@@ -93,5 +93,5 @@
 }
 
 .hero--primary {
-  --ifm-hero-background-color: #fff;
+  --ifm-hero-background-color: var(--ifm-background-color);
 }

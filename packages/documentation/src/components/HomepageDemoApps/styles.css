@@ -1,23 +1,38 @@
 .demo-apps {
-  margin-top: 10rem;
+  margin-top: 5rem;
   white-space: nowrap;
-  margin-bottom: 10rem;
+  margin-bottom: 3rem;
 }
 
-.demo-apps .title {
+.demo-apps__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.demo-apps__title {
   font-weight: 700;
   font-size: 2.25rem;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
+  text-wrap: wrap;
 }
 
-.demo-apps .frameworks {
+.demo-apps__desc {
+  font-size: 1.25rem;
+  margin-bottom: 4rem;
+  text-wrap: wrap;
+  text-align: center;
+  width: 50%;
+}
+
+.demo-apps__frameworks {
   display: flex;
   justify-content: center;
   flex-direction: center;
 }
 
-.demo-apps .frameworks .framework {
+.demo-apps__framework {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,18 +40,20 @@
   margin-bottom:  10rem;
 }
 
-.demo-apps .frameworks .framework:last-child {
+demo-apps__logo
+
+.demo-apps__framework:last-child {
   margin-inline-end: 0;
   margin-bottom:  10rem;
 }
 
-.demo-apps .frameworks .framework .logo {
+.demo-apps__logo {
   width:  5.625rem;
   height:  5.625rem;
   margin-bottom: 1.125rem;
 }
 
-.demo-apps .frameworks .framework .link {
+.demo-apps__link {
   color: #3584BE;
   text-align: center;
   font-size: 0.875rem;
@@ -46,27 +63,25 @@
   margin-bottom: 0.5rem;
 }
 
-.demo-apps .frameworks .framework .link:last-child {
+.demo-apps__link:last-child {
   margin-bottom: 0;
 }
 
-
-
 @media (max-width: 700px) {
-  .demo-apps .frameworks {
+  .demo-apps__frameworks {
     flex-direction: column;
   }
-  .demo-apps .frameworks .framework {
+  .demo-apps__framework {
     margin: 4rem 0;
   }
 
-  .demo-apps .frameworks .framework:last-child {
+  .demo-apps__framework:last-child {
     margin: 4rem 0;
   }
 }
 
 @media (max-width: 1000px) {
-  .demo-apps .frameworks .framework {
+  .demo-apps__framework {
     margin: 4rem 2rem;
   }
 }
