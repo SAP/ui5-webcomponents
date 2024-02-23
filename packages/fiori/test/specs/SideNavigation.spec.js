@@ -68,7 +68,7 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await input.getProperty("value"), "6", "Event is fired");
 
-			const item = await browser.$("#item21");
+			const item = await browser.$("#item3");
 			await item.click();
 
 			const itemRef = await item.shadow$(".ui5-sn-item");
@@ -134,8 +134,8 @@ describe("Component Behavior", () => {
 
 			await browser.$("#item21").click();
 
-			assert.ok(await browser.$("#item22").getProperty("selected"), "new item is selected");
-			assert.strictEqual(await renderedItems[3].getAttribute("aria-current"), "page", "aria-current is set");
+			assert.ok(await browser.$("#item21").getProperty("selected"), "new item is selected");
+			assert.strictEqual(await renderedItems[2].getAttribute("aria-current"), "page", "aria-current is set");
 
 			const selectionChangeCheckbox = await browser.$("#prevent-selection");
 			await selectionChangeCheckbox.click();
@@ -145,8 +145,8 @@ describe("Component Behavior", () => {
 			assert.notOk(await browser.$("#item1").getProperty("selected"), "new item is not selected");
 			assert.notExists(await renderedItems[0].getAttribute("aria-current"),  "aria-current is not changed");
 
-			assert.ok(await browser.$("#item22").getProperty("selected"), "initially selected item has not changed");
-			assert.strictEqual(await renderedItems[3].getAttribute("aria-current"), "page", "aria-current is not changed");
+			assert.ok(await browser.$("#item21").getProperty("selected"), "initially selected item has not changed");
+			assert.strictEqual(await renderedItems[2].getAttribute("aria-current"), "page", "aria-current is not changed");
 
 			await selectionChangeCheckbox.click();
 		});
