@@ -12,29 +12,43 @@ export default function Item() {
             initialValue = localStorage.getItem("ui5-theme");
         }
         return initialValue || "sap_horizon";
-      })
+    });
+
+    const [currentTextDirection, setCurrentTextDirection] = useState("LTR");
+    const [currentContentDensity, setCurrentContentDensity] = useState("Compact");
     const {colorMode, setColorMode} = useColorMode();
 
-    useEffect(() => {
-        if (ExecutionEnvironment.canUseDOM) {
-            localStorage.setItem('ui5-theme', currentTheme);
-        }
-        console.log("useEffect theme")
-        sendThemeToFrame(currentTheme);
-    }, [currentTheme]);
 
-    function sendThemeToFrame(theme) {
+    const   sendSettingsToFrame = (settings) => {
+        console.log("sendSettingsToFrame...", settings);
+
         [...document.querySelectorAll("playground-ide")].forEach(ide => {
-            ide.shadowRoot.querySelector("playground-preview").iframe.contentWindow.postMessage({theme}, "*");
+            ide.shadowRoot.querySelector("playground-preview").iframe.contentWindow.postMessage({ settings }, "*");
         });
 
         [...document.querySelectorAll("playground-preview")].forEach(preview => {
-            console.log("sending theme to frame:", {preview, theme})
-            preview.iframe.contentWindow.postMessage({theme}, "*");
+            console.log("sending settings to frame:", {preview, settings})
+            preview.iframe.contentWindow.postMessage({ settings }, "*");
         });
     }
 
-    function setTheme(theme) {
+    const setContentDensity = (contentDensity) => {
+        setCurrentContentDensity(contentDensity);
+        // setHidden(true);
+        // setTimeout(function () {
+        //     setHidden(false);
+        // }, 10);
+    }
+
+    const setTextDirection = (textDirection) => {
+        setCurrentTextDirection(textDirection);
+        // setHidden(true);
+        // setTimeout(function () {
+        //     setHidden(false);
+        // }, 10);
+    }
+
+    const setTheme = (theme) => {
         setCurrentTheme(theme);
         // localStorage.setItem('ui5-theme', currentTheme);
 
@@ -44,22 +58,38 @@ export default function Item() {
             setColorMode("dark");
         }
 
-        setHidden(true);
-        setTimeout(function () {
-            setHidden(false);
-        }, 10);
-
-        // sendThemeToFrame(theme);
+        // setHidden(true);
+        // setTimeout(function () {
+        //     setHidden(false);
+        // }, 10);
     }
+
+    useEffect(() => {
+        if (ExecutionEnvironment.canUseDOM) {
+            localStorage.setItem('ui5-theme', currentTheme);
+        }
+
+        console.log("useEffect settings");
+        sendSettingsToFrame({ currentTheme, currentContentDensity, currentTextDirection });
+
+        setTimeout(() => {
+            console.log("useEffect settings after 500ms");
+            const lightThemeInUse = ["sap_horizon", "sap_horizon_hcw", "sap_fiori_3", "sap_fiori_3_hcw"].includes(currentTheme);
+            sendSettingsToFrame({ currentTheme, currentContentDensity, currentTextDirection });
+            setColorMode(lightThemeInUse ? "light" : "dark");
+        }, 2000);
+    }, [currentTheme, currentContentDensity, currentTextDirection]);
+
 
     return (
         <>
             <div className="navbar__item dropdown dropdown--hoverable dropdown--right">
-                <a href="#" aria-haspopup="true" aria-expanded="false" role="button" className="navbar__link">Theme</a>
+                <a href="#" aria-haspopup="true" aria-expanded="false" role="button" className="navbar__link">Settings</a>
                     <ul className={clsx('dropdown__menu', {
                             'navbar-dropdown-hidden': hidden
                         })
                     }>
+                    <li><b style={{marginInlineStart: "0.35rem"}}>Theme</b></li>
                     <li>
                         <a
                             tabIndex="-1"
@@ -138,6 +168,56 @@ export default function Item() {
                             onClick={function () { setTheme("sap_fiori_3_hcw"); }}
                         >
                             Quartz High Contrast White
+                        </a>
+                    </li>
+
+                    <li><hr style={{margin: "0.3rem 0.5rem 0.5rem 0.5rem"}} /></li>
+                    <li><b style={{marginInlineStart: "0.35rem"}}>Direction</b></li>
+
+                    {/* RTL */}
+                    <li>
+                        <a
+                            tabIndex="-1"
+                            className={clsx('dropdown__link', {'dropdown__link--active': currentTextDirection === "LTR"})}
+                            style={{cursor: "pointer"}}
+                            onClick={function () { setTextDirection("LTR"); }}
+                        >
+                            LTR
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            tabIndex="-1"
+                            className={clsx('dropdown__link', {'dropdown__link--active': currentTextDirection === "RTL"})}
+                            style={{cursor: "pointer"}}
+                            onClick={function () { setTextDirection("RTL"); }}
+                        >
+                        RTL
+                        </a>
+                    </li>
+
+                    <li><hr style={{margin: "0.5rem 0.5rem 0.5rem 0.5rem"}} /></li>
+                    <li><b style={{marginInlineStart: "0.35rem"}}>ContentDensity</b></li>
+
+                    {/* Compact/ Cozy */}
+                    <li>
+                        <a
+                            tabIndex="-1"
+                            className={clsx('dropdown__link', {'dropdown__link--active': currentContentDensity === "Cozy"})}
+                            style={{cursor: "pointer"}}
+                            onClick={function () { setContentDensity("Cozy"); }}
+                        >
+                            Cozy
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            tabIndex="-1"
+                            className={clsx('dropdown__link', {'dropdown__link--active': currentContentDensity === "Compact"})}
+                            style={{cursor: "pointer"}}
+                            onClick={function () { setContentDensity("Compact"); }}
+                        >
+                           Compact
                         </a>
                     </li>
                 </ul>

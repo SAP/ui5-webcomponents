@@ -59,7 +59,7 @@ const config: Config = {
     navbar: {
       title: 'UI5 Web Components',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'UI5 Web Components Logo',
         src: 'img/logo.png',
       },
       items: [
@@ -77,18 +77,18 @@ const config: Config = {
           type: 'custom-themeNavbarItem',
           position: "right",
         },
-        {
-          type: 'custom-contentDensityNavbarItem',
-          position: "right",
-        },
-        {
-          type: 'custom-TextDirectionNavbarItem',
-          position: "right",
-        },
+        // {
+        //   type: 'custom-contentDensityNavbarItem',
+        //   position: "right",
+        // },
+        // {
+        //   type: 'custom-TextDirectionNavbarItem',
+        //   position: "right",
+        // },
         {
           label: `v${packageJson.version}`,
           position: "right",
-          to: 'https://github.com/SAP/ui5-webcomponents/releases/latest',
+          to: `https://github.com/SAP/ui5-webcomponents/releases/tag/v${packageJson.version}`,
         },
         {
           type: 'custom-GitHubNavbarItem',
