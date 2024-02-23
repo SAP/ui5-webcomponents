@@ -2,7 +2,7 @@ import { assert } from "chai";
 
 async function getTreeItemsInPopover() {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const items = await browser.$$(`>>>.${staticAreaItemClassName} ui5-responsive-popover .ui5-sn-item`);
+	const items = await browser.$$(`.${staticAreaItemClassName} [ui5-side-navigation-item], .${staticAreaItemClassName} [ui5-side-navigation-sub-item]`);
 
 	return items;
 }
@@ -23,8 +23,10 @@ describe("Component Behavior", () => {
 		it("Tests selection-change event", async () => {
 			const input = await browser.$("#counter");
 			const sideNavigation = await browser.$("#sn1");
-			let items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item");
-			const fixedItems = await sideNavigation.shadow$$(".ui5-sn-fixed .ui5-sn-item");
+			let items = await browser.$$("#sn1 [ui5-side-navigation-item]:not([slot='fixedItems']), #sn1 [ui5-side-navigation-item]:not([slot='fixedItems']) [ui5-side-navigation-sub-item]");
+			const fixedItems = await browser.$$("#sn1 [slot='fixedItems'], #sn1 [slot='fixedItems'] [ui5-side-navigation-sub-item]");
+
+			await browser.debug();
 
 			await items[0].click();
 			await items[3].click();
@@ -36,7 +38,6 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await input.getProperty("value"), "3", "Event is fired");
 
 			await sideNavigation.setAttribute("collapsed", "true");
-			items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item");
 
 			await items[0].click();
 
@@ -58,7 +59,7 @@ describe("Component Behavior", () => {
 		it("Tests click event & whole-item-toggleable property", async () => {
 			const input = await browser.$("#click-counter");
 			const sideNavigation = await browser.$("ui5-side-navigation");
-			let items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item-level1");
+			let items = await browser.$$("#sn1 [ui5-side-navigation-item]:not([slot='fixedItems'])");
 
 			await items[0].click();
 
@@ -92,7 +93,7 @@ describe("Component Behavior", () => {
 
 		it("Tests tooltips when expanded", async () => {
 			const sideNavigation = await browser.$("#sn1");
-			const renderedItems = await sideNavigation.shadow$$(".ui5-sn-item");
+			const renderedItems = await browser.$$("#sn1 [ui5-side-navigation-item], #sn1 [ui5-side-navigation-item] [ui5-side-navigation-sub-item]");
 
 			// items
 			assert.strictEqual(await renderedItems[0].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
@@ -107,7 +108,7 @@ describe("Component Behavior", () => {
 			await browser.$("#sn1").setProperty("collapsed", true);
 
 			const sideNavigation = await browser.$("#sn1");
-			const renderedItems = await sideNavigation.shadow$$(".ui5-sn-item");
+			const renderedItems = await browser.$$("#sn1 [ui5-side-navigation-item], #sn1 [ui5-side-navigation-item] [ui5-side-navigation-sub-item]");
 
 			assert.strictEqual(await renderedItems[0].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
 			assert.strictEqual(await renderedItems[1].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
@@ -125,7 +126,7 @@ describe("Component Behavior", () => {
 
 		it("tests the prevention of the ui5-selection-change event", async () => {
 			const sideNavigation = await browser.$("#sn1");
-			const items = await sideNavigation.shadow$$(".ui5-sn-item");
+			const items = await browser.$$("#sn1 [ui5-side-navigation-item], #sn1 [ui5-side-navigation-item] [ui5-side-navigation-sub-item]");
 
 			await items[3].click();
 
@@ -151,7 +152,7 @@ describe("Component Behavior", () => {
 			await sideNavigation.setAttribute("collapsed", "true");
 
 			const input = await browser.$("#counter");
-			const items = await sideNavigation.shadow$$(".ui5-sn-item");
+			const items = await browser.$$("#sn1 [ui5-side-navigation-item], #sn1 [ui5-side-navigation-item] [ui5-side-navigation-sub-item]");
 
 			await items[0].click();
 
@@ -173,8 +174,8 @@ describe("Component Behavior", () => {
 			const sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
 			const sideNavigationFixedTree = await sideNavigation.shadow$(".ui5-sn-fixed");
 
-			const items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item");
-			const fixedItems = await sideNavigation.shadow$$(".ui5-sn-fixed .ui5-sn-item");
+			let items = await browser.$$("#sn1 [ui5-side-navigation-item]:not([slot='fixedItems']), #sn1 [ui5-side-navigation-item]:not([slot='fixedItems']) [ui5-side-navigation-sub-item]");
+			const fixedItems = await browser.$$("#sn1 [slot='fixedItems'], #sn1 [slot='fixedItems'] [ui5-side-navigation-sub-item]");
 
 			assert.strictEqual(await sideNavigationRoot.getTagName(), "nav", "tag name of the SideNavigation root element is correctly set");
 
@@ -208,8 +209,8 @@ describe("Component Behavior", () => {
 			const sideNavigationTree = await sideNavigation.shadow$(".ui5-sn-flexible");
 			const sideNavigationFixedTree = await sideNavigation.shadow$(".ui5-sn-fixed");
 
-			const items = await sideNavigation.shadow$$(".ui5-sn-flexible .ui5-sn-item");
-			const fixedItems = await sideNavigation.shadow$$(".ui5-sn-fixed .ui5-sn-item");
+			let items = await browser.$$("#sn1 [ui5-side-navigation-item]:not([slot='fixedItems']), #sn1 [ui5-side-navigation-item]:not([slot='fixedItems']) [ui5-side-navigation-sub-item]");
+			const fixedItems = await browser.$$("#sn1 [slot='fixedItems'], #sn1 [slot='fixedItems'] [ui5-side-navigation-sub-item]");
 
 			assert.strictEqual(await sideNavigationRoot.getTagName(), "nav", "tag name of the SideNavigation root element is correctly set");
 
