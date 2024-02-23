@@ -8,11 +8,17 @@
     <title>Sample</title>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor)">
+<body style="background-color: var(--sapBackgroundColor); height: 450px;">
     <!-- playground-fold-end -->
 
     <ui5-date-picker value="2024-02-29" value-state="Information">
         <div slot="valueStateMessage">This date exists only once every four years!</div>
+    </ui5-date-picker>
+    <ui5-date-picker value="2024-02-29" value-state="Success">
+    </ui5-date-picker>
+    <ui5-date-picker value="2024-02-29" value-state="Error">
+    </ui5-date-picker>
+    <ui5-date-picker value="2024-02-29" value-state="Warning">
     </ui5-date-picker>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>

@@ -88,7 +88,7 @@
 }
 
 [data-theme='dark'] playground-preview {
-  background-color: rgb(40, 40, 40);
+  background-color: var(--ifm-background-color);
 }
 
 .navbar-dropdown-hidden {

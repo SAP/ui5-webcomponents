@@ -131,7 +131,7 @@ ${fixAssetPaths(js)}`}
                     {css}
                   </script>
               </playground-project>
-              <div style={{display: "flex", flexDirection: "column"}}>
+              <div style={{display: "flex", flexDirection: "column", borderBottom: editorVisible ? "none" : "1px solid #ccc"}}>
               <playground-preview style={{height: "unset"}} ref={previewRef}></playground-preview>
                 <div style={{display: editorVisible ? "block" : "none"}}>
                   <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
