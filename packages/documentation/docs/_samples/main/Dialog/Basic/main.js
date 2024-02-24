@@ -1,5 +1,6 @@
 import "@ui5/webcomponents/dist/Dialog.js";
 import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Label.js";
 

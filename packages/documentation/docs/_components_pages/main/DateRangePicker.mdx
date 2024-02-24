@@ -1,6 +1,6 @@
 import Basic from "../../_samples/main/DateRangePicker/Basic/Basic.md";
 import MinMax from "../../_samples/main/DateRangePicker/MinMax/MinMax.md";
-import LongFormat from "../../_samples/main/DateRangePicker/LongFormat/LongFormat.md";
+import DateFormat from "../../_samples/main/DateRangePicker/DateFormat/DateFormat.md";
 
 <%COMPONENT_OVERVIEW%>
 
@@ -11,8 +11,13 @@ import LongFormat from "../../_samples/main/DateRangePicker/LongFormat/LongForma
 
 ## More Samples
 
-### Min and Max date boundaries
-<MinMax />
+### Date Formats
+Supported format options are pattern-based on Unicode LDML Date Format notation.
+For more information, see <a target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</a>.
 
-### Long Date Format
-<LongFormat />
+<DateFormat />
+
+### Min and Max Dates
+Define min and max date boundaries to contrain user choice.
+
+<MinMax />
