@@ -65,19 +65,11 @@ export default function Item() {
     }
 
     useEffect(() => {
+        console.log("useEffect settings");
         if (ExecutionEnvironment.canUseDOM) {
             localStorage.setItem('ui5-theme', currentTheme);
         }
-
-        console.log("useEffect settings");
         sendSettingsToFrame({ currentTheme, currentContentDensity, currentTextDirection });
-
-        setTimeout(() => {
-            console.log("useEffect settings after 500ms");
-            const lightThemeInUse = ["sap_horizon", "sap_horizon_hcw", "sap_fiori_3", "sap_fiori_3_hcw"].includes(currentTheme);
-            sendSettingsToFrame({ currentTheme, currentContentDensity, currentTextDirection });
-            setColorMode(lightThemeInUse ? "light" : "dark");
-        }, 2000);
     }, [currentTheme, currentContentDensity, currentTextDirection]);
 
 
