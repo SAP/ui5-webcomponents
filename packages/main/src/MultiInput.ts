@@ -54,7 +54,7 @@ type MultiInputTokenDeleteEventDetail = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/MultiInput";</code>
+ * <code>import "@ui5/webcomponents/dist/MultiInput.js";</code>
  *
  * @constructor
  * @extends Input

@@ -1,7 +1,6 @@
 import "@ui5/webcomponents/dist/MultiInput.js";
 import "@ui5/webcomponents/dist/Token.js";
-import "@ui5/webcomponents/dist/SuggestionItem";
-
+import "@ui5/webcomponents/dist/SuggestionItem.js";
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 
 var createTokenFromText = function (text) {
@@ -10,10 +9,12 @@ var createTokenFromText = function (text) {
     token.setAttribute("slot", "tokens");
     return token;
 };
+
 document.getElementById("multi-input").addEventListener("token-delete", function (event) {
     const token = event.detail?.token;
     token && token.remove();
 });
+
 document.getElementById("multi-input").addEventListener("paste", function (event) {
     event.preventDefault();
     let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
@@ -31,6 +32,7 @@ document.getElementById("multi-input").addEventListener("paste", function (event
         }
     })
 });
+
 document.getElementById("multi-input").addEventListener("change", function (event) {
     if (!event.target.value) {
         return;

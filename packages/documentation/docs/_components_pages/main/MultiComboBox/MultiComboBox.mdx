@@ -1,7 +1,6 @@
 import Basic from "../../../_samples/main/MultiComboBox/Basic/Basic.md";
 import MultiComboBoxCustomValue from "../../../_samples/main/MultiComboBox/MultiComboBoxCustomValue/MultiComboBoxCustomValue.md";
 import MultiComboBoxGrouping from "../../../_samples/main/MultiComboBox/MultiComboBoxGrouping/MultiComboBoxGrouping.md";
-import MultiComboBoxLongToken from "../../../_samples/main/MultiComboBox/MultiComboBoxLongToken/MultiComboBoxLongToken.md";
 import SuggestionsWrapping from "../../../_samples/main/MultiComboBox/SuggestionsWrapping/SuggestionsWrapping.md";
 
 <%COMPONENT_OVERVIEW%>
@@ -12,7 +11,20 @@ import SuggestionsWrapping from "../../../_samples/main/MultiComboBox/Suggestion
 <%COMPONENT_METADATA%>
 
 ## More Samples
+
+### Custom values
+By default, typing of non-existing items is permitted.
+Use <b>allowCustomValues</b> to allow typing values that are not present as items.
+
 <MultiComboBoxCustomValue />
+
+### Items Grouping
+The <b>ui5-mcb-group-item</b> can be used to implement grouping.
+
 <MultiComboBoxGrouping />
-<MultiComboBoxLongToken />
+
+### Items Text Wrapping
+The sample demonstrates how the text of the items wrap when too long.
+<b>Note:</b> their representation in the input field (known as token) will truncate.
+
 <SuggestionsWrapping />

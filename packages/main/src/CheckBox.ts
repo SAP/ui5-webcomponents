@@ -73,7 +73,7 @@ let activeCb: CheckBox;
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/CheckBox";</code>
+ * <code>import "@ui5/webcomponents/dist/CheckBox.js";</code>
  *
  * @constructor
  * @extends UI5Element

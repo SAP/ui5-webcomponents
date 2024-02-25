@@ -11,9 +11,19 @@
 <body style="background-color: var(--sapBackgroundColor)">
     <!-- playground-fold-end -->
 
-    <div class="wrapper">
-        <ui5-button id="button1">Generate MessageStrip</ui5-button>
-    </div>
+    <ui5-checkbox
+        text="Truncating text when 'wrapping-type=Normal' set and some long text."
+        style="width:200px;"
+    ></ui5-checkbox>
+
+    <br>
+
+    <ui5-checkbox
+        checked
+        wrapping-type="Normal"
+        text="Wrapping text when 'wrapping-type=Normal' set and some long text."
+        style="width:200px;"
+    ></ui5-checkbox>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>
