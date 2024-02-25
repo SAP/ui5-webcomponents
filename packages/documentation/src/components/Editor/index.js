@@ -5,6 +5,7 @@ import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import styles from "./index.module.css";
 
 console.log("EDITOR IMORTED");
 let playgroundSupportContent = playgroundSupport("/");
@@ -133,7 +134,7 @@ ${fixAssetPaths(js)}`}
               </playground-project>
 
               <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 1px 3px 0"}}>
-                <playground-preview style={{height: "unset"}} ref={previewRef}></playground-preview>
+                <playground-preview class={styles.previewResultHidden} style={{height: "unset"}} ref={previewRef}></playground-preview>
                   <div style={{display: editorVisible ? "block" : "none"}}>
                     <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
                     <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
