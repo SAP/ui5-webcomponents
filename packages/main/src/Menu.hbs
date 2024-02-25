@@ -67,6 +67,7 @@
 				accessible-role="menuitem"
 				.additionalText="{{this.item._additionalText}}"
 				tooltip="{{this.item.tooltip}}"
+				selected="{{this.item.subMenuOpened}}"
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
 				?selected={{this.item.subMenuOpened}}
@@ -74,6 +75,7 @@
 				@mouseover={{../_itemMouseOver}}
 				@mouseout={{../_itemMouseOut}}
 				@keydown={{../_itemKeyDown}}
+				@_focused={{../_onfocusin}}
 			>
 				<div class="ui5-menu-item-text">
 				{{#if this.item.hasDummyIcon}}

@@ -22,7 +22,7 @@
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
-				<ui5-menu-item text="Open from E"></ui5-menu-item>
+				<ui5-menu-item text="Open from E" disabled></ui5-menu-item>
 			</ui5-menu-item>
 			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L"></ui5-menu-item>
 		</ui5-menu-item>
@@ -59,6 +59,10 @@
 
 	<ui5-title level="H5" class="header-title">Event logger</ui5-title>
 	<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
+
+	<ui5-popover id="detailsPopover">
+		<a href="https://en.wikipedia.org/wiki/Google_logo" target="_blank"></a>
+	</ui5-popover>
 
 	<script>
 		btnOpen.accessibilityAttributes = {
@@ -104,6 +108,20 @@
 			selectionInput.value = item.text;
 			if (item && item.text === "New File") {
 				event.preventDefault();
+			}
+		});
+
+		menu.addEventListener("ui5-item-focusin", function(event) {
+			const menuItem = event.detail.menuItem;
+			const opener = event.detail.opener;
+			const detailsPopover = document.getElementById("detailsPopover");
+
+			if (detailsPopover.isOpen()) {
+				detailsPopover.close(false, false, true);
+			} else if (menuItem.disabled) {
+				const anchor = detailsPopover.querySelector("a");
+				anchor.textContent = menuItem.text;
+				detailsPopover.showAt(opener, true)
 			}
 		});
 
