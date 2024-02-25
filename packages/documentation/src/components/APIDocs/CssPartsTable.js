@@ -10,7 +10,7 @@ export default function CssPartsTable({ declaration }) {
     // return cssParts.map(cssPart => {
     //     return <>
     //         <h3>{cssPart.name}</h3>
-    //         <p>{cssPart.description}</p>
+    //         <p dangerouslySetInnerHTML={{ __html: cssPart.description }}></p>
     //     </>
     // })
 
@@ -25,7 +25,7 @@ export default function CssPartsTable({ declaration }) {
             {
                 cssParts.map((cssPart, idx) => {
                     return <tr key={"cssPart" + idx}>
-                        <td>{cssPart.name}</td>
+                        <td><b>{cssPart.name}</b></td>
                         <td dangerouslySetInnerHTML={{__html: cssPart.description}}></td>
                     </tr>
                 })

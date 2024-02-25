@@ -18,7 +18,7 @@ export default function EnumFieldsTable({ declaration }) {
             {
                 enumFields.map((field, idx) => {
                     return <tr key={"enum" + idx}>
-                        <td>{field.name}</td>
+                        <td><b>{field.name}</b></td>
                         <td dangerouslySetInnerHTML={{__html: field.description}}></td>
                     </tr>
                 })

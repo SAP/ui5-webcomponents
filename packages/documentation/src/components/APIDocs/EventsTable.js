@@ -7,46 +7,66 @@ export default function EventsTable({ declaration }) {
         return "No events available for this component."
     }
 
-    // return events.map(event => {
-    //     return <>
-    //         <h3>{event.name}</h3>
-    //         <p>{event.description}</p>
-    //         <p><b>Type:</b> {event.type?.text}</p>
-    //         <p><b>Paramters:</b>
-    //             <ul>
-    //                 {
-    //                     event._ui5parameters?.map(parameter => {
-    //                         return <li>
-    //                             <b>{parameter.name}:</b> {parameter.type?.text}
-    //                             <p>{parameter.description}</p>
-    //                         </li>
-    //                     })
-    //                 }
-    //             </ul>
-    //         </p>
-    //     </>
-    // })
+    return events.map(event => {
+        return <>
+            <h3>{event.name}</h3>
+            <table>
+                <tr>
+                    <td><b>Description</b></td>
+                    <td dangerouslySetInnerHTML={{ __html: event.description }}></td>
+                </tr>
+                <tr>
+                    <td><b>Type</b></td>
+                    <td>{event.type?.text}</td>
+                </tr>
+                {event._ui5parameters && <tr>
+                    <td><b>Parameters</b></td>
+                    <td>{event._ui5parameters?.map(parameter => {
+                        return <><b>{parameter.name}</b>: {parameter.type?.text}
+                            <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: parameter.description }}></p>
+                            {parameter._ui5since && <>
+                                Available since: {parameter._ui5since}
+                                <br />
+                            </>}
+                            {parameter.deprecated && <>
+                                Deprecated: {parameter.deprecated}
+                                <br />
+                            </>}
+                        </>
+                    })}</td>
+                </tr>}
+                {event._ui5since && <tr>
+                    <td><b>Available since</b></td>
+                    <td>{event._ui5since}</td>
+                </tr>}
+                {event.deprecated && <tr>
+                    <td><b>Deprecated</b></td>
+                    <td>{event.deprecated}</td>
+                </tr>}
+            </table>
+        </>
+    })
 
-    return <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Return type</th>
-                <th>Description</th>
-                <th>Arguments</th>
-            </tr>
-        </thead>
-        <tbody>
-            {
-                events.map((event, idx) => {
-                    return <tr key={"event" + idx}>
-                        <td>{event.name}</td>
-                        <td>{event.type?.text || ""}</td>
-                        <td dangerouslySetInnerHTML={{__html: event.description}}></td>
-                        <td>{event._ui5parameters?.map(parameter => parameter.name).join(" ") || ""}</td>
-                    </tr>
-                })
-            }
-        </tbody>
-    </table>
+    // return <table>
+    //     <thead>
+    //         <tr>
+    //             <th>Name</th>
+    //             <th>Return type</th>
+    //             <th>Description</th>
+    //             <th>Arguments</th>
+    //         </tr>
+    //     </thead>
+    //     <tbody>
+    //         {
+    //             events.map((event, idx) => {
+    //                 return <tr key={"event" + idx}>
+    //                     <td>{event.name}</td>
+    //                     <td>{event.type?.text || ""}</td>
+    //                     <td dangerouslySetInnerHTML={{ __html: event.description }}></td>
+    //                     <td>{event._ui5parameters?.map(parameter => parameter.name).join(" ") || ""}</td>
+    //                 </tr>
+    //             })
+    //         }
+    //     </tbody>
+    // </table>
 }
