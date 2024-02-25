@@ -82,9 +82,6 @@ class NavigationMenu extends Menu {
 				}
 			}
 
-			// If there is a pending close operation, cancel it
-			this._clearTimeout();
-
 			// Opens submenu with 300ms delay
 			this._startOpenTimeout(item, opener, hoverId);
 		}
@@ -129,13 +126,14 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		if (isPhone()) {
-			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item);
-		} else if (isTablet()) {
-			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener, actionId);
-		}
+		this._prepareSubMenuDesktopTablet(item, opener, actionId);
+		// if (isPhone()) {
+		// 	// prepares and opens sub-menu on phone
+		// 	this._prepareSubMenuPhone(item);
+		// } else if (isTablet()) {
+		// 	// prepares and opens sub-menu on tablet
+		// 	this._prepareSubMenuDesktopTablet(item, opener, actionId);
+		// }
 	}
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
