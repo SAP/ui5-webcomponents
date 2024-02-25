@@ -593,19 +593,19 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		const isMenuClose = this.isRtl ? isRight(e) : isLeft(e);
-		const isMenuOpen = this.isRtl ? isLeft(e) : isRight(e);
+		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
+		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 
 		if (isEnter(e)) {
 			e.preventDefault();
 		}
-		if (isMenuOpen) {
+		if (shouldOpenMenu) {
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 			const hoverId = opener.getAttribute("id")!;
 
 			item.hasSubmenu && this._prepareSubMenuDesktopTablet(item, opener, hoverId);
-		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
+		} else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
 			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
 			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true, true);
 		}
