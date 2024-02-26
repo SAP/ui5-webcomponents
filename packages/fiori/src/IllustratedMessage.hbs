@@ -1,24 +1,28 @@
 <div class="ui5-illustrated-message-root">
-	<div class="ui5-illustrated-message-illustration">
-		{{{effectiveIllustration}}}
-	</div>
-	{{#if hasTitle}}
-			{{#if hasFormattedTitle}}
-				<slot name="title"></slot>
-			{{else}}
-				<ui5-title level="{{titleLevel}}" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+	<div class="ui5-illustrated-message-inner">
+		<div class="ui5-illustrated-message-illustration">
+			{{{effectiveIllustration}}}
+		</div>
+		<div class="ui5-illustrated-message-text-container">
+			{{#if hasTitle}}
+					{{#if hasFormattedTitle}}
+						<slot name="title"></slot>
+					{{else}}
+						<ui5-title level="{{titleLevel}}" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+					{{/if}}
 			{{/if}}
-	{{/if}}
 
-	{{#if hasSubtitle}}
-		<div part="subtitle" class="ui5-illustrated-message-subtitle">
-			{{#if hasFormattedSubtitle}}
-				<slot name="subtitle"></slot>
-			{{else}}
-				{{effectiveSubitleText}}
+			{{#if hasSubtitle}}
+				<div part="subtitle" class="ui5-illustrated-message-subtitle">
+					{{#if hasFormattedSubtitle}}
+						<slot name="subtitle"></slot>
+					{{else}}
+						{{effectiveSubitleText}}
+					{{/if}}
+				</div>
 			{{/if}}
 		</div>
-	{{/if}}
+	</div>
 
 	{{#if hasActions}}
 		<div class="ui5-illustrated-message-actions">

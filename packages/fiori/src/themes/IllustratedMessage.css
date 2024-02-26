@@ -9,7 +9,8 @@
     padding: 1rem;
 }
 
-.ui5-illustrated-message-root {
+.ui5-illustrated-message-root,
+.ui5-illustrated-message-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,6 +24,7 @@
 
 .ui5-illustrated-message-illustration svg {
     max-height: 100%;
+	max-width: 100%;
 }
 
 .ui5-illustrated-message-illustration.ui5-illustrated-message-illustration-fit-content {
@@ -109,6 +111,37 @@
 
 :host([media="spot"]) .ui5-illustrated-message-actions {
     margin: 0.5rem 0;
+}
+
+:host([media="dot"]) {
+	padding: 0.25rem;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-inner {
+	flex-direction: row;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-illustration {
+	margin: 0 0.25rem 0 0;
+	height: 2.8125rem;
+	width: 2.8125rem;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-title {
+	margin-bottom: 0.25rem;
+	font-size: var(--sapFontHeader5Size);
+	line-height: 1.25rem;
+	max-width: 12.6875rem;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-subtitle {
+	font-size: var(--sapFontSize);
+	max-width: 12.6875rem;
+	margin-bottom: 0.25rem;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-actions {
+	margin: 0.25rem 0;
 }
 
 :host([media="base"]) .ui5-illustrated-message-illustration {

@@ -62,6 +62,8 @@ const generate = async () => {
 	// collect each illustration name because each one should have Sample.js file
 	const fileNames = new Set();
 
+	let dotIllustrationNames = [];
+
 	try {
 		await fs.access(srcPath);
 	} catch (error) {
@@ -77,7 +79,13 @@ const generate = async () => {
 	const svgToJs = async fileName => {
 		const svg = await fs.readFile(path.join(srcPath, fileName), { encoding: "utf-8" });
 		const fileContent = svgImportTemplate(svg);
+		const fileNameSplitArr = fileName.split('-');
 		fileName = fileName.replace(/\.svg$/, ".js");
+
+		// TODO try to avoid collision between sets
+		if (fileNameSplitArr[1] === 'Dot') {
+			dotIllustrationNames.push(fileNameSplitArr[2].split('.')[0]);
+		}
 
 		return fs.writeFile(path.join(destPath, fileName), fileContent);
 	};
@@ -93,12 +101,13 @@ const generate = async () => {
 		}
 
 		const illustrationNameUpperCase = illustrationNameForTranslation.toUpperCase();
+		const hasDot = dotIllustrationNames.indexOf(illustrationName) !== -1 ? 'Dot' : 'Spot';
 
 		return `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
 import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
 import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
-import dotSvg from "./${illustrationsPrefix}-Dot-${illustrationName}.js";${
+import dotSvg from "./${illustrationsPrefix}-${hasDot}-${illustrationName}.js";${
 	defaultText ? `import {
 	IM_TITLE_${illustrationNameUpperCase},
 	IM_SUBTITLE_${illustrationNameUpperCase},
@@ -156,12 +165,15 @@ export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 		}
 	});
 
-	for (let illustrationName of fileNames) {
-		promises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
-		promises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
-	}
+	return Promise.all(promises).then(() => {
+		const nestedPromises = [];
+		for (let illustrationName of fileNames) {
+			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
+			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
+		}
 
-	return Promise.all(promises);
+		return Promise.all(nestedPromises);
+	});
 };
 
 generate().then(() => {
