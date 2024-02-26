@@ -1,6 +1,6 @@
 import fs from "fs/promises"
 import path from "path"
-import { parseDeclaration, parseComponentDeclaration } from "./component-file.mjs"
+import { parseDeclaration } from "./component-file.mjs"
 
 const packages = ["main", "fiori"];
 const manifests = {};
@@ -14,8 +14,9 @@ const generateTypes = async () => {
         await fs.mkdir(`./docs/components/${packageName}/enums`, { recursive: true })
         await fs.mkdir(`./docs/components/${packageName}/interfaces`, { recursive: true })
 
-        Promise.all(["interfaces", "enums"].map(async typeName => {
+        Promise.all(["enums", "interfaces"].map(async (typeName, idx) => {
             await fs.writeFile(path.join(`./docs/components/${packageName}/${typeName}/README.mdx`), `---
+sidebar_position: ${idx}
 title: ${typeName.charAt(0).toUpperCase() + typeName.slice(1)}
 ---
 

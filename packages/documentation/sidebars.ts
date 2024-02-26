@@ -17,6 +17,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: "Main",
+      collapsed: false,
       link: {
         type: 'generated-index',
         title: 'Main components',
@@ -27,6 +28,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: "Fiori",
+      collapsed: false,
       link: {
         type: 'generated-index',
         title: 'Fiori',

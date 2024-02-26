@@ -24,10 +24,66 @@ const findDeclaration = (manifest, declarationName) => {
     return declaration;
 }
 
-
-packages.map(packageName => {
+[...packages, "base"].map(packageName => {
     return manifests[packageName] = JSON.parse(fs.readFileSync(path.resolve(`./../${packageName}/dist/custom-elements-internal.json`), { encoding: "utf-8" }))
 });
+
+const parseTypeAsString = (typeObj) => {
+    if (!typeObj || !typeObj.references) {
+        return typeObj;
+    }
+
+    typeObj.references.forEach(reference => {
+        let packageName;
+
+        if (reference.package === "@ui5/webcomponents") {
+            packageName = "main"
+        } else if (reference.package === "@ui5/webcomponents-fiori") {
+            packageName = "fiori"
+        } else if (reference.package === "@ui5/webcomponents-base") {
+            packageName = "base"
+        }
+
+        const foundReference = findDeclaration(manifests[packageName], reference.name);
+
+        if (foundReference && foundReference.kind === "enum") {
+            const enumFields = foundReference.members
+                .filter(member => member.kind === "field" && member.static)
+                .map(member => `"${member.name}"`)
+                .join(" | ");
+
+            const regexp = new RegExp(`\\b${foundReference.name}\\b`, "g");
+            typeObj.text = typeObj.text.replaceAll(regexp, enumFields);
+        }
+    })
+}
+
+const resolveTypes = declaration => {
+    declaration.members
+        ?.filter(member => member.kind === "field")
+        .forEach(field => {
+            parseTypeAsString(field.type);
+        })
+
+    declaration.members
+        ?.filter(member => member.kind === "method")
+        .forEach(method => {
+            if (method.return) parseTypeAsString(method.type);
+            if (method.parameters) method.parameters.forEach(param => parseTypeAsString(param.type))
+        })
+
+    declaration.events
+        ?.forEach(event => {
+            parseTypeAsString(event.type)
+            if (event._ui5parameters) event._ui5parameters.forEach(param => parseTypeAsString(param.type))
+        })
+
+    declaration.slots
+        ?.forEach(slot => {
+            parseTypeAsString(slot._ui5type)
+        })
+
+}
 
 const generateComponents = (source = "./docs/_components_pages", level = 1) => {
     const sourcePath = path.resolve(source);
@@ -67,6 +123,8 @@ const generateComponents = (source = "./docs/_components_pages", level = 1) => {
             if (packageName) {
                 const fileContent = fs.readFileSync(path.join(sourcePath, file), { encoding: "utf-8" });
                 const declaration = findDeclaration(manifests[packageName], fileName)
+
+                resolveTypes(declaration);
 
                 fs.writeFileSync(path.join(targetPath, `${fileName}.mdx`), parseComponentDeclaration(declaration, fileContent))
                 fs.writeFileSync(path.join(targetPath, `_${fileName}Declaration.json`), JSON.stringify(declaration))
