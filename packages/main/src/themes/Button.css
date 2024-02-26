@@ -110,7 +110,8 @@
 	pointer-events: none;
 }
 
-:host([focused]) .ui5-button-root:after {
+:host([desktop]) .ui5-button-root:focus-within:after,
+.ui5-button-root:focus-visible:after {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
