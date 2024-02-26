@@ -7,11 +7,11 @@ export default function EventsTable({ declaration }) {
         return "No events available for this component."
     }
 
-    return events.map(event => {
+    return events.map((event, idx) => {
         return <>
             <h3>{event.name}</h3>
             <table>
-                <tr>
+                <tr key={"event" + idx}>
                     <td><b>Description</b></td>
                     <td dangerouslySetInnerHTML={{ __html: event.description }}></td>
                 </tr>

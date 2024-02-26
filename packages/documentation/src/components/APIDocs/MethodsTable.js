@@ -7,11 +7,11 @@ export default function MethodsTable({ declaration }) {
         return "No methods available for this component."
     }
 
-    return methods.map(method => {
+    return methods.map((method, idx) => {
         return <>
             <h3>{method.name}</h3>
             <table>
-                <tr>
+                <tr key={"methods" + idx}>
                     <td><b>Description</b></td>
                     <td dangerouslySetInnerHTML={{ __html: method.description }}></td>
                 </tr>

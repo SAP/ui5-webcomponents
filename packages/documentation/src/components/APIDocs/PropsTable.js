@@ -7,11 +7,11 @@ export default function PropsTable({ declaration }) {
         return "No properties available for this component."
     }
 
-    return properties.map(property => {
+    return properties.map((property, idx) => {
         return <>
             <h3>{property.name}</h3>
             <table>
-                <tr>
+                <tr key={`props-${idx}`}>
                     <td><b>Description</b></td>
                     <td dangerouslySetInnerHTML={{ __html: property.description }}></td>
                 </tr>
@@ -47,7 +47,7 @@ export default function PropsTable({ declaration }) {
     //         </thead>
     //         <tbody>
     //             {
-    //                 properties.map((field, idx) => {
+    //                slots.map((slot, idx) => {
     //                     return <tr key={`props-${idx}`}>
     //                         <td>{field.name}</td>
     //                         <td>{field.type?.text}</td>

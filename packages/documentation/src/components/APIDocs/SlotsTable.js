@@ -7,11 +7,11 @@ export default function SlotsTable({ declaration }) {
         return "No slots available for this component."
     }
 
-    return slots.map(slot => {
+    return slots.map((slot, idx) => {
         return <>
             <h3>{slot.name}</h3>
             <table>
-                <tr>
+                <tr key={"slot" + idx}>
                     <td><b>Description</b></td>
                     <td dangerouslySetInnerHTML={{ __html: slot.description }}></td>
                 </tr>
