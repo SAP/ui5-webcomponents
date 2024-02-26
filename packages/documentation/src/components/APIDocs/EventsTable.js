@@ -13,8 +13,8 @@ export default function EventsTable({ event }) {
             </tr>
             {event._ui5parameters && <tr>
                 <td><b>Parameters</b></td>
-                <td>{event._ui5parameters?.map((parameter, index) => {
-                    return <div key={index}><b>{parameter.name}</b>: {parameter.type?.text}
+                <td>{event._ui5parameters?.map((parameter, idx) => {
+                    return <div key={idx}><b>{parameter.name}</b>: {parameter.type?.text}
                         <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: parameter.description }}></p>
                         {parameter._ui5since && <>
                             Available since: {parameter._ui5since}

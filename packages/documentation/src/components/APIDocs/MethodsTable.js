@@ -13,8 +13,8 @@ export default function MethodsTable({ method }) {
             </tr>
             {method.parameters && <tr>
                 <td><b>Parameters</b></td>
-                <td>{method.parameters?.map(parameter => {
-                    return <><b>{parameter.name}</b>: {parameter.type?.text}
+                <td>{method.parameters?.map((parameter, idx) => {
+                    return <div key={idx}><b>{parameter.name}</b>: {parameter.type?.text}
                         <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: parameter.description }}></p>
                         {parameter._ui5since && <>
                             Available since: {parameter._ui5since}
@@ -24,7 +24,7 @@ export default function MethodsTable({ method }) {
                             Deprecated: {parameter.deprecated}
                             <br />
                         </>}
-                    </>
+                    </div>
                 })}</td>
             </tr>}
             {method._ui5since && <tr>
