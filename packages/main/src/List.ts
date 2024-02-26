@@ -353,6 +353,22 @@ class List extends UI5Element {
 	growing!: `${ListGrowingMode}`;
 
 	/**
+	 * Defines the text that will be displayed inside the growing button at the bottom of the list,
+	 * meant for loading more rows upon press.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> If not specified a built-in text will be displayed.
+	 * <br>
+	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+	 *
+	 * @default ""
+	 * @since 1.23.0
+	 * @public
+	 */
+	@property()
+	growingButtonText!: string;
+
+	/**
 	 * Defines if the component would display a loading indicator over the list.
 	 *
 	 * @default false
@@ -612,7 +628,7 @@ class List extends UI5Element {
 	}
 
 	get _growingButtonText(): string {
-		return List.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get busyIndPosition() {
