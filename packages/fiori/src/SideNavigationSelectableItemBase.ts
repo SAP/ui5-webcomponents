@@ -14,14 +14,13 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 
 /**
  * @class
- * A class to serve as a foundation
- * for the <code>SideNavigationItem</code> and <code>SideNavigationSubItem</code> classes.
+ * Base class for the navigation items that support actions.
  *
  * @constructor
  * @extends UI5Element
  * @abstract
  * @public
- * @since 1.19.0
+ * @since 1.24.0
  */
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {

@@ -7,7 +7,7 @@ import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -21,8 +21,8 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * Represents a navigation action. It can provide sub items.
  * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> or <code>ui5-side-navigation-group</code> only.
- * Via the <code>ui5-side-navigation-item</code> you control the content of the <code>SideNavigation</code>.
  *
  * <h3>ES6 Module Import</h3>
  *

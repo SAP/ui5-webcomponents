@@ -5,8 +5,7 @@ import type SideNavigation from "./SideNavigation.js";
 
 /**
  * @class
- * A class to serve as a foundation
- * for the <code>SideNavigationItem</code> and <code>SideNavigationSubItem</code> classes.
+ * Base class for the items that are accepted by the <code>ui5-side-navigation</code> component.
  *
  * @constructor
  * @extends UI5Element

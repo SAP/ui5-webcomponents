@@ -12,7 +12,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * Represents a single navigation action.
  * The <code>ui5-side-navigation-sub-item</code> is intended to be used inside a <code>ui5-side-navigation-item</code> only.
  *
  * <h3>ES6 Module Import</h3>

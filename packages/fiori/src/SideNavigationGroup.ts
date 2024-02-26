@@ -12,8 +12,8 @@ import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
-import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
-import SideNavigationItem from "./SideNavigationItem.js";
+import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import type SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
 
 // Styles
@@ -24,8 +24,8 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-side-navigation-group</code> represents a group of navigation actions, which can be selected by the user.
- * The <code>ui5-side-navigation-group</code> is intended to be used inside a <code>ui5-side-navigation</code> only.
+ * Represents a group of navigation actions.
+ * The <code>ui5-side-navigation-group</code> can to be used inside a <code>ui5-side-navigation</code> only.
  *
  * <h3>ES6 Module Import</h3>
  *
