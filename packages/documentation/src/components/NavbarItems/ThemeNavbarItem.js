@@ -4,6 +4,7 @@ import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import NavbarNavLink from '@theme/NavbarItem/NavbarNavLink';
 import NavbarItem from '@theme/NavbarItem';
 import { useContentDensity, useTextDirection, useTheme } from "@site/src/components/Settings";
+import { useLocation } from "@docusaurus/router";
 import {
     Collapsible,
 } from '@docusaurus/theme-common';
@@ -23,6 +24,7 @@ function ThemeNavbarItemDesktop() {
     const [textDirection, setTextDirection] = useTextDirection();
     const [contentDensity, setContentDensity] = useContentDensity();
     const [showDropdown, setShowDropdown] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         if (ExecutionEnvironment.canUseDOM) {
@@ -37,6 +39,7 @@ function ThemeNavbarItemDesktop() {
         className={clsx('navbar__item', 'dropdown', 'dropdown--hoverable', 'dropdown--right', {
             'dropdown--show': showDropdown,
         })}>
+        <span hidden>{location}</span>
         <NavbarNavLink
             aria-haspopup="true"
             aria-expanded={showDropdown}
