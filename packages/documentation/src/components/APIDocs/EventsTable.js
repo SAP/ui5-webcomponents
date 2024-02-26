@@ -1,17 +1,8 @@
 import React from 'react';
 
-export default function EventsTable({ declaration }) {
-    const events = declaration.events || [];
-
-    if (!events.length) {
-        return "No events available for this component."
-    }
-
-    return events.map((event, idx) => {
-        return <>
-            <h3>{event.name}</h3>
-            <table>
-                <tr key={"event" + idx}>
+export default function EventsTable({ event }) {
+    return <table>
+                <tr>
                     <td><b>Description</b></td>
                     <td dangerouslySetInnerHTML={{ __html: event.description }}></td>
                 </tr>
@@ -44,29 +35,4 @@ export default function EventsTable({ declaration }) {
                     <td>{event.deprecated}</td>
                 </tr>}
             </table>
-        </>
-    })
-
-    // return <table>
-    //     <thead>
-    //         <tr>
-    //             <th>Name</th>
-    //             <th>Return type</th>
-    //             <th>Description</th>
-    //             <th>Arguments</th>
-    //         </tr>
-    //     </thead>
-    //     <tbody>
-    //         {
-    //             events.map((event, idx) => {
-    //                 return <tr key={"event" + idx}>
-    //                     <td>{event.name}</td>
-    //                     <td>{event.type?.text || ""}</td>
-    //                     <td dangerouslySetInnerHTML={{ __html: event.description }}></td>
-    //                     <td>{event._ui5parameters?.map(parameter => parameter.name).join(" ") || ""}</td>
-    //                 </tr>
-    //             })
-    //         }
-    //     </tbody>
-    // </table>
 }
