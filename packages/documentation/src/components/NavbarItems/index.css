@@ -1,0 +1,4 @@
+.navbar__item--hidden,
+.menu__list-item--hidden {
+	display: none;
+}

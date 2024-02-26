@@ -1,13 +1,16 @@
-import clsx from 'clsx';
-import { useState, useEffect } from 'react';
-import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
-import NavbarNavLink from '@theme/NavbarItem/NavbarNavLink';
-import NavbarItem from '@theme/NavbarItem';
+import "./index.css";
+import clsx from "clsx";
+import { useState, useEffect } from "react";
+import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
+import NavbarNavLink from "@theme/NavbarItem/NavbarNavLink";
+import NavbarItem from "@theme/NavbarItem";
 import { useContentDensity, useTextDirection, useTheme } from "@site/src/components/Settings";
 import { useLocation } from "@docusaurus/router";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
 import {
     Collapsible,
-} from '@docusaurus/theme-common';
+} from "@docusaurus/theme-common";
 
 const sendSettingsToFrame = (settings) => {
     [...document.querySelectorAll("playground-ide")].forEach(ide => {
@@ -20,11 +23,13 @@ const sendSettingsToFrame = (settings) => {
 }
 
 function SettingsNavbarItemDesktop() {
+    const location = useLocation();
+    const baseUrl = useBaseUrl("/");
+
     const [theme, setTheme] = useTheme();
     const [textDirection, setTextDirection] = useTextDirection();
     const [contentDensity, setContentDensity] = useContentDensity();
     const [showDropdown, setShowDropdown] = useState(false);
-    const location = useLocation();
 
     useEffect(() => {
         if (ExecutionEnvironment.canUseDOM) {
@@ -38,8 +43,10 @@ function SettingsNavbarItemDesktop() {
     return <div
         className={clsx('navbar__item', 'dropdown', 'dropdown--hoverable', 'dropdown--right', {
             'dropdown--show': showDropdown,
+            "navbar__item--hidden": location.pathname === baseUrl,
         })}>
-        <span hidden>{location.pathname}</span>
+        
+        <span hidden>location: {location.pathname} baseUrl: {baseUrl}</span>
         <NavbarNavLink
             aria-haspopup="true"
             aria-expanded={showDropdown}
@@ -138,10 +145,12 @@ function SettingsNavbarItemDesktop() {
 }
 
 function SettingsNavbarItemMobile() {
+    const locationMobile = useLocation();
+    const baseUrlMobile= useBaseUrl("/");
+
     const [theme, setTheme] = useTheme();
     const [textDirection, setTextDirection] = useTextDirection();
     const [contentDensity, setContentDensity] = useContentDensity();
-
     const [collapsed, setCollapsed] = useState(false)
 
     useEffect(() => {
@@ -155,14 +164,15 @@ function SettingsNavbarItemMobile() {
 
     return (
         <li
-            className={clsx('menu__list-item', {
-                'menu__list-item--collapsed': collapsed,
+            className={clsx("menu__list-item", {
+                "menu__list-item--collapsed": collapsed,
+                "menu__list-item--hidden": locationMobile.pathname === baseUrlMobile,
             })}>
             <NavbarNavLink
                 role="button"
                 label="Settings"
                 className={clsx(
-                    'menu__link menu__link--sublist menu__link--sublist-caret',
+                    "menu__link menu__link--sublist menu__link--sublist-caret",
                 )}
                 onClick={(e) => {
                     setCollapsed(!collapsed);
@@ -174,56 +184,56 @@ function SettingsNavbarItemMobile() {
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_horizon") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_horizon" })}
+                    className={clsx({ "menu__link--active": theme === "sap_horizon" })}
                 />
                 <NavbarItem
                     label="Evening Horizon"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_horizon_dark") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_horizon_dark" })}
+                    className={clsx({ "menu__link--active": theme === "sap_horizon_dark" })}
                 />
                 <NavbarItem
                     label="Horizon High Contrast Black"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_horizon_hcb") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_horizon_hcb" })}
+                    className={clsx({ "menu__link--active": theme === "sap_horizon_hcb" })}
                 />
                 <NavbarItem
                     label="Horizon High Contrast White"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_horizon_hcw") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_horizon_hcw" })}
+                    className={clsx({ "menu__link--active": theme === "sap_horizon_hcw" })}
                 />
                 <NavbarItem
                     label="Quartz Light"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_fiori_3") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_fiori_3" })}
+                    className={clsx({ "menu__link--active": theme === "sap_fiori_3" })}
                 />
                 <NavbarItem
                     label="Quartz Dark"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_fiori_3_dark") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_fiori_3_dark" })}
+                    className={clsx({ "menu__link--active": theme === "sap_fiori_3_dark" })}
                 />
                 <NavbarItem
                     label="Quartz High Contrast Black"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_fiori_3_hcb") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_fiori_3_hcb" })}
+                    className={clsx({ "menu__link--active": theme === "sap_fiori_3_hcb" })}
                 />
                 <NavbarItem
                     label="Quartz High Contrast White"
                     mobile
                     isDropdownItem
                     onClick={() => { setTheme("sap_fiori_3_hcw") }}
-                    className={clsx({ 'menu__link--active': theme === "sap_fiori_3_hcw" })}
+                    className={clsx({ "menu__link--active": theme === "sap_fiori_3_hcw" })}
                 />
                 <li><hr style={{ margin: "var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal)" }} /></li>
                 <li className="menu__list-item"><b style={{ padding: "var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal)" }}>Direction</b></li>
@@ -232,14 +242,14 @@ function SettingsNavbarItemMobile() {
                     mobile
                     isDropdownItem
                     onClick={() => { setTextDirection("LTR") }}
-                    className={clsx({ 'menu__link--active': textDirection === "LTR" })}
+                    className={clsx({ "menu__link--active": textDirection === "LTR" })}
                 />
                 <NavbarItem
                     label="RTL"
                     mobile
                     isDropdownItem
                     onClick={() => { setTextDirection("RTL") }}
-                    className={clsx({ 'menu__link--active': textDirection === "RTL" })}
+                    className={clsx({ "menu__link--active": textDirection === "RTL" })}
                 />
                 <li><hr style={{ margin: "var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal)" }} /></li>
                 <li className="menu__list-item"><b style={{ padding: "var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal)" }}>Content density</b></li>
@@ -248,12 +258,12 @@ function SettingsNavbarItemMobile() {
                     mobile
                     isDropdownItem
                     onClick={() => { setContentDensity("Cozy") }}
-                    className={clsx({ 'menu__link--active': contentDensity === "Cozy" })}
+                    className={clsx({ "menu__link--active": contentDensity === "Cozy" })}
                 />
                 <NavbarItem
                     label="Compact"
                     mobile
-                    className={clsx({ 'menu__link--active': contentDensity === "Compact" })}
+                    className={clsx({ "menu__link--active": contentDensity === "Compact" })}
                     isDropdownItem
                     onClick={() => { setContentDensity("Compact") }}
                 />
