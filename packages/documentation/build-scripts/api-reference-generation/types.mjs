@@ -10,10 +10,6 @@ const generateTypes = async () => {
         manifests[packageName] = JSON.parse(await fs.readFile(path.resolve(`./../${packageName}/dist/custom-elements-internal.json`), { encoding: "utf-8" }))
     }));
 
-    await fs.writeFile(path.join(`./docs/components/Components.md`), `---
-displayed_sidebar: componentsSidebar
----`)
-
     packages.forEach(async (packageName) => {
         await fs.mkdir(`./docs/components/${packageName}/enums`, { recursive: true })
         await fs.mkdir(`./docs/components/${packageName}/interfaces`, { recursive: true })
@@ -31,10 +27,10 @@ import DocCardList from '@theme/DocCardList';
         manifests[packageName].modules.forEach(_module => {
             _module.declarations.forEach(async (declaration) => {
                 if (declaration.kind === "enum") {
-                    await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `${declaration.name}.mdx`), parseDeclaration(declaration))
+                    await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `${declaration.name}.mdx`), parseDeclaration(declaration, packageName))
                     await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
                 } else if (declaration.kind === "interface") {
-                    await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `${declaration.name}.mdx`), parseDeclaration(declaration))
+                    await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `${declaration.name}.mdx`), parseDeclaration(declaration, packageName))
                     await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
                 }
             });

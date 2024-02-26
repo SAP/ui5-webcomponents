@@ -1,3 +1,0 @@
----
-displayed_sidebar: componentsSidebar
----

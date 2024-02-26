@@ -69,7 +69,7 @@ const config: Config = {
           activeBasePath: 'docs',
         },
         {
-          to: 'components/main/',
+          to: 'components/',
           label: 'Components',
           activeBasePath: 'components',
         },

@@ -144,7 +144,7 @@ const getTable = (kind, declaration) => {
 }
 
 
-const parseDeclaration = (declaration) => {
+const parseDeclaration = (declaration, packageName) => {
     if (!declaration) {
         return "";
     }
@@ -152,6 +152,12 @@ const parseDeclaration = (declaration) => {
     let sections = [
         parseDeclarationDescription(declaration)
     ]
+
+    if (packageName === "main") {
+        sections.unshift(`---
+slug: ../../${declaration.kind}s/${declaration.name}
+---`)
+    }
 
     if (declaration.kind === "enum") {
         sections.push(`import declarationJSON from "./_${declaration.name}Declaration.json";`);
