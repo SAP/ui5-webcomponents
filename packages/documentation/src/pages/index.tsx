@@ -32,7 +32,7 @@ function HomepageHeader() {
 
           <Link
             className={clsx("button button--secondary button--lg button--getting-started", styles.buttonSecondary)}
-            to="/components/main">
+            to="/components/">
             Components
           </Link>
         </div>

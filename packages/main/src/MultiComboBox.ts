@@ -175,7 +175,7 @@ type MultiComboboxItemWithSelection = {
  * @extends UI5Element
  * @public
  * @since 0.11.0
- * @csspart token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)
+ * @csspart token-\{index\} - Used to style each token(where <code>token-0</code> corresponds to the first item)
  */
 @customElement({
 	tag: "ui5-multi-combobox",
