@@ -3,7 +3,7 @@ import "@ui5/webcomponents/dist/Token.js";
 import "@ui5/webcomponents/dist/SuggestionItem.js";
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 
-var createTokenFromText = function (text) {
+const createTokenFromText = function (text) {
     let token = document.createElement("ui5-token");
     token.setAttribute("text", text);
     token.setAttribute("slot", "tokens");

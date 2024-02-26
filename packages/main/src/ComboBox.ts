@@ -154,7 +154,7 @@ type ComboBoxSelectionChangeEventDetail = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ComboBox";</code>
+ * <code>import "@ui5/webcomponents/dist/ComboBox.js";</code>
  *
  *
  * @constructor

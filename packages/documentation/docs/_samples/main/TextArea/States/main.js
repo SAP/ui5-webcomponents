@@ -1,1 +1,1 @@
-import "@ui5/webcomponents/dist/TimePicker.js";
+import "@ui5/webcomponents/dist/TextArea.js";

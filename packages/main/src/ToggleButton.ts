@@ -25,7 +25,7 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/ToggleButton";</code>
+ * <code>import "@ui5/webcomponents/dist/ToggleButton.js";</code>
  *
  * @constructor
  * @extends Button
