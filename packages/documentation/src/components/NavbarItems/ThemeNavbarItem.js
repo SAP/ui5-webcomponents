@@ -1,77 +1,40 @@
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
-import { useColorMode } from '@docusaurus/theme-common';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
+import NavbarNavLink from '@theme/NavbarItem/NavbarNavLink';
+import NavbarItem from '@theme/NavbarItem';
+import { useContentDensity, useTextDirection, useTheme } from "@site/src/components/Settings";
+import {
+    isRegexpStringMatch,
+    useCollapsible,
+    Collapsible,
+  } from '@docusaurus/theme-common';
 
-export default function Item() {
+function ThemeNavbarItemDesktop() {
     const [hidden, setHidden] = useState(false);
-    const [currentTheme, setCurrentTheme] = useState(() => {
-        // getting stored value
-        let initialValue;
-        if (ExecutionEnvironment.canUseDOM) {
-            initialValue = localStorage.getItem("ui5-theme");
-        }
-        return initialValue || "sap_horizon";
-    });
 
-    const [currentTextDirection, setCurrentTextDirection] = useState("LTR");
-    const [currentContentDensity, setCurrentContentDensity] = useState("Compact");
-    const {colorMode, setColorMode} = useColorMode();
+    const [theme, setTheme] = useTheme();
+    const [textDirection, setTextDirection] = useTextDirection();
+    const [contentDensity, setContentDensity] = useContentDensity();
 
-
-    const   sendSettingsToFrame = (settings) => {
-        console.log("sendSettingsToFrame...", settings);
-
+    const sendSettingsToFrame = (settings) => {
         [...document.querySelectorAll("playground-ide")].forEach(ide => {
             ide.shadowRoot.querySelector("playground-preview").iframe.contentWindow.postMessage({ settings }, "*");
         });
 
         [...document.querySelectorAll("playground-preview")].forEach(preview => {
-            console.log("sending settings to frame:", {preview, settings})
             preview.iframe.contentWindow.postMessage({ settings }, "*");
         });
     }
 
-    const setContentDensity = (contentDensity) => {
-        setCurrentContentDensity(contentDensity);
-        // setHidden(true);
-        // setTimeout(function () {
-        //     setHidden(false);
-        // }, 10);
-    }
-
-    const setTextDirection = (textDirection) => {
-        setCurrentTextDirection(textDirection);
-        // setHidden(true);
-        // setTimeout(function () {
-        //     setHidden(false);
-        // }, 10);
-    }
-
-    const setTheme = (theme) => {
-        setCurrentTheme(theme);
-        // localStorage.setItem('ui5-theme', currentTheme);
-
-        if (["sap_horizon", "sap_horizon_hcw", "sap_fiori_3", "sap_fiori_3_hcw"].includes(theme)) {
-            setColorMode("light");
-        } else {
-            setColorMode("dark");
-        }
-
-        // setHidden(true);
-        // setTimeout(function () {
-        //     setHidden(false);
-        // }, 10);
-    }
-
     useEffect(() => {
-        console.log("useEffect settings");
         if (ExecutionEnvironment.canUseDOM) {
-            localStorage.setItem('ui5-theme', currentTheme);
+            localStorage.setItem('ui5-theme', theme);
+            localStorage.setItem('ui5-content-density', contentDensity);
+            localStorage.setItem('ui5-text-direction', textDirection);
         }
-        sendSettingsToFrame({ currentTheme, currentContentDensity, currentTextDirection });
-    }, [currentTheme, currentContentDensity, currentTextDirection]);
-
+        sendSettingsToFrame({ theme, contentDensity, textDirection });
+    }, [theme, contentDensity, textDirection]);
 
     return (
         <>
@@ -85,7 +48,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_horizon"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_horizon"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_horizon"); }}
                         >
@@ -95,7 +58,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_horizon_dark"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_horizon_dark"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_horizon_dark"); }}
                         >
@@ -105,7 +68,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_horizon_hcb"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_horizon_hcb"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_horizon_hcb"); }}
                         >
@@ -115,7 +78,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_horizon_hcw"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_horizon_hcw"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_horizon_hcw"); }}
                         >
@@ -125,7 +88,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_fiori_3"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_fiori_3"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_fiori_3"); }}
                         >
@@ -135,7 +98,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_fiori_3_dark"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_fiori_3_dark"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_fiori_3_dark"); }}
                         >
@@ -145,7 +108,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_fiori_3_hcb"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_fiori_3_hcb"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_fiori_3_hcb"); }}
                         >
@@ -155,7 +118,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTheme === "sap_fiori_3_hcw"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': theme === "sap_fiori_3_hcw"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTheme("sap_fiori_3_hcw"); }}
                         >
@@ -170,7 +133,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTextDirection === "LTR"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': textDirection === "LTR"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTextDirection("LTR"); }}
                         >
@@ -180,7 +143,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentTextDirection === "RTL"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': textDirection === "RTL"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setTextDirection("RTL"); }}
                         >
@@ -195,7 +158,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentContentDensity === "Cozy"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': contentDensity === "Cozy"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setContentDensity("Cozy"); }}
                         >
@@ -205,7 +168,7 @@ export default function Item() {
                     <li>
                         <a
                             tabIndex="-1"
-                            className={clsx('dropdown__link', {'dropdown__link--active': currentContentDensity === "Compact"})}
+                            className={clsx('dropdown__link', {'dropdown__link--active': contentDensity === "Compact"})}
                             style={{cursor: "pointer"}}
                             onClick={function () { setContentDensity("Compact"); }}
                         >
@@ -217,3 +180,34 @@ export default function Item() {
         </>
     );
 }
+
+function ThemeNavbarItemMobile(
+    items2,
+    className,
+    position, // Need to destructure position from props so that it doesn't get passed on.
+    onClick,
+    ...props) {
+    const [items, setItems] = useState(["a", "b", "c"])
+    return (
+        <li
+            className={clsx('menu__list-item', {
+                'menu__list-item--collapsed': false,
+            })}>
+            <a role="button" class="dropdownNavbarItemMobile_A1en menu__link menu__link--sublist menu__link--sublist-caret">Theme</a>
+            <ul class="menu__list">
+                <li class="menu__list-item"><a aria-current="page" class="menu__link menu__link--active">Morning Horizon</a></li>
+                <li class="menu__list-item"><a class="menu__link">Evening Horizon</a></li>
+                <li class="menu__list-item"><a class="menu__link">Horizon HCB</a></li>
+                <li class="menu__list-item"><a class="menu__link">Horizon HCW</a></li>
+            </ul>
+        </li>
+    )
+}
+
+export default function ThemeNavbarItem({
+    mobile = false,
+    ...props
+  }) {
+    const Comp = mobile ? ThemeNavbarItemMobile : ThemeNavbarItemDesktop;
+    return <Comp {...props} />;
+  }

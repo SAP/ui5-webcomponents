@@ -1,4 +1,4 @@
-export default (baseUrl) => `//import "@ui5/webcomponents/dist/Assets.js";
+export default (settings) => `//import "@ui5/webcomponents/dist/Assets.js";
 
 const resizeObserver = new ResizeObserver((entries) => {
     entries.forEach(e => {
@@ -37,7 +37,6 @@ const loadAndCheck = async (themeName) => {
         throw new Error("error");
     }
     const result = {_:data}
-    console.log(result  )
     return result;
 };
 
@@ -88,16 +87,21 @@ const setDirection = (direction) => {
     applyDirection();
 }
 
+// apply initial settings
+setTheme("${settings.theme}");
+setContentDensity("${settings.contentDensity}");
+setDirection("${settings.textDirection}");
+
 window.addEventListener("message", async (event) => {
     if (!event.data.settings) {
         return;
     }
 
-    const { currentTheme, currentContentDensity, currentTextDirection } = event.data.settings;
-    console.log("Message received :: " + currentTheme + " " + currentTextDirection + " " + currentContentDensity + " applied");
+    const { theme, contentDensity, textDirection } = event.data.settings;
+    // console.log("Message received :: " + theme + " " + textDirection + " " + contentDensity + " applied");
 
-    setTheme(currentTheme);
-    setContentDensity(currentContentDensity);
-    setDirection(currentTextDirection);
+    setTheme(theme);
+    setContentDensity(contentDensity);
+    setDirection(textDirection);
 });
 `

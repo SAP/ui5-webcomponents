@@ -6,8 +6,8 @@ import playgroundSupport from "./playground-support.js";
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
+import { useTheme, useTextDirection, useContentDensity } from "@site/src/components/Settings"
 
-console.log("EDITOR IMORTED");
 let playgroundSupportContent = playgroundSupport("/");
 
 if (ExecutionEnvironment.canUseDOM) {
@@ -31,6 +31,10 @@ export default function Editor({html, js, css }) {
   const [editorVisible, setEditorVisible] = useState(false);
   const [btnText, setButtonText] = useState("Edit");
   const {siteConfig, siteMetadata} = useDocusaurusContext();
+  // this is only reading the initial stored state, updates go through postMessage
+  const [theme] = useTheme();
+  const [textDirection] = useTextDirection();
+  const [contentDensity] = useContentDensity();
 
   function addImportMap(html) {
     return html.replace("<head>", `
@@ -98,57 +102,52 @@ export default function Editor({html, js, css }) {
   }, []);
 
   return (
-    // <BrowserOnly fallback={<div>Enable Javascript to see the example!</div>}>
-    //      {
-    //          () =>
-            <>
-              <playground-project ref={projectRef} id="btn-project" resizable>
-                  <script type="sample/importmap">
-                    {`{
-                      "imports": {
-                        "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
-                        "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
-                        "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
-                        "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
-                        "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/"
-                      }
-                    }`}
-                  </script>
-                  <script type="sample/html" filename="index.html" hidden={!html || undefined}>
-                      {addImportMap(fixAssetPaths(html))}
-                  </script>
+    <>
+      <playground-project ref={projectRef} id="btn-project" resizable>
+          <script type="sample/importmap">
+            {`{
+              "imports": {
+                "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
+                "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
+                "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
+                "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
+                "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/"
+              }
+            }`}
+          </script>
+          <script type="sample/html" filename="index.html" hidden={!html || undefined}>
+              {addImportMap(fixAssetPaths(html))}
+          </script>
 
-                  <script type="sample/js" hidden filename="playground-support.js">
-                    {playgroundSupport(siteConfig)}
-                    {/* {playgroundSupport(new URL(useBaseUrl("/")).toString())} */}
-                  </script>
-                  <script type="sample/js" filename="main.js"  hidden={!js || undefined}>
-                    {`/* playground-hide */
+          <script type="sample/js" hidden filename="playground-support.js">
+            {playgroundSupport({theme, textDirection, contentDensity})}
+            {/* {playgroundSupport(new URL(useBaseUrl("/")).toString())} */}
+          </script>
+          <script type="sample/js" filename="main.js"  hidden={!js || undefined}>
+            {`/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
 ${fixAssetPaths(js)}`}
-                  </script>
-                  <script type="sample/css" filename="main.css" hidden={!css || undefined}>
-                    {css}
-                  </script>
-              </playground-project>
+          </script>
+          <script type="sample/css" filename="main.css" hidden={!css || undefined}>
+            {css}
+          </script>
+      </playground-project>
 
-              <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 1px 3px 0"}}>
-                <playground-preview class={styles.previewResultHidden} style={{height: "unset"}} ref={previewRef}></playground-preview>
-                  <div style={{display: editorVisible ? "block" : "none"}}>
-                    <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
-                    <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
-                  </div>
-                  <button 
-                    className={"button " + (editorVisible ? "button--secondary" : "button--primary")}
-                    style={{ borderEndEndRadius: 0, borderTopRightRadius:0, padding: "0.125rem 0.75rem", margin: "0", alignSelf: "end", fontSize: "0.625rem" }}
-                    onClick={ toggleEditor }
-                  >
-                    {btnText}
-                  </button>
-              </div>
-            </>
-    //      }
-    //  </BrowserOnly>
+      <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 1px 3px 0"}}>
+        <playground-preview class={styles.previewResultHidden} style={{height: "unset"}} ref={previewRef}></playground-preview>
+          <div style={{display: editorVisible ? "block" : "none"}}>
+            <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
+            <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
+          </div>
+          <button
+            className={"button " + (editorVisible ? "button--secondary" : "button--primary")}
+            style={{ borderEndEndRadius: 0, borderTopRightRadius:0, padding: "0.125rem 0.75rem", margin: "0", alignSelf: "end", fontSize: "0.625rem" }}
+            onClick={ toggleEditor }
+          >
+            {btnText}
+          </button>
+      </div>
+    </>
   );
 }
