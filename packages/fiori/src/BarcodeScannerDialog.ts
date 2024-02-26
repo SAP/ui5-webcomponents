@@ -126,24 +126,9 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @public
 	 * @default false
 	 * @since 1.23.0
-	 */
-	get open(): boolean {
-		return this._open;
-	}
-
-	set open(value: boolean) {
-		const oldValue = this._open;
-
-		if (oldValue !== value) {
-			this._open = value;
-
-			if (value) {
-				this.show();
-			} else {
-				this.close();
-			}
-		}
-	}
+	*/
+	@property({ type: Boolean })
+	open!: boolean;
 
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
@@ -155,14 +140,13 @@ class BarcodeScannerDialog extends UI5Element {
 	loading!: boolean;
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
-	_observer!: MutationObserver;
-	_open: boolean;
+	_previousOpenState: boolean;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
-		this._open = false;
+		this._previousOpenState = false;
 		this._codeReader = new BrowserMultiFormatReader();
 	}
 
@@ -170,9 +154,21 @@ class BarcodeScannerDialog extends UI5Element {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	onBeforeRendering() {
+		if (this._previousOpenState !== this.open) {
+			if (this.open) {
+				this.show();
+			} else {
+				this.close();
+			}
+		}
+		this._previousOpenState = this.open;
+	}
+
 	/**
 	 * Shows a dialog with the camera videostream. Starts a scan session.
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> property.
 	 */
 	show(): void {
 		if (this.loading) {
@@ -198,6 +194,7 @@ class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Closes the dialog and the scan session.
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> property.
 	 */
 	close():void {
 		this._closeDialog();
@@ -229,17 +226,13 @@ class BarcodeScannerDialog extends UI5Element {
 	async _showDialog() {
 		this.dialog = await this._getDialog();
 		this.dialog.show();
-
-		this._open = true;
-		this.setAttribute("open", "");
+		this.open = true;
 	}
 
 	_closeDialog() {
 		if (this.dialog && this.dialog.opened) {
 			this.dialog.close();
-
-			this._open = false;
-			this.removeAttribute("open");
+			this.open = false;
 		}
 	}
 
@@ -276,26 +269,6 @@ class BarcodeScannerDialog extends UI5Element {
 
 	get _busyIndicatorText() {
 		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
-	}
-
-	onEnterDOM() {
-		this._observer = new MutationObserver(mutations => {
-			mutations.forEach(mutation => {
-				if (mutation.type === "attributes" && mutation.attributeName === "open") {
-					this.open = this.hasAttribute("open");
-				}
-			});
-		});
-
-		this._observer.observe(this, {
-			attributes: true,
-		});
-	}
-
-	onExitDOM() {
-		if (this._observer) {
-			this._observer.disconnect();
-		}
 	}
 }
 

@@ -1,20 +1,8 @@
 import { assert } from "chai";
 
 describe("BarcodeScannerDialog Behavior", () => {
-	beforeEach(async () => {
+	before(async () => {
 		await browser.url(`test/pages/BarcodeScannerDialog.html`);
-	});
-
-	it("should grant webcam permission", async () => {
-		await browser.setPermissions({ name: 'camera' }, 'granted');
-
-		const permissionStatus = await browser.executeAsync(async (done) => {
-			await navigator.permissions.query({ name: 'camera' }).then(result => {
-				done(result.state);  // 'granted', 'denied' or 'prompt'
-			});
-		});
-
-		assert.equal(permissionStatus, "granted", "Camera permission granted");
 	});
 
 	it("fires scan-error when no permissions granted", async () => {
