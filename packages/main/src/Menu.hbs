@@ -58,7 +58,7 @@
 			@mouseover="{{_busyMouseOver}}"
 		>
 		{{#each _currentItems}}
-			<ui5-li
+			<ui5-menu-li
 				.associatedItem="{{this.item}}"
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
@@ -66,7 +66,7 @@
 				accessible-name={{this.item.ariaLabelledByText}}
 				accessible-role="menuitem"
 				.additionalText="{{this.item._additionalText}}"
-				._ariaHasPopup={{this.ariaHasPopup}}
+				tooltip="{{this.item.tooltip}}"
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
 				?selected={{this.item.subMenuOpened}}
@@ -101,7 +101,7 @@
 					</div>
 				{{/if}}
 				</div>
-			</ui5-li>
+			</ui5-menu-li>
 		{{/each}}
 		</ui5-list>
 	{{else if busy}}
