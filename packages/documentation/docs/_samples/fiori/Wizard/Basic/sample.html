@@ -8,10 +8,10 @@
     <title>Sample</title>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor)">
+<body style="background-color: var(--sapBackgroundColor); height: 500px">
     <!-- playground-fold-end -->
 
-
+    <!-- <div style="height: 700px;"> -->
     <ui5-wizard id="wiz">
         <ui5-wizard-step icon="product" title-text="Product type" selected="">
             <div style="display: flex; min-height: 200px; flex-direction: column;">
@@ -98,6 +98,7 @@
             <ui5-button id="wiz-finalize" hidden="" design="Emphasized">Finalize</ui5-button>
         </ui5-wizard-step>
     </ui5-wizard>
+    <!-- </div> -->
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>
