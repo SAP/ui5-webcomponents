@@ -7,9 +7,18 @@ describe("Component Behavior", () => {
 	});
 
 	describe("Main functionality", async () => {
-		it("collapse/expand", async () => {
+		it("rendering", async () => {
 			const sideNavigation = await browser.$("#sn1");
 
+			assert.ok(await browser.$("#group1").shadow$(".ui5-sn-item").isExisting(), 'group item is rendered');
+
+			await sideNavigation.setAttribute("collapsed", "true");
+			assert.notOk(await browser.$("#group1").shadow$(".ui5-sn-item").isExisting(), 'group item is not rendered');
+
+			await sideNavigation.removeAttribute("collapsed");
+		});
+
+		it("collapse/expand", async () => {
 			assert.ok(await browser.$("#group1").getProperty("expanded"), "Group is expanded");
 
 			await browser.$("#group1").shadow$(".ui5-sn-item").click();
@@ -17,11 +26,6 @@ describe("Component Behavior", () => {
 
 			await browser.$("#group1").shadow$(".ui5-sn-item").click();
 			assert.ok(await browser.$("#group1").getProperty("expanded"), "Group is expanded");
-
-			await sideNavigation.setAttribute("collapsed", "true");
-			assert.notOk(await browser.$("#group1").shadow$(".ui5-sn-item").isExisting(), 'group item is not rendered');
-
-			await sideNavigation.removeAttribute("collapsed");
 		});
 	});
 });

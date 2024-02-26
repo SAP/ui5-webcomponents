@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
 

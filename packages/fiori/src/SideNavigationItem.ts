@@ -3,6 +3,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
@@ -18,7 +21,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only.
+ * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> or <code>ui5-side-navigation-group</code> only.
  * Via the <code>ui5-side-navigation-item</code> you control the content of the <code>SideNavigation</code>.
  *
  * <h3>ES6 Module Import</h3>

@@ -8,6 +8,8 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
@@ -22,7 +24,8 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-side-navigation-group</code> is intended to be used inside a <code>ui5-side-navigation-group</code> only.
+ * The <code>ui5-side-navigation-group</code> represents a group of navigation actions, which can be selected by the user.
+ * The <code>ui5-side-navigation-group</code> is intended to be used inside a <code>ui5-side-navigation</code> only.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -32,7 +35,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  * @extends SideNavigationItemBase
  * @public
  * @abstract
- * @since 1.0.0-rc.8
+ * @since 1.24.0
  */
 @customElement({
 	tag: "ui5-side-navigation-group",

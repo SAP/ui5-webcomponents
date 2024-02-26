@@ -22,10 +22,6 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import "@ui5/webcomponents-icons/dist/circle-task-2.js";
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
@@ -85,7 +81,8 @@ type NavigationMenuClickEventDetail = {
  *
  * <h3>Usage</h3>
  *
- * Use the available <code>ui5-side-navigation-item</code> and <code>ui5-side-navigation-sub-item</code> components to build your menu.
+ * Use the available <code>ui5-side-navigation-group</code>, <code>ui5-side-navigation-item</code>
+ * and <code>ui5-side-navigation-sub-item</code> components to build your menu.
  * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
  * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
  *
@@ -100,6 +97,8 @@ type NavigationMenuClickEventDetail = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
+ * <br>
+ * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";</code> (for <code>ui5-side-navigation-group</code>)
  * <br>
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code> (for <code>ui5-side-navigation-item</code>)
  * <br>
@@ -124,7 +123,6 @@ type NavigationMenuClickEventDetail = {
 		SideNavigationGroup,
 		SideNavigationItem,
 		SideNavigationSubItem,
-		Icon,
 		NavigationMenu,
 	],
 })
