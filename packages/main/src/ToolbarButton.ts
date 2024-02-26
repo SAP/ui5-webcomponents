@@ -25,7 +25,7 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
  * used in the <code>ui5-toolbar</code>.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ToolbarButton";</code>
+ * <code>import "@ui5/webcomponents/dist/ToolbarButton.js";</code>
  *
  * @constructor
  * @abstract

@@ -73,7 +73,7 @@ import panelCss from "./generated/themes/Panel.css.js";
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Panel";</code>
+ * <code>import "@ui5/webcomponents/dist/Panel.js";</code>
  *
  * @constructor
  * @extends UI5Element

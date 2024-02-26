@@ -168,7 +168,7 @@ type MultiComboboxItemWithSelection = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/MultiComboBox";</code>
+ * <code>import "@ui5/webcomponents/dist/MultiComboBox.js";</code>
  *
  *
  * @constructor

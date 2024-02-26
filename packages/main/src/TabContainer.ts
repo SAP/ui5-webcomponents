@@ -140,11 +140,11 @@ interface TabContainerTabInOverflow extends CustomListItem {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/TabContainer";</code>
+ * <code>import "@ui5/webcomponents/dist/TabContainer.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/Tab";</code> (for <code>ui5-tab</code>)
+ * <code>import "@ui5/webcomponents/dist/Tab.js";</code> (for <code>ui5-tab</code>)
  * <br>
- * <code>import "@ui5/webcomponents/dist/TabSeparator";</code> (for <code>ui5-tab-separator</code>)
+ * <code>import "@ui5/webcomponents/dist/TabSeparator.js";</code> (for <code>ui5-tab-separator</code>)
  *
  * @constructor
  * @extends UI5Element

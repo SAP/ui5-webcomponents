@@ -19,7 +19,7 @@ type ShellBarItemClickEventDetail = {
  * might be added to the <code>ui5-shellbar</code>.
  * <br><br>
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";</code>
  *
  * @constructor
  * @extends UI5Element

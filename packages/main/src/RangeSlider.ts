@@ -76,7 +76,7 @@ type AffectedValue = "startValue" | "endValue";
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/RangeSlider";</code>
+ * <code>import "@ui5/webcomponents/dist/RangeSlider.js";</code>
  *
  *
  * @constructor

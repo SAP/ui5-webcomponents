@@ -51,7 +51,7 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/BusyIndicator";</code>
+ * <code>import "@ui5/webcomponents/dist/BusyIndicator.js";</code>
  *
  * @constructor
  * @extends UI5Element

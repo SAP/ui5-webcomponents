@@ -50,7 +50,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/SegmentedButton";</code>
+ * <code>import "@ui5/webcomponents/dist/SegmentedButton.js";</code>
  *
  * @constructor
  * @extends UI5Element

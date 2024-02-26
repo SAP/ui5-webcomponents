@@ -83,9 +83,9 @@ const COLUMNS_COUNT: Record<string, number> = {
  * <br>
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGallery";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/MediaGallery.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code>
  *
  * @constructor
  * @extends UI5Element

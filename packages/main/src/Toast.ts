@@ -71,7 +71,7 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Toast";</code>
+ * <code>import "@ui5/webcomponents/dist/Toast.js";</code>
  *
  * @constructor
  * @extends UI5Element

@@ -27,9 +27,9 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * The items inside the <code>ui5-toolbar-select</code> define the available options by using the <code>ui5-toolbar-select-option</code> component.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ToolbarSelect";</code>
+ * <code>import "@ui5/webcomponents/dist/ToolbarSelect.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
+ * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption.js";</code> (comes with <code>ui5-toolbar-select</code>)
  * @constructor
  * @abstract
  * @extends ToolbarItem

@@ -96,7 +96,7 @@ type VSDInternalSettings = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";</code>
  *
  * @constructor
  * @extends UI5Element
@@ -259,7 +259,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Defines the list of items against which the user could sort data.
-	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
+	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem.js";</code>
 	 *
 	 * @public
 	 */
@@ -268,7 +268,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Defines the <code>filterItems</code> list.
-	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
+	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem.js";</code>
 	 *
 	 * @public
 	 */

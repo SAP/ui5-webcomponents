@@ -64,7 +64,7 @@ import {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Slider";</code>
+ * <code>import "@ui5/webcomponents/dist/Slider.js";</code>
  *
  * @constructor
  * @extends SliderBase

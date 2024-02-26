@@ -25,7 +25,7 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/SegmentedButtonItem";</code>
+ * <code>import "@ui5/webcomponents/dist/SegmentedButtonItem.js";</code>
  *
  * @constructor
  * @extends ToggleButton

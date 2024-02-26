@@ -49,7 +49,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Badge";</code>
+ * <code>import "@ui5/webcomponents/dist/Badge.js";</code>
  *
  * @constructor
  * @extends UI5Element

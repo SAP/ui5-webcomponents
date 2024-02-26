@@ -160,7 +160,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * <br><br>
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/ShellBar.js";</code>
  *
  * @csspart root - Used to style the outermost wrapper of the <code>ui5-shellbar</code>
  *

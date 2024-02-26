@@ -67,7 +67,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * <br>
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Toolbar";</code>
+ * <code>import "@ui5/webcomponents/dist/Toolbar.js";</code>
  * @constructor
  * @extends UI5Element
  * @public
