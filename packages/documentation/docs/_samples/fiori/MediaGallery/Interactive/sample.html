@@ -12,46 +12,8 @@
 <body style="background-color: var(--sapBackgroundColor)">
     <!-- playground-fold-end -->
 
-    <div> Horizontal Media Gallery with initially selected item:
-        <ui5-media-gallery layout="Horizontal">
-            <ui5-media-gallery-item>
-                <img src="../assets/images/HT-1000.jpg" />
-            </ui5-media-gallery-item>
-            <ui5-media-gallery-item selected>
-                <img src="../assets/images/HT-1010.jpg" />
-            </ui5-media-gallery-item>
-        </ui5-media-gallery>
-    </div>
-
-    <br />
-
-    <div> Vertical Media Gallery with initially disabled item:
-        <ui5-media-gallery layout="Vertical" show-all-thumbnails>
-            <ui5-media-gallery-item disabled>
-                <img src="../assets/images/HT-1000.jpg" />
-            </ui5-media-gallery-item>
-            <ui5-media-gallery-item>
-                <img src="../assets/images/HT-1010.jpg" />
-            </ui5-media-gallery-item>
-            <ui5-media-gallery-item>
-                <img src="../assets/images/HT-1022.jpg" />
-            </ui5-media-gallery-item>
-            <ui5-media-gallery-item>
-                <img src="../assets/images/HT-1030.jpg" />
-            </ui5-media-gallery-item>
-            <ui5-media-gallery-item>
-                <img src="../assets/images/HT-2002.jpg" />
-            </ui5-media-gallery-item>
-            <ui5-media-gallery-item>
-                <img src="../assets/images/HT-2026.jpg" />
-            </ui5-media-gallery-item>
-        </ui5-media-gallery>
-    </div>
-
-    <br />
-
-    <div> Horizontal Media Gallery with thumbnails on the right:
-        <ui5-media-gallery layout="Horizontal" show-all-thumbnails menu-horizontal-align="Right">
+    <div class="container">
+        <ui5-media-gallery interactive-display-area>
             <ui5-media-gallery-item>
                 <img src="../assets/images/HT-1000.jpg" />
             </ui5-media-gallery-item>
@@ -71,18 +33,58 @@
                 <img src="../assets/images/HT-2026.jpg" />
             </ui5-media-gallery-item>
         </ui5-media-gallery>
+
+        <div class="details">
+            <ui5-title level="H4">Item Details</ui5-title>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+            quam lectus, tristique semper mi et, faucibus viverra metus.
+            Quisque nec venenatis massa. Ut eu dolor a justo ornare feugiat.
+            Morbi congue diam id enim porttitor, sit amet placerat nunc
+            pulvinar. Vivamus eu feugiat justo. Ut eu lectus mauris. Aliquam
+            erat volutpat. Vestibulum et enim sit amet ipsum tincidunt
+            aliquet nec in dui. Sed dui est, hendrerit non sollicitudin
+            quis, venenatis vel libero. Suspendisse sit amet lorem posuere,
+            egestas neque eget, sodales ipsum. Donec sollicitudin leo ut
+            risus tincidunt tincidunt. Ut vel nisl nisl. Cras leo odio,
+            viverra a ante nec, cursus volutpat lectus. Cras ac metus nisi.
+            Aliquam fermentum nec felis sit amet tristique. Nunc luctus a
+            lacus non semper. Curabitur euismod tellus id massa mattis, in
+            consectetur mi luctus. Mauris dignissim efficitur lobortis.
+            Etiam sit amet nunc commodo, lacinia nisi sagittis, finibus
+            nulla. Proin quis elementum eros. Ut facilisis lacinia viverra.
+        </div>
+    </div>
     </div>
 
-    <br />
-
-    <div> Media Gallery with seperate image thumbnail:
-        <ui5-media-gallery layout="Horizontal" show-all-thumbnails menu-horizontal-align="Right">
+    <ui5-dialog id="mediaGalleryDialog" header-text="Item" stretch>
+        <ui5-bar design="Header" slot="header">
+            <ui5-label>Item</ui5-label>
+        </ui5-bar>
+        <ui5-media-gallery show-all-thumbnails>
             <ui5-media-gallery-item>
                 <img src="../assets/images/HT-1000.jpg" />
-                <img src="../assets/images/HT-1000-small.jpg" slot="thumbnail" />
+            </ui5-media-gallery-item>
+            <ui5-media-gallery-item>
+                <img src="../assets/images/HT-1010.jpg" />
+            </ui5-media-gallery-item>
+            <ui5-media-gallery-item>
+                <img src="../assets/images/HT-1022.jpg" />
+            </ui5-media-gallery-item>
+            <ui5-media-gallery-item>
+                <img src="../assets/images/HT-1030.jpg" />
+            </ui5-media-gallery-item>
+            <ui5-media-gallery-item>
+                <img src="../assets/images/HT-2002.jpg" />
+            </ui5-media-gallery-item>
+            <ui5-media-gallery-item>
+                <img src="../assets/images/HT-2026.jpg" />
             </ui5-media-gallery-item>
         </ui5-media-gallery>
-    </div>
+        <div slot="footer" class="dialog-footer">
+            <div style="flex: 1;"></div>
+            <ui5-button id="closeDialogButton">Close</ui5-button>
+        </div>
+    </ui5-dialog>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>

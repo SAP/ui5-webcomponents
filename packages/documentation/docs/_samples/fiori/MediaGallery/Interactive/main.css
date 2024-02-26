@@ -19,6 +19,7 @@ ui5-media-gallery-item:not(:defined) {
 .details {
     background: var(--sapBaseColor);
     padding: 1rem;
+    color: var(--sapTextColor);
 }
 
 .dialog-footer {
