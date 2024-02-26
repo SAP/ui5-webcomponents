@@ -1,8 +1,11 @@
 import './styles.css';
 
+import { useColorMode } from '@docusaurus/theme-common';
+
 type FeatureItem = {
   title: string;
   src?: string;
+  srcContrast?: string;
   description: JSX.Element;
 };
 
@@ -10,6 +13,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'Easy to Use',
     src: require('@site/static/img/features/Frame.png').default,
+    srcContrast: require('@site/static/img/features-contrast/Frame_inverted.png').default,
     description: (
       <>
        Based on web standards - just HTML!
@@ -21,6 +25,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'Lightweight',
     src: require('@site/static/img/features/hand.png').default,
+    srcContrast: require('@site/static/img/features-contrast/hand_inverted.png').default,
     description: (
       <>
        Tiny - come with a minimal footprint.
@@ -32,6 +37,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'Enterprise Ready',
     src: require('@site/static/img/features/buildings.png').default,
+    srcContrast: require('@site/static/img/features-contrast/buildings_inverted.png').default,
     description: (
       <>
        Implements latest SAP Design language.
@@ -42,10 +48,12 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, src, description}: FeatureItem) {
+function Feature({title, src, srcContrast, description}: FeatureItem) {
+  const { colorMode } = useColorMode();
+
   return (
     <div className="feature">
-      <img className="feature__image" src={src} />
+      <img className="feature__image" src={colorMode === "dark" ? srcContrast : src} />
       <h3 className="feature__title">{title}</h3>
       <p className="feature__desc">{description}</p>
     </div>

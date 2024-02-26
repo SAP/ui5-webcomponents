@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+[data-theme='light'] .features {
   background-color: #f3f3f3;
   color: #242526;
 }

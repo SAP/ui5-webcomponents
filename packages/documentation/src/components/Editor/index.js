@@ -114,6 +114,7 @@ ${fixAssetPaths(js)}`
       importMap: {
         "imports": {
           "@ui5/webcomponents/": `${getHostBaseUrl()}local-cdn/main/`,
+          "@ui5/webcomponents-fiori/": `${getHostBaseUrl()}local-cdn/fiori/`,
           "@ui5/webcomponents-base/": `${getHostBaseUrl()}local-cdn/base/`,
           "@ui5/webcomponents-icons/": `${getHostBaseUrl()}local-cdn/icons/`,
           "@ui5/webcomponents-localization/": `${getHostBaseUrl()}local-cdn/localization/`,

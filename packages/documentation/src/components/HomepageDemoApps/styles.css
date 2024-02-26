@@ -1,5 +1,4 @@
 .demo-apps {
-  margin-top: 5rem;
   white-space: nowrap;
   margin-bottom: 2rem;
   display: flex;
@@ -8,7 +7,13 @@
   flex-direction: column;
 }
 
+[data-theme='dark'] .demo-apps {
+  background-color: var(--ifm-navbar-background-color);
+}
+
+
 .demo-apps__heading {
+  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

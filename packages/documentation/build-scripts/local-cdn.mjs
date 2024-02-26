@@ -4,6 +4,7 @@ import path from "path";
 await Promise.all([
     cp("../base/dist", "local-cdn/local-cdn/base/dist", {recursive: true}),
     cp("../main/dist", "local-cdn/local-cdn/main/dist", {recursive: true}),
+    cp("../fiori/dist", "local-cdn/local-cdn/fiori/dist", {recursive: true}),
     cp("../icons/dist", "local-cdn/local-cdn/icons/dist", {recursive: true}),
     cp("../theming/dist", "local-cdn/local-cdn/theming/dist", {recursive: true}),
     cp("../localization/dist", "local-cdn/local-cdn/localization/dist", {recursive: true}),

@@ -3,7 +3,6 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
-import HomepageCompatibility from '@site/src/components/HomepageCompatibility';
 import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
