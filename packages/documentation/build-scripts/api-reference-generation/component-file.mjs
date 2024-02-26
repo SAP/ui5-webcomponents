@@ -119,7 +119,7 @@ No CSS parts available for this component.`
     result = `${result}
 | Name | Description |
 |------|-------------|
-${cssParts.map(cssPart => `| ${cssPart.name} | ${cssPart.description.replaceAll("\n", " ")} |`).join("\n")}`
+${cssParts.map(cssPart => `| **${cssPart.name}** | ${cssPart.description.replaceAll("\n", " ")} |`).join("\n")}`
 
     return result;
 }
@@ -162,6 +162,19 @@ slug: ../../${declaration.kind}s/${declaration.name}
     if (declaration.kind === "enum") {
         sections.push(`import declarationJSON from "./_${declaration.name}Declaration.json";`);
         sections.push(getTable("enum"));
+    } else if (declaration.kind === "interface") {
+        if (!declaration._implementations || !declaration._implementations.length) {
+            sections.push(`## Implementations
+Interfaces doesn't have direct implementations.
+`)
+        } else {
+            sections.push(`## Implementations
+| Name | Module |
+|------|--------|
+${declaration._implementations.map(_implementation => `| ${_implementation.split("/").pop()} | \`${_implementation}\` |`).join("\n")}
+`)
+        }
+
     }
 
     return sections.join("\n\n")
