@@ -649,7 +649,6 @@ class Menu extends UI5Element {
 				}
 			}
 		} else {
-		// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
 	}
