@@ -39,7 +39,7 @@ function ThemeNavbarItemDesktop() {
         className={clsx('navbar__item', 'dropdown', 'dropdown--hoverable', 'dropdown--right', {
             'dropdown--show': showDropdown,
         })}>
-        <span hidden>{location}</span>
+        <span hidden>{location.pathname}</span>
         <NavbarNavLink
             aria-haspopup="true"
             aria-expanded={showDropdown}
