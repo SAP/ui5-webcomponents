@@ -431,28 +431,13 @@ class SideNavigation extends UI5Element {
 	}
 
 	onAfterRendering() {
-		const shadowRootActiveElement = this.shadowRoot!.activeElement;
-		if (shadowRootActiveElement instanceof SideNavigationItem && shadowRootActiveElement.isOverflow) {
-			return;
-		}
-
-		let activeElement = document.activeElement;
-
-		if (activeElement
-			&& !(activeElement instanceof SideNavigationItemBase)
-			&& activeElement.shadowRoot) {
-			activeElement = activeElement.shadowRoot.activeElement;
-		}
-
-		if (!(activeElement instanceof SideNavigationItemBase) || this._getAllItems(this.items).indexOf(activeElement) === -1) {
-			const selectedItem = this._findSelectedItem(this.items);
+		if (!this.getDomRef()?.matches(":focus-within")) {
+			let selectedItem = this._findSelectedItem(this.items);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
 			}
-		}
 
-		if (!(activeElement instanceof SideNavigationItemBase) || this._getAllItems(this.fixedItems).indexOf(activeElement) === -1) {
-			const selectedItem = this._findSelectedItem(this.fixedItems);
+			selectedItem = this._findSelectedItem(this.fixedItems);
 			if (selectedItem) {
 				this._fixedItemNavigation.setCurrentItem(selectedItem);
 			}
