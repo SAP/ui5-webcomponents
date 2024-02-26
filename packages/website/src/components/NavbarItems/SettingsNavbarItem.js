@@ -46,7 +46,6 @@ function SettingsNavbarItemDesktop() {
             "navbar__item--hidden": location.pathname === baseUrl,
         })}>
         
-        <span hidden>location: {location.pathname} baseUrl: {baseUrl}</span>
         <NavbarNavLink
             aria-haspopup="true"
             aria-expanded={showDropdown}

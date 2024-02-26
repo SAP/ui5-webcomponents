@@ -37,6 +37,7 @@
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts bundle",
     "ci:deploybuild": "yarn ci:testbuild && yarn generateAPI && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
+    "ci:deploy": "yarn ci:testbuild && yarn generateAPI && yarn copy-css && yarn workspace @ui5/webcomponents-website build",
 
     "ci:test:base": "yarn workspace @ui5/webcomponents-base test",
     "ci:test:main:suite-1": "yarn workspace @ui5/webcomponents test:ssr && yarn workspace @ui5/webcomponents test:suite-1",
