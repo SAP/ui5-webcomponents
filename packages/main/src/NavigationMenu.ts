@@ -125,14 +125,8 @@ class NavigationMenu extends Menu {
 		}
 
 		this._prepareSubMenuDesktopTablet(item, opener, actionId);
-		// if (isPhone()) {
-		// 	// prepares and opens sub-menu on phone
-		// 	this._prepareSubMenuPhone(item);
-		// } else if (isTablet()) {
-		// 	// prepares and opens sub-menu on tablet
-		// 	this._prepareSubMenuDesktopTablet(item, opener, actionId);
-		// }
 	}
+
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
