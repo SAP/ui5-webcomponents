@@ -19,7 +19,7 @@ const sendSettingsToFrame = (settings) => {
     });
 }
 
-function ThemeNavbarItemDesktop() {
+function SettingsNavbarItemDesktop() {
     const [theme, setTheme] = useTheme();
     const [textDirection, setTextDirection] = useTextDirection();
     const [contentDensity, setContentDensity] = useContentDensity();
@@ -137,7 +137,7 @@ function ThemeNavbarItemDesktop() {
     </div>;
 }
 
-function ThemeNavbarItemMobile() {
+function SettingsNavbarItemMobile() {
     const [theme, setTheme] = useTheme();
     const [textDirection, setTextDirection] = useTextDirection();
     const [contentDensity, setContentDensity] = useContentDensity();
@@ -262,10 +262,10 @@ function ThemeNavbarItemMobile() {
     )
 }
 
-export default function ThemeNavbarItem({
+export default function SettingsNavbarItem({
     mobile = false,
     ...props
 }) {
-    const Comp = mobile ? ThemeNavbarItemMobile : ThemeNavbarItemDesktop;
+    const Comp = mobile ? SettingsNavbarItemMobile : SettingsNavbarItemDesktop;
     return <Comp {...props} />;
 }

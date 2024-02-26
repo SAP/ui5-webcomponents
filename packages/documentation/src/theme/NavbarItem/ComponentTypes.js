@@ -1,13 +1,9 @@
 import ComponentTypes from '@theme-original/NavbarItem/ComponentTypes';
-import ThemeNavbarItem from '@site/src/components/NavbarItems/ThemeNavbarItem';
-import ContentDensityNavBarItem from '@site/src/components/NavbarItems/ContentDensityNavBarItem';
-import TextDirectionNavBarItem from '@site/src/components/NavbarItems/TextDirectionNavBarItem';
+import SettingsNavbarItem from '@site/src/components/NavbarItems/SettingsNavbarItem';
 import GitHubNavBarItem from '@site/src/components/NavbarItems/GitHubnavBarItem';
 
 export default {
   ...ComponentTypes,
-  'custom-themeNavbarItem': ThemeNavbarItem,
-  'custom-contentDensityNavbarItem': ContentDensityNavBarItem,
-  'custom-TextDirectionNavbarItem': TextDirectionNavBarItem,
+  'custom-settingsNavbarItem': SettingsNavbarItem,
   'custom-GitHubNavbarItem': GitHubNavBarItem,
 };

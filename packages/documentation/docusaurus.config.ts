@@ -74,7 +74,7 @@ const config: Config = {
           activeBasePath: 'components',
         },
         {
-          type: 'custom-themeNavbarItem',
+          type: 'custom-settingsNavbarItem',
           position: "right",
         },
         // {
