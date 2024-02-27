@@ -548,7 +548,7 @@ class StepInput extends UI5Element implements IFormElement {
 
 	_isPrecisionValid() {
 		// gets either "." or "," as delimiter which is based on locale, and splits the number by it
-		const delimiter = !Number.isInteger(this.input.value) && this.input.value.includes(".") ? "." : ",";
+		const delimiter = !Number.isInteger(Number(this.input.value)) && this.input.value.includes(".") ? "." : ",";
 		const numberParts = this.input.value.split(delimiter);
 		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
 		const isPrecisionValid = decimalPartLength === this.valuePrecision;
