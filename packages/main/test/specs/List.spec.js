@@ -581,12 +581,12 @@ describe("List Tests", () => {
 		const innerElement = await browser.$("#effectiveTabindexChange #country11 button");
 		const listItem = await browser.$("#effectiveTabindexChange #country11");
 		const rootItemElement = await listItem.shadow$(".ui5-li-root");
-	
+
 		// Focus on the target list item
 		await innerElement.click();
-	
+
 		const newTabIndex = await rootItemElement.getAttribute("tabindex");
-	
+
 		assert.equal(newTabIndex , "0", "The tabIndex of the list item root should be '0' when inner element receives focus.");
 	});
 
@@ -596,5 +596,23 @@ describe("List Tests", () => {
 		const display = await endMarker.getCSSProperty("display");
 
 		assert.strictEqual(display.value, 'inline-block', "The end marker is displayed");
+	});
+
+	it("Checks if tooltip property value equals the title of li element", async () => {
+		const listItem = await browser.$("#myList7 ui5-li");
+
+		let rootTooltip = await listItem.getProperty("tooltip");
+		let innerTooltip = await listItem.shadow$("li").getAttribute("title");
+
+		assert.strictEqual(rootTooltip, innerTooltip, "Tooltip of root element and title of inner li element are equal.");
+
+		const newTooltip = "Updated tooltip";
+		await listItem.setProperty("tooltip", newTooltip);
+
+		rootTooltip = await listItem.getProperty("tooltip");
+		innerTooltip = await listItem.shadow$("li").getAttribute("title");
+
+		assert.strictEqual(rootTooltip, newTooltip, "Tooltip of root element is updated correctly at runtime.");
+		assert.strictEqual(rootTooltip, innerTooltip, "Tooltip of root element and title of inner li element are equal after runtime change.");
 	});
 });
