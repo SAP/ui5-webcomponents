@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useId } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
@@ -35,7 +35,7 @@ export default function Editor({html, js, css }) {
   const fileEditorRef = useRef(null);
 
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
-  const [iframeName, setIframeName] = useState(`${performance.now()}`)
+  const iframeId = useId();
   const [editorVisible, setEditorVisible] = useState(false);
   const [btnText, setButtonText] = useState("Edit");
   const {siteConfig, siteMetadata} = useDocusaurusContext();
@@ -97,7 +97,7 @@ export default function Editor({html, js, css }) {
           content: addImportMap(fixAssetPaths(html)),
         },
         "playground-support.js": {
-          content: playgroundSupport({theme, textDirection, contentDensity}),
+          content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
           hidden: true,
         },
         "main.js": {
@@ -124,25 +124,22 @@ ${fixAssetPaths(js)}`
     }
     projectContainerRef.current.appendChild(projectElement)
 
-    window.addEventListener("message", async (event) => {
-      if (event.data.height && event.data.name === iframeName) {
+    const messageHandler = async (event) => {
+      if (event.data.height && event.data.iframeId === iframeId) {
         previewRef.current.iframe.style.height = `${event.data.height}px`;
       }
-    });
+    }
+    window.addEventListener("message", messageHandler);
+
     previewRef.current.project = projectElement;
     tabBarRef.current.project = projectElement;
     fileEditorRef.current.project = projectElement;
 
     tabBarRef.current.editor = fileEditorRef.current;
 
-    // the name attribute on the iframe is accessible from the content as window.name
-    customElements.whenDefined("playground-preview").then(function () {
-      // iframe property available after element is defined
-      previewRef.current.iframe.name = iframeName;
-    })
-
     return function () {
       // component cleanup
+      window.removeEventListener("message", messageHandler);
       returnProjectToPool(projectElement);
     }
   }, []);

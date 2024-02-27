@@ -5,7 +5,7 @@ const resizeObserver = new ResizeObserver((entries) => {
         // console.log({e})
         const htmlHeight = e.target.parentElement.getBoundingClientRect().height;
         // window.name is assigned from the parent so it can identify which child the message is coming from
-        parent.postMessage({height: htmlHeight, name: window.name}, "*");
+        parent.postMessage({height: htmlHeight, iframeId: "${settings.iframeId}"}, "*");
     })
 });
 resizeObserver.observe(document.body);
