@@ -82,7 +82,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  *<h3>Keyboard Handling</h3>
  *
  * <h4>Basic Navigation</h4>
- * When the <code>ui5-dialog</code> is focused and has the <code>draggable</code> property set, the user can move the dialog
+ * When the <code>ui5-dialog</code> has the <code>draggable<code> property set and the header is focused, the user can move the dialog
  * with the following keyboard shortcuts:
  * <br>
  * <ul>
@@ -91,7 +91,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * </ul>
  *
  * <h4>Resizing</h4>
- * When the <code>ui5-dialog</code> is focused and has the <code>resizable</code> property set, the user can change the size of the dialog
+ * When the <code>ui5-dialog</code> has the <code>resizable<code> property set and the header is focused, the user can change the size of the dialog
  * with the following keyboard shortcuts:
  * <br>
  * <ul>
