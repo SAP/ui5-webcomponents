@@ -110,7 +110,9 @@
 	pointer-events: none;
 }
 
-:host([focused]) .ui5-button-root:after {
+:host([focused]:not([active])) .ui5-button-root:after,
+:host([focused][active][design="Emphasized"]) .ui5-button-root:after,
+:host([focused][active]) .ui5-button-root:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -120,6 +122,10 @@
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
 	border-radius: var(--_ui5_button_focused_border_radius);
+}
+
+:host([focused][active]) .ui5-button-root:before {
+	border-color: var(--_ui5_button_pressed_focused_border_color);
 }
 
 :host([design="Emphasized"][focused]) .ui5-button-root:after {
