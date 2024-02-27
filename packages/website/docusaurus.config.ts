@@ -12,7 +12,7 @@ const config: Config = {
   url: 'https://sap.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/ui5-webcomponents/',
+  baseUrl: '/ui5-webcomponents/preview/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
