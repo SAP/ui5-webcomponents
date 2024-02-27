@@ -100,9 +100,8 @@ const config: Config = {
       style: 'dark',
       copyright: `© Copyright ${new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors`,
       logo: {
-        alt: 'Meta Open Source Logo',
+        alt: 'SAP Logo',
         src: 'https://sap.github.io/ui5-webcomponents/assets/footer/sap-1920-1440.svg',
-        href: 'https://opensource.fb.com',
         width: 160,
         height: 51,
       },
@@ -126,6 +125,24 @@ const config: Config = {
               label: 'GitHub',
               to: 'https://github.com/SAP/ui5-webcomponents/',
             },
+            // {
+            //   html: `
+            //   <div style="display: flex; align-items: center;">
+            //     <a href="https://twitter.com/ui5webcomps" target="_blank" rel="noreferrer noopener" aria-label="Twitter">
+            //       <img src="img/footer/sap-twitter-1920-1440.svg" alt="Twitter" style="width: 2rem; height:2rem;margin-inline-end: 1rem;"/>
+            //     </a>
+            //     <a href="https://openui5.slack.com/" target="_blank" rel="noreferrer noopener" aria-label="Slack">
+            //       <img src="img/footer/sap-slack-1920-1440.svg" alt="Slack" style="width: 2rem; height:2rem;margin-inline-end: 1rem;"/>
+            //     </a>
+            //     <a href="https://www.youtube.com/watch?v=9P5Jk4S3438&list=PLHUs_FUbq4dXkQpUt6b4eCXAAjiOg0IC-" target="_blank" rel="noreferrer noopener" aria-label="Youtube">
+            //       <img src="img/footer/sap-youtube-1920-1440.svg" alt="Youtube" style="width: 2rem; height:2rem;margin-inline-end: 1rem;"/>
+            //     </a>
+            //     <a href="https://sap.github.io/ui5-webcomponents/" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+            //       <img src="img/footer/sap-slack-1920-1440.svg" alt="GitHub" style="width: 2rem; height:2rem;margin-inline-end: 1rem;"/>
+            //     </a>
+            //   </div>
+            // `,
+            // },
           ],
         },
         {

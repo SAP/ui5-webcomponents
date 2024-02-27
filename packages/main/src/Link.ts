@@ -65,7 +65,7 @@ type AccessibilityAttributes = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/Link";</code>
+ * <code>import "@ui5/webcomponents/dist/Linkjs";</code>
  *
  * @constructor
  * @extends UI5Element

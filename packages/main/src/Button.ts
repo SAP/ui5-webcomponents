@@ -68,10 +68,10 @@ type AccessibilityAttributes = {
  *
  * For the <code>ui5-button</code> UI, you can define text, icon, or both. You can also specify
  * whether the text or the icon is displayed first.
- * <br><br>
+ *
  * You can choose from a set of predefined types that offer different
  * styling to correspond to the triggered action.
- * <br><br>
+ *
  * You can set the <code>ui5-button</code> as enabled or disabled. An enabled
  * <code>ui5-button</code> can be pressed by clicking or tapping it. The button changes
  * its style to provide visual feedback to the user that it is pressed or hovered over with
