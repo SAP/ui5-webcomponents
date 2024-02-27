@@ -61,7 +61,7 @@
 	<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
 
 	<ui5-popover id="detailsPopover">
-		<a href="https://en.wikipedia.org/wiki/Google_logo" target="_blank"></a>
+		<ui5-link id="detailsLink" href="https://en.wikipedia.org/wiki/Google_logo" target="_blank"></ui5-link>
 	</ui5-popover>
 
 	<script>
@@ -111,17 +111,29 @@
 			}
 		});
 
+		const detailsPopover = document.getElementById("detailsPopover");
+		let shouldOpenDetailsPopover = true;
+
+		detailsPopover.addEventListener("ui5-before-close", function(event) {
+			shouldOpenDetailsPopover = false;
+			setTimeout(function() {
+				shouldOpenDetailsPopover = true;
+			}, 0);
+		});
+
 		menu.addEventListener("ui5-item-focusin", function(event) {
 			const menuItem = event.detail.menuItem;
 			const opener = event.detail.opener;
-			const detailsPopover = document.getElementById("detailsPopover");
+			
 
 			if (detailsPopover.isOpen()) {
 				detailsPopover.close(false, false, true);
-			} else if (menuItem.disabled) {
-				const anchor = detailsPopover.querySelector("a");
-				anchor.textContent = menuItem.text;
+				shouldOpenDetailsPopover = true;
+			} else if (menuItem.disabled && shouldOpenDetailsPopover) {
+				const link = detailsPopover.querySelector("#detailsLink");
+				link.textContent = menuItem.text;
 				detailsPopover.showAt(opener, true)
+				link.focus();
 			}
 		});
 
