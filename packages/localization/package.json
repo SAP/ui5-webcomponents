@@ -36,6 +36,7 @@
     "@ui5/webcomponents-tools": "1.22.1-rc.0",
     "babel-plugin-amd-to-esm": "^2.0.3",
     "chromedriver": "120.0.0",
+    "estree-walk": "^2.2.0",
     "mkdirp": "^1.0.4",
     "resolve": "^1.20.0"
   },
