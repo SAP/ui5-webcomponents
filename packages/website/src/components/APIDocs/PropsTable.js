@@ -1,7 +1,11 @@
 import React from 'react';
 
 export default function PropsTable({ property }) {
-    return <table>
+    return <table style={{
+            borderRadius: "0.5rem",
+            boxShadow: "inset 0 0 0 1px var(--ifm-table-border-color)",
+            borderStyle: "hidden",
+        }}>
         <tbody>
             <tr>
                 <td><b>Description</b></td>
@@ -16,7 +20,7 @@ export default function PropsTable({ property }) {
                 <td>{property.default}</td>
             </tr>
             {property._ui5since && <tr>
-                <td><b>Available since</b></td>
+                <td><b>Since</b></td>
                 <td>{property._ui5since}</td>
             </tr>}
             {property.deprecated && <tr>

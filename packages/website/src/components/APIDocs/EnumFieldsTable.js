@@ -7,7 +7,11 @@ export default function EnumFieldsTable({ declaration }) {
         return "No enum fields available for this component."
     }
 
-    return <table>
+    return <table style={{
+            borderRadius: "0.5rem",
+            boxShadow: "inset 0 0 0 1px var(--ifm-table-border-color)",
+            borderStyle: "hidden",
+        }}>
         <thead>
             <tr>
                 <th>Name</th>

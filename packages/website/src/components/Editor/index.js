@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRef, useEffect, useState, useId } from 'react';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -148,8 +147,8 @@ ${fixAssetPaths(js)}`
     <>
       <div ref={projectContainerRef}></div>
 
-      <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 1px 3px 0"}}>
-        <playground-preview class={styles.previewResultHidden} style={{height: "unset"}} ref={previewRef}></playground-preview>
+      <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}>
+        <playground-preview class={ styles.previewResultHidden } style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}></playground-preview>
           <div style={{display: editorVisible ? "block" : "none"}}>
             <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
             <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
