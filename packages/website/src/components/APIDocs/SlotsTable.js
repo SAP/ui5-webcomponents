@@ -2,6 +2,7 @@ import React from 'react';
 
 export default function SlotsTable({ slot }) {
     return <table style={{
+            display: "table",
             borderRadius: "0.5rem",
             boxShadow: "inset 0 0 0 1px var(--ifm-table-border-color)",
             borderStyle: "hidden",

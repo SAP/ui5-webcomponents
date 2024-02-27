@@ -1,7 +1,9 @@
 import React from 'react';
 
 export default function PropsTable({ property }) {
-    return <table style={{
+    return <div style={{ overflowX: "auto", maxWidth: "100%"}}>
+        <table style={{
+            display: "table",
             borderRadius: "0.5rem",
             boxShadow: "inset 0 0 0 1px var(--ifm-table-border-color)",
             borderStyle: "hidden",
@@ -29,5 +31,5 @@ export default function PropsTable({ property }) {
             </tr>}
         </tbody>
     </table>
-
+    </div>
 }
