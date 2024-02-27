@@ -129,3 +129,24 @@
 code {
   text-wrap: nowrap;
 }
+
+@media (max-width: 996px) {
+  .navbar__title {
+    font-size: 0.875rem;
+  }
+
+  .navbar__search-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  /* .navbar__title, */
+  .navbar__logo {
+    display: none;
+  }
+
+  .navbar__search-input {
+    width: 8rem;
+  }
+}
