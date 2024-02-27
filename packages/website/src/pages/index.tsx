@@ -6,6 +6,7 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
+import UI5Logo from "@site/static/img/compatibility-frameworks/UI5.svg";
 
 import styles from './index.module.css';
 
@@ -14,8 +15,7 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div  className={clsx('container', styles.container)}>
-
-        <img className={styles.logoMain} src="/ui5-webcomponents/img/compatibility-frameworks/UI5.svg" alt="UI5 Web Components"></img>
+        <UI5Logo className={styles.logoMain}></UI5Logo>
         <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
         <span className={styles.heroTitle__UI5}>UI5</span> Web Components
         </Heading>
