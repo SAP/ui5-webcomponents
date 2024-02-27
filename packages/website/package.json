@@ -9,7 +9,7 @@
     "generate-all": "yarn generate-api-reference && yarn generate-documentation && yarn generate-local-cdn",
     "docusaurus": "docusaurus",
     "start": "yarn generate-all && docusaurus start",
-    "build": "yarn generate-all && docusaurus build --no-minify",
+    "build": "yarn generate-all && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
