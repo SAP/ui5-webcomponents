@@ -468,6 +468,19 @@ describe("'change' event firing", () => {
 		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
 	});
 
+	it("Value is not rounding when valuePrecision is set, and Value State is set to 'Error' when the value is not compliant", async () => {
+		await browser.url(`test/pages/StepInput.html`);
+		const input = await browser.$("#stepInputPrecision").shadow$("ui5-input");
+
+		await input.click();
+		await browser.keys("1");
+		await browser.keys("Enter");		
+
+
+		assert.strictEqual(await input.getProperty("valueState"), "Error", "value state is set to Error");
+		assert.strictEqual(await input.getProperty("value"), "0.100", "value is not rounded");
+	})
+
 });
 
 describe("Accessibility related parameters", async () => {
