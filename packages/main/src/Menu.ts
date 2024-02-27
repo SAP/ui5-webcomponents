@@ -526,10 +526,10 @@ class Menu extends UI5Element {
 
 	_onfocusin(e: CustomEvent<any>): void {
 		const target = e.target as HTMLElement;
-		const opener = target instanceof MenuListItem ? target : (target.getRootNode() as any).host;
-		const menuItem = opener.associatedItem as MenuItem;
+		const listItem = target instanceof MenuListItem ? target : (target.getRootNode() as any).host;
+		const menuItem = listItem.associatedItem as MenuItem;
 		const mainMenu = this._findMainMenu(menuItem);
-		mainMenu?.fireEvent("ui5-item-focusin", { opener, menuItem });
+		mainMenu?.fireEvent("ui5-item-focusin", { listItem, menuItem });
 	}
 
 	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
