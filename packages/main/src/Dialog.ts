@@ -86,8 +86,8 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * with the following keyboard shortcuts:
  * <br>
  * <ul>
- * <li>[UP/DOWN] arrow keys - Move the dialog to the top/bottom.</li>
- * <li>[LEFT/RIGHT] arrow keys - Move the dialog to the left/right.</li>
+ * <li>[UP/DOWN] arrow keys - Move the dialog up/down.</li>
+ * <li>[LEFT/RIGHT] arrow keys - Move the dialog left/right.</li>
  * </ul>
  *
  * <h4>Resizing</h4>
