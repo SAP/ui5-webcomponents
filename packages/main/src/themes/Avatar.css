@@ -241,7 +241,7 @@
 	display: none;
 }
 
-.ui5-avatar-initials:not(.ui5-avatar-initials-hidden) + .ui5-avatar-icon-fallback {
+.ui5-avatar-fallback-icon-hidden {
 	display: none;
 }
 
