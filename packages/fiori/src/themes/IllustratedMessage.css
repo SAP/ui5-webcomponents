@@ -10,7 +10,8 @@
 }
 
 .ui5-illustrated-message-root,
-.ui5-illustrated-message-inner {
+.ui5-illustrated-message-inner,
+.ui5-illustrated-message-text-and-actions-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,6 +126,7 @@
 	margin: 0 0.25rem 0 0;
 	height: 2.8125rem;
 	width: 2.8125rem;
+	align-self: baseline;
 }
 
 :host([media="dot"]) .ui5-illustrated-message-title {

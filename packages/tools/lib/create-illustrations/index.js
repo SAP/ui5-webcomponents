@@ -82,8 +82,8 @@ const generate = async () => {
 		const fileNameSplitArr = fileName.split('-');
 		fileName = fileName.replace(/\.svg$/, ".js");
 
-		// TODO try to avoid collision between sets
 		if (fileNameSplitArr[1] === 'Dot') {
+			// we keep the Dot illustration names to import them later. If no Dot is present, Spot will be used
 			dotIllustrationNames.push(fileNameSplitArr[2].split('.')[0]);
 		}
 
@@ -101,6 +101,7 @@ const generate = async () => {
 		}
 
 		const illustrationNameUpperCase = illustrationNameForTranslation.toUpperCase();
+		// If no Dot is present, Spot will be imported as Dot
 		const hasDot = dotIllustrationNames.indexOf(illustrationName) !== -1 ? 'Dot' : 'Spot';
 
 		return `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";

@@ -3,7 +3,7 @@
 		<div class="ui5-illustrated-message-illustration">
 			{{{effectiveIllustration}}}
 		</div>
-		<div class="ui5-illustrated-message-text-container">
+		<div class="ui5-illustrated-message-text-and-actions-container">
 			{{#if hasTitle}}
 					{{#if hasFormattedTitle}}
 						<slot name="title"></slot>
@@ -21,14 +21,13 @@
 					{{/if}}
 				</div>
 			{{/if}}
+			{{#if hasActions}}
+				<div class="ui5-illustrated-message-actions">
+					<slot></slot>
+				</div>
+			{{/if}}
 		</div>
 	</div>
-
-	{{#if hasActions}}
-		<div class="ui5-illustrated-message-actions">
-			<slot></slot>
-		</div>
-	{{/if}}
 
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 		class="ui5-illustrated-message-util">
