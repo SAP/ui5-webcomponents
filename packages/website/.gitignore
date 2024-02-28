@@ -8,6 +8,7 @@
 /docs/docs/
 /docs/samples/**/*.mdx
 /local-cdn
+/icons
 
 # Generated files
 .docusaurus

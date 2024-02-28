@@ -13,6 +13,6 @@ await Promise.all([
 
 const files = await readdir("local-cdn", {recursive: true, withFileTypes: true});
 const filesToDelete = files.filter(f => {
-    return f.isFile() && !f.name.endsWith(".js")
+    return f.isFile() && !f.name.endsWith(".js") && !f.name.endsWith(".svg")
 });
 filesToDelete.map(f => rm(path.join(f.path, f.name)));

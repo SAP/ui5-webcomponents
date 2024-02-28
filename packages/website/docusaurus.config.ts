@@ -74,6 +74,11 @@ const config: Config = {
           activeBasePath: 'components',
         },
         {
+          to: 'icons/',
+          label: 'Icons',
+          activeBasePath: 'icons',
+        },
+        {
           type: 'custom-settingsNavbarItem',
           position: "right",
         },
