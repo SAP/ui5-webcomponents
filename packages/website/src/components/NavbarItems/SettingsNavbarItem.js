@@ -1,12 +1,13 @@
 import "./index.css";
 import clsx from "clsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 import NavbarNavLink from "@theme/NavbarItem/NavbarNavLink";
 import NavbarItem from "@theme/NavbarItem";
-import { useContentDensity, useTextDirection, useTheme } from "@site/src/components/Settings";
 import { useLocation } from "@docusaurus/router";
 import useBaseUrl from "@docusaurus/useBaseUrl";
+import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
+import { useColorMode } from '@docusaurus/theme-common';
 
 import {
     Collapsible,
@@ -26,9 +27,10 @@ function SettingsNavbarItemDesktop() {
     const location = useLocation();
     const baseUrl = useBaseUrl("/");
 
-    const [theme, setTheme] = useTheme();
-    const [textDirection, setTextDirection] = useTextDirection();
-    const [contentDensity, setContentDensity] = useContentDensity();
+    const { theme, setTheme } = useContext(ThemeContext);
+    const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
+    const { textDirection, setTextDirection } = useContext(TextDirectionContext);
+    const { colorMode, setColorMode } = useColorMode();
     const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
@@ -40,12 +42,20 @@ function SettingsNavbarItemDesktop() {
         sendSettingsToFrame({ theme, contentDensity, textDirection });
     }, [theme, contentDensity, textDirection]);
 
+    useEffect(() => {
+        if (["sap_horizon", "sap_horizon_hcw", "sap_fiori_3", "sap_fiori_3_hcw"].includes(theme)) {
+            setColorMode("light");
+        } else {
+            setColorMode("dark");
+        }
+    }, [theme]);
+
     return <div
         className={clsx('navbar__item', 'dropdown', 'dropdown--hoverable', 'dropdown--right', {
             'dropdown--show': showDropdown,
             "navbar__item--hidden": location.pathname === baseUrl,
         })}>
-        
+
         <NavbarNavLink
             aria-haspopup="true"
             aria-expanded={showDropdown}
@@ -147,9 +157,10 @@ function SettingsNavbarItemMobile() {
     const locationMobile = useLocation();
     const baseUrlMobile= useBaseUrl("/");
 
-    const [theme, setTheme] = useTheme();
-    const [textDirection, setTextDirection] = useTextDirection();
-    const [contentDensity, setContentDensity] = useContentDensity();
+    const { theme, setTheme } = useContext(ThemeContext);
+    const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
+    const { textDirection, setTextDirection } = useContext(TextDirectionContext);
+    const { colorMode, setColorMode } = useColorMode();
     const [collapsed, setCollapsed] = useState(false)
 
     useEffect(() => {
@@ -160,6 +171,14 @@ function SettingsNavbarItemMobile() {
         }
         sendSettingsToFrame({ theme, contentDensity, textDirection });
     }, [theme, contentDensity, textDirection]);
+
+    useEffect(() => {
+        if (["sap_horizon", "sap_horizon_hcw", "sap_fiori_3", "sap_fiori_3_hcw"].includes(theme)) {
+            setColorMode("light");
+        } else {
+            setColorMode("dark");
+        }
+    }, [theme]);
 
     return (
         <li

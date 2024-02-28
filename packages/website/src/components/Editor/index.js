@@ -1,11 +1,11 @@
 import React from 'react';
-import { useRef, useEffect, useState, useId } from 'react';
+import { useRef, useEffect, useState, useId, useContext } from 'react';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import playgroundSupport from "./playground-support.js";
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
-import { useTheme, useTextDirection, useContentDensity } from "@site/src/components/Settings"
+import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
@@ -29,19 +29,20 @@ const returnProjectToPool = (project) => {
 
 export default function Editor({html, js, css }) {
   const projectContainerRef = useRef(null);
+  const projectRef = useRef(null);
   const previewRef = useRef(null);
   const tabBarRef = useRef(null);
   const fileEditorRef = useRef(null);
 
+  const [firstRender, setFirstRender] = useState(true);
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const iframeId = useId();
   const [editorVisible, setEditorVisible] = useState(false);
   const [btnText, setButtonText] = useState("Edit");
   const {siteConfig, siteMetadata} = useDocusaurusContext();
-  // this is only reading the initial stored state, updates go through postMessage
-  const [theme] = useTheme();
-  const [textDirection] = useTextDirection();
-  const [contentDensity] = useContentDensity();
+  const { theme, setTheme } = useContext(ThemeContext);
+  const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
+  const { textDirection, setTextDirection } = useContext(TextDirectionContext);
 
   function addImportMap(html) {
     return html.replace("<head>", `
@@ -89,8 +90,8 @@ export default function Editor({html, js, css }) {
   const baseUrl = useBaseUrl("/");
 
   useEffect(() => {
-    const projectElement = getProjectFromPool();
-    projectElement.config = {
+    projectRef.current = getProjectFromPool();
+    projectRef.current.config = {
       files: {
         "index.html": {
           content: addImportMap(fixAssetPaths(html)),
@@ -121,7 +122,7 @@ ${fixAssetPaths(js)}`
         }
       }
     }
-    projectContainerRef.current.appendChild(projectElement)
+    projectContainerRef.current.appendChild(projectRef.current)
 
     const messageHandler = async (event) => {
       if (event.data.height && event.data.iframeId === iframeId) {
@@ -130,23 +131,34 @@ ${fixAssetPaths(js)}`
     }
     window.addEventListener("message", messageHandler);
 
-    previewRef.current.project = projectElement;
-    tabBarRef.current.project = projectElement;
-    fileEditorRef.current.project = projectElement;
+    previewRef.current.project = projectRef.current;
+    tabBarRef.current.project = projectRef.current;
+    fileEditorRef.current.project = projectRef.current;
 
     tabBarRef.current.editor = fileEditorRef.current;
 
     return function () {
       // component cleanup
       window.removeEventListener("message", messageHandler);
-      returnProjectToPool(projectElement);
+      returnProjectToPool(projectRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (firstRender) {
+      setFirstRender(false);
+      return;
+    }
+    // setting has changed but exising project config is there
+    // update the playground-support.js only with the new settings so refresh works correctly
+    const newConfig = JSON.parse(JSON.stringify(projectRef.current.config));
+    newConfig.files["playground-support.js"].content = playgroundSupport({theme, textDirection, contentDensity, iframeId});
+    projectRef.current.config = newConfig;
+  }, [theme, contentDensity, textDirection]);
 
   return (
     <>
       <div ref={projectContainerRef}></div>
-
       <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}>
         <playground-preview class={ styles.previewResultHidden } style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}></playground-preview>
           <div style={{display: editorVisible ? "block" : "none"}}>
