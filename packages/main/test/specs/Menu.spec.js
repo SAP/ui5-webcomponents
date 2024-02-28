@@ -59,24 +59,22 @@ describe("Menu interaction", () => {
 
 		listItems[3].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu").waitForExist({
+		await submenuList.$("ui5-menu:nth-of-type(1)").waitForExist({
 			timeout: 1000,
-			timeoutMsg: "The second level sub-menu is should be created"
+			timeoutMsg: "First sub-menu is created"
 		})
 
 		assert.ok(await submenuList.$("ui5-menu"), "The second level sub-menu is being created"); // new ui5-menu element is created for the sub-menu
 
-		await browser.keys("ArrowLeft"); // back to main menu
-		await browser.keys("ArrowDown"); // go to the next menu item (close sub-menu)
+		listItems[4].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu").waitForExist({
-			reverse: true,
+		await submenuList.$("ui5-menu:nth-of-type(2)").waitForExist({
 			timeout: 1000,
-			timeoutMsg: "The second level sub-menu is should be destroyed"
+			timeoutMsg: "Second sub-menu is created"
 		})
 
-		assert.strictEqual(await submenuList.$$("ui5-menu").length, 0,
-								"The second level sub-menu is being destroyed"); // sub-menu ui5-menu element is destroyed
+		assert.strictEqual(await submenuList.$$("ui5-menu").length, 2,
+								"Two sub-menus are present");
 	});
 
 	it("Event firing after 'click' on menu item", async () => {

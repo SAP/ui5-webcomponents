@@ -168,7 +168,7 @@ class MenuItem extends UI5Element {
 	}
 
 	get subMenuOpened() {
-		return !!this._subMenu;
+		return !!this._subMenu?._popover?.isOpen();
 	}
 
 	get _additionalText() {
