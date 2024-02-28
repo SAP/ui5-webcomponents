@@ -2,6 +2,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
+	isPhone,
+	isTablet,
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
@@ -124,7 +126,13 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		this._prepareSubMenuDesktopTablet(item, opener, actionId);
+		if (isPhone()) {
+			// prepares and opens sub-menu on phone
+			this._prepareSubMenuPhone(item);
+		} else if (isTablet()) {
+			// prepares and opens sub-menu on tablet
+			this._prepareSubMenuDesktopTablet(item, opener, actionId);
+		}
 	}
 
 	get accSideNavigationPopoverHiddenText() {

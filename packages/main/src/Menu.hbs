@@ -38,7 +38,7 @@
 			icon="decline"
 			design="Transparent"
 			aria-label="{{labelClose}}"
-			@click={{_closeAll}}
+			@click={{close}}
 		>
 		</ui5-button>
 	</div>
@@ -67,7 +67,6 @@
 				accessible-role="menuitem"
 				.additionalText="{{this.item._additionalText}}"
 				tooltip="{{this.item.tooltip}}"
-				selected="{{this.item.subMenuOpened}}"
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
 				?selected={{this.item.subMenuOpened}}

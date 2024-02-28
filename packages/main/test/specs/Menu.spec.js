@@ -48,9 +48,7 @@ describe("Menu interaction", () => {
 	it("Sub-menu creation, opening, closing and destroying", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-
 		openButton.click();
-
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
 		const popover = staticAreaItem.shadow$("ui5-responsive-popover");
@@ -59,22 +57,24 @@ describe("Menu interaction", () => {
 
 		listItems[3].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu:nth-of-type(1)").waitForExist({
+		await submenuList.$("ui5-menu").waitForExist({
 			timeout: 1000,
-			timeoutMsg: "First sub-menu is created"
+			timeoutMsg: "The second level sub-menu is should be created"
 		})
 
 		assert.ok(await submenuList.$("ui5-menu"), "The second level sub-menu is being created"); // new ui5-menu element is created for the sub-menu
 
-		listItems[4].click(); // open sub-menu
+		await browser.keys("ArrowLeft"); // back to main menu
+		await browser.keys("ArrowDown"); // go to the next menu item (close sub-menu)
 
-		await submenuList.$("ui5-menu:nth-of-type(2)").waitForExist({
+		await submenuList.$("ui5-menu").waitForExist({
+			reverse: true,
 			timeout: 1000,
-			timeoutMsg: "Second sub-menu is created"
+			timeoutMsg: "The second level sub-menu is should be destroyed"
 		})
 
-		assert.strictEqual(await submenuList.$$("ui5-menu").length, 2,
-								"Two sub-menus are present");
+		assert.strictEqual(await submenuList.$$("ui5-menu").length, 0,
+								"The second level sub-menu is being destroyed"); // sub-menu ui5-menu element is destroyed
 	});
 
 	it("Event firing after 'click' on menu item", async () => {

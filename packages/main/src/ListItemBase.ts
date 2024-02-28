@@ -74,8 +74,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 		}
 
 		this.focused = true;
-		// The ui5-menu component counts on this private event firing, in order to
-		// temporary provide a private semantic event firing on focusin for a stakeholder.
 		this.fireEvent("_focused", e);
 	}
 

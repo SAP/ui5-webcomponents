@@ -127,16 +127,15 @@
 
 		menu.addEventListener("ui5-item-focusin", function(event) {
 			const menuItem = event.detail.menuItem;
-			const listItem = event.detail.listItem;
+			const opener = event.detail.opener;
 			
 
 			if (detailsPopover.isOpen()) {
 				detailsPopover.close(false, false, true);
-				shouldOpenDetailsPopover = true;
 			} else if (menuItem.disabled && shouldOpenDetailsPopover) {
 				const link = detailsPopover.querySelector("#detailsLink");
 				link.textContent = menuItem.text;
-				detailsPopover.showAt(listItem, true)
+				detailsPopover.showAt(opener, true)
 				link.focus();
 			}
 		});
