@@ -130,6 +130,13 @@ code {
   overflow-wrap: break-word;
 }
 
+
+.navbar__item li,
+.navbar__item li a {
+  cursor: pointer;
+}
+
+
 @media (max-width: 996px) {
   .navbar__title {
     font-size: 0.875rem;
