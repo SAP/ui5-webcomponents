@@ -136,6 +136,14 @@ code {
   cursor: pointer;
 }
 
+.menu__link {
+  font-size: 0.813rem;
+}
+
+.menu__caret:before,
+.menu__link--sublist-caret:after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 1.25rem;
+}
 
 @media (max-width: 996px) {
   .navbar__title {
