@@ -48,7 +48,9 @@ describe("Menu interaction", () => {
 	it("Sub-menu creation, opening, closing and destroying", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
+
 		openButton.click();
+
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
 		const popover = staticAreaItem.shadow$("ui5-responsive-popover");

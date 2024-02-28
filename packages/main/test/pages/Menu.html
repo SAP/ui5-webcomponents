@@ -16,7 +16,7 @@
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
 
-		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file" icon="add-document"></ui5-menu-item>
+		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file" icon="add-document" disabled></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section busy-delay="100" busy>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
@@ -115,7 +115,7 @@
 		});
 
 		const detailsPopover = document.getElementById("detailsPopover");
-		let shouldOpenDetailsPopover = true;
+		let shouldOpenDetailsPopover = false;
 
 		detailsPopover.addEventListener("ui5-before-close", function(event) {
 			shouldOpenDetailsPopover = false;
@@ -129,10 +129,11 @@
 			const menuItem = event.detail.menuItem;
 			const opener = event.detail.opener;
 			
-
 			if (detailsPopover.isOpen()) {
 				detailsPopover.close(false, false, true);
-			} else if (menuItem.disabled && shouldOpenDetailsPopover) {
+			}
+			
+			if (menuItem.disabled && shouldOpenDetailsPopover) {
 				const link = detailsPopover.querySelector("#detailsLink");
 				link.textContent = menuItem.text;
 				detailsPopover.showAt(opener, true)
@@ -147,6 +148,7 @@
 		});
 
 		menu.addEventListener("ui5-after-open", function() {
+			shouldOpenDetailsPopover = true;
 			var opener = menu.opener.id ? menu.opener.id : menu.opener;
 			openerInput.value = opener;
 			eventLogger.value += "* [after-open] ";
@@ -158,6 +160,7 @@
 		});
 
 		menu.addEventListener("ui5-after-close", function() {
+			shouldOpenDetailsPopover = false;
 			openerInput.value = "";
 			btnToggleOpen.pressed = false;
 			eventLogger.value += "* [after-close]";

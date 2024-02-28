@@ -266,10 +266,11 @@ class Menu extends UI5Element {
 	_currentItems!: Array<CurrentItem>;
 
 	/**
-	 * Stores parent menu item (if there is such).
+	 * Stores a list of parent menu items for each sub-menu (on phone).
+	 * @private
 	 */
-	@property({ type: Object, defaultValue: undefined })
-	_parentMenuItem?: MenuItem;
+	@property({ type: Object, multiple: true })
+	_parentItemsStack!: Array<MenuItem>;
 
 	/**
 	 * Stores the ResponsivePopover instance
@@ -278,11 +279,10 @@ class Menu extends UI5Element {
 	_popover?: ResponsivePopover;
 
 	/**
-	 * Stores a list of parent menu items for each sub-menu (on phone).
-	 * @private
+	 * Stores parent menu item (if there is such).
 	 */
-	@property({ type: Object, multiple: true })
-	_parentItemsStack!: Array<MenuItem>;
+	@property({ type: Object, defaultValue: undefined })
+	_parentMenuItem?: MenuItem;
 
 	/**
 	 * Stores parent menu item DOM representation (if there is such).
@@ -423,7 +423,7 @@ class Menu extends UI5Element {
 			if (isPhone()) {
 				this._parentItemsStack = [];
 			}
-			this._popover?.close(false, false, true);
+			this._popover.close(false, false, true);
 		}
 	}
 

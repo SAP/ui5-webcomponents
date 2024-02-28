@@ -2,9 +2,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
+	isDesktop,
 	isPhone,
 	isTablet,
-	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
@@ -134,7 +134,6 @@ class NavigationMenu extends Menu {
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
 	}
-
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
