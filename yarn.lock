@@ -7158,6 +7158,11 @@ estraverse@^5.1.0, estraverse@^5.2.0:
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-5.3.0.tgz#2eea5290702f26ab8fe5370370ff86c965d21123"
   integrity sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==
 
+estree-walk@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/estree-walk/-/estree-walk-2.2.0.tgz#f1428cbdb57f46462be9f0d5d2fa5582e647dad9"
+  integrity sha512-6gUr3kGNVEfL6pcIiGBrSkhoEQPkv8laQy1lUDpaxT4AvlBxf/UYSueOEb6Wq1cG5Ct6xQSkFCHoJcZlijpUAg==
+
 esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
