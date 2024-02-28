@@ -10,23 +10,23 @@ export default function PropsTable({ property }) {
         }}>
         <tbody>
             <tr>
-                <td><b>Description</b></td>
+                <td>Description</td>
                 <td dangerouslySetInnerHTML={{ __html: property.description }}></td>
             </tr>
             <tr>
-                <td><b>Type</b></td>
+                <td>Type</td>
                 <td>{property.type?.text}</td>
             </tr>
             <tr>
-                <td><b>Default</b></td>
+                <td>Default</td>
                 <td>{property.default}</td>
             </tr>
             {property._ui5since && <tr>
-                <td><b>Since</b></td>
+                <td>Since</td>
                 <td>{property._ui5since}</td>
             </tr>}
             {property.deprecated && <tr>
-                <td><b>Deprecated</b></td>
+                <td>Deprecated</td>
                 <td>{property.deprecated}</td>
             </tr>}
         </tbody>

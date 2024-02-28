@@ -9,17 +9,17 @@ export default function EventsTable({ event }) {
             }}>
             <tbody>
             <tr>
-                <td><b>Description</b></td>
+                <td>Description</td>
                 <td dangerouslySetInnerHTML={{ __html: event.description }}></td>
             </tr>
             <tr>
-                <td><b>Type</b></td>
+                <td>Type</td>
                 <td>{event.type?.text}</td>
             </tr>
             {event._ui5parameters && <tr>
-                <td><b>Parameters</b></td>
+                <td>Parameters</td>
                 <td>{event._ui5parameters?.map((parameter, idx) => {
-                    return <div key={idx}><b>{parameter.name}</b>: {parameter.type?.text}
+                    return <div key={idx}>{parameter.name}: {parameter.type?.text}
                         <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: parameter.description }}></p>
                         {parameter._ui5since && <>
                             Since: {parameter._ui5since}
@@ -33,11 +33,11 @@ export default function EventsTable({ event }) {
                 })}</td>
             </tr>}
             {event._ui5since && <tr>
-                <td><b>Since</b></td>
+                <td>Since</td>
                 <td>{event._ui5since}</td>
             </tr>}
             {event.deprecated && <tr>
-                <td><b>Deprecated</b></td>
+                <td>Deprecated</td>
                 <td>{event.deprecated}</td>
             </tr>}
         </tbody>

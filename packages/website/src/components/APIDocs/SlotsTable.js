@@ -9,19 +9,19 @@ export default function SlotsTable({ slot }) {
         }}>
         <tbody>
             <tr>
-                <td><b>Description</b></td>
+                <td>Description</td>
                 <td dangerouslySetInnerHTML={{ __html: slot.description }}></td>
             </tr>
             <tr>
-                <td><b>Type</b></td>
+                <td>Type</td>
                 <td>{slot._ui5type?.text}</td>
             </tr>
             {slot._ui5since && <tr>
-                <td><b>Since</b></td>
+                <td>Since</td>
                 <td>{slot._ui5since}</td>
             </tr>}
             {slot.deprecated && <tr>
-                <td><b>Deprecated</b></td>
+                <td>Deprecated</td>
                 <td>{slot.deprecated}</td>
             </tr>}
         </tbody>
