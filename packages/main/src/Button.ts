@@ -250,14 +250,14 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Describes the accessibility role of the button.
 	 *
-	 * NOTE: Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics is recommended.
+	 * NOTE: Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
 	 *
 	 * @default "Button"
 	 * @public
 	 * @since 1.23
 	 */
 	@property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Button })
-	accessibleRole!: string;
+	accessibleRole!: `${ButtonAccessibleRole}`;
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
