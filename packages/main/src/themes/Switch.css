@@ -347,8 +347,8 @@
 	inset-inline-start: var(--_ui5_switch_text_inactive_left_alternate);
 	inset-inline-end: var(--_ui5_switch_text_inactive_right_alternate);
 }
-.ui5-switch-root.ui5-switch--ios-device .ui5-switch-text--on.ui5-switch-no-label-icon,
-.ui5-switch-root.ui5-switch--ios-device .ui5-switch-text--off.ui5-switch-no-label-icon {
+.ui5-switch-root.ui5-switch--safari .ui5-switch-text--on.ui5-switch-no-label-icon,
+.ui5-switch-root.ui5-switch--safari .ui5-switch-text--off.ui5-switch-no-label-icon {
 	inset-inline-start: 0.1875rem;
 }
 

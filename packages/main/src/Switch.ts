@@ -291,7 +291,7 @@ class Switch extends UI5Element implements IFormElement {
 				"ui5-switch--checked": this.checked,
 				"ui5-switch--semantic": this.graphical,
 				"ui5-switch--no-label": !hasLabel,
-				"ui5-switch--ios-device": isSafari(),
+				"ui5-switch--safari": isSafari(),
 			},
 		};
 	}
