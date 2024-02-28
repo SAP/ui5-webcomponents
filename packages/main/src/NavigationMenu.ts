@@ -72,7 +72,6 @@ class NavigationMenu extends Menu {
 			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			let item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id")!;
 
 			if (!item) {
 				// for nested <a>
@@ -83,7 +82,7 @@ class NavigationMenu extends Menu {
 			}
 
 			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item, opener, hoverId);
+			this._startOpenTimeout(item, opener);
 		}
 	}
 
@@ -106,7 +105,6 @@ class NavigationMenu extends Menu {
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const opener = e.detail.item as OpenerStandardListItem;
 		const item = opener.associatedItem;
-		const actionId = opener.getAttribute("id")!;
 		const mainMenu = this._findMainMenu(item);
 		const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
 			"item": item,
@@ -131,7 +129,7 @@ class NavigationMenu extends Menu {
 			this._prepareSubMenuPhone(item);
 		} else if (isTablet()) {
 			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener, actionId);
+			this._prepareSubMenuDesktopTablet(item, opener);
 		}
 	}
 	get accSideNavigationPopoverHiddenText() {
