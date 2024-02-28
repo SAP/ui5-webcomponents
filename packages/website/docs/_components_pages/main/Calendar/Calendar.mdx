@@ -7,6 +7,8 @@ import Bounds from "../../../_samples/main/Calendar/Bounds/Bounds.md";
 import CalendarTypes from "../../../_samples/main/Calendar/CalendarTypes/CalendarTypes.md";
 import CalendarWithLegend from "../../../_samples/main/Calendar/CalendarWithLegend/CalendarWithLegend.md"
 import SelectionModes from "../../../_samples/main/Calendar/SelectionModes/SelectionModes.md";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import Link from '@docusaurus/Link';
 
 <%COMPONENT_OVERVIEW%>
 
@@ -34,5 +36,7 @@ Several calendars are supported: Gregorian, Islamic, Persian and Japanese.
 <CalendarTypes />
 
 ### Calendar with Legend
-You can use the CalendarLegend component in addition to the Calendar to highlight specific days.
+You can use the [CalendarLegend](../CalendarLegend/CalendarLegend.mdx) component in addition to the Calendar to highlight specific days.
+Discover all the available <Link to={useBaseUrl("/components/CalendarLegend##item-types")}>CalendarLegendItem Types</Link>.
+
 <CalendarWithLegend />
