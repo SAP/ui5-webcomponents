@@ -28,7 +28,12 @@ import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import type {
+	AccessibilityInfo,
+	PromiseResolve,
+	ComponentStylesData,
+	ClassMap,
+} from "./types.js";
 
 let autoId = 0;
 
@@ -902,6 +907,17 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	get classes(): ClassMap {
+		return {};
+	}
+
+	/**
+	 * Components will add an implementation of the method to provide an accessibility info.
+	 * for usage from high-order (containers) components.
+	 * <b>For example:</b> TableRow may need the accessibility info of an Input, used inside the TableRow,
+	 * to provide better accessibility content for screen readers.
+	 * @private
+	 */
+	get accessibilityInfo(): AccessibilityInfo {
 		return {};
 	}
 
