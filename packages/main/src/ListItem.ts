@@ -63,6 +63,7 @@ type AccInfo = {
 	ariaChecked?: boolean;
 	listItemAriaLabel?: string;
 	ariaOwns?: string;
+	tooltip?: string;
 }
 
 type AccessibilityAttributes = {
@@ -146,6 +147,16 @@ abstract class ListItem extends ListItemBase {
 	navigated!: boolean;
 
 	/**
+	 * Defines the text of the tooltip that would be displayed for the list item.
+	 *
+	 * @default ""
+	 * @public
+	 * @since 1.23.0
+	 */
+	@property({ type: String, defaultValue: "" })
+	tooltip!: string;
+
+	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 *
 	 * @private
@@ -156,6 +167,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the tooltip of the component.
 	 * @default ""
+	 * @deprecated
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -374,7 +386,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive) {
+		if (this.isInactive || this.disabled) {
 			return;
 		}
 		if (isEnter(e as KeyboardEvent)) {
@@ -487,6 +499,7 @@ abstract class ListItem extends ListItemBase {
 			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
+			tooltip: this.tooltip || this.title,
 		};
 	}
 

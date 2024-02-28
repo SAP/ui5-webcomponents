@@ -6,7 +6,6 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
-	container-type: inline-size;
 }
 
 .ui5-tc-root {
@@ -150,22 +149,20 @@
 	padding: 1rem;
 }
 
-@container (min-width: 600px) {
-	.ui5-tc__header {
-		padding: 0 1rem;
-	}
-
-	.ui5-tc__content {
-		padding: 1rem 2rem;
-	}
+:host([media-range="M"]) .ui5-tc__header,
+:host([media-range="L"]) .ui5-tc__header {
+	padding: 0 1rem;
 }
 
-@container (min-width: 1440px) {
-	.ui5-tc__header {
-		padding: 0 2rem;
-	}
-	
-	.ui5-tc__content {
-		padding: 1rem 3rem;
-	}
+:host([media-range="M"]) .ui5-tc__content,
+:host([media-range="L"]) .ui5-tc__content {
+	padding: 1rem 2rem;
+}
+
+:host([media-range="XL"]) .ui5-tc__header {
+	padding: 0 2rem;
+}
+
+:host([media-range="XL"]) .ui5-tc__content {
+	padding: 1rem 3rem;
 }
