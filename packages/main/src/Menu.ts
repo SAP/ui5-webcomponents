@@ -546,12 +546,14 @@ class Menu extends UI5Element {
 		this._parentItemsStack.push(item);
 	}
 
-	_onfocusin(e: CustomEvent<any>): void {
+	_onfocusin(e: FocusEvent): void {
 		const target = e.target as HTMLElement;
-		const menuListItem = target instanceof MenuListItem ? target : (target.getRootNode() as any).host;
-		const menuItem = menuListItem.associatedItem as MenuItem;
-		const mainMenu = this._findMainMenu(menuItem);
-		mainMenu?.fireEvent("ui5-item-focusin", { opener: menuListItem, menuItem });
+		const menuListItem = target.hasAttribute("ui5-menu-li")
+			? target as MenuListItem
+			: (target.getRootNode() as ShadowRoot).host as MenuListItem;
+		const item = menuListItem.associatedItem as MenuItem;
+		const mainMenu = this._findMainMenu(item);
+		mainMenu?.fireEvent("ui5-item-focus", { ref: menuListItem, item });
 	}
 
 	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
@@ -683,7 +685,7 @@ class Menu extends UI5Element {
 	}
 
 	_findMainMenu(element: MenuItem | Menu) {
-		let parentMenu = element instanceof Menu ? element : element.parentElement as Menu;
+		let parentMenu = element.hasAttribute("ui5-menu") ? element as Menu : element.parentElement as Menu;
 		while (parentMenu && parentMenu._parentMenuItem) {
 			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
 		}
