@@ -16,8 +16,6 @@ const convertSAPUIDefineToDefine = async (filePath) => {
 }
 
 const convertAmdToEs6 = async (code) => {
-	code = code.replace(/sap\.ui\.require/g, "require");
-
 	return (await babelCore.transformAsync(code, {
 		plugins: [['babel-plugin-amd-to-esm', {}]]
 	})).code;
@@ -75,8 +73,8 @@ const replaceGlobalCoreUsage = (filePath, code) => {
 		const replaced = code.replace(/sap\.ui\.getCore\(\)/g, `Core`);
 		return code !== replaced ? `import Core from 'sap/ui/core/Core';${replaced}` : code;
 	}
-	
-	return code; 
+
+	return code;
 };
 
 const transformAmdToES6Module = async (filePath) => {
