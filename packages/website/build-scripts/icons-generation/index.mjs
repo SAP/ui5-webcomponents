@@ -28,7 +28,7 @@ import ${svgImport} from "../local-cdn/local-cdn/icons/dist/v5/${fileName}.svg";
 
         icons += `
 <div style={{display: "flex", alignItems: "center", flexDirection: "column", padding: "1rem"}}>
-    <div style={{width: "4rem", height: "4rem"}}><${svgImport} fill="var(--ifm-font-color-base)"/></div>
+    <div style={{width: "3rem", height: "3rem"}}><${svgImport} fill="var(--ifm-font-color-base)"/></div>
     <span style={{ color: "var(--ifm-font-color-base)", textAlign: "center", marginTop: "0.5rem" }}>{${iconNameImport}}</span>
 </div>`;
         }
@@ -45,7 +45,7 @@ import React from 'react';
 import Layout from '@theme/Layout';
 ${imports}
 
-    export default function Icons() {
+export default function Icons() {
     return (
         <Layout title="UI5 Web Components Icons" description="UI5 Web Components Icons">
             <div style={{display: "grid", padding: "5rem 2rem", columnGap: "2rem", rowGap: "2rem", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))" }}>
