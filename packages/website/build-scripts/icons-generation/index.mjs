@@ -48,7 +48,7 @@ ${imports}
 export default function Icons() {
     return (
         <Layout title="UI5 Web Components Icons" description="UI5 Web Components Icons">
-            <div style={{display: "grid", padding: "5rem 2rem", columnGap: "2rem", rowGap: "2rem", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))" }}>
+            <div style={{display: "grid", padding: "5rem 2rem", columnGap: "2rem", rowGap: "2rem", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))" }}>
                 ${icons}
             </div>
         </Layout>
