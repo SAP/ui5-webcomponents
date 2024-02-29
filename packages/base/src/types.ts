@@ -19,9 +19,9 @@ type ClassMap = { [x: string] : ClassMapValue | ClassMap };
 type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
 
 type AccessibilityInfo = {
-	role?: string, // The WAI-ARIA role of the component.
-	type?: string, // The component type (could be the component name), used when several components share same role (f.e. Select and ComboBox both have role="combobox").
-	description?: string, // The most relevant component description/state - value, placeholder, label, etc.
+	role?: Lowercase<string>, // The WAI-ARIA role of the component.
+	type?: string, // A translated text that represents the component type. Used when several components share same role - f.e. Select and ComboBox both have role="combobox".
+	description?: string, // A translated text that represents relevant component description/state - value, placeholder, label, etc.
 	disabled?: boolean, // The component disabled state.
 	readonly?: boolean, // The component readonly state.
 	required?: boolean, // The component required state.
