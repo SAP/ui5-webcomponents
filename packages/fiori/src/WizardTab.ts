@@ -16,15 +16,15 @@ type WizardTabInfo = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * Private component, used internally by the <code>ui5-wizard</code>
- * to represent a "step" in the navigation header of the <code>ui5-wizard</code>.
+ * ### Overview
+ * Private component, used internally by the `ui5-wizard`
+ * to represent a "step" in the navigation header of the `ui5-wizard`.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/WizardTab.js";</code> (imported with <ui5-wizard>)
+ * `import "@ui5/webcomponents/dist/WizardTab.js";` (imported with <ui5-wizard>)
  *
  * @constructor
  * @extends UI5Element
@@ -48,7 +48,7 @@ type WizardTabInfo = {
 
 class WizardTab extends UI5Element implements ITabbable {
 	/**
-	 * Defines the <code>icon</code> of the step.
+	 * Defines the `icon` of the step.
 	 *
 	 * @default ""
 	 * @private
@@ -57,7 +57,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	icon!: string
 
 	/**
-	 * Defines the <code>titleText</code> of the step.
+	 * Defines the `titleText` of the step.
 	 *
 	 * @default ""
 	 * @private
@@ -67,7 +67,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	titleText!: string
 
 	/**
-	 * Defines the <code>subtitleText</code> of the step.
+	 * Defines the `subtitleText` of the step.
 	 *
 	 * @default ""
 	 * @private
@@ -77,7 +77,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	subtitleText!: string
 
 	/**
-	 * Defines the number that will be displayed in place of the <code>icon</code>, when it's missing.
+	 * Defines the number that will be displayed in place of the `icon`, when it's missing.
 	 *
 	 * @default ""
 	 * @private
@@ -86,7 +86,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	number!: string
 
 	/**
-	 * Defines if the step is <code>disabled</code> - the step is not responding to user interaction.
+	 * Defines if the step is `disabled` - the step is not responding to user interaction.
 	 *
 	 * @default false
 	 * @private
@@ -95,8 +95,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 disabled!: boolean
 
 	/**
-	 * Defines if the step is <selected>selected</code>.
-	 * <br><br>
+	 * Defines if the step is `selected`.
 	 *
 	 * @default false
 	 * @private

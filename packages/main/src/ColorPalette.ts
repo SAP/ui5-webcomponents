@@ -38,7 +38,7 @@ import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
 import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
 
 /**
- * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
+ * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
  *
  * @public
  */
@@ -56,17 +56,17 @@ type ColorPaletteItemClickEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-color-palette</code> provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
+ * ### Overview
+ * The `ui5-color-palette` provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * The <code>ui5-color-palette</code> is meant for users that need to select a color from a predefined set.
- * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
+ * The `ui5-color-palette` is meant for users that need to select a color from a predefined set.
+ * To define the colors, use the `ui5-color-palette-item` component inside the default slot of the `ui5-color-palette`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
+ * `import "@ui5/webcomponents/dist/ColorPalette.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -114,7 +114,7 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
-	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -132,7 +132,7 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the default color of the color palette
-	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
+	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
@@ -161,7 +161,7 @@ class ColorPalette extends UI5Element {
 	onPhone!: boolean;
 
 	/**
-	 * Defines the <code>ui5-color-palette-item</code> elements.
+	 * Defines the `ui5-color-palette-item` elements.
 	 * @public
 	 */
 	@slot({

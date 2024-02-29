@@ -86,7 +86,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
- * Interface for components that represent a suggestion item, usable in <code>ui5-input</code>
+ * Interface for components that represent a suggestion item, usable in `ui5-input`
  *
  * @public
  */
@@ -152,44 +152,41 @@ type InputSuggestionScrollEventDetail = {
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-input</code> component allows the user to enter and edit text or numeric values in one line.
- * <br>
- * Additionally, you can provide <code>suggestionItems</code>,
+ * The `ui5-input` component allows the user to enter and edit text or numeric values in one line.
+ *
+ * Additionally, you can provide `suggestionItems`,
  * that are displayed in a popover right under the input.
- * <br><br>
- * The text field can be editable or read-only (<code>readonly</code> property),
- * and it can be enabled or disabled (<code>disabled</code> property).
- * To visualize semantic states, such as "error" or "warning", the <code>valueState</code> property is provided.
+ *
+ * The text field can be editable or read-only (`readonly` property),
+ * and it can be enabled or disabled (`disabled` property).
+ * To visualize semantic states, such as "error" or "warning", the `valueState` property is provided.
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
- * <br><br>
- * <b>Note:</b> If you are using the <code>ui5-input</code> as a single npm module,
- * don't forget to import the <code>InputSuggestions</code> module from
+ *
+ * **Note:** If you are using the `ui5-input` as a single npm module,
+ * don't forget to import the `InputSuggestions` module from
  * "@ui5/webcomponents/dist/features/InputSuggestions.js"
  * to enable the suggestions functionality.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-input</code> provides the following keyboard shortcuts:
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-input` provides the following keyboard shortcuts:
  *
- * <ul>
- * <li>[ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.</li>
- * <li>[ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.</li>
- * <li>[DOWN] - Focuses the next matching item in the suggestion list.</li>
- * <li>[UP] - Focuses the previous matching item in the suggestion list.</li>
- * <li>[HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.</li>
- * <li>[END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.</li>
- * <li>[PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.</li>
- * <li>[PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.</li>
- * </ul>
+ * - [ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.
+ * - [ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.
+ * - [DOWN] - Focuses the next matching item in the suggestion list.
+ * - [UP] - Focuses the previous matching item in the suggestion list.
+ * - [HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.
+ * - [END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.
+ * - [PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.
+ * - [PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Input.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> (optional - for input suggestions support)
+ * `import "@ui5/webcomponents/dist/Input.js";`
+ *
+ * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
  *
  * @constructor
  * @extends UI5Element
@@ -285,8 +282,8 @@ type InputSuggestionScrollEventDetail = {
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
+	 *
+	 * **Note:** A disabled component is completely noninteractive.
 	 *
 	 * @default false
 	 * @public
@@ -297,8 +294,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines if characters within the suggestions are to be highlighted
 	 * in case the input value matches parts of the suggestions text.
-	 * <br><br>
-	 * <b>Note:</b> takes effect when <code>showSuggestions</code> is set to <code>true</code>
+	 *
+	 * **Note:** takes effect when `showSuggestions` is set to `true`
 	 *
 	 * @default false
 	 * @private
@@ -319,8 +316,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
+	 *
+	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @default false
@@ -351,14 +348,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the HTML type of the component.
-	 * <br><br>
-	 * <b>Notes:</b>
-	 * <ul>
-	 * <li>The particular effect of this property differs depending on the browser
-	 * and the current language settings, especially for type <code>Number</code>.</li>
-	 * <li>The property is mostly intended to be used with touch devices
-	 * that use different soft keyboard layouts depending on the given input type.</li>
-	 * </ul>
+	 *
+	 * **Notes:**
+	 *
+	 * - The particular effect of this property differs depending on the browser
+	 * and the current language settings, especially for type `Number`.
+	 * - The property is mostly intended to be used with touch devices
+	 * that use different soft keyboard layouts depending on the given input type.
 	 *
 	 * @default "Text"
 	 * @public
@@ -368,8 +364,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the value of the component.
-	 * <br><br>
-	 * <b>Note:</b> The property is updated upon typing.
+	 *
+	 * **Note:** The property is updated upon typing.
 	 *
 	 * @default ""
 	 * @formEvents change input
@@ -381,8 +377,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the inner stored value of the component.
-	 * <br><br>
-	 * <b>Note:</b> The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
+	 *
+	 * **Note:** The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
 	 *
 	 * @default ""
 	 * @private
@@ -402,12 +398,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
+	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
@@ -419,9 +413,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
-	 * <br><br>
-	 * <b>Note:</b> You need to import the <code>InputSuggestions</code> module
-	 * from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
+	 *
+	 * **Note:** You need to import the `InputSuggestions` module
+	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
 	 *
 	 * @default false
 	 * @public
@@ -431,8 +425,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Sets the maximum number of characters available in the input field.
-	 * <br><br>
-	 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
+	 *
+	 * **Note:** This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
 	 *
 	 * @default undefined
 	 * @since 1.0.0-rc.5
@@ -541,14 +535,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the suggestion items.
-	 * <br><br>
+	 *
 	 * Example:
-	 * <br><br>
-	 * &lt;ui5-input show-suggestions><br>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br>
+	 *
+	 * &lt;ui5-input show-suggestions>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item>
+	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item>
 	 * &lt;/ui5-input>
-	 * <br>
+	 *
+	 * ```html
 	 * <ui5-input show-suggestions>
 	 * <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
 	 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
@@ -557,17 +552,18 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
 	 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 	 * </ui5-input>
-	 * <br><br>
-	 * <b>Note:</b> The suggestions would be displayed only if the <code>showSuggestions</code>
-	 * property is set to <code>true</code>.
-	 * <br><br>
-	 * <b>Note:</b> The <code>&lt;ui5-suggestion-item&gt;</code> and <code>&lt;ui5-suggestion-group-item&gt;</code> are recommended to be used as suggestion items.
-	 * <br><br>
-	 * <b>Note:</b> Importing the Input Suggestions Support feature:
-	 * <br>
-	 * <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code>
-	 * <br>
-	 * automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.
+	 * ```
+	 *
+	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
+	 * property is set to `true`.
+	 *
+	 * **Note:** The `&lt;ui5-suggestion-item&gt;` and `&lt;ui5-suggestion-group-item&gt;` are recommended to be used as suggestion items.
+	 *
+	 * **Note:** Importing the Input Suggestions Support feature:
+	 *
+	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
+	 *
+	 * automatically imports the `&lt;ui5-suggestion-item>` and `&lt;ui5-suggestion-group-item>` for your convenience.
 	 *
 	 * @public
 	 */
@@ -583,8 +579,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	icon!: Array<IIcon>;
 
 	/**
-	 * The slot is used for native <code>input</code> HTML element to enable form submit,
-	 * when <code>name</code> property is set.
+	 * The slot is used for native `input` HTML element to enable form submit,
+	 * when `name` property is set.
 	 *
 	 * @private
 	 */
@@ -593,15 +589,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br><br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * <br><br>
-	 * <b>Note:</b> If the component has <code>suggestionItems</code>,
-	 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 *
+	 * **Note:** If the component has `suggestionItems`,
+	 * the `valueStateMessage` would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 	 *
 	 * @since 1.0.0-rc.6
 	 * @public
@@ -974,7 +969,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Called on "focusin" of the native input HTML Element.
-	 * <b>Note:</b> implemented in MultiInput, but used in the Input template.
+	 * **Note:** implemented in MultiInput, but used in the Input template.
 	 */
 	innerFocusIn(): void | undefined {}
 
@@ -1436,7 +1431,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Returns if the suggestions popover is scrollable.
-	 * The method returns <code>Promise</code> that resolves to true,
+	 * The method returns `Promise` that resolves to true,
 	 * if the popup is scrollable and false otherwise.
 	 */
 	isSuggestionsScrollable() {

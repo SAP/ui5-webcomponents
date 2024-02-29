@@ -12,16 +12,16 @@ import tableColumnStyles from "./generated/themes/TableColumn.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-column</code> component allows to define column specific properties that are applied
- * when rendering the <code>ui5-table</code> component.
+ * The `ui5-table-column` component allows to define column specific properties that are applied
+ * when rendering the `ui5-table` component.
  *
  * @constructor
  * @extends UI5Element
  * @public
  * @slot {Node[]} default - Defines the content of the column header
- * @csspart column - Used to style the native <code>th</code> element
+ * @csspart column - Used to style the native `th` element
  */
 @customElement({
 	tag: "ui5-table-column",
@@ -32,11 +32,11 @@ import tableColumnStyles from "./generated/themes/TableColumn.css.js";
 class TableColumn extends UI5Element {
 	/**
 	 * Defines the minimum table width required to display this column. By default it is always displayed.
-	 * <br><br>
-	 * The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting
-	 * <code>minWidth</code> property to <code>400</code> sets the minimum width to 400 pixels, and	shows this column on tablet (and desktop) but hides it on mobile.
-	 * <br>
-	 * For further responsive design options, see <code>demandPopin</code> property.
+	 *
+	 * The responsive behavior of the `ui5-table` is determined by this property. As an example, by setting
+	 * `minWidth` property to `400` sets the minimum width to 400 pixels, and	shows this column on tablet (and desktop) but hides it on mobile.
+	 *
+	 * For further responsive design options, see `demandPopin` property.
 	 *
 	 * @default Infinity
 	 * @public
@@ -54,10 +54,10 @@ class TableColumn extends UI5Element {
 	popinText!: string;
 
 	/**
-	 * According to your <code>minWidth</code> settings, the component can be hidden
+	 * According to your `minWidth` settings, the component can be hidden
 	 * in different screen sizes.
-	 * <br><br>
-	 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
+	 *
+	 * Setting this property to `true`, shows this column as pop-in instead of hiding it.
 	 *
 	 * @default false
 	 * @public
@@ -68,13 +68,10 @@ class TableColumn extends UI5Element {
 	/**
 	 * Defines how the popin row is displayed.
 	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
+	 * **The available values are:**
 	 *
-	 * <ul>
-	 * <li><code>Block</code></li>
-	 * <li><code>Inline</code></li>
-	 * </ul>
+	 * - `Block`
+	 * - `Inline`
 	 *
 	 * @default "Block"
 	 * @public

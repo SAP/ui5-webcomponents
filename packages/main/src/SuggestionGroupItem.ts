@@ -6,8 +6,8 @@ import type { IInputSuggestionItem } from "./Input.js";
 
 /**
  * @class
- * The <code>ui5-suggestion-group-item</code> is type of suggestion item,
- * that can be used to split the <code>ui5-input</code> suggestions into groups.
+ * The `ui5-suggestion-group-item` is type of suggestion item,
+ * that can be used to split the `ui5-input` suggestions into groups.
  *
  * @constructor
  * @extends UI5Element
@@ -22,7 +22,7 @@ import type { IInputSuggestionItem } from "./Input.js";
 })
 class SuggestionGroupItem extends UI5Element implements IInputSuggestionItem {
 	/**
-	 * Defines the text of the <code>ui5-suggestion-group-item</code>.
+	 * Defines the text of the `ui5-suggestion-group-item`.
 	 *
 	 * @default ""
 	 * @public

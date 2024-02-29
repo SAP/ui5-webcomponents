@@ -20,12 +20,12 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-toolbar-button</code> represents an abstract action,
- * used in the <code>ui5-toolbar</code>.
+ * ### Overview
+ * The `ui5-toolbar-button` represents an abstract action,
+ * used in the `ui5-toolbar`.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ToolbarButton.js";</code>
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/ToolbarButton.js";`
  *
  * @constructor
  * @abstract
@@ -41,9 +41,9 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
 /**
  * Fired when the component is activated either with a
  * mouse/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event will not be fired if the <code>disabled</code>
- * property is set to <code>true</code>.
+ *
+ * **Note:** The event will not be fired if the `disabled`
+ * property is set to `true`.
  *
  * @public
  */
@@ -51,8 +51,8 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
 class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines if the action is disabled.
-	 * <br><br>
-	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
+	 *
+	 * **Note:** a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
 	 * @default false
 	 * @public
@@ -62,16 +62,14 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the action design.
-	 * <b>The available values are:</b>
+	 * **The available values are:**
 	 *
-	 * <ul>
-	 * <li><code>Default</code></li>
-	 * <li><code>Emphasized</code></li>
-	 * <li><code>Positive</code></li>
-	 * <li><code>Negative</code></li>
-	 * <li><code>Transparent</code></li>
-	 * <li><code>Attention</code></li>
-	 * </ul>
+	 * - `Default`
+	 * - `Emphasized`
+	 * - `Positive`
+	 * - `Negative`
+	 * - `Transparent`
+	 * - `Attention`
 	 *
 	 * @default "Default"
 	 * @public
@@ -80,12 +78,10 @@ class ToolbarButton extends ToolbarItem {
 	design!: `${ButtonDesign}`;
 
 	/**
-	 * Defines the <code>icon</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b>
-	 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * Defines the `icon` source URI.
 	 *
+	 * **Note:** SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
+	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -103,8 +99,8 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * <br>
-	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
+	 *
+	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 	 * @default ""
 	 * @public
 	 */
@@ -135,24 +131,17 @@ class ToolbarButton extends ToolbarItem {
 	 *
 	 * It supports the following fields:
 	 *
-	 * <ul>
-	 * 		<li><code>expanded</code>: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-	 *			<ul>
-	 *				<li><code>true</code></li>
-	 *				<li><code>false</code></li>
-	 *			</ul>
-	 * 		</li>
-	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
-	 * 			<ul>
-	 *				<li><code>Dialog</code></li>
-	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
-	 *				<li><code>Menu</code></li>
-	 *				<li><code>Tree</code></li>
-	 * 			</ul>
-	 * 		</li>
-	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
-	 * </ul>
+	 * - `expanded`: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+	 * 	- `true`
+	 * 	- `false`
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
+	 * 	- `Dialog`
+	 * 	- `Grid`
+	 * 	- `ListBox`
+	 * 	- `Menu`
+	 * 	- `Tree`
+	 * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
+	 *
 	 * @default {}
 	 * @public
 	 */
@@ -169,9 +158,8 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the width of the button.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
+	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
 	 * @default undefined
 	 * @public

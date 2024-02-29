@@ -41,7 +41,7 @@ type SecondaryCalendarButtonTexts = {
 class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's timestamp.
-	 * <b>Note:</b> set by the Calendar component
+	 * **Note:** set by the Calendar component
 	 *
 	 * @public
 	 * @default undefined
@@ -51,7 +51,7 @@ class CalendarHeader extends UI5Element {
 
 	/**
 	 * Defines component's primary calendar type.
-	 * <b>Note:</b> set by the Calendar component
+	 * **Note:** set by the Calendar component
 	 *
 	 * @public
 	 * @default undefined
@@ -61,7 +61,7 @@ class CalendarHeader extends UI5Element {
 
 	/**
 	 * Defines component's secondary calendar type.
-	 * <b>Note:</b> set by the Calendar component
+	 * **Note:** set by the Calendar component
 	 *
 	 * @since 1.0.0-rc.16
 	 * @default undefined

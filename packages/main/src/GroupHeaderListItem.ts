@@ -14,11 +14,11 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
 
 /**
  * @class
- * The <code>ui5-li-groupheader</code> is a special list item, used only to separate other list items into logical groups.
+ * The `ui5-li-groupheader` is a special list item, used only to separate other list items into logical groups.
  *
  * @slot {Node[]} default - Defines the text of the component.
- * <br>
- * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  *
  * @constructor
  * @extends ListItemBase

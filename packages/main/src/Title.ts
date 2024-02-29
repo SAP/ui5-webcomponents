@@ -14,21 +14,21 @@ import titleCss from "./generated/themes/Title.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-title</code> component is used to display titles inside a page.
+ * The `ui5-title` component is used to display titles inside a page.
  * It is a simple, large-sized text with explicit header/title semantics.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Title.js";</code>
+ * `import "@ui5/webcomponents/dist/Title.js";`
  *
  * @constructor
  * @extends UI5Element
  * @slot {Node[]} default - Defines the text of the component.
- * This component supports nesting a <code>Link</code> component inside.
- * <br><br>
- * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * This component supports nesting a `Link` component inside.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @public
  */
 @customElement({
@@ -40,7 +40,7 @@ import titleCss from "./generated/themes/Title.css.js";
 class Title extends UI5Element {
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
+	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @default "None"
 	 * @public
@@ -50,7 +50,7 @@ class Title extends UI5Element {
 
 	/**
 	 * Defines the component level.
-	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
+	 * Available options are: `"H6"` to `"H1"`.
 	 *
 	 * @default "H2"
 	 * @public

@@ -23,7 +23,7 @@ import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTempla
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-segmented-button</code> as items
+ * Interface for components that may be slotted inside `ui5-segmented-button` as items
  *
  * @public
  */
@@ -40,17 +40,17 @@ type SegmentedButtonSelectionChangeEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-segmented-button</code> shows a group of items. When the user clicks or taps
+ * The `ui5-segmented-button` shows a group of items. When the user clicks or taps
  * one of the items, it stays in a pressed state. It automatically resizes the items
  * to fit proportionally within the component. When no width is set, the component uses the available width.
- * <br><br>
- * <b>Note:</b> There can be just one selected <code>item</code> at a time.
  *
- * <h3>ES6 Module Import</h3>
+ * **Note:** There can be just one selected `item` at a time.
  *
- * <code>import "@ui5/webcomponents/dist/SegmentedButton.js";</code>
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/SegmentedButton.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -76,7 +76,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
 	detail: {
 		/**
 		 * @public
-		 * @deprecated deprecated since 1.14.0 and will be removed in the next major release, use the <code>selectedItems</code> parameter instead.
+		 * @deprecated deprecated since 1.14.0 and will be removed in the next major release, use the `selectedItems` parameter instead.
 		 */
 		selectedItem: { type: HTMLElement },
 		/**
@@ -101,13 +101,10 @@ class SegmentedButton extends UI5Element {
 	/**
 	 * Defines the component selection mode.
 	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
+	 * **The available values are:**
 	 *
-	 * <ul>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>MultiSelect</code></li>
-	 * </ul>
+	 * - `SingleSelect`
+	 * - `MultiSelect`
 	 *
 	 * @default "SingleSelect"
 	 * @public
@@ -117,11 +114,11 @@ class SegmentedButton extends UI5Element {
 	mode!: `${SegmentedButtonMode}`;
 
 	/**
-	 * Defines the items of <code>ui5-segmented-button</code>.
-	 * <br><br>
-	 * <b>Note:</b> Multiple items are allowed.
-	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
+	 * Defines the items of `ui5-segmented-button`.
+	 *
+	 * **Note:** Multiple items are allowed.
+	 *
+	 * **Note:** Use the `ui5-segmented-button-item` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -268,7 +265,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected item.
 	 *
 	 * @deprecated since 1.14.0. This method will be removed in the next major release.
-	 * Please use the <code>selectedItems</code> property instead.
+	 * Please use the `selectedItems` property instead.
 	 * @public
 	 * @default undefined
 	 */

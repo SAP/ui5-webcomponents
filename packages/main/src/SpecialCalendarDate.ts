@@ -6,9 +6,9 @@ import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-special-date</code> component defines a special calendar date to be used inside <code>ui5-calendar</code>,
+ * The `ui5-special-date` component defines a special calendar date to be used inside `ui5-calendar`,
  * which is visually distinguished from the rest of the dates.
  *
  * @constructor

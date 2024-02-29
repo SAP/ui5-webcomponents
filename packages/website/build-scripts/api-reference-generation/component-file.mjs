@@ -1,38 +1,37 @@
-import sanitizeHtml from "sanitize-html";
-
 const parseDeclarationDescription = (declaration) => {
     if (!declaration.description) {
         return "";
     }
-    return escapeText(declaration.description)
+    return declaration.description
+    // codeblocks format
+    .replaceAll(/\`{3}[\s\S]*?\`{3}/gm, (match) => {
+        return `\`\`\`${match.replaceAll("```", "").trim().replaceAll("\n", "@newLineCode@")}\`\`\``;
+    })
 };
 
-const processTitles = (text) => {
-    const matches = text.matchAll(/<h(\d).*?>(.+)<\/.*h\d+.*>/g);
-
-    for (const match of matches) {
-        if (match[2].trim().startsWith("Overview")) {
-            text = text.replace(match[0], "")
-        } else {
-            text = text.replace(match[0], `${"#".repeat(match[1])} ${match[2]}`)
-        }
+const processDescription = (description) => {
+    if (!description) {
+        return " - "
     }
 
-    return text;
+    return description
+        // codeblocks format
+        .replaceAll(/\`{3}[\s\S]*?\`{3}/gm, (match) => {
+            return `\`\`\`${match.replaceAll("```", "").trim().replaceAll("\n", "@newLineCode@")}\`\`\``;
+        })
+        // lists inside description
+        .replaceAll(/\n\s*-/g, "<br />-")
+        // breaklines
+        .replaceAll(/\n\n/g, "<br />")
+        .replaceAll(/\n/g, " ");
 }
 
-const escapeText = (text) => {
-    if (!text) {
-        return "";
+const processType = (type) => {
+    if (!type || !type.text) {
+        return " - "
     }
 
-    const hasTitle = /<h\d.+?>/.test(text);
-
-    if (hasTitle) {
-        text = processTitles(text);
-    }
-
-    return sanitizeHtml(text);
+    return `\`${type?.text?.replaceAll("|", "\\|")}\``
 }
 
 const getPropsTables = (declaration) => {
@@ -44,11 +43,23 @@ const getPropsTables = (declaration) => {
 No properties available for this component.`
     }
 
-    result += "\n\n" + properties.map(property => {
-        return `### ${property.name}
+    result += "\n" + properties.map(property => {
+        let propertyResult = `### ${property.name}
+|             |   |
+|-------------|---|
+| Description | ${processDescription(property.description)} |
+| Type        | ${processType(property.type)} |`
 
-<PropsTable property={${JSON.stringify(property)}} />
-`}).join("\n")
+        if (property._ui5since) {
+            propertyResult += `\n| Since | ${property._ui5since} |`
+        }
+
+        if (property.deprecated) {
+            propertyResult += `\n| Deprecated | ${property.deprecated} |`
+        }
+
+        return propertyResult
+    }).join("\n")
 
     return result;
 }
@@ -62,11 +73,45 @@ const getMethodsTables = (declaration) => {
 No methods available for this component.`
     }
 
-    result += "\n\n" + methods.map(method => {
-        return `### ${method.name}
+    result += "\n" + methods.map(method => {
+        let methodResult = `### ${method.name}
+|             |   |
+|-------------|---|
+| Description | ${processDescription(method.description)} |
+| Return type | ${processType(method.return?.type)} |`
 
-<MethodsTable method={${JSON.stringify(method)}} />
-`}).join("\n")
+        if (method.parameters) {
+            const paramsText = method.parameters.map(param => {
+                let text = `**${param.name}**: ${processType(param.type)}`;
+
+                if (param.description) {
+                    text += `<br />${processDescription(param.description)}`
+                }
+
+                if (param._ui5since) {
+                    text += `<br />Since:${param._ui5since}`
+                }
+
+                if (param.deprecated) {
+                    text += `<br />Deprecated: ${param.deprecated}`
+                }
+
+                return text;
+            }).join("\n\n");
+
+            methodResult += `\n| Parameters | ${processDescription(paramsText)} |`
+        }
+
+        if (method._ui5since) {
+            methodResult += `\n| Since | ${method._ui5since} |`
+        }
+
+        if (method.deprecated) {
+            methodResult += `\n| Deprecated | ${method.deprecated} |`
+        }
+
+        return methodResult
+    }).join("\n")
 
     return result;
 }
@@ -80,11 +125,45 @@ const getEventsTables = (declaration) => {
 No events available for this component.`
     }
 
-    result += "\n\n" + events.map(event => {
-        return `### ${event.name}
+    result += "\n" + events.map(event => {
+        let eventResult = `### ${event.name}
+|             |   |
+|-------------|---|
+| Description | ${processDescription(event.description)} |
+| Type | ${processType(event.type)} |`
 
-<EventsTable event={${JSON.stringify(event)}} />
-`}).join("\n")
+        if (event._ui5parameters) {
+            const paramsText = event._ui5parameters.map(param => {
+                let text = `**${param.name}**: ${processType(param.type)}`;
+
+                if (param.description) {
+                    text += `<br />${processDescription(param.description)}`
+                }
+
+                if (param._ui5since) {
+                    text += `<br />Since:${param._ui5since}`
+                }
+
+                if (param.deprecated) {
+                    text += `<br />Deprecated: ${param.deprecated}`
+                }
+
+                return text;
+            }).join("\n\n");
+
+            eventResult += `\n| Parameters | ${processDescription(paramsText)} |`
+        }
+
+        if (event._ui5since) {
+            eventResult += `\n| Since | ${event._ui5since} |`
+        }
+
+        if (event.deprecated) {
+            eventResult += `\n| Deprecated | ${event.deprecated} |`
+        }
+
+        return eventResult
+    }).join("\n")
 
     return result;
 }
@@ -98,11 +177,23 @@ const getSlotsTables = (declaration) => {
 No slots available for this component.`
     }
 
-    result += "\n\n" + slots.map(slot => {
-        return `### ${slot.name}
+    result += "\n" + slots.map(slot => {
+        let slotResult = `### ${slot.name}
+|             |   |
+|-------------|---|
+| Description | ${processDescription(slot.description)} |
+| Type        | ${processType(slot._ui5type)} |`
 
-<SlotsTable slot={${JSON.stringify(slot)}} />
-`}).join("\n")
+        if (slot._ui5since) {
+            slotResult += `\n| Since | ${slot._ui5since} |`
+        }
+
+        if (slot.deprecated) {
+            slotResult += `\n| Deprecated | ${slot.deprecated} |`
+        }
+
+        return slotResult
+    }).join("\n")
 
     return result;
 }
@@ -119,7 +210,26 @@ No CSS parts available for this component.`
     result = `${result}
 | Name | Description |
 |------|-------------|
-${cssParts.map(cssPart => `| **${cssPart.name}** | ${cssPart.description.replaceAll("\n", " ")} |`).join("\n")}`
+${cssParts.map(cssPart => `| ${cssPart.name} | ${processDescription(cssPart.description)} |`).join("\n")}`
+
+    return result;
+}
+
+
+
+const getEnumFieldsTables = (declaration) => {
+    let result = `## Enum fields`
+    const enumFields = declaration.members?.filter(member => member.kind === "field") || [];
+
+    if (!enumFields.length) {
+        return `${result}
+No enum fields available for this enum.`
+    }
+
+    result = `${result}
+| Name | Description |
+|------|-------------|
+${enumFields.map(field => `| ${field.name} | ${processDescription(field.description)} |`).join("\n")}`
 
     return result;
 }
@@ -137,7 +247,7 @@ const getTable = (kind, declaration) => {
         case "slot":
             return getSlotsTables(declaration);
         case "enum":
-            return `## Enum fields\n<EnumFieldsTable declaration={declarationJSON} />`;
+            return getEnumFieldsTables(declaration);
         default:
             return "";
     }
@@ -160,8 +270,7 @@ slug: ../../${declaration.kind}s/${declaration.name}
     }
 
     if (declaration.kind === "enum") {
-        sections.push(`import declarationJSON from "./_${declaration.name}Declaration.json";`);
-        sections.push(getTable("enum"));
+        sections.push(getTable("enum", declaration));
     } else if (declaration.kind === "interface") {
         if (!declaration._implementations || !declaration._implementations.length) {
             sections.push(`## Implementations
@@ -195,8 +304,6 @@ const parseComponentDeclaration = (declaration, fileContent) => {
         "method",
         "cssPart"
     ].map(fieldType => getTable(fieldType, declaration))
-
-    metadataSections.unshift(`import declarationJSON from "./_${declaration.name}Declaration.json";`)
 
     fileContent = fileContent.replace("<%COMPONENT_METADATA%>", metadataSections.join("\n\n"));
 

@@ -5,7 +5,7 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
 
 /**
  * @class
- * The <code>ui5-li-suggestion-item</code> represents the suggestion item in the <code>ui5-input</code>
+ * The `ui5-li-suggestion-item` represents the suggestion item in the `ui5-input`
  * suggestion popover.
  *
  * @constructor
@@ -21,8 +21,8 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
 class SuggestionListItem extends StandardListItem {
 	/**
 	 * Defines a description that can contain HTML.
-	 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
-	 * <br>
+	 * **Note:** If not specified, the `description` property will be used.
+	 *
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */

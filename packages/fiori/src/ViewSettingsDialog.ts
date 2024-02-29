@@ -77,26 +77,26 @@ type VSDInternalSettings = {
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-view-settings-dialog</code> component helps the user to sort data within a list or a table.
- * It consists of several lists like <code>Sort order</code> which is built-in and <code>Sort By</code> and <code>Filter By</code> lists,
- * for which you must be provide items(<code>ui5-sort-item</code> & <code>ui5-filter-item</code> respectively)
+ * ### Overview
+ * The `ui5-view-settings-dialog` component helps the user to sort data within a list or a table.
+ * It consists of several lists like `Sort order` which is built-in and `Sort By` and `Filter By` lists,
+ * for which you must be provide items(`ui5-sort-item` & `ui5-filter-item` respectively)
  * These options can be used to create sorters for a table.
  *
- * The <code>ui5-view-settings-dialog</code> interrupts the current application processing as it is the only focused UI element and
+ * The `ui5-view-settings-dialog` interrupts the current application processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
- * The <code>ui5-view-settings-dialog</code> is modal, which means that user action is required before returning to the parent window is possible.
+ * The `ui5-view-settings-dialog` is modal, which means that user action is required before returning to the parent window is possible.
  *
- * <h3>Structure</h3>
- * A <code>ui5-view-settings-dialog</code> consists of a header, content, and a footer for action buttons.
- * The <code>ui5-view-settings-dialog</code> is usually displayed at the center of the screen.
+ * ### Structure
+ * A `ui5-view-settings-dialog` consists of a header, content, and a footer for action buttons.
+ * The `ui5-view-settings-dialog` is usually displayed at the center of the screen.
  *
- * <h3>Responsive Behavior</h3>
- * <code>ui5-view-settings-dialog</code> stretches on full screen on phones.
+ * ### Responsive Behavior
+ * `ui5-view-settings-dialog` stretches on full screen on phones.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";</code>
+ * `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -125,8 +125,8 @@ type VSDInternalSettings = {
  * Fired when confirmation button is activated.
  *
  * @param {String} sortOrder The current sort order selected.
- * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
- * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+ * @param {String} sortBy The currently selected `ui5-sort-item` text attribute.
+ * @param {HTMLElement} sortByItem The currently selected `ui5-sort-item`.
  * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
  * @param {Array} filters The selected filters items.
  * @public
@@ -160,8 +160,8 @@ type VSDInternalSettings = {
  * Fired when cancel button is activated.
  *
  * @param {String} sortOrder The current sort order selected.
- * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
- * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+ * @param {String} sortBy The currently selected `ui5-sort-item` text attribute.
+ * @param {HTMLElement} sortByItem The currently selected `ui5-sort-item`.
  * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
  * @param {Array} filters The selected filters items.
  * @public
@@ -192,7 +192,7 @@ type VSDInternalSettings = {
 })
 
 /**
- * Fired before the component is opened. <b>This event does not bubble.</b>
+ * Fired before the component is opened. **This event does not bubble.**
  *
  * @public
  */
@@ -259,7 +259,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Defines the list of items against which the user could sort data.
-	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem.js";</code>
+	 * **Note:** If you want to use this slot, you need to import used item: `import "@ui5/webcomponents-fiori/dist/SortItem.js";`
 	 *
 	 * @public
 	 */
@@ -267,8 +267,8 @@ class ViewSettingsDialog extends UI5Element {
 	sortItems!: Array<SortItem>
 
 	/**
-	 * Defines the <code>filterItems</code> list.
-	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem.js";</code>
+	 * Defines the `filterItems` list.
+	 * **Note:** If you want to use this slot, you need to import used item: `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`
 	 *
 	 * @public
 	 */
@@ -400,7 +400,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Determines disabled state of the <code>Reset</code> button.
+	 * Determines disabled state of the `Reset` button.
 	 */
 	get _disableResetButton() {
 		return this._dialog && this._sortSetttingsAreInitial && this._filteresAreInitial;
@@ -585,7 +585,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Stores current settings as confirmed and fires <code>confirm</code> event.
+	 * Stores current settings as confirmed and fires `confirm` event.
 	 */
 	_confirmSettings() {
 		this.close();
@@ -595,7 +595,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Sets current settings to recently confirmed ones and fires <code>cancel</code> event.
+	 * Sets current settings to recently confirmed ones and fires `cancel` event.
 	 */
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
@@ -643,7 +643,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * If the dialog is closed by [ESC] key, do the same as if the <code>Cancel</code> button is pressed.
+	 * If the dialog is closed by [ESC] key, do the same as if the `Cancel` button is pressed.
 	 *
 	 * @param evt
 	 */
@@ -665,7 +665,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Sets current settings to ones passed as <code>settings</code> argument.
+	 * Sets current settings to ones passed as `settings` argument.
 	 *
 	 * @param settings
 	 */
@@ -676,7 +676,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
+	 * Stores `Sort Order` list as recently used control and its selected item in current state.
 	 */
 	_onSortOrderChange(e: CustomEvent<ListItemClickEventDetail>) {
 		this._recentlyFocused = this._sortOrder!;
@@ -690,7 +690,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
+	 * Stores `Sort By` list as recently used control and its selected item in current state.
 	 */
 	 _onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
 		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
@@ -704,13 +704,13 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Sets a JavaScript object, as settings to the <code>ui5-view-settings-dialog</code>.
+	 * Sets a JavaScript object, as settings to the `ui5-view-settings-dialog`.
 	 * This method can be used after the dialog is initially open, as the dialog needs
-	 * to set its initial settings.<br>
-	 * The <code>ui5-view-settings-dialog</code> throws an event called "before-open",
-	 * which can be used as a trigger point.<br>
-	 * The object should have the following format:<br>
-	 * <pre>
+	 * to set its initial settings.
+	 * The `ui5-view-settings-dialog` throws an event called "before-open",
+	 * which can be used as a trigger point.
+	 * The object should have the following format:
+	 * ```
 	 * {
 	 *	sortOrder: "Ascending",
 	 *	sortBy: "Name",
@@ -719,7 +719,7 @@ class ViewSettingsDialog extends UI5Element {
 	 *		{"Filter 2": ["Some filter 4"]},
 	 *	]
 	 * }
-	 * </pre>
+	 * ```
 	 * @param settings - predefined settings.
 	 * @public
 	 */

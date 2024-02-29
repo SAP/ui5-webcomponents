@@ -47,7 +47,7 @@ type PopupBeforeCloseEventDetail = {
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Base class for all popup Web Components.
  *
  * If you need to create your own popup-like custom UI5 Web Components, it is highly recommended that you extend
@@ -84,7 +84,7 @@ type PopupBeforeCloseEventDetail = {
 	staticAreaStyles: popupStaticAreaStyles,
 })
 /**
- * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
+ * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
  *
  * @public
  * @allowPreventDefault
@@ -92,18 +92,18 @@ type PopupBeforeCloseEventDetail = {
 @event("before-open")
 
 /**
- * Fired after the component is opened. <b>This event does not bubble.</b>
+ * Fired after the component is opened. **This event does not bubble.**
  *
  * @public
  */
 @event("after-open")
 
 /**
- * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
+ * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
  *
  * @public
  * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
 @event<PopupBeforeCloseEventDetail>("before-close", {
 	detail: {
@@ -117,7 +117,7 @@ type PopupBeforeCloseEventDetail = {
 })
 
 /**
- * Fired after the component is closed. <b>This event does not bubble.</b>
+ * Fired after the component is closed. **This event does not bubble.**
  *
  * @public
  */
@@ -393,7 +393,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
+	 * Focuses the element denoted by `initialFocus`, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
 	 * @returns Promise that resolves when the focus is applied

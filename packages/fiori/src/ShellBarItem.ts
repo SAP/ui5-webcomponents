@@ -8,18 +8,18 @@ type ShellBarItemClickEventDetail = {
 };
 
 /**
- * Interface for components that may be slotted inside <code>ui5-shellbar</code> as items
+ * Interface for components that may be slotted inside `ui5-shellbar` as items
  *
  * @public
  */
 
 /**
  * @class
- * The <code>ui5-shellbar-item</code> represents a custom item, that
- * might be added to the <code>ui5-shellbar</code>.
- * <br><br>
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";</code>
+ * The `ui5-shellbar-item` represents a custom item, that
+ * might be added to the `ui5-shellbar`.
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -51,8 +51,8 @@ class ShellBarItem extends UI5Element {
 
 	/**
 	 * Defines the item text.
-     * <br><br>
-     * <b>Note:</b> The text is only displayed inside the overflow popover list view.
+     *
+     * **Note:** The text is only displayed inside the overflow popover list view.
 	 * @default ""
 	 * @public
 	 */

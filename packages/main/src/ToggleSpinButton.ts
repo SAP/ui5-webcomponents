@@ -12,10 +12,10 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-toggle-spin-button</code> is explicitly used in the new design of <code>ui5-time-picker</code>.
- * It extends <code>ui5-toggle-button</code> with some specific accessibility-related properties in order to
+ * `ui5-toggle-spin-button` is explicitly used in the new design of `ui5-time-picker`.
+ * It extends `ui5-toggle-button` with some specific accessibility-related properties in order to
  * have spin button look and feel from accessibility point of view. This component should not be used separately.
  *
  * @constructor

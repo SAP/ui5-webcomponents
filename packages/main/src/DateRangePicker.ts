@@ -20,33 +20,30 @@ import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The DateRangePicker enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * The user can enter a date by:
  * Using the calendar that opens in a popup or typing it in directly in the input field (not available for mobile devices).
- * For the <code>ui5-daterange-picker</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-daterange-picker`
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/DateRangePicker.js";</code>
+ * `import "@ui5/webcomponents/dist/DateRangePicker.js";`
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-daterange-picker` provides advanced keyboard handling.
  *
- * When the <code>ui5-daterange-picker</code> input field is focused the user can
+ * When the `ui5-daterange-picker` input field is focused the user can
  * increment or decrement respectively the range start or end date, depending on where the cursor is.
  * The following shortcuts are available:
- * <br>
- * <ul>
- * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
- * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
- * </ul>
+ *
+ * - [PAGEDOWN] - Decrements the corresponding day of the month by one
+ * - [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
+ * - [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
+ * - [PAGEUP] - Increments the corresponding day of the month by one
+ * - [SHIFT] + [PAGEUP] - Increments the corresponding month by one
+ * - [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
  *
  * @constructor
  * @extends DatePicker
@@ -84,7 +81,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
+	 * **Note:** The getter method is inherited and not supported. If called it will return an empty value.
 	 *
 	 * @public
 	 * @default null
@@ -94,7 +91,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
+	 * **Note:** The getter method is inherited and not supported. If called it will return an empty value.
 	 *
 	 * @public
 	 * @default null

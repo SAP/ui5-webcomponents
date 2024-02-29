@@ -7,14 +7,14 @@ import type FilterItemOption from "./FilterItemOption.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * For the <code>ui5-filter-item</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-filter-item`
+ * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents-fiori/dist/FilterItem.js";</code>
+ * `import @ui5/webcomponents-fiori/dist/FilterItem.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -43,7 +43,7 @@ class FilterItem extends UI5Element {
 	additionalText!: string;
 
 	/**
-	 * Defines the <code>values</code> list.
+	 * Defines the `values` list.
 	 * @public
 	 */
 	@slot()

@@ -39,7 +39,7 @@ type DirectionStart = "left" | "right";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * @constructor
  * @extends UI5Element
@@ -66,8 +66,8 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-	 * <br><br>
-	 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
+	 *
+	 * **Note:** If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 	 *
 	 * @default 1
 	 * @public
@@ -77,8 +77,8 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Displays a label with a value on every N-th step.
-	 * <br><br>
-	 * <b>Note:</b> The step and tickmarks properties must be enabled.
+	 *
+	 * **Note:** The step and tickmarks properties must be enabled.
 	 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 	 * tickmark will be labelled, which means every 4th value number.
 	 *
@@ -90,8 +90,8 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Enables tickmarks visualization for each step.
-	 * <br><br>
-	 * <b>Note:</b> The step must be a positive number.
+	 *
+	 * **Note:** The step must be a positive number.
 	 *
 	 * @default false
 	 * @public
@@ -259,7 +259,7 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
+	/** Shows the tooltip(s) if the `showTooltip` property is set to true
 	 *
 	 * @private
 	 */
@@ -270,7 +270,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Hides the tooltip(s) if the <code>showTooltip</code> property is set to true
+	 * Hides the tooltip(s) if the `showTooltip` property is set to true
 	 *
 	 * @private
 	 */
@@ -419,7 +419,7 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user finish interacting with the slider
-	 * Fires an <code>change</code> event indicating a final value change, after user interaction is finished.
+	 * Fires an `change` event indicating a final value change, after user interaction is finished.
 	 *
 	 * @protected
 	 */
@@ -436,7 +436,7 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Updates state storage for the value-related property
-	 * Fires an <code>input</code> event indicating a value change via interaction that is not yet finished.
+	 * Fires an `input` event indicating a value change via interaction that is not yet finished.
 	 *
 	 * @protected
 	 */
@@ -716,7 +716,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Normalizes a new <code>step</code> property value.
+	 * Normalizes a new `step` property value.
 	 * If tickmarks are enabled recreates them according to it.
 	 *
 	 * @private

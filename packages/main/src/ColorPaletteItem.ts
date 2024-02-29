@@ -19,9 +19,9 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-color-palette-item</code> component represents a color in the the <code>ui5-color-palette</code>.
+ * The `ui5-color-palette-item` component represents a color in the the `ui5-color-palette`.
  *
  * @constructor
  * @extends UI5Element
@@ -38,8 +38,8 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	/**
 	 * Defines the colour of the component.
-	 * <br><br>
-	 * <b>Note:</b> The value should be a valid CSS color.
+	 *
+	 * **Note:** The value should be a valid CSS color.
 	 *
 	 * @default undefined
 	 * @public

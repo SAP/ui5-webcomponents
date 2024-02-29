@@ -5,20 +5,20 @@ import MenuItem from "./MenuItem.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-navigation-menu-item</code> is the item to use inside a <code>ui5-navigation-menu</code>.
+ * `ui5-navigation-menu-item` is the item to use inside a `ui5-navigation-menu`.
  * An arbitrary hierarchy structure can be represented by recursively nesting navigation menu items.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <code>ui5-navigation-menu-item</code> is an abstract element, representing a node in a <code>ui5-navigation-menu</code>. The navigation menu itself is rendered as a list,
- * and each <code>ui5-navigation-menu-item</code> is represented by a list item (<code>ui5-li</code>) in that list. Therefore, you should only use
- * <code>ui5-navigation-menu-item</code> directly in your apps. The <code>ui5-li</code> list item is internal for the list, and not intended for public use.
+ * `ui5-navigation-menu-item` is an abstract element, representing a node in a `ui5-navigation-menu`. The navigation menu itself is rendered as a list,
+ * and each `ui5-navigation-menu-item` is represented by a list item (`ui5-li`) in that list. Therefore, you should only use
+ * `ui5-navigation-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/NavigationMenuItem.js";</code>
+ * `import "@ui5/webcomponents/dist/NavigationMenuItem.js";`
  *
  * @constructor
  * @extends MenuItem
@@ -32,7 +32,7 @@ class NavigationMenuItem extends MenuItem {
 	 * Defines the link target URI. Supports standard hyperlink behavior.
 	 * If a JavaScript action should be triggered,
 	 * this should not be set, but instead an event handler
-	 * for the <code>click</code> event should be registered.
+	 * for the `click` event should be registered.
 	 *
 	 * @public
 	 * @default ""
@@ -43,18 +43,16 @@ class NavigationMenuItem extends MenuItem {
 
 	/**
 	 * Defines the component target.
-	 * <br><br>
-	 * <b>Notes:</b>
 	 *
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
+	 * **Notes:**
 	 *
-	 * <b>This property must only be used when the <code>href</code> property is set.</b>
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
+	 *
+	 * **This property must only be used when the `href` property is set.**
 	 *
 	 * @public
 	 * @default ""

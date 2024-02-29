@@ -16,62 +16,61 @@ import {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-time-picker</code> component provides an input field with assigned clocks which are opened on user action.
- * The <code>ui5-time-picker</code> allows users to select a localized time using touch, mouse, or keyboard input.
+ * ### Overview
+ * The `ui5-time-picker` component provides an input field with assigned clocks which are opened on user action.
+ * The `ui5-time-picker` allows users to select a localized time using touch, mouse, or keyboard input.
  * It consists of two parts: the time input field and the clocks.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * The user can enter a time by:
- * <ul>
- * <li>Using the clocks that are displayed in a popup</li>
- * <li>Typing it in directly in the input field</li>
- * </ul>
- * <br><br>
+ *
+ * - Using the clocks that are displayed in a popup
+ * - Typing it in directly in the input field
+ *
  * When the user makes an entry and chooses the enter key, the clocks show the corresponding time (hours, minutes and seconds separately).
  * When the user directly triggers the clocks display, the actual time is displayed.
- * For the <code>ui5-time-picker</code>
+ * For the `ui5-time-picker`
  *
- * <h3>Formatting</h3>
+ * ### Formatting
  *
  * If a time is entered by typing it into
  * the input field, it must fit to the used time format.
- * <br><br>
+ *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
- * For example, if the <code>format-pattern</code> is "HH:mm:ss",
+ * [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table)
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ *
+ * For example, if the `format-pattern` is "HH:mm:ss",
  * a valid value string is "11:42:35" and the same is displayed in the input.
  *
- * <h3>Keyboard handling</h3>
+ * ### Keyboard handling
  * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
- * <br>
+ *
  * When closed:
- * <ul>
- * <li>[PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.</li>
- * <li>[PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.</li>
- * <li>[SHIFT]+[PAGEUP] - Increments minutes by 1.</li>
- * <li>[SHIFT]+[PAGEDOWN] - Decrements minutes by 1.</li>
- * <li>[SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.</li>
- * <li>[SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.</li>
- * <li>
- * </ul>
+ *
+ * - [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
+ * - [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
+ * - [SHIFT]+[PAGEUP] - Increments minutes by 1.
+ * - [SHIFT]+[PAGEDOWN] - Decrements minutes by 1.
+ * - [SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.
+ * - [SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.
+ * -
+ *
  * When opened:
- * <ul>
- * <li>[PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.</li>
- * <li>[PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.</li>
- * <li>[SHIFT]+[PAGEUP] - Increments minutes by 1.</li>
- * <li>[SHIFT]+[PAGEDOWN] - Decrements minutes by 1.</li>
- * <li>[SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.</li>
- * <li>[SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.</li>
- * <li>[A] or [P] - Selects AM or PM respectively.</li>
- * <li>[0]-[9] - Allows direct time selecting (hours/minutes/seconds).</li>
- * <li>[:] - Allows switching between hours/minutes/seconds clocks. If the last clock is displayed and [:] is pressed, the first clock is beind displayed.</li>
- * </ul>
  *
- * <h3>ES6 Module Import</h3>
+ * - [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
+ * - [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
+ * - [SHIFT]+[PAGEUP] - Increments minutes by 1.
+ * - [SHIFT]+[PAGEDOWN] - Decrements minutes by 1.
+ * - [SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.
+ * - [SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.
+ * - [A] or [P] - Selects AM or PM respectively.
+ * - [0]-[9] - Allows direct time selecting (hours/minutes/seconds).
+ * - [:] - Allows switching between hours/minutes/seconds clocks. If the last clock is displayed and [:] is pressed, the first clock is beind displayed.
  *
- * <code>import "@ui5/webcomponents/dist/TimePicker.js";</code>
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/TimePicker.js";`
  *
  * @constructor
  * @extends TimePickerBase
@@ -84,8 +83,7 @@ class TimePicker extends TimePickerBase {
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
 	 * @default undefined

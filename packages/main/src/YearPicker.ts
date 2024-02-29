@@ -357,7 +357,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
+	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 *
 	 * @protected
 	 */
@@ -368,7 +368,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
+	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 *
 	 * @protected
 	 */

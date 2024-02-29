@@ -11,8 +11,8 @@ type NotificationActionClickEventDetail = {
 
 /**
  * @class
- * The <code>ui5-notification-action</code> represents an abstract action,
- * used in the <code>ui5-li-notification</code> and the <code>ui5-li-notification-group</code> items.
+ * The `ui5-notification-action` represents an abstract action,
+ * used in the `ui5-li-notification` and the `ui5-li-notification-group` items.
  *
  * @constructor
  * @extends UI5Element
@@ -34,7 +34,7 @@ type NotificationActionClickEventDetail = {
 })
 class NotificationAction extends UI5Element {
 	/**
-	 * Defines the text of the <code>ui5-notification-action</code>.
+	 * Defines the text of the `ui5-notification-action`.
 	 *
 	 * @default ""
 	 * @public
@@ -44,8 +44,8 @@ class NotificationAction extends UI5Element {
 
 	/**
 	 * Defines if the action is disabled.
-	 * <br><br>
-	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
+	 *
+	 * **Note:** a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 *
 	 * @default false
 	 * @public
@@ -63,11 +63,11 @@ class NotificationAction extends UI5Element {
 	design!: `${ButtonDesign}`;
 
 	/**
-	 * Defines the <code>icon</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b>
+	 * Defines the `icon` source URI.
+	 *
+	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 *
 	 * @default ""
 	 * @public
@@ -77,7 +77,7 @@ class NotificationAction extends UI5Element {
 
 	/**
 	 * Fires a custom event "click".
-	 * <b>Note:</b> Called by NotificationListItem and NotificationListGroupItem components.
+	 * **Note:** Called by NotificationListItem and NotificationListGroupItem components.
 	 *
 	 * @param e
 	 * @protected

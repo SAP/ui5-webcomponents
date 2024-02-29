@@ -41,18 +41,18 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * A component to be used within the <code>ui5-upload-collection</code>.
+ * ### Overview
+ * A component to be used within the `ui5-upload-collection`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code>
+ * `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`
  *
  * @constructor
  * @extends ListItem
  * @public
  * @implements {IUploadCollectionItem}
- * @slot {Node[]} default - Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
+ * @slot {Node[]} default - Hold the description of the `ui5-upload-collection-item`. Will be shown below the file name.
  * @since 1.0.0-rc.7
  */
 @customElement({
@@ -72,18 +72,18 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 
 /**
  * Fired when the file name is clicked.
- * <br><br>
- * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
+ *
+ * **Note:** This event is only available when `fileNameClickable` property is `true`.
  *
  * @public
  */
 @event("file-name-click")
 
 /**
- * Fired when the <code>fileName</code> property gets changed.
- * <br><br>
- * <b>Note:</b> An edit button is displayed on each item,
- * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
+ * Fired when the `fileName` property gets changed.
+ *
+ * **Note:** An edit button is displayed on each item,
+ * when the `ui5-upload-collection-item` `type` property is set to `Detail`.
  *
  * @public
  */
@@ -91,8 +91,8 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 
 /**
  * Fired when the terminate button is pressed.
- * <br><br>
- * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
+ *
+ * **Note:** Terminate button is displayed when `uploadState` property is set to `Uploading`.
  *
  * @public
  */
@@ -100,8 +100,8 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 
 /**
  * Fired when the retry button is pressed.
- * <br><br>
- * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
+ *
+ * **Note:** Retry button is displayed when `uploadState` property is set to `Error`.
  *
  * @public
  */
@@ -120,7 +120,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @event("_uci-delete")
 class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
-	 * Holds an instance of <code>File</code> associated with this item.
+	 * Holds an instance of `File` associated with this item.
 	 *
 	 * @default null
 	 * @public
@@ -138,7 +138,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	fileName!: string;
 
 	/**
-	 * If set to <code>true</code> the file name will be clickable and it will fire <code>file-name-click</code> event upon click.
+	 * If set to `true` the file name will be clickable and it will fire `file-name-click` event upon click.
 	 *
 	 * @default false
 	 * @public
@@ -156,8 +156,8 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	declare disableDeleteButton: boolean;
 
 	/**
-	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
-	 * Setting this property to <code>true</code> will hide the delete button.
+	 * By default, the delete button will always be shown, regardless of the `ui5-upload-collection`'s property `mode`.
+	 * Setting this property to `true` will hide the delete button.
 	 *
 	 * @default false
 	 * @public
@@ -166,7 +166,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	hideDeleteButton!: boolean;
 
 	/**
-	 * Hides the retry button when <code>uploadState</code> property is <code>Error</code>.
+	 * Hides the retry button when `uploadState` property is `Error`.
 	 *
 	 * @default false
 	 * @public
@@ -175,7 +175,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	hideRetryButton!: boolean;
 
 	/**
-	 * Hides the terminate button when <code>uploadState</code> property is <code>Uploading</code>.
+	 * Hides the terminate button when `uploadState` property is `Uploading`.
 	 *
 	 * @default false
 	 * @public
@@ -185,8 +185,8 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * The upload progress in percentage.
-	 * <br><br>
-	 * <b>Note:</b> Expected values are in the interval [0, 100].
+	 *
+	 * **Note:** Expected values are in the interval [0, 100].
 	 *
 	 * @default 0
 	 * @public
@@ -195,9 +195,9 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	progress!: number;
 
 	/**
-	 * If set to <code>Uploading</code> or <code>Error</code>, a progress indicator showing the <code>progress</code> is displayed.
-	 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
-	 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
+	 * If set to `Uploading` or `Error`, a progress indicator showing the `progress` is displayed.
+	 * Also if set to `Error`, a refresh button is shown. When this icon is pressed `retry` event is fired.
+	 * If set to `Uploading`, a terminate button is shown. When this icon is pressed `terminate` event is fired.
 	 *
 	 * @default "Ready"
 	 * @public
@@ -215,9 +215,9 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	_editing!: boolean;
 
 	/**
-	 * A thumbnail, which will be shown in the beginning of the <code>ui5-upload-collection-item</code>.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-icon</code> or <code>img</code> for the intended design.
+	 * A thumbnail, which will be shown in the beginning of the `ui5-upload-collection-item`.
+	 *
+	 * **Note:** Use `ui5-icon` or `img` for the intended design.
 	 *
 	 * @public
 	 */

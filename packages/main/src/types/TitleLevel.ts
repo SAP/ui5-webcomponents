@@ -5,37 +5,37 @@
  */
 enum TitleLevel {
 	/**
-	 * Renders <code>h1</code> tag.
+	 * Renders `h1` tag.
 	 * @public
 	 */
 	H1 = "H1",
 
 	/**
-	 * Renders <code>h2</code> tag.
+	 * Renders `h2` tag.
 	 * @public
 	 */
 	H2 = "H2",
 
 	/**
-	 * Renders <code>h3</code> tag.
+	 * Renders `h3` tag.
 	 * @public
 	 */
 	H3 = "H3",
 
 	/**
-	 * Renders <code>h4</code> tag.
+	 * Renders `h4` tag.
 	 * @public
 	 */
 	H4 = "H4",
 
 	/**
-	 * Renders <code>h5</code> tag.
+	 * Renders `h5` tag.
 	 * @public
 	 */
 	H5 = "H5",
 
 	/**
-	 * Renders <code>h6</code> tag.
+	 * Renders `h6` tag.
 	 * @public
 	 */
 	H6 = "H6",

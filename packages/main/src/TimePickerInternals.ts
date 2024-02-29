@@ -69,10 +69,10 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-picker-internals</code> is helper component that contains shared methods used in <code>ui5-time-selection-clocks</code>
- * and <ui5-time-selection-inputs> components and should not be used separately.
+ * `ui5-time-picker-internals` is helper component that contains shared methods used in `ui5-time-selection-clocks`
+ * and `<ui5-time-selection-inputs>` components and should not be used separately.
  *
  * @constructor
  * @extends UI5Element

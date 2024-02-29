@@ -5,7 +5,7 @@ import type { IComboBoxItem } from "./ComboBox.js";
 
 /**
  * @class
- * The <code>ui5-cb-item</code> represents the item for a <code>ui5-combobox</code>.
+ * The `ui5-cb-item` represents the item for a `ui5-combobox`.
  *
  * @constructor
  * @extends UI5Element

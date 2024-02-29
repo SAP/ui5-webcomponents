@@ -97,7 +97,7 @@ type DayPickerNavigateEventDetail = {
 /**
  * @class
  *
- * Represents the days inside a single month view of the <code>ui5-calendar</code> component.
+ * Represents the days inside a single month view of the `ui5-calendar` component.
  *
  * @constructor
  * @extends CalendarPart
@@ -134,12 +134,11 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Defines the type of selection used in the day picker component.
-	 * Accepted property values are:<br>
-	 * <ul>
-	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
-	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
-	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
-	 * </ul>
+	 * Accepted property values are:
+	 *
+	 * - `CalendarSelectionMode.Single` - enables a single date selection.(default value)
+	 * - `CalendarSelectionMode.Range` - enables selection of a date range.
+	 * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
 	 *
 	 * @default "Single"
 	 * @public
@@ -149,9 +148,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Defines the visibility of the week numbers column.
-	 * <br><br>
 	 *
-	 * <b>Note:<b> For calendars other than Gregorian,
+	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 *
 	 * @default false
@@ -651,7 +649,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Click is the same as "Enter".
-	 * <b>Note:</b> "Click+Shift" has the same effect as "Enter+Shift".
+	 * **Note:** "Click+Shift" has the same effect as "Enter+Shift".
 	 *
 	 * @param e
 	 * @private

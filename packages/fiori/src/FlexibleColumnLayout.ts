@@ -87,42 +87,39 @@ type FlexibleColumnLayoutAccessibilityRoles = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>FlexibleColumnLayout</code> implements the list-detail-detail paradigm by displaying up to three pages in separate columns.
+ * The `FlexibleColumnLayout` implements the list-detail-detail paradigm by displaying up to three pages in separate columns.
  * There are several possible layouts that can be changed either with the component API, or by pressing the arrows, displayed between the columns.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * Use this component for applications that need to display several logical levels of related information side by side (e.g. list of items, item, sub-item, etc.).
  * The Component is flexible in a sense that the application can focus the user's attention on one particular column.
  *
- * <h3>Responsive Behavior</h3>
+ * ### Responsive Behavior
  *
- * The <code>FlexibleColumnLayout</code> automatically displays the maximum possible number of columns based on <code>layout</code> property and the window size.
+ * The `FlexibleColumnLayout` automatically displays the maximum possible number of columns based on `layout` property and the window size.
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
  *
- * <br><br>
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <h4>Basic Navigation</h4>
- * <ul>
- * <li>[SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).</li>
- * <li>This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Basic Navigation
+ *
+ * - [SPACE, ENTER, RETURN] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).
+ * - This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code></li>
- * </ul>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";</code>
+ * `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -190,11 +187,11 @@ type FlexibleColumnLayoutAccessibilityRoles = {
 class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the columns layout and their proportion.
-	* <br><br>
-	* <b>Note:</b> The layout also depends on the screen size - one column for screens smaller than 599px,
+	*
+	* **Note:** The layout also depends on the screen size - one column for screens smaller than 599px,
 	* two columns between 599px and 1023px and three columns for sizes bigger than 1023px.
-	* <br><br>
-	* <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
+	*
+	* **For example:** layout=`TwoColumnsStartExpanded` means the layout will display up to two columns
 	* in 67%/33% proportion.
 	* @default "OneColumn"
 	* @public
@@ -217,15 +214,15 @@ class FlexibleColumnLayout extends UI5Element {
 	* An object of strings that defines several additional accessibility texts for even further customization.
 	*
 	* It supports the following fields:
-	*  - <code>startColumnAccessibleName</code>: the accessibility name for the <code>startColumn</code> region
-	*  - <code>midColumnAccessibleName</code>: the accessibility name for the <code>midColumn</code> region
-	*  - <code>endColumnAccessibleName</code>: the accessibility name for the <code>endColumn</code> region
-	*  - <code>startArrowLeftText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the left
-	*  - <code>startArrowRightText</code>: the text that the first arrow (between the <code>begin</code> and <code>mid</code> columns) will have when pointing to the right
-	*  - <code>endArrowLeftText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the left
-	*  - <code>endArrowRightText</code>: the text that the second arrow (between the <code>mid</code> and <code>end</code> columns) will have when pointing to the right
-	*  - <code>startArrowContainerAccessibleName</code>: the text that the first arrow container (between the <code>begin</code> and <code>mid</code> columns) will have as <code>aria-label</code>
-	*  - <code>endArrowContainerAccessibleName</code>: the text that the second arrow container (between the <code>mid</code> and <code>end</code> columns) will have as <code>aria-label</code>
+	*  - `startColumnAccessibleName`: the accessibility name for the `startColumn` region
+	*  - `midColumnAccessibleName`: the accessibility name for the `midColumn` region
+	*  - `endColumnAccessibleName`: the accessibility name for the `endColumn` region
+	*  - `startArrowLeftText`: the text that the first arrow (between the `begin` and `mid` columns) will have when pointing to the left
+	*  - `startArrowRightText`: the text that the first arrow (between the `begin` and `mid` columns) will have when pointing to the right
+	*  - `endArrowLeftText`: the text that the second arrow (between the `mid` and `end` columns) will have when pointing to the left
+	*  - `endArrowRightText`: the text that the second arrow (between the `mid` and `end` columns) will have when pointing to the right
+	*  - `startArrowContainerAccessibleName`: the text that the first arrow container (between the `begin` and `mid` columns) will have as `aria-label`
+	*  - `endArrowContainerAccessibleName`: the text that the second arrow container (between the `mid` and `end` columns) will have as `aria-label`
 	*
 	* @default {}
 	* @public
@@ -238,11 +235,11 @@ class FlexibleColumnLayout extends UI5Element {
 	* An object of strings that defines additional accessibility roles for further customization.
 	*
 	* It supports the following fields:
-	*  - <code>startColumnRole</code>: the accessibility role for the <code>startColumn</code>
-	*  - <code>startArrowContainerRole</code>: the accessibility role for the first arrow container (between the <code>begin</code> and <code>mid</code> columns)
-	*  - <code>midColumnRole</code>: the accessibility role for the <code>midColumn</code>
-	*  - <code>endArrowContainerRole</code>: the accessibility role for the second arrow container (between the <code>mid</code> and <code>end</code> columns)
-	*  - <code>endColumnRole</code>: the accessibility role for the <code>endColumn</code>
+	*  - `startColumnRole`: the accessibility role for the `startColumn`
+	*  - `startArrowContainerRole`: the accessibility role for the first arrow container (between the `begin` and `mid` columns)
+	*  - `midColumnRole`: the accessibility role for the `midColumn`
+	*  - `endArrowContainerRole`: the accessibility role for the second arrow container (between the `mid` and `end` columns)
+	*  - `endColumnRole`: the accessibility role for the `endColumn`
 	*
 	* @default {}
 	* @public
@@ -262,7 +259,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Defines the effective columns layout,
-	* based on both the <code>layout</code> property and the screen size.
+	* based on both the `layout` property and the screen size.
 	* Example: [67%, 33%, 0], [25%, 50%, 25%], etc.
 	*
 	* @default undefined
@@ -504,9 +501,9 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	/**
-	* Returns the current column layout, based on both the <code>layout</code> property and the screen size.
-	* <br><br>
-	* <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
+	* Returns the current column layout, based on both the `layout` property and the screen size.
+	*
+	* **For example:** ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
 	* where the numbers represents the width of the start, middle and end columns.
 	* @default undefined
 	* @public
@@ -516,7 +513,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	/**
-	* Returns if the <code>start</code> column is visible.
+	* Returns if the `start` column is visible.
 	* @default true
 	* @public
 	*/
@@ -529,7 +526,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	/**
-	* Returns if the <code>middle</code> column is visible.
+	* Returns if the `middle` column is visible.
 	* @default false
 	* @public
 	*/
@@ -542,7 +539,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	/**
-	* Returns if the <code>end</code> column is visible.
+	* Returns if the `end` column is visible.
 	* @default false
 	* @public
 	*/

@@ -47,46 +47,41 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-tree</code> component provides a tree structure for displaying data in a hierarchy.
+ * ### Overview
+ * The `ui5-tree` component provides a tree structure for displaying data in a hierarchy.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h4>When to use:</h4>
- * <ul>
- * <li>To display hierarchically structured items.</li>
- * <li>To select one or more items out of a set of hierarchically structured items.</li>
- * </ul>
+ * #### When to use:
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li>To display items not hierarchically structured. In this case, use the List component.</li>
- * <li>To select one item from a very small number of non-hierarchical items. Select or ComboBox might be more appropriate.</li>
- * <li>The hierarchy turns out to have only two levels. In this case, use List with group items.</li>
- * </ul>
+ * - To display hierarchically structured items.
+ * - To select one or more items out of a set of hierarchically structured items.
  *
- * <h3>Keyboard Handling</h3>
+ * #### When not to use:
  *
- * The <code>ui5-tree</code> provides advanced keyboard handling.
+ * - To display items not hierarchically structured. In this case, use the List component.
+ * - To select one item from a very small number of non-hierarchical items. Select or ComboBox might be more appropriate.
+ * - The hierarchy turns out to have only two levels. In this case, use List with group items.
+ *
+ * ### Keyboard Handling
+ *
+ * The `ui5-tree` provides advanced keyboard handling.
  * The user can use the following keyboard shortcuts in order to navigate trough the tree:
- * <ul>
- * <li>[UP/DOWN] - Navigates up and down the tree items that are currently visible.</li>
- * <li>[RIGHT] - Drills down the tree by expanding the tree nodes.</li>
- * <li>[LEFT] - Goes up the tree and collapses the tree nodes.</li>
- * </ul>
- * <br>
+ *
+ * - [UP/DOWN] - Navigates up and down the tree items that are currently visible.
+ * - [RIGHT] - Drills down the tree by expanding the tree nodes.
+ * - [LEFT] - Goes up the tree and collapses the tree nodes.
  *
  * The user can use the following keyboard shortcuts to perform selection,
- * when the <code>mode</code> property is in use:
- * <ul>
- * <li>[SPACE] - Selects the currently focused item upon keyup.</li>
- * <li>[ENTER]  - Selects the currently focused item upon keydown.</li>
- * </ul>
+ * when the `mode` property is in use:
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Tree.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
+ * - [SPACE] - Selects the currently focused item upon keyup.
+ * - [ENTER]  - Selects the currently focused item upon keydown.
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Tree.js";`
+ *
+ * `import "@ui5/webcomponents/dist/TreeItem.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -106,9 +101,10 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 /**
  * Fired when a tree item is expanded or collapsed.
- * <i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed.
+ *
+ * **Note:** You can call `preventDefault()` on the event object to suppress the event, if needed.
  * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
- * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
+ * Even if you prevented the event's default behavior, you can always manually call `toggle()` on a tree item.
  *
  * @param {HTMLElement} item the toggled item.
  * @allowPreventDefault
@@ -168,9 +164,9 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 
 /**
  * Fired when the Delete button of any tree item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the component <code>mode</code> property is set to <code>Delete</code>.
+ *
+ * **Note:** A Delete button is displayed on each item,
+ * when the component `mode` property is set to `Delete`.
  *
  * @param {HTMLElement} item the deleted item.
  * @public
@@ -198,7 +194,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 
 /**
  * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
+ * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
  *
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
@@ -223,7 +219,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 class Tree extends UI5Element {
 	/**
-	 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
+	 * Defines the mode of the component. Since the tree uses a `ui5-list` to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
 	 *
 	 * @public
@@ -243,8 +239,8 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the component header text.
-	 * <br><br>
-	 * <b>Note:</b> If the <code>header</code> slot is set, this property is ignored.
+	 *
+	 * **Note:** If the `header` slot is set, this property is ignored.
 	 *
 	 * @default ""
 	 * @public
@@ -292,8 +288,8 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-tree-item` for the intended design.
 	 *
 	 * @public
 	 */
@@ -302,9 +298,9 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the component header.
-	 * <br><br>
-	 * <b>Note:</b> When the <code>header</code> slot is set, the
-	 * <code>headerText</code> property is ignored.
+	 *
+	 * **Note:** When the `header` slot is set, the
+	 * `headerText` property is ignored.
 	 *
 	 * @public
 	 */

@@ -65,7 +65,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the minimum date available for selection.
 	 *
-	 * <b>Note:</b> If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
+	 * **Note:** If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 *
 	 * @default ""
 	 * @since 1.0.0-rc.6
@@ -77,7 +77,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the maximum date available for selection.
 	 *
-	 * <b>Note:</b> If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
+	 * **Note:** If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 *
 	 * @default ""
 	 * @since 1.0.0-rc.6

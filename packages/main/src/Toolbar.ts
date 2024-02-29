@@ -52,22 +52,19 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-toolbar</code> component is used to create a horizontal layout with items.
+ * The `ui5-toolbar` component is used to create a horizontal layout with items.
  * The items can be overflowing in a popover, when the space is not enough to show all of them.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-toolbar</code> provides advanced keyboard handling.
- * <br>
- * <ul>
- * <li>The control is not interactive, but can contain of interactive elements </li>
- * <li>[TAB] - iterates through elements</li>
- * </ul>
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-toolbar` provides advanced keyboard handling.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Toolbar.js";</code>
+ * - The control is not interactive, but can contain of interactive elements
+ * - [TAB] - iterates through elements
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Toolbar.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -136,7 +133,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Defines the items of the component.
      *
-     * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
+     * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
 	 *
 	 * @public
 	 */

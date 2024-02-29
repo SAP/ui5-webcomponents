@@ -29,12 +29,12 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-selection-inputs</code> displays a popover with <code>ui5-input</code> components of type="number" and an
- * optional a AM/PM <code>ui5-segmented-button</code> according to the display format given to the <code>ui5-time-picker</code>.
+ * `ui5-time-selection-inputs` displays a popover with `ui5-input` components of type="number" and an
+ * optional a AM/PM `ui5-segmented-button` according to the display format given to the `ui5-time-picker`.
  * Using of numeric input components enables display of mobile devices' native numeric keyboard, which speeds up entering of the time.
- * The popup appears only on mobile devices when there is a tap on the <code>ui5-time-picker</code> input.
+ * The popup appears only on mobile devices when there is a tap on the `ui5-time-picker` input.
  *
  * This component should not be used separately.
  *

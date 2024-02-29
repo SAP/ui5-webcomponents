@@ -34,22 +34,21 @@ import badgeCss from "./generated/themes/Badge.css.js";
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-badge</code> is a component which serves
+ * The `ui5-badge` is a component which serves
  * the purpose to attract the user attention to some piece
  * of information (state, quantity, condition, etc.).
  * It can contain icon and text information, and its design can be chosen from specific design types.
  *
- * <h3>Usage Guidelines</h3>
- * <ul>
- * <li>If the text is longer than the width of the component, it can wrap, or it can show ellipsis, depending on the <code>wrappingType</code> property.</li>
-  * <li>Colors can be semantic or not semantic.</li>
- * </ul>
+ * ### Usage Guidelines
  *
- * <h3>ES6 Module Import</h3>
+ * - If the text is longer than the width of the component, it can wrap, or it can show ellipsis, depending on the `wrappingType` property.
+  * - Colors can be semantic or not semantic.
  *
- * <code>import "@ui5/webcomponents/dist/Badge.js";</code>
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Badge.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -69,7 +68,8 @@ import badgeCss from "./generated/themes/Badge.css.js";
 
 /**
  * Fired when the user clicks on an interactive badge.
- * <b>Note:</b> The event will be fired if the <code>interactive</code> property is <code>true</code>
+ *
+ * **Note:** The event will be fired if the `interactive` property is `true`
  * @public
  * @since 1.22.0
  */
@@ -87,9 +87,9 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the color scheme of the component.
 	 * There are 10 predefined schemes.
-	 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
-	 * <br><br>
-	 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
+	 * To use one you can set a number from `"1"` to `"10"`. The `colorScheme` `"1"` will be set by default.
+	 *
+	 * **Note:** Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 	 * @default "1"
 	 * @public
 	 */
@@ -107,8 +107,9 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
-	 * <br><b>Note:</b> The badge cannot be <code>interactive</code>
-	 * when <code>design</code> property is <code>BadgeDesign.Set3</code>
+	 *
+	 * **Note:** The badge cannot be `interactive`
+	 * when `design` property is `BadgeDesign.Set3`
 	 * @default false
 	 * @public
 	 * @since 1.22.0
@@ -118,7 +119,8 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * <br><b>Note:</b> For option "Normal" the text will wrap and the
+	 *
+	 * **Note:** For option "Normal" the text will wrap and the
 	 * words will not be broken based on hyphenation.
 	 *
 	 * @default "None"
@@ -151,7 +153,8 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines the text of the component.
-	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @public
 	 */

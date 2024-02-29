@@ -30,19 +30,18 @@ type MenuItemClickEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-navigation-menu</code> component represents a hierarchical menu structure, inherits all the functionality of <code>ui5-menu<code>.
+ * `ui5-navigation-menu` component represents a hierarchical menu structure, inherits all the functionality of `ui5-menu`.
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
- *
- * <code>ui5-navigation-menu</code> contains <code>ui5-navigation-menu-item</code> components.
+ * `ui5-navigation-menu` contains `ui5-navigation-menu-item` components.
  * An arbitrary hierarchy structure can be represented by recursively nesting navigation menu items.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/NavigationMenu.js";</code>
+ * `import "@ui5/webcomponents/dist/NavigationMenu.js";`
  *
  * @constructor
  * @extends Menu
@@ -59,8 +58,8 @@ type MenuItemClickEventDetail = {
 class NavigationMenu extends Menu {
 	/**
 	 * Defines the items of this component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-navigation-menu-item</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-navigation-menu-item` for the intended design.
 	 *
 	 * @public
 	 */

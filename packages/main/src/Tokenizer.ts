@@ -79,7 +79,7 @@ enum ClipboardDataOperation {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * A container for tokens.
  *

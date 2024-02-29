@@ -50,30 +50,27 @@ type Footnote = Record<string, any>;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-li-notification</code> is a type of list item, meant to display notifications.
- * <br>
+ * ### Overview
+ * The `ui5-li-notification` is a type of list item, meant to display notifications.
  *
- * The component has a rich set of various properties that allows the user to set <code>avatar</code>, <code>titleText</code>, descriptive <code>content</code>
- * and <code>footnotes</code> to fully describe a notification.
- * <br>
+ * The component has a rich set of various properties that allows the user to set `avatar`, `titleText`, descriptive `content`
+ * and `footnotes` to fully describe a notification.
  *
  * The user can:
- * <ul>
- * <li>display a <code>Close</code> button</li>
- * <li>can control whether the <code>titleText</code> and <code>description</code> should wrap or truncate
- * and display a <code>ShowMore</code> button to switch between less and more information</li>
- * <li>add custom actions by using the <code>ui5-notification-action</code> component</li>
- * </ul>
  *
- * <h3>Usage</h3>
- * The component can be used in a standard <code>ui5-list</code>.
+ * - display a `Close` button
+ * - can control whether the `titleText` and `description` should wrap or truncate
+ * and display a `ShowMore` button to switch between less and more information
+ * - add custom actions by using the `ui5-notification-action` component
  *
- * <h3>ES6 Module Import</h3>
+ * ### Usage
+ * The component can be used in a standard `ui5-list`.
  *
- * <code>import "@ui5/webcomponents/dist/NotificationListItem.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/NotificationListItem.js";`
+ *
+ * `import "@ui5/webcomponents/dist/NotificationAction.js";` (optional)
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
@@ -97,12 +94,11 @@ type Footnote = Record<string, any>;
 @event("_press")
 class NotificationListItem extends NotificationListItemBase {
 	/**
-	* Defines if the <code>titleText</code> and <code>description</code> should wrap,
+	* Defines if the `titleText` and `description` should wrap,
 	* they truncate by default.
 	*
-	* <br><br>
-	* <b>Note:</b> by default the <code>titleText</code> and <code>description</code>,
-	* and a <code>ShowMore/Less</code> button would be displayed.
+	* **Note:** by default the `titleText` and `description`,
+	* and a `ShowMore/Less` button would be displayed.
 	* @default "None"
 	* @public
 	* @since 1.0.0-rc.15
@@ -111,7 +107,7 @@ class NotificationListItem extends NotificationListItemBase {
 	wrappingType!: `${WrappingType}`;
 
 	/**
-	* Defines the state of the <code>titleText</code> and <code>description</code>,
+	* Defines the state of the `titleText` and `description`,
 	* if less or more information is displayed.
 	* @private
 	*/
@@ -119,21 +115,20 @@ class NotificationListItem extends NotificationListItemBase {
 	_showMorePressed!: boolean;
 
 	/**
-	* Defines the visibility of the <code>showMore</code> button.
+	* Defines the visibility of the `showMore` button.
 	* @private
 	*/
 	@property({ type: Boolean })
 	_showMore!: boolean;
 
 	/**
-	* Defines the avatar, displayed in the <code>ui5-li-notification</code>.
+	* Defines the avatar, displayed in the `ui5-li-notification`.
 	*
-	* <br><br>
-	* <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
-	* <br>
-	* <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
-	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
-	* you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
+	* **Note:** Consider using the `ui5-avatar` to display icons, initials or images.
+	*
+	* **Note:**In order to be complaint with the UX guidlines and for best experience,
+	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the `ui5-avatar`
+	* you can set its `size` property to `XS` to get the required size - `&lt;ui5-avatar size="XS">&lt;/ui5-avatar>`.
 	*
 	* @public
 	*/
@@ -148,11 +143,10 @@ class NotificationListItem extends NotificationListItemBase {
 	footnotes!: Array<HTMLElement>;
 
 	/**
-	* Defines the content of the <code>ui5-li-notification</code>,
+	* Defines the content of the `ui5-li-notification`,
 	* usually a description of the notification.
 	*
-	* <br><br>
-	* <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	* **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	*
 	* @public
 	*/

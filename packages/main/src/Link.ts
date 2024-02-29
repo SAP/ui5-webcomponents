@@ -37,40 +37,39 @@ type AccessibilityAttributes = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-link</code> is a hyperlink component that is used to navigate to other
+ * ### Overview
+ * The `ui5-link` is a hyperlink component that is used to navigate to other
  * apps and web pages, or to trigger actions.
  * It is a clickable text element, visualized in such a way that it stands out
  * from the standard text.
  * On hover, it changes its style to an underlined text to provide additional feedback to the user.
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
+ * You can set the `ui5-link` to be enabled or disabled.
  *
- * You can set the <code>ui5-link</code> to be enabled or disabled.
- * <br><br>
  * To create a visual hierarchy in large lists of links, you can set the less important links as
- * <code>Subtle</code> or the more important ones as <code>Emphasized</code>,
- * by using the <code>design</code> property.
- * <br><br>
- * If the <code>href</code> property is set, the link behaves as the HTML
- * anchor tag (<code>&lt;a&gt;&lt;a&#47;&gt;</code>) and opens the specified URL in the given target frame (<code>target</code> property).
- * To specify where the linked content is opened, you can use the <code>target</code> property.
+ * `Subtle` or the more important ones as `Emphasized`,
+ * by using the `design` property.
  *
- * <h3>Responsive behavior</h3>
+ * If the `href` property is set, the link behaves as the HTML
+ * anchor tag (`&lt;a&gt;&lt;a&#47;&gt;`) and opens the specified URL in the given target frame (`target` property).
+ * To specify where the linked content is opened, you can use the `target` property.
  *
- * If there is not enough space, the text of the <code>ui5-link</code> becomes truncated.
- * If the <code>wrappingType</code> property is set to <code>"Normal"</code>, the text is displayed
+ * ### Responsive behavior
+ *
+ * If there is not enough space, the text of the `ui5-link` becomes truncated.
+ * If the `wrappingType` property is set to `"Normal"`, the text is displayed
  * on several lines instead of being truncated.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Linkjs";</code>
+ * `import "@ui5/webcomponents/dist/Link";`
  *
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Array<Node>} default - Defines the text of the component. <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * @slot {Array<Node>} default - Defines the text of the component. **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-link",
@@ -113,8 +112,8 @@ type AccessibilityAttributes = {
 class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines whether the component is disabled.
-	 * <br><br>
-	 * <b>Note:</b> When disabled, the click event cannot be triggered by the user.
+	 *
+	 * **Note:** When disabled, the click event cannot be triggered by the user.
 	 *
 	 * @default false
 	 * @public
@@ -133,8 +132,8 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the component href.
-	 * <br><br>
-	 * <b>Note:</b> Standard hyperlink behavior is supported.
+	 *
+	 * **Note:** Standard hyperlink behavior is supported.
 	 *
 	 * @default ""
 	 * @public
@@ -144,18 +143,16 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the component target.
-	 * <br><br>
-	 * <b>Notes:</b>
 	 *
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
+	 * **Notes:**
 	 *
-	 * <b>This property must only be used when the <code>href</code> property is set.</b>
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
+	 *
+	 * **This property must only be used when the `href` property is set.**
 	 *
 	 * @default ""
 	 * @public
@@ -165,8 +162,8 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the component design.
-	 * <br><br>
-	 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
+	 *
+	 * **Note:** Avaialble options are `Default`, `Subtle`, and `Emphasized`.
 	 *
 	 * @default "Default"
 	 * @public
@@ -176,7 +173,7 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
+	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @default "None"
 	 * @public
@@ -207,7 +204,7 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines the ARIA role of the component.
 	 *
-	 * <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
+	 * **Note:** Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
 	 *
 	 * @default "link"
 	 * @public
@@ -222,24 +219,15 @@ class Link extends UI5Element implements ITabbable {
 	 *
 	 * It supports the following fields:
 	 *
-	 * <ul>
-	 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-	 *			<ul>
-	 *				<li><code>true</code></li>
-	 *				<li><code>false</code></li>
-	 *			</ul>
-	 * 		</li>
-	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
-	 * 			<ul>
-	 *				<li><code>Dialog</code></li>
-	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
-	 *				<li><code>Menu</code></li>
-	 *				<li><code>Tree</code></li>
-	 * 			</ul>
-	 * 		</li>
-	 * </ul>
-	 *
+	 * - `expanded`: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+	 *	- `true`
+	 *	- `false`
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+	 *	- `Dialog`
+	 *	- `Grid`
+	 *	- `ListBox`
+	 *	- `Menu`
+	 *	- `Tree`
 	 * @public
 	 * @since 1.1.0
 	 * @default {}

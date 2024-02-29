@@ -26,54 +26,51 @@ import panelCss from "./generated/themes/Panel.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-panel</code> component is a container which has a header and a
+ * The `ui5-panel` component is a container which has a header and a
  * content area and is used
  * for grouping and displaying information. It can be collapsed to save space on the screen.
  *
- * <h3>Guidelines:</h3>
- * <ul>
- * <li>Nesting two or more panels is not recommended.</li>
- * <li>Do not stack too many panels on one page.</li>
- * </ul>
+ * ### Guidelines:
  *
- * <h3>Structure</h3>
+ * - Nesting two or more panels is not recommended.
+ * - Do not stack too many panels on one page.
+ *
+ * ### Structure
  * The panel's header area consists of a title bar with a header text or custom header.
- * <br>
+ *
  * The header is clickable and can be used to toggle between the expanded and collapsed state. It includes an icon which rotates depending on the state.
- * <br>
- * The custom header can be set through the <code>header</code> slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
- * <br>
+ *
+ * The custom header can be set through the `header` slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
+ *
  * The content area can contain an arbitrary set of controls.
- * <br><b>Note:</b> The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
+ * **Note:** The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
- * <h3>Responsive Behavior</h3>
- * <ul>
- * <li>If the width of the panel is set to 100% (default), the panel and its children are
+ * ### Responsive Behavior
+ *
+ * - If the width of the panel is set to 100% (default), the panel and its children are
  * resized responsively,
- * depending on its parent container.</li>
- * <li>If the panel has a fixed height, it will take up the space even if the panel is
- * collapsed.</li>
- * <li>When the panel is expandable (the <code>fixed</code> property is set to <code>false</code>),
- * an arrow icon (pointing to the right) appears in front of the header.</li>
- * <li>When the animation is activated, expand/collapse uses a smooth animation to open or
- * close the content area.</li>
- * <li>When the panel expands/collapses, the arrow icon rotates 90 degrees
- * clockwise/counter-clockwise.</li>
- * </ul>
+ * depending on its parent container.
+ * - If the panel has a fixed height, it will take up the space even if the panel is
+ * collapsed.
+ * - When the panel is expandable (the `fixed` property is set to `false`),
+ * an arrow icon (pointing to the right) appears in front of the header.
+ * - When the animation is activated, expand/collapse uses a smooth animation to open or
+ * close the content area.
+ * - When the panel expands/collapses, the arrow icon rotates 90 degrees
+ * clockwise/counter-clockwise.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Panel.js";</code>
+ * `import "@ui5/webcomponents/dist/Panel.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -101,8 +98,8 @@ class Panel extends UI5Element {
 	/**
 	 * This property is used to set the header text of the component.
 	 * The text is visible in both expanded and collapsed states.
-	 * <br><br>
-	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
+	 *
+	 * **Note:** This property is overridden by the `header` slot.
 	 *
 	 * @default ""
 	 * @public
@@ -141,8 +138,8 @@ class Panel extends UI5Element {
 
 	/**
 	 * Sets the accessible ARIA role of the component.
-	 * Depending on the usage, you can change the role from the default <code>Form</code>
-	 * to <code>Region</code> or <code>Complementary</code>.
+	 * Depending on the usage, you can change the role from the default `Form`
+	 * to `Region` or `Complementary`.
 	 *
 	 * @default "Form"
 	 * @public
@@ -152,7 +149,7 @@ class Panel extends UI5Element {
 
 	/**
 	 * Defines the "aria-level" of component heading,
-	 * set by the <code>headerText</code>.
+	 * set by the `headerText`.
 	 *
 	 * @default "H2"
 	 * @public
@@ -184,9 +181,9 @@ class Panel extends UI5Element {
 	 stickyHeader!: boolean;
 
 	/**
-	 * When set to <code>true</code>, the <code>accessibleName</code> property will be
+	 * When set to `true`, the `accessibleName` property will be
 	 * applied not only on the panel root itself, but on its toggle button too.
-	 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
+	 * **Note:** This property only has effect if `accessibleName` is set and a header slot is provided.
 	 *
 	 * @default false
 	 * @private
@@ -208,8 +205,8 @@ class Panel extends UI5Element {
 
 	/**
 	 * Defines the component header area.
-	 * <br><br>
-	 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
+	 *
+	 * **Note:** When a header is provided, the `headerText` property is ignored.
 	 *
 	 * @public
 	 */

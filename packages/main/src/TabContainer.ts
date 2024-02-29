@@ -59,7 +59,7 @@ import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-tabcontainer</code> as items
+ * Interface for components that may be slotted inside `ui5-tabcontainer` as items
  *
  * @public
  */
@@ -111,40 +111,38 @@ interface TabContainerTabInOverflow extends CustomListItem {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-tabcontainer</code> represents a collection of tabs with associated content.
+ * The `ui5-tabcontainer` represents a collection of tabs with associated content.
  * Navigation through the tabs changes the content display of the currently active content area.
  * A tab can be labeled with text only, or icons with text.
  *
- * <h3>Structure</h3>
+ * ### Structure
  *
- * The <code>ui5-tabcontainer</code> can hold two types of entities:
- * <ul>
- * <li><code>ui5-tab</code> - contains all the information on an item (text and icon)</li>
- * <li><code>ui5-tab-separator</code> - used to separate tabs with a line</li>
- * </ul>
+ * The `ui5-tabcontainer` can hold two types of entities:
  *
- * <h3>Hierarchies</h3>
+ * - `ui5-tab` - contains all the information on an item (text and icon)
+ * - `ui5-tab-separator` - used to separate tabs with a line
+ *
+ * ### Hierarchies
  * Multiple sub tabs could be placed underneath one main tab. Nesting allows deeper hierarchies with indentations
  * to indicate the level of each nested tab. When a tab has both sub tabs and own content its click area is split
  * to allow the user to display the content or alternatively to expand / collapse the list of sub tabs.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/TabContainer.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/Tab.js";</code> (for <code>ui5-tab</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TabSeparator.js";</code> (for <code>ui5-tab-separator</code>)
+ * `import "@ui5/webcomponents/dist/TabContainer.js";`
+ *
+ * `import "@ui5/webcomponents/dist/Tab.js";` (for `ui5-tab`)
+ *
+ * `import "@ui5/webcomponents/dist/TabSeparator.js";` (for `ui5-tab-separator`)
  *
  * @constructor
  * @extends UI5Element
@@ -171,8 +169,8 @@ interface TabContainerTabInOverflow extends CustomListItem {
 /**
  * Fired when a tab is selected.
  *
- * @param {ITab} tab The selected <code>tab</code>.
- * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
+ * @param {ITab} tab The selected `tab`.
+ * @param {Integer} tabIndex The selected `tab` index in the flattened array of all tabs and their subTabs, provided by the `allItems` getter.
  * @public
  * @allowPreventDefault
  */
@@ -210,25 +208,24 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Defines whether the overflow select list is displayed.
-	 * <br><br>
+	 *
 	 * The overflow select list represents a list, where all tabs are displayed
 	 * so that it's easier for the user to select a specific tab.
 	 *
 	 * @default false
 	 * @public
 	 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
-	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the <code>overflowButton</code> and / or <code>startOverflowButton</code> slots.
+	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the `overflowButton` and / or `startOverflowButton` slots.
 	 */
 	@property({ type: Boolean })
 	showOverflow!: boolean;
 
 	/**
-	 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
+	 * Defines the alignment of the content and the `additionalText` of a tab.
 	 *
-	 * <br>
-	 * <b>Note:</b>
-	 * The content and the <code>additionalText</code> would be displayed vertically by default,
-	 * but when set to <code>Inline</code>, they would be displayed horizontally.
+	 * **Note:**
+	 * The content and the `additionalText` would be displayed vertically by default,
+	 * but when set to `Inline`, they would be displayed horizontally.
 	 *
 	 * @default "Standard"
 	 * @public
@@ -240,10 +237,9 @@ class TabContainer extends UI5Element {
 	 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
 	 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
 	 *
-	 * <br>
-	 * <b>Note:</b>
+	 * **Note:**
 	 * Only one overflow at the end would be displayed by default,
-	 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
+	 * but when set to `StartAndEnd`, there will be two overflows on both ends, and tab order will not change on tab selection.
 	 *
 	 * @default "End"
 	 * @since 1.1.0
@@ -253,7 +249,7 @@ class TabContainer extends UI5Element {
 	tabsOverflowMode!: `${TabsOverflowMode}`;
 
 	/**
-	 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+	 * Sets the background color of the Tab Container's header as `Solid`, `Transparent`, or `Translucent`.
 	 *
 	 * @default "Solid"
 	 * @since 1.10.0
@@ -263,7 +259,7 @@ class TabContainer extends UI5Element {
 	headerBackgroundDesign!: `${TabContainerBackgroundDesign}`;
 
 	/**
-	 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+	 * Sets the background color of the Tab Container's content as `Solid`, `Transparent`, or `Translucent`.
 	 *
 	 * @default "Solid"
 	 * @since 1.10.0
@@ -274,9 +270,9 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Defines the placement of the tab strip relative to the actual tabs' content.
-	 * <br><br>
-	 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
-	 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
+	 *
+	 * **Note:** By default the tab strip is displayed above the tabs' content area and this is the recommended
+	 * layout for most scenarios. Set to `Bottom` only when the component is at the
 	 * bottom of the page and you want the tab strip to act as a menu.
 	 *
 	 * @default "Top"
@@ -317,8 +313,8 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Defines the tabs.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-tab` and `ui5-tab-separator` for the intended design.
 	 *
 	 * @public
 	 */
@@ -615,7 +611,7 @@ class TabContainer extends UI5Element {
 	/**
 	 * Returns all slotted tabs and their subTabs in a flattened array.
 	 * The order of tabs is depth-first. For example, given the following slotted elements:
-	 * <pre><code>
+	 * ```html
 	 * 	&lt;ui5-tabcontainer&gt;
 	 * 		&lt;ui5-tab id="First" text="First"&gt;
 	 * 			...
@@ -625,9 +621,9 @@ class TabContainer extends UI5Element {
 	 * 		&lt;ui5-tab-separator id="sep"&gt;&lt;/ui5-tab-separator&gt;
 	 * 		&lt;ui5-tab id="Third" text="Third"&gt;...&lt;/ui5-tab&gt;
 	 * 	&lt;/ui5-tabcontainer&gt;
-	 * </code></pre>
-	 * Calling <code>allItems</code> on this TabContainer will return the instances in the following order:
-	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
+	 * ```
+	 * Calling `allItems` on this TabContainer will return the instances in the following order:
+	 * `[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]`
 	 * @public
 	 * @default []
 	 */
@@ -720,12 +716,12 @@ class TabContainer extends UI5Element {
 	}
 
 	/**
-	 * Fires the <code>tab-select</code> event and changes the internal reference for the currently selected tab.
+	 * Fires the `tab-select` event and changes the internal reference for the currently selected tab.
 	 * If the event is prevented, the current tab is not changed.
 	 * @private
 	 *
 	 * @param selectedTab selected tab instance
-	 * @param selectedTabIndex selected tab index for an array containing all tabs and sub tabs. <b>Note:</b> Use the method <code>allTabs</code> to get this array.
+	 * @param selectedTabIndex selected tab index for an array containing all tabs and sub tabs. **Note:** Use the method `allTabs` to get this array.
 	 * @returns true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {

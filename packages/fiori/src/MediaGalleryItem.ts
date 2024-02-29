@@ -18,24 +18,21 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-media-gallery-item</code> web component represents the items displayed in the
- * <code>ui5-media-gallery</code> web component.
- * <br><br>
- * <b>Note:</b> <code>ui5-media-gallery-item</code> is not supported when used outside of <code>ui5-media-gallery</code>.
- * <br><br>
+ * ### Overview
+ * The `ui5-media-gallery-item` web component represents the items displayed in the
+ * `ui5-media-gallery` web component.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-media-gallery</code> provides advanced keyboard handling.
+ * **Note:** `ui5-media-gallery-item` is not supported when used outside of `ui5-media-gallery`.
+ *
+ * ### Keyboard Handling
+ * The `ui5-media-gallery` provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
- * <ul>
- * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
- * </ul>
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";</code> (comes with <code>ui5-media-gallery</code>)
+ * - [SPACE/ENTER/RETURN] - Trigger `ui5-click` event
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";` (comes with `ui5-media-gallery`)
  *
  * @constructor
  * @extends UI5Element
@@ -71,12 +68,11 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 	/**
 	 * Determines the layout of the item container.
-	 * <br><br>
+	 *
 	 * Available options are:
-	 * <ul>
-	 * <li><code>Square</code></li>
-	 * <li><code>Wide</code></li>
-	 * </ul>
+	 *
+	 * - `Square`
+	 * - `Wide`
 	 *
 	 * @default "Square"
 	 * @public

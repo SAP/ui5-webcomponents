@@ -15,32 +15,31 @@ import BarCss from "./generated/themes/Bar.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The Bar is a container which is primarily used to hold titles, buttons and input elements
  * and its design and functionality is the basis for page headers and footers.
  * The component consists of three areas to hold its content - startContent slot, default slot and endContent slot.
  * It has the capability to center content, such as a title, while having other components on the left and right side.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * With the use of the design property, you can set the style of the Bar to appear designed like a Header, Subheader, Footer and FloatingFooter.
- * <br>
- * <b>Note:</b> Do not place a Bar inside another Bar or inside any bar-like component. Doing so may cause unpredictable behavior.
  *
- * <h3>Responsive Behavior</h3>
+ * **Note:** Do not place a Bar inside another Bar or inside any bar-like component. Doing so may cause unpredictable behavior.
+ *
+ * ### Responsive Behavior
  * The default slot will be centered in the available space between the startContent and the endContent areas,
  * therefore it might not always be centered in the entire bar.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/Bar.js";</code>
+ * `import "@ui5/webcomponents-fiori/dist/Bar.js";`
  *
  * @csspart bar - Used to style the wrapper of the content of the component
  * @constructor

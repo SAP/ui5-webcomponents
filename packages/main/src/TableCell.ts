@@ -18,14 +18,14 @@ import {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-cell</code> component defines the structure of the data in a single <code>ui5-table</code> cell.
+ * The `ui5-table-cell` component defines the structure of the data in a single `ui5-table` cell.
  *
  * @constructor
  * @extends UI5Element
  * @public
- * @csspart cell - Used to style the native <code>td</code> element
+ * @csspart cell - Used to style the native `td` element
  */
 @customElement({
 	tag: "ui5-table-cell",

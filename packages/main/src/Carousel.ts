@@ -49,52 +49,45 @@ type CarouselNavigateEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The Carousel allows the user to browse through a set of items.
  * The component is mostly used for showing a gallery of images, but can hold any other HTML element.
- * <br>
+ *
  * There are several ways to perform navigation:
- * <ul>
- * <li>on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.</li>
- * <li>on mobile - the user can use swipe gestures.</li>
- * </ul>
  *
- * <h3>Usage</h3>
+ * - on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.
+ * - on mobile - the user can use swipe gestures.
  *
- * <h4>When to use:</h4>
+ * ### Usage
  *
- * <ul>
- * <li>The items you want to display are very different from each other.</li>
- * <li>You want to display the items one after the other.</li>
- * </ul>
+ * #### When to use:
  *
- * <h4>When not to use:</h4>
+ * - The items you want to display are very different from each other.
+ * - You want to display the items one after the other.
  *
- * <ul>
- * <li>The items you want to display need to be visible at the same time.</li>
- * <li>The items you want to display are uniform and very similar.</li>
- * </ul>
+ * #### When not to use:
  *
- * <h3>Keyboard Handling</h3>
+ * - The items you want to display need to be visible at the same time.
+ * - The items you want to display are uniform and very similar.
  *
- * <h4>Basic Navigation</h4>
- * When the <code>ui5-carousel</code> is focused the user can navigate between the items
+ * ### Keyboard Handling
+ *
+ * #### Basic Navigation
+ * When the `ui5-carousel` is focused the user can navigate between the items
  * with the following keyboard shortcuts:
- * <br>
- * <ul>
- * <li>[UP/DOWN] - Navigates to previous and next item</li>
- * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
- * </ul>
  *
- * <h3>Fast Navigation</h3>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * - [UP/DOWN] - Navigates to previous and next item
+ * - [LEFT/RIGHT] - Navigates to previous and next item
+ *
+ * ### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
  *
- * <h3>ES6 Module Import</h3>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <code>import "@ui5/webcomponents/dist/Carousel.js";</code>
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Carousel.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -117,7 +110,7 @@ type CarouselNavigateEventDetail = {
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
- * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+ * based on the `items-per-page-l`, `items-per-page-m` and `items-per-page-s` properties.
  *
  * @param {Integer} selectedIndex the current selected index
  * @public
@@ -168,8 +161,8 @@ class Carousel extends UI5Element {
 	/**
 	 * Defines the visibility of the navigation arrows.
 	 * If set to true the navigation arrows will be hidden.
-	 * <br><br>
-	 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
+	 *
+	 * **Note:** The navigation arrows are never displayed on touch devices.
 	 * In this case, the user can swipe to navigate through the items.
 	 * @since 1.0.0-rc.15
 	 * @default false
@@ -191,10 +184,10 @@ class Carousel extends UI5Element {
 	/**
 	 * Defines the style of the page indicator.
 	 * Available options are:
-	 * <ul>
-	 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
-	 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
-	 * </ul>
+	 *
+	 * - `Default` - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)
+	 * - `Numeric` - The page indicator will display the current page and the total number of pages. (e.g. X of Y)
+	 *
 	 * @since 1.10
 	 * @default "Default"
 	 * @public
@@ -239,12 +232,12 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the position of arrows.
-	 * <br><br>
+	 *
 	 * Available options are:
-	 * <ul>
-	 * <li><code>Content</code> - the arrows are placed on the sides of the current page.</li>
-	 * <li><code>Navigation</code> - the arrows are placed on the sides of the page indicator.</li>
-	 * </ul>
+	 *
+	 * - `Content` - the arrows are placed on the sides of the current page.
+	 * - `Navigation` - the arrows are placed on the sides of the page indicator.
+	 *
 	 * @default "Content"
 	 * @public
 	 */

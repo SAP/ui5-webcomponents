@@ -1,5 +1,5 @@
 /**
- * Defines the layout type of the thumbnails list of the <code>ui5-media-gallery</code> component.
+ * Defines the layout type of the thumbnails list of the `ui5-media-gallery` component.
  *
  * @public
  */

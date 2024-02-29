@@ -60,24 +60,24 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-picker-clock</code> allows selecting of hours,minutes or seconds (depending on property set).
+ * `ui5-time-picker-clock` allows selecting of hours,minutes or seconds (depending on property set).
  * The component supports interactions with mouse, touch and mouse wheel.
  * Depending on settings, the clock can display only outer set of items (when the clock displays hours in 12-hour mode,
  * minutes or seconds), or outer and inner sets of items (when the clock displays hours in 24-hours mode).
  * The step for displaying or selecting of items can be configured.
  *
- * <code>ui5-time-picker-clock</code> is used as part of <code>ui5-time-selection-clocks</code> component, which
- * is used in <code>ui5-time-picker</code> component respectively.
+ * `ui5-time-picker-clock` is used as part of `ui5-time-selection-clocks` component, which
+ * is used in `ui5-time-picker` component respectively.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <code>ui5-time-picker-clock</code> can display hours, minutes or seconds
+ * `ui5-time-picker-clock` can display hours, minutes or seconds
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/TimePickerClock.js";</code>
+ * `import "@ui5/webcomponents/dist/TimePickerClock.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -94,9 +94,9 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 /**
  * Fired when a value of clock is changed.
  *
- * @param { integer } value The new <code>value</code> of the clock.
- * @param { string } stringValue The new <code>value</code> of the clock, as string, zero-prepended when necessary.
- * @param { boolean } finalChange <code>true</code> when a value is selected and confirmed, <code>false</code> when a value is only selected but not confirmed.
+ * @param { integer } value The new `value` of the clock.
+ * @param { string } stringValue The new `value` of the clock, as string, zero-prepended when necessary.
+ * @param { boolean } finalChange `true` when a value is selected and confirmed, `false` when a value is only selected but not confirmed.
  */
 @event<TimePickerClockChangeEventDetail>("change", {
 	detail: {
@@ -149,7 +149,7 @@ class TimePickerClock extends UI5Element {
 	itemMax!: number;
 
 	/**
-	 * If set to <code>true</code>, an inner circle is displayed.
+	 * If set to `true`, an inner circle is displayed.
 	 * The first item value of the inner circle will be itemMax + 1
 	 *
 	 * @default false
@@ -166,7 +166,7 @@ class TimePickerClock extends UI5Element {
 	label?: string;
 
 	/**
-	 * If set to <code>true</code>, a surrounding circle with markers (dots) will be hidden.
+	 * If set to `true`, a surrounding circle with markers (dots) will be hidden.
 	 * (for example, on the 'Minutes' clock-dial, markers represent minutes).
 	 *
 	 * @default false
@@ -185,7 +185,7 @@ class TimePickerClock extends UI5Element {
 	lastItemReplacement!: number;
 
 	/**
-	 * Prepend with zero flag. If <code>true</code>, values less than 10 will be prepend with 0.
+	 * Prepend with zero flag. If `true`, values less than 10 will be prepend with 0.
 	 *
 	 * @default false
 	 */

@@ -72,83 +72,79 @@ type DatePickerInputEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-date-picker</code> component provides an input field with assigned calendar which opens on user action.
- * The <code>ui5-date-picker</code> allows users to select a localized date using touch,
+ * The `ui5-date-picker` component provides an input field with assigned calendar which opens on user action.
+ * The `ui5-date-picker` allows users to select a localized date using touch,
  * mouse, or keyboard input. It consists of two parts: the date input field and the
  * date picker.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * The user can enter a date by:
- * <ul>
- * <li>Using the calendar that opens in a popup</li>
- * <li>Typing it in directly in the input field</li>
- * </ul>
- * <br><br>
+ *
+ * - Using the calendar that opens in a popup
+ * - Typing it in directly in the input field
+ *
  * When the user makes an entry and presses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.
  *
- * <h3>Formatting</h3>
+ * ### Formatting
  *
  * If a date is entered by typing it into
  * the input field, it must fit to the used date format.
- * <br><br>
+ *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
- * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ *
+ * For example, if the `format-pattern` is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-date-picker</code> provides advanced keyboard handling.
- * If the <code>ui5-date-picker</code> is focused,
- * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
- * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
+ * ### Keyboard Handling
+ * The `ui5-date-picker` provides advanced keyboard handling.
+ * If the `ui5-date-picker` is focused,
+ * you can open or close the drop-down by pressing `F4`, `ALT+UP` or `ALT+DOWN` keys.
+ * Once the drop-down is opened, you can use the `UP`, `DOWN`, `LEFT`, `RIGHT` arrow keys
+ * to navigate through the dates and select one by pressing the `Space` or `Enter` keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
- * <br>
  *
- * If the <code>ui5-date-picker</code> input field is focused and its corresponding picker dialog is not opened,
- * then users can increment or decrement the date referenced by <code>dateValue</code> property
+ * If the `ui5-date-picker` input field is focused and its corresponding picker dialog is not opened,
+ * then users can increment or decrement the date referenced by `dateValue` property
  * by using the following shortcuts:
- * <br>
- * <ul>
- * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
- * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
- * </ul>
  *
- * <h3>Calendar types</h3>
+ * - [PAGEDOWN] - Decrements the corresponding day of the month by one
+ * - [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
+ * - [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
+ * - [PAGEUP] - Increments the corresponding day of the month by one
+ * - [SHIFT] + [PAGEUP] - Increments the corresponding month by one
+ * - [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
+ *
+ * ### Calendar types
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
  * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
- * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
- * <br><br>
+ * you need to set the `primaryCalendarType` property and import one or more of the following modules:
  *
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
- * <br><br>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";`
  *
- * Or, you can use the global configuration and set the <code>calendarType</code> key:
- * <br>
- * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
- * \{
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";`
+ *
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";`
+ *
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";`
+ *
+ * Or, you can use the global configuration and set the `calendarType` key:
+ *
+ * ```
+ * <script data-id="sap-ui-config" type="application/json">
+ * {
  *	"calendarType": "Japanese"
- * \}
- * &lt;/script&gt;</code></pre>
+ * }
+ * <script>
+ * ```
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/DatePicker.js";</code>
+ * `import "@ui5/webcomponents/dist/DatePicker.js";`
  *
  * @constructor
  * @extends DateComponentBase
@@ -181,7 +177,7 @@ type DatePickerInputEventDetail = {
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<DatePickerChangeEventDetail>("change", {
 	detail: {
 		/**
@@ -205,7 +201,7 @@ type DatePickerInputEventDetail = {
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<DatePickerInputEventDetail>("input", {
 	detail: {
 		/**
@@ -229,7 +225,7 @@ type DatePickerInputEventDetail = {
  *
  * @allowPreventDefault
  * @public
- * @param {string} valueState The new <code>valueState</code> that will be set.
+ * @param {string} valueState The new `valueState` that will be set.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event<DatePickerValueStateChangeEventDetail>("value-state-change", {
@@ -301,8 +297,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 *
 	 * @default undefined
@@ -314,12 +309,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
+	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
@@ -331,9 +324,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines the visibility of the week numbers column.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> For calendars other than Gregorian,
+	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 *
 	 * @default false
@@ -376,12 +368,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the component is in `Information`, `Warning` or `Error` value state.
 	 *
 	 * @since 1.0.0-rc.7
 	 * @public
@@ -390,8 +381,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	valueStateMessage!: Array<HTMLElement>;
 
 	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
+	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
+	 * when `name` property is set.
 	 *
 	 * @private
 	 */
@@ -810,7 +801,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
-	 * according to the <code>formatPattern</code> property of the DatePicker instance
+	 * according to the `formatPattern` property of the DatePicker instance
 	 *
 	 * @public
 	 * @param date A Java Script date object to be formatted as string

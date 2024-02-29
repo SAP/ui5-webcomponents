@@ -124,10 +124,11 @@ const generateComponents = (source = "./docs/_components_pages", level = 1) => {
                 const fileContent = fs.readFileSync(path.join(sourcePath, file), { encoding: "utf-8" });
                 const declaration = findDeclaration(manifests[packageName], fileName)
 
+                if (file === "Badge.mdx") debugger
+
                 resolveTypes(declaration);
 
                 fs.writeFileSync(path.join(targetPath, `${fileName}.mdx`), parseComponentDeclaration(declaration, fileContent))
-                fs.writeFileSync(path.join(targetPath, `_${fileName}Declaration.json`), JSON.stringify(declaration))
                 console.log(`${"-".repeat(level)} ${file}`)
             }
         }

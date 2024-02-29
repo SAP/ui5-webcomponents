@@ -41,13 +41,13 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-selection-clocks</code> is component that contains all the <code>ui5-time-picker-clock</code> components
- * necessary for the <code>ui5-time-picker</code> as well as all necessary <code>ui5-toggle-spin-button</code> components
+ * `ui5-time-selection-clocks` is component that contains all the `ui5-time-picker-clock` components
+ * necessary for the `ui5-time-picker` as well as all necessary `ui5-toggle-spin-button` components
  * used for switching between different clocks.
- * <code>ui5-time-picker-clock</code> components and <code>ui5-toggle-spin-button</code> depend on the time format set to
- * <code>ui5-time-picker</code> component.
+ * `ui5-time-picker-clock` components and `ui5-toggle-spin-button` depend on the time format set to
+ * `ui5-time-picker` component.
  *
  * This component should not be used separately.
  *

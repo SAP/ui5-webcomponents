@@ -56,16 +56,16 @@ type TableRowF7PressEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
+ * The `ui5-table-row` component represents a row in the `ui5-table`.
  *
  * @constructor
  * @extends UI5Element
  * @implements {ITableRow}
  * @public
- * @csspart row - Used to style the native <code>tr</code> element
- * @csspart popin-row - Used to style the <code>tr</code> element when a row pops in
+ * @csspart row - Used to style the native `tr` element
+ * @csspart popin-row - Used to style the `tr` element when a row pops in
  */
 @customElement({
 	tag: "ui5-table-row",
@@ -75,7 +75,7 @@ type TableRowF7PressEventDetail = {
 	dependencies: [CheckBox],
 })
 /**
- * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
+ * Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
  *
  * @since 1.0.0-rc.15
  * @private
@@ -100,8 +100,8 @@ class TableRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the visual indication and behavior of the component.
 	 *
-	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
-	 * while with type <code>Inactive</code>-will not.
+	 * **Note:** When set to `Active`, the item will provide visual response upon press,
+	 * while with type `Inactive`-will not.
 	 *
 	 * @default "Inactive"
 	 * @since 1.0.0-rc.15
@@ -164,8 +164,8 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Defines the cells of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-table-cell` for the intended design.
 	 *
 	 * @public
 	 */

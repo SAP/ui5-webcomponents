@@ -32,60 +32,57 @@ type AffectedValue = "startValue" | "endValue";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Represents a numerical interval and two handles (grips) to select a sub-range within it.
  * The purpose of the component to enable visual selection of sub-ranges within a given interval.
  *
- * <h3>Structure</h3>
+ * ### Structure
  * The most important properties of the Range Slider are:
- * <ul>
- * <li>min - The minimum value of the slider range.</li>
- * <li>max - The maximum value of the slider range.</li>
- * <li>value - The current value of the slider.</li>
- * <li>step - Determines the increments in which the slider will move.</li>
- * <li>showTooltip - Determines if a tooltip should be displayed above the handle.</li>
- * <li>showTickmarks - Displays a visual divider between the step values.</li>
- * <li>labelInterval - Labels some or all of the tickmarks with their values.</li>
- * </ul>
- * <h4>Notes:</h4>
- * <ul>
- * <li>The right and left handle can be moved individually and their positions could therefore switch.</li>
- * <li>The entire range can be moved along the interval.</li>
- * </ul>
- * <h3>Usage</h3>
+ *
+ * - min - The minimum value of the slider range.
+ * - max - The maximum value of the slider range.
+ * - value - The current value of the slider.
+ * - step - Determines the increments in which the slider will move.
+ * - showTooltip - Determines if a tooltip should be displayed above the handle.
+ * - showTickmarks - Displays a visual divider between the step values.
+ * - labelInterval - Labels some or all of the tickmarks with their values.
+ *
+ * #### Notes:
+ *
+ * - The right and left handle can be moved individually and their positions could therefore switch.
+ * - The entire range can be moved along the interval.
+ *
+ * ### Usage
  * The most common use case is to select and move sub-ranges on a continuous numerical scale.
  *
- * <h3>Responsive Behavior</h3>
+ * ### Responsive Behavior
  * You can move the currently selected range by clicking on it and dragging it along the interval.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <ul>
- * <li><code>Left or Down Arrow</code> - Moves a component's handle or the entire selection one step to the left;</li>
- * <li><code>Right or Up Arrow</code> - Moves a component's handle or the entire selection one step to the right;</li>
- * <li><code>Left or Down Arrow + Ctrl/Cmd</code> - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;</li>
- * <li><code>Right or Up Arrow + Ctrl/Cmd</code> - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;</li>
- * <li><code>Plus</code> - Same as <code>Right or Up Arrow</code>;</li>
- * <li><code>Minus</code> - Same as <code>Left or Down Arrow</code>;</li>
- * <li><code>Home</code> - Moves the entire selection or the selected handle to the beginning of the component's range;</li>
- * <li><code>End</code> - Moves the entire selection or the selected handle to the end of the component's range;</li>
- * <li><code>Page Up</code> - Same as <code>Right or Up Arrow + Ctrl/Cmd</code>;</li>
- * <li><code>Page Down</code> - Same as <code>Left or Down Arrow + Ctrl/Cmd</code>;</li>
- * <li><code>Escape</code> - Resets the <code>startValue</code> and <code>endValue</code> properties to the values prior the component focusing;</li>
- * </ul>
+ * - `Left or Down Arrow` - Moves a component's handle or the entire selection one step to the left;
+ * - `Right or Up Arrow` - Moves a component's handle or the entire selection one step to the right;
+ * - `Left or Down Arrow + Ctrl/Cmd` - Moves a component's handle to the left or the entire range with step equal to 1/10th of the entire range;
+ * - `Right or Up Arrow + Ctrl/Cmd` - Moves a component's handle to the right or the entire range with step equal to 1/10th of the entire range;
+ * - `Plus` - Same as `Right or Up Arrow`;
+ * - `Minus` - Same as `Left or Down Arrow`;
+ * - `Home` - Moves the entire selection or the selected handle to the beginning of the component's range;
+ * - `End` - Moves the entire selection or the selected handle to the end of the component's range;
+ * - `Page Up` - Same as `Right or Up Arrow + Ctrl/Cmd`;
+ * - `Page Down` - Same as `Left or Down Arrow + Ctrl/Cmd`;
+ * - `Escape` - Resets the `startValue` and `endValue` properties to the values prior the component focusing;
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/RangeSlider.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/RangeSlider.js";`
  *
  * @constructor
  * @extends SliderBase
  * @since 1.0.0-rc.11
  * @public
- * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the <code>ui5-range-slider</code>.
- * @csspart progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.
- * @csspart handle - Used to style the handles of the <code>ui5-range-slider</code>.
+ * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the `ui5-range-slider`.
+ * @csspart progress-bar - Used to style the progress bar, which shows the progress of the `ui5-range-slider`.
+ * @csspart handle - Used to style the handles of the `ui5-range-slider`.
  */
 @customElement({
 	tag: "ui5-range-slider",
@@ -97,7 +94,6 @@ type AffectedValue = "startValue" | "endValue";
 class RangeSlider extends SliderBase {
 	/**
 	 * Defines start point of a selection - position of a first handle on the slider.
-	 * <br><br>
 	 *
 	 * @default 0
 	 * @formEvents change input
@@ -109,7 +105,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Defines end point of a selection - position of a second handle on the slider.
-	 * <br><br>
 	 *
 	 * @default 100
 	 * @formEvents change input

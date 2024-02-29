@@ -88,7 +88,7 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<TimePickerBaseChangeEventDetail>("change", {
 	detail: {
 		/**
@@ -107,12 +107,12 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 })
 
 /**
- * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
+ * Fired when the value of the `ui5-time-picker` is changed at each key stroke.
  *
  * @public
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<TimePickerBaseInputEventDetail>("input", {
 	detail: {
 		/**
@@ -142,16 +142,15 @@ class TimePickerBase extends UI5Element {
 	value?: string;
 
 	/**
-	 * Defines the value state of the <code>ui5-time-picker</code>.
-	 * <br><br>
+	 * Defines the value state of the `ui5-time-picker`.
+	 *
 	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
+	 *
+	 * - `None`
+	 * - `Error`
+	 * - `Warning`
+	 * - `Success`
+	 * - `Information`
 	 *
 	 * @default "None"
 	 * @public
@@ -160,7 +159,7 @@ class TimePickerBase extends UI5Element {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
+	 * Determines whether the `ui5-time-picker` is displayed as disabled.
 	 *
 	 * @default false
 	 * @public
@@ -169,7 +168,7 @@ class TimePickerBase extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Determines whether the <code>ui5-time-picker</code> is displayed as readonly.
+	 * Determines whether the `ui5-time-picker` is displayed as readonly.
 	 *
 	 * @default false
 	 * @public
@@ -184,13 +183,12 @@ class TimePickerBase extends UI5Element {
 	_isInputsPopoverOpen!: boolean;
 
 	/**
-	 * Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>.
-	 * <br><br>
+	 * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
 	 *
 	 * @since 1.0.0-rc.8
 	 * @public
@@ -492,7 +490,7 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
-	 * according to the <code>formatPattern</code> property of the TimePicker instance
+	 * according to the `formatPattern` property of the TimePicker instance
 	 * @param date A Java Script date object to be formatted as string
 	 * @public
 	 * @returns formatted value
@@ -502,10 +500,9 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * Checks if a value is valid against the current <code>formatPattern</code> value.
+	 * Checks if a value is valid against the current `formatPattern` value.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> an empty string is considered as valid value.
+	 * **Note:** an empty string is considered as valid value.
 	 * @param value The value to be tested against the current date format
 	 * @public
 	 */

@@ -17,7 +17,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * An entry posted on the timeline.
  *
@@ -25,7 +25,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
- * @slot {Node[]} default - Determines the description of the <code>ui5-timeline-item</code>.
+ * @slot {Node[]} default - Determines the description of the `ui5-timeline-item`.
  */
 @customElement({
 	tag: "ui5-timeline-item",
@@ -40,8 +40,8 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 /**
  * Fired when the item name is pressed either with a
  * click/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
+ *
+ * **Note:** The event will not be fired if the `name-clickable`
  * attribute is not set.
  *
  * @public
@@ -49,11 +49,10 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 @event("name-click")
 class TimelineItem extends UI5Element implements ITimelineItem {
 	/**
-	 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
+	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
-	 * <br><br>
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 *
 	 * @default ""
 	 * @public
@@ -62,7 +61,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	icon!: string;
 
 	/**
-	 * Defines the name of the item, displayed before the <code>title-text</code>.
+	 * Defines the name of the item, displayed before the `title-text`.
 	 *
 	 * @default ""
 	 * @public
@@ -71,7 +70,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	name!: string;
 
 	/**
-	 * Defines if the <code>name</code> is clickable.
+	 * Defines if the `name` is clickable.
 	 *
 	 * @default false
 	 * @public

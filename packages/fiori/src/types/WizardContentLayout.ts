@@ -1,17 +1,17 @@
 /**
- * Enumeration for different content layouts of the <code>ui5-wizard</code>.
+ * Enumeration for different content layouts of the `ui5-wizard`.
  *
  * @public
  */
 enum WizardContentLayout {
 	/**
-      * Display the content of the <code>ui5-wizard</code> as multiple steps in a scroll section.
+      * Display the content of the `ui5-wizard` as multiple steps in a scroll section.
 	 * @public
      */
     MultipleSteps = "MultipleSteps",
 
 	/**
-      * Display the content of the <code>ui5-wizard</code> as single step.
+      * Display the content of the `ui5-wizard` as single step.
 	 * @public
      */
      SingleStep = "SingleStep",

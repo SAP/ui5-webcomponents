@@ -5,21 +5,20 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * A component that represents a logical step as part of the <code>ui5-wizard</code>.
+ * A component that represents a logical step as part of the `ui5-wizard`.
  * It is meant to aggregate arbitrary HTML elements that form the content of a single step.
  *
- * <h3>Structure</h3>
- * <ul>
- * <li>Each wizard step has arbitrary content.</li>
- * <li>Each wizard step might have texts - defined by the <code>titleText</code> and <code>subtitleText</code> properties.</li>
- * <li>Each wizard step might have an icon - defined by the <code>icon</code> property.</li>
- * <li>Each wizard step might display a number in place of the <code>icon</code>, when it's missing.</li>
- * </ul>
+ * ### Structure
  *
- * <h3>Usage</h3>
- * The <code>ui5-wizard-step</code> component should be used only as slot of the <code>ui5-wizard</code> component
+ * - Each wizard step has arbitrary content.
+ * - Each wizard step might have texts - defined by the `titleText` and `subtitleText` properties.
+ * - Each wizard step might have an icon - defined by the `icon` property.
+ * - Each wizard step might display a number in place of the `icon`, when it's missing.
+ *
+ * ### Usage
+ * The `ui5-wizard-step` component should be used only as slot of the `ui5-wizard` component
  * and should not be used standalone.
  *
  * @constructor
@@ -33,10 +32,9 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 @customElement("ui5-wizard-step")
 class WizardStep extends UI5Element {
 	/**
-	 * Defines the <code>titleText</code> of the step.
-	 * <br><br>
+	 * Defines the `titleText` of the step.
 	 *
-	 * <b>Note:</b> The text is displayed in the <code>ui5-wizard</code> navigation header.
+	 * **Note:** The text is displayed in the `ui5-wizard` navigation header.
 	 *
 	 * @default ""
 	 * @public
@@ -46,10 +44,9 @@ class WizardStep extends UI5Element {
 	titleText!: string
 
 	/**
-	 * Defines the <code>subtitleText</code> of the step.
-	 * <br><br>
+	 * Defines the `subtitleText` of the step.
 	 *
-	 * <b>Note:</b> the text is displayed in the <code>ui5-wizard</code> navigation header.
+	 * **Note:** the text is displayed in the `ui5-wizard` navigation header.
 	 *
 	 * @default ""
 	 * @public
@@ -59,14 +56,12 @@ class WizardStep extends UI5Element {
 	subtitleText!: string
 
 	/**
-	 * Defines the <code>icon</code> of the step.
-	 * <br><br>
+	 * Defines the `icon` of the step.
 	 *
-	 * <b>Note:</b> The icon is displayed in the <code>ui5-wizard</code> navigation header.
-	 * <br><br>
+	 * **Note:** The icon is displayed in the `ui5-wizard` navigation header.
 	 *
 	 * The SAP-icons font provides numerous options.
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -74,12 +69,11 @@ class WizardStep extends UI5Element {
 	icon!: string
 
 	/**
-	 * Defines if the step is <code>disabled</code>. When disabled the step is displayed,
+	 * Defines if the step is `disabled`. When disabled the step is displayed,
 	 * but the user can't select the step by clicking or navigate to it with scrolling.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
-	 * In this case the <code>selected</code> property would take precedence.
+	 * **Note:** Step can't be `selected` and `disabled` at the same time.
+	 * In this case the `selected` property would take precedence.
 	 *
 	 * @default false
 	 * @public
@@ -88,11 +82,10 @@ class WizardStep extends UI5Element {
 	disabled!: boolean
 
 	/**
-	 * Defines the step's <code>selected</code> state - the step that is currently active.
-	 * <br><br>
+	 * Defines the step's `selected` state - the step that is currently active.
 	 *
-	 * <b>Note:</b> Step can't be <code>selected</code> and <code>disabled</code> at the same time.
-	 * In this case the <code>selected</code> property would take precedence.
+	 * **Note:** Step can't be `selected` and `disabled` at the same time.
+	 * In this case the `selected` property would take precedence.
 	 *
 	 * @default false
 	 * @public
@@ -101,11 +94,10 @@ class WizardStep extends UI5Element {
 	selected!: boolean
 
 	/**
-	 * When <code>branching</code> is enabled a dashed line would be displayed after the step,
+	 * When `branching` is enabled a dashed line would be displayed after the step,
 	 * meant to indicate that the next step is not yet known and depends on user choice in the current step.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> It is recommended to use <code>branching</code> on the last known step
+	 * **Note:** It is recommended to use `branching` on the last known step
 	 * and later add new steps when it becomes clear how the wizard flow should continue.
 	 *
 	 * @default false

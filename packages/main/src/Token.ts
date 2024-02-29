@@ -33,13 +33,13 @@ type TokenDeleteEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Token.js";</code>
+ * `import "@ui5/webcomponents/dist/Token.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.9
@@ -87,8 +87,8 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component can not be deleted or selected,
+	 *
+	 * **Note:** A read-only component can not be deleted or selected,
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @default false
@@ -147,7 +147,7 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
-	 * Accepts <code>ui5-icon</code>.
+	 * Accepts `ui5-icon`.
 	 *
 	 * @public
 	 * @since 1.0.0-rc.9

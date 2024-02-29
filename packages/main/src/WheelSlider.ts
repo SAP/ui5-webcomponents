@@ -28,13 +28,13 @@ type WheelSliderSelectEventDetail = { value: string };
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/WheelSlider.js";</code>
+ * `import "@ui5/webcomponents/dist/WheelSlider.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -78,7 +78,7 @@ type WheelSliderSelectEventDetail = { value: string };
 class WheelSlider extends UI5Element {
 	/**
 	 * Defines whether the component is disabled
-	 * (default is set to <code>false</code>).
+	 * (default is set to `false`).
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
 	 *
