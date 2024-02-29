@@ -9,6 +9,8 @@
 /docs/samples/**/*.mdx
 /local-cdn
 /icons
+/icons-tnt
+/icons-business-suite
 
 # Generated files
 .docusaurus

@@ -10,5 +10,5 @@ export default {
   ...MDXComponents,
   Editor,
   table: MDXTable,
-  code: MDXCode,
+  // code: MDXCode,
 };
