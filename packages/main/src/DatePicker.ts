@@ -745,6 +745,22 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	/**
+	 * Returns the first picker depending on the CalendarPickerMode
+	 */
+	get firstPicker() {
+		const calendarPickerMode = this._calendarPickersMode;
+		let firstPicker = "day";
+
+		if (calendarPickerMode === CalendarPickersMode.YEAR) {
+			firstPicker = "year";
+		} else if (calendarPickerMode === CalendarPickersMode.MONTH_YEAR) {
+			firstPicker = "month";
+		}
+
+		return firstPicker;
+	}
+
+	/**
 	 * Defines whether the value help icon is hidden
 	 *
 	 * @private
@@ -836,7 +852,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 */
 	async openPicker(): Promise<void> {
 		this._isPickerOpen = true;
-		this._calendarCurrentPicker = "day";
+		this._calendarCurrentPicker = this.firstPicker;
 		this.responsivePopover = await this._respPopover();
 
 		this.responsivePopover.showAt(this);
