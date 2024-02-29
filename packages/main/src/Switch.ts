@@ -6,7 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -286,11 +286,12 @@ class Switch extends UI5Element implements IFormElement {
 
 		return {
 			main: {
-				"ui5-switch-desktop": isDesktop(),
+				"ui5-switch--desktop": isDesktop(),
 				"ui5-switch--disabled": this.disabled,
 				"ui5-switch--checked": this.checked,
 				"ui5-switch--semantic": this.graphical,
 				"ui5-switch--no-label": !hasLabel,
+				"ui5-switch--safari": isSafari(),
 			},
 		};
 	}
