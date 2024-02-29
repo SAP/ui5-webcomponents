@@ -3,10 +3,10 @@ const parseDeclarationDescription = (declaration) => {
         return "";
     }
     return declaration.description
-    // codeblocks format
-    .replaceAll(/\`{3}[\s\S]*?\`{3}/gm, (match) => {
-        return `\`\`\`${match.replaceAll("```", "").trim().replaceAll("\n", "@newLineCode@")}\`\`\``;
-    })
+        // codeblocks format
+        .replaceAll(/\`{3}[\s\S]*?\`{3}/gm, (match) => {
+            return `\`\`\`${match.replaceAll("```", "").trim().replaceAll("\n", "@newLineCode@")}\`\`\``;
+        })
 };
 
 const processDescription = (description) => {
@@ -22,7 +22,7 @@ const processDescription = (description) => {
         // lists inside description
         .replaceAll(/\n\s*-/g, "<br />-")
         // breaklines
-        .replaceAll(/\n\n/g, "<br />")
+        .replaceAll(/(\n\s*\n){1,}/g, "<br />")
         .replaceAll(/\n/g, " ");
 }
 

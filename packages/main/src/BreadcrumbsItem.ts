@@ -10,7 +10,6 @@ import LinkDesign from "./types/LinkDesign.js";
  * ### Overview
  *
  * The `ui5-breadcrumbs-item` component defines the content of an item in `ui5-breadcrumbs`.
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -23,7 +22,6 @@ class BreadcrumbsItem extends UI5Element {
 	 * Defines the link href.
 	 *
 	 * **Note:** Standard hyperlink behavior is supported.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -42,7 +40,6 @@ class BreadcrumbsItem extends UI5Element {
 	 * - `_search`
 	 *
 	 * **Note:** This property must only be used when the `href` property is set.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -51,7 +48,6 @@ class BreadcrumbsItem extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the item.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -62,7 +58,6 @@ class BreadcrumbsItem extends UI5Element {
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

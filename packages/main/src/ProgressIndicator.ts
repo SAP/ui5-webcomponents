@@ -35,9 +35,7 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ProgressIndicator.js";`
- *
  * @csspart remaining-bar - Used to style the remaining bar of the `ui5-progress-indicator`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -54,7 +52,6 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
 class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.16.0
@@ -64,7 +61,6 @@ class ProgressIndicator extends UI5Element {
 
 	/**
 	 * Defines whether component is in disabled state.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -73,7 +69,6 @@ class ProgressIndicator extends UI5Element {
 
 	/**
 	 * Defines whether the component value is shown.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -98,7 +93,6 @@ class ProgressIndicator extends UI5Element {
 	 *
 	 * - If there is no value provided or the value is empty, the default percentage value is shown.
 	 * - If `hideValue` property is `true` both the `displayValue` and `value` property values are not shown.
-	 *
 	 * @default null
 	 * @public
 	 */
@@ -107,7 +101,6 @@ class ProgressIndicator extends UI5Element {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */

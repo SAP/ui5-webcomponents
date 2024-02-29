@@ -76,7 +76,6 @@ type BreadcrumbsItemClickEventDetail = {
  * - [DOWN] - If the drop-down is open - moves focus to the previous item.
  * - [HOME] - Navigates to the first item.
  * - [END] - Navigates to the last item.
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -104,7 +103,6 @@ type BreadcrumbsItemClickEventDetail = {
  * Fires when a `BreadcrumbsItem` is clicked.
  *
  * **Note:** You can prevent browser location change by calling `event.preventDefault()`.
- *
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
@@ -143,7 +141,6 @@ class Breadcrumbs extends UI5Element {
 	 *
 	 * **Note:** The `Standard` breadcrumbs show the current page as the last item in the trail.
 	 * The last item contains only plain text and is not a link.
-	 *
 	 * @default "Standard"
 	 * @public
 	*/
@@ -152,7 +149,6 @@ class Breadcrumbs extends UI5Element {
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
-	 *
 	 * @default "Slash"
 	 * @public
 	 */
@@ -161,7 +157,6 @@ class Breadcrumbs extends UI5Element {
 
 	/**
 	 * Holds the number of items in the overflow.
-	 *
 	 * @default 0
 	 * @private
 	 */

@@ -54,7 +54,6 @@ type MultiInputTokenDeleteEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MultiInput.js";`
- *
  * @constructor
  * @extends Input
  * @since 1.0.0-rc.9
@@ -75,14 +74,12 @@ type MultiInputTokenDeleteEventDetail = {
 /**
  * Fired when the value help icon is pressed
  * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
- *
  * @public
  */
 @event("value-help-trigger")
 
 /**
  * Fired when a token is about to be deleted.
- *
  * @param {HTMLElement} token deleted token.
  * @public
  */
@@ -99,7 +96,6 @@ class MultiInput extends Input {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -108,7 +104,6 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -117,7 +112,6 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer has tokens
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -126,7 +120,6 @@ class MultiInput extends Input {
 
 	/**
 	 * Defines the component tokens.
-	 *
 	 * @public
 	 */
 	@slot()

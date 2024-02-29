@@ -82,7 +82,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * `import "@ui5/webcomponents/dist/Tree.js";`
  *
  * `import "@ui5/webcomponents/dist/TreeItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -105,7 +104,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * **Note:** You can call `preventDefault()` on the event object to suppress the event, if needed.
  * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
  * Even if you prevented the event's default behavior, you can always manually call `toggle()` on a tree item.
- *
  * @param {HTMLElement} item the toggled item.
  * @allowPreventDefault
  * @public
@@ -148,7 +146,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 /**
  * Fired when a tree item is activated.
- *
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
@@ -167,7 +164,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  *
  * **Note:** A Delete button is displayed on each item,
  * when the component `mode` property is set to `Delete`.
- *
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -182,7 +178,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 
 /**
  * Fired when a tree item is focused.
- *
  * @param {HTMLElement} item The focused item.
  * @private
  */
@@ -195,7 +190,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 /**
  * Fired when selection is changed by user interaction
  * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
- *
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @param {HTMLElement} targetItem The item triggering the event.
@@ -221,7 +215,6 @@ class Tree extends UI5Element {
 	/**
 	 * Defines the mode of the component. Since the tree uses a `ui5-list` to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
-	 *
 	 * @public
 	 * @default "None"
 	 */
@@ -230,7 +223,6 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -241,7 +233,6 @@ class Tree extends UI5Element {
 	 * Defines the component header text.
 	 *
 	 * **Note:** If the `header` slot is set, this property is ignored.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -250,7 +241,6 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the component footer text.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -259,7 +249,6 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -269,7 +258,6 @@ class Tree extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -290,7 +278,6 @@ class Tree extends UI5Element {
 	 * Defines the items of the component. Tree items may have other tree items as children.
 	 *
 	 * **Note:** Use `ui5-tree-item` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -301,7 +288,6 @@ class Tree extends UI5Element {
 	 *
 	 * **Note:** When the `header` slot is set, the
 	 * `headerText` property is ignored.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -427,7 +413,6 @@ class Tree extends UI5Element {
 
 	/**
 	 * Returns the corresponding list item for a given tree item
-	 *
 	 * @param item The tree item
 	 * @protected
 	 */
@@ -456,7 +441,6 @@ class Tree extends UI5Element {
 
 	/**
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node
-	 *
 	 * @public
 	 * @param callback function to execute on each node of the tree with 3 arguments: the node, the level and the index
 	 */

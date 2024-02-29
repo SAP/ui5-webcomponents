@@ -67,7 +67,6 @@ type Star = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/RatingIndicator.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -84,7 +83,6 @@ type Star = {
 })
 /**
  * The event is fired when the value changes.
- *
  * @public
  */
 @event("change")
@@ -98,7 +96,6 @@ class RatingIndicator extends UI5Element {
 	 * - 1.0 - 1.2 -> 1
 	 * - 1.3 - 1.7 -> 1.5
 	 * - 1.8 - 1.9 -> 2
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -107,7 +104,6 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * The number of displayed rating symbols.
-	 *
 	 * @default 5
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -119,7 +115,6 @@ class RatingIndicator extends UI5Element {
 	 * Defines whether the component is disabled.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -131,7 +126,6 @@ class RatingIndicator extends UI5Element {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -140,7 +134,6 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -150,7 +143,6 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.15.0
@@ -160,7 +152,6 @@ class RatingIndicator extends UI5Element {
 
 	 /**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.15.0
@@ -170,7 +161,6 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * Defines the tooltip of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.19.0

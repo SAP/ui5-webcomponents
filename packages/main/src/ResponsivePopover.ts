@@ -33,7 +33,6 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ResponsivePopover.js";`
- *
  * @constructor
  * @extends Popover
  * @since 1.0.0-rc.6
@@ -72,7 +71,6 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Defines whether a close button will be rendered in the header of the component
 	 * **Note:** If you are using the `header` slot, this property will have no effect
-	 *
 	 * @private
 	 * @default false
 	 * @since 1.0.0-rc.16

@@ -65,7 +65,6 @@ type AccessibilityAttributes = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Link";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -83,7 +82,6 @@ type AccessibilityAttributes = {
 /**
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
- *
  * @public
  * @allowPreventDefault
  * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
@@ -116,7 +114,6 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines whether the component is disabled.
 	 *
 	 * **Note:** When disabled, the click event cannot be triggered by the user.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -136,7 +133,6 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines the component href.
 	 *
 	 * **Note:** Standard hyperlink behavior is supported.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -155,7 +151,6 @@ class Link extends UI5Element implements ITabbable {
 	 * - `_search`
 	 *
 	 * **This property must only be used when the `href` property is set.**
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -166,7 +161,6 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines the component design.
 	 *
 	 * **Note:** Avaialble options are `Default`, `Subtle`, and `Emphasized`.
-	 *
 	 * @default "Default"
 	 * @public
 	 */
@@ -177,7 +171,6 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -186,7 +179,6 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.2.0
@@ -196,7 +188,6 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -208,7 +199,6 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines the ARIA role of the component.
 	 *
 	 * **Note:** Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
-	 *
 	 * @default "link"
 	 * @public
 	 * @since 1.9.0

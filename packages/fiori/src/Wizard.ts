@@ -175,7 +175,6 @@ type StepInfo = {
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/Wizard.js";` (includes <ui5-wizard-step/>)
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.10
@@ -206,7 +205,6 @@ type StepInfo = {
 /**
  * Fired when the step is changed by user interaction - either with scrolling,
  * or by clicking on the steps within the component header.
- *
  * @param {WizardStep} step The new step.
  * @param {WizardStep} previousStep The previous step.
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
@@ -280,7 +278,6 @@ class Wizard extends UI5Element {
 	 * Defines the steps.
 	 *
 	 * **Note:** Use the available `ui5-wizard-step` component.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -966,7 +963,6 @@ class Wizard extends UI5Element {
 	/**
 	 * Scrolls to the content item within the `ui5-wizard` shadowDOM
 	 * by given step index.
-	 *
 	 * @private
 	 * @param stepIndex the index of a step
 	 */
@@ -976,7 +972,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Returns to closest scroll position for the given step index.
-	 *
 	 * @private
 	 * @param stepIndex the index of a step
 	 */
@@ -1022,7 +1017,6 @@ class Wizard extends UI5Element {
 
 	/**
 	 * Switches the selection from the old step to the newly selected step.
-	 *
 	 * @param selectedStep the old step
 	 * @param stepToSelect the step to be selected
 	 * @param stepToSelectIndex the index of the newly selected step

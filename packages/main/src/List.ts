@@ -136,7 +136,6 @@ type ListItemClickEventDetail = {
  * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
  *
  * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -152,7 +151,6 @@ type ListItemClickEventDetail = {
 /**
  * Fired when an item is activated, unless the item's `type` property
  * is set to `Inactive`.
- *
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
@@ -171,7 +169,6 @@ type ListItemClickEventDetail = {
  *
  * **Note:** This event is only applicable to list items that can be closed (such as notification list items),
  * not to be confused with `item-delete`.
- *
  * @param {HTMLElement} item the item about to be closed.
  * @public
  * @since 1.0.0-rc.8
@@ -189,7 +186,6 @@ type ListItemClickEventDetail = {
  * Fired when the `Toggle` button of any item is clicked.
  *
  * **Note:** This event is only applicable to list items that can be toggled (such as notification group list items).
- *
  * @param {HTMLElement} item the toggled item.
  * @public
  * @since 1.0.0-rc.8
@@ -208,7 +204,6 @@ type ListItemClickEventDetail = {
  *
  * **Note:** A Delete button is displayed on each item,
  * when the component `mode` property is set to `Delete`.
- *
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -224,7 +219,6 @@ type ListItemClickEventDetail = {
 /**
  * Fired when selection is changed by user interaction
  * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
- *
  * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
@@ -261,7 +255,6 @@ type ListItemClickEventDetail = {
  * Fired when the user scrolls to the bottom of the list.
  *
  * **Note:** The event is fired when the `growing='Scroll'` property is enabled.
- *
  * @public
  * @since 1.0.0-rc.6
  */
@@ -280,7 +273,6 @@ class List extends UI5Element {
 	 * Defines the component header text.
 	 *
 	 * **Note:** If `header` is set this property is ignored.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -289,7 +281,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the footer text.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -298,7 +289,6 @@ class List extends UI5Element {
 
 	/**
 	 * Determines whether the component is indented.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -307,7 +297,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -316,7 +305,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -325,7 +313,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the item separator style that is used.
-	 *
 	 * @default "All"
 	 * @public
 	 */
@@ -347,7 +334,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines if the component would display a loading indicator over the list.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.6
@@ -357,7 +343,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
 	 * @default 1000
 	 * @public
 	 */
@@ -366,7 +351,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -376,7 +360,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the input.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -386,7 +369,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the accessible role of the component.
-	 *
 	 * @public
 	 * @default "list"
 	 * @since 1.0.0-rc.15
@@ -421,7 +403,6 @@ class List extends UI5Element {
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-groupheader` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -432,7 +413,6 @@ class List extends UI5Element {
 	 *
 	 * **Note:** When `header` is set, the
 	 * `headerText` property is ignored.
-	 *
 	 * @public
 	 */
 	@slot()

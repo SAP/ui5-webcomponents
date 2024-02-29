@@ -85,7 +85,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Menu.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.3.0
@@ -111,7 +110,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired when an item is being clicked.
  *
  * **Note:** Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
- *
  * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
@@ -138,7 +136,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
  *
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
- *
  * @public
  * @allowPreventDefault
  * @since 1.10.0
@@ -158,7 +155,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired after the menu is opened. **This event does not bubble.**
- *
  * @public
  * @since 1.10.0
  */
@@ -166,7 +162,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
- *
  * @public
  * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
@@ -185,7 +180,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired after the menu is closed. **This event does not bubble.**
- *
  * @public
  * @since 1.10.0
  */
@@ -193,7 +187,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -202,7 +195,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Indicates if the menu is open
-	 *
 	 * @public
 	 * @default false
 	 * @since 1.10.0
@@ -212,7 +204,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -222,7 +213,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
-	 *
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -232,7 +222,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.10.0
@@ -294,7 +283,6 @@ class Menu extends UI5Element {
 	 * Defines the items of this component.
 	 *
 	 * **Note:** Use `ui5-menu-item` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -389,7 +377,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Shows the Menu near the opener element.
-	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 */
@@ -414,7 +401,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Closes the Menu.
-	 *
 	 * @public
 	 */
 	close(): void {

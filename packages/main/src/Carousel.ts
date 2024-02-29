@@ -88,7 +88,6 @@ type CarouselNavigateEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Carousel.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.6
@@ -111,7 +110,6 @@ type CarouselNavigateEventDetail = {
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
  * based on the `items-per-page-l`, `items-per-page-m` and `items-per-page-s` properties.
- *
  * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
@@ -187,7 +185,6 @@ class Carousel extends UI5Element {
 	 *
 	 * - `Default` - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)
 	 * - `Numeric` - The page indicator will display the current page and the total number of pages. (e.g. X of Y)
-	 *
 	 * @since 1.10
 	 * @default "Default"
 	 * @public
@@ -237,7 +234,6 @@ class Carousel extends UI5Element {
 	 *
 	 * - `Content` - the arrows are placed on the sides of the current page.
 	 * - `Navigation` - the arrows are placed on the sides of the page indicator.
-	 *
 	 * @default "Content"
 	 * @public
 	 */

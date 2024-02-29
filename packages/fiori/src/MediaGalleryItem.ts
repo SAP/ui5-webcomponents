@@ -33,7 +33,6 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";` (comes with `ui5-media-gallery`)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -50,7 +49,6 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
 class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	/**
 	 * Defines the selected state of the component.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -59,7 +57,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 	/**
 	 * Defines whether the component is in disabled state.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -68,7 +65,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 	/**
 	 * Determines the layout of the item container.
-	 *
 	 * @default "Square"
 	 * @public
 	 */
@@ -125,7 +121,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 	/**
 	 * Defines the content of the component.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -133,7 +128,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 
 	/**
 	 * Defines the content of the thumbnail.
-	 *
 	 * @public
 	 */
 	@slot()

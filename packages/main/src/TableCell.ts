@@ -21,7 +21,6 @@ import {
  * ### Overview
  *
  * The `ui5-table-cell` component defines the structure of the data in a single `ui5-table` cell.
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -54,7 +53,6 @@ class TableCell extends UI5Element {
 
 	/**
 	 * Specifies the content of the component.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

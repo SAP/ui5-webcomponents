@@ -30,7 +30,6 @@ import labelCss from "./generated/themes/Label.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Label";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -50,7 +49,6 @@ class Label extends UI5Element {
 	 * Defines the labeled input by providing its ID.
 	 *
 	 * **Note:** Can be used with both `ui5-input` and native input.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -73,7 +71,6 @@ class Label extends UI5Element {
 	 * **Note:** Usually indicates that user input (bound with the `for` property) is required.
 	 * In that case the `required` property of
 	 * the corresponding input should also be set.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -84,7 +81,6 @@ class Label extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 *
 	 * @default "None"
 	 * @public
 	 */

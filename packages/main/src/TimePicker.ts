@@ -70,7 +70,6 @@ import {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/TimePicker.js";`
- *
  * @constructor
  * @extends TimePickerBase
  * @public
@@ -84,7 +83,6 @@ class TimePicker extends TimePickerBase {
 	 *
 	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -98,7 +96,6 @@ class TimePicker extends TimePickerBase {
 	 * HH:mm:ss -> 11:42:35
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -130,7 +127,6 @@ class TimePicker extends TimePickerBase {
 
 	/**
 	 * Currently selected time represented as JavaScript Date instance
-	 *
 	 * @public
 	 * @default null
 	 */

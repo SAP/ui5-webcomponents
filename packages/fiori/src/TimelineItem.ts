@@ -20,7 +20,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * ### Overview
  *
  * An entry posted on the timeline.
- *
  * @constructor
  * @extends UI5Element
  * @implements { ITimelineItem }
@@ -43,7 +42,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  *
  * **Note:** The event will not be fired if the `name-clickable`
  * attribute is not set.
- *
  * @public
  */
 @event("name-click")
@@ -53,7 +51,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * SAP-icons font provides numerous options.
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -62,7 +59,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	/**
 	 * Defines the name of the item, displayed before the `title-text`.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -71,7 +67,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	/**
 	 * Defines if the `name` is clickable.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -80,7 +75,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	/**
 	 * Defines the title text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -100,7 +94,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	/**
 	 * Defines the items orientation.
-	 *
 	 * @default "Vertical"
 	 * @private
 	 */
@@ -109,7 +102,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	/**
 	 * Defines the indicator line width.
-	 *
 	 * @private
 	 */
 	@property()

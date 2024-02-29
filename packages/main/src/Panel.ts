@@ -72,7 +72,6 @@ import panelCss from "./generated/themes/Panel.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Panel.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -91,7 +90,6 @@ import panelCss from "./generated/themes/Panel.css.js";
 })
 /**
  * Fired when the component is expanded/collapsed by user interaction.
- *
  * @public
  */
 @event("toggle")
@@ -101,7 +99,6 @@ class Panel extends UI5Element {
 	 * The text is visible in both expanded and collapsed states.
 	 *
 	 * **Note:** This property is overridden by the `header` slot.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -111,7 +108,6 @@ class Panel extends UI5Element {
 	/**
 	 * Determines whether the component is in a fixed state that is not
 	 * expandable/collapsible by user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -120,7 +116,6 @@ class Panel extends UI5Element {
 
 	/**
 	 * Indicates whether the component is collapsed and only the header is displayed.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -129,7 +124,6 @@ class Panel extends UI5Element {
 
 	/**
 	 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -141,7 +135,6 @@ class Panel extends UI5Element {
 	 * Sets the accessible ARIA role of the component.
 	 * Depending on the usage, you can change the role from the default `Form`
 	 * to `Region` or `Complementary`.
-	 *
 	 * @default "Form"
 	 * @public
 	 */
@@ -151,7 +144,6 @@ class Panel extends UI5Element {
 	/**
 	 * Defines the "aria-level" of component heading,
 	 * set by the `headerText`.
-	 *
 	 * @default "H2"
 	 * @public
 	*/
@@ -160,7 +152,6 @@ class Panel extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -173,7 +164,6 @@ class Panel extends UI5Element {
 	 * If stickyHeader is set to true, then whenever you scroll the content or
 	 * the application, the header of the panel will be always visible and
 	 * a solid color will be used for its design.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.16.0-rc.1
@@ -185,7 +175,6 @@ class Panel extends UI5Element {
 	 * When set to `true`, the `accessibleName` property will be
 	 * applied not only on the panel root itself, but on its toggle button too.
 	 * **Note:** This property only has effect if `accessibleName` is set and a header slot is provided.
-	 *
 	 * @default false
 	 * @private
 	  */
@@ -208,7 +197,6 @@ class Panel extends UI5Element {
 	 * Defines the component header area.
 	 *
 	 * **Note:** When a header is provided, the `headerText` property is ignored.
-	 *
 	 * @public
 	 */
 	@slot()

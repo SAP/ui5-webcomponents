@@ -1,6 +1,5 @@
 /**
  * Toast placement.
- *
  * @public
  */
 enum ToastPlacement {

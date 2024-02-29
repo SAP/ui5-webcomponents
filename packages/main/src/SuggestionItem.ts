@@ -10,7 +10,6 @@ import type { IInputSuggestionItem } from "./Input.js";
 /**
  * @class
  * The `ui5-suggestion-item` represents the suggestion item of the `ui5-input`.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -24,7 +23,6 @@ import type { IInputSuggestionItem } from "./Input.js";
 class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -37,7 +35,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	 *
 	 * **Note:** When set to `Active`, the item will provide visual response upon press and hover,
 	 * while when `Inactive` or `Detail` - will not.
-	 *
 	 * @default "Active"
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -47,7 +44,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -60,7 +56,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -71,7 +66,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	 * Defines whether the `icon` should be displayed in the beginning of the item or in the end.
 	 *
 	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -81,7 +75,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	 * Defines the `image` source URI.
 	 *
 	 * **Note:** The `image` would be displayed in the beginning of the item.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -90,7 +83,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the item.
-	 *
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -100,7 +92,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the state of the `additionalText`.
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public

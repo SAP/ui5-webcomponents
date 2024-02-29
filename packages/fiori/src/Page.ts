@@ -39,7 +39,6 @@ import PageCss from "./generated/themes/Page.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/Page.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.12
@@ -61,7 +60,6 @@ class Page extends UI5Element {
 	 * Defines the background color of the `ui5-page`.
 	 *
 	 * **Note:** When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
-	 *
 	 * @default "Solid"
 	 * @public
 	 */
@@ -71,7 +69,6 @@ class Page extends UI5Element {
 	/**
 	 * Disables vertical scrolling of page content.
 	 * If set to true, there will be no vertical scrolling at all.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -82,7 +79,6 @@ class Page extends UI5Element {
 	 * Defines if the footer should float over the content.
 	 *
 	 * **Note:** When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-	 *
 	 * @default true
 	 * @public
 	 */
@@ -91,7 +87,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the footer visibility.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -100,7 +95,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -109,7 +103,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the header HTML Element.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -117,7 +110,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the content HTML Element.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -125,7 +117,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the footer HTML Element.
-	 *
 	 * @public
 	 */
 	@slot()

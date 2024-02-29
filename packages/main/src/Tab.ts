@@ -50,7 +50,6 @@ const DESIGN_DESCRIPTIONS = {
  * The `ui5-tab` represents a selectable item inside a `ui5-tabcontainer`.
  * It defines both the item in the tab strip (top part of the `ui5-tabcontainer`) and the
  * content that is presented to the user once the tab is selected.
- *
  * @abstract
  * @constructor
  * @extends UI5Element
@@ -98,7 +97,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * Defines the icon source URI to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous built-in icons.
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -125,7 +123,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Specifies if the component is selected.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -143,7 +140,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Holds the content associated with this tab.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -160,7 +156,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * Defines hierarchies with nested sub tabs.
 	 *
 	 * **Note:** Use `ui5-tab` and `ui5-tab-separator` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -248,7 +243,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
 	 *
 	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
-	 *
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */

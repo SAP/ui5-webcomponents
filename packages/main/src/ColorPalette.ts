@@ -39,7 +39,6 @@ import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea
 
 /**
  * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
- *
  * @public
  */
 interface IColorPaletteItem extends HTMLElement, ITabbable {
@@ -67,7 +66,6 @@ type ColorPaletteItemClickEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ColorPalette.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.12
@@ -88,7 +86,6 @@ type ColorPaletteItemClickEventDetail = {
 
 /**
  * Fired when the user selects a color.
- *
  * @public
  * @since 1.0.0-rc.15
  * @param {string} color the selected color
@@ -114,6 +111,7 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
+	 *
 	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -132,6 +130,7 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the default color of the color palette
+	 *
 	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @private
 	 * @since 1.0.0-rc.16

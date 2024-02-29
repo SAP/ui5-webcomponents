@@ -50,7 +50,6 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/BusyIndicator.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -77,7 +76,6 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the size of the component.
-	 *
 	 * @default "Medium"
 	 * @public
 	 */
@@ -86,7 +84,6 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -95,7 +92,6 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
-	 *
 	 * @default 1000
 	 * @public
 	 */

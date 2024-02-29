@@ -28,7 +28,6 @@ import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit
 
 /**
  * Interface for components that can be slotted inside `ui5-media-gallery` as items.
- *
  * @public
  */
 interface IMediaGalleryItem extends HTMLElement, ITabbable {
@@ -82,7 +81,6 @@ const COLUMNS_COUNT: Record<string, number> = {
  * `import "@ui5/webcomponents-fiori/dist/MediaGallery.js";`
  *
  * `import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -103,7 +101,6 @@ const COLUMNS_COUNT: Record<string, number> = {
 
 /**
  * Fired when selection is changed by user interaction.
- *
  * @param {HTMLElement} item the selected item.
  * @public
  */
@@ -118,7 +115,6 @@ const COLUMNS_COUNT: Record<string, number> = {
 
 /**
  * Fired when the thumbnails overflow button is clicked.
- *
  * @public
  */
 @event("overflow-click")
@@ -127,7 +123,6 @@ const COLUMNS_COUNT: Record<string, number> = {
  * Fired when the display area is clicked.
  * The display area is the central area that contains
  * the enlarged content of the currently selected item.
- *
  * @public
  */
 @event("display-area-click")
@@ -137,7 +132,6 @@ class MediaGallery extends UI5Element {
 	 * If set to `true`, all thumbnails are rendered in a scrollable container.
 	 * If `false`, only up to five thumbnails are rendered, followed by
 	 * an overflow button that shows the count of the remaining thumbnails.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -150,7 +144,6 @@ class MediaGallery extends UI5Element {
 	 *
 	 * The display area is the central area that contains
 	 * the enlarged content of the currently selected item.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -159,7 +152,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * Determines the layout of the component.
-	 *
 	 * @default "Auto"
 	 * @public
 	 */
@@ -169,7 +161,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the horizontal alignment of the thumbnails menu
 	 * vs. the central display area.
-	 *
 	 * @default "Left"
 	 * @public
 	 */
@@ -179,7 +170,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the vertical alignment of the thumbnails menu
 	 * vs. the central display area.
-	 *
 	 * @default "Bottom"
 	 * @public
 	 */
@@ -190,7 +180,6 @@ class MediaGallery extends UI5Element {
 	 * Determines the actual applied layout type
 	 * (esp. needed when the app did not specify a fixed layout type
 	 * but selected `Auto` layout type).
-	 *
 	 * @default "Vertical"
 	 * @private
 	 */
@@ -199,7 +188,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 */
 	@property()
@@ -207,7 +195,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * The number of items in the overflow.
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })

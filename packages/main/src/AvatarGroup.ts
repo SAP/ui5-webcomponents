@@ -36,7 +36,6 @@ import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.j
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as `ui5-avatar-group`
- *
  * @public
  */
 interface IAvatarGroupItem extends HTMLElement, ITabbable {
@@ -134,7 +133,6 @@ type AvatarGroupClickEventDetail = {
  *
  * - [TAB] - Move focus to the next interactive element after the component
  * - [SPACE],[ENTER],[RETURN] - Trigger `ui5-click` event
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.11
@@ -179,7 +177,6 @@ type AvatarGroupClickEventDetail = {
 class AvatarGroup extends UI5Element {
 	/**
 	 * Defines the mode of the `AvatarGroup`.
-	 *
 	 * @default "Group"
 	 * @public
 	 */
@@ -221,7 +218,6 @@ class AvatarGroup extends UI5Element {
 	 * **Note:** We recommend using the `ui5-button` component.
 	 *
 	 * **Note:** If this slot is not used, the component will display the built-in overflow button.
-	 *
 	 * @public
 	 * @since 1.0.0-rc.13
 	 */

@@ -13,7 +13,6 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * ### Overview
  * The `ui5-toolbar-spacer` is an element, used for taking needed space for toolbar items to take 100% width.
  * It takes no space in calculating toolbar items width.
- *
  * @constructor
  * @extends ToolbarItem
  * @abstract
@@ -29,7 +28,6 @@ class ToolbarSpacer extends ToolbarItem {
 	 * Defines the width of the spacer.
 	 *
 	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
-	 *
 	 * @public
 	 * @default undefined
 	 */

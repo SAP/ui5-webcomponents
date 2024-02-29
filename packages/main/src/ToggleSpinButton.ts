@@ -17,7 +17,6 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  * `ui5-toggle-spin-button` is explicitly used in the new design of `ui5-time-picker`.
  * It extends `ui5-toggle-button` with some specific accessibility-related properties in order to
  * have spin button look and feel from accessibility point of view. This component should not be used separately.
- *
  * @constructor
  * @extends ToggleButton
  * @since 1.15.0
@@ -33,7 +32,6 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
 class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemin of the component.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
@@ -41,7 +39,6 @@ class ToggleSpinButton extends ToggleButton {
 
 	/**
 	 * Defines the ARIA valuemax of the component.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
@@ -49,7 +46,6 @@ class ToggleSpinButton extends ToggleButton {
 
 	/**
 	 * Defines the ARIA valuenow of the component.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
@@ -57,7 +53,6 @@ class ToggleSpinButton extends ToggleButton {
 
 	/**
 	 * Defines the ARIA valuetext of the component.
-	 *
 	 * @default ""
 	 */
 	@property()

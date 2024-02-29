@@ -13,7 +13,6 @@ type NotificationActionClickEventDetail = {
  * @class
  * The `ui5-notification-action` represents an abstract action,
  * used in the `ui5-li-notification` and the `ui5-li-notification-group` items.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -23,7 +22,6 @@ type NotificationActionClickEventDetail = {
 
 /**
  * Fired, when the action is pressed.
- *
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
@@ -35,7 +33,6 @@ type NotificationActionClickEventDetail = {
 class NotificationAction extends UI5Element {
 	/**
 	 * Defines the text of the `ui5-notification-action`.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -46,7 +43,6 @@ class NotificationAction extends UI5Element {
 	 * Defines if the action is disabled.
 	 *
 	 * **Note:** a disabled action can't be pressed or focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -55,7 +51,6 @@ class NotificationAction extends UI5Element {
 
 	/**
 	 * Defines the action design.
-	 *
 	 * @default "Transparent"
 	 * @public
 	 */
@@ -68,7 +63,6 @@ class NotificationAction extends UI5Element {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -78,7 +72,6 @@ class NotificationAction extends UI5Element {
 	/**
 	 * Fires a custom event "click".
 	 * **Note:** Called by NotificationListItem and NotificationListGroupItem components.
-	 *
 	 * @param e
 	 * @protected
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise

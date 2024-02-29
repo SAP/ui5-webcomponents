@@ -64,7 +64,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * Internally, the component  uses the zxing-js/library third party OSS.
  *
  * For a list of supported barcode formats, see the [zxing-js/library](https://github.com/zxing-js/library) documentation.
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -84,7 +83,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 })
 /**
  * Fires when the scan is completed successfuuly.
- *
  * @param {string} text the scan result as string
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
@@ -104,7 +102,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 /**
  * Fires when the scan fails with error.
- *
  * @param {string} message the error message
  * @public
  */
@@ -120,7 +117,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
-	 *
 	 * @default false
 	 * @private
 	 */

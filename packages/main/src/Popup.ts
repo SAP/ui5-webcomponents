@@ -71,7 +71,6 @@ type PopupBeforeCloseEventDetail = {
  * 5. The template of this component exposes two inline partials you can override in derivatives:
  *  - beforeContent (upper part of the box, useful for header/title/close button)
  *  - afterContent (lower part, useful for footer/action buttons)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -85,7 +84,6 @@ type PopupBeforeCloseEventDetail = {
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
- *
  * @public
  * @allowPreventDefault
  */
@@ -93,14 +91,12 @@ type PopupBeforeCloseEventDetail = {
 
 /**
  * Fired after the component is opened. **This event does not bubble.**
- *
  * @public
  */
 @event("after-open")
 
 /**
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
- *
  * @public
  * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
@@ -118,21 +114,18 @@ type PopupBeforeCloseEventDetail = {
 
 /**
  * Fired after the component is closed. **This event does not bubble.**
- *
  * @public
  */
 @event("after-close")
 
 /**
  * Fired whenever the popup content area is scrolled
- *
  * @private
  */
 @event("scroll")
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -168,7 +161,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -178,7 +170,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -188,7 +179,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Allows setting a custom role.
-	 *
 	 * @default "Dialog"
 	 * @public
 	 * @since 1.10.0
@@ -198,7 +188,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 */
 	@property()
@@ -217,7 +206,6 @@ abstract class Popup extends UI5Element {
 	 * Indicates if the element is the top modal popup
 	 *
 	 * This property is calculated automatically
-	 *
 	 * @private
 	 * @default false
 	 */
@@ -561,21 +549,18 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
-	 *
 	 * @protected
 	 */
 	abstract get isModal(): boolean
 
 	/**
 	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-	 *
 	 * @protected
 	 */
 	abstract get shouldHideBackdrop(): boolean
 
 	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup
-	 *
 	 * @protected
 	 */
 	abstract get _ariaLabelledBy(): string | undefined

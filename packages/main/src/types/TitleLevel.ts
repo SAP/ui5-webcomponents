@@ -1,6 +1,5 @@
 /**
  * Different types of Title level.
- *
  * @public
  */
 enum TitleLevel {

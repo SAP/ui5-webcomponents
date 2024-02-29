@@ -8,7 +8,6 @@ import type SideNavigation from "./SideNavigation.js";
 /**
  * Fired when the component is activated either with a
  * click/tap or by using the Enter or Space key.
- *
  * @public
  */
 @event("click")
@@ -17,7 +16,6 @@ import type SideNavigation from "./SideNavigation.js";
  * @class
  * A class to serve as a foundation
  * for the `SideNavigationItem` and `SideNavigationSubItem` classes.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -27,7 +25,6 @@ import type SideNavigation from "./SideNavigation.js";
 class SideNavigationItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text of the item.
-	 *
 	 * @public
 	 * @default ""
 	 */
@@ -48,7 +45,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines whether the item is selected
-	 *
 	 * @public
 	 * @default false
 	 */
@@ -60,7 +56,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * If a JavaScript action should be triggered,
 	 * this should not be set, but instead an event handler
 	 * for the `click` event should be registered.
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.19.0
@@ -80,7 +75,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * - `_search`
 	 *
 	 * **This property must only be used when the `href` property is set.**
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.19.0
@@ -92,7 +86,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.19.0

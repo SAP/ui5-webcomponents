@@ -7,7 +7,6 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
  * @class
  * The `ui5-li-suggestion-item` represents the suggestion item in the `ui5-input`
  * suggestion popover.
- *
  * @constructor
  * @extends StandardListItem
  * @csspart title - Used to style the title of the suggestion list item
@@ -22,7 +21,6 @@ class SuggestionListItem extends StandardListItem {
 	/**
 	 * Defines a description that can contain HTML.
 	 * **Note:** If not specified, the `description` property will be used.
-	 *
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -31,7 +29,6 @@ class SuggestionListItem extends StandardListItem {
 
 	/**
 	 * Defines the title text of the suggestion item.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

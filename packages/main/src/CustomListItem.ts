@@ -15,16 +15,13 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * the same way as the standard `ui5-li`.
  *
  * The component accepts arbitrary HTML content to allow full customization.
- *
  * @csspart native-li - Used to style the main li tag of the list item
  * @csspart content - Used to style the content area of the list item
  * @csspart detail-button - Used to style the button rendered when the list item is of type detail
  * @csspart delete-button - Used to style the button rendered when the list item is in delete mode
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
- *
  * @slot {Node[]} default - Defines the content of the component.
- *
  * @constructor
  * @extends ListItem
  * @public
@@ -39,7 +36,6 @@ class CustomListItem extends ListItem {
 	 * Defines the text alternative of the component.
 	 *
 	 * **Note**: If not provided a default text alternative will be set, if present.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15

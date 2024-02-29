@@ -27,11 +27,9 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @csspart delete-button - Used to style the button rendered when the list item is in delete mode
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
- *
  * @slot {Node[]} default - Defines the text of the component.
  *
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
- *
  * @constructor
  * @extends ListItem
  * @public
@@ -61,7 +59,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -72,7 +69,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
 	 *
 	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -83,7 +79,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * Defines the `image` source URI.
 	 *
 	 * **Note:** The `image` would be displayed in the beginning of the list item.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -113,7 +108,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15

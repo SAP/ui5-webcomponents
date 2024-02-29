@@ -46,7 +46,6 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Avatar.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.6
@@ -75,7 +74,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -121,7 +119,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * **Note:** If no icon or an empty one is provided, by default the "employee" icon should be displayed.
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -144,7 +141,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * ```<ui5-avatar fallback-icon="alert">```
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -155,7 +151,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Defines the displayed initials.
 	 *
 	 * Up to three Latin letters can be displayed as initials.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -164,7 +159,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines the shape of the component.
-	 *
 	 * @default "Circle"
 	 * @public
 	 */
@@ -173,7 +167,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines predefined size of the component.
-	 *
 	 * @default "S"
 	 * @public
 	 */
@@ -188,7 +181,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines the background color of the desired image.
-	 *
 	 * @default "Accent6"
 	 * @public
 	 */
@@ -204,7 +196,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.7
@@ -214,7 +205,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	/**
 	 * Defines the aria-haspopup value of the component when `interactive` property is `true`.
-	 *
 	 * @since 1.0.0-rc.15
 	 * @protected
 	 */

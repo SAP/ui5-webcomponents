@@ -47,7 +47,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`
- *
  * @constructor
  * @extends ListItem
  * @public
@@ -74,7 +73,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * Fired when the file name is clicked.
  *
  * **Note:** This event is only available when `fileNameClickable` property is `true`.
- *
  * @public
  */
 @event("file-name-click")
@@ -84,7 +82,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  *
  * **Note:** An edit button is displayed on each item,
  * when the `ui5-upload-collection-item` `type` property is set to `Detail`.
- *
  * @public
  */
 @event("rename")
@@ -93,7 +90,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * Fired when the terminate button is pressed.
  *
  * **Note:** Terminate button is displayed when `uploadState` property is set to `Uploading`.
- *
  * @public
  */
 @event("terminate")
@@ -102,14 +98,12 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * Fired when the retry button is pressed.
  *
  * **Note:** Retry button is displayed when `uploadState` property is set to `Error`.
- *
  * @public
  */
 @event("retry")
 
 /**
  * @since 1.0.0-rc.8
- *
  * @private
  */
 @event("_focus-requested")
@@ -121,7 +115,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * Holds an instance of `File` associated with this item.
-	 *
 	 * @default null
 	 * @public
 	 */
@@ -130,7 +123,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * The name of the file.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -139,7 +131,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * If set to `true` the file name will be clickable and it will fire `file-name-click` event upon click.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -148,7 +139,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * Disables the delete button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -158,7 +148,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	/**
 	 * By default, the delete button will always be shown, regardless of the `ui5-upload-collection`'s property `mode`.
 	 * Setting this property to `true` will hide the delete button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -167,7 +156,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * Hides the retry button when `uploadState` property is `Error`.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -176,7 +164,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * Hides the terminate button when `uploadState` property is `Uploading`.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -187,7 +174,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * The upload progress in percentage.
 	 *
 	 * **Note:** Expected values are in the interval [0, 100].
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -198,7 +184,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * If set to `Uploading` or `Error`, a progress indicator showing the `progress` is displayed.
 	 * Also if set to `Error`, a refresh button is shown. When this icon is pressed `retry` event is fired.
 	 * If set to `Uploading`, a terminate button is shown. When this icon is pressed `terminate` event is fired.
-	 *
 	 * @default "Ready"
 	 * @public
 	 */
@@ -207,7 +192,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	/**
 	 * Indicates if editing.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -218,7 +202,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	 * A thumbnail, which will be shown in the beginning of the `ui5-upload-collection-item`.
 	 *
 	 * **Note:** Use `ui5-icon` or `img` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })

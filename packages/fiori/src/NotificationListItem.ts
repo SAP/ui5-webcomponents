@@ -129,7 +129,6 @@ class NotificationListItem extends NotificationListItemBase {
 	* **Note:** In order to be complaint with the UX guidlines and for best experience,
 	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the `ui5-avatar`
 	* you can set its `size` property to `XS` to get the required size - `<ui5-avatar size="XS"></ui5-avatar>`.
-	*
 	* @public
 	*/
 	@slot()
@@ -147,7 +146,6 @@ class NotificationListItem extends NotificationListItemBase {
 	* usually a description of the notification.
 	*
 	* **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	*
 	* @public
 	*/
 	@slot({ type: Node, "default": true })

@@ -22,7 +22,6 @@ import titleCss from "./generated/themes/Title.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Title.js";`
- *
  * @constructor
  * @extends UI5Element
  * @slot {Node[]} default - Defines the text of the component.
@@ -42,7 +41,6 @@ class Title extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -52,7 +50,6 @@ class Title extends UI5Element {
 	/**
 	 * Defines the component level.
 	 * Available options are: `"H6"` to `"H1"`.
-	 *
 	 * @default "H2"
 	 * @public
 	 */

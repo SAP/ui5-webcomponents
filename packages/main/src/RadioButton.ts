@@ -67,7 +67,6 @@ let activeRadio: RadioButton;
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/RadioButton";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -84,7 +83,6 @@ let activeRadio: RadioButton;
 })
 /**
  * Fired when the component checked state changes.
- *
  * @public
  * @since 1.0.0-rc.15
  */
@@ -95,7 +93,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * Defines whether the component is disabled.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -107,7 +104,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -116,7 +112,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.9.0
@@ -130,7 +125,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * **Note:** The property value can be changed with user interaction,
 	 * either by clicking/tapping on the component,
 	 * or by using the Space or Enter key.
-	 *
 	 * @default false
 	 * @formEvents change
 	 * @formProperty
@@ -142,7 +136,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -151,7 +144,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -174,7 +166,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -188,7 +179,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 *
 	 * **Important:** For the `value` property to have effect, you must add the following import to your project:
 	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -199,7 +189,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * Defines whether the component text wraps when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -208,7 +197,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.6.0
@@ -218,7 +206,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.1.0

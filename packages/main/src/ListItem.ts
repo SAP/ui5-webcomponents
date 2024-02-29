@@ -75,7 +75,6 @@ type AccessibilityAttributes = {
  * @class
  * A class to serve as a base
  * for the `StandardListItem` and `CustomListItem` classes.
- *
  * @constructor
  * @abstract
  * @extends ListItemBase
@@ -92,7 +91,6 @@ type AccessibilityAttributes = {
 })
 /**
  * Fired when the user clicks on the detail button when type is `Detail`.
- *
  * @public
  */
 @event("detail-click")
@@ -106,7 +104,6 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 * **Note:** When set to `Active` or `Navigation`, the item will provide visual response upon press and hover,
 	 * while with type `Inactive` and `Detail` - will not.
-	 *
 	 * @default "Active"
 	 * @public
 	*/
@@ -125,7 +122,6 @@ abstract class ListItem extends ListItemBase {
 	 * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
 	 * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
 	 * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
-	 *
 	 * @default {}
 	 * @public
 	 * @since 1.15.0
@@ -136,7 +132,6 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * The navigated state of the list item.
 	 * If set to `true`, a navigation indicator is displayed at the end of the list item.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.10.0
@@ -146,7 +141,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.23.0
@@ -156,7 +150,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
-	 *
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -174,7 +167,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 *
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -182,7 +174,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Used to define the role of the list item.
-	 *
 	 * @private
 	 * @default "listitem"
 	 * @since 1.0.0-rc.9
@@ -202,7 +193,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Used to define the role of the list item.
-	 *
 	 * @private
 	 * @default ""
 	 * @since 1.3.0

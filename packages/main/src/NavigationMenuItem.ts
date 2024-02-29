@@ -19,7 +19,6 @@ import MenuItem from "./MenuItem.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/NavigationMenuItem.js";`
- *
  * @constructor
  * @extends MenuItem
  * @abstract
@@ -33,7 +32,6 @@ class NavigationMenuItem extends MenuItem {
 	 * If a JavaScript action should be triggered,
 	 * this should not be set, but instead an event handler
 	 * for the `click` event should be registered.
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.22.0
@@ -53,7 +51,6 @@ class NavigationMenuItem extends MenuItem {
 	 * - `_search`
 	 *
 	 * **This property must only be used when the `href` property is set.**
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.22.0

@@ -35,7 +35,6 @@ type WheelSliderSelectEventDetail = { value: string };
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/WheelSlider.js";`
- *
  * @constructor
  * @extends UI5Element
  * @private
@@ -81,7 +80,6 @@ class WheelSlider extends UI5Element {
 	 * (default is set to `false`).
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -325,7 +323,6 @@ class WheelSlider extends UI5Element {
 
 	/**
 	 * The listener for this event can't be passive as it calls preventDefault()
-	 *
 	 * @param e Wheel Event
 	 * @private
 	 */

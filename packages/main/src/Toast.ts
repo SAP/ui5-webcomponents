@@ -70,7 +70,6 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Toast.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -93,7 +92,6 @@ class Toast extends UI5Element {
 	 *
 	 * **Note:** The minimum supported value is `500` ms
 	 * and even if a lower value is set, the duration would remain `500` ms.
-	 *
 	 * @default 3000
 	 * @public
 	 */
@@ -102,7 +100,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Defines the placement of the component.
-	 *
 	 * @default "BottomCenter"
 	 * @public
 	 */
@@ -111,7 +108,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is open (visible).
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -119,7 +115,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is hovered.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -127,7 +122,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component DOM is rendered.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -136,7 +130,6 @@ class Toast extends UI5Element {
 	/**
 	 * Indicates whether the toast could be focused
 	 * This happens when ctr / command + shift + m is pressed
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -145,7 +138,6 @@ class Toast extends UI5Element {
 	/**
 	 * Indicates whether the toast is focused
 	 * This happens when ctr / command + shift + m is pressed
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })

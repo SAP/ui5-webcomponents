@@ -49,7 +49,6 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Badge.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 0.12.0
@@ -122,7 +121,6 @@ class Badge extends UI5Element {
 	 *
 	 * **Note:** For option "Normal" the text will wrap and the
 	 * words will not be broken based on hyphenation.
-	 *
 	 * @default "None"
 	 * @public
 	 * @since 1.22.0
@@ -155,7 +153,6 @@ class Badge extends UI5Element {
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -163,7 +160,6 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines the icon to be displayed in the component.
-	 *
 	 * @public
 	 */
 	@slot()

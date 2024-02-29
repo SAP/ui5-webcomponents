@@ -64,7 +64,6 @@ import tableStyles from "./generated/themes/Table.css.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-table` as rows
- *
  * @public
  */
 interface ITableRow extends HTMLElement, ITabbable {
@@ -168,7 +167,6 @@ enum TableFocusTargetElement {
  * `import "@ui5/webcomponents/dist/TableRow.js";` (`ui5-table-row`)
  * `import "@ui5/webcomponents/dist/TableGroupRow.js";` (`ui5-table-group-row`)
  * `import "@ui5/webcomponents/dist/TableCell.js";` (`ui5-table-cell`)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -182,7 +180,6 @@ enum TableFocusTargetElement {
 	dependencies: [BusyIndicator, CheckBox],
 })
 /** Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
- *
  * @param {HTMLElement} row the activated row.
  * @public
  */
@@ -197,7 +194,6 @@ enum TableFocusTargetElement {
 
 /**
  * Fired when `ui5-table-column` is shown as a pop-in instead of hiding it.
- *
  * @param {Array} poppedColumns popped-in columns.
  * @since 1.0.0-rc.6
  * @public
@@ -225,7 +221,6 @@ enum TableFocusTargetElement {
 /**
  * Fired when selection is changed by user interaction
  * in `SingleSelect` and `MultiSelect` modes.
- *
  * @param {Array} selectedRows An array of the selected rows.
  * @param {Array} previouslySelectedRows An array of the previously selected rows.
  * @public
@@ -246,7 +241,6 @@ enum TableFocusTargetElement {
 class Table extends UI5Element {
 	/**
 	 * Defines the text that will be displayed when there is no data and `hideNoData` is not present.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -260,7 +254,6 @@ class Table extends UI5Element {
 	 * **Note:** If not specified a built-in text will be displayed.
 	 *
 	 * **Note:** This property takes effect if `growing` is set to `Button`.
-	 *
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -272,7 +265,6 @@ class Table extends UI5Element {
 	 * Defines the subtext that will be displayed under the `growingButtonText`.
 	 *
 	 * **Note:** This property takes effect if `growing` is set to `Button`.
-	 *
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -282,7 +274,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines if the value of `noDataText` will be diplayed when there is no rows present in the table.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -304,7 +295,6 @@ class Table extends UI5Element {
 	 *
 	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
 	 * and the component will fallback to `growing="Button"`.
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.12
 	 * @public
@@ -317,7 +307,6 @@ class Table extends UI5Element {
 	 *
 	 * In this state the component's opacity is reduced
 	 * and busy indicator is displayed at the bottom of the table.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.12
 	 * @public
@@ -327,7 +316,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
 	 * @default 1000
 	 * @public
 	 */
@@ -359,7 +347,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -369,7 +356,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.3.0
@@ -379,7 +365,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.3.0
@@ -416,7 +401,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -428,7 +412,6 @@ class Table extends UI5Element {
 	 * Defines the component rows.
 	 *
 	 * **Note:** Use `ui5-table-row` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -443,7 +426,6 @@ class Table extends UI5Element {
 	 * Defines the configuration for the columns of the component.
 	 *
 	 * **Note:** Use `ui5-table-column` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({

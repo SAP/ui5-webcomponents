@@ -11,7 +11,6 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`
- *
  * @constructor
  * @extends SideNavigationItemBase
  * @public

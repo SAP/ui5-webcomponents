@@ -57,7 +57,6 @@ type FileUploaderChangeEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/FileUploader.js";`
- *
  * @constructor
  * @since 1.0.0-rc.6
  * @extends UI5Element
@@ -81,7 +80,6 @@ type FileUploaderChangeEventDetail = {
  * Event is fired when the value of the file path has been changed.
  *
  * **Note:** Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
- *
  * @param {FileList | null} files The current files.
  * @public
  */
@@ -116,7 +114,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -140,7 +137,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -184,7 +180,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.
 	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -268,7 +263,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * FileList of all selected files.
-	 *
 	 * @public
 	 * @default null
 	 */

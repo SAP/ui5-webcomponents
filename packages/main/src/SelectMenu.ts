@@ -56,7 +56,6 @@ type SelectMenuChange = {
  * ### ES6 Module Import
  *
  * `import @ui5/webcomponents/dist/SelectMenu.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -97,7 +96,6 @@ class SelectMenu extends UI5Element {
 
 	/**
 	 * Defines the options of the component.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -109,7 +107,6 @@ class SelectMenu extends UI5Element {
 
 	/**
 	 * Defines the width of the component.
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer })

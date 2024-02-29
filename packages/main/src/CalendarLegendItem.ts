@@ -34,7 +34,6 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/CalendarLegendItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.23.0
@@ -58,7 +57,6 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the type of the Calendar Legend Item.
-	 *
 	 * @default "None"
 	 * @public
 	 */

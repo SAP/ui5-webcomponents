@@ -24,7 +24,6 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
  * ### Overview
  *
  * The `ui5-table-group-row` component represents a group row in the `ui5-table`.
- *
  * @constructor
  * @since 1.0.0-rc.15
  * @implements {ITableRow}
@@ -48,7 +47,6 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 class TableGroupRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the mode of the row
-	 *
 	 * @default "None"
 	 * @private
 	 */

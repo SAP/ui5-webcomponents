@@ -22,7 +22,6 @@ import type Menu from "./Menu.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -33,7 +32,6 @@ import type Menu from "./Menu.js";
 class MenuItem extends UI5Element {
 	/**
 	 * Defines the text of the tree item.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -44,7 +42,6 @@ class MenuItem extends UI5Element {
 	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
 	 * **Note:** The additional text would not be displayed if the item has a submenu.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -59,7 +56,6 @@ class MenuItem extends UI5Element {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -68,7 +64,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines whether a visual separator should be rendered before the item.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -79,7 +74,6 @@ class MenuItem extends UI5Element {
 	 * Defines whether `ui5-menu-item` is in disabled state.
 	 *
 	 * **Note:** A disabled `ui5-menu-item` is noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -90,7 +84,6 @@ class MenuItem extends UI5Element {
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
 	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -100,7 +93,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
-	 *
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -110,7 +102,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.7.0
@@ -120,7 +111,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.23.0
@@ -154,7 +144,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the items of this component.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })

@@ -43,7 +43,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
 /**
  * Fired when the selected option changes.
- *
  * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
@@ -59,13 +58,11 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
 /**
  * Fired after the component's dropdown menu opens.
- *
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
- *
  * @public
  */
 @event("close")
@@ -75,7 +72,6 @@ class ToolbarSelect extends ToolbarItem {
 	 * Defines the width of the select.
 	 *
 	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -96,7 +92,6 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -115,7 +110,6 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @public
 	 * @default ""
 	 */
@@ -124,7 +118,6 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 *
 	 * @default ""
 	 * @public
 	 */

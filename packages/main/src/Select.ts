@@ -75,7 +75,6 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-select` as options
- *
  * @public
  */
 interface IOption extends UI5Element {
@@ -168,7 +167,6 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired when the selected option changes.
- *
  * @allowPreventDefault
  * @param {IOption} selectedOption the selected option.
  * @public
@@ -184,7 +182,6 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
- *
  * @param {IOption} selectedOption the selected option.
  * @public
  * @since 1.17.0
@@ -199,13 +196,11 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired after the component's dropdown menu opens.
- *
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
- *
  * @public
  */
 @event("close")
@@ -217,7 +212,6 @@ class Select extends UI5Element implements IFormElement {
 	 * as alternative to define the select's dropdown.
 	 *
 	 * **Note:** Usage of `ui5-select-menu` is recommended.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.17.0
@@ -229,7 +223,6 @@ class Select extends UI5Element implements IFormElement {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -246,7 +239,6 @@ class Select extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the `ui5-select` so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -255,7 +247,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -264,7 +255,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @default false
 	 * @public
@@ -277,7 +267,6 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @since 1.21.0
 	 * @public
@@ -287,7 +276,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @public
 	 * @default ""
@@ -297,7 +285,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -397,7 +384,6 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** If not specified and `ui5-option` is used,
 	 * the option's textContent will be displayed.
-	 *
 	 * @public
 	 * @since 1.17.0
 	*/
@@ -493,7 +479,6 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** If the given value does not match any existing option,
 	 * the first option will get selected.
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.20.0

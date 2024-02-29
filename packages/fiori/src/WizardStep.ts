@@ -20,7 +20,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * ### Usage
  * The `ui5-wizard-step` component should be used only as slot of the `ui5-wizard` component
  * and should not be used standalone.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -35,7 +34,6 @@ class WizardStep extends UI5Element {
 	 * Defines the `titleText` of the step.
 	 *
 	 * **Note:** The text is displayed in the `ui5-wizard` navigation header.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -47,7 +45,6 @@ class WizardStep extends UI5Element {
 	 * Defines the `subtitleText` of the step.
 	 *
 	 * **Note:** the text is displayed in the `ui5-wizard` navigation header.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -74,7 +71,6 @@ class WizardStep extends UI5Element {
 	 *
 	 * **Note:** Step can't be `selected` and `disabled` at the same time.
 	 * In this case the `selected` property would take precedence.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -86,7 +82,6 @@ class WizardStep extends UI5Element {
 	 *
 	 * **Note:** Step can't be `selected` and `disabled` at the same time.
 	 * In this case the `selected` property would take precedence.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -99,7 +94,6 @@ class WizardStep extends UI5Element {
 	 *
 	 * **Note:** It is recommended to use `branching` on the last known step
 	 * and later add new steps when it becomes clear how the wizard flow should continue.
-	 *
 	 * @default false
 	 * @public
 	 */

@@ -9,7 +9,6 @@ type ShellBarItemClickEventDetail = {
 
 /**
  * Interface for components that may be slotted inside `ui5-shellbar` as items
- *
  * @public
  */
 
@@ -20,7 +19,6 @@ type ShellBarItemClickEventDetail = {
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -29,7 +27,6 @@ type ShellBarItemClickEventDetail = {
 @customElement("ui5-shellbar-item")
 /**
  * Fired, when the item is pressed.
- *
  * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public

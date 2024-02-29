@@ -28,7 +28,6 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -45,7 +44,6 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 /**
  * Fired when the `ui5-product-switch-item` is activated either with a
  * click/tap or by using the Enter or Space key.
- *
  * @public
  */
 @event("click")
@@ -87,7 +85,6 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * <pre>ui5-product-switch-item icon="palette"</pre>
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -104,7 +101,6 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * - `_blank`
 	 * - `_parent`
 	 * - `_search`
-	 *
 	 * @default "_self"
 	 * @public
 	 */

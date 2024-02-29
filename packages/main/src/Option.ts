@@ -13,7 +13,6 @@ import type { IOption } from "./Select.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Option.js";`
- *
  * @constructor
  * @extends UI5Element
  * @implements {IOption}
@@ -65,7 +64,6 @@ class Option extends UI5Element implements IOption {
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -94,7 +92,6 @@ class Option extends UI5Element implements IOption {
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })

@@ -87,7 +87,6 @@ const SKIP_ITEMS_SIZE = 10;
 
 /**
  * Interface for components that may be slotted inside a `ui5-combobox`
- *
  * @public
  */
 interface IComboBoxItem {
@@ -149,7 +148,6 @@ type ComboBoxSelectionChangeEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ComboBox.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -185,7 +183,6 @@ type ComboBoxSelectionChangeEventDetail = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
- *
  * @public
  */
 @event("change")
@@ -199,7 +196,6 @@ type ComboBoxSelectionChangeEventDetail = {
 @event("input")
 /**
  * Fired when selection is changed by user interaction
- *
  * @param {IComboBoxItem} item item to be selected.
  * @public
  */
@@ -215,7 +211,6 @@ type ComboBoxSelectionChangeEventDetail = {
 class ComboBox extends UI5Element {
 	/**
 	 * Defines the value of the component.
-	 *
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
@@ -226,7 +221,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.19.0
@@ -240,7 +234,6 @@ class ComboBox extends UI5Element {
 	 * **Note:** If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
 	 *
 	 * **Note:** Initially the filter value is synced with value.
-	 *
 	 * @default ""
 	 * @private
 	 */
@@ -250,7 +243,6 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -261,7 +253,6 @@ class ComboBox extends UI5Element {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -270,7 +261,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -282,7 +272,6 @@ class ComboBox extends UI5Element {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -291,7 +280,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -300,7 +288,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Indicates whether a loading indicator should be shown in the picker.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -309,7 +296,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the filter type of the component.
-	 *
 	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
@@ -318,7 +304,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the clear icon of the combobox will be shown.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.20.1
@@ -342,7 +327,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -373,7 +357,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the component items.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -394,7 +377,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the icon to be displayed in the input field.
-	 *
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
@@ -957,7 +939,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
-	 *
 	 * @private
 	 */
 	static _groupItemFilter(item: IComboBoxItem, idx: number, allItems: Array<IComboBoxItem>, filteredItems: Array<IComboBoxItem>) {

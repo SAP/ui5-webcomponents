@@ -16,7 +16,6 @@ import iconCss from "./generated/themes/Icon.css.js";
 
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
- *
  * @public
  */
 interface IIcon extends HTMLElement { }
@@ -88,9 +87,7 @@ const PRESENTATION_ROLE = "presentation";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Icon.js";`
- *
  * @csspart root - Used to style the outermost wrapper of the `ui5-icon`.
- *
  * @constructor
  * @extends UI5Element
  * @implements {IIcon}
@@ -115,7 +112,6 @@ const PRESENTATION_ROLE = "presentation";
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
-	 *
 	 * @default "Default"
 	 * @public
 	 * @since 1.9.2
@@ -166,7 +162,6 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * **Note:** Every icon should have a text alternative in order to
 	 * calculate its accessible name.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -177,7 +172,6 @@ class Icon extends UI5Element implements IIcon {
 	 * Defines whether the component should have a tooltip.
 	 *
 	 * **Note:** The tooltip text should be provided via the `accessible-name` property.
-	 *
 	 * @default false
 	 * @public
 	 */

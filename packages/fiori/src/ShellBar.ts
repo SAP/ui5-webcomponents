@@ -158,9 +158,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`
- *
  * @csspart root - Used to style the outermost wrapper of the `ui5-shellbar`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -186,7 +184,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  *
  * Fired, when the notification icon is activated.
- *
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
@@ -202,7 +199,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the profile slot is present.
- *
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -219,7 +215,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when the product switch icon is activated.
  *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
- *
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
@@ -235,7 +230,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the logo is activated.
- *
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @since 0.10
  * @public
@@ -251,7 +245,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the co pilot is activated.
- *
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @since 0.10
  * @public
@@ -269,7 +262,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when a menu item is activated
  *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
- *
  * @param {HTMLElement} item DOM ref of the activated list item
  * @since 0.10
  * @public
@@ -287,7 +279,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when the search button is activated.
  *
  * **Note:** You can prevent expanding/collapsing of the search field by calling `event.preventDefault()`.
- *
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @param {Boolean} searchFieldVisible whether the search field is visible
@@ -387,7 +378,6 @@ class ShellBar extends UI5Element {
 	 * It supports the following fields:
 	 * - `profileButtonTitle`: defines the tooltip for the profile button
 	 * - `logoTitle`: defines the tooltip for the logo
-	 *
 	 * @default {}
 	 * @public
 	 * @since 1.1.0
@@ -457,7 +447,6 @@ class ShellBar extends UI5Element {
 	 *
 	 * **Note:**
 	 * You can use the  <ui5-shellbar-item></ui5-shellbar-item>.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -489,7 +478,6 @@ class ShellBar extends UI5Element {
 	 *
 	 * **Note:**
 	 * You can use the  <ui5-li></ui5-li> and its ancestors.
-	 *
 	 * @since 0.10
 	 * @public
 	 */
@@ -498,7 +486,6 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines the `ui5-input`, that will be used as a search field.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -508,7 +495,6 @@ class ShellBar extends UI5Element {
 	 * Defines a `ui5-button` in the bar that will be placed in the beginning.
 	 * We encourage this slot to be used for a back or home button.
 	 * It gets overstyled to match ShellBar's styling.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -518,7 +504,6 @@ class ShellBar extends UI5Element {
 	 * The container is positioned in the center of the `ui5-shellbar` and occupies one-third of the total length of the `ui5-shellbar`.
 	 *
 	 * **Note:** If set, the `searchField` slot is not rendered.
-	 *
 	 * @private
 	 */
 	@slot()

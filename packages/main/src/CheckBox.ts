@@ -70,7 +70,6 @@ let activeCb: CheckBox;
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/CheckBox.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -90,7 +89,6 @@ let activeCb: CheckBox;
 })
 /**
  * Fired when the component checked state changes.
- *
  * @public
  * @allowPreventDefault
  */
@@ -108,7 +106,6 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.1.0
@@ -120,7 +117,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * Defines whether the component is disabled.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -132,7 +128,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -155,7 +150,6 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.3.0
@@ -173,7 +167,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	* -  If the component is checked and indeterminate, it will be displayed as partially checked
 	* -  If the component is checked and it is not indeterminate, it will be displayed as checked
 	* -  If the component is not checked, it will be displayed as not checked regardless value of the indeterminate attribute
-	*
 	* @default false
 	* @public
 	* @since 1.0.0-rc.15
@@ -187,7 +180,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * **Note:** The property can be changed with user interaction,
 	 * either by cliking/tapping on the component, or by
 	 * pressing the Enter or Space key.
-	 *
 	 * @default false
 	 * @formEvents change
 	 * @formProperty
@@ -198,7 +190,6 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -207,7 +198,6 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -218,7 +208,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * Defines whether the component text wraps when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -234,7 +223,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */

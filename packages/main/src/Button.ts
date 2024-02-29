@@ -38,7 +38,6 @@ import type FormSupport from "./features/InputElementsFormSupport.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
- *
  * @public
  */
 interface IButton extends HTMLElement, ITabbable {
@@ -79,7 +78,6 @@ type AccessibilityAttributes = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Button.js";`
- *
  * @csspart button - Used to style the native button element
  * @constructor
  * @extends UI5Element
@@ -100,7 +98,6 @@ type AccessibilityAttributes = {
  *
  * **Note:** The event will not be fired if the `disabled`
  * property is set to `true`.
- *
  * @public
  * @native
  */
@@ -113,7 +110,6 @@ type AccessibilityAttributes = {
 class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines the component design.
-	 *
 	 * @default "Default"
 	 * @public
 	 */
@@ -124,7 +120,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -137,7 +132,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 *
 	 * Example:
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -146,7 +140,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	/**
 	 * Defines whether the icon should be displayed after the component text.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -159,7 +152,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 *
 	 * **Note:** For the `submits` property to have effect, you must add the following import to your project:
 	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
 	 * @default false
 	 * @public
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
@@ -180,7 +172,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -190,7 +181,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -216,7 +206,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 *	- `Tree`
 	 *
 	 * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
-	 *
 	 * @public
 	 * @since 1.2.0
 	 * @default {}
@@ -229,7 +218,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 *
 	 * **Note:** For the `type` property to have effect, you must add the following import to your project:
 	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
 	 * @default "Button"
 	 * @public
 	 * @since 1.15.0
@@ -303,7 +291,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

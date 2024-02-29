@@ -75,7 +75,6 @@ type AffectedValue = "startValue" | "endValue";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/RangeSlider.js";`
- *
  * @constructor
  * @extends SliderBase
  * @since 1.0.0-rc.11
@@ -94,7 +93,6 @@ type AffectedValue = "startValue" | "endValue";
 class RangeSlider extends SliderBase {
 	/**
 	 * Defines start point of a selection - position of a first handle on the slider.
-	 *
 	 * @default 0
 	 * @formEvents change input
 	 * @formProperty
@@ -105,7 +103,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Defines end point of a selection - position of a second handle on the slider.
-	 *
 	 * @default 100
 	 * @formEvents change input
 	 * @formProperty
@@ -265,7 +262,6 @@ class RangeSlider extends SliderBase {
 	 * its inner elements in result of user interactions.
 	 *
 	 * Resets the stored Range Slider's initial values saved when it was first focused
-	 *
 	 * @private
 	 */
 	_onfocusout() {
@@ -287,7 +283,6 @@ class RangeSlider extends SliderBase {
 	* Handles keyup logic. If one of the handles came across the other
 	* swap the start and end values. Reset the affected value by the finished
 	* user interaction.
-	*
 	* @private
 	*/
 	_onkeyup() {
@@ -350,7 +345,6 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Determines affected value (start/end) depending on the currently
 	 * active inner element within the Range Slider - used in the keyboard handling.
-	 *
 	 * @private
 	 */
 	_setAffectedValueByFocusedElement() {
@@ -372,7 +366,6 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Calculates the start and end values when the 'Home" or 'End' keys
 	 * are pressed on the selected range bar.
-	 *
 	 * @private
 	 */
 	_homeEndForSelectedRange(e: KeyboardEvent, affectedValue: string, min: number, max: number) {
@@ -388,7 +381,6 @@ class RangeSlider extends SliderBase {
 	 * Update values, stored inner state and the visual UI representation of the component.
 	 * If no specific type of value property is passed - the range is selected - update both handles,
 	 * otherwise update the handle corresponding to the affected by the user interacton value prop.
-	 *
 	 * @private
 	 */
 	update(affectedValue: string | undefined, startValue: number | undefined, endValue: number | undefined) {
@@ -417,7 +409,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Called when the user starts interacting with the slider
-	 *
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
@@ -452,7 +443,6 @@ class RangeSlider extends SliderBase {
 	 * Initial pageX position of the start handle affected by the interaction;
 	 * Initial pageX value of the pressed postion;
 	 * Affected value property by the action;
-	 *
 	 * @private
 	 */
 	_saveInteractionStartData(e: TouchEvent | MouseEvent, newValue: number) {
@@ -473,7 +463,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Called when the user moves the slider
-	 *
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
@@ -496,7 +485,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Updates UI and state when dragging a single Range Slider handle
-	 *
 	 * @private
 	 */
 	_updateValueOnHandleDrag(event: TouchEvent | MouseEvent) {
@@ -507,7 +495,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Updates UI and state when dragging of the whole selected range
-	 *
 	 * @private
 	 */
 	_updateValueOnRangeDrag(event: TouchEvent | MouseEvent) {
@@ -550,7 +537,6 @@ class RangeSlider extends SliderBase {
 	 * Set flags if the press is over a handle or in the selected range,
 	 * in such cases no values are changed on interaction start, but could be
 	 * updated later when dragging.
-	 *
 	 * @private
 	 */
 	_pressTargetAndAffectedValue(clientX: number, value: number) {
@@ -588,7 +574,6 @@ class RangeSlider extends SliderBase {
 	 * by a user action depending on that user action's characteristics
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
-	 *
 	 * @param affectedValue The value that will get modified by the interaction
 	 * @private
 	 */
@@ -603,7 +588,6 @@ class RangeSlider extends SliderBase {
 
 	/**
 	 * Flag if press action is made on the currently selected range of values
-	 *
 	 * @param isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
 	 * @private
 	 */
@@ -633,7 +617,6 @@ class RangeSlider extends SliderBase {
 	 * The focusout handler is one and the same for all focusable parts within the
 	 * Range Slider and when is called it checks if it should keep the focus within
 	 * the component and which part of it should get focused if that is the case.
-	 *
 	 * @protected
 	 */
 	focusInnerElement() {
@@ -658,10 +641,8 @@ class RangeSlider extends SliderBase {
 	 *
 	 * Uses the change of the position of the start handle and adds the initially
 	 * selected range to it, to determine the whole range offset.
-	 *
 	 * @param currentPageXPos The current horizontal position of the cursor/touch
 	 * @param initialStartHandlePageXPos The initial horizontal position of the start handle
-	 *
 	 * @private
 	 */
 	_calculateRangeOffset(currentPageXPos: number, initialStartHandlePageXPos: number) {
@@ -689,10 +670,8 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Computes the new value based on the difference of the current cursor location from the
 	 * start of the interaction.
-	 *
 	 * @param currentPageXPos The current horizontal position of the cursor/touch
 	 * @param initialStartHandlePageXPos The initial horizontal position of the start handle
-	 *
 	 * @private
 	 */
 	_calculateStartValueByOffset(currentPageXPos: number, initialStartHandlePageXPos: number) {
@@ -730,7 +709,6 @@ class RangeSlider extends SliderBase {
 	/**
 	 * Updates the visual representation of the component by calculating
 	 * the styles of the handles and the range selection based on the new state.
-	 *
 	 * @private
 	 */
 	_updateHandlesAndRange(newValue: number) {
@@ -766,7 +744,6 @@ class RangeSlider extends SliderBase {
 	 *
 	 * Note: Only the property values are reversed, the DOM elements of the handles
 	 * corresponding to them are never switched.
-	 *
 	 * @private
 	 */
 	_swapValues() {
@@ -798,7 +775,6 @@ class RangeSlider extends SliderBase {
 	 * to correctly switch the focus within the component from one handle to another
 	 * when the swapping is finished. As we only swap property values and not
 	 * the handle elements themselves, we must also swap their focus.
-	 *
 	 * @private
 	 */
 	_setValuesAreReversed() {

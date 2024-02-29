@@ -82,7 +82,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
-	 *
 	 * @public
 	 * @default "End"
 	 */
@@ -114,7 +113,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -123,7 +121,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -333,7 +330,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Returns if the overflow popup is open.
-	 *
 	 * @public
 	 */
 	async isOverflowOpen(): Promise<boolean> {

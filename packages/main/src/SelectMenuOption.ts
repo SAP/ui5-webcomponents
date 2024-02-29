@@ -25,7 +25,6 @@ import type { IOption } from "./Select.js";
  * ### ES6 Module Import
  *
  * `import @ui5/webcomponents/dist/SelectMenuOption.js";`
- *
  * @constructor
  * @extends CustomListItem
  * @implements {IOption}
@@ -44,7 +43,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	/**
 	 * Defines the text, displayed inside the `ui5-select` input filed
 	 * when the option gets selected.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -64,7 +62,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -73,7 +70,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @default "Active"
 	 * @public
 	 * @deprecated
@@ -83,7 +79,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @default {}
 	 * @public
 	 * @deprecated
@@ -93,7 +88,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @default false
 	 * @public
 	 * @deprecated
@@ -103,7 +97,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 
 	/**
 	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @public
 	 * @deprecated
 	 */

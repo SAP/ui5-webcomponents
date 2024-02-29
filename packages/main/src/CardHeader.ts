@@ -35,7 +35,6 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/CardHeader";`
- *
  * @constructor
  * @implements {ICardHeader}
  * @extends UI5Element
@@ -96,6 +95,7 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	/**
 	 * Define the `aria-level` attribute of the component
+	 *
 	 * **Note: ** If the interactive property is set, `aria-level` attribute is not rendered at all.
 	 * @private
 	 * @default 3

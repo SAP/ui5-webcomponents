@@ -60,7 +60,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 
 /**
  * Interface for components that may be slotted inside `ui5-tabcontainer` as items
- *
  * @public
  */
 interface ITab extends UI5Element {
@@ -143,7 +142,6 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * `import "@ui5/webcomponents/dist/Tab.js";` (for `ui5-tab`)
  *
  * `import "@ui5/webcomponents/dist/TabSeparator.js";` (for `ui5-tab-separator`)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -168,7 +166,6 @@ interface TabContainerTabInOverflow extends CustomListItem {
 })
 /**
  * Fired when a tab is selected.
- *
  * @param {ITab} tab The selected `tab`.
  * @param {Integer} tabIndex The selected `tab` index in the flattened array of all tabs and their subTabs, provided by the `allItems` getter.
  * @public
@@ -190,7 +187,6 @@ class TabContainer extends UI5Element {
 	/**
 	 * Defines whether the tabs are in a fixed state that is not
 	 * expandable/collapsible by user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -199,7 +195,6 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Defines whether the tab content is collapsed.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -211,7 +206,6 @@ class TabContainer extends UI5Element {
 	 *
 	 * The overflow select list represents a list, where all tabs are displayed
 	 * so that it's easier for the user to select a specific tab.
-	 *
 	 * @default false
 	 * @public
 	 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
@@ -226,7 +220,6 @@ class TabContainer extends UI5Element {
 	 * **Note:**
 	 * The content and the `additionalText` would be displayed vertically by default,
 	 * but when set to `Inline`, they would be displayed horizontally.
-	 *
 	 * @default "Standard"
 	 * @public
 	 */
@@ -240,7 +233,6 @@ class TabContainer extends UI5Element {
 	 * **Note:**
 	 * Only one overflow at the end would be displayed by default,
 	 * but when set to `StartAndEnd`, there will be two overflows on both ends, and tab order will not change on tab selection.
-	 *
 	 * @default "End"
 	 * @since 1.1.0
 	 * @public
@@ -250,7 +242,6 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Sets the background color of the Tab Container's header as `Solid`, `Transparent`, or `Translucent`.
-	 *
 	 * @default "Solid"
 	 * @since 1.10.0
 	 * @public
@@ -260,7 +251,6 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Sets the background color of the Tab Container's content as `Solid`, `Transparent`, or `Translucent`.
-	 *
 	 * @default "Solid"
 	 * @since 1.10.0
 	 * @public
@@ -274,7 +264,6 @@ class TabContainer extends UI5Element {
 	 * **Note:** By default the tab strip is displayed above the tabs' content area and this is the recommended
 	 * layout for most scenarios. Set to `Bottom` only when the component is at the
 	 * bottom of the page and you want the tab strip to act as a menu.
-	 *
 	 * @default "Top"
 	 * @since 1.0.0-rc.7
 	 * @private
@@ -284,7 +273,6 @@ class TabContainer extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 */
 	@property()
@@ -315,7 +303,6 @@ class TabContainer extends UI5Element {
 	 * Defines the tabs.
 	 *
 	 * **Note:** Use `ui5-tab` and `ui5-tab-separator` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -332,7 +319,6 @@ class TabContainer extends UI5Element {
 	/**
 	 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
 	 * the default button will be used.
-	 *
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
@@ -342,7 +328,6 @@ class TabContainer extends UI5Element {
 	/**
 	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
 	 * the default button will be used.
-	 *
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -719,7 +704,6 @@ class TabContainer extends UI5Element {
 	 * Fires the `tab-select` event and changes the internal reference for the currently selected tab.
 	 * If the event is prevented, the current tab is not changed.
 	 * @private
-	 *
 	 * @param selectedTab selected tab instance
 	 * @param selectedTabIndex selected tab index for an array containing all tabs and sub tabs. **Note:** Use the method `allTabs` to get this array.
 	 * @returns true if the tab selection is successful, false if it was prevented

@@ -75,7 +75,6 @@ type CalculatedPlacement = {
  * the position and/or z-index management of the popup-like components.
  *
  * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
- *
  * @constructor
  * @extends Popup
  * @since 1.0.0-rc.6
@@ -98,7 +97,6 @@ class Popover extends Popup {
 	 * Defines the header text.
 	 *
 	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -107,7 +105,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines on which side the component is placed at.
-	 *
 	 * @default "Right"
 	 * @public
 	 */
@@ -116,7 +113,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines the horizontal alignment of the component.
-	 *
 	 * @default "Center"
 	 * @public
 	 */
@@ -125,7 +121,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines the vertical alignment of the component.
-	 *
 	 * @default "Center"
 	 * @public
 	 */
@@ -136,7 +131,6 @@ class Popover extends Popup {
 	 * Defines whether the component should close when
 	 * clicking/tapping outside of the popover.
 	 * If enabled, it blocks any interaction with the background.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -154,7 +148,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines whether the component arrow is hidden.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -165,7 +158,6 @@ class Popover extends Popup {
 	/**
 	 * Determines if there is no enough space, the component can be placed
 	 * over the target.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -183,7 +175,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines whether the content is scrollable.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -192,7 +183,6 @@ class Popover extends Popup {
 
 	/**
 	 * Sets the X translation of the arrow
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
@@ -200,7 +190,6 @@ class Popover extends Popup {
 
 	/**
 	 * Sets the Y translation of the arrow
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
@@ -208,7 +197,6 @@ class Popover extends Popup {
 
 	/**
 	 * Returns the calculated placement depending on the free space
-	 *
 	 * @private
 	 */
 	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
@@ -222,7 +210,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines the header HTML Element.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -230,7 +217,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })

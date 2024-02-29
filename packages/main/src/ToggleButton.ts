@@ -26,7 +26,6 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ToggleButton.js";`
- *
  * @constructor
  * @extends Button
  * @public
@@ -39,7 +38,6 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
 class ToggleButton extends Button {
 	/**
 	 * Determines whether the component is displayed as pressed.
-	 *
 	 * @default false
 	 * @public
 	 */

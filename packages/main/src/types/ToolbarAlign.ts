@@ -1,6 +1,5 @@
 /**
  * Defines which direction the items of ui5-toolbar will be aligned.
- *
  * @public
  */
 enum ToolbarAlign {

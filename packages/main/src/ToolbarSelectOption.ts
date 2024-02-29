@@ -9,7 +9,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * ### Overview
  *
  * The `ui5-toolbar-select-option` component defines the content of an option in the `ui5-toolbar-select`.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -30,7 +29,6 @@ class ToolbarSelectOption extends UI5Element {
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })

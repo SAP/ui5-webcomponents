@@ -44,7 +44,6 @@ import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
  * - [PAGEUP] - Increments the corresponding day of the month by one
  * - [SHIFT] + [PAGEUP] - Increments the corresponding month by one
  * - [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
- *
  * @constructor
  * @extends DatePicker
  * @since 1.0.0-rc.8
@@ -58,7 +57,6 @@ class DateRangePicker extends DatePicker {
 	 /**
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
-	 *
 	 * @default "-"
 	 * @public
 	 */
@@ -67,7 +65,6 @@ class DateRangePicker extends DatePicker {
 
 	 /**
 	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
-	 *
 	 * @private
 	 */
 	@property()
@@ -82,7 +79,6 @@ class DateRangePicker extends DatePicker {
 
 	/**
 	 * **Note:** The getter method is inherited and not supported. If called it will return an empty value.
-	 *
 	 * @public
 	 * @default null
 	 */
@@ -92,7 +88,6 @@ class DateRangePicker extends DatePicker {
 
 	/**
 	 * **Note:** The getter method is inherited and not supported. If called it will return an empty value.
-	 *
 	 * @public
 	 * @default null
 	 */
@@ -144,7 +139,6 @@ class DateRangePicker extends DatePicker {
 
 	/**
 	 * Returns the start date of the currently selected range as JavaScript Date instance.
-	 *
 	 * @public
 	 * @default null
 	 */
@@ -154,7 +148,6 @@ class DateRangePicker extends DatePicker {
 
 	/**
 	 * Returns the end date of the currently selected range as JavaScript Date instance.
-	 *
 	 * @public
 	 * @default null
 	 */

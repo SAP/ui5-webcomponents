@@ -100,7 +100,6 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -152,7 +151,6 @@ type DynamicSideContentLayoutChangeEventDetail = {
 class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the visibility of the main content.
-	 *
 	 * @default false
 	 * @public
 	 *
@@ -162,7 +160,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines the visibility of the side content.
-	 *
 	 * @default false
 	 * @public
 	 *
@@ -183,7 +180,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
-	 *
  	 * @default "ShowAboveS"
 	 * @public
 	 *
@@ -193,7 +189,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
-	 *
 	 * @default "OnMinimumWidth"
 	 * @public
 	 *
@@ -206,7 +201,6 @@ class DynamicSideContent extends UI5Element {
 	 * the main content take 50:50 percent of the container on all screen sizes
 	 * except for phone, where the main and side contents are switching visibility
 	 * using the toggle method.
-	 *
 	 * @default false
 	 * @public
 	 *
@@ -240,7 +234,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines the side content.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -273,7 +266,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
-	 *
 	 * @public
 	 */
 	toggleContents(): void {

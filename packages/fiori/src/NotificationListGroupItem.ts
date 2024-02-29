@@ -86,7 +86,6 @@ type NotificationListGroupItemToggleEventDetail = {
 
 /**
  * Fired when the `ui5-li-notification-group` is expanded/collapsed by user interaction.
- *
  * @public
  */
 @event("toggle")
@@ -110,7 +109,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	/**
 	 * Defines the items of the `ui5-li-notification-group`,
 	 * usually `ui5-li-notification` items.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

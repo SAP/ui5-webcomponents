@@ -152,7 +152,6 @@ type SpecialCalendarDateT = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Calendar.js";`
- *
  * @constructor
  * @extends CalendarPart
  * @public
@@ -177,7 +176,6 @@ type SpecialCalendarDateT = {
  *
  * **Note:** If you call `preventDefault()` for this event, the component will not
  * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
- *
  * @allowPreventDefault
  * @param {Array<string>} values The selected dates
  * @param {Array<number>} dates The selected dates as UTC timestamps
@@ -208,7 +206,6 @@ class Calendar extends CalendarPart {
 	 * - `CalendarSelectionMode.Single` - enables a single date selection.(default value)
 	 * - `CalendarSelectionMode.Range` - enables selection of a date range.
 	 * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
-	 *
 	 * @default "Single"
 	 * @public
 	 */
@@ -223,7 +220,6 @@ class Calendar extends CalendarPart {
 	 *
 	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -268,7 +264,6 @@ class Calendar extends CalendarPart {
 	/**
 	 * Defines the selected date or dates (depending on the `selectionMode` property)
 	 * for this calendar as instances of `ui5-date`.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })

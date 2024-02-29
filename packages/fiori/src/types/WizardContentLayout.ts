@@ -1,6 +1,5 @@
 /**
  * Enumeration for different content layouts of the `ui5-wizard`.
- *
  * @public
  */
 enum WizardContentLayout {

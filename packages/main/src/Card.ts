@@ -18,7 +18,6 @@ import cardCss from "./generated/themes/Card.css.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-card` as header
- *
  * @public
  */
 interface ICardHeader extends HTMLElement {
@@ -44,7 +43,6 @@ interface ICardHeader extends HTMLElement {
  * `import "@ui5/webcomponents/dist/Card";`
  *
  * `import "@ui5/webcomponents/dist/CardHeader.js";` (for `ui5-card-header`)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -64,7 +62,6 @@ class Card extends UI5Element {
 	 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
 	 *
 	 * **Note:** `accessibleName` should be always set, unless `accessibleNameRef` is set.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -74,7 +71,6 @@ class Card extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16

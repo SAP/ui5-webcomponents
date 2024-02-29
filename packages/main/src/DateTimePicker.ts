@@ -103,7 +103,6 @@ type PreviewValues = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/DateTimePicker.js";`
- *
  * @constructor
  * @extends DatePicker
  * @since 1.0.0-rc.7
@@ -193,7 +192,6 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Opens the picker.
-	 *
 	 * @public
 	 */
 	async openPicker(): Promise<void> {
@@ -285,7 +283,6 @@ class DateTimePicker extends DatePicker {
 
 	/**
 	 * Defines whether the dialog on mobile should have header
-	 *
 	 * @private
 	 */
 	get _shouldHideHeader() {
@@ -360,7 +357,6 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * Handles the date/time switch available in `phoneMode` to switch
 	 * between the date and time views.
-	 *
 	 * @param e
 	 */
 	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS

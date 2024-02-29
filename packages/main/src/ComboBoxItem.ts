@@ -6,7 +6,6 @@ import type { IComboBoxItem } from "./ComboBox.js";
 /**
  * @class
  * The `ui5-cb-item` represents the item for a `ui5-combobox`.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -17,7 +16,6 @@ import type { IComboBoxItem } from "./ComboBox.js";
 class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -26,7 +24,6 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 
 	/**
 	 * Defines the additional text of the component.
-	 *
 	 * @default ""
 	 * @since 1.0.0-rc.11
 	 * @public

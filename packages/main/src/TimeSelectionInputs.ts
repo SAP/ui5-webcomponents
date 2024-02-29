@@ -37,7 +37,6 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
  * The popup appears only on mobile devices when there is a tap on the `ui5-time-picker` input.
  *
  * This component should not be used separately.
- *
  * @constructor
  * @extends TimePickerInternals
  * @abstract
@@ -105,7 +104,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Returns Input component by index or name.
-	 *
 	 * @param indexOrName the index or name of the component
 	 * @returns component (if exists) or undefined
 	 */
@@ -117,7 +115,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Returns the inner input element DOM reference.
-	 *
 	 * @param input the Input component
 	 * @returns inner input element
 	 */
@@ -197,7 +194,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Switches to the specific input.
-	 *
 	 * @param index the index (in _entities array) of the input
 	 * @private
 	 */
@@ -210,7 +206,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Switches to the next input that can de focused.
-	 *
 	 * @param wrapAround whether to start with first clock after reaching the last one, or not
 	 * @private
 	 */
@@ -236,7 +231,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Return a value as string, formatted and prepended with zero if necessary.
-	 *
 	 * @param num A number to format
 	 * @param prependZero Whether to prepend with zero or not
 	 * @returns Formatted value
@@ -285,7 +279,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 
 	/**
 	 * Input 'change' event handler.
-	 *
 	 * @param value new value to set on active input
 	 */
 	_inputChange(value: number) {

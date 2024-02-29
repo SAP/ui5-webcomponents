@@ -20,11 +20,9 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/TreeItemCustom.js";`
- *
  * @csspart title - Used to style the title of the tree list item
  * @csspart additionalText - Used to style the additionalText of the tree list item
  * @csspart icon - Used to style the icon of the tree list item
- *
  * @constructor
  * @extends TreeItemBase
  * @public
@@ -38,7 +36,6 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines whether the tree list item should display the selection element.
-	 *
 	 * @public
 	 * @default false
 	 */
@@ -47,7 +44,6 @@ class TreeItemCustom extends TreeItemBase {
 
 	/**
 	 * Defines the content of the `ui5-tree-item`.
-	 *
 	 * @public
 	 */
 	@slot()

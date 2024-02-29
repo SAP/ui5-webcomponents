@@ -17,11 +17,9 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/TreeItem.js";`
- *
  * @csspart title - Used to style the title of the tree list item
  * @csspart additionalText - Used to style the additionalText of the tree list item
  * @csspart icon - Used to style the icon of the tree list item
- *
  * @constructor
  * @extends TreeItemBase
  * @public
@@ -35,7 +33,6 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
 class TreeItem extends TreeItemBase {
 	/**
 	 * Defines the text of the tree item.
-	 *
 	 * @public
 	 * @default ""
 	 */

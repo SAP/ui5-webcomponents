@@ -35,7 +35,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 /**
  * A class to serve as a foundation
  * for the `TreeItem` and `TreeItemCustom` classes.
- *
  * @abstract
  * @constructor
  * @extends ListItem
@@ -66,7 +65,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 
 /**
  * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
- *
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
@@ -78,7 +76,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 
 /**
  * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
- *
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
@@ -90,7 +87,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
-	 *
 	 * @protected
 	 * @default 1
 	 */
@@ -99,7 +95,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * If set, an icon will be displayed before the text of the tree list item.
-	 *
 	 * @public
 	 * @default ""
 	 */
@@ -108,7 +103,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines whether the tree list item should display an expand/collapse button.
-	 *
 	 * @default false
 	 * @protected
 	 */
@@ -117,7 +111,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines whether the tree list item will show a collapse or expand icon inside its toggle button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -149,7 +142,6 @@ class TreeItemBase extends ListItem {
 	 * **Note:** This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
 	 * Set this to `true` for nodes you intend to load lazily, when the user clicks the expand button.
 	 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -169,7 +161,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -204,7 +195,6 @@ class TreeItemBase extends ListItem {
 	 * Defines the items of the component.
 	 *
 	 * **Note:** Use `ui5-tree-item` or `ui5-tree-item-custom`
-	 *
 	 * @public
 	 */
 	@slot({

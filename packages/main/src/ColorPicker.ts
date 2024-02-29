@@ -65,7 +65,6 @@ type ColorCoordinates = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ColorPicker.js";`
- *
  * @constructor
  * @since 1.0.0-rc.12
  * @extends UI5Element
@@ -85,7 +84,6 @@ type ColorCoordinates = {
 })
 /**
  * Fired when the the selected color is changed
- *
  * @public
  */
 @event("change")
@@ -94,7 +92,6 @@ class ColorPicker extends UI5Element {
 	 * Defines the currently selected color of the component.
 	 *
 	 * **Note**: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-	 *
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
@@ -103,8 +100,8 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the HEX code of the currently selected color
-	 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
 	 *
+	 * **Note**: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
 	 * @private
 	 */
 	@property({ defaultValue: "ffffff", noAttribute: true })
@@ -112,7 +109,6 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -120,7 +116,6 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the currenty selected color from the main color section.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })

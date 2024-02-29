@@ -43,7 +43,6 @@ type NotificationListItemBaseCloseEventDetail = {
  * @class
  *
  * The base class of the `NotificationListItem` and `NotificationListGroupItem`.
- *
  * @constructor
  * @extends ListItemBase
  * @since 1.0.0-rc.8
@@ -56,7 +55,6 @@ type NotificationListItemBaseCloseEventDetail = {
 
 /**
  * Fired when the `Close` button is pressed.
- *
  * @param {HTMLElement} item the closed item.
  * @public
  */
@@ -81,7 +79,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines the `priority` of the item.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -118,7 +115,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
 	 * @default 1000
 	 * @public
 	 */
@@ -129,7 +125,6 @@ class NotificationListItemBase extends ListItemBase {
 	 * Defines the actions, displayed in the top-right area.
 	 *
 	 * **Note:** use the `ui5-notification-action` component.
-	 *
 	 * @public
 	 */
 	@slot()

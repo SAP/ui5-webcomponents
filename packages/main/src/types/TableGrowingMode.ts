@@ -1,6 +1,5 @@
 /**
  * Different table growing modes.
- *
  * @public
  */
 enum TableGrowingMode {

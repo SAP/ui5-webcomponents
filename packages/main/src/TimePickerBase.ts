@@ -58,7 +58,6 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 
 /**
  * @class
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -84,7 +83,6 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 /**
  * Fired when the input operation has finished by clicking the "OK" button or
  * when the text in the input field has changed and the focus leaves the input field.
- *
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -108,7 +106,6 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 
 /**
  * Fired when the value of the `ui5-time-picker` is changed at each key stroke.
- *
  * @public
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -132,7 +129,6 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 class TimePickerBase extends UI5Element {
 	/**
 	 * Defines a formatted time value.
-	 *
 	 * @default undefined
 	 * @formEvents change input
 	 * @formProperty
@@ -143,15 +139,6 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Defines the value state of the `ui5-time-picker`.
-	 *
-	 * Available options are:
-	 *
-	 * - `None`
-	 * - `Error`
-	 * - `Warning`
-	 * - `Success`
-	 * - `Information`
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -160,7 +147,6 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Determines whether the `ui5-time-picker` is displayed as disabled.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -169,7 +155,6 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Determines whether the `ui5-time-picker` is displayed as readonly.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -189,7 +174,6 @@ class TimePickerBase extends UI5Element {
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
 	 * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
-	 *
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -540,7 +524,6 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * The listener for this event can't be passive as it calls preventDefault()
-	 *
 	 * @param e Wheel Event
 	 * @private
 	 */

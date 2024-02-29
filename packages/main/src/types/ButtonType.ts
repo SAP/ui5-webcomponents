@@ -1,6 +1,5 @@
 /**
  * Determines if the button has special form-related functionality.
- *
  * @public
  */
 enum ButtonType {

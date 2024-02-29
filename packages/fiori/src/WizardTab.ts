@@ -25,7 +25,6 @@ type WizardTabInfo = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/WizardTab.js";` (imported with <ui5-wizard>)
- *
  * @constructor
  * @extends UI5Element
  * @private
@@ -41,7 +40,6 @@ type WizardTabInfo = {
 
 /**
  * Fired when clicking on none disabled step.
- *
  * @private
  */
 @event("selection-change-requested")
@@ -49,7 +47,6 @@ type WizardTabInfo = {
 class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the `icon` of the step.
-	 *
 	 * @default ""
 	 * @private
 	 */
@@ -58,7 +55,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the `titleText` of the step.
-	 *
 	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -68,7 +64,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the `subtitleText` of the step.
-	 *
 	 * @default ""
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -78,7 +73,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the number that will be displayed in place of the `icon`, when it's missing.
-	 *
 	 * @default ""
 	 * @private
 	 */
@@ -87,7 +81,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step is `disabled` - the step is not responding to user interaction.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -96,7 +89,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step is `selected`.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -105,7 +97,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step's separator is hidden or not.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -114,7 +105,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step's separator is active or not.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -123,7 +113,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the step's separator is dashed or not.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -132,7 +121,6 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tabindex of the step.
-	 *
 	 * @default "-1"
 	 * @private
 	 */

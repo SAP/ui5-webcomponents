@@ -1,6 +1,5 @@
 /**
  * Different table modes.
- *
  * @public
  */
 enum TableMode {

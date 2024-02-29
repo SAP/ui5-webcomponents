@@ -90,7 +90,6 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * the position and/or z-index management of the popup-like components.
  *
  * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
- *
  * @constructor
  * @extends Popup
  * @public
@@ -115,7 +114,6 @@ class Dialog extends Popup {
 	 * Defines the header text.
 	 *
 	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -127,7 +125,6 @@ class Dialog extends Popup {
 	 *
 	 * **Note:** The component will be stretched to approximately
 	 * 90% of the viewport.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -216,7 +213,6 @@ class Dialog extends Popup {
 	 *
 	 * **Note:** If `header` slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * `accessibleName` should be used.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -226,7 +222,6 @@ class Dialog extends Popup {
 	 * Defines the footer HTML Element.
 	 *
 	 * **Note:** When a `ui5-bar` is used in the footer, you should remove the default dialog's paddings.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -258,7 +253,6 @@ class Dialog extends Popup {
 
 	/**
 	 * Shows the dialog.
-	 *
 	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
 	 * @returns Resolves when the dialog is open

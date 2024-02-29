@@ -12,7 +12,6 @@ import DateComponentBase from "./DateComponentBase.js";
  * Abstract base class for Calendar, DayPicker, MonthPicker and YearPicker that adds support for:
  *  - common properties (timestamp, selectedDates): declarations and methods that operate on them
  *  - other common code
- *
  * @constructor
  * @extends DateComponentBase
  * @public
@@ -65,7 +64,6 @@ class CalendarPart extends DateComponentBase {
 
 	/**
 	 * Change a timestamp and enforce limits
-	 *
 	 * @param timestamp
 	 * @protected
 	 */

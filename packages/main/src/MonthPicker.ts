@@ -62,11 +62,9 @@ type MonthPickerNavigateEventDetail = {
 
 /**
  * Month picker component.
- *
  * @class
  *
  * Displays months which can be selected.
- *
  * @constructor
  * @extends CalendarPart
  * @private
@@ -91,7 +89,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 *
 	 * @public
 	 * @default []
 	 */

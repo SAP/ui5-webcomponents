@@ -71,7 +71,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MessageStrip.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -92,7 +91,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 /**
  * Fired when the close button is pressed either with a
  * click/tap or by using the Enter or Space key.
- *
  * @public
  */
 @event("close")
@@ -100,7 +98,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component type.
-	 *
 	 * @default "Information"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -114,7 +111,6 @@ class MessageStrip extends UI5Element {
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
 	 * You can directly provide an icon with the `icon` slot. Otherwise, the default icon for the type will be used.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -124,7 +120,6 @@ class MessageStrip extends UI5Element {
 
 	/**
 	 * Defines whether the MessageStrip renders close button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -138,7 +133,6 @@ class MessageStrip extends UI5Element {
 	 * The SAP-icons font provides numerous options.
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @public
 	 */
 	@slot()

@@ -70,9 +70,7 @@ const getEffectiveIllustrationName = (name: string): string => {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";`
- *
  * @csspart subtitle - Used to style the subtitle wrapper of the `ui5-illustrated-message`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -122,7 +120,6 @@ class IllustratedMessage extends UI5Element {
 	*
 	* As `IllustratedMessage` adapts itself around the `Illustration`, the other
 	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
-	*
 	* @default "Auto"
 	* @public
 	* @since 1.5.0
@@ -154,7 +151,6 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Receives id(or many ids) of the elements that label the component.
-	*
 	* @default ""
 	* @public
 	* @since 1.7.0
@@ -170,7 +166,6 @@ class IllustratedMessage extends UI5Element {
 	* <br/>
 	*
 	* **Note:** Doesn't take effect when `title` slot is being used.
-	*
 	* @default "H2"
 	* @public
 	* @since 1.20.0
@@ -180,7 +175,6 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Illustration breakpoint variant for the `Spot` size.
-	*
 	* @private
 	* @since 1.9.0
 	*/
@@ -189,7 +183,6 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Illustration breakpoint variant for the `Scene` size.
-	*
 	* @private
 	* @since 1.9.0
 	*/
@@ -198,7 +191,6 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Illustration breakpoint variant for the `Dialog` size.
-	*
 	* @private
 	* @since 1.9.0
 	*/

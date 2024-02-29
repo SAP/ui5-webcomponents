@@ -87,7 +87,6 @@ import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
- *
  * @public
  */
 interface IInputSuggestionItem extends UI5Element {
@@ -187,7 +186,6 @@ type InputSuggestionScrollEventDetail = {
  * `import "@ui5/webcomponents/dist/Input.js";`
  *
  * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -208,7 +206,6 @@ type InputSuggestionScrollEventDetail = {
 
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- *
  * @public
  */
 @event("change")
@@ -216,14 +213,12 @@ type InputSuggestionScrollEventDetail = {
 /**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
- *
  * @public
  */
 @event("input")
 
 /**
  * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
- *
  * @param {HTMLElement} item The selected item.
  * @public
  * @allowPreventDefault
@@ -240,7 +235,6 @@ type InputSuggestionScrollEventDetail = {
 /**
  * Fired when the user navigates to a suggestion item via the ARROW keys,
  * as a preview, before the final selection.
- *
  * @param {HTMLElement} item The previewed suggestion item.
  * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
  * @public
@@ -261,7 +255,6 @@ type InputSuggestionScrollEventDetail = {
 
 /**
  * Fired when the user scrolls the suggestion popover.
- *
  * @param {Integer} scrollTop The current scroll position.
  * @param {HTMLElement} scrollContainer The scroll container.
  * @protected
@@ -284,7 +277,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -296,7 +288,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * in case the input value matches parts of the suggestions text.
 	 *
 	 * **Note:** takes effect when `showSuggestions` is set to `true`
-	 *
 	 * @default false
 	 * @private
 	 * @since 1.0.0-rc.8
@@ -307,7 +298,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -319,7 +309,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -328,7 +317,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.3
@@ -338,7 +326,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.4.0
@@ -355,7 +342,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * and the current language settings, especially for type `Number`.
 	 * - The property is mostly intended to be used with touch devices
 	 * that use different soft keyboard layouts depending on the given input type.
-	 *
 	 * @default "Text"
 	 * @public
 	 */
@@ -366,7 +352,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines the value of the component.
 	 *
 	 * **Note:** The property is updated upon typing.
-	 *
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
@@ -379,7 +364,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines the inner stored value of the component.
 	 *
 	 * **Note:** The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
-	 *
 	 * @default ""
 	 * @private
 	 */
@@ -388,7 +372,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -404,7 +387,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -416,7 +398,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 *
 	 * **Note:** You need to import the `InputSuggestions` module
 	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -427,7 +408,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Sets the maximum number of characters available in the input field.
 	 *
 	 * **Note:** This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
-	 *
 	 * @default undefined
 	 * @since 1.0.0-rc.5
 	 * @public
@@ -437,7 +417,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -447,7 +426,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -457,7 +435,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines whether the clear icon of the input will be shown.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.2.0
@@ -467,7 +444,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines whether the clear icon is visible.
-	 *
 	 * @default false
 	 * @private
 	 * @since 1.2.0
@@ -565,7 +541,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
 	 *
 	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-group-item>` for your convenience.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -573,7 +548,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the icon to be displayed in the component.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -582,7 +556,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * The slot is used for native `input` HTML element to enable form submit,
 	 * when `name` property is set.
-	 *
 	 * @private
 	 */
 	@slot()
@@ -598,7 +571,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 *
 	 * **Note:** If the component has `suggestionItems`,
 	 * the `valueStateMessage` would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
-	 *
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */

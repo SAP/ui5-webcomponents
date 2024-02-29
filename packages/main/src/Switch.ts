@@ -45,7 +45,6 @@ import switchCss from "./generated/themes/Switch.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Switch";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -65,7 +64,6 @@ import switchCss from "./generated/themes/Switch.css.js";
 })
 /**
  * Fired when the component checked state changes.
- *
  * @public
  * @allowPreventDefault
  */
@@ -76,7 +74,6 @@ class Switch extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** If `Graphical` type is set,
 	 * positive and negative icons will replace the `textOn` and `textOff`.
-	 *
 	 * @public
 	 * @default "Textual"
 	 */
@@ -100,7 +97,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * Defines whether the component is disabled.
 	 *
 	 * **Note:** A disabled component is noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -111,7 +107,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * Defines the text, displayed when the component is checked.
 	 *
 	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -122,7 +117,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * Defines the text, displayed when the component is not checked.
 	 *
 	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -166,7 +160,6 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.16.0
@@ -183,7 +176,6 @@ class Switch extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.16.0
@@ -193,7 +185,6 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit, when `Switch` is a part of HTML form.
-	 *
 	 * @private
 	 * @since 1.16.0
 	 */

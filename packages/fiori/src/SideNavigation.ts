@@ -100,7 +100,6 @@ type NavigationMenuClickEventDetail = {
  * `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";` (for `ui5-side-navigation-item`)
  *
  * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";` (for `ui5-side-navigation-sub-item`)
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.8
@@ -125,7 +124,6 @@ type NavigationMenuClickEventDetail = {
 })
 /**
  * Fired when the selection has changed via user interaction
- *
  * @param {SideNavigationItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
@@ -141,7 +139,6 @@ type NavigationMenuClickEventDetail = {
 class SideNavigation extends UI5Element {
 	/**
 	 * Defines whether the `ui5-side-navigation` is expanded or collapsed.
-	 *
 	 * @public
 	 * @default false
 	 */
@@ -152,7 +149,6 @@ class SideNavigation extends UI5Element {
 	 * Defines the main items of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
 	 * for the top-level items, and the `ui5-side-navigation-sub-item` component for second-level items, nested
 	 * inside the items.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -162,7 +158,6 @@ class SideNavigation extends UI5Element {
 	 * Defines the header of the `ui5-side-navigation`.
 	 *
 	 * **Note:** The header is displayed when the component is expanded - the property `collapsed` is false;
-	 *
 	 * @public
 	 * @since 1.0.0-rc.11
 	 */
@@ -174,7 +169,6 @@ class SideNavigation extends UI5Element {
 	 * for the fixed items, and optionally the `ui5-side-navigation-sub-item` component to provide second-level items inside them.
 	 *
 	 * **Note:** In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })

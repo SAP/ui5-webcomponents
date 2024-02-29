@@ -1,6 +1,5 @@
 /**
  * MessageStrip designs.
- *
  * @public
  */
 enum MessageStripDesign {

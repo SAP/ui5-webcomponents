@@ -39,7 +39,6 @@ import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-upload-collection` as items
- *
  * @public
  */
 interface IUploadCollectionItem extends HTMLElement { }
@@ -63,7 +62,6 @@ type UploadCollectionItemDeleteEventDetail = {
  * `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`
  *
  * `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";` (for `ui5-upload-collection-item`)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -87,7 +85,6 @@ type UploadCollectionItemDeleteEventDetail = {
  * Fired when an element is dropped inside the drag and drop overlay.
  *
  * **Note:** The `drop` event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the `ui5-upload-collection`.
- *
  * @param {DataTransfer} dataTransfer The `drop` event operation data.
  * @public
  * @native
@@ -96,7 +93,6 @@ type UploadCollectionItemDeleteEventDetail = {
 
 /**
  * Fired when the delete button of any item is pressed.
- *
  * @param {HTMLElement} item The `ui5-upload-collection-item` which was deleted.
  * @public
  */
@@ -112,7 +108,6 @@ type UploadCollectionItemDeleteEventDetail = {
 /**
  * Fired when selection is changed by user interaction
  * in `SingleSelect` and `MultiSelect` modes.
- *
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
@@ -130,7 +125,6 @@ class UploadCollection extends UI5Element {
 	 *
 	 * **Note:**
 	 * Mode "Delete" has no effect. The delete button is controlled by the `hideDeleteButton` property of UploadCollectionItem
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -139,7 +133,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -148,7 +141,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Allows you to set your own text for the 'No data' text.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -161,7 +153,6 @@ class UploadCollection extends UI5Element {
 	 *
 	 * **Note:** It is up to the application developer to add handler for `drop` event and handle it.
 	 * `ui5-upload-collection` only displays an overlay.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -170,7 +161,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -180,7 +170,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Indicates what overlay to show when files are being dragged.
-	 *
 	 * @default "None"
 	 * @private
 	 */
@@ -191,7 +180,6 @@ class UploadCollection extends UI5Element {
 	 * Defines the items of the `ui5-upload-collection`.
 	 *
 	 * **Note:** Use `ui5-upload-collection-item` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -203,7 +191,6 @@ class UploadCollection extends UI5Element {
 	 * **Note:** If `header` slot is provided,
 	 * the labelling of the `UploadCollection` is a responsibility of the application developer.
 	 * `accessibleName` should be used.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })

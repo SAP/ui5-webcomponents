@@ -26,7 +26,6 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/ToolbarButton.js";`
- *
  * @constructor
  * @abstract
  * @extends ToolbarItem
@@ -44,7 +43,6 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
  *
  * **Note:** The event will not be fired if the `disabled`
  * property is set to `true`.
- *
  * @public
  */
 @event("click")
@@ -53,7 +51,6 @@ class ToolbarButton extends ToolbarItem {
 	 * Defines if the action is disabled.
 	 *
 	 * **Note:** a disabled action can't be pressed or focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -62,7 +59,6 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the action design.
-	 *
 	 * @default "Default"
 	 * @public
 	 */
@@ -82,7 +78,6 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines whether the icon should be displayed after the component text.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -101,7 +96,6 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -110,7 +104,6 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -133,7 +126,6 @@ class ToolbarButton extends ToolbarItem {
 	 * 	- `Menu`
 	 * 	- `Tree`
 	 * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
-	 *
 	 * @default {}
 	 * @public
 	 */
@@ -152,7 +144,6 @@ class ToolbarButton extends ToolbarItem {
 	 * Defines the width of the button.
 	 *
 	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
-	 *
 	 * @default undefined
 	 * @public
 	 */

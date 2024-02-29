@@ -1,6 +1,5 @@
 /**
  * Different Icon semantic designs.
- *
  * @public
  */
 enum IconDesign {

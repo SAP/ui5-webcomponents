@@ -109,7 +109,6 @@ import Input, { InputEventDetail } from "./Input.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-multi-combobox` as items
- *
  * @public
  */
 interface IMultiComboBoxItem extends UI5Element {
@@ -167,7 +166,6 @@ type MultiComboboxItemWithSelection = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MultiComboBox.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -200,21 +198,18 @@ type MultiComboboxItemWithSelection = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- *
  * @public
  */
 @event("change")
 
 /**
  * Fired when the value of the component changes at each keystroke or clear icon is pressed.
- *
  * @public
  */
 @event("input")
 
 /**
  * Fired when the dropdown is opened or closed.
- *
  * @since 1.0.0-rc.5
  * @public
  */
@@ -222,7 +217,6 @@ type MultiComboboxItemWithSelection = {
 
 /**
  * Fired when selection is changed by user interaction.
- *
  * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
  * @allowPreventDefault
@@ -241,7 +235,6 @@ class MultiComboBox extends UI5Element {
 	 * Defines the value of the component.
 	 *
 	 * **Note:** The property is updated upon typing.
-	 *
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
@@ -252,7 +245,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.4.0
@@ -263,7 +255,6 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -272,7 +263,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines if the user input will be prevented, if no matching item has been found
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -283,7 +273,6 @@ class MultiComboBox extends UI5Element {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * **Note:** A disabled component is completely noninteractive.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -292,7 +281,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -304,7 +292,6 @@ class MultiComboBox extends UI5Element {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -313,7 +300,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.5
@@ -323,7 +309,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines the filter type of the component.
-	 *
 	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
@@ -332,7 +317,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the clear icon of the multi-combobox will be shown.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.20.1
@@ -342,7 +326,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.4.0
@@ -352,7 +335,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.4.0
@@ -362,7 +344,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Determines if the select all checkbox is visible on top of suggestions.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -373,7 +354,6 @@ class MultiComboBox extends UI5Element {
 	_effectiveValueState!: `${ValueState}`;
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -428,7 +408,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Defines the component items.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -436,7 +415,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	* Defines the icon to be displayed in the component.
-	*
 	* @public
 	* @since 1.0.0-rc.9
 	*/
@@ -450,7 +428,6 @@ class MultiComboBox extends UI5Element {
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
 	 * when the component is in `Information`, `Warning` or `Error` value state.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -578,7 +555,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -1316,7 +1292,6 @@ class MultiComboBox extends UI5Element {
 
 	/**
 	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
-	 *
 	 * @private
 	 */
 	static _groupItemFilter(item: IMultiComboBoxItem, idx: number, allItems: Array<IMultiComboBoxItem>, filteredItems: Array<IMultiComboBoxItem>) {

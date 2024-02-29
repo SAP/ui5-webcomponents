@@ -22,7 +22,6 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * ### Overview
  *
  * The `ui5-color-palette-item` component represents a color in the the `ui5-color-palette`.
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.12
@@ -40,7 +39,6 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * Defines the colour of the component.
 	 *
 	 * **Note:** The value should be a valid CSS color.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -49,7 +47,6 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
-	 *
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
@@ -57,7 +54,6 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer })
@@ -65,7 +61,6 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })

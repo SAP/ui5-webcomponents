@@ -47,7 +47,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  * ### ES6 Module Import
  *
  * `import @ui5/webcomponents/dist/ColorPalettePopover.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -68,7 +67,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
 /**
  * Fired when the user selects a color.
- *
  * @public
  * @param {string} color the selected color
  */
@@ -91,7 +89,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -102,7 +99,6 @@ class ColorPalettePopover extends UI5Element {
 	 * Defines whether the user can choose a custom color from a component.
 	 *
 	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -111,7 +107,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -122,7 +117,6 @@ class ColorPalettePopover extends UI5Element {
 	 * Defines the default color of the component.
 	 *
 	 * **Note:** The default color should be a part of the ColorPalette colors`
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -149,7 +143,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
@@ -175,7 +168,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @deprecated The method is deprecated in favour of `open` and `opener` properties.
@@ -189,7 +181,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Shows the ColorPalettePopover.
-	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -216,7 +207,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Returns if the component is opened.
-	 *
 	 * @protected
 	 * @since 1.0.0-rc.16
 	 */

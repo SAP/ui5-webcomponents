@@ -87,7 +87,6 @@ type StepInputValueStateChangeEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/StepInput.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.13
@@ -105,7 +104,6 @@ type StepInputValueStateChangeEventDetail = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- *
  * @public
  */
 @event("change")
@@ -113,7 +111,6 @@ type StepInputValueStateChangeEventDetail = {
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- *
  * @allowPreventDefault
  * @since 1.23.0
  * @public
@@ -139,7 +136,6 @@ type StepInputValueStateChangeEventDetail = {
 class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a value of the component.
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -148,7 +144,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a minimum value of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -157,7 +152,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a maximum value of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -166,7 +160,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a step of increasing/decreasing the value of the component.
-	 *
 	 * @default 1
 	 * @public
 	 */
@@ -175,7 +168,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -184,7 +176,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -193,7 +184,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines whether the component is displayed as disabled.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -202,7 +192,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines whether the component is displayed as read-only.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -215,7 +204,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 *
 	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -231,7 +219,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -240,7 +227,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines the number of digits after the decimal point of the component.
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -249,7 +235,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -259,7 +244,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -312,7 +296,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
 	 * when `name` property is set.
-	 *
 	 * @private
 	 */
 	@slot()
@@ -462,7 +445,6 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Value modifier - modifies the value of the component, validates the new value and enables/disables increment and
 	 * decrement buttons according to the value and min/max values (if set). Fires `change` event when requested
-	 *
 	 * @private
 	 * @param modifier modifies the value of the component with the given modifier (positive or negative)
 	 * @param fireChangeEvent if `true`, fires `change` event when the value is changed

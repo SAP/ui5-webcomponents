@@ -63,7 +63,6 @@ type SuggestionsAccInfo = {
 
 /**
  * A class to manage the `Input` suggestion items.
- *
  * @class
  * @private
  */

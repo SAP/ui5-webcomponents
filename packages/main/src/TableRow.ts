@@ -59,7 +59,6 @@ type TableRowF7PressEventDetail = {
  * ### Overview
  *
  * The `ui5-table-row` component represents a row in the `ui5-table`.
- *
  * @constructor
  * @extends UI5Element
  * @implements {ITableRow}
@@ -76,7 +75,6 @@ type TableRowF7PressEventDetail = {
 })
 /**
  * Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
- *
  * @since 1.0.0-rc.15
  * @private
  */
@@ -84,14 +82,12 @@ type TableRowF7PressEventDetail = {
 @event("_focused")
 /**
  * Fired on selection change of an active row.
- *
  * @since 1.0.0-rc.15
  * @private
  */
 @event("selection-requested")
 /**
  * Fired when F7 is pressed.
- *
  * @since 1.2.0
  * @private
  */
@@ -102,7 +98,6 @@ class TableRow extends UI5Element implements ITableRow {
 	 *
 	 * **Note:** When set to `Active`, the item will provide visual response upon press,
 	 * while with type `Inactive`-will not.
-	 *
 	 * @default "Inactive"
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -112,7 +107,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Defines the row's selected state.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -122,7 +116,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Indicates if the table row is navigated.
-	 *
 	 * @default false
 	 * @since 1.9.0
 	 * @public
@@ -132,7 +125,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -142,7 +134,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Indicates if the table row is active.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -166,7 +157,6 @@ class TableRow extends UI5Element implements ITableRow {
 	 * Defines the cells of the component.
 	 *
 	 * **Note:** Use `ui5-table-cell` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })

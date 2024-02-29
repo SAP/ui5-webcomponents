@@ -42,7 +42,6 @@ type MenuItemClickEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/NavigationMenu.js";`
- *
  * @constructor
  * @extends Menu
  * @since 1.22.0
@@ -60,7 +59,6 @@ class NavigationMenu extends Menu {
 	 * Defines the items of this component.
 	 *
 	 * **Note:** Use `ui5-navigation-menu-item` for the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })

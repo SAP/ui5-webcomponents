@@ -27,7 +27,6 @@ import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-product-switch` as items
- *
  * @public
  */
 interface IProductSwitchItem extends HTMLElement, ITabbable {
@@ -94,7 +93,6 @@ class ProductSwitch extends UI5Element {
 
 	/**
 	 * Defines the items of the `ui5-product-switch`.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

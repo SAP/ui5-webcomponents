@@ -97,7 +97,6 @@ type VSDInternalSettings = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.16
@@ -123,7 +122,6 @@ type VSDInternalSettings = {
 
 /**
  * Fired when confirmation button is activated.
- *
  * @param {String} sortOrder The current sort order selected.
  * @param {String} sortBy The currently selected `ui5-sort-item` text attribute.
  * @param {HTMLElement} sortByItem The currently selected `ui5-sort-item`.
@@ -158,7 +156,6 @@ type VSDInternalSettings = {
 
 /**
  * Fired when cancel button is activated.
- *
  * @param {String} sortOrder The current sort order selected.
  * @param {String} sortBy The currently selected `ui5-sort-item` text attribute.
  * @param {HTMLElement} sortByItem The currently selected `ui5-sort-item`.
@@ -193,14 +190,12 @@ type VSDInternalSettings = {
 
 /**
  * Fired before the component is opened. **This event does not bubble.**
- *
  * @public
  */
 @event("before-open")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -209,7 +204,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -217,7 +211,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Stores settings of the dialog before the initial open.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -225,7 +218,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Stores settings of the dialog after confirmation.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -233,7 +225,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Stores current settings of the dialog.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -241,7 +232,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Defnies the current mode of the component.
-	 *
 	 * @since 1.0.0-rc.16
 	 * @private
 	 */
@@ -250,7 +240,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
-	 *
 	 * @since 1.0.0-rc.16
 	 * @private
 	 */
@@ -261,7 +250,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the list of items against which the user could sort data.
 	 *
 	 * **Note:** If you want to use this slot, you need to import used item: `import "@ui5/webcomponents-fiori/dist/SortItem.js";`
-	 *
 	 * @public
 	 */
 	@slot()
@@ -271,7 +259,6 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the `filterItems` list.
 	 *
 	 * **Note:** If you want to use this slot, you need to import used item: `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`
-	 *
 	 * @public
 	 */
 	@slot()
@@ -646,7 +633,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * If the dialog is closed by [ESC] key, do the same as if the `Cancel` button is pressed.
-	 *
 	 * @param evt
 	 */
 	_restoreConfirmedOnEscape(evt: CustomEvent) { // Dialog#before-close
@@ -668,7 +654,6 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Sets current settings to ones passed as `settings` argument.
-	 *
 	 * @param settings
 	 */
 	_restoreSettings(settings: VSDInternalSettings) {

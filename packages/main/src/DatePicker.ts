@@ -145,7 +145,6 @@ type DatePickerInputEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/DatePicker.js";`
- *
  * @constructor
  * @extends DateComponentBase
  * @public
@@ -172,7 +171,6 @@ type DatePickerInputEventDetail = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- *
  * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
@@ -196,7 +194,6 @@ type DatePickerInputEventDetail = {
 })
 /**
  * Fired when the value of the component is changed at each key stroke.
- *
  * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
@@ -222,7 +219,6 @@ type DatePickerInputEventDetail = {
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- *
  * @allowPreventDefault
  * @public
  * @param {string} valueState The new `valueState` that will be set.
@@ -247,7 +243,6 @@ type DatePickerInputEventDetail = {
 class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Defines a formatted date value.
-	 *
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
@@ -258,7 +253,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -267,7 +261,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @default false
 	 * @public
@@ -277,7 +270,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Determines whether the component is displayed as disabled.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -286,7 +278,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Determines whether the component is displayed as read-only.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -299,7 +290,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -315,7 +305,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -327,7 +316,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -337,7 +325,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines the aria-label attribute for the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -347,7 +334,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -373,7 +359,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
 	 * when the component is in `Information`, `Warning` or `Error` value state.
-	 *
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
@@ -383,7 +368,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
 	 * when `name` property is set.
-	 *
 	 * @private
 	 */
 	@slot({ type: HTMLElement })
@@ -430,7 +414,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Override in derivatives to change calendar selection mode
-	 *
 	 * @protected
 	 */
 	get _calendarSelectionMode(): string {
@@ -441,7 +424,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Used to provide a timestamp to the Calendar (to focus it to a relevant date when open) based on the component's state
 	 * Override in derivatives to provide the calendar a timestamp based on their properties
 	 * By default focus the calendar on the selected date if set, or the current day otherwise
-	 *
 	 * @protected
 	 */
 	get _calendarTimestamp(): number {
@@ -456,7 +438,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Used to provide selectedDates to the calendar based on the component's state
 	 * Override in derivatives to provide different rules for setting the calendar's selected dates
-	 *
 	 * @protected
 	 */
 	get _calendarSelectedDates(): Array<string> {
@@ -587,14 +568,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
-	 *
 	 * @protected
 	 */
 	_onInputSubmit() {}
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
-	 *
 	 * @protected
 	 */
 	_onInputChange(e: Event) {
@@ -603,7 +582,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The ui5-input "input" event handler - fire input even when the user types
-	 *
 	 * @protected
 	 */
 	_onInputInput(e: KeyboardEvent) {
@@ -612,7 +590,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if the provided value is valid and within valid range.
-	 *
 	 * @protected
 	 * @param value
 	 */
@@ -632,7 +609,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
-	 *
 	 * @public
 	 * @param value A value to be tested against the current date format
 	 */
@@ -646,7 +622,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if a date is between the minimum and maximum date.
-	 *
 	 * @public
 	 * @param value A value to be checked
 	 */
@@ -666,7 +641,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The parser understands many formats, but we need one format
-	 *
 	 * @protected
 	 */
 	normalizeValue(value: string) {
@@ -729,7 +703,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines whether the dialog on mobile should have header
-	 *
 	 * @private
 	 */
 	get _shouldHideHeader() {
@@ -738,7 +711,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines whether the value help icon is hidden
-	 *
 	 * @private
 	 */
 	get _ariaHidden() {
@@ -773,7 +745,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The user selected a new date in the calendar
-	 *
 	 * @param e
 	 * @protected
 	 */
@@ -802,7 +773,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the `formatPattern` property of the DatePicker instance
-	 *
 	 * @public
 	 * @param date A Java Script date object to be formatted as string
 	 * @returns The date as string
@@ -813,7 +783,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Closes the picker.
-	 *
 	 * @public
 	 */
 	closePicker(): void {
@@ -822,7 +791,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Opens the picker.
-	 *
 	 * @public
 	 * @returns Resolves when the picker is open
 	 */
@@ -844,7 +812,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if the picker is open.
-	 *
 	 * @public
 	 * @returns true if the picker is open, false otherwise
 	 */
@@ -854,7 +821,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Currently selected date represented as a Local JavaScript Date instance.
-	 *
 	 * @public
 	 * @default null
 	 */

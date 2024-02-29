@@ -61,7 +61,6 @@ import {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Slider.js";`
- *
  * @constructor
  * @extends SliderBase
  * @since 1.0.0-rc.11
@@ -79,7 +78,6 @@ import {
 class Slider extends SliderBase {
 	/**
 	 * Current value of the slider
-	 *
 	 * @default 0
 	 * @formEvents change input
 	 * @formProperty
@@ -153,7 +151,6 @@ class Slider extends SliderBase {
 
 	/**
 	 * Called when the user starts interacting with the slider
-	 *
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
@@ -212,7 +209,6 @@ class Slider extends SliderBase {
 
 	/**
 	 * Called when the user moves the slider
-	 *
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
@@ -233,7 +229,6 @@ class Slider extends SliderBase {
 	}
 
 	/** Called when the user finish interacting with the slider
-	 *
 	 * @private
 	 */
 	_handleUp() {
@@ -246,7 +241,6 @@ class Slider extends SliderBase {
 	}
 
 	/** Determines if the press is over the handle
-	 *
 	 * @private
 	 */
 	_isHandlePressed(clientX: number) {
@@ -255,7 +249,6 @@ class Slider extends SliderBase {
 	}
 
 	/** Updates the UI representation of the progress bar and handle position
-	 *
 	 * @private
 	 */
 	_updateHandleAndProgress(newValue: number) {

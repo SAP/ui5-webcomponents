@@ -26,7 +26,6 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
- *
  * @constructor
  * @extends ToggleButton
  * @implements { ISegmentedButtonItem }
@@ -40,7 +39,6 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
 class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @default "Default"
 	 * @public
 	 */
@@ -49,7 +47,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -58,7 +55,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -67,7 +63,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
-	 *
 	 * @default 0
 	 * @private
 	 */
@@ -76,7 +71,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
-	 *
 	 * @default 0
 	 * @private
 	 */

@@ -15,7 +15,6 @@ import type FilterItemOption from "./FilterItemOption.js";
  * ### ES6 Module Import
  *
  * `import @ui5/webcomponents-fiori/dist/FilterItem.js";`
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -26,7 +25,6 @@ import type FilterItemOption from "./FilterItemOption.js";
 class FilterItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -35,7 +33,6 @@ class FilterItem extends UI5Element {
 
 	/**
 	 * Defines the additional text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */

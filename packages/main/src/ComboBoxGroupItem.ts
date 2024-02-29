@@ -7,7 +7,6 @@ import type { IComboBoxItem } from "./ComboBox.js";
  * @class
  * The `ui5-cb-group-item` is type of suggestion item,
  * that can be used to split the `ui5-combobox` suggestions into groups.
- *
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -19,7 +18,6 @@ import type { IComboBoxItem } from "./ComboBox.js";
 class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		/**
 		 * Defines the text of the component.
-		 *
 		 * @default ""
 		 * @public
 		 */

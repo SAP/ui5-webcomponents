@@ -24,7 +24,6 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-segmented-button` as items
- *
  * @public
  */
 interface ISegmentedButtonItem extends UI5Element, ITabbable {
@@ -51,7 +50,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/SegmentedButton.js";`
- *
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.6
@@ -67,7 +65,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
 })
 /**
  * Fired when the selected item changes.
- *
  * @param {ISegmentedButtonItem} selectedItem the pressed item.
  * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
  * @public
@@ -90,7 +87,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
 class SegmentedButton extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.0.3
@@ -100,12 +96,6 @@ class SegmentedButton extends UI5Element {
 
 	/**
 	 * Defines the component selection mode.
-	 *
-	 * **The available values are:**
-	 *
-	 * - `SingleSelect`
-	 * - `MultiSelect`
-	 *
 	 * @default "SingleSelect"
 	 * @public
 	 * @since 1.14.0
@@ -263,7 +253,6 @@ class SegmentedButton extends UI5Element {
 
 	/**
 	 * Currently selected item.
-	 *
 	 * @deprecated since 1.14.0. This method will be removed in the next major release.
 	 * Please use the `selectedItems` property instead.
 	 * @public

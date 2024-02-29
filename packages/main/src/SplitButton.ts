@@ -75,7 +75,6 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/SplitButton.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -107,7 +106,6 @@ class SplitButton extends UI5Element {
 	 * Example:
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -116,7 +114,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the icon to be displayed in active state as graphical element within the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -125,7 +122,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines whether the arrow button should have the active state styles or not.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.21.0
@@ -135,7 +131,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the component design.
-	 *
 	 * @default "Default"
 	 * @public
 	 */
@@ -146,7 +141,6 @@ class SplitButton extends UI5Element {
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -155,7 +149,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -164,7 +157,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if the elements is on focus
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -173,7 +165,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Accessibility-related properties for inner elements of the Split Button
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -181,7 +172,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the tabIndex of the component.
-	 *
 	 * @default "0"
 	 * @private
 	 */
@@ -190,7 +180,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if there is Space key pressed
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -199,7 +188,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Indicates if there is SHIFT or ESCAPE key pressed
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -208,7 +196,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the active state of the text button
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -217,7 +204,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the icon of the text button
-	 *
 	 * @default ""
 	 * @private
 	 */
@@ -226,7 +212,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -237,7 +222,6 @@ class SplitButton extends UI5Element {
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -416,7 +400,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Checks if the pressed key is an arrow key.
-	 *
 	 * @param e - keyboard event
 	 * @private
 	 */
@@ -426,7 +409,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Checks if the pressed key is a default action key (Space or Enter).
-	 *
 	 * @param e - keyboard event
 	 * @private
 	 */
@@ -436,7 +418,6 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Checks if the pressed key is an escape key or shift key.
-	 *
 	 * @param e - keyboard event
 	 * @private
 	 */

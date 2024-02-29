@@ -120,7 +120,6 @@ type FlexibleColumnLayoutAccessibilityRoles = {
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -138,7 +137,6 @@ type FlexibleColumnLayoutAccessibilityRoles = {
 /**
  * Fired when the layout changes via user interaction by clicking the arrows
  * or by changing the component size due to resizing.
- *
  * @param {FCLLayout} layout The current layout
  * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
  * @param {boolean} startColumnVisible Indicates if the start column is currently visible
@@ -202,7 +200,6 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the visibility of the arrows,
 	* used for expanding and shrinking the columns.
-	*
 	* @default false
 	* @public
 	* @since 1.0.0-rc.15
@@ -223,7 +220,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - `endArrowRightText`: the text that the second arrow (between the `mid` and `end` columns) will have when pointing to the right
 	*  - `startArrowContainerAccessibleName`: the text that the first arrow container (between the `begin` and `mid` columns) will have as `aria-label`
 	*  - `endArrowContainerAccessibleName`: the text that the second arrow container (between the `mid` and `end` columns) will have as `aria-label`
-	*
 	* @default {}
 	* @public
 	* @since 1.0.0-rc.11
@@ -240,7 +236,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - `midColumnRole`: the accessibility role for the `midColumn`
 	*  - `endArrowContainerRole`: the accessibility role for the second arrow container (between the `mid` and `end` columns)
 	*  - `endColumnRole`: the accessibility role for the `endColumn`
-	*
 	* @default {}
 	* @public
 	* @since 1.1.0
@@ -250,7 +245,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Defines the component width in px.
-	*
 	* @default 0
 	* @private
 	*/
@@ -261,7 +255,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* Defines the effective columns layout,
 	* based on both the `layout` property and the screen size.
 	* Example: [67%, 33%, 0], [25%, 50%, 25%], etc.
-	*
 	* @default undefined
 	* @private
 	*/
@@ -270,7 +263,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Defines the visible columns count - 1, 2 or 3.
-	*
 	* @default 1
 	* @private
 	*/
@@ -279,7 +271,6 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	* Allows the user to replace the whole layouts configuration
-	*
 	* @private
 	*/
 	@property({ type: Object, defaultValue: undefined })

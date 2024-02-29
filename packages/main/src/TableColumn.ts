@@ -16,7 +16,6 @@ import tableColumnStyles from "./generated/themes/TableColumn.css.js";
  *
  * The `ui5-table-column` component allows to define column specific properties that are applied
  * when rendering the `ui5-table` component.
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -37,7 +36,6 @@ class TableColumn extends UI5Element {
 	 * `minWidth` property to `400` sets the minimum width to 400 pixels, and	shows this column on tablet (and desktop) but hides it on mobile.
 	 *
 	 * For further responsive design options, see `demandPopin` property.
-	 *
 	 * @default Infinity
 	 * @public
 	 */
@@ -46,7 +44,6 @@ class TableColumn extends UI5Element {
 
 	/**
 	 * The text for the column when it pops in.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -58,7 +55,6 @@ class TableColumn extends UI5Element {
 	 * in different screen sizes.
 	 *
 	 * Setting this property to `true`, shows this column as pop-in instead of hiding it.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -72,7 +68,6 @@ class TableColumn extends UI5Element {
 	 *
 	 * - `Block`
 	 * - `Inline`
-	 *
 	 * @default "Block"
 	 * @public
 	 */
