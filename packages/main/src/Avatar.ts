@@ -11,7 +11,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { IAvatar } from "./Interfaces.js";
+import type { IAvatarGroupItem } from "./AvatarGroup.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -56,7 +56,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.6
- * @implements {IAvatar}
+ * @implements {IAvatarGroupItem}
  * @public
  */
 @customElement({
@@ -75,7 +75,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 * @since 1.0.0-rc.11
 */
 @event("click")
-class Avatar extends UI5Element implements ITabbable, IAvatar {
+class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
@@ -227,7 +227,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	ariaHaspopup!: string;
 
 	@property({ noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
 	_hasImage!: boolean;
@@ -288,7 +288,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	}
 
 	get tabindex() {
-		return this._tabIndex || (this._interactive ? "0" : "-1");
+		return this.forcedTabIndex || (this._interactive ? "0" : "-1");
 	}
 
 	/**
@@ -296,7 +296,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "S"
 	 * @private
 	 */
-	get _effectiveSize(): AvatarSize {
+	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
 		return this.getAttribute("size") as AvatarSize || this._size;
 	}
@@ -306,7 +306,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "Accent6"
 	 * @private
 	 */
-	get _effectiveBackgroundColor(): AvatarColorScheme {
+	get еffectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
 		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}
@@ -358,7 +358,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	get initialsContainer(): HTMLObjectElement | null {
 		return this.getDomRef()!.querySelector(".ui5-avatar-initials");
-	 }
+	}
+
+	get fallBackIconDomRef(): Icon | null {
+		return this.getDomRef()!.querySelector(".ui5-avatar-icon-fallback");
+	}
 
 	onBeforeRendering() {
 		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
@@ -388,20 +392,25 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	}
 
 	_checkInitials() {
-		const avatar = this.getDomRef()!,
-			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
-		// if there aren`t initalts set - the fallBack icon should be shown
-		if (!this.validInitials) {
-			avatarInitials!.classList.add("ui5-avatar-initials-hidden");
+		const avatar = this.getDomRef()!;
+		const avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		const validInitials = this.validInitials && avatarInitials && avatarInitials.scrollWidth <= avatar.scrollWidth;
+
+		if (validInitials) {
+			this.showInitials();
 			return;
 		}
-		// if initials` width is bigger than the avatar, an icon should be shown inside the avatar
-		avatarInitials && avatarInitials.classList.remove("ui5-avatar-initials-hidden");
-		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials && avatarInitials.scrollWidth > avatar.scrollWidth) {
-				avatarInitials.classList.add("ui5-avatar-initials-hidden");
-			}
-		}
+		this.showFallbackIcon();
+	}
+
+	showFallbackIcon() {
+		this.initialsContainer?.classList.add("ui5-avatar-initials-hidden");
+		this.fallBackIconDomRef?.classList.remove("ui5-avatar-fallback-icon-hidden");
+	}
+
+	showInitials() {
+		this.initialsContainer?.classList.remove("ui5-avatar-initials-hidden");
+		this.fallBackIconDomRef?.classList.add("ui5-avatar-fallback-icon-hidden");
 	}
 
 	_onClickHandler(e: MouseEvent) {

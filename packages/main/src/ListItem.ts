@@ -15,7 +15,7 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
-import { IButton } from "./Interfaces.js";
+import type { IButton } from "./Button.js";
 import {
 	DELETE,
 	ARIA_LABEL_LIST_ITEM_CHECKBOX,
@@ -56,18 +56,19 @@ type AccInfo = {
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${HasPopup}`;
+	ariaHaspopup?: `${Lowercase<HasPopup>}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;
 	ariaChecked?: boolean;
 	listItemAriaLabel?: string;
 	ariaOwns?: string;
+	tooltip?: string;
 }
 
 type AccessibilityAttributes = {
-	ariaSetsize: number,
-	ariaPosinset: number,
+	ariaSetsize?: number,
+	ariaPosinset?: number,
 }
 
 /**
@@ -76,6 +77,7 @@ type AccessibilityAttributes = {
  * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
  *
  * @constructor
+ * @abstract
  * @extends ListItemBase
  * @public
  */
@@ -101,8 +103,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
 	 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
-	 * <br><br>
-	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
+	 * <br><br> <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 	 *
 	 * @default "Active"
@@ -146,6 +147,16 @@ abstract class ListItem extends ListItemBase {
 	navigated!: boolean;
 
 	/**
+	 * Defines the text of the tooltip that would be displayed for the list item.
+	 *
+	 * @default ""
+	 * @public
+	 * @since 1.23.0
+	 */
+	@property({ type: String, defaultValue: "" })
+	tooltip!: string;
+
+	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 *
 	 * @private
@@ -156,6 +167,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the tooltip of the component.
 	 * @default ""
+	 * @deprecated
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -374,7 +386,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive) {
+		if (this.isInactive || this.disabled) {
 			return;
 		}
 		if (isEnter(e as KeyboardEvent)) {
@@ -484,9 +496,10 @@ abstract class ListItem extends ListItemBase {
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup || undefined,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
+			tooltip: this.tooltip || this.title,
 		};
 	}
 

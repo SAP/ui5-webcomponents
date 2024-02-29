@@ -1,26 +1,17 @@
 import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
 
-import { DocsPage } from "../../../../.storybook/docs";
-
 import type TableGroupRow from "@ui5/webcomponents/dist/TableGroupRow.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-
-const component = "ui5-table-group-row";
 let index = 0;
 
 export default {
 	title: "Main/Table/Table Group Row",
 	component: "TableGroupRow",
-	parameters: {
-		docs: {
-		  page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-		},
-	},
 	argTypes,
 } as Meta<TableGroupRow>;
 

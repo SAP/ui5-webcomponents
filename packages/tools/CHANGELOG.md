@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* remove sap.ui.require call from unused openui5 module ([#8359](https://github.com/SAP/ui5-webcomponents/issues/8359)) ([50219ac](https://github.com/SAP/ui5-webcomponents/commit/50219ac23add7b86fe26d8ca51e2181f01404992))
+
+
+
+
+
+# [1.23.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.3...v1.23.0-rc.4) (2024-02-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.2...v1.23.0-rc.3) (2024-02-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.1...v1.23.0-rc.2) (2024-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **tools:** fix usage of require in mjs ([#8258](https://github.com/SAP/ui5-webcomponents/issues/8258)) ([cbca059](https://github.com/SAP/ui5-webcomponents/commit/cbca059b926a8a5473d1f13690b6670239aafb8e))
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0) (2024-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
 # [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
 
 

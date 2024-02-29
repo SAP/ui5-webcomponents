@@ -59,6 +59,11 @@ type DatePickerChangeEventDetail = {
 	valid: boolean,
 }
 
+type DatePickerValueStateChangeEventDetail = {
+	valueState: `${ValueState}`,
+	valid: boolean,
+}
+
 type DatePickerInputEventDetail = {
 	value: string,
 	valid: boolean,
@@ -207,6 +212,32 @@ type DatePickerInputEventDetail = {
 		 * @public
 		 */
 		value: {
+			type: String,
+		},
+		/**
+		 * @public
+		 */
+		valid: {
+			type: Boolean,
+		},
+	},
+})
+/**
+ * Fired before the value state of the component is updated internally.
+ * The event is preventable, meaning that if it's default action is
+ * prevented, the component will not update the value state.
+ *
+ * @allowPreventDefault
+ * @public
+ * @param {string} valueState The new <code>valueState</code> that will be set.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+ */
+@event<DatePickerValueStateChangeEventDetail>("value-state-change", {
+	detail: {
+		/**
+		 * @public
+		 */
+		valueState: {
 			type: String,
 		},
 		/**
@@ -542,12 +573,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	_updateValueState() {
-		const isValid = this._checkValueValidity(this.value);
+		const valid = this._checkValueValidity(this.value);
+		const previousValueState = this.valueState;
 
-		if (isValid && this.valueState === ValueState.Error) { // If not valid - always set Error regardless of the current value state
-			this.valueState = ValueState.None;
-		} else if (!isValid) { // However if valid, change only Error (but not the others) to None
-			this.valueState = ValueState.Error;
+		this.valueState = valid ? ValueState.None : ValueState.Error;
+
+		const eventPrevented = !this.fireEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
+
+		if (eventPrevented) {
+			this.valueState = previousValueState;
 		}
 	}
 
@@ -683,8 +717,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": HasPopup.Grid,
-			"ariaAutoComplete": "none",
+			"ariaHasPopup": HasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
@@ -860,4 +893,5 @@ export default DatePicker;
 export type {
 	DatePickerChangeEventDetail,
 	DatePickerInputEventDetail,
+	DatePickerValueStateChangeEventDetail,
 };

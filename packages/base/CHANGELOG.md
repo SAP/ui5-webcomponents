@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* remove sap.ui.require call from unused openui5 module ([#8359](https://github.com/SAP/ui5-webcomponents/issues/8359)) ([50219ac](https://github.com/SAP/ui5-webcomponents/commit/50219ac23add7b86fe26d8ca51e2181f01404992))
+
+
+
+
+
+# [1.23.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.3...v1.23.0-rc.4) (2024-02-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.23.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.2...v1.23.0-rc.3) (2024-02-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.23.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.1...v1.23.0-rc.2) (2024-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* setting configuration before boot ([#8246](https://github.com/SAP/ui5-webcomponents/issues/8246)) ([d73834b](https://github.com/SAP/ui5-webcomponents/commit/d73834bd06516d5f663f14ecb516e92624191300))
+
+
+
+
+
+## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.22.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0) (2024-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+
+### Bug Fixes
+
+* build ([#8191](https://github.com/SAP/ui5-webcomponents/issues/8191)) ([5af9560](https://github.com/SAP/ui5-webcomponents/commit/5af956088195cd4de81f9c1ec82f1b937b3498aa))
+* **framework:** property with empty object as default value ([#8215](https://github.com/SAP/ui5-webcomponents/issues/8215)) ([b4e1eba](https://github.com/SAP/ui5-webcomponents/commit/b4e1ebae03a5ea87567ffc07516bb76a36d6734a))
+* release build ([#8222](https://github.com/SAP/ui5-webcomponents/issues/8222)) ([27042ac](https://github.com/SAP/ui5-webcomponents/commit/27042ac90443dea8d5900d1c5bfa5bc93d365da0))
+
+
+### Features
+
+* add dom shim so importing components in SSR works ([#8184](https://github.com/SAP/ui5-webcomponents/issues/8184)) ([ca49674](https://github.com/SAP/ui5-webcomponents/commit/ca49674e046bd74842100245db2cea61d53e2df0))
+
+
+
+
+
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
 
 

@@ -18,6 +18,7 @@ import type {
 import type {
 	ListItemClickEventDetail,
 	ListItemDeleteEventDetail,
+	ListItemFocusEventDetail,
 	ListSelectionChangeEventDetail,
 } from "./List.js";
 
@@ -35,6 +36,7 @@ type TreeItemMouseoverEventDetail = TreeItemEventDetail;
 type TreeItemMouseoutEventDetail = TreeItemEventDetail;
 type TreeItemClickEventDetail = TreeItemEventDetail;
 type TreeItemDeleteEventDetail = TreeItemEventDetail;
+type TreeItemFocusEventDetail = TreeItemEventDetail;
 type TreeSelectionChangeEventDetail = {
 	selectedItems: Array<TreeItemBase>;
 	previouslySelectedItems: Array<TreeItemBase>;
@@ -178,6 +180,18 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		/**
 		 * @public
 		 */
+		item: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired when a tree item is focused.
+ *
+ * @param {HTMLElement} item The focused item.
+ * @private
+ */
+@event<TreeItemFocusEventDetail>("item-focus", {
+	detail: {
 		item: { type: HTMLElement },
 	},
 })
@@ -362,6 +376,11 @@ class Tree extends UI5Element {
 		this.fireEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
 	}
 
+	_onListItemFocus(e: CustomEvent<ListItemFocusEventDetail>) {
+		const treeItem = e.detail.item as TreeItemBase;
+		this.fireEvent<TreeItemFocusEventDetail>("item-focus", { item: treeItem });
+	}
+
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
@@ -405,8 +424,8 @@ class Tree extends UI5Element {
 
 			item.setAttribute("level", level.toString());
 
-			item._setsize = ariaSetSize;
-			item._posinset = index + 1;
+			item.forcedSetsize = ariaSetSize;
+			item.forcedPosinset = index + 1;
 		});
 	}
 
@@ -473,6 +492,7 @@ export type {
 	TreeItemMouseoutEventDetail,
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
+	TreeItemFocusEventDetail,
 	TreeSelectionChangeEventDetail,
 	WalkCallback,
 };

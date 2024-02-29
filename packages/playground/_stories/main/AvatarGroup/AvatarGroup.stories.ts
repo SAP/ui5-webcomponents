@@ -6,27 +6,17 @@ import type { StoryFn, Meta } from "@storybook/web-components";
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
 import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
 import TemplateGroupWithPopover from "./TemplateGroupWithPopover.js";
 import TemplateIndividualWithPopover from "./TemplateIndividualWithPopover.js";
 import TemplateAvatarGroupTypesAndSizes from "./TemplateAvatarGroupTypesAndSizes.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
-const component = "ui5-avatar-group";
-
 export default {
   title: "Main/AvatarGroup",
   component: "AvatarGroup",
   argTypes,
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component })
-    },
-  },
 } as Meta<AvatarGroup>;
 
 const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>

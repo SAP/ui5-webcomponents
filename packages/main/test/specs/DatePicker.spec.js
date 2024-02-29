@@ -15,7 +15,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
-		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "grid", "aria-haspopup attribute is added.");
 		assert.notOk(await innerInput.getAttribute("aria-controls"), "aria-controls attribute isn't rendered.");
 		assert.notOk(await innerInput.getAttribute("aria-expanded"), "aria-expanded attribute isn't rendered.");
 	});
@@ -1330,5 +1330,19 @@ describe("Date Picker Tests", () => {
 
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2025 is not disabled");
+	});
+
+	it("Value state is not changed, when value-state-change is prevented", async () => {
+		datepicker.id = "#dpVsChangePrevented";
+
+		const input = await datepicker.getInput();
+
+		const valueState = await input.getProperty("valueState");
+		await input.click();
+		await browser.keys("Jan 29, 2019");
+
+		await browser.$("#dpVsChangePrevented").shadow$("ui5-input").shadow$("input").click(); // click elsewhere to focusout
+
+		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
 	});
 });

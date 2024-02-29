@@ -45,7 +45,7 @@ import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import type Token from "./Token.js";
-import type { IToken } from "./Interfaces.js";
+import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";

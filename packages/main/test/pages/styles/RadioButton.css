@@ -22,3 +22,18 @@ div {
 .radiobutton2auto {
     width: 300px
 }
+
+div.customStyling{
+    width: 100%;
+}
+
+.customStyling #customRb1:hover::part(inner-ring) {
+    fill: #20b7d5;
+}
+
+.customStyling ui5-radio-button[value-state="Error"]::part(outer-ring) {
+    stroke: rgb(212 56 247);
+}
+.customStyling ui5-radio-button[value-state="Success"]::part(outer-ring) {
+    stroke: rgb(12 223 147);
+}

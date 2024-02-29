@@ -1,8 +1,7 @@
 .ui5-block-layer {
 	display: none;
 	position: fixed;
-	background-color: var(--sapBlockLayer_Background);
-	opacity: 0.6;
+	background-color: var(--_ui5_popup_block_layer_background);
 	top: -500px;
 	left: -500px;
 	right: -500px;

@@ -1,6 +1,11 @@
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
+const isSSR = typeof document === "undefined";
+
 const detectNavigatorLanguage = () => {
+	if (isSSR) {
+		return DEFAULT_LANGUAGE;
+	}
 	const browserLanguages = navigator.languages;
 
 	const navigatorLanguage = () => {

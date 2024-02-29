@@ -57,17 +57,17 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	_columnsInfo!: Array<TableColumnInfo>;
 
 	@property({ defaultValue: "-1" })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
-	_busy!: boolean;
+	forcedBusy!: boolean;
 
 	@property({ defaultValue: "", noAttribute: true })
-	_ariaPosition!: string;
+	forcedAriaPosition!: string;
 
 	// Properties, set and handled by the Table
 	selected = false;
-	_tabbables: Array<HTMLElement> = [];
+	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
 	static i18nBundle: I18nBundle;
@@ -79,7 +79,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	}
 
 	get ariaLabelText() {
-		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this._ariaPosition}`;
+		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this.forcedAriaPosition}`;
 	}
 
 	visibleColCount(): number {

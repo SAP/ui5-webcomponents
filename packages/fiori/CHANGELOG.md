@@ -3,6 +3,134 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** title subtitle aligned with visual spec ([#8344](https://github.com/SAP/ui5-webcomponents/issues/8344)) ([84fb0d9](https://github.com/SAP/ui5-webcomponents/commit/84fb0d94d0bf9597f10147ca4dff0fcbfc0570ff)), closes [#7879](https://github.com/SAP/ui5-webcomponents/issues/7879)
+
+
+
+
+
+# [1.23.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.3...v1.23.0-rc.4) (2024-02-26)
+
+
+### Bug Fixes
+
+* **ui5-li-notification-group:** expand arrow visible ([#8329](https://github.com/SAP/ui5-webcomponents/issues/8329)) ([b2ca2a2](https://github.com/SAP/ui5-webcomponents/commit/b2ca2a299ebde195c5c16902a00969b6ada85f26)), closes [#8302](https://github.com/SAP/ui5-webcomponents/issues/8302)
+
+
+
+
+
+# [1.23.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.2...v1.23.0-rc.3) (2024-02-22)
+
+
+### Bug Fixes
+
+* **ui5-timeline-item:** correct content check ([#8295](https://github.com/SAP/ui5-webcomponents/issues/8295)) ([414087f](https://github.com/SAP/ui5-webcomponents/commit/414087f676d83ba1a0e62e1bd929fcd9f9718e4d))
+
+
+
+
+
+# [1.23.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.1...v1.23.0-rc.2) (2024-02-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.23.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.0...v1.23.0-rc.1) (2024-02-19)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** improved story and documentation ([#8294](https://github.com/SAP/ui5-webcomponents/issues/8294)) ([9740fe2](https://github.com/SAP/ui5-webcomponents/commit/9740fe21baa34233a66a4aea02f261fe1f5992f2))
+
+
+
+
+
+# [1.23.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.1-rc.0...v1.23.0-rc.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** aligned with visual specification ([#8266](https://github.com/SAP/ui5-webcomponents/issues/8266)) ([143d4af](https://github.com/SAP/ui5-webcomponents/commit/143d4afccfa1046f08c17e591e2749304afcac49))
+
+
+### Features
+
+* **ui5-side-navigation:** add external link icon ([#8199](https://github.com/SAP/ui5-webcomponents/issues/8199)) ([47e28c5](https://github.com/SAP/ui5-webcomponents/commit/47e28c5c50c824dfb743b79998c4d98f56be4beb))
+
+
+
+
+
+## [1.22.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0...v1.22.1-rc.0) (2024-02-08)
+
+
+### Bug Fixes
+
+* cast ariaHasPopup acc attribute to lowercase ([#8239](https://github.com/SAP/ui5-webcomponents/issues/8239)) ([6692284](https://github.com/SAP/ui5-webcomponents/commit/66922847d6cbc545c500c661d18facac7c2f609c))
+* **ui5-shellbar:** fixed secondaryTitle visual presentation ([#8221](https://github.com/SAP/ui5-webcomponents/issues/8221)) ([b3e0a80](https://github.com/SAP/ui5-webcomponents/commit/b3e0a80157615c22b89d7fb0857d22275cb83710)), closes [#8189](https://github.com/SAP/ui5-webcomponents/issues/8189)
+
+
+
+
+
+# [1.22.0](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.3...v1.22.0) (2024-02-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.22.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.2...v1.22.0-rc.3) (2024-02-01)
+
+
+### Bug Fixes
+
+* build ([#8191](https://github.com/SAP/ui5-webcomponents/issues/8191)) ([5af9560](https://github.com/SAP/ui5-webcomponents/commit/5af956088195cd4de81f9c1ec82f1b937b3498aa))
+* release build ([#8222](https://github.com/SAP/ui5-webcomponents/issues/8222)) ([27042ac](https://github.com/SAP/ui5-webcomponents/commit/27042ac90443dea8d5900d1c5bfa5bc93d365da0))
+* **ui5-li-notification-group:** correct collapse button shape on Compact mode ([#8166](https://github.com/SAP/ui5-webcomponents/issues/8166)) ([226d975](https://github.com/SAP/ui5-webcomponents/commit/226d975204f0755daf25710ad639ebfbd2e8fdd4)), closes [#8059](https://github.com/SAP/ui5-webcomponents/issues/8059)
+* **ui5-shellbar:** allow prevent default 'menu-item-click' action ([#8172](https://github.com/SAP/ui5-webcomponents/issues/8172)) ([d16efb6](https://github.com/SAP/ui5-webcomponents/commit/d16efb624f4d581bfa413cb96a4eebd4b9ce29d8))
+
+
+### Features
+
+* add dom shim so importing components in SSR works ([#8184](https://github.com/SAP/ui5-webcomponents/issues/8184)) ([ca49674](https://github.com/SAP/ui5-webcomponents/commit/ca49674e046bd74842100245db2cea61d53e2df0))
+* **ui5-illustrated-message:** new illustration type ([#8204](https://github.com/SAP/ui5-webcomponents/issues/8204)) ([9bcf589](https://github.com/SAP/ui5-webcomponents/commit/9bcf58930ce9d8a65507e173d2af99c34e644e78))
+* **ui5-illustrated-message:** new illustration type ([#8207](https://github.com/SAP/ui5-webcomponents/issues/8207)) ([6473ffe](https://github.com/SAP/ui5-webcomponents/commit/6473ffebd6001404c80cd06849e9135c6c350016))
+* **ui5-shellbar:** introducing Joule ([#8036](https://github.com/SAP/ui5-webcomponents/issues/8036)) ([ed5c20f](https://github.com/SAP/ui5-webcomponents/commit/ed5c20ffb42dd5f3eb81f77819fd40a9f7abbe08))
+* **ui5-shellbar:** new event added ([#8197](https://github.com/SAP/ui5-webcomponents/issues/8197)) ([4e864e9](https://github.com/SAP/ui5-webcomponents/commit/4e864e913597cdcc5d783012b8866afc1cde51a1)), closes [#6273](https://github.com/SAP/ui5-webcomponents/issues/6273)
+
+
+
+
+
+# [1.22.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.1...v1.22.0-rc.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** allow overstyling of width and border-radius ([#8081](https://github.com/SAP/ui5-webcomponents/issues/8081)) ([392f118](https://github.com/SAP/ui5-webcomponents/commit/392f11815b5e85d22949b4008f0a95c64e16d694))
+* **ui5-side-navigation:** correct text placement on items without icon ([#8154](https://github.com/SAP/ui5-webcomponents/issues/8154)) ([6bb45a9](https://github.com/SAP/ui5-webcomponents/commit/6bb45a94e5e52fc64fe8b816d1135e97ef6d85f3)), closes [#8131](https://github.com/SAP/ui5-webcomponents/issues/8131)
+
+
+### Features
+
+* **ui5-side-navigation:** display full item in collapsed mode on hover and focus ([#8112](https://github.com/SAP/ui5-webcomponents/issues/8112)) ([e0be298](https://github.com/SAP/ui5-webcomponents/commit/e0be29821a50d6c01f25d671565d0af4863e3d1e))
+
+
+
+
+
 # [1.22.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.22.0-rc.0...v1.22.0-rc.1) (2024-01-18)
 
 

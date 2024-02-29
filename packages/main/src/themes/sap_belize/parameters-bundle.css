@@ -3,6 +3,8 @@
 @import "../base/Badge-parameters.css";
 @import "./BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
+@import "../base/CalendarLegend-parameters.css";
+@import "../base/CalendarLegendItem-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
@@ -26,6 +28,7 @@
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "./PopupsCommon-parameters.css";
+@import "../base/PopupStaticAreaStyles-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";

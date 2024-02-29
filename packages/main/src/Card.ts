@@ -8,7 +8,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
-import type { ICardHeader } from "./CardHeader.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
@@ -16,6 +15,18 @@ import {
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
+
+/**
+ * Interface for components that may be slotted inside <code>ui5-card</code> as header
+ *
+ * @public
+ */
+interface ICardHeader extends HTMLElement {
+	subtitleText: string,
+	titleText: string,
+	status: string,
+	interactive: boolean,
+}
 
 /**
  * @class
@@ -122,3 +133,7 @@ class Card extends UI5Element {
 Card.define();
 
 export default Card;
+
+export type {
+	ICardHeader,
+};

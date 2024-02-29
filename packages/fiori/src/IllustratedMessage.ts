@@ -11,7 +11,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type IButton from "@ui5/webcomponents/dist/Button.js";
+import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
@@ -172,6 +172,10 @@ class IllustratedMessage extends UI5Element {
 	* Defines the semantic level of the title.
 	*
 	* <b>Note:</b> Used for accessibility purposes only.
+	*
+	* <br/>
+	*
+	* <b>Note:</b> Doesn't take effect when <code>title</code> slot is being used.
 	*
 	* @default "H2"
 	* @public

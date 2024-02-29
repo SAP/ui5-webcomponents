@@ -13,6 +13,7 @@ import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupI
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 
@@ -204,6 +205,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get _ariaExpanded() {
 		return !this.collapsed;
+	}
+
+	get groupCollapsedIcon() {
+		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
 	}
 
 	/**

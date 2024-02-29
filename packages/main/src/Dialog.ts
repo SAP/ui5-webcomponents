@@ -79,6 +79,25 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * <br>
  * For more information see the sample "Bar in Header/Footer".
 
+ *<h3>Keyboard Handling</h3>
+ *
+ * <h4>Basic Navigation</h4>
+ * When the <code>ui5-dialog</code> has the <code>draggable</code> property set to <code>true</code> and the header is focused, the user can move the dialog
+ * with the following keyboard shortcuts:
+ * <br>
+ * <ul>
+ * <li>[UP/DOWN] arrow keys - Move the dialog up/down.</li>
+ * <li>[LEFT/RIGHT] arrow keys - Move the dialog left/right.</li>
+ * </ul>
+ *
+ * <h4>Resizing</h4>
+ * When the <code>ui5-dialog</code> has the <code>resizable</code> property set to <code>true</code> and the header is focused, the user can change the size of the dialog
+ * with the following keyboard shortcuts:
+ * <br>
+ * <ul>
+ * <li>[SHIFT] + [UP/DOWN] - Decrease/Increase the height of the dialog.</li>
+ * <li>[SHIFT] + [LEFT/RIGHT] - Decrease/Increase the width of the dialog.</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *

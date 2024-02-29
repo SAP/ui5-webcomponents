@@ -3,26 +3,16 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type Calendar from "@ui5/webcomponents/dist/Calendar.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 
 
-const component = "ui5-calendar";
-
 export default {
 	title: "Main/Calendar",
 	component: "Calendar",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<Calendar>;
 
@@ -54,3 +44,62 @@ CalendarTypes.args = {
 	primaryCalendarType: CalendarType.Japanese,
 	secondaryCalendarType: CalendarType.Islamic,
 };
+
+export const CalendarWithLegend = Template.bind({});
+CalendarWithLegend.storyName = "Calendar with Calendar Legend";
+CalendarWithLegend.args = {
+	default: `
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+
+<ui5-calendar-legend
+	slot="calendarLegend"
+	id="calendarLegend"
+	hide-today
+	hide-selected-day
+>
+	<ui5-calendar-legend-item type="Type05" text="Holiday"></ui5-calendar-legend-item>
+	<ui5-calendar-legend-item type="Type07" text="School Vacation"></ui5-calendar-legend-item>
+	<ui5-calendar-legend-item type="Type13" text="Wedding"></ui5-calendar-legend-item>
+</ui5-calendar-legend>
+	`,
+};
+CalendarWithLegend.decorators = [
+	(story) => html`
+	${story()}
+	<script>
+	// Function that maps special dates to the current month
+	function updateSpecialDates() {
+		const currentDate = new Date();
+		const year = currentDate.getFullYear();
+		const formattedMonth = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+		const specialDates = document.querySelectorAll("ui5-special-date");
+		const types = ["Type05", "Type07", "Type13"];
+		const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
+		let assignedDays = new Set();
+
+		function generateUniqueRandomDay() {
+			let randomDay;
+			do {
+				randomDay = Math.floor(Math.random() * daysInMonth) + 1;
+			} while (assignedDays.has(randomDay));
+			assignedDays.add(randomDay);
+			return randomDay.toString().padStart(2, "0");
+		}
+
+		specialDates.forEach((specDate, index) => {
+			specDate.setAttribute("value", year + "-" + formattedMonth + "-" + generateUniqueRandomDay());
+			specDate.setAttribute("type", types[index % types.length]);
+		});
+	}
+
+	updateSpecialDates();
+</script>
+`,
+];

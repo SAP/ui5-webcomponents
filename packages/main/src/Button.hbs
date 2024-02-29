@@ -16,10 +16,11 @@
 	tabindex={{tabIndexValue}}
 	aria-expanded="{{accessibilityAttributes.expanded}}"
 	aria-controls="{{accessibilityAttributes.controls}}"
-	aria-haspopup="{{accessibilityAttributes.hasPopup}}"
+	aria-haspopup="{{_hasPopup}}"
 	aria-label="{{ariaLabelText}}"
 	title="{{buttonTitle}}"
 	part="button"
+	role="{{buttonAccessibleRole}}"
 >
 	{{#if icon}}
 		<ui5-icon

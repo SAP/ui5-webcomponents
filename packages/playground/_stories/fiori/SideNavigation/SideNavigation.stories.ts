@@ -2,24 +2,14 @@ import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import type { Decorator, Meta } from "@storybook/web-components";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import { DocsPage } from "../../../.storybook/docs";
-
 import type SideNavigation from "@ui5/webcomponents-fiori/dist/SideNavigation.js";
-
-const component = "ui5-side-navigation";
 
 export default {
 	title: "Fiori/Side Navigation",
 	component: "SideNavigation",
-	parameters: {
-		docs: {
-			page: DocsPage({ ...componentInfo, component })
-		},
-	},
 	argTypes,
 } as Meta<SideNavigation>;
 
@@ -45,17 +35,22 @@ ${story()}`;
 export const Basic = Template.bind({});
 Basic.args = {
 	default: `<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
+	<ui5-side-navigation-item text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
 	<ui5-side-navigation-item text="People" expanded icon="group">
 		<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
 		<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
 	</ui5-side-navigation-item>
 	<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+	<ui5-side-navigation-item text="Locations" disabled icon="locate-me" selected></ui5-side-navigation-item>
 	<ui5-side-navigation-item text="Events" icon="calendar">
 		<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+		<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
 		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 	</ui5-side-navigation-item>`,
 	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
-	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`
+	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history">
+		<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+	</ui5-side-navigation-item>`,
 };
 Basic.decorators = [setHeight];
 Basic.parameters = {
@@ -79,9 +74,12 @@ ToolLayout.args = {
 	<ui5-side-navigation-item text="Events" icon="calendar">
 		<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
 		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
-	</ui5-side-navigation-item>`,
+		<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+	</ui5-side-navigation-item>
+	<ui5-side-navigation-item text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>`,
 	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
-	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`
+	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
+	<ui5-side-navigation-item text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>`,
 };
 ToolLayout.decorators = [
 	setHeight,

@@ -18,6 +18,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * for the <code>ListItem</code> and <code>GroupHeaderListItem</code> classes.
  *
  * @constructor
+ * @abstract
  * @extends UI5Element
  * @public
  */
@@ -46,7 +47,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	hasBorder!: boolean;
 
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	* Defines whether <code>ui5-li</code> is in disabled state.
@@ -129,7 +130,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		return {
 			main: {
 				"ui5-li-root": true,
-				"ui5-li--focusable": !this.disabled,
+				"ui5-li--focusable": this._focusable,
 			},
 		};
 	}
@@ -138,18 +139,22 @@ class ListItemBase extends UI5Element implements ITabbable {
 		return this.disabled ? true : undefined;
 	}
 
+	get _focusable() {
+		return !this.disabled;
+	}
+
 	get hasConfigurableMode() {
 		return false;
 	}
 
 	get _effectiveTabIndex() {
-		if (this.disabled) {
+		if (!this._focusable) {
 			return -1;
 		}
 		if (this.selected) {
 			return 0;
 		}
-		return this._tabIndex;
+		return this.forcedTabIndex;
 	}
 }
 

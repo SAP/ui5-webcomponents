@@ -2051,6 +2051,11 @@
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.1.tgz#64df34e2f12e68e78ac57e571d25ec07fa460ca9"
   integrity sha512-kXOeFbfCm4fFf2A3WwVEeQj55tMZa8c8/f9AKHMobQMkzNUfUj+antR3fRPaZJawsa1aZiP/Da3ndpZrwEe4rQ==
 
+"@lit-labs/ssr-dom-shim@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.2.tgz#d693d972974a354034454ec1317eb6afd0b00312"
+  integrity sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==
+
 "@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.6.0":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.6.2.tgz#c256690f82f2d7d0ffb0b1cdf68dcb1ec86cea28"
@@ -2776,10 +2781,10 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@sap-theming/theming-base-content@11.10.0":
-  version "11.10.0"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.10.0.tgz#214c5a4886149c6e9f9faa880c4a1ed101d51531"
-  integrity sha512-MPGq5pivR+MLzchyZTXwu+VM6ZAekaPxiMnEHYHTG3uorTpBzaW+JhP8mqV+yGD3mpIUuomjbBeWbedTHnB2nw==
+"@sap-theming/theming-base-content@11.12.0":
+  version "11.12.0"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.12.0.tgz#e62d2b6f9cc923447d2a3813b214ba6f0bedc7e4"
+  integrity sha512-kPHlziH8e6W8VjzljOiNjgBz81GuvC8WUAi7K6F5k+ZaRc1DUkDU12x9k6B0l4u9nPtprdZTse55r3PFGuELdQ==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
@@ -4815,12 +4820,21 @@ axe-core@4.2.3:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.2.3.tgz#2a3afc332f0031b42f602f4a3de03c211ca98f72"
   integrity sha512-pXnVMfJKSIWU2Ml4JHP7pZEPIrgBO1Fd3WGx+fPBsS+KRGhE4vxooD8XBGWbQOIVSZsVK7pUDBBkCicNu80yzQ==
 
-axios@^1.0.0, axios@^1.6.0:
+axios@^1.0.0:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.2.tgz#de67d42c755b571d3e698df1b6504cde9b0ee9f2"
   integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
   dependencies:
     follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.6.5:
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.7.tgz#7b48c2e27c96f9c68a2f8f31e2ab19f59b06b0a7"
+  integrity sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==
+  dependencies:
+    follow-redirects "^1.15.4"
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
@@ -5440,13 +5454,13 @@ chrome-launcher@^0.15.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@119.0.1:
-  version "119.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-119.0.1.tgz#064f3650790ccea055e9bfd95c600f5ea60295e9"
-  integrity sha512-lpCFFLaXPpvElTaUOWKdP74pFb/sJhWtWqMjn7Ju1YriWn8dT5JBk84BGXMPvZQs70WfCYWecxdMmwfIu1Mupg==
+chromedriver@^121.0.2:
+  version "121.0.2"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-121.0.2.tgz#208909a61e9d510913107ea6faf34bcdd72cdced"
+  integrity sha512-58MUSCEE3oB3G3Y/Jo3URJ2Oa1VLHcVBufyYt7vNfGrABSJm7ienQLF9IQ8LPDlPVgLUXt2OBfggK3p2/SlEBg==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
-    axios "^1.6.0"
+    axios "^1.6.5"
     compare-versions "^6.1.0"
     extract-zip "^2.0.1"
     https-proxy-agent "^5.0.1"
@@ -6966,6 +6980,11 @@ estraverse@^5.1.0, estraverse@^5.2.0:
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-5.3.0.tgz#2eea5290702f26ab8fe5370370ff86c965d21123"
   integrity sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==
 
+estree-walk@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/estree-walk/-/estree-walk-2.2.0.tgz#f1428cbdb57f46462be9f0d5d2fa5582e647dad9"
+  integrity sha512-6gUr3kGNVEfL6pcIiGBrSkhoEQPkv8laQy1lUDpaxT4AvlBxf/UYSueOEb6Wq1cG5Ct6xQSkFCHoJcZlijpUAg==
+
 esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
@@ -7400,6 +7419,11 @@ follow-redirects@^1.15.0:
   version "1.15.4"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.4.tgz#cdc7d308bf6493126b17ea2191ea0ccf3e535adf"
   integrity sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==
+
+follow-redirects@^1.15.4:
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
+  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -8453,9 +8477,9 @@ ip-regex@^4.1.0:
   integrity sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==
 
 ip@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ip/-/ip-2.0.0.tgz#4cf4ab182fee2314c75ede1276f8c80b479936da"
-  integrity sha512-WKa+XuLG1A1R0UWhl2+1XQSi+fZWMsYKffMZTTYsiZaUD8k2yDAj5atimTUD2TZkyCkNEeYE5NhFZmupOGtjYQ==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ip/-/ip-2.0.1.tgz#e8f3595d33a3ea66490204234b77636965307105"
+  integrity sha512-lJUL9imLTNi1ZfXT+DU6rBBdbiKGBuay9B6xGSPVjUeQwaH1RIGqef8RZkUtHioLmSNpPR5M4HVKJGm1j8FWVQ==
 
 ipaddr.js@1.9.1:
   version "1.9.1"

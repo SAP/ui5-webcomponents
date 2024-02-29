@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var mainContent = document.getElementById("main-content");
 	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
 	var COMPACT_CLASS = "ui5-content-density-compact";
-	var RTL = Configuration.getRTL();
 	var THEME = Configuration.getTheme();
 	var HCB = "sap_belize_hcb";
 	var FIORI3 = "sap_fiori_3";
@@ -14,12 +13,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var btnCompact = document.getElementById("btnCompact");
 	var btnTheme = document.getElementById("btnTheme");
 	var btnLightDark = document.getElementById("btnLightDark");
-
-	if (RTL) {
-		document.body.setAttribute("dir", "rtl");
-	} else {
-		document.body.removeAttribute("dir");
-	}
 
 	/* SideNav */
 	function toggleSideNav(toggle) {
@@ -45,12 +38,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		return currentURL.slice(0, currentURL.indexOf(".html")) + params;
 	}
 
-	btnRTL.pressed = !!RTL;
 	btnTheme.pressed = !!(THEME === HCB);
 	btnLightDark.pressed = !!(THEME === FIORI3_DARK);
 
 	btnRTL.addEventListener('click', function(e) {
-		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, THEME);
+		if (e.target.pressed) {
+			document.body.setAttribute("dir", "rtl");
+		} else {
+			document.body.removeAttribute("dir");
+		}
+		window['sap-ui-webcomponents-bundle'].applyDirection();
 	}, false);
 
 	btnCompact.addEventListener('click', function(e) {

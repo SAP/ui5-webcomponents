@@ -7,7 +7,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { IColorPaletteItem } from "./Interfaces.js";
+import type { IColorPaletteItem } from "./ColorPalette.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
@@ -25,7 +25,6 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  *
  * @constructor
  * @extends UI5Element
- * @abstract
  * @since 1.0.0-rc.12
  * @implements { IColorPaletteItem }
  * @public
@@ -54,7 +53,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
@@ -70,7 +69,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	phone!: boolean;
+	onPhone!: boolean;
 
 	/**
 	 * @private
@@ -91,7 +90,8 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	onBeforeRendering() {
 		this._disabled = !this.value;
-		this.phone = isPhone();
+		this.onPhone = isPhone();
+		this.setAttribute("style", `background-color: ${this.value}`);
 	}
 
 	get colorLabel() {

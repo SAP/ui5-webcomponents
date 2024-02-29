@@ -1,24 +1,15 @@
 import { html } from "lit";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
 
-import { DocsPage } from "../../../../.storybook/docs.js";
-
 import type MultiComboBoxGroupItem from "@ui5/webcomponents/dist/MultiComboBoxGroupItem.js";
-
-const component = "ui5-mcb-group-item";
 
 export default {
     title: "Main/Multi-Combo Box/Multi-Combo Box Group Item",
     component: "MultiComboBoxGroupItem",
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component, showDefaultStoryOnly: true })
-        },
-    },
     argTypes,
 } as Meta<MultiComboBoxGroupItem>;
 
