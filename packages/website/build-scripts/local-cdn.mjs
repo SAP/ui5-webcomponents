@@ -9,10 +9,18 @@ await Promise.all([
     cp("../theming/dist", "local-cdn/local-cdn/theming/dist", {recursive: true}),
     cp("../localization/dist", "local-cdn/local-cdn/localization/dist", {recursive: true}),
     cp("../../node_modules/lit-html", "local-cdn/local-cdn/lit-html", {recursive: true}),
+
+    cp("../base/package.json", "local-cdn/local-cdn/base/package.json"),
+    cp("../main/package.json", "local-cdn/local-cdn/main/package.json"),
+    cp("../fiori/package.json", "local-cdn/local-cdn/fiori/package.json"),
+    cp("../icons/package.json", "local-cdn/local-cdn/icons/package.json"),
+    cp("../theming/package.json", "local-cdn/local-cdn/theming/package.json"),
+    cp("../localization/package.json", "local-cdn/local-cdn/localization/package.json"),
+
 ]);
 
 const files = await readdir("local-cdn", {recursive: true, withFileTypes: true});
 const filesToDelete = files.filter(f => {
-    return f.isFile() && !f.name.endsWith(".js") && !f.name.endsWith(".svg")
+    return f.isFile() && !f.name.endsWith(".js") && !f.name.endsWith(".svg") && !f.name.endsWith(".d.ts") && !f.name.endsWith("package.json")
 });
 filesToDelete.map(f => rm(path.join(f.path, f.name)));

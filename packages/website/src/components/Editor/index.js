@@ -27,7 +27,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css }) {
+export default function Editor({html, js, css, mainFile = "main.js" }) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -100,7 +100,7 @@ export default function Editor({html, js, css }) {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
           hidden: true,
         },
-        "main.js": {
+        [mainFile]: {
           content: `/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
