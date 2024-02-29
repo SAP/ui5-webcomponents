@@ -173,11 +173,7 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines whether the side content is positioned before the main content (left side
 	 * in LTR mode), or after the the main content (right side in LTR mode).
-	 *
-	 * **The available values are:**
-	 *
-	 * - `Start`
-	 * - `End`
+
 	 * @default "End"
 	 * @public
 	 *
@@ -187,14 +183,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
-	 *
-	 * **The available values are:**
-	 *
-	 * - `AlwaysShow`
-	 * - `ShowAboveL`
-	 * - `ShowAboveM`
-	 * - `ShowAboveS`
-	 * - `NeverShow`
 	 *
  	 * @default "ShowAboveS"
 	 * @public
@@ -206,12 +194,6 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
 	 *
-	 * **The available values are:**
-	 *
-	 * - `BelowXL`
-	 * - `BelowL`
-	 * - `BelowM`
-	 * - `OnMinimumWidth`
 	 * @default "OnMinimumWidth"
 	 * @public
 	 *

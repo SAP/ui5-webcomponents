@@ -33,7 +33,8 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
 class GroupHeaderListItem extends ListItemBase {
 	/**
 	 * Defines the text alternative of the component.
-	 * Note: If not provided a default text alternative will be set, if present.
+	 *
+	 * **Note:** If not provided a default text alternative will be set, if present.
 	 *
 	 * @default ""
 	 * @public

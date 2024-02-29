@@ -149,9 +149,9 @@ type StepInfo = {
  *
  * **For example:**
  *
- * `&lt;ui5-dialog style="height: 80%"&gt;`
- * `&#9;&lt;ui5-wizard&gt;&lt;/ui5-wizard&gt;`
- * `&lt;/ui5-dialog&gt;`
+ * `<ui5-dialog style="height: 80%">`
+ * `&#9;<ui5-wizard></ui5-wizard>`
+ * `</ui5-dialog>`
  *
  * #### Moving to next step
  * The `ui5-wizard-step` provides the necessary API and it's up to the user of the component to use it to move to the next step.
@@ -174,7 +174,7 @@ type StepInfo = {
  * Tapping on them will show a popover to select the step to navigate to. On mobile device, the grouped steps are presented within a dialog.
  *
  * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/Wizard.js";` (includes &lt;ui5-wizard-step/&gt;)
+ * `import "@ui5/webcomponents-fiori/dist/Wizard.js";` (includes <ui5-wizard-step/>)
  *
  * @constructor
  * @extends UI5Element

@@ -30,6 +30,10 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * ### Usage
  * Use it when you want to make sure that all the content is visible on any device.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ResponsivePopover.js";`
+ *
  * @constructor
  * @extends Popover
  * @since 1.0.0-rc.6

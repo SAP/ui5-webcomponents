@@ -259,6 +259,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Defines the list of items against which the user could sort data.
+	 *
 	 * **Note:** If you want to use this slot, you need to import used item: `import "@ui5/webcomponents-fiori/dist/SortItem.js";`
 	 *
 	 * @public
@@ -268,6 +269,7 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Defines the `filterItems` list.
+	 *
 	 * **Note:** If you want to use this slot, you need to import used item: `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`
 	 *
 	 * @public

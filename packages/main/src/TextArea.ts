@@ -473,8 +473,8 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	_tokenizeText(value: string) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
-			.replace(/>/gm, "&gt;")
+		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "<")
+			.replace(/>/gm, ">")
 			.split("\n");
 
 		if (tokenizedText.length < this.rows) {

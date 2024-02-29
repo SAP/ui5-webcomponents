@@ -53,7 +53,7 @@ type AccessibilityAttributes = {
  * by using the `design` property.
  *
  * If the `href` property is set, the link behaves as the HTML
- * anchor tag (`&lt;a&gt;&lt;a&#47;&gt;`) and opens the specified URL in the given target frame (`target` property).
+ * anchor tag (`<a><a&#47;>`) and opens the specified URL in the given target frame (`target` property).
  * To specify where the linked content is opened, you can use the `target` property.
  *
  * ### Responsive behavior
@@ -69,7 +69,9 @@ type AccessibilityAttributes = {
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Array<Node>} default - Defines the text of the component. **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * @slot {Array<Node>} default - Defines the text of the component.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-link",
@@ -173,6 +175,7 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
+	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @default "None"

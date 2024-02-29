@@ -76,9 +76,9 @@ const PRESENTATION_ROLE = "presentation";
  * Set the icon collection ("SAP-icons", "tnt" or "business-suite" - "SAP-icons" is the default icon collection and can be skipped)
  * and the icon name to the `name` property.
  *
- * `&lt;ui5-icon name="employee">&lt;/ui5-icon>`
- * `&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon>`
- * `&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon>`
+ * `<ui5-icon name="employee"></ui5-icon>`
+ * `<ui5-icon name="tnt/antenna"></ui5-icon>`
+ * `<ui5-icon name="business-suite/ab-testing"></ui5-icon>`
  *
  * ### Keyboard Handling
  *

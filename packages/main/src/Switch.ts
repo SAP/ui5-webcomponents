@@ -35,7 +35,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * The component can display texts, that will be switched, based on the component state, via the `textOn` and `textOff` properties,
  * but texts longer than 3 letters will be cutted off.
  *
- * However, users are able to customize the width of `ui5-switch` with pure CSS (`&lt;ui5-switch style="width: 200px">`), and set widths, depending on the texts they would use.
+ * However, users are able to customize the width of `ui5-switch` with pure CSS (`<ui5-switch style="width: 200px">`), and set widths, depending on the texts they would use.
  *
  * Note: the component would not automatically stretch to fit the whole text width.
  *

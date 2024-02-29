@@ -144,7 +144,8 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
-	 * design guidelines, please use the `ui5-avatar` with it`s default size - S.
+	 * design guidelines, please use the `ui5-avatar` with it's default size - S.
+	 *
 	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
 	 * `ui5-li` should be customized in order to fit.
 	 * @since 1.10.0

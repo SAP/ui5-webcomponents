@@ -61,10 +61,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 class Timeline extends UI5Element {
 	/**
 	 * Defines the items orientation.
-	 *
-	 * **Note:** Available options are:
-	 * - `Vertical`
-	 * - `Horizontal`
 	 * @default "Vertical"
 	 * @since 1.0.0-rc.15
 	 * @public

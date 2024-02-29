@@ -42,6 +42,7 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
+	 *
 	 * **Note:** The additional text would not be displayed if the item has a submenu.
 	 *
 	 * @default ""
@@ -88,7 +89,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * Note: If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
+	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
 	 *
 	 * @default false
 	 * @public

@@ -103,7 +103,8 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
 	 * Available options are `Active` (by default), `Inactive`, `Detail` and `Navigation`.
-	 *  **Note:** When set to `Active` or `Navigation`, the item will provide visual response upon press and hover,
+	 *
+	 * **Note:** When set to `Active` or `Navigation`, the item will provide visual response upon press and hover,
 	 * while with type `Inactive` and `Detail` - will not.
 	 *
 	 * @default "Active"
@@ -120,7 +121,8 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 * - `ariaSetsize`: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
 	 * 	The value of each `aria-setsize` is an integer reflecting number of items in the complete set.
-	 * 	**Note: ** If the size of the entire set is unknown, set `aria-setsize="-1"`.
+	 *
+	 * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
 	 * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
 	 * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
 	 *

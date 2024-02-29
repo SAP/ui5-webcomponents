@@ -69,11 +69,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	/**
 	 * Determines the layout of the item container.
 	 *
-	 * Available options are:
-	 *
-	 * - `Square`
-	 * - `Wide`
-	 *
 	 * @default "Square"
 	 * @public
 	 */

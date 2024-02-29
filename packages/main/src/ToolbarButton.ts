@@ -62,14 +62,6 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the action design.
-	 * **The available values are:**
-	 *
-	 * - `Default`
-	 * - `Emphasized`
-	 * - `Positive`
-	 * - `Negative`
-	 * - `Transparent`
-	 * - `Attention`
 	 *
 	 * @default "Default"
 	 * @public

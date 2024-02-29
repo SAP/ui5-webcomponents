@@ -23,11 +23,6 @@ class ToolbarItem extends UI5Element {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
-	 * Available options are:
-	 *
-	 * - `NeverOverflow`
-	 * - `AlwaysOverflow`
-	 * - `Default`
 	 *
 	 * @public
 	 * @default "Default"

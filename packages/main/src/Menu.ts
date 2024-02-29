@@ -142,12 +142,13 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @public
  * @allowPreventDefault
  * @since 1.10.0
- * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening. **Note:** available since 1.14.0.
+ * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
 @event<MenuBeforeOpenEventDetail>("before-open", {
 	detail: {
 		/**
 		 * @public
+		 * @since 1.14.0
 		 */
 		item: {
 			type: HTMLElement,

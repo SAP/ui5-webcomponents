@@ -314,7 +314,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines if the table is in busy state.
-	 * **
 	 *
 	 * In this state the component's opacity is reduced
 	 * and busy indicator is displayed at the bottom of the table.

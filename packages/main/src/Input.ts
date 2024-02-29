@@ -537,33 +537,34 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines the suggestion items.
 	 *
 	 * Example:
-	 *
-	 * &lt;ui5-input show-suggestions>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item>
-	 * &lt;/ui5-input>
-	 *
-	 * ```html
+	 * ```
 	 * <ui5-input show-suggestions>
-	 * <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
-	 * <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
-	 * <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
-	 * <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item>
-	 * <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
-	 * <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
+	 *     <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+	 *     <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+	 * </ui5-input>
+	 * ```
+	 *
+	 * ```
+	 * <ui5-input show-suggestions>
+	 *     <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
+	 *     <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+	 *     <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+	 *     <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item>
+	 *     <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
+	 *     <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
 	 * </ui5-input>
 	 * ```
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
 	 * property is set to `true`.
 	 *
-	 * **Note:** The `&lt;ui5-suggestion-item&gt;` and `&lt;ui5-suggestion-group-item&gt;` are recommended to be used as suggestion items.
+	 * **Note:** The `<ui5-suggestion-item>` and `<ui5-suggestion-group-item>` are recommended to be used as suggestion items.
 	 *
 	 * **Note:** Importing the Input Suggestions Support feature:
 	 *
 	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
 	 *
-	 * automatically imports the `&lt;ui5-suggestion-item>` and `&lt;ui5-suggestion-group-item>` for your convenience.
+	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-group-item>` for your convenience.
 	 *
 	 * @public
 	 */

@@ -55,7 +55,7 @@ No properties available for this component.`
         }
 
         if (property.deprecated) {
-            propertyResult += `\n| Deprecated | ${property.deprecated} |`
+            propertyResult += `\n| Deprecated | ${processDescription(typeof property.deprecated === "boolean" ? "true" : property.deprecated)} |`
         }
 
         return propertyResult
@@ -93,7 +93,7 @@ No methods available for this component.`
                 }
 
                 if (param.deprecated) {
-                    text += `<br />Deprecated: ${param.deprecated}`
+                    text += `<br />Deprecated: ${processDescription(typeof param.deprecated === "boolean" ? "true" : param.deprecated)}`
                 }
 
                 return text;
@@ -107,7 +107,7 @@ No methods available for this component.`
         }
 
         if (method.deprecated) {
-            methodResult += `\n| Deprecated | ${method.deprecated} |`
+            methodResult += `\n| Deprecated | ${processDescription(typeof method.deprecated === "boolean" ? "true" : method.deprecated)} |`
         }
 
         return methodResult
@@ -145,7 +145,7 @@ No events available for this component.`
                 }
 
                 if (param.deprecated) {
-                    text += `<br />Deprecated: ${param.deprecated}`
+                    text += `<br />Deprecated: ${processDescription(typeof param.deprecated === "boolean" ? "true" : param.deprecated)}`
                 }
 
                 return text;
@@ -159,7 +159,7 @@ No events available for this component.`
         }
 
         if (event.deprecated) {
-            eventResult += `\n| Deprecated | ${event.deprecated} |`
+            eventResult += `\n| Deprecated | ${processDescription(typeof event.deprecated === "boolean" ? "true" : event.deprecated)} |`
         }
 
         return eventResult
@@ -189,7 +189,7 @@ No slots available for this component.`
         }
 
         if (slot.deprecated) {
-            slotResult += `\n| Deprecated | ${slot.deprecated} |`
+            slotResult += `\n| Deprecated | ${processDescription(typeof slot.deprecated === "boolean" ? "true" : slot.deprecated)} |`
         }
 
         return slotResult

@@ -30,7 +30,9 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
  * @implements {ITableRow}
  * @extends UI5Element
  * @public
- * @slot {Node[]} default - Defines the text of the component.  **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * @slot {Node[]} default - Defines the text of the component.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @csspart group-row - Used to style the native `tr` element
  */
 @customElement({

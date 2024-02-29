@@ -52,6 +52,7 @@ class TabSeparator extends UI5Element implements ITab {
 
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
+	 *
 	 * **Note:** Tabs and separators, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
 	 *
 	 * @public

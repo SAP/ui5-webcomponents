@@ -10,6 +10,10 @@ import type { IOption } from "./Select.js";
  *
  * The `ui5-option` component defines the content of an option in the `ui5-select`.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Option.js";`
+ *
  * @constructor
  * @extends UI5Element
  * @implements {IOption}

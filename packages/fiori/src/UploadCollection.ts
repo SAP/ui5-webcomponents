@@ -189,6 +189,7 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Defines the items of the `ui5-upload-collection`.
+	 *
 	 * **Note:** Use `ui5-upload-collection-item` for the intended design.
 	 *
 	 * @public

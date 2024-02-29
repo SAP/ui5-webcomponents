@@ -45,6 +45,7 @@ import panelCss from "./generated/themes/Panel.css.js";
  * The custom header can be set through the `header` slot and it may contain arbitraray content, such as: title, buttons or any other HTML elements.
  *
  * The content area can contain an arbitrary set of controls.
+ *
  * **Note:** The custom header is not clickable out of the box, but in this case the icon is interactive and allows to show/hide the content area.
  *
  * ### Responsive Behavior

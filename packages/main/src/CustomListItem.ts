@@ -37,7 +37,8 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
 class CustomListItem extends ListItem {
 	/**
 	 * Defines the text alternative of the component.
-	 * Note: If not provided a default text alternative will be set, if present.
+	 *
+	 * **Note**: If not provided a default text alternative will be set, if present.
 	 *
 	 * @default ""
 	 * @public

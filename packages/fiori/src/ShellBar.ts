@@ -217,6 +217,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the product switch icon is activated.
+ *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
  *
  * @allowPreventDefault
@@ -266,6 +267,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when a menu item is activated
+ *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
  *
  * @param {HTMLElement} item DOM ref of the activated list item
@@ -283,6 +285,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the search button is activated.
+ *
  * **Note:** You can prevent expanding/collapsing of the search field by calling `event.preventDefault()`.
  *
  * @allowPreventDefault
@@ -346,6 +349,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines, if the product CoPilot icon would be displayed.
+	 *
 	 * **Note:** By default the co-pilot is displayed as static SVG.
 	 * If you need an animated co-pilot, you can import the `"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"` module as add-on feature.
 	 * @default false
@@ -356,6 +360,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+	 *
 	 * **Note:** By default the Search Field is not displayed.
 	 * @default false
 	 * @public
@@ -451,7 +456,7 @@ class ShellBar extends UI5Element {
 	 * Defines the `ui5-shellbar` aditional items.
 	 *
 	 * **Note:**
-	 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
+	 * You can use the  <ui5-shellbar-item></ui5-shellbar-item>.
 	 *
 	 * @public
 	 */
@@ -462,7 +467,7 @@ class ShellBar extends UI5Element {
 	 * You can pass `ui5-avatar` to set the profile image/icon.
 	 * If no profile slot is set - profile will be excluded from actions.
 	 *
-	 * Note: We recommend not using the `size` attribute of `ui5-avatar` because
+	 * **Note:** We recommend not using the `size` attribute of `ui5-avatar` because
 	 * it should have specific size by design in the context of `ui5-shellbar` profile.
 	 * @since 1.0.0-rc.6
 	 * @public
@@ -483,7 +488,7 @@ class ShellBar extends UI5Element {
 	 * Defines the items displayed in menu after a click on the primary title.
 	 *
 	 * **Note:**
-	 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
+	 * You can use the  <ui5-li></ui5-li> and its ancestors.
 	 *
 	 * @since 0.10
 	 * @public

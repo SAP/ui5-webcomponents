@@ -134,7 +134,6 @@ class Toolbar extends UI5Element {
 	 * Defines the items of the component.
      *
      * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })

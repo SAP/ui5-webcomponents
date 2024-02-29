@@ -37,7 +37,6 @@ import {
  * the input field, it must fit to the used time format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table)
  * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
  *
  * For example, if the `format-pattern` is "HH:mm:ss",
