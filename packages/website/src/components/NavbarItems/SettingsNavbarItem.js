@@ -14,12 +14,8 @@ import {
 } from "@docusaurus/theme-common";
 
 const sendSettingsToFrame = (settings) => {
-    [...document.querySelectorAll("playground-ide")].forEach(ide => {
-        ide.shadowRoot.querySelector("playground-preview").iframe.contentWindow.postMessage({ settings }, "*");
-    });
-
     [...document.querySelectorAll("playground-preview")].forEach(preview => {
-        preview.iframe.contentWindow.postMessage({ settings }, "*");
+        preview.iframe?.contentWindow?.postMessage({ settings }, "*");
     });
 }
 
