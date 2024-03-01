@@ -1360,7 +1360,7 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 		currentPicker = await calendar.getProperty("_currentPicker");
 
-		assert.equal(currentPicker, "day", "calendar is opened on months");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
 
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
 		const monthPicker = await calendar.shadow$("ui5-monthpicker");
