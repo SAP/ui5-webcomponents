@@ -1,3 +1,62 @@
+.icon__grid {
+	display: grid;
+	padding: 2rem 0;
+	gap: 2rem;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+
+.icon__wrapper {
+	position: relative;
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0.5rem;
+    background-color: var(--ifm-background-surface-color);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1.5px 3px 0px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+	justify-content: center;
+}
+
+[data-theme='dark'] .icon__wrapper:hover {
+	background-color: var(--ifm-background-color);
+}
+
+.icon__wrapper:hover {
+	background-color: var(--ifm-menu-color-background-active);
+}
+
+.icon__wrapper.icon__wrapper--copied .icon__wrapper__copy {
+	fill: var(--ifm-color-primary);
+}
+
+.icon__wrapper__svg {
+	width: 2rem;
+	height: 2rem;
+	pointer-events: none;
+}
+
+.icon__wrapper__copy {
+	fill: var(--ifm-color-primary);
+}
+
+.icon__wrapper__copy {
+	width: 1rem;
+	height: 1rem;
+	align-self: end;
+	fill: var(--ifm-font-color-base);
+	pointer-events: none;
+}
+
+.icon__wrapper__title {
+	color: var(--ifm-font-color-base);
+	text-align: center;
+	margin-top: 0.5rem;
+	word-break: break-all;
+	font-size: 0.813rem;
+	pointer-events: none;
+}
+
 .segmented__button {
 	display: inline-flex;
     align-items: center;
