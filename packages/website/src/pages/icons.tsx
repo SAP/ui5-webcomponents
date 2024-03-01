@@ -28,11 +28,11 @@ const Select = ({ updateState }) => {
 
     <div
         onClick={() => { 
-          setCollection("SAP BS Icons");
-          updateState("SAP BS Icons");
+          setCollection("SAP BSuite Icons");
+          updateState("SAP BSuite Icons");
         }}
-        className={clsx("segmented__button__item", { 'segmented__button__item--active': collection === "SAP BS Icons" })}
-    >SAP BS Icons</div>
+        className={clsx("segmented__button__item", { 'segmented__button__item--active': collection === "SAP BSuite Icons" })}
+    >SAP BSuite Icons</div>
   </div>;
 };
 
@@ -40,7 +40,7 @@ const Select = ({ updateState }) => {
 const Collection = ({ currCollection }) => { 
   if (currCollection === "SAP TNT Icons") {
       return <SAPTNTIcons />
-  } else if (currCollection === "SAP BS Icons") {
+  } else if (currCollection === "SAP BSuite Icons") {
       return <SAPBSIcons />
   }
 
