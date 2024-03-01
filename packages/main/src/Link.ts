@@ -53,7 +53,7 @@ type AccessibilityAttributes = {
  * by using the `design` property.
  *
  * If the `href` property is set, the link behaves as the HTML
- * anchor tag (`<a><a&#47;>`) and opens the specified URL in the given target frame (`target` property).
+ * anchor tag (`<a></a>`) and opens the specified URL in the given target frame (`target` property).
  * To specify where the linked content is opened, you can use the `target` property.
  *
  * ### Responsive behavior

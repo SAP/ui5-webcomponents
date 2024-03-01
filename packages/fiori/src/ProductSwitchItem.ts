@@ -82,7 +82,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 *
 	 * Example:
 	 *
-	 * <pre>ui5-product-switch-item icon="palette"</pre>
+	 * `<ui5-product-switch-item icon="palette">`
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""

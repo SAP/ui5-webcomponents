@@ -163,8 +163,6 @@ class IllustratedMessage extends UI5Element {
 	*
 	* **Note:** Used for accessibility purposes only.
 	*
-	* <br/>
-	*
 	* **Note:** Doesn't take effect when `title` slot is being used.
 	* @default "H2"
 	* @public

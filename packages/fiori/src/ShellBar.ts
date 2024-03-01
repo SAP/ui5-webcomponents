@@ -446,7 +446,7 @@ class ShellBar extends UI5Element {
 	 * Defines the `ui5-shellbar` aditional items.
 	 *
 	 * **Note:**
-	 * You can use the  <ui5-shellbar-item></ui5-shellbar-item>.
+	 * You can use the `<ui5-shellbar-item></ui5-shellbar-item>`.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -476,8 +476,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Defines the items displayed in menu after a click on the primary title.
 	 *
-	 * **Note:**
-	 * You can use the  <ui5-li></ui5-li> and its ancestors.
+	 * **Note:** You can use the  `<ui5-li></ui5-li>` and its ancestors.
 	 * @since 0.10
 	 * @public
 	 */

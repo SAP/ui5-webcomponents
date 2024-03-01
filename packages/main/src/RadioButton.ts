@@ -70,8 +70,8 @@ let activeRadio: RadioButton;
  * @constructor
  * @extends UI5Element
  * @public
- * @csspart outer-ring - Used to style the outer ring of the <code>ui5-radio-button</code>.
- * @csspart inner-ring - Used to style the inner ring of the <code>ui5-radio-button</code>.
+ * @csspart outer-ring - Used to style the outer ring of the `ui5-radio-button`.
+ * @csspart inner-ring - Used to style the inner ring of the `ui5-radio-button`.
  */
 @customElement({
 	tag: "ui5-radio-button",

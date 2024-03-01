@@ -299,6 +299,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js.
+	 *
 	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
