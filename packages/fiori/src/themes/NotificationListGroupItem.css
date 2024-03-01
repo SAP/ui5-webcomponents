@@ -52,13 +52,13 @@
 	flex: 1;
 }
 
-.ui5-nli-group-counter {
+/* .ui5-nli-group-counter {
 	margin-inline-start: 0.25rem;
 	margin-inline-end: 1rem;
 	color: var(--sapList_TableGroupHeaderTextColor);
 	font-size: var(--sapFontHeader6Size);
 	font-family: "72override", var(--sapFontHeaderFamily);
-}
+} */
 
 /* fix for blue background color on tap (touchscreen devices) */
 :host([ui5-li-notification-group]) {

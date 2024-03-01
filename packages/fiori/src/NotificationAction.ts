@@ -12,7 +12,7 @@ type NotificationActionClickEventDetail = {
 /**
  * @class
  * The <code>ui5-notification-action</code> represents an abstract action,
- * used in the <code>ui5-li-notification</code> and the <code>ui5-li-notification-group</code> items.
+ * used in the <code>ui5-li-notification</code> items.
  *
  * @constructor
  * @extends UI5Element

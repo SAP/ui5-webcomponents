@@ -18,20 +18,20 @@
 			aria-label="{{toggleBtnAccessibleName}}"
 		></ui5-button>
 
-		{{#if hasPriority}}
+		{{!-- {{#if hasPriority}}
 			<ui5-icon
 				class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
 				name="{{priorityIcon}}">
 			</ui5-icon>
-		{{/if}}
+		{{/if}} --}}
 
 		<div id="{{_id}}-title-text" class="ui5-nli-group-title-text" part="title-text">
 			{{titleText}}
 		</div>
 
-		{{#if showCounter}}
+		{{!-- {{#if showCounter}}
 			<span class="ui5-nli-group-counter">({{itemsCount}})</span>
-		{{/if}}
+		{{/if}} --}}
 
 		<div class="ui5-nli-group-divider"></div>
 
@@ -61,7 +61,7 @@
 			{{/if}}
 		{{/unless}}
 
-		{{#if showClose}}
+		{{!-- {{#if showClose}}
 			<ui5-button
 				icon="decline"
 				design="Transparent"
@@ -70,7 +70,7 @@
 				aria-label="{{closeBtnAccessibleName}}"
 				close-btn
 			></ui5-button>
-		{{/if}}
+		{{/if}} --}}
 
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
