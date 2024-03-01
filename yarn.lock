@@ -10016,16 +10016,17 @@ estree-util-visit@^2.0.0:
     "@types/estree-jsx" "^1.0.0"
     "@types/unist" "^3.0.0"
 
+estree-walk@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/estree-walk/-/estree-walk-2.2.0.tgz#f1428cbdb57f46462be9f0d5d2fa5582e647dad9"
+  integrity sha512-6gUr3kGNVEfL6pcIiGBrSkhoEQPkv8laQy1lUDpaxT4AvlBxf/UYSueOEb6Wq1cG5Ct6xQSkFCHoJcZlijpUAg==
+
 estree-walker@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-3.0.3.tgz#67c3e549ec402a487b4fc193d1953a524752340d"
   integrity sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==
   dependencies:
     "@types/estree" "^1.0.0"
-estree-walk@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/estree-walk/-/estree-walk-2.2.0.tgz#f1428cbdb57f46462be9f0d5d2fa5582e647dad9"
-  integrity sha512-6gUr3kGNVEfL6pcIiGBrSkhoEQPkv8laQy1lUDpaxT4AvlBxf/UYSueOEb6Wq1cG5Ct6xQSkFCHoJcZlijpUAg==
 
 esutils@^2.0.2:
   version "2.0.3"
@@ -11808,7 +11809,7 @@ htmlparser2@^6.1.0:
     domutils "^2.5.2"
     entities "^2.0.0"
 
-htmlparser2@^8.0.0, htmlparser2@^8.0.1:
+htmlparser2@^8.0.1:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-8.0.2.tgz#f002151705b383e62433b5cf466f5b716edaec21"
   integrity sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==
@@ -16475,11 +16476,6 @@ parse-path@^7.0.0:
   dependencies:
     protocols "^2.0.0"
 
-parse-srcset@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/parse-srcset/-/parse-srcset-1.0.2.tgz#f2bd221f6cc970a938d88556abc589caaaa2bde1"
-  integrity sha512-/2qh0lav6CmI15FzA3i/2Bzk2zCgQhGMkvhOhKNcBVQ1ldgpbfiNTVslmooUmWJcADi1f1kIeynbDRVzNlfR6Q==
-
 parse-url@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/parse-url/-/parse-url-8.1.0.tgz#972e0827ed4b57fc85f0ea6b0d839f0d8a57a57d"
@@ -17134,7 +17130,7 @@ postcss-zindex@^5.1.0:
   resolved "https://registry.yarnpkg.com/postcss-zindex/-/postcss-zindex-5.1.0.tgz#4a5c7e5ff1050bd4c01d95b1847dfdcc58a496ff"
   integrity sha512-fgFMf0OtVSBR1va1JNHYgMxYk73yhn/qb4uQDq1DLGYolz8gHCyr/sesEuGUaYs58E3ZJRcpoGuPVoB7Meiq9A==
 
-postcss@^8.3.11, postcss@^8.4.17, postcss@^8.4.21, postcss@^8.4.26, postcss@^8.4.33:
+postcss@^8.4.17, postcss@^8.4.21, postcss@^8.4.26, postcss@^8.4.33:
   version "8.4.35"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.35.tgz#60997775689ce09011edf083a549cea44aabe2f7"
   integrity sha512-u5U8qYpBCpN13BsiEB0CbR1Hhh4Gc0zLFuedrHJKMctHCHAGrMdG0PRM/KErzAL3CU6/eckEtmHNB3x6e3c0vA==
@@ -18564,18 +18560,6 @@ safe-regex-test@^1.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
-
-sanitize-html@^2.11.0:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-2.12.1.tgz#280a0f5c37305222921f6f9d605be1f6558914c7"
-  integrity sha512-Plh+JAn0UVDpBRP/xEjsk+xDCoOvMBwQUf/K+/cBAVuTbtX8bj2VB7S1sL1dssVpykqp0/KPSesHrqXtokVBpA==
-  dependencies:
-    deepmerge "^4.2.2"
-    escape-string-regexp "^4.0.0"
-    htmlparser2 "^8.0.0"
-    is-plain-object "^5.0.0"
-    parse-srcset "^1.0.2"
-    postcss "^8.3.11"
 
 sax@^1.2.4:
   version "1.3.0"

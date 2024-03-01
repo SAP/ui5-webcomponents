@@ -35,13 +35,13 @@
   height: 9rem;
 }
 
-@media screen and (max-width: 996px) {
+@media (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
   }
 }
 
-@media screen and (min-width: 600px) {
+@media (min-width: 600px) {
   .heroTitle {
     font-weight: 900;
     font-size: 5.5rem;
