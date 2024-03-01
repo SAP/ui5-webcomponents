@@ -102,11 +102,11 @@ describe("Component Behavior", () => {
 
 			// items
 			assert.strictEqual(await items[0].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
-			assert.strictEqual(await items[1].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
+			assert.notOk(await items[1].getAttribute("title"), "No tooltip");
 
 			// sub items
 			assert.strictEqual(await items[2].getAttribute("title"), await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
-			assert.strictEqual(await items[3].getAttribute("title"), await browser.$("#item22").getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
+			assert.notOk(await items[3].getAttribute("title"), "No tooltip");
 		});
 
 		it("Tests tooltips when collapsed", async () => {
@@ -115,13 +115,13 @@ describe("Component Behavior", () => {
 			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
 
 			assert.strictEqual(await items[1].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
-			assert.strictEqual(await items[2].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
+			assert.notOk(await items[2].getAttribute("title"), "No tooltip");
 
 			await browser.$("#item2").click();
 
 			const popoverItems = await getRenderedTreeItemsInPopover();
 
-			assert.strictEqual(await popoverItems[0].getAttribute("title"), await browser.$("#item2").getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
+			assert.notOk(await popoverItems[0].getAttribute("title"), "No tooltip");
 			assert.strictEqual(await popoverItems[1].getAttribute("title"), await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
 
 			// clean up
