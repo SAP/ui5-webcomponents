@@ -50,7 +50,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 900px) {
+@media (max-width: 900px) {
   .features__container {
     grid-template-columns: 1fr;
   }
