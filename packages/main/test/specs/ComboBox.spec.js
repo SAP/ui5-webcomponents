@@ -604,6 +604,25 @@ describe("General interaction", () => {
 		assert.strictEqual(await $("#clear-icon-change-count").getText(), "1", "change event is fired once");
 		assert.strictEqual(await $("#clear-icon-input-count").getText(), "1", "input event is fired once");
 	});
+
+	it ("Should show all items if value does not match any item and arrow is pressed", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cb = await $("#combo");
+		const arrow = await cb.shadow$("[input-icon]");
+		const input = cb.shadow$("input");
+
+		await input.click();
+		await input.keys("z");
+		await arrow.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		// assert
+		assert.strictEqual(listItems.length, 11, "All items are shown");
+	});
 });
 
 describe("Grouping", () => {
