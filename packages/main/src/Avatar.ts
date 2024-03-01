@@ -114,7 +114,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 *
 	 * `import "@ui5/webcomponents-icons/dist/{icon_name}.js"`
 	 *
-	 * ```<ui5-avatar icon="employee">```
+	 * `<ui5-avatar icon="employee">`
 	 *
 	 * **Note:** If no icon or an empty one is provided, by default the "employee" icon should be displayed.
 	 *
@@ -138,7 +138,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 *
 	 * `import "@ui5/webcomponents-icons/dist/{icon_name}.js"`
 	 *
-	 * ```<ui5-avatar fallback-icon="alert">```
+	 * `<ui5-avatar fallback-icon="alert">`
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
@@ -221,12 +221,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Receives the desired `<img>` tag
 	 *
 	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
-	 *
-	 * ```
-	 * ui5-avatar:not(:defined) {
-	 * 	visibility: hidden;
-	 * }
-	 * ```
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -239,15 +233,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * **Note:** While the slot allows for custom badges, to achieve
 	 * the Fiori design, please use `ui5-badge` with `ui5-icon`
 	 * in the corresponding `icon` slot, without text nodes.
-	 *
-	 * Example:
-	 * ```
-	 * <ui5-avatar>
-	 * 	<ui5-badge slot="badge">
-	 * 		<ui5-icon slot="icon" name="employee"></ui5-icon>
-	 * 	</ui5-badge>
-	 * </ui5-avatar>
-	 * ```
 	 * @public
 	 * @since 1.7.0
 	 */

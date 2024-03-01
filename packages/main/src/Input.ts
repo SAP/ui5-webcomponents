@@ -512,25 +512,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines the suggestion items.
 	 *
-	 * Example:
-	 * ```
-	 * <ui5-input show-suggestions>
-	 *     <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
-	 *     <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
-	 * </ui5-input>
-	 * ```
-	 *
-	 * ```
-	 * <ui5-input show-suggestions>
-	 *     <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
-	 *     <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
-	 *     <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
-	 *     <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item>
-	 *     <ui5-suggestion-item text="Item #3"></ui5-suggestion-item>
-	 *     <ui5-suggestion-item text="Item #4"></ui5-suggestion-item>
-	 * </ui5-input>
-	 * ```
-	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
 	 * property is set to `true`.
 	 *

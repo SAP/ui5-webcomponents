@@ -1,12 +1,8 @@
-const parseDeclarationDescription = (declaration) => {
-    if (!declaration.description) {
+const parseDeclarationDescription = (description) => {
+    if (!description) {
         return "";
     }
-    return declaration.description
-    // codeblocks format
-        .replaceAll(/\`{3}[\s\S]*?\`{3}/gm, (match) => {
-            return `\`\`\`\n${match.replaceAll("```", "").trim().replaceAll("\n", "@newLineCode@")}\n\`\`\``;
-        })
+    return description;
 };
 
 const processDescription = (description) => {
@@ -15,10 +11,6 @@ const processDescription = (description) => {
     }
 
     return description
-        // codeblocks format
-        .replaceAll(/\`{3}[\s\S]*?\`{3}/gm, (match) => {
-            return `\`\`\`\n${match.replaceAll("```", "").trim().replaceAll("\n", "@newLineCode@")}\n\`\`\``;
-        })
         // lists inside description
         .replaceAll(/\n\s*-/g, "<br />-")
         // breaklines
@@ -260,7 +252,7 @@ const parseDeclaration = (declaration, packageName) => {
     }
 
     let sections = [
-        parseDeclarationDescription(declaration)
+        parseDeclarationDescription(declaration.description)
     ]
 
     if (packageName === "main") {
@@ -295,7 +287,7 @@ const parseComponentDeclaration = (declaration, fileContent) => {
         return "";
     }
 
-    fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", parseDeclarationDescription(declaration))
+    fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", parseDeclarationDescription(declaration.description))
 
     const metadataSections = [
         "field",

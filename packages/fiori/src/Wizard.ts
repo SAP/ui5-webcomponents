@@ -149,9 +149,11 @@ type StepInfo = {
  *
  * **For example:**
  *
- * `<ui5-dialog style="height: 80%">`
- * `&#9;<ui5-wizard></ui5-wizard>`
- * `</ui5-dialog>`
+ * ```html
+ * <ui5-dialog style="height: 80%">
+ * 	<ui5-wizard></ui5-wizard>
+ * </ui5-dialog>
+ * ```
  *
  * #### Moving to next step
  * The `ui5-wizard-step` provides the necessary API and it's up to the user of the component to use it to move to the next step.
