@@ -98,9 +98,10 @@ import ${svgImport} from "../local-cdn/local-cdn/${config.dir}/dist/${config.ver
 
         setTimeout(() => {
             target.classList.remove("icon__wrapper--copied");
-        }, 500)
+        }, 600)
     }}>
     <CopySvg className="icon__wrapper__copy"/>
+    <AcceptSvg className="icon__wrapper__accept"/>
     <div className="icon__wrapper__svg"><${svgImport} fill="var(--ifm-font-color-base)"/></div>
     <span className="icon__wrapper__title">{${iconNameImport}}</span>
 </div>`;
