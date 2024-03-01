@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation:** fix broken storybook example ([57e1eb9](https://github.com/SAP/ui5-webcomponents/commit/57e1eb96691a9d2712f43539c27c8e9f14e0c9d3)), closes [#8305](https://github.com/SAP/ui5-webcomponents/issues/8305)
+
+
+
+
+
 # [1.23.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.3...v1.23.0-rc.4) (2024-02-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

@@ -138,8 +138,6 @@ class TimePicker extends TimePickerBase {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
-			"ariaAutoComplete": "none",
-			"ariaControls": `${this._id}-responsive-popover`,
 		};
 	}
 

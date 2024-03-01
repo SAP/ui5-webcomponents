@@ -143,4 +143,15 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(await nativeButton.getAttribute("title"), "Download", "Icon tooltip is shown");
 	});
+
+	it("setting accessible-role on the host is reflected on the button tag", async () => {
+		const button = await browser.$("#button-role-link").shadow$("button");
+
+		assert.strictEqual(await button.getAttribute("role"), "link", "Attribute is reflected");
+	});
+	it("not setting accessible-role on the host keeps the correct role on the button tag", async () => {
+		const button = await browser.$("#button1").shadow$("button");
+
+		assert.strictEqual(await button.getAttribute("role"), "button", "Attribute is reflected");
+	});
 });

@@ -98,6 +98,22 @@ type ExceededText = {
  */
 @event("input")
 
+/**
+ * Fired when some text has been selected.
+ *
+ * @since 1.23.0
+ * @public
+ */
+@event("select")
+
+/**
+ * Fired when textarea is scrolled.
+ *
+ * @since 1.23.0
+ * @public
+ */
+@event("scroll")
+
 class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value of the component.
@@ -396,6 +412,14 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onchange() {
 		this.fireEvent("change", {});
+	}
+
+	_onselect() {
+		this.fireEvent("select", {});
+	}
+
+	_onscroll() {
+		this.fireEvent("scroll", {});
 	}
 
 	_oninput(e: InputEvent) {

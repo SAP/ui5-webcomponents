@@ -424,7 +424,9 @@ class ComboBox extends UI5Element {
 		}
 
 		if (this.open && !this._isKeyNavigation) {
-			this._filteredItems = this._filterItems(this.filterValue);
+			const items = this._filterItems(this.filterValue);
+
+			this._filteredItems = items.length ? items : this.items;
 		}
 
 		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
@@ -858,6 +860,7 @@ class ComboBox extends UI5Element {
 			if (picker?.opened && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
+				this.inner.setSelectionRange(this.value.length, this.value.length);
 			} else if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}
