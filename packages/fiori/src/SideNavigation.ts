@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -49,20 +50,15 @@ type SideNavigationPopoverContents = {
 };
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: SideNavigationSelectableItemBase;
+	item: SideNavigationItemBase,
 };
 
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type PopupClickEventDetail = {
-	target: {
-		associatedItem: SideNavigationSelectableItemBase
-	}
-};
+type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNavigationItemBase };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type NavigationMenuClickEventDetail = {
-	item: {
-		associatedItem: SideNavigationSelectableItemBase
+type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
+	item: Pick<MenuItemClickEventDetail, "item"> & {
+		associatedItem: SideNavigationItemBase,
 	}
 };
 
@@ -288,8 +284,8 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	async handlePopupItemClick(e: PopupClickEventDetail) {
-		const associatedItem = e.target.associatedItem;
+	async handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
+		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
