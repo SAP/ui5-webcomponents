@@ -18,14 +18,14 @@ export default {
 const Template: UI5StoryArgs<Grid, StoryArgsSlots> = (args) =>
   html`<ui5-grid
   >
-    ${unsafeHTML(args.columnrow)}
+    ${unsafeHTML(args.header)}
     ${unsafeHTML(args.default)}
   </ui5-grid>`;
 
 export const Basic = Template.bind({});
 Basic.args = {
-  columnrow: `
-    <ui5-grid-header-row slot="columnrow">
+  header: `
+    <ui5-grid-header-row slot="header">
       <ui5-grid-header-cell width="300px">Product</ui5-grid-header-cell>
       <ui5-grid-header-cell>Supplier</ui5-grid-header-cell>
       <ui5-grid-header-cell>Dimensions</ui5-grid-header-cell>
