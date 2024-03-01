@@ -375,7 +375,7 @@ class StepInput extends UI5Element implements IFormElement {
 		return this.focused;
 	}
 
-	get _valuePrecisioned() {
+	get _displayValue() {
 		if ((this.value === 0 && this._initialRender) || (Number.isInteger(this.value) && !this.valuePrecision)) {
 			return this.value.toFixed(this.valuePrecision);
 		}
