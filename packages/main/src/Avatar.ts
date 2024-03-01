@@ -358,7 +358,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	get initialsContainer(): HTMLObjectElement | null {
 		return this.getDomRef()!.querySelector(".ui5-avatar-initials");
-	 }
+	}
+
+	get fallBackIconDomRef(): Icon | null {
+		return this.getDomRef()!.querySelector(".ui5-avatar-icon-fallback");
+	}
 
 	onBeforeRendering() {
 		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
@@ -388,20 +392,25 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	_checkInitials() {
-		const avatar = this.getDomRef()!,
-			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
-		// if there aren`t initalts set - the fallBack icon should be shown
-		if (!this.validInitials) {
-			avatarInitials!.classList.add("ui5-avatar-initials-hidden");
+		const avatar = this.getDomRef()!;
+		const avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		const validInitials = this.validInitials && avatarInitials && avatarInitials.scrollWidth <= avatar.scrollWidth;
+
+		if (validInitials) {
+			this.showInitials();
 			return;
 		}
-		// if initials` width is bigger than the avatar, an icon should be shown inside the avatar
-		avatarInitials && avatarInitials.classList.remove("ui5-avatar-initials-hidden");
-		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials && avatarInitials.scrollWidth > avatar.scrollWidth) {
-				avatarInitials.classList.add("ui5-avatar-initials-hidden");
-			}
-		}
+		this.showFallbackIcon();
+	}
+
+	showFallbackIcon() {
+		this.initialsContainer?.classList.add("ui5-avatar-initials-hidden");
+		this.fallBackIconDomRef?.classList.remove("ui5-avatar-fallback-icon-hidden");
+	}
+
+	showInitials() {
+		this.initialsContainer?.classList.remove("ui5-avatar-initials-hidden");
+		this.fallBackIconDomRef?.classList.add("ui5-avatar-fallback-icon-hidden");
 	}
 
 	_onClickHandler(e: MouseEvent) {

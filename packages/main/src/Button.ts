@@ -26,6 +26,7 @@ import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.j
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 import HasPopup from "./types/HasPopup.js";
@@ -245,6 +246,18 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 */
 	@property({ type: ButtonType, defaultValue: ButtonType.Button })
 	type!: `${ButtonType}`;
+
+	/**
+	 * Describes the accessibility role of the button.
+	 *
+	 * NOTE: Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
+	 *
+	 * @default "Button"
+	 * @public
+	 * @since 1.23
+	 */
+	@property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Button })
+	accessibleRole!: `${ButtonAccessibleRole}`;
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
@@ -503,6 +516,10 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	get buttonTypeText() {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+	}
+
+	get buttonAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
 	}
 
 	get tabIndexValue() {
