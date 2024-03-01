@@ -12,6 +12,9 @@ import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonMode from "./types/SegmentedButtonMode.js";
@@ -241,7 +244,9 @@ class SegmentedButton extends UI5Element {
 		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
 
 		if (isTargetSegmentedButtonItem) {
-			eventTarget.focus();
+			if (isDesktop()) {
+				eventTarget.focus();
+			}
 			this._itemNavigation.setCurrentItem(eventTarget);
 			this.hasPreviouslyFocusedItem = true;
 		}

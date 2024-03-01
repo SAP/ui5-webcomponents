@@ -356,6 +356,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 		this._isTouch = (isPhone() || isTablet()) && !isCombi();
 	}
 
@@ -388,13 +391,13 @@ class Button extends UI5Element implements IFormElement, IButton {
 			formSupport.triggerFormReset(this);
 		}
 
-		if (isSafari()) {
+		if (isDesktop() && isSafari()) {
 			this.getDomRef()?.focus();
 		}
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (this.nonInteractive || this._isTouch) {
+		if (this.nonInteractive) {
 			return;
 		}
 
@@ -446,10 +449,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		if (this.active) {
 			this._setActiveState(false);
 		}
-
-		if (isDesktop()) {
-			this.focused = false;
-		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -458,9 +457,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		if (isDesktop()) {
-			this.focused = true;
-		}
 	}
 
 	_setActiveState(active: boolean) {

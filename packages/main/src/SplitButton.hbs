@@ -7,6 +7,7 @@
 	@focusin={{_onFocusIn}}
 	@keydown={{_onKeyDown}}
 	@keyup={{_onKeyUp}}
+	@mousedown={{_handleMouseDown}}
 >
 
 	<ui5-button
@@ -39,7 +40,7 @@
 			@click="{{_handleArrowButtonAction}}"
 			@mousedown={{_arrowButtonPress}}
 			@mouseup={{_arrowButtonRelease}}
-			@focusin={{_setTabIndexValue}}
+			@focusin={{_arrowButtonFocusIn}}
 			@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
 		>
 		</ui5-button>
