@@ -339,7 +339,7 @@ class Menu extends UI5Element {
 	}
 
 	get isSubMenuOpened() {
-		return !!this._popover?.isOpen();
+		return this._parentMenuItem && this._popover?.isOpen();
 	}
 
 	get menuHeaderTextPhone() {
@@ -398,7 +398,7 @@ class Menu extends UI5Element {
 		}
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
-		popover.showAt(opener);
+		popover.showAt(opener, this._parentMenuItem?.busy);
 	}
 
 	/**
