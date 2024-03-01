@@ -44,7 +44,7 @@ const Framework = ({ Svg, repository, demo }: Item) => {
 
 export default function HomepageDemoApps(): JSX.Element {
   return (
-    <article className="demo-apps">
+    <article className="demo-apps mainPageContainer">
         <div className="demo-apps__heading">
           <h2 className="demo-apps__title">Use the web framework of your choice</h2>
           <p className="demo-apps__desc"> UI5 Web Componnents are framework agnostic, working seamlessly with all popular frameworks,
