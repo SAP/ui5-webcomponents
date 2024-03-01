@@ -63,7 +63,7 @@ function Feature({title, src, srcContrast, description}: FeatureItem) {
 export default function HomepageFeatures(): JSX.Element {
   return (
     <section className="features">
-      <div className="features__container">
+      <div className="features__container mainPageContainer">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}

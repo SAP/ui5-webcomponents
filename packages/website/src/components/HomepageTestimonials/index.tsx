@@ -46,7 +46,7 @@ const Testimonial = ({ Svg, title, text }: Item) => {
 
 export default function HomepageTestimonials(): JSX.Element {
   return (
-    <article className="testimonials">
+    <article className="testimonials mainPageContainer">
         <div className="testimonials__heading">
           <h2 className="testimonials__title">Testimonials</h2>
           <p className="testimonials__desc">Discover what some of our consumers have to say about their experiences with UI5 Web Components.</p>

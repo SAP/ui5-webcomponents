@@ -2,7 +2,7 @@ const parseDeclarationDescription = (description) => {
     if (!description) {
         return "";
     }
-    return description;
+    return description.replaceAll(/#{1,} Overview/g, "");
 };
 
 const processDescription = (description) => {

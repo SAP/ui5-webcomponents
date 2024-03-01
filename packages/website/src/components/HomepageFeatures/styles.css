@@ -14,7 +14,7 @@
   align-items: start;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 4rem;
-  margin: 2rem 4rem 0rem 4rem;
+  margin-top: 2rem;
 }
 
 .feature__image {
