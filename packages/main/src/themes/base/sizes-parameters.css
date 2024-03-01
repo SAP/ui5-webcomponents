@@ -141,6 +141,9 @@
 	--_ui5-toolbar-separator-height: 2rem;
 	--_ui5-toolbar-height: 2.75rem;
 	--_ui5_toolbar_overflow_padding: 0.25rem 0.5rem;
+
+	/* Grid */
+	--_ui5_grid_cell_padding: 0.25rem 0.5rem;
 }
 
 [data-ui5-compact-size],

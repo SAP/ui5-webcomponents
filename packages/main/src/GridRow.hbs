@@ -1,1 +1,17 @@
+{{#if _hasSelectionComponent}}
+    <ui5-grid-cell class="selection-cell" @keydown="{{_onSelectionCellKeyDown}}">
+    {{#if _isMultiSelect}}
+        <ui5-checkbox class="selection-component" tabindex="-1"
+            ?checked="{{_selected}}"
+            @ui5-change="{{_onSelectionChange}}"
+        ></ui5-checkbox>
+    {{else}}
+        <ui5-radio-button class="selection-component" tabindex="-1"
+            name="{{_gridId}}"
+            ?checked="{{_selected}}"
+            @ui5-change="{{_onSelectionChange}}"
+        ></ui5-checkbox>
+    {{/if}}
+    </ui5-grid-cell>
+{{/if}}
 <slot></slot>

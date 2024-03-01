@@ -798,7 +798,7 @@ abstract class UI5Element extends HTMLElement {
 		const focusDomRef = this.getFocusDomRef();
 
 		if (focusDomRef && typeof focusDomRef.focus === "function") {
-			focusDomRef.focus(focusOptions);
+			HTMLElement.prototype.focus.call(this, focusOptions);
 		}
 	}
 

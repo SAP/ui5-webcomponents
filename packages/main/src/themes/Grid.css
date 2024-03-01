@@ -1,5 +1,9 @@
 :host {
 	display: grid;
-    font: var(--sapFontSize) var(--sapFontFamily);
-    color: var(--sapList_TextColor);
+    grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
+    background: var(--sapList_Background);
+}
+
+:host([hidden]) {
+    display: none;
 }

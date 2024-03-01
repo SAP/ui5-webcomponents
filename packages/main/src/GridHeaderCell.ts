@@ -5,8 +5,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import GridHeaderCellTemplate from "./generated/templates/GridHeaderCellTemplate.lit.js";
-
-// Styles
 import GridHeaderCellCss from "./generated/themes/GridHeaderCell.css.js";
 
 /**
@@ -46,8 +44,12 @@ class GridHeaderCell extends UI5Element {
 	width!: string;
 
 	onEnterDOM(): void {
-		this.role = "columnheader";
-		this.tabIndex = 0;
+		this.setAttribute("role", "columnheader");
+		this.setAttribute("tabindex", "0");
+	}
+
+	getFocusDomRef(): HTMLElement | undefined {
+		return this;
 	}
 }
 

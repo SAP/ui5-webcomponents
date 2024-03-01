@@ -2,10 +2,22 @@
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
-    border-bottom: 1px solid var(--sapList_HeaderBorderColor);
-    background-color: var(--sapList_HeaderBackground);
+    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
+}
 
-    font: var(--sapFontSize) var(--sapFontSemiboldDuplexFamily);
-    font-weight: normal;
-    color: var(--sapList_HeaderTextColor);
+:host([hidden]) {
+    display: none;
+}
+
+:host(:focus-visible) {
+    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    outline-offset: calc(-1 * var(--sapContent_FocusWidth));
+}
+
+.selection-cell {
+    padding: 0;
+}
+
+.selection-component {
+    vertical-align: middle;
 }

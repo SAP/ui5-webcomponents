@@ -4,8 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import GridCellTemplate from "./generated/templates/GridCellTemplate.lit.js";
-
-// Styles
 import GridCellCss from "./generated/themes/GridCell.css.js";
 
 /**
@@ -42,8 +40,8 @@ class GridCell extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onEnterDOM(): void {
-		this.role = "gridcell";
-		this.tabIndex = 0;
+		this.setAttribute("role", "gridcell");
+		this.setAttribute("tabindex", "0");
 	}
 }
 
