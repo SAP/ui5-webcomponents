@@ -1,5 +1,5 @@
 /**
- * Creates a <style> tag in the <head> tag
+ * Creates a `<style>` tag in the `<head>` tag
  * @param cssText - the CSS
  * @param attributes - optional attributes to add to the tag
  * @returns {HTMLElement}
