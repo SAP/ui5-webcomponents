@@ -8,6 +8,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
+import type { MenuItemClickEventDetail } from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
@@ -22,10 +23,6 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
-type MenuItemClickEventDetail = {
-	item: MenuItem,
-	text: string,
-}
 
 /**
  * @class
