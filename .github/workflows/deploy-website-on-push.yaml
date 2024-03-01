@@ -2,7 +2,7 @@ name: Deploy Website [on push]
 
 on:
   push:
-    branches: [ new-docs ]
+    branches: [ main ]
 
 jobs:
   deploy:
