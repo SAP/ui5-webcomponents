@@ -3,7 +3,7 @@ import DataType from "./DataType.js";
 /**
  * @class
  * DOM Element reference or ID.
- * <b>Note:</b> If an ID is passed, it is expected to be part of the same <code>document</code> element as the consuming component.
+ * **Note:** If an ID is passed, it is expected to be part of the same `document` element as the consuming component.
  *
  * @public
  */
