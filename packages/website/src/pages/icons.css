@@ -22,31 +22,39 @@
 	background-color: var(--ifm-background-color);
 }
 
-.icon__wrapper:hover {
-	background-color: var(--ifm-menu-color-background-active);
-}
-
-.icon__wrapper.icon__wrapper--copied .icon__wrapper__copy {
-	fill: var(--ifm-color-primary);
-}
-
 .icon__wrapper__svg {
 	width: 2rem;
 	height: 2rem;
 	pointer-events: none;
 }
 
-.icon__wrapper__copy {
-	fill: var(--ifm-color-primary);
+.icon__wrapper:hover {
+	background-color: var(--ifm-menu-color-background-active);
 }
 
-.icon__wrapper__copy {
+.icon__wrapper.icon__wrapper--copied .icon__wrapper__copy {
+	display: none;
+}
+
+.icon__wrapper.icon__wrapper--copied .icon__wrapper__accept {
+	fill: var(--ifm-color-primary);
+	display: inline-block;
+}
+
+.icon__wrapper__copy,
+.icon__wrapper__accept {
 	width: 1rem;
 	height: 1rem;
 	align-self: end;
 	fill: var(--ifm-font-color-base);
 	pointer-events: none;
 }
+
+.icon__wrapper__accept {
+	display: none;
+}
+
+
 
 .icon__wrapper__title {
 	color: var(--ifm-font-color-base);

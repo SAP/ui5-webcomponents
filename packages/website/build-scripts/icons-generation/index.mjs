@@ -54,9 +54,10 @@ import ${svgImport} from "../local-cdn/local-cdn/${collection}/dist/${version}/$
 
         setTimeout(() => {
             target.classList.remove("icon__wrapper--copied");
-        }, 500)
+        }, 600)
     }}>
     <CopySvg className="icon__wrapper__copy"/>
+    <AcceptSvg className="icon__wrapper__accept"/>
     <div className="icon__wrapper__svg"><${svgImport} fill="var(--ifm-font-color-base)"/></div>
     <span className="icon__wrapper__title">{${iconNameImport}}</span>
 </div>`;
@@ -103,6 +104,7 @@ const generateTNTIconsPage = (sourceDir, collection, version) => {
      const content =`
 ${commonImports}
 import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
+import AcceptSvg from "../local-cdn/local-cdn/icons/dist/v5/accept.svg";
 
 ${imports}
  
@@ -138,6 +140,8 @@ const generateBSIconsPage = (sourceDir, collection, version) => {
 ${commonImports}
  
 import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
+import AcceptSvg from "../local-cdn/local-cdn/icons/dist/v5/accept.svg";
+
 ${imports}
  
  export default function SAPBSIcons() {
