@@ -26,14 +26,14 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Represents a group of navigation actions.
- * The <code>ui5-side-navigation-group</code> can to be used inside a <code>ui5-side-navigation</code> only.
+ * The `ui5-side-navigation-group` can to be used inside a `ui5-side-navigation` only.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";</code>
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";`
  *
  * @constructor
  * @extends SideNavigationItemBase
@@ -61,7 +61,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	expanded!: boolean;
 
 	/**
-	 * Defines nested items by passing <code>ui5-side-navigation-item</code> to the default slot.
+	 * Defines nested items by passing `ui5-side-navigation-item` to the default slot.
 	 *
 	 * @public
 	 */

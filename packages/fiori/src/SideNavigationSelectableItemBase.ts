@@ -26,11 +26,10 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Defines the icon of the item.
-	 * <br><br>
 	 *
 	 * The SAP-icons font provides numerous options.
-	 * <br>
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @public
 	 * @default ""
 	 */
@@ -50,7 +49,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 * Defines the link target URI. Supports standard hyperlink behavior.
 	 * If a JavaScript action should be triggered,
 	 * this should not be set, but instead an event handler
-	 * for the <code>click</code> event should be registered.
+	 * for the `click` event should be registered.
 	 *
 	 * @public
 	 * @default ""
@@ -61,18 +60,16 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	/**
 	 * Defines the component target.
-	 * <br><br>
-	 * <b>Notes:</b>
 	 *
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
+	 * **Notes:**
 	 *
-	 * <b>This property must only be used when the <code>href</code> property is set.</b>
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
+	 *
+	 * **This property must only be used when the `href` property is set.**
 	 *
 	 * @public
 	 * @default ""
