@@ -46,7 +46,7 @@ import ${svgImport} from "../local-cdn/local-cdn/${collection}/dist/${version}/$
     borderRadius: "0.5rem",
 }}>
     <div style={{width: "3rem", height: "3rem"}}><${svgImport} fill="var(--ifm-font-color-base)"/></div>
-    <span style={{ color: "var(--ifm-font-color-base)", textAlign: "center", marginTop: "0.5rem" }}>{${iconNameImport}}</span>
+    <span style={{ color: "var(--ifm-font-color-base)", textAlign: "center", marginTop: "0.5rem", wordBreak: "break-all" }}>{${iconNameImport}}</span>
 </div>`;
         }
     });
@@ -79,7 +79,7 @@ export default function SAPIcons() {
                     padding: "2rem 0",
                     gap: "2rem",
                     rowGap: "2rem",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))"
+                    gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))"
                 }}>
                     ${icons}
                 </div>
