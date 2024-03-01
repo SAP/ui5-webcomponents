@@ -18,6 +18,13 @@ const capitalize = (str) => {
     return capitalizedWord;
 }
 
+const commonImports = `
+import React from 'react';
+import clsx from "clsx";
+import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link';
+`
+
 const _generateIconsPage = (sourceDir, collection, version) => {
     let imports = ``;
     let icons = ``;
@@ -36,17 +43,22 @@ import ${svgImport} from "../local-cdn/local-cdn/${collection}/dist/${version}/$
 `;
 
         icons += `
-<div style={{
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    padding: "1rem",
-    backgroundColor: "var(--ifm-background-surface-color)",
-    boxShadow: "rgba(0, 0, 0, 0.15) 0px 1.5px 3px 0px", 
-    borderRadius: "0.5rem",
-}}>
-    <div style={{width: "3rem", height: "3rem"}}><${svgImport} fill="var(--ifm-font-color-base)"/></div>
-    <span style={{ color: "var(--ifm-font-color-base)", textAlign: "center", marginTop: "0.5rem", wordBreak: "break-all" }}>{${iconNameImport}}</span>
+<div
+    tabIndex="-1"
+    title="Copy the icon name"
+    className="icon__wrapper"
+    onClick={function(e) { 
+        navigator.clipboard.writeText(${iconNameImport}); 
+        const target = e.target;
+        target.classList.add("icon__wrapper--copied");
+
+        setTimeout(() => {
+            target.classList.remove("icon__wrapper--copied");
+        }, 500)
+    }}>
+    <CopySvg className="icon__wrapper__copy"/>
+    <div className="icon__wrapper__svg"><${svgImport} fill="var(--ifm-font-color-base)"/></div>
+    <span className="icon__wrapper__title">{${iconNameImport}}</span>
 </div>`;
         }
     });
@@ -58,29 +70,18 @@ const generateIconsPage = (sourceDir, collection, version) => {
    const { imports, icons} = _generateIconsPage(sourceDir, collection, version);
 
     const content =`
-import React from 'react';
-
-import Heading from '@theme/Heading';
-import Link from '@docusaurus/Link';
+${commonImports}
 
 ${imports}
 
 export default function SAPIcons() {
     return (
-            <div style={{
-                    padding: "2rem 2rem",
-                }}>
+            <div style={{ padding: "2rem 2rem" }}>
                 
                 <Heading as="h2" style={{ marginBottom: "0.125rem" }}>SAP Icons</Heading>
                 <Link to="https://www.npmjs.com/package/@ui5/webcomponents-icons">@ui5/webcomponents-icons</Link>
 
-                <div style={{
-                    display: "grid",
-                    padding: "2rem 0",
-                    gap: "2rem",
-                    rowGap: "2rem",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))"
-                }}>
+                <div className="icon__grid">
                     ${icons}
                 </div>
             </div>
@@ -100,12 +101,10 @@ const generateTNTIconsPage = (sourceDir, collection, version) => {
     const { imports, icons} = _generateIconsPage(sourceDir, collection, version);
  
      const content =`
- import React from 'react';
- 
- import Heading from '@theme/Heading';
- import Link from '@docusaurus/Link';
- 
- ${imports}
+${commonImports}
+import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
+
+${imports}
  
  export default function SAPTNTIcons() {
      return (
@@ -116,13 +115,7 @@ const generateTNTIconsPage = (sourceDir, collection, version) => {
                  <Heading as="h2" style={{ marginBottom: "0.125rem" }}>SAP TNT Icons</Heading>
                  <Link to="https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt">@ui5/webcomponents-icons-tnt</Link>
  
-                 <div style={{
-                     display: "grid",
-                     padding: "2rem 0",
-                     gap: "2rem",
-                     rowGap: "2rem",
-                     gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))"
-                 }}>
+                 <div className="icon__grid">
                      ${icons}
                  </div>
              </div>
@@ -142,12 +135,10 @@ const generateBSIconsPage = (sourceDir, collection, version) => {
     const { imports, icons} = _generateIconsPage(sourceDir, collection, version);
  
      const content =`
- import React from 'react';
+${commonImports}
  
- import Heading from '@theme/Heading';
- import Link from '@docusaurus/Link';
- 
- ${imports}
+import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
+${imports}
  
  export default function SAPBSIcons() {
      return (
@@ -158,13 +149,7 @@ const generateBSIconsPage = (sourceDir, collection, version) => {
                  <Heading as="h2" style={{ marginBottom: "0.125rem" }}>SAP Business Suite Icons</Heading>
                  <Link to="https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite">@ui5/webcomponents-icons-business-suite</Link>
  
-                 <div style={{
-                     display: "grid",
-                     padding: "2rem 0",
-                     gap: "2rem",
-                     rowGap: "2rem",
-                     gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))"
-                 }}>
+                 <div className="icon__grid">
                      ${icons}
                  </div>
              </div>
