@@ -56,7 +56,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	_sideNavigation!: SideNavigation;
 
 	get _tooltip() {
-		return this.title || this.text;
+		return this.title || undefined;
 	}
 
 	get classesArray() {

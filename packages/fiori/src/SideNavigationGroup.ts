@@ -6,6 +6,8 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -13,6 +15,10 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
+
+import {
+	SIDE_NAVIGATION_GROUP_HEADER_DESC,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
@@ -61,6 +67,8 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
+
+	static i18nBundle: I18nBundle;
 
 	get overflowItems() : Array<HTMLElement> {
 		const separator1 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as HTMLElement;
@@ -127,6 +135,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return "";
 	}
 
+	get accDescription() {
+		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+	}
+
 	_onkeydown = (e: KeyboardEvent) => {
 		if (isLeft(e)) {
 			this.expanded = false;
@@ -150,6 +162,13 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 	_toggle() {
 		this.expanded = !this.expanded;
+	}
+
+	static async onDefine() {
+		[SideNavigationGroup.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents-fiori"),
+			super.onDefine(),
+		]);
 	}
 }
 
