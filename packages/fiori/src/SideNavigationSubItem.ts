@@ -4,14 +4,13 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-side-navigation-sub-item</code> is intended to be used inside a <code>ui5-side-navigation-item</code> only.
+ * The `ui5-side-navigation-sub-item` is intended to be used inside a `ui5-side-navigation-item` only.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`
  * @constructor
  * @extends SideNavigationItemBase
  * @public

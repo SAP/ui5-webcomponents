@@ -1,0 +1,56 @@
+{
+  "name": "@ui5/webcomponents-website",
+  "version": "1.23.0-rc.3",
+  "private": true,
+  "scripts": {
+    "generate-local-cdn": "rimraf ./local-cdn && node ./build-scripts/local-cdn.mjs",
+    "generate-api-reference": "rimraf ./docs/components/fiori && rimraf ./docs/components/main && node ./build-scripts/api-reference-generation/index.mjs",
+    "generate-documentation": "rimraf ./docs/docs && node ./build-scripts/documentation-generation/index.mjs",
+    "generate-icons": "rimraf ./icons && rimraf ./icons-tnt && rimraf ./icons-business-suite && node ./build-scripts/icons-generation/index.mjs",
+    "generate-all": "yarn generate-api-reference && yarn generate-documentation && yarn generate-local-cdn && yarn generate-icons",
+    "docusaurus": "docusaurus",
+    "start": "yarn generate-all && docusaurus start",
+    "build": "yarn generate-all && docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.1.1",
+    "@docusaurus/preset-classic": "3.1.1",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.0.0",
+    "docusaurus-lunr-search": "^3.3.2",
+    "playground-elements": "^0.18.1",
+    "prism-react-renderer": "^2.3.0",
+    "raw-loader": "^4.0.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.1.1",
+    "@docusaurus/tsconfig": "3.1.1",
+    "@docusaurus/types": "3.1.1",
+    "typescript": "~5.2.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
+}

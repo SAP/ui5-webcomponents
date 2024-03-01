@@ -1,6 +1,5 @@
 /**
  * Tabs placement of TabContainer.
- *
  * @private
  */
 enum TabContainerTabsPlacement {

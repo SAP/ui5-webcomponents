@@ -9,8 +9,7 @@ import type { IInputSuggestionItem } from "./Input.js";
 
 /**
  * @class
- * The <code>ui5-suggestion-item</code> represents the suggestion item of the <code>ui5-input</code>.
- *
+ * The `ui5-suggestion-item` represents the suggestion item of the `ui5-input`.
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -24,7 +23,6 @@ import type { IInputSuggestionItem } from "./Input.js";
 class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -33,11 +31,10 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the visual indication and behavior of the item.
-	 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
-	 * <br><br>
-	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
-	 * while when <code>Inactive</code> or <code>Detail</code> - will not.
+	 * Available options are `Active` (by default), `Inactive` and `Detail`.
 	 *
+	 * **Note:** When set to `Active`, the item will provide visual response upon press and hover,
+	 * while when `Inactive` or `Detail` - will not.
 	 * @default "Active"
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -47,7 +44,6 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -55,12 +51,11 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	description!: string
 
 	/**
-	 * Defines the <code>icon</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b>
-	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * Defines the `icon` source URI.
 	 *
+	 * **Note:**
+	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
+	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -68,20 +63,18 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	icon!: string
 
 	/**
-	 * Defines whether the <code>icon</code> should be displayed in the beginning of the item or in the end.
-	 * <br><br>
-	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
+	 * Defines whether the `icon` should be displayed in the beginning of the item or in the end.
 	 *
+	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	iconEnd!: boolean;
 	/**
-	 * Defines the <code>image</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
+	 * Defines the `image` source URI.
 	 *
+	 * **Note:** The `image` would be displayed in the beginning of the item.
 	 * @default ""
 	 * @public
 	 */
@@ -89,8 +82,7 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	image!: string
 
 	/**
-	 * Defines the <code>additionalText</code>, displayed in the end of the item.
-	 *
+	 * Defines the `additionalText`, displayed in the end of the item.
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -99,8 +91,7 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	additionalText!: string
 
 	/**
-	 * Defines the state of the <code>additionalText</code>.
-	 *
+	 * Defines the state of the `additionalText`.
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public

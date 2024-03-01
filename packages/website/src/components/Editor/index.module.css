@@ -1,0 +1,3 @@
+.previewResultHidden::part(preview-location) {
+	visibility: hidden;
+}

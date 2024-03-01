@@ -61,32 +61,30 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-menu</code> component represents a hierarchical menu structure.
+ * `ui5-menu` component represents a hierarchical menu structure.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <code>ui5-menu</code> contains <code>ui5-menu-item</code> components.
+ * `ui5-menu` contains `ui5-menu-item` components.
  * An arbitrary hierarchy structure can be represented by recursively nesting menu items.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * The <code>ui5-menu</code> provides advanced keyboard handling.
+ * The `ui5-menu` provides advanced keyboard handling.
  * The user can use the following keyboard shortcuts in order to navigate trough the tree:
- * <ul>
- * <li><code>Arrow Up</code> / <code>Arrow Down</code> - Navigates up and down the menu items that are currently visible.</li>
- * <li><code>Arrow Right</code>, <code>Space</code> or <code>Enter</code> - Opens a sub-menu if there are menu items nested
- * in the currently clicked menu item.</li>
- * <li><code>Arrow Left</code> or <code>Escape</code> - Closes the currently opened sub-menu.</li>
- * </ul>
- * Note: if the text ditrection is set to Right-to-left (RTL), <code>Arrow Right</code> and <code>Arrow Left</code> functionality is swapped.
- * <br>
  *
- * <h3>ES6 Module Import</h3>
+ * - `Arrow Up` / `Arrow Down` - Navigates up and down the menu items that are currently visible.
+ * - `Arrow Right`, `Space` or `Enter` - Opens a sub-menu if there are menu items nested
+ * in the currently clicked menu item.
+ * - `Arrow Left` or `Escape` - Closes the currently opened sub-menu.
  *
- * <code>import "@ui5/webcomponents/dist/Menu.js";</code>
+ * Note: if the text ditrection is set to Right-to-left (RTL), `Arrow Right` and `Arrow Left` functionality is swapped.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Menu.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.3.0
@@ -110,9 +108,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired when an item is being clicked.
- * <br />
- * <b>Note:</b> Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
  *
+ * **Note:** Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
  * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
@@ -136,19 +133,19 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 })
 
 /**
- * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
- * <br />
- * <b>Note:</b> Since 1.14.0 the event is also fired before a sub-menu opens.
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
  *
+ * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
  * @allowPreventDefault
  * @since 1.10.0
- * @param { HTMLElement } item The <code>ui5-menu-item</code> that triggers opening of the sub-menu or undefined when fired upon root menu opening. <b>Note:</b> available since 1.14.0.
+ * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
 @event<MenuBeforeOpenEventDetail>("before-open", {
 	detail: {
 		/**
 		 * @public
+		 * @since 1.14.0
 		 */
 		item: {
 			type: HTMLElement,
@@ -157,19 +154,17 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 })
 
 /**
- * Fired after the menu is opened. <b>This event does not bubble.</b>
- *
+ * Fired after the menu is opened. **This event does not bubble.**
  * @public
  * @since 1.10.0
  */
 @event("after-open")
 
 /**
- * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>
- *
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
  * @public
  * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
 @event<MenuBeforeCloseEventDetail>("before-close", {
@@ -184,8 +179,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 })
 
 /**
- * Fired after the menu is closed. <b>This event does not bubble.</b>
- *
+ * Fired after the menu is closed. **This event does not bubble.**
  * @public
  * @since 1.10.0
  */
@@ -193,7 +187,6 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -202,7 +195,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Indicates if the menu is open
-	 *
 	 * @public
 	 * @default false
 	 * @since 1.10.0
@@ -212,7 +204,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -222,7 +213,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
-	 *
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -232,7 +222,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
-	 *
 	 * @public
 	 * @default ""
 	 * @since 1.10.0
@@ -298,9 +287,8 @@ class Menu extends UI5Element {
 
 	/**
 	 * Defines the items of this component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-menu-item` for the intended design.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -395,7 +383,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Shows the Menu near the opener element.
-	 *
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 */
@@ -415,7 +402,6 @@ class Menu extends UI5Element {
 
 	/**
 	 * Closes the Menu.
-	 *
 	 * @public
 	 */
 	close(): void {

@@ -29,31 +29,29 @@ import switchCss from "./generated/themes/Switch.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-switch</code> component is used for changing between binary states.
- * <br>
- * The component can display texts, that will be switched, based on the component state, via the <code>textOn</code> and <code>textOff</code> properties,
+ * ### Overview
+ * The `ui5-switch` component is used for changing between binary states.
+ *
+ * The component can display texts, that will be switched, based on the component state, via the `textOn` and `textOff` properties,
  * but texts longer than 3 letters will be cutted off.
- * <br>
- * However, users are able to customize the width of <code>ui5-switch</code> with pure CSS (<code>&lt;ui5-switch style="width: 200px"></code>), and set widths, depending on the texts they would use.
- * <br>
+ *
+ * However, users are able to customize the width of `ui5-switch` with pure CSS (`<ui5-switch style="width: 200px">`), and set widths, depending on the texts they would use.
+ *
  * Note: the component would not automatically stretch to fit the whole text width.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  * The state can be changed by pressing the Space and Enter keys.
- * <br /><br />
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Switch";</code>
- *
+ * `import "@ui5/webcomponents/dist/Switch";`
  * @constructor
  * @extends UI5Element
  * @public
  * @since 0.8.0
  * @csspart slider - Used to style the track, where the handle is being slid
- * @csspart text-on - Used to style the <code>textOn</code> property text
- * @csspart text-off - Used to style the <code>textOff</code> property text
+ * @csspart text-on - Used to style the `textOn` property text
+ * @csspart text-off - Used to style the `textOff` property text
  * @csspart handle - Used to style the handle of the switch
  */
 @customElement({
@@ -66,7 +64,6 @@ import switchCss from "./generated/themes/Switch.css.js";
 })
 /**
  * Fired when the component checked state changes.
- *
  * @public
  * @allowPreventDefault
  */
@@ -74,10 +71,9 @@ import switchCss from "./generated/themes/Switch.css.js";
 class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
-	 * <br><br>
-	 * <b>Note:</b> If <code>Graphical</code> type is set,
-	 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 	 *
+	 * **Note:** If `Graphical` type is set,
+	 * positive and negative icons will replace the `textOn` and `textOff`.
 	 * @public
 	 * @default "Textual"
 	 */
@@ -86,9 +82,9 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines if the component is checked.
-	 * <br><br>
-	 * <b>Note:</b> The property can be changed with user interaction,
-	 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
+	 *
+	 * **Note:** The property can be changed with user interaction,
+	 * either by cliking the component, or by pressing the `Enter` or `Space` key.
 	 * @default false
 	 * @formEvents change
 	 * @formProperty
@@ -99,9 +95,8 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is disabled.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
+	 * **Note:** A disabled component is noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -111,9 +106,7 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Defines the text, displayed when the component is checked.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
-	 *
+	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 * @default ""
 	 * @public
 	 */
@@ -122,9 +115,8 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the text, displayed when the component is not checked.
-	 * <br><br>
-	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 *
+	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 * @default ""
 	 * @public
 	 */
@@ -134,8 +126,8 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Sets the accessible ARIA name of the component.
 	 *
-	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
-	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
+	 * **Note**: We recommend that you set an accessibleNameRef pointing to an external label or at least an `accessibleName`.
+	 * Providing an `accessibleNameRef` or an `accessibleName` is mandatory in the cases when `textOn` and `textOff` properties aren't set.
 	 * @default ""
 	 * @public
 	 * @since 1.2.0
@@ -146,8 +138,8 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
-	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
-	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
+	 * **Note**: We recommend that you set an accessibleNameRef pointing to an external label or at least an `accessibleName`.
+	 * Providing an `accessibleNameRef` or an `accessibleName` is mandatory in the cases when `textOn` and `textOff` properties aren't set.
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -157,8 +149,8 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * <br>
-	 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
+	 *
+	 * **Note:** If applicable an external label reference should always be the preferred option to provide context to the `ui5-switch` component over a tooltip.
 	 * @default ""
 	 * @public
 	 * @since 1.9.0
@@ -168,7 +160,6 @@ class Switch extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.16.0
@@ -179,15 +170,12 @@ class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
+	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.16.0
@@ -196,8 +184,7 @@ class Switch extends UI5Element implements IFormElement {
 	name!: string;
 
 	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit, when <code>Switch</code> is a part of HTML form.
-	 *
+	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit, when `Switch` is a part of HTML form.
 	 * @private
 	 * @since 1.16.0
 	 */

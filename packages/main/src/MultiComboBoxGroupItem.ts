@@ -5,9 +5,8 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 
 /**
  * @class
- * The <code>ui5-mcb-group-item</code> is type of suggestion item,
- * that can be used to split the <code>ui5-multi-combobox</code> suggestions into groups.
- *
+ * The `ui5-mcb-group-item` is type of suggestion item,
+ * that can be used to split the `ui5-multi-combobox` suggestions into groups.
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -19,7 +18,6 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 class MultiComboBoxGroupItem extends UI5Element implements IMultiComboBoxItem {
 	/**
 	 * Defines the text of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
