@@ -1,6 +1,5 @@
 /**
  * Different input types.
- *
  * @public
  */
 enum InputType {

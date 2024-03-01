@@ -16,7 +16,6 @@ import iconCss from "./generated/themes/Icon.css.js";
 
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
- *
  * @public
  */
 interface IIcon extends HTMLElement { }
@@ -26,90 +25,69 @@ const PRESENTATION_ROLE = "presentation";
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-icon</code> component represents an SVG icon.
- * There are two main scenarios how the <code>ui5-icon</code> component is used:
- * as a purely decorative element, <br>
+ * The `ui5-icon` component represents an SVG icon.
+ * There are two main scenarios how the `ui5-icon` component is used:
+ * as a purely decorative element,
  * or as an interactive element that can be focused and clicked.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * 1. <b>Get familiar with the icons collections.</b>
- * <br>
+ * 1. **Get familiar with the icons collections.**
+ *
  * Before displaying an icon, you need to explore the icons collections to find and import the desired icon.
- * <br>
+ *
  * Currently there are 3 icons collection, available as 3 npm packages:
- * <br>
  *
- * <ul>
- * <li>
- * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons">@ui5/webcomponents-icons</ui5-link> represents the "SAP-icons" collection and includes the following
- * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons">icons</ui5-link>.
- * </li>
- * <li>
- * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt">@ui5/webcomponents-icons-tnt</ui5-link> represents the "tnt" collection and includes the following
- * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT">icons</ui5-link>.
- * </li>
- * <li>
- * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite">@ui5/webcomponents-icons-icons-business-suite</ui5-link> represents the "business-suite" collection and includes the following
- * <ui5-link target="_blank" href="https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols">icons</ui5-link>.
- * </li>
- * </ul>
+ * - [@ui5/webcomponents-icons](https://www.npmjs.com/package/@ui5/webcomponents-icons) represents the "SAP-icons" collection and includes the following
+ * [icons](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
+ * - [@ui5/webcomponents-icons-tnt](https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt) represents the "tnt" collection and includes the following
+ * [icons](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT).
+ * - [@ui5/webcomponents-icons-icons-business-suite](https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite) represents the "business-suite" collection and includes the following
+ * [icons](https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
  *
- * 2. <b>After exploring the icons collections, add one or more of the packages as dependencies to your project.</b>
- * <br>
- * <code>npm i @ui5/webcomponents-icons</code><br>
- * <code>npm i @ui5/webcomponents-icons-tnt</code><br>
- * <code>npm i @ui5/webcomponents-icons-business-suite</code>
- * <br><br>
+ * 2. **After exploring the icons collections, add one or more of the packages as dependencies to your project.**
  *
- * 3. <b>Then, import the desired icon</b>.
- * <br>
- * <code>import "@ui5/{package_name}/dist/{icon_name}.js";</code>
- * <br><br>
+ * `npm i @ui5/webcomponents-icons`
+ * `npm i @ui5/webcomponents-icons-tnt`
+ * `npm i @ui5/webcomponents-icons-business-suite`
  *
- * <b>For Example</b>:
- * <br>
+ * 3. **Then, import the desired icon**.
  *
- * For the standard "SAP-icons" icon collection, import an icon from the <code>@ui5/webcomponents-icons</code> package:
- * <br>
- * <code>import "@ui5/webcomponents-icons/dist/employee.js";</code>
- * <br><br>
+ * `import "@ui5/\{package_name\}/dist/\{icon_name\}.js";`
  *
- * For the "tnt" (SAP Fiori Tools) icon collection, import an icon from the <code>@ui5/webcomponents-icons-tnt</code> package:
- * <br>
- * <code>import "@ui5/webcomponents-icons-tnt/dist/antenna.js";</code>
- * <br><br>
+ * **For Example**:
  *
- * For the "business-suite" (SAP Business Suite) icon collection, import an icon from the <code>@ui5/webcomponents-icons-business-suite</code> package:
- * <br>
- * <code>import "@ui5/webcomponents-icons-business-suite/dist/ab-testing.js";</code>
- * <br><br>
+ * For the standard "SAP-icons" icon collection, import an icon from the `@ui5/webcomponents-icons` package:
  *
- * 4. <b>Display the icon using the <code>ui5-icon</code> web component.</b><br>
- * Set the icon collection ("SAP-icons", "tnt" or "business-suite" - "SAP-icons" is the default icon collection and can be skipped)<br>
- * and the icon name to the <code>name</code> property.
- * <br><br>
+ * `import "@ui5/webcomponents-icons/dist/employee.js";`
  *
- * <code>&lt;ui5-icon name="employee">&lt;/ui5-icon></code><br>
- * <code>&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon></code><br>
- * <code>&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon></code>
+ * For the "tnt" (SAP Fiori Tools) icon collection, import an icon from the `@ui5/webcomponents-icons-tnt` package:
  *
- * <br><br>
- * <h3>Keyboard Handling</h3>
+ * `import "@ui5/webcomponents-icons-tnt/dist/antenna.js";`
  *
- * <ul>
- * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the ui5-icon without triggering the click event.</li>
- * </ul>
+ * For the "business-suite" (SAP Business Suite) icon collection, import an icon from the `@ui5/webcomponents-icons-business-suite` package:
  *
- * <h3>ES6 Module Import</h3>
+ * `import "@ui5/webcomponents-icons-business-suite/dist/ab-testing.js";`
  *
- * <code>import "@ui5/webcomponents/dist/Icon.js";</code>
+ * 4. **Display the icon using the `ui5-icon` web component.**
+ * Set the icon collection ("SAP-icons", "tnt" or "business-suite" - "SAP-icons" is the default icon collection and can be skipped)
+ * and the icon name to the `name` property.
  *
- * @csspart root - Used to style the outermost wrapper of the <code>ui5-icon</code>.
+ * `<ui5-icon name="employee"></ui5-icon>`
+ * `<ui5-icon name="tnt/antenna"></ui5-icon>`
+ * `<ui5-icon name="business-suite/ab-testing"></ui5-icon>`
  *
+ * ### Keyboard Handling
+ *
+ * - [SPACE, ENTER, RETURN] - Fires the `click` event if the `interactive` property is set to true.
+ * - [SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the ui5-icon without triggering the click event.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Icon.js";`
+ * @csspart root - Used to style the outermost wrapper of the `ui5-icon`.
  * @constructor
  * @extends UI5Element
  * @implements {IIcon}
@@ -124,9 +102,9 @@ const PRESENTATION_ROLE = "presentation";
 	styles: iconCss,
 })
 /**
- * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
- * - on mouse click, the icon fires native <code>click</code> event
- * - on <code>SPACE</code> and <code>ENTER</code>, the icon fires custom <code>click</code> event
+ * Fired on mouseup, `SPACE` and `ENTER`.
+ * - on mouse click, the icon fires native `click` event
+ * - on `SPACE` and `ENTER`, the icon fires custom `click` event
  * @private
  * @since 1.0.0-rc.8
  */
@@ -134,7 +112,6 @@ const PRESENTATION_ROLE = "presentation";
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
-	 *
 	 * @default "Default"
 	 * @public
 	 * @since 1.9.2
@@ -153,35 +130,26 @@ class Icon extends UI5Element implements IIcon {
 
 	/**
 	 * Defines the unique identifier (icon name) of the component.
-	 * <br>
 	 *
 	 * To browse all available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">SAP Icons</ui5-link>,
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT">SAP Fiori Tools</ui5-link> and
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">SAP Business Suite</ui5-link> collections.
-	 * <br>
+	 * [SAP Icons](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html),
+	 * [SAP Fiori Tools](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT) and
+	 * [SAP Business Suite](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html)
 	 *
 	 * Example:
-	 * <br>
-	 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
-	 * <br><br>
+	 * `name='add'`, `name='delete'`, `name='employee'`.
 	 *
-	 * <b>Note:</b> To use the SAP Fiori Tools icons,
-	 * you need to set the <code>tnt</code> prefix in front of the icon's name.
-	 * <br>
+	 * **Note:** To use the SAP Fiori Tools icons,
+	 * you need to set the `tnt` prefix in front of the icon's name.
 	 *
 	 * Example:
-	 * <br>
-	 * <code>name='tnt/antenna'</code>, <code>name='tnt/actor'</code>, <code>name='tnt/api'</code>.
-	 * <br><br>
+	 * `name='tnt/antenna'`, `name='tnt/actor'`, `name='tnt/api'`.
 	 *
-	 * <b>Note:</b> To use the SAP Business Suite icons,
-	 * you need to set the <code>business-suite</code> prefix in front of the icon's name.
-	 * <br>
+	 * **Note:** To use the SAP Business Suite icons,
+	 * you need to set the `business-suite` prefix in front of the icon's name.
 	 *
 	 * Example:
-	 * <br>
-	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
+	 * `name='business-suite/3d'`, `name='business-suite/1x2-grid-layout'`, `name='business-suite/4x4-grid-layout'`.
 	 * @default ""
 	 * @public
 	 */
@@ -191,10 +159,9 @@ class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
-	 * <br><br>
-	 * <b>Note:</b> Every icon should have a text alternative in order to
-	 * calculate its accessible name.
 	 *
+	 * **Note:** Every icon should have a text alternative in order to
+	 * calculate its accessible name.
 	 * @default ""
 	 * @public
 	 */
@@ -203,9 +170,8 @@ class Icon extends UI5Element implements IIcon {
 
 	/**
 	 * Defines whether the component should have a tooltip.
-	 * <br><br>
-	 * <b>Note:</b> The tooltip text should be provided via the <code>accessible-name</code> property.
 	 *
+	 * **Note:** The tooltip text should be provided via the `accessible-name` property.
 	 * @default false
 	 * @public
 	 */
