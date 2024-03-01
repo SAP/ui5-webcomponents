@@ -353,13 +353,12 @@ class List extends UI5Element {
 	growing!: `${ListGrowingMode}`;
 
 	/**
-	 * Defines the text that will be displayed inside the growing button at the bottom of the list,
-	 * meant for loading more rows upon press.
+	 * Defines the text that will be displayed inside the growing button.
 	 *
 	 * <br><br>
 	 * <b>Note:</b> If not specified a built-in text will be displayed.
 	 * <br>
-	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+	 * <b>Note:</b> This property takes effect if the <code>growing</code> property is set to the <code>Button</code>.
 	 *
 	 * @default ""
 	 * @since 1.23.0
