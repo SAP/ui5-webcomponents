@@ -1,6 +1,5 @@
 /**
  * Different types of AvatarSize.
- *
  * @public
  */
 enum AvatarSize {

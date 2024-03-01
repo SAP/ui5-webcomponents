@@ -1,0 +1,25 @@
+.segmented__button {
+	display: inline-flex;
+    align-items: center;
+	justify-content: center;
+    background-color: var(--ifm-background-surface-color);
+	padding: 0.5rem;
+}
+
+.segmented__button__item {
+	padding: 0.25rem 0.5rem;
+	margin: 0 0.125rem;
+	border-radius: 0.5rem;
+	color: var(--ifm-navbar-link-color);
+}
+
+.segmented__button__item:hover {
+	cursor: pointer;
+	transition: all 0.5s;
+	background-color: var(--ifm-menu-color-background-active);
+}
+
+.segmented__button__item--active {
+	color: var(--ifm-menu-color-active);
+	background-color: var(--ifm-menu-color-background-active);
+}

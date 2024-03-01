@@ -42,8 +42,7 @@ type NotificationListItemBaseCloseEventDetail = {
 /**
  * @class
  *
- * The base class of the <code>NotificationListItem</code> and <code>NotificationListGroupItem</code>.
- *
+ * The base class of the `NotificationListItem` and `NotificationListGroupItem`.
  * @constructor
  * @extends ListItemBase
  * @since 1.0.0-rc.8
@@ -55,8 +54,7 @@ type NotificationListItemBaseCloseEventDetail = {
 })
 
 /**
- * Fired when the <code>Close</code> button is pressed.
- *
+ * Fired when the `Close` button is pressed.
  * @param {HTMLElement} item the closed item.
  * @public
  */
@@ -72,7 +70,7 @@ type NotificationListItemBaseCloseEventDetail = {
 })
 class NotificationListItemBase extends ListItemBase {
 	/**
-	 * Defines the <code>titleText</code> of the item.
+	 * Defines the `titleText` of the item.
 	 * @default ""
 	 * @public
 	 */
@@ -80,8 +78,7 @@ class NotificationListItemBase extends ListItemBase {
 	titleText!: string;
 
 	/**
-	 * Defines the <code>priority</code> of the item.
-	 *
+	 * Defines the `priority` of the item.
 	 * @default "None"
 	 * @public
 	 */
@@ -89,7 +86,7 @@ class NotificationListItemBase extends ListItemBase {
 	priority!: `${Priority}`;
 
 	/**
-	 * Defines if the <code>close</code> button would be displayed.
+	 * Defines if the `close` button would be displayed.
 	 * @default false
 	 * @public
 	 */
@@ -97,9 +94,9 @@ class NotificationListItemBase extends ListItemBase {
 	showClose!: boolean;
 
 	/**
-	 * Defines if the <code>notification</code> is new or has been already read.
-	 * <br><br>
-	 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
+	 * Defines if the `notification` is new or has been already read.
+	 *
+	 * **Note:** if set to `false` the `titleText` has bold font,
 	 * if set to true - it has a normal font.
 	 * @default false
 	 * @public
@@ -118,7 +115,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
 	 * @default 1000
 	 * @public
 	 */
@@ -127,9 +123,8 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines the actions, displayed in the top-right area.
-	 * <br><br>
-	 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 	 *
+	 * **Note:** use the `ui5-notification-action` component.
 	 * @public
 	 */
 	@slot()

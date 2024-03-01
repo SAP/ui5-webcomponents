@@ -1,0 +1,56 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<!-- playground-fold-end -->
+
+<ui5-tabcontainer>
+	<ui5-tab text="Notes">
+		Notes go here ...
+	</ui5-tab>
+	<ui5-tab text="Products">
+		Products go here ...
+		<ui5-tab slot="subTabs" text="Computers">
+			Computers go here ...
+			<ui5-tab slot="subTabs" text="Laptops" selected>
+				Laptops go here ...
+			</ui5-tab>
+			<ui5-tab slot="subTabs" text="Desktops">
+				<ui5-tab slot="subTabs" text="Work Stations">
+					Work Stations go here ...
+				</ui5-tab>
+				<ui5-tab slot="subTabs" text="Game Stations">
+					Game Stations go here ...
+				</ui5-tab>
+				Desktops go here ...
+			</ui5-tab>
+		</ui5-tab>
+		<ui5-tab text="Phones" slot="subTabs">
+			<ui5-tab text="Smartphones" slot="subTabs">
+				Smartphones go here ...
+			</ui5-tab>
+			<ui5-tab text="Tablets" slot="subTabs">
+				Tablets go here ...
+			</ui5-tab>
+			Phones go here ...
+		</ui5-tab>
+	</ui5-tab>
+	<ui5-tab text="Orders">
+		Orders go here ...
+		<ui5-tab slot="subTabs" text="Attachments">
+			Order attachments go here ...
+		</ui5-tab>
+	</ui5-tab>
+</ui5-tabcontainer>
+
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-fold-end -->
+
