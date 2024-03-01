@@ -2,8 +2,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import {
-	isSpace,
-	isEnter,
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -137,21 +135,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 		if (isRight(e)) {
 			this.expanded = true;
-			return;
-		}
-
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
-		if (isEnter(e)) {
-			this._toggle();
-		}
-	}
-
-	_onkeyup = (e: KeyboardEvent) => {
-		if (isSpace(e)) {
-			this._toggle();
 		}
 	}
 

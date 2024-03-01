@@ -20,6 +20,7 @@ const Template: UI5StoryArgs<SideNavigationGroup, StoryArgsSlots> = (args) => {
 	<ui5-side-navigation-group
 		text="${ifDefined(args.text)}"
 		?expanded="${ifDefined(args.expanded)}"
+		?disabled="${ifDefined(args.disabled)}"
 	>
 		${unsafeHTML(args.default)}
 	</ui5-side-navigation-group>
@@ -31,5 +32,6 @@ Basic.tags = ["_hidden_"];
 Basic.args = {
 	text: "Group",
 	expanded: true,
+	disabled: false,
 	default: `<ui5-side-navigation-item text="Item"></ui5-side-navigation-item>`
 };
