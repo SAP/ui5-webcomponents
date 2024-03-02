@@ -32,17 +32,14 @@
 	background-color: var(--ifm-menu-color-background-active);
 }
 
-.icon__wrapper.icon__wrapper--copied .icon__wrapper__copy {
-	display: none;
-}
-
-.icon__wrapper.icon__wrapper--copied .icon__wrapper__accept {
+.icon__svg--accept.icon__svg--accept--visible {
 	fill: var(--ifm-color-primary);
-	display: inline-block;
+	visibility: visible;
 }
 
-.icon__wrapper__copy,
-.icon__wrapper__accept {
+.icon__svg--copy,
+.icon__svg--accept,
+.icon__svg--picture {
 	width: 1rem;
 	height: 1rem;
 	align-self: end;
@@ -50,8 +47,8 @@
 	pointer-events: none;
 }
 
-.icon__wrapper__accept {
-	display: none;
+.icon__svg--accept {
+	visibility: hidden;
 }
 
 .icon__wrapper__title {
@@ -61,6 +58,22 @@
 	word-break: break-all;
 	font-size: 0.813rem;
 	pointer-events: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-wrap: nowrap;
+	width: 100%;
+}
+
+.icon__button--copy,
+.icon__button--picture {
+	width: 1.5rem;
+	height: 1.5rem;
+	display: inline-flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	padding: 0.25rem;
+	margin: 0.25rem;
 }
 
 .segmented__button {

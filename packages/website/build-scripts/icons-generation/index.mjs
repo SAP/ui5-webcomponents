@@ -66,6 +66,7 @@ import Link from '@docusaurus/Link';
 const additionalImports = `
 import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
 import AcceptSvg from "../local-cdn/local-cdn/icons/dist/v5/accept.svg";
+import PictureSvg from "../local-cdn/local-cdn/icons/dist/v5/picture.svg";
 `;
 
 
@@ -80,31 +81,46 @@ const _generateIconsPage = (sourceDir, config) => {
 
             const iconNameImport = `${fileNameImportName}SvgName`;
             const svgImport = `${capitalize(fileNameImportName)}Svg`;
-
-        imports += `
-import ${iconNameImport} from "../local-cdn/local-cdn/${config.dir}/dist/${fileName}.js";
-import ${svgImport} from "../local-cdn/local-cdn/${config.dir}/dist/${config.version}/${fileName}.svg";
-`;
+            
+            imports += `
+            import ${iconNameImport} from "../local-cdn/local-cdn/${config.dir}/dist/${fileName}.js";
+            import ${svgImport} from "../local-cdn/local-cdn/${config.dir}/dist/${config.version}/${fileName}.svg";
+            `;
 
         icons += `
-<div
-    tabIndex="-1"
-    title="Copy the icon name"
-    className="icon__wrapper"
-    onClick={function(e) { 
-        navigator.clipboard.writeText(${iconNameImport}); 
-        const target = e.target;
-        target.classList.add("icon__wrapper--copied");
+        <div
+            tabIndex="-1"
+            title="Copy Icon"
+            className="icon__wrapper"
+            onClick={function(e) {
+                const target = document.querySelector("#${svgImport}_accept");
+                target?.classList.add("icon__svg--accept--visible");
 
-        setTimeout(() => {
-            target.classList.remove("icon__wrapper--copied");
-        }, 600)
-    }}>
-    <CopySvg className="icon__wrapper__copy"/>
-    <AcceptSvg className="icon__wrapper__accept"/>
-    <div className="icon__wrapper__svg"><${svgImport} fill="var(--ifm-font-color-base)"/></div>
-    <span className="icon__wrapper__title">{${iconNameImport}}</span>
-</div>`;
+                setTimeout(() => {
+                    target.classList.remove("icon__svg--accept--visible");
+                }, 600)
+            }}>
+    
+            <AcceptSvg id="${svgImport}_accept" className="icon__svg--accept"/>
+            <div id="${svgImport}_svg"  className="icon__wrapper__svg"><${svgImport} fill="var(--ifm-font-color-base)"/></div>
+            <span className="icon__wrapper__title">{${iconNameImport}.replace("tnt/", "").replace("business-suite/", "")}</span>
+
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <button className="button button--secondary icon__button--copy"
+                    onClick={function(e) {
+                        navigator.clipboard.writeText(${iconNameImport});
+                }}>
+                    <CopySvg className="icon__svg--copy" />
+                </button>
+
+                <button className="button button--secondary icon__button--picture"
+                    onClick={function(e) {
+                        navigator.clipboard.writeText(document.querySelector("#${svgImport}_svg")?.innerHTML);
+                }}>
+                    <PictureSvg className="icon__svg--picture" />
+                </button>
+            </div>
+        </div>`;
         }
     });
 
