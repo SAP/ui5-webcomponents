@@ -24,13 +24,15 @@
   font-size: 2.25rem;
   text-align: center;
   margin-bottom: 1rem;
-  text-wrap: wrap;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .demo-apps__desc {
   font-size: 1.25rem;
   margin-bottom: 4rem;
-  text-wrap: wrap;
+  overflow-wrap: break-word;
+  white-space: normal;
   text-align: center;
   width: 50%;
 }
@@ -77,6 +79,10 @@
 @media (max-width: 900px) {
   .demo-apps__frameworks {
     grid-template-columns: 1fr;
+  }
+
+  .demo-apps__desc {
+    width: 80%;
   }
 }
 
