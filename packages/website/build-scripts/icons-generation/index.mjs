@@ -93,12 +93,16 @@ const _generateIconsPage = (sourceDir, config) => {
             title="Copy Icon"
             className="icon__wrapper"
             onClick={function(e) {
-                const target = document.querySelector("#${svgImport}_accept");
-                target?.classList.add("icon__svg--accept--visible");
+                const target = e.target;
 
-                setTimeout(() => {
-                    target.classList.remove("icon__svg--accept--visible");
-                }, 600)
+                if (target.classList.contains("icon__button--picture") || target.classList.contains("icon__button--copy")) {
+                    const acceptSVG = document.querySelector("#${svgImport}_accept");
+                    acceptSVG?.classList.add("icon__svg--accept--visible");
+
+                    setTimeout(() => {
+                        acceptSVG.classList.remove("icon__svg--accept--visible");
+                    }, 600);
+                }
             }}>
     
             <AcceptSvg id="${svgImport}_accept" className="icon__svg--accept"/>

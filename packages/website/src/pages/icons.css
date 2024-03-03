@@ -43,13 +43,19 @@
 	width: 1rem;
 	height: 1rem;
 	align-self: end;
-	fill: var(--ifm-font-color-base);
 	pointer-events: none;
 }
 
 .icon__svg--accept {
 	visibility: hidden;
 }
+
+[data-theme='dark'] .icon__svg--copy,
+[data-theme='dark'] .icon__svg--accept,
+[data-theme='dark'] .icon__svg--picture {
+	fill: var(--ifm-color-primary);
+}
+	
 
 .icon__wrapper__title {
 	color: var(--ifm-font-color-base);
@@ -75,6 +81,19 @@
 	padding: 0.25rem;
 	margin: 0.25rem;
 }
+
+[data-theme='dark'] .icon__button--copy,
+[data-theme='dark'] .icon__button--picture {
+	background-color: transparent;
+	border-color: transparent;
+}
+
+[data-theme='dark'] .icon__button--copy:hover,
+[data-theme='dark'] .icon__button--picture:hover {
+	background-color: var(--ifm-background-surface-color);
+}
+
+
 
 .segmented__button {
 	display: inline-flex;
