@@ -268,6 +268,7 @@ abstract class ListItem extends ListItemBase {
 		document.addEventListener("mouseup", this.deactivate);
 		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
+		this.getDomRef()?.addEventListener("keydown", this._onkeydown.bind(this))
 	}
 
 	onExitDOM() {

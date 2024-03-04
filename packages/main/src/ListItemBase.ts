@@ -113,9 +113,15 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* [TAB] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter() {
-		const aContent = getTabbableElements(this.getFocusDomRef()!);
+		const aContent = getTabbableElements(this);
 
-		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
+		if (aContent.length === 0) {
+			return true;
+		}
+
+		const activeElement = getActiveElement();
+		// Check if active element is the last tabbable element, or it is the after element of a nested list
+		return (aContent[aContent.length - 1] === activeElement) || (!!activeElement && activeElement.id.endsWith("-after"));
 	}
 
 	/*
