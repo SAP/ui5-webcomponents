@@ -265,8 +265,8 @@ class IllustratedMessage extends UI5Element {
 
 	static get BREAKPOINTS() {
 		return {
-			DIALOG: 679,
-			SPOT: 319,
+			DIALOG: 680,
+			SPOT: 359,
 			DOT: 259,
 			BASE: 159,
 		};
@@ -274,10 +274,10 @@ class IllustratedMessage extends UI5Element {
 
 	static get BREAKPOINTS_HEIGHT() {
 		return {
-			DIALOG: 451,
-			SPOT: 296,
-			DOT: 154,
-			BASE: 87,
+			DIALOG: 414,
+			SPOT: 283,
+			DOT: 206,
+			BASE: 60,
 		};
 	}
 
