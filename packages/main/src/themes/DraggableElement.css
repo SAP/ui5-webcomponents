@@ -1,8 +1,11 @@
-:host([draggable=true]), [draggable=true] {
+[draggable=true] {
 	cursor: grab !important;
 }
 
-:host([draggable=true]:active), [draggable=true]:active {
+
+:host([ui5-li][active]) [draggable=true],
+:host([ui5-li-custom][active]) [draggable=true],
+:host(:not([ui5-li],[ui5-li-custom])) [draggable=true]:active {
 	cursor: grabbing !important;
 	opacity: var(--sapContent_DisabledOpacity);
 }
