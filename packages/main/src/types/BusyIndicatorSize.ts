@@ -1,6 +1,5 @@
 /**
  * Different BusyIndicator sizes.
- *
  * @public
  */
 enum BusyIndicatorSize {

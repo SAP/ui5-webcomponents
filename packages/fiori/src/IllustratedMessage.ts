@@ -37,44 +37,40 @@ const getEffectiveIllustrationName = (name: string): string => {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * An IllustratedMessage is a recommended combination of a solution-oriented message, an engaging
  * illustration, and conversational tone to better communicate an empty or a success state than just show
  * a message alone.
  *
  * Each illustration has default internationalised title and subtitle texts. Also they can be managed with
- * <code>titleText</code> and <code>subtitleText</code> properties.
+ * `titleText` and `subtitleText` properties.
  *
- * To display the desired illustration, use the <code>name</code> property, where you can find the list of all available illustrations.
- * <br><br>
- * <b>Note:</b> By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"</code>
- * <br>
- * <b>Note:</b> Illustrations starting with the “Tnt” prefix are part of another illustration set. For example to use the “TntSuccess” illustration, add the following import::
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/Success.js"</code>
+ * To display the desired illustration, use the `name` property, where you can find the list of all available illustrations.
  *
- * <h3>Structure</h3>
+ * **Note:** By default the “BeforeSearch” illustration is loaded. To use other illustrations, make sure you import them in addition, for example:
+ *
+ * `import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js"`
+ *
+ * **Note:** Illustrations starting with the “Tnt” prefix are part of another illustration set. For example to use the “TntSuccess” illustration, add the following import::
+ *
+ * `import "@ui5/webcomponents-fiori/dist/illustrations/tnt/Success.js"`
+ *
+ * ### Structure
  * The IllustratedMessage consists of the following elements, which are displayed below each other in the following order:
- * <br>
- * <ul>
- * <li>Illustration</li>
- * <li>Title</li>
- * <li>Subtitle</li>
- * <li>Actions</li>
- * </ul>
  *
- * <h3>Usage</h3>
- * <code>ui5-illustrated-message</code> is meant to be used inside container component, for example a <code>ui5-card</code>,
- * a <code>ui5-dialog</code> or a <code>ui5-page</code>
+ * - Illustration
+ * - Title
+ * - Subtitle
+ * - Actions
  *
- * <h3>ES6 Module Import</h3>
+ * ### Usage
+ * `ui5-illustrated-message` is meant to be used inside container component, for example a `ui5-card`,
+ * a `ui5-dialog` or a `ui5-page`
  *
- * <code>import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";</code>
+ * ### ES6 Module Import
  *
- * @csspart subtitle - Used to style the subtitle wrapper of the <code>ui5-illustrated-message</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";`
+ * @csspart subtitle - Used to style the subtitle wrapper of the `ui5-illustrated-message`
  * @constructor
  * @extends UI5Element
  * @public
@@ -93,29 +89,26 @@ const getEffectiveIllustrationName = (name: string): string => {
 class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the illustration name that will be displayed in the component.
-	* <br>
+	*
 	* Example:
-	* <br>
-	* <code>name='BeforeSearch'</code>, <code>name='UnableToUpload'</code>, etc..
-	* <br>
-	* <br>
-	* <b>Note:</b> To use the TNT illustrations,
-	* you need to set the <code>tnt</code> or <code>Tnt</code> prefix in front of the icon's name.
-	* <br>
+	*
+	* `name='BeforeSearch'`, `name='UnableToUpload'`, etc..
+	*
+	* **Note:** To use the TNT illustrations,
+	* you need to set the `tnt` or `Tnt` prefix in front of the icon's name.
+	*
 	* Example:
-	* <br>
-	* <code>name='tnt/Avatar'</code> or <code>name='TntAvatar'</code>.
-	* <br>
-	* <br>
-	* <b>Note:</b> By default the <code>BeforeSearch</code> illustration is loaded.
+	*
+	* `name='tnt/Avatar'` or `name='TntAvatar'`.
+	*
+	* **Note:** By default the `BeforeSearch` illustration is loaded.
 	* When using an illustration type, other than the default, it should be loaded in addition:
-	* <br>
-	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";</code>
-	* <br>
-	* <br>
+	*
+	* `import "@ui5/webcomponents-fiori/dist/illustrations/NoData.js";`
+	*
 	* For TNT illustrations:
-	* <br>
-	* <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
+	*
+	* `import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";`
 	* @default "BeforeSearch"
 	* @public
 	*/
@@ -124,11 +117,9 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Determines which illustration breakpoint variant is used.
-	* <br><br>
 	*
-	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
+	* As `IllustratedMessage` adapts itself around the `Illustration`, the other
 	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
-	*
 	* @default "Auto"
 	* @public
 	* @since 1.5.0
@@ -138,10 +129,10 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the subtitle of the component.
-	* <br><br>
-	* <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
-	* <br><br>
-	* <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
+	*
+	* **Note:** Using this property, the default subtitle text of illustration will be overwritten.
+	*
+	* **Note:** Using `subtitle` slot, the default of this property will be overwritten.
 	* @default ""
 	* @public
 	*/
@@ -150,8 +141,8 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the title of the component.
-	* <br><br>
-	* <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
+	*
+	* **Note:** Using this property, the default title text of illustration will be overwritten.
 	* @default ""
 	* @public
 	*/
@@ -160,7 +151,6 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Receives id(or many ids) of the elements that label the component.
-	*
 	* @default ""
 	* @public
 	* @since 1.7.0
@@ -171,12 +161,9 @@ class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the semantic level of the title.
 	*
-	* <b>Note:</b> Used for accessibility purposes only.
+	* **Note:** Used for accessibility purposes only.
 	*
-	* <br/>
-	*
-	* <b>Note:</b> Doesn't take effect when <code>title</code> slot is being used.
-	*
+	* **Note:** Doesn't take effect when `title` slot is being used.
 	* @default "H2"
 	* @public
 	* @since 1.20.0
@@ -203,8 +190,7 @@ class IllustratedMessage extends UI5Element {
 	spotSvg!: string;
 
 	/**
-	* Illustration breakpoint variant for the <code>Scene</code> size.
-	*
+	* Illustration breakpoint variant for the `Scene` size.
 	* @private
 	* @since 1.9.0
 	*/
@@ -212,8 +198,7 @@ class IllustratedMessage extends UI5Element {
 	sceneSvg!: string;
 
 	/**
-	* Illustration breakpoint variant for the <code>Dialog</code> size.
-	*
+	* Illustration breakpoint variant for the `Dialog` size.
 	* @private
 	* @since 1.9.0
 	*/
@@ -229,8 +214,8 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the title of the component.
-	* <br><br>
-	* <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
+	*
+	* **Note:** Using this slot, the default title text of illustration and the value of `title` property will be overwritten.
 	* @public
 	* @since 1.7.0
 	*/
@@ -239,8 +224,8 @@ class IllustratedMessage extends UI5Element {
 
 	/**
 	* Defines the subtitle of the component.
-	* <br><br>
-	* <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
+	*
+	* **Note:** Using this slot, the default subtitle text of illustration and the value of `subtitleText` property will be overwritten.
 	* @public
 	* @since 1.0.0-rc.16
 	*/

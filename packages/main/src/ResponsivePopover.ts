@@ -23,13 +23,16 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-responsive-popover</code> acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
+ * ### Overview
+ * The `ui5-responsive-popover` acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
  * The component improves tremendously the user experience on mobile.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * Use it when you want to make sure that all the content is visible on any device.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ResponsivePopover.js";`
  * @constructor
  * @extends Popover
  * @since 1.0.0-rc.6
@@ -67,8 +70,7 @@ class ResponsivePopover extends Popover {
 
 	/**
 	 * Defines whether a close button will be rendered in the header of the component
-	 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
-	 *
+	 * **Note:** If you are using the `header` slot, this property will have no effect
 	 * @private
 	 * @default false
 	 * @since 1.0.0-rc.16

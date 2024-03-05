@@ -1,6 +1,5 @@
 /**
  * Popover horizontal align types.
- *
  * @public
  */
 enum PopoverHorizontalAlign {

@@ -11,20 +11,18 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 
 /**
  * @class
- * The <code>ui5-tree-item-custom</code> represents a node in a tree structure, shown as a <code>ui5-list</code>.
- * <br>
- * This is the item to use inside a <code>ui5-tree</code>.
+ * The `ui5-tree-item-custom` represents a node in a tree structure, shown as a `ui5-list`.
+ *
+ * This is the item to use inside a `ui5-tree`.
  * You can represent an arbitrary tree structure by recursively nesting tree items.
  *
  * You can use this item to put any custom content inside the tree item.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/TreeItemCustom.js";</code>
- *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/TreeItemCustom.js";`
  * @csspart title - Used to style the title of the tree list item
  * @csspart additionalText - Used to style the additionalText of the tree list item
  * @csspart icon - Used to style the icon of the tree list item
- *
  * @constructor
  * @extends TreeItemBase
  * @public
@@ -38,7 +36,6 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines whether the tree list item should display the selection element.
-	 *
 	 * @public
 	 * @default false
 	 */
@@ -46,8 +43,7 @@ class TreeItemCustom extends TreeItemBase {
 	hideSelectionElement!: boolean;
 
 	/**
-	 * Defines the content of the <code>ui5-tree-item</code>.
-	 *
+	 * Defines the content of the `ui5-tree-item`.
 	 * @public
 	 */
 	@slot()

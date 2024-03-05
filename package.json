@@ -27,7 +27,8 @@
     "dev": "node packages/tools/lib/dev-server/dev-server.js",
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:fiori dev",
     "start:playground": "yarn ci:releasebuild && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
-    
+    "start:playground-new": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-documentation start",
+
     "start": "npm-run-all --sequential generate start:all",
     "build": "yarn ci:releasebuild",
     "test": "yarn wsrun --exclude-missing test",
@@ -36,12 +37,13 @@
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts bundle",
     "ci:deploybuild": "yarn ci:testbuild && yarn generateAPI && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
+    "ci:deploy": "yarn ci:testbuild && yarn generateAPI && yarn copy-css && yarn workspace @ui5/webcomponents-website build",
 
     "ci:test:base": "yarn workspace @ui5/webcomponents-base test",
     "ci:test:main:suite-1": "yarn workspace @ui5/webcomponents test:ssr && yarn workspace @ui5/webcomponents test:suite-1",
     "ci:test:main:suite-2": "yarn workspace @ui5/webcomponents test:suite-2",
     "ci:test:fiori": "yarn workspace @ui5/webcomponents-fiori test:ssr && yarn workspace @ui5/webcomponents-fiori test",
-  
+
     "lint": "wsrun --exclude-missing lint",
     "lint:scope": "wsrun --exclude-missing lint:scope",
     "link-all": "wsrun link",
@@ -85,6 +87,7 @@
     "packages/icons-tnt",
     "packages/tools",
     "packages/playground",
+    "packages/website",
     "packages/create-package"
   ]
 }

@@ -58,7 +58,7 @@ const getDefaultLanguage = (): string => {
 /**
  * Defines if the default language, that is inlined, should be
  * fetched over the network instead of using the inlined one.
- * <b>Note:</b> By default the language will not be fetched.
+ * **Note:** By default the language will not be fetched.
  *
  * @public
  * @param {boolean} fetchDefaultLang

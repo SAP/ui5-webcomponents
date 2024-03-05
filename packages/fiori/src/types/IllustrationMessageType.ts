@@ -1,6 +1,5 @@
 /**
  * Different illustration types of Illustrated Message.
- *
  * @public
  */
 enum IllustrationMessageType {
