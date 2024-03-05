@@ -116,6 +116,7 @@
 
 :host([media="dot"]) {
 	padding: 0.25rem;
+	min-height: 4rem; /* needed to avoid infinite loop between "dot" and "base" when only illustration is used (no title, etc.) */
 }
 
 :host([media="dot"]) .ui5-illustrated-message-inner {
