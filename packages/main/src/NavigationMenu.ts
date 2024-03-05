@@ -126,7 +126,7 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		this._prepareSubMenuDesktopTablet(item, opener);
+		this._prepareSubMenu(item, opener);
 	}
 
 	get accSideNavigationPopoverHiddenText() {

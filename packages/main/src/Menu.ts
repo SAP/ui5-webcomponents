@@ -509,7 +509,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_prepareSubMenuDesktopTablet(item: MenuItem, opener: HTMLElement) {
+	_prepareSubMenu(item: MenuItem, opener: HTMLElement) {
 		if (opener.id !== this._subMenuOpenerId || (item && item.hasSubmenu)) {
 			// close opened sub-menu if there is any opened
 			this._closeItemSubMenu(this._openedSubMenuItem!, true);
@@ -539,7 +539,7 @@ class Menu extends UI5Element {
 
 		// Sets the new timeout
 		this._timeout = setTimeout(() => {
-			this._prepareSubMenuDesktopTablet(item, opener);
+			this._prepareSubMenu(item, opener);
 		}, MENU_OPEN_DELAY);
 	}
 
@@ -598,7 +598,7 @@ class Menu extends UI5Element {
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
-			item.hasSubmenu && this._prepareSubMenuDesktopTablet(item, opener);
+			item.hasSubmenu && this._prepareSubMenu(item, opener);
 		} else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
 			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
 			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true, true);
@@ -642,17 +642,17 @@ class Menu extends UI5Element {
 				}
 			}
 		} else {
-			this._prepareSubMenuDesktopTablet(item, opener);
+			this._prepareSubMenu(item, opener);
 		}
 	}
 
 	_findMainMenu(element: MenuItem | Menu) {
-		let parentMenu = this._isMenu(element) ? element as Menu : element.parentElement as Menu;
-		while (parentMenu && parentMenu._parentMenuItem) {
-			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
+		let menu = this._isMenu(element) ? element as Menu : element.parentElement as Menu;
+		while (menu && menu._parentMenuItem) {
+			menu = menu._parentMenuItem.parentElement as Menu;
 		}
 
-		return parentMenu;
+		return menu;
 	}
 
 	_isMenu(element: HTMLElement) {
