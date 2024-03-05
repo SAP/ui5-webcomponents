@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 
 import GridHeaderCell from "./GridHeaderCell.js";
@@ -12,12 +11,11 @@ import GridSelectionMode from "./types/GridSelectionMode.js";
 import CheckBox from "./CheckBox.js";
 import GridHeaderRowTemplate from "./generated/templates/GridHeaderRowTemplate.lit.js";
 import GridHeaderRowCss from "./generated/themes/GridHeaderRow.css.js";
-
-import {
-	GRID_HEADER_ROW_SELECTION,
-	GRID_HEADER_ROW_SELECT_ALL_ROWS,
-} from "./generated/i18n/i18n-defaults.js";
 import Grid from "./Grid.js";
+import {
+	GRID_SELECTION,
+	GRID_ROW_SELECTOR,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -87,13 +85,6 @@ class GridHeaderRow extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const widths : Array<string> = [];
-		if (this._hasSelectionComponent) {
-			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
-		}
-		widths.push(...this.cells.map(cell => cell.width));
-		this.parentElement!.style.gridTemplateColumns = widths.join(" ");
-
 		if (this._isMultiSelect) {
 			this.setAttribute("aria-selected", `${this._selected}`);
 		} else {
@@ -109,19 +100,15 @@ class GridHeaderRow extends UI5Element {
 		return this._selectionMode === "Multi" || this._selectionMode === "Single";
 	}
 
-	get _selectionWidth(): string {
-		return `var(${getScopedVarName("--_ui5_checkbox_width_height")})`;
-	}
-
-	get _i18nSelecAllRows(): string {
-		return GridHeaderRow.i18nBundle.getText(GRID_HEADER_ROW_SELECT_ALL_ROWS);
+	get _i18nRowSelector(): string {
+		return GridHeaderRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 
 	get _i18nSelection(): string {
-		return GridHeaderRow.i18nBundle.getText(GRID_HEADER_ROW_SELECTION);
+		return GridHeaderRow.i18nBundle.getText(GRID_SELECTION);
 	}
 
-	#informGridForSelectAllChange(selected : boolean) {
+	#informGridForSelectAllChange(selected: boolean) {
 		const grid = this.parentElement as Grid;
 		grid._onSelectAllChange(selected);
 	}
@@ -131,10 +118,12 @@ class GridHeaderRow extends UI5Element {
 	}
 
 	_onSelectionCellKeyDown(e: KeyboardEvent) {
-		if (isSpace(e) || isEnter(e)) {
-			this.#informGridForSelectAllChange(!this._selected);
-			e.preventDefault();
+		if (!(isSpace(e) || isEnter(e)) || e.currentTarget !== e.composedPath()[0]) {
+			return;
 		}
+
+		this.#informGridForSelectAllChange(!this._selected);
+		e.preventDefault();
 	}
 }
 

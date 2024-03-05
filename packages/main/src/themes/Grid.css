@@ -1,9 +1,12 @@
 :host {
-	display: grid;
-    grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
-    background: var(--sapList_Background);
+	background: var(--sapList_Background);
 }
 
 :host([hidden]) {
     display: none;
+}
+
+.grid {
+    display: grid;
+    grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
 }

@@ -1,2 +1,8 @@
-<slot name="header-row"></slot>
-<slot></slot>
+<div class="grid" role="grid"
+    style="{{styles.grid}}"
+    aria-label="{{_ariaLabelText}}"
+    aria-multiselectable="{{_isMultiSelect}}"
+>
+    <slot name="header-row"></slot>
+    <slot></slot>
+</div>

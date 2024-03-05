@@ -3,6 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridCss from "./generated/themes/Grid.css.js";
@@ -53,8 +55,9 @@ class Grid extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
 	"header-row"!: Array<GridHeaderRow>;
+	get headerRow() { return this["header-row"][0]; }
 
 	/**
 	 * Defines the selection mode of the component.
@@ -65,23 +68,32 @@ class Grid extends UI5Element {
 	@property({ type: GridSelectionMode, defaultValue: GridSelectionMode.None })
 	selectionMode!: `${GridSelectionMode}`;
 
-	get headerRow() {
-		return this["header-row"];
-	}
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @public
+	 */
+	@property()
+	accessibleName?: string;
 
-	onEnterDOM() {
-		this.setAttribute("role", "grid");
-	}
+	/**
+	 * Identifies the element (or elements) that labels the component.
+	 *
+	 * @public
+	 */
+	@property()
+	accessibleNameRef!: string;
 
 	onBeforeRendering() {
-		this.setAttribute("aria-multiselectable", `${this.selectionMode === GridSelectionMode.Multi}`);
-		[...this.rows, ...this.headerRow].forEach(row => { row._selectionMode = this.selectionMode; });
+		[...this.rows, this.headerRow].forEach(row => {
+			row._selectionMode = this.selectionMode;
+		});
 	}
 
 	_onRowSelectionChange(row: GridRow, selected: boolean) {
 		row._selected = selected;
-		if (this.selectionMode === GridSelectionMode.Multi) {
-			this.headerRow[0]._selected = this.rows.every(r => r._selected);
+		if (this._isMultiSelect) {
+			this.headerRow._selected = this.rows.every(r => r._selected);
 		} else {
 			if (this.#lastSelectedRow && this.#lastSelectedRow.parentElement === this) {
 				this.#lastSelectedRow._selected = false;
@@ -91,14 +103,39 @@ class Grid extends UI5Element {
 	}
 
 	_onSelectAllChange(selected: boolean) {
-		[...this.rows, ...this.headerRow].forEach(row => {
+		[...this.rows, this.headerRow].forEach(row => {
 			if (row._selected !== selected) {
 				row._selected = selected;
 			}
 		});
 	}
 
-	#lastSelectedRow? : GridRow;
+	#lastSelectedRow?: GridRow;
+
+	#getGridTemplateColumns(): string {
+		const widths : Array<string> = [];
+		if (this._isMultiSelect || this.selectionMode === GridSelectionMode.Single) {
+			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
+		}
+		widths.push(...this.headerRow.cells.map(cell => cell.width));
+		return widths.join(" ");
+	}
+
+	get styles() {
+		return {
+			grid: {
+				"grid-template-columns": this.#getGridTemplateColumns(),
+			},
+		};
+	}
+
+	get _ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
+	get _isMultiSelect(): boolean {
+		return this.selectionMode === GridSelectionMode.Multi;
+	}
 }
 
 Grid.define();
