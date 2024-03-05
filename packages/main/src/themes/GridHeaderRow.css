@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
+    background: var(--sapList_HeaderBackground);
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
 }
 
@@ -14,10 +15,10 @@
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
-.selection-cell {
+#selection-cell {
     padding: 0;
 }
 
-.selection-component {
+#selection-component {
     vertical-align: middle;
 }

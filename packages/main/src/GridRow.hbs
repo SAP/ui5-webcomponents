@@ -1,16 +1,16 @@
 {{#if _hasSelectionComponent}}
-    <ui5-grid-cell class="selection-cell"
+    <ui5-grid-cell id="selection-cell"
         aria-selected="{{_selected}}"
         @keydown="{{_onSelectionCellKeyDown}}"
     >
     {{#if _isMultiSelect}}
-        <ui5-checkbox class="selection-component" tabindex="-1"
+        <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_selected}}"
             @ui5-change="{{_onSelectionChange}}"
             accessible-name="{{_i18nRowSelector}}"
         ></ui5-checkbox>
     {{else}}
-        <ui5-radio-button class="selection-component" tabindex="-1"
+        <ui5-radio-button id="selection-component" tabindex="-1"
             name="{{_gridId}}"
             ?checked="{{_selected}}"
             @ui5-change="{{_onSelectionChange}}"

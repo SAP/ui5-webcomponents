@@ -1,12 +1,13 @@
 :host {
-	background: var(--sapList_Background);
+	display: block;
 }
 
 :host([hidden]) {
     display: none;
 }
 
-.grid {
+#grid {
     display: grid;
     grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
+    background: var(--sapList_Background);
 }
