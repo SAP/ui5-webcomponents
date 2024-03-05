@@ -42,20 +42,18 @@ type MultiInputTokenDeleteEventDetail = {
 
 /**
  * @class
- * <h3>Overview</h3>
- * A <code>ui5-multi-input</code> field allows the user to enter multiple values, which are displayed as <code>ui5-token</code>.
+ * ### Overview
+ * A `ui5-multi-input` field allows the user to enter multiple values, which are displayed as `ui5-token`.
  *
  * User can choose interaction for creating tokens.
  * Fiori Guidelines say that user should create tokens when:
- * <ul>
- * <li>Type a value in the input and press enter or focus out the input field (<code>change</code> event is fired)</li>
- * <li>Select a value from the suggestion list (<code>suggestion-item-select</code> event is fired)</li>
- * </ul>
  *
- * <h3>ES6 Module Import</h3>
+ * - Type a value in the input and press enter or focus out the input field (`change` event is fired)
+ * - Select a value from the suggestion list (`suggestion-item-select` event is fired)
  *
- * <code>import "@ui5/webcomponents/dist/MultiInput";</code>
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents/dist/MultiInput.js";`
  * @constructor
  * @extends Input
  * @since 1.0.0-rc.9
@@ -76,14 +74,12 @@ type MultiInputTokenDeleteEventDetail = {
 /**
  * Fired when the value help icon is pressed
  * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
- *
  * @public
  */
 @event("value-help-trigger")
 
 /**
  * Fired when a token is about to be deleted.
- *
  * @param {HTMLElement} token deleted token.
  * @public
  */
@@ -99,8 +95,7 @@ type MultiInputTokenDeleteEventDetail = {
 class MultiInput extends Input {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
-	 * Pressing the icon will fire <code>value-help-trigger</code> event.
-	 *
+	 * Pressing the icon will fire `value-help-trigger` event.
 	 * @default false
 	 * @public
 	 */
@@ -109,7 +104,6 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -118,7 +112,6 @@ class MultiInput extends Input {
 
 	/**
 	 * Indicates whether the tokenizer has tokens
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -127,7 +120,6 @@ class MultiInput extends Input {
 
 	/**
 	 * Defines the component tokens.
-	 *
 	 * @public
 	 */
 	@slot()

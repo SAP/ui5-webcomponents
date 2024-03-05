@@ -53,20 +53,17 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>BarcodeScannerDialog</code> component provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API.
+ * The `BarcodeScannerDialog` component provides barcode scanning functionality for all devices that support the `MediaDevices.getUserMedia()` native API.
  * Opening the dialog launches the device camera and scans for known barcode formats.
- * <br>
- * <br>
- * A <code>scanSuccess</code> event fires whenever a barcode is identified
- * and a <code>scanError</code> event fires when the scan failed (for example, due to missing permisions).
- * <br>
- * <br>
+ *
+ * A `scanSuccess` event fires whenever a barcode is identified
+ * and a `scanError` event fires when the scan failed (for example, due to missing permisions).
+ *
  * Internally, the component  uses the zxing-js/library third party OSS.
  *
- * For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.
- *
+ * For a list of supported barcode formats, see the [zxing-js/library](https://github.com/zxing-js/library) documentation.
  * @constructor
  * @extends UI5Element
  * @public
@@ -86,7 +83,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 })
 /**
  * Fires when the scan is completed successfuuly.
- *
  * @param {string} text the scan result as string
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
@@ -106,7 +102,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 /**
  * Fires when the scan fails with error.
- *
  * @param {string} message the error message
  * @public
  */
@@ -132,7 +127,6 @@ class BarcodeScannerDialog extends UI5Element {
 
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
-	 *
 	 * @default false
 	 * @private
 	 */

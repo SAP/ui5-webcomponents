@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
+
+
+### Bug Fixes
+
+* remove sap.ui.require call from unused openui5 module ([#8359](https://github.com/SAP/ui5-webcomponents/issues/8359)) ([50219ac](https://github.com/SAP/ui5-webcomponents/commit/50219ac23add7b86fe26d8ca51e2181f01404992))
+
+
+
+
+
+# [1.23.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.3...v1.23.0-rc.4) (2024-02-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
 # [1.23.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.2...v1.23.0-rc.3) (2024-02-22)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

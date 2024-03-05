@@ -1,6 +1,5 @@
 /**
  * Defines the priority of the toolbar item to go inside overflow popover.
- *
  * @public
  */
 enum ToolbarItemOverflowBehavior {

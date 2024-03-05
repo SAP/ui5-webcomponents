@@ -41,4 +41,4 @@ Argument of type 'boolean' is not assignable to parameter of type 'string'.
 ```
 
 
-Next: [Wrapping Up](./08-wrapping-up)
+Next: [Wrapping Up](./08-wrapping-up.md)
