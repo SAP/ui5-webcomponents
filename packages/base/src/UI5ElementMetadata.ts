@@ -354,8 +354,11 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	}
 
 	if (!propertyType || propertyType === String) {
+		if (value === null) {
+			return "defaultValue" in propData ? propData.defaultValue : "";
+		}
 		// eslint-disable-next-line @typescript-eslint/no-base-to-string -- if an object is passed as a value to a string property, this was an error so displaying [object Object] will indicate the issue to the developer
-		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
+		return (typeof value === "string" || typeof value === "undefined") ? value : value.toString();
 	}
 
 	if (propertyType === Boolean) {
