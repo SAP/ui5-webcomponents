@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.5...v1.23.0) (2024-03-06)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** fixed not working separators ([#8383](https://github.com/SAP/ui5-webcomponents/issues/8383)) ([ca733c1](https://github.com/SAP/ui5-webcomponents/commit/ca733c1c7034b03edcc51bbaf3153385e1b70d22))
+* **ui5-combobox:** show all items upon arrow click ([#8373](https://github.com/SAP/ui5-webcomponents/issues/8373)) ([c9dab87](https://github.com/SAP/ui5-webcomponents/commit/c9dab87ebfad72a784c7115dd8ef983e35c022b1)), closes [#8267](https://github.com/SAP/ui5-webcomponents/issues/8267)
+* **ui5-date-picker:** open correct picker ([#8371](https://github.com/SAP/ui5-webcomponents/issues/8371)) ([78b98a5](https://github.com/SAP/ui5-webcomponents/commit/78b98a546cdff7569ff716f63b4daf434678837a)), closes [#8218](https://github.com/SAP/ui5-webcomponents/issues/8218)
+* **ui5-side-navigation:** fix private types ([#8158](https://github.com/SAP/ui5-webcomponents/issues/8158)) ([a03921c](https://github.com/SAP/ui5-webcomponents/commit/a03921cc4ad90418d3ca9dd2241a3cafe24e4fff))
+* **ui5-switch:** align icon on iOS devices ([#8356](https://github.com/SAP/ui5-webcomponents/issues/8356)) ([f373305](https://github.com/SAP/ui5-webcomponents/commit/f373305cbb5ace38afd002c34e134d5a40b02efe))
+* **ui5-table:** highlight popined selected rows ([#8372](https://github.com/SAP/ui5-webcomponents/issues/8372)) ([5c6af14](https://github.com/SAP/ui5-webcomponents/commit/5c6af14feff211b9bb9c66056e45f51cbc13da06))
+
+
+### Features
+
+* **ui5-textarea:** select and scroll events ([#8340](https://github.com/SAP/ui5-webcomponents/issues/8340)) ([5565a53](https://github.com/SAP/ui5-webcomponents/commit/5565a53460b5acbc379e09322b91d8b06b538b85))
+
+
+
+
+
 # [1.23.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0-rc.4...v1.23.0-rc.5) (2024-02-29)
 
 
