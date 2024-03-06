@@ -21,7 +21,6 @@
 
 /* the ear of the needle */
 :host([orientation="Vertical"]) .ui5-di-needle::before {
-	top: -0.1875rem;
 	left: -0.1875rem;
 	content: "";
 	position: absolute;
@@ -36,7 +35,6 @@
 /* the ear of the needle */
 :host([orientation="Horizontal"]) .ui5-di-needle::before {
 	top: -0.1875rem;
-	left: -0.1875rem;
 	content: "";
 	position: absolute;
 	width: 0.25rem;
