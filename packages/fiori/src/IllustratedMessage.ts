@@ -175,7 +175,7 @@ class IllustratedMessage extends UI5Element {
 	* Illustration breakpoint variant for the <code>Dot</code> size.
 	*
 	* @private
-	* @since 2.2.0
+	* @since 1.24.0
 	*/
 	@property({ noAttribute: true })
 	dotSvg!: string;

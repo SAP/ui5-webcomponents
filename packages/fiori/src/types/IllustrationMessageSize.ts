@@ -5,13 +5,8 @@
  */
 enum IllustrationMessageSize {
 	/**
-<<<<<<< HEAD
 	 * Automatically decides the <code>Illustration</code> size (<code>Base</code>, <code>Dot</code>, <code>Spot</code>,
 	 * <code>Dialog</code>, or <code>Scene</code>) depending on the <code>IllustratedMessage</code> container width.
-=======
-	 * Automatically decides the `Illustration` size (`Base`, `Spot`,
-	 * `Dialog`, or `Scene`) depending on the `IllustratedMessage` container width.
->>>>>>> main
 	 *
 	 * **Note:** `Auto` is the only option where the illustration size is changed according to
 	 * the available container width. If any other `IllustratedMessageSize` is chosen, it remains
