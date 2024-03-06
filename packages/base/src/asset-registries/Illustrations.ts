@@ -8,6 +8,7 @@ type IllustrationProperties = {
 	dialogSvg: string,
 	sceneSvg: string,
 	spotSvg: string,
+	dotSvg: string,
 	title: I18nText,
 	subtitle: I18nText,
 };
@@ -70,6 +71,7 @@ const registerIllustration = (name: string, data: IllustrationData) => {
 		dialogSvg: data.dialogSvg,
 		sceneSvg: data.sceneSvg,
 		spotSvg: data.spotSvg,
+		dotSvg: data.dotSvg,
 		title: data.title,
 		subtitle: data.subtitle,
 	});
