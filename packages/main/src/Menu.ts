@@ -200,8 +200,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired when a menu item receives focus. <b>This event does not bubble.</b>
  *
  * @public
- * @param { HTMLElement } ref The currently focused element representing a menu item.
- * @param { HTMLElement } item The menu item represented by the focused element.
+ * @param { HTMLElement } ref The currently focused element representing a <code>ui5-menu-item</code>.
+ * @param { HTMLElement } item The <code>ui5-menu-item</code> represented by the focused element.
  * @since 1.23.1
  */
 @event<MenuFocusEventDetail>("item-focus", {
