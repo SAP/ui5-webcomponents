@@ -6,7 +6,7 @@
     overflow: clip;
     overflow-clip-margin: content-box;
     padding: var(--_ui5_grid_cell_padding);
-    font: var(--sapFontSize) var(--sapFontSemiboldDuplexFamily);
+    font-family: var(--sapFontSemiboldDuplexFamily);
     color: var(--sapList_HeaderTextColor);
 }
 

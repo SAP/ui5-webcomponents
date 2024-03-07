@@ -5,12 +5,16 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridCss from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
+import {
+	GRID_NO_DATA,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -59,6 +63,9 @@ class Grid extends UI5Element {
 	"header-row"!: Array<GridHeaderRow>;
 	get headerRow() { return this["header-row"][0]; }
 
+	@slot({ type: HTMLElement})
+	nodata!: Array<HTMLElement>;
+
 	/**
 	 * Defines the selection mode of the component.
 	 *
@@ -83,6 +90,20 @@ class Grid extends UI5Element {
 	 */
 	@property()
 	accessibleNameRef!: string;
+
+	/**
+	 * Defines the text to be displayed when there are no rows in the component.
+	 *
+	 * @public
+	 */
+	@property()
+	noDataText!: string;
+
+	static i18nBundle: I18nBundle;
+
+	static async onDefine() {
+		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
 
 	onBeforeRendering() {
 		[...this.rows, this.headerRow].forEach(row => {
@@ -113,7 +134,7 @@ class Grid extends UI5Element {
 	#lastSelectedRow?: GridRow;
 
 	#getGridTemplateColumns(): string {
-		const widths : Array<string> = [];
+		const widths = [];
 		if (this._isMultiSelect || this.selectionMode === GridSelectionMode.Single) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
@@ -129,12 +150,26 @@ class Grid extends UI5Element {
 		};
 	}
 
-	get _ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
-	}
-
 	get _isMultiSelect(): boolean {
 		return this.selectionMode === GridSelectionMode.Multi;
+	}
+
+	get _effectiveNoDataText() {
+		return this.noDataText ? this.noDataText : Grid.i18nBundle.getText(GRID_NO_DATA);
+	}
+
+	get _ariaLabelText() {
+		const texts = [];
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this);
+		if (effectiveAriaLabelText) {
+			texts.push(effectiveAriaLabelText);
+		}
+		if (!this.rows.length) {
+			texts.push(this._effectiveNoDataText);
+		}
+		if (texts.length) {
+			return texts.join(" ");
+		}
 	}
 }
 

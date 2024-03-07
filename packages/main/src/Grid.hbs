@@ -6,3 +6,12 @@
     <slot name="header-row"></slot>
     <slot></slot>
 </div>
+{{#unless rows.length}}
+    <div id="nodata" tabindex="0">
+        {{#if nodata.length}}
+            <slot name="nodata"></slot>
+        {{else}}
+            {{_effectiveNoDataText}}
+        {{/if}}
+    </div>
+{{/unless}}
