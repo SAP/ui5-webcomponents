@@ -56,6 +56,11 @@ type MenuItemClickEventDetail = {
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
+type MenuFocusEventDetail = {
+	ref: HTMLElement,
+	item: MenuItem,
+};
+
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
@@ -190,6 +195,32 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @since 1.10.0
  */
 @event("after-close")
+
+/**
+ * Fired when a menu item receives focus. <b>This event does not bubble.</b>
+ *
+ * @public
+ * @param { HTMLElement } ref The currently focused element representing a menu item.
+ * @param { HTMLElement } item The menu item represented by the focused element.
+ * @since 1.23.1
+ */
+@event<MenuFocusEventDetail>("item-focus", {
+	detail: {
+		/**
+		 * @public
+		 */
+		ref: {
+			type: HTMLElement,
+		},
+		/**
+		 * @public
+		 */
+		item: {
+			type: HTMLElement,
+		},
+	},
+})
+
 class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
@@ -553,7 +584,7 @@ class Menu extends UI5Element {
 			: (target.getRootNode() as ShadowRoot).host as MenuListItem;
 		const item = menuListItem.associatedItem as MenuItem;
 		const mainMenu = this._findMainMenu(item);
-		mainMenu?.fireEvent("item-focus", { ref: menuListItem, item });
+		mainMenu?.fireEvent<MenuFocusEventDetail>("item-focus", { ref: menuListItem, item }, true, false);
 	}
 
 	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem) {
@@ -726,4 +757,5 @@ export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
+	MenuFocusEventDetail,
 };
