@@ -1,4 +1,4 @@
-# Custom Theming with `UI Theme Designer`
+# Custom Theming with UI Theme Designer
 
 UI5 Web Components are fully compatible with `UI Theme Designer`, a tool for building a custom theme. You can create your own theme and effortlessly integrate it in your UI5 Web Components project on HTML level. On top, this does not prevent you from switching to and from officially supported themes, while having your own.
 

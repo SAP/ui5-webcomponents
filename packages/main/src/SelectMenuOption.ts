@@ -16,16 +16,15 @@ import type { IOption } from "./Select.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-select-menu-option</code> component represents an option in the <code>ui5-select-menu</code>.
+ * ### Overview
+ * The `ui5-select-menu-option` component represents an option in the `ui5-select-menu`.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * For the <code>ui5-select-menu-option</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-select-menu-option`
+ * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/SelectMenuOption.js";</code>
- *
+ * `import @ui5/webcomponents/dist/SelectMenuOption.js";`
  * @constructor
  * @extends CustomListItem
  * @implements {IOption}
@@ -42,9 +41,8 @@ import type { IOption } from "./Select.js";
 })
 class SelectMenuOption extends CustomListItem implements IOption {
 	/**
-	 * Defines the text, displayed inside the <code>ui5-select</code> input filed
+	 * Defines the text, displayed inside the `ui5-select` input filed
 	 * when the option gets selected.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -53,8 +51,8 @@ class SelectMenuOption extends CustomListItem implements IOption {
 
 	/**
 	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is hidden.
+	 *
+	 * **Note:** A disabled component is hidden.
 	 * @default false
 	 * @public
 	 */
@@ -62,9 +60,8 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	declare disabled: boolean;
 
 	/**
-	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
-	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
-	 *
+	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
+	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
 	 * @default ""
 	 * @public
 	 */
@@ -72,8 +69,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	value!: string;
 
 	/**
-	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-	 *
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
 	 * @default "Active"
 	 * @public
 	 * @deprecated
@@ -82,8 +78,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	declare type: `${ListItemType}`;
 
 	/**
-	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-	 *
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
 	 * @default {}
 	 * @public
 	 * @deprecated
@@ -92,8 +87,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	declare accessibilityAttributes: AccessibilityAttributes;
 
 	/**
-	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
-	 *
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
 	 * @default false
 	 * @public
 	 * @deprecated
@@ -102,8 +96,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	declare navigated: boolean;
 
 	/**
-	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
-	 *
+	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
 	 * @public
 	 * @deprecated
 	 */

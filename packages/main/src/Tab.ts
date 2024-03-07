@@ -47,10 +47,9 @@ const DESIGN_DESCRIPTIONS = {
 
 /**
  * @class
- * The <code>ui5-tab</code> represents a selectable item inside a <code>ui5-tabcontainer</code>.
- * It defines both the item in the tab strip (top part of the <code>ui5-tabcontainer</code>) and the
+ * The `ui5-tab` represents a selectable item inside a `ui5-tabcontainer`.
+ * It defines both the item in the tab strip (top part of the `ui5-tabcontainer`) and the
  * content that is presented to the user once the tab is selected.
- *
  * @abstract
  * @constructor
  * @extends UI5Element
@@ -97,8 +96,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Defines the icon source URI to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous built-in icons.
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -107,19 +105,16 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Defines the component's design color.
-	 * <br><br>
+	 *
 	 * The design is applied to:
-	 * <ul>
-	 * <li>the component icon</li>
-	 * <li>the <code>text</code> when the component overflows</li>
-	 * <li>the tab selection line</li>
-	 * </ul>
 	 *
-	 * <br><br>
-	 * Available designs are: <code>"Default"</code>, <code>"Neutral"</code>, <code>"Positive"</code>, <code>"Critical"</code> and <code>"Negative"</code>.
+	 * - the component icon
+	 * - the `text` when the component overflows
+	 * - the tab selection line
 	 *
-	 * <br><br>
-	 * <b>Note:</b> The design depends on the current theme.
+	 * Available designs are: `"Default"`, `"Neutral"`, `"Positive"`, `"Critical"` and `"Negative"`.
+	 *
+	 * **Note:** The design depends on the current theme.
 	 * @default "Default"
 	 * @public
 	 */
@@ -128,7 +123,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Specifies if the component is selected.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -146,7 +140,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Holds the content associated with this tab.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -161,9 +154,8 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Defines hierarchies with nested sub tabs.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-tab` and `ui5-tab-separator` for the intended design.
 	 * @public
 	 */
 	@slot({
@@ -247,9 +239,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
-	 * <b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.
-	 * <b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.
 	 *
+	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+	 *
+	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */

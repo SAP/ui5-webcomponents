@@ -48,8 +48,9 @@ Basic.args = {
 		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 	</ui5-side-navigation-item>`,
 	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
-	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
-	<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>`,
+	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history">
+		<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+	</ui5-side-navigation-item>`,
 };
 Basic.decorators = [setHeight];
 Basic.parameters = {

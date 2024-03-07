@@ -1,6 +1,5 @@
 /**
  * Background design for the header and content of TabContainer.
- *
  * @public
  */
 enum TabContainerBackgroundDesign {
