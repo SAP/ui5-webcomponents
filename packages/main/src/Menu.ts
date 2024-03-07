@@ -396,9 +396,10 @@ class Menu extends UI5Element {
 			this._parentMenuItem = undefined;
 			this._opener = undefined;
 		}
+		const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
-		popover.showAt(opener, this._parentMenuItem?.busy);
+		popover.showAt(opener, busyWithoutItems);
 	}
 
 	/**
