@@ -351,6 +351,18 @@ abstract class ListItem extends ListItemBase {
 		this.fireItemPress(e);
 	}
 
+	_ondragstart(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.setAttribute("data-moving", "");
+		}
+	}
+
+	_ondragend(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.removeAttribute("data-moving");
+		}
+	}
+
 	/*
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.

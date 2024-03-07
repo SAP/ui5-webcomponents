@@ -46,7 +46,7 @@
 	outline: none;
 }
 
-:host([focused]) .ui5-li-root.ui5-li--focusable:after {
+:host([focused]) .ui5-li-root:not([data-moving]).ui5-li--focusable:after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
@@ -55,7 +55,7 @@
 	pointer-events: none;
 }
 
-:host([focused]) .ui5-li-content:focus:after {
+:host([focused]) .ui5-li-root:not([data-moving]) .ui5-li-content:focus:after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;

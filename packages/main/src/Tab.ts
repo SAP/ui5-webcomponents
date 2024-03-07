@@ -470,6 +470,18 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	static async onDefine() {
 		Tab.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
+
+	_ondragstart(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.setAttribute("data-moving", "");
+		}
+	}
+
+	_ondragend(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.removeAttribute("data-moving");
+		}
+	}
 }
 
 Tab.define();

@@ -935,11 +935,11 @@ class List extends UI5Element {
 		e.preventDefault();
 	}
 
-	_ondragend() {
-		this.dropIndicatorDOM!.targetReference = null;
-	}
+	_ondragleave(e: DragEvent) {
+		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
+			return;
+		}
 
-	_ondragleave() {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 

@@ -2,10 +2,7 @@
 	cursor: grab !important;
 }
 
-
-:host([ui5-li][active]) [draggable=true],
-:host([ui5-li-custom][active]) [draggable=true],
-:host(:not([ui5-li],[ui5-li-custom])) [draggable=true]:active {
+[draggable=true][data-moving] {
 	cursor: grabbing !important;
 	opacity: var(--sapContent_DisabledOpacity);
 }
