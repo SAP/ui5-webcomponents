@@ -562,6 +562,8 @@ class TabContainer extends UI5Element {
 
 			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.subTabs.length) {
 				popoverTarget = closestPosition.element;
+			} else if (!acceptedPlacement) {
+				this.dropIndicatorDOM!.targetReference = null;
 			}
 		}
 
