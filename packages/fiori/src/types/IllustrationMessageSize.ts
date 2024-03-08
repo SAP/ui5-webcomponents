@@ -5,8 +5,8 @@
  */
 enum IllustrationMessageSize {
 	/**
-	 * Automatically decides the `Illustration` size (`Base`, `Spot`,
-	 * `Dialog`, or `Scene`) depending on the `IllustratedMessage` container width.
+	 * Automatically decides the <code>Illustration</code> size (<code>Base</code>, <code>Dot</code>, <code>Spot</code>,
+	 * <code>Dialog</code>, or <code>Scene</code>) depending on the <code>IllustratedMessage</code> container width.
 	 *
 	 * **Note:** `Auto` is the only option where the illustration size is changed according to
 	 * the available container width. If any other `IllustratedMessageSize` is chosen, it remains
@@ -23,7 +23,13 @@ enum IllustrationMessageSize {
 	Base = "Base",
 
 	/**
-	 * Spot `Illustration` size (S breakpoint). Suitable for cards (four columns).
+	 * Dot <code>Illustration</code> size (XS breakpoint). Suitable for table rows.
+	 * @public
+	 */
+	Dot = "Dot",
+
+	/**
+	 * Spot <code>Illustration</code> size (S breakpoint). Suitable for cards (four columns).
 	 * @public
 	 */
 	Spot = "Spot",

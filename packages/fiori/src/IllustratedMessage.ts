@@ -172,7 +172,17 @@ class IllustratedMessage extends UI5Element {
 	titleLevel!: `${TitleLevel}`;
 
 	/**
-	* Illustration breakpoint variant for the `Spot` size.
+	* Illustration breakpoint variant for the <code>Dot</code> size.
+	*
+	* @private
+	* @since 1.24.0
+	*/
+	@property({ noAttribute: true })
+	dotSvg!: string;
+
+	/**
+	* Illustration breakpoint variant for the <code>Spot</code> size.
+	*
 	* @private
 	* @since 1.9.0
 	*/
@@ -255,23 +265,26 @@ class IllustratedMessage extends UI5Element {
 
 	static get BREAKPOINTS() {
 		return {
-			DIALOG: 679,
-			SPOT: 319,
-			BASE: 259,
+			DIALOG: 681,
+			SPOT: 360,
+			DOT: 260,
+			BASE: 160,
 		};
 	}
 
 	static get BREAKPOINTS_HEIGHT() {
 		return {
-			DIALOG: 451,
-			SPOT: 296,
-			BASE: 87,
+			DIALOG: 415,
+			SPOT: 284,
+			DOT: 207,
+			BASE: 61,
 		};
 	}
 
 	static get MEDIA() {
 		return {
 			BASE: "base",
+			DOT: "dot",
 			SPOT: "spot",
 			DIALOG: "dialog",
 			SCENE: "scene",
@@ -293,6 +306,7 @@ class IllustratedMessage extends UI5Element {
 			illustrationData = await getIllustrationData(effectiveName);
 		}
 
+		this.dotSvg = illustrationData!.dotSvg;
 		this.spotSvg = illustrationData!.spotSvg;
 		this.dialogSvg = illustrationData!.dialogSvg;
 		this.sceneSvg = illustrationData!.sceneSvg;
@@ -333,6 +347,8 @@ class IllustratedMessage extends UI5Element {
 
 		if (size <= oBreakpounts.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
+		} else if (size <= oBreakpounts.DOT) {
+			newMedia = IllustratedMessage.MEDIA.DOT;
 		} else if (size <= oBreakpounts.SPOT) {
 			newMedia = IllustratedMessage.MEDIA.SPOT;
 		} else if (size <= oBreakpounts.DIALOG) {
@@ -395,6 +411,9 @@ class IllustratedMessage extends UI5Element {
 		case IllustrationMessageSize.Base:
 			this.media = IllustratedMessage.MEDIA.BASE;
 			return;
+		case IllustrationMessageSize.Dot:
+			this.media = IllustratedMessage.MEDIA.DOT;
+			return;
 		case IllustrationMessageSize.Spot:
 			this.media = IllustratedMessage.MEDIA.SPOT;
 			return;
@@ -412,6 +431,8 @@ class IllustratedMessage extends UI5Element {
 
 	get effectiveIllustration(): string {
 		switch (this.media) {
+		case IllustratedMessage.MEDIA.DOT:
+			return this.dotSvg;
 		case IllustratedMessage.MEDIA.SPOT:
 			return this.spotSvg;
 		case IllustratedMessage.MEDIA.DIALOG:
