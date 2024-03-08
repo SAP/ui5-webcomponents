@@ -1,9 +1,9 @@
 /**
- * Determines where a drop indicator will be drawn.
+ * Placements of a moved element relative to a target element.
  *
  * @public
  */
-enum DropPlacement {
+enum MovePlacement {
 	/**
 	 * @public
 	 */
@@ -20,4 +20,4 @@ enum DropPlacement {
 	After = "After",
 }
 
-export default DropPlacement;
+export default MovePlacement;

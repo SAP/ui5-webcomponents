@@ -17,7 +17,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
+import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -27,7 +27,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -83,7 +83,7 @@ type ListMoveOverEventDetail = {
 	},
 	destination: {
 		element: HTMLElement,
-		placement: `${DropPlacement}`,
+		placement: `${MovePlacement}`,
 	}
 }
 
@@ -93,7 +93,7 @@ type ListMoveEventDetail = {
 	},
 	destination: {
 		element: HTMLElement,
-		placement: `${DropPlacement}`,
+		placement: `${MovePlacement}`,
 	}
 }
 
@@ -950,38 +950,38 @@ class List extends UI5Element {
 			return;
 		}
 
-		const closestDropPosition = findClosestDropPosition(
+		const closestPosition = findClosestPosition(
 			this.items,
 			e.clientY,
 			Orientation.Vertical,
 		);
 
-		if (!closestDropPosition) {
+		if (!closestPosition) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;
 		}
 
-		let placements = closestDropPosition.placements;
+		let placements = closestPosition.placements;
 
-		if (closestDropPosition.element === draggedElement) {
-			placements = placements.filter(placement => placement !== DropPlacement.On);
+		if (closestPosition.element === draggedElement) {
+			placements = placements.filter(placement => placement !== MovePlacement.On);
 		}
 
-		const placementAccepted = placements.some(dropPlacement => {
+		const placementAccepted = placements.some(placement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListMoveOverEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},
 				destination: {
-					element: closestDropPosition.element,
-					placement: dropPlacement,
+					element: closestPosition.element,
+					placement,
 				},
 			}, true);
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();
-				this.dropIndicatorDOM!.targetReference = closestDropPosition.element;
-				this.dropIndicatorDOM!.placement = dropPlacement;
+				this.dropIndicatorDOM!.targetReference = closestPosition.element;
+				this.dropIndicatorDOM!.placement = placement;
 				return true;
 			}
 

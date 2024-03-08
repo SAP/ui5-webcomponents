@@ -1,4 +1,4 @@
-import DropPlacement from "../../types/DropPlacement.js";
+import MovePlacement from "../../types/MovePlacement.js";
 import Orientation from "../../types/Orientation.js";
 
 const closestPlacement = (point: number, beforePoint: number, centerPoint: number, afterPoint: number) => {
@@ -10,24 +10,24 @@ const closestPlacement = (point: number, beforePoint: number, centerPoint: numbe
 		distToCenterPoint,
 		distToAfterPoint,
 	);
-	let dropPlacements: Array<DropPlacement> = [];
+	let placements: Array<MovePlacement> = [];
 
 	switch (closestPoint) {
 	case distToBeforePoint:
-		dropPlacements = [DropPlacement.Before];
+		placements = [MovePlacement.Before];
 		break;
 	case distToCenterPoint:
-		dropPlacements = [DropPlacement.On, distToBeforePoint < distToAfterPoint ? DropPlacement.Before : DropPlacement.After];
+		placements = [MovePlacement.On, distToBeforePoint < distToAfterPoint ? MovePlacement.Before : MovePlacement.After];
 		break;
 	case distToAfterPoint:
-		dropPlacements = [DropPlacement.After];
+		placements = [MovePlacement.After];
 		break;
 	}
 
-	return dropPlacements;
+	return placements;
 };
 
-const findClosestDropPosition = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
+const findClosestPosition = (elements: Array<HTMLElement>, point: number, layoutOrientation: Orientation) => {
 	let shortestDist = Number.POSITIVE_INFINITY;
 	let closestElement: HTMLElement | null = null;
 
@@ -74,4 +74,4 @@ const findClosestDropPosition = (elements: Array<HTMLElement>, point: number, la
 	};
 };
 
-export default findClosestDropPosition;
+export default findClosestPosition;

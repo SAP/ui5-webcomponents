@@ -28,12 +28,12 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import findClosestDropPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestDropPosition.js";
+import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
-import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
@@ -113,7 +113,7 @@ type TabContainerMoveOverEventDetail = {
 	},
 	destination: {
 		element: HTMLElement;
-		placement: `${DropPlacement}`
+		placement: `${MovePlacement}`
 	}
 }
 
@@ -123,7 +123,7 @@ type TabContainerMoveEventDetail = {
 	},
 	destination: {
 		element: HTMLElement;
-		placement: `${DropPlacement}`
+		placement: `${MovePlacement}`
 	}
 }
 
@@ -539,7 +539,7 @@ class TabContainer extends UI5Element {
 		}
 
 		const draggedElement = DragRegistry.getDraggedElement();
-		const closestDropPosition = findClosestDropPosition(
+		const closestPosition = findClosestPosition(
 			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)],
 			e.clientX,
 			Orientation.Horizontal,
@@ -550,37 +550,37 @@ class TabContainer extends UI5Element {
 		if (overflowButton) {
 			popoverTarget = overflowButton;
 			e.preventDefault();
-		} else if (closestDropPosition) {
-			const dropTarget = (closestDropPosition.element as Tab).realTabReference;
-			let placements = closestDropPosition.placements;
+		} else if (closestPosition) {
+			const dropTarget = (closestPosition.element as Tab).realTabReference;
+			let placements = closestPosition.placements;
 
 			if (dropTarget === draggedElement) {
-				placements = placements.filter(placement => placement !== DropPlacement.On);
+				placements = placements.filter(placement => placement !== MovePlacement.On);
 			}
 
-			const acceptedPlacement = placements.find(dropPlacement => {
+			const acceptedPlacement = placements.find(placement => {
 				const dragOverPrevented = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
 					source: {
 						element: draggedElement!,
 					},
 					destination: {
 						element: dropTarget,
-						placement: dropPlacement,
+						placement,
 					},
 				}, true);
 
 				if (dragOverPrevented) {
 					e.preventDefault();
-					this.dropIndicatorDOM!.targetReference = closestDropPosition.element;
-					this.dropIndicatorDOM!.placement = dropPlacement;
+					this.dropIndicatorDOM!.targetReference = closestPosition.element;
+					this.dropIndicatorDOM!.placement = placement;
 					return true;
 				}
 
 				return false;
 			});
 
-			if (acceptedPlacement === DropPlacement.On && (closestDropPosition.element as Tab).realTabReference.subTabs.length) {
-				popoverTarget = closestDropPosition.element;
+			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.subTabs.length) {
+				popoverTarget = closestPosition.element;
 			}
 		}
 
@@ -620,7 +620,7 @@ class TabContainer extends UI5Element {
 		const draggedElement = DragRegistry.getDraggedElement();
 		const dropTarget = (destination.element as ITab).realTabReference;
 
-		if (destination.placement === DropPlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
+		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
 			return;
 		}
 

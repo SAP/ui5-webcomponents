@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import DropPlacement from "@ui5/webcomponents-base/dist/types/DropPlacement.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 
 import DropIndicatorTemplate from "./generated/templates/DropIndicatorTemplate.lit.js";
@@ -58,8 +58,8 @@ class DropIndicator extends UI5Element {
 	 * @default "Before"
 	 * @public
 	 */
-	@property({ type: DropPlacement, defaultValue: DropPlacement.Before })
-	placement!: `${DropPlacement}`;
+	@property({ type: MovePlacement, defaultValue: MovePlacement.Before })
+	placement!: `${MovePlacement}`;
 
 	/**
 	 * Orientation of the indicator.
@@ -107,14 +107,14 @@ class DropIndicator extends UI5Element {
 
 		if (this.orientation === Orientation.Vertical) {
 			switch (this.placement) {
-			case DropPlacement.Before:
+			case MovePlacement.Before:
 				position = left - this._needle!.offsetWidth / 2;
 				break;
-			case DropPlacement.On:
+			case MovePlacement.On:
 				style.width = `${width}px`;
 				position = left;
 				break;
-			case DropPlacement.After:
+			case MovePlacement.After:
 				position = right - this._needle!.offsetWidth / 2;
 				break;
 			}
@@ -124,14 +124,14 @@ class DropIndicator extends UI5Element {
 
 		if (this.orientation === Orientation.Horizontal) {
 			switch (this.placement) {
-			case DropPlacement.Before:
+			case MovePlacement.Before:
 				position = top;
 				break;
-			case DropPlacement.On:
+			case MovePlacement.On:
 				style.height = `${height}px`;
 				position = top;
 				break;
-			case DropPlacement.After:
+			case MovePlacement.After:
 				position = bottom;
 				break;
 			}
@@ -148,8 +148,8 @@ class DropIndicator extends UI5Element {
 	get classes() {
 		return {
 			root: {
-				"ui5-di-rect": this.placement === DropPlacement.On,
-				"ui5-di-needle": this.placement !== DropPlacement.On,
+				"ui5-di-rect": this.placement === MovePlacement.On,
+				"ui5-di-needle": this.placement !== MovePlacement.On,
 			},
 		};
 	}
