@@ -336,6 +336,16 @@ describe("TabContainer general interaction", () => {
 		// Assert
 		assert.ok(productsTabDomRefInStrip.isEqual(productsTabDomRefInStripExpected) , "Tab dom ref in strip should be the first child of the tab container's strip");
 	});
+
+	it("tests inline visualization", async () => {
+		const tabContainer = await browser.$("#tabContainerInlineTab");
+		const firstTabItemText = await tabContainer.shadow$(".ui5-tab-strip-itemText");
+
+		// Assert
+		assert.notOk(await tabContainer.shadow$(".ui5-tab-strip-itemAdditionalText").isExisting(), "There is no additional text.");
+		assert.strictEqual(await firstTabItemText.getProperty("innerText"), "Tab 1 (123)" , "The inline number is added to the text.");
+	});
+
 });
 
 describe("TabContainer keyboard handling", () => {

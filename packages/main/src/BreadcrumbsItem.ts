@@ -7,10 +7,9 @@ import LinkDesign from "./types/LinkDesign.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-breadcrumbs-item</code> component defines the content of an item in <code>ui5-breadcrumbs</code>.
- *
+ * The `ui5-breadcrumbs-item` component defines the content of an item in `ui5-breadcrumbs`.
  * @constructor
  * @extends UI5Element
  * @public
@@ -21,9 +20,8 @@ import LinkDesign from "./types/LinkDesign.js";
 class BreadcrumbsItem extends UI5Element {
 	/**
 	 * Defines the link href.
-	 * <br><br>
-	 * <b>Note:</b> Standard hyperlink behavior is supported.
 	 *
+	 * **Note:** Standard hyperlink behavior is supported.
 	 * @default ""
 	 * @public
 	 */
@@ -32,18 +30,16 @@ class BreadcrumbsItem extends UI5Element {
 
 	/**
 	 * Defines the link target.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
-	 * <br><br>
-	 * <b>Note:<b> This property must only be used when the <code>href</code> property is set.
 	 *
+	 * Available options are:
+	 *
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
+	 *
+	 * **Note:** This property must only be used when the `href` property is set.
 	 * @default undefined
 	 * @public
 	 */
@@ -52,7 +48,6 @@ class BreadcrumbsItem extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the item.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -61,9 +56,8 @@ class BreadcrumbsItem extends UI5Element {
 
 	/**
 	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

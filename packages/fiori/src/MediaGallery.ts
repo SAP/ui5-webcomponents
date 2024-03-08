@@ -27,8 +27,7 @@ import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
 
 /**
- * Interface for components that can be slotted inside <code>ui5-media-gallery</code> as items.
- *
+ * Interface for components that can be slotted inside `ui5-media-gallery` as items.
  * @public
  */
 interface IMediaGalleryItem extends HTMLElement, ITabbable {
@@ -44,7 +43,7 @@ type MediaGallerySelectionChangeEventDetail = {
 }
 
 // The allowed number of thumbnail columns on each size
-// (relevant when <code>showAllThumbnails</code> is enabled)
+// (relevant when `showAllThumbnails` is enabled)
 const COLUMNS_COUNT: Record<string, number> = {
 	"S": 1,
 	"M": 2,
@@ -55,38 +54,33 @@ const COLUMNS_COUNT: Record<string, number> = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-media-gallery</code> component allows the user to browse through multimedia items. Currently,
- * the supported items are images and videos. The items should be defined using the <code>ui5-media-gallery-item</code>
+ * The `ui5-media-gallery` component allows the user to browse through multimedia items. Currently,
+ * the supported items are images and videos. The items should be defined using the `ui5-media-gallery-item`
  * component.
  *
  * The items are initially displayed as thumbnails. When the user selects a thumbnail, the corresponding item
  * is displayed in larger size.
- * <br>
+ *
  * The component is responsive by default and adjusts the position of the menu with respect to viewport size,
  * but the application is able to further customize the layout via the provided API.
  *
-* <h3>Keyboard Handling</h3>
- * The <code>ui5-media-gallery</code> provides advanced keyboard handling.
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-media-gallery` provides advanced keyboard handling.
+ *
  * When the thumbnails menu is focused the following keyboard
  * shortcuts allow the user to navigate through the thumbnail items:
- * <br>
  *
- * <ul>
- * <li>[UP/DOWN] - Navigates up and down the items</li>
- * <li>[HOME] - Navigates to first item</li>
- * <li>[END] - Navigates to the last item</li>
- * <li>[SPACE/ENTER] - Select an item</li>
- * </ul>
- * <br>
+ * - [UP/DOWN] - Navigates up and down the items
+ * - [HOME] - Navigates to first item
+ * - [END] - Navigates to the last item
+ * - [SPACE/ENTER] - Select an item
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGallery";</code>
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/MediaGalleryItem";</code>
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/MediaGallery.js";`
  *
+ * `import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -107,7 +101,6 @@ const COLUMNS_COUNT: Record<string, number> = {
 
 /**
  * Fired when selection is changed by user interaction.
- *
  * @param {HTMLElement} item the selected item.
  * @public
  */
@@ -122,26 +115,23 @@ const COLUMNS_COUNT: Record<string, number> = {
 
 /**
  * Fired when the thumbnails overflow button is clicked.
- *
  * @public
  */
 @event("overflow-click")
 
 /**
- * Fired when the display area is clicked.<br>
+ * Fired when the display area is clicked.
  * The display area is the central area that contains
  * the enlarged content of the currently selected item.
- *
  * @public
  */
 @event("display-area-click")
 
 class MediaGallery extends UI5Element {
 	/**
-	 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
-	 * If <code>false</code>, only up to five thumbnails are rendered, followed by
+	 * If set to `true`, all thumbnails are rendered in a scrollable container.
+	 * If `false`, only up to five thumbnails are rendered, followed by
 	 * an overflow button that shows the count of the remaining thumbnails.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -149,12 +139,11 @@ class MediaGallery extends UI5Element {
 	showAllThumbnails!: boolean;
 
 	/**
-	 * If enabled, a <code>display-area-click</code> event is fired
+	 * If enabled, a `display-area-click` event is fired
 	 * when the user clicks or taps on the display area.
-	 * <br>
+	 *
 	 * The display area is the central area that contains
 	 * the enlarged content of the currently selected item.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -163,7 +152,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * Determines the layout of the component.
-	 *
 	 * @default "Auto"
 	 * @public
 	 */
@@ -173,7 +161,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the horizontal alignment of the thumbnails menu
 	 * vs. the central display area.
-	 *
 	 * @default "Left"
 	 * @public
 	 */
@@ -183,7 +170,6 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the vertical alignment of the thumbnails menu
 	 * vs. the central display area.
-	 *
 	 * @default "Bottom"
 	 * @public
 	 */
@@ -193,8 +179,7 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Determines the actual applied layout type
 	 * (esp. needed when the app did not specify a fixed layout type
-	 * but selected <code>Auto</code> layout type).
-	 *
+	 * but selected `Auto` layout type).
 	 * @default "Vertical"
 	 * @private
 	 */
@@ -203,7 +188,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 */
 	@property()
@@ -211,7 +195,6 @@ class MediaGallery extends UI5Element {
 
 	/**
 	 * The number of items in the overflow.
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
@@ -220,12 +203,9 @@ class MediaGallery extends UI5Element {
 	/**
 	 * Defines the component items.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Only one selected item is allowed.
+	 * **Note:** Only one selected item is allowed.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
-	 *
+	 * **Note:** Use the `ui5-media-gallery-item` component to define the desired items.
 	 * @public
 	 */
 	@slot({

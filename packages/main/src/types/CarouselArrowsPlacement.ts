@@ -1,6 +1,5 @@
 /**
  * Different Carousel arrows placement.
- *
  * @public
  */
 enum CarouselArrowsPlacement {

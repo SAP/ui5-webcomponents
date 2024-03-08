@@ -1,6 +1,5 @@
 /**
  * Different Carousel page indicator styles.
- *
  * @public
  */
 enum CarouselPageIndicatorStyle {

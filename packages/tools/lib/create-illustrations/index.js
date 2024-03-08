@@ -62,6 +62,8 @@ const generate = async () => {
 	// collect each illustration name because each one should have Sample.js file
 	const fileNames = new Set();
 
+	let dotIllustrationNames = [];
+
 	try {
 		await fs.access(srcPath);
 	} catch (error) {
@@ -77,7 +79,13 @@ const generate = async () => {
 	const svgToJs = async fileName => {
 		const svg = await fs.readFile(path.join(srcPath, fileName), { encoding: "utf-8" });
 		const fileContent = svgImportTemplate(svg);
+		const fileNameSplitArr = fileName.split('-');
 		fileName = fileName.replace(/\.svg$/, ".js");
+
+		if (fileNameSplitArr[1] === 'Dot') {
+			// we keep the Dot illustration names to import them later. If no Dot is present, Spot will be used
+			dotIllustrationNames.push(fileNameSplitArr[2].split('.')[0]);
+		}
 
 		return fs.writeFile(path.join(destPath, fileName), fileContent);
 	};
@@ -93,11 +101,14 @@ const generate = async () => {
 		}
 
 		const illustrationNameUpperCase = illustrationNameForTranslation.toUpperCase();
+		// If no Dot is present, Spot will be imported as Dot
+		const hasDot = dotIllustrationNames.indexOf(illustrationName) !== -1 ? 'Dot' : 'Spot';
 
 		return `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
 import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
-import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";${
+import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
+import dotSvg from "./${illustrationsPrefix}-${hasDot}-${illustrationName}.js";${
 	defaultText ? `import {
 	IM_TITLE_${illustrationNameUpperCase},
 	IM_SUBTITLE_${illustrationNameUpperCase},
@@ -112,7 +123,8 @@ const subtitle = IM_SUBTITLE_${illustrationNameUpperCase};` : ``}
 registerIllustration(name, {
 	dialogSvg,
 	sceneSvg,
-	spotSvg,${defaultText ? `
+	spotSvg,
+	dotSvg,${defaultText ? `
 	title,
 	subtitle,` : ``}
 	set,
@@ -124,6 +136,7 @@ export {
 	dialogSvg,
 	sceneSvg,
 	spotSvg,
+	dotSvg,
 };`
 	};
 
@@ -131,10 +144,11 @@ export {
 		return `declare const dialogSvg: string;
 declare const sceneSvg: string;
 declare const spotSvg: string;
+declare const dotSvg: string;
 declare const _default: "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
 
 export default _default;
-export { dialogSvg, sceneSvg, spotSvg };`
+export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 	};
 
 	await fs.mkdir(destPath, { recursive: true });
@@ -152,12 +166,15 @@ export { dialogSvg, sceneSvg, spotSvg };`
 		}
 	});
 
-	for (let illustrationName of fileNames) {
-		promises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
-		promises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
-	}
+	return Promise.all(promises).then(() => {
+		const nestedPromises = [];
+		for (let illustrationName of fileNames) {
+			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
+			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
+		}
 
-	return Promise.all(promises);
+		return Promise.all(nestedPromises);
+	});
 };
 
 generate().then(() => {
