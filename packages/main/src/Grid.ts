@@ -63,7 +63,12 @@ class Grid extends UI5Element {
 	"header-row"!: Array<GridHeaderRow>;
 	get headerRow() { return this["header-row"][0]; }
 
-	@slot({ type: HTMLElement})
+	/**
+	 * Defines the custom visualization if there is no data available.
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
 	nodata!: Array<HTMLElement>;
 
 	/**
