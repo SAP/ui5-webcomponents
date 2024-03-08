@@ -7,7 +7,6 @@
 	@focusin={{_onFocusIn}}
 	@keydown={{_onKeyDown}}
 	@keyup={{_onKeyUp}}
-	@mousedown={{_handleMouseDown}}
 >
 
 	<ui5-button
@@ -28,22 +27,23 @@
 			<slot></slot>
 		{{/if}}
 	</ui5-button>
-		<ui5-button
-			class="ui5-split-arrow-button"
-			design="{{design}}"
-			icon="slim-arrow-down"
-			tabindex="-1"
-			?disabled="{{disabled}}"
-			?active="{{effectiveActiveArrowButton}}"
-			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
-			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
-			@click="{{_handleArrowButtonAction}}"
-			@mousedown={{_arrowButtonPress}}
-			@mouseup={{_arrowButtonRelease}}
-			@focusin={{_arrowButtonFocusIn}}
-			@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
-		>
-		</ui5-button>
+	<ui5-button
+		class="ui5-split-arrow-button"
+		design="{{design}}"
+		icon="slim-arrow-down"
+		tabindex="-1"
+		?disabled="{{disabled}}"
+		?active="{{effectiveActiveArrowButton}}"
+		aria-expanded="{{accessibilityInfo.ariaExpanded}}"
+		aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
+		@click="{{_handleArrowButtonAction}}"
+		@touchstart={{_arrowButtonPress}}
+		@mousedown={{_arrowButtonPress}}
+		@mouseup={{_arrowButtonRelease}}
+		@focusin={{_arrowButtonFocusIn}}
+		@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
+	>
+	</ui5-button>
 	<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accessibilityInfo.description}} {{accessibilityInfo.keyboardHint}} {{accessibleName}}</span>
 	<span id="{{_id}}-invisibleTextDefault" class="ui5-hidden-text">{{textButtonAccText}}</span>
 

@@ -16,9 +16,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import {
-	isDesktop,
-} from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -284,11 +281,6 @@ class SplitButton extends UI5Element {
 		this._fireClick(e);
 	}
 
-	_handleMouseDown(e: MouseEvent) {
-		e.stopPropagation();
-		this.focus();
-	}
-
 	_onFocusOut(e: FocusEvent) {
 		if (this.disabled || getEventMark(e)) {
 			return;
@@ -387,12 +379,8 @@ class SplitButton extends UI5Element {
 	}
 
 	_arrowButtonPress(e: MouseEvent) {
-		e.preventDefault();
 		e.stopPropagation();
 
-		if (isDesktop()) {
-			this.arrowButton!.focus();
-		}
 		this._tabIndex = "-1";
 	}
 
