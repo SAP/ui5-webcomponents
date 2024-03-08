@@ -47,40 +47,37 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-toast</code> is a small, non-disruptive popup for success or information messages that
+ * The `ui5-toast` is a small, non-disruptive popup for success or information messages that
  * disappears automatically after a few seconds.
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
+ * #### When to use:
  *
- * <h4>When to use:</h4>
- * <ul>
- * <li>You want to display a short success or information message.</li>
- * <li>You do not want to interrupt users while they are performing an action.</li>
- * <li>You want to confirm a successful action.</li>
- * </ul>
- * <h4>When not to use:</h4>
- * <ul>
- * <li>You want to display error or warning message.</li>
- * <li>You want to interrupt users while they are performing an action.</li>
- * <li>You want to make sure that users read the message before they leave the page.</li>
- * <li>You want users to be able to copy some part of the message text.</li>
- * </ul>
+ * - You want to display a short success or information message.
+ * - You do not want to interrupt users while they are performing an action.
+ * - You want to confirm a successful action.
  *
- * <h3>ES6 Module Import</h3>
+ * #### When not to use:
  *
- * <code>import "@ui5/webcomponents/dist/Toast";</code>
+ * - You want to display error or warning message.
+ * - You want to interrupt users while they are performing an action.
+ * - You want to make sure that users read the message before they leave the page.
+ * - You want users to be able to copy some part of the message text.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Toast.js";`
  * @constructor
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
  * @slot {Array<Node>} default
  * Defines the text of the component.
- * <br><br>
- * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-toast",
@@ -92,10 +89,9 @@ class Toast extends UI5Element {
 	/**
 	 * Defines the duration in milliseconds for which component
 	 * remains on the screen before it's automatically closed.
-	 * <br><br>
-	 * <b>Note:</b> The minimum supported value is <code>500</code> ms
-	 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 	 *
+	 * **Note:** The minimum supported value is `500` ms
+	 * and even if a lower value is set, the duration would remain `500` ms.
 	 * @default 3000
 	 * @public
 	 */
@@ -104,8 +100,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Defines the placement of the component.
-	 * <br><br>
-	 *
 	 * @default "BottomCenter"
 	 * @public
 	 */
@@ -114,7 +108,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is open (visible).
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -122,7 +115,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is hovered.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -130,7 +122,6 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component DOM is rendered.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -139,7 +130,6 @@ class Toast extends UI5Element {
 	/**
 	 * Indicates whether the toast could be focused
 	 * This happens when ctr / command + shift + m is pressed
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -148,7 +138,6 @@ class Toast extends UI5Element {
 	/**
 	 * Indicates whether the toast is focused
 	 * This happens when ctr / command + shift + m is pressed
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })

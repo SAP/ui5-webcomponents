@@ -110,8 +110,12 @@
 	pointer-events: none;
 }
 
-:host([desktop]) .ui5-button-root:focus-within:after,
-.ui5-button-root:focus-visible:after {
+:host([desktop]:not([active])) .ui5-button-root:focus-within:after,
+:host(:not([active])) .ui5-button-root:focus-visible:after,
+:host([desktop][active][design="Emphasized"]) .ui5-button-root:focus-within:after,
+:host([active][design="Emphasized"]) .ui5-button-root:focus-visible:after,
+:host([desktop][active]) .ui5-button-root:focus-within:before,
+:host([active]) .ui5-button-root:focus-visible:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -121,6 +125,11 @@
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
 	border-radius: var(--_ui5_button_focused_border_radius);
+}
+
+:host([desktop][active]) .ui5-button-root:focus-within:before,
+:host([active]) .ui5-button-root:focus-visible:before {
+	border-color: var(--_ui5_button_pressed_focused_border_color);
 }
 
 :host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:after,

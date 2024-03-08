@@ -1,6 +1,5 @@
 /**
  * Different types of Bar.
- *
  * @public
  */
 enum ViewSettingsDialogMode {

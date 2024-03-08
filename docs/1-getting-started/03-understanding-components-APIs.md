@@ -222,7 +222,7 @@ Please, note, however that some frameworks (e.g. React) cannot use their standar
 for binding to custom events (such as `close`), but only for standard ones (such as `click`).
 So, for custom events in React you'd have to get a reference to the element and call `addEventListener` manually.
 
-For more information, please check our [React tutorial](React-tutorial.md).
+For more information, please check our [React tutorial](../4-frameworks/01-React.md).
 
 ## 5. How do I call public methods?
 <a name="methods"></a>

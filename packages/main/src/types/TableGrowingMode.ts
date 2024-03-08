@@ -1,18 +1,17 @@
 /**
  * Different table growing modes.
- *
  * @public
  */
 enum TableGrowingMode {
 	/**
-	 * Component <code>load-more</code> is fired
+	 * Component `load-more` is fired
 	 * upon pressing a "More" button at the bottom.
 	 * @public
 	 */
 	Button = "Button",
 
 	/**
-	 * Component <code>load-more</code> is fired upon scroll.
+	 * Component `load-more` is fired upon scroll.
 	 * @public
 	 */
 	Scroll = "Scroll",

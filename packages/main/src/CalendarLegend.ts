@@ -25,16 +25,15 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-calendar-legend</code> component is designed for use within the <code>ui5-calendar</code> to display a legend.
- * Each <code>ui5-calendar-legend-item</code> represents a unique date type, specifying its visual style
+ * The `ui5-calendar-legend` component is designed for use within the `ui5-calendar` to display a legend.
+ * Each `ui5-calendar-legend-item` represents a unique date type, specifying its visual style
  * and a corresponding textual label.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/CalendarLegend.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/CalendarLegend.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -56,7 +55,6 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Today item in the legend.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -65,7 +63,6 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Hides the Selected day item in the legend.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -74,7 +71,6 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Hides the Non-Working day item in the legend.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -83,7 +79,6 @@ class CalendarLegend extends UI5Element {
 
 	/**
 	 * Hides the Working day item in the legend.
-	 *
 	 * @default false
 	 * @public
 	 */

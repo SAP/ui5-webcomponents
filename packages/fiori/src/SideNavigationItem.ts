@@ -9,15 +9,14 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-side-navigation-item</code> is used within <code>ui5-side-navigation</code> only.
- * Via the <code>ui5-side-navigation-item</code> you control the content of the <code>SideNavigation</code>.
+ * The `ui5-side-navigation-item` is used within `ui5-side-navigation` only.
+ * Via the `ui5-side-navigation-item` you control the content of the `SideNavigation`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`
  * @constructor
  * @extends SideNavigationItemBase
  * @abstract
@@ -28,7 +27,6 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 class SideNavigationItem extends SideNavigationItemBase {
 	/**
 	 * Defines if the item is expanded
-	 *
 	 * @public
 	 * @default false
 	 */
@@ -46,8 +44,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	_fixed!: boolean;
 
 	/**
-     * Defines nested items by passing <code>ui5-side-navigation-sub-item</code> to the default slot.
-	 *
+     * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -55,9 +52,8 @@ class SideNavigationItem extends SideNavigationItemBase {
 
 	/**
 	 * Defines whether clicking the whole item or only pressing the icon will show/hide the sub items (if present).
-	 * If set to true, clicking the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
+	 * If set to true, clicking the whole item will toggle the sub items, and it won't fire the `click` event.
 	 * By default, only clicking the arrow icon will toggle the sub items.
-	 *
 	 * @public
 	 * @default false
 	 * @since 1.0.0-rc.11

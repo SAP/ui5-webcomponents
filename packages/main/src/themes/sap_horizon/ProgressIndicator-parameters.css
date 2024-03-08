@@ -14,12 +14,6 @@
     --_ui5_progress_indicator_value_state_success: var(--sapProgress_Value_PositiveBackground);
     --_ui5_progress_indicator_value_state_information: var(--sapProgress_Value_InformationBackground);
 
-    --_ui5_progress_indicator_value_state_none_border_color: var(--sapProgress_Value_BorderColor);
-    --_ui5_progress_indicator_value_state_error_border_color: var(--sapProgress_Value_NegativeBorderColor);
-    --_ui5_progress_indicator_value_state_warning_border_color: var(--sapProgress_Value_CriticalBorderColor);
-    --_ui5_progress_indicator_value_state_success_border_color: var(--sapProgress_Value_PositiveBorderColor);
-    --_ui5_progress_indicator_value_state_information_border_color: var(--sapProgress_Value_InformationBorderColor);
-
     --_ui5_progress_indicator_value_state_error_icon_color: var(--sapProgress_Value_NegativeTextColor);
     --_ui5_progress_indicator_value_state_warning_icon_color: var(--sapProgress_Value_CriticalTextColor);
     --_ui5_progress_indicator_value_state_success_icon_color: var(--sapProgress_Value_PositiveTextColor);
