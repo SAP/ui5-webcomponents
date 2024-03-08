@@ -78,6 +78,7 @@ class Grid extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -86,6 +87,7 @@ class Grid extends UI5Element {
 	/**
 	 * Identifies the element (or elements) that labels the component.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -94,6 +96,7 @@ class Grid extends UI5Element {
 	/**
 	 * Defines the text to be displayed when there are no rows in the component.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -156,8 +159,8 @@ class Grid extends UI5Element {
 
 	get _aria() {
 		return {
-			label: getEffectiveAriaLabelText(this),
-			multiselectable: this.selectionMode === GridSelectionMode.None || !this.rows.length ? undefined : this.selectionMode === GridSelectionMode.Multi,
+			label: getEffectiveAriaLabelText(this) || undefined,
+			multiselectable: (this.selectionMode !== GridSelectionMode.None && this.rows.length) ? this.selectionMode === GridSelectionMode.Multi : undefined,
 		};
 	}
 }

@@ -43,6 +43,7 @@ class GridHeaderCell extends UI5Element {
 	/**
 	 * Defines the width of the component, including padding and border.
 	 *
+	 * @default "auto"
 	 * @public
 	 */
 	@property({ type: String, defaultValue: "auto" })
