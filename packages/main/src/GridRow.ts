@@ -77,19 +77,19 @@ class GridRow extends UI5Element {
 		}
 	}
 
-	get _isMultiSelect(): boolean {
+	get _isMultiSelect() {
 		return this._selectionMode === GridSelectionMode.Multi;
 	}
 
-	get _hasSelectionComponent(): boolean {
+	get _hasSelectionComponent() {
 		return this._isMultiSelect || this._selectionMode === GridSelectionMode.Single;
 	}
 
-	get _gridId(): string {
+	get _gridId() {
 		return (this.parentElement as Grid)._id;
 	}
 
-	get _i18nRowSelector(): string {
+	get _i18nRowSelector() {
 		return GridRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 

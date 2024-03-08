@@ -1,17 +1,19 @@
 <div id="grid" role="grid"
     style="{{styles.grid}}"
-    aria-label="{{_ariaLabelText}}"
-    aria-multiselectable="{{_isMultiSelect}}"
+    aria-label="{{_aria.label}}"
+    aria-multiselectable="{{_aria.multiselectable}}"
 >
     <slot name="header-row"></slot>
     <slot></slot>
+    {{#unless rows.length}}
+        <ui5-grid-row tabindex="0">
+            <ui5-grid-cell id="nodata-cell">
+            {{#if nodata.length}}
+                <slot name="nodata"></slot>
+            {{else}}
+                {{_effectiveNoDataText}}
+            {{/if}}
+            </ui5-grid-cell>
+        </ui5-grid-row>
+    {{/unless}}
 </div>
-{{#unless rows.length}}
-    <div id="nodata" tabindex="0">
-        {{#if nodata.length}}
-            <slot name="nodata"></slot>
-        {{else}}
-            {{_effectiveNoDataText}}
-        {{/if}}
-    </div>
-{{/unless}}

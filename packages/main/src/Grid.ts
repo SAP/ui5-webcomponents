@@ -113,7 +113,7 @@ class Grid extends UI5Element {
 
 	_onRowSelectionChange(row: GridRow, selected: boolean) {
 		row._selected = selected;
-		if (this._isMultiSelect) {
+		if (this.selectionMode === GridSelectionMode.Multi) {
 			this.headerRow._selected = this.rows.every(r => r._selected);
 		} else {
 			if (this.#lastSelectedRow && this.#lastSelectedRow.parentElement === this) {
@@ -133,9 +133,9 @@ class Grid extends UI5Element {
 
 	#lastSelectedRow?: GridRow;
 
-	#getGridTemplateColumns(): string {
+	#getGridTemplateColumns() {
 		const widths = [];
-		if (this._isMultiSelect || this.selectionMode === GridSelectionMode.Single) {
+		if (this.selectionMode === GridSelectionMode.Multi || this.selectionMode === GridSelectionMode.Single) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
 		widths.push(...this.headerRow.cells.map(cell => cell.width));
@@ -150,26 +150,15 @@ class Grid extends UI5Element {
 		};
 	}
 
-	get _isMultiSelect(): boolean {
-		return this.selectionMode === GridSelectionMode.Multi;
-	}
-
 	get _effectiveNoDataText() {
-		return this.noDataText ? this.noDataText : Grid.i18nBundle.getText(GRID_NO_DATA);
+		return this.noDataText || Grid.i18nBundle.getText(GRID_NO_DATA);
 	}
 
-	get _ariaLabelText() {
-		const texts = [];
-		const effectiveAriaLabelText = getEffectiveAriaLabelText(this);
-		if (effectiveAriaLabelText) {
-			texts.push(effectiveAriaLabelText);
-		}
-		if (!this.rows.length) {
-			texts.push(this._effectiveNoDataText);
-		}
-		if (texts.length) {
-			return texts.join(" ");
-		}
+	get _aria() {
+		return {
+			label: getEffectiveAriaLabelText(this),
+			multiselectable: this.selectionMode === GridSelectionMode.None || !this.rows.length ? undefined : this.selectionMode === GridSelectionMode.Multi,
+		};
 	}
 }
 

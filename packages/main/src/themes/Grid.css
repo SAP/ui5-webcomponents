@@ -14,18 +14,7 @@
     grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
 }
 
-#nodata {
-    display: flex;
-    align-items: center;
+#nodata-cell {
+    grid-column: 1 / -1;
     justify-content: center;
-    overflow: clip;
-    overflow-clip-margin: content-box;
-    min-height: var(--_ui5_list_item_base_height);
-    padding: var(--_ui5_grid_cell_padding);
-    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-}
-
-#nodata:focus-visible {
-    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-    outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
