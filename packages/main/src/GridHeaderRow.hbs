@@ -13,4 +13,6 @@
     {{/if}}
     </ui5-grid-header-cell>
 {{/if}}
-<slot></slot>
+{{#each visibleColumns}}
+	<slot name="{{_individualSlot}}"></slot>
+{{/each}}

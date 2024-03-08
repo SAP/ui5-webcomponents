@@ -9,42 +9,54 @@
 	<meta charset="utf-8">
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<script type="module">
+		import Bar from "https://unpkg.com/@ui5/webcomponents-fiori@1.22.0/dist/Bar.js?module";
+	</script>
 </head>
 
 <body>
 	<div class="section">
-		<ui5-title level="H3" id="title">My Selectable Products (3)</ui5-title>
-		<ui5-grid selection-mode="Multi" accessible-name-ref="title">
+		<ui5-title tabindex="0" level="H3" id="title">My Selectable Products (3)</ui5-title>
+		<ui5-slider id="slider" min="0" max="100" step="5" value="100" label-interval="0"></ui5-slider>
+		<ui5-grid id="grid" popin-layout="Block">
 			<ui5-grid-header-row slot="header-row">
-				<ui5-grid-header-cell width="300px">Product</ui5-grid-header-cell>
-				<ui5-grid-header-cell>Supplier</ui5-grid-header-cell>
-				<ui5-grid-header-cell>Dimensions</ui5-grid-header-cell>
-				<ui5-grid-header-cell>Weight</ui5-grid-header-cell>
-				<ui5-grid-header-cell style="text-align: end;">Price</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="produtCol" min-width="600px" width="300px"><span>Product</span></ui5-grid-header-cell>
+				<ui5-grid-header-cell id="supplierCol" min-width="800px">Supplier</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="dimensionsCol" min-width="300px">Dimensions</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="weightCol" popin-text="Weight">Weight</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="priceCol" min-width="300px" style="text-align: end;">Price</ui5-grid-header-cell>
 			</ui5-grid-header-row>
 			<ui5-grid-row>
 				<ui5-grid-cell><ui5-label><b>Notebook Basic 15</b><br>HT-1000</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label>Very Best Screens</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-grid-cell>
-				<ui5-grid-cell style="text-align: end;"><ui5-label><b>956</b> EUR</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>956</b> EUR</ui5-label></ui5-grid-cell>
 			</ui5-grid-row>
 			<ui5-grid-row>
 				<ui5-grid-cell><ui5-label><b>Notebook Basic 17</b><br>HT-1001</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label>Smartcards</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label>29 x 17 x 3.1 cm</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-grid-cell>
-				<ui5-grid-cell style="text-align: end;"><ui5-label><b>1249</b> EUR</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>1249</b> EUR</ui5-label></ui5-grid-cell>
 			</ui5-grid-row>
 			<ui5-grid-row>
 				<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
-				<ui5-grid-cell style="text-align: end;"><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
 			</ui5-grid-row>
 		</ui5-grid>
 	</div>
+
+	<script>
+		const slider = document.getElementById("slider");
+		const grid = document.getElementById("grid");
+		slider.addEventListener("input", (e) => {
+			grid.style.width = `${e.target.value}%`;
+		});
+	</script>
 </body>
 
 </html>

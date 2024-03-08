@@ -61,9 +61,10 @@ class GridHeaderRow extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		invalidateOnChildChange: {
-			properties: ["width"],
+			properties: ["width", "_popin"],
 			slots: false,
 		},
+		individualSlots: true,
 	})
 	cells!: Array<GridHeaderCell>;
 
@@ -124,6 +125,10 @@ class GridHeaderRow extends UI5Element {
 
 		this.#informGridForSelectAllChange(!this._selected);
 		e.preventDefault();
+	}
+
+	get visibleColumns() {
+		return this.cells.filter(c => !c._popin);
 	}
 }
 

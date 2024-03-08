@@ -5,17 +5,19 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 import GridRowTemplate from "./generated/templates/GridRowTemplate.lit.js";
 import GridRowCss from "./generated/themes/GridRow.css.js";
 import GridCell from "./GridCell.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
+import PopinLayout from "./types/PopinLayout.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
-import Grid from "./Grid.js";
 import {
 	GRID_ROW_SELECTOR,
 } from "./generated/i18n/i18n-defaults.js";
+import Grid from "./Grid.js";
 
 /**
  * @class
@@ -49,7 +51,15 @@ class GridRow extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: ["_invalidate"],
+			slots: false,
+		},
+	})
 	cells!: Array<GridCell>;
 
 	@property({ type: Boolean })
@@ -109,6 +119,31 @@ class GridRow extends UI5Element {
 
 		this.#informGridForSelectionChange(this._isMultiSelect ? !this._selected : true);
 		e.preventDefault();
+	}
+
+	get hasPopin() {
+		return this.poppedIn.length > 0;
+	}
+
+	get poppedIn() {
+		return this.cells.filter(c => c._columnInfo.poppedIn);
+	}
+
+	get default() {
+		return this.cells.filter(c => !c._columnInfo.poppedIn);
+	}
+
+	get classes(): ClassMap {
+		return {
+			popin: {
+				"ui5-grid-block-layout": this.grid.popinLayout === PopinLayout.Block,
+				"ui5-grid-inline-layout": this.grid.popinLayout === PopinLayout.Inline,
+			},
+		};
+	}
+
+	get grid() {
+		return this.parentElement as Grid;
 	}
 }
 

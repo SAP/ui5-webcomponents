@@ -18,3 +18,17 @@
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
+
+.popin-area {
+    display: flex;
+}
+
+.inline {
+    flex-direction: row;
+    column-gap: 1px;
+}
+
+.block {
+    flex-direction: column;
+    row-gap: 1px;
+}

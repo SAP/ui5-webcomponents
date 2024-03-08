@@ -1,1 +1,9 @@
-<slot></slot>
+{{#if _columnInfo.poppedIn}}
+	<div class="{{classes.popin}}">
+		<ui5-label show-colon>{{_columnInfo.header}}</ui5-label>
+		<slot></slot>
+	</div>
+{{else}}
+	<slot></slot>
+{{/if}}
+

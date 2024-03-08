@@ -19,4 +19,16 @@
     {{/if}}
     </ui5-grid-cell>
 {{/if}}
-<slot></slot>
+<div style="display: grid; grid-template-columns: subgrid; grid-column: 1 / -1;">
+	{{#each default}}
+		<slot name="{{_individualSlot}}"></slot>
+	{{/each}}
+
+    {{#if hasPopin}}
+        <ui5-grid-cell role="none" tabindex="0" class="ui5-grid-popin {{classes.popin}}">
+            {{#each poppedIn}}
+                <slot name="{{_individualSlot}}"></slot>
+            {{/each}}
+        </ui5-grid-cell>
+    {{/if}}
+</div>

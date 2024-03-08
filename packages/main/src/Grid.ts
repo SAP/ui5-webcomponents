@@ -5,12 +5,15 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridCss from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
+import PopinLayout from "./types/PopinLayout.js";
 
 /**
  * @class
@@ -69,6 +72,15 @@ class Grid extends UI5Element {
 	selectionMode!: `${GridSelectionMode}`;
 
 	/**
+	 * Defines the popin layout of the component.
+	 *
+	 * @default "Block"
+	 * @public
+	 */
+	@property({ type: PopinLayout, defaultValue: PopinLayout.Block })
+	popinLayout!: `${PopinLayout}`;
+
+	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @public
@@ -83,6 +95,13 @@ class Grid extends UI5Element {
 	 */
 	@property()
 	accessibleNameRef!: string;
+
+	_handleResize: ResizeObserverCallback;
+
+	constructor() {
+		super();
+		this._handleResize = this.popinContent.bind(this);
+	}
 
 	onBeforeRendering() {
 		[...this.rows, this.headerRow].forEach(row => {
@@ -117,7 +136,7 @@ class Grid extends UI5Element {
 		if (this._isMultiSelect || this.selectionMode === GridSelectionMode.Single) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
-		widths.push(...this.headerRow.cells.map(cell => cell.width));
+		widths.push(...this.headerRow.cells.filter(cell => !cell._popin).map(cell => `minmax(${cell.minWidth}, 1fr)`));
 		return widths.join(" ");
 	}
 
@@ -135,6 +154,34 @@ class Grid extends UI5Element {
 
 	get _isMultiSelect(): boolean {
 		return this.selectionMode === GridSelectionMode.Multi;
+	}
+
+	onEnterDOM(): void {
+		ResizeHandler.register(this.getDomRef()!, this._handleResize);
+	}
+
+	popinContent() {
+		const clientRect: DOMRect = this.getDomRef()!.getBoundingClientRect();
+		const tableWidth: number = clientRect.width;
+
+		// store the hidden columns
+		let curWidth = 0;
+		[...this.headerRow.cells].sort((a, b) => a.importance - b.importance).forEach((column, index) => {
+			const minWidth = parseInt(getComputedStyle(column).minWidth);
+			if (curWidth + minWidth > tableWidth) {
+				if (!column._popin) {
+					column._popin = true;
+				}
+			} else {
+				if (column._popin) {
+					column._popin = false;
+				}
+				curWidth += minWidth;
+			}
+			this.rows.forEach(r => {
+				r.cells[index]._columnInfo = { header: column.clone, poppedIn: column._popin };
+			});
+		});
 	}
 }
 

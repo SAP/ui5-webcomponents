@@ -22,3 +22,18 @@
 #selection-component {
     vertical-align: middle;
 }
+
+.ui5-grid-popin {
+    display: flex;
+    place-items: initial;
+    grid-row: 2;
+    grid-column: 1 / -1;
+}
+
+.ui5-grid-block-layout {
+    flex-direction: column;
+}
+
+.ui5-grid-inline-layout {
+    column-gap: 1rem;
+}

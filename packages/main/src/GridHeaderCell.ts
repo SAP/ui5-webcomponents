@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 import GridHeaderCellTemplate from "./generated/templates/GridHeaderCellTemplate.lit.js";
 import GridHeaderCellCss from "./generated/themes/GridHeaderCell.css.js";
@@ -43,13 +44,27 @@ class GridHeaderCell extends UI5Element {
 	@property({ type: String, defaultValue: "auto" })
 	width!: string;
 
+	@property({ type: String, defaultValue: "8rem" })
+	minWidth!: string;
+
+	@property({ validator: Integer, defaultValue: 0 })
+	importance!: number;
+
+	@property({ type: Boolean, defaultValue: false, noAttribute: true })
+	_popin!: boolean;
+
 	onEnterDOM(): void {
 		this.setAttribute("role", "columnheader");
 		this.setAttribute("tabindex", "0");
+		this.style.minWidth = this.minWidth;
 	}
 
 	getFocusDomRef(): HTMLElement | undefined {
 		return this;
+	}
+
+	get clone() {
+		return this.header[0] ? this.header[0].cloneNode(true) : this.innerHTML;
 	}
 }
 

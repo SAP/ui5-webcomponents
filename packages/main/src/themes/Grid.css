@@ -10,4 +10,5 @@
     display: grid;
     grid-auto-rows: minmax(var(--_ui5_list_item_base_height), auto);
     background: var(--sapList_Background);
+    width: 100%;
 }
