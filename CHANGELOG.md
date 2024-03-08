@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1-rc.0...v1.23.1) (2024-03-08)
+
+
+### Bug Fixes
+
+* **ui5-icon:** default icon color aligned with specification ([#8376](https://github.com/SAP/ui5-webcomponents/issues/8376)) ([7915a8c](https://github.com/SAP/ui5-webcomponents/commit/7915a8cf7416da70244bf5e8e959a5cee8e25624)), closes [#8375](https://github.com/SAP/ui5-webcomponents/issues/8375)
+* **ui5-progress-indicator:** visual fix ([#8333](https://github.com/SAP/ui5-webcomponents/issues/8333)) ([012fc4d](https://github.com/SAP/ui5-webcomponents/commit/012fc4d070daab7c6851bbf3abb5bc0d718c7465)), closes [#8306](https://github.com/SAP/ui5-webcomponents/issues/8306)
+
+
+
+
+
 ## [1.23.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.0...v1.23.1-rc.0) (2024-03-07)
 
 **Note:** Version bump only for package ui5-webcomponents
