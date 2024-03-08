@@ -13,15 +13,13 @@ import DropIndicatorCss from "./generated/themes/DropIndicator.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
+ * ### ES6 Module Import
  *
- * For the <code>ui5-drop-indicator</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import @ui5/webcomponents/dist/DropIndicator.js";</code>
+ * `import "@ui5/webcomponents/dist/DropIndicator.js";`
  *
  * @constructor
  * @extends UI5Element
