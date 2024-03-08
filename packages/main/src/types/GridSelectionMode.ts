@@ -1,5 +1,5 @@
 /**
- * Selection modes of the <ui5-grid> component.
+ * Selection modes of the &lt;ui5-grid&gt; component.
  *
  * @public
  */

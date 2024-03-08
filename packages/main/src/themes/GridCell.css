@@ -10,6 +10,10 @@
     box-sizing: border-box;
 }
 
+:host(:not([role=gridcell])) {
+    padding-left: 0;
+}
+
 :host([hidden]) {
     display: none;
 }
