@@ -3,11 +3,11 @@
     place-items: var(--_ui5_grid_cell_valign);
     flex-wrap: wrap;
     min-width: 0;
+    max-width: 100%;
     overflow: clip;
     overflow-clip-margin: content-box;
     padding: var(--_ui5_grid_cell_padding);
-    font: var(--sapFontSize) var(--sapFontFamily);
-    color: var(--sapList_TextColor);
+    box-sizing: border-box;
 }
 
 :host([hidden]) {

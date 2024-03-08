@@ -9,16 +9,13 @@
 	<meta charset="utf-8">
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<script type="module">
-		import Bar from "https://unpkg.com/@ui5/webcomponents-fiori@1.22.0/dist/Bar.js?module";
-	</script>
 </head>
 
 <body>
 	<div class="section">
 		<ui5-title tabindex="0" level="H3" id="title">My Selectable Products (3)</ui5-title>
-		<ui5-slider id="slider" min="0" max="100" step="5" value="100" label-interval="0"></ui5-slider>
-		<ui5-grid id="grid" popin-layout="Block">
+		<ui5-slider id="slider" min="0" max="100" step="1" value="100" label-interval="0"></ui5-slider>
+		<ui5-grid id="grid" selection-mode="Multi" accessible-name-ref="title" no-data-text="No data found">
 			<ui5-grid-header-row slot="header-row">
 				<ui5-grid-header-cell id="produtCol" min-width="600px" width="300px"><span>Product</span></ui5-grid-header-cell>
 				<ui5-grid-header-cell id="supplierCol" min-width="800px">Supplier</ui5-grid-header-cell>

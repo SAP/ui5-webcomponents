@@ -7,6 +7,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridCss from "./generated/themes/Grid.css.js";
@@ -14,6 +15,9 @@ import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
 import PopinLayout from "./types/PopinLayout.js";
+import {
+	GRID_NO_DATA,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -63,6 +67,14 @@ class Grid extends UI5Element {
 	get headerRow() { return this["header-row"][0]; }
 
 	/**
+	 * Defines the custom visualization if there is no data available.
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	nodata!: Array<HTMLElement>;
+
+	/**
 	 * Defines the selection mode of the component.
 	 *
 	 * @default "None"
@@ -83,6 +95,7 @@ class Grid extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -91,16 +104,32 @@ class Grid extends UI5Element {
 	/**
 	 * Identifies the element (or elements) that labels the component.
 	 *
+	 * @default ""
 	 * @public
 	 */
 	@property()
 	accessibleNameRef!: string;
+
+	/**
+	 * Defines the text to be displayed when there are no rows in the component.
+	 *
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	noDataText!: string;
+
+	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
 
 	constructor() {
 		super();
 		this._handleResize = this.popinContent.bind(this);
+	}
+
+	static async onDefine() {
+		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -111,7 +140,7 @@ class Grid extends UI5Element {
 
 	_onRowSelectionChange(row: GridRow, selected: boolean) {
 		row._selected = selected;
-		if (this._isMultiSelect) {
+		if (this.selectionMode === GridSelectionMode.Multi) {
 			this.headerRow._selected = this.rows.every(r => r._selected);
 		} else {
 			if (this.#lastSelectedRow && this.#lastSelectedRow.parentElement === this) {
@@ -131,9 +160,9 @@ class Grid extends UI5Element {
 
 	#lastSelectedRow?: GridRow;
 
-	#getGridTemplateColumns(): string {
-		const widths : Array<string> = [];
-		if (this._isMultiSelect || this.selectionMode === GridSelectionMode.Single) {
+	#getGridTemplateColumns() {
+		const widths = [];
+		if (this.selectionMode === GridSelectionMode.Multi || this.selectionMode === GridSelectionMode.Single) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
 		widths.push(...this.headerRow.cells.filter(cell => !cell._popin).map(cell => `minmax(${cell.minWidth}, 1fr)`));
@@ -148,12 +177,15 @@ class Grid extends UI5Element {
 		};
 	}
 
-	get _ariaLabelText() {
-		return getEffectiveAriaLabelText(this);
+	get _effectiveNoDataText() {
+		return this.noDataText || Grid.i18nBundle.getText(GRID_NO_DATA);
 	}
 
-	get _isMultiSelect(): boolean {
-		return this.selectionMode === GridSelectionMode.Multi;
+	get _aria() {
+		return {
+			label: getEffectiveAriaLabelText(this) || undefined,
+			multiselectable: (this.selectionMode !== GridSelectionMode.None && this.rows.length) ? this.selectionMode === GridSelectionMode.Multi : undefined,
+		};
 	}
 
 	onEnterDOM(): void {
