@@ -267,7 +267,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	hasIcon!: boolean;
 
 	/**
-	 * Indicates if the element if focusable
+	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
