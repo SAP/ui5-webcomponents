@@ -56,6 +56,11 @@ type MenuItemClickEventDetail = {
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
+type MenuItemFocusEventDetail = {
+	ref: HTMLElement,
+	item: MenuItem,
+};
+
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
@@ -199,7 +204,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @param { HTMLElement } item The <code>ui5-menu-item</code> represented by the focused element.
  * @since 1.23.1
  */
-@event("item-focus", {
+@event<MenuItemFocusEventDetail>("item-focus", {
 	detail: {
 		/**
 		 * @public
@@ -579,7 +584,7 @@ class Menu extends UI5Element {
 			: (target.getRootNode() as ShadowRoot).host as MenuListItem;
 		const item = menuListItem.associatedItem as MenuItem;
 		const mainMenu = this._findMainMenu(item);
-		mainMenu?.fireEvent("item-focus", { ref: menuListItem, item });
+		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: menuListItem, item });
 	}
 
 	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem) {
@@ -752,4 +757,5 @@ export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
+	MenuItemFocusEventDetail,
 };
