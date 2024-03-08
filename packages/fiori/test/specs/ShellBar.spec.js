@@ -558,8 +558,6 @@ describe("Component Behavior", () => {
 				psButtonText = await [...items][5].getText();
 
 				assert.strictEqual(psButtonText, await shellBar.getProperty("_productsText"), "Product switch button text is translated in overflow popover");
-
-				await browser.url(`test/pages/ShellBar.html?sap-ui-language=en_EN`);
 			});
 		});
 	});
