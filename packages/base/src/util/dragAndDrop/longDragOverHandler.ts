@@ -1,6 +1,6 @@
 let lastTarget: HTMLElement | null = null;
 let lastTargetDragOverStart = Date.now();
-const LONG_DRAG_OVER_THRESHOLD = 1000;
+const LONG_DRAG_OVER_THRESHOLD = 300;
 
 const longDragOverHandler = (targetsSelector: string) => {
 	return (target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<(arg0: DragEvent, arg1: boolean) => any>) => {
