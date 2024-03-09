@@ -22,6 +22,10 @@
 	position: relative;
 	min-width: var(--_ui5_step_input_min_width);
 	text-align: right;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 :host .ui5-step-input-input {
