@@ -340,14 +340,14 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_ondragstart(e: DragEvent) {
-		if (e.target instanceof HTMLElement) {
-			e.target.setAttribute("data-moving", "");
+		if (e.target === this._listItem) {
+			this.setAttribute("data-moving", "");
 		}
 	}
 
 	_ondragend(e: DragEvent) {
-		if (e.target instanceof HTMLElement) {
-			e.target.removeAttribute("data-moving");
+		if (e.target === this._listItem) {
+			this.removeAttribute("data-moving");
 		}
 	}
 
@@ -505,6 +505,10 @@ abstract class ListItem extends ListItemBase {
 
 	get hasConfigurableMode() {
 		return true;
+	}
+
+	get _listItem() {
+		return this.shadowRoot!.querySelector("li");
 	}
 
 	static async onDefine() {

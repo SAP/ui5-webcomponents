@@ -16,7 +16,9 @@
 	min-width: 2rem;
 	max-width: 100%;
 	box-sizing: border-box;
-	box-shadow: var(--_ui5_tc_header_box_shadow);
+}
+
+.ui5-tab-strip-item[data-moving] {
 	background-color: var(--ui5_tc_header_active_background_color);
 }
 
