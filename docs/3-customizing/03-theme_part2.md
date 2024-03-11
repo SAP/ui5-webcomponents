@@ -2,7 +2,7 @@
 
 The article describes the steps to manually create a custom theme for your UI5 Web Components project without any tools.
 
-<b>Note:</b>  We recommend using `UI Theme Designer` tool to effortlessly create a custom theme for your UI5 Web Components project as described in the [Custom Theming with UI Theme Designer](./03-theme.md) article.
+<b>Note:</b>  We recommend using `UI Theme Designer` tool to effortlessly create a custom theme for your UI5 Web Components project as described in the [Custom Theming with UI Theme Designer](./02-theme.md) article.
 However, it requires SAP BTP account and configuration in the SAP BTP Cockpit. In case you don't have access to the UI Theme Designer, this article is for you.
 
 
@@ -74,7 +74,6 @@ npm install less --save-dev
 ```js
 const less = require('less');
 const fs = require('fs');
-const path = require('path');
 
 const themeName =  "mytheme";
 const baseThemeName = "sap_horizon";
@@ -85,21 +84,19 @@ const CUSTOM_THEME_METADATA = `
 }`;
 
 async function compileLess(inputFile, outputFile) {
-    try {
-      if (!fs.existsSync("dist")) {
-		   fs.mkdirSync("dist");
-	   }
+	if (!fs.existsSync("dist")) {
+		fs.mkdirSync("dist");
+	}
 
-      const inputFilePath = path.resolve(__dirname, inputFile);
-      const outputFilePath = path.resolve(__dirname, outputFile);
-      const lessData = await fs.promises.readFile(inputFilePath, 'utf-8');
+    try {
+      const lessData = await fs.promises.readFile(inputFile, 'utf-8');
 
       const { css } = await less.render(lessData, {
-         filename: inputFilePath
+         filename: inputFile
       });
-		const output = `${CUSTOM_THEME_METADATA} ${css}`;
+      const output = `${CUSTOM_THEME_METADATA} ${css}`;
 
-      await fs.promises.writeFile(outputFilePath, output, {encoding:'utf8',flag:'w'});
+      await fs.promises.writeFile(outputFile, output, {encoding:'utf8',flag:'w'});
       console.log(`Successfully compiled Less file ${inputFile} to CSS file ${outputFile}`);
 
     } catch (error) {
