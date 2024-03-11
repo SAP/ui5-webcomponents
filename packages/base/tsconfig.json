@@ -1,6 +1,8 @@
 {
     "include": ["src/**/*", "src/global.d.ts"],
-    "compilerOptions": {
+    // ssr-dom is imported with bare specifier so that import contions are used, but this treats it as input and output
+    "exclude": ["src/ssr-dom*"],
+      "compilerOptions": {
       "target": "ES2021",
       "lib": ["DOM", "DOM.Iterable", "ES2023"],
       // Generate d.ts files
