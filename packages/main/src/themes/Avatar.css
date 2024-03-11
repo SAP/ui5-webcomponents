@@ -2,6 +2,7 @@
 	display: inline-block;
 	box-sizing: border-box;
 	position: relative;
+	font-family: "72override", var(--sapFontFamily);
 }
 
 /* The ui5_hovered class is set by FileUploader to indicate hover state of the control */
@@ -66,6 +67,7 @@
 	font-size: var(--_ui5_avatar_fontsize_XS);
 }
 
+:host(:not([size])),
 :host([_size="S"]),
 :host([size="S"]) {
 	min-height: 3rem;
