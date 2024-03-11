@@ -137,10 +137,11 @@ type BreadcrumbsItemClickEventDetail = {
 })
 class Breadcrumbs extends UI5Element {
 	/**
-	 * Defines the visual indication and behavior of the breadcrumbs.
+	 * Defines the visual appearance of the last BreadcrumbsItem.
 	 *
-	 * **Note:** The `Standard` breadcrumbs show the current page as the last item in the trail.
-	 * The last item contains only plain text and is not a link.
+	 * The Breadcrumbs supports two visual appearances for the last BreadcrumbsItem:
+	 * - "Standard" - displaying the last item as "current page" (bold and without separator)
+	 * - "NoCurrentPage" - displaying the last item as a regular BreadcrumbsItem, followed by separator
 	 * @default "Standard"
 	 * @public
 	*/
