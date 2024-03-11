@@ -47,7 +47,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
-import type { ListMoveOverEventDetail, ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
+import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -104,16 +104,6 @@ const PAGE_UP_DOWN_SIZE = 5;
 type TabContainerTabSelectEventDetail = {
 	tab: ITab;
 	tabIndex: number;
-}
-
-type TabContainerMoveOverEventDetail = {
-	source: {
-		element: HTMLElement;
-	},
-	destination: {
-		element: HTMLElement;
-		placement: `${MovePlacement}`
-	}
 }
 
 type TabContainerMoveEventDetail = {
@@ -540,7 +530,7 @@ class TabContainer extends UI5Element {
 			}
 
 			const acceptedPlacement = placements.find(placement => {
-				const dragOverPrevented = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
+				const dragOverPrevented = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
 					source: {
 						element: draggedElement!,
 					},
@@ -598,7 +588,7 @@ class TabContainer extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
-	_onPopoverListMoveOver(e: CustomEvent<ListMoveOverEventDetail>) {
+	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement();
 		const dropTarget = (destination.element as ITab).realTabReference;
@@ -607,7 +597,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const placementAccepted = !this.fireEvent<TabContainerMoveOverEventDetail>("move-over", {
+		const placementAccepted = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
 			source: {
 				element: draggedElement!,
 			},
@@ -1505,6 +1495,5 @@ export default TabContainer;
 export type {
 	ITab,
 	TabContainerTabSelectEventDetail,
-	TabContainerMoveOverEventDetail,
 	TabContainerMoveEventDetail,
 };

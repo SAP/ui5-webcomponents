@@ -77,16 +77,6 @@ type ListItemDeleteEventDetail = {
 	item: ListItemBase,
 }
 
-type ListMoveOverEventDetail = {
-	source: {
-		element: HTMLElement,
-	},
-	destination: {
-		element: HTMLElement,
-		placement: `${MovePlacement}`,
-	}
-}
-
 type ListMoveEventDetail = {
 	source: {
 		element: HTMLElement,
@@ -941,7 +931,7 @@ class List extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<ListMoveOverEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},
@@ -1220,6 +1210,5 @@ export type {
 	ListItemCloseEventDetail,
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
-	ListMoveOverEventDetail,
 	ListMoveEventDetail,
 };
