@@ -1,6 +1,5 @@
 /**
  * Popover placement types.
- *
  * @public
  */
 enum PopoverPlacementType {

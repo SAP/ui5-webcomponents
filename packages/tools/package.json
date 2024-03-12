@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.22.1-rc.0",
+  "version": "1.23.1",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@custom-elements-manifest/analyzer": "^0.8.4",
+    "cem-plugin-vs-code-custom-data-generator": "^1.4.2",
+    "custom-element-jet-brains-integration": "^1.4.4",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@wdio/cli": "^7.19.7",

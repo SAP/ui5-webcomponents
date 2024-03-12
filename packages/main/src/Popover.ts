@@ -46,38 +46,36 @@ type CalculatedPlacement = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-popover</code> component displays additional information for an object
+ * The `ui5-popover` component displays additional information for an object
  * in a compact way and without leaving the page.
  * The Popover can contain various UI elements, such as fields, tables, images, and charts.
  * It can also include actions in the footer.
  *
- * <h3>Structure</h3>
+ * ### Structure
  *
  * The popover has three main areas:
- * <ul>
- * <li>Header (optional)</li>
- * <li>Content</li>
- * <li>Footer (optional)</li>
- * </ul>
  *
- * <b>Note:</b> The <code>ui5-popover</code> is closed when the user clicks
+ * - Header (optional)
+ * - Content
+ * - Footer (optional)
+ *
+ * **Note:** The `ui5-popover` is closed when the user clicks
  * or taps outside the popover
  * or selects an action within the popover. You can prevent this with the
- * <code>modal</code> property.
+ * `modal` property.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Popover.js";</code>
+ * `import "@ui5/webcomponents/dist/Popover.js";`
  *
- * <b>Note: </b> We recommend placing popup-like components (<code>ui5-dialog</code> and <code>ui5-popover</code>)
+ * **Note: ** We recommend placing popup-like components (`ui5-dialog` and `ui5-popover`)
  * outside any other components. Preferably, the popup-like components should be placed
  * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
  * the position and/or z-index management of the popup-like components.
  *
- * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>).
- *
+ * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
  * @constructor
  * @extends Popup
  * @since 1.0.0-rc.6
@@ -99,9 +97,8 @@ type CalculatedPlacement = {
 class Popover extends Popup {
 	/**
 	 * Defines the header text.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
+	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
 	 * @default ""
 	 * @public
 	 */
@@ -110,7 +107,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines on which side the component is placed at.
-	 *
 	 * @default "Right"
 	 * @public
 	 */
@@ -119,7 +115,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines the horizontal alignment of the component.
-	 *
 	 * @default "Center"
 	 * @public
 	 */
@@ -128,7 +123,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines the vertical alignment of the component.
-	 *
 	 * @default "Center"
 	 * @public
 	 */
@@ -139,7 +133,6 @@ class Popover extends Popup {
 	 * Defines whether the component should close when
 	 * clicking/tapping outside of the popover.
 	 * If enabled, it blocks any interaction with the background.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -157,7 +150,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines whether the component arrow is hidden.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -168,7 +160,6 @@ class Popover extends Popup {
 	/**
 	 * Determines if there is no enough space, the component can be placed
 	 * over the target.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -186,7 +177,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines whether the content is scrollable.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -195,7 +185,6 @@ class Popover extends Popup {
 
 	/**
 	 * Sets the X translation of the arrow
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
@@ -203,7 +192,6 @@ class Popover extends Popup {
 
 	/**
 	 * Sets the Y translation of the arrow
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
@@ -211,7 +199,6 @@ class Popover extends Popup {
 
 	/**
 	 * Returns the calculated placement depending on the free space
-	 *
 	 * @private
 	 */
 	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
@@ -225,7 +212,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines the header HTML Element.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -233,7 +219,6 @@ class Popover extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -678,7 +663,7 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Fallbacks to new placement, prioritizing <code>Left</code> and <code>Right</code> placements.
+	 * Fallbacks to new placement, prioritizing `Left` and `Right` placements.
 	 * @private
 	 */
 	fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType | undefined {

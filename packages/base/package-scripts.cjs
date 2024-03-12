@@ -6,6 +6,7 @@ const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/i
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const amdToES6 = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/index.js");
+const noRequire = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/no-remaining-require.js");
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
@@ -15,12 +16,13 @@ const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint .`,
 	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates",
-	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript",
+	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript integrate.no-remaining-require",
 	typescript: "tsc -b",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.amd-to-es6 integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
 		"amd-to-es6": `node "${amdToES6}" dist/`,
+		"no-remaining-require": `node "${noRequire}" dist/`,
 		"third-party": {
 			default: "nps integrate.third-party.copy integrate.third-party.fix",
 			copy: "mkdirp dist/sap/ui/thirdparty/ && copy-and-watch ../../node_modules/@openui5/sap.ui.core/src/sap/ui/thirdparty/caja-html-sanitizer.js dist/sap/ui/thirdparty/",

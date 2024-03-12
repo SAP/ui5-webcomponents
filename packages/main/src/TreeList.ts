@@ -24,7 +24,6 @@ class TreeList extends List {
 
 /*
  * Converts a tree structure into a flat array
- *
  * @param {Array} treeItems
  * @param {Array} result
  * @param {Boolean} includeCollapsed

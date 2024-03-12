@@ -55,6 +55,20 @@ describe("TabContainer general interaction", () => {
 		await cbPrevent.click();
 	});
 
+	it("tests custom media ranges", async () => {
+		await browser.setWindowSize(520, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "S", "media-range=S");
+
+		await browser.setWindowSize(650, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "M", "media-range=M");
+
+		await browser.setWindowSize(1350, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "L", "media-range=L");
+
+		await browser.setWindowSize(1650, 1080);
+		assert.strictEqual(await browser.$("#tabContainerIconOnly").getAttribute("media-range"), "XL", "media-range=XL");
+	});
+
 	it("tests if content is scrollable when tabcontainer takes limited height by its parent", async () => {
 		const { tcHeight, tcScrollHeight } = await browser.executeAsync(done => {
 			const scrollableContent = document.getElementById("tc-scrollable-child");
@@ -320,6 +334,15 @@ describe("TabContainer general interaction", () => {
 
 		// Assert
 		assert.ok(productsTabDomRefInStrip.isEqual(productsTabDomRefInStripExpected) , "Tab dom ref in strip should be the first child of the tab container's strip");
+	});
+
+	it("tests inline visualization", async () => {
+		const tabContainer = await browser.$("#tabContainerInlineTab");
+		const firstTabItemText = await tabContainer.shadow$(".ui5-tab-strip-itemText");
+
+		// Assert
+		assert.notOk(await tabContainer.shadow$(".ui5-tab-strip-itemAdditionalText").isExisting(), "There is no additional text.");
+		assert.strictEqual(await firstTabItemText.getProperty("innerText"), "Tab 1 (123)" , "The inline number is added to the text.");
 	});
 
 });

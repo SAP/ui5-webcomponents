@@ -1,6 +1,5 @@
 /**
  * Different types of HasPopup.
- *
  * @public
  */
 enum HasPopup {

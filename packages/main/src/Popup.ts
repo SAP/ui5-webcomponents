@@ -48,7 +48,7 @@ type PopupBeforeCloseEventDetail = {
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Base class for all popup Web Components.
  *
  * If you need to create your own popup-like custom UI5 Web Components, it is highly recommended that you extend
@@ -72,7 +72,6 @@ type PopupBeforeCloseEventDetail = {
  * 5. The template of this component exposes two inline partials you can override in derivatives:
  *  - beforeContent (upper part of the box, useful for header/title/close button)
  *  - afterContent (lower part, useful for footer/action buttons)
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -85,26 +84,23 @@ type PopupBeforeCloseEventDetail = {
 	staticAreaStyles: popupStaticAreaStyles,
 })
 /**
- * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
- *
+ * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
  * @public
  * @allowPreventDefault
  */
 @event("before-open")
 
 /**
- * Fired after the component is opened. <b>This event does not bubble.</b>
- *
+ * Fired after the component is opened. **This event does not bubble.**
  * @public
  */
 @event("after-open")
 
 /**
- * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
- *
+ * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
  * @public
  * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
 @event<PopupBeforeCloseEventDetail>("before-close", {
 	detail: {
@@ -118,22 +114,19 @@ type PopupBeforeCloseEventDetail = {
 })
 
 /**
- * Fired after the component is closed. <b>This event does not bubble.</b>
- *
+ * Fired after the component is closed. **This event does not bubble.**
  * @public
  */
 @event("after-close")
 
 /**
  * Fired whenever the popup content area is scrolled
- *
  * @private
  */
 @event("scroll")
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -169,7 +162,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -179,7 +171,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.1.0
@@ -189,7 +180,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Allows setting a custom role.
-	 *
 	 * @default "Dialog"
 	 * @public
 	 * @since 1.10.0
@@ -199,7 +189,6 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 */
 	@property()
@@ -224,7 +213,6 @@ abstract class Popup extends UI5Element {
 	 * Indicates if the element is the top modal popup
 	 *
 	 * This property is calculated automatically
-	 *
 	 * @private
 	 * @default false
 	 */
@@ -421,7 +409,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
+	 * Focuses the element denoted by `initialFocus`, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
 	 * @returns Promise that resolves when the focus is applied
@@ -613,21 +601,18 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
-	 *
 	 * @protected
 	 */
 	abstract get isModal(): boolean
 
 	/**
 	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-	 *
 	 * @protected
 	 */
 	abstract get shouldHideBackdrop(): boolean
 
 	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup
-	 *
 	 * @protected
 	 */
 	abstract get _ariaLabelledBy(): string | undefined

@@ -1,6 +1,5 @@
 /**
  * Defines border designs.
- *
  * @public
  */
 enum BorderDesign {

@@ -113,8 +113,8 @@ Edge | Latest
 This section might be of interest to you mainly if you need to run or build the project locally
 
 ### Requirements
-- [Node.js](https://nodejs.org/) (**version 14 or higher**)
-- [Yarn](https://yarnpkg.com/en)
+- [Node.js](https://nodejs.org/) (**version 20 or higher**)
+- [Yarn](https://yarnpkg.com/en) (**version 1.22 or higher**)
 
 **Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.
 This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [UI5 Web Components (mono-)repository](https://github.com/SAP/ui5-webcomponents). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
