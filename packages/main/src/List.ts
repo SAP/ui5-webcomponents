@@ -337,9 +337,9 @@ class List extends UI5Element {
 	 *
 	 * **Note:** If not specified a built-in text will be displayed.
 	 *
-	 * **Note:** This property takes effect if the <code>growing</code> property is set to the <code>Button</code>.
+	 * **Note:** This property takes effect if the `growing` property is set to the `Button`.
 	 * @default ""
-	 * @since 1.23.0
+	 * @since 1.24
 	 * @public
 	 */
 	@property()
