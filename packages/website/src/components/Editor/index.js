@@ -6,6 +6,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
+import {encodeToBase64, decodeFromBase64} from "./share.js";
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
@@ -27,7 +28,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js" }) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false}) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -87,11 +88,35 @@ export default function Editor({html, js, css, mainFile = "main.js" }) {
     setButtonText(editorVisible ? "Edit" : "Hide code");
   }
 
+  function share() {
+    const files = {};
+
+    // convert file format
+    projectRef.current.files.forEach(f => {
+      files[f.name] = {
+        content: f.content
+      };
+    });
+
+    // remove import map from index.html
+    const htmlContent = files["index.html"].content;
+    const startIdx = htmlContent.indexOf(`<script type="importmap">`);
+    const endIdx = htmlContent.indexOf(`</script>`) + `</script>`.length;
+    files["index.html"].content = htmlContent.substring(0, startIdx) + htmlContent.substring(endIdx)
+
+    // remove playground support
+    delete files["playground-support.js"];
+
+    // encode and put in url
+    const hash = encodeToBase64(JSON.stringify(files));
+    history.pushState({}, '', new URL(`#${hash}`, window.location.href).href);
+  }
+
   const baseUrl = useBaseUrl("/");
 
   useEffect(() => {
     projectRef.current = getProjectFromPool();
-    projectRef.current.config = {
+    let newConfig = {
       files: {
         "index.html": {
           content: addImportMap(fixAssetPaths(html)),
@@ -122,6 +147,16 @@ ${fixAssetPaths(js)}`
         }
       }
     }
+    if (newConfig.files["main.css"].hidden) {
+      delete newConfig.files["main.css"];
+    }
+
+    if (location.hash) {
+      const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
+      sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+      newConfig.files = {...newConfig.files, ...sharedConfig};
+    }
+    projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
 
     const messageHandler = async (event) => {
@@ -172,6 +207,19 @@ ${fixAssetPaths(js)}`
           >
             {btnText}
           </button>
+          {canShare
+          ?
+            <button
+              className={"button " + (canShare ? "button--secondary" : "button--primary")}
+              style={{ borderEndEndRadius: 0, borderTopRightRadius:0, padding: "0.5rem125rem 0.75rem", margin: "0", alignSelf: "end", fontSize: "0.625rem" }}
+              onClick={ share }
+            >
+              Share
+            </button>
+          :
+            <></>
+          }
+
       </div>
     </>
   );
