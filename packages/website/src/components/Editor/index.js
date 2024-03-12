@@ -57,7 +57,9 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
           "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
           "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/",
           "lit-html": "${getHostBaseUrl()}local-cdn/lit-html/lit-html.js",
-          "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/"
+          "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/",
+          "@zxing/library/umd/": "${getHostBaseUrl()}local-cdn/zxing/umd/",
+          "@zxing/library/esm5/": "${getHostBaseUrl()}local-cdn/zxing/esm5/"
         }
       }
     </script>
