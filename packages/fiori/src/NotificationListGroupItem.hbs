@@ -45,19 +45,6 @@
 					tooltip="{{overflowBtnAccessibleName}}"
 					aria-label="{{overflowBtnAccessibleName}}"
 				></ui5-button>
-			{{else}}
-				{{#each standardActions}}
-					<ui5-button
-						icon="{{this.icon}}"
-						class="ui5-nli-action"
-						?disabled="{{this.disabled}}"
-						design="{{this.design}}"
-						@click="{{this.press}}"
-						data-ui5-external-action-item-id="{{this.refItemid}}"
-					>
-						{{this.text}}
-					</ui5-button>
-				{{/each}}
 			{{/if}}
 		{{/unless}}
 

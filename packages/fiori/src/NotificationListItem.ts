@@ -53,7 +53,7 @@ type Footnote = Record<string, any>;
  * ### Overview
  * The `ui5-li-notification` is a type of list item, meant to display notifications.
  *
- * The component has a rich set of various properties that allows the user to set `avatar`, `titleText`, descriptive `content`
+ * The component has a rich set of various properties that allows the user to set `avatar`, `menu`, `titleText`, descriptive `content`
  * and `footnotes` to fully describe a notification.
  *
  * The user can:
@@ -61,7 +61,9 @@ type Footnote = Record<string, any>;
  * - display a `Close` button
  * - can control whether the `titleText` and `description` should wrap or truncate
  * and display a `ShowMore` button to switch between less and more information
- * - add custom actions by using the `ui5-notification-action` component
+ * - add actions by using the `ui5-menu` component
+ *
+ * **Note:** Adding custom actions by using the `ui5-notification-action` component is deprecated!
  *
  * ### Usage
  * The component can be used in a standard `ui5-list`.
@@ -133,6 +135,17 @@ class NotificationListItem extends NotificationListItemBase {
 	*/
 	@slot()
 	avatar!: Array<HTMLElement>;
+
+	/**
+	* Defines the menu, displayed in the `ui5-li-notification`.
+	*
+	* **Note:** Use this for implementing actions.
+	*
+	* **Note:** Should be used instead i5-notification-action, which is deprecated as of ... version.
+	* @public
+	*/
+	@slot()
+	menu!: Array<HTMLElement>;
 
 	/**
 	* Defines the elements, displayed in the footer of the of the component.

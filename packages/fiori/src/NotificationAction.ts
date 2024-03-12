@@ -13,10 +13,12 @@ type NotificationActionClickEventDetail = {
  * @class
  * The `ui5-notification-action` represents an abstract action,
  * used in the `ui5-li-notification` and the `ui5-li-notification-group` items.
+ * **Note:** ui5-notification-action is deprecated! For the ui5-li-notification use ui5-menu instead! For ui5-li-notification-group there are no actions allowed.
  * @constructor
  * @extends UI5Element
  * @abstract
  * @public
+ * @deprecated
  */
 @customElement("ui5-notification-action")
 
@@ -35,6 +37,7 @@ class NotificationAction extends UI5Element {
 	 * Defines the text of the `ui5-notification-action`.
 	 * @default ""
 	 * @public
+	 * @deprecated
 	 */
 	@property()
 	text!: string;
@@ -45,6 +48,7 @@ class NotificationAction extends UI5Element {
 	 * **Note:** a disabled action can't be pressed or focused, and it is not in the tab chain.
 	 * @default false
 	 * @public
+	 * @deprecated
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
@@ -53,6 +57,7 @@ class NotificationAction extends UI5Element {
 	 * Defines the action design.
 	 * @default "Transparent"
 	 * @public
+	 * @deprecated
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
 	design!: `${ButtonDesign}`;
@@ -65,6 +70,7 @@ class NotificationAction extends UI5Element {
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
+	 * @deprecated
 	 */
 	@property()
 	icon!: string;
@@ -75,6 +81,7 @@ class NotificationAction extends UI5Element {
 	 * @param e
 	 * @protected
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 * @deprecated
 	 */
 	fireClickEvent(e: MouseEvent): boolean {
 		return this.fireEvent<NotificationActionClickEventDetail>("click", {

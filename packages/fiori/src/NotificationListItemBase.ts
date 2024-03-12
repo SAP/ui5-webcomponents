@@ -10,6 +10,7 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
+import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import type NotificationAction from "./NotificationAction.js";
 
 // Icons
@@ -148,12 +149,18 @@ class NotificationListItemBase extends ListItemBase {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-overflow-btn")!;
 	}
 
+	// Menu is used only for the Notification Item
+	// Actions are deprecated for Notification Item and Notification Group
 	get showOverflow() {
-		return !!this.overflowActions.length;
+		const areThereNotificationActions = !!this.overflowActions.length;
+		if (areThereNotificationActions) {
+			console.warn("ui5-notification-action is deprecated and will be removed in future! For the ui5-li-notification use ui5-menu instead! For ui5-li-notification-group there are no actions allowed."); // eslint-disable-line
+		}
+		return !!this.getMenu() || areThereNotificationActions;
 	}
 
 	get overflowActions() {
-		if (this.actions.length <= 1) {
+		if (this.actions.length < 1) {
 			return [];
 		}
 
@@ -188,8 +195,14 @@ class NotificationListItemBase extends ListItemBase {
 		this.fireEvent<NotificationListItemBaseCloseEventDetail>("close", { item: this });
 	}
 
+	// Menu is used only for the Notification Item
+	// Actions are deprecated for Notification Item and Notification Group
 	_onBtnOverflowClick() {
-		this.openOverflow();
+		if (this.getMenu()) {
+			this.openMenu();
+		} else {
+			this.openOverflow();
+		}
 	}
 
 	_onCustomActionClick(e: MouseEvent) {
@@ -230,6 +243,16 @@ class NotificationListItemBase extends ListItemBase {
 	async getOverflowPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
+	}
+
+	openMenu() {
+		const menu = this.getMenu();
+		menu.showAt(this.overflowButtonDOM);
+	}
+
+	getMenu() {
+		const menu = this.querySelector<Menu>("ui5-menu")!;
+		return menu;
 	}
 
 	static async onDefine() {

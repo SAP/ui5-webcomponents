@@ -19,19 +19,6 @@
 				tooltip="{{overflowBtnAccessibleName}}"
 				aria-label="{{overflowBtnAccessibleName}}"
 			></ui5-button>
-		{{else}}
-			{{#each standardActions}}
-				<ui5-button
-					icon="{{this.icon}}"
-					class="ui5-nli-action"
-					@click="{{this.press}}"
-					?disabled="{{this.disabled}}"
-					design="{{this.design}}"
-					data-ui5-external-action-item-id="{{this.refItemid}}"
-				>
-					{{this.text}}
-				</ui5-button>
-			{{/each}}
 		{{/if}}
 
 		{{#if showClose}}
@@ -92,6 +79,8 @@
 	<div class="ui5-nli-avatar">
 		<slot name="avatar"></slot>
 	</div>
+
+	<slot name="menu"></slot>
 
 	{{#if busy}}
 		<ui5-busy-indicator
