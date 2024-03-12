@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -120,7 +120,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 *
 	 * @public
 	 * @default false
-	 * @since 1.23.0
+	 * @since 1.24.0
 	*/
 	@property({ type: Boolean })
 	open!: boolean;
@@ -134,13 +134,11 @@ class BarcodeScannerDialog extends UI5Element {
 	loading!: boolean;
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
-	_previousOpenState: boolean;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
-		this._previousOpenState = false;
 		this._codeReader = new BrowserMultiFormatReader();
 	}
 
@@ -148,15 +146,14 @@ class BarcodeScannerDialog extends UI5Element {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	onBeforeRendering() {
-		if (this._previousOpenState !== this.open) {
-			if (this.open) {
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.type === "property" && changeInfo.name === "open") {
+			if (changeInfo.newValue) {
 				this.show();
 			} else {
 				this.close();
 			}
 		}
-		this._previousOpenState = this.open;
 	}
 
 	/**
