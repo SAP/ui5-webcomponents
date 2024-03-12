@@ -75,6 +75,7 @@ let activeCb: CheckBox;
  * @public
  * @csspart root - Used to style the outermost wrapper of the `ui5-checkbox`
  * @csspart label - Used to style the label of the `ui5-checkbox`
+ * @csspart icon - Used to style the icon of the `ui5-checkbox` when it is in displayOnly state
  */
 @customElement({
 	tag: "ui5-checkbox",
