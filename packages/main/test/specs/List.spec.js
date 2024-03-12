@@ -615,4 +615,19 @@ describe("List Tests", () => {
 		assert.strictEqual(rootTooltip, newTooltip, "Tooltip of root element is updated correctly at runtime.");
 		assert.strictEqual(rootTooltip, innerTooltip, "Tooltip of root element and title of inner li element are equal after runtime change.");
 	});
+
+	it("Tests the highlight property", async () => {
+		const listItem = await browser.$("#highlight ui5-li:nth-child(1)");
+		const initialValueState = "Error";
+		let highlightValue = await listItem.getProperty("highlight");
+
+		assert.strictEqual(highlightValue, initialValueState, "Highlight property is correctly set to the list item.");
+
+		const newValueState = "Information";
+		await listItem.setProperty("highlight", "Information");
+		highlightValue = await listItem.getProperty("highlight");
+
+		assert.strictEqual(highlightValue, newValueState, "Highlight property is correctly changed.");
+
+	});
 });

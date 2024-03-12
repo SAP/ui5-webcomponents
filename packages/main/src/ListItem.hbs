@@ -33,6 +33,10 @@
 			{{> selectionElement}}
 		{{/if}}
 
+		{{#if _hasHighlightColor}}
+			<div class="ui5-li-highlight"></div>
+		{{/if}}
+
 		<div part="content" id="{{_id}}-content" class="ui5-li-content">
 			{{> imageBegin}}
 			{{> iconBegin}}
