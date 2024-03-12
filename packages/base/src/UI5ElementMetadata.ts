@@ -359,6 +359,8 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 		}
 		// eslint-disable-next-line @typescript-eslint/no-base-to-string -- if an object is passed as a value to a string property, this was an error so displaying [object Object] will indicate the issue to the developer
 		return (typeof value === "string" || typeof value === "undefined") ? value : value.toString();
+		// eslint-disable-next-line @typescript-eslint/no-base-to-string -- if an object is passed as a value to a string property, this was an error so displaying [object Object] will indicate the issue to the developer
+		// return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
 	}
 
 	if (propertyType === Boolean) {
@@ -366,7 +368,12 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	}
 
 	if (propertyType === Object) {
-		return typeof value === "object" ? value : propData.defaultValue;
+		if (value === null) {
+			return {};
+		}
+
+		return typeof value === "object" ? value : {};
+		// return typeof value === "object" ? value : propData.defaultValue;
 	}
 
 	// Check if "value" is part of the enum (propertyType) values and return the defaultValue if not found.
