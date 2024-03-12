@@ -9,7 +9,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -139,16 +138,6 @@ abstract class ListItem extends ListItemBase {
 	 */
 	@property({ type: Boolean })
 	navigated!: boolean;
-
-	/**
-	 * Defines the highlight state of the list items.
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
-	 * @default "None"
-	 * @public
-	 * @since 1.23.1
-	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	highlight!: `${ValueState}`;
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
@@ -453,10 +442,6 @@ abstract class ListItem extends ListItemBase {
 		}
 
 		return undefined;
-	}
-
-	get _hasHighlightColor() {
-		return this.highlight !== ValueState.None;
 	}
 
 	get ariaSelectedText() {
