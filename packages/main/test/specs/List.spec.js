@@ -630,4 +630,19 @@ describe("List Tests", () => {
 		assert.strictEqual(highlightValue, newValueState, "Highlight property is correctly changed.");
 
 	});
+
+	it("Tests the growingButtonText property", async () => {
+		const list = await browser.$("#infiniteScrollEx2");
+		const btnText = "Custom text"
+		let growingBtnText = await list.getProperty("growingButtonText");
+
+		assert.strictEqual(growingBtnText, btnText, "GrowingButtonText property is correctly set to the list.");
+
+		const newBtnText = "New custom text";
+		await list.setProperty("growingButtonText", newBtnText);
+ 		growingBtnText = await list.getProperty("growingButtonText");
+
+		assert.strictEqual(growingBtnText, newBtnText, "GrowingButtonText property is correctly changed.");
+
+	});
 });

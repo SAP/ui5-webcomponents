@@ -111,26 +111,18 @@
 
 :host([value-state="Error"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_error);
-	border: 0.0625rem solid
-		var(--_ui5_progress_indicator_value_state_error_border_color);
 }
 
 :host([value-state="Warning"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_warning);
-	border: 0.0625rem solid
-		var(--_ui5_progress_indicator_value_state_warning_border_color);
 }
 
 :host([value-state="Success"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_success);
-	border: 0.0625rem solid
-		var(--_ui5_progress_indicator_value_state_success_border_color);
 }
 
 :host([value-state="Information"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_information);
-	border: 0.0625rem solid
-		var(--_ui5_progress_indicator_value_state_information_border_color);
 }
 
 :host([value-state="Error"]) .ui5-progress-indicator-root {

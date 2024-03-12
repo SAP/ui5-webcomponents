@@ -90,7 +90,6 @@ const _generateIconsPage = (sourceDir, config) => {
         icons += `
         <div
             tabIndex="-1"
-            title="Copy Icon"
             className="icon__wrapper"
             onClick={function(e) {
                 const target = e.target;
@@ -110,14 +109,14 @@ const _generateIconsPage = (sourceDir, config) => {
             <span className="icon__wrapper__title">{${iconNameImport}.replace("tnt/", "").replace("business-suite/", "")}</span>
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <button className="button button--secondary icon__button--copy"
+                <button title="Copy Icon Name" className="button button--secondary icon__button--copy"
                     onClick={function(e) {
                         navigator.clipboard.writeText(${iconNameImport});
                 }}>
                     <CopySvg className="icon__svg--copy" />
                 </button>
 
-                <button className="button button--secondary icon__button--picture"
+                <button title="Copy SVG" className="button button--secondary icon__button--picture"
                     onClick={function(e) {
                         navigator.clipboard.writeText(document.querySelector("#${svgImport}_svg")?.innerHTML);
                 }}>

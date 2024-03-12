@@ -7466,6 +7466,13 @@ ccount@^2.0.0:
   resolved "https://registry.yarnpkg.com/ccount/-/ccount-2.0.1.tgz#17a3bf82302e0870d6da43a01311a8bc02a3ecf5"
   integrity sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==
 
+cem-plugin-vs-code-custom-data-generator@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/cem-plugin-vs-code-custom-data-generator/-/cem-plugin-vs-code-custom-data-generator-1.4.2.tgz#d81d93231d31701eb45be823109ebe9bb22a3aa2"
+  integrity sha512-Hjj7U0CkX1H8uym9SDkuRj5t2SEx6Iyys4hC4m/5F2MBcCeMPkMR5BJZlTpatcKdDRZh21tVJz+S/FbKqiniNA==
+  dependencies:
+    prettier "^2.7.1"
+
 chai@^4.3.4:
   version "4.3.7"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.3.7.tgz#ec63f6df01829088e8bf55fca839bcd464a8ec51"
@@ -8690,6 +8697,13 @@ currently-unhandled@^0.4.1:
   integrity sha512-/fITjgjGU50vjQ4FH6eUoYu+iUoUKIXws2hL15JJpIR+BbTxaXQsMuuyjtNh2WqsSBS5nsaZHFsFecyw5CCAng==
   dependencies:
     array-find-index "^1.0.1"
+
+custom-element-jet-brains-integration@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/custom-element-jet-brains-integration/-/custom-element-jet-brains-integration-1.4.4.tgz#7dfd406d42b69a2097d5be67226521b845a82857"
+  integrity sha512-HEiTy5jBKQa1QdC5jaFbFkXkhHmgwJ0oRLjKK/mZuxuUx0+/wCFRjHBZX51qu5KYj6Ta/gPXcr3blCzuBHXF7A==
+  dependencies:
+    prettier "^2.8.0"
 
 custom-elements-manifest@1.0.0:
   version "1.0.0"
@@ -16787,7 +16801,7 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha512-ravE6m9Atw9Z/jjttRUZ+clIXogdghyZAuWJ3qEzjT+jI/dL1ifAqhZeC5VHzQp1MSt1+jxKkFNemj/iO7tVUA==
 
-prettier@^2.8.0, prettier@^2.8.1:
+prettier@^2.7.1, prettier@^2.8.0, prettier@^2.8.1:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
