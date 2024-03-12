@@ -15,6 +15,10 @@ body {
     min-height: 0;
 }
 
+.sideBar {
+    background-color: var(--sapList_Background);
+}
+
 .inner-content {
     overflow: auto;
     display: flex;
@@ -22,9 +26,10 @@ body {
     min-height: 0;
 }
 
+/*
 ui5-shellbar::part(root) {
     padding-left: .5rem;
-}
+} */
 
 .header {
     display: flex;

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Side Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/publicToolLayout.css">
+</head>
+
+<body>
+
+	<div class="layout">
+		<div class="header panelStyle1">
+			<ui5-shellbar class="shellBarStyle1" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
+			</ui5-shellbar>
+			<ui5-tabcontainer fixed="" collapsed="" data-sap-ui-fastnavgroup="true">
+				<ui5-tab text="Home" is-top-level-tab="" slot="default-1"></ui5-tab>
+				<ui5-tab
+				  text="What's new"
+				  selected=""
+				  is-top-level-tab=""
+				  slot="default-2"
+				></ui5-tab>
+				<ui5-tab text="Who are we" is-top-level-tab="" slot="default-3"></ui5-tab>
+				<ui5-tab text="About" is-top-level-tab="" slot="default-4"></ui5-tab>
+				<ui5-tab text="Contacts" is-top-level-tab="" slot="default-5"></ui5-tab>
+			</ui5-tabcontainer>
+		</div>
+
+		<div class="content panelStyle3">
+			content
+		</div>
+	</div>
+
+</body>
+</html>

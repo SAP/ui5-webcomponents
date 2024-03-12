@@ -1,0 +1,149 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    height: 100%;
+}
+
+/* layout */
+.layout {
+    position: relative;
+
+    height: 100%;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: auto 1fr;
+
+    gap: 0.5rem;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+
+
+    /* todo should we have background here? */
+    background: color-mix(in srgb, black 4%, var(--sapBackgroundColor));
+}
+
+.header {
+    grid-column: 1 / span 2;
+    grid-row: 1 / 2;
+    min-height: 0;
+}
+
+.sideBar {
+    min-height: 0;
+}
+
+.content {
+    grid-column: 1 / span 2;
+    min-height: 0;
+}
+
+.sideBar+.content {
+    grid-column: 2 / span 1;
+}
+
+/* end layout */
+
+
+/* panels */
+.panelStyle1 {
+    /* rounded top and bottom */
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+
+    background: white;
+
+    padding: 0 0.5rem;
+}
+
+.panelStyle2 {
+    /* rounded top only */
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+
+    background: white;
+
+    /* no padding */
+}
+
+.panelStyle3 {
+    /* rounded top only */
+    overflow: hidden;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+
+    /* different background */
+    background: #f5f6f7;
+
+    /* no padding */
+}
+
+/* end panels */
+
+
+
+/* on phone
+		use
+		.sideBar {
+			grid-column: 1 / span 2;
+		}
+		.content {
+			grid-column: 1 / span 2;
+		}
+
+		.autoCollapse {
+
+
+			z-index: 2;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+
+			or
+			position relative + left and right = 0
+		}
+		*/
+.autoCollapse.expanded {
+
+    /*on phone only*/
+
+    border-radius: 0.5rem 0.5rem 0 0;
+    /* --_ui5_side_navigation_phone_border_radius */
+}
+
+
+/* todo
+		- auto collapse side nav on small size - new property
+		- fully hide sideBar on extra small size
+		- js to expand both on phone and on desktop
+		- css check if content expands 1 column or 2 columns
+		*/
+
+/*
+		1. option 1 - explicitly set class to style the side nav
+			independent of parent
+		2. option 2 - automatically applies no border
+		*/
+
+/*
+			@todo
+			- better for devs if they have padding-tiny, background-style2, etc. from common css
+			- if device.js is public
+		*/
+
+/* shell bar - belongs to shell bar */
+.shellBarStyle1::part(root) {
+    padding: 0;
+}
+
+/* end shell bar */

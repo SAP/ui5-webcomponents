@@ -5,16 +5,11 @@
 	width: var(--_ui5_side_navigation_width);
 	max-width: 100%;
 	transition: width 0.3s, min-width 0.3s;
-	border-radius: var(--_ui5_side_navigation_border_radius);
 }
 
 :host([collapsed]) {
 	min-width: var(--_ui5_side_navigation_collapsed_width);
 	width: var(--_ui5_side_navigation_collapsed_width);
-}
-
-:host([is-touch-device]) {
-	border-radius: var(--_ui5_side_navigation_phone_border_radius);
 }
 
 .ui5-sn-root {
@@ -24,9 +19,8 @@
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
-	background: var(--sapList_Background);
+	/* todo background color? */
 	border-inline-end: var(--_ui5_side_navigation_border_right);
-	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	border-radius: inherit;
 }
 
