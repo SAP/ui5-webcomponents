@@ -7,4 +7,5 @@ import ts from '!!raw-loader!./_samples/base/UI5Element/Basic/main.ts';
 	mainFile={"main.ts"} 
 	canShare={true} 
 	editorExpanded={true}
+	mainFileSelected={true}
 />

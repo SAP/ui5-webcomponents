@@ -28,7 +28,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js", canShare = false}, editorExpanded = false ) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false, editorExpanded = false, mainFileSelected = false }) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -44,6 +44,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const { theme, setTheme } = useContext(ThemeContext);
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
   const { textDirection, setTextDirection } = useContext(TextDirectionContext);
+  const [copied, setCopied] = useState(false);
 
   function addImportMap(html) {
     return html.replace("<head>", `
@@ -111,7 +112,8 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 
     // encode and put in url
     const hash = encodeToBase64(JSON.stringify(files));
-    history.pushState({}, '', new URL(`#${hash}`, window.location.href).href);
+    navigator.clipboard.writeText(new URL(`#${hash}`, window.location.href).href);
+    setCopied(true);
   }
 
   const baseUrl = useBaseUrl("/");
@@ -132,6 +134,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 import "./playground-support.js";
 /* playground-hide-end */
 ${fixAssetPaths(js)}`,
+          selected: mainFileSelected,
         },
         "main.css": {
           content: css,
@@ -197,6 +200,14 @@ ${fixAssetPaths(js)}`,
     projectRef.current.config = newConfig;
   }, [theme, contentDensity, textDirection]);
 
+  useEffect(() => {
+    if (copied) {
+      setTimeout(() => {
+        setCopied(false);
+      }, 5000)
+    }
+  }, [copied]);
+
   return (
     <>
       <div ref={projectContainerRef}></div>
@@ -217,12 +228,20 @@ ${fixAssetPaths(js)}`,
 
           {canShare
           ?
-            <button
-              className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
-              onClick={ share }
-            >
-              Share
-            </button>
+            <>
+              <button
+                className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
+                onClick={ share }
+              >
+                Share
+              </button>
+              { copied
+                ? <div style={ {position: "absolute"} }>
+                    <span className={styles["copy-status"]}>&#x2714; Link copied</span>
+                  </div>
+            : <></>
+              }
+            </>
           :
             <></>
           }
