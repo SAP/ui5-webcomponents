@@ -153,10 +153,14 @@ ${fixAssetPaths(js)}`
       delete newConfig.files["main.css"];
     }
 
-    if (location.hash) {
-      const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
-      sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
-      newConfig.files = {...newConfig.files, ...sharedConfig};
+    if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
+      try {
+        const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
+        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        newConfig.files = {...newConfig.files, ...sharedConfig};
+      } catch (e) {
+        console.log(e);
+      }
     }
     projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
