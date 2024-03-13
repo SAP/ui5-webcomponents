@@ -472,14 +472,15 @@ class StepInput extends UI5Element implements IFormElement {
 	_updateValueState() {
 		const isWithinRange = (this.min === undefined || Number(this.input.value) >= this.min)
 							  && (this.max === undefined || Number(this.input.value) <= this.max);
-		const isPrecisionValid = this._isPrecisionValid();
+		const isValuePrecisionRespected = this._isValuePrecisionRespected();
 		const previousValueState = this.valueState;
+		const isValid = isWithinRange && isValuePrecisionRespected;
 
-		this.valueState = isWithinRange && isPrecisionValid ? ValueState.None : ValueState.Error;
+		this.valueState = isValid ? ValueState.None : ValueState.Error;
 
 		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
 			valueState: this.valueState,
-			valid: isWithinRange && isPrecisionValid,
+			valid: isValid,
 		}, true);
 
 		if (eventPrevented) {
@@ -546,14 +547,14 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
-	_isPrecisionValid() {
+	_isValuePrecisionRespected() {
 		// gets either "." or "," as delimiter which is based on locale, and splits the number by it
 		const delimiter = this.input.value.includes(".") ? "." : ",";
 		const numberParts = this.input.value.split(delimiter);
 		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
-		const isPrecisionValid = decimalPartLength === this.valuePrecision;
+		const isValuePrecisionRespected = decimalPartLength === this.valuePrecision;
 
-		return isPrecisionValid;
+		return isValuePrecisionRespected;
 	}
 
 	_onInputChange() {
