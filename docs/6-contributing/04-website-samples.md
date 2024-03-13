@@ -74,20 +74,20 @@ The Button supports several designs to indicate the priority or the nature of th
 
 ### Cnventions 
 
-#### Sample name
+#### Sample Name
 - The sample name and the folder that includes the sample files should match the `.md` file name. 
 
 For example, `packages/website/docs/_samples/main/Button/IconOnly/IconOnly.md` (`IconOnly` as folder and `IconOnly.md` file).
 
 - Regarding the naming, it's best to consult with KM and use existing ones as reference.
 
-#### Title and description
+#### Sample Title and Description
 The title ("My New Sample") and the description ("The Button..") will be displayed on top of the sample itself. Adding title and description is recommended -  they help viewers better understand what they are looking at.
 
 
-#### Samples Order
+#### Sample Order
 Add new samples in the "More Samples" section where it best fits among the existing samples.
 
 
-#### The "Basic" sample
+#### The "Basic" Sample
 All components have sample, called "Basic" and it's used as the first sample, displayed right-after the component's overview. Don't use "Basic" for other samples.
