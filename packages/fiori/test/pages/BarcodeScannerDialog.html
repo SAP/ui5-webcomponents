@@ -31,18 +31,23 @@
 	</div>
 
 	<script>
-		btnScan.addEventListener("click", function(event) {
-			dlgScan.show();
+		const dlgScan = document.getElementById("dlgScan");
+		const btnScan = document.getElementById("btnScan");
+		const scanResult = document.getElementById("scanResult");
+		const scanError = document.getElementById("scanError");
+
+		btnScan.addEventListener("click", (event) => {
+			dlgScan.open = true;
 		});
 
-		dlgScan.addEventListener("ui5-scan-success", function(event) {
+		dlgScan.addEventListener("ui5-scan-success", (event) => {
 			scanResult.innerHTML = event.detail.text;
-			dlgScan.close();
+			dlgScan.open = false;
 		});
 
-		dlgScan.addEventListener("ui5-scan-error", function(event) {
+		dlgScan.addEventListener("ui5-scan-error", (event) => {
 			scanError.innerHTML = event.detail.message;
-			dlgScan.close();
+			dlgScan.open = false;
 		});
 	</script>
 </body>
