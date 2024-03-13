@@ -1,4 +1,4 @@
-# Running the Wesbsite (Docs & Samples) Locally
+# Running Wesbsite Locally
 
 The UI5 Web Components Website app is the entry point of the UI5 Web Components project. 
 The app includes documentation, API reference and samples for all the available web components.
@@ -6,7 +6,7 @@ The app includes documentation, API reference and samples for all the available 
 The website can be run locally to test your changes and samples.
 In order to do so, you have to follow the steps below:
 
-In your terminal, run the following command:
+In your terminal, run the following commands:
 
 ```bash
 yarn

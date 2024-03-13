@@ -11,7 +11,7 @@ yarn
 ```
 
 ## 2. Start the storybook locally
-In your terminal, run the following command:
+In your terminal, run the following commands:
 
 ```bash
 yarn start:storybook

@@ -2,7 +2,7 @@
 
 Components features or states are demonstrated via samples.
 
-## How to run the website
+## Run the Website
 
 Runs project build + website start
 
@@ -20,17 +20,14 @@ yarn start
 
 **Note:** In case of issues with the second flow, most likely you need `yarn build` in the root.
 
-## Samples Location
+
+## Create New Sample
 
 The website app is developed in its own package `packages/website` and the samples are placed in `/packages/website/docs/_samples` folder.
-For example, the Button samples can be found in `/packages/website/docs/_samples/main/Button`.
 
+For example, the Button samples can be found in `/packages/website/docs/_samples/main/Button`
 
-## Creating a sample
-
-
-### 1. Create the sample:
-A regular component sample consists of a folder with 3 files: {sample_name}.md, `main.js` and `sample.html`:
+A regular component sample consists of a folder with 3 files: `{sample_name}.md`, `main.js` and `sample.html`:
 
 - in the `main.js` file, we import the components and assets (icons, illustration) required by the sample.
 
@@ -47,7 +44,7 @@ import js from '!!raw-loader!./main.js';
 ```
 
 
-### 2. Show the sample
+## Show the Sample in the Website
 
 In the previous step we have created our sample. Now it's time to show and document it.
 
@@ -93,4 +90,4 @@ Add new samples in the "More Samples" section where it best fits among the exist
 
 
 #### The "Basic" sample
-All components have sample, called "Basic" and it's used as first sample, displayed right-after the component's overview. Don't use "Basic" for other samples.
+All components have sample, called "Basic" and it's used as the first sample, displayed right-after the component's overview. Don't use "Basic" for other samples.
