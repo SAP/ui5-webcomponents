@@ -1,6 +1,11 @@
 # Creating Website Samples
 
-Components features or states are demonstrated via samples.
+The website app is developed in its own package `packages/website`. Components features or states are demonstrated via samples meant for consumers.
+The samples are placed in `/packages/website/docs/_samples` folder.
+
+**For example:** 
+The Button samples can be found in `/packages/website/docs/_samples/main/Button`
+
 
 ## Run the Website
 
@@ -23,19 +28,58 @@ yarn start
 
 ## Create New Sample
 
-The website app is developed in its own package `packages/website` and the samples are placed in `/packages/website/docs/_samples` folder.
+A regular component sample consists of a folder + 3 files (`{sample_name}.md`, `main.js` and `sample.html`) that you need to create. Let's go trough every one of them:
 
-For example, the Button samples can be found in `/packages/website/docs/_samples/main/Button`
+### The `main.js` file
 
-A regular component sample consists of a folder with 3 files: `{sample_name}.md`, `main.js` and `sample.html`:
+In the `main.js` file, we import the components and assets (icons, illustration) required by the sample.
 
-- in the `main.js` file, we import the components and assets (icons, illustration) required by the sample.
+**For example:**
+```ts
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents-icons/dist/edit.js";
+import "@ui5/webcomponents-icons/dist/account.js";
+```
 
-- in the `sample.html` file, we use the web components as in regular HTML page
+### The `sample.html` file
 
-- in the `.md` file we instantiate the `Editor` component (file editor + preview) that will display your sample and show the code behind it.
+In the `sample.html` file, we use the web components as in regular HTML page
 
-Just copy and paste this:
+**For example:**
+
+```html
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+
+    <ui5-button icon="sap-icon://edit" design="Default" tooltip="Edit Button"></ui5-button>
+    <ui5-button icon="sap-icon://account" design="Transparent" tooltip="Account Button"></ui5-button>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
+
+```
+
+
+**Note:** The `playground-fold` comments will fold this part of the code to highlight the important part - the components usage.
+
+### Tee `{sample_name}.md` file
+
+In the `.md` file we instantiate the `Editor` component (file editor + preview) that will display your sample and show the code behind it.
+
+**For example:**
 ```md
 import html from '!!raw-loader!./sample.html';
 import js from '!!raw-loader!./main.js';
@@ -44,7 +88,7 @@ import js from '!!raw-loader!./main.js';
 ```
 
 
-## Show the Sample in the Website
+## Show the Sample
 
 In the previous step we have created our sample. Now it's time to show and document it.
 
@@ -53,15 +97,19 @@ In the previous step we have created our sample. Now it's time to show and docum
 
 - Find your component's `.mdx` file.
 
-For example, `packages/website/docs/_components_pages/main/Button.mdx`
+**For example:** `packages/website/docs/_components_pages/main/Button.mdx`
 
 - Import the newly created sample
 
-For example, `import Basic from "../../_samples/main/Button/MyNewSample/MyNewSample.md";`
+**For example:** 
+```js
+import Basic from "../../_samples/main/Button/MyNewSample/MyNewSample.md";`
+```
 
 - Instantiate the sample and add title + description
 
-For example:
+**For example:**
+
 ```.md
 ### My New Sample
 The Button supports several designs to indicate the priority or the nature of the action.
@@ -70,24 +118,23 @@ The Button supports several designs to indicate the priority or the nature of th
 
 ```
 
-**Note:** Changes in the sample files (`.md`, `.html`, `.js`) are detected and the app reloads. However, changes in the `.mdx` file are not watched - restart of the app is needed.
+**Note:** Changes in the sample files (`.md`, `.html`, `.js`) are detected and the server reloads. However, changes in the `.mdx` file are not watched - restart of the server is needed.
 
-### Conventions 
+## Conventions 
 
-#### Sample Name
-- The sample name and the folder that includes the sample files should match the `.md` file name. 
+### Sample Name
 
-For example, `packages/website/docs/_samples/main/Button/IconOnly/IconOnly.md` (`IconOnly` as folder and `IconOnly.md` file).
+- The sample name and the folder that includes the sample files should match the `.md` file name (`Button/IconOnly/IconOnly.md`). 
 
 - Regarding the naming, it's best to consult with KM and use existing ones as reference.
 
-#### Sample Title and Description
+### Sample Title and Description
 The title ("My New Sample") and the description ("The Button..") will be displayed on top of the sample itself. Adding title and description is recommended -  they help viewers better understand what they are looking at.
 
 
-#### Sample Order
+### Sample Order
 Add new samples in the "More Samples" section where it best fits among the existing samples.
 
 
-#### The "Basic" Sample
+### The "Basic" Sample
 All components have sample, called "Basic" and it's used as the first sample, displayed right-after the component's overview. Don't use "Basic" for other samples.
