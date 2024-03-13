@@ -136,9 +136,6 @@ code {
   cursor: pointer;
 }
 
-.menu__link {
-  font-size: 0.813rem;
-}
 
 .menu__caret:before,
 .menu__link--sublist-caret:after {
