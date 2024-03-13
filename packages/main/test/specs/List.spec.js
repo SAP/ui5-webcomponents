@@ -615,4 +615,19 @@ describe("List Tests", () => {
 		assert.strictEqual(rootTooltip, newTooltip, "Tooltip of root element is updated correctly at runtime.");
 		assert.strictEqual(rootTooltip, innerTooltip, "Tooltip of root element and title of inner li element are equal after runtime change.");
 	});
+
+	it("Tests the growingButtonText property", async () => {
+		const list = await browser.$("#infiniteScrollEx2");
+		const btnText = "Custom text"
+		let growingBtnText = await list.getProperty("growingButtonText");
+
+		assert.strictEqual(growingBtnText, btnText, "GrowingButtonText property is correctly set to the list.");
+
+		const newBtnText = "New custom text";
+		await list.setProperty("growingButtonText", newBtnText);
+ 		growingBtnText = await list.getProperty("growingButtonText");
+
+		assert.strictEqual(growingBtnText, newBtnText, "GrowingButtonText property is correctly changed.");
+
+	});
 });
