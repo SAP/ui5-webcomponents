@@ -34,12 +34,12 @@ import GridHeaderCellCss from "./generated/themes/GridHeaderCell.css.js";
 })
 class GridHeaderCell extends UI5Element {
 	/**
-	 * Defines the header of the component.
+	 * Defines the content of the component.
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	header!: Array<HTMLElement>;
+	@slot({ type: Node, "default": true })
+	content!: Array<Node>;
 
 	/**
 	 * Defines the width of the component, including padding and border.
@@ -59,18 +59,14 @@ class GridHeaderCell extends UI5Element {
 	@property({ type: Boolean, defaultValue: false, noAttribute: true })
 	_popin!: boolean;
 
-	onEnterDOM(): void {
+	onEnterDOM() {
 		this.setAttribute("role", "columnheader");
 		this.setAttribute("tabindex", "0");
 		this.style.minWidth = this.minWidth;
 	}
 
-	getFocusDomRef(): HTMLElement | undefined {
+	getFocusDomRef() {
 		return this;
-	}
-
-	get clone() {
-		return this.header[0] ? this.header[0].cloneNode(true) : this.innerHTML;
 	}
 }
 

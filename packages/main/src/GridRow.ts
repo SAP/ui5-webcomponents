@@ -5,13 +5,11 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 import GridRowTemplate from "./generated/templates/GridRowTemplate.lit.js";
 import GridRowCss from "./generated/themes/GridRow.css.js";
 import GridCell from "./GridCell.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
-import PopinLayout from "./types/PopinLayout.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import {
@@ -56,7 +54,7 @@ class GridRow extends UI5Element {
 		"default": true,
 		individualSlots: true,
 		invalidateOnChildChange: {
-			properties: ["_invalidate"],
+			properties: ["_popin"],
 			slots: false,
 		},
 	})
@@ -87,25 +85,8 @@ class GridRow extends UI5Element {
 		}
 	}
 
-	get _isMultiSelect() {
-		return this._selectionMode === GridSelectionMode.Multi;
-	}
-
-	get _hasSelectionComponent() {
-		return this._isMultiSelect || this._selectionMode === GridSelectionMode.Single;
-	}
-
-	get _gridId() {
-		return (this.parentElement as Grid)._id;
-	}
-
-	get _i18nRowSelector() {
-		return GridRow.i18nBundle.getText(GRID_ROW_SELECTOR);
-	}
-
-	#informGridForSelectionChange(selected: boolean) {
-		const grid = this.parentElement as Grid;
-		grid._onRowSelectionChange(this, selected);
+	getFocusDomRef() {
+		return this;
 	}
 
 	_onSelectionChange(e: CustomEvent) {
@@ -121,29 +102,33 @@ class GridRow extends UI5Element {
 		e.preventDefault();
 	}
 
-	get hasPopin() {
-		return this.poppedIn.length > 0;
+	#informGridForSelectionChange(selected: boolean) {
+		const grid = this.parentElement as Grid;
+		grid._onRowSelectionChange(this, selected);
 	}
 
-	get poppedIn() {
-		return this.cells.filter(c => c._columnInfo.poppedIn);
+	get _isMultiSelect() {
+		return this._selectionMode === GridSelectionMode.Multi;
 	}
 
-	get default() {
-		return this.cells.filter(c => !c._columnInfo.poppedIn);
+	get _hasSelectionComponent() {
+		return this._isMultiSelect || this._selectionMode === GridSelectionMode.Single;
 	}
 
-	get classes(): ClassMap {
-		return {
-			popin: {
-				"ui5-grid-block-layout": this.grid.popinLayout === PopinLayout.Block,
-				"ui5-grid-inline-layout": this.grid.popinLayout === PopinLayout.Inline,
-			},
-		};
+	get _visibleCells() {
+		return this.cells.filter(c => !c._popin);
 	}
 
-	get grid() {
-		return this.parentElement as Grid;
+	get _popinCells() {
+		return this.cells.filter(c => c._popin);
+	}
+
+	get _gridId() {
+		return (this.parentElement as Grid)._id;
+	}
+
+	get _i18nRowSelector() {
+		return GridRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 }
 

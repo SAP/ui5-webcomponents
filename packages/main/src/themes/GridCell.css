@@ -1,17 +1,13 @@
 :host {
     display: flex;
-    place-items: var(--_ui5_grid_cell_valign);
     flex-wrap: wrap;
+    align-content: var(--_ui5_grid_cell_valign);
     min-width: 0;
     max-width: 100%;
     overflow: clip;
     overflow-clip-margin: content-box;
     padding: var(--_ui5_grid_cell_padding);
     box-sizing: border-box;
-}
-
-:host(:not([role=gridcell])) {
-    padding-left: 0;
 }
 
 :host([hidden]) {
@@ -23,16 +19,12 @@
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
-.popin-area {
-    display: flex;
+:host([_popin]) {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    align-items: center;
 }
 
-.inline {
-    flex-direction: row;
-    column-gap: 1px;
-}
-
-.block {
-    flex-direction: column;
-    row-gap: 1px;
+.popin-colon {
+    padding-inline-end: 0.5rem;
 }

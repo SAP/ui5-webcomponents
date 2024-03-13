@@ -1,7 +1,7 @@
 :host {
     display: flex;
-    place-items: var(--_ui5_grid_cell_valign);
     flex-wrap: wrap;
+    align-content: var(--_ui5_grid_cell_valign);
     min-width: 0;
     max-width: 100%;
     overflow: clip;

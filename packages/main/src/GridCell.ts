@@ -3,11 +3,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import GridCellTemplate from "./generated/templates/GridCellTemplate.lit.js";
 import GridCellCss from "./generated/themes/GridCell.css.js";
-import GridHeaderCell from "./GridHeaderCell.js";
+import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
+import Grid from "./Grid.js";
+import GridRow from "./GridRow.js";
 
 /**
  * @class
@@ -39,54 +41,38 @@ class GridCell extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	@slot({ type: Node, "default": true })
+	content!: Array<Node>;
 
-	@property({ type: Boolean, noAttribute: true })
-	_invalidate!: boolean;
+	@property({ type: Boolean, defaultValue: false })
+	_popin!: boolean;
 
-	_info!: { header: Node | string | null, poppedIn: boolean };
+	static i18nBundle: I18nBundle;
 
-	_column!: GridHeaderCell;
-
-	constructor() {
-		super();
-		this._info = { header: null, poppedIn: false };
+	static async onDefine() {
+		GridCell.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	onEnterDOM(): void {
-		this.setAttribute("role", "gridcell");
-		this.setAttribute("tabindex", "0");
-	}
-
-	onBeforeRendering(): void {
-		if (this._info.poppedIn) {
-			this.setAttribute("tabindex", "-1");
+	onBeforeRendering() {
+		if (this._popin) {
 			this.removeAttribute("role");
+			this.removeAttribute("tabindex");
 		} else {
 			this.setAttribute("role", "gridcell");
 			this.setAttribute("tabindex", "0");
 		}
 	}
 
-	set _columnInfo(c: { header: Node | string | null, poppedIn: boolean }) {
-		this._info = c;
-		this._invalidate = false;
-		this._invalidate = true;
+	get _popinHeader() {
+		const row = this.parentElement as GridRow;
+		const grid = row.parentElement as Grid;
+		const index = row.cells.indexOf(this);
+		const headerCell = grid.headerRow.cells[index];
+		return headerCell.content[0]?.cloneNode(true);
 	}
 
-	get _columnInfo() {
-		return this._info;
-	}
-
-	get classes(): ClassMap {
-		return {
-			"popin": {
-				"popin-area": true,
-				"inline": false,
-				"block": true,
-			},
-		};
+	get _i18nPopinColon() {
+		return GridCell.i18nBundle.getText(LABEL_COLON);
 	}
 }
 

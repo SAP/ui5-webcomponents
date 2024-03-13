@@ -15,6 +15,7 @@ import Grid from "./Grid.js";
 import {
 	GRID_SELECTION,
 	GRID_ROW_SELECTOR,
+	GRID_ROW_POPIN,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -83,6 +84,7 @@ class GridHeaderRow extends UI5Element {
 	onEnterDOM() {
 		this.setAttribute("role", "row");
 		this.setAttribute("tabindex", "0");
+		this.setAttribute("slot", "header-row");
 	}
 
 	onBeforeRendering() {
@@ -93,25 +95,8 @@ class GridHeaderRow extends UI5Element {
 		}
 	}
 
-	get _isMultiSelect() {
-		return this._selectionMode === GridSelectionMode.Multi;
-	}
-
-	get _hasSelectionComponent() {
-		return this._selectionMode === "Multi" || this._selectionMode === "Single";
-	}
-
-	get _i18nRowSelector() {
-		return GridHeaderRow.i18nBundle.getText(GRID_ROW_SELECTOR);
-	}
-
-	get _i18nSelection() {
-		return GridHeaderRow.i18nBundle.getText(GRID_SELECTION);
-	}
-
-	#informGridForSelectAllChange(selected: boolean) {
-		const grid = this.parentElement as Grid;
-		grid._onSelectAllChange(selected);
+	getFocusDomRef() {
+		return this;
 	}
 
 	_onSelectAllChange(e: CustomEvent) {
@@ -127,8 +112,37 @@ class GridHeaderRow extends UI5Element {
 		e.preventDefault();
 	}
 
-	get visibleColumns() {
+	#informGridForSelectAllChange(selected: boolean) {
+		const grid = this.parentElement as Grid;
+		grid._onSelectAllChange(selected);
+	}
+
+	get _isMultiSelect() {
+		return this._selectionMode === GridSelectionMode.Multi;
+	}
+
+	get _hasSelectionComponent() {
+		return this._selectionMode === "Multi" || this._selectionMode === "Single";
+	}
+
+	get _visibleCells() {
 		return this.cells.filter(c => !c._popin);
+	}
+
+	get _popinCells() {
+		return this.cells.filter(c => c._popin);
+	}
+
+	get _i18nRowSelector() {
+		return GridHeaderRow.i18nBundle.getText(GRID_ROW_SELECTOR);
+	}
+
+	get _i18nSelection() {
+		return GridHeaderRow.i18nBundle.getText(GRID_SELECTION);
+	}
+
+	get _i18nRowPopin() {
+		return GridHeaderRow.i18nBundle.getText(GRID_ROW_POPIN);
 	}
 }
 

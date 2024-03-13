@@ -1,34 +1,33 @@
-<div style="display: grid; grid-template-columns: subgrid; grid-column: 1 / -1;">
-    {{#if _hasSelectionComponent}}
-        <ui5-grid-cell id="selection-cell"
-            aria-selected="{{_selected}}"
-            @keydown="{{_onSelectionCellKeyDown}}"
-        >
-        {{#if _isMultiSelect}}
-            <ui5-checkbox id="selection-component" tabindex="-1"
-                ?checked="{{_selected}}"
-                @ui5-change="{{_onSelectionChange}}"
-                accessible-name="{{_i18nRowSelector}}"
-            ></ui5-checkbox>
-        {{else}}
-            <ui5-radio-button id="selection-component" tabindex="-1"
-                name="{{_gridId}}"
-                ?checked="{{_selected}}"
-                @ui5-change="{{_onSelectionChange}}"
-                accessible-name="{{_i18nRowSelector}}"
-            ></ui5-radio-button>
-        {{/if}}
-        </ui5-grid-cell>
+{{#if _hasSelectionComponent}}
+    <ui5-grid-cell id="selection-cell"
+        aria-selected="{{_selected}}"
+        @keydown="{{_onSelectionCellKeyDown}}"
+    >
+    {{#if _isMultiSelect}}
+        <ui5-checkbox id="selection-component" tabindex="-1"
+            ?checked="{{_selected}}"
+            @ui5-change="{{_onSelectionChange}}"
+            accessible-name="{{_i18nRowSelector}}"
+        ></ui5-checkbox>
+    {{else}}
+        <ui5-radio-button id="selection-component" tabindex="-1"
+            name="{{_gridId}}"
+            ?checked="{{_selected}}"
+            @ui5-change="{{_onSelectionChange}}"
+            accessible-name="{{_i18nRowSelector}}"
+        ></ui5-radio-button>
     {{/if}}
-	{{#each default}}
-		<slot name="{{_individualSlot}}"></slot>
-	{{/each}}
+    </ui5-grid-cell>
+{{/if}}
 
-    {{#if hasPopin}}
-        <ui5-grid-cell role="none" tabindex="0" class="ui5-grid-popin {{classes.popin}}">
-            {{#each poppedIn}}
-                <slot name="{{_individualSlot}}"></slot>
-            {{/each}}
-        </ui5-grid-cell>
-    {{/if}}
-</div>
+{{#each _visibleCells}}
+    <slot name="{{_individualSlot}}"></slot>
+{{/each}}
+
+{{#if _popinCells.length}}
+    <ui5-grid-cell id="popin-cell">
+        {{#each _popinCells}}
+            <slot name="{{_individualSlot}}"></slot>
+        {{/each}}
+    </ui5-grid-cell>
+{{/if}}

@@ -14,7 +14,6 @@ import GridCss from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
-import PopinLayout from "./types/PopinLayout.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
@@ -84,15 +83,6 @@ class Grid extends UI5Element {
 	selectionMode!: `${GridSelectionMode}`;
 
 	/**
-	 * Defines the popin layout of the component.
-	 *
-	 * @default "Block"
-	 * @public
-	 */
-	@property({ type: PopinLayout, defaultValue: PopinLayout.Block })
-	popinLayout!: `${PopinLayout}`;
-
-	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @default ""
@@ -121,15 +111,23 @@ class Grid extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	_handleResize: ResizeObserverCallback;
+	static async onDefine() {
+		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	_onResizeBound: ResizeObserverCallback;
 
 	constructor() {
 		super();
-		this._handleResize = this.popinContent.bind(this);
+		this._onResizeBound = this._onResize.bind(this);
 	}
 
-	static async onDefine() {
-		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	onEnterDOM() {
+		ResizeHandler.register(this, this._onResizeBound);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
 	onBeforeRendering() {
@@ -143,10 +141,10 @@ class Grid extends UI5Element {
 		if (this.selectionMode === GridSelectionMode.Multi) {
 			this.headerRow._selected = this.rows.every(r => r._selected);
 		} else {
-			if (this.#lastSelectedRow && this.#lastSelectedRow.parentElement === this) {
-				this.#lastSelectedRow._selected = false;
+			if (this._lastSelectedRow && this._lastSelectedRow.parentElement === this) {
+				this._lastSelectedRow._selected = false;
 			}
-			this.#lastSelectedRow = row;
+			this._lastSelectedRow = row;
 		}
 	}
 
@@ -158,23 +156,35 @@ class Grid extends UI5Element {
 		});
 	}
 
-	#lastSelectedRow?: GridRow;
-
-	#getGridTemplateColumns() {
-		const widths = [];
-		if (this.selectionMode === GridSelectionMode.Multi || this.selectionMode === GridSelectionMode.Single) {
-			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
-		}
-		widths.push(...this.headerRow.cells.filter(cell => !cell._popin).map(cell => `minmax(${cell.minWidth}, 1fr)`));
-		return widths.join(" ");
+	_onResize() {
+		const gridWidth = this.getDomRef()!.clientWidth;
+		this.headerRow.cells.toSorted((a, b) => a.importance - b.importance).reduce((totalMinWidth, headerCell, headerCellIndex) => {
+			const headerCellMinWidth = parseFloat(getComputedStyle(headerCell).minWidth);
+			headerCell._popin = headerCellIndex > 0 && totalMinWidth + headerCellMinWidth > gridWidth;
+			this.rows.forEach(row => {
+				row.cells[headerCellIndex]._popin = headerCell._popin;
+			});
+			return totalMinWidth + headerCellMinWidth;
+		}, 0);
 	}
 
 	get styles() {
 		return {
 			grid: {
-				"grid-template-columns": this.#getGridTemplateColumns(),
+				"grid-template-columns": this._gridTemplateColumns,
 			},
 		};
+	}
+
+	_lastSelectedRow?: GridRow;
+
+	get _gridTemplateColumns() {
+		const widths = [];
+		if (this.selectionMode === GridSelectionMode.Multi || this.selectionMode === GridSelectionMode.Single) {
+			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
+		}
+		widths.push(...this.headerRow._visibleCells.map(cell => `minmax(${cell.minWidth}, auto)`));
+		return widths.join(" ");
 	}
 
 	get _effectiveNoDataText() {
@@ -186,34 +196,6 @@ class Grid extends UI5Element {
 			label: getEffectiveAriaLabelText(this) || undefined,
 			multiselectable: (this.selectionMode !== GridSelectionMode.None && this.rows.length) ? this.selectionMode === GridSelectionMode.Multi : undefined,
 		};
-	}
-
-	onEnterDOM(): void {
-		ResizeHandler.register(this.getDomRef()!, this._handleResize);
-	}
-
-	popinContent() {
-		const clientRect: DOMRect = this.getDomRef()!.getBoundingClientRect();
-		const tableWidth: number = clientRect.width;
-
-		// store the hidden columns
-		let curWidth = 0;
-		[...this.headerRow.cells].sort((a, b) => a.importance - b.importance).forEach((column, index) => {
-			const minWidth = parseInt(getComputedStyle(column).minWidth);
-			if (curWidth + minWidth > tableWidth) {
-				if (!column._popin) {
-					column._popin = true;
-				}
-			} else {
-				if (column._popin) {
-					column._popin = false;
-				}
-				curWidth += minWidth;
-			}
-			this.rows.forEach(r => {
-				r.cells[index]._columnInfo = { header: column.clone, poppedIn: column._popin };
-			});
-		});
 	}
 }
 

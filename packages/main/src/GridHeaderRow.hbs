@@ -13,6 +13,11 @@
     {{/if}}
     </ui5-grid-header-cell>
 {{/if}}
-{{#each visibleColumns}}
+
+{{#each _visibleCells}}
 	<slot name="{{_individualSlot}}"></slot>
 {{/each}}
+
+{{#if _popinCells.length}}
+    <ui5-grid-header-cell id="popin-cell" aria-label="{{_i18nRowPopin}}"></ui5-grid-cell>
+{{/if}}

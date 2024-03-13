@@ -22,3 +22,8 @@
 #selection-component {
     vertical-align: middle;
 }
+
+#popin-cell {
+    padding: 0;
+    width: 0;
+}
