@@ -72,7 +72,7 @@
 	align-items: center;
 	height: 100%;
 	width: 100%;
-	cursor: default;
+	cursor: pointer;
 	padding-inline-start: var(--_ui5_token_left_padding);
 	box-sizing: border-box;
 	font-size: var(--sapFontSize);

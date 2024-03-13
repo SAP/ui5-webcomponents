@@ -19,7 +19,72 @@
 
 <body>
 	<div class="wrapper">
+		<h1 class="sample-container-title">Only nItems tokenizer</h1>
+		<ui5-tokenizer id="basic-tokenizer" show-more	>
+            <ui5-token text="Your name and email address were configured automatically based    
+			on your username and hostname. Please check that they are accurate."></ui5-token>
+			<ui5-token text="Your name and email address were configured automatically based    
+			on your username and hostname. Please check that they are accurate."></ui5-token>
+        </ui5-tokenizer>
 
+		<h1 class="sample-container-title">Tokenizer with n-more items</h1>
+		<div class="tokenizer-container">
+			<ui5-tokenizer id="nmore-tokenizer" show-more>
+				<ui5-token text="Andora"></ui5-token>
+				<ui5-token text="Bulgaria"></ui5-token>
+				<ui5-token text="Canada"></ui5-token>
+				<ui5-token text="Denmark"></ui5-token>
+				<ui5-token text="Estonia"></ui5-token>
+			</ui5-tokenizer>
+		</div>
+
+	<h1 class="sample-container-title">Tokenizer with long items</h1>
+	<div class="tokenizer-container">
+		<ui5-tokenizer id="long-tokenizer" show-more>
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="So close no matter how far"></ui5-token>
+			<ui5-token text="Lose yourself in the music bum bam tupturup"></ui5-token>
+		</ui5-tokenizer>
+	</div>
+
+	<h1 class="sample-container-title">Readonly tokenizer</h1>
+	<div class="tokenizer-container">
+		<ui5-tokenizer id="readonly-tokenizer" show-more readonly>
+			<ui5-token text="Andora" readonly></ui5-token>
+			<ui5-token text="Bulgaria" readonly></ui5-token>
+			<ui5-token text="Canada" readonly></ui5-token>
+			<ui5-token text="Denmark" readonly></ui5-token>
+			<ui5-token text="Estonia" readonly></ui5-token>
+		</ui5-tokenizer>
+	</div>
+
+	<h1 class="sample-container-title">Disabled tokenizer</h1>
+
+	<div class="tokenizer-container">
+		<ui5-tokenizer id="disabled-tokenizer" show-more disabled>
+			<ui5-token text="Andora"></ui5-token> </ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+		</ui5-tokenizer>
+	</div>
+
+	<h1 class="sample-container-title">Deletable tokens</h1>
+	<div class="tokenizer-container">
+		<ui5-tokenizer id="delete-tokenizer" show-more>
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+		</ui5-tokenizer>
+	</div>
+</div>
+
+	<h1>Basic API</h1>
+	<div class="wrapper">
 		<ui5-segmented-button id="theme-switch">
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon" selected>Morning</ui5-segmented-button-item>
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_dark">Evening</ui5-segmented-button-item>
@@ -82,6 +147,11 @@
 
 		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
 			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
+		});
+
+		document.getElementById("delete-tokenizer").addEventListener("token-delete", event => {
+			const token = event.detail?.ref;
+			token && token.remove();
 		});
 	</script>
 </body>

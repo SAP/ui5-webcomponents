@@ -1562,6 +1562,10 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 		// force resize of the tokenizer on invalidation
 		this._tokenizer._handleResize();
+
+		if (this._tokenizer.expanded && this.hasAttribute("focused")) {
+			this._tokenizer.scrollToEnd();
+		}
 	}
 
 	get _isPhone() {
@@ -1673,6 +1677,9 @@ class MultiComboBox extends UI5Element {
 		if (!isPhone() || this.readonly) {
 			this.focused = true;
 			this._tokenizer.expanded = true;
+			setTimeout(() => {
+				this._tokenizer.scrollToEnd();
+			}, 0);
 		} else {
 			this._innerInput.blur();
 		}

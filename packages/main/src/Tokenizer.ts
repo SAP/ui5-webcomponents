@@ -1,3 +1,4 @@
+// @ts-nocheck
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -13,6 +14,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
+	isShift,
 	isSpace,
 	isSpaceCtrl,
 	isSpaceShift,
@@ -83,8 +85,12 @@ enum ClipboardDataOperation {
  *
  * A container for tokens.
  * @constructor
- * @extends UI5Element
- * @private
+ * @author SAP SE
+ * @alias sap.ui.webc.main.Tokenizer
+ * @extends sap.ui.webc.base.UI5Element
+ * @tagname ui5-tokenizer
+ * @usestextcontent
+ * @public
  */
 @customElement({
 	tag: "ui5-tokenizer",
@@ -128,6 +134,9 @@ class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	disabled!: boolean;
 
+	@property({ type: Boolean })
+	readonly!: boolean;
+
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
 	 * @private
@@ -147,6 +156,12 @@ class Tokenizer extends UI5Element {
 
 	@property({ validator: Integer })
 	popoverMinWidth?: number;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	 * Indicates the value state of the related input component.
@@ -196,6 +211,13 @@ class Tokenizer extends UI5Element {
 
 		this._tokens.forEach(token => {
 			token.singleToken = this._tokens.length === 1;
+			if ((this.readonly || this.disabled) && !token.readonly) {
+				token.readonly = true;
+			}
+
+			if (!this.readonly && !this.disabled && token.readonly) {
+				token.readonly = false;
+			}
 		});
 
 		if (!this._tokens.length) {
@@ -211,16 +233,27 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _openMorePopoverAndFireEvent() {
+	async _handleNMoreClick() {
+		if (this.disabled) {
+			return;
+		}
+
+		this.expanded = true;
+
 		if (!this.preventPopoverOpen) {
 			await this.openMorePopover();
+			this.scrollToEnd();
 		}
 
 		this.fireEvent("show-more-items-press");
 	}
 
 	async openMorePopover() {
-		(await this.getPopover()).showAt(this.morePopoverOpener || this);
+		// the morePopoverProperty is an object so it will always return 'true', so we check for keys
+		// TODO: Popover is not correctly positioned if opened by "this".
+		const popoverOpener = Object.keys(this.morePopoverOpener).length === 0 ? this : this.morePopoverOpener;
+
+		(await this.getPopover()).showAt(popoverOpener);
 	}
 
 	_getTokens() {
@@ -236,12 +269,17 @@ class Tokenizer extends UI5Element {
 			const target = e.target as Token;
 			if (!target.toBeDeleted) {
 				this._itemNav.setCurrentItem(target);
+				this._scrollToToken(target);
 			}
 		}
 	}
 
-	onTokenSelect() {
+	onTokenSelect(e) {
+		this._previousToken = this._getTokens().find(item => item.selected && !item.focused);
 		const tokens = this._getTokens();
+		const firstToken = this._getTokens()[0];
+
+		firstToken.forcedTabIndex = firstToken.selected ? "0" : "-1";
 
 		if (tokens.length === 1 && tokens[0].isTruncatable) {
 			if (tokens[0].selected) {
@@ -263,7 +301,17 @@ class Tokenizer extends UI5Element {
 	}
 
 	async onAfterRendering() {
+		const tokensArray = this._getTokens();
+		const firstToken = this._tokens[0];
+
 		this._nMoreCount = this.overflownTokens.length;
+		firstToken.forcedTabIndex = this._tabIndex;
+
+		if (tokensArray.some(token => token.selected)) {
+			firstToken.forcedTabIndex = "-1";
+
+			firstToken.forcedTabIndex = firstToken.selected ? "0" : "-1";
+		}
 
 		if (!this._getTokens().length) {
 			const popover = await this.getPopover();
@@ -274,16 +322,12 @@ class Tokenizer extends UI5Element {
 
 		if (this.expanded) {
 			this._expandedScrollWidth = this.expandedContentDom!.scrollWidth;
-			this.scrollToEnd();
-		}
-
-		if (!this.expanded) {
-			this.scrollToStart();
 		}
 	}
 
 	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
 		const target = e.target as Token;
+
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
 
@@ -357,6 +401,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	async itemDelete(e: CustomEvent) {
+
 		const token = e.detail.item.tokenRef;
 
 		// delay the token deletion in order to close the popover before removing token of the DOM
@@ -371,16 +416,29 @@ class Tokenizer extends UI5Element {
 
 			morePopover.close();
 		} else {
+
 			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 		}
 	}
 
-	handleBeforeClose() {
+	handleBeforeClose(e) {
+		if (e.detail.escPressed) {
+			const lastToken = this._getTokens().pop();
+			lastToken?.getFocusDomRef().focus();
+			this._itemNav.setCurrentItem(lastToken);
+
+			console.log(document.activeElement);
+			return;
+		}
+
 		if (isPhone()) {
 			this._getTokens().forEach(token => {
 				token.selected = false;
 			});
 		}
+
+		this.expanded = false;
+		this.showMore = true;
 	}
 
 	handleBeforeOpen() {
@@ -413,7 +471,6 @@ class Tokenizer extends UI5Element {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
 		const target = e.target as Token;
-
 		if (isLeftCtrl(e) || isRightCtrl(e) || isDownCtrl(e) || isUpCtrl(e)) {
 			return this._handleArrowCtrl(e, target, tokens, isRightCtrl(e) || isDownCtrl(e));
 		}
@@ -435,6 +492,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (isLeft(e) || isRight(e) || isUp(e) || isDown(e)) {
+
 			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused)!, tokens, (isRight(e) || isDown(e)));
 			this._scrollToToken(tokens[nextTokenIdx]);
 		}
@@ -530,7 +588,69 @@ class Tokenizer extends UI5Element {
 	}
 
 	_click(e: MouseEvent) {
+		if (e.metaKey || e.ctrlKey) {
+			return;
+		}
+
+		const targetToken = e.target;
+		let focusedToken = targetToken;
+debugger;
+		if (this._previousToken) {
+			focusedToken = this._previousToken;
+		} else {
+			this._previousToken = focusedToken;
+		}
+
+		if (e.shiftKey) {
+			const tokensArray = this._getTokens();
+			const lastClickedIndex = tokensArray.indexOf(targetToken);
+			const firstSelectedTokenIndex = tokensArray.indexOf(focusedToken);
+			const start = Math.min(lastClickedIndex, firstSelectedTokenIndex);
+			const end = Math.max(lastClickedIndex, firstSelectedTokenIndex);
+
+			if (lastClickedIndex !== -1) {
+				tokensArray.forEach((token, i) => {
+					token.selected = i >= start && i <= end;
+				});
+			}
+
+			return;
+		}
+
 		this._handleTokenSelection(e);
+	}
+
+	_onfocusin(e: FocusEvent) {
+		const relatedTarget = e.relatedTarget as HTMLElement;
+		const target = e.target as HTMLElement;
+
+		if (this.disabled) {
+			this.focused = false;
+			return;
+		}
+
+		if (!this.expanded) {
+			this.expanded = true;
+			this.showMore = false;
+		}
+
+		if (target.hasAttribute("ui5-token")) {
+			target.focus();
+			return;
+		}
+
+		// When standalone tokenizer is getting focused and no token is clicked (with TAB) - focus the first token
+		if (e.relatedTarget && !relatedTarget.hasAttribute("ui5-input")) {
+			this.focused = true;
+			this.scrollToStart();
+
+			this.tokens[0].focus();
+		}
+	}
+
+	_onfocusout() {
+		this.showMore = true;
+		this.expanded = false;
 	}
 
 	_toggleTokenSelection(tokens: Array<Token>) {
@@ -616,6 +736,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	async closeMorePopover() {
+		debugger;
 		(await this.getPopover()).close(false, false, true);
 	}
 
@@ -645,6 +766,10 @@ class Tokenizer extends UI5Element {
 
 	get narrowContentDom() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer-nmore--content");
+	}
+
+	get moreLink() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer-more-text");
 	}
 
 	get tokenizerLabel() {
@@ -692,7 +817,7 @@ class Tokenizer extends UI5Element {
 	/**
 	 * This method is relevant for sap_horizon theme only
 	 */
-	 get _valueStateMessageIcon() {
+	get _valueStateMessageIcon() {
 		const iconPerValueState = {
 			Error: "error",
 			Warning: "alert",
@@ -709,6 +834,13 @@ class Tokenizer extends UI5Element {
 
 	get _selectedTokens() {
 		return this._getTokens().filter(token => token.selected);
+	}
+	get _nMoreListMode() {
+		if (this.readonly || this.disabled) {
+			return "None";
+		}
+
+		return "Delete";
 	}
 
 	get classes(): ClassMap {
@@ -741,7 +873,7 @@ class Tokenizer extends UI5Element {
 	get styles() {
 		return {
 			popover: {
-				"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : "",
+				"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : `${this.getBoundingClientRect().width}px`,
 			},
 			popoverValueStateMessage: {
 				"width": this.popoverMinWidth && !isPhone() ? `${this.popoverMinWidth}px` : "100%",
@@ -781,6 +913,10 @@ class Tokenizer extends UI5Element {
 		const lastToken = this.tokens[this.tokens.length - 1];
 		lastToken.focus();
 		this._itemNav.setCurrentItem(lastToken);
+	}
+
+	get _tabIndex() {
+		return this.disabled ? "-1" : "0";
 	}
 
 	static async onDefine() {
