@@ -133,12 +133,14 @@ const _generateIconsPage = (sourceDir, config) => {
                 <div style={{
                         padding: "2rem 2rem",
                     }}>
-                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <Heading as="h2" style={{ marginBottom: "0.125rem" }}>${config.title}</Heading>
                             <Link to="${config.npmLink}">${config.npmPackage}</Link>
                         </div>
-                        <input onInput={function(e) {
+                        <div style={{ marginTop: "1rem" }}>
+                        <span role="presentation"></span>
+                        <input className="icons__search" type="search" placeholder="Filter icons..." aria-label="Filter icons" onInput={function (e) {
                             [...document.querySelectorAll("[data-icon-name]")].forEach(iconWrapper => {
                                 const iconName = iconWrapper.getAttribute("data-icon-name").toLowerCase();
                                 iconWrapper.classList.toggle("hidden", !iconName.includes(e.target.value))
@@ -147,8 +149,9 @@ const _generateIconsPage = (sourceDir, config) => {
                             document
                                 .querySelector(".icon__not__found")
                                 .classList
-                                .toggle("hidden", [...document.querySelectorAll("[data-icon-name]")].every(iconWrapper => !iconWrapper.classList.contains("icon__hidden")))
+                                .toggle("hidden", ![...document.querySelectorAll("[data-icon-name]")].every(iconWrapper => iconWrapper.classList.contains("hidden")))
                         }} />
+                    </div>
                     </div>
                     <div className="icon__grid">
                         ${icons}
