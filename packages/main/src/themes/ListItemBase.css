@@ -16,24 +16,24 @@
     bottom: 0;
     left: 0;
     top: 0;
-    border-right: 0.0625rem solid #fff;
+    border-inline-end: 0.0625rem solid var(--ui5-listitem-background-color);
     box-sizing: border-box;
 }
 
 :host([highlight="Error"]) .ui5-li-highlight {
-	background: var(--sapField_InvalidColor);
+	background: var(--sapNegativeTextColor);
 }
 
 :host([highlight="Warning"]) .ui5-li-highlight {
-	background: var(--sapField_WarningColor);
+	background: var(--sapCriticalTextColor);
 }
 
 :host([highlight="Success"]) .ui5-li-highlight {
-	background: var(--sapField_SuccessColor);
+	background: var(--sapPositiveTextColor);
 }
 
 :host([highlight="Information"]) .ui5-li-highlight {
-	background: var(--sapField_InformationColor);
+	background: var(--sapInformativeTextColor);
 }
 
 /* selected */

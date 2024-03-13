@@ -8,7 +8,6 @@ import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -66,16 +65,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Boolean })
 	focused!: boolean;
-
-	/**
-	 * Defines the highlight state of the list items.
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
-	 * @default "None"
-	 * @public
-	 * @since 1.24
-	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	highlight!: `${ValueState}`;
 
 	_onfocusin(e: FocusEvent) {
 		this.fireEvent("_request-tabindex-change", e);
@@ -165,10 +154,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 			return 0;
 		}
 		return this.forcedTabIndex;
-	}
-
-	get _hasHighlightColor() {
-		return this.highlight !== ValueState.None;
 	}
 }
 
