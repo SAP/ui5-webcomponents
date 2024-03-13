@@ -1,10 +1,10 @@
 # Creating Website Samples
 
 The website app is developed in its own package `packages/website`. Components features or states are demonstrated via samples meant for consumers.
-The samples are placed in `/packages/website/docs/_samples` folder.
+The samples are placed in the `/packages/website/docs/_samples` folder.
 
 **For example:** 
-The Button samples can be found in `/packages/website/docs/_samples/main/Button`
+The Button samples can be found in the `/packages/website/docs/_samples/main/Button` folder.
 
 
 ## Run the Website
@@ -75,7 +75,7 @@ In the `sample.html` file, we use the web components as in regular HTML page
 
 **Note:** The `playground-fold` comments will fold this part of the code to highlight the important part - the components usage.
 
-### Tee `{sample_name}.md` file
+### The `{sample_name}.md` file
 
 In the `.md` file we instantiate the `Editor` component (file editor + preview) that will display your sample and show the code behind it.
 
@@ -103,7 +103,7 @@ In the previous step we have created our sample. Now it's time to show and docum
 
 **For example:** 
 ```js
-import Basic from "../../_samples/main/Button/MyNewSample/MyNewSample.md";`
+import MyNewSample from "../../_samples/main/Button/MyNewSample/MyNewSample.md";`
 ```
 
 - Instantiate the sample and add title + description
