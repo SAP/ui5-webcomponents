@@ -26,8 +26,8 @@
     "start:all": "npm-run-all --parallel watch:allWithDelay dev",
     "dev": "node packages/tools/lib/dev-server/dev-server.js",
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:fiori dev",
-    "start:playground": "yarn ci:releasebuild && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
-    "start:playground-new": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-documentation start",
+    "start:storybook": "yarn ci:releasebuild && yarn copy-css && yarn workspace @ui5/webcomponents-playground start",
+    "start:website": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-website start",
 
     "start": "npm-run-all --sequential generate start:all",
     "build": "yarn ci:releasebuild",

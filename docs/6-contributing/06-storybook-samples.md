@@ -1,15 +1,18 @@
-# UI5 Web Components Storybook App
-The UI5 Web Components Storybook app is a playground for testing and documenting the UI5 Web Components library. It allows developers to create stories for each UI component,
-capturing its rendered state in various scenarios, and to document all the potential states that a component can display.
+# UI5 Web Components Storybook Samples
 
-## Running the UI5 Web Components Storybook App Locally
+The UI5 Web Components Storybook app is a playground for testing and documenting the UI5 Web Components library.
+It allows developers to create stories for each UI component, capturing its rendered state in various scenarios,
+and to document all the potential states that a component can display.
+
+## Running the Storybook App Locally
 
 To run the [UI5 Web Components Storybook app](https://sap.github.io/ui5-webcomponents/) locally and test your changes and samples, follow the steps below:
 
 ### 1. In the root folder of the project, run the following command:
 
 ```bash
-yarn start:playground
+yarn
+yarn start:storybook
 ```
 
 <b>Note:</b> This are required only for running the Storybook app locally and not for general development.
