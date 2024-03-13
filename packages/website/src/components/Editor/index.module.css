@@ -31,3 +31,25 @@
 	font-family: Arial;
 	color: var(--ifm-color-primary);
 }
+
+.container-standalone {
+	display: flex;
+	flex-direction: row-reverse;
+	width: 100%;
+	height: 100%;
+}
+
+.container-sample {
+	display: flex;
+	flex-direction: column;
+}
+
+.preview-standalone {
+	width: 100%;
+	height: 100%;
+}
+
+.editor-standalone {
+	width: 100%;
+	height: 100%;
+}
