@@ -1,4 +1,4 @@
-# Running the UI5 Web Components Wesbsite (Docs & Samples) App Locally
+# Running the Wesbsite (Docs & Samples) Locally
 
 The UI5 Web Components Website app is the entry point of the UI5 Web Components project. 
 The app includes documentation, API reference and samples for all the available web components.

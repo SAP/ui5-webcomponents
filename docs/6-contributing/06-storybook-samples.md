@@ -1,4 +1,4 @@
-# UI5 Web Components Storybook Samples
+# Creating Storybook Samples
 
 The UI5 Web Components Storybook app is a playground for testing and documenting the UI5 Web Components library.
 It allows developers to create stories for each UI component, capturing its rendered state in various scenarios,

@@ -1,4 +1,4 @@
-# UI5 Web Components Website Samples
+# Creating Website Samples
 
 Components features or states are demonstrated via samples.
 
