@@ -6,6 +6,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
+import {encodeToBase64, decodeFromBase64} from "./share.js";
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
@@ -27,7 +28,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js" }) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false}, editorExpanded = false ) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -37,8 +38,8 @@ export default function Editor({html, js, css, mainFile = "main.js" }) {
   const [firstRender, setFirstRender] = useState(true);
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const iframeId = useId();
-  const [editorVisible, setEditorVisible] = useState(false);
-  const [btnText, setButtonText] = useState("Edit");
+  const [editorVisible, setEditorVisible] = useState(editorExpanded);
+  const [btnText, setButtonText] = useState(editorExpanded ? "Hide code" : "Edit");
   const {siteConfig, siteMetadata} = useDocusaurusContext();
   const { theme, setTheme } = useContext(ThemeContext);
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
@@ -56,7 +57,9 @@ export default function Editor({html, js, css, mainFile = "main.js" }) {
           "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
           "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/",
           "lit-html": "${getHostBaseUrl()}local-cdn/lit-html/lit-html.js",
-          "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/"
+          "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/",
+          "@zxing/library/umd/": "${getHostBaseUrl()}local-cdn/zxing/umd/",
+          "@zxing/library/esm5/": "${getHostBaseUrl()}local-cdn/zxing/esm5/"
         }
       }
     </script>
@@ -87,11 +90,35 @@ export default function Editor({html, js, css, mainFile = "main.js" }) {
     setButtonText(editorVisible ? "Edit" : "Hide code");
   }
 
+  function share() {
+    const files = {};
+
+    // convert file format
+    projectRef.current.files.forEach(f => {
+      files[f.name] = {
+        content: f.content
+      };
+    });
+
+    // remove import map from index.html
+    const htmlContent = files["index.html"].content;
+    const startIdx = htmlContent.indexOf(`<script type="importmap">`);
+    const endIdx = htmlContent.indexOf(`</script>`) + `</script>`.length;
+    files["index.html"].content = htmlContent.substring(0, startIdx) + htmlContent.substring(endIdx)
+
+    // remove playground support
+    delete files["playground-support.js"];
+
+    // encode and put in url
+    const hash = encodeToBase64(JSON.stringify(files));
+    history.pushState({}, '', new URL(`#${hash}`, window.location.href).href);
+  }
+
   const baseUrl = useBaseUrl("/");
 
   useEffect(() => {
     projectRef.current = getProjectFromPool();
-    projectRef.current.config = {
+    let newConfig = {
       files: {
         "index.html": {
           content: addImportMap(fixAssetPaths(html)),
@@ -104,7 +131,7 @@ export default function Editor({html, js, css, mainFile = "main.js" }) {
           content: `/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
-${fixAssetPaths(js)}`
+${fixAssetPaths(js)}`,
         },
         "main.css": {
           content: css,
@@ -122,6 +149,20 @@ ${fixAssetPaths(js)}`
         }
       }
     }
+    if (newConfig.files["main.css"].hidden) {
+      delete newConfig.files["main.css"];
+    }
+
+    if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
+      try {
+        const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
+        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        newConfig.files = {...newConfig.files, ...sharedConfig};
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
 
     const messageHandler = async (event) => {
@@ -165,13 +206,28 @@ ${fixAssetPaths(js)}`
             <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
             <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
           </div>
-          <button
-            className={"button " + (editorVisible ? "button--secondary" : "button--primary")}
-            style={{ borderEndEndRadius: 0, borderTopRightRadius:0, padding: "0.125rem 0.75rem", margin: "0", alignSelf: "end", fontSize: "0.625rem" }}
-            onClick={ toggleEditor }
-          >
-            {btnText}
-          </button>
+
+          <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
+            <button
+              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              onClick={ toggleEditor }
+            >
+              {btnText}
+            </button>
+
+          {canShare
+          ?
+            <button
+              className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
+              onClick={ share }
+            >
+              Share
+            </button>
+          :
+            <></>
+          }
+          </div>
+
       </div>
     </>
   );

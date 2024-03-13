@@ -22,6 +22,7 @@ const Template: UI5StoryArgs<List, StoryArgsSlots> = (args) => {
     ?busy="${ifDefined(args.busy)}"
     ?indent="${ifDefined(args.indent)}"
     ?growing="${ifDefined(args.growing)}"
+    growing-button-text="${ifDefined(args.growingButtonText)}"
     busy-delay="${ifDefined(args.busyDelay)}"
     separators="${ifDefined(args.separators)}"
     header-text="${ifDefined(args.headerText)}"
