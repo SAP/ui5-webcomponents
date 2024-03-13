@@ -7,8 +7,14 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
 import {encodeToBase64, decodeFromBase64} from "./share.js";
+import clsx from "clsx";
+
+let Splitter = function () {
+  return (<></>)
+};
 
 if (ExecutionEnvironment.canUseDOM) {
+  Splitter = require('react-splitter-light').Splitter;
   require('playground-elements');
 }
 
@@ -28,7 +34,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js", canShare = false, editorExpanded = false, mainFileSelected = false }) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false, standalone = false, mainFileSelected = false }) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -38,8 +44,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const [firstRender, setFirstRender] = useState(true);
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const iframeId = useId();
-  const [editorVisible, setEditorVisible] = useState(editorExpanded);
-  const [btnText, setButtonText] = useState(editorExpanded ? "Hide code" : "Edit");
+  const [editorVisible, setEditorVisible] = useState(false);
   const {siteConfig, siteMetadata} = useDocusaurusContext();
   const { theme, setTheme } = useContext(ThemeContext);
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
@@ -88,7 +93,6 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 
   function toggleEditor() {
     setEditorVisible(!editorVisible);
-    setButtonText(editorVisible ? "Edit" : "Hide code");
   }
 
   function share() {
@@ -208,27 +212,64 @@ ${fixAssetPaths(js)}`,
     }
   }, [copied]);
 
+  function optionalSplitter(editor, preview) {
+    return (
+      <>
+        { standalone
+          ?
+            <div style={{width: "100%"}}>
+              <Splitter>
+                {editor}
+                {preview}
+              </Splitter>
+            </div>
+          :
+            <div>
+              {editor}
+              {preview}
+            </div>
+        }
+      </>
+    )
+  }
+
+  function preview() {
+    return (
+      <>
+        <playground-preview class={clsx(styles.previewResultHidden, {
+            [styles['preview-standalone']]: standalone,
+            [styles['preview-sample']]: !standalone,
+          })}
+          style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}
+        ></playground-preview>
+      </>
+    )
+  }
+
+  function editor() {
+    return (
+      <>
+        <div
+          className={clsx({
+            [styles['editor-standalone']]: standalone,
+            [styles['editor-sample']]: !standalone,
+          })}
+          style={{display: editorVisible | standalone ? "block" : "none"}}>
+          <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
+          <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <div ref={projectContainerRef}></div>
-      <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}>
-        <playground-preview class={ styles.previewResultHidden } style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}></playground-preview>
-          <div style={{display: editorVisible ? "block" : "none"}}>
-            <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
-            <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
-          </div>
 
-          <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
-            <button
-              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
-              onClick={ toggleEditor }
-            >
-              {btnText}
-            </button>
-
-          {canShare
-          ?
-            <>
+      {canShare
+        ?
+          <>
+            <div style={{display: "flex", "justify-content": "end"}}>
               <button
                 className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
                 onClick={ share }
@@ -239,13 +280,35 @@ ${fixAssetPaths(js)}`,
                 ? <div style={ {position: "absolute"} }>
                     <span className={styles["copy-status"]}>&#x2714; Link copied</span>
                   </div>
-            : <></>
+                : <></>
               }
-            </>
-          :
+            </div>
+          </>
+        :
+          <></>
+      }
+
+      <div
+        className={clsx({
+          [styles['container-standalone']]: standalone,
+          [styles['container-sample']]: !standalone,
+        })}
+        style={{ border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}
+      >
+        {optionalSplitter(preview(), editor())}
+        <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
+        { standalone
+          ?
             <></>
-          }
-          </div>
+          :
+            <button
+              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              onClick={ toggleEditor }
+            >
+              {editorVisible ? "Hide code" : "Edit"}
+            </button>
+        }
+        </div>
 
       </div>
     </>
