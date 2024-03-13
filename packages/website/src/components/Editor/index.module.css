@@ -1,3 +1,25 @@
+
+
 .previewResultHidden::part(preview-location) {
 	visibility: hidden;
+}
+
+.previewResult__actions {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+.previewResult__action {
+	padding: 0.125rem 0.75rem;
+	margin: 0;
+	align-self: end;
+	font-size: 0.625rem;
+	border-end-end-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.previewResult__hasShare .previewResult__action {
+	margin-inline-start: 0.5rem;
+	border-radius: 0.25rem;
 }

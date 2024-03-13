@@ -28,7 +28,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js", canShare = false}) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false}, editorExpanded = false ) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -38,8 +38,8 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const [firstRender, setFirstRender] = useState(true);
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const iframeId = useId();
-  const [editorVisible, setEditorVisible] = useState(false);
-  const [btnText, setButtonText] = useState("Edit");
+  const [editorVisible, setEditorVisible] = useState(editorExpanded);
+  const [btnText, setButtonText] = useState(editorExpanded ? "Hide code" : "Edit");
   const {siteConfig, siteMetadata} = useDocusaurusContext();
   const { theme, setTheme } = useContext(ThemeContext);
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
@@ -129,7 +129,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
           content: `/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
-${fixAssetPaths(js)}`
+${fixAssetPaths(js)}`,
         },
         "main.css": {
           content: css,
@@ -200,18 +200,19 @@ ${fixAssetPaths(js)}`
             <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
             <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
           </div>
-          <button
-            className={"button " + (editorVisible ? "button--secondary" : "button--primary")}
-            style={{ borderEndEndRadius: 0, borderTopRightRadius:0, padding: "0.125rem 0.75rem", margin: "0", alignSelf: "end", fontSize: "0.625rem" }}
-            onClick={ toggleEditor }
-          >
-            {btnText}
-          </button>
+
+          <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
+            <button
+              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              onClick={ toggleEditor }
+            >
+              {btnText}
+            </button>
+
           {canShare
           ?
             <button
-              className={"button " + (canShare ? "button--secondary" : "button--primary")}
-              style={{ borderEndEndRadius: 0, borderTopRightRadius:0, padding: "0.5rem125rem 0.75rem", margin: "0", alignSelf: "end", fontSize: "0.625rem" }}
+              className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
               onClick={ share }
             >
               Share
@@ -219,6 +220,7 @@ ${fixAssetPaths(js)}`
           :
             <></>
           }
+          </div>
 
       </div>
     </>
