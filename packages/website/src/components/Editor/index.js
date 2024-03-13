@@ -28,7 +28,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js", canShare = false}, editorExpanded = false ) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false, editorExpanded = false, mainFileSelected = false }) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -132,6 +132,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 import "./playground-support.js";
 /* playground-hide-end */
 ${fixAssetPaths(js)}`,
+          selected: mainFileSelected,
         },
         "main.css": {
           content: css,
