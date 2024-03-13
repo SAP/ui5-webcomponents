@@ -8,9 +8,13 @@ import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
 import {encodeToBase64, decodeFromBase64} from "./share.js";
 import clsx from "clsx";
-import {Splitter} from 'react-splitter-light';
+
+let Splitter = function () {
+  return (<></>)
+};
 
 if (ExecutionEnvironment.canUseDOM) {
+  Splitter = require('react-splitter-light').Splitter;
   require('playground-elements');
 }
 
