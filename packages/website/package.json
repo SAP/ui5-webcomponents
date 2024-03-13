@@ -30,6 +30,7 @@
     "raw-loader": "^4.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-splitter-light": "^1.0.3",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
