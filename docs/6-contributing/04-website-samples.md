@@ -72,7 +72,7 @@ The Button supports several designs to indicate the priority or the nature of th
 
 **Note:** Changes in the sample files (`.md`, `.html`, `.js`) are detected and the app reloads. However, changes in the `.mdx` file are not watched - restart of the app is needed.
 
-### Cnventions 
+### Conventions 
 
 #### Sample Name
 - The sample name and the folder that includes the sample files should match the `.md` file name. 
