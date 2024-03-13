@@ -1,5 +1,3 @@
-
-
 .previewResultHidden::part(preview-location) {
 	visibility: hidden;
 }
@@ -22,4 +20,14 @@
 .previewResult__hasShare .previewResult__action {
 	margin-inline-start: 0.5rem;
 	border-radius: 0.25rem;
+}
+
+.copy-status {
+	position: relative;
+	top: -2rem;
+	left: -1rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	font-family: Arial;
+	color: var(--ifm-color-primary);
 }
