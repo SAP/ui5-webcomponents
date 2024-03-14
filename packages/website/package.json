@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-website",
-  "version": "1.23.0-rc.5",
+  "version": "1.24.0-rc.0",
   "private": true,
   "scripts": {
     "generate-local-cdn": "rimraf ./local-cdn && node ./build-scripts/local-cdn.mjs",
@@ -17,7 +17,9 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "ci:build": "dotenv -e .env.latest -- yarn build",
+    "ci:build:nightly": "dotenv -e .env -- yarn build"
   },
   "dependencies": {
     "@docusaurus/core": "3.1.1",
@@ -25,17 +27,20 @@
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "docusaurus-lunr-search": "^3.3.2",
+    "dotenv": "^16.4.5",
     "playground-elements": "^0.18.1",
     "prism-react-renderer": "^2.3.0",
     "raw-loader": "^4.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-splitter-light": "^1.0.3",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.1.1",
     "@docusaurus/tsconfig": "3.1.1",
     "@docusaurus/types": "3.1.1",
+    "dotenv-cli": "^7.4.1",
     "typescript": "~5.2.2"
   },
   "browserslist": {

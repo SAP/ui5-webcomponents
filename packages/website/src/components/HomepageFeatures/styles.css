@@ -50,15 +50,12 @@
   text-align: center;
 }
 
-@media screen and (max-width: 900px) {
+@media (max-width: 900px) {
   .features__container {
     grid-template-columns: 1fr;
   }
 
   .features__container {
     margin: 1rem 5rem 1rem 5rem;
-  }
-  .testimonials__desc {
-    display: none;
   }
 }

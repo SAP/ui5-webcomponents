@@ -1,6 +1,6 @@
 # Custom Fonts
 
-## The `data-ui5-font-face` Font-Face `style` Tag
+## The data-ui5-font-face style tag
 
 Upon `boot`, the UI5 Web Components framework creates a `<style data-ui5-font-face>` tag in the `<head>` in order to load the necessary fonts.
 

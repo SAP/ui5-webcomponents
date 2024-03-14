@@ -1,4 +1,4 @@
-# Understanding the Handlebars (`.hbs`) templates
+# Understanding the Handlebars (.hbs) templates
 
 The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.
 

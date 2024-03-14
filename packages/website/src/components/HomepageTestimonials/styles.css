@@ -58,13 +58,13 @@
 }
 
 
-@media screen and (min-width: 1800px) {
+@media (min-width: 1800px) {
   .testimonials__content {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 
-@media screen and (max-width: 900px) {
+@media (max-width: 900px) {
   .testimonials__content {
     grid-template-columns: 1fr;
   }
@@ -82,7 +82,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
   .testimonials__content {
     grid-template-columns: 1fr;
   }

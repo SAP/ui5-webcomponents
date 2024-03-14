@@ -25,9 +25,11 @@ const getUrl = (packageName: string, path: string) => {
 };
 
 /**
- * Call this function to enable or disable the usage of <link> tags instead of <style> tags to achieve CSP compliance
- * Example: "setUseLinks(true)" will unconditionally use <link> tags for all browsers;
- * Example: "setUseLinks(!document.adoptedStyleSheets) will only enable the usage of <link> tags for browsers that do not support constructable stylesheets.
+ * Call this function to enable or disable the usage of `<link>` tags instead of `<style>` tags to achieve CSP compliance
+ *
+ * Example: "setUseLinks(true)" will unconditionally use `<link>` tags for all browsers.
+ *
+ * Example: "setUseLinks(!document.adoptedStyleSheets) will only enable the usage of `<link>` tags for browsers that do not support constructable stylesheets.
  *
  * @public
  * @param use whether links will be used
@@ -37,9 +39,10 @@ const setUseLinks = (use: boolean) => {
 };
 
 /**
- * Call this function to enable or disable the preloading of <link> tags.
- * Note: only taken into account when <link> tags are being used.
- * Note: links are being preloaded by default, so call "setPreloadLinks(false)" to opt out of this.
+ * Call this function to enable or disable the preloading of `<link>` tags.
+ *
+ * **Note:** only taken into account when `<link>` tags are being used.
+ * **Note:** links are being preloaded by default, so call "setPreloadLinks(false)" to opt out of this.
  *
  * @public
  * @param preload

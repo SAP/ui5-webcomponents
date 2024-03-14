@@ -1,3 +1,60 @@
 .previewResultHidden::part(preview-location) {
 	visibility: hidden;
 }
+
+.previewResult__actions {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+.previewResult__action {
+	padding: 0.125rem 0.75rem;
+	margin: 0;
+	align-self: end;
+	font-size: 0.625rem;
+	border-end-end-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.previewResult__hasShare .previewResult__action {
+	margin-inline-start: 0.5rem;
+	border-radius: 0.25rem;
+}
+
+.copy-status {
+	position: relative;
+	top: -0.3rem;
+	left: -4rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	font-family: Arial;
+	color: var(--ifm-color-primary);
+	z-index: 1;
+}
+
+.container-standalone {
+	display: flex;
+	flex-direction: row-reverse;
+	width: 100%;
+	height: 100vh;
+}
+
+.container-standalone playground-file-editor {
+	height: 100%;
+}
+
+.container-sample {
+	display: flex;
+	flex-direction: column;
+}
+
+.preview-standalone {
+	width: 100%;
+	height: 100%;
+}
+
+.editor-standalone {
+	width: 100%;
+	height: 100%;
+}
