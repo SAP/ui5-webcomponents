@@ -34,8 +34,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 
 /**
  * A class to serve as a foundation
- * for the <code>TreeItem</code> and <code>TreeItemCustom</code> classes.
- *
+ * for the `TreeItem` and `TreeItemCustom` classes.
  * @abstract
  * @constructor
  * @extends ListItem
@@ -66,7 +65,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 
 /**
  * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
- *
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
@@ -78,7 +76,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 
 /**
  * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
- *
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
@@ -90,7 +87,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
-	 *
 	 * @protected
 	 * @default 1
 	 */
@@ -99,7 +95,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * If set, an icon will be displayed before the text of the tree list item.
-	 *
 	 * @public
 	 * @default ""
 	 */
@@ -108,7 +103,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines whether the tree list item should display an expand/collapse button.
-	 *
 	 * @default false
 	 * @protected
 	 */
@@ -117,7 +111,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines whether the tree list item will show a collapse or expand icon inside its toggle button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -126,17 +119,16 @@ class TreeItemBase extends ListItem {
 
 	/**
 	* Defines whether the selection of a tree node is displayed as partially selected.
-	* <br><br>
-	* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
-	* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
-	* and <code>selected</code> properties:
-	* <ul>
-	* <li> If a tree node has both <code>selected</code> and <code>indeterminate</code> set to <code>true</code>, it is displayed as partially selected.
-	* <li> If a tree node has <code>selected</code> set to <code>true</code> and <code>indeterminate</code> set to <code>false</code>, it is displayed as selected.
-	* <li> If a tree node has <code>selected</code> set to <code>false</code>, it is displayed as not selected regardless of the value of the <code>indeterminate</code> property.
-	* </ul>
-	* <br>
-	* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
+	*
+	* **Note:** The indeterminate state can be set only programmatically and can’t be achieved by user
+	* interaction, meaning that the resulting visual state depends on the values of the `indeterminate`
+	* and `selected` properties:
+	*
+	* -  If a tree node has both `selected` and `indeterminate` set to `true`, it is displayed as partially selected.
+	* -  If a tree node has `selected` set to `true` and `indeterminate` set to `false`, it is displayed as selected.
+	* -  If a tree node has `selected` set to `false`, it is displayed as not selected regardless of the value of the `indeterminate` property.
+	*
+	* **Note:** This property takes effect only when the `ui5-tree` is in `MultiSelect` mode.
 	* @default false
 	* @public
 	* @since 1.1.0
@@ -146,11 +138,10 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
-	 * <br>
-	 * <i>Note:</i> This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
-	 * Set this to <code>true</code> for nodes you intend to load lazily, when the user clicks the expand button.
-	 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
 	 *
+	 * **Note:** This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
+	 * Set this to `true` for nodes you intend to load lazily, when the user clicks the expand button.
+	 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
 	 * @default false
 	 * @public
 	 */
@@ -158,9 +149,9 @@ class TreeItemBase extends ListItem {
 	hasChildren!: boolean;
 
 	/**
-	 * Defines the state of the <code>additionalText</code>.
-	 * <br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+	 * Defines the state of the `additionalText`.
+	 *
+	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -170,7 +161,6 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -203,10 +193,8 @@ class TreeItemBase extends ListItem {
 
 	/**
 	 * Defines the items of the component.
-	 * <br />
-	 * <br />
-	 * <b>Note:</b> Use <code>ui5-tree-item</code> or <code>ui5-tree-item-custom</code>
 	 *
+	 * **Note:** Use `ui5-tree-item` or `ui5-tree-item-custom`
 	 * @public
 	 */
 	@slot({
@@ -284,7 +272,7 @@ class TreeItemBase extends ListItem {
 	}
 
 	/**
-	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
+	 * Call this method to manually switch the `expanded` state of a tree item.
 	 * @public
 	 */
 	toggle(): void {

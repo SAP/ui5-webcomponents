@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -51,58 +52,50 @@ type SideNavigationPopoverContents = {
 };
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: SideNavigationItemBase;
+	item: SideNavigationItemBase,
 };
 
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type PopupClickEventDetail = {
-	target: {
-		associatedItem: SideNavigationItemBase
-	}
-};
+type PopupSideNavigationItem = SideNavigationItem & { associatedItem: SideNavigationItemBase };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type NavigationMenuClickEventDetail = {
-	item: {
-		associatedItem: SideNavigationItemBase
+type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
+	item: Pick<MenuItemClickEventDetail, "item"> & {
+		associatedItem: SideNavigationItemBase,
 	}
 };
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>SideNavigation</code> is used as a standard menu in applications.
+ * The `SideNavigation` is used as a standard menu in applications.
  * It consists of three containers: header (top-aligned), main navigation section (top-aligned) and the secondary section (bottom-aligned).
- * <ul>
- * <li>The header is meant for displaying user related information - profile data, avatar, etc.</li>
- * <li>The main navigation section is related to the user’s current work context</li>
- * <li>The secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on). </li>
- * </ul>
  *
- * <h3>Usage</h3>
+ * - The header is meant for displaying user related information - profile data, avatar, etc.
+ * - The main navigation section is related to the user’s current work context
+ * - The secondary section is mostly used to link additional information that may be of interest (legal information, developer communities, external help, contact information and so on).
  *
- * Use the available <code>ui5-side-navigation-item</code> and <code>ui5-side-navigation-sub-item</code> components to build your menu.
+ * ### Usage
+ *
+ * Use the available `ui5-side-navigation-item` and `ui5-side-navigation-sub-item` components to build your menu.
  * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
  * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code> (for <code>ui5-side-navigation-item</code>)
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code> (for <code>ui5-side-navigation-sub-item</code>)
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`
  *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";` (for `ui5-side-navigation-item`)
+ *
+ * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";` (for `ui5-side-navigation-sub-item`)
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.8
@@ -127,7 +120,6 @@ type NavigationMenuClickEventDetail = {
 })
 /**
  * Fired when the selection has changed via user interaction
- *
  * @param {SideNavigationItemBase} item the clicked item.
  * @allowPreventDefault
  * @public
@@ -142,8 +134,7 @@ type NavigationMenuClickEventDetail = {
 })
 class SideNavigation extends UI5Element {
 	/**
-	 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
-	 *
+	 * Defines whether the `ui5-side-navigation` is expanded or collapsed.
 	 * @public
 	 * @default false
 	 */
@@ -151,21 +142,18 @@ class SideNavigation extends UI5Element {
 	collapsed!: boolean;
 
 	/**
-	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-	 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
+	 * Defines the main items of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
+	 * for the top-level items, and the `ui5-side-navigation-sub-item` component for second-level items, nested
 	 * inside the items.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationItem>;
 
 	/**
-	 * Defines the header of the <code>ui5-side-navigation</code>.
+	 * Defines the header of the `ui5-side-navigation`.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
-	 *
+	 * **Note:** The header is displayed when the component is expanded - the property `collapsed` is false;
 	 * @public
 	 * @since 1.0.0-rc.11
 	 */
@@ -173,11 +161,10 @@ class SideNavigation extends UI5Element {
 	header!: Array<HTMLElement>;
 
 	/**
-	 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-	 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
+	 * Defines the fixed items at the bottom of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
+	 * for the fixed items, and optionally the `ui5-side-navigation-sub-item` component to provide second-level items inside them.
 	 *
-	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
-	 *
+	 * **Note:** In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
@@ -283,8 +270,8 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	async handlePopupItemClick(e: PopupClickEventDetail) {
-		const associatedItem = e.target.associatedItem;
+	async handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
+		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
@@ -300,7 +287,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
-		const associatedItem = e.detail?.item.associatedItem;
+		const associatedItem = e.detail.item.associatedItem;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {

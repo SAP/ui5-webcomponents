@@ -1,6 +1,5 @@
 /**
  * Tabs overflow mode in TabContainer.
- *
  * @public
  */
 enum TabsOverflowMode {

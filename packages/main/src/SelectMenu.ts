@@ -39,25 +39,23 @@ type SelectMenuChange = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-select-menu</code> is meant to be used together with the <code>ui5-select</code> component as alternative
+ * The `ui5-select-menu` is meant to be used together with the `ui5-select` component as alternative
  * to define the select's dropdown. It acts as a popover on desktop and tablet, and as a Dialog on phone.
- * </br></br>
- * The component gives the possibility to the user to customize the <code>ui5-select</code>'s dropdown
+ *
+ * The component gives the possibility to the user to customize the `ui5-select`'s dropdown
  * by slotting custom options and adding custom styles.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * To use <code>ui5-select</code> with a <code>ui5-select-menu</code>,
- * you need to set the <code>ui5-select</code> <code>menu</code> property to reference <code>ui5-select-menu</code> either by ID or DOM reference.
- * </br></br>
+ * To use `ui5-select` with a `ui5-select-menu`,
+ * you need to set the `ui5-select` `menu` property to reference `ui5-select-menu` either by ID or DOM reference.
  *
- * For the <code>ui5-select-menu</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-select-menu`
+ * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/SelectMenu.js";</code>
- *
+ * `import @ui5/webcomponents/dist/SelectMenu.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -98,7 +96,6 @@ class SelectMenu extends UI5Element {
 
 	/**
 	 * Defines the options of the component.
-	 *
 	 * @public
 	 */
 	@slot({
@@ -110,7 +107,6 @@ class SelectMenu extends UI5Element {
 
 	/**
 	 * Defines the width of the component.
-	 *
 	 * @private
 	 */
 	@property({ validator: Integer })

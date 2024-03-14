@@ -1,6 +1,5 @@
 /**
  * Different list item types.
- *
  * @public
  */
 enum ListItemType {

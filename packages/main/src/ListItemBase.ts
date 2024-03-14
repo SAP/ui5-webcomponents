@@ -15,8 +15,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
 /**
  * @class
  * A class to serve as a foundation
- * for the <code>ListItem</code> and <code>GroupHeaderListItem</code> classes.
- *
+ * for the `ListItem` and `GroupHeaderListItem` classes.
  * @constructor
  * @abstract
  * @extends UI5Element
@@ -32,7 +31,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
 @event("_forward-before")
 class ListItemBase extends UI5Element implements ITabbable {
 	/**
-	 * Defines the selected state of the <code>ListItem</code>.
+	 * Defines the selected state of the `ListItem`.
 	 * @default false
 	 * @public
 	 */
@@ -50,9 +49,9 @@ class ListItemBase extends UI5Element implements ITabbable {
 	forcedTabIndex!: string;
 
 	/**
-	* Defines whether <code>ui5-li</code> is in disabled state.
-	* <br><br>
-	* <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+	* Defines whether `ui5-li` is in disabled state.
+	*
+	* **Note:** A disabled `ui5-li` is noninteractive.
 	* @default false
 	* @protected
 	* @since 1.0.0-rc.12

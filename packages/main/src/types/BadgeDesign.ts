@@ -1,6 +1,5 @@
 /**
  * Defines badge design types.
- *
  * @public
  */
 enum BadgeDesign {

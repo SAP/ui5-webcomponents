@@ -17,7 +17,7 @@
 	display: inline-block;
 	width: 1rem;
 	height: 1rem;
-	color: var(--sapContent_NonInteractiveIconColor);
+	color: var(--sapContent_IconColor);
 	fill: currentColor;
 	outline: none;
 }
@@ -28,10 +28,6 @@
 
 :host([design="Critical"]) {
 	color: var(--sapCriticalElementColor);
-}
-
-:host([design="Default"]) {
-	color: var(--sapContent_IconColor);
 }
 
 :host([design="Information"]) {

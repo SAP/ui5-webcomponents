@@ -48,26 +48,23 @@ type ColorCoordinates = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-color-picker</code> allows users to choose any color and provides different input options for selecting colors.
+ * ### Overview
+ * The `ui5-color-picker` allows users to choose any color and provides different input options for selecting colors.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h4>When to use:</h4
+ * #### When to use
  * Use the color picker if:
- * <ul>
- * <li> users need to select any color freely.</li>
- * </ul>
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.</li>
- * </ul>
+ * -  users need to select any color freely.
  *
- * <h3>ES6 Module Import</h3>
+ * #### When not to use
  *
- * <code>import "@ui5/webcomponents/dist/ColorPicker.js";</code>
+ * -  Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ColorPicker.js";`
  * @constructor
  * @since 1.0.0-rc.12
  * @extends UI5Element
@@ -87,16 +84,14 @@ type ColorCoordinates = {
 })
 /**
  * Fired when the the selected color is changed
- *
  * @public
  */
 @event("change")
 class ColorPicker extends UI5Element {
 	/**
 	 * Defines the currently selected color of the component.
-	 * <br><br>
-	 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 	 *
+	 * **Note**: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
@@ -105,8 +100,8 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the HEX code of the currently selected color
-	 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
 	 *
+	 * **Note**: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
 	 * @private
 	 */
 	@property({ defaultValue: "ffffff", noAttribute: true })
@@ -114,7 +109,6 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
@@ -122,7 +116,6 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the currenty selected color from the main color section.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })

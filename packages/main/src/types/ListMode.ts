@@ -1,6 +1,5 @@
 /**
  * Different list modes.
- *
  * @public
  */
 enum ListMode {
