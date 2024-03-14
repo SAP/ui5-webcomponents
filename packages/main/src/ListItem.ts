@@ -350,6 +350,18 @@ abstract class ListItem extends ListItemBase {
 		this.fireItemPress(e);
 	}
 
+	_ondragstart(e: DragEvent) {
+		if (e.target === this._listItem) {
+			this.setAttribute("data-moving", "");
+		}
+	}
+
+	_ondragend(e: DragEvent) {
+		if (e.target === this._listItem) {
+			this.removeAttribute("data-moving");
+		}
+	}
+
 	/*
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
@@ -508,6 +520,10 @@ abstract class ListItem extends ListItemBase {
 
 	get hasConfigurableMode() {
 		return true;
+	}
+
+	get _listItem() {
+		return this.shadowRoot!.querySelector("li");
 	}
 
 	static async onDefine() {
