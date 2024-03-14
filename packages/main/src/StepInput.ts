@@ -326,15 +326,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	_initialValueState?: `${ValueState}`;
 
-	/**
-	 * Indicates if the component is initially rendering.
-	 * It's used to round the value of 0 once to illustrate `valuePrecision` property effect.
-	 * Subsequent value changes aren't auto-rounded to preserve user input accuracy.
-	 *
-	 * @private
-	 */
-	_initialRender!: boolean;
-
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
@@ -376,7 +367,7 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	get _displayValue() {
-		if ((this.value === 0 && this._initialRender) || (Number.isInteger(this.value) && !this.valuePrecision)) {
+		if ((this.value === 0) || (Number.isInteger(this.value) && !this.valuePrecision)) {
 			return this.value.toFixed(this.valuePrecision);
 		}
 
@@ -402,12 +393,6 @@ class StepInput extends UI5Element implements IFormElement {
 		};
 	}
 
-	constructor() {
-		super();
-
-		this._initialRender = true;
-	}
-
 	onBeforeRendering() {
 		this._setButtonState();
 		if (this._previousValue === undefined) {
@@ -422,14 +407,12 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
-	onAfterRendering() {
-		if (this._initialRender) {
-			this._initialRender = false;
-		}
-	}
-
 	get input(): Input {
 		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	}
+
+	get innerInput(): HTMLInputElement {
+		return this.input.shadowRoot!.querySelector<HTMLInputElement>("input")!;
 	}
 
 	get inputOuter() {
@@ -472,9 +455,9 @@ class StepInput extends UI5Element implements IFormElement {
 	_updateValueState() {
 		const isWithinRange = (this.min === undefined || Number(this.input.value) >= this.min)
 							  && (this.max === undefined || Number(this.input.value) <= this.max);
-		const isValuePrecisionRespected = this._isValuePrecisionRespected();
+		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision();
 		const previousValueState = this.valueState;
-		const isValid = isWithinRange && isValuePrecisionRespected;
+		const isValid = isWithinRange && isValueWithCorrectPrecision;
 
 		this.valueState = isValid ? ValueState.None : ValueState.Error;
 
@@ -547,19 +530,23 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
-	_isValuePrecisionRespected() {
+	_isValueWithCorrectPrecision() {
 		// gets either "." or "," as delimiter which is based on locale, and splits the number by it
 		const delimiter = this.input.value.includes(".") ? "." : ",";
 		const numberParts = this.input.value.split(delimiter);
 		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
-		const isValuePrecisionRespected = decimalPartLength === this.valuePrecision;
+		const isValueWithCorrectPrecision = decimalPartLength === this.valuePrecision;
 
-		return isValuePrecisionRespected;
+		return isValueWithCorrectPrecision;
 	}
 
 	_onInputChange() {
 		if (this.input.value === "") {
 			this.input.value = (this.min || 0).toFixed(this.valuePrecision);
+			// We need to update the value property of the inner input as well,
+			// because it is not updated when the value of the input is set to an empty string
+			// which causes an empty input scenario
+			this.innerInput.value = (this.min || 0).toFixed(this.valuePrecision);
 		}
 		const inputValue = Number(this.input.value);
 		if (this.value !== this._previousValue || this.value !== inputValue || inputValue === 0 || this.value.toString() !== this.input.value) {
