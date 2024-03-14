@@ -9,7 +9,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -173,8 +173,8 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 * @since 1.24
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	highlight!: `${ValueState}`;
+	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+	highlight!: `${HighlightTypes}`;
 
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
@@ -503,7 +503,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get _hasHighlightColor() {
-		return this.highlight !== ValueState.None;
+		return this.highlight !== HighlightTypes.None;
 	}
 
 	get hasConfigurableMode() {
