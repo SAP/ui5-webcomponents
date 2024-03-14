@@ -3,19 +3,23 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import packageJson from "./package.json";
 
+
+console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
+
+
 const getBaseURL = () => {
   // localhost
   if (process.env.NODE_ENV === "development") {
     return "";
   }
 
-  // nightly deployment
-  if (process.env.DEPLOYMENT_TYPE === "nightly") {
-    return "/ui5-webcomponents/nightly/";
-  }
-
   // latest deployment
-  return "/ui5-webcomponents/";
+  if (process.env.DEPLOYMENT_TYPE === "latest") {
+    return "/ui5-webcomponents/";
+  }
+  
+  // nightly deployment
+  return "/ui5-webcomponents/nightly/";
 };
 
 
