@@ -17,15 +17,11 @@
 
 	<div class="layout">
 		<div class="header panel1">
-			<ui5-button icon="menu" id="expandButton"></ui5-button>
+			<ui5-shellbar class="shellBarStyle1" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
+			</ui5-shellbar>
 			<ui5-tabcontainer fixed="" collapsed="" data-sap-ui-fastnavgroup="true">
 				<ui5-tab text="Home" is-top-level-tab="" slot="default-1"></ui5-tab>
-				<ui5-tab
-				  text="What's new"
-				  selected=""
-				  is-top-level-tab=""
-				  slot="default-2"
-				></ui5-tab>
+				<ui5-tab text="What's new" slot="default-2"></ui5-tab>
 				<ui5-tab text="Who are we" is-top-level-tab="" slot="default-3"></ui5-tab>
 				<ui5-tab text="About" is-top-level-tab="" slot="default-4"></ui5-tab>
 				<ui5-tab text="Contacts" is-top-level-tab="" slot="default-5"></ui5-tab>
@@ -33,192 +29,12 @@
 		</div>
 
 		<div class="body">
-			<aside id="sideBar" class="sideBar panel2">
-				<ui5-tree>
-					<ui5-tree-item
-					expanded=""
-					text="Tree 1"
-					icon="paste"
-					selected=""
-					level="1"
-					show-toggle-button=""
-					has-border=""
-					>
-					<ui5-tree-item
-						expanded=""
-						text="Tree 1.1"
-						selected=""
-						level="2"
-						show-toggle-button=""
-						has-border=""
-					>
-						<ui5-tree-item
-						text="Tree 1.1.1"
-						level="3"
-						has-border=""
-						></ui5-tree-item>
-						<ui5-tree-item
-						text="Tree 1.1.2"
-						level="3"
-						has-border=""
-						></ui5-tree-item>
-					</ui5-tree-item>
-					</ui5-tree-item>
-					<ui5-tree-item
-					text="Tree 2"
-					icon="copy"
-					level="1"
-					show-toggle-button=""
-					has-border=""
-					>
-					<ui5-tree-item
-						text="Tree 2.1"
-						level="2"
-						show-toggle-button=""
-						has-border=""
-					>
-						<ui5-tree-item
-						text="Tree 2.1.1"
-						level="3"
-						has-border=""
-						></ui5-tree-item>
-						<ui5-tree-item
-						text="Tree 2.1.2"
-						level="3"
-						show-toggle-button=""
-						has-border=""
-						>
-						<ui5-tree-item
-							text="Tree 2.1.2.1"
-							level="4"
-							has-border=""
-						></ui5-tree-item>
-						<ui5-tree-item
-							text="Tree 2.1.2.2"
-							level="4"
-							has-border=""
-						></ui5-tree-item>
-						<ui5-tree-item
-							text="Tree 2.1.2.3"
-							level="4"
-							has-border=""
-						></ui5-tree-item>
-						<ui5-tree-item
-							text="Tree 2.1.2.5"
-							level="4"
-							has-border=""
-						></ui5-tree-item>
-						</ui5-tree-item>
-					</ui5-tree-item>
-					<ui5-tree-item text="Tree 2.2" level="2" has-border=""></ui5-tree-item>
-					</ui5-tree-item>
-					<ui5-tree-item
-					expanded=""
-					text="Tree 3 (no icon)"
-					level="1"
-					has-border=""
-					></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
-				</ui5-tree>
-			</aside>
 			<div class="content panel3">
 				content
 			</div>
 		</div>
 	</div>
 
-	<script>
-		const expandButton = document.querySelector("#expandButton"),
-			sideBar = document.querySelector("#sideBar");
 
-		expandButton.addEventListener("click", function (event) {
-			sideBar.classList.toggle("collapsed");
-		});
-
-		const observer = new ResizeObserver(entries => {
-			const width = entries[0].contentRect.width;
-
-			sideBar.classList.toggle("detached",  width < 600);
-			sideBar.classList.toggle("collapsed",  width < 1024);
-		});
-		observer.observe(document.body);
-
-		// @todo button tooltip toggle - is it needed - saw it from cardExplorer
-		// expandButton.tooltip = isCollapsed ? "Expand side navigation" : "Collapse side navigation";
-	</script>
 </body>
 </html>

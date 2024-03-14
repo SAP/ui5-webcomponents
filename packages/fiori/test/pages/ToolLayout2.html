@@ -18,23 +18,98 @@
 	<div class="layout">
 		<div class="header panel1">
 			<ui5-shellbar class="shellBarStyle1" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
+				<ui5-button icon="menu" slot="startButton" id="expandButton" tooltip="Toggle side navigation"></ui5-button>
 			</ui5-shellbar>
-			<ui5-tabcontainer fixed="" collapsed="" data-sap-ui-fastnavgroup="true">
-				<ui5-tab text="Home" is-top-level-tab="" slot="default-1"></ui5-tab>
-				<ui5-tab text="What's new" slot="default-2"></ui5-tab>
-				<ui5-tab text="Who are we" is-top-level-tab="" slot="default-3"></ui5-tab>
-				<ui5-tab text="About" is-top-level-tab="" slot="default-4"></ui5-tab>
-				<ui5-tab text="Contacts" is-top-level-tab="" slot="default-5"></ui5-tab>
-			</ui5-tabcontainer>
 		</div>
 
 		<div class="body">
+			<aside id="sideBar" class="sideBar panel2">
+				<ui5-side-navigation>
+					<ui5-side-navigation-item id="item1" text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
+					<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
+						<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum nibh eget diam euismod, quis commodo nisi luctus. Curabitur vel tempor nunc." icon="calendar" whole-item-toggleable>
+						<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item id="item3" text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item id="item4" text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item text="Test Item" icon="home" title="Test item"></ui5-side-navigation-item>
+					<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" title="Useful links tooltip">
+						<ui5-side-navigation-sub-item id="fixedItem11" text="Vacation Tool" title="Vacation Tool tooltip"></ui5-side-navigation-sub-item>
+						<ui5-side-navigation-sub-item id="fixedItem12" text="HR tool"></ui5-side-navigation-sub-item>
+					</ui5-side-navigation-item>
+					<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
+				</ui5-side-navigation>
+			</aside>
+
 			<div class="content panel3">
 				content
 			</div>
 		</div>
 	</div>
 
+	<script>
+		const expandButton = document.querySelector("#expandButton"),
+			sideNavigation = document.querySelector("ui5-side-navigation"),
+			sideBar = document.querySelector("#sideBar");
 
+		expandButton.addEventListener("click", function (event) {
+			sideBar.classList.toggle("collapsed");
+			sideNavigation.toggleAttribute("collapsed");
+		});
+
+		const observer = new ResizeObserver(entries => {
+			const width = entries[0].contentRect.width;
+
+			sideBar.classList.toggle("detached",  width < 600);
+			sideBar.classList.toggle("collapsed",  width < 1024);
+			sideNavigation.toggleAttribute("collapsed", width < 1024);
+		});
+		observer.observe(document.body);
+
+		// @todo button tooltip toggle - is it needed - saw it from cardExplorer
+		// expandButton.tooltip = isCollapsed ? "Expand side navigation" : "Collapse side navigation";
+	</script>
 </body>
 </html>
