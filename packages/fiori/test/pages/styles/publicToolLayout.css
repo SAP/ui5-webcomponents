@@ -120,3 +120,16 @@ body {
     padding: 0;
 }
 /* end shell bar */
+
+/* @todo tab container - belongs to tab container? */
+/* @todo in order to fully remove padding first and last tabs should not have padding? */
+/* @todo make sure shell bar and tab container have same padding, best is if they have actual 0, then panel can add correct paddings */
+.tabContainerStyle2::part(tabstrip) {
+    padding: 0;
+    box-shadow: unset;
+    margin-bottom: 0.5rem; /* this should be padding in the panel */
+}
+.shellBarStyle2::part(root) {
+    padding: 0 1rem;
+}
+/* end tab container */
