@@ -5,7 +5,6 @@ const LIB = path.join(__dirname, `../lib/`);
 const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const getScripts = (options) => {
-
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
 	const illustrationsData = options.illustrationsData || [];
 	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath} ${illustration.collection}`);
@@ -13,6 +12,16 @@ const getScripts = (options) => {
 
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+
+	const postGenerateFolders = illustrationsData.map(illustrations => ({
+		input: illustrations.destinationPath,
+		output: illustrations.dynamicImports.location,
+		set: illustrations.set,
+		collection: illustrations.collection.toLowerCase().replace("/", "-"),
+	}));
+
+	// The script creates the "src/generated/illustrations/**/*.js"
+	const postCreateIllustrationsLoadersScript = postGenerateFolders?.length === 0 ? '' : `node ${LIB}/generate-js-imports/illustrations-root-imports.js '${JSON.stringify(postGenerateFolders)}'`
 
 	const tsOption = options.typescript;
 	const tsCommandOld = tsOption ? "tsc" : "";
@@ -88,8 +97,9 @@ const getScripts = (options) => {
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n src/generated/json-imports`,
 			},
 			jsImports: {
-				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
+				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders && nps build.jsImports.postIllustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
+				postIllustrationsLoaders: postCreateIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig}`,
 			bundle2: ``,
