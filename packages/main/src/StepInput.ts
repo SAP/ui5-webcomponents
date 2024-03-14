@@ -541,20 +541,37 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	_onInputChange() {
-		if (this.input.value === "") {
-			this.input.value = (this.min || 0).toFixed(this.valuePrecision);
-			// We need to update the value property of the inner input as well,
-			// because it is not updated when the value of the input is set to an empty string
-			// which causes an empty input scenario
-			this.innerInput.value = (this.min || 0).toFixed(this.valuePrecision);
-		}
+		this._setDefaultInputValueIfNeeded();
+
 		const inputValue = Number(this.input.value);
-		if (this.value !== this._previousValue || this.value !== inputValue || inputValue === 0 || this.value.toString() !== this.input.value) {
-			this.value = inputValue;
-			this._validate();
-			this._setButtonState();
-			this._fireChangeEvent();
+		if (this._isValueChanged(inputValue)) {
+			this._updateValueAndValidate(inputValue);
 		}
+	}
+
+	_setDefaultInputValueIfNeeded() {
+		if (this.input.value === "") {
+			const defaultValue = (this.min || 0).toFixed(this.valuePrecision);
+			this.input.value = defaultValue;
+			this.innerInput.value = defaultValue; // we need to update inner input value as well, to avoid empty input scenario
+		}
+	}
+
+	_isValueChanged(inputValue: number) {
+		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision();
+
+		return this.value !== this._previousValue
+			|| this.value !== inputValue
+			|| inputValue === 0
+			|| (this.value.toString() === this.input.value && !isValueWithCorrectPrecision)
+			|| (isValueWithCorrectPrecision && this.valueState === ValueState.Error);
+	}
+
+	_updateValueAndValidate(inputValue: number) {
+		this.value = inputValue;
+		this._validate();
+		this._setButtonState();
+		this._fireChangeEvent();
 	}
 
 	_onfocusin() {
