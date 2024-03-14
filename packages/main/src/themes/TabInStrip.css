@@ -18,6 +18,10 @@
 	box-sizing: border-box;
 }
 
+.ui5-tab-strip-item[data-moving] {
+	background-color: var(--ui5_tc_header_active_background_color);
+}
+
 .ui5-tab-strip-itemText {
 	position: relative;
 	white-space: nowrap;
@@ -162,8 +166,8 @@
 	outline: none;
 }
 
-.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemText::before,
-.ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemText::before {
+.ui5-tab-strip-item--textOnly:focus:not([data-moving]) .ui5-tab-strip-itemText::before,
+.ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus:not([data-moving]) .ui5-tab-strip-itemText::before {
 	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
 	content: "";
 	pointer-events: none;
@@ -175,7 +179,7 @@
 	bottom: var(--_ui5_tc_headerItem_text_focus_border_offset_bottom);
 }
 
-.ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent::before {
+.ui5-tab-strip-item--mixedMode:focus:not([data-moving]) .ui5-tab-strip-itemContent::before {
 	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
 	content: "";
 	pointer-events: none;
@@ -187,7 +191,7 @@
 	bottom: var(--_ui5_tc_headerItem_mixed_mode_focus_border_offset_bottom);
 }
 
-.ui5-tab-strip-item--withIcon:focus .ui5-tab-strip-item-icon-outer::before {
+.ui5-tab-strip-item--withIcon:focus:not([data-moving]) .ui5-tab-strip-item-icon-outer::before {
 	content: "";
 	pointer-events: none;
 	position: absolute;
