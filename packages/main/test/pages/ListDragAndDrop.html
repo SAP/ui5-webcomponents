@@ -11,7 +11,7 @@
 </head>
 
 <body class="list1auto">
-	<ui5-checkbox id="reorder" text="Draggable items" checked></ui5-checkbox>
+	<ui5-checkbox id="reorder" text="Movable items" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
 	<a id="link" href="http://sap.com" draggable="true">http://sap.com</a>
 
@@ -98,8 +98,8 @@
 
 		const reorderCb = document.getElementById("reorder");
 		reorderCb.addEventListener("ui5-change", e => {
-			list1.items.forEach((item) => item.draggable = e.target.checked);
-			list2.items.forEach((item) => item.draggable = e.target.checked);
+			list1.items.forEach((item) => item.movable = e.target.checked);
+			list2.items.forEach((item) => item.movable = e.target.checked);
 		});
 	</script>
 </body>
