@@ -9,6 +9,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -164,6 +165,16 @@ abstract class ListItem extends ListItemBase {
 	 */
 	@property()
 	title!: string;
+
+	/**
+	 * Defines the highlight state of the list items.
+	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * @default "None"
+	 * @public
+	 * @since 1.24
+	 */
+	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+	highlight!: `${HighlightTypes}`;
 
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
@@ -489,6 +500,10 @@ abstract class ListItem extends ListItemBase {
 			posinset: this.accessibilityAttributes.ariaPosinset,
 			tooltip: this.tooltip || this.title,
 		};
+	}
+
+	get _hasHighlightColor() {
+		return this.highlight !== HighlightTypes.None;
 	}
 
 	get hasConfigurableMode() {
