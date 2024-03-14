@@ -219,8 +219,8 @@ ${fixAssetPaths(js)}`,
           ?
             <div style={{width: "100%"}}>
               <Splitter>
-                {editor}
                 {preview}
+                {editor}
               </Splitter>
             </div>
           :
