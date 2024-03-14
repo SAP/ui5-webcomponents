@@ -3,7 +3,21 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import packageJson from "./package.json";
 
-const latest = false; // TODO: make it conditional
+const getBaseURL = () => {
+  // localhost
+  if (process.env.NODE_ENV === "development") {
+    return "";
+  }
+
+  // nightly deployment
+  if (process.env.DEPLOYMENT_TYPE === "nightly") {
+    return "/ui5-webcomponents/nightly/";
+  }
+
+  // latest deployment
+  return "/ui5-webcomponents/";
+};
+
 
 const config: Config = {
   title: 'UI5 Web Components',
@@ -14,7 +28,7 @@ const config: Config = {
   url: 'https://sap.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: `/ui5-webcomponents/${latest ? "" : "nightly/"}`,
+  baseUrl: getBaseURL(),
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.

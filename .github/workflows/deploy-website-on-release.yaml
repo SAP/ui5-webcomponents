@@ -21,10 +21,15 @@ jobs:
       run: |
         export NODE_OPTIONS="--max_old_space_size=4096"
         yarn install
-        yarn ci:deploybuild
 
-    - name: Write version.md
-      run: git log -1 &>> packages/playground/dist/version.md
+    - name: Update version.md
+      run: |
+        touch packages/website/static/version.md
+        git log -1 &>> packages/website/static/version.md
+
+    - name: Build
+      run: |
+        yarn ci:deploybuild
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
