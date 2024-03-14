@@ -12,7 +12,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  * @class
  *
  * ### Overview
- * Represents a single navigation action.
+ * Represents a single navigation action within `ui5-side-navigation-item`.
  * The `ui5-side-navigation-sub-item` is intended to be used inside a `ui5-side-navigation-item` only.
  *
  * ### ES6 Module Import

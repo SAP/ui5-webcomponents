@@ -28,8 +28,8 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  *
  * ### Overview
  *
- * Represents a group of navigation actions.
- * The `ui5-side-navigation-group` can to be used inside a `ui5-side-navigation` only.
+ * Represents a group of navigation actions within `ui5-side-navigation`.
+ * The `ui5-side-navigation-group` can only be used inside a `ui5-side-navigation`.
  *
  * ### ES6 Module Import
  *

@@ -6,7 +6,7 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 
 /**
  * Fired when the component is activated either with a
- * click/tap or by using the Enter or Space key.
+ * click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
  */
