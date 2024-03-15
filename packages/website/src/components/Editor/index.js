@@ -270,7 +270,7 @@ ${fixAssetPaths(js)}`,
       {canShare
         ?
           <>
-            <div className={`${styles.editor__tabBar}`}>
+            <div className={`${styles.editor__toolbar}`}>
               <button
                 className={`button button--secondary ${styles.previewResult__share}`}
                 onClick={ share }

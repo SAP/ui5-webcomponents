@@ -2,7 +2,7 @@
 	visibility: hidden;
 }
 
-.editor__tabBar {
+.editor__toolbar {
 	display: flex;
 	justify-content: end;
 	height: 3rem;
