@@ -23,8 +23,7 @@ const ts = `
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { customElement, property } from "@ui5/webcomponents-base/dist/decorators.js";
 
 @customElement({
   tag: "my-element",
@@ -43,6 +42,12 @@ export class MyElement extends UI5Element {
         </button>
       </div>\`
   }
+
+  static styles = \`
+    button {
+      padding: 1rem;
+      border-radius: 1rem;
+    }\`;
 
   _onClick() {
     this.count += 2;
