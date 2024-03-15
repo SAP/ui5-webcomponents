@@ -9,13 +9,8 @@ import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site
 import {encodeToBase64, decodeFromBase64} from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
-
-let Splitter = function () {
-  return (<></>)
-};
-
+import { Splitter } from 'react-splitter-light';
 if (ExecutionEnvironment.canUseDOM) {
-  Splitter = require('react-splitter-light').Splitter;
   require('playground-elements');
 }
 
