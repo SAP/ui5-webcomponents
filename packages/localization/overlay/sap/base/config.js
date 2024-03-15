@@ -1,4 +1,4 @@
-sap.ui.define([], function() {
+sap.ui.define(["sap/base/config/_Configuration"], function(_Configuration) {
 
 	// called from sapui5, but not supported by us
 	const legacyFormats = [
@@ -13,14 +13,11 @@ sap.ui.define([], function() {
 	return {
 		getWritableInstance() {
 			return {
-				get({ name }) {
-					if (legacyFormats.includes(name)) {
-						return undefined;
-					}
-					throw new Error("Localization :: missing configuration requested.");
+				get(options) {
+					return _Configuration.get(options);
 				},
 			}
 		},
-		Type: { }
+		Type: _Configuration.Type
 	}
 });

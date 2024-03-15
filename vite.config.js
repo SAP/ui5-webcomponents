@@ -51,9 +51,9 @@ const customResolver = (id, source, options) => {
 			if (resolved.endsWith("sap/ui/core/Core.js") && resolved.includes("/dist/")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
-			if (resolved.endsWith("localization/dist/sap/base/i18n/Localization.js")) {
-				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
-			}
+			// if (resolved.endsWith("localization/dist/sap/base/i18n/Localization.js")) {
+			// 	resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
+			// }
 			if (resolved.endsWith("dist/sap/ui/core/Configuration.js")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
