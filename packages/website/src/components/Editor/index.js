@@ -8,6 +8,7 @@ import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
 import {encodeToBase64, decodeFromBase64} from "./share.js";
 import clsx from "clsx";
+import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
 
 let Splitter = function () {
   return (<></>)
@@ -269,11 +270,12 @@ ${fixAssetPaths(js)}`,
       {canShare
         ?
           <>
-            <div style={{display: "flex", "justify-content": "end"}}>
+            <div className={`${styles.editor__tabBar}`}>
               <button
-                className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
+                className={`button button--secondary ${styles.previewResult__share}`}
                 onClick={ share }
               >
+               <ShareIcon style={{height: "1rem", width: "1rem", marginInlineEnd: "0.5rem" }}/>
                 Share
               </button>
               { copied
@@ -302,7 +304,7 @@ ${fixAssetPaths(js)}`,
             <></>
           :
             <button
-              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}` }
               onClick={ toggleEditor }
             >
               {editorVisible ? "Hide code" : "Edit"}
