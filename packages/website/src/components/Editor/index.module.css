@@ -8,7 +8,7 @@
 	height: 3rem;
 	align-items: center;
 	/* background: var(--playground-toolbar-bg); */
-	padding: 0 0.5rem;
+	padding: 0 1rem;
 	box-sizing: border-box;
 }
 
@@ -18,7 +18,8 @@
 	justify-content: end;
 }
 
-.previewResult__share {
+.previewResult__share,
+.previewResult__download {
 	display: inline-flex;
 	align-items: center;
 	padding: 0.25rem 0.5rem;
@@ -27,6 +28,10 @@
 	font-size: 0.625rem;
 	border-radius: 0.25rem;
 	font-size: 0.813rem;
+}
+
+.previewResult__download {
+	margin-inline-end: 0.5rem;
 }
 
 .previewResult__toggleCodeEditor {

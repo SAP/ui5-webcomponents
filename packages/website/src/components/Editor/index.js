@@ -6,9 +6,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
-import {encodeToBase64, decodeFromBase64} from "./share.js";
+import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
+import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
+import downloadSample from './download.js';
 
 let Splitter = function () {
   return (<></>)
@@ -70,6 +72,11 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         }
       }
     </script>
+    <style>
+      *:not(:defined) {
+        display: none;
+      }
+    </style>
 `)
   }
 
@@ -96,12 +103,13 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     setEditorVisible(!editorVisible);
   }
 
-  function share() {
+  const getSampleFiles = () => {
     const files = {};
 
     // convert file format
     projectRef.current.files.forEach(f => {
       files[f.name] = {
+        name: f.name,
         content: f.content
       };
     });
@@ -114,6 +122,17 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 
     // remove playground support
     delete files["playground-support.js"];
+
+    return files;
+  }
+
+  const download = () => {
+    const files = getSampleFiles();
+    downloadSample(files);
+  }
+
+  const share = () => {
+    const files = getSampleFiles();
 
     // encode and put in url
     const hash = encodeToBase64(JSON.stringify(files));
@@ -272,12 +291,21 @@ ${fixAssetPaths(js)}`,
           <>
             <div className={`${styles.editor__toolbar}`}>
               <button
+                className={`button button--secondary ${styles.previewResult__download}`}
+                onClick={ download }
+              >
+               <DownloadIcon style={{height: "1rem", width: "1rem", marginInlineEnd: "0.5rem" }}/>
+                Download
+              </button>
+
+              <button
                 className={`button button--secondary ${styles.previewResult__share}`}
                 onClick={ share }
               >
                <ShareIcon style={{height: "1rem", width: "1rem", marginInlineEnd: "0.5rem" }}/>
                 Share
               </button>
+
               { copied
                 ? <div style={ {position: "absolute"} }>
                     <span className={styles["copy-status"]}>&#x2714; Link copied</span>
