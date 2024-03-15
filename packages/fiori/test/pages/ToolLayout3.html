@@ -10,16 +10,26 @@
 		}
 	</script>
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/publicToolLayout.css">
+	<link rel="stylesheet" type="text/css" href="/packages/fiori/dist/styles/ToolLayout.css">
+
+	<style>
+		html {
+			height: 100%;
+		}
+		body {
+			margin: 0px;
+			height: 100%;
+		}
+	</style>
 </head>
 
 <body>
 
-	<div class="layout">
-		<div class="header panel1">
-			<ui5-shellbar class="shellBarStyle2" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
+	<div class="ui5-tool-layout">
+		<div class="ui5-tool-layout-header ui5-tool-layout-panel-top">
+			<ui5-shellbar class="ui5-shell-bar-small-padding" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
 			</ui5-shellbar>
-			<ui5-tabcontainer class="tabContainerStyle2" fixed collapsed data-sap-ui-fastnavgroup="true">
+			<ui5-tabcontainer class="ui5-tab-container-no-padding ui5-tab-container-no-shadow" fixed collapsed data-sap-ui-fastnavgroup="true">
 				<ui5-tab text="Home" is-top-level-tab="" slot="default-1"></ui5-tab>
 				<ui5-tab text="What's new" slot="default-2"></ui5-tab>
 				<ui5-tab text="Who are we" is-top-level-tab="" slot="default-3"></ui5-tab>
@@ -28,8 +38,8 @@
 			</ui5-tabcontainer>
 		</div>
 
-		<div class="body">
-			<div class="content panel3">
+		<div class="ui5-tool-layout-body">
+			<div class="ui5-tool-layout-content ui5-tool-layout-panel-content">
 				content
 			</div>
 		</div>

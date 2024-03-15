@@ -10,24 +10,56 @@
 		}
 	</script>
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/publicToolLayout.css">
+	<link rel="stylesheet" type="text/css" href="/packages/fiori/dist/styles/ToolLayout.css">
+
+	<style>
+		html {
+			height: 100%;
+		}
+		body {
+			margin: 0px;
+			height: 100%;
+		}
+	</style>
 </head>
 
 <body>
-	<div class="layout">
-		<div class="header panel1">
-			header
+	<div class="ui5-tool-layout">
+		<div class="ui5-tool-layout-header ui5-tool-layout-panel-top">
+			header <a id="expandButton" href="#">toggle side</a>
 		</div>
 
-		<div class="body">
-			<div class="sideBar panel2">
-				side
-			</div>
+		<div class="ui5-tool-layout-body">
+			<aside id="sideBar" class="ui5-tool-layout-side ui5-tool-layout-panel-side">
+				side expanded
+			</aside>
 
-			<div class="content panel3">
+			<div class="ui5-tool-layout-content ui5-tool-layout-panel-content">
 				content
 			</div>
 		</div>
 	</div>
+
+	<script>
+		const expandButton = document.querySelector("#expandButton"),
+			sideBar = document.querySelector("#sideBar");
+
+		expandButton.addEventListener("click", function (event) {
+			sideBar.classList.toggle("ui5-tool-layout-side-collapsed");
+			sideBar.innerText = sideBar.classList.contains("ui5-tool-layout-side-collapsed") ? "side" : "side expanded";
+			event.preventDefault();
+		});
+
+		const observer = new ResizeObserver(entries => {
+			const width = entries[0].contentRect.width;
+
+			sideBar.classList.toggle("ui5-tool-layout-side-detached",  width < 600);
+			sideBar.classList.toggle("ui5-tool-layout-side-collapsed",  width < 1024);
+
+			// for demonstration
+			sideBar.innerText = width < 1024 ? "side" : "side expanded";
+		});
+		observer.observe(document.body);
+	</script>
 </body>
 </html>

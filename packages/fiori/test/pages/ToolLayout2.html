@@ -10,20 +10,30 @@
 		}
 	</script>
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/publicToolLayout.css">
+	<link rel="stylesheet" type="text/css" href="/packages/fiori/dist/styles/ToolLayout.css">
+
+	<style>
+		html {
+			height: 100%;
+		}
+		body {
+			margin: 0px;
+			height: 100%;
+		}
+	</style>
 </head>
 
 <body>
 
-	<div class="layout">
-		<div class="header panel1">
-			<ui5-shellbar class="shellBarStyle1" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
+	<div class="ui5-tool-layout">
+		<div class="ui5-tool-layout-header ui5-tool-layout-panel-top">
+			<ui5-shellbar class="ui5-shell-bar-no-padding" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
 				<ui5-button icon="menu" slot="startButton" id="expandButton" tooltip="Toggle side navigation"></ui5-button>
 			</ui5-shellbar>
 		</div>
 
-		<div class="body">
-			<aside id="sideBar" class="sideBar panel2">
+		<div class="ui5-tool-layout-body">
+			<aside id="sideBar" class="ui5-tool-layout-side ui5-tool-layout-panel-side">
 				<ui5-side-navigation>
 					<ui5-side-navigation-item id="item1" text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
 					<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
@@ -83,7 +93,7 @@
 				</ui5-side-navigation>
 			</aside>
 
-			<div class="content panel3">
+			<div class="ui5-tool-layout-content ui5-tool-layout-panel-content">
 				content
 			</div>
 		</div>
@@ -95,15 +105,15 @@
 			sideBar = document.querySelector("#sideBar");
 
 		expandButton.addEventListener("click", function (event) {
-			sideBar.classList.toggle("collapsed");
+			sideBar.classList.toggle("ui5-tool-layout-side-collapsed");
 			sideNavigation.toggleAttribute("collapsed");
 		});
 
 		const observer = new ResizeObserver(entries => {
 			const width = entries[0].contentRect.width;
 
-			sideBar.classList.toggle("detached",  width < 600);
-			sideBar.classList.toggle("collapsed",  width < 1024);
+			sideBar.classList.toggle("ui5-tool-layout-side-detached",  width < 600);
+			sideBar.classList.toggle("ui5-tool-layout-side-collapsed",  width < 1024);
 			sideNavigation.toggleAttribute("collapsed", width < 1024);
 		});
 		observer.observe(document.body);

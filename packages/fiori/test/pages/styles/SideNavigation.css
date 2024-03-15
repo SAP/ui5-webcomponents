@@ -15,10 +15,6 @@ body {
     min-height: 0;
 }
 
-.sideBar {
-    background-color: var(--sapList_Background);
-}
-
 .inner-content {
     overflow: auto;
     display: flex;
