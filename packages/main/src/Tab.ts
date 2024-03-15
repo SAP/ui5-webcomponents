@@ -277,7 +277,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
 		await renderFinished();
-		await super.focus(focusOptions);
+		return super.focus(focusOptions);
 	}
 
 	get isMixedModeTab() {
