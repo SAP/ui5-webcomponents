@@ -17,7 +17,7 @@ const getBaseURL = () => {
   if (process.env.DEPLOYMENT_TYPE === "latest") {
     return "/ui5-webcomponents/";
   }
-  
+
   // nightly deployment
   return "/ui5-webcomponents/nightly/";
 };
@@ -97,6 +97,11 @@ const config: Config = {
           to: 'icons/',
           label: 'Icons',
           activeBasePath: 'icons',
+        },
+        {
+          to: 'play/',
+          label: 'Playground',
+          activeBasePath: 'play',
         },
         {
           type: 'custom-settingsNavbarItem',

@@ -6,38 +6,32 @@ import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../../types.js";
 
-import type SideNavigationItem from "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";
+import type SideNavigationGroup from "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";
 
 export default {
-	title: "Fiori/Side Navigation/Side Navigation Item",
-	component: "SideNavigationItem",
+	title: "Fiori/Side Navigation/Side Navigation Group",
+	component: "SideNavigationGroup",
 	argTypes,
-} as Meta<SideNavigationItem>;
+} as Meta<SideNavigationGroup>;
 
-const Template: UI5StoryArgs<SideNavigationItem, StoryArgsSlots> = (args) => {
+const Template: UI5StoryArgs<SideNavigationGroup, StoryArgsSlots> = (args) => {
 	return html`
 <ui5-side-navigation>
-	<ui5-side-navigation-item
+	<ui5-side-navigation-group
 		text="${ifDefined(args.text)}"
-		icon="${ifDefined(args.icon)}"
 		?expanded="${ifDefined(args.expanded)}"
 		?disabled="${ifDefined(args.disabled)}"
-		?whole-item-toggleable="${ifDefined(args.wholeItemToggleable)}"
-		href="${ifDefined(args.href)}"
-		?selected="${ifDefined(args.selected)}"
-		target="${ifDefined(args.target)}"
 	>
 		${unsafeHTML(args.default)}
-	</ui5-side-navigation-item>
+	</ui5-side-navigation-group>
 </ui5-side-navigation>`;
 };
 
 export const Basic = Template.bind({});
 Basic.tags = ["_hidden_"];
 Basic.args = {
-	text: "Events",
-	icon: "calendar",
+	text: "Group",
 	expanded: true,
-	default: `<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>`,
-	selected: true
+	disabled: false,
+	default: `<ui5-side-navigation-item text="Item"></ui5-side-navigation-item>`
 };

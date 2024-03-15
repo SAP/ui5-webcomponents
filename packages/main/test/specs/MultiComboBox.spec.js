@@ -1354,10 +1354,15 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys(["Control", "v"]);
 
-			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+			assert.strictEqual(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+			assert.ok(await mcb2.getProperty("open"), "Condensed", "Popover should be open");
+
+			await input.keys(["Control", "v"]);
+
+			assert.equal(await mcb2.getProperty("value"), "CondensedCondensed", "Pasting second time should append the as text");
 		});
 
-		it ("should not be able to paste tokenwith CTRL+V in read only multi combo box", async () => {
+		it ("should not be able to paste token with CTRL+V in read only multi combo box", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
