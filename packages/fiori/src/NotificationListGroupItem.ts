@@ -1,4 +1,4 @@
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+// import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -23,9 +23,9 @@ import {
 	NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT,
 	NOTIFICATION_LIST_ITEM_READ,
 	NOTIFICATION_LIST_ITEM_UNREAD,
-	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
-	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
-	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
+	// NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
+	// NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
+	// NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
 	NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE,
 	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE,
@@ -150,25 +150,25 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
 	}
 
-	get priorityText() {
-		if (this.priority === Priority.High) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
-		}
+	// get priorityText() {
+	// 	if (this.priority === Priority.High) {
+	// 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+	// 	}
 
-		if (this.priority === Priority.Medium) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
-		}
+	// 	if (this.priority === Priority.Medium) {
+	// 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+	// 	}
 
-		if (this.priority === Priority.Low) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
-		}
+	// 	if (this.priority === Priority.Low) {
+	// 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+	// 	}
 
-		return "";
-	}
+	// 	return "";
+	// }
 
-	get accInvisibleText() {
-		return `${this.groupText} ${this.readText} ${this.priorityText} ${this.counterText}`;
-	}
+	// get accInvisibleText() {
+	// 	return `${this.groupText} ${this.readText} ${this.priorityText} ${this.counterText}`;
+	// }
 
 	get readText() {
 		if (this.read) {

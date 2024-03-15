@@ -35,7 +35,12 @@
 
 	<div class="ui5-nli-content">
 		<div class="ui5-nli-title-text-wrapper">
-			{{#if hasPriority}}
+			{{#if hasStatusIndicator}}
+				<ui5-icon
+					class="ui5-prio-icon ui5-prio-icon--{{statusIcon}}"
+					name="{{statusIcon}}">
+				</ui5-icon>
+			{{else if hasPriority}}
 				<ui5-icon
 					class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
 					name="{{priorityIcon}}">
@@ -72,6 +77,13 @@
 				{{showMoreText}}
 			</ui5-link>
 		</div>
+
+		{{#if indicateImportance}}
+			<ui5-badge class="ui5-nli-importance" design="set2" color-scheme="2">
+				<ui5-icon name="high-priority" slot="icon"></ui5-icon>
+				{{importanceText}}
+			</ui5-badge>
+		{{/if}}
 
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>

@@ -8,7 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+// import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import type NotificationAction from "./NotificationAction.js";
@@ -26,15 +26,15 @@ import NotificationOverflowActionsPopoverTemplate from "./generated/templates/No
 // Styles
 import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
-/**
- * Defines the icons corresponding to the notification's priority.
- */
-const ICON_PER_PRIORITY = {
-	[Priority.High]: "message-error",
-	[Priority.Medium]: "message-warning",
-	[Priority.Low]: "message-success",
-	[Priority.None]: "",
-};
+// /**
+//  * Defines the icons corresponding to the notification's priority.
+//  */
+// const ICON_PER_STATUS = {
+// 	[ValueState.Error]: "message-error",
+// 	[ValueState.Warning]: "message-warning",
+// 	[ValueState.Success]: "message-success",
+// 	[ValueState.None]: "",
+// };
 
 type NotificationListItemBaseCloseEventDetail = {
 	item: HTMLElement,
@@ -78,13 +78,13 @@ class NotificationListItemBase extends ListItemBase {
 	@property()
 	titleText!: string;
 
-	/**
-	 * Defines the `priority` of the item.
-	 * @default "None"
-	 * @public
-	 */
-	@property({ type: Priority, defaultValue: Priority.None })
-	priority!: `${Priority}`;
+	// /**
+	//  * Defines the `priority` of the item.
+	//  * @default "None"
+	//  * @public
+	//  */
+	// @property({ type: Priority, defaultValue: Priority.None })
+	// priority!: `${Priority}`;
 
 	/**
 	 * Defines if the `close` button would be displayed.
@@ -137,13 +137,9 @@ class NotificationListItemBase extends ListItemBase {
 		return !!this.titleText.length;
 	}
 
-	get hasPriority() {
-		return this.priority !== Priority.None;
-	}
-
-	get priorityIcon() {
-		return ICON_PER_PRIORITY[this.priority];
-	}
+	// get priorityIcon() {
+	// 	return ICON_PER_STATUS[this.status];
+	// }
 
 	get overflowButtonDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-overflow-btn")!;

@@ -20,13 +20,13 @@
 	<ui5-list id="notificationListWithMenu" header-text="Notifications that uses Menu for actions as per the new design (2024)">
 		<ui5-li-notification
 			show-close
-			title-text="Notification with several actions"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+			priority="High"
+			status-indicator="Success"
+			indicate-importance
+			title-text="When 'priority' and 'statusIndicator' are set at the same time - we need to see the status icon Success from the 'statusIndicator'"
+		>Notification with several actions.
 
-			<ui5-avatar size="XS" slot="avatar">
-				<img src="./img/man_avatar_1.png" />
-			</ui5-avatar>
+			<ui5-avatar size="XS" slot="avatar" shape="Square" initials="JS"></ui5-avatar>
 
 			<ui5-menu slot="menu">
 				<ui5-menu-item text="View"></ui5-menu-item>
@@ -35,16 +35,18 @@
 				<ui5-menu-item text="Settings"></ui5-menu-item>
 			</ui5-menu>
 
-			<span slot="footnotes">John Doe</span>
-			<span slot="footnotes">2 Days</span>
-			<span slot="footnotes">Other stuff</span>
+			<span slot="footnotes">Product Name</span>
+			<span slot="footnotes">Category</span>
+			<span slot="footnotes">More info</span>
+			<span slot="footnotes">And more info</span>
+			<span slot="footnotes">11:13</span>
 		</ui5-li-notification>
 
 		<ui5-li-notification
 			show-close
-			title-text="Notification with one action"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+			priority="Medium"
+			title-text="When 'priority' (deprecated) is set to 'Medium' we need to see it (represented by warning icon)"
+		>Notification with one action.
 
 			<ui5-avatar size="XS" slot="avatar">
 				<img src="./img/man_avatar_1.png" />
@@ -61,9 +63,9 @@
 
 		<ui5-li-notification
 			show-close
-			title-text="Notification with Menu and Notification actions (deprecated) - overflow button should open Menu"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+			status-indicator="Information"
+			title-text="When 'statusIndicator' (new) is set to 'Information' we need to see it"
+		>Notification with Menu and Notification actions (deprecated) - overflow button should open Menu
 
 			<ui5-avatar size="XS" slot="avatar">
 				<img src="./img/man_avatar_1.png" />
@@ -90,9 +92,9 @@
 
 		<ui5-li-notification
 			show-close
-			title-text="Notification with no actions"
-		>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+			status-indicator="Error"
+			title-text="Title"
+		>Notification with no actions
 
 			<ui5-avatar size="XS" slot="avatar">
 				<img src="./img/man_avatar_1.png" />
@@ -133,6 +135,7 @@
 
 		<ui5-li-notification
 			show-close
+			status-indicator="None"
 			title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 			priority="High"
 		>

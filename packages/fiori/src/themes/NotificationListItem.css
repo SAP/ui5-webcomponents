@@ -115,6 +115,11 @@
 	margin-inline-start: 1rem;
 }
 
+.ui5-nli-importance{
+	margin-top: 0.25rem;
+	width: fit-content;
+}
+
 ::slotted([slot^="footnotes"]) {
 	color: var(--sapContent_LabelColor);
 	font-size: var(--sapFontSize);

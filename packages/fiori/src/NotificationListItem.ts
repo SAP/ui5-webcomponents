@@ -7,6 +7,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
@@ -29,8 +30,13 @@ import {
 	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
+	NOTIFICATION_LIST_ITEM_INFORMATION_STATUS_TXT,
+	NOTIFICATION_LIST_ITEM_SUCCESS_STATUS_TXT,
+	NOTIFICATION_LIST_ITEM_ERROR_STATUS_TXT,
+	NOTIFICATION_LIST_ITEM_WARNING_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_IMPORTANT_TXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -46,6 +52,27 @@ type NotificationListItemPressEventDetail = {
 };
 
 type Footnote = Record<string, any>;
+
+/**
+ * Defines the icons corresponding to the notification's priority.
+ */
+const ICON_PER_PRIORITY = {
+	[Priority.High]: "message-error",
+	[Priority.Medium]: "message-warning",
+	[Priority.Low]: "message-success",
+	[Priority.None]: "",
+};
+
+/**
+ * Defines the icons corresponding to the notification's status indicator.
+ */
+const ICON_PER_STATUS = {
+	[ValueState.Error]: "message-error",
+	[ValueState.Warning]: "message-warning",
+	[ValueState.Success]: "message-success",
+	[ValueState.Information]: "message-information",
+	[ValueState.None]: "",
+};
 
 /**
  * @class
@@ -107,6 +134,33 @@ class NotificationListItem extends NotificationListItemBase {
 	*/
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: `${WrappingType}`;
+
+	/**
+	 * Defines the status indicator of the item.
+	 * @default "None"
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	statusIndicator!: `${ValueState}`;
+
+	/**
+	 * Defines the `priority` of the item.
+	 *
+	 * **Note:** this property is deprecated and will be removed in future. Please use "statusIndicator" property instead.
+	 * @default "None"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Priority, defaultValue: Priority.None })
+	priority!: `${Priority}`;
+
+	/**
+	 * Defines the `Important` label of the item.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	indicateImportance!: boolean;
 
 	/**
 	* Defines the state of the `titleText` and `description`,
@@ -187,6 +241,20 @@ class NotificationListItem extends NotificationListItemBase {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._onResizeBound);
+	}
+
+	get hasPriority() {
+		const hasPriority = this.priority !== Priority.None;
+
+		if (hasPriority) {
+			console.warn("The property 'priority' is deprecated and will be removed in future! Please use 'statusIndicator' property instead!"); // eslint-disable-line
+		}
+
+		return hasPriority;
+	}
+
+	get hasStatusIndicator() {
+		return this.statusIndicator !== ValueState.None;
 	}
 
 	get hasDesc() {
@@ -286,6 +354,14 @@ class NotificationListItem extends NotificationListItemBase {
 		return ids.join(" ");
 	}
 
+	get priorityIcon() {
+		return ICON_PER_PRIORITY[this.priority];
+	}
+
+	get statusIcon() {
+		return ICON_PER_STATUS[this.statusIndicator];
+	}
+
 	get priorityText() {
 		if (this.priority === Priority.High) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
@@ -302,12 +378,38 @@ class NotificationListItem extends NotificationListItemBase {
 		return "";
 	}
 
+	get importanceText() {
+		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_IMPORTANT_TXT);
+	}
+
+	get statusIndicatorText() {
+		if (this.statusIndicator === ValueState.Success) {
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SUCCESS_STATUS_TXT);
+		}
+
+		if (this.statusIndicator === ValueState.Warning) {
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_WARNING_STATUS_TXT);
+		}
+
+		if (this.statusIndicator === ValueState.Error) {
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_ERROR_STATUS_TXT);
+		}
+
+		if (this.statusIndicator === ValueState.Information) {
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_INFORMATION_STATUS_TXT);
+		}
+
+		return "";
+	}
+
 	get accInvisibleText() {
 		const notificationText = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
 		const readText = this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 		const priorityText = this.priorityText;
+		const statusIndicatorText = this.statusIndicatorText;
+		const importanceText = this.importanceText;
 
-		return `${notificationText} ${readText} ${priorityText}`;
+		return `${notificationText} ${readText} ${priorityText} ${statusIndicatorText} ${importanceText}`;
 	}
 
 	/**
