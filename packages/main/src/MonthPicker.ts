@@ -36,7 +36,7 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 
 const PAGE_SIZE = 12; // total months on a single page
-const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
+let ROW_SIZE = 3; // months per row (4 rows of 3 months each)
 
 type Month = {
 	timestamp: string,
@@ -117,6 +117,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	onBeforeRendering() {
 		this._buildMonths();
+		ROW_SIZE = this.secondaryCalendarType === "Islamic" || this.secondaryCalendarType === "Persian" ? 2 : 3;
 	}
 
 	onAfterRendering() {
