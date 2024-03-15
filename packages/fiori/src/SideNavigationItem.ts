@@ -1,32 +1,52 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type SideNavigationItemBase from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationItemTemplate from "./generated/templates/SideNavigationItemTemplate.lit.js";
+
+// Styles
+import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
 
 /**
  * @class
  *
  * ### Overview
  *
- * The `ui5-side-navigation-item` is used within `ui5-side-navigation` only.
- * Via the `ui5-side-navigation-item` you control the content of the `SideNavigation`.
+ * Represents a navigation action. It can provide sub items.
+ * The `ui5-side-navigation-item` is used within `ui5-side-navigation` or `ui5-side-navigation-group` only.
  *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`
+ *
  * @constructor
- * @extends SideNavigationItemBase
+ * @extends SideNavigationSelectableItemBase
  * @abstract
  * @public
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-side-navigation-item")
-class SideNavigationItem extends SideNavigationItemBase {
+@customElement({
+	tag: "ui5-side-navigation-item",
+	renderer: litRender,
+	template: SideNavigationItemTemplate,
+	styles: SideNavigationItemCss,
+	dependencies: [
+		Icon,
+	],
+})
+class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**
 	 * Defines if the item is expanded
+	 *
 	 * @public
 	 * @default false
 	 */
@@ -45,6 +65,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 
 	/**
      * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
+	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -54,6 +75,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	 * Defines whether clicking the whole item or only pressing the icon will show/hide the sub items (if present).
 	 * If set to true, clicking the whole item will toggle the sub items, and it won't fire the `click` event.
 	 * By default, only clicking the arrow icon will toggle the sub items.
+	 *
 	 * @public
 	 * @default false
 	 * @since 1.0.0-rc.11
@@ -61,12 +83,44 @@ class SideNavigationItem extends SideNavigationItemBase {
 	@property({ type: Boolean })
 	wholeItemToggleable!: boolean;
 
+	get overflowItems() : Array<HTMLElement> {
+		return [this];
+	}
+
+	get selectableItems() : Array<SideNavigationSelectableItemBase> {
+		return [this, ...this.items];
+	}
+
+	get focusableItems() : Array<SideNavigationItemBase> {
+		if (this.sideNavCollapsed) {
+			return [this];
+		}
+
+		if (this.expanded) {
+			return [this, ...this.items];
+		}
+
+		return [this];
+	}
+
+	get allItems() : Array<SideNavigationItemBase> {
+		return [this, ...this.items];
+	}
+
 	get _ariaHasPopup() {
-		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
+		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
 
 		return undefined;
+	}
+
+	get _ariaChecked() {
+		if (this.isOverflow) {
+			return undefined;
+		}
+
+		return this.selected;
 	}
 
 	get _groupId() {
@@ -104,15 +158,11 @@ class SideNavigationItem extends SideNavigationItemBase {
 	}
 
 	get _selected() {
-		if (this.sideNavigation?.collapsed) {
+		if (this.sideNavCollapsed) {
 			return this.selected || this.items.some(item => item.selected);
 		}
 
 		return this.selected;
-	}
-
-	get isFixedItem() {
-		return this.slot === "fixedItems";
 	}
 
 	_onToggleClick = (e: PointerEvent) => {
@@ -144,7 +194,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	}
 
 	_onclick = (e: PointerEvent) => {
-		if (!this.sideNavigation?.collapsed
+		if (!this.sideNavCollapsed
 			&& this.wholeItemToggleable
 			&& e.pointerType === "mouse") {
 			e.preventDefault();
@@ -157,27 +207,27 @@ class SideNavigationItem extends SideNavigationItemBase {
 	}
 
 	_onfocusout = () => {
-		if (!this.sideNavigation?.collapsed) {
+		if (!this.sideNavCollapsed) {
 			return;
 		}
 
-		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseenter = () => {
-		if (!this.sideNavigation?.collapsed) {
+		if (!this.sideNavCollapsed) {
 			return;
 		}
 
-		this.getDomRef().classList.remove("ui5-sn-item-no-hover-effect");
+		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseleave = () => {
-		if (!this.sideNavigation?.collapsed || !this._selected) {
+		if (!this.sideNavCollapsed || !this._selected) {
 			return;
 		}
 
-		this.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
+		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 }
 
