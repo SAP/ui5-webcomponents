@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.0...v1.24.0-rc.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* **ui5-multi-combobox:** pasting content should not be prevented ([#8413](https://github.com/SAP/ui5-webcomponents/issues/8413)) ([db0b63c](https://github.com/SAP/ui5-webcomponents/commit/db0b63c8e745db23fb44816fcbfe999257071353)), closes [#8275](https://github.com/SAP/ui5-webcomponents/issues/8275)
+
+
+### Features
+
+* **ui5-li:** highlight property added ([#8421](https://github.com/SAP/ui5-webcomponents/issues/8421)) ([1a3fa61](https://github.com/SAP/ui5-webcomponents/commit/1a3fa617199e5599b5beeebc503121ca3112f0a0)), closes [#8317](https://github.com/SAP/ui5-webcomponents/issues/8317)
+* **ui5-side-navigation:** add navigation groups ([#8261](https://github.com/SAP/ui5-webcomponents/issues/8261)) ([8678dc0](https://github.com/SAP/ui5-webcomponents/commit/8678dc0ec8f017a41ac5bdcd7720bc055d28891c))
+* **ui5-tabcontainer, ui5-list:** add events for reordering items by mouse ([#8265](https://github.com/SAP/ui5-webcomponents/issues/8265)) ([c4383ea](https://github.com/SAP/ui5-webcomponents/commit/c4383eaaa3b5588658f13a9c468d778e9c6abf57))
+
+
+
+
+
 # [1.24.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1...v1.24.0-rc.0) (2024-03-14)
 
 
