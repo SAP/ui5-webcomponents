@@ -56,7 +56,7 @@
 
 :root {
     --playground-code-background: var(--sys-color-surface);
-    --playground-code-keyword-color: #d92f3f;
+    --playground-code-keyword-color: #708;
     --playground-code-atom-color: #005cc5;
     --playground-code-number-color: #005cc5;
     --playground-code-def-color: #00f;
@@ -67,8 +67,8 @@
     --playground-code-variable-3-color: #000000;
     --playground-code-type-color: #005cc5;
     --playground-code-comment-color: #6a737d;
-    --playground-code-string-color: #032f62;
-    --playground-code-string-2-color: #032f62;
+    --playground-code-string-color: #a11;
+    --playground-code-string-2-color: #a11;
     --playground-code-meta-color: #000000;
     --playground-code-qualifier-color: #6f42c1;
     --playground-code-builtin-color: #6f42c1;
