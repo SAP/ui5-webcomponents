@@ -6,7 +6,7 @@ const html = `<!-- playground-fold -->
 <head>
 </head>
 
-<body style="background-color: var(--sapBackgroundColor)">
+<body style="background-color: var(--sapBackgroundColor); color: var(--sapTextColor);">
   <!-- playground-fold-end -->
 
   <my-element>
@@ -30,7 +30,7 @@ import { customElement, property } from "@ui5/webcomponents-base/dist/decorators
   renderer: litRender,
 })
 export class MyElement extends UI5Element {
-  @property({ type: Integer, defaultValue: 0})
+  @property({ validator: Integer, defaultValue: 0})
   count!: number;
 
   render() {
