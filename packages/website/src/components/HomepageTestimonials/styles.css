@@ -49,6 +49,10 @@
   margin-bottom: 1.125rem;
 }
 
+.testimonial__title {
+  font-size: var(--ifm-h4-font-size);
+}
+
 [data-theme='dark'] .testimonial__title {
   color: var(--ifm-color-primary);
 }
