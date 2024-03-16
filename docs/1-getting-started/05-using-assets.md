@@ -55,4 +55,3 @@ The `ui5-date-picker` component will have all translatable texts in Spanish, and
 Additional assets are `.json` files with the respective data. When you import the `dist/Assets.js` file of a given package, assets are only **registered**, but not yet fetched.
 When they are needed, they are loaded on the fly with **dymamic imports**, and then used.
 
-Next: [Using Additional Features](./06-using-features.md)
