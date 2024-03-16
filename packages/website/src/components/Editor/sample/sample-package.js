@@ -4,6 +4,7 @@ export default `{
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
+	  "start": "vite",
 	  "dev": "vite",
 	  "build": "tsc && vite build",
 	  "preview": "vite preview"

@@ -1,4 +1,5 @@
 export default `{
+	"include": ["./"],
 	"compilerOptions": {
 		"target": "ES2021",
 		"lib": ["DOM", "DOM.Iterable", "ES2023"],

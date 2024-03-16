@@ -10,6 +10,8 @@ import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
 import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
+import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
+import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
 
 let Splitter = function () {
@@ -294,7 +296,7 @@ ${fixAssetPaths(js)}`,
                 className={`button button--secondary ${styles.previewResult__download}`}
                 onClick={ download }
               >
-               <DownloadIcon style={{height: "1rem", width: "1rem", marginInlineEnd: "0.5rem" }}/>
+               <DownloadIcon className={`${styles.btn__icon}`}/>
                 Download
               </button>
 
@@ -302,7 +304,7 @@ ${fixAssetPaths(js)}`,
                 className={`button button--secondary ${styles.previewResult__share}`}
                 onClick={ share }
               >
-               <ShareIcon style={{height: "1rem", width: "1rem", marginInlineEnd: "0.5rem" }}/>
+               <ShareIcon className={`${styles.btn__icon}`}/>
                 Share
               </button>
 
@@ -331,12 +333,23 @@ ${fixAssetPaths(js)}`,
           ?
             <></>
           :
+          <>
             <button
-              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              className={`button button--secondary ${styles.previewResult__downloadSample}`}
+              onClick={ download }
+            >
+            <DownloadIcon className={`${styles["btn__icon--edit"]} `}/>
+              Download
+            </button>
+
+            <button
+              className={`button ${(editorVisible ? "button--secondary" : "button--secondary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}` }
               onClick={ toggleEditor }
             >
+              {editorVisible ? <HideIcon className={`${styles["btn__icon--edit"]} `}/> : <EditIcon className={`${styles["btn__icon--edit"]}`}/>}
               {editorVisible ? "Hide code" : "Edit"}
             </button>
+          </>
         }
         </div>
 
