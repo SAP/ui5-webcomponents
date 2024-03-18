@@ -12,7 +12,7 @@ import {
 	getDefaultIconCollection,
 } from "./dist/config/Icons.js";
 import { RegisteredIconCollection } from "./dist/asset-registries/util/IconCollectionsByTheme.js";
-import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionsByTheme.js";
+import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionByTheme.js";
 import {
 	getLanguage,
 	setLanguage,
