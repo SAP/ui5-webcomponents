@@ -6,9 +6,20 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
-import {encodeToBase64, decodeFromBase64} from "./share.js";
+import { encodeToBase64, decodeFromBase64 } from "./share.js";
+import clsx from "clsx";
+import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
+import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
+import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
+import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
+import downloadSample from './download.js';
+
+let Splitter = function () {
+  return (<></>)
+};
 
 if (ExecutionEnvironment.canUseDOM) {
+  Splitter = require('react-splitter-light').Splitter;
   require('playground-elements');
 }
 
@@ -28,7 +39,7 @@ const returnProjectToPool = (project) => {
     projectPool.push(project);
 }
 
-export default function Editor({html, js, css, mainFile = "main.js", canShare = false}, editorExpanded = false ) {
+export default function Editor({html, js, css, mainFile = "main.js", canShare = false, standalone = false, mainFileSelected = false }) {
   const projectContainerRef = useRef(null);
   const projectRef = useRef(null);
   const previewRef = useRef(null);
@@ -38,12 +49,12 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const [firstRender, setFirstRender] = useState(true);
   // name is set on iframe so it can be passed back in resize message to identify which iframe is resized
   const iframeId = useId();
-  const [editorVisible, setEditorVisible] = useState(editorExpanded);
-  const [btnText, setButtonText] = useState(editorExpanded ? "Hide code" : "Edit");
+  const [editorVisible, setEditorVisible] = useState(false);
   const {siteConfig, siteMetadata} = useDocusaurusContext();
   const { theme, setTheme } = useContext(ThemeContext);
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
   const { textDirection, setTextDirection } = useContext(TextDirectionContext);
+  const [copied, setCopied] = useState(false);
 
   function addImportMap(html) {
     return html.replace("<head>", `
@@ -63,6 +74,11 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         }
       }
     </script>
+    <style>
+      *:not(:defined) {
+        display: none;
+      }
+    </style>
 `)
   }
 
@@ -87,15 +103,15 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 
   function toggleEditor() {
     setEditorVisible(!editorVisible);
-    setButtonText(editorVisible ? "Edit" : "Hide code");
   }
 
-  function share() {
+  const getSampleFiles = () => {
     const files = {};
 
     // convert file format
     projectRef.current.files.forEach(f => {
       files[f.name] = {
+        name: f.name,
         content: f.content
       };
     });
@@ -109,9 +125,21 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     // remove playground support
     delete files["playground-support.js"];
 
+    return files;
+  }
+
+  const download = () => {
+    const files = getSampleFiles();
+    downloadSample(files);
+  }
+
+  const share = () => {
+    const files = getSampleFiles();
+
     // encode and put in url
     const hash = encodeToBase64(JSON.stringify(files));
-    history.pushState({}, '', new URL(`#${hash}`, window.location.href).href);
+    navigator.clipboard.writeText(new URL(`#${hash}`, window.location.href).href);
+    setCopied(true);
   }
 
   const baseUrl = useBaseUrl("/");
@@ -132,6 +160,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 import "./playground-support.js";
 /* playground-hide-end */
 ${fixAssetPaths(js)}`,
+          selected: mainFileSelected,
         },
         "main.css": {
           content: css,
@@ -197,36 +226,132 @@ ${fixAssetPaths(js)}`,
     projectRef.current.config = newConfig;
   }, [theme, contentDensity, textDirection]);
 
+  useEffect(() => {
+    if (copied) {
+      setTimeout(() => {
+        setCopied(false);
+      }, 5000)
+    }
+  }, [copied]);
+
+  function optionalSplitter(editor, preview) {
+    return (
+      <>
+        { standalone
+          ?
+            <div style={{width: "100%"}}>
+              <Splitter>
+                {preview}
+                {editor}
+              </Splitter>
+            </div>
+          :
+            <div>
+              {editor}
+              {preview}
+            </div>
+        }
+      </>
+    )
+  }
+
+  function preview() {
+    return (
+      <>
+        <playground-preview class={clsx(styles.previewResultHidden, {
+            [styles['preview-standalone']]: standalone,
+            [styles['preview-sample']]: !standalone,
+          })}
+          style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}
+        ></playground-preview>
+      </>
+    )
+  }
+
+  function editor() {
+    return (
+      <>
+        <div
+          className={clsx({
+            [styles['editor-standalone']]: standalone,
+            [styles['editor-sample']]: !standalone,
+          })}
+          style={{display: editorVisible | standalone ? "block" : "none"}}>
+          <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
+          <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <div ref={projectContainerRef}></div>
-      <div style={{display: "flex", flexDirection: "column", border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}>
-        <playground-preview class={ styles.previewResultHidden } style={{ height: "unset", minHeight: "7rem" }} ref={previewRef}></playground-preview>
-          <div style={{display: editorVisible ? "block" : "none"}}>
-            <playground-tab-bar editable-file-system ref={tabBarRef}></playground-tab-bar>
-            <playground-file-editor line-numbers ref={fileEditorRef}></playground-file-editor>
-          </div>
 
-          <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
+      {canShare
+        ?
+          <>
+            <div className={`${styles.editor__toolbar}`}>
+              <button
+                className={`button button--secondary ${styles.previewResult__download}`}
+                onClick={ download }
+              >
+               <DownloadIcon className={`${styles.btn__icon}`}/>
+                Download
+              </button>
+
+              <button
+                className={`button button--secondary ${styles.previewResult__share}`}
+                onClick={ share }
+              >
+               <ShareIcon className={`${styles.btn__icon}`}/>
+                Share
+              </button>
+
+              { copied
+                ? <div style={ {position: "absolute"} }>
+                    <span className={styles["copy-status"]}>&#x2714; Link copied</span>
+                  </div>
+                : <></>
+              }
+            </div>
+          </>
+        :
+          <></>
+      }
+
+      <div
+        className={clsx({
+          [styles['container-standalone']]: standalone,
+          [styles['container-sample']]: !standalone,
+        })}
+        style={{ border: "1px solid hsla(203, 50%, 30%, 0.15)", boxShadow: "var(--ifm-color-secondary) 0 0 3px 0", borderRadius: "0.5rem", overflow: "hidden" }}
+      >
+        {optionalSplitter(preview(), editor())}
+        <div className={ `${styles.previewResult__actions}  ${(canShare ? styles.previewResult__hasShare : "")} `}>
+        { standalone
+          ?
+            <></>
+          :
+          <>
             <button
-              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              className={`button button--secondary ${styles.previewResult__downloadSample}`}
+              onClick={ download }
+            >
+            <DownloadIcon className={`${styles["btn__icon--edit"]} `}/>
+              Download
+            </button>
+
+            <button
+              className={`button ${(editorVisible ? "button--secondary" : "button--secondary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}` }
               onClick={ toggleEditor }
             >
-              {btnText}
+              {editorVisible ? <HideIcon className={`${styles["btn__icon--edit"]} `}/> : <EditIcon className={`${styles["btn__icon--edit"]}`}/>}
+              {editorVisible ? "Hide code" : "Edit"}
             </button>
-
-          {canShare
-          ?
-            <button
-              className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
-              onClick={ share }
-            >
-              Share
-            </button>
-          :
-            <></>
-          }
-          </div>
+          </>
+        }
+        </div>
 
       </div>
     </>

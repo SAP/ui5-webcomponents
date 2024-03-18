@@ -145,18 +145,19 @@ yarn start # to serve the project
 
 A dev server will be started and the browser will open its index URL with a listing of all test pages.
 
-You can start the Playground app with the following commands:
+### How to start Website (Docs & Samples):
+You can start the website app with the following commands:
 
 ```sh
 yarn # to install all dependencies
 
 # start the playground from the project root
-yarn start:playground
+yarn start:website
 
-# open http://localhost:6006/
+# open http://localhost:3000/ui5-webcomponents/nightly/
 ```
 
-**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)
+**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-website.md)
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:

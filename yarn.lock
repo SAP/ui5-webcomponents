@@ -9196,6 +9196,16 @@ dot-prop@^5.1.0, dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
+dotenv-cli@^7.4.1:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/dotenv-cli/-/dotenv-cli-7.4.1.tgz#be3895878775c257e9864e5e57ff801d7492dcf8"
+  integrity sha512-fE1aywjRrWGxV3miaiUr3d2zC/VAiuzEGghi+QzgIA9fEf/M5hLMaRSXb4IxbUAwGmaLi0IozdZddnVU96acag==
+  dependencies:
+    cross-spawn "^7.0.3"
+    dotenv "^16.3.0"
+    dotenv-expand "^10.0.0"
+    minimist "^1.2.6"
+
 dotenv-expand@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-10.0.0.tgz#12605d00fb0af6d0a592e6558585784032e4ef37"
@@ -9205,6 +9215,11 @@ dotenv@^16.0.0:
   version "16.3.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
   integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
+
+dotenv@^16.3.0, dotenv@^16.4.5:
+  version "16.4.5"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.5.tgz#cdd3b3b604cb327e286b4762e13502f717cb099f"
+  integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
 
 dotenv@~10.0.0:
   version "10.0.0"
@@ -17356,6 +17371,11 @@ react-router@5.3.4, react-router@^5.3.4:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-splitter-light@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-splitter-light/-/react-splitter-light-1.0.3.tgz#7ff1a698d2a1300111c999e351cb73c1fed94fc5"
+  integrity sha512-9iQN8cWaIGddAumumjUfdGMQQZAAmoPHRFVvh1xdH8/NBwE0pReAD1UCDpAj+WhnpfuDrxPc2CYcSpusRUkDYA==
+
 react-style-singleton@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.2.1.tgz#f99e420492b2d8f34d38308ff660b60d0b1205b4"
@@ -19118,6 +19138,11 @@ tar@^6.1.11, tar@^6.1.13, tar@^6.1.2:
     minizlib "^2.1.1"
     mkdirp "^1.0.3"
     yallist "^4.0.0"
+
+tarts@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tarts/-/tarts-2.0.1.tgz#e5cb99c1db98acda2080199149d914757cb1851c"
+  integrity sha512-24hWg+6mn/v6Z2ekwmYhzk7zZajzjIN5KNjaKe9qmU5HdsF21/KE0qmsXLie4suE3rjqxj5lT5cKpjt77w+LyQ==
 
 tcp-port-used@^1.0.1, tcp-port-used@^1.0.2:
   version "1.0.2"
