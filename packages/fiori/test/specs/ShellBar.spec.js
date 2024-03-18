@@ -56,7 +56,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests accessibilityAttributes property", async () => {
-			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "Dialog";
+			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "dialog";
 			const sb = await browser.$("#sbAccAttr");
 
 			assert.strictEqual(await sb.getProperty("_notificationsHasPopup"), NOTIFICATIONS_BTN_ARIA_HASPOPUP,
@@ -546,30 +546,18 @@ describe("Component Behavior", () => {
 			});
 
 			it("Shows translated label for predefined buttons, as button text when in Overflow Popover", async () => {
+				await browser.url(`test/pages/ShellBar.html?sap-ui-language=de_DE`);
 				const shellBar = await browser.$("#shellbar");
 				const overflowButton = await shellBar.shadow$(".ui5-shellbar-overflow-button");
 				let psButtonText;
 
-				await browser.executeAsync(function(done) {
-					window['sap-ui-webcomponents-bundle'].configuration.setLanguage("de_DE");
-					done();
-				});
-				await browser.setWindowSize(500, 1080);
-
-				overflowButton.click();
 				const popover = await getOverflowPopover("shellbar");
 				const items = await popover.$$("ui5-li");
+				await overflowButton.click();
 
 				psButtonText = await [...items][5].getText();
 
 				assert.strictEqual(psButtonText, await shellBar.getProperty("_productsText"), "Product switch button text is translated in overflow popover");
-
-				await browser.setWindowSize(500, 1080);
-				await browser.executeAsync(function(done) {
-					window['sap-ui-webcomponents-bundle'].configuration.setLanguage("en_EN");
-					done();
-				});
-
 			});
 		});
 	});

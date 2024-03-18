@@ -22,6 +22,7 @@ const Template: UI5StoryArgs<List, StoryArgsSlots> = (args) => {
     ?busy="${ifDefined(args.busy)}"
     ?indent="${ifDefined(args.indent)}"
     ?growing="${ifDefined(args.growing)}"
+    growing-button-text="${ifDefined(args.growingButtonText)}"
     busy-delay="${ifDefined(args.busyDelay)}"
     separators="${ifDefined(args.separators)}"
     header-text="${ifDefined(args.headerText)}"
@@ -219,4 +220,17 @@ export const SeparationTypes: StoryFn = () =>
       <ui5-li icon="shipping-status">Devilered</ui5-li>
       <ui5-li icon="shipping-status">Pending</ui5-li>
       <ui5-li icon="shipping-status">Declined</ui5-li>
+    </ui5-list>`;
+
+export const HighlightTypes: StoryFn = () =>
+  html` <ui5-list
+      header-text="Highlight Types"
+      separators="Inner"
+      class="full-width"
+    >
+      <ui5-li highlight="None">None</ui5-li>
+      <ui5-li highlight="Success">Success</ui5-li>
+      <ui5-li highlight="Warning">Warning</ui5-li>
+      <ui5-li highlight="Error">Error</ui5-li>
+      <ui5-li highlight="Information">Information</ui5-li>
     </ui5-list>`;

@@ -15,7 +15,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await input.isDisplayedInViewport(), "input is rendered");
 		assert.ok(await innerInput.isDisplayedInViewport(), "inner input is rendered");
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Date Input", "aria-roledescription attribute is added.");
-		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "Grid", "aria-haspopup attribute is added.");
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "grid", "aria-haspopup attribute is added.");
 		assert.notOk(await innerInput.getAttribute("aria-controls"), "aria-controls attribute isn't rendered.");
 		assert.notOk(await innerInput.getAttribute("aria-expanded"), "aria-expanded attribute isn't rendered.");
 	});
@@ -1344,5 +1344,29 @@ describe("Date Picker Tests", () => {
 		await browser.$("#dpVsChangePrevented").shadow$("ui5-input").shadow$("input").click(); // click elsewhere to focusout
 
 		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
+	});
+
+	it("should open date picker in daypicker", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		const calendar = await datepicker.getCalendar();
+		const datepickerRoot = await datepicker.getRoot();
+		await datepicker.openPicker();
+
+		let currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+		
+		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
+		await datepicker.openPicker();
+		currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		const dayPicker = await calendar.shadow$("ui5-daypicker");
+		const monthPicker = await calendar.shadow$("ui5-monthpicker");
+		const yearPicker = await calendar.shadow$("ui5-yearpicker");
+		assert.notOk(await dayPicker.getAttribute("hidden"));
+		assert.ok(await monthPicker.getAttribute("hidden"));
+		assert.ok(await yearPicker.getAttribute("hidden"));
 	});
 });

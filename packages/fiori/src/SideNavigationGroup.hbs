@@ -1,0 +1,42 @@
+{{#if sideNavCollapsed}}
+	<div class="ui5-sn-item-separator {{belowGroupClassName}}"></div>
+	<slot></slot>
+	<div class="ui5-sn-item-separator"></div>
+{{else}}
+	{{> treeitem }}
+{{/if}}
+
+{{#*inline treeitem}}
+	<li id="{{_id}}" class="ui5-sn-list-li {{belowGroupClassName}}" role="none">
+		<div class="ui5-sn-item-separator"></div>
+		<div class="ui5-sn-item ui5-sn-item-group {{_classes}}"
+			 role="treeitem"
+			 data-sap-focus-ref
+			 @keydown="{{_onkeydown}}"
+			 @click="{{_onclick}}"
+			 @focusin="{{_onfocusin}}"
+			 tabindex="{{effectiveTabIndex}}"
+			 aria-expanded="{{_expanded}}"
+			 aria-description="{{accDescription}}"
+			 title="{{_tooltip}}"
+			 aria-owns="{{_groupId}}"
+		>
+			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="{{_toggleIconName}}"
+				></ui5-icon>
+			{{/if}}
+		</div>
+		{{#if items.length}}
+			<ul id="{{_groupId}}"
+				class="ui5-sn-item-ul"
+				aria-label="{{text}}"
+				role="group"
+			>
+				<slot></slot>
+			</ul>
+		{{/if}}
+		<div class="ui5-sn-item-separator"></div>
+	</li>
+{{/inline}}

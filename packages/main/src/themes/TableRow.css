@@ -93,8 +93,12 @@
 }
 
 /** Selected **/
-:host([selected]) .ui5-table-row-root:not(:active) {
+:host([selected]) .ui5-table-row-root:not(:active),
+:host([selected]) .ui5-table-row-root:not(:active) ~ tr {
 	background-color: var(--sapList_SelectionBackgroundColor);
+}
+
+:host([selected]) tr:last-child {
 	border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 }
 

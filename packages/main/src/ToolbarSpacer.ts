@@ -10,10 +10,9 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-toolbar-spacer</code> is an element, used for taking needed space for toolbar items to take 100% width.
+ * ### Overview
+ * The `ui5-toolbar-spacer` is an element, used for taking needed space for toolbar items to take 100% width.
  * It takes no space in calculating toolbar items width.
- *
  * @constructor
  * @extends ToolbarItem
  * @abstract
@@ -27,10 +26,8 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 class ToolbarSpacer extends ToolbarItem {
 	/**
 	 * Defines the width of the spacer.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
-	 *
+	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 * @public
 	 * @default undefined
 	 */

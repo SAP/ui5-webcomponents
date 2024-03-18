@@ -9,8 +9,11 @@
 	aria-controls="ui5-tc-content"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-disabled="{{this.effectiveDisabled}}"
-	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
+	?disabled="{{this.effectiveDisabled}}"
+	draggable="{{this.movable}}"
+	@dragstart="{{this._ondragstart}}"
+	@dragend="{{this._ondragend}}"
 	.realTabReference="{{this}}"
 >
 	{{#if this.icon}}
@@ -26,7 +29,7 @@
 	{{/if}}
 
 	<div class="ui5-tab-strip-itemContent">
-		{{#unless this._isInline}}
+		{{#unless this.isInline}}
 			{{> additionalText}}
 		{{/unless}}
 

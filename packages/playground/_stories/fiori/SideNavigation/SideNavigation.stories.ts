@@ -35,17 +35,26 @@ ${story()}`;
 export const Basic = Template.bind({});
 Basic.args = {
 	default: `<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
-	<ui5-side-navigation-item text="People" expanded icon="group">
-		<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
-		<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+	<ui5-side-navigation-group text="Group 1" expanded>
+		<ui5-side-navigation-item text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="People" expanded icon="group">
+			<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+	</ui5-side-navigation-group>
+	<ui5-side-navigation-group text="Group 2" expanded>
+		<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="Locations" disabled icon="locate-me"></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="Events" icon="calendar">
+			<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+	</ui5-side-navigation-group>`,
+	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link">
+		<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
 	</ui5-side-navigation-item>
-	<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-	<ui5-side-navigation-item text="Events" icon="calendar">
-		<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
-		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
-	</ui5-side-navigation-item>`,
-	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
-	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`
+	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`,
 };
 Basic.decorators = [setHeight];
 Basic.parameters = {
@@ -61,17 +70,23 @@ Basic.parameters = {
 export const ToolLayout = Template.bind({});
 ToolLayout.args = {
 	default: `<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
-	<ui5-side-navigation-item text="People" expanded icon="group">
-		<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
-		<ui5-side-navigation-sub-item text="From Other Team"></ui5-side-navigation-sub-item>
+	<ui5-side-navigation-group text="Group" expanded>
+		<ui5-side-navigation-item text="People" expanded icon="group">
+			<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="From Other Team"></ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+		<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="Events" icon="calendar">
+			<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+	</ui5-side-navigation-group>
+	<ui5-side-navigation-item text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>`,
+	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link">
+		<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
 	</ui5-side-navigation-item>
-	<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-	<ui5-side-navigation-item text="Events" icon="calendar">
-		<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
-		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
-	</ui5-side-navigation-item>`,
-	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
-	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`
+	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`,
 };
 ToolLayout.decorators = [
 	setHeight,
@@ -93,10 +108,6 @@ ToolLayout.decorators = [
 		gap: 0.5rem;
 		grid-template-rows: auto 1fr;
 		grid-template-columns: auto 1fr;
-	}
-
-	.tool-layout > * {
-		z-index: 1;
 	}
 
 	ui5-shellbar {
