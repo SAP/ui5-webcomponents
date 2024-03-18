@@ -3,11 +3,11 @@
 		aria-roledescription="{{ariaDescription}}"
 		aria-posinset="{{posInSet}}"
 		aria-setsize="{{sizeOfSet}}"
-		aria-selected="{{pressed}}"
+		aria-selected="{{selected}}"
 		class="ui5-button-root"
 		aria-disabled="{{disabled}}"
 		data-sap-focus-ref
-	{{> ariaPressed}}
+		aria-pressed="{{selected}}"
 		@focusout={{_onfocusout}}
 		@focusin={{_onfocusin}}
 		@click={{_onclick}}
@@ -37,5 +37,3 @@
 	</span>
 
 </li>
-
-{{#*inline "ariaPressed"}}{{/inline}}

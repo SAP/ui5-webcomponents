@@ -10,6 +10,8 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import Icon from "./Icon.js";
 
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @class
@@ -37,29 +39,14 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
 	dependencies: [Icon],
 })
 class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
+	
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "Default"
-	 * @public
-	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	declare design: `${ButtonDesign}`;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * Determines whether the component is displayed as pressed.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare iconEnd: boolean;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	declare submits: boolean;
+	selected!: boolean;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
@@ -76,6 +63,23 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
 	sizeOfSet!: number;
+
+	_onclick() {
+		this.pressed = !this.pressed;
+
+		if (isSafari()) {
+			this.getDomRef()!.focus();
+		}
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpaceShift(e)) {
+			e.preventDefault();
+			return;
+		}
+
+		super._onkeyup(e);
+	}
 
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
