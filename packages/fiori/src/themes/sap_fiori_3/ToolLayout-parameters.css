@@ -1,0 +1,15 @@
+/* base */
+:root {
+	--_ui5_tool_layout_gap: 0;
+    --_ui5_tool_layout_padding: 0;
+    --_ui5_tool_layout_background: color-mix(in srgb, black 4%, var(--sapBackgroundColor));
+    --_ui5_tool_layout_content_background: transparent;
+
+    --_ui5_tool_layout_panel_inner_padding: 0 0.5rem;
+
+    --_ui5_tool_layout_border_radius_top_and_bottom: 0;
+    --_ui5_tool_layout_shadow_top_and_bottom: none;
+
+    --_ui5_tool_layout_border_radius_top: 0;
+    --_ui5_tool_layout_shadow_top: none;
+}

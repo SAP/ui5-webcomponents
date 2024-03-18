@@ -1,42 +1,41 @@
 /* layout */
 /* @public Use as top most element for tool page layout. */
-.ui5-tool-layout {
+.ui5ToolLayout {
     position: relative;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     height: 100%;
 
-    gap: 0.5rem;
-    padding: 0.5rem 0.5rem 0 0.5rem;
-    /* @todo params for all paddings and gaps */
+    gap: var(--_ui5_tool_layout_gap);
+    padding: var(--_ui5_tool_layout_padding);
 
     /* @todo we should not have background here */
-    background: color-mix(in srgb, black 4%, var(--sapBackgroundColor));
+    background: var(--_ui5_tool_layout_background);
 }
 
 /* @public Use for header. */
-.ui5-tool-layout-header {
+.ui5ToolLayoutHeader {
 }
 
 /* @public Use to contain side bar and content. */
-.ui5-tool-layout-body {
+.ui5ToolLayoutBody {
     position: relative;
     flex: 1;
     display: flex;
     flex-direction: row;
     min-height: 0;
 
-    gap: 0.5rem;
+    gap: var(--_ui5_tool_layout_gap);
 }
 
 /* @public Use for side bar. */
-.ui5-tool-layout-side {
+.ui5ToolLayoutSide {
 
 }
 
 /* @public Use for content. */
-.ui5-tool-layout-content {
+.ui5ToolLayoutContent {
     flex: 1;
     /* @todo limit to 100% height always */
 }
@@ -45,44 +44,35 @@
 
 /* panels */
 /* @public Use for panel style in the header. */
-.ui5-tool-layout-panel-top {
-    /* rounded top and bottom */
-    border-radius: 0.5rem;
-    box-shadow:
-        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
-        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+.ui5ToolLayoutPanelTop {
+    border-radius: var(--_ui5_tool_layout_border_radius_top_and_bottom);
+    box-shadow: var(--_ui5_tool_layout_shadow_top_and_bottom);
 
     background: var(--sapShellColor);
 
-    padding: 0 0.5rem; /* @todo */
+    padding: var(--_ui5_tool_layout_panel_top_padding); /* @todo */
 }
 
 /* @public Use for panel style in the side bar. */
-.ui5-tool-layout-panel-side {
-    /* rounded top only */
-    border-radius: 0.5rem 0.5rem 0 0;
-    box-shadow:
-        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
-        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+.ui5ToolLayoutPanelSide {
+    border-radius: var(--_ui5_tool_layout_border_radius_top);
+    box-shadow: var(--_ui5_tool_layout_shadow_top);
 
     background: var(--sapList_Background);
 }
 
 /* @public Use for panel style in the content. */
-.ui5-tool-layout-panel-content {
-    /* rounded top only */
-    border-radius: 0.5rem 0.5rem 0 0;
-    box-shadow:
-        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
-        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+.ui5ToolLayoutPanelContent {
+    border-radius: var(--_ui5_tool_layout_border_radius_top);
+    box-shadow: var(--_ui5_tool_layout_shadow_top);
 
-    background: #f5f6f7;
+    background: var(--_ui5_tool_layout_content_background);
 }
 /* end panels */
 
 /* collapsing */
 /* @public Use when side bar should be detached from the layout. */
-.ui5-tool-layout-side-detached {
+.ui5ToolLayoutSideDetached {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -96,16 +86,16 @@
 }
 
 /* @public Use when side bar is collapsed. */
-.ui5-tool-layout-side-collapsed {
+.ui5ToolLayoutSideCollapsed {
 
 }
 
-.ui5-tool-layout-side-detached.ui5-tool-layout-side-collapsed {
+.ui5ToolLayoutSideDetached.ui5ToolLayoutSideCollapsed {
     transform: translateX(calc(-100% - 0.5rem));
 }
 
 /* @todo side nav width 100% when detached, belongs to side nav? property? */
-.ui5-tool-layout-side-detached ui5-side-navigation {
+.ui5ToolLayoutSideDetached > * {
     width: 100%;
 }
 /* end collapsing */
@@ -113,23 +103,38 @@
 
 
 
+
+
+
+
+
 /* @todo shell bar - belongs to shell bar? */
-.ui5-shell-bar-no-padding::part(root) {
+.ui5ShellBarTransparent::part(root) {
+    background-color: transparent;
+}
+.ui5ShellBarNoPadding::part(root) {
     padding: 0;
 }
+.ui5ShellBarSmallPadding::part(root) {
+    padding: 0 1rem;
+}
 /* end shell bar */
+
+/* @todo side navigation */
+.ui5SideNavigationTransparent::part(root) {
+    background-color: transparent;
+}
+/* end side navigation */
 
 /* @todo tab container - belongs to tab container? */
 /* @todo in order to fully remove padding first and last tabs should not have padding? */
 /* @todo make sure shell bar and tab container have same padding, best is if they have actual 0, then panel can add correct paddings */
-.ui5-tab-container-no-padding::part(tabstrip) {
+.ui5TabContainerNoPadding::part(tabstrip) {
     padding: 0;
     margin-bottom: 0.5rem; /* this should be padding in the panel */
 }
-.ui5-tab-container-no-shadow::part(tabstrip) {
+.ui5TabContainerNoShadow::part(tabstrip) {
     box-shadow: unset;
 }
-.ui5-shell-bar-small-padding::part(root) {
-    padding: 0 1rem;
-}
+
 /* end tab container */

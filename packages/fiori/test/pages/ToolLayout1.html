@@ -24,17 +24,17 @@
 </head>
 
 <body>
-	<div class="ui5-tool-layout">
-		<div class="ui5-tool-layout-header ui5-tool-layout-panel-top">
+	<div class="ui5ToolLayout">
+		<div class="ui5ToolLayoutHeader ui5ToolLayoutPanelTop">
 			header <a id="expandButton" href="#">toggle side</a>
 		</div>
 
-		<div class="ui5-tool-layout-body">
-			<aside id="sideBar" class="ui5-tool-layout-side ui5-tool-layout-panel-side">
+		<div class="ui5ToolLayoutBody">
+			<aside id="sideBar" class="ui5ToolLayoutSide ui5ToolLayoutPanelSide">
 				side expanded
 			</aside>
 
-			<div class="ui5-tool-layout-content ui5-tool-layout-panel-content">
+			<div class="ui5ToolLayoutContent ui5ToolLayoutPanelContent">
 				content
 			</div>
 		</div>
@@ -45,16 +45,23 @@
 			sideBar = document.querySelector("#sideBar");
 
 		expandButton.addEventListener("click", function (event) {
-			sideBar.classList.toggle("ui5-tool-layout-side-collapsed");
-			sideBar.innerText = sideBar.classList.contains("ui5-tool-layout-side-collapsed") ? "side" : "side expanded";
+			sideBar.classList.toggle("ui5ToolLayoutSideCollapsed");
+			sideBar.innerText = sideBar.classList.contains("ui5ToolLayoutSideCollapsed") ? "side" : "side expanded";
 			event.preventDefault();
 		});
 
+
+		/* @todo, real phone vs width check with design */
+		/* @todo make Devide public if needed */
+		/* @todo do we need to auto collapse < 1024 */
+
+		// The following part is made with js instead of css media queries, because this way js knows when the side is collapsed and can have full control on collapsing.
+		// With media query logic will be more complex.
 		const observer = new ResizeObserver(entries => {
 			const width = entries[0].contentRect.width;
 
-			sideBar.classList.toggle("ui5-tool-layout-side-detached",  width < 600);
-			sideBar.classList.toggle("ui5-tool-layout-side-collapsed",  width < 1024);
+			sideBar.classList.toggle("ui5ToolLayoutSideDetached", width < 600);
+			sideBar.classList.toggle("ui5ToolLayoutSideCollapsed", width < 1024);
 
 			// for demonstration
 			sideBar.innerText = width < 1024 ? "side" : "side expanded";

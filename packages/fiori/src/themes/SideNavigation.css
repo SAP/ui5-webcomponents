@@ -19,7 +19,7 @@
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
-	/* todo background color? */
+	background: var(--sapList_Background);
 	border-inline-end: var(--_ui5_side_navigation_border_right);
 	border-radius: inherit;
 }

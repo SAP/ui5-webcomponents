@@ -1,0 +1,20 @@
+/* base */
+:root {
+	--_ui5_tool_layout_gap: 0.5rem;
+    --_ui5_tool_layout_padding: 0.5rem 0.5rem 0 0.5rem;
+    --_ui5_tool_layout_background: color-mix(in srgb, black 4%, var(--sapBackgroundColor));
+    --_ui5_tool_layout_content_background: #f5f6f7;
+
+    --_ui5_tool_layout_panel_inner_padding: 0 0.5rem;
+
+    --_ui5_tool_layout_border_radius_top_and_bottom: 0.5rem;
+    --_ui5_tool_layout_shadow_top_and_bottom:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+
+
+    --_ui5_tool_layout_border_radius_top: 0.5rem 0.5rem 0 0;
+    --_ui5_tool_layout_shadow_top:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+}

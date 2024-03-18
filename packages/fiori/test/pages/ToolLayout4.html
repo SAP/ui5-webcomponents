@@ -24,8 +24,8 @@
 
 <body>
 
-	<div class="ui5-tool-layout">
-		<div class="ui5-tool-layout-header ui5-tool-layout-panel-top">
+	<div class="ui5ToolLayout">
+		<div class="ui5ToolLayoutHeader ui5ToolLayoutPanelTop">
 			<ui5-button icon="menu" id="expandButton"></ui5-button>
 			<ui5-tabcontainer fixed="" collapsed="" data-sap-ui-fastnavgroup="true">
 				<ui5-tab text="Home" is-top-level-tab="" slot="default-1"></ui5-tab>
@@ -41,8 +41,8 @@
 			</ui5-tabcontainer>
 		</div>
 
-		<div class="ui5-tool-layout-body">
-			<aside id="sideBar" class="ui5-tool-layout-side ui5-tool-layout-panel-side">
+		<div class="ui5ToolLayoutBody">
+			<aside id="sideBar" class="ui5ToolLayoutSide ui5ToolLayoutPanelSide">
 				<ui5-tree>
 					<ui5-tree-item
 					expanded=""
@@ -204,7 +204,7 @@
 					<ui5-tree-item text="Tree 1" icon="paste"  level="1" ></ui5-tree-item>
 				</ui5-tree>
 			</aside>
-			<div class="ui5-tool-layout-content ui5-tool-layout-panel-content">
+			<div class="ui5ToolLayoutContent ui5ToolLayoutPanelContent">
 				content
 			</div>
 		</div>
@@ -215,14 +215,14 @@
 			sideBar = document.querySelector("#sideBar");
 
 		expandButton.addEventListener("click", function (event) {
-			sideBar.classList.toggle("ui5-tool-layout-side-collapsed");
+			sideBar.classList.toggle("ui5ToolLayoutSideCollapsed");
 		});
 
 		const observer = new ResizeObserver(entries => {
 			const width = entries[0].contentRect.width;
 
-			sideBar.classList.toggle("ui5-tool-layout-side-detached",  width < 600);
-			sideBar.classList.toggle("ui5-tool-layout-side-collapsed",  width < 1024);
+			sideBar.classList.toggle("ui5ToolLayoutSideDetached",  width < 600);
+			sideBar.classList.toggle("ui5ToolLayoutSideCollapsed",  width < 1024);
 		});
 		observer.observe(document.body);
 	</script>

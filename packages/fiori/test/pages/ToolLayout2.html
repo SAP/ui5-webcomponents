@@ -25,16 +25,16 @@
 
 <body>
 
-	<div class="ui5-tool-layout">
-		<div class="ui5-tool-layout-header ui5-tool-layout-panel-top">
-			<ui5-shellbar class="ui5-shell-bar-no-padding" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
+	<div class="ui5ToolLayout">
+		<div class="ui5ToolLayoutHeader ui5ToolLayoutPanelTop">
+			<ui5-shellbar class="ui5ShellBarNoPadding ui5ShellBarTransparent" primary-title="UI5 Web Components" secondary-title="The Best Run SAP" >
 				<ui5-button icon="menu" slot="startButton" id="expandButton" tooltip="Toggle side navigation"></ui5-button>
 			</ui5-shellbar>
 		</div>
 
-		<div class="ui5-tool-layout-body">
-			<aside id="sideBar" class="ui5-tool-layout-side ui5-tool-layout-panel-side">
-				<ui5-side-navigation>
+		<div class="ui5ToolLayoutBody">
+			<aside id="sideBar" class="ui5ToolLayoutSide ui5ToolLayoutPanelSide">
+				<ui5-side-navigation class="ui5SideNavigationTransparent">
 					<ui5-side-navigation-item id="item1" text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
 					<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
 						<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
@@ -93,7 +93,7 @@
 				</ui5-side-navigation>
 			</aside>
 
-			<div class="ui5-tool-layout-content ui5-tool-layout-panel-content">
+			<div class="ui5ToolLayoutContent ui5ToolLayoutPanelContent">
 				content
 			</div>
 		</div>
@@ -105,15 +105,17 @@
 			sideBar = document.querySelector("#sideBar");
 
 		expandButton.addEventListener("click", function (event) {
-			sideBar.classList.toggle("ui5-tool-layout-side-collapsed");
+			sideBar.classList.toggle("ui5ToolLayoutSideCollapsed");
 			sideNavigation.toggleAttribute("collapsed");
 		});
 
+		// The following part is made with js instead of css media queries, because this way js knows when the side is collapsed and can have full control on collapsing.
+		// With media query logic will be more complex.
 		const observer = new ResizeObserver(entries => {
 			const width = entries[0].contentRect.width;
 
-			sideBar.classList.toggle("ui5-tool-layout-side-detached",  width < 600);
-			sideBar.classList.toggle("ui5-tool-layout-side-collapsed",  width < 1024);
+			sideBar.classList.toggle("ui5ToolLayoutSideDetached",  width < 600);
+			sideBar.classList.toggle("ui5ToolLayoutSideCollapsed",  width < 1024);
 			sideNavigation.toggleAttribute("collapsed", width < 1024);
 		});
 		observer.observe(document.body);

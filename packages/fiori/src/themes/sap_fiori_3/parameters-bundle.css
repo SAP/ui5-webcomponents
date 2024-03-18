@@ -9,6 +9,7 @@
 @import "./ShellBar-parameters.css";
 @import "../base/SideNavigation-parameters.css";
 @import "../base/TimelineItem-parameters.css";
+@import "./ToolLayout-parameters.css";
 @import "../base/UploadCollection-parameters.css";
 @import "../base/ViewSettingsDialog-parameters.css";
 @import "../base/Wizard-parameters.css";
