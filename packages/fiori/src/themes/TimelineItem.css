@@ -231,7 +231,6 @@
 	font-weight: 400;
 	font-size: var(--sapFontSmallSize);
 	padding-top: var(--_ui5_TimelineItem_bubble_content_subtitle_padding_top);
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
