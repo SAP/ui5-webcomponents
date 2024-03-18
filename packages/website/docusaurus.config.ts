@@ -6,20 +6,25 @@ import packageJson from "./package.json";
 
 console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
 
+const LATEST_URL_PARTH = "/ui5-webcomponents/";
+const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nightly/";
+
+const LATEST_DEPLOYMENT = process.env.DEPLOYMENT_TYPE === "latest";
+const DEVELOPMENT_ENVIRONMENT =  process.env.NODE_ENV === "development";
 
 const getBaseURL = () => {
   // localhost
-  if (process.env.NODE_ENV === "development") {
+  if (DEVELOPMENT_ENVIRONMENT) {
     return "";
   }
 
   // latest deployment
-  if (process.env.DEPLOYMENT_TYPE === "latest") {
-    return "/ui5-webcomponents/";
+  if (LATEST_DEPLOYMENT) {
+    return LATEST_URL_PARTH;
   }
 
   // nightly deployment
-  return "/ui5-webcomponents/nightly/";
+  return NIGHTLY_URL_PARTH;
 };
 
 
@@ -193,7 +198,7 @@ const config: Config = {
           items: [
             {
               label: 'Privacy',
-              href: 'https://www.sap.com/about/legal/privacy.html',
+              href: `${DEVELOPMENT_ENVIRONMENT ? "/Privacy" : `https://sap.github.io${LATEST_DEPLOYMENT ? LATEST_URL_PARTH : NIGHTLY_URL_PARTH}Privacy`}`,
             },
             {
               label: 'Legal Disclosure',
