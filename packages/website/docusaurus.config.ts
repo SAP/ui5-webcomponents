@@ -203,7 +203,15 @@ const config: Config = {
             },
             {
               label: 'Legal Disclosure',
-              href: 'https://www.sap.com/about/legal/impressum.html',
+              href: 'https://www.sap.com/impressum',
+            },
+            {
+              label: 'Terms of Use',
+              href: 'https://www.sap.com/terms-of-use',
+            },
+            {
+              label: 'Trademark',
+              href: 'https://www.sap.com/trademark',
             },
           ],
         },
