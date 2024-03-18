@@ -6,21 +6,27 @@ import packageJson from "./package.json";
 
 console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
 
+const LATEST_URL_PARTH = "/ui5-webcomponents/";
+const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nightly/";
+
+const LATEST_DEPLOYMENT = process.env.DEPLOYMENT_TYPE === "latest";
+const DEVELOPMENT_ENVIRONMENT =  process.env.NODE_ENV === "development";
 
 const getBaseURL = () => {
   // localhost
-  if (process.env.NODE_ENV === "development") {
-    return "";
+  if (DEVELOPMENT_ENVIRONMENT) {
+    return "/";
   }
 
-  // latest deployment
-  if (process.env.DEPLOYMENT_TYPE === "latest") {
-    return "/ui5-webcomponents/";
-  }
-
-  // nightly deployment
-  return "/ui5-webcomponents/nightly/";
+  // latest deployment or nightly deployment
+  return LATEST_DEPLOYMENT ? LATEST_URL_PARTH : NIGHTLY_URL_PARTH;
 };
+
+const BASE_URL = getBaseURL();
+
+const getFullURL = () => {
+  return DEVELOPMENT_ENVIRONMENT ? `${BASE_URL}` : `https://sap.github.io${BASE_URL}`
+}
 
 
 const config: Config = {
@@ -32,7 +38,7 @@ const config: Config = {
   url: 'https://sap.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: getBaseURL(),
+  baseUrl: BASE_URL,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -193,7 +199,7 @@ const config: Config = {
           items: [
             {
               label: 'Privacy',
-              href: 'https://www.sap.com/about/legal/privacy.html',
+              href: `${getFullURL()}Privacy`,
             },
             {
               label: 'Legal Disclosure',
