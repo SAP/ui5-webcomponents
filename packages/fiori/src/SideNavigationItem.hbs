@@ -1,0 +1,154 @@
+{{#if sideNavCollapsed}}
+	{{> menuitem }}
+{{else}}
+	{{> treeitem }}
+{{/if}}
+
+{{#*inline menuitem}}
+	{{#if _href}}
+		<a id="{{_id}}"
+		   class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
+		   role="{{ariaRole}}"
+		   data-sap-focus-ref
+		   @keydown="{{_onkeydown}}"
+		   @keyup="{{_onkeyup}}"
+		   @click="{{_onclick}}"
+		   @focusin="{{_onfocusin}}"
+		   @focusout="{{_onfocusout}}"
+		   @mouseenter="{{_onmouseenter}}"
+		   @mouseleave="{{_onmouseleave}}"
+		   tabindex="{{effectiveTabIndex}}"
+		   aria-haspopup="{{_ariaHasPopup}}"
+		   aria-checked="{{_ariaChecked}}"
+		   title="{{_tooltip}}"
+		   href="{{_href}}"
+		   target="{{_target}}"
+		>
+			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
+			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
+			{{#if isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
+				></ui5-icon>
+			{{/if}}
+		</a>
+	{{else}}
+		<div id="{{_id}}"
+			 class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
+			 role="{{ariaRole}}"
+			 data-sap-focus-ref
+			 @keydown="{{_onkeydown}}"
+			 @keyup="{{_onkeyup}}"
+			 @click="{{_onclick}}"
+			 @focusin="{{_onfocusin}}"
+			 @focusout="{{_onfocusout}}"
+			 @mouseenter="{{_onmouseenter}}"
+			 @mouseleave="{{_onmouseleave}}"
+			 tabindex="{{effectiveTabIndex}}"
+			 aria-haspopup="{{_ariaHasPopup}}"
+			 aria-checked="{{_ariaChecked}}"
+			 title="{{_tooltip}}"
+		>
+			<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
+			<div class="ui5-sn-item-text">{{text}}</div>
+			{{#if items.length}}
+				<ui5-icon class="ui5-sn-item-toggle-icon"
+						  name="navigation-right-arrow"
+				></ui5-icon>
+			{{/if}}
+			{{#if isExternalLink}}
+				<ui5-icon class="ui5-sn-item-external-link-icon"
+						  name="arrow-right"
+				></ui5-icon>
+			{{/if}}
+		</div>
+	{{/if}}
+{{/inline}}
+
+{{#*inline treeitem}}
+	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
+		{{#if _href}}
+			<a class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
+			   role="{{ariaRole}}"
+			   data-sap-focus-ref
+			   @keydown="{{_onkeydown}}"
+			   @keyup="{{_onkeyup}}"
+			   @click="{{_onclick}}"
+			   @focusin="{{_onfocusin}}"
+			   tabindex="{{effectiveTabIndex}}"
+			   aria-expanded="{{_expanded}}"
+			   aria-current="{{_ariaCurrent}}"
+			   title="{{_tooltip}}"
+			   aria-owns="{{_groupId}}"
+			   href="{{_href}}"
+			   target="{{_target}}"
+			>
+				{{#if icon}}
+					<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
+				{{/if}}
+				<div class="ui5-sn-item-text">{{text}}</div>
+				<ui5-icon class="ui5-sn-item-selection-icon"
+						  name="circle-task-2"
+				></ui5-icon>
+				{{#if isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
+					></ui5-icon>
+				{{/if}}
+				{{#if items.length}}
+					<ui5-icon class="ui5-sn-item-toggle-icon"
+							  name="{{_toggleIconName}}"
+							  @click="{{_onToggleClick}}"
+					></ui5-icon>
+				{{/if}}
+			</a>
+		{{else}}
+			<div class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
+				 role="{{ariaRole}}"
+				 data-sap-focus-ref
+				 @keydown="{{_onkeydown}}"
+				 @keyup="{{_onkeyup}}"
+				 @click="{{_onclick}}"
+				 @focusin="{{_onfocusin}}"
+				 tabindex="{{effectiveTabIndex}}"
+				 aria-expanded="{{_expanded}}"
+				 aria-current="{{_ariaCurrent}}"
+				 title="{{_tooltip}}"
+				 aria-owns="{{_groupId}}"
+			>
+				{{#if icon}}
+					<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
+				{{/if}}
+				<div class="ui5-sn-item-text">{{text}}</div>
+				<ui5-icon class="ui5-sn-item-selection-icon"
+						  name="circle-task-2"
+				></ui5-icon>
+				{{#if isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
+					></ui5-icon>
+				{{/if}}
+				{{#if items.length}}
+					<ui5-icon class="ui5-sn-item-toggle-icon"
+							  name="{{_toggleIconName}}"
+							  @click="{{_onToggleClick}}"
+					></ui5-icon>
+				{{/if}}
+			</div>
+		{{/if}}
+		{{#if items.length}}
+			<ul id="{{_groupId}}"
+				class="ui5-sn-item-ul"
+				aria-label="{{text}}"
+				role="group"
+			>
+				<slot></slot>
+			</ul>
+		{{/if}}
+	</li>
+{{/inline}}

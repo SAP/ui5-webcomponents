@@ -2,7 +2,7 @@ import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/List.js";
 
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
-import "@ui5/webcomponents-fiori/dist/NotificationAction";
+import "@ui5/webcomponents-fiori/dist/NotificationAction.js";
 
 import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/accept.js";

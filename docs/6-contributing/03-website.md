@@ -1,4 +1,4 @@
-# Running Wesbsite Locally
+# Running Website Locally
 
 The UI5 Web Components Website app is the entry point of the UI5 Web Components project. 
 The app includes documentation, API reference and samples for all the available web components.
