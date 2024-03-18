@@ -15,17 +15,18 @@ const DEVELOPMENT_ENVIRONMENT =  process.env.NODE_ENV === "development";
 const getBaseURL = () => {
   // localhost
   if (DEVELOPMENT_ENVIRONMENT) {
-    return "";
+    return "/";
   }
 
-  // latest deployment
-  if (LATEST_DEPLOYMENT) {
-    return LATEST_URL_PARTH;
-  }
-
-  // nightly deployment
-  return NIGHTLY_URL_PARTH;
+  // latest deployment or nightly deployment
+  return LATEST_DEPLOYMENT ? LATEST_URL_PARTH : NIGHTLY_URL_PARTH;
 };
+
+const BASE_URL = getBaseURL();
+
+const getFullURL = () => {
+  return DEVELOPMENT_ENVIRONMENT ? `${BASE_URL}` : `https://sap.github.io${BASE_URL}`
+}
 
 
 const config: Config = {
@@ -37,7 +38,7 @@ const config: Config = {
   url: 'https://sap.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: getBaseURL(),
+  baseUrl: BASE_URL,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -198,7 +199,7 @@ const config: Config = {
           items: [
             {
               label: 'Privacy',
-              href: `${DEVELOPMENT_ENVIRONMENT ? "/Privacy" : `https://sap.github.io${LATEST_DEPLOYMENT ? LATEST_URL_PARTH : NIGHTLY_URL_PARTH}Privacy`}`,
+              href: `${getFullURL()}Privacy`,
             },
             {
               label: 'Legal Disclosure',
