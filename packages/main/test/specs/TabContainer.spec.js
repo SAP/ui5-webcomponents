@@ -346,6 +346,17 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await firstTabItemText.getProperty("innerText"), "Tab 1 (123)" , "The inline number is added to the text.");
 	});
 
+	it("test that tab can be focused right after is inserted in the tab container", async () => {
+		await browser.$("#insertAndFocusNewTab").click();
+		const isNewTabFocused = await browser.executeAsync((done) => {
+			const tabInStripDomRef = document.getElementById("newlyInsertedFocusedTab").getTabInStripDomRef();
+			const activeElement = document.activeElement.shadowRoot.activeElement;
+
+			done(tabInStripDomRef === activeElement);
+		});
+
+		assert.ok(isNewTabFocused, "Tab should be focused");
+	});
 });
 
 describe("TabContainer keyboard handling", () => {
@@ -486,7 +497,7 @@ describe("TabContainer drag and drop tests", () => {
 
 	const dragAndDropInPopover = async (popoverItemToDrag, popoverDropTarget, placement) => {
 		const dragOffset = await getDragOffset(popoverItemToDrag, popoverDropTarget, placement);
-		console.error("DRAG IN DROP IN POPOVER   ", dragOffset.y)
+
 		await popoverItemToDrag.dragAndDrop({ x: 0, y: dragOffset.y });
 	}
 
@@ -565,11 +576,8 @@ describe("TabContainer drag and drop tests", () => {
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
-		console.error(currentOrder);
 		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
-		console.error(currentOrder);
-		console.error(expectedOrder);
 
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
