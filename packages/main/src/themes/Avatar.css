@@ -30,7 +30,8 @@
 	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
 }
 
-:host(:is([interactive][focused]):not([hidden]):not([pressed])) {
+:host(:is([interactive][desktop]):not([hidden])) .ui5-avatar-root:focus-within,
+:host(:is([interactive]):not([hidden])) .ui5-avatar-root:focus-visible {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
 }
@@ -55,6 +56,7 @@
 	outline: none;
 	height: 100%;
 	width: 100%;
+	border-radius: inherit;
 }
 
 /* Sizes */

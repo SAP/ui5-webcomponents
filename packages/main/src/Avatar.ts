@@ -11,6 +11,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type { IAvatarGroupItem } from "./AvatarGroup.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
@@ -90,13 +91,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 */
 	@property({ type: Boolean })
 	interactive!: boolean;
-
-	/**
-	 * Indicates if the elements is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
 
 	/**
 	 * Indicates if the elements is pressed
@@ -341,6 +335,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+
 		this.initialsContainer && ResizeHandler.register(this.initialsContainer,
 			this._handleResizeBound);
 	}
@@ -407,16 +405,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	_fireClick() {
 		this.fireEvent("click");
 		this.pressed = !this.pressed;
-	}
-
-	_onfocusout() {
-		this.focused = false;
-	}
-
-	_onfocusin() {
-		if (this._interactive) {
-			this.focused = true;
-		}
 	}
 
 	_getAriaHasPopup() {
