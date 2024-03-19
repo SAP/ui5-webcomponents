@@ -62,9 +62,7 @@
 				.associatedItem="{{this.item}}"
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
-				.icon="{{this.item.icon}}"
 				accessible-name={{this.item.ariaLabelledByText}}
-				accessible-role="menuitem"
 				.additionalText="{{this.item._additionalText}}"
 				tooltip="{{this.item.tooltip}}"
 				?disabled={{this.item.disabled}}
@@ -76,32 +74,6 @@
 				@keydown={{../_itemKeyDown}}
 				@_focused={{../_onfocusin}}
 			>
-				<div class="ui5-menu-item-text">
-				{{#if this.item.hasDummyIcon}}
-					<div
-						class="ui5-menu-item-dummy-icon"
-					>
-					</div>
-				{{/if}}
-				{{this.item.text}}
-				{{#if this.item.hasSubmenu}}
-					<div
-						class="ui5-menu-item-submenu-icon"
-					>
-						<ui5-icon
-							part="subicon"
-							name="slim-arrow-right"
-							class="ui5-menu-item-icon-end"
-						>
-						</ui5-icon>
-					</div>
-				{{else if this.item._siblingsWithChildren}}
-					<div
-						class="ui5-menu-item-no-icon-end"
-					>
-					</div>
-				{{/if}}
-				</div>
 			</ui5-menu-li>
 		{{/each}}
 		</ui5-list>

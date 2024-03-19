@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import StandardListItem from "./StandardListItem.js";
-import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
+import CustomListItem from "./CustomListItem.js";
+import MenuListItemTemplate from "./generated/templates/MenuListItemTemplate.lit.js";
 import MenuItem from "./MenuItem.js";
 import HasPopup from "./types/HasPopup.js";
 
@@ -11,22 +11,50 @@ import menuListItemCss from "./generated/themes/MenuListItem.css.js";
 /**
  * @class
  * @constructor
- * @extends StandardListItem
+ * @extends CustomListItem
  * @since 1.23.0
  * @private
  */
 @customElement({
 	tag: "ui5-menu-li",
-	template: StandardListItemTemplate,
-	styles: [StandardListItem.styles, menuListItemCss],
+	template: MenuListItemTemplate,
+	styles: [CustomListItem.styles, menuListItemCss],
 })
-class MenuListItem extends StandardListItem {
+class MenuListItem extends CustomListItem {
 	/**
 	 * Defines the associated MenuItem instance
 	 * @private
 	 */
 	@property({ type: Object })
 	associatedItem?: MenuItem;
+
+	get text() {
+		return this.associatedItem?.text;
+	}
+
+	get icon() {
+		return this.associatedItem?.icon;
+	}
+
+	get hasIcon() {
+		return !!this.associatedItem?.icon;
+	}
+
+	get hasSubmenu() {
+		return !!(this.associatedItem?.items.length || this.associatedItem?.busy);
+	}
+
+	get subMenuOpened() {
+		return !!this.associatedItem?._subMenu;
+	}
+
+	get _additionalText() {
+		return this.associatedItem?.hasSubmenu ? "" : this.associatedItem?.additionalText;
+	}
+
+	get _siblingsWithIcon() {
+		return this.associatedItem?._siblingsWithIcon;
+	}
 
 	get _focusable() {
 		return true;
