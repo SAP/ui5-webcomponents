@@ -9,17 +9,13 @@ import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site
 import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
+import { Splitter } from 'react-splitter-light';
 import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
 import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
 import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
 
-let Splitter = function () {
-  return (<></>)
-};
-
 if (ExecutionEnvironment.canUseDOM) {
-  Splitter = require('react-splitter-light').Splitter;
   require('playground-elements');
 }
 
