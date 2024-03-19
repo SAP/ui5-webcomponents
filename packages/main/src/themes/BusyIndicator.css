@@ -132,11 +132,11 @@
 }
 
 .ui5-busy-indicator-text-placement-top {
-	margin-bottom: .25rem;
+	margin-bottom: 0.5rem
 }
 
 .ui5-busy-indicator-text-placement-bottom {
-	margin-top: .25rem;
+	margin-top: 0.5rem;
 }
 
 @keyframes grow {
