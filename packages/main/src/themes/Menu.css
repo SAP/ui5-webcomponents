@@ -8,7 +8,6 @@
 .ui5-menu-rp[ui5-responsive-popover] {
 	box-shadow: var(--sapContent_Shadow1);
 	border-radius: var(--_ui5_menu_popover_border_radius);
-	max-width: 20rem;
 }
 
 .ui5-menu-busy-indicator {

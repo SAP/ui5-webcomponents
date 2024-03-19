@@ -34,10 +34,9 @@
 }
 
 .ui5-menu-item-text {
-	overflow: hidden;
-	text-overflow: ellipsis;
 	white-space: nowrap;
 	pointer-events: none;
+	display: inline-block;
 }
 
 .ui5-menu-item-dummy-icon {
