@@ -62,9 +62,9 @@
 				.associatedItem="{{this.item}}"
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
+				.icon="{{this.item.icon}}"
 				accessible-name={{this.item.ariaLabelledByText}}
 				accessible-role="menuitem"
-				.icon="{{this.item.icon}}"
 				.additionalText="{{this.item._additionalText}}"
 				tooltip="{{this.item.tooltip}}"
 				?disabled={{this.item.disabled}}
