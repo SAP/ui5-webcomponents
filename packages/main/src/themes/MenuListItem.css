@@ -26,9 +26,9 @@
 	padding: var(--_ui5_menu_item_padding);
 }
 
-
 :host::part(additional-text) {
-	margin-inline-start: var(--_ui5_menu_item_additional_text_start_margin);
+	margin: unset;
+	margin-inline-start: auto;
 	color: var(--sapContent_LabelColor);
 	min-width: max-content;
 }
