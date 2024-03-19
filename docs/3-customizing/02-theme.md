@@ -110,5 +110,3 @@ To load a custom theme via URL, you can also use the available `setThemeRoot` me
 import { setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 setThemeRoot("https://my-example-host.com/");
 ```
-
-Next: [Custom Fonts](./03-theme_part2.md)

@@ -40,14 +40,15 @@ No properties available for this component.`
 |             |   |
 |-------------|---|
 | Description | ${processDescription(property.description)} |
-| Type        | ${processType(property.type)} |`
+| Type        | ${processType(property.type)}               |
+| Default     | ${property.default}                         |`
 
         if (property._ui5since) {
             propertyResult += `\n| Since | ${property._ui5since} |`
         }
 
         if (property.deprecated) {
-            propertyResult += `\n| Deprecated | ${processDescription(typeof property.deprecated === "boolean" ? "true" : property.deprecated)} |`
+            propertyResult += `\n| **Deprecated** | ${processDescription(typeof property.deprecated === "boolean" ? "true" : property.deprecated)} |`
         }
 
         return propertyResult

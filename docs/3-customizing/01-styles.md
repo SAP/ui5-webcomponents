@@ -64,5 +64,3 @@ ui5-button {
 ## Custom Theme schema
 To change the entire colour scheme, the users can create a custom theme.
 You can find here more info in the next article.
-
-Next: [Custom Theming](./02-theme.md)

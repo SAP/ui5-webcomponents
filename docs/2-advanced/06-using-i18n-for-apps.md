@@ -116,5 +116,3 @@ and return the data directly in `.json` format if you want to load a little bit 
 | `assets/messagebundle_es.json` | `{"PLEASE_WAIT": "Espere"}`       |
 | `assets/messagebundle_en.json` | `{"PLEASE_WAIT": "Please wait"}`  |
 
-
-Next: [Accessibility](./07-accessibility.md)
