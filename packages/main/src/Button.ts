@@ -1,16 +1,17 @@
-import ButtonBase from "./ButtonBase.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import ButtonBase from "./ButtonBase.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -23,7 +24,6 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 
 type AccessibilityAttributes = {
 	expanded?: "true" | "false" | boolean,
@@ -194,8 +194,6 @@ class Button extends ButtonBase implements IFormElement, IButton {
 		}
 	}
 
-	
-
 	get _hasPopup() {
 		return this.accessibilityAttributes.hasPopup?.toLowerCase();
 	}
@@ -238,5 +236,5 @@ Button.define();
 export default Button;
 export type {
 	AccessibilityAttributes,
-	IButton
+	IButton,
 };

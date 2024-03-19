@@ -18,9 +18,9 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 
 let isGlobalHandlerAttached = false;
@@ -79,7 +79,6 @@ let activeButton: ButtonBase | null = null;
  */
 @event("_active-state-change")
 class ButtonBase extends UI5Element implements IFormElement {
-
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or

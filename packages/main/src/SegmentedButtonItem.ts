@@ -1,17 +1,15 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
+import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
 import ToggleButton from "./ToggleButton.js";
-import ButtonDesign from "./types/ButtonDesign.js";
 import Icon from "./Icon.js";
 
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
-import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 
 /**
  * @class
@@ -39,7 +37,6 @@ import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 	dependencies: [Icon],
 })
 class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
-	
 	/**
 	 * Determines whether the component is displayed as pressed.
 	 * @default false
