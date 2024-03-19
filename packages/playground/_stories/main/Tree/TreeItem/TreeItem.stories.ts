@@ -29,6 +29,7 @@ const Template: UI5StoryArgs<TreeItem, StoryArgsSlots> = (args) => html`<ui5-tre
         navigated="${ifDefined(args.navigated)}"
         type="${ifDefined(args.type)}"
         selected="${ifDefined(args.selected)}"
+		tooltip="${ifDefined(args.tooltip)}"
     >
         ${unsafeHTML(args.default)}
         ${unsafeHTML(args.deleteButton)}

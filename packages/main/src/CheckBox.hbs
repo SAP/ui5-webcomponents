@@ -20,12 +20,12 @@
 
 	{{#if isDisplayOnly}}
 		<div class="ui5-checkbox-display-only-icon-inner">
-			<ui5-icon aria-hidden="true" name={{displayOnlyIcon}} class="ui5-checkbox-display-only-icon"></ui5-icon>
+			<ui5-icon aria-hidden="true" name={{displayOnlyIcon}} class="ui5-checkbox-display-only-icon" part="icon"></ui5-icon>
 		</div>
 	{{else}}
 		<div id="{{_id}}-CbBg" class="ui5-checkbox-inner">
 			{{#if isCompletelyChecked}}
-				<ui5-icon aria-hidden="true" name="accept" class="ui5-checkbox-icon"></ui5-icon>
+				<ui5-icon aria-hidden="true" name="accept" class="ui5-checkbox-icon" part="icon"></ui5-icon>
 			{{/if}}
 		</div>
 	{{/if}}

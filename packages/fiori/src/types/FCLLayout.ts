@@ -1,6 +1,5 @@
 /**
  * Different types of FCLLayout.
- *
  * @public
  */
 enum FCLLayout {
@@ -17,7 +16,6 @@ enum FCLLayout {
 	 * Phone:   -- 100 --  only the Mid column is displayed
 	 *
 	 * Use to display both a list and a detail page when the user should focus on the list page.
-	 *
 	 * @public
 	 */
 	TwoColumnsStartExpanded = "TwoColumnsStartExpanded",
@@ -28,7 +26,6 @@ enum FCLLayout {
 	 * Phone:   -- 100 --   only the Mid column is displayed
 	 *
 	 * Use to display both a list and a detail page when the user should focus on the detail page.
-	 *
 	 * @public
 	 */
 	TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
@@ -39,7 +36,6 @@ enum FCLLayout {
 	 * Phone:   -- -- 100  only the End column is displayed
 	 *
 	 * Use to display all three pages (list, detail, detail-detail) when the user should focus on the detail.
-	 *
 	 * @public
 	 */
 	ThreeColumnsMidExpanded = "ThreeColumnsMidExpanded",
@@ -50,7 +46,6 @@ enum FCLLayout {
 	 * Phone:   -- -- 100  (only the End column is displayed)
 	 *
 	 * Use to display all three pages (list, detail, detail-detail) when the user should focus on the detail-detail.
-	 *
 	 * @public
 	 */
 	ThreeColumnsEndExpanded = "ThreeColumnsEndExpanded",
@@ -62,7 +57,6 @@ enum FCLLayout {
 	 *
 	 * Use to display the list and detail pages when the user should focus on the list.
 	 * The detail-detail is still loaded and easily accessible with layout arrows.
-	 *
 	 * @public
 	 */
 	ThreeColumnsStartExpandedEndHidden = "ThreeColumnsStartExpandedEndHidden",
@@ -74,7 +68,6 @@ enum FCLLayout {
 	 *
 	 * Use to display the list and detail pages when the user should focus on the detail.
 	 * The detail-detail is still loaded and easily accessible with a layout arrow.
-	 *
 	 * @public
 	 */
 	ThreeColumnsMidExpandedEndHidden = "ThreeColumnsMidExpandedEndHidden",
@@ -85,7 +78,6 @@ enum FCLLayout {
 	 * Phone:   -- 100 --  only the Mid column is displayed
 	 *
 	 * Use to display a detail page only, when the user should focus entirely on it.
-	 *
 	 * @public
 	 */
 	MidColumnFullScreen = "MidColumnFullScreen",
@@ -96,7 +88,6 @@ enum FCLLayout {
 	 * Phone:   -- -- 100  only the End column is displayed
 	 *
 	 * Use to display a detail-detail page only, when the user should focus entirely on it.
-	 *
 	 * @public
 	 */
 	EndColumnFullScreen = "EndColumnFullScreen",

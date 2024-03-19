@@ -99,4 +99,3 @@ that support them (Chrome, Edge) out of the box. For the other browsers (Firefox
 achieve CSP-compliance, you must instruct the framework to use `<link>` instead of `<style>` tags, but
 then you must also copy the CSS resources to a directory you can serve them from.
 
-Next: [Scrollbars customization](./09-scrollbars-customization.md)

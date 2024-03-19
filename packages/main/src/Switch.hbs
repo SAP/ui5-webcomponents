@@ -9,7 +9,6 @@
 	@keyup="{{_onkeyup}}"
 	@keydown="{{_onkeydown}}"
 	tabindex="{{effectiveTabIndex}}"
-	dir="{{effectiveDir}}"
 	title="{{tooltip}}"
 >
 	<div class="ui5-switch-inner">
@@ -27,7 +26,7 @@
 						<span class="ui5-switch-text ui5-switch-text--on ui5-switch-no-label-icon" part="text-on">
 							<ui5-icon name="{{sapNextIcon}}" class="ui5-switch-no-label-icon-on" ></ui5-icon>
 						</span>
-						<span class="ui5-switch-text ui5-switch-text--off switch-no-label-icon" part="text-off">
+						<span class="ui5-switch-text ui5-switch-text--off ui5-switch-no-label-icon" part="text-off">
 							<ui5-icon name="{{sapNextIcon}}" class="ui5-switch-no-label-icon-off" ></ui5-icon>
 						</span>
 					{{else}}

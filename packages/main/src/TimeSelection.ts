@@ -50,7 +50,6 @@ type TimeSelectionSliderChangeEventDetail = {
 
 /**
  * @class
- *
  * @constructor
  * @extends UI5Element
  * @private
@@ -86,7 +85,6 @@ type TimeSelectionSliderChangeEventDetail = {
 class TimeSelection extends UI5Element {
 	/**
 	 * Defines a formatted time value.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -100,7 +98,6 @@ class TimeSelection extends UI5Element {
 	 * HH:mm:ss -> 11:42:35
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -110,7 +107,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -120,7 +116,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -130,7 +125,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -139,7 +133,6 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -148,7 +141,6 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -157,7 +149,6 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
-	 *
 	 * @default undefined
 	 * @public
 	 */

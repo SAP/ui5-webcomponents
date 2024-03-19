@@ -46,45 +46,47 @@ const ACCELERATION = 0.8;
 const MIN_WAIT_TIMEOUT = 50; // milliseconds
 const INITIAL_SPEED = 120; // milliseconds
 
+type StepInputValueStateChangeEventDetail = {
+	valueState: `${ValueState}`,
+	valid: boolean,
+}
+
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-step-input</code> consists of an input field and buttons with icons to increase/decrease the value
+ * The `ui5-step-input` consists of an input field and buttons with icons to increase/decrease the value
  * with the predefined step.
- * <br><br>
+ *
  * The user can change the value of the component by pressing the increase/decrease buttons,
  * by typing a number directly, by using the keyboard up/down and page up/down,
  * or by using the mouse scroll wheel. Decimal values are supported.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * The default step is 1 but the app developer can set a different one.
  *
- * App developers can set a maximum and minimum value for the <code>StepInput</code>.
+ * App developers can set a maximum and minimum value for the `StepInput`.
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
- * <br><br>
- * <h4>When to use:</h4>
- * <ul>
- * <li>To adjust amounts, quantities, or other values quickly.</li>
- * <li>To adjust values for a specific step.</li>
- * </ul>
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li>To enter a static number (for example, postal code, phone number, or ID). In this case,
- * use the regular <code>ui5-input</code> instead.</li>
- * <li>To display a value that rarely needs to be adjusted and does not pertain to a particular step.
- * In this case, use the regular <code>ui5-input</code> instead.</li>
- * <li>To enter dates and times. In this case, use date/time related components instead.</li>
- * </ul>
+ * #### When to use:
  *
- * <h3>ES6 Module Import</h3>
+ * - To adjust amounts, quantities, or other values quickly.
+ * - To adjust values for a specific step.
  *
- * <code>import "@ui5/webcomponents/dist/StepInput.js";</code>
+ * #### When not to use:
  *
+ * - To enter a static number (for example, postal code, phone number, or ID). In this case,
+ * use the regular `ui5-input` instead.
+ * - To display a value that rarely needs to be adjusted and does not pertain to a particular step.
+ * In this case, use the regular `ui5-input` instead.
+ * - To enter dates and times. In this case, use date/time related components instead.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/StepInput.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.13
@@ -102,14 +104,38 @@ const INITIAL_SPEED = 120; // milliseconds
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- *
  * @public
  */
 @event("change")
+/**
+ * Fired before the value state of the component is updated internally.
+ * The event is preventable, meaning that if it's default action is
+ * prevented, the component will not update the value state.
+ * @allowPreventDefault
+ * @since 1.23.0
+ * @public
+ * @param {string} valueState The new `valueState` that will be set.
+ * @param {boolean} valid Indicator if the value is in between the min and max value.
+ */
+@event<StepInputValueStateChangeEventDetail>("value-state-change", {
+	detail: {
+		/**
+		 * @public
+		 */
+		valueState: {
+			type: String,
+		},
+		/**
+		 * @public
+		 */
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Defines a value of the component.
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -118,7 +144,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a minimum value of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -127,7 +152,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a maximum value of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -136,7 +160,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a step of increasing/decreasing the value of the component.
-	 *
 	 * @default 1
 	 * @public
 	 */
@@ -145,7 +168,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -154,7 +176,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -163,7 +184,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines whether the component is displayed as disabled.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -172,7 +192,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines whether the component is displayed as read-only.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -183,10 +202,8 @@ class StepInput extends UI5Element implements IFormElement {
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -196,15 +213,12 @@ class StepInput extends UI5Element implements IFormElement {
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
+	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -213,7 +227,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines the number of digits after the decimal point of the component.
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -222,7 +235,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -232,7 +244,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -272,21 +283,19 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the component is in `Information`, `Warning` or `Error` value state.
 	 * @public
 	 */
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
 	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
-	 *
+	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
+	 * when `name` property is set.
 	 * @private
 	 */
 	@slot()
@@ -405,9 +414,20 @@ class StepInput extends UI5Element implements IFormElement {
 			this._initialValueState = this.valueState;
 		}
 
-		this.valueState = ((this.min !== undefined && this.value < this.min)
-			|| (this.max !== undefined && this.value > this.max))
-			? ValueState.Error : this._initialValueState;
+		this._updateValueState();
+	}
+
+	_updateValueState() {
+		const valid = !((this.min !== undefined && this.value < this.min) || (this.max !== undefined && this.value > this.max));
+		const previousValueState = this.valueState;
+
+		this.valueState = valid ? ValueState.None : ValueState.Error;
+
+		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
+
+		if (eventPrevented) {
+			this.valueState = previousValueState;
+		}
 	}
 
 	_preciseValue(value: number) {
@@ -424,11 +444,10 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Value modifier - modifies the value of the component, validates the new value and enables/disables increment and
-	 * decrement buttons according to the value and min/max values (if set). Fires <code>change</code> event when requested
-	 *
+	 * decrement buttons according to the value and min/max values (if set). Fires `change` event when requested
 	 * @private
 	 * @param modifier modifies the value of the component with the given modifier (positive or negative)
-	 * @param fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
+	 * @param fireChangeEvent if `true`, fires `change` event when the value is changed
 	 */
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
@@ -595,3 +614,6 @@ class StepInput extends UI5Element implements IFormElement {
 StepInput.define();
 
 export default StepInput;
+export type {
+	StepInputValueStateChangeEventDetail,
+};

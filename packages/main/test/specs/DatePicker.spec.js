@@ -1345,4 +1345,28 @@ describe("Date Picker Tests", () => {
 
 		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
 	});
+
+	it("should open date picker in daypicker", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		const calendar = await datepicker.getCalendar();
+		const datepickerRoot = await datepicker.getRoot();
+		await datepicker.openPicker();
+
+		let currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+		
+		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
+		await datepicker.openPicker();
+		currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		const dayPicker = await calendar.shadow$("ui5-daypicker");
+		const monthPicker = await calendar.shadow$("ui5-monthpicker");
+		const yearPicker = await calendar.shadow$("ui5-yearpicker");
+		assert.notOk(await dayPicker.getAttribute("hidden"));
+		assert.ok(await monthPicker.getAttribute("hidden"));
+		assert.ok(await yearPicker.getAttribute("hidden"));
+	});
 });

@@ -9,15 +9,12 @@
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
+    align-items: center;
 	margin: 0.1875rem 0;
 }
 
 [ui5-responsive-popover]::part(content) {
 	padding: 0;
-}
-
-[ui5-title], [ui5-button] {
-	margin-bottom: 1rem;
 }
 
 .ui5-cp-item-container {

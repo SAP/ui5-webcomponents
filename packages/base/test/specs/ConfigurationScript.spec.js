@@ -5,14 +5,6 @@ describe("Configuration script has effect", () => {
 		await browser.url("test/pages/ConfigurationScript.html?do-not-change-configuration");
 	});
 
-	it("Tests that RTL is applied", async () => {
-		const res = await browser.executeAsync(done => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			done(config.getRTL());
-		});
-		assert.strictEqual(res, true, "RTL is true");
-	});
-
 	it("Tests that language is applied", async () => {
 		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;

@@ -1,6 +1,7 @@
 # Ignore .gitignore, target, dist and tmp folders
 .gitignore
 !packages/create-package/template/.gitignore
+!packages/website/.gitignore
 tmp
 temp
 target
@@ -84,6 +85,8 @@ packages/playground/docs/FAQ.md
 # Ignore the generated storybook related files
 packages/playground/_stories/**/*/argTypes.ts
 packages/playground/_stories/**/*/*Overview.mdx
+packages/playground/_stories/**/Enums.mdx
+packages/playground/_stories/**/Interfaces.mdx
 packages/playground/.storybook/custom-elements.json
 packages/playground/docs/storybook/**/*
 packages/playground/docs/storybook-pages/**/*
