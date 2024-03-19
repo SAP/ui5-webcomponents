@@ -28,12 +28,36 @@ class MenuListItem extends CustomListItem {
 	@property({ type: Object })
 	associatedItem?: MenuItem;
 
+	/**
+	 * Defines the icon to be displayed as graphical element within the component.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * **Example:**
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	icon!: string;
+
+	/**
+	 * Defines the `additionalText`, displayed in the end of the menu item.
+	 *
+	 * **Note:** The additional text would not be displayed if the item has a submenu.
+	 * @default ""
+	 * @public
+	 * @since 1.8.0
+	 */
+	@property()
+	additionalText!: string;
+
 	get text() {
 		return this.associatedItem?.text;
 	}
 
-	get icon() {
-		return this.associatedItem?.icon;
+	get _additionalText() {
+		return this.associatedItem?._additionalText;
 	}
 
 	get hasIcon() {
@@ -48,10 +72,6 @@ class MenuListItem extends CustomListItem {
 		return !!this.associatedItem?._subMenu;
 	}
 
-	get _additionalText() {
-		return this.associatedItem?.hasSubmenu ? "" : this.associatedItem?.additionalText;
-	}
-
 	get _siblingsWithIcon() {
 		return this.associatedItem?._siblingsWithIcon;
 	}
@@ -62,7 +82,6 @@ class MenuListItem extends CustomListItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: "menuitem",
 			ariaHaspopup: this.associatedItem?.hasSubmenu ? HasPopup.Menu.toLowerCase() as Lowercase<HasPopup> : undefined,
 		};
 
