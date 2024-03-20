@@ -182,17 +182,17 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	_forcedSetsize?: number;
 	_isTopLevelTab?: boolean;
 	_forcedStyleInOverflow?: Record<string, any>;
-	getElementInStrip?: () => ITab | null;
+	_getElementInStrip?: () => HTMLElement | undefined;
 	_individualSlot!: string;
 
 	static i18nBundle: I18nBundle;
 
 	set forcedTabIndex(val: string) {
-		this.getTabInStripDomRef()!.setAttribute("tabindex", val);
+		this.getDomRefInStrip()!.setAttribute("tabindex", val);
 	}
 
 	get forcedTabIndex() {
-		return this.getTabInStripDomRef()!.getAttribute("tabindex")!;
+		return this.getDomRefInStrip()!.getAttribute("tabindex")!;
 	}
 
 	get displayText() {
@@ -255,6 +255,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		this._forcedSetsize = info.setsize;
 		this._isInline = info.isInline;
 		this._isTopLevelTab = info.isTopLevelTab;
+		this._getElementInStrip = info.getElementInStrip;
 	}
 
 	receiveOverflowPresentationInfo(info: ITabPresentationInOverflowInfo) {
@@ -264,28 +265,18 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 *
-	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `undefined`.
 	 *
 	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
-	 * @since 1.0.0-rc.16
+	 * @since 2.0.0
 	 */
-	getTabInStripDomRef(): ITab | null {
-		if (this.getElementInStrip) {
-			return this.getElementInStrip();
-		}
-
-		return null;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	getFocusDomRef() {
-		let focusedDomRef = super.getFocusDomRef();
-
-		if (this.getElementInStrip && this.getElementInStrip()) {
-			focusedDomRef = this.getElementInStrip()!;
-		}
-
-		return focusedDomRef;
+		return this.getDomRefInStrip();
 	}
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {

@@ -71,11 +71,12 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  */
 
 type ITabPresentationInStripInfo = {
-	isInline: boolean;
-	mixedMode: boolean;
-	posinset: number;
-	setsize: number;
-	isTopLevelTab: boolean;
+	isInline?: boolean;
+	mixedMode?: boolean;
+	posinset?: number;
+	setsize?: number;
+	isTopLevelTab?: boolean;
+	getElementInStrip: () => HTMLElement | undefined;
 }
 
 type ITabPresentationInOverflowInfo = {
@@ -87,6 +88,7 @@ interface ITab extends UI5Element {
 	get overflowPresentation(): object;
 	receiveStripPresentationInfo: (info: ITabPresentationInStripInfo) => void;
 	receiveOverflowPresentationInfo: (info: ITabPresentationInOverflowInfo) => void;
+	getDomRefInStrip: () => HTMLElement | undefined;
 	isSeparator: boolean;
 	additionalText?: string;
 	design?: `${SemanticColor}`;
@@ -98,10 +100,8 @@ interface ITab extends UI5Element {
 	subTabs?: Array<ITab>;
 	text?: string;
 	hasOwnContent?: boolean;
-	// >>>>
-	getTabInStripDomRef: () => ITab | null;
 	forcedSelected?: boolean;
-	getElementInStrip?: () => ITab | null;
+	// >>>>
 	realTabReference: ITab;
 	tabs?: Array<ITab>
 }
@@ -476,20 +476,28 @@ class TabContainer extends UI5Element {
 	}
 
 	_sendStripPresentationInfos(items: Array<ITab>) {
-		// set real dom ref to all items, then return only the tabs for further processing
-		const allTabs = items.filter(item => {
-			item.getElementInStrip = () => this.getDomRef()!.querySelector(`[id="${item._id}"]`);
-			return !item.isSeparator;
-		});
+		const setsize = this._getTabs().length;
+		let posinset = 1;
 
-		allTabs.forEach((tab, index, arr) => {
-			tab.receiveStripPresentationInfo?.({
-				isInline: this.tabLayout === TabLayout.Inline,
-				mixedMode: this.mixedMode,
-				posinset: index + 1,
-				setsize: arr.length,
-				isTopLevelTab: items.some(i => i === tab),
-			});
+		items.forEach(item => {
+			let info: ITabPresentationInStripInfo = {
+				getElementInStrip: () => { return this.getDomRef()!.querySelector<HTMLElement>(`[id="${item._id}"]`)!; },
+			};
+
+			if (!item.isSeparator) {
+				info = {
+					...info,
+					isInline: this.tabLayout === TabLayout.Inline,
+					mixedMode: this.mixedMode,
+					posinset,
+					setsize,
+					isTopLevelTab: items.some(i => i === item),
+				};
+
+				posinset++;
+			}
+
+			item.receiveStripPresentationInfo(info);
 		});
 	}
 
@@ -777,7 +785,7 @@ class TabContainer extends UI5Element {
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-		selectedTopLevel.getTabInStripDomRef()!.focus();
+		selectedTopLevel.getDomRefInStrip()!.focus();
 	}
 
 	/**
@@ -951,7 +959,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!);
+		const itemsDomRefs = this.items.map(item => item.getDomRefInStrip()!);
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -974,10 +982,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this.isModeStartAndEnd) {
-			this._updateStartAndEndOverflow(itemsDomRefs);
+			this._updateStartAndEndOverflow(itemsDomRefs as Array<ITab>);
 			this._updateOverflowCounters();
 		} else {
-			this._updateEndOverflow(itemsDomRefs);
+			this._updateEndOverflow(itemsDomRefs as Array<ITab>);
 		}
 	}
 
@@ -997,10 +1005,10 @@ class TabContainer extends UI5Element {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
+		const selectedTabDomRef = selectedTab.getDomRefInStrip()!;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
-		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
+		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef as ITab);
 		const lastVisibleTabIndex = this._findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemIndexAndWidth.width);
 
 		for (let i = lastVisibleTabIndex + 1; i < itemsDomRefs.length; i++) {
@@ -1014,8 +1022,8 @@ class TabContainer extends UI5Element {
 	_updateStartAndEndOverflow(itemsDomRefs: Array<ITab>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
-		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
+		const selectedTabDomRef = selectedTab.getDomRefInStrip()!;
+		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef as ITab);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		let firstVisible;
@@ -1211,7 +1219,7 @@ class TabContainer extends UI5Element {
 		let endOverflowItemsCount = 0;
 
 		this._getTabs()
-			.map(tab => tab.getTabInStripDomRef()!)
+			.map(tab => tab.getDomRefInStrip()!)
 			.forEach(tab => {
 				if (tab.hasAttribute("start-overflow")) {
 					startOverflowItemsCount++;
@@ -1238,7 +1246,7 @@ class TabContainer extends UI5Element {
 		}
 
 		this._getTabs().forEach(tab => {
-			const ref = tab.getTabInStripDomRef();
+			const ref = tab.getDomRefInStrip();
 			const focusable = ref && !ref.hasAttribute("hidden");
 
 			if (focusable) {
@@ -1280,7 +1288,7 @@ class TabContainer extends UI5Element {
 	_getPopoverItemsFor(targetOwner: TabContainerPopoverOwner) {
 		if (targetOwner === "start-overflow") {
 			return this.items.filter(item => {
-				const stripRef = item.getTabInStripDomRef();
+				const stripRef = item.getDomRefInStrip();
 
 				return stripRef && stripRef.hasAttribute("start-overflow");
 			});
@@ -1288,7 +1296,7 @@ class TabContainer extends UI5Element {
 
 		if (targetOwner === "end-overflow") {
 			return this.items.filter(item => {
-				const stripRef = item.getTabInStripDomRef();
+				const stripRef = item.getDomRefInStrip();
 
 				return stripRef && stripRef.hasAttribute("end-overflow");
 			});
