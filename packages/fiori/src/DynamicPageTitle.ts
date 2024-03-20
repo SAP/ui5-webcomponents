@@ -27,32 +27,30 @@ import {
 /**
  * @class
  *
- * <h3>Overview</h3>
+ * ### Overview
  *
- * Title of the <code>DynamicPage</code>.
+ * Title of the `DynamicPage`.
  *
- * The <code>DynamicPageTitle</code> component is part of the <code>DynamicPage</code>
- * family and is used to serve as title of the <code>DynamicPage</code>.
+ * The `DynamicPageTitle` component is part of the `DynamicPage`
+ * family and is used to serve as title of the `DynamicPage`.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * The <code>DynamicPageTitle</code> can hold any component and displays the most important
+ * The `DynamicPageTitle` can hold any component and displays the most important
  * information regarding the object that will always remain visible while scrolling.
  *
- * <b>Note:</b> The <code>actions</code> slot accepts any UI5 web component, but it`s
- * recommended to use <code>ui5-toolbar</code>.
+ * **Note:** The `actions` slot accepts any UI5 web component, but it's
+ * recommended to use `ui5-toolbar`.
  *
  * The user can switch between the expanded/collapsed states of the
- * <code>DynamicPage</code> by clicking on the <code>DynamicPageTitle</code>
+ * `DynamicPage` by clicking on the `DynamicPageTitle`
  * or by using the expand/collapse visual indicators, positioned at the bottom of the
- * <code>DynamicPageTitle</code> and the <code>DynamicPageHeader</code> inside <code>ui5-dynamic-page-header-actions</code>.
+ * `DynamicPageTitle` and the `DynamicPageHeader` inside `ui5-dynamic-page-header-actions`.
  *
- * <h3>Responsive Behavior</h3>
+ * ### Responsive Behavior
  *
- * The responsive behavior of the <code>DynamicPageTitle</code> depends on the behavior of the
+ * The responsive behavior of the `DynamicPageTitle` depends on the behavior of the
  * content that is displayed.
- *
- *
  * @constructor
  * @extends UI5Element
  * @public

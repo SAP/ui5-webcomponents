@@ -1,0 +1,38 @@
+.text {
+    display: inline-block;
+    font-size: var(--sapFontSize);
+    font-family: var(--sapFontFamily);
+    color: var(--sapTextColor);
+    line-height: normal;
+    white-space: pre-line;
+    word-wrap: break-word;
+    cursor: text;
+    margin: 0;
+}
+
+.product-info {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.product-info-cell {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+
+.product-description {
+    display: inline;
+    max-width: 300px;
+}
+
+.availability {
+   font-size: 1.2rem;
+   color: var(--sapPositiveTextColor);
+}
+
+.price {
+    font-size: 1.2rem;
+    color: var(--sapTextColor);
+}

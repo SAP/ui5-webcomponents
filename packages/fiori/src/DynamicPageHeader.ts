@@ -14,25 +14,23 @@ import DynamicPageHeaderCss from "./generated/themes/DynamicPageHeader.css.js";
  *
  * Header of the DynamicPage.
  *
- * <h3>Overview</h3>
+ * ### Overview
  *
- * The DynamicPageHeader <code>ui5-dynamic-page-header</code> is part of the DynamicPage family
- * and is used to serve as header of the <code>DynamicPage</code>.
+ * The DynamicPageHeader `ui5-dynamic-page-header` is part of the DynamicPage family
+ * and is used to serve as header of the `DynamicPage`.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * The <code>DynamicPageHeader</code> can hold any layout control and has two states - expanded
+ * The `DynamicPageHeader` can hold any layout control and has two states - expanded
  * and collapsed (snapped). The switching between these states happens when:
+ *	- the user scrolls below its bottom margin
+ *	- the user clicks on the `DynamicPageTitle`
+ *	- through the `DynamicPage` property `headerSnapped`
  *
- * <ul><li>the user scrolls below its bottom margin</li>
- * <li>the user clicks on the <code>DynamicPageTitle</code></li>
- * <li>through the <code>DynamicPage</code> property <code>headerSnapped</code></li></ul>
+ * ### Responsive Behavior
  *
- * <h3>Responsive Behavior</h3>
- *
- * The responsive behavior of the <code>DynamicPageHeader</code> depends on the behavior of the
+ * The responsive behavior of the `DynamicPageHeader` depends on the behavior of the
  * content that is displayed.
- *
  *
  * @constructor
  * @extends UI5Element

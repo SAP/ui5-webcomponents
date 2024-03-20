@@ -80,6 +80,7 @@
 }
 
 .ui5-dynamic-page-title--content {
+    padding: 0 0 0 1rem;
     flex-shrink: 1.6;
     min-width: 3rem;
     flex-grow: 1;
