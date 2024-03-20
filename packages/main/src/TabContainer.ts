@@ -85,8 +85,8 @@ type ITabPresentationInOverflowInfo = {
 interface ITab extends UI5Element {
 	get stripPresentation(): object;
 	get overflowPresentation(): object;
-	receiveStripPresentationInfo?: (info: ITabPresentationInStripInfo) => void;
-	receiveOverflowPresentationInfo?: (info: ITabPresentationInOverflowInfo) => void;
+	receiveStripPresentationInfo: (info: ITabPresentationInStripInfo) => void;
+	receiveOverflowPresentationInfo: (info: ITabPresentationInOverflowInfo) => void;
 	isSeparator: boolean;
 	additionalText?: string;
 	design?: `${SemanticColor}`;

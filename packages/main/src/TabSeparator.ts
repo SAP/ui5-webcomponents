@@ -4,7 +4,7 @@ import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTempla
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { ITab, ITabPresentationInOverflowInfo } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -30,6 +30,8 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 class TabSeparator extends UI5Element implements ITab {
 	@property({ type: Object, defaultValue: null })
 	realTabReference!: TabSeparator;
+
+	_forcedStyleInOverflow?: Record<string, any>;
 
 	getElementInStrip?: () => ITab | null;
 
@@ -77,6 +79,12 @@ class TabSeparator extends UI5Element implements ITab {
 
 	get overflowPresentation() {
 		return executeTemplate(TabSeparator.overflowTemplate, this);
+	}
+
+	receiveStripPresentationInfo() {}
+
+	receiveOverflowPresentationInfo(info: ITabPresentationInOverflowInfo) {
+		this._forcedStyleInOverflow = info.style;
 	}
 }
 
