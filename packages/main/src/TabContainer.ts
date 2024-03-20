@@ -103,7 +103,6 @@ interface ITab extends UI5Element {
 	forcedSelected?: boolean;
 	// >>>>
 	realTabReference: ITab;
-	tabs?: Array<ITab>
 }
 
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
@@ -669,7 +668,9 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (!tab.realTabReference.hasOwnContent && tab.realTabReference.tabs.length) {
+		const tabHasSubTabs = tab.realTabReference.subTabs.some(item => !item.isSeparator);
+
+		if (!tab.realTabReference.hasOwnContent && tabHasSubTabs) {
 			await this._togglePopover(tab);
 
 			return;
