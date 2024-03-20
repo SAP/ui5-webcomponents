@@ -5,6 +5,8 @@
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
+@import "../base/CalendarLegend-parameters.css";
+@import "./CalendarLegendItem-parameters.css";
 @import "../base/Card-parameters.css";
 @import "./Card-parameters.css";
 @import "./Carousel-parameters.css";

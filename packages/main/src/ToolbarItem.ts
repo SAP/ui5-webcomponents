@@ -11,8 +11,7 @@ type IEventOptions = {
 /**
  * @class
  *
- * Represents an abstract class for items, used in the <code>ui5-toolbar</code>.
- *
+ * Represents an abstract class for items, used in the `ui5-toolbar`.
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -23,12 +22,6 @@ class ToolbarItem extends UI5Element {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>NeverOverflow</code></li>
-	 * <li><code>AlwaysOverflow</code></li>
-	 * <li><code>Default</code></li>
-	 * </ul>
 	 * @public
 	 * @default "Default"
 	 */

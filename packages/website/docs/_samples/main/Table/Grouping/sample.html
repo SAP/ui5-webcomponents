@@ -1,0 +1,54 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<!-- playground-fold-end -->
+
+<ui5-table>
+
+    <ui5-table-column slot="columns">
+        <ui5-label>City</ui5-label>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="500" popin-text="Supplier" demand-popin="">
+        <ui5-label>Supplier</ui5-label>
+    </ui5-table-column>
+    <ui5-table-column slot="columns" min-width="500">
+        <ui5-label>Date Of Foundation</ui5-label>
+    </ui5-table-column>
+
+    <ui5-table-group-row>Country: Bulgaria</ui5-table-group-row>
+    <ui5-table-row>
+        <ui5-table-cell><span>Sofia</span></ui5-table-cell>
+        <ui5-table-cell><span>Data Analytics</span></ui5-table-cell>
+        <ui5-table-cell><span>1980</span></ui5-table-cell>
+    </ui5-table-row>
+    <ui5-table-row>
+        <ui5-table-cell><span>Plovdiv</span></ui5-table-cell>
+        <ui5-table-cell><span>Old Town Corp</span></ui5-table-cell>
+        <ui5-table-cell><span>1899</span></ui5-table-cell>
+    </ui5-table-row>
+
+    <ui5-table-group-row><span>Country: USA</span></ui5-table-group-row>
+    <ui5-table-row>
+        <ui5-table-cell><span>New York</span></ui5-table-cell>
+        <ui5-table-cell><span>Deloitte</span></ui5-table-cell>
+        <ui5-table-cell><span>1845</span></ui5-table-cell>
+    </ui5-table-row>
+    <ui5-table-row>
+        <ui5-table-cell><span>Bentonville</span></ui5-table-cell>
+        <ui5-table-cell><span>Walmart</span></ui5-table-cell>
+        <ui5-table-cell><span>1962</span></ui5-table-cell>
+    </ui5-table-row>
+
+</ui5-table>
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-fold-end -->
+

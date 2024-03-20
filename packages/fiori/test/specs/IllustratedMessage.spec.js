@@ -199,3 +199,35 @@ describe("Vertical responsiveness", () => {
 		assert.strictEqual(cssHeight, "160px", "svg has expected height");
 	});
 });
+
+describe("Dot size resource handling", () => {
+	before(async () => {
+		await browser.url(`test/pages/IllustratedMessage.html`);
+	});
+
+	it("uses substitute Spot illustration", async () => {
+
+		const illustratedMsg = await browser.$("#illustratedMsg1");
+		
+		// Act
+		await illustratedMsg.setProperty("name", "BeforeSearch"); // set an illustration which doesn't have original Dot SVG
+		await illustratedMsg.setProperty("size", "Dot");
+		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
+		
+		// Check
+		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Spot-BeforeSearch", "Spot SVG is used when no Dot is present");
+	});
+
+	it("uses original Dot illustration", async () => {
+
+		const illustratedMsg = await browser.$("#illustratedMsg1");
+		
+		// Act
+		await illustratedMsg.setProperty("name", "AddPeople"); // set an illustration which has original Dot SVG
+		await illustratedMsg.setProperty("size", "Dot");
+		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
+		
+		// Check
+		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Dot-AddPeople", "Dot is present, therefore used");
+	});
+});

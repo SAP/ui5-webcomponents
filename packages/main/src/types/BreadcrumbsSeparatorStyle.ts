@@ -1,6 +1,5 @@
 /**
  * Different Breadcrumbs separator styles.
- *
  * @public
  */
 enum BreadcrumbsSeparatorStyle {

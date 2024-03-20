@@ -3,6 +3,8 @@
 @import "../base/Badge-parameters.css";
 @import "./BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
+@import "../base/CalendarLegend-parameters.css";
+@import "../base/CalendarLegendItem-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";

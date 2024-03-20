@@ -1,6 +1,5 @@
 /**
  * Different types of wrapping.
- *
  * @public
  */
 enum WrappingType {

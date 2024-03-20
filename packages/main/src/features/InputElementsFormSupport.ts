@@ -88,8 +88,8 @@ class FormSupport {
 	}
 
 	/**
-	 * Syncs the native file input element, rendered into the <code>ui5-file-uploader</code> component's light DOM,
-	 * with the <code>ui5-file-uploader</code> component's state.
+	 * Syncs the native file input element, rendered into the `ui5-file-uploader` component's light DOM,
+	 * with the `ui5-file-uploader` component's state.
 	 * @param { IFormFileElement} element - the component with form support
 	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
 	 * @param { NativeInputChangeCallback } nativeInputChangeCallback - callback, added to native input's "change" event

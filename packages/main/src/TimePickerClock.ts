@@ -60,25 +60,24 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-picker-clock</code> allows selecting of hours,minutes or seconds (depending on property set).
+ * `ui5-time-picker-clock` allows selecting of hours,minutes or seconds (depending on property set).
  * The component supports interactions with mouse, touch and mouse wheel.
  * Depending on settings, the clock can display only outer set of items (when the clock displays hours in 12-hour mode,
  * minutes or seconds), or outer and inner sets of items (when the clock displays hours in 24-hours mode).
  * The step for displaying or selecting of items can be configured.
  *
- * <code>ui5-time-picker-clock</code> is used as part of <code>ui5-time-selection-clocks</code> component, which
- * is used in <code>ui5-time-picker</code> component respectively.
+ * `ui5-time-picker-clock` is used as part of `ui5-time-selection-clocks` component, which
+ * is used in `ui5-time-picker` component respectively.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <code>ui5-time-picker-clock</code> can display hours, minutes or seconds
+ * `ui5-time-picker-clock` can display hours, minutes or seconds
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/TimePickerClock.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/TimePickerClock.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.15.0
@@ -93,10 +92,9 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 
 /**
  * Fired when a value of clock is changed.
- *
- * @param { integer } value The new <code>value</code> of the clock.
- * @param { string } stringValue The new <code>value</code> of the clock, as string, zero-prepended when necessary.
- * @param { boolean } finalChange <code>true</code> when a value is selected and confirmed, <code>false</code> when a value is only selected but not confirmed.
+ * @param { integer } value The new `value` of the clock.
+ * @param { string } stringValue The new `value` of the clock, as string, zero-prepended when necessary.
+ * @param { boolean } finalChange `true` when a value is selected and confirmed, `false` when a value is only selected but not confirmed.
  */
 @event<TimePickerClockChangeEventDetail>("change", {
 	detail: {
@@ -118,7 +116,6 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 class TimePickerClock extends UI5Element {
 	/**
 	 * Determines whether the component is displayed as disabled.
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -126,7 +123,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Determines whether the component is active (visible).
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -134,7 +130,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Minimum item value for the outer circle of the clock.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
@@ -142,16 +137,14 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Maximum item value for the outer circle of the clock.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	itemMax!: number;
 
 	/**
-	 * If set to <code>true</code>, an inner circle is displayed.
+	 * If set to `true`, an inner circle is displayed.
 	 * The first item value of the inner circle will be itemMax + 1
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -159,16 +152,14 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Label of the clock dial - for example, 'Hours', 'Minutes', or 'Seconds'.
-	 *
 	 * @default undefined
 	 */
 	@property({ type: String, defaultValue: undefined })
 	label?: string;
 
 	/**
-	 * If set to <code>true</code>, a surrounding circle with markers (dots) will be hidden.
+	 * If set to `true`, a surrounding circle with markers (dots) will be hidden.
 	 * (for example, on the 'Minutes' clock-dial, markers represent minutes).
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -178,15 +169,13 @@ class TimePickerClock extends UI5Element {
 	 * If provided, this will replace the last item displayed. If there is only one (outer) circle,
 	 * the last item from outer circle will be replaced; if there is an inner circle too, the last
 	 * item of inner circle will be replaced. Usually, the last item '24' is replaced with '0'.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	lastItemReplacement!: number;
 
 	/**
-	 * Prepend with zero flag. If <code>true</code>, values less than 10 will be prepend with 0.
-	 *
+	 * Prepend with zero flag. If `true`, values less than 10 will be prepend with 0.
 	 * @default false
 	 */
 	@property({ type: Boolean })
@@ -194,7 +183,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * The currently selected value of the clock.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
@@ -205,7 +193,6 @@ class TimePickerClock extends UI5Element {
 	 * 1 means 1/60 of the circle.
 	 * The default display step is 5 which means minutes and seconds are displayed as "0", "5", "10", etc.
 	 * For hours the display step must be set to 1.
-	 *
 	 * @default 5
 	 */
 	@property({ validator: Integer, defaultValue: 5 })
@@ -216,7 +203,6 @@ class TimePickerClock extends UI5Element {
 	 * 1 means 1 unit:
 	 * - if the clock displays hours - 1 unit = 1 hour
 	 * - if the clock displays minutes/seconds - 1 unit = 1 minute/second
-	 *
 	 * @default 1
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
@@ -242,7 +228,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Mousedown or Touchstart event flag.
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -250,7 +235,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Cancel Mouseout flag.
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -258,7 +242,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Calculated selected value of the clock during interactions.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
@@ -266,7 +249,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Selected value of the clock during interactions.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
@@ -274,7 +256,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Hovered value of the clock during interactions.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
@@ -282,7 +263,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Previously hovered value of the clock during interactions.
-	 *
 	 * @default -1
 	 */
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
@@ -290,7 +270,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Animation in progress flag.
-	 *
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -332,7 +311,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Returns the real value of the passed clock item, if the replacement must be done, returns the replaced value.
-	 *
 	 * @param value The value of the clock item
 	 * @returns The real/replaced value
 	 */
@@ -352,7 +330,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Updates internal selected value object constructed for rendering purposes.
-	 *
 	 * @param value currently selected value.
 	 */
 	_updateSelectedValueObject(value: number) {
@@ -439,7 +416,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Returns the DOM Reference of the clock cover element
-	 *
 	 * @returns the DOM Reference
 	 */
 	_getClockCoverContainerDomRef(): Element | null | undefined {
@@ -449,7 +425,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Returns the real max value of clock items, taking in count if there is inner circle or not.
-	 *
 	 * @returns max value
 	 */
 	_getMaxValue(): number {
@@ -458,7 +433,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Calculates the outer height of a HTML element.
-	 *
 	 * @param element The element which outer height to be calculated
 	 * @returns Outer height of the passed HTML element
 	 */
@@ -474,7 +448,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Returns the Id of the DOM element of the clock item that display specific value.
-	 *
 	 * @param value The value of the clock item
 	 * @returns Id of the clock item element
 	 */
@@ -490,7 +463,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Returns provided value as string. Padding with additional zero is applied if necessary.
-	 *
 	 * @param value The value that should be returned as string
 	 * @returns The value as string
 	 */
@@ -500,7 +472,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Calculates dimension variables necessary for determining of item selection.
-	 *
 	 * @returns Dimensions object
 	 */
 	_calculateDimensions(): TimePickerClockDimensions | undefined {
@@ -537,7 +508,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Calculates selected and hovered values based on click/touch position.
-	 *
 	 * @param x X position of click/touch returned by the event
 	 * @param y Y position of click/touch returned by the event
 	 */
@@ -578,7 +548,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Does the animation between the old and the new value of the clock. Can be skipped with setting the second parameter to true.
-	 *
 	 * @param newValue the new value that must be set
 	 * @param skipAnimation whether to skip the animation
 	 */
@@ -618,7 +587,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Does the animation step between old and new selected values.
-	 *
 	 * @param firstSelected first/current value to move from
 	 * @param lastSelected last value to move to
 	 * @param direction direction of the animation
@@ -652,7 +620,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Mousewheel handler. Increases/decreases value of the clock.
-	 *
 	 * @param increase whether to increase or decrease the value
 	 */
 	_modifyValue(increase: boolean) {
@@ -689,7 +656,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Sets new selected value, fires change event and updates selected value object used for rendering purposes.
-	 *
 	 * @param value
 	 */
 	_setSelectedValue(value: number) {
@@ -705,7 +671,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * TouchStart/MouseDown event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_onTouchStart(evt: Event) {
@@ -725,7 +690,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * TouchMove/MouseMove event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_onTouchMove(evt: Event) {
@@ -762,7 +726,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * TouchEnd/MouseUp event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_onTouchEnd(evt: Event) {
@@ -781,7 +744,6 @@ class TimePickerClock extends UI5Element {
 
 	/**
 	 * Mouse Wheel event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_onMouseWheel(evt: WheelEvent) {

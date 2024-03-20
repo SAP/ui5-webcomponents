@@ -33,7 +33,7 @@ const metadata = {
  * For the <code>${tagName}</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import ${packageName}/dist/${componentName}.js";</code>
+ * <code>import "${packageName}/dist/${componentName}.js";</code>
  *
  * @constructor
  * @author SAP SE

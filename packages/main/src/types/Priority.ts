@@ -1,6 +1,5 @@
 /**
  * Different types of Priority.
- *
  * @public
  */
 enum Priority {

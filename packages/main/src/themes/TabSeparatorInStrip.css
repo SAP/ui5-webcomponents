@@ -1,5 +1,14 @@
 .ui5-tc__separator {
-	width: 0;
-	border-left: 0.0625rem solid var(--sapGroup_TitleBorderColor);
-	margin: 0.5rem 0.25rem;
+	position: relative;
+	width: 0.5625rem;
+}
+
+.ui5-tc__separator::before {
+	content: " ";
+	position: absolute;
+	width: 0.0625rem;
+	left: 0.25rem;
+	top: 0.5rem;
+	bottom: 0.5rem;
+	background: var(--sapGroup_TitleBorderColor);
 }

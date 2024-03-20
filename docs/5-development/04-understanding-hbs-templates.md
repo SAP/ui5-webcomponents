@@ -1,4 +1,4 @@
-# Understanding the Handlebars (`.hbs`) templates
+# Understanding the Handlebars (.hbs) templates
 
 The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.
 
@@ -900,4 +900,3 @@ The resulting DOM from the loop above will look like this:
 
 This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally rendered next to each other in a single slot.
 
-Next: [Testing UI5 Web Components](./05-testing-UI5-Web-Components.md)

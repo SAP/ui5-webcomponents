@@ -5,6 +5,8 @@
 @import "../base/BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/Card-parameters.css";
+@import "../base/CalendarLegend-parameters.css";
+@import "../base/CalendarLegendItem-parameters.css";
 @import "../base/Carousel-parameters.css";
 @import "./CheckBox-parameters.css";
 @import "../base/ColorPalette-parameters.css";
