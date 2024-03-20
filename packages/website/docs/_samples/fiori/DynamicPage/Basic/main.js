@@ -26,20 +26,12 @@ const editButton = document.querySelector("#edit-button");
 const cancelEdit = document.querySelector("#cancel-edit");
 const saveEdit = document.querySelector("#save-edit");
 
-
-console.error(dynamicPage);
-console.error(editButton);
-console.error(cancelEdit);
-console.error(saveEdit);
-
 editButton.addEventListener("click", () => {
-    console.error("editButton click");
     dynamicPage.setAttribute("show-footer", true);
 });
 
 [saveEdit, cancelEdit].forEach(button => {
     button.addEventListener("click", () => {
-        console.error("saveEdit or cancelEdit click", dynamicPage);
         dynamicPage.removeAttribute("show-footer");
     });
 });

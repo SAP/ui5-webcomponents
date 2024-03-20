@@ -31,7 +31,7 @@ import {
 	DYNAMIC_PAGE_ARIA_LABEL_SNAPPED_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
 
-const SCROLL_DEBOUNCE_RATE = 25; // ms
+const SCROLL_DEBOUNCE_RATE = 5; // ms
 
 /**
  * @class
