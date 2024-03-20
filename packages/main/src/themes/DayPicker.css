@@ -33,8 +33,7 @@
 .ui5-dp-item {
 	width: var(--_ui5_day_picker_item_width);
 	height: var(--_ui5_day_picker_item_height);
-	margin-block-start: var(--_ui5_daypicker_item_margin);
-	margin-inline-end: var(--_ui5_daypicker_item_margin);
+	margin: var(--_ui5_daypicker_item_margin);
 	font-family: "72override", var(--sapFontFamily);
 	border-radius: var(--_ui5_daypicker_item_border_radius);
 }
@@ -412,8 +411,13 @@
 	padding-block: var(--_ui5_daypicker_item_now_selected_two_calendar_focus_secondary_text_padding_block);
 }
 
+.ui5-dp-item--withsecondtype {
+	width: var(--_ui5_day_picker_item_with_secondtype_width_height, var(--_ui5_day_picker_item_width));
+	height: var(--_ui5_day_picker_item_with_secondtype_width_height, var(--_ui5_day_picker_item_height));
+}
+
 .ui5-dp-item--withsecondtype .ui5-dp-daytext {
-	font-size: 0.75rem;
+	font-size: 0.875rem;
 }
 
 .ui5-dp-item.ui5-dp-item--withsecondtype .ui5-dp-specialday,
