@@ -303,14 +303,14 @@ class Calendar extends CalendarPart {
 			const dateRange = this.dates[0] as CalendarDateRange;
 			const firstDate = dateRange.value ? this.getFormat().parse(dateRange.value, true) as Date : new Date();
 			const lastDate = dateRange.endValue ? this.getFormat().parse(dateRange.endValue, true) as Date : new Date();
-			let date = new Date(firstDate) as Date;
+			const date = new Date(firstDate);
 			dates = [];
 			do {
 				dates.push(date.getTime() / 1000);
 				date.setDate(date.getDate() + 1);
-			} while (date.getTime() <= lastDate.getTime())
+			} while (date.getTime() <= lastDate.getTime());
 		}
-		console.log(dates);
+
 		return dates;
 	}
 
@@ -327,7 +327,7 @@ class Calendar extends CalendarPart {
 		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
 		let valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 		let isDateRange;
-		
+
 		if (this.dates.length && this.dates[0].hasAttribute("ui5-date-range") && this.selectionMode === CalendarSelectionMode.Range) {
 			isDateRange = true;
 		}
@@ -336,15 +336,14 @@ class Calendar extends CalendarPart {
 			const dateRange = this.dates[0] as CalendarDateRange;
 			const firstDate = dateRange.value ? this.getFormat().parse(dateRange.value) as Date : new Date();
 			const lastDate = dateRange.endValue ? this.getFormat().parse(dateRange.endValue) as Date : new Date();
-			let date = new Date(firstDate) as Date;
+			const date = new Date(firstDate);
 			valuesInDOM = [];
 			do {
 				valuesInDOM.push(this.getFormat().format(date));
 				date.setDate(date.getDate() + 1);
-			} while (date.getTime() > lastDate.getTime())
+			} while (date.getTime() <= lastDate.getTime());
 		}
 
-		
 		// Remove all elements for dates that are no longer selected
 		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
 			this.removeChild(dateElement);

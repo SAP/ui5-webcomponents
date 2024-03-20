@@ -416,7 +416,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 		return timestamp === this.selectedDates[0] || timestamp === this.selectedDates[this.selectedDates.length - 1];
 	}
-		
+
 	/**
 	 * Tells if the day is inside a selection range (light blue).
 	 * @param timestamp
