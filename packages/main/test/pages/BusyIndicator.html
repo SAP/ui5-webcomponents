@@ -21,6 +21,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="./styles/BusyIndicator.css">
+<link rel="stylesheet" type="text/css" href="./styles/Dialog.css">
 </head>
 
 <body class="busyindicator1auto">
@@ -40,8 +41,8 @@
 
 	<br />
 	<br />
-	<ui5-busy-indicator active text="Loading" class="busyindicator2auto"></ui5-busy-indicator>
-
+	<ui5-busy-indicator id="busy-indicator-text-placement-bottom" active text="Loading" class="busyindicator2auto"></ui5-busy-indicator>
+	<ui5-busy-indicator id="busy-indicator-text-placement-top" text="Loading" text-placement="Top" active class="busyindicator2auto"></ui5-busy-indicator>
 	<br />
 	<br />
 
@@ -172,6 +173,15 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-button id="open-dialog-loading-text">Open Dialog with loading text indicator</ui5-button>
+	<ui5-dialog id="dialog-loading-text"  header-text="Loading Data" initial-focus="btnOk">
+			<ui5-busy-indicator style="display: block;" active text="Loading data from backend server" text-placement="Top">
+			</ui5-busy-indicator>
+			<div slot="footer" class="dialogFooter">
+				<ui5-button id="btnOk" design="Emphasized">OK</ui5-button>
+			</div>
+	</ui5-dialog>
+
 	<br>
 	<br>
 	<span>Indicator with delay</span>
@@ -207,6 +217,7 @@
       </div>
     </div>
     <br />
+
 
 	<script>
 		document.getElementById("fetch-btn").addEventListener("click", function(event) {
@@ -270,6 +281,11 @@
 			document.getElementById("dialog-delayed-indicator-indicator").active = true;
 			document.getElementById("dialog-delayed-indicator").show();
 		});
+
+		document.getElementById("open-dialog-loading-text").addEventListener("click", function () {
+			document.getElementById("dialog-loading-text").show();
+		});
+
 	</script>
 </body>
 
