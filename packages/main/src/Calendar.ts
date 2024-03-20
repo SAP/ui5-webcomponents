@@ -15,6 +15,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "./CalendarDate.js";
+import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -267,7 +268,7 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	dates!: Array<CalendarDate>;
+	dates!: Array<CalendarDate | CalendarDateRange>;
 
 	/**
 	 * Defines the special dates, visually emphasized in the calendar.
@@ -288,11 +289,29 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	get _selectedDatesTimestamps(): Array<number> {
-		return this.dates.map(date => {
+		let isDateRange;
+		let dates = this.dates.map(date => {
+			if (date.hasAttribute("ui5-date-range") && this.selectionMode === CalendarSelectionMode.Range) {
+				isDateRange = true;
+			}
 			const value = date.value;
 			const validValue = value && !!this.getFormat().parse(value);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
 		}).filter((date): date is number => !!date);
+
+		if (isDateRange) {
+			const dateRange = this.dates[0] as CalendarDateRange;
+			const firstDate = dateRange.value ? this.getFormat().parse(dateRange.value, true) as Date : new Date();
+			const lastDate = dateRange.endValue ? this.getFormat().parse(dateRange.endValue, true) as Date : new Date();
+			let date = new Date(firstDate) as Date;
+			dates = [];
+			do {
+				dates.push(date.getTime() / 1000);
+				date.setDate(date.getDate() + 1);
+			} while (date.getTime() <= lastDate.getTime())
+		}
+		console.log(dates);
+		return dates;
 	}
 
 	constructor() {
@@ -306,8 +325,26 @@ class Calendar extends CalendarPart {
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
 		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
-		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
+		let valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
+		let isDateRange;
+		
+		if (this.dates.length && this.dates[0].hasAttribute("ui5-date-range") && this.selectionMode === CalendarSelectionMode.Range) {
+			isDateRange = true;
+		}
 
+		if (isDateRange) {
+			const dateRange = this.dates[0] as CalendarDateRange;
+			const firstDate = dateRange.value ? this.getFormat().parse(dateRange.value) as Date : new Date();
+			const lastDate = dateRange.endValue ? this.getFormat().parse(dateRange.endValue) as Date : new Date();
+			let date = new Date(firstDate) as Date;
+			valuesInDOM = [];
+			do {
+				valuesInDOM.push(this.getFormat().format(date));
+				date.setDate(date.getDate() + 1);
+			} while (date.getTime() > lastDate.getTime())
+		}
+
+		
 		// Remove all elements for dates that are no longer selected
 		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
 			this.removeChild(dateElement);
