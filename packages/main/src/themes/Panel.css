@@ -54,7 +54,7 @@
 	border: var(--_ui5_panel_focus_border);
 	border-radius: var(--_ui5_panel_border_radius);
 	top: var(--_ui5_panel_focus_offset);
-	bottom: var(--_ui5_panel_focus_offset);
+	bottom: var(--_ui5_panel_focus_bottom_offset);
 	left: var(--_ui5_panel_focus_offset);
 	right: var(--_ui5_panel_focus_offset);
 }

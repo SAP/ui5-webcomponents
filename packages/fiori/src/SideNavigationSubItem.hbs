@@ -1,0 +1,57 @@
+{{#unless sideNavCollapsed}}
+	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
+		{{#if _href}}
+			<a class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
+			   role="treeitem"
+			   data-sap-focus-ref
+			   @keydown="{{_onkeydown}}"
+			   @keyup="{{_onkeyup}}"
+			   @click="{{_onclick}}"
+			   @focusin="{{_onfocusin}}"
+			   tabindex="{{effectiveTabIndex}}"
+			   aria-current="{{_ariaCurrent}}"
+			   title="{{_tooltip}}"
+			   href="{{_href}}"
+			   target="{{_target}}"
+			>
+				{{#if icon}}
+					<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
+				{{/if}}
+				<div class="ui5-sn-item-text">{{text}}</div>
+				<ui5-icon class="ui5-sn-item-selection-icon"
+						  name="circle-task-2"
+				></ui5-icon>
+				{{#if isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
+					></ui5-icon>
+				{{/if}}
+			</a>
+		{{else}}
+			<div class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
+				 role="treeitem"
+				 data-sap-focus-ref
+				 @keydown="{{_onkeydown}}"
+				 @keyup="{{_onkeyup}}"
+				 @click="{{_onclick}}"
+				 @focusin="{{_onfocusin}}"
+				 tabindex="{{effectiveTabIndex}}"
+				 aria-current="{{_ariaCurrent}}"
+				 title="{{_tooltip}}"
+			>
+				{{#if icon}}
+					<ui5-icon class="ui5-sn-item-icon" name="{{icon}}"></ui5-icon>
+				{{/if}}
+				<div class="ui5-sn-item-text">{{text}}</div>
+				<ui5-icon class="ui5-sn-item-selection-icon"
+						  name="circle-task-2"
+				></ui5-icon>
+				{{#if isExternalLink}}
+					<ui5-icon class="ui5-sn-item-external-link-icon"
+							  name="arrow-right"
+					></ui5-icon>
+				{{/if}}
+			</div>
+		{{/if}}
+	</li>
+{{/unless}}

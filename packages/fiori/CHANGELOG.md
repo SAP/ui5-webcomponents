@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.0...v1.24.0-rc.1) (2024-03-15)
+
+
+### Features
+
+* **ui5-side-navigation:** add navigation groups ([#8261](https://github.com/SAP/ui5-webcomponents/issues/8261)) ([8678dc0](https://github.com/SAP/ui5-webcomponents/commit/8678dc0ec8f017a41ac5bdcd7720bc055d28891c))
+
+
+
+
+
+# [1.24.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1...v1.24.0-rc.0) (2024-03-14)
+
+
+### Bug Fixes
+
+* **ui5-bar:** align subheader style ([#8412](https://github.com/SAP/ui5-webcomponents/issues/8412)) ([e42a976](https://github.com/SAP/ui5-webcomponents/commit/e42a976162314251b4c13d7b6850a80fcc2faffb)), closes [#8079](https://github.com/SAP/ui5-webcomponents/issues/8079)
+* **ui5-shellbar:** fix volatile test ([#8411](https://github.com/SAP/ui5-webcomponents/issues/8411)) ([7e6bf4b](https://github.com/SAP/ui5-webcomponents/commit/7e6bf4b15a437f2795d5fa791f1df07122bc0121)), closes [#8409](https://github.com/SAP/ui5-webcomponents/issues/8409)
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** add 'open' property ([#8316](https://github.com/SAP/ui5-webcomponents/issues/8316)) ([8f59d16](https://github.com/SAP/ui5-webcomponents/commit/8f59d166c55af5f692520ff3b88b09aca28738c3)), closes [#8072](https://github.com/SAP/ui5-webcomponents/issues/8072)
+
+
+
+
+
 ## [1.23.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1-rc.0...v1.23.1) (2024-03-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

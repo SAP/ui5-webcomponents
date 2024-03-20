@@ -14,5 +14,3 @@ Example 1:
     ...
 </body>
 ```
-
-Next: [Ignore Custom HTML elements](./10-ignore-custom-elements.md)

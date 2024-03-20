@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.23.1",
+  "version": "1.24.0-rc.1",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -22,8 +22,6 @@
   },
   "dependencies": {
     "@custom-elements-manifest/analyzer": "^0.8.4",
-    "cem-plugin-vs-code-custom-data-generator": "^1.4.2",
-    "custom-element-jet-brains-integration": "^1.4.4",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "@wdio/cli": "^7.19.7",
@@ -33,6 +31,7 @@
     "@wdio/spec-reporter": "^7.19.7",
     "@wdio/static-server-service": "^7.19.5",
     "ajv": "^8.12.0",
+    "cem-plugin-vs-code-custom-data-generator": "^1.4.2",
     "chai": "^4.3.4",
     "child_process": "^1.0.2",
     "chokidar": "^3.5.1",
@@ -41,6 +40,7 @@
     "comment-parser": "^1.4.0",
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
+    "custom-element-jet-brains-integration": "^1.4.4",
     "escodegen": "^2.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",

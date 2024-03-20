@@ -341,5 +341,3 @@ In order to process the issues correctly, we would like to have the following in
 
 Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the SAPUI5 High Contrast theme and you are using browser different than Chrome and Edge this may cause conflicts, and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
 
-
-Next: [CSP](./08-CSP.md)

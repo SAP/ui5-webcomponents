@@ -542,4 +542,3 @@ Respectively, the definitions file for, let's say `sap_fiori_3`, contains:
 What's important to understand here is that you author all the `.css` files listed in the table above, but the build script
 generates from them a single `.js` file for you, and this is namely the file you pass to the Web Component class: `generated/themes/Demo.css.js`.
 
-Next: [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)
