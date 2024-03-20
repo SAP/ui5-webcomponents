@@ -24,7 +24,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab, ITabPresentationInStripInfo } from "./TabContainer.js";
+import type { ITab, ITabPresentationInOverflowInfo, ITabPresentationInStripInfo } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -181,6 +181,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	_forcedPosinset?: number;
 	_forcedSetsize?: number;
 	_isTopLevelTab?: boolean;
+	_forcedStyleInOverflow?: Record<string, any>;
 	getElementInStrip?: () => ITab | null;
 	_individualSlot!: string;
 
@@ -254,6 +255,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		this._forcedSetsize = info.setsize;
 		this._isInline = info.isInline;
 		this._isTopLevelTab = info.isTopLevelTab;
+	}
+
+	receiveOverflowPresentationInfo(info: ITabPresentationInOverflowInfo) {
+		this._forcedStyleInOverflow = info.style;
 	}
 
 	/**

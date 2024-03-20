@@ -78,13 +78,17 @@ type ITabPresentationInStripInfo = {
 	isTopLevelTab: boolean;
 }
 
+type ITabPresentationInOverflowInfo = {
+	style: Record<string, any>;
+};
+
 interface ITab extends UI5Element {
 	get stripPresentation(): object;
 	get overflowPresentation(): object;
-	receiveStripPresentationInfo?: (attributes: ITabPresentationInStripInfo) => void;
+	receiveStripPresentationInfo?: (info: ITabPresentationInStripInfo) => void;
+	receiveOverflowPresentationInfo?: (info: ITabPresentationInOverflowInfo) => void;
 	isSeparator: boolean;
 	additionalText?: string;
-	getTabInStripDomRef: () => ITab | null;
 	design?: `${SemanticColor}`;
 	disabled?: boolean;
 	icon?: string;
@@ -92,14 +96,14 @@ interface ITab extends UI5Element {
 	requiresExpandButton?: boolean;
 	selected?: boolean;
 	subTabs?: Array<ITab>;
-	tabs?: Array<ITab>
 	text?: string;
 	hasOwnContent?: boolean;
-	forcedLevel?: number;
+	// >>>>
+	getTabInStripDomRef: () => ITab | null;
 	forcedSelected?: boolean;
 	getElementInStrip?: () => ITab | null;
 	realTabReference: ITab;
-	forcedStyle?: Record<string, any>;
+	tabs?: Array<ITab>
 }
 
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
@@ -405,7 +409,7 @@ class TabContainer extends UI5Element {
 			this._selectedTab.forcedSelected = true;
 		}
 
-		this._setItemsPrivateProperties(this.items);
+		this._sendStripPresentationInfos(this.items);
 
 		if (!this._animationRunning) {
 			this._contentCollapsed = this.collapsed;
@@ -471,7 +475,7 @@ class TabContainer extends UI5Element {
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
-	_setItemsPrivateProperties(items: Array<ITab>) {
+	_sendStripPresentationInfos(items: Array<ITab>) {
 		// set real dom ref to all items, then return only the tabs for further processing
 		const allTabs = items.filter(item => {
 			item.getElementInStrip = () => this.getDomRef()!.querySelector(`[id="${item._id}"]`);
@@ -487,8 +491,6 @@ class TabContainer extends UI5Element {
 				isTopLevelTab: items.some(i => i === tab),
 			});
 		});
-
-		this._setIndentLevels(items);
 	}
 
 	_onHeaderFocusin(e: FocusEvent) {
@@ -789,18 +791,6 @@ class TabContainer extends UI5Element {
 		return this._flatten(this.items);
 	}
 
-	_setIndentLevels(items: Array<ITab>, level = 1) {
-		items.forEach(item => {
-			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
-				item.forcedLevel = level;
-
-				if (item.subTabs) {
-					this._setIndentLevels(item.subTabs, level + 1);
-				}
-			}
-		});
-	}
-
 	_flatten(items: Array<ITab>) {
 		const result: Array<ITab> = [];
 
@@ -918,23 +908,27 @@ class TabContainer extends UI5Element {
 		await this._togglePopover(opener, true);
 	}
 
-	_addStyleIndent(itemsFlat: Array<ITab>) {
-		const extraIndent = itemsFlat
-			.filter(tab => !tab.isSeparator)
+	_setIndentLevels(items: Array<ITab>, level: number, extraIndent: boolean) {
+		items.forEach(item => {
+			item.receiveOverflowPresentationInfo?.({
+				style: {
+					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
+					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
+				},
+			});
+
+			if (item.subTabs) {
+				this._setIndentLevels(item.subTabs, level + 1, extraIndent);
+			}
+		});
+	}
+
+	_sendOverflowPresentationInfos(items: Array<ITab>) {
+		const extraIndent = items
+			.filter(item => !item.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
-		itemsFlat.forEach(item => {
-			let level = item.forcedLevel! - 1;
-
-			if (item.isSeparator) {
-				level += 1;
-			}
-
-			item.forcedStyle = {
-				[getScopedVarName("--_ui5-tab-indentation-level")]: level,
-				[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
-			};
-		});
+		this._setIndentLevels(this.items, 0, extraIndent);
 	}
 
 	async _onOverflowKeyDown(e: KeyboardEvent) {
@@ -1308,11 +1302,11 @@ class TabContainer extends UI5Element {
 	}
 
 	_setPopoverItems(items: Array<ITab>) {
+		this._sendOverflowPresentationInfos(items);
 		const newItemsFlat = this._flatten(items);
 
 		if (!arraysAreEqual(this._popoverItemsFlat, newItemsFlat)) {
 			this._popoverItemsFlat = newItemsFlat;
-			this._addStyleIndent(this._popoverItemsFlat);
 		}
 	}
 
@@ -1508,6 +1502,7 @@ export default TabContainer;
 export type {
 	ITab,
 	ITabPresentationInStripInfo,
+	ITabPresentationInOverflowInfo,
 	TabContainerTabSelectEventDetail,
 	TabContainerMoveEventDetail,
 };
