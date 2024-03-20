@@ -2,10 +2,15 @@ const { defineConfig } = require('cypress')
 const path = require("path");
 
 module.exports = defineConfig({
-  e2e: {
-    baseUrl: 'http://localhost:1234',
-    supportFile: path.join(__dirname, "cypress/support/e2e.js"),
-    specPattern: "test/specs/*.cy.js"
+  component: {
+    supportFile: path.join(__dirname, "cypress/support/component.js"),
+    indexHtmlFile: path.join(__dirname, "cypress/support/component-index.html"),
+    specPattern: "test/specs/*.cy.js",
+    devServer: {
+      framework: 'cypress-ct-lit',
+      bundler: 'vite',
+      viteConfig: {}
+    }
   },
   video: false,
   screenshotOnRunFailure: false,
