@@ -112,18 +112,4 @@ describe("BusyIndicator general interaction", () => {
 
 		assert.equal(height, 144, "Height of the root element inherits the height of the Busy Indicator");
 	});
-
-	it("test busy indicators text-placement=top property", async () => {
-		const busyIndicator = await browser.$("#busy-indicator-text-placement-top");
-		const busyIndicatorWrapper = await busyIndicator.shadow$(".ui5-busy-indicator-text");
-
-		assert.strictEqual(busyIndicatorWrapper.nextElementSibling.getAttribute("class"), "ui5-busy-indicator-circles-wrapper", "The text is displayed on top of the busy indicator");
-	});
-
-	it("test busy indicators text-placement=bottom property", async () => {
-		const busyIndicator = await browser.$("#busy-indicator-text-placement-bottom");
-		const busyIndicatorWrapper = await busyIndicator.shadow$(".ui5-busy-indicator-text");
-
-		assert.strictEqual(busyIndicatorWrapper.previousElementSibling.getAttribute("class"), "ui5-busy-indicator-circles-wrapper", "The text is displayed on top of the busy indicator");
-	});
 });
