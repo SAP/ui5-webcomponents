@@ -69,10 +69,22 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  * Interface for components that may be slotted inside `ui5-tabcontainer` as items
  * @public
  */
+
+type ITabPresentationInStripInfo = {
+	isInline: boolean;
+	mixedMode: boolean;
+	posinset: number;
+	setsize: number;
+	isTopLevelTab: boolean;
+}
+
 interface ITab extends UI5Element {
+	get stripPresentation(): object;
+	get overflowPresentation(): object;
+	receiveStripPresentationInfo?: (attributes: ITabPresentationInStripInfo) => void;
 	isSeparator: boolean;
-	getTabInStripDomRef: () => ITab | null;
 	additionalText?: string;
+	getTabInStripDomRef: () => ITab | null;
 	design?: `${SemanticColor}`;
 	disabled?: boolean;
 	icon?: string;
@@ -86,12 +98,7 @@ interface ITab extends UI5Element {
 	forcedLevel?: number;
 	forcedSelected?: boolean;
 	getElementInStrip?: () => ITab | null;
-	isInline?: boolean;
-	forcedMixedMode?: boolean;
-	forcedPosinset?: number;
-	forcedSetsize?: number;
 	realTabReference: ITab;
-	isTopLevelTab?: boolean;
 	forcedStyle?: Record<string, any>;
 }
 
@@ -472,11 +479,13 @@ class TabContainer extends UI5Element {
 		});
 
 		allTabs.forEach((tab, index, arr) => {
-			tab.isInline = this.tabLayout === TabLayout.Inline;
-			tab.forcedMixedMode = this.mixedMode;
-			tab.forcedPosinset = index + 1;
-			tab.forcedSetsize = arr.length;
-			tab.isTopLevelTab = items.some(i => i === tab);
+			tab.receiveStripPresentationInfo?.({
+				isInline: this.tabLayout === TabLayout.Inline,
+				mixedMode: this.mixedMode,
+				posinset: index + 1,
+				setsize: arr.length,
+				isTopLevelTab: items.some(i => i === tab),
+			});
 		});
 
 		this._setIndentLevels(items);
@@ -1498,6 +1507,7 @@ TabContainer.define();
 export default TabContainer;
 export type {
 	ITab,
+	ITabPresentationInStripInfo,
 	TabContainerTabSelectEventDetail,
 	TabContainerMoveEventDetail,
 };

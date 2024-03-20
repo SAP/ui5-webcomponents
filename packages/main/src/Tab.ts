@@ -24,7 +24,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { ITab, ITabPresentationInStripInfo } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -146,9 +146,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Object, defaultValue: null })
 	realTabReference!: Tab;
 
-	@property({ type: Boolean })
-	isTopLevelTab!: boolean;
-
 	/**
 	 * Holds the content associated with this tab.
 	 * @public
@@ -179,8 +176,11 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	})
 	subTabs!: Array<ITab>
 
-	isInline?: boolean;
-	forcedMixedMode?: boolean;
+	_isInline?: boolean;
+	_forcedMixedMode?: boolean;
+	_forcedPosinset?: number;
+	_forcedSetsize?: number;
+	_isTopLevelTab?: boolean;
 	getElementInStrip?: () => ITab | null;
 	_individualSlot!: string;
 
@@ -197,7 +197,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	get displayText() {
 		let text = this.text;
 
-		if (this.isInline && this.additionalText) {
+		if (this._isInline && this.additionalText) {
 			text += ` (${this.additionalText})`;
 		}
 
@@ -221,15 +221,15 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isSingleClickArea() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && !this.hasOwnContent;
 	}
 
 	get isTwoClickArea() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isOnSelectedTabPath(): boolean {
@@ -246,6 +246,14 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get hasOwnContent() {
 		return willShowContent(this.content);
+	}
+
+	receiveStripPresentationInfo(info: ITabPresentationInStripInfo) {
+		this._forcedMixedMode = info.mixedMode;
+		this._forcedPosinset = info.posinset;
+		this._forcedSetsize = info.setsize;
+		this._isInline = info.isInline;
+		this._isTopLevelTab = info.isTopLevelTab;
 	}
 
 	/**
@@ -281,11 +289,11 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get isMixedModeTab() {
-		return !this.icon && this.forcedMixedMode;
+		return !this.icon && this._forcedMixedMode;
 	}
 
 	get isTextOnlyTab() {
-		return !this.icon && !this.forcedMixedMode;
+		return !this.icon && !this._forcedMixedMode;
 	}
 
 	get isIconTab() {
@@ -342,7 +350,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--disabled");
 		}
 
-		if (this.isInline) {
+		if (this._isInline) {
 			classes.push("ui5-tab-strip-item--inline");
 		}
 
@@ -350,7 +358,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withAdditionalText");
 		}
 
-		if (!this.icon && !this.forcedMixedMode) {
+		if (!this.icon && !this._forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--textOnly");
 		}
 
@@ -358,7 +366,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withIcon");
 		}
 
-		if (!this.icon && this.forcedMixedMode) {
+		if (!this.icon && this._forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--mixedMode");
 		}
 
