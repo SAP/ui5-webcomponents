@@ -17,6 +17,7 @@
 	display: flex;
 	align-items: center;
 	box-sizing: border-box;
+	touch-action: none;
 	font-family: "72override", var(--sapFontFamily);
 }
 

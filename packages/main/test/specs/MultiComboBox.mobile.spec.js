@@ -16,7 +16,7 @@ describe("Basic interaction", () => {
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-input");
 		assert.ok(await dialogInput.isDisplayed(), "Input is displayed");
 
-		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+		const toggleSelectedButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 		assert.ok(await toggleSelectedButton.isDisplayed(), "Toggle selected items button is displayed");
 
 		const dialogCloseButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
@@ -28,7 +28,7 @@ describe("Basic interaction", () => {
 
 	it("Should close the mobile picker dialog when pressing the close button", async () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
-		const picker =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialogCloseButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 
 		assert.ok(await picker.isDisplayed(), "Picker is still opened");
@@ -41,7 +41,7 @@ describe("Basic interaction", () => {
 	it("Should close the mobile picker dialog when pressing the OK button", async () => {
 		const multiCombo = await browser.$("#multi1");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
-		const picker =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialogOkButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
 
 		await multiCombo.scrollIntoView();
@@ -75,7 +75,7 @@ describe("Basic interaction", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
 
-		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+		const toggleSelectedButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 		assert.strictEqual(await toggleSelectedButton.getAttribute("pressed"), "", "Toggle selected items button is pressed");
 
 		const itemsCount = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-list").$$("ui5-li")
@@ -85,7 +85,7 @@ describe("Basic interaction", () => {
 	it("Should show all items again when the toggle selected items is unpressed", async () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
 
-		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+		const toggleSelectedButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 
 		toggleSelectedButton.click();
 
@@ -263,7 +263,7 @@ describe("Items selection", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
 
-		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+		const toggleSelectedButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 		await toggleSelectedButton.click();
 
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[1];
@@ -276,7 +276,7 @@ describe("Items selection", () => {
 		assert.strictEqual(tokens.length, 3, "No deselection was performed");
 	});
 
-	it ("should select all items when clicking select all", async () => {
+	it("should select all items when clicking select all", async () => {
 		const cb = await $("#mcb-select-all-vs");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
 		const popover = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -441,16 +441,16 @@ describe("Accessibility", () => {
 		await multiCombo.scrollIntoView();
 		await multiCombo.shadow$('input').click();
 
-		const toggleSelectedButton =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
+		const toggleSelectedButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 
 		resourceBundleText = await browser.executeAsync(done => {
 			const mcb = document.getElementById("multi1");
 			done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SHOW_SELECTED_BUTTON));
 		});
-		
+
 		assert.ok(await toggleSelectedButton.isDisplayed(), "Toggle selected items button is displayed");
 		assert.strictEqual(await toggleSelectedButton.getAttribute("accessible-name"), "Show Selected Items Only", "Correct value is applied")
-		
+
 	});
 
 });

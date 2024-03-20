@@ -16,7 +16,6 @@
 					{{/each}}
 				</div>
 			{{/unless}}
-		</div>
 	{{/unless}}
 
 	{{#if _isPhone}}
@@ -45,6 +44,7 @@
 		class="ui5-tokenizer-list"
 		mode={{_nMoreListMode}}
 		separators="None"
+		@keydown="{{_onPopoverListKeydown}}"
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}

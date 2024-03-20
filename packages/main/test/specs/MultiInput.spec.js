@@ -184,7 +184,6 @@ describe("MultiInput general interaction", () => {
 
 	it("should NOT fire token-delete when MI is readonly", async () => {
 		const input = await browser.$("#readonly-mi");
-		const innerInput = await input.shadow$("input");
 		const deleteIcon = input.$$("ui5-token")[0].shadow$("ui5-icon");
 
 		// Act
@@ -205,7 +204,7 @@ describe("MultiInput general interaction", () => {
 
 		mi.scrollIntoView();
 		await valueHelpIcon.click();
-		
+
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#token-unique");
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
@@ -248,7 +247,7 @@ describe("MultiInput Truncated Token", () => {
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-		
+
 		await token.click();
 
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
@@ -270,7 +269,7 @@ describe("MultiInput Truncated Token", () => {
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-		
+
 		await token.click();
 
 		await $("#dummy-btn").click();
@@ -287,7 +286,7 @@ describe("MultiInput Truncated Token", () => {
 		const inner = await mi.shadow$("input");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-		
+
 		await inner.click();
 
 		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
@@ -334,7 +333,6 @@ describe("MultiInput Truncated Token", () => {
 		await btn.click();
 
 		const innerInput = await $("#added-mi").shadow$("input");
-		const html = await innerInput.getHTML();
 
 		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
 	});
@@ -409,7 +407,6 @@ describe("Keyboard handling", () => {
 	it("left/right arrow navigation", async () => {
 		const input =  await browser.$("#basic-overflow");
 		const innerInput =  await input.shadow$("input");
-		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
 		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
 
 		await innerInput.click();
@@ -643,7 +640,6 @@ describe("Keyboard handling", () => {
 	it("should trigger change event on enter", async () => {
 		const mi = await $("#token-unique");
 		const inner = await mi.shadow$("input");
-		const valueState = await $("#value-state-wrapper");
 
 		await mi.scrollIntoView();
 
