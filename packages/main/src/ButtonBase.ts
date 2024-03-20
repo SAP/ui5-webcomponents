@@ -376,6 +376,4 @@ class ButtonBase extends UI5Element implements IFormElement {
 	}
 }
 
-ButtonBase.define();
-
 export default ButtonBase;
