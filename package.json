@@ -32,6 +32,7 @@
     "start": "npm-run-all --sequential generate start:all",
     "build": "yarn ci:releasebuild",
     "test": "yarn wsrun --exclude-missing test",
+    "test2": "yarn workspace @ui5/webcomponents nps test2",
 
     "ci:releasebuild": "npm-run-all --sequential generate ts generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
