@@ -117,13 +117,13 @@ describe("BusyIndicator general interaction", () => {
 		const busyIndicator = await browser.$("#busy-indicator-text-placement-top");
 		const busyIndicatorTopLabel = await busyIndicator.shadow$(".ui5-busy-indicator-text-placement-top");
 
-		assert.isOk(busyIndicatorTopLabel, "Text is placed on top of the busy indicator");
+		assert.isOk(busyIndicatorTopLabel, "The text is displayed on top of the busy indicator");
 	});
 
 	it("test busy indicators text-placement=bottom property", async () => {
 		const busyIndicator = await browser.$("#busy-indicator-text-placement-bottom");
 		const busyIndicatorTopLabel = await busyIndicator.shadow$(".ui5-busy-indicator-text-placement-bottom");
 
-		assert.isOk(busyIndicatorTopLabel, "Text is placed on the bottom of the busy indicator");
+		assert.isOk(busyIndicatorTopLabel, "The text is displayed at the bottom of the busy indicator");
 	});
 });

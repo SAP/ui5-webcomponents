@@ -1,17 +1,17 @@
 /**
- * Different BusyIndicator text placement.
+ * Different BusyIndicator text placements.
  *
  * @public
  */
 enum BusyIndicatorTextPlacement {
 	/**
-	 * Text will be on top of busy indicator
+	 * The text will be displayed on top of the busy indicator.
 	 * @public
 	 */
 	Top = "Top",
 
 	/**
-	 * Text will be on bottom of busy indicator
+	 * The text will be displayed at the bottom of the busy indicator.
 	 * @public
 	 */
 	Bottom = "Bottom",
