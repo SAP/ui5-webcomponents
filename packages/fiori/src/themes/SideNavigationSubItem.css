@@ -1,5 +1,12 @@
 @import "./SideNavigationItemBase.css";
 
+:host {
+	color: var(--sapList_TextColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	font-weight: normal;
+}
+
 .ui5-sn-item-level2 {
 	padding-inline-start: var(--_ui5_side_navigation_group_icon_width);
 }

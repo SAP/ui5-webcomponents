@@ -1,5 +1,11 @@
 @import "./SideNavigationItemBase.css";
 
+:host {
+	font-size: var(--sapFontSmallSize);
+	font-family: var(--sapFontSemiboldFamily);
+	color: var(--sapContent_LabelColor);
+}
+
 .ui5-sn-item.ui5-sn-item-group {
 	height: 2rem;
 	min-height: 2rem;
@@ -14,12 +20,6 @@
 .ui5-sn-item.ui5-sn-item-group:hover .ui5-sn-item-toggle-icon,
 .ui5-sn-item.ui5-sn-item-group:focus .ui5-sn-item-toggle-icon {
 	display: block;
-}
-
-.ui5-sn-item-group .ui5-sn-item-text {
-	font-size: var(--sapFontSmallSize);
-	font-family: var(--sapFontSemiboldFamily);
-	color: var(--sapContent_LabelColor);
 }
 
 :host(:first-child) .ui5-sn-item-separator:first-child,

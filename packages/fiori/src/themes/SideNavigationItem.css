@@ -1,6 +1,9 @@
 @import "./SideNavigationItemBase.css";
 
-.ui5-sn-item-level1 .ui5-sn-item-text {
+:host {
+	color: var(--sapList_TextColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 	font-weight: var(--_ui5_side_navigation_group_text_weight);
 }
 

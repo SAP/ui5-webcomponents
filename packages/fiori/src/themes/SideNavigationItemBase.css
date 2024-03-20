@@ -15,6 +15,7 @@
 	height: var(--_ui5_side_navigation_item_height);
 	min-height: var(--_ui5_side_navigation_item_height);
 	cursor: pointer;
+	color: inherit;
 	background-color: var(--sapList_Background);
 	border-radius: var(--_ui5_side_navigation_item_border_radius);
 	transition: var(--_ui5_side_navigation_item_transition);
@@ -213,7 +214,6 @@ in high contrast themes the border is on all sides and there is extra border on 
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	color: var(--sapList_TextColor);
 }
 
 .ui5-sn-item-with-expander .ui5-sn-item-icon::after {
