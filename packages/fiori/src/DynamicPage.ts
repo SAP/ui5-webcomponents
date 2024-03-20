@@ -140,6 +140,15 @@ class DynamicPage extends UI5Element {
 	headerSnapped!: boolean;
 
 	/**
+	 * Defines if the pin button is hidden.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hidePinButton!: boolean;
+
+	/**
 	 * Defines if the header is pinned.
 	 *
 	 * @default false
@@ -333,7 +342,6 @@ class DynamicPage extends UI5Element {
 		this.headerSnapped = !this.headerSnapped;
 
 		this.skipSnapOnScroll = true;
-		this.headerPinned = false;
 	}
 
 	updateMediaRange() {

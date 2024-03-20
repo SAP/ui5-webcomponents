@@ -70,6 +70,15 @@ class DynamicPageHeaderActions extends UI5Element {
 	pinned!: boolean;
 
 	/**
+	 * Defines whether the pin button is hidden.
+	 *
+	 * @protected
+	 * @default false
+	 */
+	@property({ type: Boolean })
+	hidePinButton!: boolean;
+
+	/**
 	 * Defines whether the header is snapped.
 	 *
 	 * @protected
@@ -133,6 +142,10 @@ class DynamicPageHeaderActions extends UI5Element {
 
 	onPinClick() {
 		this.fireEvent("pin-button-click");
+	}
+
+	get showPinButton() {
+		return !this.hidePinButton && !this.snapped;
 	}
 }
 

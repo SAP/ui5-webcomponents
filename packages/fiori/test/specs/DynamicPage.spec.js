@@ -70,6 +70,21 @@ describe("API", () => {
         // assert property is propagated
         assert.strictEqual(await headerActions.getProperty("pinned"), false, "Pin header action is off");
     });
+
+    it("toggles the pin-button visibility with 'hidePinButton' property", async () => {
+        const page = await browser.$("#page"),
+            headerActions = page.shadow$('ui5-dynamic-page-header-actions');
+
+        // assert init state
+        assert.strictEqual(await page.getProperty("hidePinButton"), false, "Pin button is initially visible");
+        assert.strictEqual(await headerActions.getProperty("hidePinButton"), false, "Pin button is initially visible");
+
+        // act
+        await page.setProperty("hidePinButton", true);
+
+        // assert pin button is not rendered
+        assert.strictEqual(await headerActions.getProperty("hidePinButton"), true, "Pin button is hidden");
+    });
 });
 
 describe("Page general interaction", () => {
@@ -166,7 +181,7 @@ describe("Page general interaction", () => {
         const scrollTopBeforeScroll = await page.shadow$(".ui5-dynamic-page-scroll-container").getProperty("scrollTop");
         const scrollButton = await browser.$("#scrollDownBtn");
 
-        // act: scroll the page down`````
+        // act: scroll the page down
         await scrollButton.click();
 
         // wait untill the page processes the scroll event
@@ -182,13 +197,12 @@ describe("Page general interaction", () => {
 
     it("unpins the header upon press of snap button", async () => {
         const page = await browser.$("#page");
-        const snaoButton = await page.shadow$("ui5-dynamic-page-header-actions")
+        const snapButton = await page.shadow$("ui5-dynamic-page-header-actions")
             .shadow$(".ui5-dynamic-page-header-action");
 
         // act: snap the header
-        await snaoButton.click();
+        await snapButton.click();
 
-        assert.strictEqual(await page.getProperty("headerPinned"), false, "Header is not pinned");
         assert.strictEqual(await page.getProperty("headerSnapped"), true, "Header is snapped");
     });
 

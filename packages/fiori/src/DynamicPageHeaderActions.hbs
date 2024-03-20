@@ -8,7 +8,7 @@
             .accessibilityAttributes="{{accessibilityAttributes}}"
             title="{{expandLabel}}"
         ></ui5-button>
-    {{#unless snapped}}
+    {{#if showPinButton}}
         <ui5-toggle-button
             class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-pin"
             @click="{{onPinClick}}"
@@ -18,6 +18,6 @@
             accessible-name="{{pinLabel}}"
             title="{{pinLabel}}"
         ></ui5-toggle-button>
-    {{/unless}}
+    {{/if}}
     </div>
 </div>
