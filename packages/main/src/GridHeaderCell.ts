@@ -50,7 +50,7 @@ class GridHeaderCell extends UI5Element {
 	@property({ type: String, defaultValue: "auto" })
 	width!: string;
 
-	@property({ type: String, defaultValue: "8rem" })
+	@property({ type: String, defaultValue: "auto" })
 	minWidth!: string;
 
 	@property({ validator: Integer, defaultValue: 0 })
@@ -58,6 +58,13 @@ class GridHeaderCell extends UI5Element {
 
 	@property({ type: Boolean, defaultValue: false, noAttribute: true })
 	_popin!: boolean;
+
+	_popinWidth: number;
+
+	constructor() {
+		super();
+		this._popinWidth = 0;
+	}
 
 	onEnterDOM() {
 		this.setAttribute("role", "columnheader");

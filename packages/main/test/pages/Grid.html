@@ -15,13 +15,13 @@
 	<div class="section">
 		<ui5-title tabindex="0" level="H3" id="title">My Selectable Products (3)</ui5-title>
 		<ui5-slider id="slider" min="0" max="100" step="1" value="100" label-interval="0"></ui5-slider>
-		<ui5-grid id="grid" selection-mode="Multi" accessible-name-ref="title" no-data-text="No data found">
+		<ui5-grid id="grid" column-mode="Popin" selection-mode="Multi" accessible-name-ref="title" no-data-text="No data found">
 			<ui5-grid-header-row slot="header-row">
-				<ui5-grid-header-cell id="produtCol" min-width="250px" width="300px"><span>Product</span></ui5-grid-header-cell>
-				<ui5-grid-header-cell id="supplierCol" min-width="200px">Supplier</ui5-grid-header-cell>
-				<ui5-grid-header-cell id="dimensionsCol" min-width="300px">Dimensions</ui5-grid-header-cell>
-				<ui5-grid-header-cell id="weightCol" popin-text="Weight">Weight</ui5-grid-header-cell>
-				<ui5-grid-header-cell id="priceCol" min-width="200px" style="text-align: end;">Price</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="produtCol" importance="2" width="300px"><span>Product</span></ui5-grid-header-cell>
+				<ui5-grid-header-cell id="supplierCol">Supplier</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="dimensionsCol" min-width="300px" importance="-1">Dimensions</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="weightCol" popin-text="Weight" importance="1">Weight</ui5-grid-header-cell>
+				<ui5-grid-header-cell id="priceCol" min-width="220px" importance="1" style="text-align: end;">Price</ui5-grid-header-cell>
 			</ui5-grid-header-row>
 			<ui5-grid-row>
 				<ui5-grid-cell><ui5-label><b>Notebook Basic 15</b><br>HT-1000</ui5-label></ui5-grid-cell>

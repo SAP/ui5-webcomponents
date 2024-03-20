@@ -17,6 +17,8 @@ import GridSelectionMode from "./types/GridSelectionMode.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
+import GridHeaderCell from "./GridHeaderCell.js";
+import GridColumnMode from "./types/GridColumnMode.js";
 
 /**
  * @class
@@ -109,6 +111,12 @@ class Grid extends UI5Element {
 	@property()
 	noDataText!: string;
 
+	@property({ type: GridColumnMode, defaultValue: GridColumnMode.Popin })
+	columnMode!: GridColumnMode;
+
+	poppedIn: Array<{col: GridHeaderCell, width: float}>;
+	containerWidth: number;
+
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
@@ -120,14 +128,20 @@ class Grid extends UI5Element {
 	constructor() {
 		super();
 		this._onResizeBound = this._onResize.bind(this);
+		this.poppedIn = [];
+		this.containerWidth = 0;
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this._onResizeBound);
+		if (this.columnMode === GridColumnMode.Popin) {
+			ResizeHandler.register(this, this._onResizeBound);
+		}
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this._onResizeBound);
+		if (this.columnMode === GridColumnMode.Popin) {
+			ResizeHandler.deregister(this, this._onResizeBound);
+		}
 	}
 
 	onBeforeRendering() {
@@ -157,21 +171,48 @@ class Grid extends UI5Element {
 	}
 
 	_onResize() {
-		const gridWidth = this.getDomRef()!.clientWidth;
-		this.headerRow.cells.toSorted((a, b) => a.importance - b.importance).reduce((totalMinWidth, headerCell, headerCellIndex) => {
-			const headerCellMinWidth = parseFloat(getComputedStyle(headerCell).minWidth);
-			headerCell._popin = headerCellIndex > 0 && totalMinWidth + headerCellMinWidth > gridWidth;
-			this.rows.forEach(row => {
-				row.cells[headerCellIndex]._popin = headerCell._popin;
-			});
-			return totalMinWidth + headerCellMinWidth;
-		}, 0);
+		const { clientWidth, scrollWidth } = this.getDomRef()!;
+		this.containerWidth = this.containerWidth || clientWidth;
+		const underflow = clientWidth - this.containerWidth;
+		const headers = this.headerRow.cells.toSorted((a, b) => a.importance - b.importance);
+
+		if (scrollWidth > clientWidth) {
+			const overflow = scrollWidth - clientWidth;
+			this.containerWidth = clientWidth;
+			headers.reduce((totalWidth, headerCell, headerCellIndex) => {
+				if (totalWidth <= overflow && !headerCell._popin && headerCellIndex !== this.headerRow.cells.length - 1) {
+					const headerWidth = headerCell.getBoundingClientRect().width;
+					this._setHeaderPopinState(headerCell, true, headerWidth);
+					totalWidth += headerWidth;
+				}
+				return totalWidth;
+			}, 0);
+		} else if (underflow > 0) {
+			headers.filter(headerCell => headerCell._popin).toReversed().reduce((totalWidth, headerCell) => {
+				if ((totalWidth + headerCell._popinWidth) <= underflow && headerCell._popinWidth <= underflow) {
+					totalWidth += headerCell._popinWidth;
+					this._setHeaderPopinState(headerCell, false, 0);
+					this.containerWidth = scrollWidth;
+				}
+				return totalWidth;
+			}, 0);
+		}
+	}
+
+	_setHeaderPopinState(headerCell: GridHeaderCell, inPopin: boolean, popinWidth: number) {
+		const headerIndex = this.headerRow.cells.indexOf(headerCell);
+		headerCell._popin = inPopin;
+		headerCell._popinWidth = popinWidth;
+		this.rows.forEach(row => {
+			row.cells[headerIndex]._popin = inPopin;
+		});
 	}
 
 	get styles() {
 		return {
 			grid: {
 				"grid-template-columns": this._gridTemplateColumns,
+				"overflow-x": this._gridOverflowX,
 			},
 		};
 	}
@@ -185,6 +226,13 @@ class Grid extends UI5Element {
 		}
 		widths.push(...this.headerRow._visibleCells.map(cell => `minmax(${cell.minWidth}, auto)`));
 		return widths.join(" ");
+	}
+
+	get _gridOverflowX() {
+		if (this.columnMode === GridColumnMode.Popin) {
+			return "hidden";
+		}
+		return "scroll";
 	}
 
 	get _effectiveNoDataText() {
