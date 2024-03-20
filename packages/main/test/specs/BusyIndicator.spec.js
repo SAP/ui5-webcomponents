@@ -115,15 +115,15 @@ describe("BusyIndicator general interaction", () => {
 
 	it("test busy indicators text-placement=top property", async () => {
 		const busyIndicator = await browser.$("#busy-indicator-text-placement-top");
-		const busyIndicatorTopLabel = await busyIndicator.shadow$(".ui5-busy-indicator-text-placement-top");
+		const busyIndicatorWrapper = await busyIndicator.shadow$(".ui5-busy-indicator-text");
 
-		assert.isOk(busyIndicatorTopLabel, "The text is displayed on top of the busy indicator");
+		assert.strictEqual(busyIndicatorWrapper.nextElementSibling.getAttribute("class"), "ui5-busy-indicator-circles-wrapper", "The text is displayed on top of the busy indicator");
 	});
 
 	it("test busy indicators text-placement=bottom property", async () => {
 		const busyIndicator = await browser.$("#busy-indicator-text-placement-bottom");
-		const busyIndicatorTopLabel = await busyIndicator.shadow$(".ui5-busy-indicator-text-placement-bottom");
+		const busyIndicatorWrapper = await busyIndicator.shadow$(".ui5-busy-indicator-text");
 
-		assert.isOk(busyIndicatorTopLabel, "The text is displayed at the bottom of the busy indicator");
+		assert.strictEqual(busyIndicatorWrapper.previousElementSibling.getAttribute("class"), "ui5-busy-indicator-circles-wrapper", "The text is displayed on top of the busy indicator");
 	});
 });
