@@ -127,7 +127,7 @@ class GridRow extends UI5Element {
 		return (this.parentElement as Grid)._id;
 	}
 
-	get _i18nRowSelector() {
+	get _i18nRowSelector(): string {
 		return GridRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 }

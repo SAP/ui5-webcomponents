@@ -133,15 +133,15 @@ class GridHeaderRow extends UI5Element {
 		return this.cells.filter(c => c._popin);
 	}
 
-	get _i18nRowSelector() {
+	get _i18nRowSelector(): string {
 		return GridHeaderRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 
-	get _i18nSelection() {
+	get _i18nSelection(): string {
 		return GridHeaderRow.i18nBundle.getText(GRID_SELECTION);
 	}
 
-	get _i18nRowPopin() {
+	get _i18nRowPopin(): string {
 		return GridHeaderRow.i18nBundle.getText(GRID_ROW_POPIN);
 	}
 }

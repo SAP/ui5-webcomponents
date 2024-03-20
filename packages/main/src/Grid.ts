@@ -235,7 +235,7 @@ class Grid extends UI5Element {
 		return "scroll";
 	}
 
-	get _effectiveNoDataText() {
+	get _effectiveNoDataText(): string {
 		return this.noDataText || Grid.i18nBundle.getText(GRID_NO_DATA);
 	}
 
