@@ -56,7 +56,7 @@
     "@ui5/webcomponents-theming": "1.24.0-rc.2"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.23.1",
-    "chromedriver": "^123.0.0"
+    "@ui5/webcomponents-tools": "1.24.0-rc.2",
+    "chromedriver": "^121.0.2"
   }
 }
