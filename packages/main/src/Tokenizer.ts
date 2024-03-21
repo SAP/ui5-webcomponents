@@ -296,7 +296,7 @@ class Tokenizer extends UI5Element {
 				this._itemNav.setCurrentItem(target);
 				setTimeout(() => {
 					this._scrollToToken(target);
-				}, 0)
+				}, 0);
 			}
 		}
 	}
