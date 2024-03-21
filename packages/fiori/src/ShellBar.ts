@@ -28,6 +28,7 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
@@ -1208,8 +1209,8 @@ class ShellBar extends UI5Element {
 		return this.primaryTitle || this.showLogoInMenuButton;
 	}
 
-	get popoverHorizontalAlign() {
-		return this.effectiveDir === "rtl" ? "Left" : "Right";
+	get popoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir === "rtl" ? "Start" : "End";
 	}
 
 	get hasSearchField() {
