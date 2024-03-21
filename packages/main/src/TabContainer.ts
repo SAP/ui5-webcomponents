@@ -65,11 +65,6 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
-/**
- * Interface for components that may be slotted inside `ui5-tabcontainer` as items
- * @public
- */
-
 type ITabPresentationInStripInfo = {
 	isInline?: boolean;
 	mixedMode?: boolean;
@@ -83,6 +78,10 @@ type ITabPresentationInOverflowInfo = {
 	style: Record<string, any>;
 };
 
+/**
+ * Interface for components that may be slotted inside `ui5-tabcontainer` as items
+ * @public
+ */
 interface ITab extends UI5Element {
 	get stripPresentation(): object;
 	get overflowPresentation(): object;
@@ -101,15 +100,25 @@ interface ITab extends UI5Element {
 	text?: string;
 	hasOwnContent?: boolean;
 	forcedSelected?: boolean;
-	// >>>>
-	realTabReference: ITab;
 }
 
-type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
+type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | ITabPresentation | ITab;
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
+
+interface TabContainerExpandButton extends Button {
+	tab: ITab;
+}
+
+interface ITabPresentation extends HTMLElement {
+	realTabReference: ITab;
+}
+
+interface TabContainerTabInOverflow extends CustomListItem {
+	realTabReference: ITab;
+}
 
 type TabContainerTabSelectEventDetail = {
 	tab: ITab;
@@ -124,14 +133,6 @@ type TabContainerMoveEventDetail = {
 		element: HTMLElement;
 		placement: `${MovePlacement}`
 	}
-}
-
-interface TabContainerExpandButton extends Button {
-	tab: Tab;
-}
-
-interface TabContainerTabInOverflow extends CustomListItem {
-	realTabReference: Tab;
 }
 
 /**
@@ -501,10 +502,10 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderFocusin(e: FocusEvent) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 
 		if (tab) {
-			this._itemNavigation.setCurrentItem(tab.realTabReference);
+			this._itemNavigation.setCurrentItem(tab.realTabReference as Tab);
 		}
 	}
 
@@ -513,7 +514,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._setDraggedElement!((e.target as Tab).realTabReference);
+		this._setDraggedElement!((e.target as ITabPresentation).realTabReference);
 	}
 
 	_onHeaderDragEnter(e: DragEvent) {
@@ -540,7 +541,7 @@ class TabContainer extends UI5Element {
 			popoverTarget = overflowButton;
 			e.preventDefault();
 		} else if (closestPosition) {
-			const dropTarget = (closestPosition.element as Tab).realTabReference;
+			const dropTarget = (closestPosition.element as ITabPresentation).realTabReference;
 			let placements = closestPosition.placements;
 
 			if (dropTarget === draggedElement) {
@@ -568,7 +569,7 @@ class TabContainer extends UI5Element {
 				return false;
 			});
 
-			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.subTabs.length) {
+			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as ITabPresentation).realTabReference.subTabs!.length) {
 				popoverTarget = closestPosition.element;
 			} else if (!acceptedPlacement) {
 				this.dropIndicatorDOM!.targetReference = null;
@@ -591,7 +592,7 @@ class TabContainer extends UI5Element {
 				element: draggedElement,
 			},
 			destination: {
-				element: (this.dropIndicatorDOM!.targetReference as Tab).realTabReference,
+				element: (this.dropIndicatorDOM!.targetReference as ITabPresentation).realTabReference,
 				placement: this.dropIndicatorDOM!.placement,
 			},
 		});
@@ -611,7 +612,7 @@ class TabContainer extends UI5Element {
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement();
-		const dropTarget = (destination.element as ITab).realTabReference;
+		const dropTarget = (destination.element as ITabPresentation).realTabReference;
 
 		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
 			return;
@@ -645,7 +646,7 @@ class TabContainer extends UI5Element {
 				element: draggedElement,
 			},
 			destination: {
-				element: (destination.element as Tab).realTabReference,
+				element: (destination.element as ITabPresentation).realTabReference,
 				placement: destination.placement,
 			},
 		}, true);
@@ -655,7 +656,7 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onTabStripClick(e: Event) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
@@ -668,7 +669,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const tabHasSubTabs = tab.realTabReference.subTabs.some(item => !item.isSeparator);
+		const tabHasSubTabs = tab.realTabReference.subTabs!.some(item => !item.isSeparator);
 
 		if (!tab.realTabReference.hasOwnContent && tabHasSubTabs) {
 			await this._togglePopover(tab);
@@ -683,10 +684,10 @@ class TabContainer extends UI5Element {
 		e.stopPropagation();
 		e.preventDefault();
 
-		let tabInstance: Tab;
+		let tabInstance: HTMLElement;
 
 		if (isTabInStrip(e.target as HTMLElement)) {
-			tabInstance = e.target as Tab;
+			tabInstance = e.target as ITabPresentation;
 		} else {
 			tabInstance = (e.target as TabContainerExpandButton).tab;
 		}
@@ -697,9 +698,9 @@ class TabContainer extends UI5Element {
 			tabInstance.focus();
 		}
 
-		if (e.type === "keydown" && !(e.target as Tab).realTabReference.isSingleClickArea) {
-			opener = (e.target as Tab).querySelector<TabContainerExpandButton>(".ui5-tab-expand-button [ui5-button]")!;
-			tabInstance = (e.target as Tab).realTabReference;
+		if (e.type === "keydown" && !(e.target as ITabPresentation).realTabReference.isSingleClickArea) {
+			opener = opener.querySelector<TabContainerExpandButton>(".ui5-tab-expand-button [ui5-button]")!;
+			tabInstance = (e.target as ITabPresentation).realTabReference;
 		}
 
 		// if clicked between the expand button and the tab
@@ -729,7 +730,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
@@ -757,7 +758,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onTabStripKeyUp(e: KeyboardEvent) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
@@ -1283,7 +1284,7 @@ class TabContainer extends UI5Element {
 			return (opener as TabContainerExpandButton).tab;
 		}
 
-		return (opener as Tab);
+		return (opener as ITabPresentation);
 	}
 
 	_getPopoverItemsFor(targetOwner: TabContainerPopoverOwner) {
@@ -1304,10 +1305,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isTabInStrip(targetOwner)) {
-			return targetOwner.realTabReference.subTabs;
+			return (targetOwner as ITabPresentation).realTabReference.subTabs!;
 		}
 
-		return targetOwner.subTabs;
+		return (targetOwner as ITab).subTabs!;
 	}
 
 	_setPopoverItems(items: Array<ITab>) {
@@ -1381,7 +1382,7 @@ class TabContainer extends UI5Element {
 		if (!this._setDraggedElementInStaticArea) {
 			this._setDraggedElementInStaticArea = DragRegistry.addSelfManagedArea(this.staticAreaItem!);
 			staticAreaItemDomRef!.addEventListener("dragstart", e => {
-				this._setDraggedElementInStaticArea!((e.target as Tab).realTabReference);
+				this._setDraggedElementInStaticArea!((e.target as ITabPresentation).realTabReference);
 			});
 		}
 
@@ -1484,10 +1485,10 @@ class TabContainer extends UI5Element {
 
 const isTabInStrip = (el: HTMLElement) => el.localName === "div" && el.getAttribute("role") === "tab";
 
-const getTab = (el: HTMLElement | null) => {
+const getTabInStrip = (el: HTMLElement | null) => {
 	while (el) {
 		if (isTabInStrip(el)) {
-			return el as Tab;
+			return el as ITabPresentation;
 		}
 
 		el = el.parentElement;

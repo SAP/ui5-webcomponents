@@ -143,9 +143,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Boolean })
 	forcedSelected!: boolean;
 
-	@property({ type: Object, defaultValue: null })
-	realTabReference!: Tab;
-
 	/**
 	 * Holds the content associated with this tab.
 	 * @public
