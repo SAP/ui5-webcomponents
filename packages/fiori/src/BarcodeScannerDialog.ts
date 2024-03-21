@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -116,6 +116,16 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 class BarcodeScannerDialog extends UI5Element {
 	/**
+	 * Indicates whether the dialog is open.
+	 *
+	 * @public
+	 * @default false
+	 * @since 1.24.0
+	*/
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 * @default false
 	 * @private
@@ -136,9 +146,20 @@ class BarcodeScannerDialog extends UI5Element {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.type === "property" && changeInfo.name === "open") {
+			if (changeInfo.newValue) {
+				this.show();
+			} else {
+				this.close();
+			}
+		}
+	}
+
 	/**
 	 * Shows a dialog with the camera videostream. Starts a scan session.
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> property.
 	 */
 	show(): void {
 		if (this.loading) {
@@ -164,6 +185,7 @@ class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Closes the dialog and the scan session.
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> property.
 	 */
 	close():void {
 		this._closeDialog();
@@ -195,11 +217,13 @@ class BarcodeScannerDialog extends UI5Element {
 	async _showDialog() {
 		this.dialog = await this._getDialog();
 		this.dialog.show();
+		this.open = true;
 	}
 
 	_closeDialog() {
 		if (this.dialog && this.dialog.opened) {
 			this.dialog.close();
+			this.open = false;
 		}
 	}
 

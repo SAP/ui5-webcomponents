@@ -900,4 +900,3 @@ The resulting DOM from the loop above will look like this:
 
 This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally rendered next to each other in a single slot.
 
-Next: [Testing UI5 Web Components](./05-testing-UI5-Web-Components.md)
