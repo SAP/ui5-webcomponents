@@ -56,13 +56,6 @@ import { registerIconLoader } from "./dist/asset-registries/Icons.js";
 // Boot.ts
 import { attachBoot } from "./dist/Boot.js";
 
-// CSP.ts
-import {
-	setPackageCSSRoot,
-	setUseLinks,
-	setPreloadLinks,
-} from "./dist/CSP.js";
-
 // CustomElementsScope.ts
 import {
 	setCustomElementsScopingSuffix,
@@ -172,11 +165,6 @@ export {
 
 	// Boot.ts
 	attachBoot,
-
-	// CSP.ts
-	setPackageCSSRoot,
-	setUseLinks,
-	setPreloadLinks,
 
 	// CustomElementsScope.ts
 	setCustomElementsScopingSuffix,

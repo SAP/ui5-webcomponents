@@ -25,7 +25,6 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
@@ -35,7 +34,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => void;
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, forStaticArea: boolean, options: RendererOptions) => void;
 
 type RendererOptions = {
 	/**
@@ -1139,7 +1138,6 @@ abstract class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
-			preloadLinks(this);
 		}
 		return this;
 	}
