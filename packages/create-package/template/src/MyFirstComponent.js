@@ -52,7 +52,7 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 		return metadata;
 	}
 
-	static get renderer() {
+	static get render() {
 		return litRender;
 	}
 
