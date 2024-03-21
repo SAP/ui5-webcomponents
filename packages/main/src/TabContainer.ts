@@ -102,21 +102,17 @@ interface ITab extends UI5Element {
 	forcedSelected?: boolean;
 }
 
-type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | ITabPresentation | ITab;
+type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | ITabPresentation;
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
-interface TabContainerExpandButton extends Button {
-	tab: ITab;
-}
-
 interface ITabPresentation extends HTMLElement {
 	realTabReference: ITab;
 }
 
-interface TabContainerTabInOverflow extends CustomListItem {
+interface ITabPresentationInOverflow extends CustomListItem {
 	realTabReference: ITab;
 }
 
@@ -689,18 +685,17 @@ class TabContainer extends UI5Element {
 		if (isTabInStrip(e.target as HTMLElement)) {
 			tabInstance = e.target as ITabPresentation;
 		} else {
-			tabInstance = (e.target as TabContainerExpandButton).tab;
+			tabInstance = getTabInStrip(e.target as HTMLElement) as ITabPresentation;
 		}
-
-		let opener = e.target as HTMLElement;
 
 		if (tabInstance) {
 			tabInstance.focus();
 		}
 
+		let opener = e.target as HTMLElement;
+
 		if (e.type === "keydown" && !(e.target as ITabPresentation).realTabReference.isSingleClickArea) {
-			opener = opener.querySelector<TabContainerExpandButton>(".ui5-tab-expand-button [ui5-button]")!;
-			tabInstance = (e.target as ITabPresentation).realTabReference;
+			opener = opener.querySelector(".ui5-tab-expand-button [ui5-button]")!;
 		}
 
 		// if clicked between the expand button and the tab
@@ -720,13 +715,13 @@ class TabContainer extends UI5Element {
 	}
 
 	_getSelectedTabInOverflow() {
-		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
-			return (<TabContainerTabInOverflow>item).realTabReference && (<TabContainerTabInOverflow>item).realTabReference.selected;
+		return <ITabPresentationInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
+			return (<ITabPresentationInOverflow>item).realTabReference && (<ITabPresentationInOverflow>item).realTabReference.selected;
 		});
 	}
 
 	_getFirstFocusableItemInOverflow() {
-		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
+		return <ITabPresentationInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
@@ -1280,11 +1275,7 @@ class TabContainer extends UI5Element {
 			return "end-overflow";
 		}
 
-		if (opener instanceof Button) {
-			return (opener as TabContainerExpandButton).tab;
-		}
-
-		return (opener as ITabPresentation);
+		return getTabInStrip(opener) as ITabPresentation;
 	}
 
 	_getPopoverItemsFor(targetOwner: TabContainerPopoverOwner) {
@@ -1304,11 +1295,7 @@ class TabContainer extends UI5Element {
 			});
 		}
 
-		if (isTabInStrip(targetOwner)) {
-			return (targetOwner as ITabPresentation).realTabReference.subTabs!;
-		}
-
-		return (targetOwner as ITab).subTabs!;
+		return targetOwner.realTabReference.subTabs!;
 	}
 
 	_setPopoverItems(items: Array<ITab>) {
