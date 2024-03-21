@@ -27,6 +27,8 @@ import {
 	isRightShift,
 	isLeftShiftCtrl,
 	isRightShiftCtrl,
+	isDeleteShift,
+	isInsertCtrl,
 	isEnd,
 	isHome,
 	isHomeShift,
@@ -488,9 +490,10 @@ class Tokenizer extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
-		if (isCtrl && ["c", "x"].includes(e.key.toLowerCase())) {
+		if ((isCtrl && ["c", "x"].includes(e.key.toLowerCase())) || isDeleteShift(e) || isInsertCtrl(e)) {
 			e.preventDefault();
-			const isCut = e.key.toLowerCase() === "x";
+
+			const isCut = e.key.toLowerCase() === "x" || isDeleteShift(e);
 			const selectedTokens = this.tokens.filter(token => token.selected);
 
 			if (isCut) {

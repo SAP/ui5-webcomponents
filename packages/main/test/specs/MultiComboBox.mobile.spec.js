@@ -258,9 +258,12 @@ describe("Items selection", () => {
 
 	it("Should not allow additional selection when readonly", async () => {
 		const multiCombo = await browser.$("#mcb-ro");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
+
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-ro");
 
 		await multiCombo.scrollIntoView();
+		await mcbInput.click();
 		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
 
 		const toggleSelectedButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-toggle-button");

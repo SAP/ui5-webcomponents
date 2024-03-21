@@ -390,8 +390,8 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
 			await tokens[1].keys('F4');
-
-			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
+			// focus goes back to token which results in Tokenizer being expanded.
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 
 			tokens = await browser.$("#more-mcb").shadow$$(".ui5-multi-combobox-token");
 
@@ -399,7 +399,7 @@ describe("MultiComboBox general interaction", () => {
 			await tokens[2].click();
 			await tokens[2].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
 			await tokens[2].keys('F4');
 
@@ -652,7 +652,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const tokenizerNMore = await cb.shadow$("[ui5-tokenizer]");
 			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
-			
+
 			await nMoreLabel.click();
 
 			assert.ok(await popover.$(".ui5-mcb-select-all-checkbox").getProperty("checked"), "Select All CheckBox should be selected");
@@ -1709,24 +1709,24 @@ describe("MultiComboBox general interaction", () => {
 
 		it ("Should check clear icon availability", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			const cb = await $("#clear-icon-cb");
 			const inner = cb.shadow$("input");
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
-	
+
 			assert.notOk(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to false when mcb has no value");
 
 			await inner.click();
 			await inner.keys("c");
-	
+
 			assert.ok(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to true upon typing");
 		});
-	
+
 		it ("Should check clear icon events", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			const cb = await $("#clear-icon-cb");
-			
+
 			await cb.shadow$("input").click();
 			await cb.shadow$("input").keys("c");
 
@@ -1734,7 +1734,7 @@ describe("MultiComboBox general interaction", () => {
 
 			// focus out the combo
 			await clearIcon.click();
-	
+
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});

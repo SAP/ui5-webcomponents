@@ -1508,9 +1508,6 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (this._tokenizer) {
-			this._tokenizer.preventTokenFocus = true;
-		}
 		// Typehead causes issues on Android devices, so we disable it for now
 		// If there is already a selection the autocomplete has already been performed
 		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars) {
@@ -1651,7 +1648,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	inputFocusIn(e: FocusEvent) {
-		if (!isPhone() || !this.readonly) {
+		if (!isPhone() && !this.readonly) {
 			this.focused = true;
 			this._tokenizer.expanded = true;
 			setTimeout(() => {
