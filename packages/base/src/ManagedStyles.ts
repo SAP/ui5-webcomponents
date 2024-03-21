@@ -55,9 +55,7 @@ const hasStyle = (name: string, value = ""): boolean => {
 		return true;
 	}
 
-	const styleElement = document.querySelector(`head>style[${name}="${value}"]`);
-
-	return !!styleElement || !!document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
+	return !!document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
 };
 
 const removeStyle = (name: string, value = "") => {
