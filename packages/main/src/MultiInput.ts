@@ -133,11 +133,6 @@ class MultiInput extends Input {
 		this.fireEvent("value-help-trigger");
 	}
 
-	showMorePress() {
-		this.tokenizer.expanded = false;
-		this.focus();
-	}
-
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		const focusedToken = e.detail.ref;
 		const selectedTokens = this.tokens.filter(token => token.selected);
@@ -283,9 +278,6 @@ class MultiInput extends Input {
 
 		if (!insideDOM && !insideShadowDom) {
 			this.tokenizer.expanded = false;
-
-			// we need to reset tabindex setting by tokenizer
-			this.tokenizer._itemNav._currentIndex = -1;
 		}
 	}
 

@@ -290,10 +290,13 @@ class Tokenizer extends UI5Element {
 
 	_onmousedown(e: MouseEvent) {
 		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
+			this.expanded = true;
 			const target = e.target as Token;
 			if (!target.toBeDeleted) {
 				this._itemNav.setCurrentItem(target);
-				this._scrollToToken(target);
+				setTimeout(() => {
+					this._scrollToToken(target);
+				}, 0)
 			}
 		}
 	}
@@ -341,7 +344,7 @@ class Tokenizer extends UI5Element {
 				}
 			});
 
-			if (!hasSelectedToken) {
+			if (!hasSelectedToken && !this.preventTokenFocus) {
 				firstToken.forcedTabIndex = "0";
 			}
 		}
@@ -724,10 +727,19 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		if (this._skipExpanding) {
 			this._skipExpanding = false;
 			return;
+		}
+
+		// When focus is prevented and focus is not going to a token, we need to reset the currentIndex of the ItemNavigation
+		if (this.preventTokenFocus && !(e.relatedTarget as HTMLElement).hasAttribute("ui5-token")) {
+			this._getTokens().forEach(token => {
+				token.forcedTabIndex = "-1";
+			});
+
+			this._itemNav._currentIndex = -1;
 		}
 
 		this.expanded = false;
