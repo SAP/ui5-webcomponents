@@ -1578,7 +1578,6 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
 			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
-			await mcb.click();
 			await mcb.keys(["Control", "i"]);
 			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
 
@@ -1586,7 +1585,6 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Control", "i"]);
 			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
-			await mcb.click();
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Control", "i"]);
 			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
