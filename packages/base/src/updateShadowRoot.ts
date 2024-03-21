@@ -23,12 +23,7 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 
 	shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
 
-	if (ctor.renderer) {
-		ctor.renderer(renderResult, shadowRoot, forStaticArea, { host: element });
-		return;
-	}
-
-	ctor.render(renderResult, shadowRoot, forStaticArea, { host: element });
+	ctor.renderer(renderResult, shadowRoot, forStaticArea, { host: element });
 };
 
 export default updateShadowRoot;

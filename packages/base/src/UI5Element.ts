@@ -108,11 +108,7 @@ abstract class UI5Element extends HTMLElement {
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
 
-	/**
-	 * @deprecated
-	 */
-	static render: Renderer;
-	static renderer?: Renderer;
+	static renderer: Renderer;
 
 	constructor() {
 		super();
