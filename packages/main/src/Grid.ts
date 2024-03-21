@@ -48,8 +48,8 @@ import GridColumnMode from "./types/GridColumnMode.js";
 class Grid extends UI5Element {
 	/**
 	 * Defines the rows of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-row</code> for the intended design.
+	 *
+	 * Note: Use <code>ui5-grid-row</code> for the intended design.
 	 *
 	 * @public
 	 */
@@ -58,8 +58,8 @@ class Grid extends UI5Element {
 
 	/**
 	 * Defines the header row of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-header-row</code> for the intended design.
+	 *
+	 * Note: Use <code>ui5-grid-header-row</code> for the intended design.
 	 *
 	 * @public
 	 */
