@@ -679,7 +679,7 @@ describe("List drag and drop tests", () => {
 		const results = await Promise.all(expectedItems.map((item, i) => item.isEqual(listItems[i])));
 
 		return results.every(value => value);
-	}
+	};
 
 	before(async () => {
 		await browser.url(`test/pages/ListDragAndDrop.html`);
@@ -691,10 +691,12 @@ describe("List drag and drop tests", () => {
 		let dragOffset = await getDragOffset(firstItem, secondItem, "After");
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd1", [secondItem, firstItem, thirdItem]), "Items order has changed");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
 
 		dragOffset = await getDragOffset(firstItem, thirdItem, "After");
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd1", [secondItem, thirdItem, firstItem]), "Items order has changed");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
 	});
 
 	it("Moving item Before another", async () => {
@@ -714,11 +716,13 @@ describe("List drag and drop tests", () => {
 
 		await firstItem.dragAndDrop({ x: 0, y: 0 });
 		assert.ok(await compareItemsOrder("listDnd2", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
 
 		const dragOffset = await getDragOffset(firstItem, secondItem);
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd2", [secondItem, thirdItem]), "Items order has changed");
 		assert.ok(await secondItem.$("[ui5-li]").isEqual(firstItem), "First item is nested in second item");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
 	});
 
 	it("Moving item from one list to another", async () => {
@@ -728,6 +732,7 @@ describe("List drag and drop tests", () => {
 		const dragOffset = await getDragOffset(listTwoItem, listOneFirstItem, "After");
 		await listTwoItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd1", [listOneFirstItem, listTwoItem, listOneSecondItem, listOneThirdItem]), "Items order has changed");
+		assert.ok(await listTwoItem.isFocused(), "Item is focused");
 	});
 
 	it("Moving link to list that doesn't accept it", async () => {

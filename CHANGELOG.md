@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
+
+
+### Bug Fixes
+
+* **ui5-tab:** focus() now works if dom ref in strip is not rendered yet  ([#8425](https://github.com/SAP/ui5-webcomponents/issues/8425)) ([d827e0e](https://github.com/SAP/ui5-webcomponents/commit/d827e0e2b1bad6f569e65cdb644e7b87d7d71f8f))
+* **ui5-timeline-item:** fix subtitle text overflows when long text provided ([#8462](https://github.com/SAP/ui5-webcomponents/issues/8462)) ([c938f6d](https://github.com/SAP/ui5-webcomponents/commit/c938f6d05e6661aa29d7f528f090a965fc8e0a39))
+* wrong import in base package module index ([#8464](https://github.com/SAP/ui5-webcomponents/issues/8464)) ([2dff60f](https://github.com/SAP/ui5-webcomponents/commit/2dff60fdb131802d532defc210c121ac04e8110d))
+
+
+### Features
+
+* **ui5-avatar:** update focus handling ([#8420](https://github.com/SAP/ui5-webcomponents/issues/8420)) ([c66ddd5](https://github.com/SAP/ui5-webcomponents/commit/c66ddd506c4836be5ee7e5550b1d5928fb354b12))
+* **ui5-busy-indicator:** added property text-placement ([#8471](https://github.com/SAP/ui5-webcomponents/issues/8471)) ([a494473](https://github.com/SAP/ui5-webcomponents/commit/a49447373cddcb91233fcb3ddd7c89b02d435044))
+* **ui5-tabcontainer, ui5-list:** automatically focus dropped element ([#8455](https://github.com/SAP/ui5-webcomponents/issues/8455)) ([93b074d](https://github.com/SAP/ui5-webcomponents/commit/93b074da62f11b51e6288271e574b721e8061d55))
+
+
+
+
+
 # [1.24.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.0...v1.24.0-rc.1) (2024-03-15)
 
 
