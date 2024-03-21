@@ -75,7 +75,6 @@ import {
 // Device.ts
 import {
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,
@@ -187,7 +186,6 @@ export {
 
 	// Device.ts
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,
