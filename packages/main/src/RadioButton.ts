@@ -476,10 +476,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 		return tabindex || "0";
 	}
-
-	get strokeWidth() {
-		return this.valueState === "None" ? "1" : "2";
-	}
 }
 
 RadioButton.define();
