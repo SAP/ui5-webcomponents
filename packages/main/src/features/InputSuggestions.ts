@@ -251,11 +251,12 @@ class Suggestions {
 		return sc.offsetHeight < sc.scrollHeight;
 	}
 
-	open() {
+	async open() {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		this.responsivePopover!.showAt(this._getComponent());
+		this.responsivePopover = await this._getSuggestionPopover();
+		this.responsivePopover.showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {

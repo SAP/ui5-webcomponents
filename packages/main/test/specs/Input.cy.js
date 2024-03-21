@@ -1,4 +1,5 @@
 import { html } from 'lit';
+// import "../../src/bundle.esm.ts";
 
 describe("Attributes propagation", () => {
 	it("Should change the placeholder of the inner input", () => {
@@ -184,7 +185,7 @@ describe("Input general interaction", () => {
 		cy.get("@input")
 			.realClick()
 
-		cy.wait(100) // BugFix
+		// cy.wait(100) // BugFix
 
 		cy.get("@input")
 			.realType("c")
@@ -221,10 +222,11 @@ describe("Input general interaction", () => {
 				button.get(0).addEventListener('ui5-change', cy.stub().as('changed'))
 			})
 
+		// cy.pause();
 		cy.get("@input")
 			.realClick()
 
-		cy.wait(100) // BugFix
+		// cy.wait(100) // BugFix
 
 		cy.get("@input")
 			.realPress("Backspace")

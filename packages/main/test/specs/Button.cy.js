@@ -1,4 +1,5 @@
 import { html } from 'lit';
+// import "../../src/bundle.esm.ts";
 
 describe("Button general interaction", () => {
 	it("tests button's text rendering", () => {

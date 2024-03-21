@@ -3,7 +3,7 @@ const { readFileSync } = require("fs");
 const path = require("path");
 const fs = require("fs");
 
-// search for dev-server port 
+// search for dev-server port
 // start in current folder
 // traversing upwards in case of mono repo tests and dev-server running in root folder of repository
 let devServerFolder = process.cwd();
@@ -42,6 +42,7 @@ if (fs.existsSync("config/cypress.config.js")) {
 }
 
 // run wdio with calculated parameters
-const cmd = `yarn cypress open --browser chrome --config-file ${wdioConfig} --config '{"e2e": { "baseUrl": "${baseUrl}" }}'`;
+// const cmd = `yarn cypress run --component --browser chrome --config-file ${wdioConfig} `;
+const cmd = `yarn cypress open --component --browser chrome --config-file ${wdioConfig} `;
 console.log(`executing: ${cmd}`);
 child_process.execSync(cmd, {stdio: 'inherit'});
