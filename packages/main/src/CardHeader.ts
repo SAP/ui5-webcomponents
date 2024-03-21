@@ -9,7 +9,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { ICardHeader } from "./Card.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {
@@ -36,7 +35,6 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  *
  * `import "@ui5/webcomponents/dist/CardHeader";`
  * @constructor
- * @implements {ICardHeader}
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
@@ -59,7 +57,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * @public
  */
 @event("click")
-class CardHeader extends UI5Element implements ICardHeader {
+class CardHeader extends UI5Element {
 	/**
 	 * Defines the title text.
 	 * @default ""
@@ -238,6 +236,3 @@ class CardHeader extends UI5Element implements ICardHeader {
 CardHeader.define();
 
 export default CardHeader;
-export type {
-	ICardHeader,
-};
