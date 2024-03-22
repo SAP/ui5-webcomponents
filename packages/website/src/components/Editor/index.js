@@ -387,7 +387,7 @@ ${fixAssetPaths(js)}`,
               onClick={ openInNewTab }
             >
               <ActionIcon className={`${styles["btn__icon--edit"]} `}/>
-              Open in new tab
+              Open in Playground
             </button>
 
             <button
