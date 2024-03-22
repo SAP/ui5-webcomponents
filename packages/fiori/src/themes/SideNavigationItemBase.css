@@ -59,7 +59,8 @@
 
 /* borders are drawn using a pseudo element.
 in some themes, the border is drawn only on the bottom.
-in high contrast themes the border is on all sides and there is extra border on hover */
+In high contrast themes, the border is present on all sides,
+and there is an additional border that appears on hover. */
 .ui5-sn-item::before {
 	content: "";
 	position: absolute;
