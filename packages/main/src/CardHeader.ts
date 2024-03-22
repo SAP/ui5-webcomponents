@@ -25,7 +25,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * ### Overview
  *
  * The `ui5-card-header` is a component, meant to be used as a header of the `ui5-card` component.
- * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `status`
+ * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `additionalText`
  * and two slots: `avatar` and `action`.
  *
  * ### Keyboard handling
@@ -41,7 +41,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * @csspart root - Used to style the root DOM element of the CardHeader
  * @csspart title - Used to style the title of the CardHeader
  * @csspart subtitle - Used to style the subtitle of the CardHeader
- * @csspart status - Used to style the status of the CardHeader
+ * @csspart additional-text - Used to style the additional text of the CardHeader
  */
 @customElement({
 	tag: "ui5-card-header",
@@ -75,12 +75,12 @@ class CardHeader extends UI5Element {
 	subtitleText!: string;
 
 	/**
-	 * Defines the status text.
+	 * Defines the additional text.
 	 * @default ""
 	 * @public
 	*/
 	@property()
-	status!: string;
+	additionalText!: string;
 
 	/**
 	 * Defines if the component would be interactive,
@@ -158,8 +158,8 @@ class CardHeader extends UI5Element {
 			labels.push(`${this._id}-subtitle`);
 		}
 
-		if (this.status) {
-			labels.push(`${this._id}-status`);
+		if (this.additionalText) {
+			labels.push(`${this._id}-additionalText`);
 		}
 
 		if (this.hasAvatar) {
