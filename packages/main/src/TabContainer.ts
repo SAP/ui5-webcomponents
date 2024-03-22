@@ -566,10 +566,11 @@ class TabContainer extends UI5Element {
 
 	_onHeaderDrop(e: DragEvent) {
 		e.preventDefault();
+		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
-				element: DragRegistry.getDraggedElement()!,
+				element: draggedElement,
 			},
 			destination: {
 				element: (this.dropIndicatorDOM!.targetReference as Tab).realTabReference,
@@ -578,6 +579,7 @@ class TabContainer extends UI5Element {
 		});
 
 		this.dropIndicatorDOM!.targetReference = null;
+		draggedElement.focus();
 	}
 
 	_onHeaderDragLeave(e: DragEvent) {
@@ -616,12 +618,13 @@ class TabContainer extends UI5Element {
 
 	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
+		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		e.preventDefault();
 
 		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
-				element: DragRegistry.getDraggedElement()!,
+				element: draggedElement,
 			},
 			destination: {
 				element: (destination.element as Tab).realTabReference,
@@ -630,6 +633,7 @@ class TabContainer extends UI5Element {
 		}, true);
 
 		this.dropIndicatorDOM!.targetReference = null;
+		draggedElement.focus();
 	}
 
 	async _onTabStripClick(e: Event) {

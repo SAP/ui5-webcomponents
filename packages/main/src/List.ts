@@ -971,10 +971,11 @@ class List extends UI5Element {
 
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
+		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		this.fireEvent<ListMoveEventDetail>("move", {
 			source: {
-				element: DragRegistry.getDraggedElement()!,
+				element: draggedElement,
 			},
 			destination: {
 				element: this.dropIndicatorDOM!.targetReference!,
@@ -983,6 +984,7 @@ class List extends UI5Element {
 		});
 
 		this.dropIndicatorDOM!.targetReference = null;
+		draggedElement.focus();
 	}
 
 	isForwardElement(element: HTMLElement) {
