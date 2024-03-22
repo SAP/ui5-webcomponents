@@ -208,8 +208,6 @@ ${fixAssetPaths(js)}`,
       }
     }
 
-
-
     projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
 
