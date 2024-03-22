@@ -69,6 +69,8 @@ describe("Basic interaction", () => {
 	});
 
 	it("Should open the picker with preselected items only when n-more is clicked", async () => {
+		await browser.url(`test/pages/MultiComboBox.html`);
+
 		const multiCombo = await browser.$("#multi1");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
 

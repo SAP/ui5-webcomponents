@@ -1653,7 +1653,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	inputFocusIn(e: FocusEvent) {
-		if (!isPhone() && !this.readonly) {
+		if (!isPhone()) {
 			this.focused = true;
 			this._tokenizer.expanded = true;
 			setTimeout(() => {
@@ -1852,7 +1852,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get _tokenizerExpanded() {
-		if (isPhone() || this.readonly) {
+		if (isPhone()) {
 			return false;
 		}
 
