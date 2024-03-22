@@ -197,9 +197,9 @@ ${fixAssetPaths(js)}`,
     }
     window.addEventListener("message", messageHandler);
 
-    previewRef.current.project = projectRef.current;
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
+    previewRef.current.project = projectRef.current;
 
     tabBarRef.current.editor = fileEditorRef.current;
 
