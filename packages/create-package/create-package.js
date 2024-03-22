@@ -15,13 +15,6 @@ const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))
 // from where all the files will be copied
 const TEMPLATE_DIR = path.join(`${__dirname}`, `template/`);
 
-// String utils
-const isTSRelatedFile = sourcePath => {
-	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
-};
-const isJSRelatedFile = sourcePath => {
-	return ["Assets.js", "MyFirstComponent.js"].some(fileName => sourcePath.includes(fileName));
-};
 const isGitIgnore = sourcePath => {
 	return sourcePath.includes("gitignore");
 };
@@ -65,13 +58,6 @@ const replaceVarsInFileName = (vars, fileName) => {
 };
 
 const copyFile = (vars, sourcePath, destPath) => {
-	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && isJSRelatedFile(sourcePath);
-	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTSRelatedFile(sourcePath);
-
-	if (ignoreJsRelated || ignoreTsRelated) {
-		return;
-	}
-
 	if (isLogo(sourcePath)) {
 		fs.copyFileSync(sourcePath, destPath);
 		return;
@@ -108,7 +94,7 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-const generateFilesContent = (packageName, componentName, namespace, typescript, skipSubfolder) => {
+const generateFilesContent = (packageName, componentName, namespace, skipSubfolder) => {
 	const tagName = argv.tag || hyphaneteComponentName(componentName);
 
 	// All variables that will be replaced in the content of the resources/
@@ -117,7 +103,6 @@ const generateFilesContent = (packageName, componentName, namespace, typescript,
 		INIT_PACKAGE_VAR_NAME: packageName,
 		INIT_PACKAGE_VAR_TAG: tagName,
 		INIT_PACKAGE_VAR_CLASS_NAME: componentName,
-		INIT_PACKAGE_VAR_TYPESCRIPT: typescript,
 	};
 
 	const packageContent = {
@@ -150,12 +135,9 @@ const generateFilesContent = (packageName, componentName, namespace, typescript,
 		"devDependencies": {
 			"@ui5/webcomponents-tools": version,
 			"chromedriver": "*",
+			"typescript": "^5.2.2"
 		},
 	};
-
-	if (typescript) {
-		packageContent.devDependencies.typescript = "^4.9.4";
-	}
 
 	// Update package.json
 	let destDir = packageName.includes("@") ? packageName.slice(packageName.lastIndexOf("/") + 1) : packageName;
@@ -207,11 +189,10 @@ const createWebcomponentsPackage = async () => {
 	let packageName = argv.name || "my-package";
 	let componentName = argv.componentName || "MyComponent";
 	let namespace = argv.namespace || "demo.components";
-	let typescriptSupport = !!argv.enableTypescript;
 	const skipSubfolder = !!argv.skipSubfolder;
 
 	if (argv.skip) {
-		return generateFilesContent(packageName, componentName, namespace, typescriptSupport, skipSubfolder);
+		return generateFilesContent(packageName, componentName, namespace, skipSubfolder);
 	}
 
 	if (!argv.name) {
@@ -222,25 +203,6 @@ const createWebcomponentsPackage = async () => {
 			validate: (value) => isPackageNameValid(value) ? true : "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
 		});
 		packageName = response.name;
-	}
-
-	if (!typescriptSupport) {
-		response = await prompts({
-			type: "select",
-			name: "language",
-			message: "Project type:",
-			choices: [
-				{
-					title: "JavaScript",
-					value: false,
-				},
-				{
-					title: "TypeScript",
-					value: true,
-				},
-			],
-		});
-		typescriptSupport = response.language;
 	}
 
 	if (!argv.componentName) {
@@ -265,7 +227,7 @@ const createWebcomponentsPackage = async () => {
 		namespace = response.namespace;
 	}
 
-	return generateFilesContent(packageName, componentName, namespace, typescriptSupport, skipSubfolder);
+	return generateFilesContent(packageName, componentName, namespace, skipSubfolder);
 };
 
 createWebcomponentsPackage();
