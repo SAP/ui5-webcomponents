@@ -183,17 +183,6 @@ ${fixAssetPaths(js)}`,
       delete newConfig.files["main.css"];
     }
 
-    // shared content
-    if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
-      try {
-        const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
-        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
-        newConfig.files = {...newConfig.files, ...sharedConfig};
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
     // restore project if saved
     if (location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) {
       const savedProject = localStorage.getItem("project");
@@ -207,6 +196,19 @@ ${fixAssetPaths(js)}`,
         }
       }
     }
+
+    // shared content - should be after restore from localstorage
+    if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
+      try {
+        const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
+        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        newConfig.files = {...newConfig.files, ...sharedConfig};
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+
 
     projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
