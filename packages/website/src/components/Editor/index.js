@@ -138,6 +138,11 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     setCopied(true);
   }
 
+  const saveProject = () => {
+    const files = getSampleFiles();
+    localStorage.setItem("project", JSON.stringify(files));
+  }
+
   const baseUrl = useBaseUrl("/");
 
   useEffect(() => {
@@ -178,6 +183,21 @@ ${fixAssetPaths(js)}`,
       delete newConfig.files["main.css"];
     }
 
+    // restore project if saved
+    if (location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) {
+      const savedProject = localStorage.getItem("project");
+      if (savedProject) {
+        try {
+          const savedConfig = JSON.parse(savedProject);
+          savedConfig["index.html"].content = addImportMap(fixAssetPaths(savedConfig["index.html"].content));
+          newConfig.files = {...newConfig.files, ...savedConfig};
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+
+    // shared content - should be after restore from localstorage
     if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
@@ -187,6 +207,7 @@ ${fixAssetPaths(js)}`,
         console.log(e);
       }
     }
+
     projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
 
@@ -202,6 +223,13 @@ ${fixAssetPaths(js)}`,
     previewRef.current.project = projectRef.current;
 
     tabBarRef.current.editor = fileEditorRef.current;
+
+    // setup localstorage saving
+    if (standalone) {
+      projectRef.current.addEventListener("compileStart", function () {
+        saveProject();
+      });
+    }
 
     return function () {
       // component cleanup
