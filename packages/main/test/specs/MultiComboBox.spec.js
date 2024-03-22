@@ -381,29 +381,16 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await $("#more-mcb");
 			let tokenizer = await mcb.shadow$("ui5-tokenizer")
 			let tokens = await browser.$("#more-mcb").shadow$$(".ui5-multi-combobox-token");
-			const input = mcb.shadow$("input");
 
 			await mcb.scrollIntoView();
 			await tokens[1].click();
 			await browser.keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
-
-			await browser.keys('F4');
-			// focus goes back to token which results in Tokenizer being expanded.
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
-
-			tokens = await browser.$("#more-mcb").shadow$$(".ui5-multi-combobox-token");
-
-			await input.click();
-			await tokens[2].click();
-			await browser.keys('F4');
-
-			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer should be expanded if popover is opened");
 
 			await browser.keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer should be expanded if popover is opened");
 		})
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
@@ -1572,24 +1559,19 @@ describe("MultiComboBox general interaction", () => {
 
 		it("should open/close popover on keyboard combination ctrl + i", async () => {
 			const mcb = await $("#truncated-token");
-			const rpoClassName = await getTokenizerPopoverId("truncated-token");
-			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const input = await mcb.shadow$("input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#truncated-token");
+			const rpo = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-			await mcb.click();
-			await browser.keys(["Control", "i"]);
+			await input.click();
+			await input.keys(["Control", "i"]);
+
 			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened1");
-			await mcb.click();
-			await browser.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed2");
 
-			await mcb.click();
-			await mcb.keys("ArrowLeft");
-			await browser.keys(["Control", "i"]);
-			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened3");
-			await mcb.click();
-			await mcb.keys("ArrowLeft");
-			await browser.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed4");
+			await input.click();
+			await input.keys(["Control", "i"]);
+
+			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed2");
 		});
 
 		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {

@@ -1538,6 +1538,10 @@ class MultiComboBox extends UI5Element {
 		this._tokenizer._handleResize();
 		this._tokenizer.preventTokenFocus = true;
 
+		if (this.allItemsPopover?.opened) {
+			this._tokenizer.expanded = true;
+		}
+
 		if (this._tokenizer.expanded && this.hasAttribute("focused")) {
 			this._tokenizer.scrollToEnd();
 		}

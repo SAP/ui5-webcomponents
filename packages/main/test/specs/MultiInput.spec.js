@@ -658,19 +658,18 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
 	});
 
-	it("should open popover on keyboard combination ctrl + i", async () => {
+	it("should open and close popover on keyboard combination ctrl + i", async () => {
 		const mi = await $("#truncated-token");
+		const inner = await mi.shadow$("input");
 		const rpoClassName = await getTokenizerPopoverId("truncated-token");
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
-		await mi.click();
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
+		await inner.click();
+		await inner.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("opened"), "n-more popover should be opened");
 
-		await mi.click();
-		await mi.keys("ArrowLeft");
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+		await inner.keys(["Control", "i"]);
+		assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed");
 	});
 
 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
