@@ -462,19 +462,13 @@ class Tokenizer extends UI5Element {
 
 	handleBeforeClose(e: CustomEvent) {
 		if (e.detail.escPressed && this._openedByNmore) {
-			const tokens = this._getTokens();
-			const lastToken = tokens.pop();
+			const lastToken = this.tokens[this.tokens.length - 1];
 
-			if (lastToken) {
-				const focusDomRef = lastToken.getFocusDomRef();
-				if (focusDomRef) {
-					focusDomRef.focus();
-					this._itemNav.setCurrentItem(lastToken);
-					this._scrollToToken(lastToken);
-					this._openedByNmore = false;
-					return;
-				}
-			}
+			this._focusLastToken();
+			this._scrollToToken(lastToken);
+			this._openedByNmore = false;
+
+			return;
 		}
 
 		if (isPhone()) {
