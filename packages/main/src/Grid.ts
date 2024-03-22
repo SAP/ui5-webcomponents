@@ -8,17 +8,27 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridCss from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
-import GridSelectionMode from "./types/GridSelectionMode.js";
+import GridSelection from "./GridSelection.js";
+import GridHeaderCell from "./GridHeaderCell.js";
+import GridColumnMode from "./types/GridColumnMode.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
-import GridHeaderCell from "./GridHeaderCell.js";
-import GridColumnMode from "./types/GridColumnMode.js";
+
+/**
+ * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>.
+ *
+ * @public
+ */
+interface IGridFeature extends HTMLElement {
+	onGridActivate(grid: Grid): void;
+}
 
 /**
  * @class
@@ -75,14 +85,8 @@ class Grid extends UI5Element {
 	@slot({ type: HTMLElement })
 	nodata!: Array<HTMLElement>;
 
-	/**
-	 * Defines the selection mode of the component.
-	 *
-	 * @default "None"
-	 * @public
-	 */
-	@property({ type: GridSelectionMode, defaultValue: GridSelectionMode.None })
-	selectionMode!: `${GridSelectionMode}`;
+	@slot({ type: HTMLElement })
+	features!: Array<IGridFeature>;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -91,7 +95,7 @@ class Grid extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName!: string;
 
 	/**
 	 * Identifies the element (or elements) that labels the component.
@@ -117,6 +121,9 @@ class Grid extends UI5Element {
 	poppedIn: Array<{col: GridHeaderCell, width: float}>;
 	containerWidth: number;
 
+	@property({ type: Integer, defaultValue: 0, noAttribute: true })
+	_invalidate!: number;
+
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
@@ -127,15 +134,16 @@ class Grid extends UI5Element {
 
 	constructor() {
 		super();
-		this._onResizeBound = this._onResize.bind(this);
 		this.poppedIn = [];
 		this.containerWidth = 0;
+		this._onResizeBound = this._onResize.bind(this);
 	}
 
 	onEnterDOM() {
 		if (this.columnMode === GridColumnMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
+		this.features.forEach(feature => feature.onGridActivate(this));
 	}
 
 	onExitDOM() {
@@ -144,30 +152,12 @@ class Grid extends UI5Element {
 		}
 	}
 
-	onBeforeRendering() {
-		[...this.rows, this.headerRow].forEach(row => {
-			row._selectionMode = this.selectionMode;
-		});
+	_getFeature<Klass>(klass: any): Klass | undefined {
+		return this.features.find(feature => feature instanceof klass) as Klass;
 	}
 
-	_onRowSelectionChange(row: GridRow, selected: boolean) {
-		row._selected = selected;
-		if (this.selectionMode === GridSelectionMode.Multi) {
-			this.headerRow._selected = this.rows.every(r => r._selected);
-		} else {
-			if (this._lastSelectedRow && this._lastSelectedRow.parentElement === this) {
-				this._lastSelectedRow._selected = false;
-			}
-			this._lastSelectedRow = row;
-		}
-	}
-
-	_onSelectAllChange(selected: boolean) {
-		[...this.rows, this.headerRow].forEach(row => {
-			if (row._selected !== selected) {
-				row._selected = selected;
-			}
-		});
+	_getSelection(): GridSelection | undefined {
+		return this._getFeature(GridSelection);
 	}
 
 	_onResize() {
@@ -217,11 +207,9 @@ class Grid extends UI5Element {
 		};
 	}
 
-	_lastSelectedRow?: GridRow;
-
 	get _gridTemplateColumns() {
 		const widths = [];
-		if (this.selectionMode === GridSelectionMode.Multi || this.selectionMode === GridSelectionMode.Single) {
+		if (this._getSelection()?.hasRowSelector()) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
 		widths.push(...this.headerRow._visibleCells.map(cell => `minmax(${cell.minWidth}, auto)`));
@@ -229,24 +217,27 @@ class Grid extends UI5Element {
 	}
 
 	get _gridOverflowX() {
-		if (this.columnMode === GridColumnMode.Popin) {
-			return "hidden";
-		}
-		return "scroll";
+		return (this.columnMode === GridColumnMode.Popin) ? "hidden" : "auto";
 	}
 
-	get _effectiveNoDataText(): string {
+	get _effectiveNoDataText() {
 		return this.noDataText || Grid.i18nBundle.getText(GRID_NO_DATA);
 	}
 
-	get _aria() {
-		return {
-			label: getEffectiveAriaLabelText(this) || undefined,
-			multiselectable: (this.selectionMode !== GridSelectionMode.None && this.rows.length) ? this.selectionMode === GridSelectionMode.Multi : undefined,
-		};
+	get _ariaLabel() {
+		return getEffectiveAriaLabelText(this) || undefined;
+	}
+
+	get _ariaMultiSelectable() {
+		const selection = this._getSelection();
+		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
 	}
 }
 
 Grid.define();
 
 export default Grid;
+
+export type {
+	IGridFeature,
+};

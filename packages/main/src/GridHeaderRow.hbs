@@ -1,12 +1,12 @@
-{{#if _hasSelectionComponent}}
+{{#if _hasRowSelector}}
     <ui5-grid-header-cell id="selection-cell"
-        aria-selected="{{_selected}}"
+        aria-selected="{{_isSelected}}"
         aria-label="{{_i18nSelection}}"
         @keydown="{{_onSelectionCellKeyDown}}"
     >
     {{#if _isMultiSelect}}
         <ui5-checkbox id="selection-component" tabindex="-1"
-            ?checked="{{_selected}}"
+            ?checked="{{_isSelected}}"
             @ui5-change="{{_onSelectAllChange}}"
             accessible-name="{{_i18nRowSelector}}"
         ></ui5-checkbox>

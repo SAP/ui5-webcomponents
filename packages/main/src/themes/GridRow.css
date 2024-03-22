@@ -10,7 +10,7 @@
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
-:host([_selected]) {
+:host([aria-selected=true]) {
     background-color: var(--sapList_SelectionBackgroundColor);
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_SelectionBorderColor);
 }

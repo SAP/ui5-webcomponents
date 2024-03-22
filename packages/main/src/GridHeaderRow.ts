@@ -5,13 +5,14 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
-import GridHeaderCell from "./GridHeaderCell.js";
-import GridSelectionMode from "./types/GridSelectionMode.js";
-import CheckBox from "./CheckBox.js";
 import GridHeaderRowTemplate from "./generated/templates/GridHeaderRowTemplate.lit.js";
 import GridHeaderRowCss from "./generated/themes/GridHeaderRow.css.js";
+import GridHeaderCell from "./GridHeaderCell.js";
 import Grid from "./Grid.js";
+import GridSelection from "./GridSelection.js";
+import CheckBox from "./CheckBox.js";
 import {
 	GRID_SELECTION,
 	GRID_ROW_SELECTOR,
@@ -69,11 +70,8 @@ class GridHeaderRow extends UI5Element {
 	})
 	cells!: Array<GridHeaderCell>;
 
-	@property({ type: Boolean })
-	_selected!: boolean;
-
-	@property({ type: GridSelectionMode, defaultValue: GridSelectionMode.None, noAttribute: true })
-	_selectionMode!: `${GridSelectionMode}`;
+	@property({ type: Integer, defaultValue: 0, noAttribute: true })
+	_invalidate!: number;
 
 	static i18nBundle: I18nBundle;
 
@@ -84,12 +82,11 @@ class GridHeaderRow extends UI5Element {
 	onEnterDOM() {
 		this.setAttribute("role", "row");
 		this.setAttribute("tabindex", "0");
-		this.setAttribute("slot", "header-row");
 	}
 
 	onBeforeRendering() {
 		if (this._isMultiSelect) {
-			this.setAttribute("aria-selected", `${this._selected}`);
+			this.setAttribute("aria-selected", `${this._isSelected}`);
 		} else {
 			this.removeAttribute("aria-selected");
 		}
@@ -99,8 +96,13 @@ class GridHeaderRow extends UI5Element {
 		return this;
 	}
 
+	_informSelectionChange(selected: boolean) {
+		this._gridSelection?.informHeaderRowSelectionChange(selected);
+	}
+
 	_onSelectAllChange(e: CustomEvent) {
-		this.#informGridForSelectAllChange((e.target as CheckBox).checked);
+		const target = e.target as CheckBox;
+		this._informSelectionChange(target.checked);
 	}
 
 	_onSelectionCellKeyDown(e: KeyboardEvent) {
@@ -108,21 +110,28 @@ class GridHeaderRow extends UI5Element {
 			return;
 		}
 
-		this.#informGridForSelectAllChange(!this._selected);
+		this._informSelectionChange(!this._isSelected);
 		e.preventDefault();
 	}
 
-	#informGridForSelectAllChange(selected: boolean) {
-		const grid = this.parentElement as Grid;
-		grid._onSelectAllChange(selected);
+	get _grid(): Grid {
+		return this.parentElement as Grid;
+	}
+
+	get _gridSelection(): GridSelection | undefined {
+		return this._grid._getSelection();
+	}
+
+	get _isSelected() {
+		return this._gridSelection?.areAllRowsSelected();
 	}
 
 	get _isMultiSelect() {
-		return this._selectionMode === GridSelectionMode.Multi;
+		return this._gridSelection?.isMultiSelect();
 	}
 
-	get _hasSelectionComponent() {
-		return this._selectionMode === "Multi" || this._selectionMode === "Single";
+	get _hasRowSelector() {
+		return this._gridSelection?.hasRowSelector();
 	}
 
 	get _visibleCells() {
@@ -133,15 +142,15 @@ class GridHeaderRow extends UI5Element {
 		return this.cells.filter(c => c._popin);
 	}
 
-	get _i18nRowSelector(): string {
+	get _i18nRowSelector() {
 		return GridHeaderRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 
-	get _i18nSelection(): string {
+	get _i18nSelection() {
 		return GridHeaderRow.i18nBundle.getText(GRID_SELECTION);
 	}
 
-	get _i18nRowPopin(): string {
+	get _i18nRowPopin() {
 		return GridHeaderRow.i18nBundle.getText(GRID_ROW_POPIN);
 	}
 }

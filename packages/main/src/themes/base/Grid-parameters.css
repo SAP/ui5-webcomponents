@@ -1,3 +1,4 @@
 :root {
 	--_ui5_grid_cell_valign: center;
+	--_ui5_grid_cell_min_width: 2.75rem;
 }
