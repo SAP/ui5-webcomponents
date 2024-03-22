@@ -144,16 +144,16 @@ describe("ARIA attributes", () => {
 
 	it ("aria-haspopup is correct for interactive avatar", async () => {
 		const avatar = await $("#myInteractiveAvatar");;
-		const ariaHasPopup = await avatar.getProperty("_ariaHasPopup");
+		const accInfo = await avatar.getProperty("accInfo");
 
-		assert.strictEqual(ariaHasPopup, "menu", "should have aria-haspopup set");
+		assert.strictEqual(accInfo.hasPopup, "menu", "should have aria-haspopup set");
 	});
 
 	it ("aria-haspopup is correct for non-interactive avatar", async () => {
 		const avatar = await $("#non-interactive-avatar");;
-		const ariaHasPopup = await avatar.getProperty("_ariaHasPopup");
+		const accInfo = await avatar.getProperty("accInfo");
 
-		assert.notExists(ariaHasPopup, "should not have aria-haspopup set");
+		assert.notExists(accInfo.hasPopup, "should not have aria-haspopup set");
 	});
 
 	it ("aria-label is correctly set", async () => {

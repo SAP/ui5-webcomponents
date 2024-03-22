@@ -82,13 +82,13 @@
 				<p>this is footer</p>
 			</div>
 		</ui5-popover>
-		<ui5-avatar-group aria-haspopup="menu" type="Individual" id="avatar-group-individual">
-			<ui5-avatar interactive size="XL" aria-haspopup="menu" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="dialog" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="listbox" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="tree" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="grid" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="none" initials="XL"></ui5-avatar>
+		<ui5-avatar-group type="Individual" id="avatar-group-individual">
+			<ui5-avatar interactive size="XL" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" icon="home">
 				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
 			</ui5-avatar>
@@ -99,7 +99,7 @@
 			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
 		<br>
-		<ui5-avatar-group aria-haspopup="menu" type="Group" id="avatar-group-group">
+		<ui5-avatar-group type="Group" id="avatar-group-group">
 			<ui5-avatar size="M" initials="M">
 				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
 			</ui5-avatar>
@@ -265,9 +265,22 @@
 	var avGrWrapper = document.getElementById("avatar-group-wrapper");
 	var groupWithBtn = document.getElementById("group-with-overflow-btn");
 	var customOBtn = document.getElementById("overflowButton");
+	var firstIndividualAvatar = document.getElementById("avatar-1");
 
 	slider.style.width = '100%';
 	avGrWrapper.style.width = slider.getAttribute("value") + '%';
+
+	avatarGroupIndividual.accessibilityAttributes = {
+		hasPopup: "Menu",
+	};
+
+	firstIndividualAvatar.accessibilityAttributes = {
+		hasPopup: "Menu",
+	};
+
+	avatarGroupGroup.accessibilityAttributes = {
+		hasPopup: "Menu",
+	};
 
 	function onButtonClicked(avatarGroup, event) {
 		var hiddenItems = avatarGroup.type === "Group" ? avatarGroup.items : avatarGroup.hiddenItems;

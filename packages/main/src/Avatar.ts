@@ -11,6 +11,8 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { AriaMixin, AriaAttributes, createAccessibilityProxy } from "@ui5/webcomponents-base/dist/Accessibility.js";
+
 import type { IAvatarGroupItem } from "./AvatarGroup.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
@@ -28,6 +30,8 @@ import AvatarColorScheme from "./types/AvatarColorScheme.js";
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
+
+type AccessibilityAttributes = Pick<AriaMixin, AriaAttributes.HasPopup>;
 
 /**
  * @class
@@ -204,12 +208,25 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	accessibleName!: string;
 
 	/**
-	 * Defines the aria-haspopup value of the component when `interactive` property is `true`.
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * An object of properties that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
+	 *
+	 * It supports the following fields:
+	 *
+	 *
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
+	 *	- `Dialog`
+	 *	- `Grid`
+	 *	- `ListBox`
+	 *	- `Menu`
+	 *	- `Tree`
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	@property({ type: Object })
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	@property({ noAttribute: true })
 	forcedTabIndex!: string;
@@ -248,6 +265,13 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		this._handleResizeBound = this.handleResize.bind(this);
 	}
 
+	get accInfo() {
+		return createAccessibilityProxy<AccessibilityAttributes>({
+			...this.accessibilityAttributes,
+			[AriaAttributes.HasPopup]: this._interactive ? this.accessibilityAttributes[AriaAttributes.HasPopup] : undefined,
+		});
+	}
+
 	static async onDefine() {
 		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -271,17 +295,13 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @default "Accent6"
 	 * @private
 	 */
-	get еffectiveBackgroundColor(): AvatarColorScheme {
+	get effectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
 		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}
 
 	get _role() {
 		return this._interactive ? "button" : "img";
-	}
-
-	get _ariaHasPopup() {
-		return this._getAriaHasPopup();
 	}
 
 	get _fallbackIcon() {
@@ -417,14 +437,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		if (this._interactive) {
 			this.focused = true;
 		}
-	}
-
-	_getAriaHasPopup() {
-		if (!this._interactive || this.ariaHaspopup === "") {
-			return;
-		}
-
-		return this.ariaHaspopup;
 	}
 }
 

@@ -14,6 +14,8 @@ import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { AriaAttributes, AriaMixin, createAccessibilityProxy } from "@ui5/webcomponents-base/dist/Accessibility.js";
+
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
@@ -34,12 +36,14 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
 
+type AccessibilityAttributes = Pick<AriaMixin, AriaAttributes.HasPopup>;
+
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as `ui5-avatar-group`
  * @public
  */
 interface IAvatarGroupItem extends HTMLElement, ITabbable {
-	еffectiveBackgroundColor: AvatarColorScheme;
+	effectiveBackgroundColor: AvatarColorScheme;
 	size: `${AvatarSize}`;
 	effectiveSize: AvatarSize;
 	interactive: boolean;
@@ -184,15 +188,27 @@ class AvatarGroup extends UI5Element {
 	type!: `${AvatarGroupType}`;
 
 	/**
-	 * Defines the aria-haspopup value of the component on:
+	 * An object of properties that defines several additional accessibility attribute values
+	 * for customization depending on the use case. The values are applied to:
 	 *
 	 * -  the whole container when `type` property is `Group`
 	 * -  the default "More" overflow button when `type` is `Individual`
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 *
+	 * It supports the following fields:
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
+	 *	- `Dialog`
+	 *	- `Grid`
+	 *	- `ListBox`
+	 *	- `Menu`
+	 *	- `Tree`
+	 *
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	 @property({ type: Object })
+	 accessibilityAttributes!: AccessibilityAttributes;
 
 	/**
 	 * @private
@@ -262,7 +278,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	get colorScheme(): AvatarColorScheme[] {
-		return this.items.map(avatar => avatar.еffectiveBackgroundColor);
+		return this.items.map(avatar => avatar.effectiveBackgroundColor);
 	}
 
 	get _customOverflowButton() {
@@ -295,12 +311,18 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _containerAriaHasPopup() {
-		return this._isGroup ? this._getAriaHasPopup() : undefined;
+		return this._isGroup ? this.accInfo[AriaAttributes.HasPopup] : undefined;
+	}
+
+	get accInfo() {
+		return createAccessibilityProxy<AccessibilityAttributes>(
+			this.accessibilityAttributes,
+		);
 	}
 
 	get _overflowButtonAccAttributes() {
 		return {
-			hasPopup: this._isGroup ? undefined : this._getAriaHasPopup(),
+			hasPopup: this._isGroup ? undefined : this.accInfo[AriaAttributes.HasPopup],
 		};
 	}
 
@@ -569,14 +591,6 @@ class AvatarGroup extends UI5Element {
 		if (shouldFireEvent) {
 			this.fireEvent("overflow");
 		}
-	}
-
-	_getAriaHasPopup() {
-		if (this.ariaHaspopup === "") {
-			return;
-		}
-
-		return this.ariaHaspopup;
 	}
 }
 
