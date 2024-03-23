@@ -15,6 +15,7 @@ import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
 import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
 import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
+import ExampleLinks from "./ExampleLinks";
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
@@ -212,7 +213,7 @@ ${fixAssetPaths(js)}`,
     }
 
     // shared content - should be after restore from localstorage
-    if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
+    if (location.pathname.includes("/play") && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
         sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
@@ -332,28 +333,31 @@ ${fixAssetPaths(js)}`,
         ?
           <>
             <div className={`${styles.editor__toolbar}`}>
-              <button
-                className={`button button--secondary ${styles.previewResult__download}`}
-                onClick={ download }
-              >
-               <DownloadIcon className={`${styles.btn__icon}`}/>
-                Download
-              </button>
+              <ExampleLinks />
+              <div>
+                <button
+                  className={`button button--secondary ${styles.previewResult__download}`}
+                  onClick={ download }
+                >
+                <DownloadIcon className={`${styles.btn__icon}`}/>
+                  Download
+                  { copied
+                  ? <div style={ {position: "absolute"} }>
+                      <span className={styles["copy-status"]}>&#x2714; Link copied</span>
+                    </div>
+                  : <></>
+                  }
+                </button>
 
-              <button
-                className={`button button--secondary ${styles.previewResult__share}`}
-                onClick={ share }
-              >
-               <ShareIcon className={`${styles.btn__icon}`}/>
-                Share
-              </button>
-
-              { copied
-                ? <div style={ {position: "absolute"} }>
-                    <span className={styles["copy-status"]}>&#x2714; Link copied</span>
-                  </div>
-                : <></>
-              }
+                <button
+                  className={`button button--secondary ${styles.previewResult__share}`}
+                  onClick={ share }
+                >
+                <ShareIcon className={`${styles.btn__icon}`}/>
+                  Share
+                </button>
+               
+              </div>
             </div>
           </>
         :

@@ -1,12 +1,12 @@
-import Editor from "../components/Editor";
+import Editor from "../../../components/Editor";
 import Layout from '@theme/Layout';
-import html from "./play/hello-world/html";
-import ts from "./play/hello-world/main";
+import html from "./html";
+import ts from "./main";
 
 export default function () {
   return (
     <>
-      <Layout>
+     <Layout>
         <Editor
           html={html}
           js={ts}
