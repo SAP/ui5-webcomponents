@@ -105,7 +105,7 @@ const config: Config = {
           activeBasePath: 'icons',
         },
         {
-          to: 'play/',
+          to: 'play/hello-world',
           label: 'Playground',
           activeBasePath: 'play',
         },
