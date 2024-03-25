@@ -2,7 +2,28 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { IOption } from "./Select.js";
+
+import CustomListItem from "./CustomListItem.js";
+
+import optionCss from "./generated/themes/Option.css.js";
+
+/**
+ * Interface for components that may be slotted inside `ui5-select` as options
+ * @public
+ */
+interface IOption extends UI5Element {
+	selected: boolean,
+	disabled: boolean,
+	title: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	focused?: boolean,
+	text?: Array<Node>,
+	stableDomRef: string,
+	displayText?: string,
+}
+
 /**
  * @class
  *
@@ -17,10 +38,16 @@ import type { IOption } from "./Select.js";
  * @extends UI5Element
  * @implements {IOption}
  * @public
- * @abstract
  */
-@customElement("ui5-option")
-class Option extends UI5Element implements IOption {
+@customElement({
+	tag: "ui5-option",
+	styles: [
+		CustomListItem.styles,
+		optionCss,
+	],
+	dependencies: [CustomListItem],
+})
+class Option extends CustomListItem implements IOption {
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -105,3 +132,4 @@ class Option extends UI5Element implements IOption {
 Option.define();
 
 export default Option;
+export { IOption };

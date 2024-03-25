@@ -60,35 +60,14 @@ import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
-import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
-import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
-
-/**
- * Interface for components that may be slotted inside `ui5-select` as options
- * @public
- */
-interface IOption extends UI5Element {
-	selected: boolean,
-	disabled: boolean,
-	title: string,
-	icon?: string | null,
-	value: string,
-	additionalText?: string,
-	focused?: boolean,
-	text?: Array<Node>,
-	stableDomRef: string,
-	displayText?: string,
-}
+import type { IOption } from "./Option.js";
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -147,13 +126,7 @@ type SelectLiveChangeEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: SelectTemplate,
-	staticAreaTemplate: SelectPopoverTemplate,
 	styles: selectCss,
-	staticAreaStyles: [
-		ResponsivePopoverCommonCss,
-		ValueStateMessageCss,
-		SelectPopoverCss,
-	],
 	dependencies: [
 		Option,
 		Label,
@@ -322,20 +295,12 @@ class Select extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	/**
-	 * @private
-	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_selectedIndex!: number;
-
-	_syncedOptions: Array<IOption>;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
 	_lastSelectedOption: IOption | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
-	selectedItem?: string | null;
 	valueStatePopover?: Popover;
 
 	selectMenu?: SelectMenu;
@@ -401,7 +366,6 @@ class Select extends UI5Element implements IFormElement {
 	constructor() {
 		super();
 
-		this._syncedOptions = [];
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
@@ -418,6 +382,10 @@ class Select extends UI5Element implements IFormElement {
 		this._upgradeProperty("value");
 	}
 
+	onEnterDOM() {
+		this._selectedIndexBeforeOpen = this._selectedIndex;
+	}
+
 	onBeforeRendering() {
 		const menu = this._getSelectMenu();
 
@@ -426,8 +394,6 @@ class Select extends UI5Element implements IFormElement {
 			// To cause invalidation when the menu is used for another Select that could have the same value as the previous.
 			// Otherwise, the menu won't re-render.
 			menu.selectId = this.__id;
-		} else {
-			this._syncSelection();
 		}
 
 		this._enableFormSupport();
@@ -443,8 +409,6 @@ class Select extends UI5Element implements IFormElement {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
 		}
-
-		this._attachRealDomRefs();
 	}
 
 	_onfocusin() {
@@ -465,9 +429,8 @@ class Select extends UI5Element implements IFormElement {
 		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -498,6 +461,10 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
+	get _selectedIndex() {
+		return this.selectOptions.findIndex(option => option.selected);
+	}
+
 	/**
 	 * Currently selected `ui5-option` element.
 	 * @public
@@ -505,6 +472,10 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	get selectedOption(): IOption | undefined {
 		return this.selectOptions.find(option => option.selected);
+	}
+
+	get text() {
+		return this._text || this.selectedOption?.textContent || "";
 	}
 
 	onMenuClick(e: CustomEvent<SelectMenuOptionClick>) {
@@ -526,7 +497,6 @@ class Select extends UI5Element implements IFormElement {
 
 	onMenuChange(e: CustomEvent<SelectMenuChange>) {
 		this._text = e.detail.text;
-		this._selectedIndex = e.detail.selectedIndex;
 	}
 
 	_toggleSelectMenu() {
@@ -550,7 +520,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _toggleRespPopover() {
+	_toggleRespPopover() {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -563,71 +533,12 @@ class Select extends UI5Element implements IFormElement {
 			return;
 		}
 
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
 			this.responsivePopover.showAt(this);
 		}
-	}
-
-	async _attachRealDomRefs() {
-		this.responsivePopover = await this._respPopover();
-
-		this.options.forEach(option => {
-			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
-		});
-	}
-
-	_syncSelection() {
-		let lastSelectedOptionIndex = -1,
-			firstEnabledOptionIndex = -1;
-		const options = this._filteredItems;
-		const syncOpts = options.map((opt, index) => {
-			if (opt.selected) {
-				lastSelectedOptionIndex = index;
-			}
-			if (firstEnabledOptionIndex === -1) {
-				firstEnabledOptionIndex = index;
-			}
-
-			opt.selected = false;
-			opt.focused = false;
-
-			return {
-				selected: false,
-				focused: false,
-				icon: opt.icon,
-				value: opt.value,
-				textContent: opt.textContent,
-				title: opt.title,
-				additionalText: opt.additionalText,
-				id: opt._id,
-				stableDomRef: opt.stableDomRef,
-			};
-		});
-
-		if (lastSelectedOptionIndex > -1) {
-			syncOpts[lastSelectedOptionIndex].selected = true;
-			syncOpts[lastSelectedOptionIndex].focused = true;
-			options[lastSelectedOptionIndex].selected = true;
-			options[lastSelectedOptionIndex].focused = true;
-			this._text = syncOpts[lastSelectedOptionIndex].textContent;
-			this._selectedIndex = lastSelectedOptionIndex;
-		} else {
-			this._text = "";
-			this._selectedIndex = -1;
-			if (syncOpts[firstEnabledOptionIndex]) {
-				syncOpts[firstEnabledOptionIndex].selected = true;
-				syncOpts[firstEnabledOptionIndex].focused = true;
-				options[firstEnabledOptionIndex].selected = true;
-				options[firstEnabledOptionIndex].focused = true;
-				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = options[firstEnabledOptionIndex].textContent;
-			}
-		}
-
-		this._syncedOptions = syncOpts as Array<IOption>;
 	}
 
 	_getSelectMenu(): SelectMenu | undefined {
@@ -781,8 +692,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	_getSelectedItemIndex(item: ListItemBase) {
-		return this.selectOptions.findIndex(option => `${option._id}-li` === item.id);
+	_getItemIndex(item: IOption) {
+		return this.selectOptions.indexOf(item);
 	}
 
 	_select(index: number) {
@@ -792,7 +703,6 @@ class Select extends UI5Element implements IFormElement {
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
 		}
 
-		this._selectedIndex = index;
 		this.selectOptions[index].selected = true;
 	}
 
@@ -801,8 +711,8 @@ class Select extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item;
-		const selectedItemIndex = this._getSelectedItemIndex(item);
+		const item = e.detail.item as unknown as IOption;
+		const selectedItemIndex = this._getItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
 	}
@@ -812,7 +722,13 @@ class Select extends UI5Element implements IFormElement {
 		e.preventDefault();
 	}
 
-	_onclick() {
+	_onclick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+
+		if (target.hasAttribute("ui5-option")) {
+			return;
+		}
+
 		this.getFocusDomRef()!.focus();
 		this._toggleRespPopover();
 	}
@@ -879,8 +795,6 @@ class Select extends UI5Element implements IFormElement {
 		nextOption.selected = true;
 		nextOption.focused = true;
 
-		this._selectedIndex = newIndex;
-
 		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
 
 		if (!this._isPickerOpen) {
@@ -944,11 +858,9 @@ class Select extends UI5Element implements IFormElement {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
-		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
 
 		if (changePrevented) {
-			this.selectedItem = this._lastSelectedOption!.textContent;
 			this._select(this._selectedIndexBeforeOpen);
 		}
 	}
@@ -1110,8 +1022,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		this.valueStatePopover = await this._getPopover() as Popover;
+	openValueStatePopover() {
+		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
 			this.valueStatePopover.showAt(this);
 		}
@@ -1133,9 +1045,8 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOption && this.selectedOption.icon;
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
+	_getPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]");
 	}
 
 	static async onDefine() {

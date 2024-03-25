@@ -24,24 +24,570 @@
 			<section>
 				<ui5-title>Select + SelectMenu + SelectMenuOption</ui5-title><br>
 
-				<ui5-select id="sel" menu="selectOptions">
+				<ui5-select id="sel">
 					<div class="selectLabel" slot="label">
 						<span id="mainText">Skirt [3]</span>
 						<ui5-avatar id="avatar" size="XS" initials="S"></ui5-avatar>
 					</div>
-				</ui5-select>
-	
-				<ui5-select menu="selectOptions2" value-state="Error">
-					<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
-				</ui5-select>
-	
-				<ui5-select menu="selectOptions3" value-state="Information"></ui5-select>
 
-				<ui5-select menu="selectMultipleItems" value-state="Error"></ui5-select>
-
-				<ui5-select menu="selectReadOnly" readonly></ui5-select>
-			</section>
+					<ui5-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S" value="tshirt">
+						<div class="selectMenuOption">
+							T-shirt [1]
+							<div>
+								<ui5-icon name="accept"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
 			
+					<ui5-option data-display-text="Dress [2]" value="dress" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
+						<div class="selectMenuOption selectMenuOption--warning">
+							Dress [2]
+							<div>
+								<ui5-icon name="accept" class="selectMenuOptionIcon--warning"></ui5-icon>
+								<ui5-icon name="employee" class="selectMenuOptionIcon--warning"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option data-display-text="Skirt [3]" value="skirt" data-additional-text="L" accessible-name="Skirt size L" selected>
+						<div  class="selectMenuOption">
+							Skirt [3]
+							<div>
+								<ui5-icon name="accept"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+
+				</ui5-select>
+	
+				<ui5-select value-state="Error">
+					<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+
+					<ui5-option selected display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+					
+				</ui5-select>
+	
+				<ui5-select value-state="Information">
+
+					<ui5-option display-text="item text [1]" selected>
+						<div class="selectMenuOption">
+							Item 1 Text
+							<div>
+								<ui5-icon name="accept"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="item text [2]">
+						<div class="selectMenuOption">
+							Item 2 Text
+							<div>
+								<ui5-icon name="accept"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="item text [3]">
+						<div class="selectMenuOption">
+							Item 3 Text
+							<div>
+								<ui5-icon name="accept"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+
+				</ui5-select>
+
+				<ui5-select menu="selectMultipleItems" value-state="Error">
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+				</ui5-select>
+
+				<ui5-select menu="selectReadOnly" readonly>
+					<ui5-option display-text="Phone">
+						<div class="selectMenuOption">
+							Phone
+							<div>
+								<ui5-icon name="phone"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Tablet">
+						<div class="selectMenuOption">
+							Tablet
+							<div>
+								<ui5-icon name="ipad-2"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+					<ui5-option display-text="Desktop">
+						<div class="selectMenuOption">
+							Desktop
+							<div>
+								<ui5-icon name="laptop"></ui5-icon>
+								<ui5-icon name="employee"></ui5-icon>
+							</div>
+						</div>
+					</ui5-option>
+			
+				</ui5-select>
+			</section>
+
+
 			<section>
 				<ui5-title>Select+ SelectMenu Test setup</ui5-title><br>
 		
@@ -50,7 +596,19 @@
 				<ui5-input id="testOpen" placeholder="open fired 0"></ui5-input><br>
 				<ui5-input id="testClose" placeholder="close fired 0"></ui5-input><br>
 		
-				<ui5-select id="selTest" menu="selectOptionsTest"></ui5-select>
+				<ui5-select id="selTest">
+					<ui5-option id="selOption1" display-text="item1" value="item1">
+						<div>Item 1</div>
+					</ui5-option>
+			
+					<ui5-option id="selOption2" display-text="item2" value="item2">
+						<div>Item 2</div>
+					</ui5-option>
+			
+					<ui5-option id="selOption3" display-text="item3" value="item3">
+						<div>Item 3</div>
+					</ui5-option>
+				</ui5-select>
 				
 		
 				<ui5-button id="clearCounter">Reset counters</ui5-button>
@@ -74,579 +632,10 @@
 					<ui5-option selected>Condensed</ui5-option>
 				</ui5-select>
 			</section>
+
+
 		</div>
 	</div>
-
-	<ui5-select-menu id="selectOptions">
-
-		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S" value="tshirt">
-			<div class="selectMenuOption">
-				T-shirt [1]
-				<div>
-					<ui5-icon name="accept"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option data-display-text="Dress [2]" value="dress" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
-			<div class="selectMenuOption selectMenuOption--warning">
-				Dress [2]
-				<div>
-					<ui5-icon name="accept" class="selectMenuOptionIcon--warning"></ui5-icon>
-					<ui5-icon name="employee" class="selectMenuOptionIcon--warning"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option data-display-text="Skirt [3]" value="skirt" data-additional-text="L" accessible-name="Skirt size L" selected>
-			<div  class="selectMenuOption">
-				Skirt [3]
-				<div>
-					<ui5-icon name="accept"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-	</ui5-select-menu>
-
-	<ui5-select-menu id="selectOptions2">
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-	</ui5-select-menu>
-
-	<ui5-select-menu id="selectOptions3">
-
-		<ui5-select-menu-option display-text="item text [1]" selected>
-			<div class="selectMenuOption">
-				Item 1 Text
-				<div>
-					<ui5-icon name="accept"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="item text [2]" selected>
-			<div class="selectMenuOption">
-				Item 2 Text
-				<div>
-					<ui5-icon name="accept"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="item text [3]" selected>
-			<div class="selectMenuOption">
-				Item 3 Text
-				<div>
-					<ui5-icon name="accept"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-	</ui5-select-menu>
-
-	<ui5-select-menu id="selectOptionsTest">
-		<ui5-select-menu-option id="selOption1" display-text="item1" value="item1">
-			<div>Item 1</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option id="selOption2" display-text="item2" value="item2">
-			<div>Item 2</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option id="selOption3" display-text="item3" value="item3">
-			<div>Item 3</div>
-		</ui5-select-menu-option>
-	</ui5-select-menu>
-
-	<ui5-select-menu id="selectMultipleItems">
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-	</ui5-select-menu>
-
-	<ui5-select-menu id="selectReadOnly">
-
-		<ui5-select-menu-option display-text="Phone">
-			<div class="selectMenuOption">
-				Phone
-				<div>
-					<ui5-icon name="phone"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Tablet">
-			<div class="selectMenuOption">
-				Tablet
-				<div>
-					<ui5-icon name="ipad-2"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-		<ui5-select-menu-option display-text="Desktop">
-			<div class="selectMenuOption">
-				Desktop
-				<div>
-					<ui5-icon name="laptop"></ui5-icon>
-					<ui5-icon name="employee"></ui5-icon>
-				</div>
-			</div>
-		</ui5-select-menu-option>
-
-	</ui5-select-menu>
 
 	<script>
 		let counter = 0;
@@ -679,7 +668,7 @@
 		let testPreviewCounter = 0;
 		let testOpenCounter = 0;
 		let testCloseCounter = 0;
-		
+
 		selTest.addEventListener("ui5-change", function(e) {
 			testChange.value = ++testChangeCounter;
 		});
