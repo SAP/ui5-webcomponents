@@ -4,7 +4,7 @@
 }
 
 :host([disabled])::part(content) {
-    opacity: var(--_ui5-listitembase_disabled_opacity);
+	opacity: var(--_ui5-listitembase_disabled_opacity);
 }
 
 /* hovered and active */
@@ -28,12 +28,14 @@
 
 :host::part(additional-text) {
 	margin: unset;
-	margin-inline-start: auto;
+	margin-inline-start: 1rem;
 	color: var(--sapContent_LabelColor);
 	min-width: max-content;
 }
 
 .ui5-menu-item-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 	pointer-events: none;
 	display: inline-block;
@@ -44,7 +46,7 @@
 }
 
 :host::part(title) {
-    font-size: var(--sapFontSize);
+	font-size: var(--sapFontSize);
 	padding-top: 0.125rem;
 }
 
