@@ -12,7 +12,7 @@ import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
 import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
@@ -296,14 +296,14 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
 		const dateTimePickerContent = e.path ? e.path[1] : e.composedPath()[1];
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: e.detail.timestamp,
-			calendarValue: e.detail.values[0],
+			calendarValue: e.detail.selectedValues[0],
 			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
 	}
