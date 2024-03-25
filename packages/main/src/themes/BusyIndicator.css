@@ -128,8 +128,15 @@
 
 .ui5-busy-indicator-text {
 	width: 100%;
-	margin-top: .25rem;
 	text-align: center;
+}
+
+.ui5-busy-indicator-text-placement-top {
+	margin-bottom: 0.5rem
+}
+
+.ui5-busy-indicator-text-placement-bottom {
+	margin-top: 0.5rem;
 }
 
 @keyframes grow {
@@ -140,7 +147,7 @@
 	}
 	25% {
 		-webkit-transform: scale(1);
-		-moz-transform: scale(1);
+		-moz-transform: scale(1);   
 		transform: scale(1);
 	}
 }

@@ -38,7 +38,7 @@ const Testimonial = ({ Svg, title, text }: Item) => {
   return (
     <div className="card testimonial">
         {/* <Svg className="testimonial__logo" /> */}
-        <h4 className="testimonial__title">{title}</h4>
+        <h3 className="testimonial__title">{title}</h3>
         <p className="testimonial__text">{text}</p>
     </div>
   );

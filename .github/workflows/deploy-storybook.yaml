@@ -1,8 +1,8 @@
-name: Deploy Main Playground [on push]
+name: Deploy Storybook [manual]
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,13 +19,11 @@ jobs:
         export NODE_OPTIONS="--max_old_space_size=4096"
         yarn install
         yarn ci:deploybuild
-    - name: Write version.md
-      run: git log -1 &>> packages/playground/dist/version.md
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/playground/dist # The folder the action should deploy.
-        target-folder: nightly
+        target-folder: storybook
         clean: true

@@ -5,6 +5,32 @@
 	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 }
 
+.hidden {
+	display: none !important;
+}
+
+.icon__not__found {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.icons__search {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		background: var(--ifm-navbar-search-input-background-color) var(--ifm-navbar-search-input-icon) no-repeat 0.75rem center / 1rem 1rem;
+		border: none;
+		border-radius: 2rem;
+		color: var(--ifm-navbar-search-input-color);
+		cursor: text;
+		display: inline-block;
+		font-size: 0.9rem;
+		height: 2.5rem;
+		padding: 0 0.5rem 0 2.25rem;
+		width: 12.5rem;
+}
+
 .icon__wrapper {
 	position: relative;
 	display: flex;
