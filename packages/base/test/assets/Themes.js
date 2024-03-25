@@ -19,24 +19,6 @@ const fiori3Dark = {
 	fileName: "",
 };
 
-const belize = {
-	content: `:root{ --var1: blue; }`,
-	packageName: "",
-	fileName: "",
-};
-
-const belizeHcb = {
-	content: `:root{ --var1: orange; }`,
-	packageName: "",
-	fileName: "",
-};
-
-const belizeHcw = {
-	content: `:root{ --var1: orange; }`,
-	packageName: "",
-	fileName: "",
-};
-
 const fiori3Hcb = {
 	content: `:root{ --var1: yellow; }`,
 	packageName: "",
@@ -52,8 +34,5 @@ const fiori3Hcw = {
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_horizon", () => defaultTheme);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3", () => fiori3);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_dark", () => fiori3Dark);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_belize", () => belize);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_belize_hcb", () => belizeHcb);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_belize_hcw", () => belizeHcw);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_hcb", () => fiori3Hcb);
 registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_hcw", () => fiori3Hcw);

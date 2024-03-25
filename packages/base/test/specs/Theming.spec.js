@@ -18,7 +18,7 @@ describe("Theming works", () => {
 	});
 
 	it("Tests that theme parameters are changed on theme change", async () => {
-		const newTheme = 'sap_belize_hcb';
+		const newTheme = 'sap_horizon_hcb';
 
 		const res = await browser.executeAsync( async (newTheme, done) => {
 			const bundle = window['sap-ui-webcomponents-bundle'];

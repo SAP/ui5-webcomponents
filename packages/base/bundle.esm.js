@@ -13,7 +13,7 @@ import "./test/elements/WithStaticArea.js";
 import "./test/elements/WithComplexTemplate.js";
 import "./test/elements/GenericExt.js";
 
-// Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark, sap_belize and sap_belize_hcb themes
+// Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark themes
 import "./test/assets/Themes.js";
 
 // used in test pages
