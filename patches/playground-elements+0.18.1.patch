@@ -1,0 +1,21 @@
+diff --git a/node_modules/playground-elements/playground-preview.js b/node_modules/playground-elements/playground-preview.js
+index 1c2996f..4259730 100644
+--- a/node_modules/playground-elements/playground-preview.js
++++ b/node_modules/playground-elements/playground-preview.js
+@@ -151,6 +151,7 @@ let PlaygroundPreview = class PlaygroundPreview extends PlaygroundConnectedEleme
+ 
+         <iframe
+           title="Project preview"
++          allow="camera; microphone"
+           @load=${this._onIframeLoad}
+           ?hidden=${!this._loadedAtLeastOnce}
+         ></iframe>
+@@ -298,7 +299,7 @@ __decorate([
+     property()
+ ], PlaygroundPreview.prototype, "location", void 0);
+ __decorate([
+-    query('iframe', true)
++    query('iframe')
+ ], PlaygroundPreview.prototype, "iframe", void 0);
+ __decorate([
+     query('slot')

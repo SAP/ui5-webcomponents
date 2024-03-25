@@ -70,8 +70,6 @@ class MyElement extends UI5Element {
 }
 ```
 
-**Note**: the `static get render()` that we use when developing in JavaScript (still supported for backward compatibility) is replaced with **`renderer`** in the `@customElement` decorator.
-
 ### Property decorators
 
 These are used inside the class and are associated with accessors (class members).

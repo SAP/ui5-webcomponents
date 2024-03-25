@@ -34,7 +34,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -108,7 +108,7 @@ For a complete reference to all metadata entities, click [here](./03-understandi
 UI5 Web Components are agnostic of the DOM render engine used. However, all standard UI5 Web Components (`@ui5/webcomponents`, `@ui5/webcomponents-fiori`, etc.)
 use [lit-html](https://github.com/Polymer/lit-html) as the rendering technology of choice.
 
-The render engine is defined via the `render` static getter:
+The render engine is defined via the `renderer` static getter:
 
 ```js
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -129,7 +129,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 }
@@ -167,7 +167,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -216,7 +216,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -280,7 +280,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -331,7 +331,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -398,7 +398,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -455,7 +455,7 @@ class Demo extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -542,4 +542,3 @@ Respectively, the definitions file for, let's say `sap_fiori_3`, contains:
 What's important to understand here is that you author all the `.css` files listed in the table above, but the build script
 generates from them a single `.js` file for you, and this is namely the file you pass to the Web Component class: `generated/themes/Demo.css.js`.
 
-Next: [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)

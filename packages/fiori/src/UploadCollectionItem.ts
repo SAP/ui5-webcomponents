@@ -30,7 +30,6 @@ import {
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type { IUploadCollectionItem } from "./UploadCollection.js";
 
 // Template
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
@@ -50,7 +49,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @constructor
  * @extends ListItem
  * @public
- * @implements {IUploadCollectionItem}
  * @slot {Node[]} default - Hold the description of the `ui5-upload-collection-item`. Will be shown below the file name.
  * @since 1.0.0-rc.7
  */
@@ -112,7 +110,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @private
  */
 @event("_uci-delete")
-class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
+class UploadCollectionItem extends ListItem {
 	/**
 	 * Holds an instance of `File` associated with this item.
 	 * @default null

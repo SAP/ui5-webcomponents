@@ -78,7 +78,7 @@
 	justify-content: space-between;
 }
 
-.ui5-card-header-status {
+.ui5-card-header-additionalText {
 	flex: none;
 }
 
@@ -105,7 +105,7 @@
 	border-radius: 50%;
 }
 
-.ui5-card-header .ui5-card-header-status {
+.ui5-card-header .ui5-card-header-additionalText {
 	display: inline-block;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);

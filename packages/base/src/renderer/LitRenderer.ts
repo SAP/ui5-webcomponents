@@ -28,7 +28,7 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 	return fn(strings, ...values);
 };
 
-const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<TemplateFunctionResult>, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => {
+const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<TemplateFunctionResult>, container: HTMLElement | DocumentFragment, forStaticArea: boolean, options: RendererOptions) => {
 	if (Array.isArray(templateResult)) {
 		templateResult = effectiveHtml`${templateResult[0]}${unsafeHTML(DIVIDER_COMMENT)}${templateResult[1]}`;
 	}
@@ -38,11 +38,6 @@ const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<Temp
 		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult as TemplateResult);
 	}
 
-	if (typeof styleStrOrHrefsArr === "string") {
-		templateResult = effectiveHtml`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
-	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
-		templateResult = effectiveHtml`${styleStrOrHrefsArr.map(href => effectiveHtml`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
-	}
 	render(templateResult as TemplateResult, container, options);
 };
 
