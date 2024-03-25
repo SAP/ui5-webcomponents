@@ -139,7 +139,7 @@
 
 		menu.addEventListener("ui5-before-close", function(event) {
 			preventBeforeClose.checked && event.preventDefault();
-			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Esc]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
+			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Escape]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
 		});
 
 		menu.addEventListener("ui5-after-close", function() {

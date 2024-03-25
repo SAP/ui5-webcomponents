@@ -24,7 +24,7 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  *
- * - [SPACE/ENTER/RETURN] - Trigger `ui5-click` event
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`
