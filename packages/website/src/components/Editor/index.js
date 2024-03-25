@@ -12,6 +12,7 @@ import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
 import { Splitter } from 'react-splitter-light';
 import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
 import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
+import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
 import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
 
@@ -138,7 +139,22 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     setCopied(true);
   }
 
+  const saveProject = () => {
+    const files = getSampleFiles();
+    localStorage.setItem("project", JSON.stringify(files));
+  }
+
   const baseUrl = useBaseUrl("/");
+  const playUrl = useBaseUrl("/play");
+
+  const openInNewTab = () => {
+    const files = getSampleFiles();
+
+    // encode and put in url
+    const hash = encodeToBase64(JSON.stringify(files));
+    const url = new URL(`${playUrl}#${hash}`, location.origin);
+    window.open(url, "_blank");
+  }
 
   useEffect(() => {
     projectRef.current = getProjectFromPool();
@@ -178,15 +194,37 @@ ${fixAssetPaths(js)}`,
       delete newConfig.files["main.css"];
     }
 
+    // restore project if saved
+    if (location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) {
+      const savedProject = localStorage.getItem("project");
+      if (savedProject) {
+        try {
+          const savedConfig = JSON.parse(savedProject);
+          savedConfig["index.html"].content = addImportMap(fixAssetPaths(savedConfig["index.html"].content));
+          if (savedConfig["main.js"] && newConfig.files["main.ts"]) {
+            delete newConfig.files["main.ts"];
+          }
+          newConfig.files = {...newConfig.files, ...savedConfig};
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+
+    // shared content - should be after restore from localstorage
     if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
         sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        if (sharedConfig["main.js"] && newConfig.files["main.ts"]) {
+          delete newConfig.files["main.ts"];
+        }
         newConfig.files = {...newConfig.files, ...sharedConfig};
       } catch (e) {
         console.log(e);
       }
     }
+
     projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
 
@@ -197,15 +235,21 @@ ${fixAssetPaths(js)}`,
     }
     window.addEventListener("message", messageHandler);
 
-    previewRef.current.project = projectRef.current;
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
+    previewRef.current.project = projectRef.current;
 
     tabBarRef.current.editor = fileEditorRef.current;
+
+    // setup localstorage saving
+    if (standalone) {
+      projectRef.current.addEventListener("compileStart", saveProject);
+    }
 
     return function () {
       // component cleanup
       window.removeEventListener("message", messageHandler);
+      projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
   }, []);
@@ -334,8 +378,16 @@ ${fixAssetPaths(js)}`,
               className={`button button--secondary ${styles.previewResult__downloadSample}`}
               onClick={ download }
             >
-            <DownloadIcon className={`${styles["btn__icon--edit"]} `}/>
+              <DownloadIcon className={`${styles["btn__icon--edit"]} `}/>
               Download
+            </button>
+
+            <button
+              className={`button button--secondary ${styles.previewResult__downloadSample}`}
+              onClick={ openInNewTab }
+            >
+              <ActionIcon className={`${styles["btn__icon--edit"]} `}/>
+              Open in Playground
             </button>
 
             <button
