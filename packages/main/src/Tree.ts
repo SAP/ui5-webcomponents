@@ -75,8 +75,8 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * The user can use the following keyboard shortcuts to perform selection,
  * when the `mode` property is in use:
  *
- * - [SPACE] - Selects the currently focused item upon keyup.
- * - [ENTER]  - Selects the currently focused item upon keydown.
+ * - [Space] - Selects the currently focused item upon keyup.
+ * - [Enter]  - Selects the currently focused item upon keydown.
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Tree.js";`

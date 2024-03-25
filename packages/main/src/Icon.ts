@@ -82,7 +82,7 @@ const PRESENTATION_ROLE = "presentation";
  * ### Keyboard Handling
  *
  * - [SPACE, ENTER, RETURN] - Fires the `click` event if the `interactive` property is set to true.
- * - [SHIFT] - If [SPACE] or [ENTER],[RETURN] is pressed, pressing [SHIFT] releases the ui5-icon without triggering the click event.
+ * - [Shift] - If [Space] or [Enter],[Return] is pressed, pressing [Shift] releases the ui5-icon without triggering the click event.
  *
  * ### ES6 Module Import
  *

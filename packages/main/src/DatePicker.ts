@@ -112,12 +112,12 @@ type DatePickerInputEventDetail = {
  * then users can increment or decrement the date referenced by `dateValue` property
  * by using the following shortcuts:
  *
- * - [PAGEDOWN] - Decrements the corresponding day of the month by one
- * - [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
- * - [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
- * - [PAGEUP] - Increments the corresponding day of the month by one
- * - [SHIFT] + [PAGEUP] - Increments the corresponding month by one
- * - [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
+ * - [Page Down] - Decrements the corresponding day of the month by one
+ * - [Shift] + [Page Down] - Decrements the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Down] - Decrements the corresponding year by one
+ * - [Page Up] - Increments the corresponding day of the month by one
+ * - [Shift] + [Page Up] - Increments the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Up] - Increments the corresponding year by one
  *
  * ### Calendar types
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.

@@ -95,13 +95,6 @@ type AvatarGroupClickEventDetail = {
  * - `Individual` type: The avatars are displayed side-by-side and each
  * avatar has its own click/tap area.
  *
- * ### Responsive Behavior
- *
- * When the available space is less than the width required to display all avatars,
- * an overflow visualization appears as a button placed at the end with the same shape
- * and size as the avatars. The visualization displays the number of avatars that have overflowed
- * and are not currently visible.
- *
  * ### Usage
  *
  * Use the `AvatarGroup` if:
@@ -115,6 +108,13 @@ type AvatarGroupClickEventDetail = {
  * - You want to display a gallery for simple images.
  * - You want to use it for other visual content than avatars.
  *
+ * ### Responsive Behavior
+ *
+ * When the available space is less than the width required to display all avatars,
+ * an overflow visualization appears as a button placed at the end with the same shape
+ * and size as the avatars. The visualization displays the number of avatars that have overflowed
+ * and are not currently visible.
+ *
  * ### Keyboard Handling
  * The component provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
@@ -122,17 +122,17 @@ type AvatarGroupClickEventDetail = {
  *
  * `type` Individual:
  *
- * - [TAB] - Move focus to the overflow button
+ * - [Tab] - Move focus to the overflow button
  * - [LEFT] - Navigate one avatar to the left
  * - [RIGHT] - Navigate one avatar to the right
- * - [HOME] - Navigate to the first avatar
- * - [END] - Navigate to the last avatar
- * - [SPACE],[ENTER],[RETURN] - Trigger `ui5-click` event
+ * - [Home] - Navigate to the first avatar
+ * - [End] - Navigate to the last avatar
+ * - [Space],[Enter],[Return] - Trigger `ui5-click` event
  *
  * `type` Group:
  *
- * - [TAB] - Move focus to the next interactive element after the component
- * - [SPACE],[ENTER],[RETURN] - Trigger `ui5-click` event
+ * - [Tab] - Move focus to the next interactive element after the component
+ * - [Space],[Enter],[Return] - Trigger `ui5-click` event
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.11

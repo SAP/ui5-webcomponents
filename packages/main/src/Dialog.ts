@@ -92,8 +92,8 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * When the `ui5-dialog` has the `resizable` property set to `true` and the header is focused, the user can change the size of the dialog
  * with the following keyboard shortcuts:
  *
- * - [SHIFT] + [UP/DOWN] - Decrease/Increase the height of the dialog.
- * - [SHIFT] + [LEFT/RIGHT] - Decrease/Increase the width of the dialog.
+ * - [Shift] + [UP/DOWN] - Decrease/Increase the height of the dialog.
+ * - [Shift] + [LEFT/RIGHT] - Decrease/Increase the width of the dialog.
  *
  * ### ES6 Module Import
  *

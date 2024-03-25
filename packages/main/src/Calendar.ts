@@ -91,35 +91,35 @@ type SpecialCalendarDateT = {
  * - Day picker:
  *
  * - [F4] - Shows month picker
- * - [SHIFT] + [F4] - Shows year picker
- * - [PAGEUP] - Navigate to the previous month
- * - [PAGEDOWN] - Navigate to the next month
- * - [SHIFT] + [PAGEUP] - Navigate to the previous year
- * - [SHIFT] + [PAGEDOWN] - Navigate to the next year
- * - [CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards
- * - [CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards
- * - [HOME] - Navigate to the first day of the week
- * - [END] - Navigate to the last day of the week
- * - [CTRL] + [HOME] - Navigate to the first day of the month
- * - [CTRL] + [END] - Navigate to the last day of the month
+ * - [Shift] + [F4] - Shows year picker
+ * - [Page Up] - Navigate to the previous month
+ * - [Page Down] - Navigate to the next month
+ * - [Shift] + [Page Up] - Navigate to the previous year
+ * - [Shift] + [Page Down] - Navigate to the next year
+ * - [Ctrl] + [Shift] + [Page Up] - Navigate ten years backwards
+ * - [Ctrl] + [Shift] + [Page Down] - Navigate ten years forwards
+ * - [Home] - Navigate to the first day of the week
+ * - [End] - Navigate to the last day of the week
+ * - [Ctrl] + [Home] - Navigate to the first day of the month
+ * - [Ctrl] + [End] - Navigate to the last day of the month
  *
  * - Month picker:
  *
- * - [PAGEUP] - Navigate to the previous year
- * - [PAGEDOWN] - Navigate to the next year
- * - [HOME] - Navigate to the first month of the current row
- * - [END] - Navigate to the last month of the current row
- * - [CTRL] + [HOME] - Navigate to the first month of the current year
- * - [CTRL] + [END] - Navigate to the last month of the year
+ * - [Page Up] - Navigate to the previous year
+ * - [Page Down] - Navigate to the next year
+ * - [Home] - Navigate to the first month of the current row
+ * - [End] - Navigate to the last month of the current row
+ * - [Ctrl] + [Home] - Navigate to the first month of the current year
+ * - [Ctrl] + [End] - Navigate to the last month of the year
  *
  * - Year picker:
  *
- * - [PAGEUP] - Navigate to the previous year range
- * - [PAGEDOWN] - Navigate the next year range
- * - [HOME] - Navigate to the first year of the current row
- * - [END] - Navigate to the last year of the current row
- * - [CTRL] + [HOME] - Navigate to the first year of the current year range
- * - [CTRL] + [END] - Navigate to the last year of the current year range
+ * - [Page Up] - Navigate to the previous year range
+ * - [Page Down] - Navigate the next year range
+ * - [Home] - Navigate to the first year of the current row
+ * - [End] - Navigate to the last year of the current row
+ * - [Ctrl] + [Home] - Navigate to the first year of the current year range
+ * - [Ctrl] + [End] - Navigate to the last year of the current year range
  *
  * #### Fast Navigation
  * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.

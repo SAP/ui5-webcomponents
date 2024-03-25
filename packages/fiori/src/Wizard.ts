@@ -125,11 +125,11 @@ type StepInfo = {
  *
  * #### Wizard Progress Navigation
  *
- * 	- [LEFT], [DOWN] - Focus moves backward to the WizardProgressNavAnchors.
- * 	- [UP], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.
- * 	- [SPACE] or [ENTER], [RETURN] - Selects an active step
- * 	- [HOME] or [PAGE UP] - Focus goes to the first step
- * 	- [END] or [PAGE DOWN] - Focus goes to the last step
+ * 	- [LEFT], [Down] - Focus moves backward to the WizardProgressNavAnchors.
+ * 	- [Up], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.
+ * 	- [Space] or [Enter], [Return] - Selects an active step
+ * 	- [Home] or [PAGE UP] - Focus goes to the first step
+ * 	- [End] or [PAGE DOWN] - Focus goes to the last step
  *
  * #### Fast Navigation
  * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.

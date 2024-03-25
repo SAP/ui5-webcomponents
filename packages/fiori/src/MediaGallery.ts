@@ -73,8 +73,8 @@ const COLUMNS_COUNT: Record<string, number> = {
  * shortcuts allow the user to navigate through the thumbnail items:
  *
  * - [UP/DOWN] - Navigates up and down the items
- * - [HOME] - Navigates to first item
- * - [END] - Navigates to the last item
+ * - [Home] - Navigates to first item
+ * - [End] - Navigates to the last item
  * - [SPACE/ENTER] - Select an item
  *
  * ### ES6 Module Import

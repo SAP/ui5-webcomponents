@@ -128,13 +128,13 @@ type ListItemClickEventDetail = {
  * shortcuts in order to perform a navigation:
  *
  * - [UP/DOWN] - Navigates up and down the items
- * - [HOME] - Navigates to first item
- * - [END] - Navigates to the last item
+ * - [Home] - Navigates to first item
+ * - [End] - Navigates to the last item
  *
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
  * when the `mode` property is in use:
  *
- * - [SPACE] - Select an item (if `type` is 'Active') when `mode` is selection
+ * - [Space] - Select an item (if `type` is 'Active') when `mode` is selection
  * - [DELETE] - Delete an item if `mode` property is `Delete`
  *
  * #### Fast Navigation

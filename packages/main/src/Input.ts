@@ -173,14 +173,14 @@ type InputSuggestionScrollEventDetail = {
  * ### Keyboard Handling
  * The `ui5-input` provides the following keyboard shortcuts:
  *
- * - [ESC] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.
- * - [ENTER] or [RETURN] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.
- * - [DOWN] - Focuses the next matching item in the suggestion list.
- * - [UP] - Focuses the previous matching item in the suggestion list.
- * - [HOME] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.
- * - [END] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.
- * - [PAGEUP] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.
- * - [PAGEDOWN] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.
+ * - [Escape] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.
+ * - [Enter] or [Return] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.
+ * - [Down] - Focuses the next matching item in the suggestion list.
+ * - [Up] - Focuses the previous matching item in the suggestion list.
+ * - [Home] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.
+ * - [End] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.
+ * - [Page Up] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.
+ * - [Page Down] - If focus is in the list, moves highlight down by page size (10 items by default). If focus is in the input, does nothing.
  *
  * ### ES6 Module Import
  *
@@ -594,16 +594,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		// Represents the value before user moves selection from suggestion item to another
 		// and its value is updated after each move.
-		// Note: Used to register and fire "input" event upon [SPACE] or [ENTER].
+		// Note: Used to register and fire "input" event upon [Space] or [Enter].
 		// Note: The property "value" is updated upon selection move and can`t be used.
 		this.valueBeforeItemSelection = "";
 
 		// Represents the value before user moves selection between the suggestion items
 		// and its value remains the same when the user navigates up or down the list.
-		// Note: Used to cancel selection upon [ESC].
+		// Note: Used to cancel selection upon [Escape].
 		this.valueBeforeItemPreview = "";
 
-		// Indicates if the user selection has been canceled with [ESC].
+		// Indicates if the user selection has been canceled with [Escape].
 		this.suggestionSelectionCancelled = false;
 
 		// tracks the value between focus in and focus out to detect that change event should be fired.
