@@ -55,6 +55,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
+import GroupListItem from "./GroupListItem.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -161,7 +162,7 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator, DropIndicator],
+	dependencies: [BusyIndicator, DropIndicator, GroupListItem],
 })
 /**
  * Fired when an item is activated, unless the item's `type` property
@@ -430,10 +431,14 @@ class List extends UI5Element {
 	/**
 	 * Defines the items of the component.
 	 *
-	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-groupheader` for the intended design.
+	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		"default": true,
+		invalidateOnChildChange: true,
+		type: HTMLElement,
+	})
 	items!: Array<ListItemBase>;
 
 	/**
@@ -766,7 +771,21 @@ class List extends UI5Element {
 	}
 
 	getItems(): Array<ListItemBase> {
-		return this.getSlottedNodes<ListItemBase>("items");
+		// drill down when we see ui5-li-group and get the items
+		const items: ListItemBase[] = [];
+		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
+
+		slottedItems.forEach(item => {
+			if (item.hasAttribute("ui5-li-group")) {
+				const groupItem = item as GroupListItem;
+				const groupItems = [groupItem.groupHeaderItem, ...groupItem.items];
+				items.push(...groupItems);
+			} else {
+				items.push(item);
+			}
+		});
+
+		return items;
 	}
 
 	getItemsForProcessing(): Array<ListItemBase> {
