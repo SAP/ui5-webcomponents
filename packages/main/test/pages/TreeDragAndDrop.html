@@ -86,7 +86,8 @@
 
 		const handleMove = (e) => {
 			const { destination, source } = e.detail;
-			const parent = destination.element.closest("[ui5-tree]");
+			const parent = destination.element.parentNode.closest("[ui5-tree-item]") ||
+				destination.element.closest("[ui5-tree]");
 
 			if (destination.placement === "Before") {
 				parent.insertBefore(

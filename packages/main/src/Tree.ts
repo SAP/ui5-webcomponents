@@ -361,13 +361,15 @@ class Tree extends UI5Element {
 
 	_ondragover(e: DragEvent) {
 		const draggedElement = DragRegistry.getDraggedElement();
-
+		const allItemsTraversed: Array<TreeItemBase> = [];
 		if (!(e.target instanceof HTMLElement) || !draggedElement) {
 			return;
 		}
 
+		this.walk(item => { allItemsTraversed.push(item); });
+
 		const closestPosition = findClosestPosition(
-			this.items,
+			allItemsTraversed,
 			e.clientY,
 			Orientation.Vertical,
 		);
