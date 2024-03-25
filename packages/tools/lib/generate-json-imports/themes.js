@@ -4,7 +4,6 @@ const assets = require("../../assets-meta.js");
 
 const generate = async () => {
 	const inputFolder = path.normalize(process.argv[2]);
-	const outputFile = path.normalize(`${process.argv[3]}/Themes-static.ts`);
 	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.ts`);
 
 // All supported optional themes
@@ -19,33 +18,8 @@ const generate = async () => {
 
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
-	const importLines = themesOnFileSystem.map(theme => `import ${theme} from "../assets/themes/${theme}/parameters-bundle.css.json";`).join("\n");
-	const themeUrlsByName = "{\n" + themesOnFileSystem.join(",\n") + "\n}";
 	const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
 	const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-${theme.replace("_", "-")}-parameters-bundle" */"../assets/themes/${theme}/parameters-bundle.css.json")).default;`).join("\n");
-
-
-// static imports file content
-	const contentStatic = `// @ts-nocheck
-import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
-
-${importLines}
-
-const themeUrlsByName = ${themeUrlsByName};
-const isInlined = obj => typeof (obj) === "object";
-
-const loadThemeProperties = async (themeName) => {
-	if (typeof themeUrlsByName[themeName] === "object") {
-		// inlined from build
-		throw new Error("[themes] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
-	}
-	return (await fetch(themeUrlsByName[themeName])).json();
-};
-
-${availableThemesArray}
-  .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadThemeProperties));
-`;
-
 
 // dynamic imports file content
 	const contentDynamic = `// @ts-nocheck
@@ -70,9 +44,8 @@ ${availableThemesArray}
   .forEach(themeName => registerThemePropertiesLoader("${packageName}", themeName, loadAndCheck));
 `;
 
-	await fs.mkdir(path.dirname(outputFile), { recursive: true });
+	await fs.mkdir(path.dirname(outputFileDynamic), { recursive: true });
 	return Promise.all([
-		fs.writeFile(outputFile, contentStatic),
 		fs.writeFile(outputFileDynamic, contentDynamic)
 	]);
 };
