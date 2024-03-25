@@ -17,6 +17,7 @@ import GridHeaderRow from "./GridHeaderRow.js";
 import GridSelection from "./GridSelection.js";
 import GridHeaderCell from "./GridHeaderCell.js";
 import GridColumnMode from "./types/GridColumnMode.js";
+import GridNavigation from "./GridNavigation.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
@@ -131,6 +132,7 @@ class Grid extends UI5Element {
 	}
 
 	_onResizeBound: ResizeObserverCallback;
+	_gridNavigation?: GridNavigation;
 
 	constructor() {
 		super();
@@ -143,13 +145,19 @@ class Grid extends UI5Element {
 		if (this.columnMode === GridColumnMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
+		this._gridNavigation = new GridNavigation(this);
 		this.features.forEach(feature => feature.onGridActivate(this));
 	}
 
 	onExitDOM() {
+		this._gridNavigation = undefined;
 		if (this.columnMode === GridColumnMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}
+	}
+
+	getDomRef(): HTMLElement | undefined {
+		return this.shadowRoot!.querySelector("#grid") as HTMLElement;
 	}
 
 	_getFeature<Klass>(klass: any): Klass | undefined {

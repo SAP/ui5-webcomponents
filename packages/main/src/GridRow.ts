@@ -70,6 +70,9 @@ class GridRow extends UI5Element {
 	@property()
 	key!: string;
 
+	@property({ defaultValue: "-1", noAttribute: true })
+	forcedTabIndex!: string;
+
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
@@ -81,10 +84,10 @@ class GridRow extends UI5Element {
 
 	onEnterDOM() {
 		this.setAttribute("role", "row");
-		this.setAttribute("tabindex", "0");
 	}
 
 	onBeforeRendering() {
+		this.setAttribute("tabindex", this.forcedTabIndex);
 		if (this._isSelectable) {
 			this.setAttribute("aria-selected", `${this._isSelected}`);
 		} else {
