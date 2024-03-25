@@ -3,8 +3,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isDesktop,
-	isPhone,
-	isTablet,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
@@ -60,6 +58,10 @@ class NavigationMenu extends Menu {
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
+
+	_isMenu(element: HTMLElement) {
+		return element.hasAttribute("ui5-navigation-menu");
+	}
 
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
@@ -118,14 +120,9 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		if (isPhone()) {
-			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item);
-		} else if (isTablet()) {
-			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener);
-		}
+		this._prepareSubMenu(item, opener);
 	}
+
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
