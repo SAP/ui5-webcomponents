@@ -344,7 +344,7 @@ ${fixAssetPaths(js)}`,
                 onClick={ reset }
               >
                <ResetIcon className={`${styles.btn__icon}`}/>
-                Reset exapmle
+                Reset example
               </button>
 
               <button
