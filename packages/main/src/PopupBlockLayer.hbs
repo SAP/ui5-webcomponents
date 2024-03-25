@@ -1,16 +1,6 @@
-{{#if _useNativePopover}}
-	<div class="ui5-block-layer"
-		popover="manual"
-		tabindex="0"
-		@keydown="{{_preventBlockLayerFocus}}"
-		@mousedown="{{_preventBlockLayerFocus}}">
-	</div>
-{{else}}
-	<div class="ui5-block-layer"
-		?hidden={{_blockLayerHidden}}
-		tabindex="0"
-		style="{{styles.blockLayer}}"
-		@keydown="{{_preventBlockLayerFocus}}"
-		@mousedown="{{_preventBlockLayerFocus}}">
-	</div>
-{{/if}}
+<div class="ui5-block-layer"
+	popover="manual"
+	tabindex="0"
+	@keydown="{{_preventBlockLayerFocus}}"
+	@mousedown="{{_preventBlockLayerFocus}}">
+</div>

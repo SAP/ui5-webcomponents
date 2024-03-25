@@ -10,8 +10,6 @@ import UI5ElementMetadata, {
 	Metadata,
 } from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
-import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
-import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
 import {
@@ -33,7 +31,6 @@ import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
-import { getUseNativePopovers } from "./config/NativePopover.js";
 
 let autoId = 0;
 
@@ -42,7 +39,7 @@ const TEMPLATE_DIVIDER_TEXT = "UI5_DIVIDER";
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, forStaticArea: boolean, options: RendererOptions) => void;
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => void;
 
 type RendererOptions = {
 	/**
@@ -109,8 +106,6 @@ abstract class UI5Element extends HTMLElement {
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
 	_getRealDomRef?: () => HTMLElement;
-
-	staticAreaItem?: StaticAreaItem;
 
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
@@ -219,10 +214,6 @@ abstract class UI5Element extends HTMLElement {
 		if (this._fullyConnected) {
 			this.onExitDOM();
 			this._fullyConnected = false;
-		}
-
-		if (!getUseNativePopovers() && this.staticAreaItem && this.staticAreaItem.parentElement) {
-			this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
 		}
 
 		cancelRender(this);
@@ -649,9 +640,9 @@ abstract class UI5Element extends HTMLElement {
 	 *   1) children: immediate children (HTML elements or text nodes) were added, removed or reordered in the slot
 	 *   2) textcontent: text nodes in the slot changed value (or nested text nodes were added or changed value). Can only trigger for slots of "type: Node"
 	 *   3) slotchange: a slot element, slotted inside that slot had its "slotchange" event listener called. This practically means that transitively slotted children changed.
-	 *      Can only trigger if the child of a slot is a slot element itself.
+	 *	  Can only trigger if the child of a slot is a slot element itself.
 	 *   4) childchange: indicates that a UI5Element child in that slot was invalidated and in turn invalidated the component.
-	 *      Can only trigger for slots with "invalidateOnChildChange" metadata descriptor
+	 *	  Can only trigger for slots with "invalidateOnChildChange" metadata descriptor
 	 *
 	 *  - newValue: the new value of the property (for type="property" only)
 	 *
@@ -708,9 +699,6 @@ abstract class UI5Element extends HTMLElement {
 		// Update shadow root and static area item
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
-		}
-		if (!getUseNativePopovers() && this.staticAreaItem) {
-			this.staticAreaItem.update();
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
@@ -946,24 +934,8 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	async getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
-		if (getUseNativePopovers()) {
-			await renderFinished();
-			return Promise.resolve(this.shadowRoot);
-		}
-
-		if (!(this.constructor as typeof UI5Element)._needsStaticArea()) {
-			throw new Error("This component does not use the static area");
-		}
-
-		if (!this.staticAreaItem) {
-			this.staticAreaItem = StaticAreaItem.createInstance();
-			this.staticAreaItem.setOwnerElement(this);
-		}
-		if (!this.staticAreaItem.parentElement) {
-			getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
-		}
-
-		return this.staticAreaItem.getDomRef();
+		await renderFinished();
+		return Promise.resolve(this.shadowRoot);
 	}
 
 	/**

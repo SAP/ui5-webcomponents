@@ -3,7 +3,6 @@ import getStylesString from "./getStylesString.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import type UI5Element from "../UI5Element.js";
 import OpenUI5Enablement from "../features/OpenUI5Enablement.js";
-import { getUseNativePopovers } from "../config/NativePopover.js";
 
 const effectiveStyleMap = new Map<string, string>();
 
@@ -11,9 +10,9 @@ attachCustomCSSChange((tag: string) => {
 	effectiveStyleMap.delete(`${tag}_normal`); // there is custom CSS only for the component itself, not for its static area part
 });
 
-const getEffectiveStyle = (ElementClass: typeof UI5Element, forStaticArea = false) => {
+const getEffectiveStyle = (ElementClass: typeof UI5Element) => {
 	const tag = ElementClass.getMetadata().getTag();
-	const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
+	const key = `${tag}_normal`;
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 
 	if (!effectiveStyleMap.has(key)) {
@@ -24,18 +23,14 @@ const getEffectiveStyle = (ElementClass: typeof UI5Element, forStaticArea = fals
 			busyIndicatorStyles = getStylesString(openUI5Enablement.getBusyIndicatorStyles());
 		}
 
-		if (forStaticArea) {
-			effectiveStyle = getStylesString(ElementClass.staticAreaStyles);
-		} else {
-			const customStyle = getCustomCSS(tag) || "";
-			let builtInStyles = getStylesString(ElementClass.styles);
+		const customStyle = getCustomCSS(tag) || "";
+		let builtInStyles = getStylesString(ElementClass.styles);
 
-			if (getUseNativePopovers() && ElementClass._needsStaticArea()) {
-				builtInStyles += getStylesString(ElementClass.staticAreaStyles);
-			}
-
-			effectiveStyle = `${builtInStyles} ${customStyle}`;
+		if (ElementClass._needsStaticArea()) {
+			builtInStyles += getStylesString(ElementClass.staticAreaStyles);
 		}
+
+		effectiveStyle = `${builtInStyles} ${customStyle}`;
 
 		effectiveStyle = `${effectiveStyle} ${busyIndicatorStyles}`;
 		effectiveStyleMap.set(key, effectiveStyle);

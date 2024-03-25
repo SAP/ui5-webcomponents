@@ -28,13 +28,13 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 	return fn(strings, ...values);
 };
 
-const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<TemplateFunctionResult>, container: HTMLElement | DocumentFragment, forStaticArea: boolean, options: RendererOptions) => {
+const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<TemplateFunctionResult>, container: HTMLElement | DocumentFragment, options: RendererOptions) => {
 	if (Array.isArray(templateResult)) {
 		templateResult = effectiveHtml`${templateResult[0]}${unsafeHTML(DIVIDER_COMMENT)}${templateResult[1]}`;
 	}
 
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
-	if (openUI5Enablement && !forStaticArea) {
+	if (openUI5Enablement) {
 		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult as TemplateResult);
 	}
 

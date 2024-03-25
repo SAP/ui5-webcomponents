@@ -495,7 +495,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!(this.shadowRoot!.contains(toBeFocused)) && (this.staticAreaItem !== e.relatedTarget)) {
+		if (!(this.shadowRoot!.contains(toBeFocused))) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}

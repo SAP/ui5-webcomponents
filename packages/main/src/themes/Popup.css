@@ -1,14 +1,5 @@
 :host {
     min-width: 1px; /** So that it can always get focus **/
-}
-
-:host(:not([_use-native-popover])) {
-    display: none;
-    position: fixed;
-}
-
-:host([_use-native-popover]) {
-    min-width: 1px; /** So that it can always get focus **/
     overflow: visible;
     border: none;
     inset: "unset";

@@ -11,16 +11,7 @@
 	pointer-events: all;
 }
 
-:host(:not([_use-native-popover])) .ui5-block-layer {
-	display: none;
-	z-index: -1;
-}
-
-:host([_use-native-popover]) .ui5-block-layer {
+:host .ui5-block-layer {
 	width: auto;
 	height: auto;
-}
-
-:host(:not([_use-native-popover])) .ui5-block-layer:not([hidden]) {
-	display: inline-block;
 }
