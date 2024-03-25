@@ -85,8 +85,8 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * When the `ui5-dialog` has the `draggable` property set to `true` and the header is focused, the user can move the dialog
  * with the following keyboard shortcuts:
  *
- * - [Up],[Down] arrow keys - Move the dialog up/down.
- * - [Left],[Right] arrow keys - Move the dialog left/right.
+ * - [Up] or [Down] arrow keys - Move the dialog up/down.
+ * - [Left] or [Right] arrow keys - Move the dialog left/right.
  *
  * #### Resizing
  * When the `ui5-dialog` has the `resizable` property set to `true` and the header is focused, the user can change the size of the dialog

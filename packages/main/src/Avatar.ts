@@ -42,7 +42,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  *
  * ### Keyboard Handling
  *
- * - [Space], [Enter], [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
  * - [Shift] - If [Space] is pressed, pressing [Shift] releases the component without triggering the click event.
  *
  * ### ES6 Module Import

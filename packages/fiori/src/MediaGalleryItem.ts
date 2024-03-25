@@ -29,7 +29,7 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  *
- * - [Space], [Enter], [Return] - Trigger `ui5-click` event
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/MediaGalleryItem.js";` (comes with `ui5-media-gallery`)

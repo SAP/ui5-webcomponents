@@ -104,7 +104,7 @@ type DatePickerInputEventDetail = {
  * The `ui5-date-picker` provides advanced keyboard handling.
  * If the `ui5-date-picker` is focused,
  * you can open or close the drop-down by pressing [F4], [Alt] + [Up] or [Alt] + [Down] keys.
- * Once the drop-down is opened, you can use the [Up], [Down], [Left], [Right] arrow keys
+ * Once the drop-down is opened, you can use the [Up], [Down], [Left] or [Right] arrow keys
  * to navigate through the dates and select one by pressing the `Space` or `Enter` keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
  *

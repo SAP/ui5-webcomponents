@@ -72,7 +72,7 @@ const COLUMNS_COUNT: Record<string, number> = {
  * When the thumbnails menu is focused the following keyboard
  * shortcuts allow the user to navigate through the thumbnail items:
  *
- * - [Up],[Down] - Navigates up and down the items
+ * - [Up] or [Down] - Navigates up and down the items
  * - [Home] - Navigates to first item
  * - [End] - Navigates to the last item
  * - [Space], [Enter] - Selects an item

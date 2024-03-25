@@ -127,12 +127,12 @@ type AvatarGroupClickEventDetail = {
  * - [Right] - Navigate one avatar to the right
  * - [Home] - Navigate to the first avatar
  * - [End] - Navigate to the last avatar
- * - [Space],[Enter],[Return] - Trigger `ui5-click` event
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  *
  * `type` Group:
  *
  * - [Tab] - Move focus to the next interactive element after the component
- * - [Space],[Enter],[Return] - Trigger `ui5-click` event
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.11

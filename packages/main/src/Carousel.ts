@@ -76,11 +76,11 @@ type CarouselNavigateEventDetail = {
  * When the `ui5-carousel` is focused the user can navigate between the items
  * with the following keyboard shortcuts:
  *
- * - [Up],[Down] - Navigates to previous and next item
- * - [Left], [Right] - Navigates to previous and next item
+ * - [Up] or [Down] - Navigates to previous and next item
+ * - [Left] or [Right] - Navigates to previous and next item
  *
  * ### Fast Navigation
- * This component provides a build in fast navigation group which can be used via [F6], [Shift] + [F6] or [Ctrl] + [Alt/Option] + [Down] / [Ctrl] + [Alt/Option] + [Up].
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  *
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`

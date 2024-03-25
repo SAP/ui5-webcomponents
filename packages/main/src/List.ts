@@ -127,7 +127,7 @@ type ListItemClickEventDetail = {
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  *
- * - [Up],[Down] - Navigates up and down the items
+ * - [Up] or [Down] - Navigates up and down the items
  * - [Home] - Navigates to first item
  * - [End] - Navigates to the last item
  *
@@ -138,7 +138,7 @@ type ListItemClickEventDetail = {
  * - [Delete] - Delete an item if `mode` property is `Delete`
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via [F6], [Shift] + [F6] or [Ctrl] + [Alt/Option] + [Down] / [Ctrl] + [Alt/Option] + [Up].
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *

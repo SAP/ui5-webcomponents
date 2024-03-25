@@ -126,8 +126,8 @@ type SelectLiveChangeEventDetail = {
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
  *
- * - [F4, [Alt] + [Up], [Alt] + [Down], [Space], [Enter] - Opens/closes the drop-down.
- * - [Up],[Down] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
+ * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
+ * - [Up] or [Down] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
  * - [Space], [Enter] - If the drop-down is opened - selects the focused option.
  * - [Escape] - Closes the drop-down without changing the selection.
  * - [Home] - Navigates to first option
