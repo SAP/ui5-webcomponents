@@ -123,8 +123,8 @@ type AvatarGroupClickEventDetail = {
  * `type` Individual:
  *
  * - [Tab] - Move focus to the overflow button
- * - [LEFT] - Navigate one avatar to the left
- * - [RIGHT] - Navigate one avatar to the right
+ * - [Left] - Navigate one avatar to the left
+ * - [Right] - Navigate one avatar to the right
  * - [Home] - Navigate to the first avatar
  * - [End] - Navigate to the last avatar
  * - [Space],[Enter],[Return] - Trigger `ui5-click` event

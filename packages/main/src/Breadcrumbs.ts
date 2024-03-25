@@ -70,8 +70,8 @@ type BreadcrumbsItemClickEventDetail = {
  * - [F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - If the dropdown arrow is focused - opens/closes the drop-down.
  * - [SPACE, ENTER] - Activates the focused item and triggers the `item-click` event.
  * - [Escape] - Closes the drop-down.
- * - [LEFT] - If the drop-down is closed - navigates one item to the left.
- * - [RIGHT] - If the drop-down is closed - navigates one item to the right.
+ * - [Left] - If the drop-down is closed - navigates one item to the left.
+ * - [Right] - If the drop-down is closed - navigates one item to the right.
  * - [Up] - If the drop-down is open - moves focus to the next item.
  * - [Down] - If the drop-down is open - moves focus to the previous item.
  * - [Home] - Navigates to the first item.

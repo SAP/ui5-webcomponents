@@ -125,8 +125,8 @@ type StepInfo = {
  *
  * #### Wizard Progress Navigation
  *
- * 	- [LEFT], [Down] - Focus moves backward to the WizardProgressNavAnchors.
- * 	- [Up], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.
+ * 	- [Left], [Down] - Focus moves backward to the WizardProgressNavAnchors.
+ * 	- [Up], [Right] - Focus moves forward to the WizardProgressNavAnchor.
  * 	- [Space] or [Enter], [Return] - Selects an active step
  * 	- [Home] or [PAGE UP] - Focus goes to the first step
  * 	- [End] or [PAGE DOWN] - Focus goes to the last step
