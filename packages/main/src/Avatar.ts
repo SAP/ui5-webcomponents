@@ -93,13 +93,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	interactive!: boolean;
 
 	/**
-	 * Indicates if the elements is pressed
-	 * @private
-	 */
-	@property({ type: Boolean })
-	pressed!: boolean;
-
-	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
 	 *
 	 * **Note:** If `image` slot is provided, the property will be ignored.
@@ -404,7 +397,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	_fireClick() {
 		this.fireEvent("click");
-		this.pressed = !this.pressed;
 	}
 
 	_getAriaHasPopup() {
