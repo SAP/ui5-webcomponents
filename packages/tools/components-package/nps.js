@@ -1,8 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const resolve = require("resolve");
 const LIB = path.join(__dirname, `../lib/`);
-const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const getScripts = (options) => {
 
@@ -54,7 +52,7 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
@@ -137,14 +135,9 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: `nps ${ tsOption ? "generateAPI.generateCEM generateAPI.validateCEM" : "generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest generateAPI.validateCEM"}`,
+			default: "nps generateAPI.generateCEM generateAPI.validateCEM",
 			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
 			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
-			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
-			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
-			jsdoc: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-			cleanup: "rimraf jsdoc-dist/"
 		},
 	};
 
