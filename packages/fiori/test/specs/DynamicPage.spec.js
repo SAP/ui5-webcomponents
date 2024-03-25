@@ -2,7 +2,7 @@ import { assert } from "chai";
 
 describe("API", () => {
     before(async () => {
-        await browser.url(`test/pages/DynamicPage.html`);
+        await browser.url(`test/pages/DynamicPage_test.html`);
     });
 
     it("toggles the header-snapped state with 'headerSnapped' property", async () => {
@@ -89,7 +89,7 @@ describe("API", () => {
 
 describe("Page general interaction", () => {
 	before(async () => {
-		await browser.url(`test/pages/DynamicPage.html`);
+		await browser.url(`test/pages/DynamicPage_test.html`);
 	});
 
     it("allows toggle the footer", async () => {
@@ -314,7 +314,7 @@ describe("Page layout when content has 100% height", () => {
 
 describe("Page layout when content oveflows", () => {
     before(async () => {
-        await browser.url(`test/pages/DynamicPage.html`);
+        await browser.url(`test/pages/DynamicPage_test.html`);
     });
 
     it("footer does not hide the content", async () => {
@@ -349,7 +349,7 @@ describe("Page layout when content oveflows", () => {
 
 describe("ARIA attributes", () => {
     before(async () => {
-        await browser.url(`test/pages/DynamicPage.html`);
+        await browser.url(`test/pages/DynamicPage_test.html`);
     });
 
     it("sets expanded state attributes", async () => {

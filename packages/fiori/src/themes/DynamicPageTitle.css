@@ -3,6 +3,7 @@
 :host {
     display: flex;
     flex-direction: column;
+    position: relative; /* for the absolute focus area span, to respect title's size */
     width: 100%;
     background-color: var(--_ui5_dynamic_page_header_background_color);
     min-height: var(--_ui5_dynamic_page_title_min_height);
@@ -57,10 +58,10 @@
 }
 
 /* subheading / expanded & snapped content */
-::slotted([ui5-title][slot="expandedContent"]),
-::slotted([ui5-title][slot="snappedContent"]) {
+::slotted([slot="expandedContent"]),
+::slotted([slot="snappedContent"]) {
     color: var(--sapObjectHeader_Subtitle_TextColor);
-    font-size: var(--sapObjectHeader_Subtitle_FontSize);
+    font-size: var(--sapFontSize);
     margin-top: var(--_ui5_dynamic_page_title_subheading_margin_top);
 }
 
