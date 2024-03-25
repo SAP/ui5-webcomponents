@@ -350,7 +350,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
 	});
 
-	it("[Alt] + [UP] toggles the calendar", async () => {
+	it("[Alt] + [Up] toggles the calendar", async () => {
 		datepicker.id = "#dp9";
 
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
@@ -366,7 +366,7 @@ describe("Date Picker Tests", () => {
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 	});
 
-	it("[Alt] + [DOWN] toggles the calendar", async () => {
+	it("[Alt] + [Down] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
@@ -394,7 +394,7 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click(); // close the datepicker
 	});
 
-	it("[SHIFT] + [F4] shows year picker after date picker is open", async () => {
+	it("[Shift] + [F4] shows year picker after date picker is open", async () => {
 		datepicker.id = "#dp11";
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -420,7 +420,7 @@ describe("Date Picker Tests", () => {
 	});
 
 
-	it("[SHIFT] + [F4] shows year picker after month picker is open", async () => {
+	it("[Shift] + [F4] shows year picker after month picker is open", async () => {
 		datepicker.id = "#dp11";
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
