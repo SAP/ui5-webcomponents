@@ -67,8 +67,8 @@ type BreadcrumbsItemClickEventDetail = {
  * ### Keyboard Handling
  * The `ui5-breadcrumbs` provides advanced keyboard handling.
  *
- * - [F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - If the dropdown arrow is focused - opens/closes the drop-down.
- * - [SPACE, ENTER] - Activates the focused item and triggers the `item-click` event.
+ * - [F4], [Alt] + [Up], [Alt] + [Down], [Space], or [Enter] - If the dropdown arrow is focused - opens/closes the drop-down.
+ * - [Space],[Enter] - Activates the focused item and triggers the `item-click` event.
  * - [Escape] - Closes the drop-down.
  * - [Left] - If the drop-down is closed - navigates one item to the left.
  * - [Right] - If the drop-down is closed - navigates one item to the right.

@@ -68,7 +68,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * The `ui5-tree` provides advanced keyboard handling.
  * The user can use the following keyboard shortcuts in order to navigate trough the tree:
  *
- * - [UP/DOWN] - Navigates up and down the tree items that are currently visible.
+ * - [Up],[Down] - Navigates up and down the tree items that are currently visible.
  * - [Right] - Drills down the tree by expanding the tree nodes.
  * - [Left] - Goes up the tree and collapses the tree nodes.
  *

@@ -51,8 +51,8 @@ interface IProductSwitchItem extends HTMLElement, ITabbable {
  * shortcuts in order to perform a navigation:
  *
  * - [Tab] - Move focus to the next interactive element after the `ui5-product-switch`
- * - [UP/DOWN] - Navigates up and down the items
- * - [LEFT/RIGHT] - Navigates left and right the items
+ * - [Up],[Down] - Navigates up and down the items
+ * - [Left],[Right] - Navigates left and right the items
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`
