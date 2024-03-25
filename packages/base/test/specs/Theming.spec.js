@@ -18,7 +18,7 @@ describe("Theming works", () => {
 	});
 
 	it("Tests that theme parameters are changed on theme change", async () => {
-		const newTheme = 'sap_horizon_hcb';
+		const newTheme = 'sap_fiori_3_hcb';
 
 		const res = await browser.executeAsync( async (newTheme, done) => {
 			const bundle = window['sap-ui-webcomponents-bundle'];
@@ -27,7 +27,7 @@ describe("Theming works", () => {
 			await config.setTheme(newTheme);
 
 			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`).cssRules[0].cssText
-			const varsFound = style && style.includes("--var1: orange"); // see test/assets/Themes.js
+			const varsFound = style && style.includes("--var1: yellow"); // see test/assets/Themes.js
 			done(varsFound);
 		}, newTheme);
 

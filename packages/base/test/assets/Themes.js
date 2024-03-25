@@ -6,7 +6,6 @@ const defaultTheme = {
 	fileName: "",
 };
 
-
 const fiori3 = {
 	content: `:root{ --var1: red; }`,
 	packageName: "",
