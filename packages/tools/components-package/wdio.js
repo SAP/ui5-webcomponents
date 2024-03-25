@@ -235,6 +235,12 @@ exports.config = {
 			}, this, attrName);
 		}, true);
 
+		await browser.addCommand("matches", async function(selector) {
+			return browser.executeAsync((elem, selector, done) => {
+				done(elem.matches(selector));
+			}, this, selector);
+		}, true);
+
 		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
 			return browser.executeAsync(async (selector, done) => {
 				const component = await document.querySelector(selector);
@@ -259,6 +265,7 @@ exports.config = {
 			"$$",
 			"getAttribute",
 			"hasAttribute", // custom
+			"matches", // custom
 			"getCSSProperty",
 			"getHTML",
 			"getProperty",

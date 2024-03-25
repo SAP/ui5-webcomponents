@@ -464,6 +464,9 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
+		// Await render before trying to access the blocking layer
+		await renderFinished();
+
 		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
 			if (getUseNativePopovers()) {
@@ -492,8 +495,6 @@ abstract class Popup extends UI5Element {
 
 		this.opened = true;
 		this.open = true;
-
-		await renderFinished();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
 			await this.applyInitialFocus();
