@@ -7,6 +7,9 @@ import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonIt
 
 import ToggleButton from "./ToggleButton.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import ButtonType from "./types/ButtonType.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import { AccessibilityAttributes } from "./Button.js";
 import Icon from "./Icon.js";
 
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
@@ -60,6 +63,30 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	 */
 	@property({ type: Boolean })
 	declare submits: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default {}
+	 * @public
+	 */
+    @property({ type: Object })
+    declare accessibilityAttributes: AccessibilityAttributes;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default "Button"
+	 * @public
+	 */
+	@property({ type: ButtonType, defaultValue: ButtonType.Button })
+	declare type: `${ButtonType}`;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default "Button"
+	 * @public
+	 */
+	@property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Button })
+	declare accessibleRole: `${ButtonAccessibleRole}`;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
