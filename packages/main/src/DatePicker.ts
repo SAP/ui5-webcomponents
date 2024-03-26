@@ -44,7 +44,6 @@ import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -154,9 +153,8 @@ type DatePickerInputEventDetail = {
 	tag: "ui5-date-picker",
 	languageAware: true,
 	template: DatePickerTemplate,
-	staticAreaTemplate: DatePickerPopoverTemplate,
-	styles: datePickerCss,
-	staticAreaStyles: [
+	styles: [
+		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
 	],
