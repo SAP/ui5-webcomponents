@@ -1,7 +1,7 @@
 <ui5-responsive-popover
 	id="{{_id}}-menu-rp"
 	class="ui5-menu-rp"
-	horizontal-align="Left"
+	horizontal-align="Start"
 	placement-type={{placementType}}
 	vertical-align={{verticalAlign}}
 	hide-arrow
@@ -38,7 +38,7 @@
 			icon="decline"
 			design="Transparent"
 			aria-label="{{labelClose}}"
-			@click={{close}}
+			@click={{_closeAll}}
 		>
 		</ui5-button>
 	</div>
@@ -67,6 +67,7 @@
 				accessible-role="menuitem"
 				.additionalText="{{this.item._additionalText}}"
 				tooltip="{{this.item.tooltip}}"
+				selected="{{this.item.subMenuOpened}}"
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
 				?selected={{this.item.subMenuOpened}}

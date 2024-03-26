@@ -76,7 +76,7 @@ import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registrie
 	const importAndCheck = async (localeId) => {
 		const data = await importMessageBundle(localeId);
 		if (typeof data === "string" && data.endsWith(".json")) {
-			throw new Error(\`[i18n] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
+			throw new Error(\`[i18n] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build. Check the \"Assets\" documentation for more information.\`);
 		}
 		return data;
 	}

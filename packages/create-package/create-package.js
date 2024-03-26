@@ -27,10 +27,8 @@ const isNPMRC = sourcePath => {
 
 // Validation of user input
 const ComponentNamePattern = /^[A-Z][A-Za-z0-9]+$/;
-const NamespacePattern = /^[a-z][a-z0-9\.\-]+$/;
 const isPackageNameValid = name => typeof name === "string" && name.match(/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/);
 const isComponentNameValid = name => typeof name === "string" && ComponentNamePattern.test(name);
-const isNamespaceValid = name => typeof name === "string" && NamespacePattern.test(name);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
 
 /**
@@ -94,12 +92,11 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-const generateFilesContent = (packageName, componentName, namespace, skipSubfolder) => {
+const generateFilesContent = (packageName, componentName, skipSubfolder) => {
 	const tagName = argv.tag || hyphaneteComponentName(componentName);
 
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
-		INIT_PACKAGE_VAR_NAMESPACE: namespace, // namespace must be replaced before name
 		INIT_PACKAGE_VAR_NAME: packageName,
 		INIT_PACKAGE_VAR_TAG: tagName,
 		INIT_PACKAGE_VAR_CLASS_NAME: componentName,
@@ -178,21 +175,16 @@ const createWebcomponentsPackage = async () => {
 		throw new Error("The component name should be a string, starting with a capital letter [A-Z][a-z], for example: Button, MyButton, etc.");
 	}
 
-	if (argv.namespace && !isNamespaceValid(argv.namespace)) {
-		throw new Error("The JSDoc namespace must start with a letter and can only contain small-case letters, numbers, dots and dashes.");
-	}
-
 	if (argv.tag && !isTagValid(argv.tag) ) {
 		throw new Error("The tag should be in kebab-case (f.e my-component) and it can't be a single word.");
 	}
 
 	let packageName = argv.name || "my-package";
 	let componentName = argv.componentName || "MyComponent";
-	let namespace = argv.namespace || "demo.components";
 	const skipSubfolder = !!argv.skipSubfolder;
 
 	if (argv.skip) {
-		return generateFilesContent(packageName, componentName, namespace, skipSubfolder);
+		return generateFilesContent(packageName, componentName, skipSubfolder);
 	}
 
 	if (!argv.name) {
@@ -216,18 +208,7 @@ const createWebcomponentsPackage = async () => {
 		componentName = response.componentName;
 	}
 
-	if (!argv.namespace) {
-		response = await prompts({
-			type: "text",
-			name: "namespace",
-			message: "JSDoc namespace:",
-			initial: "demo.components",
-			validate: (value) => isNamespaceValid(value) ? true : "The JSDoc namespace must start with a letter and can only contain small-case letters, numbers, dots and dashes.",
-		});
-		namespace = response.namespace;
-	}
-
-	return generateFilesContent(packageName, componentName, namespace, skipSubfolder);
+	return generateFilesContent(packageName, componentName, skipSubfolder);
 };
 
 createWebcomponentsPackage();
