@@ -51,7 +51,8 @@
 			colorPicker1 = document.getElementById("cp1"),
 			stepInput = document.getElementById("changeEventCounter");
 
-		colorPicker.addEventListener("ui5-change", function(event) {
+		colorPicker.addEventListener("ui5-change", () => {
+			debugger
 			colorLabel.value = event.target.value;
 		});
 
