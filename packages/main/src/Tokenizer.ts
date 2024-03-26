@@ -114,6 +114,7 @@ enum ClipboardDataOperation {
 
 /**
  * Fired when a token is deleted (delete icon, delete or bacspace is pressed)
+ * @param {HTMLElement} ref DOM ref of the token to be deleted.
  * @public
  */
 @event("token-delete", {
@@ -126,11 +127,7 @@ enum ClipboardDataOperation {
  * Fired when nMore link is pressed.
  * @public
  */
-@event("show-more-items-press", {
-	detail: {
-		ref: { type: HTMLElement },
-	},
-})
+@event("show-more-items-press")
 
 /**
  * Fired before nMore Popover is opened.
