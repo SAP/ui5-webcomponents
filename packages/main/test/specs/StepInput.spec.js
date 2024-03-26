@@ -471,10 +471,10 @@ describe("'change' event firing", () => {
 	it("Value is not rounding when valuePrecision is set, and Value State is set to 'Error' when the value is not compliant", async () => {
 		await browser.url(`test/pages/StepInput.html`);
 		const input = await browser.$("#stepInputPrecision").shadow$("ui5-input");
-		const Innerinput = await input.shadow$("input");
+		const innerInput = await input.shadow$("input");
 
-		await Innerinput.click();
-		await Innerinput.setValue("0.100");
+		await innerInput.click();
+		await innerInput.setValue("0.100");
 		await browser.keys("Enter");
 
 
