@@ -10,6 +10,12 @@
 	padding-inline-end: var(--_ui5_progress_indicator_padding_end);
 }
 
+:host(:not([hidden])[hide-value]) {
+	padding-top: var(--_ui5_progress_indicator_padding_novalue);
+	padding-bottom: var(--_ui5_progress_indicator_padding_novalue);
+
+}
+
 .ui5-progress-indicator-root {
 	display: flex;
 	align-items: center;
