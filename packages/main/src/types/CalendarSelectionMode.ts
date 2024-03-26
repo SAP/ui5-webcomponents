@@ -1,6 +1,5 @@
 /**
  * Different Calendar selection mode.
- *
  * @public
  */
 enum CalendarSelectionMode {

@@ -59,17 +59,16 @@ type ExceededText = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-textarea</code> component is used to enter multiple lines of text.
- * <br><br>
- * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
- * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
+ * The `ui5-textarea` component is used to enter multiple lines of text.
  *
- * <h3>ES6 Module Import</h3>
+ * When empty, it can hold a placeholder similar to a `ui5-input`.
+ * You can define the rows of the `ui5-textarea` and also determine specific behavior when handling long texts.
  *
- * <code>import "@ui5/webcomponents/dist/TextArea";</code>
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents/dist/TextArea.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -87,7 +86,6 @@ type ExceededText = {
 })
 /**
  * Fired when the text has changed and the focus leaves the component.
- *
  * @public
  */
 @event("change")
@@ -95,16 +93,30 @@ type ExceededText = {
 /**
  * Fired when the value of the component changes at each keystroke or when
  * something is pasted.
- *
  * @since 1.0.0-rc.5
  * @public
  */
 @event("input")
 
+/**
+ * Fired when some text has been selected.
+ *
+ * @since 1.23.0
+ * @public
+ */
+@event("select")
+
+/**
+ * Fired when textarea is scrolled.
+ *
+ * @since 1.23.0
+ * @public
+ */
+@event("scroll")
+
 class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value of the component.
-	 *
 	 * @formEvents change input
 	 * @formProperty
 	 * @default ""
@@ -114,9 +126,8 @@ class TextArea extends UI5Element implements IFormElement {
 	value!: string;
 	/**
 	 * Indicates whether the user can interact with the component or not.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
+	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -124,10 +135,9 @@ class TextArea extends UI5Element implements IFormElement {
 	disabled!: boolean;
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
@@ -135,7 +145,6 @@ class TextArea extends UI5Element implements IFormElement {
 	readonly!: boolean;
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.3
@@ -145,7 +154,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -154,12 +162,10 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If <code>maxlength</code> property is set,
+	 * **Note:** If `maxlength` property is set,
 	 * the component turns into "Warning" state once the characters exceeds the limit.
 	 * In this case, only the "Error" state is considered and can be applied.
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.7
 	 * @public
@@ -169,14 +175,12 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the number of visible text lines for the component.
-	 * <br><br>
-	 * <b>Notes:</b>
-	 * <ul>
-	 * <li>If the <code>growing</code> property is enabled, this property defines the minimum rows to be displayed
-	 * in the textarea.</li>
-	 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
-	 * </ul>
 	 *
+	 * **Notes:**
+	 *
+	 * - If the `growing` property is enabled, this property defines the minimum rows to be displayed
+	 * in the textarea.
+	 * - The CSS `height` property wins over the `rows` property, if both are set.
 	 * @default 0
 	 * @public
 	 */
@@ -184,8 +188,7 @@ class TextArea extends UI5Element implements IFormElement {
 	rows!: number;
 
 	/**
-	 * Defines the maximum number of characters that the <code>value</code> can have.
-	 *
+	 * Defines the maximum number of characters that the `value` can have.
 	 * @default undefined
 	 * @public
 	 */
@@ -195,12 +198,11 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
 	 * in the component.
-	 * <br><br>
-	 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
-	 * <code>maxlength</code> property.
-	 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
-	 * paste and the counter below the component displays their number.
 	 *
+	 * If set to `false`, the user is not allowed to enter more characters than what is set in the
+	 * `maxlength` property.
+	 * If set to `true` the characters exceeding the `maxlength` value are selected on
+	 * paste and the counter below the component displays their number.
 	 * @default false
 	 * @public
 	 */
@@ -209,8 +211,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Enables the component to automatically grow and shrink dynamically with its content.
-	 * <br><br>
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -219,7 +219,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the maximum number of lines that the component can grow.
-	 *
 	 * @default 0
 	 * @public
 	 */
@@ -229,15 +228,12 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
+	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -246,7 +242,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -256,7 +251,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the textarea.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -297,22 +291,18 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the component has
-	 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
-	 *
+	 * **Note:** The `valueStateMessage` would be displayed if the component has
+	 * `valueState` of type `Information`, `Warning` or `Error`.
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
-	 *
+	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
+	 * when `name` property is set.
 	 * @private
 	 */
 	 @slot()
@@ -424,6 +414,14 @@ class TextArea extends UI5Element implements IFormElement {
 		this.fireEvent("change", {});
 	}
 
+	_onselect() {
+		this.fireEvent("select", {});
+	}
+
+	_onscroll() {
+		this.fireEvent("scroll", {});
+	}
+
 	_oninput(e: InputEvent) {
 		const nativeTextArea = this.getInputDomRef()!;
 
@@ -480,8 +478,8 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	_tokenizeText(value: string) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
-			.replace(/>/gm, "&gt;")
+		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "<")
+			.replace(/>/gm, ">")
 			.split("\n");
 
 		if (tokenizedText.length < this.rows) {

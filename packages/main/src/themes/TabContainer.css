@@ -6,7 +6,6 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
-	container-type: inline-size;
 }
 
 .ui5-tc-root {
@@ -23,6 +22,7 @@
 	display: flex;
 	align-items: center;
 	background-color: var(--_ui5_tc_header_background);
+	--ui5_tc_header_active_background_color: var(--_ui5_tc_header_background);
 	height: var(--_ui5_tc_header_height);
 	box-shadow: var(--_ui5_tc_header_box_shadow);
 	box-sizing: border-box;
@@ -34,10 +34,12 @@
 
 :host([header-background-design="Transparent"]) .ui5-tc__header {
 	background-color: transparent;
+	--ui5_tc_header_active_background_color: transparent;
 }
 
 :host([header-background-design="Translucent"]) .ui5-tc__header {
 	background-color: var(--_ui5_tc_header_background_translucent);
+	--ui5_tc_header_active_background_color: var(--_ui5_tc_header_background_translucent);
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__header {
@@ -150,22 +152,20 @@
 	padding: 1rem;
 }
 
-@container (min-width: 600px) {
-	.ui5-tc__header {
-		padding: 0 1rem;
-	}
-
-	.ui5-tc__content {
-		padding: 1rem 2rem;
-	}
+:host([media-range="M"]) .ui5-tc__header,
+:host([media-range="L"]) .ui5-tc__header {
+	padding: 0 1rem;
 }
 
-@container (min-width: 1440px) {
-	.ui5-tc__header {
-		padding: 0 2rem;
-	}
-	
-	.ui5-tc__content {
-		padding: 1rem 3rem;
-	}
+:host([media-range="M"]) .ui5-tc__content,
+:host([media-range="L"]) .ui5-tc__content {
+	padding: 1rem 2rem;
+}
+
+:host([media-range="XL"]) .ui5-tc__header {
+	padding: 0 2rem;
+}
+
+:host([media-range="XL"]) .ui5-tc__content {
+	padding: 1rem 3rem;
 }

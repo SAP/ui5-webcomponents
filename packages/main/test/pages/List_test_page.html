@@ -39,6 +39,17 @@
 
 	<br><br><br>
 
+	<ui5-list id="infiniteScrollEx2" class="list_test_page2auto" growing="Button" growing-button-text="Custom text">
+		<ui5-li>Laptop Lenovo</ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li>DVD set</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li id="lastItem">Last Item</ui5-li>
+	</ui5-list>
+
 	<br/>
 	<ui5-list id="listEvents" mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -237,6 +248,16 @@
 		<ui5-li >item</ui5-li>
 	</ui5-list>
 
+	<br/><br/>
+
+	<ui5-list id="myList7" header-text="API: ListItem tooltip">
+		<ui5-li tooltip="Option #1">Option 1</ui5-li>
+		<ui5-li tooltip="Option #2">Option 2</ui5-li>
+		<ui5-li tooltip="Option #3">Option 3</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list id="listWithEmptyItem">
 		<ui5-li id="emptyItem"></ui5-li>
 		<ui5-li>IPhone 3</ui5-li>
@@ -299,6 +320,13 @@
 				<ui5-option icon="laptop" selected>Desktop</ui5-option>
 			</ui5-select>
 		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-list id="highlight">
+		<ui5-li highlight="Error" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li highlight="Information" image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li highlight="Success" image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li highlight="Warning" image="./img/HT-2002.jpg" >DVD set</ui5-li>
 	</ui5-list>
 
 	<input id="customListItemSelectResult" value="0"/>
@@ -380,6 +408,15 @@
 			loadMoreResult.value= ++loadMoreCounter;
 		});
 
+		infiniteScrollEx2.addEventListener("ui5-loadMore", function(e) {
+			for(var i = 0; i < 3; i++) {
+				var li = document.createElement("ui5-li");
+				li.textContent = "Title" + i;
+				infiniteScrollEx2.appendChild(li);
+			}
+			loadMoreResult.value= ++loadMoreCounter;
+		});
+
 		detailListItem.addEventListener("ui5-detail-click", function(e) {
 			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
 		});
@@ -406,7 +443,7 @@
 		listWithCustomItems.addEventListener("ui5-item-close", function(e) {
 			customListItemSelectResult.value = ++customListItemSelectResult.value
 		});
-		
+
 	</script>
 
 	<ui5-list growing="Scroll">

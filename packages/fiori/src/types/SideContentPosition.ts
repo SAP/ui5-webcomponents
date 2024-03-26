@@ -1,6 +1,5 @@
 /**
  * Side Content position options.
- *
  * @public
  */
 enum SideContentPosition {

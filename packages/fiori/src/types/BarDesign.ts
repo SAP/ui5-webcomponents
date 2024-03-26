@@ -1,6 +1,5 @@
 /**
  * Different types of Bar design
- *
  * @public
  */
 enum BarDesign {

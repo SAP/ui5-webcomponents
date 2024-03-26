@@ -1,6 +1,5 @@
 /**
  * Different SegmentedButton modes.
- *
  * @public
  */
 enum SegmentedButtonMode {

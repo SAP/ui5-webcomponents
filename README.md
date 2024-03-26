@@ -113,8 +113,8 @@ Edge | Latest
 This section might be of interest to you mainly if you need to run or build the project locally
 
 ### Requirements
-- [Node.js](https://nodejs.org/) (**version 14 or higher**)
-- [Yarn](https://yarnpkg.com/en)
+- [Node.js](https://nodejs.org/) (**version 20 or higher**)
+- [Yarn](https://yarnpkg.com/en) (**version 1.22 or higher**)
 
 **Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.
 This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [UI5 Web Components (mono-)repository](https://github.com/SAP/ui5-webcomponents). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
@@ -145,18 +145,19 @@ yarn start # to serve the project
 
 A dev server will be started and the browser will open its index URL with a listing of all test pages.
 
-You can start the Playground app with the following commands:
+### How to start Website (Docs & Samples):
+You can start the website app with the following commands:
 
 ```sh
 yarn # to install all dependencies
 
 # start the playground from the project root
-yarn start:playground
+yarn start:website
 
-# open http://localhost:6006/
+# open http://localhost:3000/ui5-webcomponents/nightly/
 ```
 
-**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-playground-app.md)
+**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-website.md)
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:

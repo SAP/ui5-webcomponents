@@ -22,7 +22,7 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  * For the <code>${tagName}</code>
  * <h3>ES6 Module Import</h3>
  *
- * <code>import ${packageName}/dist/${componentName}.js";</code>
+ * <code>import "${packageName}/dist/${componentName}.js";</code>
  *
  * @constructor
  * @extends UI5Element

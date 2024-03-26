@@ -1,0 +1,30 @@
+ui5-media-gallery-item:not(:defined) {
+    visibility: hidden;
+}
+
+@media (min-width: 600px) {
+    ui5-media-gallery {
+        height: 50rem;
+    }
+}
+
+@media (min-width: 612px) {
+    .container {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.details {
+    background: var(--sapBaseColor);
+    padding: 1rem;
+    color: var(--sapTextColor);
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0px 0.5rem 0px 0px;
+}

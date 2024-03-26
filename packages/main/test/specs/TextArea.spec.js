@@ -374,3 +374,29 @@ describe("Value update", () => {
 		assert.strictEqual(count, selectionLength, "14 symbols should exceed");
 	});
 });
+
+describe("selection events", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/TextArea-selection.html`);
+	});
+
+	it("fires select event", async () => {
+		const textAreaInner = await browser.$("#button-area").shadow$("textarea");
+		const selectResult = await browser.$("#select-event-counter");
+
+		await textAreaInner.doubleClick();
+
+		assert.strictEqual(await selectResult.getText(), "1", "select is called");
+	});
+
+	it("fires scroll event", async () => {
+		const scrollResult = await browser.$("#scroll-event-counter");
+
+		await browser.executeAsync(async (done) => {
+			document.getElementById("button-area").shadowRoot.querySelector("textarea").scrollTop = 100;
+			done();
+		});
+
+		assert.strictEqual(await scrollResult.getText(), "1", "scroll event is called");
+	});
+});
