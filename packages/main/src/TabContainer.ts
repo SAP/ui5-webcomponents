@@ -476,11 +476,13 @@ class TabContainer extends UI5Element {
 			tab.forcedMixedMode = this.mixedMode;
 			tab.forcedPosinset = index + 1;
 			tab.forcedSetsize = arr.length;
-			tab.realTabReference = this._selectedTab;
 			tab.isTopLevelTab = items.some(i => i === tab);
-			walk(items, _tab => {
-				_tab.realTabReference = tab.realTabReference;
-			});
+		});
+
+		walk(items, item => {
+			if (!item.isSeparator) {
+				(item as Tab)._selectedTabReference = this._selectedTab;
+			}
 		});
 
 		this._setIndentLevels(items);
