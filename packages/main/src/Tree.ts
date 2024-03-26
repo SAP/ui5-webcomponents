@@ -83,15 +83,15 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * The `ui5-tree` provides advanced keyboard handling.
  * The user can use the following keyboard shortcuts in order to navigate trough the tree:
  *
- * - [UP/DOWN] - Navigates up and down the tree items that are currently visible.
- * - [RIGHT] - Drills down the tree by expanding the tree nodes.
- * - [LEFT] - Goes up the tree and collapses the tree nodes.
+ * - [Up] or [Down] - Navigates up and down the tree items that are currently visible.
+ * - [Right] - Drills down the tree by expanding the tree nodes.
+ * - [Left] - Goes up the tree and collapses the tree nodes.
  *
  * The user can use the following keyboard shortcuts to perform selection,
  * when the `mode` property is in use:
  *
- * - [SPACE] - Selects the currently focused item upon keyup.
- * - [ENTER]  - Selects the currently focused item upon keydown.
+ * - [Space] - Selects the currently focused item upon keyup.
+ * - [Enter]  - Selects the currently focused item upon keydown.
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Tree.js";`
