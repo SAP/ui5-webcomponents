@@ -24,7 +24,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { ITab, ITabPresentationInOverflowInfo, ITabPresentationInStripInfo } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -143,12 +143,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Boolean })
 	forcedSelected!: boolean;
 
-	@property({ type: Object, defaultValue: null })
-	realTabReference!: Tab;
-
-	@property({ type: Boolean })
-	isTopLevelTab!: boolean;
-
 	/**
 	 * Holds the content associated with this tab.
 	 * @public
@@ -179,25 +173,29 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	})
 	subTabs!: Array<ITab>
 
-	isInline?: boolean;
-	forcedMixedMode?: boolean;
-	getElementInStrip?: () => ITab | null;
+	_isInline?: boolean;
+	_forcedMixedMode?: boolean;
+	_forcedPosinset?: number;
+	_forcedSetsize?: number;
+	_isTopLevelTab?: boolean;
+	_forcedStyleInOverflow?: Record<string, any>;
+	_getElementInStrip?: () => HTMLElement | undefined;
 	_individualSlot!: string;
 
 	static i18nBundle: I18nBundle;
 
 	set forcedTabIndex(val: string) {
-		this.getTabInStripDomRef()!.setAttribute("tabindex", val);
+		this.getDomRefInStrip()!.setAttribute("tabindex", val);
 	}
 
 	get forcedTabIndex() {
-		return this.getTabInStripDomRef()!.getAttribute("tabindex")!;
+		return this.getDomRefInStrip()!.getAttribute("tabindex")!;
 	}
 
 	get displayText() {
 		let text = this.text;
 
-		if (this.isInline && this.additionalText) {
+		if (this._isInline && this.additionalText) {
 			text += ` (${this.additionalText})`;
 		}
 
@@ -221,15 +219,15 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isSingleClickArea() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && !this.hasOwnContent;
 	}
 
 	get isTwoClickArea() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+		return this.subTabs.length > 0 && this._isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isOnSelectedTabPath(): boolean {
@@ -248,31 +246,34 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		return willShowContent(this.content);
 	}
 
+	receiveStripPresentationInfo(info: ITabPresentationInStripInfo) {
+		this._forcedMixedMode = info.mixedMode;
+		this._forcedPosinset = info.posinset;
+		this._forcedSetsize = info.setsize;
+		this._isInline = info.isInline;
+		this._isTopLevelTab = info.isTopLevelTab;
+		this._getElementInStrip = info.getElementInStrip;
+	}
+
+	receiveOverflowPresentationInfo(info: ITabPresentationInOverflowInfo) {
+		this._forcedStyleInOverflow = info.style;
+	}
+
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 *
-	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `undefined`.
 	 *
 	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
-	 * @since 1.0.0-rc.16
+	 * @since 2.0.0
 	 */
-	getTabInStripDomRef(): ITab | null {
-		if (this.getElementInStrip) {
-			return this.getElementInStrip();
-		}
-
-		return null;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	getFocusDomRef() {
-		let focusedDomRef = super.getFocusDomRef();
-
-		if (this.getElementInStrip && this.getElementInStrip()) {
-			focusedDomRef = this.getElementInStrip()!;
-		}
-
-		return focusedDomRef;
+		return this.getDomRefInStrip();
 	}
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
@@ -281,11 +282,11 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get isMixedModeTab() {
-		return !this.icon && this.forcedMixedMode;
+		return !this.icon && this._forcedMixedMode;
 	}
 
 	get isTextOnlyTab() {
-		return !this.icon && !this.forcedMixedMode;
+		return !this.icon && !this._forcedMixedMode;
 	}
 
 	get isIconTab() {
@@ -342,7 +343,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--disabled");
 		}
 
-		if (this.isInline) {
+		if (this._isInline) {
 			classes.push("ui5-tab-strip-item--inline");
 		}
 
@@ -350,7 +351,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withAdditionalText");
 		}
 
-		if (!this.icon && !this.forcedMixedMode) {
+		if (!this.icon && !this._forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--textOnly");
 		}
 
@@ -358,7 +359,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push("ui5-tab-strip-item--withIcon");
 		}
 
-		if (!this.icon && this.forcedMixedMode) {
+		if (!this.icon && this._forcedMixedMode) {
 			classes.push("ui5-tab-strip-item--mixedMode");
 		}
 

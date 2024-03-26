@@ -2,9 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type { ITab, ITabPresentationInOverflowInfo, ITabPresentationInStripInfo } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -28,10 +27,8 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 	renderer: litRender,
 })
 class TabSeparator extends UI5Element implements ITab {
-	@property({ type: Object, defaultValue: null })
-	realTabReference!: TabSeparator;
-
-	getElementInStrip?: () => ITab | null;
+	_forcedStyleInOverflow?: Record<string, any>;
+	_getElementInStrip?: () => HTMLElement | undefined;
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -53,20 +50,6 @@ class TabSeparator extends UI5Element implements ITab {
 		return true;
 	}
 
-	/**
-	 * Returns the DOM reference of the separator that is placed in the header.
-	 *
-	 * **Note:** Tabs and separators, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
-	 * @public
-	 */
-	getTabInStripDomRef(): ITab | null {
-		if (this.getElementInStrip) {
-			return this.getElementInStrip();
-		}
-
-		return null;
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
@@ -77,6 +60,25 @@ class TabSeparator extends UI5Element implements ITab {
 
 	get overflowPresentation() {
 		return executeTemplate(TabSeparator.overflowTemplate, this);
+	}
+
+	receiveStripPresentationInfo(info: ITabPresentationInStripInfo) {
+		this._getElementInStrip = info.getElementInStrip;
+	}
+
+	receiveOverflowPresentationInfo(info: ITabPresentationInOverflowInfo) {
+		this._forcedStyleInOverflow = info.style;
+	}
+
+	/**
+	 * Returns the DOM reference of the separator that is placed in the header.
+	 *
+	 * **Note:** Tabs and separators, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `undefined`.
+	 * @public
+	 * @since 2.0.0
+	 */
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 }
 
