@@ -117,7 +117,7 @@ enum ClipboardDataOperation {
  * @param {HTMLElement} ref DOM ref of the token to be deleted.
  * @public
  */
-@event("token-delete", {
+@event<TokenizerTokenDeleteEventDetail>("token-delete", {
 	detail: {
 		ref: { type: HTMLElement },
 	},
