@@ -25,7 +25,6 @@ import Icon from "./Icon.js";
 
 // Template
 import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
-import FileUploaderPopoverTemplate from "./generated/templates/FileUploaderPopoverTemplate.lit.js";
 
 // Styles
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
@@ -66,10 +65,12 @@ type FileUploaderChangeEventDetail = {
 	tag: "ui5-file-uploader",
 	languageAware: true,
 	renderer: litRender,
-	styles: FileUploaderCss,
+	styles: [
+		FileUploaderCss,
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+	],
 	template: FileUploaderTemplate,
-	staticAreaTemplate: FileUploaderPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss],
 	dependencies: [
 		Input,
 		Popover,
