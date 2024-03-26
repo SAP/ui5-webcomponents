@@ -392,19 +392,20 @@ class Tree extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<TreeMoveEventDetail>("move-over", {
+			const closestElement = closestPosition.element;
+			const beforeItemMovePrevented = !draggedElement.contains(closestElement) && !this.fireEvent<TreeMoveEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},
 				destination: {
-					element: closestPosition.element,
+					element: closestElement,
 					placement,
 				},
 			}, true);
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();
-				this.dropIndicatorDOM!.targetReference = closestPosition.element;
+				this.dropIndicatorDOM!.targetReference = closestElement;
 				this.dropIndicatorDOM!.placement = placement;
 				return true;
 			}
@@ -420,16 +421,17 @@ class Tree extends UI5Element {
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 
+		const draggedElement = DragRegistry.getDraggedElement()!;
 		this.fireEvent<TreeMoveEventDetail>("move", {
 			source: {
-				element: DragRegistry.getDraggedElement()!,
+				element: draggedElement,
 			},
 			destination: {
 				element: this.dropIndicatorDOM!.targetReference!,
 				placement: this.dropIndicatorDOM!.placement,
 			},
 		});
-
+		draggedElement.focus();
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 

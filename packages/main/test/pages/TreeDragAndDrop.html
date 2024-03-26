@@ -71,7 +71,7 @@
 				e.preventDefault();
 			}
 
-			console.log(`Moving "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
+			console.log(`Moving "${source.element.text}" ${destination.placement.toLowerCase()} "${destination.element.text}"`);
 		};
 	
 		const tree1HandleMoveOver = (e) => {
@@ -104,8 +104,6 @@
 			} else if (destination.placement === "On") {
 				destination.element.prepend(source.element);
 			}
-
-			source.element.focus();
 		};
 
 		tree1.addEventListener("ui5-move-over", tree1HandleMoveOver);
