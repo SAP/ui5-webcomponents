@@ -84,11 +84,10 @@ enum ClipboardDataOperation {
  * @class
  *
  * ### Overview
- *
- * A container for tokens.
+ * A `ui5-tokenizer` is a container for `ui5-tokens`. It also handles all actions associated with the `ui5-tokens` like adding, deleting, selecting and editing.
  * @constructor
  * @extends sap.ui.webc.base.UI5Element
- * @since 1.24.1
+ * @since 2.0
  * @public
  */
 @customElement({
@@ -113,19 +112,32 @@ enum ClipboardDataOperation {
 	],
 })
 
+/**
+ * Fired when a token is deleted (delete icon, delete or bacspace is pressed)
+ * @public
+ */
 @event("token-delete", {
 	detail: {
 		ref: { type: HTMLElement },
 	},
 })
 
+/**
+ * Fired when nMore link is pressed.
+ * @public
+ */
 @event("show-more-items-press", {
 	detail: {
 		ref: { type: HTMLElement },
 	},
 })
 
+/**
+ * Fired before nMore Popover is opened.
+ * @public
+ */
 @event("before-more-popover-open")
+
 class Tokenizer extends UI5Element {
 	/**
 	 * Defines whether the component is disabled.
@@ -175,7 +187,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventTokenFocus!: boolean;
+	preventInitialFocus!: boolean;
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
@@ -331,20 +343,14 @@ class Tokenizer extends UI5Element {
 		const firstToken = this._tokens[0];
 
 		this._nMoreCount = this.overflownTokens.length;
-		if (firstToken && !this.disabled && !this.preventTokenFocus) {
-			firstToken.forcedTabIndex = this._tabIndex;
+		if (firstToken && !this.disabled && !this.preventInitialFocus) {
+			const hasSelectedToken = tokensArray.some(token => token.selected);
 
-			let hasSelectedToken = false;
 			tokensArray.forEach(token => {
-				if (token.selected) {
-					token.forcedTabIndex = "0";
-					hasSelectedToken = true;
-				} else {
-					token.forcedTabIndex = "-1";
-				}
+				token.forcedTabIndex = hasSelectedToken && token.selected ? "0" : "-1";
 			});
 
-			if (!hasSelectedToken && !this.preventTokenFocus) {
+			if (!hasSelectedToken && !this.preventInitialFocus) {
 				firstToken.forcedTabIndex = "0";
 			}
 		}
@@ -583,8 +589,10 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (isLeft(e) || isRight(e) || isUp(e) || isDown(e)) {
+			e.preventDefault();
 			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused)!, tokens, (isRight(e) || isDown(e)));
 			this._scrollToToken(tokens[nextTokenIdx]);
+			tokens[nextTokenIdx].focus();
 		}
 	}
 
@@ -728,7 +736,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		// When focus is prevented and focus is not going to a token, we need to reset the currentIndex of the ItemNavigation
-		if (this.preventTokenFocus && !(e.relatedTarget as HTMLElement).hasAttribute("ui5-token")) {
+		if (this.preventInitialFocus && !(e.relatedTarget as HTMLElement).hasAttribute("ui5-token")) {
 			this._getTokens().forEach(token => {
 				token.forcedTabIndex = "-1";
 			});

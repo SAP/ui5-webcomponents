@@ -81,6 +81,13 @@
 				<ui5-token text="Estonia"></ui5-token>
 			</ui5-tokenizer>
 		</div>
+
+		<h1 class="sample-container-title">Single token</h1>
+		<div class="tokenizer-container">
+			<ui5-tokenizer id="single-token-tokenizer">
+				<ui5-token text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea."></ui5-token>
+			</ui5-tokenizer>
+		</div>
 	</div>
 
 	<h1>Basic API</h1>
@@ -149,12 +156,12 @@
 			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
 		});
 
-		document.getElementById("delete-tokenizer").addEventListener("token-delete", event => {
+		document.getElementById("delete-tokenizer").addEventListener("ui5-token-delete", event => {
 			const token = event.detail?.ref;
 			token && token.remove();
 		});
 
-		document.getElementById("readonly-tokenizer").addEventListener("token-delete", event => {
+		document.getElementById("readonly-tokenizer").addEventListener("ui5-token-delete", event => {
 			const token = event.detail?.ref;
 			token && token.remove();
 		});

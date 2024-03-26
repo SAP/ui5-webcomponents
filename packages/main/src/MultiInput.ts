@@ -308,7 +308,7 @@ class MultiInput extends Input {
 	async onAfterRendering() {
 		await super.onAfterRendering();
 
-		this.tokenizer.preventTokenFocus = true;
+		this.tokenizer.preventInitialFocus = true;
 
 		if (this.tokenizer.expanded) {
 			this.tokenizer.scrollToEnd();

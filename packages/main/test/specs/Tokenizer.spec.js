@@ -8,61 +8,79 @@ const getTokenizerPopoverId = async (tokenizerId) => {
 	}, tokenizerId);
 }
 
-describe("Tokenizer general interaction", () => {
+describe("General interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/Tokenizer.html`);
 	});
 
-	it("tests expanding of tokenizer", async () => {
-		const tokenizer = await browser.$("#nmore-tokenizer");
-		const firstToken = await tokenizer.$("ui5-token:first-child");
+	it("tests expanding of tokenizer + focus handling", async () => {
+		const tokenizer = await browser.$("#long-tokenizer");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 
-		await firstToken.click();
+		await secondToken.click();
 
 		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+		assert.ok(await secondToken.getProperty("selected"), "Second token should be selected.");
+		assert.ok(await secondToken.getProperty("focused"), "Second token should be focused");
 
         await browser.keys('Tab');
 
+		assert.ok(await secondToken.getProperty("selected"), "Second token should stay selected after focusout.");
 		assert.notOk(await tokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
+
+        await browser.keys(['Shift','Tab']);
+
+        assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+		assert.ok(await secondToken.getProperty("focused"), "Focus should go back to the selected token.");
 	});
 
-	it ("tests opening of tokenizer Popover", async () => {
+	it ("tests opening of nMore Popover", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
 		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+        const tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+		const tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
+		const tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").getBoundingClientRect().width);
 
 		await nMoreLabel.click();
 
 		const rpoClassName = await getTokenizerPopoverId("nmore-tokenizer");
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
 
+        assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
 
         await browser.keys('Escape');
+        // await browser.debug();
+
+		// assert.ok(await lastToken.getProperty("focused"), "Last token should be focused, after Escape key is pressed.");
 	});
 
-	// it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
-	// 	await browser.url(`test/pages/Tokenizer.html`);
-
+	// it("Should apply correct text to the tokens overflow indicator", async () => {
 	// 	const tokenizer = await browser.$("#nmore-tokenizer");
-	// 	const firstToken = await tokenizer.$("ui5-token:first-child");
+	// 	const tokenizerNMore = await tokenizer.shadow$("ui5-tokenizer");
+	// 	const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
+	// 	let resourceBundleText = null;
 
-	// 	await firstToken.click();
+	// 	resourceBundleText = await browser.executeAsync(done => {
+	// 		const mi = document.getElementById("nmore-tokenizer");
+	// 		done({
+	// 			miNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
+	// 		});
+	// 	});
 
-	// 	let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-	// 	let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
-	// 	let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").getBoundingClientRect().width);
-
-
-	// 	assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
-
-	// 	await browser.keys('Tab');
-	// 	tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-
-	// 	assert.strictEqual(tokenizerScrollContainerScrollLeft, 0, "tokenizer is scrolled to start");
+	// 	assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.miNMoreLabelText, "Text should be 1 More");
 	// });
+});
+
+describe("Readonly", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Tokenizer.html`);
+	});
 
 	it("should NOT fire token-delete when Tokenizer is readonly", async () => {
-
 		const tokenizer = await browser.$("#readonly-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 
@@ -77,146 +95,55 @@ describe("Tokenizer general interaction", () => {
 		assert.strictEqual(tokens.length, 5, "The tokenizer has 4 tokens");
 	});
 
-// 	it("should empty the field when value is cleared in the change handler", async () => {
-// 		const mi = await $("#token-unique");
-// 		const valueHelpIcon = mi.shadow$("ui5-icon");
-// 		const innerInput = mi.shadow$("input");
+	it("tests expanding of tokenizer + focus handling", async () => {
+		const tokenizer = await browser.$("#readonly-tokenizer");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 
-// 		mi.scrollIntoView();
-// 		await valueHelpIcon.click();
+		await secondToken.click();
 
-// 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#token-unique");
-// 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+		assert.ok(await secondToken.getProperty("selected"), "Second token should be selected.");
+		assert.ok(await secondToken.getProperty("focused"), "Second token should be focused");
 
-// 		await listItem.click();
+        await browser.keys('Tab');
 
-// 		assert.strictEqual(await innerInput.getProperty("value"), "", "Input's value should be empty");
-// 	});
+		assert.ok(await secondToken.getProperty("selected"), "Second token should stay selected after focusout.");
+		assert.notOk(await tokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 
-// 	it("Should apply correct text to the tokens overflow indicator", async () => {
-// 		const miNItems = await $("#mi-items");
-// 		const miNMore = await $("#mi-more");
-// 		const tokenizerNItems = await miNItems.shadow$("ui5-tokenizer");
-// 		const tokenizerNMore = await miNMore.shadow$("ui5-tokenizer");
-// 		const nItemsLabel = await tokenizerNItems.shadow$(".ui5-tokenizer-more-text");
-// 		const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
-// 		let resourceBundleText = null;
+        await browser.keys(['Shift','Tab']);
 
-// 		resourceBundleText = await browser.executeAsync(done => {
-// 			const mi = document.getElementById("mi-items");
-// 			done({
-// 				miItemsLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_SHOW_ALL_ITEMS, 2),
-// 				miNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
-// 			});
-// 		});
-
-// 		assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.miItemsLabelText, "Text should be 2 Items");
-// 		assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.miNMoreLabelText, "Text should be 1 More");
-// 	});
+        assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+		assert.ok(await secondToken.getProperty("focused"), "Focus should go back to the selected token.");
+	});
 });
 
-// describe("MultiInput Truncated Token", () => {
-// 	beforeEach(async () => {
-// 		await browser.url(`test/pages/MultiInput.html`);
-// 	});
+describe("Single token", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Tokenizer.html`);
+	});
 
-// 	it("should truncate token when single token is in the multinput and open popover on click", async () => {
-// 		const mi = await $("#truncated-token");
-// 		const token = await mi.$("ui5-token");
-// 		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-// 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+	it("should truncate token when single token is in the multinput and open popover on click", async () => {
+		const tokenizer = await $("#single-token-tokenizer");
+		const token = await tokenizer.$("ui5-token");
+		const rpoClassName = await getTokenizerPopoverId("single-token-tokenizer");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
-// 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 
-// 		await token.click();
+		await token.click();
 
-// 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
-// 		assert.ok(await token.getProperty("selected"), "Token should be selected");
-// 		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
-// 		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await token.getProperty("selected"), "Token should be selected");
+		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
+		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
-// 		await token.click();
+		await token.click();
 
-// 		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
-// 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
-// 		assert.ok(await token.getProperty("focused"), "Token should be focused");
-// 	});
-
-// 	it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
-// 		const mi = await $("#truncated-token");
-// 		const token = await mi.$("ui5-token");
-// 		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-// 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-// 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-
-// 		await token.click();
-
-// 		await $("#dummy-btn").click();
-
-// 		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
-// 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
-// 	});
-
-// 	it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
-// 		const mi = await $("#truncated-token");
-// 		const token = await mi.$("ui5-token");
-// 		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-// 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-// 		const inner = await mi.shadow$("input");
-
-// 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-
-// 		await inner.click();
-
-// 		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
-// 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
-// 	});
-
-// 	it("should truncate token when a long token is added", async () => {
-// 		const mi = await $("#token-unique");
-// 		const inner = await mi.shadow$("input");
-
-// 		await mi.scrollIntoView();
-
-// 		// populate new token
-// 		await inner.click();
-// 		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
-// 		await inner.keys("Enter");
-
-// 		const rpoClassName = await getTokenizerPopoverId("token-unique");
-// 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-// 		const token = await mi.$("ui5-token");
-
-// 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-
-// 		await token.click();
-
-// 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
-// 		assert.ok(await token.getProperty("selected"), "Token should be selected");
-// 		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
-
-// 		const deleteIcon = await token.shadow$("ui5-icon");
-
-// 		await deleteIcon.click();
-
-// 		const tokensCount = (await mi.$$("ui5-token")).length;
-
-// 		assert.strictEqual(tokensCount, 0, "No Tokens should be available");
-// 		assert.ok(await inner.isFocusedDeep(), "Inner input should be focused");
-// 	});
-
-// 	it("should not throw exception when MI with 1 token is added to the page", async () => {
-// 		const btn = await $("#add-single-token");
-
-// 		await btn.click();
-
-// 		const innerInput = await $("#added-mi").shadow$("input");
-
-// 		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
-// 	});
-// });
+		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+		assert.ok(await token.getProperty("focused"), "Token should be focused");
+	});
+});
 
 // describe("ARIA attributes", () => {
 // 	it ("aria-describedby value according to the tokens count", async () => {
@@ -279,299 +206,147 @@ describe("Tokenizer general interaction", () => {
 // 	});
 // });
 
-// describe("Keyboard handling", () => {
-// 	beforeEach(async () => {
-// 		await browser.url(`test/pages/MultiInput.html`);
-// 	});
+describe("Keyboard handling", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Tokenizer.html`);
+	});
 
-// 	it("left/right arrow navigation", async () => {
-// 		const input =  await browser.$("#basic-overflow");
-// 		const innerInput =  await input.shadow$("input");
-// 		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
-
-// 		await innerInput.click();
-// 		await innerInput.keys("ArrowLeft");
-// 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused");
-// 		assert.notOk(await input.getProperty("focused"), "The input loses focus");
-
-// 		await innerInput.keys("ArrowRight");
-// 		assert.notOk(await lastToken.getProperty("focused"), "The last token is not focused anymore");
-// 	});
-
-// 	it("home/end navigation", async () => {
-// 		const input =  await browser.$("#basic-overflow");
-// 		const innerInput =  await input.shadow$("input");
-// 		const firstToken = await browser.$("#basic-overflow ui5-token:first-child");
-// 		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
-// 		let caretPosition;
+	it("left/right arrow navigation", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 
-// 		await innerInput.click();
-// 		await innerInput.keys("Home");
-// 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
-
-// 		await innerInput.keys("End");
-// 		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
+		await firstToken.click();
+		await tokenizer.keys("ArrowRight");
+		assert.ok(await secondToken.getProperty("focused"), "The last token is focused");
 
-// 		await innerInput.keys("End");
-// 		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
+		await tokenizer.keys("ArrowLeft");
+		assert.ok(await firstToken.getProperty("focused"), "The last token is not focused anymore");
+	});
 
-// 		caretPosition = await browser.execute(() =>{
-// 			const multiInputShadowRoot = document.getElementById("basic-overflow").shadowRoot;
-// 			return multiInputShadowRoot.querySelector("input").selectionStart;
-// 		});
+	it("home/end navigation", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
 
-// 		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at 0 index");
+		await firstToken.click();
+		await tokenizer.keys("End");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
 
-// 		await innerInput.keys("Home");
-// 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused on Home press, if the cursor is at 0 index");
-// 	});
+		await tokenizer.keys("Home");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
+	});
 
-// 	it("should select tokens with key modifiers (Shift + [Ctrl])", async () => {
-// 		const input = await browser.$("#basic-overflow");
-// 		const innerInput = await input.shadow$("input");
-// 		const firstToken = await browser.$("#basic-overflow ui5-token:last-child");
-// 		const secondToken = await browser.$("#basic-overflow ui5-token:nth-child(10)");
-// 		const thirdToken = await browser.$("#basic-overflow ui5-token:nth-child(9)");
-
-// 		await innerInput.click();
-// 		await innerInput.keys("ArrowLeft");
-// 		await browser.keys(["Shift", "ArrowLeft"]);
-
-// 		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
-// 		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
-// 		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
-
-// 		await browser.keys(["Control", "Shift", "ArrowLeft"]);
-
-// 		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
-// 		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
-// 		assert.strictEqual(await thirdToken.getProperty("selected"), true, "The third token should be selected");
-
-// 		await secondToken.click();
-
-// 		assert.strictEqual(await firstToken.getProperty("selected"), false, "The first token should NOT be selected");
-// 		assert.strictEqual(await secondToken.getProperty("selected"), false, "The second token should NOT be selected");
-// 		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
-// 	});
-
-// 	it("should move caret to start of input, when a value is present and home is pressed", async () => {
-// 		const input =  await browser.$("#two-tokens");
-// 		const innerInput = await input.shadow$("input");
-// 		const firstToken = await browser.$("#two-tokens ui5-token:first-child");
-// 		let caretPosition;
-
-// 		await browser.$("#two-tokens").scrollIntoView();
-
-// 		await innerInput.click();
-// 		await innerInput.keys("End");
-
-// 		caretPosition = await browser.execute(() => {
-// 			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
-// 			return multiInputShadowRoot.querySelector("input").selectionStart;
-// 		});
-
-// 		assert.strictEqual(caretPosition, 3, "The inner input's cursor is at the end");
+	it("should select tokens with [Shift] key modifier", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const thirdToken = await tokenizer.$("ui5-token:nth-child(3)");
 
-// 		await innerInput.keys("Home");
+		await firstToken.click();
+		await browser.keys(["Shift", "ArrowRight"]);
 
-// 		caretPosition = await browser.execute(() => {
-// 			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
-// 			return multiInputShadowRoot.querySelector("input").selectionStart;
-// 		});
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await secondToken.getProperty("focused"), true, "The second token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
 
-// 		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at the beginning");
-// 		assert.strictEqual(await firstToken.getProperty("focused"), false, "The first token is not focused, as text was present");
+		await browser.keys(["Shift", "ArrowLeft"]);
 
-// 		await innerInput.keys("Home");
-// 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
-// 	});
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The second token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should be selected");
 
-// 	it ("Clicking delete icon should delete token and place the focus on the previous one", async () => {
-// 		const input = await browser.$("#two-tokens");
-// 		const innerInput = await input.shadow$("input");
-// 		const secondToken = await browser.$("#two-tokens ui5-token#secondToken");
-// 		const deleteIcon = input.$$("ui5-token")[0].shadow$("ui5-icon");
-// 		let tokens;
+		await secondToken.click();
 
-// 		await input.setProperty("value", "");
-// 		await innerInput.click();
-// 		await innerInput.keys("ArrowLeft");
-// 		await innerInput.keys("Space");
+		assert.strictEqual(await firstToken.getProperty("selected"), false, "The first token should NOT be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), false, "The second token should NOT be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
+	});
 
-// 		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+	it ("Clicking delete icon should delete token and place the focus on the previous one", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+        const deleteIcon = await firstToken.shadow$(".ui5-token--icon");
 
-// 		await deleteIcon.click();
+		let tokens = await tokenizer.$$("ui5-token");
 
-// 		tokens = await input.$$("ui5-token");
+		assert.equal(tokens.length, 5, "should have five tokens");
 
-// 		assert.equal(tokens.length, 1, "should have one tokens");
-// 		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
-// 		assert.equal(await secondToken.getProperty("text"), "bb", "The selected token should not be deleted.");
-// 	});
+		await deleteIcon.click();
 
-// 	it ("Should focus the input when all tokens are deleted", async () => {
-// 		const input = await browser.$("#two-tokens");
-// 		const innerInput = await input.shadow$("input");
+		tokens = await tokenizer.$$("ui5-token");
 
-// 		await input.setProperty("value", "");
-// 		await innerInput.click();
-// 		await browser.keys("ArrowLeft");
-// 		await browser.keys(["Shift", "ArrowLeft"]);
-// 		await browser.keys("Backspace");
+		assert.equal(tokens.length, 4, "should have one tokens");
+		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
+		assert.equal(await secondToken.getProperty("text"), "Bulgaria", "The selected token should not be deleted.");
+	});
 
-// 		let tokens = await input.$$("ui5-token");
+	it("should delete token on backspace", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 
-// 		assert.equal(tokens.length, 0, "should have no tokens");
-// 		assert.equal(await input.getProperty("focused"), true, "The input is focused");
-// 	});
+		let tokens = await tokenizer.$$("ui5-token");
 
-// 	it("should delete token on backspace", async () => {
-// 		const input = await browser.$("#two-tokens");
-// 		const innerInput = await input.shadow$("input");
-// 		const firstToken = await browser.$("#two-tokens ui5-token#firstToken");
-// 		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
-// 		let tokens;
+        assert.equal(tokens.length, 5, "should have five tokens");
 
-// 		// Act
-// 		await input.setProperty("value", "");
-// 		await innerInput.click();
-// 		await browser.keys("Backspace");
-// 		tokens = await input.$$("ui5-token");
+		// Act
+		await firstToken.click();
+		await browser.keys("Backspace");
+		tokens = await tokenizer.$$("ui5-token");
 
-// 		// Assert
-// 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
-// 		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
-// 		assert.strictEqual(tokens.length, 2, "The tokenizer has two tokens");
+		// Assert
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused on Backspace");
+		assert.strictEqual(tokens.length, 4, "The tokenizer has two tokens");
 
-// 		// Act
-// 		await browser.keys("Backspace");
-// 		tokens = await input.$$("ui5-token");
+		// Act
+		await browser.keys(["Control", "A"]);
+		await browser.keys("Backspace");
+		tokens = await tokenizer.$$("ui5-token");
 
-// 		// Assert
-// 		assert.ok(await firstToken.getProperty("focused"), "The first token is focused on Backspace, as the second was deleted");
-// 		assert.notOk(await input.getProperty("focused"), "The input is not focused");
+		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
+	});
 
-// 		assert.strictEqual(tokens.length, 1, "The tokenizer has one token");
-// 	});
+	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
 
-// 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
-// 		await browser.url(`test/pages/MultiInput.html`);
-// 		const minput = await $("#basic-overflow");
-// 		const input = minput.shadow$("input");
+		await firstToken.click();
 
-// 		await minput.scrollIntoView();
-// 		await input.click();
-// 		await input.keys('ArrowLeft');
+		let scrollLeftFirstToken = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-// 		let scrollLeftFirstToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+		await tokenizer.keys('ArrowRight');
+		await tokenizer.keys('ArrowRight');
+		await tokenizer.keys('ArrowRight');
 
-// 		await input.keys('ArrowLeft');
-// 		await input.keys('ArrowLeft');
-// 		await input.keys('ArrowLeft');
+		let scrollLeftForthToken = await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-// 		let scrollLeftForthToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+		assert.notEqual(scrollLeftFirstToken, scrollLeftForthToken, "tokenizer is scrolled when navigating through the tokens");
 
-// 		assert.notEqual(scrollLeftFirstToken, scrollLeftForthToken, "tokenizer is scrolled when navigating through the tokens");
+		await tokenizer.keys('ArrowLeft');
+		await tokenizer.keys('ArrowLeft');
+		await tokenizer.keys('ArrowLeft');
 
-// 		await input.keys('ArrowRight');
-// 		await input.keys('ArrowRight');
-// 		await input.keys('ArrowRight');
+		let newScrollLeft =  await browser.execute(() => document.querySelector("#nmore-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-// 		let newScrollLeft =  await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
+	})
 
-// 		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
-// 	})
+	it("should open popover on keyboard combination ctrl + i", async () => {
+		const tokenizer = await $("#long-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
 
-// 	it("should change input's value when set in selection change event", async () => {
-// 		const input = $("#suggestion-token");
-// 		const innerInput = input.shadow$("input");
+		const rpoClassName = await getTokenizerPopoverId("long-tokenizer");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
-// 		await input.scrollIntoView();
-// 		await innerInput.click();
-// 		await innerInput.keys('a');
-// 		await innerInput.keys("Enter");
+		await firstToken.click();
+		await browser.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
 
-// 		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
-// 		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
-
-// 		await innerInput.keys("ArrowLeft");
-
-// 		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
-
-// 		await innerInput.keys("ArrowRight");
-
-// 		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
-// 	});
-
-// 	it("should text field always when focus in" , async () => {
-// 		const mi = $("#one-token");
-// 		const inner = mi.shadow$("input");
-
-// 		await mi.scrollIntoView();
-// 		await inner.click();
-// 		await inner.keys("ArrowLeft");
-
-// 		await browser.keys(["Shift", "Tab"]);
-// 		await browser.keys("Tab");
-
-// 		assert.ok(await mi.getProperty("focused"), "input field should be focused");
-// 	});
-
-// 	// it("should trigger change event on enter", async () => {
-// 	// 	const mi = await $("#token-unique");
-// 	// 	const inner = await mi.shadow$("input");
-
-// 	// 	await mi.scrollIntoView();
-
-// 	// 	// populate new token
-// 	// 	await inner.click();
-// 	// 	await inner.keys("a");
-// 	// 	await inner.keys("Enter");
-
-// 	// 	await inner.click();
-// 	// 	await inner.keys("a");
-// 	// 	await inner.keys("Enter");
-
-// 	// 	assert.strictEqual(await mi.getProperty("valueState"), "Error", "Value state is Error");
-
-// 	// 	await browser.pause(2500);
-// 	// 	assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
-// 	// });
-
-// 	// it("should open popover on keyboard combination ctrl + i", async () => {
-// 	// 	const mi = await $("#truncated-token");
-// 	// 	const rpoClassName = await getTokenizerPopoverId("truncated-token");
-// 	// 	const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-// 	// 	await mi.click();
-// 	// 	await mi.keys(["Control", "i"]);
-// 	// 	assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
-
-// 	// 	await mi.click();
-// 	// 	await mi.keys("ArrowLeft");
-// 	// 	await mi.keys(["Control", "i"]);
-// 	// 	assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
-// 	// });
-
-// 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
-// 		const mi = await browser.$("#no-tokens");
-// 		const rpoClassName = await getTokenizerPopoverId("no-tokens");
-// 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-// 		await mi.click();
-// 		await mi.keys(["Control", "i"]);
-// 		assert.notOk(await rpo.getProperty("opened"), "n-more popover shouldn't be opened since no tokens");
-// 	});
-
-// 	it("should open popover with all tokens on keyboard combination ctrl + i", async () => {
-// 		const mi = await browser.$("#two-tokens");
-// 		const rpoClassName = await getTokenizerPopoverId("two-tokens");
-// 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-// 		await mi.click();
-// 		await mi.keys(["Control", "i"]);
-// 		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
-// 		const listItems = await rpo.$("ui5-list").$$("ui5-li");
-// 		assert.strictEqual(listItems.length, 2, "All items are shown");
-// 	});
-// });
+		await browser.keys(["Control", "i"]);
+		assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+	});
+});
