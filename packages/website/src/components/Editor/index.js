@@ -128,7 +128,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   }
 
   const reset = () => {
-    localStorage.clear("project");
+    localStorage.removeItem("project");
     location.hash = "";
     location.reload();
   }
