@@ -172,5 +172,3 @@ setTheme("mytheme");
 
 Everything said so far is implemented in the following demo project - [ui5-webcomponents-custom-theme](https://github.com/ilhan007/ui5-webcomponents-custom-theme/).
 The project implements the script for producing the custom CSS vars and provides a simple test page to demonstrate the custom theme usage.
-
-Next: [Custom Fonts](./04-fonts.md)

@@ -48,13 +48,13 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, src, srcContrast, description}: FeatureItem) {
+function Feature({ title, src, srcContrast, description }: FeatureItem) {
   const { colorMode } = useColorMode();
 
   return (
     <div className="feature">
-      <img className="feature__image" src={colorMode === "dark" ? srcContrast : src} />
-      <h3 className="feature__title">{title}</h3>
+      <img className="feature__image" src={colorMode === "dark" ? srcContrast : src} alt={title} />
+      <h2 className="feature__title">{title}</h2>
       <p className="feature__desc">{description}</p>
     </div>
   );

@@ -10,32 +10,27 @@
 	opacity: .7;
 }
 
-:host(:is([interactive]):not([disabled])) {
+:host([interactive]:not([disabled])) {
 	cursor: pointer;
 }
 
-:host(:is([interactive][pressed]):not([hidden])) {
-	background: var(--sapButton_Active_Background);
+:host([interactive]:not([hidden]):active) {
+	background-color: var(--sapButton_Active_Background);
 	border-color: var(--sapButton_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 }
 
-:host(:is([interactive][pressed]):not([hidden]):hover) {
-	background: var(--sapButton_Selected_Hover_Background);
-	border-color: var(--sapButton_Selected_Hover_BorderColor);
-	color: var(--sapButton_Selected_TextColor);
-}
-
-:host(:is([interactive]):not([hidden]):not([pressed]):not([disabled]):hover) {
+:host([interactive]:not([hidden]):not([disabled]):not(:active):hover) {
 	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
 }
 
-:host(:is([interactive][focused]):not([hidden]):not([pressed])) {
+:host([interactive][desktop]:not([hidden])) .ui5-avatar-root:focus-within,
+:host([interactive]:not([hidden])) .ui5-avatar-root:focus-visible {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
 }
 
-:host(:is([disabled])) {
+:host([disabled]) {
 	opacity: var(--sapContent_DisabledOpacity);
 }
 
@@ -55,6 +50,7 @@
 	outline: none;
 	height: 100%;
 	width: 100%;
+	border-radius: inherit;
 }
 
 /* Sizes */
@@ -135,8 +131,8 @@
 
 ::slotted(*) {
 	border-radius: 50%;
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 	pointer-events: none;
 }
 

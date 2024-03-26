@@ -242,5 +242,3 @@ Consult the documentation for the available public methods for each UI5 Web Comp
 As you can see from this article, UI5 Web Components, being HTML elements in the first place,
 comply with the same rules. There are some novelties that come with the Web Components standard,
 such as `slot`, but otherwise everything else is what you already know and use from HTML.
-
-Next: [Using Icons](./04-using-icons.md)
