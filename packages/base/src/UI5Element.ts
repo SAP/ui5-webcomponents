@@ -747,24 +747,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		// Find the index of UI5_DIVIDER comment
-		const dividerIndex = [...this.shadowRoot.childNodes].findIndex(child => child.nodeType === Node.COMMENT_NODE && child.textContent === TEMPLATE_DIVIDER_TEXT);
-
-		let children;
-
-		if (dividerIndex !== -1) {
-			// Work with childNodes array to get correct child nodes before the comment.
-			// Filter child nodes before comment to guarantee that we're working only with elements.
-			children = [...this.shadowRoot.childNodes].slice(0, dividerIndex).filter(child => (child as Element).localName && !["link", "style"].includes((child as Element).localName));
-		} else {
-			children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
-		}
-
-		if (children.length !== 1) {
-			console.warn(`The shadow DOM for ${(this.constructor as typeof UI5Element).getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
-		}
-
-		return children[0] as HTMLElement;
+		return this.shadowRoot.children[0] as HTMLElement;
 	}
 
 	/**

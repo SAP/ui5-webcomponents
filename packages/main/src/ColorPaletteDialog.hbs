@@ -1,6 +1,6 @@
 {{#if _showMoreColors}}
 <ui5-dialog
-    header-text="{{moreColorsFeature.colorPaletteDialogTitle}}"
+    header-text="{{_moreColorsFeatureDialogTitle}}"
 >
     <div class="ui5-cp-dialog-content">
         <ui5-color-picker></ui5-color-picker>
@@ -10,11 +10,11 @@
         <ui5-button
             design="Emphasized"
             @click="{{_chooseCustomColor}}"
-        >{{moreColorsFeature.colorPaletteDialogOKButton}}</ui5-button>
+        >{{_moreColorsFeatureDialogOKButton}}</ui5-button>
         <ui5-button
             design="Transparent"
             @click="{{_closeDialog}}"
-        >{{moreColorsFeature.colorPaletteCancelButton}}</ui5-button>
+        >{{_moreColorsFeatureDialogCancelButton}}</ui5-button>
     </div>
 </ui5-dialog>
 {{/if}}

@@ -20,7 +20,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
 import type Dialog from "./Dialog.js";
@@ -75,9 +74,7 @@ type ColorPaletteItemClickEventDetail = {
 	tag: "ui5-color-palette",
 	renderer: litRender,
 	template: ColorPaletteTemplate,
-	staticAreaTemplate: ColorPaletteDialogTemplate,
-	styles: ColorPaletteCss,
-	staticAreaStyles: ColorPaletteStaticAreaCss,
+	styles: [ColorPaletteCss, ColorPaletteStaticAreaCss],
 	get dependencies() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
@@ -451,6 +448,18 @@ class ColorPalette extends UI5Element {
 
 	get _showMoreColors() {
 		return this.showMoreColors && this.moreColorsFeature;
+	}
+
+	get _moreColorsFeatureDialogTitle() {
+		return this.moreColorsFeature?.colorPaletteDialogTitle;
+	}
+
+	get _moreColorsFeatureDialogOKButton() {
+		return this.moreColorsFeature?.colorPaletteDialogOKButton;
+	}
+
+	get _moreColorsFeatureDialogCancelButton() {
+		return this.moreColorsFeature?.colorPaletteCancelButton;
 	}
 
 	get rowSize() {

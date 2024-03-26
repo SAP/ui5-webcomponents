@@ -38,7 +38,6 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
-import BreadcrumbsPopoverTemplate from "./generated/templates/BreadcrumbsPopoverTemplate.lit.js";
 
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
@@ -86,9 +85,7 @@ type BreadcrumbsItemClickEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: BreadcrumbsTemplate,
-	staticAreaTemplate: BreadcrumbsPopoverTemplate,
-	styles: breadcrumbsCss,
-	staticAreaStyles: breadcrumbsPopoverCss,
+	styles: [breadcrumbsCss, breadcrumbsPopoverCss],
 	dependencies: [
 		BreadcrumbsItem,
 		Link,

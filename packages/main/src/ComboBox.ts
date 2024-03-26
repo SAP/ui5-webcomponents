@@ -57,7 +57,6 @@ import {
 
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
@@ -157,15 +156,14 @@ type ComboBoxSelectionChangeEventDetail = {
 	tag: "ui5-combobox",
 	languageAware: true,
 	renderer: litRender,
-	styles: ComboBoxCss,
-	staticAreaStyles: [
+	styles: [
+		ComboBoxCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		ComboBoxPopoverCss,
 		SuggestionsCss,
 	],
 	template: ComboBoxTemplate,
-	staticAreaTemplate: ComboBoxPopoverTemplate,
 	dependencies: [
 		ComboBoxItem,
 		Icon,
@@ -1243,6 +1241,7 @@ class ComboBox extends UI5Element {
 				"min-width": `${this.offsetWidth || 0}px`,
 				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
+			popoverValueStateMessage: {},
 		};
 	}
 
