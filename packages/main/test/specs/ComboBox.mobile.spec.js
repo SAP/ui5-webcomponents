@@ -101,7 +101,7 @@ describe("Eventing", () => {
 		const inputCountText = await browser.$("#input-count").getText();
 		assert.strictEqual(inputCountText, "3", "Change was fired once");
 
-		await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn").click();
+		await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn").click();
 	});
 
 	it("Should not fire change event when pressing the picker's Close button", async () => {

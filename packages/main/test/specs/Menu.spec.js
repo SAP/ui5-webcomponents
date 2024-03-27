@@ -7,9 +7,10 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
-
-		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
+		const menu = await browser.$("#menu");
+		const popover = await menu.shadow$("ui5-responsive-popover");
+		const _id = await menu.getProperty("_id");
+		assert.strictEqual(await popover.getAttribute("id"), `${_id}-menu-rp`, "There is popover for the menu created in the static area");
 	});
 
 	it("Menu opens after setting of opener and open", async () => {
@@ -20,9 +21,11 @@ describe("Menu interaction", () => {
 		openerButton.click();
 		openButton.click();
 
-		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
+		const menu = await browser.$("#menu");
+		const popover = await menu.shadow$("ui5-responsive-popover");
+		const _id = await menu.getProperty("_id");
 
-		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
+		assert.strictEqual(await popover.getAttribute("id"), `${_id}-menu-rp`, "There is popover for the menu created in the static area");
 	});
 
 	it("Top level menu items appearance", async () => {
@@ -52,10 +55,10 @@ describe("Menu interaction", () => {
 		openButton.click();
 
 
-		const staticAreaItem = await browser.$("#menu");
-		const popover = staticAreaItem.shadow$("ui5-responsive-popover");
+		const menu = await browser.$("#menu");
+		const popover = await menu.shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
-		const submenuList = await staticAreaItem.shadow$(".ui5-menu-submenus");
+		const submenuList = await popover.shadow$(".ui5-menu-submenus");
 
 		listItems[3].click(); // open sub-menu
 

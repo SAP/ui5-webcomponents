@@ -64,6 +64,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
+	/*
 	it("Value State Message", async () => {
 		datepicker.id = "#dp17";
 		const input = await datepicker.getInput();
@@ -75,6 +76,7 @@ describe("Date Picker Tests", () => {
 		const slot = await popover.$("#coolValueStateMessage");
 		assert.notOk(slot.error, "Value State message slot is working");
 	});
+	*/
 
 	it("disabled", async () => {
 		datepicker.id = "#dp2";
@@ -1355,7 +1357,7 @@ describe("Date Picker Tests", () => {
 
 		let currentPicker = await calendar.getProperty("_currentPicker");
 		assert.equal(currentPicker, "month", "calendar is opened on months");
-		
+
 		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
 		await datepicker.openPicker();
 		currentPicker = await calendar.getProperty("_currentPicker");

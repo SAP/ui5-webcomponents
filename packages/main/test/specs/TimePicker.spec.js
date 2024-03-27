@@ -77,8 +77,7 @@ describe("TimePicker general interaction", () => {
 		await timepicker.click();
 
 		const inputId = await timepicker.shadow$("ui5-input").getProperty("_id");
-		const inputStaticAreaItem = await browser.$(`.${inputId}`);
-		const slot = await inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
+		const slot = await timepicker.shadow$("ui5-popover").$("#customValueStateMessage");
 
 		assert.notOk(slot.error, "Value State message slot is working");
 	});

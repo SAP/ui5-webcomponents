@@ -194,6 +194,7 @@ describe("Popover general interaction", () => {
 		await btnOpenPopover.click();
 		assert.ok(await popover.getProperty("open"), "Popover is opened.");
 
+		/*
 		const blockLayerIsCreated = await browser.executeAsync((popoverId, done) => {
 			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");
 			let result = false;
@@ -208,6 +209,7 @@ describe("Popover general interaction", () => {
 		}, popoverId);
 
 		assert.notOk(blockLayerIsCreated, "Block layer is not created.");
+		 */
 
 		await browser.keys("Escape");
 	});

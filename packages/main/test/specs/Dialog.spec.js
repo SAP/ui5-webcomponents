@@ -774,7 +774,7 @@ describe("Block layers", () => {
 			const dialog = document.getElementById("dialogOverDialog1");
 
 
-			done(!dialog.querySelector(".ui5-block-layer").matches(":popover-open"));
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");
@@ -783,7 +783,7 @@ describe("Block layers", () => {
 			const dialog = document.getElementById("dialogOverDialog2");
 
 
-			done(!dialog.querySelector(".ui5-block-layer").matches(":popover-open"));
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.notOk(isBlockLayerHidden, "the block layer is visible");
@@ -794,7 +794,7 @@ describe("Block layers", () => {
 			const dialog = document.getElementById("dialogOverDialog1");
 
 
-			done(!dialog.querySelector(".ui5-block-layer").matches(":popover-open"));
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.notOk(isBlockLayerHidden, "the block layer is visible");
@@ -805,7 +805,7 @@ describe("Block layers", () => {
 			const dialog = document.getElementById("dialogOverDialog1");
 
 
-			done(!dialog.querySelector(".ui5-block-layer").matches(":popover-open"));
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");

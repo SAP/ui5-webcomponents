@@ -699,7 +699,8 @@ describe("Input general interaction", () => {
 
 		const popoverHeader = await inputError.shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getText();
-		const ariaHiddenText = await inputError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getText();
+		const _id = await inputError.getProperty("_id");
+		const ariaHiddenText = await inputError.shadow$(`#${_id}-valueStateDesc`).getText();
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");

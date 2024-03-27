@@ -261,7 +261,6 @@ exports.config = {
 			"getHTML",
 			"getProperty",
 			"getSize",
-			"getStaticAreaItemClassName", // custom
 			"getText",
 			"getValue",
 			"hasClass", // custom
@@ -273,7 +272,7 @@ exports.config = {
 			"isFocusedDeep", // custom
 			"isFocusedDeepElement", // custom
 			"shadow$",
-			"shadow$$",
+			"shadow$$"
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
