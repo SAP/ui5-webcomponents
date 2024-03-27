@@ -1405,13 +1405,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _getRespPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.allItemsPopover = staticAreaItem!.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`)!;
+		await renderFinished();
+		this.allItemsPopover = this.shadowRoot!.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`)!;
 	}
 
 	async _getList(): Promise<List> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.list = staticAreaItem!.querySelector(".ui5-multi-combobox-all-items-list")!;
+		await renderFinished();
+		this.list = this.shadowRoot!.querySelector(".ui5-multi-combobox-all-items-list")!;
 		return this.list;
 	}
 
@@ -1655,13 +1655,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return (staticAreaItem!.querySelector<Popover>("[ui5-popover]"))!;
+		await renderFinished();
+		return (this.shadowRoot!.querySelector<Popover>("[ui5-popover]"))!;
 	}
 
 	async _getResponsivePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	async _setValueStateHeader() {

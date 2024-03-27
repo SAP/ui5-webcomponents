@@ -15,13 +15,8 @@ class DatePickerTestPage {
 		this._url = url;
 	}
 
-	async getStaticAreaItemClassName() {
-		return browser.getStaticAreaItemClassName(this._sut);
-	}
-
 	async getPopover() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		return browser.$(this._sut).shadow$("ui5-responsive-popover");
 	}
 
 	async getPopoverContent() {
@@ -57,57 +52,57 @@ class DatePickerTestPage {
 	}
 
 	async getBtnPrev() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-prev]`);
+
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-prev]`);
 	}
 
 	async getBtnNext() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-next]`);
+
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-next]`);
 	}
 
 	async getBtnYear() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-year]`);
+
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-year]`);
 	}
 
 	async getBtnMonth() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-month]`);
+
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-month]`);
 	}
 
 	async getDayPicker() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 	}
 
 	async getPickerDate(timestamp) {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
+
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}
 
 	async getPickerMonth(timestamp) {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
+
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}
 
 	async getPickerYear(timestamp) {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
+
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}
 
 	async getFirstDisplayedDate() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div.ui5-dp-item`);
+
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div.ui5-dp-item`);
 	}
 
 	async getFirstDisplayedYear() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
-		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div.ui5-yp-item`);
+
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div.ui5-yp-item`);
 	}
 
 	async getDisplayedYear(index) {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
+
 		const items = await browser
 			.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
 			.$$(".ui5-yp-item");
@@ -116,7 +111,7 @@ class DatePickerTestPage {
 	}
 
 	async getDisplayedMonth(index) {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
+
 		const items = await browser
 			.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
 			.$$(".ui5-mp-item");
@@ -125,7 +120,7 @@ class DatePickerTestPage {
 	}
 
 	async getDisplayedDay(index) {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
+
 		const items = await browser
 			.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$(".ui5-dp-item");
 
@@ -133,7 +128,7 @@ class DatePickerTestPage {
 	}
 
 	async getDayPickerContent() {
-		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
+
 		return browser
 			.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$$(".ui5-dp-content > div");
 	}

@@ -1,14 +1,5 @@
 import { assert } from "chai";
 
-const getTokenizerPopoverId = async (mcbId) => {
-	return await browser.executeAsync(async (mcbId, done) => {
-		const input = document.querySelector(`[id="${mcbId}"]`);
-		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
-
-		done(staticAreaItem.host.classList[0]);
-	}, mcbId);
-}
-
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
@@ -17,8 +8,7 @@ describe("MultiComboBox general interaction", () => {
 	describe("toggling", () => {
 		it("opens/closes", async () => {
 			const icon = await browser.$("#multi1").shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
 			await icon.click();
 			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
@@ -90,10 +80,9 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			await browser.setWindowSize(400, 1250);
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
 			const mcb = await browser.$("#multi1");
-			const showMore = mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
-			const allPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const showMore = await mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			const allPopover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
 			await mcb.scrollIntoView();
 			await showMore.click();
@@ -123,9 +112,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens all items popover, selects and deselects the first item", async () => {
-			const icon = await browser.$("#mcb").shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const mcb = await browser.$("#mcb");
+			const icon = await mcb.shadow$("[input-icon]");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$("ui5-list > ui5-li");
 			const firstItemCheckbox = await firstItem.shadow$("ui5-checkbox");
 			const eventInput = await browser.$("#events-input");
@@ -156,9 +145,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("When popover is opened via icon and item is selected/deselected, focus should return to the MultiComboBox", async () => {
+			const mcb = await browser.$("#mcb-success");
 			const icon = await browser.$("#mcb-success").shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-success")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
 
 			await icon.click();
@@ -171,9 +160,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens all items popover when start typing and filters items", async () => {
+			const mcb = await browser.$("#mcb");
 			const input = await browser.$("#mcb").shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
 			await input.click();
 			await input.keys("c");
@@ -251,9 +240,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("When item is clicked, the popover should be closed and the value in the input should be removed", async () => {
+			const mcb = await browser.$("#another-mcb");
 			const input = await browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#another-mcb")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
 
 			await input.click();
@@ -270,9 +259,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("When item's checkbox is clicked, the popover should not be closed and the value in the input should be kept", async () => {
+			const mcb = await browser.$("#another-mcb");
 			const input = await browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#another-mcb")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItemCheckbox = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
 
 			await input.click();
@@ -312,8 +301,7 @@ describe("MultiComboBox general interaction", () => {
 				timeoutMsg: "Popover is open"
 			});
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
-			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const list = await popover.$(".ui5-multi-combobox-all-items-list");
 
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
@@ -419,8 +407,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await nMoreText.click();
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#more-mcb")
-			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const list = await popover.$(".ui5-multi-combobox-all-items-list");
 			const lastListItem = await list.$("ui5-li:last-child");
 
@@ -468,7 +455,6 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb");
 			const sExpected = "Cosy";
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
 
 			await mcb.click();
 			await mcb.keys("c");
@@ -493,9 +479,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$("[input-icon]");
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await icon.click();
 			await mcb.keys("c");
@@ -539,8 +523,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = $("#mcb-prevent");
 			const input = mcb.shadow$("#ui5-multi-combobox-input");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-prevent")
-			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
 			const mcbTokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
@@ -647,12 +630,11 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await spanRef.getText(), "Selected items count: 5");
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
-			const popover = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await cb.shadow$("ui5-responsive-popover");
 
 			const tokenizerNMore = await cb.shadow$("[ui5-tokenizer]");
 			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
-			
+
 			await nMoreLabel.click();
 
 			assert.ok(await popover.$(".ui5-mcb-select-all-checkbox").getProperty("checked"), "Select All CheckBox should be selected");
@@ -762,9 +744,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await icon.click();
 			await input.keys("ArrowDown");
@@ -803,9 +783,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-with-placeholder");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-with-placeholder");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await icon.click();
 			await mcb.keys("ArrowDown");
@@ -1042,10 +1020,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
-
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await input.click();
 			await mcb.keys("F4");
@@ -1270,7 +1245,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$("[input-icon]");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const staticArea = await browser.execute(staticAreaItemClassName => document.querySelector(`.${staticAreaItemClassName}`), staticAreaItemClassName);
 
 			await icon.click();
@@ -1468,7 +1443,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await mcb.click();
 			await mcb.keys("F4");
@@ -1492,7 +1467,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-items");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-items");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[2].click();
@@ -1508,7 +1483,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#multi-acv");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi-acv");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await mcb.click();
 			await mcb.keys(["Alt", "ArrowDown"]);
@@ -1523,7 +1498,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await input.click();
 			await input.keys(["a", "b"]);
@@ -1540,7 +1515,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await input.click();
 			await input.keys("ArrowDown");
@@ -1572,8 +1547,8 @@ describe("MultiComboBox general interaction", () => {
 
 		it("should open/close popover on keyboard combination ctrl + i", async () => {
 			const mcb = await $("#truncated-token");
-			const rpoClassName = await getTokenizerPopoverId("truncated-token");
-			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
@@ -1594,8 +1569,8 @@ describe("MultiComboBox general interaction", () => {
 
 		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
 			const mcb = await $("#mcb-no-typeahead");
-			const rpoClassName = await getTokenizerPopoverId("mcb-no-typeahead");
-			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
@@ -1639,7 +1614,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-two-column-layout");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-two-column-layout");
 			const icon = await mcb.shadow$("[input-icon]");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
 			await icon.click();
@@ -1686,7 +1661,7 @@ describe("MultiComboBox general interaction", () => {
 		it ("Should not open value state message when component is in readonly state", async () => {
 			const mcb = await browser.$("#readonly-value-state-mcb");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-mcb");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+			const popover = await mcb.shadow$("ui5-popover");
 
 			await mcb.click();
 			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
@@ -1714,24 +1689,24 @@ describe("MultiComboBox general interaction", () => {
 
 		it ("Should check clear icon availability", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			const cb = await $("#clear-icon-cb");
 			const inner = cb.shadow$("input");
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
-	
+
 			assert.notOk(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to false when mcb has no value");
 
 			await inner.click();
 			await inner.keys("c");
-	
+
 			assert.ok(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to true upon typing");
 		});
-	
+
 		it ("Should check clear icon events", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			const cb = await $("#clear-icon-cb");
-			
+
 			await cb.shadow$("input").click();
 			await cb.shadow$("input").keys("c");
 
@@ -1739,7 +1714,7 @@ describe("MultiComboBox general interaction", () => {
 
 			// focus out the combo
 			await clearIcon.click();
-	
+
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
@@ -1753,8 +1728,8 @@ describe("MultiComboBox general interaction", () => {
 		it("should truncate token when single token is in the multicombobox and open popover on click", async () => {
 			const mcb = await $("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
-			const rpoClassName = await getTokenizerPopoverId("truncated-token");
-			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 
@@ -1775,8 +1750,8 @@ describe("MultiComboBox general interaction", () => {
 		it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
 			const mcb = await $("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
-			const rpoClassName = await getTokenizerPopoverId("truncated-token");
-			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 
@@ -1791,8 +1766,8 @@ describe("MultiComboBox general interaction", () => {
 		it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
 			const mcb = await $("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
-			const rpoClassName = await getTokenizerPopoverId("truncated-token");
-			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 			const inner = await mcb.shadow$("input");
 
 			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
@@ -1892,8 +1867,7 @@ describe("MultiComboBox general interaction", () => {
 			const mCbSuccess = await browser.$("#mcb-success");
 			const mCbError = await browser.$("#mcb-error");
 
-			let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-warning");
-			let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+			let popover = await mCbWarning.shadow$("ui5-popover");
 
 			await mCbWarning.click();
 
@@ -1906,8 +1880,7 @@ describe("MultiComboBox general interaction", () => {
 			await mCbWarning.keys("Escape");
 			await mCbError.click();
 
-			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
-			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+			popover = await mCbError.shadow$("ui5-popover");
 
 			ariaHiddenText = await mCbError.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			valueStateText = await popover.$("div").getHTML(false);
@@ -1918,7 +1891,6 @@ describe("MultiComboBox general interaction", () => {
 			await mCbError.keys("Escape");
 			await mCbSuccess.click();
 
-			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-success");
 			ariaHiddenText = await mCbSuccess.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -1931,7 +1903,7 @@ describe("MultiComboBox general interaction", () => {
 			await mCbInformation.click();
 			await mCbInformation.keys("a");
 
-			const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
+			const popoverHeader = await mcb.shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 			const valueStateText = await popoverHeader.$("div").getHTML(false);
 			const ariaHiddenText = await mCbInformation.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
@@ -1948,7 +1920,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$("[input-icon]");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			let popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 			let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -1959,7 +1931,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.keys("B");
 
-			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			popover = await mcb.shadow$("ui5-responsive-popover");
 			groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 			listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -1979,7 +1951,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$("[input-icon]");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItem;
 
 			await arrow.click();
@@ -1997,7 +1969,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$("[input-icon]");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItem;
 
 			await arrow.click();

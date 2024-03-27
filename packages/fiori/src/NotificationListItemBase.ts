@@ -1,3 +1,4 @@
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -219,8 +220,8 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	async getOverflowPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
 	}
 
 	static async onDefine() {

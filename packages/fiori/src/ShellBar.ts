@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -9,7 +10,6 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
@@ -568,7 +568,7 @@ class ShellBar extends UI5Element {
 
 			if (this.hasMenuItems) {
 				const menuPopover = await this._getMenuPopover();
-				menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
 			}
 		};
 
@@ -793,7 +793,7 @@ class ShellBar extends UI5Element {
 	async _toggleActionPopover() {
 		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
 		const overflowPopover = await this._getOverflowPopover();
-		overflowPopover!.showAt(overflowButton, true);
+		overflowPopover.showAt(overflowButton, true);
 	}
 
 	onEnterDOM() {
@@ -1103,19 +1103,19 @@ class ShellBar extends UI5Element {
 	}
 
 	async _getResponsivePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.overflowPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
-		this.menuPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
+		await renderFinished();
+		this.overflowPopover = this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
+		this.menuPopover = this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-menu-popover");
 	}
 
 	async _getOverflowPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-overflow-popover")!;
 	}
 
 	async _getMenuPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-menu-popover")!;
 	}
 
 	isIconHidden(name: string) {

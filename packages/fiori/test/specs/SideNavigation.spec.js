@@ -1,22 +1,19 @@
 import { assert } from "chai";
 
 async function getTreeItemsInPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const items = await browser.$$(`>>>.${staticAreaItemClassName} [ui5-side-navigation-item], .${staticAreaItemClassName} [ui5-side-navigation-sub-item]`);
+	const items = await browser.$$(`>>>#sn1 [ui5-side-navigation-item], #sn1 [ui5-side-navigation-sub-item]`);
 
 	return items;
 }
 
 async function getRenderedTreeItemsInPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const items = await browser.$$(`>>>.${staticAreaItemClassName} .ui5-sn-item`);
+	const items = await browser.$$(`>>>#sn1 .ui5-sn-item`);
 
 	return items;
 }
 
 async function getRootItemInPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const rootItem = await browser.$(`>>>.${staticAreaItemClassName} ui5-responsive-popover .ui5-sn-root`);
+	const rootItem = await browser.$(`>>>#sn1 ui5-responsive-popover .ui5-sn-root`);
 
 	return rootItem;
 }

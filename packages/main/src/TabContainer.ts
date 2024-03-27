@@ -1360,8 +1360,8 @@ class TabContainer extends UI5Element {
 	}
 
 	async _respPopover() {
-		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-		return staticAreaItemDomRef!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
 	_closePopover() {

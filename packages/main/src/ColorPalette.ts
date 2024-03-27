@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -522,8 +523,8 @@ class ColorPalette extends UI5Element {
 	}
 
 	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
 	async getColorPicker() {

@@ -6,8 +6,8 @@ describe("Menu interaction", () => {
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 
 		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
 	});
@@ -19,8 +19,8 @@ describe("Menu interaction", () => {
 
 		openerButton.click();
 		openButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 
 		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
 	});
@@ -32,8 +32,8 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 
 		assert.strictEqual(await menuItems.length, 7, "There are proper count of menu items in the top level menu");
@@ -51,8 +51,8 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
+
+		const staticAreaItem = await browser.$("#menu");
 		const popover = staticAreaItem.shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 		const submenuList = await staticAreaItem.shadow$(".ui5-menu-submenus");
@@ -83,8 +83,8 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 		const selectionInput = await browser.$("#selectionInput");
 
@@ -99,8 +99,8 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Space");
@@ -114,8 +114,8 @@ describe("Menu interaction", () => {
 
 		openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Enter");
@@ -208,8 +208,8 @@ describe("Menu Accessibility", () => {
 
 		openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const list = await popover.$("ui5-list");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 

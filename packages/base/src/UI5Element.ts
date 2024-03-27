@@ -16,7 +16,6 @@ import {
 	renderDeferred,
 	renderImmediately,
 	cancelRender,
-	renderFinished,
 } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
@@ -896,14 +895,6 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static _needsShadowDOM() {
 		return !!this.template || Object.prototype.hasOwnProperty.call(this.prototype, "render");
-	}
-
-	/**
-	 * @public
-	 */
-	async getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
-		await renderFinished();
-		return Promise.resolve(this.shadowRoot);
 	}
 
 	/**

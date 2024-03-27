@@ -347,8 +347,8 @@ class Toolbar extends UI5Element {
 	}
 
 	async getOverflowPopover(): Promise<Popover | null> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-overflow-popover");
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
 	}
 
 	/**

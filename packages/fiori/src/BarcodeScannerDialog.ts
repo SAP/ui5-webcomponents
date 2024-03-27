@@ -1,4 +1,5 @@
 import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -205,13 +206,13 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
 	async _getVideoElement() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
 	async _showDialog() {

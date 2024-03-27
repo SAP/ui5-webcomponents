@@ -1,14 +1,5 @@
 import { assert } from "chai";
 
-const getTokenizerPopoverId = async (inputId) => {
-	return await browser.executeAsync(async (inputId, done) => {
-		const input = document.querySelector(`[id="${inputId}"]`);
-		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
-
-		done(staticAreaItem.host.classList[0]);
-	}, inputId);
-}
-
 describe("MultiInput general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
@@ -16,13 +7,13 @@ describe("MultiInput general interaction", () => {
 	});
 
 	it ("n-more picker dialog is properly rendered", async () => {
+		const mi = await browser.$("#multiInput-warning");
 		const tokenizer = await browser.$("#multiInput-warning").shadow$("ui5-tokenizer");
 		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
 
 		await nMoreLabel.click();
 
-		const rpoClassName = await getTokenizerPopoverId("multiInput-warning");
-		const nMoreDialog = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const nMoreDialog = await mi.shadow$("ui5-responsive-popover");
 
 		assert.ok(await nMoreDialog.getProperty("opened"), "More Popover should be open");
 		assert.ok(await nMoreDialog.$(".ui5-valuestatemessage--warning").isDisplayed(), "More Popover value state is shown");
@@ -38,13 +29,13 @@ describe("Deleting tokens", () => {
 	});
 
 	it ("Should fire the ui5-token-delete event when the 'X' is pressed in the n-more picker", async () => {
+		const mi = await browser.$("#mi-event");
 		const tokenizer = await browser.$("#mi-event").shadow$("ui5-tokenizer");
 		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
 
 		await nMoreLabel.click();
 
-		const rpoClassName = await getTokenizerPopoverId("mi-event");
-		const nMoreDialog =  await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const nMoreDialog =  await mi.shadow$("ui5-responsive-popover");
 		const listItemDeleteButton = await nMoreDialog.$$("ui5-li")[0].shadow$('.ui5-li-deletebtn ui5-button');
 
 		await listItemDeleteButton.click();

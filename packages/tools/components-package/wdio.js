@@ -241,15 +241,6 @@ exports.config = {
 			}, this, selector);
 		}, true);
 
-		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
-			return browser.executeAsync(async (selector, done) => {
-				const component = await document.querySelector(selector);
-				const newClass = `${selector.replace(/[.#]/g, "").replace(/\s+/g, "-")}-test-class`;
-				component.classList.add(newClass)
-				done(newClass);
-			}, selector);
-		}, false);
-
 		await browser.addLocatorStrategy('activeElement', (selector) => {
 			return document.querySelector(selector).shadowRoot.activeElement;
 		});
