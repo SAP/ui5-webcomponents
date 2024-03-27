@@ -59,7 +59,6 @@ import type { IButton } from "./Button.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
-import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -169,11 +168,14 @@ interface TabContainerTabInOverflow extends CustomListItem {
 	tag: "ui5-tabcontainer",
 	languageAware: true,
 	fastNavigation: true,
-	styles: [tabStyles, tabContainerCss],
-	staticAreaStyles: [ResponsivePopoverCommonCss, staticAreaTabStyles],
+	styles: [
+		tabStyles,
+		tabContainerCss,
+		ResponsivePopoverCommonCss,
+		staticAreaTabStyles,
+	],
 	renderer: litRender,
 	template: TabContainerTemplate,
-	staticAreaTemplate: TabContainerPopoverTemplate,
 	dependencies: [
 		Button,
 		Icon,

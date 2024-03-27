@@ -93,7 +93,6 @@ import {
 
 // Templates
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import multiCbxStyles from "./generated/themes/MultiComboBox.css.js";
