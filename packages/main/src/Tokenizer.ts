@@ -48,7 +48,6 @@ import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
-import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
 import {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TOKENIZER_ARIA_LABEL,
@@ -91,14 +90,13 @@ enum ClipboardDataOperation {
 	languageAware: true,
 	renderer: litRender,
 	template: TokenizerTemplate,
-	styles: TokenizerCss,
-	staticAreaStyles: [
+	styles: [
+		TokenizerCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		SuggestionsCss,
 		TokenizerPopoverCss,
 	],
-	staticAreaTemplate: TokenizerPopoverTemplate,
 	dependencies: [
 		ResponsivePopover,
 		List,
