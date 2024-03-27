@@ -37,6 +37,7 @@ import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerP
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -198,7 +199,7 @@ class DateTimePicker extends DatePicker {
 		await super.openPicker();
 		this._previewValues = {
 			...this._previewValues,
-			timeSelectionValue: this.value || this.getFormat().format(new Date()),
+			timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
 		};
 	}
 

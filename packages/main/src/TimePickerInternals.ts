@@ -23,6 +23,7 @@ import {
 	TIMEPICKER_SECONDS_LABEL,
 	TIMEPICKER_CLOCK_DIAL_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 type TimePickerComponentIndexMap = {
 	hours: number,
@@ -220,11 +221,11 @@ class TimePickerInternals extends UI5Element {
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : new Date();
+		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : UI5Date.getInstance();
 	}
 
 	get validDateValue() {
-		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : UI5Date.getInstance();
 	}
 
 	get periodsArray() {

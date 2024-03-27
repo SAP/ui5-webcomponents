@@ -38,6 +38,7 @@ import {
 import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
 import type { WheelSliderSelectEventDetail } from "./WheelSlider.js";
 import type { HourType } from "./timepicker-utils/TimeSlider.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 type TimeSelectionChangeEventDetail = {
 	value: string | undefined,
@@ -455,11 +456,11 @@ class TimeSelection extends UI5Element {
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value) as Date : new Date();
+		return this.value ? this.getFormat().parse(this.value) as Date : UI5Date.getInstance();
 	}
 
 	get validDateValue() {
-		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : UI5Date.getInstance();
 	}
 
 	get hoursSliderTitle() {
