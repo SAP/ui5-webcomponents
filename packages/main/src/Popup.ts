@@ -22,7 +22,7 @@ import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsReg
 
 // Styles
 import popupStlyes from "./generated/themes/Popup.css.js";
-import popupStaticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import popupBlockLayerStyles from "./generated/themes/PopupBlockLayer.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 const createBlockingStyle = (): void => {
@@ -76,7 +76,7 @@ type PopupBeforeCloseEventDetail = {
  */
 @customElement({
 	renderer: litRender,
-	styles: [popupStlyes, popupStaticAreaStyles],
+	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
 })
 /**

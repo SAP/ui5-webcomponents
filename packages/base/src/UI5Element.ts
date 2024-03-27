@@ -108,7 +108,6 @@ abstract class UI5Element extends HTMLElement {
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
-	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
 
 	static renderer: Renderer;
@@ -157,11 +156,6 @@ abstract class UI5Element extends HTMLElement {
 
 	render() {
 		const template = (this.constructor as typeof UI5Element).template;
-		return executeTemplate(template!, this);
-	}
-
-	renderStatic() {
-		const template = (this.constructor as typeof UI5Element).staticAreaTemplate;
 		return executeTemplate(template!, this);
 	}
 
@@ -907,13 +901,6 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * @private
-	 */
-	static _needsStaticArea() {
-		return !!this.staticAreaTemplate || Object.prototype.hasOwnProperty.call(this.prototype, "renderStatic");
-	}
-
-	/**
 	 * @public
 	 */
 	async getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
@@ -1041,14 +1028,6 @@ abstract class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	static styles: ComponentStylesData = "";
-
-	/**
-	 * Returns the Static Area CSS for this UI5 Web Component Class
-	 * @protected
-	 */
-	static get staticAreaStyles(): ComponentStylesData {
-		return "";
-	}
 
 	/**
 	 * Returns an array with the dependencies for this UI5 Web Component, which could be:

@@ -16,7 +16,6 @@ const getEffectiveStyle = (ElementClass: typeof UI5Element) => {
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 
 	if (!effectiveStyleMap.has(key)) {
-		let effectiveStyle;
 		let busyIndicatorStyles = "";
 
 		if (openUI5Enablement) {
@@ -24,15 +23,9 @@ const getEffectiveStyle = (ElementClass: typeof UI5Element) => {
 		}
 
 		const customStyle = getCustomCSS(tag) || "";
-		let builtInStyles = getStylesString(ElementClass.styles);
+		const builtInStyles = getStylesString(ElementClass.styles);
 
-		if (ElementClass._needsStaticArea()) {
-			builtInStyles += getStylesString(ElementClass.staticAreaStyles);
-		}
-
-		effectiveStyle = `${builtInStyles} ${customStyle}`;
-
-		effectiveStyle = `${effectiveStyle} ${busyIndicatorStyles}`;
+		const effectiveStyle = `${builtInStyles} ${customStyle} ${busyIndicatorStyles}`;
 		effectiveStyleMap.set(key, effectiveStyle);
 	}
 

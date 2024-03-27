@@ -112,9 +112,8 @@ type PreviewValues = {
 	tag: "ui5-datetime-picker",
 	template: DateTimePickerTemplate,
 	styles: [
-		DateTimePicker.styles,
+		DatePicker.styles,
 		DateTimePickerCss,
-		DatePicker.staticAreaStyles,
 		DateTimePickerPopoverCss,
 	],
 	dependencies: [
