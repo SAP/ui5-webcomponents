@@ -34,8 +34,6 @@ import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
 let autoId = 0;
 
-const TEMPLATE_DIVIDER_TEXT = "UI5_DIVIDER";
-
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
@@ -1130,7 +1128,6 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 export default UI5Element;
 export {
 	instanceOfUI5Element,
-	TEMPLATE_DIVIDER_TEXT,
 };
 export type {
 	ChangeInfo,

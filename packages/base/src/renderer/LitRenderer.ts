@@ -4,17 +4,13 @@ import {
 	svg,
 	TemplateResult,
 } from "lit-html";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 import { getFeature } from "../FeaturesRegistry.js";
 import type { LitStatic } from "../CustomElementsScope.js";
-import { TEMPLATE_DIVIDER_TEXT } from "../UI5Element.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import type UI5Element from "../UI5Element.js";
 import type { Renderer, RendererOptions } from "../UI5Element.js";
 import { TemplateFunctionResult } from "./executeTemplate.js";
-
-const DIVIDER_COMMENT = `<!--${TEMPLATE_DIVIDER_TEXT}-->`;
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
@@ -28,11 +24,7 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 	return fn(strings, ...values);
 };
 
-const litRender: Renderer = (templateResult: TemplateFunctionResult | Array<TemplateFunctionResult>, container: HTMLElement | DocumentFragment, options: RendererOptions) => {
-	if (Array.isArray(templateResult)) {
-		templateResult = effectiveHtml`${templateResult[0]}${unsafeHTML(DIVIDER_COMMENT)}${templateResult[1]}`;
-	}
-
+const litRender: Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => {
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 	if (openUI5Enablement) {
 		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult as TemplateResult);
