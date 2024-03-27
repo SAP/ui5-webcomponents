@@ -149,5 +149,45 @@ describe("ColorPalette interactions", () => {
 		assert.ok(await colorPalette.getProperty("showRecentColors"), "Check if recent colors is on");
 		assert.ok(await colorPalette.getProperty("showMoreColors"), "Check if more colors is on");
 	})
+
+	it("After selecting an item, opening the popover again should focus the selected item", async () => {
+		await browser.url(`test/pages/ColorPalettePopover.html`);
+		const colorPaletteButton = await browser.$("#colorPaletteBtnTest6");
 	
+		// act - open color palette popover and select a color
+		await colorPaletteButton.click();
+	
+		const colorPalettePopover = await browser.$("#colorPalettePopoverTest6");
+		const colorPalettePopoverItems = await colorPalettePopover.$$("[ui5-color-palette-item]");
+	
+		await browser.keys("ArrowDown");
+		await browser.keys("Space");
+	
+		await colorPaletteButton.click();
+	
+		// check if the first item is focused
+		const isFirstItemFocused = await browser.execute(function (elem) {
+			return document.activeElement === elem;
+		}, colorPalettePopoverItems[0]);
+	
+		assert.ok(isFirstItemFocused, "The first element is focused");
+	});
+
+	it("Clicking default button and opening the popover again should focus the default button", async () => {
+		await browser.url(`test/pages/ColorPalettePopover.html`);
+		const colorPaletteButton = await browser.$("#colorPaletteBtnTest6");
+	
+		await colorPaletteButton.click();
+	
+		const colorPalettePopover = await browser.$("#colorPalettePopoverTest6");
+		const colorPalette = await colorPalettePopover.shadow$("[ui5-responsive-popover]").$("[ui5-color-palette]");
+		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
+
+		await defaultButton.click();
+		await colorPaletteButton.click();
+
+		// check if the default button is focused after reopening the popover
+		assert.ok(defaultButton.getProperty("focused"), "The default button is focused");
+	});
+
 });
