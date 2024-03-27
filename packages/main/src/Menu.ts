@@ -98,8 +98,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 @customElement({
 	tag: "ui5-menu",
 	renderer: litRender,
-	staticAreaStyles: staticAreaMenuCss,
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: staticAreaMenuCss,
+	template: staticAreaMenuTemplate,
 	dependencies: [
 		ResponsivePopover,
 		Button,
@@ -410,13 +410,13 @@ class Menu extends UI5Element {
 	 * @param opener the element that the popover is shown at
 	 * @public
 	 */
-	async showAt(opener: HTMLElement): Promise<void> {
+	showAt(opener: HTMLElement): void {
 		if (!this._isSubMenu) {
 			this._parentMenuItem = undefined;
 			this._opener = undefined;
 		}
 		const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
-		const popover = await this._createPopover();
+		const popover = this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
 		popover.showAt(opener, busyWithoutItems);
 	}
@@ -429,10 +429,9 @@ class Menu extends UI5Element {
 		this._popover?.close(false, false, true);
 	}
 
-	async _createPopover() {
+	_createPopover() {
 		if (!this._popover) {
-			const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-			this._popover = staticAreaItemDomRef!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+			this._popover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		}
 		return this._popover;
 	}

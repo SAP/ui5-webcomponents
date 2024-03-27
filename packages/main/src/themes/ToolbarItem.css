@@ -1,0 +1,5 @@
+:host(:not([hidden])) {
+    flex-shrink: 0;
+	margin-inline-end: var(--_ui5-toolbar-item-margin-right);
+	margin-inline-start: var(--_ui5-toolbar-item-margin-left);
+}

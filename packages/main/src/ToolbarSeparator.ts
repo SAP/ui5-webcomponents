@@ -1,11 +1,13 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+
 import ToolbarSeparatorTemplate from "./generated/templates/ToolbarSeparatorTemplate.lit.js";
-import ToolbarPopoverSeparatorTemplate from "./generated/templates/ToolbarPopoverSeparatorTemplate.lit.js";
+import ToolbarSeparatorCss from "./generated/themes/ToolbarSeparator.css.js";
 
-import { registerToolbarItem } from "./ToolbarRegistry.js";
-
-import ToolbarItem from "./ToolbarItem.js";
+import { IToolbarItem } from "./Toolbar.js";
+import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 /**
  * @class
@@ -21,19 +23,35 @@ import ToolbarItem from "./ToolbarItem.js";
  */
 @customElement({
 	tag: "ui5-toolbar-separator",
+	renderer: litRender,
+	template: ToolbarSeparatorTemplate,
+	styles: [ToolbarSeparatorCss],
 })
 
-class ToolbarSeparator extends ToolbarItem {
+class ToolbarSeparator extends UI5Element implements IToolbarItem {
+	/**
+	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
+	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
+	 * @public
+	 * @default "Default"
+	 */
+	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
+	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
+
+	/**
+	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
+	 * It will close by default.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	preventOverflowClosing!: boolean;
+
+	@property({ type: Boolean })
+	overflowed!: boolean;
+
 	@property({ type: Boolean })
 	visible!: boolean;
-
-	static get toolbarTemplate() {
-		return ToolbarSeparatorTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarPopoverSeparatorTemplate;
-	}
 
 	get isSeparator() {
 		return true;
@@ -42,9 +60,11 @@ class ToolbarSeparator extends ToolbarItem {
 	get isInteractive() {
 		return false;
 	}
-}
 
-registerToolbarItem(ToolbarSeparator);
+	get preventOverflow() {
+		return true;
+	}
+}
 
 ToolbarSeparator.define();
 

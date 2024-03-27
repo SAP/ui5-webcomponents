@@ -1,0 +1,8 @@
+@import url("./ToolbarItem.css");
+
+:host(:not([hidden])) {
+	height: var(--_ui5-toolbar-separator-height);
+	width: 0.0625rem;
+	background: var(--sapToolbar_SeparatorColor);
+	box-sizing: border-box;
+}

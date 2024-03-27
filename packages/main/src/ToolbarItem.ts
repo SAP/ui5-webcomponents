@@ -38,23 +38,6 @@ class ToolbarItem extends UI5Element {
 	preventOverflowClosing!: boolean;
 
 	/**
-	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
-	* @protected
-	*/
-	get ignoreSpace(): boolean {
-		return false;
-	}
-
-	/**
-	 * Returns if the item contains text. Used to position the text properly inside the popover.
-	 * Aligned left if the item has text, default aligned otherwise.
-	 * @protected
-	 */
-	get containsText(): boolean {
-		return false;
-	}
-
-	/**
 	 * Returns if the item is flexible. An item that is returning true for this property will make
 	 * the toolbar expand to fill the 100% width of its container.
 	 * @protected

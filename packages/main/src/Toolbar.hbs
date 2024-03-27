@@ -1,20 +1,41 @@
 
 <div 
-	class="{{classes.items}}" 
+	class="{{classes.main}}"
 	role="{{accInfo.root.role}}"
 	aria-label="{{accInfo.root.accessibleName}}"
 >
-	{{#each standardItems}}
-		{{this.toolbarTemplate}}
-	{{/each}}
 
-	<ui5-button
-		aria-hidden="{{hideOverflowButton}}"
-		icon="overflow"
-		design="Transparent"
-		class="{{classes.overflowButton}}"
-		tooltip="{{accInfo.overflowButton.tooltip}}"
-		accessible-name="{{accInfo.overflowButton.accessibleName}}"
-		.accessibilityAttributes={{accInfo.overflowButton.accessibilityAttributes}}
-	></ui5-button>
+	<div class="{{classes.items}}">
+		<slot></slot>
+
+		<ui5-button
+			@click="{{toggleOverflow}}"
+			aria-hidden="{{hideOverflowButton}}"
+			icon="overflow"
+			design="Transparent"
+			class="{{classes.overflowButton}}"
+			tooltip="{{accInfo.overflowButton.tooltip}}"
+			accessible-name="{{accInfo.overflowButton.accessibleName}}"
+			.accessibilityAttributes={{accInfo.overflowButton.accessibilityAttributes}}
+		></ui5-button>
+	</div>
+
+	<ui5-menu @ui5-item-click="{{onMenuItemClick}}">
+		{{#each overflowItems}}
+			<ui5-menu-item
+				data-ui5-id="{{this._id}}"
+				text="{{this.toolbarDisplayText}}"
+			>
+				{{#if this.hasSubmenu}}
+					{{#each this.subMenuItems}}
+						<ui5-menu-item
+							data-ui5-id="{{this._id}}"
+							text="{{this.displayText}}"
+						>
+						</ui5-menu-item>
+					{{/each}}
+				{{/if}}
+			</ui5-menu-item>
+		{{/each}}
+	</ui5-menu>
 </div>

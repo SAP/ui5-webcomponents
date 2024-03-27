@@ -13,9 +13,15 @@
 	justify-content: flex-start;
 }
 
-.ui5-tb-items {
+.ui5-tb-root {
 	width: 100%;
 	height: 100%;
+	display: inherit;
+	align-items: inherit;
+	justify-content: inherit;
+}
+
+.ui5-tb-items {
 	display: inherit;
 	align-items: inherit;
 	justify-content: inherit;

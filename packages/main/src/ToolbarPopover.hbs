@@ -7,8 +7,6 @@
 	hide-arrow
 >
 	<div class="ui5-overflow-list {{classes.overflow}}">
-		{{#each overflowItems}}
-			{{this.toolbarPopoverTemplate}}
-		{{/each}}
+		<slot></slot>
 	</div>
 </ui5-popover>

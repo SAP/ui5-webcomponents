@@ -1,11 +1,12 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
 
-import ToolbarItem from "./ToolbarItem.js";
-
-import { registerToolbarItem } from "./ToolbarRegistry.js";
+import { IToolbarItem } from "./Toolbar.js";
+import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 /**
  * @class
@@ -21,9 +22,31 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  */
 @customElement({
 	tag: "ui5-toolbar-spacer",
+	renderer: litRender,
+	template: ToolbarSpacerTemplate,
 })
 
-class ToolbarSpacer extends ToolbarItem {
+class ToolbarSpacer extends UI5Element implements IToolbarItem {
+	/**
+	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
+	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
+	 * @public
+	 * @default "Default"
+	 */
+	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
+	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
+
+	/**
+	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
+	 * It will close by default.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	preventOverflowClosing!: boolean;
+
+	@property({ type: Boolean })
+	overflowed!: boolean;
 	/**
 	 * Defines the width of the spacer.
 	 *
@@ -46,20 +69,10 @@ class ToolbarSpacer extends ToolbarItem {
 		return this.width === "";
 	}
 
-	static get toolbarTemplate() {
-		return ToolbarSpacerTemplate;
-	}
-
-	static get toolbarPopoverTemplate() {
-		return ToolbarSpacerTemplate;
-	}
-
 	get isInteractive() {
 		return false;
 	}
 }
-
-registerToolbarItem(ToolbarSpacer);
 
 ToolbarSpacer.define();
 
