@@ -23,7 +23,6 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
@@ -78,11 +77,9 @@ type ExceededText = {
 @customElement({
 	tag: "ui5-textarea",
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles],
+	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
 	renderer: litRender,
 	template: TextAreaTemplate,
-	staticAreaTemplate: TextAreaPopoverTemplate,
-	staticAreaStyles: valueStateMessageStyles,
 	dependencies: [Popover, Icon],
 })
 /**

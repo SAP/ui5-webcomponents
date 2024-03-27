@@ -30,7 +30,6 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -67,9 +66,12 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 	languageAware: true,
 	renderer: litRender,
 	template: TimePickerTemplate,
-	styles: TimePickerCss,
-	staticAreaTemplate: TimePickerPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, PopoverCss, TimePickerPopoverCss],
+	styles: [
+		TimePickerCss,
+		ResponsivePopoverCommonCss,
+		PopoverCss,
+		TimePickerPopoverCss,
+	],
 	dependencies: [
 		Icon,
 		Popover,
