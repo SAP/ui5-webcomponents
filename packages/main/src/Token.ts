@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
 	isBackSpace,
 	isSpace,
@@ -196,10 +195,6 @@ class Token extends UI5Element implements IToken {
 	}
 
 	get iconURI() {
-		if (getTheme().includes("sap_belize")) {
-			return "sys-cancel";
-		}
-
 		return "decline";
 	}
 
