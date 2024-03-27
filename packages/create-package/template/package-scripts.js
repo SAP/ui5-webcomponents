@@ -2,7 +2,7 @@ const getScripts = require("@ui5/webcomponents-tools/components-package/nps.js")
 
 const options = {
 	port: 8080,
-	typescript: INIT_PACKAGE_VAR_TYPESCRIPT,
+	typescript: true,
 };
 
 const scripts = getScripts(options);

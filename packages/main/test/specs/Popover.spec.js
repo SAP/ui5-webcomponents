@@ -481,8 +481,8 @@ describe("Alignment", () => {
 			assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
 		});
 
-		it("Left", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
+		it("Start", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Start']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");
@@ -490,8 +490,8 @@ describe("Alignment", () => {
 			assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned`);
 		});
 
-		it("Right", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
+		it("End", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='End']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");
@@ -509,8 +509,8 @@ describe("Alignment", () => {
 			assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
 		});
 
-		it("Left, in RTL", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
+		it("Start, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Start']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");
@@ -518,8 +518,8 @@ describe("Alignment", () => {
 			assert.ok(isHorizontallyRightAligned(popover, opener), `Popover should be right aligned, flipped by RTL direction`);
 		});
 
-		it("Right, in RTL", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
+		it("End, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='End']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");

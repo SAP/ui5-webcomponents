@@ -77,10 +77,10 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the size of the component.
-	 * @default "Medium"
+	 * @default "M"
 	 * @public
 	 */
-	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
+	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.M })
 	size!: `${BusyIndicatorSize}`;
 
 	/**

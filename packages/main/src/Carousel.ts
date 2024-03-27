@@ -29,7 +29,7 @@ import {
 	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
-import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
+import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
 import BackgroundDesign from "./types/BackgroundDesign.js";
 import BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
@@ -189,8 +189,8 @@ class Carousel extends UI5Element {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
-	pageIndicatorStyle!: `${CarouselPageIndicatorStyle}`;
+	@property({ type: CarouselPageIndicatorType, defaultValue: CarouselPageIndicatorType.Default })
+	pageIndicatorType!: `${CarouselPageIndicatorType}`;
 
 	/**
 	 * Defines the carousel's background design.
@@ -615,7 +615,7 @@ class Carousel extends UI5Element {
 	}
 
 	get isPageTypeDots() {
-		if (this.pageIndicatorStyle === CarouselPageIndicatorStyle.Numeric) {
+		if (this.pageIndicatorType === CarouselPageIndicatorType.Numeric) {
 			return false;
 		}
 
