@@ -6,6 +6,7 @@ import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import "@ui5/webcomponents-icons/dist/arrow-right.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
