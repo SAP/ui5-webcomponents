@@ -60,27 +60,13 @@ const cancelRender = (webComponent: UI5Element) => {
 const scheduleRenderTask = async () => {
 	if (!queuePromise) {
 		queuePromise = new Promise<void>(resolve => {
-			window.requestAnimationFrame(() => {
-				// Render all components in the queue
+			// console.log(`--------------------RENDER TASK START------------------------------`); // eslint-disable-line
+			invalidatedWebComponents.process(renderImmediately);
+			// console.log(`--------------------RENDER TASK END------------------------------`); // eslint-disable-line
 
-				// console.log(`--------------------RENDER TASK START------------------------------`); // eslint-disable-line
-				invalidatedWebComponents.process(renderImmediately);
-				// console.log(`--------------------RENDER TASK END------------------------------`); // eslint-disable-line
-
-				// Resolve the promise so that callers of renderDeferred can continue
-				queuePromise = null;
-				resolve();
-
-				// Wait for Mutation observer before the render task is considered finished
-				if (!mutationObserverTimer) {
-					mutationObserverTimer = setTimeout(() => {
-						mutationObserverTimer = undefined;
-						if (invalidatedWebComponents.isEmpty()) {
-							_resolveTaskPromise();
-						}
-					}, 200);
-				}
-			});
+			// Resolve the promise so that callers of renderDeferred can continue
+			queuePromise = null;
+			resolve();
 		});
 	}
 
