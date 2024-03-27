@@ -41,7 +41,6 @@ import WizardStep from "./WizardStep.js";
 
 // Template and Styles
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
-import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 
@@ -192,10 +191,9 @@ type StepInfo = {
 	styles: [
 		browserScrollbarCSS,
 		WizardCss,
+		WizardPopoverCss,
 	],
-	staticAreaStyles: WizardPopoverCss,
 	template: WizardTemplate,
-	staticAreaTemplate: WizardPopoverTemplate,
 	dependencies: [
 		WizardTab,
 		WizardStep,

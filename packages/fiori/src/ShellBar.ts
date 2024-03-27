@@ -33,7 +33,6 @@ import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
-import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
 
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
@@ -172,9 +171,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 	languageAware: true,
 	renderer: litRender,
 	template: ShellBarTemplate,
-	staticAreaTemplate: ShellBarPopoverTemplate,
-	styles: shellBarStyles,
-	staticAreaStyles: [ShellBarPopoverCss],
+	styles: [shellBarStyles, ShellBarPopoverCss],
 	dependencies: [
 		Button,
 		List,
@@ -426,7 +423,7 @@ class ShellBar extends UI5Element {
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
 	@property({ type: Object, multiple: true })
-	_menuPopoverItems!: Array<HTMLElement>;
+	_menuPopoverItems: Array<HTMLElement>;
 
 	@property({ type: Boolean, noAttribute: true })
 	_menuPopoverExpanded!: boolean;
@@ -518,7 +515,7 @@ class ShellBar extends UI5Element {
 	coPilot?: ShellBarCoPilot;
 	_coPilotIcon: string;
 	_debounceInterval?: Timeout | null;
-	_hiddenIcons?: Array<IShelBarItemInfo>;
+	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_headerPress: () => Promise<void>;
 
@@ -553,6 +550,8 @@ class ShellBar extends UI5Element {
 	constructor() {
 		super();
 
+		this._menuPopoverItems = [];
+		this._hiddenIcons = [];
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
 		this._coPilotIcon = ShellBar.CO_PILOT_ICON_UNPRESSED;
