@@ -436,9 +436,9 @@ class SplitButton extends UI5Element {
 	_handleDefaultAction(e: KeyboardEvent) {
 		e.preventDefault();
 		const wasSpacePressed = isSpace(e);
-		const buttonPressed = e.target as Button;
+		const target = e.target as Button;
 
-		if (this.arrowButton && buttonPressed === this.arrowButton) {
+		if (this.arrowButton && target === this.arrowButton) {
 			this._activeArrowButton = true;
 			this._fireArrowClick();
 			if (wasSpacePressed) {

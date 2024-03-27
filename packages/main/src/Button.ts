@@ -16,9 +16,6 @@ import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
-	isPhone,
-	isTablet,
-	isCombi,
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
@@ -350,7 +347,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-		this._isTouch = (isPhone() || isTablet()) && !isCombi();
 	}
 
 	async onBeforeRendering() {
@@ -382,7 +378,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 			formSupport.triggerFormReset(this);
 		}
 
-		if (isDesktop() && isSafari()) {
+		if (isSafari()) {
 			this.getDomRef()?.focus();
 		}
 	}

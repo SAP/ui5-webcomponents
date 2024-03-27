@@ -307,14 +307,14 @@
 }
 
 
-:host([desktop]) .ui5-split-arrow-button:focus-within::part(button)::after,
-.ui5-split-arrow-button:focus-visible::part(button)::after {
+.ui5-split-arrow-button[desktop]::part(button):focus-within::after,
+.ui5-split-arrow-button::part(button):focus-visible::after {
 	border-start-start-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 	border-end-start-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 }
 
-:host([desktop]) .ui5-split-text-button:focus-within::part(button)::after, 
-.ui5-split-text-button:focus-visible::part(button)::after {
+.ui5-split-arrow-button[desktop]::part(button):focus-within::after,
+.ui5-split-text-button::part(button):focus-visible::after {
 	border-start-end-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 	border-end-end-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 }
