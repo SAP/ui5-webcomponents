@@ -24,19 +24,6 @@
 
 		<div class="ui5-nli-group-divider"></div>
 
-		{{#unless collapsed}}
-			{{#if showOverflow}}
-				<ui5-button
-					icon="overflow"
-					design="Transparent"
-					@click="{{_onBtnOverflowClick}}"
-					class="ui5-nli-overflow-btn"
-					tooltip="{{overflowBtnAccessibleName}}"
-					aria-label="{{overflowBtnAccessibleName}}"
-				></ui5-button>
-			{{/if}}
-		{{/unless}}
-
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
 

@@ -28,8 +28,10 @@
     <ui5-li-notification
         title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
         show-close>
-        <ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-        <ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>
+        <ui5-menu slot="menu">
+            <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+            <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+        </ui5-menu>
         <ui5-avatar initials="JD" size="XS" slot="avatar"></ui5-avatar>
         <span slot="footnotes">John Doe</span>
         <span slot="footnotes">2 Days</span>
@@ -39,11 +41,13 @@
     </ui5-li-notification>
     <ui5-li-notification show-close
         title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-        priority="High">
+        state="Negative">
         <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
         <span slot="footnotes">Office Notifications</span>
         <span slot="footnotes">3 Days</span>
-        <ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+        <ui5-menu slot="menu">
+            <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+        </ui5-menu>
         And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum
         lectus turpis at nunc.
@@ -51,21 +55,23 @@
 
     <ui5-li-notification
         title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-        priority="Medium">
+        state="Critical">
         <ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
         <span slot="footnotes">Patricia Clark</span>
         <span slot="footnotes">3 Days</span>
-        <ui5-notification-action icon="accept" text="Accept All Requested Information"
-            slot="actions"></ui5-notification-action>
-        <ui5-notification-action icon="decline" text="Reject All Requested Information"
-            slot="actions"></ui5-notification-action>
+            <ui5-menu slot="menu">
+                <ui5-menu-item icon="accept" text="Accept All Requested Information"></ui5-menu-item>
+                <ui5-menu-item icon="decline" text="Reject All Requested Information"></ui5-menu-item>
+            </ui5-menu>
         Short description
     </ui5-li-notification>
 
     <ui5-li-notification title-text="New order (#2523)">
         <span slot="footnotes">John Smith</span>
         <span slot="footnotes">3 Days</span>
-        <ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>
+        <ui5-menu slot="menu">
+            <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+        </ui5-menu>
         With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis
         vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
     </ui5-li-notification>

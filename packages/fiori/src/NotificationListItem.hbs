@@ -10,40 +10,23 @@
 	aria-labelledby="{{ariaLabelledBy}}"
 >
 	<div class="ui5-nli-actions">
-		{{#if showOverflow}}
+		{{#if showMenu}}
 			<ui5-button
 				icon="overflow"
 				design="Transparent"
-				@click="{{_onBtnOverflowClick}}"
-				class="ui5-nli-overflow-btn"
-				tooltip="{{overflowBtnAccessibleName}}"
-				aria-label="{{overflowBtnAccessibleName}}"
-			></ui5-button>
-		{{/if}}
-
-		{{#if showClose}}
-			<ui5-button
-				icon="decline"
-				design="Transparent"
-				@click="{{_onBtnCloseClick}}"
-				tooltip="{{closeBtnAccessibleName}}"
-				aria-label="{{closeBtnAccessibleName}}"
-				close-btn
+				@click="{{_onBtnMenuClick}}"
+				class="ui5-nli-menu-btn"
+				tooltip="{{menuBtnAccessibleName}}"
+				aria-label="{{menuBtnAccessibleName}}"
 			></ui5-button>
 		{{/if}}
 	</div>
-
 	<div class="ui5-nli-content">
 		<div class="ui5-nli-title-text-wrapper">
-			{{#if hasStatusIndicator}}
+			{{#if hasState}}
 				<ui5-icon
 					class="ui5-prio-icon ui5-prio-icon--{{statusIcon}}"
 					name="{{statusIcon}}">
-				</ui5-icon>
-			{{else if hasPriority}}
-				<ui5-icon
-					class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
-					name="{{priorityIcon}}">
 				</ui5-icon>
 			{{/if}}
 
@@ -78,7 +61,7 @@
 			</ui5-link>
 		</div>
 
-		{{#if indicateImportance}}
+		{{#if hasImportance}}
 			<ui5-badge class="ui5-nli-importance" design="set2" color-scheme="2">
 				<ui5-icon name="high-priority" slot="icon"></ui5-icon>
 				{{importanceText}}

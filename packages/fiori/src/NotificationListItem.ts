@@ -6,14 +6,15 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
+import type Menu from "@ui5/webcomponents/dist/Menu.js";
+import NotificationListItemState from "./types/NotificationListItemState.js";
+import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Icons
@@ -27,14 +28,11 @@ import {
 	NOTIFICATION_LIST_ITEM_UNREAD,
 	NOTIFICATION_LIST_ITEM_SHOW_MORE,
 	NOTIFICATION_LIST_ITEM_SHOW_LESS,
-	NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT,
-	NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT,
-	NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT,
 	NOTIFICATION_LIST_ITEM_INFORMATION_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_SUCCESS_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_ERROR_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_WARNING_STATUS_TXT,
-	NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_IMPORTANT_TXT,
 } from "./generated/i18n/i18n-defaults.js";
@@ -45,7 +43,9 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
-import type { NotificationListItemBaseCloseEventDetail as NotificationListItemCloseEventDetail } from "./NotificationListItemBase.js";
+type NotificationListItemCloseEventDetail = {
+	item: HTMLElement,
+};
 
 type NotificationListItemPressEventDetail = {
 	item: NotificationListItem,
@@ -54,24 +54,14 @@ type NotificationListItemPressEventDetail = {
 type Footnote = Record<string, any>;
 
 /**
- * Defines the icons corresponding to the notification's priority.
- */
-const ICON_PER_PRIORITY = {
-	[Priority.High]: "message-error",
-	[Priority.Medium]: "message-warning",
-	[Priority.Low]: "message-success",
-	[Priority.None]: "",
-};
-
-/**
  * Defines the icons corresponding to the notification's status indicator.
  */
 const ICON_PER_STATUS = {
-	[ValueState.Error]: "message-error",
-	[ValueState.Warning]: "message-warning",
-	[ValueState.Success]: "message-success",
-	[ValueState.Information]: "message-information",
-	[ValueState.None]: "",
+	[NotificationListItemState.Negative]: "message-error",
+	[NotificationListItemState.Critical]: "message-warning",
+	[NotificationListItemState.Positive]: "message-success",
+	[NotificationListItemState.Information]: "message-information",
+	[NotificationListItemState.None]: "",
 };
 
 /**
@@ -90,7 +80,7 @@ const ICON_PER_STATUS = {
  * and display a `ShowMore` button to switch between less and more information
  * - add actions by using the `ui5-menu` component
  *
- * **Note:** Adding custom actions by using the `ui5-notification-action` component is deprecated!
+ * **Note:** Adding custom actions by using the `ui5-notification-action` component is deprecated as of version 2.0!
  *
  * ### Usage
  * The component can be used in a standard `ui5-list`.
@@ -99,7 +89,6 @@ const ICON_PER_STATUS = {
  *
  * `import "@ui5/webcomponents/dist/NotificationListItem.js";`
  *
- * `import "@ui5/webcomponents/dist/NotificationAction.js";` (optional)
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
@@ -121,6 +110,23 @@ const ICON_PER_STATUS = {
 })
 
 @event("_press")
+
+/**
+ * Fired when the `Close` button is pressed.
+ * @param {HTMLElement} item the closed item.
+ * @public
+ */
+@event<NotificationListItemCloseEventDetail>("close", {
+	detail: {
+	   /**
+		* @public
+		*/
+	   item: {
+		   type: HTMLElement,
+	   },
+	},
+})
+
 class NotificationListItem extends NotificationListItemBase {
 	/**
 	* Defines if the `titleText` and `description` should wrap,
@@ -140,27 +146,24 @@ class NotificationListItem extends NotificationListItemBase {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	statusIndicator!: `${ValueState}`;
+	@property({ type: NotificationListItemState, defaultValue: NotificationListItemState.None })
+	state!: `${NotificationListItemState}`;
 
 	/**
-	 * Defines the `priority` of the item.
-	 *
-	 * **Note:** this property is deprecated and will be removed in future. Please use "statusIndicator" property instead.
-	 * @default "None"
-	 * @public
-	 * @deprecated
-	 */
-	@property({ type: Priority, defaultValue: Priority.None })
-	priority!: `${Priority}`;
-
-	/**
-	 * Defines the `Important` label of the item.
+	 * Defines if the `close` button would be displayed.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	indicateImportance!: boolean;
+	showClose!: boolean;
+
+	/**
+	 * Defines the `Important` label of the item.
+	 * @default "Standard"
+	 * @public
+	 */
+	@property({ type: NotificationListItemImportance, defaultValue: NotificationListItemImportance.Standard })
+	importance!: `${NotificationListItemImportance}`;
 
 	/**
 	* Defines the state of the `titleText` and `description`,
@@ -195,7 +198,7 @@ class NotificationListItem extends NotificationListItemBase {
 	*
 	* **Note:** Use this for implementing actions.
 	*
-	* **Note:** Should be used instead i5-notification-action, which is deprecated as of ... version.
+	* **Note:** Should be used instead i5-notification-action, which is deprecated as of ui5-web-components version 2.0.
 	* @public
 	*/
 	@slot()
@@ -243,22 +246,26 @@ class NotificationListItem extends NotificationListItemBase {
 		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
-	get hasPriority() {
-		const hasPriority = this.priority !== Priority.None;
-
-		if (hasPriority) {
-			console.warn("The property 'priority' is deprecated and will be removed in future! Please use 'statusIndicator' property instead!"); // eslint-disable-line
+	onBeforeRendering() {
+		if (this.priority !== "None") {
+			console.warn("The property 'priority' is deprecated and removed from ui5-li-notification component. Please use 'state' property instead."); // eslint-disable-line
 		}
 
-		return hasPriority;
+		if (this.actions.length > 0) {
+			console.warn("ui5-notification-action is deprecated and removed as of version 2.0. For the ui5-li-notification use ui5-menu instead."); // eslint-disable-line
+		}
 	}
 
-	get hasStatusIndicator() {
-		return this.statusIndicator !== ValueState.None;
+	get hasState() {
+		return this.state !== NotificationListItemState.None;
 	}
 
 	get hasDesc() {
 		return !!this.description.length;
+	}
+
+	get hasImportance() {
+		return this.importance !== NotificationListItemImportance.Standard;
 	}
 
 	get hasFootNotes() {
@@ -273,8 +280,8 @@ class NotificationListItem extends NotificationListItemBase {
 		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SHOW_MORE);
 	}
 
-	get overflowBtnAccessibleName() {
-		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+	get menuBtnAccessibleName() {
+		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE);
 	}
 
 	get closeBtnAccessibleName() {
@@ -354,48 +361,28 @@ class NotificationListItem extends NotificationListItemBase {
 		return ids.join(" ");
 	}
 
-	get priorityIcon() {
-		return ICON_PER_PRIORITY[this.priority];
-	}
-
 	get statusIcon() {
-		return ICON_PER_STATUS[this.statusIndicator];
-	}
-
-	get priorityText() {
-		if (this.priority === Priority.High) {
-			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
-		}
-
-		if (this.priority === Priority.Medium) {
-			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
-		}
-
-		if (this.priority === Priority.Low) {
-			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
-		}
-
-		return "";
+		return ICON_PER_STATUS[this.state];
 	}
 
 	get importanceText() {
 		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_IMPORTANT_TXT);
 	}
 
-	get statusIndicatorText() {
-		if (this.statusIndicator === ValueState.Success) {
+	get stateText() {
+		if (this.state === NotificationListItemState.Positive) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SUCCESS_STATUS_TXT);
 		}
 
-		if (this.statusIndicator === ValueState.Warning) {
+		if (this.state === NotificationListItemState.Critical) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_WARNING_STATUS_TXT);
 		}
 
-		if (this.statusIndicator === ValueState.Error) {
+		if (this.state === NotificationListItemState.Negative) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_ERROR_STATUS_TXT);
 		}
 
-		if (this.statusIndicator === ValueState.Information) {
+		if (this.state === NotificationListItemState.Information) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_INFORMATION_STATUS_TXT);
 		}
 
@@ -405,11 +392,18 @@ class NotificationListItem extends NotificationListItemBase {
 	get accInvisibleText() {
 		const notificationText = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
 		const readText = this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
-		const priorityText = this.priorityText;
-		const statusIndicatorText = this.statusIndicatorText;
+		const stateText = this.stateText;
 		const importanceText = this.importanceText;
 
-		return `${notificationText} ${readText} ${priorityText} ${statusIndicatorText} ${importanceText}`;
+		return `${notificationText} ${readText} ${stateText} ${importanceText}`;
+	}
+
+	get menuButtonDOM() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-menu-btn")!;
+	}
+
+	get showMenu() {
+		return !!this.getMenu();
 	}
 
 	/**
@@ -445,6 +439,26 @@ class NotificationListItem extends NotificationListItemBase {
 		if (space) {
 			this.fireItemPress(e);
 		}
+	}
+
+	_onBtnCloseClick() {
+		this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+	}
+
+	_onBtnMenuClick() {
+		if (this.getMenu()) {
+			this.openMenu();
+		}
+	}
+
+	openMenu() {
+		const menu = this.getMenu();
+		menu.showAt(this.menuButtonDOM);
+	}
+
+	getMenu() {
+		const menu = this.querySelector<Menu>("ui5-menu")!;
+		return menu;
 	}
 
 	/**

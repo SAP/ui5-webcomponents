@@ -128,8 +128,3 @@
 	overflow: hidden;
 }
 
-/* Actions */
-.ui5-nli-actions {
-	display: flex;
-	box-sizing: border-box;
-}
