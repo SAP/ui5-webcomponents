@@ -10,11 +10,11 @@ import type { MenuItemClickEventDetail } from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
-import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
+import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
-import staticAreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import navigationMenuCss from "./generated/themes/NavigationMenu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
@@ -45,8 +45,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 @customElement({
 	tag: "ui5-navigation-menu",
 	renderer: litRender,
-	staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: [menuCss, navigationMenuCss],
+	template: menuTemplate,
 })
 
 class NavigationMenu extends Menu {

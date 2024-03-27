@@ -29,7 +29,6 @@ import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationGroup from "./SideNavigationGroup.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
-import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationPopoverTemplate.lit.js";
 
 import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
@@ -109,9 +108,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: litRender,
 	template: SideNavigationTemplate,
-	staticAreaTemplate: SideNavigationPopoverTemplate,
-	styles: SideNavigationCss,
-	staticAreaStyles: SideNavigationPopoverCss,
+	styles: [SideNavigationCss, SideNavigationPopoverCss],
 	dependencies: [
 		ResponsivePopover,
 		SideNavigationGroup,
