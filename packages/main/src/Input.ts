@@ -60,7 +60,6 @@ import type ListItemType from "./types/ListItemType.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
-import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
 import { StartsWith } from "./Filters.js";
 
 import {
@@ -196,9 +195,12 @@ type InputSuggestionScrollEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: InputTemplate,
-	staticAreaTemplate: InputPopoverTemplate,
-	styles: inputStyles,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss],
+	styles: [
+		inputStyles,
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SuggestionsCss,
+	],
 	get dependencies() {
 		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
 		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);

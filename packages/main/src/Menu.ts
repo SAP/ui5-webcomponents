@@ -30,14 +30,14 @@ import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import type { ListItemClickEventDetail } from "./List.js";
-import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 
 type CurrentItem = {
 	item: MenuItem,
@@ -98,8 +98,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 @customElement({
 	tag: "ui5-menu",
 	renderer: litRender,
-	staticAreaStyles: staticAreaMenuCss,
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: menuCss,
+	template: menuTemplate,
 	dependencies: [
 		ResponsivePopover,
 		Button,

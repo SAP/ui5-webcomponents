@@ -178,9 +178,13 @@ type MultiComboboxItemWithSelection = {
 	languageAware: true,
 	renderer: litRender,
 	template: MultiComboBoxTemplate,
-	staticAreaTemplate: MultiComboBoxPopoverTemplate,
-	styles: multiCbxStyles,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover],
+	styles: [
+		multiCbxStyles,
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SuggestionsCss,
+		MultiComboBoxPopover,
+	],
 	dependencies: [
 		MultiComboBoxItem,
 		MultiComboBoxGroupItem,
@@ -454,7 +458,7 @@ class MultiComboBox extends UI5Element {
 	_isOpenedByKeyboard?: boolean;
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
-	selectedItems?: Array<IMultiComboBoxItem>;
+	selectedItems: Array<IMultiComboBoxItem>;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
 
@@ -462,6 +466,7 @@ class MultiComboBox extends UI5Element {
 		super();
 
 		this._filteredItems = [];
+		this.selectedItems = [];
 		this._previouslySelectedItems = [];
 		this.selectedValues = [];
 		this._itemsBeforeOpen = [];
