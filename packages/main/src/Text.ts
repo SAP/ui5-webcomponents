@@ -4,10 +4,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import WrappingType from "./types/WrappingType.js";
 
 // Styles
-import textStyles from "./generated/themes/Text.css.js";
+import styles from "./generated/themes/Text.css.js";
 
 /**
  * @class
@@ -18,15 +17,18 @@ import textStyles from "./generated/themes/Text.css.js";
  *
  * <h3>Usage</h3>
  *
- * Use the Text component if you want to display text inside a form, table, or any other content area.
- * Do not use the Text component if you need a label (use ui5-label), or vice versa.
+ * Use the `Text` if:
+ * - You want to display text inside a form, table, or any other content area.
+ *
+ * Do not use the `Text` if:
+ * - You need a label to reference input type of components (use ui5-label).
  *
  * <h3>Responsive behavior</h3>
  *
  * The Text component is fully adaptive to all screen sizes.
- * By default, the text will truncate when the space is not enough for the entire text.
- * You can define whether the text should wrap or truncate via the <code>wrapping-type</code> property.
- * You can also define the number of lines the text should wrap before it truncates via the <code>max-lines</code> property.
+ * By default, the text will wrap when the space is not enough.
+ * In addition, the component supports truncation via the <code>max-lines</code> property,
+ * by defining the number of lines the text should wrap before start truncating.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -36,7 +38,7 @@ import textStyles from "./generated/themes/Text.css.js";
  * @extends UI5Element
  * @public
  * @slot {Array<Node>} default - Defines the text of the component.
- * @since 1.23.0
+ * @since 2.0
  */
 @customElement({
 	tag: "ui5-text",
@@ -44,28 +46,11 @@ import textStyles from "./generated/themes/Text.css.js";
 	template: () => {
 		return html`<bdi><slot></slot></bdi>`;
 	},
-	styles: textStyles,
+	styles,
 })
 class Text extends UI5Element {
 	/**
-	 * Defines how the text of a component will be displayed,
-	 * when there is not enough space for the entire text.
-	 *
-	 * <ul>
-	 * <li>"None" - the text will truncate (default).</li>
-	 * <li>"Normal" - the text will wrap.</li>
-	 * </ul>
-	 *
-	 * @default "None"
-	 * @public
-	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
-
-	/**
 	 * Defines the number of lines the text should wrap before it truncates.
-	 * <br><b>Note:</b> The property takes effect when <code>wrapping-type</code> is set to <code>Normal</code>.
-	 *
 	 * @default Infinity
 	 * @public
 	 */

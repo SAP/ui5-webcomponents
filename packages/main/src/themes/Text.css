@@ -10,15 +10,7 @@
 	cursor: text;
 }
 
-:host([wrapping-type="None"]),
-:host(:not([wrapping-type])) {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	word-wrap: normal;
-	overflow: hidden;
-}
-
-:host([wrapping-type="Normal"][max-lines]) {
+:host([max-lines]) {
 	display: -webkit-box;
 	-webkit-line-clamp: var(--_ui5_text_max_lines);
 	line-clamp: var(--_ui5_text_max_lines); 
