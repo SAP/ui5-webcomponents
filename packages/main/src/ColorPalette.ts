@@ -405,7 +405,7 @@ class ColorPalette extends UI5Element {
 
 	async _chooseCustomColor() {
 		const colorPicker = await this.getColorPicker();
-		this._setColor(colorPicker.color);
+		this._setColor(colorPicker.value);
 		this._closeDialog();
 	}
 
