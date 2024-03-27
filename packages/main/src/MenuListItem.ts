@@ -26,7 +26,7 @@ class MenuListItem extends CustomListItem {
 	 * @private
 	 */
 	@property({ type: Object })
-	associatedItem?: MenuItem;
+	associatedItem!: MenuItem;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
