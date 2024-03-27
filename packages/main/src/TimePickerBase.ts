@@ -26,6 +26,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -47,7 +48,6 @@ import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 type TimePickerBaseChangeInputEventDetail = {
 	value: string,

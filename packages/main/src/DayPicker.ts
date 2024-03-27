@@ -32,6 +32,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
 import type {
@@ -50,7 +51,6 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const DAYS_IN_WEEK = 7;

@@ -7,6 +7,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
@@ -37,7 +38,6 @@ import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerP
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 

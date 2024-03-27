@@ -18,6 +18,7 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import timeSelectionTemplate from "./generated/templates/TimeSelectionTemplate.lit.js";
 import WheelSlider from "./WheelSlider.js";
 import {
@@ -38,7 +39,6 @@ import {
 import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
 import type { WheelSliderSelectEventDetail } from "./WheelSlider.js";
 import type { HourType } from "./timepicker-utils/TimeSlider.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 type TimeSelectionChangeEventDetail = {
 	value: string | undefined,

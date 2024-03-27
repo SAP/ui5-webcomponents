@@ -11,6 +11,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; //
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import SegmentedButton from "./SegmentedButton.js";
 import {
 	getHoursConfigByFormat,
@@ -23,7 +24,6 @@ import {
 	TIMEPICKER_SECONDS_LABEL,
 	TIMEPICKER_CLOCK_DIAL_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 type TimePickerComponentIndexMap = {
 	hours: number,
