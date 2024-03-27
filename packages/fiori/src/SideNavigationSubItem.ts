@@ -6,7 +6,7 @@ import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase
 import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
 
 // Styles
-import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
+import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.css.js";
 
 /**
  * @class
@@ -29,7 +29,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
 	tag: "ui5-side-navigation-sub-item",
 	renderer: litRender,
 	template: SideNavigationSubItemTemplate,
-	styles: SideNavigationItemCss,
+	styles: SideNavigationSubItemCss,
 	dependencies: [
 		Icon,
 	],
