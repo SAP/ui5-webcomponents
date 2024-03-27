@@ -17,11 +17,8 @@ import styles from "./generated/themes/Text.css.js";
  *
  * <h3>Usage</h3>
  *
- * Use the `Text` if:
- * - You want to display text inside a form, table, or any other content area.
- *
- * Do not use the `Text` if:
- * - You need a label to reference input type of components (use ui5-label).
+ * - Use the `Text` if uou want to display text inside a form, table, or any other content area.
+ * - Do not use the `Text` if you need to reference input type of components (use ui5-label).
  *
  * <h3>Responsive behavior</h3>
  *
