@@ -126,12 +126,12 @@ type SelectLiveChangeEventDetail = {
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
  *
- * - [F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.
- * - [UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
- * - [SPACE, ENTER] - If the drop-down is opened - selects the focused option.
- * - [ESC] - Closes the drop-down without changing the selection.
- * - [HOME] - Navigates to first option
- * - [END] - Navigates to the last option
+ * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
+ * - [Up] or [Down] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
+ * - [Space], [Enter] - If the drop-down is opened - selects the focused option.
+ * - [Escape] - Closes the drop-down without changing the selection.
+ * - [Home] - Navigates to first option
+ * - [End] - Navigates to the last option
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
