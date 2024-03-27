@@ -39,7 +39,7 @@ import BarCss from "./generated/themes/Bar.css.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents-fiori/dist/Bar.js";`
+ * `import "@ui5/webcomponents/dist/Bar.js";`
  * @csspart bar - Used to style the wrapper of the content of the component
  * @constructor
  * @extends UI5Element

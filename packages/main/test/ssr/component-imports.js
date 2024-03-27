@@ -1,6 +1,7 @@
 import Avatar from "../../dist/Avatar.js";
 import AvatarGroup from "../../dist/AvatarGroup.js";
 import Badge from "../../dist/Badge.js";
+import Bar from "../../dist/Bar.js";
 import Breadcrumbs from "../../dist/Breadcrumbs.js";
 import BusyIndicator from "../../dist/BusyIndicator.js";
 import Button from "../../dist/Button.js";
