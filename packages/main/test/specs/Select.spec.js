@@ -26,7 +26,7 @@ describe("Select general interaction", () => {
 
 		await select.click();
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = (await popover.shadow$$("ui5-li"))[0];
+		const firstItem = (await popover.$$("ui5-li"))[0];
 
 		await firstItem.click();
 
@@ -43,7 +43,7 @@ describe("Select general interaction", () => {
 
 		await select.click();
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const secondItem = (await popover.shadow$$("ui5-li"))[1];
+		const secondItem = (await popover.$$("ui5-li"))[1];
 
 		await secondItem.click();
 
@@ -61,7 +61,7 @@ describe("Select general interaction", () => {
 		await select.click();
 
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = await popover.shadow$("ui5-li:last-child");
+		const firstItem = await popover.$("ui5-li:last-child");
 		await firstItem.click();
 
 		assert.strictEqual(await inputResult.getProperty("value"), "", "Event not fired when already selected item is selected");
@@ -438,7 +438,7 @@ describe("Select general interaction", () => {
 		const firstOption = await browser.$("#mySelect ui5-option:first-child");
 		const select = await browser.$("#mySelect");
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstListItem = await popover.shadow$("ui5-li:first-child");
+		const firstListItem = await popover.$("ui5-li:first-child");
 
 		assert.ok(await firstOption.getProperty("selected"), "First option should be selected");
 		assert.ok(await firstListItem.getProperty("selected"), "First list item should be selected");
@@ -494,7 +494,7 @@ describe("Select general interaction", () => {
 
 		await select.click();
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = await popover.shadow$("ui5-li:first-child");
+		const firstItem = await popover.$("ui5-li:first-child");
 
 		await firstItem.click();
 
@@ -509,8 +509,8 @@ describe("Select general interaction", () => {
 
 		await select.click();
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = (await popover.shadow$$("ui5-li"))[0];
-		const thirdItem = (await popover.shadow$$("ui5-li"))[2];
+		const firstItem = (await popover.$$("ui5-li"))[0];
+		const thirdItem = (await popover.$$("ui5-li"))[2];
 
 		await firstItem.click();
 
@@ -584,7 +584,7 @@ describe("Select general interaction", () => {
 	it("Tests that the picker is closed when the selected value is clicked", async () => {
 		const select = await browser.$("#mySelect");
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = (await popover.shadow$$("ui5-li"))[0];
+		const firstItem = (await popover.$$("ui5-li"))[0];
 
 		// select the first item
 		await select.click();
