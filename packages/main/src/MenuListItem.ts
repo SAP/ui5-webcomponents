@@ -37,6 +37,7 @@ class MenuListItem extends CustomListItem {
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
+	 * @since 1.24.0
 	 */
 	@property()
 	icon!: string;
@@ -47,7 +48,7 @@ class MenuListItem extends CustomListItem {
 	 * **Note:** The additional text would not be displayed if the item has a submenu.
 	 * @default ""
 	 * @public
-	 * @since 1.8.0
+	 * @since 1.24.0
 	 */
 	@property()
 	additionalText!: string;
