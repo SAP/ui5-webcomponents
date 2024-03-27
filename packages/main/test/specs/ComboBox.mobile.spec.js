@@ -12,19 +12,20 @@ describe("Basic mobile picker rendering and interaction", () => {
 		await combo.scrollIntoView();
 		await combo.click();
 
-		const dialogInput = await browser.$(`#combo2`).shadow$("ui5-responsive-popover").$("[ui5-input]");
+		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		assert.ok(await dialogInput.isDisplayed(), "Input is displayed");
 
-		const dialogCloseButton = await browser.$(`#combo2`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
+		const dialogCloseButton = await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 		assert.ok(await dialogCloseButton.isDisplayed(), "Close icon is displayed");
 
-		const dialogOkButton = await browser.$(`#combo2`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+		const dialogOkButton = await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
 		assert.ok(await dialogOkButton.isDisplayed(), "Ok button is displayed");
 	});
 
 	it("Should close the mobile picker dialog when pressing the close button", async () => {
-		const picker =  await browser.$(`#combo2`).shadow$("ui5-responsive-popover");
-		const dialogCloseButton = await browser.$(`#combo2`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
+		const combo = await browser.$("#combo2");
+		const picker =  await combo.shadow$("ui5-responsive-popover");
+		const dialogCloseButton = await picker.$(".ui5-responsive-popover-close-btn");
 
 		assert.ok(await picker.isDisplayed(), "Picker is still opened");
 
@@ -35,8 +36,8 @@ describe("Basic mobile picker rendering and interaction", () => {
 
 	it("Should close the mobile picker dialog when pressing the OK button", async () => {
 		const combo = await browser.$("#combo2");
-		const picker =  await browser.$(`#combo2`).shadow$("ui5-responsive-popover");
-		const dialogOkButton = await browser.$(`#combo2`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+		const picker =  await combo.shadow$("ui5-responsive-popover");
+		const dialogOkButton = await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
 
 		await combo.scrollIntoView();
 		await combo.click();

@@ -242,7 +242,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._updateMediaRange();
+		renderFinished().then(() => {
+			this._updateMediaRange();
+		});
 	}
 
 	onEnterDOM() {
