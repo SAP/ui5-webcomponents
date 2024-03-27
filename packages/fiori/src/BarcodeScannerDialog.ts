@@ -73,8 +73,8 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
 	renderer: litRender,
-	staticAreaTemplate: BarcodeScannerDialogTemplate,
-	staticAreaStyles: [BarcodeScannerDialogCss],
+	template: BarcodeScannerDialogTemplate,
+	styles: [BarcodeScannerDialogCss],
 	dependencies: [
 		Dialog,
 		BusyIndicator,

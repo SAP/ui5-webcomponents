@@ -19,12 +19,6 @@ import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/message-warning.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 
-// Templates
-import NotificationOverflowActionsPopoverTemplate from "./generated/templates/NotificationOverflowActionsPopoverTemplate.lit.js";
-
-// Styles
-import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
-
 /**
  * Defines the icons corresponding to the notification's priority.
  */
@@ -48,10 +42,7 @@ type NotificationListItemBaseCloseEventDetail = {
  * @since 1.0.0-rc.8
  * @public
  */
-@customElement({
-	staticAreaStyles: NotificationOverflowActionsPopoverCss,
-	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
-})
+@customElement()
 
 /**
  * Fired when the `Close` button is pressed.
