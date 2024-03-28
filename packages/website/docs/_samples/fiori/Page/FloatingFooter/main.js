@@ -5,3 +5,4 @@ import "@ui5/webcomponents/dist/Bar.js";
 import "@ui5/webcomponents-fiori/dist/Page.js";
 
 import "@ui5/webcomponents-icons/dist/home.js";
+import "@ui5/webcomponents-icons/dist/action-settings.js";
