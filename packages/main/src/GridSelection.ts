@@ -117,11 +117,12 @@ class GridSelection extends UI5Element implements IGridFeature {
 		});
 	}
 
-	informRowSelectionChange(row: GridRow, selected: boolean) {
+	informRowSelectionChange(row: GridRow) {
+		const isRowSelected = this.isMultiSelect() ? this.isSelected(row) : true;
 		const rowIdentifier = this.getRowIdentifier(row);
 		if (this.selected && this.mode === GridSelectionMode.Multi) {
 			const selectedSet = this.selectedAsSet;
-			selectedSet[selected ? "add" : "delete"](rowIdentifier);
+			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
 			this.selectedAsSet = selectedSet;
 		} else {
 			this.selected = rowIdentifier;
@@ -129,11 +130,12 @@ class GridSelection extends UI5Element implements IGridFeature {
 		this.fireEvent("change");
 	}
 
-	informHeaderRowSelectionChange(selected: boolean) {
+	informHeaderRowSelectionChange() {
+		const isRowSelected = this.areAllRowsSelected();
 		const selectedSet = this.selectedAsSet;
 		this._grid!.rows.forEach(row => {
 			const rowIdentifier = this.getRowIdentifier(row);
-			selectedSet[selected ? "add" : "delete"](rowIdentifier);
+			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
 		});
 		this.selectedAsSet = selectedSet;
 		this.fireEvent("change");
