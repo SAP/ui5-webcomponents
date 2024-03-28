@@ -550,7 +550,11 @@ abstract class UI5Element extends HTMLElement {
 			}
 		} else if (typeof newValue !== "object") {
 			if (attrValue !== newValue) {
-				this.setAttribute(attrName, newValue as string);
+				if (attrValue === null && newValue === undefined) {
+					this.removeAttribute(attrName);
+				} else {
+					this.setAttribute(attrName, newValue as string);
+				}
 			}
 		} // else { return; } // old object handling
 	}
