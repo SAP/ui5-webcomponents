@@ -46,6 +46,7 @@
 @import "../base/Toolbar-parameters.css";
 @import "../base/GrowingButton-parameters.css";
 @import "./TextArea-parameters.css";
+@import "../base/Text-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "../base/ToggleButton-parameters.css";
