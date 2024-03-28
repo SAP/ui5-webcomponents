@@ -18,13 +18,15 @@ type ClassMap = { [x: string] : ClassMapValue | ClassMap };
 
 type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
 
+type LowercaseString<T> = T extends string ? Lowercase<T> : never;
+
 type AccessibilityInfo = {
 	// The WAI-ARIA role of the component.
-	role?: Lowercase<string>,
+	role?: LowercaseString<string>,
 
 	// A translated text that represents the component type. Used when several components share same role,
 	// f.e. Select and ComboBox both have role="combobox".
-	type?: string,
+	type?: LowercaseString<string>,
 
 	// A translated text that represents relevant component description/state - value, placeholder, label, etc.
 	description?: string,
