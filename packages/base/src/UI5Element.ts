@@ -28,7 +28,12 @@ import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import type {
+	AccessibilityInfo,
+	PromiseResolve,
+	ComponentStylesData,
+	ClassMap,
+} from "./types.js";
 
 let autoId = 0;
 
@@ -902,6 +907,14 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	get classes(): ClassMap {
+		return {};
+	}
+
+	/**
+	 * Returns the component accessibility info.
+	 * @private
+	 */
+	get accessibilityInfo(): AccessibilityInfo {
 		return {};
 	}
 
