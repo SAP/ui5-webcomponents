@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** revise active state styles ([#8474](https://github.com/SAP/ui5-webcomponents/issues/8474)) ([3f9430c](https://github.com/SAP/ui5-webcomponents/commit/3f9430c64cfd349319b5f17ebc753ce0639a4ab8)), closes [#8309](https://github.com/SAP/ui5-webcomponents/issues/8309)
+* **ui5-button:** fix focus in belize ([#8498](https://github.com/SAP/ui5-webcomponents/issues/8498)) ([483d942](https://github.com/SAP/ui5-webcomponents/commit/483d942c3ba6227bd56dead070fba2313c2d97c2))
+* **ui5-carousel:** Fixed paging indicator numbers in right-to-left (RTL) mode ([#8543](https://github.com/SAP/ui5-webcomponents/issues/8543)) ([c032c0c](https://github.com/SAP/ui5-webcomponents/commit/c032c0cadbe4f9fc2e3b642d0155830ffb52325a))
+* **ui5-file-uploader:** adjust mouse cursor style ([#8485](https://github.com/SAP/ui5-webcomponents/issues/8485)) ([37a2e0d](https://github.com/SAP/ui5-webcomponents/commit/37a2e0df5643b643915284d5b36084803104bd6e)), closes [#7794](https://github.com/SAP/ui5-webcomponents/issues/7794)
+* **ui5-tabcontainer:** fix tab selection ([#8547](https://github.com/SAP/ui5-webcomponents/issues/8547)) ([5eaa835](https://github.com/SAP/ui5-webcomponents/commit/5eaa83574e98a251043b38efc34fc4477f79777c))
+
+
+
+
+
 # [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
 
 
