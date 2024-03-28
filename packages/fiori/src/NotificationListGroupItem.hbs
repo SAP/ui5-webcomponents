@@ -18,59 +18,11 @@
 			aria-label="{{toggleBtnAccessibleName}}"
 		></ui5-button>
 
-		{{#if hasPriority}}
-			<ui5-icon
-				class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
-				name="{{priorityIcon}}">
-			</ui5-icon>
-		{{/if}}
-
 		<div id="{{_id}}-title-text" class="ui5-nli-group-title-text" part="title-text">
 			{{titleText}}
 		</div>
 
-		{{#if showCounter}}
-			<span class="ui5-nli-group-counter">({{itemsCount}})</span>
-		{{/if}}
-
 		<div class="ui5-nli-group-divider"></div>
-
-		{{#unless collapsed}}
-			{{#if showOverflow}}
-				<ui5-button
-					icon="overflow"
-					design="Transparent"
-					@click="{{_onBtnOverflowClick}}"
-					class="ui5-nli-overflow-btn"
-					tooltip="{{overflowBtnAccessibleName}}"
-					aria-label="{{overflowBtnAccessibleName}}"
-				></ui5-button>
-			{{else}}
-				{{#each standardActions}}
-					<ui5-button
-						icon="{{this.icon}}"
-						class="ui5-nli-action"
-						?disabled="{{this.disabled}}"
-						design="{{this.design}}"
-						@click="{{this.press}}"
-						data-ui5-external-action-item-id="{{this.refItemid}}"
-					>
-						{{this.text}}
-					</ui5-button>
-				{{/each}}
-			{{/if}}
-		{{/unless}}
-
-		{{#if showClose}}
-			<ui5-button
-				icon="decline"
-				design="Transparent"
-				@click="{{_onBtnCloseClick}}"
-				tooltip="{{closeBtnAccessibleName}}"
-				aria-label="{{closeBtnAccessibleName}}"
-				close-btn
-			></ui5-button>
-		{{/if}}
 
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>

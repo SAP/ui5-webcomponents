@@ -99,7 +99,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests no custom actions, when group item collapsed", async () => {
 		const fifthItem = await browser.$("#nlgi3");
-		const overflow = await fifthItem.shadow$(".ui5-nli-overflow-btn");
+		const overflow = await fifthItem.shadow$(".ui5-nli-menu-btn");
 
 		assert.notOk(await overflow.isExisting(),
 			"The custom actions are hidden when the group is collapsed");

@@ -21,7 +21,6 @@ import FlexibleColumnLayout from "./FlexibleColumnLayout.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import MediaGallery from "./MediaGallery.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
-import NotificationAction from "./NotificationAction.js";
 import NotificationListGroupItem from "./NotificationListGroupItem.js";
 import NotificationListItem from "./NotificationListItem.js";
 import Page from "./Page.js";
