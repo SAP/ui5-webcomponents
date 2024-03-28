@@ -79,7 +79,7 @@ interface ITab extends UI5Element {
 	isSingleClickArea?: boolean;
 	requiresExpandButton?: boolean;
 	selected?: boolean;
-	subTabs?: Array<ITab>;
+	items?: Array<ITab>;
 	tabs?: Array<ITab>
 	text?: string;
 	hasOwnContent?: boolean;
@@ -556,7 +556,7 @@ class TabContainer extends UI5Element {
 				return false;
 			});
 
-			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.subTabs.length) {
+			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.items.length) {
 				popoverTarget = closestPosition.element;
 			} else if (!acceptedPlacement) {
 				this.dropIndicatorDOM!.targetReference = null;
@@ -791,8 +791,8 @@ class TabContainer extends UI5Element {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item.forcedLevel = level;
 
-				if (item.subTabs) {
-					this._setIndentLevels(item.subTabs, level + 1);
+				if (item.items) {
+					this._setIndentLevels(item.items, level + 1);
 				}
 			}
 		});
@@ -1298,10 +1298,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isTabInStrip(targetOwner)) {
-			return targetOwner.realTabReference.subTabs;
+			return targetOwner.realTabReference.items;
 		}
 
-		return targetOwner.subTabs;
+		return targetOwner.items;
 	}
 
 	_setPopoverItems(items: Array<ITab>) {
@@ -1337,11 +1337,11 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	get hasSubTabs(): boolean {
+	get hasItems(): boolean {
 		const tabs = this._getTabs();
 
 		for (let i = 0; i < tabs.length; i++) {
-			if (tabs[i].subTabs.length > 0) {
+			if (tabs[i].items.length > 0) {
 				return true;
 			}
 		}
@@ -1464,7 +1464,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get tablistAriaDescribedById() {
-		return this.hasSubTabs ? `${this._id}-invisibleText` : undefined;
+		return this.hasItems ? `${this._id}-invisibleText` : undefined;
 	}
 
 	get shouldAnimate() {
@@ -1493,8 +1493,8 @@ const getTab = (el: HTMLElement | null) => {
 const walk = (tabs: Array<ITab>, callback: (_: ITab) => void) => {
 	[...tabs].forEach(tab => {
 		callback(tab);
-		if (tab.subTabs) {
-			walk(tab.subTabs, callback);
+		if (tab.items) {
+			walk(tab.items, callback);
 		}
 	});
 };
