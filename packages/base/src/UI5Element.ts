@@ -911,10 +911,7 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Components will add an implementation of the method to provide an accessibility info.
-	 * for usage from high-order (containers) components.
-	 * <b>For example:</b> TableRow may need the accessibility info of an Input, used inside the TableRow,
-	 * to provide better accessibility content for screen readers.
+	 * Returns the component accessibility info.
 	 * @private
 	 */
 	get accessibilityInfo(): AccessibilityInfo {
