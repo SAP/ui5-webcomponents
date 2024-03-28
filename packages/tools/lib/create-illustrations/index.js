@@ -104,8 +104,7 @@ const generate = async () => {
 		// If no Dot is present, Spot will be imported as Dot
 		const hasDot = dotIllustrationNames.indexOf(illustrationName) !== -1 ? 'Dot' : 'Spot';
 
-		return `import { registerIllustration } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
+		return `import dialogSvg from "./${illustrationsPrefix}-Dialog-${illustrationName}.js";
 import sceneSvg from "./${illustrationsPrefix}-Scene-${illustrationName}.js";
 import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
 import dotSvg from "./${illustrationsPrefix}-${hasDot}-${illustrationName}.js";${
@@ -120,35 +119,20 @@ const collection = "${collection}";${defaultText ? `
 const title = IM_TITLE_${illustrationNameUpperCase};
 const subtitle = IM_SUBTITLE_${illustrationNameUpperCase};` : ``}
 
-registerIllustration(name, {
-	dialogSvg,
-	sceneSvg,
-	spotSvg,
-	dotSvg,${defaultText ? `
-	title,
-	subtitle,` : ``}
+const nameExport = "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
+export default {
+	name, 
 	set,
 	collection,
-});
-
-export default "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
-export {
+	nameExport,
+	${defaultText ? `
+	title,
+	subtitle,` : ``}
 	dialogSvg,
 	sceneSvg,
 	spotSvg,
 	dotSvg,
 };`
-	};
-
-	const illustrationTypeDefinition = illustrationName => {
-		return `declare const dialogSvg: string;
-declare const sceneSvg: string;
-declare const spotSvg: string;
-declare const dotSvg: string;
-declare const _default: "${illustrationSet === "fiori" ? "" : `${illustrationSet}/`}${illustrationName}";
-
-export default _default;
-export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 	};
 
 	await fs.mkdir(destPath, { recursive: true });
@@ -170,7 +154,6 @@ export { dialogSvg, sceneSvg, spotSvg, dotSvg };`
 		const nestedPromises = [];
 		for (let illustrationName of fileNames) {
 			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.js`), illustrationImportTemplate(illustrationName)));
-			nestedPromises.push(fs.writeFile(path.join(destPath, `${illustrationName}.d.ts`), illustrationTypeDefinition(illustrationName)));
 		}
 
 		return Promise.all(nestedPromises);

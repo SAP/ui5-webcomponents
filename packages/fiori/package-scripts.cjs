@@ -26,10 +26,10 @@ const options = {
 			illustrationsPrefix: "sapIllus",
 			set: "fiori",
 			collection: "V4",
-			destinationPath: "dist/illustrations",
+			destinationPath: "dist/illustrations-v4",
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/Illustrations.ts",
-				location: '../../illustrations',
+				location: 'dist/illustrations',
 				filterOut
 			}
 		},
@@ -39,10 +39,10 @@ const options = {
 			illustrationsPrefix: "tnt",
 			set: "tnt",
 			collection: "V4",
-			destinationPath: "dist/illustrations/tnt",
+			destinationPath: "dist/illustrations-v4/tnt",
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/IllustrationsTNT.ts",
-				location: '../../illustrations/tnt',
+				location: 'dist/illustrations/tnt',
 				filterOut
 			}
 		},
@@ -55,7 +55,7 @@ const options = {
 			destinationPath: "dist/illustrations-v5/tnt",
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/IllustrationsV5TNT.ts",
-				location: '../../illustrations-v5/tnt',
+				location: 'dist/illustrations/tnt',
 				filterOut
 			}
 		},
@@ -65,10 +65,10 @@ const options = {
 			illustrationsPrefix: "tnt",
 			set: "tnt",
 			collection: "V5/HC",
-			destinationPath: "dist/illustrations-v5/tnt/hc",
+			destinationPath: "dist/illustrations-v5-hc/tnt",
 			dynamicImports: {
 				outputFile: "src/generated/js-imports/IllustrationsV5TNTHC.ts",
-				location: '../../illustrations-v5/tnt/hc',
+				location: 'dist/illustrations/tnt',
 				filterOut
 			}
 		},

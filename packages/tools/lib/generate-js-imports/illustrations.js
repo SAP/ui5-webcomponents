@@ -7,7 +7,7 @@ const generateDynamicImportLines = async (fileNames, location, exclusionPatterns
     .filter((fileName) => !exclusionPatterns.some((pattern) => fileName.startsWith(pattern)))
     .map((fileName) => {
       const illustrationName = fileName.replace(".js", "");
-      const illustrationPath = `${location}/${illustrationName}`;
+      const illustrationPath = `@ui5/webcomponents-fiori/${location}/${illustrationName}`;
       return `\t\tcase "${fileName.replace('.js', '')}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-${illustrationName.toLowerCase()}" */ "${illustrationPath}.js")).default;`;
     })
     .join("\n");
@@ -57,7 +57,7 @@ const generateIllustrations = async (config) => {
   const normalizedInputFolder = path.normalize(inputFolder);
   const normalizedOutputFile = path.normalize(outputFile);
 
-  const illustrations = await getMatchingFiles(normalizedInputFolder, /^.*\.js$/);
+  const illustrations = await getMatchingFiles(normalizedInputFolder, /^[^-.]+\.js$/);
 
   const dynamicImports = await generateDynamicImportLines(illustrations, location, filterOut);
   const availableIllustrations = generateAvailableIllustrationsArray(illustrations, filterOut);
