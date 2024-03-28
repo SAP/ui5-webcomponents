@@ -137,7 +137,7 @@ describe("TabContainer general interaction", () => {
 
 	it("tests start and end overflow behavior", async () => {
 
-		assert.strictEqual(await browser.$("#tabContainerStartAndEndOverflow").getAttribute("tabs-overflow-mode"), "StartAndEnd", "overflow mode is set to StartAndEnd");
+		assert.strictEqual(await browser.$("#tabContainerStartAndEndOverflow").getAttribute("overflow-mode"), "StartAndEnd", "overflow mode is set to StartAndEnd");
 
 		// Resize
 		await browser.setWindowSize(1000, 1080);
