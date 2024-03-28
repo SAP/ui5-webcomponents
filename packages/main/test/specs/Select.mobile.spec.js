@@ -18,7 +18,7 @@ describe("Select mobile general interaction", () => {
 
 		// act - move the focus to the first item
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const selectedItem = await popover.shadow$("ui5-li:last-child");
+		const selectedItem = await popover.$("ui5-li:last-child");
 		selectedItem.keys("ArrowUp");
 		selectedItem.keys("ArrowUp");
 
