@@ -54,7 +54,7 @@ import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
-import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
 
 // Templates
@@ -226,7 +226,7 @@ class TabContainer extends UI5Element {
 	 * so that it's easier for the user to select a specific tab.
 	 * @default false
 	 * @public
-	 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
+	 * @deprecated Since the introduction of OverflowMode, overflows will always be visible if there is not enough space for all tabs,
 	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the `overflowButton` and / or `startOverflowButton` slots.
 	 */
 	@property({ type: Boolean })
@@ -255,8 +255,8 @@ class TabContainer extends UI5Element {
 	 * @since 1.1.0
 	 * @public
 	 */
-	@property({ type: TabsOverflowMode, defaultValue: TabsOverflowMode.End })
-	tabsOverflowMode!: `${TabsOverflowMode}`;
+	@property({ type: OverflowMode, defaultValue: OverflowMode.End })
+	overflowMode!: `${OverflowMode}`;
 
 	/**
 	 * Sets the background color of the Tab Container's header as `Solid`, `Transparent`, or `Translucent`.
@@ -1206,7 +1206,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get isModeStartAndEnd() {
-		return this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
+		return this.overflowMode === OverflowMode.StartAndEnd;
 	}
 
 	_updateOverflowCounters() {

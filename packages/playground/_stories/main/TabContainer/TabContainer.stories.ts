@@ -19,7 +19,7 @@ const Template: UI5StoryArgs<TabContainer, StoryArgsSlots> = (args) => {
 	?fixed="${ifDefined(args.fixed)}"
 	?collapsed="${ifDefined(args.collapsed)}"
 	tab-layout="${ifDefined(args.tabLayout)}"
-	tabs-overflow-mode="${ifDefined(args.tabsOverflowMode)}"
+	overflow-mode="${ifDefined(args.overflowMode)}"
 	header-background-design="${ifDefined(args.headerBackgroundDesign)}"
 	content-background-design="${ifDefined(args.contentBackgroundDesign)}"
 	tabs-placement="${ifDefined(args.tabsPlacement)}"
