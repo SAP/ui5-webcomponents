@@ -191,7 +191,12 @@ class MultiInput extends Input {
 
 		if (e.relatedTarget === this.nativeInput) {
 			this.tokenizer.closeMorePopover();
+			this.tokenizer.expanded = true;
+			return;
 		}
+
+		this.tokenizer.expanded = false;
+		this.tokenizer.showMore = true;
 	}
 
 	valueHelpMouseUp() {
@@ -346,6 +351,21 @@ class MultiInput extends Input {
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+	}
+
+	// We no longer want tokenezer to always scroll to end when expanded
+	// When in standalone mode we need to expand it, scroll to start and
+	// focus the first token when it is initially focused
+	async onAfterRendering() {
+		await super.onAfterRendering();
+
+		if (this.tokenizer.expanded) {
+			this.tokenizer.scrollToEnd();
+		}
+
+		if (!this.tokenizer.expanded) {
+			this.tokenizer.scrollToStart();
+		}
 	}
 
 	get iconsCount() {

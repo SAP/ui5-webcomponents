@@ -3,15 +3,19 @@
 :host {
 	display: inline-block;
 	box-sizing: border-box;
-	border: 1px solid black;
+	border: none;
 	height: 2.25rem;
+}
+
+:host([disabled]) {
+	opacity: 40%;
+	pointer-events: none;
 }
 
 .ui5-tokenizer-root {
 	height: 100%;
 	display: flex;
 	align-items: center;
-	overflow-x: scroll;
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
 }
