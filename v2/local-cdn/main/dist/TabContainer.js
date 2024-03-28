@@ -39,7 +39,7 @@ import DropIndicator from "./DropIndicator.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
-import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
 import OverflowMode from "./types/OverflowMode.js";
 // Templates
@@ -1004,10 +1004,10 @@ __decorate([
     property({ type: OverflowMode, defaultValue: OverflowMode.End })
 ], TabContainer.prototype, "overflowMode", void 0);
 __decorate([
-    property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
+    property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
 ], TabContainer.prototype, "headerBackgroundDesign", void 0);
 __decorate([
-    property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
+    property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
 ], TabContainer.prototype, "contentBackgroundDesign", void 0);
 __decorate([
     property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })

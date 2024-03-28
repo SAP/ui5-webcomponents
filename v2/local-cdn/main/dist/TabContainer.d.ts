@@ -14,7 +14,7 @@ import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
-import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
 import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
@@ -158,14 +158,14 @@ declare class TabContainer extends UI5Element {
      * @since 1.10.0
      * @public
      */
-    headerBackgroundDesign: `${TabContainerBackgroundDesign}`;
+    headerBackgroundDesign: `${BackgroundDesign}`;
     /**
      * Sets the background color of the Tab Container's content as `Solid`, `Transparent`, or `Translucent`.
      * @default "Solid"
      * @since 1.10.0
      * @public
      */
-    contentBackgroundDesign: `${TabContainerBackgroundDesign}`;
+    contentBackgroundDesign: `${BackgroundDesign}`;
     /**
      * Defines the placement of the tab strip relative to the actual tabs' content.
      *
