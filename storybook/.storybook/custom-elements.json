@@ -22113,12 +22113,6 @@
         },
         {
             "kind": "javascript-module",
-            "path": "dist/upload-utils/UploadCollectionBodyDnD.js",
-            "declarations": [],
-            "exports": []
-        },
-        {
-            "kind": "javascript-module",
             "path": "dist/types/BarDesign.js",
             "declarations": [
                 {
@@ -23963,6 +23957,12 @@
                     }
                 }
             ]
+        },
+        {
+            "kind": "javascript-module",
+            "path": "dist/upload-utils/UploadCollectionBodyDnD.js",
+            "declarations": [],
+            "exports": []
         },
         {
             "kind": "javascript-module",
