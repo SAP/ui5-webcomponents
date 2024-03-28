@@ -170,31 +170,49 @@ class Grid extends UI5Element {
 
 	_onResize() {
 		const { clientWidth, scrollWidth } = this.getDomRef()!;
-		this.containerWidth = this.containerWidth || clientWidth;
-		const underflow = clientWidth - this.containerWidth;
-		const headers = this.headerRow.cells.toSorted((a, b) => a.importance - b.importance);
 
 		if (scrollWidth > clientWidth) {
+			// Overflow Handling: Move columns into the popin until overflow is resolved
 			const overflow = scrollWidth - clientWidth;
-			this.containerWidth = clientWidth;
-			headers.reduce((totalWidth, headerCell, headerCellIndex) => {
-				if (totalWidth <= overflow && !headerCell._popin && headerCellIndex !== this.headerRow.cells.length - 1) {
-					const headerWidth = headerCell.getBoundingClientRect().width;
+			const headers = this._getPopinOrderedColumns(false);
+			headers.reduce((totalPoppedInWidth, headerCell) => {
+				if (totalPoppedInWidth <= overflow && !headerCell._popin) {
+					const headerWidth = Math.ceil(headerCell.getBoundingClientRect().width);
+					totalPoppedInWidth += headerWidth;
 					this._setHeaderPopinState(headerCell, true, headerWidth);
-					totalWidth += headerWidth;
 				}
-				return totalWidth;
+				return totalPoppedInWidth;
 			}, 0);
-		} else if (underflow > 0) {
-			headers.filter(headerCell => headerCell._popin).toReversed().reduce((totalWidth, headerCell) => {
-				if ((totalWidth + headerCell._popinWidth) <= underflow && headerCell._popinWidth <= underflow) {
-					totalWidth += headerCell._popinWidth;
+			// Calculate container width considering popped-in columns
+			const lastPoppedIn = headers.filter(headerCell => headerCell._popin).toReversed()[0];
+			this.containerWidth = scrollWidth - lastPoppedIn._popinWidth - overflow;
+		} else {
+			// Underflow Handling: Restore columns from popin until container width is met
+			const headers = this._getPopinOrderedColumns(true).filter(it => it._popin);
+
+			headers.every(headerCell => {
+				const underflow = clientWidth - this.containerWidth;
+				if (underflow > headerCell._popinWidth) {
+					this.containerWidth += headerCell._popinWidth;
 					this._setHeaderPopinState(headerCell, false, 0);
-					this.containerWidth = scrollWidth;
+					return true;
 				}
-				return totalWidth;
-			}, 0);
+				return false;
+			});
 		}
+	}
+
+	_getPopinOrderedColumns(reverse: boolean) {
+		let headers = [...this.headerRow.cells];
+		headers = headers.reverse(); // reverse the "visual" order
+		headers = headers.sort((a, b) => a.importance - b.importance); // sort by importance (asc)
+		headers.pop(); // remove the most important column, as it will not be popped in
+
+		if (reverse) {
+			headers = headers.reverse();
+		}
+
+		return headers;
 	}
 
 	_setHeaderPopinState(headerCell: GridHeaderCell, inPopin: boolean, popinWidth: number) {
@@ -220,7 +238,13 @@ class Grid extends UI5Element {
 		if (this._getSelection()?.hasRowSelector()) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
-		widths.push(...this.headerRow._visibleCells.map(cell => `minmax(${cell.minWidth}, auto)`));
+		widths.push(...this.headerRow._visibleCells.map(cell => {
+			const minWidth = cell.minWidth === "auto" ? "3rem" : cell.minWidth;
+			if (cell.width === "auto" || cell.width.includes("%") || cell.width.includes("fr") || cell.width.includes("vw")) {
+				return `minmax(${minWidth}, ${cell.maxWidth})`;
+			}
+			return `minmax(${cell.width}, ${cell.width})`;
+		}));
 		return widths.join(" ");
 	}
 

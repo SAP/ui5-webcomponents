@@ -53,6 +53,9 @@ class GridHeaderCell extends UI5Element {
 	@property({ type: String, defaultValue: "auto" })
 	minWidth!: string;
 
+	@property({ type: String, defaultValue: "auto" })
+	maxWidth!: string;
+
 	@property({ validator: Integer, defaultValue: 0 })
 	importance!: number;
 
@@ -72,6 +75,8 @@ class GridHeaderCell extends UI5Element {
 	onEnterDOM() {
 		this.setAttribute("role", "columnheader");
 		this.style.minWidth = this.minWidth;
+		this.style.maxWidth = this.maxWidth;
+		this.style.width = this.width;
 	}
 
 	onBeforeRendering() {
