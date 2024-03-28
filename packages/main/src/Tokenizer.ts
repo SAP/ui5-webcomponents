@@ -244,11 +244,11 @@ class Tokenizer extends UI5Element {
 
 		this._tokens.forEach(token => {
 			token.singleToken = this._tokens.length === 1;
-			if ((this.readonly || this.disabled) && !token.readonly) {
+			if ((this.readonly || this.disabled)) {
 				token.readonly = true;
 			}
 
-			if (!this.readonly && !this.disabled && token.readonly) {
+			if (!this.readonly && !this.disabled) {
 				token.readonly = false;
 			}
 		});
@@ -457,9 +457,16 @@ class Tokenizer extends UI5Element {
 			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 
 			const currentListItem = e.detail.item as ListItem;
-			const nextListItemIcon = currentListItem.nextElementSibling && currentListItem.nextElementSibling.shadowRoot!.querySelector<HTMLElement>("[part=delete-button]")!;
+			const nextListItem = currentListItem.nextElementSibling;
+			const preciousListItem = currentListItem.previousElementSibling;
 
-			nextListItemIcon && nextListItemIcon.focus();
+			if (nextListItem) {
+				const nextListItemIcon = nextListItem.shadowRoot!.querySelector<HTMLElement>("[part=delete-button]")!;
+				nextListItemIcon.focus();
+			} else if (preciousListItem) {
+				const previousListItemIcon = preciousListItem.shadowRoot!.querySelector<HTMLElement>("[part=delete-button]")!;
+				previousListItemIcon.focus();
+			}
 		}
 	}
 
@@ -733,7 +740,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		// When focus is prevented and focus is not going to a token, we need to reset the currentIndex of the ItemNavigation
-		if (this.preventInitialFocus && !(e.relatedTarget as HTMLElement).hasAttribute("ui5-token")) {
+		if (this.preventInitialFocus && e.relatedTarget instanceof HTMLElement && !e.relatedTarget.hasAttribute("ui5-token")) {
 			this._getTokens().forEach(token => {
 				token.forcedTabIndex = "-1";
 			});

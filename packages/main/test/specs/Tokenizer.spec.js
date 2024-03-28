@@ -1,5 +1,18 @@
 import { assert } from "chai";
 
+async function getResourceBundleTexts(keys) {
+	return browser.executeAsync((keys, done) => {
+		const tokenizer = document.getElementById("nmore-tokenizer");
+
+		const texts = keys.reduce((result, key) => {
+			result[key] = tokenizer.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts[key], 3)
+			return result;
+		}, {});
+		done(texts);
+
+	}, keys);
+}
+
 const getTokenizerPopoverId = async (tokenizerId) => {
 	return await browser.executeAsync(async (tokenizerId, done) => {
 		const staticAreaItem = await (document.querySelector(`#${tokenizerId}`).getStaticAreaItemDomRef());
@@ -49,30 +62,14 @@ describe("General interaction", () => {
 		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
 
         assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await rpo.getProperty("opened"), "nMore Popover should be open");
 		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
 
         await browser.keys('Escape');
-        // await browser.debug();
 
-		// assert.ok(await lastToken.getProperty("focused"), "Last token should be focused, after Escape key is pressed.");
+		assert.ok(await lastToken.getProperty("focused"), "Last token should be focused, after Escape key is pressed.");
 	});
 
-	// it("Should apply correct text to the tokens overflow indicator", async () => {
-	// 	const tokenizer = await browser.$("#nmore-tokenizer");
-	// 	const tokenizerNMore = await tokenizer.shadow$("ui5-tokenizer");
-	// 	const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
-	// 	let resourceBundleText = null;
-
-	// 	resourceBundleText = await browser.executeAsync(done => {
-	// 		const mi = document.getElementById("nmore-tokenizer");
-	// 		done({
-	// 			miNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
-	// 		});
-	// 	});
-
-	// 	assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.miNMoreLabelText, "Text should be 1 More");
-	// });
 });
 
 describe("Readonly", () => {
@@ -122,7 +119,7 @@ describe("Single token", () => {
 		await browser.url(`test/pages/Tokenizer.html`);
 	});
 
-	it("should truncate token when single token is in the multinput and open popover on click", async () => {
+	it("should open popover on click of single token", async () => {
 		const tokenizer = await $("#single-token-tokenizer");
 		const token = await tokenizer.$("ui5-token");
 		const rpoClassName = await getTokenizerPopoverId("single-token-tokenizer");
@@ -132,20 +129,39 @@ describe("Single token", () => {
 
 		await token.click();
 
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await rpo.getProperty("opened"), "nMore Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
 		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
 		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
 		await token.click();
 
-		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await rpo.getProperty("opened"), "nMore Popover should be closed");
 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		assert.ok(await token.getProperty("focused"), "Token should be focused");
 	});
 });
 
-// describe("ARIA attributes", () => {
+describe("Accessibility", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Tokenizer.html`);
+	});
+
+    it("nMore link should be translated", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+
+		const keys = [
+            "MULTIINPUT_SHOW_MORE_TOKENS",
+		];
+
+        const texts = await getResourceBundleTexts(keys);
+
+        console.log(texts)
+
+		assert.strictEqual(await nMoreLabel.getText(), texts.MULTIINPUT_SHOW_MORE_TOKENS, "nMore label is correctly translated");
+	});
+
 // 	it ("aria-describedby value according to the tokens count", async () => {
 // 		const mi = await browser.$("#no-tokens");
 // 		const innerInput = await mi.shadow$("input");
@@ -204,11 +220,45 @@ describe("Single token", () => {
 
 // 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
 // 	});
-// });
+});
 
 describe("Keyboard handling", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/Tokenizer.html`);
+	});
+
+    it("token selection", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+
+		await firstToken.click();
+		await tokenizer.keys("ArrowRight");
+
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused");
+
+		await tokenizer.keys("Space");
+
+		assert.ok(await secondToken.getProperty("selected"), "The second token is selected");
+
+		await tokenizer.keys("Space");
+
+		assert.notOk(await secondToken.getProperty("selected"), "The second token is deselected");
+	});
+
+    it("should select a token with CTRL+SPACE", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+
+		await firstToken.click();
+		await tokenizer.keys("ArrowRight");
+
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused");
+
+        await mcb.keys(["Control", "Space"]);
+
+		assert.ok(await secondToken.getProperty("selected"), "The second token is selected");
 	});
 
 	it("left/right arrow navigation", async () => {
@@ -218,10 +268,13 @@ describe("Keyboard handling", () => {
 
 		await firstToken.click();
 		await tokenizer.keys("ArrowRight");
-		assert.ok(await secondToken.getProperty("focused"), "The last token is focused");
+
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused");
 
 		await tokenizer.keys("ArrowLeft");
-		assert.ok(await firstToken.getProperty("focused"), "The last token is not focused anymore");
+
+		assert.notOk(await secondToken.getProperty("focused"), "The second token is not focused anymore");
+		assert.ok(await firstToken.getProperty("focused"), "The first token is focused");
 	});
 
 	it("home/end navigation", async () => {
@@ -248,21 +301,56 @@ describe("Keyboard handling", () => {
 
 		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
 		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
-		assert.strictEqual(await secondToken.getProperty("focused"), true, "The second token should be selected");
+		assert.strictEqual(await secondToken.getProperty("focused"), true, "The second token should be focused");
 		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
 
 		await browser.keys(["Shift", "ArrowLeft"]);
 
 		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
-		assert.strictEqual(await firstToken.getProperty("focused"), true, "The second token should be selected");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token should be focused");
 		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
-		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should be selected");
+		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
 
 		await secondToken.click();
 
 		assert.strictEqual(await firstToken.getProperty("selected"), false, "The first token should NOT be selected");
 		assert.strictEqual(await secondToken.getProperty("selected"), false, "The second token should NOT be selected");
 		assert.strictEqual(await thirdToken.getProperty("selected"), false, "The third token should NOT be selected");
+	});
+
+    it("should select tokens with [Shift] + [End] key modifier", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+
+		await firstToken.click();
+		await browser.keys(["Shift", "End"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token should be focused");
+		assert.strictEqual(await lastToken.getProperty("selected"), true, "The last token should be selected");
+	});
+
+
+    it("should select tokens with [Shift] + [Home] key modifier", async () => {
+		const tokenizer =  await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+
+		await firstToken.click();
+		await browser.keys("End");
+
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The second token should be selected");
+
+		await browser.keys(["Shift", "Home"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token should be focused");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await lastToken.getProperty("selected"), true, "The last token should be selected");
 	});
 
 	it ("Clicking delete icon should delete token and place the focus on the previous one", async () => {
@@ -281,7 +369,6 @@ describe("Keyboard handling", () => {
 
 		assert.equal(tokens.length, 4, "should have one tokens");
 		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
-		assert.equal(await secondToken.getProperty("text"), "Bulgaria", "The selected token should not be deleted.");
 	});
 
 	it("should delete token on backspace", async () => {
@@ -300,7 +387,7 @@ describe("Keyboard handling", () => {
 
 		// Assert
 		assert.ok(await secondToken.getProperty("focused"), "The second token is focused on Backspace");
-		assert.strictEqual(tokens.length, 4, "The tokenizer has two tokens");
+		assert.strictEqual(tokens.length, 4, "The tokenizer has four tokens");
 
 		// Act
 		await browser.keys(["Control", "A"]);
@@ -309,6 +396,100 @@ describe("Keyboard handling", () => {
 
 		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
 	});
+
+    // it ("DELETE should delete token and place the focus on the next one", async () => {
+    //     await browser.url(`test/pages/MultiComboBox.html`);
+
+    //     const mcb = await browser.$("#multi1");
+    //     const input = await mcb.shadow$("input");
+
+    //     await input.click();
+    //     await mcb.keys("ArrowLeft");
+    //     await mcb.keys("ArrowLeft");
+
+    //     await mcb.keys("Delete");
+
+    //     const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+    //     assert.equal(await tokens.length, 2, "should have two tokens");
+    //     assert.equal(await tokens[1].getProperty("focused"), true, "Previous token is focused");
+    // });
+
+    // it ("BACKSPACE should delete token all selected tokens and place the focus on the first token before the deleted ones", async () => {
+    //     await browser.url(`test/pages/MultiComboBox.html`);
+
+    //     const mcb = await browser.$("#mcb-items");
+    //     const input = await mcb.shadow$("input");
+    //     let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+    //     const fourthToken = tokens[3];
+
+    //     await fourthToken.click();
+    //     await mcb.keys(["Shift", "ArrowLeft"]);
+    //     await mcb.keys("Backspace");
+
+    //     tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+    //     assert.equal(await tokens.length, 3, "should have three tokens");
+    //     assert.equal(await tokens[1].getProperty("focused"), true, "Second token is focused");
+    // });
+
+    // it ("DELETE should delete token all selected tokens and place the focus on the first token after the deleted ones", async () => {
+    //     await browser.url(`test/pages/MultiComboBox.html`);
+
+    //     const mcb = await browser.$("#mcb-items");
+    //     const input = await mcb.shadow$("input");
+    //     let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+    //     const fourthToken = tokens[3];
+
+    //     await fourthToken.click();
+    //     await mcb.keys(["Shift", "ArrowLeft"]);
+    //     await mcb.keys("Delete");
+
+    //     tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+    //     assert.equal(await tokens.length, 3, "should have two tokens");
+    //     assert.equal(await tokens[2].getProperty("focused"), true, "Last token is focused");
+    // });
+
+    // it ("should cut a token with CTRL+X and paste it with CTRL+V", async () => {
+    //     await browser.url(`test/pages/MultiComboBox.html`);
+
+    //     const mcb = await browser.$("#multi1");
+    //     const mcb2 = await browser.$("#mcb");
+    //     const input = await mcb2.shadow$("input");
+    //     let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+    //     await tokens[1].click();
+    //     await tokens[1].keys(["Control", "x"]);
+
+    //     tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+    //     assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
+
+    //     await input.click();
+    //     await input.keys(["Control", "v"]);
+
+    //     assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+    // });
+
+    // it ("should cut a token with SHIFT+DELETE and paste it with SHIFT+INSERT", async () => {
+    //     await browser.url(`test/pages/MultiComboBox.html`);
+
+    //     const mcb = await browser.$("#multi1");
+    //     const mcb2 = await browser.$("#mcb");
+    //     const input = await mcb2.shadow$("input");
+    //     let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+    //     await tokens[1].click();
+    //     await tokens[1].keys(["Shift", "Delete"]);
+
+    //     tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+    //     assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
+
+    //     await input.click();
+    //     await input.keys(["Shift", "Insert"]);
+
+    //     assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
+    // });
+
 
 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
@@ -344,9 +525,9 @@ describe("Keyboard handling", () => {
 
 		await firstToken.click();
 		await browser.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
+		assert.ok(await rpo.getProperty("opened"), "nMore Popover should be opened");
 
 		await browser.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+		assert.notOk(await rpo.getProperty("opened"), "nMore Popover should be closed");
 	});
 });

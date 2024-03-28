@@ -4,8 +4,8 @@
 	?content-only-on-desktop="{{hasValueState}}"
 	placement-type="Bottom"
 	horizontal-align="Left"
-	@before-close={{handleBeforeClose}}
-	@before-open="{{handleBeforeOpen}}"
+	@ui5-before-close={{handleBeforeClose}}
+	@ui5-before-open="{{handleBeforeOpen}}"
 >
 	{{#unless _isPhone}}
 			{{#unless noValueStatePopover}}
