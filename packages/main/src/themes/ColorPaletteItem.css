@@ -8,7 +8,8 @@
 	box-sizing: border-box;
 }
 
-:host(:not([_disabled]):hover) {
+:host(:not([_disabled]):hover),
+:host([selected]) {
 	height: var(--_ui5_color-palette-item-hover-height);
 	width: var(--_ui5_color-palette-item-hover-height);
 	margin: var(--_ui5_color-palette-item-hover-margin);
@@ -17,7 +18,7 @@
 
 :host(:not([hidden])[on-phone]) {
 	width: 100%;
-	padding-top: calc(100% - 2px); /* padding-top is used to base the height on dynamic width and we remove 2px for the top and bottom borders*/
+	padding-top: calc(100% - 0.125rem); /* padding-top is used to base the height on dynamic width and we remove 2px for the top and bottom borders*/
 	border: 1px solid var(--sapContent_ForegroundBorderColor);
 	border-radius: 0.25rem;
 	display: inline-block;
@@ -43,13 +44,16 @@
 	border-radius: 0.1875rem;
 }
 
-.ui5-cp-item:hover:not(:focus) {
-	border: 1px solid var(--sapGroup_ContentBackground);
+.ui5-cp-item:hover:not(:focus),
+:host(:not([on-phone])) .ui5-cp-item.ui5-cp-selected {
+	border: 0.0625rem solid var(--sapGroup_ContentBackground);
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;
 }
 
-:host(:not([_disabled]):not([on-phone])) .ui5-cp-item:focus{
+.ui5-cp-item.ui5-cp-selected:focus,
+:host(:not([_disabled]):not([on-phone])) .ui5-cp-item:focus,
+:host(:not([_disabled])[on-phone]) .ui5-cp-item:focus {
 	outline: none;
 }
 
@@ -106,5 +110,25 @@
 	bottom: var(--_ui5_color-palette-item-after-focus-hover-offset);
 	border: var(--_ui5_color-palette-item-after-focus-color);
 	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
+	pointer-events: none;
+}
+
+
+:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::after,
+:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::after {
+	border: var(--_ui5_color-palette-item-selected-focused-border-after);
+}
+
+:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
+:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	left: var(--_ui5_color-palette-item-selected-focused-border-before);
+	top: var(--_ui5_color-palette-item-selected-focused-border-before);
+	right: var(--_ui5_color-palette-item-selected-focused-border-before);
+	bottom: var(--_ui5_color-palette-item-selected-focused-border-before);
+	border: var(--_ui5_color-palette-item-before-focus-color);
+	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
 	pointer-events: none;
 }

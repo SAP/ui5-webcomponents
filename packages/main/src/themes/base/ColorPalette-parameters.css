@@ -18,4 +18,8 @@
 	--_ui5_color-palette-item-inner-border-radius: 0.1875rem;
 	--_ui5_color-palette-item-hover-outer-border-radius: 0.25rem;
 	--_ui5_color-palette-item-hover-inner-border-radius: 0.1875rem;
+	--_ui5_color-palette-item-selected-focused-border-before: var(--_ui5_color-palette-item-before-focus-hover-offset);
+	--_ui5_color-palette-item-after-focus-color-phone: var(--_ui5_color-palette-item-after-focus-color);
+	--_ui5_color-palette-item-phone-selected-focus: none;
+	--_ui5_color-palette-item-selected-focused-border-after: var(--_ui5_color-palette-item-after-focus-color);
 }
