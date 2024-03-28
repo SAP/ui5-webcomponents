@@ -1,0 +1,35 @@
+{{>include "./ListItem.hbs"}}
+
+{{#*inline "listItemContent"}}
+	{{#if text}}
+		<div class="ui5-menu-item-text">{{text}}</div>
+	{{/if}}
+	{{#if _additionalText}}
+		<span part="additional-text" class="ui5-li-additional-text">{{_additionalText}}</span>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "iconBegin"}}
+	{{#if _siblingsWithIcon}}
+		{{#if hasIcon}}
+			<ui5-icon class="ui5-li-icon" name="{{icon}}"></ui5-icon>
+		{{else}}
+			<div class="ui5-menu-item-dummy-icon"></div>
+		{{/if}}
+	{{/if}}
+{{/inline}}
+
+{{#*inline "iconEnd"}}
+	{{#if hasSubmenu}}
+		<div
+			class="ui5-menu-item-submenu-icon"
+		>
+			<ui5-icon
+				part="subicon"
+				name="slim-arrow-right"
+				class="ui5-menu-item-icon-end"
+			>
+			</ui5-icon>
+		</div>
+	{{/if}}
+{{/inline}}
