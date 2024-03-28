@@ -1,0 +1,13 @@
+import type { Meta } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import type Table from "@ui5/webcomponents/dist/Table.js";
+declare const _default: Meta<Table>;
+export default _default;
+export declare const Basic: UI5StoryArgs<Table, StoryArgsSlots>;
+export declare const PopinDisplayInline: UI5StoryArgs<Table, StoryArgsSlots>;
+export declare const StickyHeader: UI5StoryArgs<Table, StoryArgsSlots>;
+export declare const NoData: UI5StoryArgs<Table, StoryArgsSlots>;
+export declare const GrowingTableMoreButton: UI5StoryArgs<Table, StoryArgsSlots>;
+export declare const GrowingTableScroll: UI5StoryArgs<Table, StoryArgsSlots>;
+export declare const GroupingTableSelect: UI5StoryArgs<Table, StoryArgsSlots>;

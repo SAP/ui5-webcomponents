@@ -1,0 +1,12 @@
+import type { Meta, StoryFn } from "@storybook/web-components";
+import type List from "@ui5/webcomponents/dist/List.js";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+declare const _default: Meta<List>;
+export default _default;
+export declare const Basic: UI5StoryArgs<List, StoryArgsSlots>;
+export declare const Growing: StoryFn;
+export declare const Modes: StoryFn;
+export declare const GroupHeaders: UI5StoryArgs<List, StoryArgsSlots>;
+export declare const SeparationTypes: StoryFn;
+export declare const HighlightTypes: StoryFn;

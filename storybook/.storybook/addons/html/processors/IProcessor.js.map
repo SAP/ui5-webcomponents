@@ -1,0 +1,1 @@
+{"version":3,"file":"IProcessor.js","sourceRoot":"","sources":["../../../../../.storybook/addons/html/processors/IProcessor.ts"],"names":[],"mappings":"","sourcesContent":["export interface IProcessor {\n    process(node: HTMLElement): void;\n}\n"]}

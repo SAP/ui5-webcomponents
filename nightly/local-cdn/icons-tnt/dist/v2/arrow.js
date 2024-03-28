@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "arrow";
+const pathData = "M446 400q-27 0-45.5-18.5T382 337V223L117 489q-19 18-45 18-12 0-24-4.5T27 489Q8 470 8 444t19-45l265-265H179q-26 0-45-19t-19-45 19-44.5T179 7h266q12-1 24 4t21 14q19 19 19 45v267q0 26-18.5 44.5T446 400z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v2";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v2/arrow";
+export { pathData, ltr, accData };

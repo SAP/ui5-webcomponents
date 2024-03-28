@@ -1,0 +1,1170 @@
+@font-face {
+	font-family: "72-Bold";
+	src: url("../fonts/72-Bold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "72-Regular";
+	src: url("../fonts/72-Regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "72-Light";
+	src: url("../fonts/72-Light.woff2") format("woff2");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background-image) no-repeat center;
+    -webkit-background-size: var(--background-size);
+    -moz-background-size: var(--background-size);
+    -o-background-size: var(--background-size);
+    background-size: var(--background-size);
+    height: var(--body-height);
+    font-family: "72-Regular";
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* ---------------------------------------- 2560PX ---------------------------------------- */
+
+    /* REM Units based on 16px root font size. */
+
+    :root {
+        --background-image: url("../illustrations/background-svgs/Landing\ 2560.svg");
+        --background-size: cover;
+        --body-width: 2560px;
+        --body-height: 5872px;
+        --navbar-display: flex;
+        --navbar-align-items: center;
+        --navbar-background-color: white;
+        --navbar-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
+        --navbar-height: 4rem;
+        --navbar-link-font-size: 1.125rem;
+        --navbar-justify-content: space-between;
+        --navbar-padding-left: 14.563rem;
+        --navbar-padding-right: 1.125rem;
+        --navbar-padding: 0 var(--navbar-padding-right) 0 var(--navbar-padding-left);
+        --navbar-left-container-display: flex;
+        --navbar-left-container-align-items: center;
+        --navbar-left-container-justify-content: flex-start;
+        --navbar-right-container-display: flex;
+        --navbar-right-container-align-items: center;
+        --navbar-right-container-justify-content: flex-end;
+        --navbar-button-width: 5rem;
+        --navbar-button-height: 2rem;
+        --navbar-button-cursor: pointer;
+        --navbar-button-text-align: center;
+        --navbar-button-align-items: center;
+        --navbar-button-text-color: #FE7520;
+        --navbar-button-border-color: #F06E1E;
+        --navbar-button-border-radius: 0.5rem;
+        --navbar-button-border: 1px solid var(--navbar-button-border-color);
+        --navbar-large-text-font-size: 2rem;
+        --navbar-font-size: 1.125rem;
+        --navbar-item-margin-inline-end: 1.5rem;
+        --navbar-link-font-weight: 700;
+        --navbar-check-it-button-font-weight: 800;
+        --navbar-check-it-button-width: 6.25rem;
+        --navbar-check-it-button-height: 2.25rem;
+        --navbar-check-it-button-font-family: "72";
+        --navbar-check-it-button-font-color: #fff;
+        --navbar-check-it-button-background: #5496C6;
+        --navbar-check-it-button-padding: 0.5rem 0.75rem;
+        --navbar-check-it-button-border-radius: 0.5rem;
+        --navbar-check-it-button-box-shadow: 0px 0px 2px rgba(24, 115, 180, 0.2), 0px 4px 8px rgba(24, 115, 180, 0.2);
+        --navbar-link-display: inline-block;
+        --navbar-link-color: #000;
+        --top-content-container-align-items: center;
+        --top-content-container-display: flex;
+        --top-content-container-width: 50.563rem;
+        --top-content-container-height: 15.5rem;
+        --top-content-container-justify-content: center;
+        --top-content-version-text-font-size: 1.125rem;
+        --top-content-margin-top: 8.875rem;
+        --top-content-margin-inline-start: 20.688rem;
+        --top-content-button-mt: 1.125rem;
+        --top-content-button-font-size: 1.5rem;
+        --top-content-button-width: 11.5rem;
+        --top-content-button-height: 4rem;
+        --top-content-button-padding: 0.625rem;
+        --top-content-button-border-radius: 0.625rem;
+        --top-content-header-font-size: 4.5rem;
+        --top-content-header-font-family: "72-Bold";
+        --top-content-text-font-size: 2rem;
+        --top-content-margin-bottom: 0.5rem;
+        --top-content-illustrations-container-mt: 30.75rem;
+        --top-content-illustrations-header-font-size: 3rem;
+        --top-content-illustrations-text-font-size: 1.75rem;
+        --top-content-illustration-1-margin-inline-start: 50rem;
+        --top-content-illustration-1-margin-top: 21.5rem;
+        --top-content-illustration-1-title-margin-bottom: 2.125rem;
+        --top-content-illustration-2-margin-top: 34rem;
+        --top-content-illustration-2-margin-rigth: 43rem;
+        --top-content-illustration-3-margin-inline-start: 45rem;
+        --top-content-illustration-3-margin-top: 34.5rem;
+        --top-content-illustrations-text-align: end;
+        --top-content-illustrations-white-space: nowrap;
+        --mid-content-example-container-width: 100%;
+        --mid-content-example-container-height: 20rem;
+        --mid-content-example-container-display: flex;
+        --mid-content-example-container-flex-direction: column;
+        --mid-content-example-container-justify-content: center;
+        --mid-content-example-container-align-items: center;
+        --mid-content-example-container-margin-top: 18.25rem;
+        --mid-content-example-header-font-size: 2.25rem;
+        --mid-content-example-button-width: 11.5rem;
+        --mid-content-example-button-height: 3.375rem;
+        --mid-content-example-button-background-color: var(--orange-text-color);
+        --mid-content-example-button-text-color: white;
+        --mid-content-example-button-font-size: 1.125rem;
+        --mid-content-example-button-border-radius: 0.5rem;
+        --mid-content-example-button-line-height: var(--mid-content-example-button-height);
+        --mid-content-example-button-align-self: center;
+        --mid-content-example-button-text-align: center;
+        --mid-content-datepicker-div-width: 47.563rem;
+        --mid-content-datepicker-div-height: 6.5rem;
+        --mid-content-datepicker-div-display: flex;
+        --mid-content-datepicker-div-flex-direction: row;
+        --mid-content-datepicker-div-justify-content: center;
+        --mid-content-datepicker-div-align-items: center;
+        --mid-content-datepicker-div-background-color: #F4F4F4;
+        --mid-content-datepicker-div-border-radius: 0.5rem;
+        --mid-content-datepicker-container-div-width: 35%;
+        --mid-content-datepicker-container-div-height: 3.5rem;
+        --mid-content-datepicker-container-div-background-color: white;
+        --mid-content-datepicker-container-div-border: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-bottom-style-left-child: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-bottom-style-right-child: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-top-style-right-child: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-right: none;
+        --mid-content-datepicker-container-div-border-left: none;
+        --mid-content-datepicker-container-div-border-bottom: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-radius: 0.5rem;
+        --mid-content-datepicker-container-div-border-radius-left-child: 0.5rem 0 0 0.5rem;
+        --mid-content-datepicker-container-div-border-radius-right-child: 0 0.5rem 0.5rem 0;
+        --demo-apps-section-margin-top: 24rem;
+        --demo-apps-title-font-weight: 700;
+        --demo-apps-title-font-size: 2.25rem;
+        --demo-apps-title-text-align: center;
+        --demo-apps-title-margin-bottom: 3.1rem;
+        --demo-apps-frameworks-logo-width: 5.625rem;
+        --demo-apps-frameworks-logo-height: 5rem;
+        --demo-apps-frameworks-logo-margin-bottom: 1.125rem;
+        --demo-apps-frameworks-flex-direction: row;
+        --demo-apps-frameworks-framework-flex-direction: column;
+        --demo-apps-frameworks-links-margin-bottom: 1.125rem;
+        --demo-apps-frameworks-margin-inline-end: 9.625rem;
+        --demo-apps-frameworks-justify-content: center;
+        --demo-apps-frameworks-align-items: center;
+        --compatibility-container-margin-top: 7.563rem;
+        --compatibility-container-title-margin-bottom: 4.2rem;
+        --compatibility-container-title-font-size: 2.25rem;
+        --compatibility-flex-direction: row;
+        --compatibility-container-logo-margin-inline-end: 3.75rem;
+        --compatibility-container-margin-inline-end: 13.75rem;
+        --testimonials-display: block;
+        --testimonials-width: 65rem;
+        --testimonials-margin-top: 32.813rem;
+        --testimonials-margin-inline-start: 38.875rem;
+        --testimonials-margin-inline-end: 22.875rem;
+        --testimonials-title-margin-inline-end: 12.25rem;
+        --testimonials-title-text-align: center;
+        --testimonials-title-font-weight: 700;
+        --testimonials-container-title-font-size: 2.25rem;
+        --testimonials-container-padding-left: 3.625rem;
+        --testimonials-container-padding-right: 3.625rem;
+        --testimonials-container-height: 15rem;
+        --testimonials-slide-text-font-size: 1.5rem;
+        --testimonials-slide-line-height: 3.125rem;
+        --testimonials-slideshow-margin: 5rem 15rem 0 2rem;
+        --testimonials-slide-image-max-width: 70%;
+        --testimonials-left-arrow-margin-inline-end: 3rem;
+        --testimonials-left-arrow-margin-bottom: 4rem;
+        --testimonials-right-arrow-margin-inline-start: 3rem;
+        --testimonials-right-arrow-margin-bottom: 4rem;
+        --footer-flex-direction: row;
+        --footer-padding: 1rem;
+        --footer-item-margin-inline-end: 13rem;
+        --footer-container-margin-inline-end: var(--footer-item-margin-inline-end);
+        --footer-container-width: auto;
+        --footer-container-justify-content: center;
+        --footer-link-font-size: 1.125rem;
+        --footer-item-title-font-size: 1.75rem;
+        --footer-margin-top: 27rem;
+        --footer-margin-inline-end: 16.875rem;
+        --footer-title-margin-bottom: 1.563rem;
+        --footer-left-container-margin-inline-start: 16.563rem;
+        --footer-align-items: flex-start;
+        --github-icon-width: 2rem;
+        --github-icon-height: 2rem;
+        --orange-text-color: #FE7520;
+    }
+
+/* ---------------------------------------- 1920PX ---------------------------------------- */
+
+@media screen and (max-width: 1920px) {
+
+    :root {
+        --background-image: url("../illustrations/background-svgs/Landing\ 1920-\ New\ content.svg");
+        --background-size: cover;
+        --body-width: 1850px;
+        --body-height: 4550px;
+        --top-content-container-align-items: center;
+        --top-content-container-display: flex;
+        --top-content-container-height: 15.5rem;
+        --top-content-container-justify-content: center;
+        --top-content-margin-top: 8.875rem;
+        --top-content-margin-inline-start: 14.688rem;
+        --top-content-button-mt: 1.125rem;
+        --top-content-button-font-size: 1.5rem;
+        --top-content-button-width: 11.5rem;
+        --top-content-button-height: 4rem;
+        --top-content-button-padding: 0.625rem;
+        --top-content-button-border-radius: 0.625rem;
+        --top-content-header-font-size: 4.5rem;
+        --top-content-header-font-family: "72-Bold";
+        --top-content-text-font-size: 2rem;
+        --top-content-margin-bottom: 0.5rem;
+        --top-content-illustrations-container-mt: 30.75rem;
+        --top-content-illustrations-header-font-size: 3rem;
+        --top-content-illustrations-text-font-size: 1.75rem;
+        --top-content-illustration-1-margin-top: 8.5rem;
+        --top-content-illustration-1-margin-inline-start: 35rem;
+        --top-content-illustration-1-title-margin-bottom: 2.125rem;
+        --top-content-illustration-2-margin-top: 15rem;
+        --top-content-illustration-2-margin-rigth: 43rem;
+        --top-content-illustration-3-margin-inline-start: 45rem;
+        --top-content-illustration-3-margin-top: 15rem;
+        --demo-apps-section-margin-top: 11rem;
+        --demo-apps-title-font-weight: 700;
+        --demo-apps-title-font-size: 2.25rem;
+        --demo-apps-title-text-align: center;
+        --demo-apps-title-margin-bottom: 3.1rem;
+        --testimonials-width: 65rem;
+        --testimonials-margin-top: 26.513rem;
+        --testimonials-margin-inline-start: 23.875rem;
+        --testimonials-margin-inline-end: 26.875rem;
+        --testimonials-title-text-align: center;
+        --testimonials-title-margin-inline-start: 4rem;
+        --testimonials-title-margin-inline-end: 0;
+        --testimonials-title-font-weight: 700;
+        --testimonials-container-title-font-size: 2.25rem;
+        --testimonials-container-padding-left: 3.625rem;
+        --testimonials-container-padding-right: 3.625rem;
+        --testimonials-container-height: 15rem;
+        --testimonials-slide-text-font-size: 1.35rem;
+        --testimonials-slide-line-height: 3.125rem;
+        --testimonials-slideshow-margin: 2rem 15rem 0 18rem;
+        --footer-flex-direction: row;
+        --footer-padding: 1rem;
+        --footer-item-margin-inline-end: 4rem;
+        --footer-container-margin-inline-end: var(--footer-item-margin-inline-end);
+        --footer-container-width: auto;
+        --footer-container-justify-content: center;
+        --footer-link-font-size: 1.125rem;
+        --footer-item-title-font-size: 1.75rem;
+        --footer-margin-top: 15rem;
+        --footer-margin-inline-end: 16.875rem;
+        --footer-title-margin-bottom: 1.563rem;
+        --footer-left-container-margin-inline-start: 16.563rem;
+    }
+}
+
+/* ---------------------------------------- 1440PX ---------------------------------------- */
+
+@media screen and (max-width: 1440px) {
+    :root {
+        --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ v2.svg");
+        --body-height: 3930px;
+        --navbar-large-text-font-size: 1.375rem;
+        --top-content-container-width: 40.563rem;
+        --top-content-container-height: 15.25rem;
+        --top-content-margin-top: 5.875rem;
+        --top-content-margin-inline-start: 13.688rem;
+        --top-content-header-font-size: 3.5rem;
+        --top-content-header-font-family: "72-Bold";
+        --top-content-text-font-size: 1.5rem;
+        --top-content-margin-bottom: 0.5rem;
+        --top-content-illustrations-container-mt: 20.75rem;
+        --top-content-illustrations-header-font-size: 2.25rem;
+        --top-content-illustrations-text-font-size: 1.5rem;
+        --top-content-illustration-1-margin-top: 8rem;
+        --top-content-illustration-1-margin-inline-start: 35rem;
+        --top-content-illustration-1-title-margin-bottom: 2.125rem;
+        --top-content-illustration-2-margin-top: 18rem;
+        --top-content-illustration-2-margin-rigth: 34rem;
+        --top-content-illustration-3-margin-inline-start: 41rem;
+        --top-content-illustration-3-margin-top: 13.75rem;
+        --mid-content-example-container-width: 100%;
+        --mid-content-example-container-height: 20rem;
+        --mid-content-example-container-margin-top: 15.25rem;
+        --mid-content-example-header-font-size: 2.25rem;
+        --mid-content-example-button-width: 11.5rem;
+        --mid-content-example-button-height: 3.375rem;
+        --mid-content-example-button-background-color: var(--orange-text-color);
+        --mid-content-datepicker-container-div-margin-inline-end-left-child: 8rem;
+        --mid-content-datepicker-container-div-border-radius-left-child: 0.5rem;
+        --mid-content-datepicker-container-div-border-radius-right-child: 0.5rem;
+        --mid-content-datepicker-container-div-border: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-bottom-style-left-child: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-bottom-style-right-child: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-right: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-left: 1px solid #DFDFDF;
+        --demo-apps-section-margin-top: 11rem;
+        --demo-apps-frameworks-margin-inline-end: 6.625rem;
+        --demo-apps-title-font-weight: 700;
+        --demo-apps-title-font-size: 2.25rem;
+        --demo-apps-title-text-align: center;
+        --demo-apps-title-margin-bottom: 3.1rem;
+        --compatibility-container-logo-margin-inline-end: 3.25rem;
+        --compatibility-container-margin-inline-end: 10.75rem;
+        --testimonials-width: 60rem;
+        --testimonials-margin-top: 13.113rem;
+        --testimonials-slideshow-margin: 2rem 15rem 0 18rem;
+        --footer-margin-top: 11.25rem;
+        --footer-margin-inline-end: 12.875rem;
+        --footer-title-margin-bottom: 1.563rem;
+        --footer-left-container-margin-inline-start: 16.563rem;
+    }
+}
+
+/* ---------------------------------------- 1160PX ---------------------------------------- */
+
+@media screen and (max-width: 1160px) {
+    :root {
+        --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ 1160px-v2.svg");
+        --navbar-link-font-size: 1rem;
+        --navbar-left-container-display: none;
+        --navbar-left-container-justify-content: flex-end;
+        --top-content-margin-inline-start: 6.688rem;
+        --top-content-illustrations-header-font-size: 2rem;
+        --top-content-illustrations-text-font-size: 1.5rem;
+        --top-content-illustration-3-margin-inline-start: 35rem;
+        --mid-content-example-header-font-size: 2rem;
+        --demo-apps-frameworks-margin-inline-end: 5.625rem;
+        --demo-apps-title-font-size: 2rem;
+        --compatibility-container-margin-inline-end: 5.75rem;
+        --compatibility-container-title-margin-bottom: 3.7rem;
+        --testimonials-container-title-font-size: 2.25rem;
+        --testimonials-slide-text-font-size: 1.25rem;
+        --testimonials-slide-line-height: 2.125rem;
+        --testimonials-slideshow-margin: 2rem 10rem 0 15rem;
+        --testimonials-width: 45rem;
+        --footer-link-font-size: 1rem;
+        --footer-item-title-font-size: 1.5rem;
+        --footer-item-margin-inline-end: 1.75rem;
+        --footer-margin-top: 12.75rem;
+    }    
+    
+    .testimonials .container .arrow.left {
+        margin-inline-end: 1.5rem;
+        margin-bottom: 2rem;
+        width: 1.5rem;
+    }
+
+    .testimonials .container .arrow.right {
+        margin-inline-start: 1.5rem;
+        margin-bottom: 2rem;
+        width: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    :root {
+        --top-content-margin-inline-start: 4.688rem;
+        --top-content-illustrations-text-font-size: 1.25rem;
+        --top-content-illustration-3-margin-top: 15.75rem;
+        --demo-apps-frameworks-margin-inline-end: 2.625rem;
+        --compatibility-container-margin-inline-end: 2.75rem;
+        --compatibility-container-logo-margin-inline-end: 2.25rem;
+        --compatibility-container-title-margin-bottom: 1rem;
+        --testimonials-margin-top: 17.813rem;
+        --testimonials-container-title-font-size: 2rem;
+        --testimonials-slide-text-font-size: 1rem;
+        --footer-item-margin-inline-end: 1.5rem;
+        --footer-link-font-size: 1rem;
+        --footer-item-title-font-size: 1.5rem;
+        --footer-margin-top: 10.75rem;
+        --footer-margin-inline-end: 10.25rem;
+        --footer-icon-height: 2rem;
+        --footer-icon-width: 2rem;
+        --footer-left-container-margin-inline-start: 12.563rem;
+        --footer-link-font-size: 1rem;
+        --footer-item-title-font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    :root {
+        --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ 950px\ -\ v2\ 1.svg");
+        --top-content-container-width: 35.563rem;
+        --top-content-container-height: 16.5rem;
+        --top-content-header-font-size: 2.65rem;
+        --top-content-description-font-size: 1.25rem;
+        --top-content-margin-top: 5.875rem;
+        --top-illustration-text-font-size: 1.1rem;
+        --top-content-illustration-1-margin-top: 8rem;
+        --top-content-illustration-1-margin-inline-start: 26rem;
+        --top-content-illustration-1-title-margin-bottom: 1.725rem;
+        --top-content-illustration-2-margin-top: 18rem;
+        --top-content-illustration-2-margin-rigth: 25rem;
+        --top-content-illustration-3-margin-inline-start: 26rem;
+        --top-content-illustration-3-margin-top: 17.75rem;
+        --mid-content-datepicker-container-div-margin-inline-end-left-child: 4rem;
+        --compatibility-container-title-font-size: 2rem;
+        --testimonials-width: 37rem;
+        --testimonials-margin-inline-start: 21.275rem;
+        --footer-item-margin-inline-end: 1.75rem;
+        --footer-margin-inline-end: 11.25rem;
+        --footer-link-font-size: 0.875rem;
+        --footer-item-title-font-size: 1.25rem;
+    }
+}
+
+/* ---------------------------------------- 768PX ---------------------------------------- */
+
+@media screen and (max-width: 768px) {
+    body {
+        --background-image: url("../illustrations/background-svgs/Landing\ 768px.svg");
+        --body-height: 2509px;
+        --navbar-link-font-size: 0.875rem;
+        --navbar-font-size: 0.875rem;
+        --top-content-version-text-font-size: 0.75rem;
+        --top-content-description-font-size: 1rem;
+        --top-content-container-width: 25.563rem;
+        --top-content-container-height: 10.5rem;
+        --top-content-margin-top: 2.875rem;
+        --top-content-margin-inline-start: 2.688rem;
+        --top-content-button-mt: 1.125rem;
+        --top-content-button-font-size: 1.125rem;
+        --top-content-button-width: 9rem;
+        --top-content-button-height: 3rem;
+        --top-content-header-font-size: 2.125rem;
+        --top-content-text-font-size: 1.125rem;
+        --top-content-illustrations-container-mt: -5rem;
+        --top-content-illustrations-header-font-size: 1.75rem;
+        --top-content-illustrations-text-font-size: 1;
+        --top-content-illustration-1-margin-inline-start: 25rem;
+        --top-content-illustration-1-margin-top: 21.5rem;
+        --top-content-illustration-1-title-margin-bottom: 0.75rem;
+        --top-content-illustration-2-margin-top: 13.75rem;
+        --top-content-illustration-2-margin-rigth: 23.25rem;
+        --top-content-illustration-3-margin-inline-start: 24.25rem;
+        --top-content-illustration-3-margin-top: 12.30rem;
+        --mid-content-example-container-margin-top: 7rem;
+        --mid-content-example-header-font-size: 1.5rem;
+        --mid-content-example-button-width: 8.5rem;
+        --mid-content-example-button-height: 2rem;
+        --mid-content-example-button-font-size: 0.875rem;
+        --mid-content-example-button-font-weight: bold;
+        --mid-content-example-container-height: 10.5rem;
+        --mid-content-datepicker-div-justify-content: space-evenly;
+        --mid-content-datepicker-container-div-margin-bottom: 1rem;
+        --mid-content-datepicker-container-div-width: 35%;
+        --mid-content-datepicker-container-div-background-color: white;
+        --mid-content-datepicker-container-div-border: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-margin-inline-end-left-child: 2rem;
+        --mid-content-datepicker-container-div-border-radius-right-child: 0.5rem;
+        --mid-content-datepicker-container-div-border-radius-left-child: 0.5rem;
+        --demo-apps-section-margin-top: 5.938rem;
+        --demo-apps-title-font-size: 1.5rem;
+        --demo-apps-title-margin-bottom: 2.6rem;
+        --demo-apps-frameworks-logo-width: 3.25rem;
+        --demo-apps-frameworks-logo-height: 2.813rem;
+        --demo-apps-frameworks-logo-margin-bottom: 1.125rem;
+        --demo-apps-frameworks-margin-inline-end: 2.875rem;
+        --demo-apps-frameworks-links-margin-bottom: 0.5rem;
+        --demo-apps-frameworks-links-font-size: 0.875rem;
+        --compatibility-container-title-margin-bottom: 2rem;
+        --compatibility-container-title-font-size: 1.5rem;
+        --compatibility-container-logo-margin-inline-end: 2.25rem;
+        --compatibility-container-margin-inline-end: 4.75rem;
+        --compatibility-container-logo-first-child-margin-inline-start: 2rem;
+        --compatibility-container-margin-top: 5.563rem;
+        --compatibility-container-logo-width: 2.25rem;
+        --compatibility-container-logo-height: 2.25rem;
+        --compatibility-container-title-white-space: nowrap;
+        --testimonials-width: 30.688rem;
+        --testimonials-margin-top: 7.5rem;
+        --testimonials-margin-inline-start: 25rem;
+        --testimonials-margin-inline-end: 10.875rem;
+        --testimonials-title-margin-inline-end: 16rem;
+        --testimonials-container-title-font-size: 1.75rem;
+        --testimonials-container-height: 10rem;
+        --testimonials-slide-text-font-size: 0.875rem;
+        --testimonials-slide-line-height: 1.5rem;
+        --testimonials-slideshow-margin: 5rem 15rem 0 2rem;
+        --testimonials-title-margin-bottom: -4rem;
+        --footer-item-margin-inline-end: 1.75rem;
+        --footer-link-font-size: 0.75rem;
+        --footer-item-title-font-size: 0.875rem;
+        --footer-margin-top: 7rem;
+        --footer-margin-inline-end: 5.875rem;
+        --footer-title-margin-bottom: 0.25rem;
+        --footer-left-container-margin-inline-start: 5.563rem;
+        --footer-left-container-margin-inline-end: 1.5rem;
+        --footer-icon-width: 1.438rem;
+        --footer-icon-height: 1.188rem;
+        --footer-icon-sap-width: 8rem;
+        --footer-icon-sap-height: 4rem;
+        --footer-community-flex-direction: row;
+    }
+}
+
+/* ---------------------------------------- 667PX ---------------------------------------- */
+
+@media screen and (max-width: 667px) {
+    body {
+        --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px.svg");
+        --body-height: 3072px;
+        --navbar-height: 3rem;
+        --navbar-link-font-size: 0.75rem;
+        --navbar-padding: 0;
+        --navbar-button-width: 4rem;
+        --top-content-margin-top: 1.875rem;
+        --top-content-margin-inline-start: 1.688rem;
+        --top-content-header-font-size: 2rem;
+        --top-content-text-font-size: 0.875rem;
+        --top-content-illustrations-container-mt: 10rem;
+        --top-content-illustrations-header-font-size: 1.125rem;
+        --top-content-illustrations-text-font-size: 0.875rem;
+        --top-content-illustration-1-margin-inline-start: 0;
+        --top-content-illustration-1-margin-top: 3rem;
+        --top-content-illustration-1-title-margin-bottom: 0.25rem;
+        --top-content-illustration-2-margin-top: 17.75rem;
+        --top-content-illustration-2-margin-rigth: 0;
+        --top-content-illustration-3-margin-inline-start: 0;
+        --top-content-illustration-3-margin-top: 20.30rem;
+        --top-content-illustrations-text-align: center;
+        --mid-content-example-container-margin-top: 7.75rem;
+        --mid-content-datepicker-container-div-border-bottom-style: none;
+        --mid-content-datepicker-container-div-margin-bottom: 0;
+        --mid-content-datepicker-container-div-margin-inline-end-left-child: 0;
+        --mid-content-datepicker-container-div-border-radius-right-child: 0 0 0.5rem 0.5rem;
+        --mid-content-datepicker-container-div-border-radius-left-child: 0.5rem 0.5rem 0 0;
+        --mid-content-datepicker-container-div-border: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-bottom-style-left-child: none;
+        --mid-content-datepicker-container-div-border-bottom-style-right-child: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-right: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-left: 1px solid #DFDFDF;
+        --mid-content-datepicker-container-div-border-top-style-right-child: none;
+        --mid-content-datepicker-div-flex-direction: column;
+        --demo-apps-frameworks-flex-direction: column;
+        --demo-apps-frameworks-margin-inline-end: 0;
+        --demo-apps-frameworks-margin-bottom: 1.75rem;
+        --demo-apps-section-margin-top: 4.738rem;
+        --compatibility-container-margin-top: 3.563rem;
+        --compatibility-flex-direction: column;
+        --compatibility-container-margin-inline-end: 0;
+        --compatibility-container-margin-bottom: 2rem;
+        --compatibility-container-margin-top: 1.563rem;
+        --testimonials-container-title-font-size: 1.5rem;
+        --testimonials-margin-top: 3.5rem;
+        --testimonials-width: 27rem;
+        --testimonials-slideshow-margin: 5rem 15rem 4rem 0;
+        --testimonials-title-margin-inline-start: 0;
+        --testimonials-slide-text-font-size: 0.75rem;
+        --testimonials-slide-image-max-width: 50%;
+        --testimonials-left-arrow-margin-inline-end: 1.5rem;
+        --testimonials-left-arrow-margin-bottom: 2rem;
+        --testimonials-right-arrow-margin-inline-start: 1.5rem;
+        --testimonials-right-arrow-margin-bottom: 2rem;
+        --footer-margin-top: 11rem;
+        --footer-margin-inline-end: 0;
+        --footer-flex-direction: column;
+        --footer-left-container-margin-inline-start: 0;
+        --footer-contaier-width: 100%;
+        --footer-container-margin-inline-start: 0;
+        --footer-container-margin-top: 2.125rem;
+        --footer-item-margin-inline-end: 2rem;
+        --footer-item-last-child-margin-inline-start: 2rem;
+        --footer-align-items: center;
+        --footer-padding: 0;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    body {
+    --testimonials-container-title-font-size: 1.5rem;
+    --testimonials-width: 22rem;
+    --testimonials-slide-text-font-size: 0.75rem;
+    --testimonials-slideshow-margin: 5rem 20rem 4rem 0;
+    --testimonials-container-height: 5rem;
+    --testimonials-title-margin-inline-start: -4rem;
+    --testimonials-left-arrow-margin-inline-end: 0.5rem;
+    --testimonials-left-arrow-margin-bottom: 2rem;
+    --testimonials-right-arrow-margin-inline-start: 0.5rem;
+    --testimonials-right-arrow-margin-bottom: 2rem;
+    --footer-margin-top: 14rem;
+    }
+}
+
+@media screen and (max-width: 448px) {
+    body {
+        --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px-test.svg");
+        --top-content-description-font-size: 0.85rem;
+        --testimonials-container-title-font-size: 1.35rem;
+        --testimonials-width: 18rem;
+        --testimonials-slide-text-font-size: 0.75rem;
+        --testimonials-slideshow-margin: 5rem 24rem 1rem 0;
+        --testimonials-container-height: 6rem;
+        --testimonials-title-margin-inline-start: -8rem;
+    }
+}
+
+/* ---------------------------------------- 375PX ---------------------------------------- */
+
+@media screen and (max-width: 386px) {
+    body {
+        --background-image: url("../illustrations/background-svgs/Landing\ -\ 375px.svg");
+        --body-height: 3072px;
+        --top-content-description-font-size: 0.75rem;
+        --top-content-container-width: 15.563rem;
+        --top-content-container-height: 11.5rem;
+        --top-content-button-mt: 1rem;
+        --top-content-button-font-size: 1rem;
+        --top-content-button-width: 8.875rem;
+        --top-content-button-height: 2.875rem;
+        --top-content-header-font-size: 1.5rem;
+        --top-content-text-font-size: 0.875rem;
+        --top-content-illustrations-container-mt: 14rem;
+        --mid-content-example-container-margin-top: 7.75rem;
+        --testimonials-slideshow-margin: 5rem 26rem 1rem 0;
+        --testimonials-title-margin-inline-start: -10rem;
+        --footer-margin-top: 10rem;
+    }
+}
+
+.navbar {
+    display: var(--navbar-display);
+    height: var(--navbar-height);
+    justify-content: var(--navbar-justify-content);
+    background-color: var(--navbar-background-color);
+    align-items: var(--navbar-align-items);
+    box-shadow: var(--navbar-box-shadow);
+    padding: var(--navbar-padding);
+    white-space: nowrap;
+}
+
+.navbar-right-container {
+    display: var(--navbar-right-container-display);
+    align-items: var(--navbar-right-container-align-items);
+    justify-content: var(--navbar-right-container-justify-content);
+    width: 100%;
+}
+
+/* THE 'Blog' BUTTON */
+.navbar-button {
+    width: var(--navbar-button-width);
+    height: var(--navbar-button-height);
+    border: var(--navbar-button-border);
+    border-radius: var(--navbar-button-border-radius);
+    color: var(--navbar-button-text-color);
+    font-size: var(--navbar-font-size);
+    text-align: var(--navbar-button-text-align);
+    line-height: var(--navbar-button-height);
+    font-family: "72-Bold";
+    cursor: var(--navbar-button-cursor);
+    align-items: var(--navbar-button-align-items);
+}
+
+.navbar-button:hover {
+    background-color: var(--navbar-button-border-color);
+    color: white;
+}
+
+.navbar .item {
+    margin-inline-end: var(--navbar-item-margin-inline-end);
+}
+
+.navbar .link {
+    font-weight: var(--navbar-link-font-weight);
+    font-size: var(--navbar-link-font-size);
+    display: var(--navbar-link-display);
+    color: var(--navbar-link-color);
+    position: relative;
+}
+
+.navbar .link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    top: 100%;
+    left: 0;
+    background-color: var(--orange-text-color);
+    transition: transform 0.25s ease-out;
+    transform-origin: bottom right;
+}
+
+.navbar .link:hover::after {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+}
+
+.top-content-container {
+    display: var(--top-content-container-display);
+    width: var(--top-content-container-width);
+    height: var(--top-content-container-height);
+    margin-top: var(--top-content-margin-top);
+    margin-inline-start: var(--top-content-margin-inline-start);
+    align-items: var(--top-content-align-items);
+    justify-content: var(--top-content-justify-content);
+    overflow: hidden;
+}
+
+.top-content-container .title {
+    font-size: var(--top-content-header-font-size);
+    font-family: var(--top-content-header-font-family);
+    margin-bottom: var(--top-content-margin-bottom);
+}
+
+.top-content-container .description {
+    font-size: var(--top-content-description-font-size);
+    margin-bottom: var(--top-content-margin-bottom);
+}
+
+.version a {
+    color: var(--orange-text-color);
+}
+
+.top-content-container .orange {
+    color: var(--orange-text-color);
+}
+
+.top-content-container .version {
+    font-size: var(--top-content-version-text-font-size);
+}
+
+.top-content-container .welcome-section {
+    font-size: var(--top-content-text-font-size);
+    flex-grow: 1;
+}
+
+.top-content-container .get-started-button {
+    width: var(--top-content-button-width);
+    height: var(--top-content-button-height);
+    margin-top: var(--top-content-button-mt);
+    text-align: center;
+    line-height: var(--top-content-button-height);
+    font-weight: 900;
+    color: #fff;
+    font-size: var(--top-content-button-font-size);
+    background-color: var(--orange-text-color);
+    display: inline-block;
+    border-radius: 0.625rem;
+}
+
+.illustration-texts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--top-content-illustrations-container-mt);
+}
+
+/* TEXT FOR ILLUSRATION 1 */
+
+.illustration-text-1 {
+    margin-inline-start: var(--top-content-illustration-1-margin-inline-start);
+    margin-top: var(--top-content-illustration-1-margin-top);
+    text-align: var(--top-content-illustrations-text-align);
+}
+.illustration-text-1 .title {
+    font-size: var(--top-content-illustrations-header-font-size);
+    margin-bottom: var(--top-content-illustration-1-title-margin-bottom);
+}
+
+.illustration-text-1 .text {
+    font-size: var(--top-content-illustrations-text-font-size);
+    font-family: "72-Light";
+    white-space: var(--top-content-illustrations-white-space);
+}
+
+/* TEXT FOR ILLUSRATION 2 */
+
+.illustration-text-2 {
+    margin-top: var(--top-content-illustration-2-margin-top);
+    margin-inline-end: var(--top-content-illustration-2-margin-rigth);
+    text-align: var(--top-content-illustrations-text-align);
+}
+
+.illustration-text-2 .title {
+    font-size: var(--top-content-illustrations-header-font-size);
+    margin-bottom: var(--top-content-illustration-1-title-margin-bottom);
+}
+
+.illustration-text-2 .text {
+    font-size: var(--top-content-illustrations-text-font-size);
+    font-family: "72-Light";
+    white-space: var(--top-content-illustrations-white-space);
+}
+
+/* TEXT FOR ILLUSRATION 3 */
+
+.illustration-text-3 {
+    margin-inline-start: var(--top-content-illustration-3-margin-inline-start);
+    margin-top: var(--top-content-illustration-3-margin-top);
+    text-align: var(--top-content-illustrations-text-align);
+}
+
+.illustration-text-3 .title {
+    font-size: var(--top-content-illustrations-header-font-size);
+    margin-bottom: var(--top-content-illustration-1-title-margin-bottom);
+}
+
+.illustration-text-3 .text {
+    font-size: var(--top-content-illustrations-text-font-size);
+    font-family: "72-Light";
+    white-space: var(--top-content-illustrations-white-space);
+}
+
+/* DATEPICKER EXAMPLE SECTION -------------- MID CONTENT -------------- */
+
+.ui5-example {
+        width: var(--mid-content-example-container-width);
+        height: var(--mid-content-example-container-height);
+        display: var(--mid-content-example-container-display);
+        flex-direction: var(--mid-content-example-container-flex-direction);
+        justify-content: var(--mid-content-example-container-justify-content);
+        align-items: var(--mid-content-example-container-align-items);
+        margin-top: var(--mid-content-example-container-margin-top);
+    }
+
+    .ui5-example-section {
+        width: var(--mid-content-datepicker-div-width);
+        display: var(--mid-content-example-container-display);
+        flex-direction: var(--mid-content-example-container-flex-direction);
+        justify-content: var(--mid-content-datepicker-div-justify-content);
+        height: 100%;
+    }
+
+    .ui5-datepicker-container {
+        width: var(--mid-content-datepicker-div-width);
+        height: var(--mid-content-datepicker-div-height);
+        display: var(--mid-content-datepicker-div-display);
+        flex-direction: var(--mid-content-datepicker-div-flex-direction);
+        justify-content: var(--mid-content-datepicker-div-justify-content);
+        align-items: var(--mid-content-datepicker-div-align-items);
+        background-color: var(--mid-content-datepicker-div-background-color);
+        border-radius: var(--mid-content-datepicker-div-border-radius);
+    }
+
+    .ui5-datepicker-container div {
+        width: var(--mid-content-datepicker-container-div-width);
+        height: var(--mid-content-datepicker-container-div-height);
+        background-color: var(--mid-content-datepicker-container-div-background-color);
+        border: var(--mid-content-datepicker-container-div-border);
+        border-bottom-style: var(--mid-content-datepicker-container-div-border-bottom-style);
+        border-radius: var(--mid-content-datepicker-container-div-border-radius-right-child);
+        margin-bottom: var(--mid-content-datepicker-container-div-margin-bottom);
+        padding: 0.5rem 2rem;
+    }
+
+    .ui5-datepicker-container div:first-child {
+        border-right: var(--mid-content-datepicker-container-div-border-right);
+        border-bottom: var(--mid-content-datepicker-container-div-border-bottom-style-left-child);
+        border-radius: var(--mid-content-datepicker-container-div-border-radius-left-child);
+        margin-inline-end: var(--mid-content-datepicker-container-div-margin-inline-end-left-child);
+    }
+
+    .ui5-datepicker-container div:last-child {
+        border-left: var(--mid-content-datepicker-container-div-border-left);
+        border-top: var(--mid-content-datepicker-container-div-border-top-style-right-child);
+        border-bottom: var(--mid-content-datepicker-container-div-border-bottom-style-right-child);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    .ui5-example-button {
+        width: var(--mid-content-example-button-width);
+        height: var(--mid-content-example-button-height);
+        border-radius: var(--mid-content-example-button-border-radius);
+        font-size: var(--mid-content-example-button-font-size);
+        line-height: var(--mid-content-example-button-height);
+        align-self: var(--mid-content-example-button-align-self);
+        background-color: var(--mid-content-example-button-background-color);
+        color: var(--mid-content-example-button-text-color);
+        text-align: var(--mid-content-example-button-text-align);
+        font-weight: var(--mid-content-example-button-font-weight);
+        margin-top: 1.225rem;
+    }
+
+    .ui5-example-header{
+        margin-bottom: 2rem;
+        font-size: var(--mid-content-example-header-font-size);
+        text-align: center;
+    }
+
+    .github-icon {
+        width: var(--github-icon-width);
+        height: var(--github-icon-height);
+    }
+
+    .demo-apps {
+        margin-top: var(--demo-apps-section-margin-top);
+        white-space: nowrap;
+    }
+
+    .demo-apps .title {
+        font-weight: var(--demo-apps-title-font-weight);
+        font-size: var(--demo-apps-title-font-size);
+        text-align: var(--demo-apps-title-text-align);
+        margin-bottom: var(--demo-apps-title-margin-bottom);
+    }
+    
+    .demo-apps .frameworks {
+        display: flex;
+        justify-content: var(--demo-apps-frameworks-justify-content);
+        flex-direction: var(--demo-apps-frameworks-flex-direction);
+    }
+    
+    .demo-apps .frameworks .framework {
+        display: flex;
+        flex-direction: var(--demo-apps-frameworks-framework-flex-direction);
+        align-items: var(--demo-apps-frameworks-align-items);
+        margin-inline-end: var(--demo-apps-frameworks-margin-inline-end);
+        margin-bottom: var(--demo-apps-frameworks-margin-bottom);
+    }
+    
+    .demo-apps .frameworks .framework:last-child {
+        margin-inline-end: 0;
+        margin-bottom: var(--demo-apps-frameworks-margin-bottom);
+    }
+    
+    .demo-apps .frameworks .framework .logo {
+        width: var(--demo-apps-frameworks-logo-width);
+        height: var(--demo-apps-frameworks-logo-height);
+        margin-bottom: var(--demo-apps-frameworks-links-margin-bottom);
+    }
+    
+    .demo-apps .frameworks .framework .link {
+        color: #3584BE;
+        text-align: center;
+        font-size: var(--demo-apps-frameworks-links-font-size);
+        display: inline-block;
+        text-align: center;
+        white-space: nowrap;
+        margin-bottom: 0.5rem;
+    }
+    
+    .demo-apps .frameworks .framework .link:last-child {
+        margin-bottom: 0;
+    }
+
+    .compatibility {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: var(--compatibility-flex-direction);
+        margin-top: var(--compatibility-container-margin-top);
+        margin-bottom: var(--compatibility-container-margin-bottom);
+    }
+    
+    .compatibility .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .compatibility .container:first-child {
+        margin-inline-end: var(--compatibility-container-margin-inline-end);
+        margin-bottom: var(--compatibility-container-margin-bottom);
+    }
+
+    .compatibility .container div:first-child {
+        margin-inline-start: var(--compatibility-container-logo-first-child-margin-inline-start)
+    }
+    
+    .compatibility .title {
+        text-align: center;
+        font-weight: 700;
+        font-size: var(--compatibility-container-title-font-size);
+        margin-bottom: var(--compatibility-container-title-margin-bottom);
+        white-space: var(--compatibility-container-title-white-space);
+    }
+    
+    .compatibility .logo {
+        margin-inline-end: var(--compatibility-container-logo-margin-inline-end);
+        width: var(--compatibility-container-logo-width);
+        height: var(--compatibility-container-logo-height);
+    }
+    
+    .compatibility .logo:last-child {
+        margin-inline-end: 0;
+    }
+
+    .testimonials {
+        display: var(--testimonials-display);
+        margin-top: var(--testimonials-margin-top);
+        margin-inline-start: var(--testimonials-margin-inline-start);
+        margin-inline-end: var(--testimonials-margin-inline-end);
+    }
+    
+    .testimonials .title {
+        text-align: var(--testimonials-title-text-align);
+        font-weight: var(--testimonials-title-font-weight);
+        font-size: var(--testimonials-container-title-font-size);
+        margin-inline-start: var(--testimonials-title-margin-inline-start);
+        margin-inline-end: var(--testimonials-title-margin-inline-end);
+        margin-bottom: var(--testimonials-title-margin-bottom);
+    }
+    
+    .testimonials .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: var(--testimonials-container-height);
+    }
+
+    .testimonials .slide .slide-text {
+        font-size: var(--testimonials-slide-text-font-size);
+        line-height: var(--testimonials-slide-line-height);
+    }
+    
+    .testimonials .container .arrow {
+        height: var(--github-icon-height);
+        width: var(--github-icon-width);
+        flex-shrink: 0;
+        display: block
+    }
+
+    .testimonials .container .arrow.left {
+        margin-inline-end: var(--testimonials-left-arrow-margin-inline-end);
+        margin-bottom: var(--testimonials-left-arrow-margin-bottom);
+    }
+
+    .testimonials .container .arrow.right {
+        margin-inline-start: var(--testimonials-right-arrow-margin-inline-start);
+        margin-bottom: var(--testimonials-right-arrow-margin-bottom);
+    }
+    
+    .testimonials .slideshow .slide {
+        text-align: center;
+        font-size: var(--testimonials-slide-text-font-size);
+        width: var(--testimonials-width);
+        height: var(--testimonials-container-height);
+    }
+    
+    .testimonials .slideshow {
+        display: flex;
+        flex-direction: row;
+        margin: var(--testimonials-slideshow-margin);
+        align-items: center;
+        height: var(--testimonials-container-height);
+    }
+    
+    .testimonials .slideshow .slide:not(.active) {
+        display: none;
+    }
+    
+    .testimonials .slideshow .slide .slide-text {
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+    
+    .testimonials .slideshow .slide .slide-image {
+        max-width: var(--testimonials-slide-image-max-width);
+    }
+
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: var(--footer-align-items);
+        flex-direction: var(--footer-flex-direction);
+        padding: var(--footer-padding);
+        margin-top: var(--footer-margin-top);
+        margin-inline-end: var(--footer-margin-inline-end);
+    }
+    
+    .footer .container-left,
+    .footer .container-right {
+        display: flex;
+        justify-content: var(--footer-container-justify-content);
+        align-items: flex-start;
+        width: var(--footer-container-width);
+    }
+
+    .footer .container-right {
+        margin-inline-start: var(--footer-container-margin-inline-start);
+        margin-top: var(--footer-container-margin-top);
+    }
+    
+    
+    .footer .container-left {
+        gap: 2rem;
+        margin-inline-end: var(--footer-container-margin-inline-end);
+        margin-inline-start: var(--footer-left-container-margin-inline-start);
+    }
+    
+    .footer .footer-item {
+        margin-inline-end: var(--footer-item-margin-inline-end);
+    }
+    
+    .footer .footer-item:last-child {
+        margin-inline-end: 0;
+    }
+    
+    .footer .footer-community {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer .footer-community div{
+        display: flex;
+        flex-direction: var(--footer-community-flex-direction);
+    }
+    
+    .footer .footer-community img {
+        width: 3.125rem;
+        margin-inline-end: 1rem;
+    }
+    
+    .footer .links-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .footer .links-wrapper .link {
+        margin-bottom: 1rem;
+        font-size: var(--footer-link-font-size);
+        color: #000;
+        white-space: nowrap;
+    }
+    
+    .footer .links-wrapper .link:last-child {
+        margin-bottom: 0;
+    }
+    
+    .footer .footer-item .title {
+        font-size: var(--footer-item-title-font-size);
+        margin-bottom: var(--footer-title-margin-bottom);
+        white-space: nowrap;
+    }
+
+    .footer .footer-item.footer-community .footer-icon {
+        width: var(--footer-icon-width);
+        height: var(--footer-icon-height);
+    }
+
+    .footer .footer-item.footer-community .footer-icon .sap {
+        width: var(--footer-icon-sap-width);
+        height: var(--footer-icon-sap-height);
+    }

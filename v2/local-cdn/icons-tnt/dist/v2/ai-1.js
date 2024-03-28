@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "ai-1";
+const pathData = "M453 170L359 53H154L60 170l196 270zm53-17q6 7 6 16t-5 16L277 501q-8 11-21 11t-21-11L5 185q-5-7-4.5-16T6 153L121 9q8-9 20-9h230q13 0 20 9zm-104 14q2 1 2 2.5t-2 2.5q-10 2-22 7t-23.5 14-20.5 22.5-12 34.5q-1 2-2.5 2t-2.5-2q-2-10-7-22.5t-13.5-24T276 183t-34-12q-2-1-2-2.5t2-2.5q10-2 22-6.5t23.5-13.5 20.5-23 12-35q1-2 2.5-2t2.5 2q2 10 6.5 22.5t13.5 24 23 20.5 34 12z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v2";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v2/ai-1";
+export { pathData, ltr, accData };

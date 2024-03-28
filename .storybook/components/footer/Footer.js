@@ -1,0 +1,10 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { Link, TooltipMessage, WithTooltip } from "@storybook/components";
+// @ts-ignore 
+import BestRunLogo from '../../../assets/images/SAP_Best_R_grad_blk_scrn.png';
+// @ts-ignore 
+import classes from './Footer.module.css';
+export const Footer = ({ style }) => {
+    return (_jsx("footer", { className: classes.footer, style: style, children: _jsx("div", { className: classes.content, children: _jsxs("div", { className: classes.footerInner, children: [_jsxs("div", { className: classes.footerGenericFlex, children: [_jsx("img", { src: BestRunLogo, alt: "SAP Logo with Text 'The Best Run'", style: { height: '1.5rem' } }), _jsxs("p", { children: ["\u00A9 Copyright ", new Date().getFullYear(), ", SAP SE and UI5 Web Components Contributors"] })] }), _jsxs("div", { className: classes.footerGenericFlex, children: [_jsx(WithTooltip, { tooltip: _jsx(TooltipMessage, { title: "Privacy Statement", desc: _jsxs(_Fragment, { children: ["This site is hosted by ", _jsx(Link, { href: "https://pages.github.com/", children: "GitHub Pages" }), ". Please see the ", _jsx(Link, { href: "https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement", children: "GitHub Privacy Statement" }), " for any information how GitHub processes your personal data."] }) }), children: _jsx(Link, { cancel: true, children: "Privacy" }) }), "\u00A0 | \u00A0", _jsx(Link, { href: "https://www.sap.com/corporate/en/legal/terms-of-use.html", children: "Terms of Use" }), "\u00A0 | \u00A0", _jsx(Link, { href: "https://www.sap.com/corporate/en/legal/impressum.html", children: "Legal Disclosure" }), "\u00A0 | \u00A0", _jsx(Link, { href: "https://www.sap.com/corporate/en/legal/trademark.html", children: "Trademarks" })] })] }) }) }));
+};
+//# sourceMappingURL=Footer.js.map

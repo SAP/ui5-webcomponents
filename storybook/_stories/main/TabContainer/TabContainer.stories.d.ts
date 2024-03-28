@@ -1,0 +1,11 @@
+import type { Meta } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import type TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
+declare const _default: Meta<TabContainer>;
+export default _default;
+export declare const Basic: UI5StoryArgs<TabContainer, StoryArgsSlots>;
+export declare const TextOnlyTabs: UI5StoryArgs<TabContainer, StoryArgsSlots>;
+export declare const TextOnlyEndOverflow: UI5StoryArgs<TabContainer, StoryArgsSlots>;
+export declare const InlineTabLayout: UI5StoryArgs<TabContainer, StoryArgsSlots>;
+export declare const NestedTabs: UI5StoryArgs<TabContainer, StoryArgsSlots>;

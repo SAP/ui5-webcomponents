@@ -1,0 +1,11 @@
+import type { Meta } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import type MultiComboBox from "@ui5/webcomponents/dist/MultiComboBox.js";
+declare const _default: Meta<MultiComboBox>;
+export default _default;
+export declare const Basic: UI5StoryArgs<MultiComboBox, StoryArgsSlots>;
+export declare const MultiComboBoxCustomValue: UI5StoryArgs<MultiComboBox, StoryArgsSlots>;
+export declare const MultiComboBoxGrouping: UI5StoryArgs<MultiComboBox, StoryArgsSlots>;
+export declare const MultiComboBoxLongToken: UI5StoryArgs<MultiComboBox, StoryArgsSlots>;
+export declare const SuggestionsWrapping: UI5StoryArgs<MultiComboBox, StoryArgsSlots>;

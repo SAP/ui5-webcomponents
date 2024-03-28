@@ -1,0 +1,20 @@
+import{x as c}from"./lit-element-c5a2b594.js";import{l as t}from"./if-defined-c29cffe1.js";import{o as D}from"./unsafe-html-0ddd83da.js";import{B as n}from"./ButtonDesign-57d82709.js";const y={design:{control:"select",options:["Default","Positive","Negative","Transparent","Emphasized","Attention"]},type:{control:"select",options:["Button","Submit","Reset"]},accessibleRole:{control:"select",options:["Button","Link"]},default:{control:{type:"text"},table:{type:{summary:"Array<Node>"}}}},v={package:"@ui5/webcomponents",tagName:"ui5-button"},B={title:"Main/Button",component:"Button",argTypes:y},d=i=>c`<ui5-button
+    design="${t(i.design)}"
+    ?disabled="${t(i.disabled)}"
+    icon="${t(i.icon)}"
+    ?icon-end="${t(i.iconEnd)}"
+    tooltip="${t(i.tooltip)}"
+    accessible-name="${t(i.accessibleName)}"
+    accessible-name-ref="${t(i.accessibleNameRef)}"
+    accessibility-attributes="${t(i.accessibilityAttributes)}"
+>
+    ${D(i.default)}
+</ui5-button>`,a=d.bind({});a.args={default:"Button Text",accessibleName:"Button with Accessible Name",icon:"sap-icon://action"};const o=d.bind({});o.decorators=[(i,{args:e})=>c`
+${i({args:{...e,design:e.design||n.Emphasized,default:e.default||"Emphasized"}})}
+${i({args:{...e,design:e.design||n.Default,default:e.default||"Default"}})}
+${i({args:{...e,design:e.design||n.Attention,default:e.default||"Attention"}})}
+${i({args:{...e,design:e.design||n.Positive,default:e.default||"Positive"}})}
+${i({args:{...e,design:e.design||n.Negative,default:e.default||"Negative"}})}
+${i({args:{...e,design:e.design||n.Transparent,default:e.default||"Transparent"}})}`];const s=d.bind({});s.decorators=[(i,{args:e})=>c`
+${i({args:{...e,design:e.design||n.Default,icon:e.icon||"edit",tooltip:e.tooltip||"Edit Button"}})}
+${i({args:{...e,design:e.design||n.Transparent,icon:e.icon||"account",tooltip:e.tooltip||"Account Button"}})}`];s.storyName="Icon-Only Buttons";var l,r,f;a.parameters={...a.parameters,docs:{...(l=a.parameters)==null?void 0:l.docs,source:{originalSource:'args => html`<ui5-button\n    design="${ifDefined(args.design)}"\n    ?disabled="${ifDefined(args.disabled)}"\n    icon="${ifDefined(args.icon)}"\n    ?icon-end="${ifDefined(args.iconEnd)}"\n    tooltip="${ifDefined(args.tooltip)}"\n    accessible-name="${ifDefined(args.accessibleName)}"\n    accessible-name-ref="${ifDefined(args.accessibleNameRef)}"\n    accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"\n>\n    ${unsafeHTML(args.default)}\n</ui5-button>`',...(f=(r=a.parameters)==null?void 0:r.docs)==null?void 0:f.source}}};var u,b,m;o.parameters={...o.parameters,docs:{...(u=o.parameters)==null?void 0:u.docs,source:{originalSource:'args => html`<ui5-button\n    design="${ifDefined(args.design)}"\n    ?disabled="${ifDefined(args.disabled)}"\n    icon="${ifDefined(args.icon)}"\n    ?icon-end="${ifDefined(args.iconEnd)}"\n    tooltip="${ifDefined(args.tooltip)}"\n    accessible-name="${ifDefined(args.accessibleName)}"\n    accessible-name-ref="${ifDefined(args.accessibleNameRef)}"\n    accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"\n>\n    ${unsafeHTML(args.default)}\n</ui5-button>`',...(m=(b=o.parameters)==null?void 0:b.docs)==null?void 0:m.source}}};var p,g,$;s.parameters={...s.parameters,docs:{...(p=s.parameters)==null?void 0:p.docs,source:{originalSource:'args => html`<ui5-button\n    design="${ifDefined(args.design)}"\n    ?disabled="${ifDefined(args.disabled)}"\n    icon="${ifDefined(args.icon)}"\n    ?icon-end="${ifDefined(args.iconEnd)}"\n    tooltip="${ifDefined(args.tooltip)}"\n    accessible-name="${ifDefined(args.accessibleName)}"\n    accessible-name-ref="${ifDefined(args.accessibleNameRef)}"\n    accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"\n>\n    ${unsafeHTML(args.default)}\n</ui5-button>`',...($=(g=s.parameters)==null?void 0:g.docs)==null?void 0:$.source}}};const N=["Basic","DifferentTypes","IconOnlyButtons"],S=Object.freeze(Object.defineProperty({__proto__:null,Basic:a,DifferentTypes:o,IconOnlyButtons:s,__namedExportsOrder:N,default:B},Symbol.toStringTag,{value:"Module"}));export{S as C,v as c};

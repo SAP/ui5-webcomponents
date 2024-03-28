@@ -1,0 +1,8 @@
+/* eslint no-unused-vars: 0 */
+import { html, repeat, ifDefined } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="ui5-yp-root" role="grid" aria-roledescription="${ifDefined(this.roleDescription)}" aria-readonly="false" aria-multiselectable="false" @keydown=${this._onkeydown} @keyup=${this._onkeyup} @click=${this._selectYear}>${repeat(this._years, (item, index) => item._id || index, (item, index) => block1.call(this, context, tags, suffix, item, index))}</div>`; }
+function block1(context, tags, suffix, item, index) { return html `<div class="ui5-yp-interval-container">${repeat(item, (item, index) => item._id || index, (item, index) => block2.call(this, context, tags, suffix, item, index))}</div>`; }
+function block2(context, tags, suffix, item, index) { return html `<div data-sap-timestamp="${ifDefined(item.timestamp)}" tabindex="${ifDefined(item._tabIndex)}" ?data-sap-focus-ref="${item.focusRef}" class="${ifDefined(item.classes)}" role="gridcell" aria-selected="${ifDefined(item.ariaSelected)}"><span>${ifDefined(item.year)}</span>${item.yearInSecType ? block3.call(this, context, tags, suffix, item, index) : undefined}</div>`; }
+function block3(context, tags, suffix, item, index) { return html `<span class="ui5-yp-item-sec-type">${ifDefined(item.yearInSecType)}</span>`; }
+export default block0;
+//# sourceMappingURL=YearPickerTemplate.lit.js.map

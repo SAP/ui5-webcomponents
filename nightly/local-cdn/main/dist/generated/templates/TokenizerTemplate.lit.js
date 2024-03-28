@@ -1,0 +1,7 @@
+/* eslint no-unused-vars: 0 */
+import { html, repeat, classMap, ifDefined } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="${classMap(this.classes.wrapper)}"><span id="${ifDefined(this._id)}-hiddenText" class="ui5-hidden-text">${ifDefined(this.tokenizerLabel)}</span><div class="${classMap(this.classes.content)}" @ui5-delete="${ifDefined(this._delete)}" @click="${this._click}" @mousedown="${this._onmousedown}" @keydown="${this._onkeydown}" @ui5-select="${ifDefined(this.onTokenSelect)}" role="listbox" aria-labelledby="${ifDefined(this._id)}-hiddenText">${repeat(this.tokens, (item, index) => item._id || index, (item, index) => block1.call(this, context, tags, suffix, item, index))}</div>${this.showNMore ? block2.call(this, context, tags, suffix) : undefined}</div>`; }
+function block1(context, tags, suffix, item, index) { return html `<slot name="${ifDefined(item._individualSlot)}"></slot>`; }
+function block2(context, tags, suffix) { return html `<span @click="${this._openMorePopoverAndFireEvent}" class="ui5-tokenizer-more-text" part="n-more-text">${ifDefined(this._nMoreText)}</span>`; }
+export default block0;
+//# sourceMappingURL=TokenizerTemplate.lit.js.map

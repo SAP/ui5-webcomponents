@@ -1,0 +1,11 @@
+import type { Meta } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import type ComboBox from "@ui5/webcomponents/dist/ComboBox.js";
+declare const _default: Meta<ComboBox>;
+export default _default;
+export declare const Basic: UI5StoryArgs<ComboBox, StoryArgsSlots>;
+export declare const Filters: UI5StoryArgs<ComboBox, StoryArgsSlots>;
+export declare const TwoColumnsLayout: UI5StoryArgs<ComboBox, StoryArgsSlots>;
+export declare const Grouping: UI5StoryArgs<ComboBox, StoryArgsSlots>;
+export declare const SuggestionsWrapping: UI5StoryArgs<ComboBox, StoryArgsSlots>;
