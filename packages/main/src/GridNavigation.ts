@@ -28,17 +28,17 @@ class GridNavigation {
 	}
 
 	_getNavigationItemsOfRow(row: GridRow | GridHeaderRow) : ITababbleElement[] {
-		return [row, ...row.shadowRoot!.children].map(el => {
-			return el.localName === "slot" ? (<HTMLSlotElement>el).assignedElements() : el;
-		}).flat().filter(el => {
-			return el.localName.includes("ui5-grid") && !el.hasAttribute("excluded-from-navigation");
+		return [row, ...row.shadowRoot!.children].map(element => {
+			return element.localName === "slot" ? (element as HTMLSlotElement).assignedElements() : element;
+		}).flat().filter(element => {
+			return element.localName.includes("ui5-grid") && !element.hasAttribute("excluded-from-navigation");
 		}) as unknown as ITababbleElement[];
 	}
 
 	_getNavigationItemsOfGrid() {
 		const items: Array<ITababbleElement> = [];
 		items.push(...this._getNavigationItemsOfRow(this._grid.headerRow));
-		this._itemNavigation.setRowSize(items.length);
+		this._itemNavigation.setRowSize(items.length + (this._grid.headerRow._popinCells.length ? 1 : 0));
 
 		if (this._grid.rows.length) {
 			this._grid.rows.forEach(row => {
@@ -52,7 +52,7 @@ class GridNavigation {
 	}
 
 	_getNoDataRow(): GridRow {
-		return this._grid.getDomRef()!.querySelector("#nodata-row") as GridRow;
+		return this._grid.shadowRoot!.getElementById("nodata-row") as GridRow;
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -66,7 +66,10 @@ class GridNavigation {
 			}
 			currentItem.focus();
 		} else {
-			const gridItem = e.composedPath().find(el => (el as ITababbleElement).localName?.includes("ui5-grid"));
+			const gridItem = e.composedPath().find(target => {
+				const element = target as ITababbleElement;
+				return element.localName?.includes("ui5-grid") && !(element as any)?._popin;
+			});
 			currentItem = this._getNavigationItemsOfGrid().findLast(item => item === gridItem);
 		}
 

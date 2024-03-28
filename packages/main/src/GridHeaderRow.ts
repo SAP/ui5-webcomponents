@@ -82,8 +82,16 @@ class GridHeaderRow extends UI5Element {
 		GridHeaderRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	_onkeydownBound: (e: KeyboardEvent) => void;
+
+	constructor() {
+		super();
+		this._onkeydownBound = this._onkeydown.bind(this);
+	}
+
 	onEnterDOM() {
 		this.setAttribute("role", "row");
+		this.addEventListener("keydown", this._onkeydownBound);
 	}
 
 	onBeforeRendering() {
@@ -99,22 +107,18 @@ class GridHeaderRow extends UI5Element {
 		return this;
 	}
 
-	_informSelectionChange(selected: boolean) {
-		this._gridSelection?.informHeaderRowSelectionChange(selected);
+	_informSelectionChange() {
+		this._gridSelection?.informHeaderRowSelectionChange();
 	}
 
-	_onSelectAllChange(e: CustomEvent) {
-		const target = e.target as CheckBox;
-		this._informSelectionChange(target.checked);
-	}
-
-	_onSelectionCellKeyDown(e: KeyboardEvent) {
-		if (!(isSpace(e) || isEnter(e)) || e.currentTarget !== e.composedPath()[0]) {
-			return;
+	_onkeydown(e: KeyboardEvent) {
+		const eventOrigin = e.composedPath()[0];
+		if ((isSpace(e) && eventOrigin === this)
+		||	((isSpace(e) || isEnter(e)) && eventOrigin === this._selectionCell)
+		) {
+			this._informSelectionChange();
+			e.preventDefault();
 		}
-
-		this._informSelectionChange(!this._isSelected);
-		e.preventDefault();
 	}
 
 	get _grid(): Grid {
@@ -135,6 +139,10 @@ class GridHeaderRow extends UI5Element {
 
 	get _hasRowSelector() {
 		return this._gridSelection?.hasRowSelector();
+	}
+
+	get _selectionCell() {
+		return this.shadowRoot!.getElementById("selection-cell");
 	}
 
 	get _visibleCells() {

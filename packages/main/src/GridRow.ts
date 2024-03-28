@@ -82,12 +82,21 @@ class GridRow extends UI5Element {
 		GridRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	_onkeydownBound: (e: KeyboardEvent) => void;
+
+	constructor() {
+		super();
+		this._onkeydownBound = this._onkeydown.bind(this);
+	}
+
 	onEnterDOM() {
 		this.setAttribute("role", "row");
+		this.addEventListener("keydown", this._onkeydownBound);
 	}
 
 	onBeforeRendering() {
 		this.setAttribute("tabindex", this.forcedTabIndex);
+		this.toggleAttribute("_interactive", this._isInteractive);
 		if (this._isSelectable) {
 			this.setAttribute("aria-selected", `${this._isSelected}`);
 		} else {
@@ -99,22 +108,18 @@ class GridRow extends UI5Element {
 		return this;
 	}
 
-	_informSelectionChange(selected: boolean) {
-		this._gridSelection?.informRowSelectionChange(this, selected);
+	_informSelectionChange() {
+		this._gridSelection?.informRowSelectionChange(this);
 	}
 
-	_onSelectionComponentChange(e: CustomEvent) {
-		const target = e.target as CheckBox | RadioButton;
-		this._informSelectionChange(target.checked);
-	}
-
-	_onSelectionCellKeyDown(e: KeyboardEvent) {
-		if (!(isSpace(e) || isEnter(e)) || e.currentTarget !== e.composedPath()[0]) {
-			return;
+	_onkeydown(e: KeyboardEvent) {
+		const eventOrigin = e.composedPath()[0];
+		if ((isSpace(e) && eventOrigin === this)
+		||	((isSpace(e) || isEnter(e)) && eventOrigin === this._selectionCell)
+		) {
+			this._informSelectionChange();
+			e.preventDefault();
 		}
-
-		this._informSelectionChange(this._isMultiSelect ? !this._isSelected : true);
-		e.preventDefault();
 	}
 
 	get _grid(): Grid | undefined {
@@ -124,6 +129,10 @@ class GridRow extends UI5Element {
 
 	get _gridId() {
 		return this._grid?._id;
+	}
+
+	get _isInteractive() {
+		return false;
 	}
 
 	get _gridSelection(): GridSelection | undefined {
@@ -144,6 +153,10 @@ class GridRow extends UI5Element {
 
 	get _hasRowSelector() {
 		return this._gridSelection?.hasRowSelector();
+	}
+
+	get _selectionCell() {
+		return this.shadowRoot!.getElementById("selection-cell");
 	}
 
 	get _visibleCells() {

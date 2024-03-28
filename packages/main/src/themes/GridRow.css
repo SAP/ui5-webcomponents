@@ -15,6 +15,16 @@
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_SelectionBorderColor);
 }
 
+@media (hover: hover) {
+    :host([_interactive]:hover) {
+        background-color: var(--sapList_Hover_Background);
+    }
+}
+
+:host([_interactive]:active) {
+    background-color: var(--sapList_Active_Background);
+}
+
 #selection-cell {
     padding: 0;
 }
