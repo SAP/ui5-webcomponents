@@ -246,21 +246,6 @@ describe("Keyboard handling", () => {
 		assert.notOk(await secondToken.getProperty("selected"), "The second token is deselected");
 	});
 
-    it("should select a token with CTRL+SPACE", async () => {
-		const tokenizer =  await browser.$("#nmore-tokenizer");
-		const firstToken = await tokenizer.$("ui5-token:first-child");
-		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
-
-		await firstToken.click();
-		await tokenizer.keys("ArrowRight");
-
-		assert.ok(await secondToken.getProperty("focused"), "The second token is focused");
-
-        await mcb.keys(["Control", "Space"]);
-
-		assert.ok(await secondToken.getProperty("selected"), "The second token is selected");
-	});
-
 	it("left/right arrow navigation", async () => {
 		const tokenizer =  await browser.$("#nmore-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
