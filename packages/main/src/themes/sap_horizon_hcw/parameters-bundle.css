@@ -1,6 +1,7 @@
 @import "./Avatar-parameters.css";
 @import "../base/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
+@import "../base/Bar-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";

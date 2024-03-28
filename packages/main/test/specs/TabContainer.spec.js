@@ -17,6 +17,13 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab matches.");
 	});
 
+	it("tests initially no explicitly selected tab", async () => {
+		const tabContainer = await browser.$("#tabContainerIconOnly");
+		const selectedSlot = await tabContainer.shadow$('slot[name="default-1"]');
+
+		assert.ok(await selectedSlot.isExisting(), "selected slot is correct");
+	});
+
 	it("tests empty tab container", async () => {
 		assert.ok(await browser.$("#tabContainerEmpty").isDisplayed(), "Empty tab container is rendered.");
 	});
