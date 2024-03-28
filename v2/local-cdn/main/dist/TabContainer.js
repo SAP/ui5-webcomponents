@@ -41,7 +41,7 @@ import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
-import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import OverflowMode from "./types/OverflowMode.js";
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
 import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
@@ -777,7 +777,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         return lastVisibleIndex;
     }
     get isModeStartAndEnd() {
-        return this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
+        return this.overflowMode === OverflowMode.StartAndEnd;
     }
     _updateOverflowCounters() {
         let startOverflowItemsCount = 0;
@@ -1001,8 +1001,8 @@ __decorate([
     property({ type: TabLayout, defaultValue: TabLayout.Standard })
 ], TabContainer.prototype, "tabLayout", void 0);
 __decorate([
-    property({ type: TabsOverflowMode, defaultValue: TabsOverflowMode.End })
-], TabContainer.prototype, "tabsOverflowMode", void 0);
+    property({ type: OverflowMode, defaultValue: OverflowMode.End })
+], TabContainer.prototype, "overflowMode", void 0);
 __decorate([
     property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
 ], TabContainer.prototype, "headerBackgroundDesign", void 0);

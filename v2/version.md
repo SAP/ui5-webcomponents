@@ -1,18 +1,18 @@
-commit 37cb9d3d474cd500b8578dc77eb48de6f083155f
+commit 3da1e47cd57addab037e7b637966571d2208441a
 Author: kskondov <konstantin.kondov@sap.com>
-Date:   Thu Mar 28 17:09:21 2024 +0200
+Date:   Thu Mar 28 17:21:18 2024 +0200
 
-    refactor(ui5-tab): rename `subTabs` slot  to `items` (#8559)
+    refactor(ui5-tabcontainer): rename `tabs-overflow-mode` to `overflow-mode` (#8565)
     
-    Renames 'subTabs' slot of ui5-tab to 'items'.
+    Renames tabs-overflow-mode to overflow-mode
     
     BREAKING CHANGE: If you have previously used:
     ```html
-    <ui5-tab id="nestedTab" slot="subTabs"></ui5-tab>
+    <ui5-tabcontainer tabs-overflow-mode="StartAndEnd"></ui5-tabcontainer>
     ```
     Now use:
     ```html
-    <ui5-tab id="nestedTab" slot="items"></ui5-tab>
+    <ui5-tabcontainer overflow-mode="StartAndEnd"></ui5-tabcontainer>
     ```
     
     Relates to https://github.com/SAP/ui5-webcomponents/issues/8461
