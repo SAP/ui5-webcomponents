@@ -9,8 +9,9 @@
     --_ui5_progress_indicator_side_points_visibility: block;
 
     --_ui5_progress_indicator_padding: 1.25rem 0 0.75rem 0;
+    --_ui5_progress_indicator_padding_novalue: 0.3125rem;
     --_ui5_progress_indicator_padding_end: 1.25rem;
-    
+
     --_ui5_progress_indicator_host_height: unset;
     --_ui5_progress_indicator_host_min_height: unset;
     --_ui5_progress_indicator_host_box_sizing: border-box;
@@ -31,7 +32,7 @@
 
     --_ui5_progress_indicator_icon_position: absolute;
     --_ui5_progress_indicator_icon_right_position: -1.25rem;
-    
+
     --_ui5_progress_indicator_value_margin: 0 0 0.1875rem 0;
     --_ui5_progress_indicator_value_position: absolute;
     --_ui5_progress_indicator_value_top_position: -1.3125rem;
