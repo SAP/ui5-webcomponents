@@ -3,7 +3,7 @@ import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/s
 import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_horizon", async () => defaultTheme);
-const styleData = { packageName: "@ui5/webcomponents", fileName: "themes/TokenizerPopover.css.ts", content: `[ui5-responsive-popover]::part(header),[ui5-responsive-popover]::part(content){padding:0}#ui5-tokenizer-dialog-confirm-btn{height:100%;min-width:4rem}[ui5-responsive-popover]{margin-top:var(--_ui5-v1-24-0-rc-2_tokenizer-popover_offset);margin-inline-start:calc(-1 * var(--_ui5-v1-24-0-rc-2_tokenizer_padding))}
+const styleData = { packageName: "@ui5/webcomponents", fileName: "themes/TokenizerPopover.css.ts", content: `[ui5-responsive-popover]::part(header),[ui5-responsive-popover]::part(content){padding:0}#ui5-tokenizer-dialog-confirm-btn{height:100%;min-width:4rem}[ui5-responsive-popover]{margin-top:var(--_ui5-v1-24-0-rc-3_tokenizer-popover_offset);margin-inline-start:calc(-1 * var(--_ui5-v1-24-0-rc-3_tokenizer_padding))}
 ` };
 export default styleData;
 //# sourceMappingURL=TokenizerPopover.css.js.map

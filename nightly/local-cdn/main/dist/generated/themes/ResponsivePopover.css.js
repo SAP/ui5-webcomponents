@@ -3,7 +3,7 @@ import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/s
 import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_horizon", async () => defaultTheme);
-const styleData = { packageName: "@ui5/webcomponents", fileName: "themes/ResponsivePopover.css.ts", content: `:host{--_ui5-v1-24-0-rc-2_input_width: 100%;min-width:6.25rem;min-height:2rem}:host([opened]){display:inline-block}.ui5-responsive-popover-header{height:var(--_ui5-v1-24-0-rc-2-responsive_popover_header_height);display:flex;justify-content:space-between;align-items:center;width:100%}.ui5-responsive-popover-header-text{width:calc(100% - var(--_ui5-v1-24-0-rc-2_button_base_min_width))}.ui5-responsive-popover-header-no-title{justify-content:flex-end}
+const styleData = { packageName: "@ui5/webcomponents", fileName: "themes/ResponsivePopover.css.ts", content: `:host{--_ui5-v1-24-0-rc-3_input_width: 100%;min-width:6.25rem;min-height:2rem}:host([opened]){display:inline-block}.ui5-responsive-popover-header{height:var(--_ui5-v1-24-0-rc-3-responsive_popover_header_height);display:flex;justify-content:space-between;align-items:center;width:100%}.ui5-responsive-popover-header-text{width:calc(100% - var(--_ui5-v1-24-0-rc-3_button_base_min_width))}.ui5-responsive-popover-header-no-title{justify-content:flex-end}
 ` };
 export default styleData;
 //# sourceMappingURL=ResponsivePopover.css.js.map

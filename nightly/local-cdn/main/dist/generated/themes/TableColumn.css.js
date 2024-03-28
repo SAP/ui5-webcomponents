@@ -3,7 +3,7 @@ import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/s
 import defaultTheme from "./sap_horizon/parameters-bundle.css.js";
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", async () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_horizon", async () => defaultTheme);
-const styleData = { packageName: "@ui5/webcomponents", fileName: "themes/TableColumn.css.ts", content: `:host{display:contents}th{background:var(--sapList_HeaderBackground);width:inherit;font-weight:var(--ui5-v1-24-0-rc-2_table_header_row_font_weight);font-size:var(--sapFontMediumSize);font-family:var(--ui5-v1-24-0-rc-2_table_header_row_font_family);padding:.5rem;box-sizing:border-box;text-align:start;vertical-align:middle}:host([first]) th{padding-inline-start:1rem}th ::slotted([ui5-label]){font-weight:var(--ui5-v1-24-0-rc-2_table_header_row_font_weight);font-size:var(--sapFontMediumSize);font-family:var(--ui5-v1-24-0-rc-2_table_header_row_font_family)}
+const styleData = { packageName: "@ui5/webcomponents", fileName: "themes/TableColumn.css.ts", content: `:host{display:contents}th{background:var(--sapList_HeaderBackground);width:inherit;font-weight:var(--ui5-v1-24-0-rc-3_table_header_row_font_weight);font-size:var(--sapFontMediumSize);font-family:var(--ui5-v1-24-0-rc-3_table_header_row_font_family);padding:.5rem;box-sizing:border-box;text-align:start;vertical-align:middle}:host([first]) th{padding-inline-start:1rem}th ::slotted([ui5-label]){font-weight:var(--ui5-v1-24-0-rc-3_table_header_row_font_weight);font-size:var(--sapFontMediumSize);font-family:var(--ui5-v1-24-0-rc-3_table_header_row_font_family)}
 ` };
 export default styleData;
 //# sourceMappingURL=TableColumn.css.js.map
