@@ -36,7 +36,6 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 
 const PAGE_SIZE = 12; // total months on a single page
-const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
 
 type Month = {
 	timestamp: string,
@@ -50,7 +49,7 @@ type Month = {
 	classes: string,
 }
 
-type MonthInterval = Array<Array<Month>>;
+type MonthInterval = Array<Month>;
 
 type MonthPickerChangeEventDetail = {
 	timestamp: number,
@@ -125,6 +124,10 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
+	get rowSize() {
+		return this.secondaryCalendarType === "Islamic" || this.secondaryCalendarType === "Persian" ? 2 : 3;
+	}
+
 	_buildMonths() {
 		if (this._hidden) {
 			return;
@@ -141,7 +144,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
-		for (let i = 0; i < 12; i++) {
+		for (let i = 0; i < PAGE_SIZE; i++) {
 			tempDate.setMonth(i);
 			timestamp = tempDate.valueOf() / 1000;
 
@@ -172,13 +175,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				month.classes += " ui5-mp-item--disabled";
 			}
 
-			const quarterIndex = Math.floor(i / ROW_SIZE);
-
-			if (months[quarterIndex]) {
-				months[quarterIndex].push(month);
-			} else {
-				months[quarterIndex] = [month];
-			}
+			months.push(month);
 		}
 
 		this._months = months;
@@ -201,9 +198,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isRight(e)) {
 			this._modifyTimestampBy(1);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-ROW_SIZE);
+			this._modifyTimestampBy(-this.rowSize);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(ROW_SIZE);
+			this._modifyTimestampBy(this.rowSize);
 		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-PAGE_SIZE);
 		} else if (isPageDown(e)) {
@@ -211,9 +208,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
+			this._setTimestamp(parseInt(this._months[0].timestamp)); // first month of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
+			this._setTimestamp(parseInt(this._months[PAGE_SIZE - 1].timestamp)); // last month of last row
 		} else {
 			preventDefault = false;
 		}
@@ -224,13 +221,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_onHomeOrEnd(homePressed: boolean) {
-		this._months.forEach(row => {
-			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
-			if (indexInRow !== -1) { // The current month is on this row
-				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
-				this._setTimestamp(parseInt(row[index].timestamp));
-			}
-		});
+		this._setTimestamp(parseInt(this._months[homePressed ? 0 : PAGE_SIZE - 1].timestamp));
 	}
 
 	/**
