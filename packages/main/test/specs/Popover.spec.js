@@ -121,7 +121,7 @@ describe("Popover general interaction", () => {
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
 		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.shadow$$("ui5-li");
+		const items = await popover.$$("ui5-li");
 
 		await manyItemsSelect.click();
 
@@ -133,7 +133,7 @@ describe("Popover general interaction", () => {
 	it("tests if overflown content can be reached by scrolling 2", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
 		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.shadow$$("ui5-li");
+		const items = await popover.$$("ui5-li");
 		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
