@@ -19,7 +19,7 @@ import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
+import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
@@ -103,14 +103,6 @@ class MultiInput extends Input {
 	showValueHelpIcon!: boolean;
 
 	/**
-	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	expandedTokenizer!: boolean;
-
-	/**
 	 * Indicates whether the tokenizer has tokens
 	 * @default false
 	 * @private
@@ -139,11 +131,6 @@ class MultiInput extends Input {
 	valueHelpPress() {
 		this.closePopover();
 		this.fireEvent("value-help-trigger");
-	}
-
-	showMorePress() {
-		this.expandedTokenizer = false;
-		this.focus();
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -191,6 +178,7 @@ class MultiInput extends Input {
 
 		if (e.relatedTarget === this.nativeInput) {
 			this.tokenizer.closeMorePopover();
+			this.tokenizer.expanded = true;
 		}
 	}
 
@@ -201,7 +189,11 @@ class MultiInput extends Input {
 	}
 
 	innerFocusIn() {
-		this.expandedTokenizer = true;
+		if (this._readonly) {
+			return;
+		}
+
+		this.tokenizer.expanded = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
 
@@ -242,9 +234,6 @@ class MultiInput extends Input {
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
-		const isCtrl = !!(e.metaKey || e.ctrlKey);
-		const tokens = this.tokens;
-
 		if (isRight(e) || isEnd(e) || rightCtrl) {
 			e.preventDefault();
 			const lastTokenIndex = this.tokens.length - 1;
@@ -253,36 +242,7 @@ class MultiInput extends Input {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
-			} else if (rightCtrl) {
-				e.preventDefault();
-				return this.tokenizer._handleArrowCtrl(e, e.target as Token, this.tokens, true);
 			}
-		}
-
-		if (isCtrl && ["c", "x"].includes(e.key.toLowerCase())) {
-			e.preventDefault();
-
-			const isCut = e.key.toLowerCase() === "x";
-			const selectedTokens = tokens.filter(token => token.selected);
-
-			if (isCut) {
-				const cutResult = this.tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
-
-				selectedTokens.forEach(token => {
-					this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
-				});
-
-				this.focus();
-
-				return cutResult;
-			}
-
-			return this.tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
-		}
-
-		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
-			e.preventDefault();
-			this.tokenizer.openMorePopover();
 		}
 	}
 
@@ -317,10 +277,7 @@ class MultiInput extends Input {
 		const insideShadowDom = this.shadowRoot!.contains(relatedTarget);
 
 		if (!insideDOM && !insideShadowDom) {
-			this.expandedTokenizer = false;
-
-			// we need to reset tabindex setting by tokenizer
-			this.tokenizer._itemNav._currentIndex = -1;
+			this.tokenizer.expanded = false;
 		}
 	}
 
@@ -348,12 +305,30 @@ class MultiInput extends Input {
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
 	}
 
+	async onAfterRendering() {
+		await super.onAfterRendering();
+
+		this.tokenizer.preventInitialFocus = true;
+
+		if (this.tokenizer.expanded) {
+			this.tokenizer.scrollToEnd();
+		}
+
+		if (!this.tokenizer.expanded) {
+			this.tokenizer.scrollToStart();
+		}
+	}
+
 	get iconsCount() {
 		return super.iconsCount + (this.showValueHelpIcon ? 1 : 0);
 	}
 
 	get tokenizer() {
 		return this.shadowRoot!.querySelector<Tokenizer>("[ui5-tokenizer]")!;
+	}
+
+	get tokenizerExpanded() {
+		return this.tokenizer && this.tokenizer.expanded;
 	}
 
 	get _tokensCountText() {

@@ -35,6 +35,10 @@
 	color: var(--sapLinkColor);
 }
 
+:host([disabled]) .ui5-multi-combobox-tokenizer {
+	opacity: 100%;
+}
+
 .ui5-multi-combobox-tokenizer::part(n-more-text) {
 	padding-inline-end: var(--_ui5_input_inner_space_to_n_more_text);
 }

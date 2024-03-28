@@ -83,23 +83,23 @@ class Token extends UI5Element implements IToken {
 	text!: string;
 
 	/**
-	 * Defines whether the component is read-only.
-	 *
-	 * **Note:** A read-only component can not be deleted or selected,
-	 * but still provides visual feedback upon user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	readonly!: boolean;
-
-	/**
 	 * Defines whether the component is selected or not.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
+
+	/**
+	 * Defines whether the component is read-only.
+	 *
+	 * **Note:** A read-only component can not be deleted or selected,
+	 * but still provides visual feedback upon user interaction.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
