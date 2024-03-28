@@ -28,6 +28,12 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
+import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
 	TABCONTAINER_NEXT_ICON_ACC_NAME,
@@ -39,8 +45,9 @@ import {
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
+import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
-import type { ListItemClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -83,7 +90,7 @@ interface ITab extends UI5Element {
 	forcedMixedMode?: boolean;
 	forcedPosinset?: number;
 	forcedSetsize?: number;
-	realTabReference?: Tab;
+	realTabReference: ITab;
 	isTopLevelTab?: boolean;
 	forcedStyle?: Record<string, any>;
 }
@@ -97,6 +104,16 @@ const PAGE_UP_DOWN_SIZE = 5;
 type TabContainerTabSelectEventDetail = {
 	tab: ITab;
 	tabIndex: number;
+}
+
+type TabContainerMoveEventDetail = {
+	source: {
+		element: HTMLElement;
+	},
+	destination: {
+		element: HTMLElement;
+		placement: `${MovePlacement}`
+	}
 }
 
 interface TabContainerExpandButton extends Button {
@@ -131,7 +148,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * ### Keyboard Handling
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -162,6 +179,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 		Icon,
 		List,
 		ResponsivePopover,
+		DropIndicator,
 	],
 })
 /**
@@ -337,7 +355,10 @@ class TabContainer extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemsFlat?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
+	_hasScheduledPopoverOpen = false;
 	_handleResizeBound: () => void;
+	_setDraggedElement?: SetDraggedElementFunction;
+	_setDraggedElementInStaticArea?: SetDraggedElementFunction;
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
@@ -406,22 +427,32 @@ class TabContainer extends UI5Element {
 			if (popoverItems.length) {
 				this._setPopoverItems(popoverItems);
 			} else {
-				this.responsivePopover.close();
+				this._closePopover();
 			}
 		}
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
+		DragRegistry.subscribe(this);
+		this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
+		DragRegistry.unsubscribe(this);
+		DragRegistry.removeSelfManagedArea(this);
+		this._setDraggedElement = undefined;
+
+		if (this.staticAreaItem && this._setDraggedElementInStaticArea) {
+			DragRegistry.removeSelfManagedArea(this.staticAreaItem);
+			this._setDraggedElementInStaticArea = undefined;
+		}
 	}
 
 	_handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
-			this.responsivePopover.close();
+			this._closePopover();
 		}
 
 		// invalidate
@@ -448,6 +479,12 @@ class TabContainer extends UI5Element {
 			tab.isTopLevelTab = items.some(i => i === tab);
 		});
 
+		walk(items, item => {
+			if (!item.isSeparator) {
+				(item as Tab)._selectedTabReference = this._selectedTab;
+			}
+		});
+
 		this._setIndentLevels(items);
 	}
 
@@ -457,6 +494,152 @@ class TabContainer extends UI5Element {
 		if (tab) {
 			this._itemNavigation.setCurrentItem(tab.realTabReference);
 		}
+	}
+
+	_onHeaderDragStart(e: DragEvent) {
+		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
+			return;
+		}
+
+		this._setDraggedElement!((e.target as Tab).realTabReference);
+	}
+
+	_onHeaderDragEnter(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
+	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
+		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
+			this.dropIndicatorDOM!.targetReference = null;
+			return;
+		}
+
+		const draggedElement = DragRegistry.getDraggedElement();
+		const closestPosition = findClosestPosition(
+			[...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)],
+			e.clientX,
+			Orientation.Horizontal,
+		);
+		const overflowButton = e.target.closest<HTMLElement>("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end]");
+		let popoverTarget = null;
+
+		if (overflowButton) {
+			popoverTarget = overflowButton;
+			e.preventDefault();
+		} else if (closestPosition) {
+			const dropTarget = (closestPosition.element as Tab).realTabReference;
+			let placements = closestPosition.placements;
+
+			if (dropTarget === draggedElement) {
+				placements = placements.filter(placement => placement !== MovePlacement.On);
+			}
+
+			const acceptedPlacement = placements.find(placement => {
+				const dragOverPrevented = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+					source: {
+						element: draggedElement!,
+					},
+					destination: {
+						element: dropTarget,
+						placement,
+					},
+				}, true);
+
+				if (dragOverPrevented) {
+					e.preventDefault();
+					this.dropIndicatorDOM!.targetReference = closestPosition.element;
+					this.dropIndicatorDOM!.placement = placement;
+					return true;
+				}
+
+				return false;
+			});
+
+			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.subTabs.length) {
+				popoverTarget = closestPosition.element;
+			} else if (!acceptedPlacement) {
+				this.dropIndicatorDOM!.targetReference = null;
+			}
+		}
+
+		if (popoverTarget && isLongDragOver) {
+			this._showPopoverAt(popoverTarget, false, true);
+		} else {
+			this._closePopover();
+		}
+	}
+
+	_onHeaderDrop(e: DragEvent) {
+		e.preventDefault();
+		const draggedElement = DragRegistry.getDraggedElement()!;
+
+		this.fireEvent<TabContainerMoveEventDetail>("move", {
+			source: {
+				element: draggedElement,
+			},
+			destination: {
+				element: (this.dropIndicatorDOM!.targetReference as Tab).realTabReference,
+				placement: this.dropIndicatorDOM!.placement,
+			},
+		});
+
+		this.dropIndicatorDOM!.targetReference = null;
+		draggedElement.focus();
+	}
+
+	_onHeaderDragLeave(e: DragEvent) {
+		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
+			return;
+		}
+
+		this.dropIndicatorDOM!.targetReference = null;
+	}
+
+	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
+		const { destination } = e.detail;
+		const draggedElement = DragRegistry.getDraggedElement();
+		const dropTarget = (destination.element as ITab).realTabReference;
+
+		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
+			return;
+		}
+
+		const placementAccepted = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+			source: {
+				element: draggedElement!,
+			},
+			destination: {
+				element: dropTarget,
+				placement: destination.placement,
+			},
+		}, true);
+
+		if (placementAccepted) {
+			e.preventDefault();
+		} else {
+			this.dropIndicatorDOM!.targetReference = null;
+		}
+	}
+
+	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
+		const { destination } = e.detail;
+		const draggedElement = DragRegistry.getDraggedElement()!;
+
+		e.preventDefault();
+
+		this.fireEvent<TabContainerMoveEventDetail>("move", {
+			source: {
+				element: draggedElement,
+			},
+			destination: {
+				element: (destination.element as Tab).realTabReference,
+				placement: destination.placement,
+			},
+		}, true);
+
+		this.dropIndicatorDOM!.targetReference = null;
+		draggedElement.focus();
 	}
 
 	async _onTabStripClick(e: Event) {
@@ -585,8 +768,7 @@ class TabContainer extends UI5Element {
 		e.preventDefault(); // cancel the item selection
 
 		this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id
-
-		this.responsivePopover!.close();
+		this._closePopover();
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
@@ -1135,25 +1317,24 @@ class TabContainer extends UI5Element {
 		this.responsivePopover = await this._respPopover();
 
 		if (this.responsivePopover.isOpen()) {
-			this.responsivePopover.close();
+			this._closePopover();
 		} else {
-			this._showPopoverAt(opener, setInitialFocus);
+			await this._showPopoverAt(opener, setInitialFocus);
 		}
 	}
 
-	async _showPopoverAt(opener: HTMLElement, setInitialFocus = false) {
+	async _showPopoverAt(opener: HTMLElement, setInitialFocus = false, preventInitialFocus = false) {
+		this._hasScheduledPopoverOpen = true;
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
-
-		if (this.responsivePopover.isOpen() && this.responsivePopover._opener !== opener) {
-			this.responsivePopover.close();
-		}
 
 		if (setInitialFocus) {
 			this._setPopoverInitialFocus();
 		}
 
-		this.responsivePopover.showAt(opener);
+		if (this._hasScheduledPopoverOpen) {
+			await this.responsivePopover.showAt(opener, preventInitialFocus);
+		}
 	}
 
 	get hasSubTabs(): boolean {
@@ -1189,13 +1370,25 @@ class TabContainer extends UI5Element {
 	}
 
 	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
+		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
+
+		if (!this._setDraggedElementInStaticArea) {
+			this._setDraggedElementInStaticArea = DragRegistry.addSelfManagedArea(this.staticAreaItem!);
+			staticAreaItemDomRef!.addEventListener("dragstart", e => {
+				this._setDraggedElementInStaticArea!((e.target as Tab).realTabReference);
+			});
+		}
+
+		return staticAreaItemDomRef!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
-	async _closeRespPopover() {
-		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.close();
+	_closePopover() {
+		this._hasScheduledPopoverOpen = false;
+		this.responsivePopover?.close();
+	}
+
+	get dropIndicatorDOM(): DropIndicator | null {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
 	}
 
 	get classes() {
@@ -1312,4 +1505,5 @@ export default TabContainer;
 export type {
 	ITab,
 	TabContainerTabSelectEventDetail,
+	TabContainerMoveEventDetail,
 };

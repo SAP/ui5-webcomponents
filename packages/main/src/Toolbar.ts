@@ -61,7 +61,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * The `ui5-toolbar` provides advanced keyboard handling.
  *
  * - The control is not interactive, but can contain of interactive elements
- * - [TAB] - iterates through elements
+ * - [Tab] - iterates through elements
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Toolbar.js";`

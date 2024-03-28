@@ -278,4 +278,3 @@ However, there are some very rare cases where a component must behave differentl
 For example, the `ui5-icon` component must show different versions of the icons based on the theme. Use the `themeAware` setting
 in these exceptional cases to guarantee that your component will be re-rendered on theme change.
 
-Next: [Understanding the Handlebars (`.hbs`) templates](./04-understanding-hbs-templates.md)

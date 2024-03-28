@@ -15,6 +15,7 @@
 	left: 0;
 	height: 100%;
 	width: 100%;
+	font-size: 0;
 }
 
 .ui5-file-uploader-root input[type=file]:not([disabled]) {

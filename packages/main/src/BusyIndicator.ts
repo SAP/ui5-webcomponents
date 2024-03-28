@@ -8,6 +8,7 @@ import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
 
 // Template
@@ -99,6 +100,15 @@ class BusyIndicator extends UI5Element {
 	delay!: number;
 
 	/**
+	 * Defines the placement of the text.
+	 *
+	 * @default "Bottom"
+	 * @public
+	 */
+	@property({ type: BusyIndicatorTextPlacement, defaultValue: BusyIndicatorTextPlacement.Bottom })
+	textPlacement!: `${BusyIndicatorTextPlacement}`;
+
+	/**
 	 * Defines if the component is currently in busy state.
 	 * @private
 	 */
@@ -154,6 +164,12 @@ class BusyIndicator extends UI5Element {
 			root: {
 				"ui5-busy-indicator-root": true,
 			},
+		};
+	}
+	get textPosition() {
+		return {
+			top: this.text && this.textPlacement === BusyIndicatorTextPlacement.Top,
+			bottom: this.text && this.textPlacement === BusyIndicatorTextPlacement.Bottom,
 		};
 	}
 

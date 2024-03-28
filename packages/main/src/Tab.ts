@@ -8,6 +8,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	TAB_ARIA_DESIGN_POSITIVE,
 	TAB_ARIA_DESIGN_NEGATIVE,
@@ -36,6 +37,7 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 // Styles
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
 
 const DESIGN_DESCRIPTIONS = {
@@ -129,6 +131,15 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Boolean })
 	selected!: boolean;
 
+	/**
+	 * Defines if the tab is movable.
+	 *
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
+
 	@property({ type: Boolean })
 	forcedSelected!: boolean;
 
@@ -137,6 +148,9 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	@property({ type: Boolean })
 	isTopLevelTab!: boolean;
+
+	@property({ type: Object, defaultValue: null })
+	_selectedTabReference!: Tab;
 
 	/**
 	 * Holds the content associated with this tab.
@@ -222,7 +236,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get isOnSelectedTabPath(): boolean {
-		return this.selected || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+		return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
 	get _effectiveSlotName() {
@@ -230,7 +244,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _defaultSlotName() {
-		return this.selected ? "" : "disabled-slot";
+		return this._selectedTabReference === this ? "" : "disabled-slot";
 	}
 
 	get hasOwnContent() {
@@ -262,6 +276,11 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		}
 
 		return focusedDomRef;
+	}
+
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+		return super.focus(focusOptions);
 	}
 
 	get isMixedModeTab() {
@@ -453,11 +472,24 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	static async onDefine() {
 		Tab.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
+
+	_ondragstart(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.setAttribute("data-moving", "");
+		}
+	}
+
+	_ondragend(e: DragEvent) {
+		if (e.target instanceof HTMLElement) {
+			e.target.removeAttribute("data-moving");
+		}
+	}
 }
 
 Tab.define();
 
 TabContainer.registerTabStyles(stripCss);
+TabContainer.registerTabStyles(draggableElementStyles);
 TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default Tab;

@@ -261,7 +261,7 @@
 	<section>
 		<h2>Icon only</h2>
 		<ui5-tabcontainer id="tabContainerIconOnly">
-			<ui5-tab icon="sap-icon://card" selected>
+			<ui5-tab icon="sap-icon://card">
 				<ui5-button>Button 11</ui5-button>
 				<ui5-button>Button 12</ui5-button>
 			</ui5-tab>
@@ -838,6 +838,16 @@
 		</ui5-tabcontainer>
 	</section>
 
+	<section>
+		<h3>Dynamically Insert Tab and Focus It</h3>
+		<ui5-button id="insertAndFocusNewTab">Insert and Focus New Tab</ui5-button>
+		<ui5-tabcontainer id="testFocusedTabAfterInsertion">
+			<ui5-tab text="One">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tab-select", async function (event) {
 			result.innerHTML = event.detail.tab.text;
@@ -925,6 +935,14 @@
 			addTab(true);
 			addTab();
 			addTab();
+		});
+
+		document.getElementById("insertAndFocusNewTab").addEventListener("click", () => {
+			const tab = document.createElement("ui5-tab");
+			tab.id = "newlyInsertedFocusedTab";
+			tab.text = "New Tab";
+			document.getElementById("testFocusedTabAfterInsertion").appendChild(tab);
+			tab.focus();
 		});
 
 	</script>

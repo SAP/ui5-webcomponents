@@ -6,15 +6,18 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
-import {encodeToBase64, decodeFromBase64} from "./share.js";
+import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
-
-let Splitter = function () {
-  return (<></>)
-};
+import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
+import { Splitter } from 'react-splitter-light';
+import ResetIcon from "../../../local-cdn/local-cdn/icons/dist/v5/reset.svg";
+import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
+import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
+import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
+import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
+import downloadSample from './download.js';
 
 if (ExecutionEnvironment.canUseDOM) {
-  Splitter = require('react-splitter-light').Splitter;
   require('playground-elements');
 }
 
@@ -69,6 +72,11 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         }
       }
     </script>
+    <style>
+      *:not(:defined) {
+        display: none;
+      }
+    </style>
 `)
   }
 
@@ -95,12 +103,13 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     setEditorVisible(!editorVisible);
   }
 
-  function share() {
+  const getSampleFiles = () => {
     const files = {};
 
     // convert file format
     projectRef.current.files.forEach(f => {
       files[f.name] = {
+        name: f.name,
         content: f.content
       };
     });
@@ -114,13 +123,45 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     // remove playground support
     delete files["playground-support.js"];
 
+    return files;
+  }
+
+  const reset = () => {
+    localStorage.removeItem("project");
+    location.hash = "";
+    location.reload();
+  }
+
+  const download = () => {
+    const files = getSampleFiles();
+    downloadSample(files);
+  }
+
+  const share = () => {
+    const files = getSampleFiles();
+
     // encode and put in url
     const hash = encodeToBase64(JSON.stringify(files));
     navigator.clipboard.writeText(new URL(`#${hash}`, window.location.href).href);
     setCopied(true);
   }
 
+  const saveProject = () => {
+    const files = getSampleFiles();
+    localStorage.setItem("project", JSON.stringify(files));
+  }
+
   const baseUrl = useBaseUrl("/");
+  const playUrl = useBaseUrl("/play");
+
+  const openInNewTab = () => {
+    const files = getSampleFiles();
+
+    // encode and put in url
+    const hash = encodeToBase64(JSON.stringify(files));
+    const url = new URL(`${playUrl}#${hash}`, location.origin);
+    window.open(url, "_blank");
+  }
 
   useEffect(() => {
     projectRef.current = getProjectFromPool();
@@ -160,15 +201,37 @@ ${fixAssetPaths(js)}`,
       delete newConfig.files["main.css"];
     }
 
+    // restore project if saved
+    if (location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) {
+      const savedProject = localStorage.getItem("project");
+      if (savedProject) {
+        try {
+          const savedConfig = JSON.parse(savedProject);
+          savedConfig["index.html"].content = addImportMap(fixAssetPaths(savedConfig["index.html"].content));
+          if (savedConfig["main.js"] && newConfig.files["main.ts"]) {
+            delete newConfig.files["main.ts"];
+          }
+          newConfig.files = {...newConfig.files, ...savedConfig};
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+
+    // shared content - should be after restore from localstorage
     if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
         sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        if (sharedConfig["main.js"] && newConfig.files["main.ts"]) {
+          delete newConfig.files["main.ts"];
+        }
         newConfig.files = {...newConfig.files, ...sharedConfig};
       } catch (e) {
         console.log(e);
       }
     }
+
     projectRef.current.config = newConfig;
     projectContainerRef.current.appendChild(projectRef.current)
 
@@ -179,15 +242,21 @@ ${fixAssetPaths(js)}`,
     }
     window.addEventListener("message", messageHandler);
 
-    previewRef.current.project = projectRef.current;
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
+    previewRef.current.project = projectRef.current;
 
     tabBarRef.current.editor = fileEditorRef.current;
+
+    // setup localstorage saving
+    if (standalone) {
+      projectRef.current.addEventListener("compileStart", saveProject);
+    }
 
     return function () {
       // component cleanup
       window.removeEventListener("message", messageHandler);
+      projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
   }, []);
@@ -219,8 +288,8 @@ ${fixAssetPaths(js)}`,
           ?
             <div style={{width: "100%"}}>
               <Splitter>
-                {editor}
                 {preview}
+                {editor}
               </Splitter>
             </div>
           :
@@ -269,13 +338,31 @@ ${fixAssetPaths(js)}`,
       {canShare
         ?
           <>
-            <div style={{display: "flex", "justify-content": "end"}}>
+            <div className={`${styles.editor__toolbar}`}>
               <button
-                className={`button button--secondary ${styles.previewResult__action} ${styles.previewResult__share}`}
+                className={`button button--secondary ${styles.previewResult__download}`}
+                onClick={ reset }
+              >
+               <ResetIcon className={`${styles.btn__icon}`}/>
+                Reset example
+              </button>
+
+              <button
+                className={`button button--secondary ${styles.previewResult__download}`}
+                onClick={ download }
+              >
+               <DownloadIcon className={`${styles.btn__icon}`}/>
+                Download
+              </button>
+
+              <button
+                className={`button button--secondary ${styles.previewResult__share}`}
                 onClick={ share }
               >
+               <ShareIcon className={`${styles.btn__icon}`}/>
                 Share
               </button>
+
               { copied
                 ? <div style={ {position: "absolute"} }>
                     <span className={styles["copy-status"]}>&#x2714; Link copied</span>
@@ -301,12 +388,31 @@ ${fixAssetPaths(js)}`,
           ?
             <></>
           :
+          <>
             <button
-              className={`button ${(editorVisible ? "button--secondary" : "button--primary")} ${styles.previewResult__action} ${(canShare ? styles.previewResult__hasShare : "")}` }
+              className={`button button--secondary ${styles.previewResult__downloadSample}`}
+              onClick={ download }
+            >
+              <DownloadIcon className={`${styles["btn__icon--edit"]} `}/>
+              Download
+            </button>
+
+            <button
+              className={`button button--secondary ${styles.previewResult__downloadSample}`}
+              onClick={ openInNewTab }
+            >
+              <ActionIcon className={`${styles["btn__icon--edit"]} `}/>
+              Open in Playground
+            </button>
+
+            <button
+              className={`button ${(editorVisible ? "button--secondary" : "button--secondary")} ${styles.previewResult__toggleCodeEditor} ${(canShare ? styles.previewResult__hasShare : "")}` }
               onClick={ toggleEditor }
             >
+              {editorVisible ? <HideIcon className={`${styles["btn__icon--edit"]} `}/> : <EditIcon className={`${styles["btn__icon--edit"]}`}/>}
               {editorVisible ? "Hide code" : "Edit"}
             </button>
+          </>
         }
         </div>
 
