@@ -91,7 +91,7 @@ declare class Tab extends UI5Element implements ITab, ITabbable {
      * **Note:** Use `ui5-tab` and `ui5-tab-separator` for the intended design.
      * @public
      */
-    subTabs: Array<ITab>;
+    items: Array<ITab>;
     isInline?: boolean;
     forcedMixedMode?: boolean;
     getElementInStrip?: () => ITab | null;
@@ -114,7 +114,7 @@ declare class Tab extends UI5Element implements ITab, ITabbable {
     /**
      * Returns the DOM reference of the tab that is placed in the header.
      *
-     * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+     * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
      *
      * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
      * @public

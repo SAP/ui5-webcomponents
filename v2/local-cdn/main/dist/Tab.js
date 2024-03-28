@@ -77,13 +77,13 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
     }
     get requiresExpandButton() {
-        return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+        return this.items.length > 0 && this.isTopLevelTab && this.hasOwnContent;
     }
     get isSingleClickArea() {
-        return this.subTabs.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
+        return this.items.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
     }
     get isTwoClickArea() {
-        return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+        return this.items.length > 0 && this.isTopLevelTab && this.hasOwnContent;
     }
     get isOnSelectedTabPath() {
         return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
@@ -100,7 +100,7 @@ let Tab = Tab_1 = class Tab extends UI5Element {
     /**
      * Returns the DOM reference of the tab that is placed in the header.
      *
-     * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+     * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
      *
      * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
      * @public
@@ -143,7 +143,7 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return !this.effectiveSelected;
     }
     get tabs() {
-        return this.subTabs.filter((tab) => !tab.isSeparator);
+        return this.items.filter((tab) => !tab.isSeparator);
     }
     get ariaLabelledBy() {
         const labels = [];
@@ -212,7 +212,7 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return Tab_1.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
     }
     get _roleDescription() {
-        return this.subTabs.length > 0 ? Tab_1.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
+        return this.items.length > 0 ? Tab_1.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
     }
     get _ariaHasPopup() {
         return this.isSingleClickArea ? "menu" : undefined;
@@ -330,7 +330,7 @@ __decorate([
             slots: false,
         },
     })
-], Tab.prototype, "subTabs", void 0);
+], Tab.prototype, "items", void 0);
 Tab = Tab_1 = __decorate([
     customElement({
         tag: "ui5-tab",

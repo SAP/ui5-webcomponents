@@ -32,7 +32,7 @@ interface ITab extends UI5Element {
     isSingleClickArea?: boolean;
     requiresExpandButton?: boolean;
     selected?: boolean;
-    subTabs?: Array<ITab>;
+    items?: Array<ITab>;
     tabs?: Array<ITab>;
     text?: string;
     hasOwnContent?: boolean;
@@ -301,7 +301,7 @@ declare class TabContainer extends UI5Element {
     _setPopoverItems(items: Array<ITab>): void;
     _togglePopover(opener: HTMLElement, setInitialFocus?: boolean): Promise<void>;
     _showPopoverAt(opener: HTMLElement, setInitialFocus?: boolean, preventInitialFocus?: boolean): Promise<void>;
-    get hasSubTabs(): boolean;
+    get hasItems(): boolean;
     _getTabStrip(): HTMLElement;
     _getStartOverflow(): HTMLElement;
     _getEndOverflow(): HTMLElement;

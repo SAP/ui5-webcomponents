@@ -249,7 +249,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                 }
                 return false;
             });
-            if (acceptedPlacement === MovePlacement.On && closestPosition.element.realTabReference.subTabs.length) {
+            if (acceptedPlacement === MovePlacement.On && closestPosition.element.realTabReference.items.length) {
                 popoverTarget = closestPosition.element;
             }
             else if (!acceptedPlacement) {
@@ -445,8 +445,8 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         items.forEach(item => {
             if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
                 item.forcedLevel = level;
-                if (item.subTabs) {
-                    this._setIndentLevels(item.subTabs, level + 1);
+                if (item.items) {
+                    this._setIndentLevels(item.items, level + 1);
                 }
             }
         });
@@ -847,9 +847,9 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             });
         }
         if (isTabInStrip(targetOwner)) {
-            return targetOwner.realTabReference.subTabs;
+            return targetOwner.realTabReference.items;
         }
-        return targetOwner.subTabs;
+        return targetOwner.items;
     }
     _setPopoverItems(items) {
         const newItemsFlat = this._flatten(items);
@@ -878,10 +878,10 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             await this.responsivePopover.showAt(opener, preventInitialFocus);
         }
     }
-    get hasSubTabs() {
+    get hasItems() {
         const tabs = this._getTabs();
         for (let i = 0; i < tabs.length; i++) {
-            if (tabs[i].subTabs.length > 0) {
+            if (tabs[i].items.length > 0) {
                 return true;
             }
         }
@@ -979,7 +979,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         return TabContainer_1.i18nBundle.getText(TABCONTAINER_SUBTABS_DESCRIPTION);
     }
     get tablistAriaDescribedById() {
-        return this.hasSubTabs ? `${this._id}-invisibleText` : undefined;
+        return this.hasItems ? `${this._id}-invisibleText` : undefined;
     }
     get shouldAnimate() {
         return getAnimationMode() !== AnimationMode.None;
@@ -1108,8 +1108,8 @@ const getTab = (el) => {
 const walk = (tabs, callback) => {
     [...tabs].forEach(tab => {
         callback(tab);
-        if (tab.subTabs) {
-            walk(tab.subTabs, callback);
+        if (tab.items) {
+            walk(tab.items, callback);
         }
     });
 };
