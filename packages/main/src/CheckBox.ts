@@ -267,6 +267,12 @@ class CheckBox extends UI5Element implements IFormElement {
 		this._enableFormSupport();
 	}
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
