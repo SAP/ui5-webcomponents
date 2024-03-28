@@ -56,7 +56,10 @@ class GridHeaderCell extends UI5Element {
 	@property({ validator: Integer, defaultValue: 0 })
 	importance!: number;
 
-	@property({ type: Boolean, defaultValue: false, noAttribute: true })
+	@property({ defaultValue: "-1", noAttribute: true })
+	forcedTabIndex!: string;
+
+	@property({ type: Boolean, noAttribute: true })
 	_popin!: boolean;
 
 	_popinWidth: number;
@@ -68,8 +71,11 @@ class GridHeaderCell extends UI5Element {
 
 	onEnterDOM() {
 		this.setAttribute("role", "columnheader");
-		this.setAttribute("tabindex", "0");
 		this.style.minWidth = this.minWidth;
+	}
+
+	onBeforeRendering() {
+		this.setAttribute("tabindex", this.forcedTabIndex);
 	}
 
 	getFocusDomRef() {

@@ -1,12 +1,13 @@
+<div id="before" role="none" tabindex="0" ui5-grid-dummy-focus-area></div>
 <div id="grid" role="grid"
     style="{{styles.grid}}"
-    aria-label="{{_aria.label}}"
-    aria-multiselectable="{{_aria.multiselectable}}"
+    aria-label="{{_ariaLabel}}"
+    aria-multiselectable="{{_ariaMultiSelectable}}"
 >
     <slot name="header-row"></slot>
     <slot></slot>
     {{#unless rows.length}}
-        <ui5-grid-row tabindex="0">
+        <ui5-grid-row id="nodata-row">
             <ui5-grid-cell id="nodata-cell">
             {{#if nodata.length}}
                 <slot name="nodata"></slot>
@@ -17,3 +18,4 @@
         </ui5-grid-row>
     {{/unless}}
 </div>
+<div id="after" role="none" tabindex="0" ui5-grid-dummy-focus-area></div>
