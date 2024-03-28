@@ -33,6 +33,7 @@ import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
+import type Input from "./Input.js";
 
 /**
  * Defines the step size at which this component would change by when being dragged or resized with the keyboard.
@@ -373,13 +374,34 @@ class Dialog extends Popup {
 		return this.accessibleRole.toLowerCase();
 	}
 
+	@property({ type: Boolean })
+	_openShown!: boolean;
+
+	set openShown(value) {
+		if (value) {
+			super._show();
+			(this.querySelector("ui5-input") as Input)?.shadowRoot?.querySelector("input")?.focus();
+		}
+		this._openShown = value;
+	}
+	get openShown() {
+		return this._openShown;
+	}
+
 	_show() {
 		super._show();
 		this._center();
 	}
 
 	onBeforeRendering() {
+		this.open = true;
 		super.onBeforeRendering();
+		this._blockLayerHidden = !this.openShown;
+		if (!this.openShown) {
+			this.hide();
+		} else {
+			this._show();
+		}
 
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
