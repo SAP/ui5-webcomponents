@@ -1,5 +1,5 @@
-commit 0f753da96aab9efbd1d45b2c87a44f8e4a574ad9
+commit 57f5cadfce8ffc242e4bec85aa3883a32aebfc14
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Thu Mar 28 18:16:22 2024 +0200
+Date:   Thu Mar 28 18:16:01 2024 +0200
 
-    docs: prevent 404 request on each keystroke (#8560)
+    docs: add html autocompletion for ui5 elements (#8557)
