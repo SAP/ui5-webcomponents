@@ -1,4 +1,5 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -592,8 +593,8 @@ class Suggestions {
 			return this.responsivePopover;
 		}
 
-		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		this.responsivePopover = this._getComponent().shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 

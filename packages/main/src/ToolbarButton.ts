@@ -35,6 +35,7 @@ type AccessibilityAttributes = ButtonAccessibilityAttributes;
 @customElement({
 	tag: "ui5-toolbar-button",
 	dependencies: [Button],
+	styles: ToolbarButtonPopoverCss,
 })
 
 /**
@@ -149,10 +150,6 @@ class ToolbarButton extends ToolbarItem {
 	 */
 	@property({ validator: CSSSize })
 	width?: string;
-
-	static get staticAreaStyles() {
-		return ToolbarButtonPopoverCss;
-	}
 
 	get styles() {
 		return {

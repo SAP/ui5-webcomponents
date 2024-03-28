@@ -91,7 +91,6 @@ const COLUMNS_COUNT: Record<string, number> = {
 	renderer: litRender,
 	styles: [MediaGalleryCss],
 	template: MediaGalleryTemplate,
-	staticAreaTemplate: MediaGalleryTemplate,
 	dependencies: [
 		MediaGalleryItem,
 		Button,

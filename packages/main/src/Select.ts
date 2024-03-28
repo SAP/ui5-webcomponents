@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -60,7 +61,6 @@ import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -147,9 +147,8 @@ type SelectLiveChangeEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: SelectTemplate,
-	staticAreaTemplate: SelectPopoverTemplate,
-	styles: selectCss,
-	staticAreaStyles: [
+	styles: [
+		selectCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		SelectPopoverCss,
@@ -466,8 +465,8 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -1134,8 +1133,8 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]");
 	}
 
 	static async onDefine() {

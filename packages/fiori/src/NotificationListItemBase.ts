@@ -1,3 +1,4 @@
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -18,12 +19,6 @@ import "@ui5/webcomponents-icons/dist/message-success.js";
 import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/message-warning.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
-
-// Templates
-import NotificationOverflowActionsPopoverTemplate from "./generated/templates/NotificationOverflowActionsPopoverTemplate.lit.js";
-
-// Styles
-import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 /**
  * Defines the icons corresponding to the notification's priority.
@@ -48,10 +43,7 @@ type NotificationListItemBaseCloseEventDetail = {
  * @since 1.0.0-rc.8
  * @public
  */
-@customElement({
-	staticAreaStyles: NotificationOverflowActionsPopoverCss,
-	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
-})
+@customElement()
 
 /**
  * Fired when the `Close` button is pressed.
@@ -228,8 +220,8 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	async getOverflowPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
 	}
 
 	static async onDefine() {

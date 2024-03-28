@@ -17,8 +17,8 @@ describe("Select mobile general interaction", () => {
 		select.click();
 
 		// act - move the focus to the first item
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect");
-		const selectedItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-li:last-child");
+		const popover = await select.shadow$("ui5-responsive-popover");
+		const selectedItem = await popover.$("ui5-li:last-child");
 		selectedItem.keys("ArrowUp");
 		selectedItem.keys("ArrowUp");
 

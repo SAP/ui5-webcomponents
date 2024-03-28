@@ -6,8 +6,6 @@ describe("Lit HTML key function for #each", async () => {
 	});
 
 	it("LIT HTML does not mess up keys when looping over lists", async () => {
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
-
 		// Focus the input
 		const input = await browser.$("#mcb").shadow$("[inner-input]");
 		await input.click();
@@ -18,7 +16,7 @@ describe("Lit HTML key function for #each", async () => {
 		await input.keys("a");
 
 		// Click on the first item
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+		const popover = await browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 		const firstItem = await popover.$$(".ui5-multi-combobox-all-items-list > ui5-li")[0];
 		await firstItem.click();
 

@@ -10,28 +10,22 @@ attachCustomCSSChange((tag: string) => {
 	effectiveStyleMap.delete(`${tag}_normal`); // there is custom CSS only for the component itself, not for its static area part
 });
 
-const getEffectiveStyle = (ElementClass: typeof UI5Element, forStaticArea = false) => {
+const getEffectiveStyle = (ElementClass: typeof UI5Element) => {
 	const tag = ElementClass.getMetadata().getTag();
-	const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
+	const key = `${tag}_normal`;
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 
 	if (!effectiveStyleMap.has(key)) {
-		let effectiveStyle;
 		let busyIndicatorStyles = "";
 
 		if (openUI5Enablement) {
 			busyIndicatorStyles = getStylesString(openUI5Enablement.getBusyIndicatorStyles());
 		}
 
-		if (forStaticArea) {
-			effectiveStyle = getStylesString(ElementClass.staticAreaStyles);
-		} else {
-			const customStyle = getCustomCSS(tag) || "";
-			const builtInStyles = getStylesString(ElementClass.styles);
-			effectiveStyle = `${builtInStyles} ${customStyle}`;
-		}
+		const customStyle = getCustomCSS(tag) || "";
+		const builtInStyles = getStylesString(ElementClass.styles);
 
-		effectiveStyle = `${effectiveStyle} ${busyIndicatorStyles}`;
+		const effectiveStyle = `${builtInStyles} ${customStyle} ${busyIndicatorStyles}`;
 		effectiveStyleMap.set(key, effectiveStyle);
 	}
 

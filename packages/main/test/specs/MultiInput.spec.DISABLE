@@ -1,14 +1,5 @@
 import { assert } from "chai";
 
-const getTokenizerPopoverId = async (inputId) => {
-	return await browser.executeAsync(async (inputId, done) => {
-		const input = document.querySelector(`[id="${inputId}"]`);
-		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
-
-		done(staticAreaItem.host.classList[0]);
-	}, inputId);
-}
-
 describe("MultiInput general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
@@ -31,8 +22,7 @@ describe("MultiInput general interaction", () => {
 
 		await nMoreLabel.click();
 
-		const rpoClassName = await getTokenizerPopoverId("basic-overflow");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
 	});
@@ -135,8 +125,7 @@ describe("MultiInput general interaction", () => {
 	it ("adds a token after selection change", async () => {
 		const mi = await browser.$("#suggestion-token");
 		const input = await mi.shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#suggestion-token");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await mi.shadow$("ui5-responsive-popover");
 
 		await input.click();
 		await input.keys("c");
@@ -205,9 +194,8 @@ describe("MultiInput general interaction", () => {
 
 		mi.scrollIntoView();
 		await valueHelpIcon.click();
-		
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#token-unique");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		const listItem = await mi.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		await listItem.click();
 
@@ -243,12 +231,12 @@ describe("MultiInput Truncated Token", () => {
 
 	it("should truncate token when single token is in the multinput and open popover on click", async () => {
 		const mi = await $("#truncated-token");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const token = await mi.$("ui5-token");
-		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-		
+
 		await token.click();
 
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
@@ -265,12 +253,13 @@ describe("MultiInput Truncated Token", () => {
 
 	it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
 		const mi = await $("#truncated-token");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const token = await mi.$("ui5-token");
-		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-		
+
 		await token.click();
 
 		await $("#dummy-btn").click();
@@ -281,13 +270,13 @@ describe("MultiInput Truncated Token", () => {
 
 	it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
 		const mi = await $("#truncated-token");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const token = await mi.$("ui5-token");
-		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 		const inner = await mi.shadow$("input");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-		
+
 		await inner.click();
 
 		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
@@ -296,6 +285,7 @@ describe("MultiInput Truncated Token", () => {
 
 	it("should truncate token when a long token is added", async () => {
 		const mi = await $("#token-unique");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const inner = await mi.shadow$("input");
 
 		await mi.scrollIntoView();
@@ -305,8 +295,7 @@ describe("MultiInput Truncated Token", () => {
 		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
 		await inner.keys("Enter");
 
-		const rpoClassName = await getTokenizerPopoverId("token-unique");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await mi.shadow$("ui5-responsive-popover");
 
 		const token = await mi.$("ui5-token");
 
@@ -664,8 +653,8 @@ describe("Keyboard handling", () => {
 
 	it("should open popover on keyboard combination ctrl + i", async () => {
 		const mi = await $("#truncated-token");
-		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
@@ -679,8 +668,8 @@ describe("Keyboard handling", () => {
 
 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
 		const mi = await browser.$("#no-tokens");
-		const rpoClassName = await getTokenizerPopoverId("no-tokens");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
+		const rpo = await mi.shadow$("ui5-responsive-popover");
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
@@ -689,8 +678,8 @@ describe("Keyboard handling", () => {
 
 	it("should open popover with all tokens on keyboard combination ctrl + i", async () => {
 		const mi = await browser.$("#two-tokens");
-		const rpoClassName = await getTokenizerPopoverId("two-tokens");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const tokenizer = await mi.shadow$("ui5-tokenizer");
+		const rpo = await mi.shadow$("ui5-responsive-popover");
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);

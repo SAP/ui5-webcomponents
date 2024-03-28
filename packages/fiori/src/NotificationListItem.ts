@@ -38,6 +38,7 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 import type { NotificationListItemBaseCloseEventDetail as NotificationListItemCloseEventDetail } from "./NotificationListItemBase.js";
 
@@ -80,7 +81,10 @@ type Footnote = Record<string, any>;
 @customElement({
 	tag: "ui5-li-notification",
 	languageAware: true,
-	styles: NotificationListItemCss,
+	styles: [
+		NotificationListItemCss,
+		NotificationOverflowActionsPopoverCss,
+	],
 	template: NotificationListItemTemplate,
 	dependencies: [
 		Button,

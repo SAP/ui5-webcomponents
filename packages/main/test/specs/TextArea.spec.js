@@ -109,8 +109,7 @@ describe("when enabled", () => {
 
 	it("shows value state message", async () => {
 		const textarea = await browser.$("#textarea-value-state-msg")
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#textarea-value-state-msg");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+		const popover = await textarea.shadow$("ui5-popover")
 
 		// act
 		await textarea.click();
@@ -121,8 +120,7 @@ describe("when enabled", () => {
 
 	it("does not show value state msg when valueState='None'", async () => {
 		const textarea = await browser.$("#basic-textarea");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+		const popover = await textarea.shadow$("ui5-popover")
 
 		// act
 		await textarea.click();
@@ -133,8 +131,7 @@ describe("when enabled", () => {
 
 	it("Should not open value state message when textarea is in readonly state", async () => {
 		const textarea = await browser.$("#readonly-value-state-textarea");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-textarea");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover")
+		const popover = await textarea.shadow$("ui5-popover")
 
 		// act
 		await textarea.click();
@@ -303,13 +300,12 @@ describe("Value update", () => {
 	it("Value state type should be added to the screen readers default value states announcement", async () => {
 		const tAreaError = await browser.$("#basic-textarea-error");
 		const tAreaWarning = await browser.$("#basic-textarea-warning");
-		const tAreaSuccess = await browser.$("#basic-textarea-success");
+		const tAreaV = await browser.$("#textarea-value-state-msg");
 		const tAreaInformation = await browser.$("#basic-textarea-info");
 
 		await tAreaError.click();
 
-		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea-error");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		let popover = await tAreaError.shadow$("ui5-popover");
 
 		let ariaHiddenText = await tAreaError.shadow$(".ui5-hidden-text").getText();
 		let valueStateText = await popover.$("div").getText();
@@ -319,8 +315,7 @@ describe("Value update", () => {
 
 		await tAreaWarning.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea-warning");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await tAreaWarning.shadow$("ui5-popover");
 
 		ariaHiddenText = await tAreaWarning.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();
@@ -330,8 +325,7 @@ describe("Value update", () => {
 
 		await tAreaInformation.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#basic-textarea-info");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await tAreaInformation.shadow$("ui5-popover");
 
 		ariaHiddenText = await tAreaInformation.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();
@@ -343,8 +337,7 @@ describe("Value update", () => {
 		const tAreaCustomError = await browser.$("#textarea-value-state-msg");
 		await tAreaCustomError.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#textarea-value-state-msg");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await tAreaV.shadow$("ui5-popover");
 
 		ariaHiddenText = await tAreaCustomError.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();

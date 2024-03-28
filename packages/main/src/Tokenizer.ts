@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -48,7 +49,6 @@ import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
-import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
 import {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TOKENIZER_ARIA_LABEL,
@@ -91,14 +91,13 @@ enum ClipboardDataOperation {
 	languageAware: true,
 	renderer: litRender,
 	template: TokenizerTemplate,
-	styles: TokenizerCss,
-	staticAreaStyles: [
+	styles: [
+		TokenizerCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		SuggestionsCss,
 		TokenizerPopoverCss,
 	],
-	staticAreaTemplate: TokenizerPopoverTemplate,
 	dependencies: [
 		ResponsivePopover,
 		List,
@@ -788,8 +787,8 @@ class Tokenizer extends UI5Element {
 	}
 
 	async getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 }
 

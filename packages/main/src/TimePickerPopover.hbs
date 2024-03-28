@@ -20,7 +20,7 @@
 		@close-picker="{{submitPickers}}"
 	></ui5-time-selection-clocks>
 
-	<div slot="footer" class="ui5-time-picker-footer" @keydown={{_onfooterkeydown}}>
+	<div slot="footer" class="ui5-time-picker-footer">
 		<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
 		<ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
 	</div>
@@ -50,7 +50,7 @@
 		></ui5-time-selection-inputs>
 	</div>
 
-	<div slot="footer" class="ui5-time-picker-footer" @keydown={{_onfooterkeydown}}>
+	<div slot="footer" class="ui5-time-picker-footer">
 		<ui5-button id="submitInputs" design="Emphasized" @click="{{submitInputsPopover}}">{{submitButtonLabel}}</ui5-button>
 		<ui5-button id="closeInputs" design="Transparent" @click="{{closeInputsPopover}}">{{cancelButtonLabel}}</ui5-button>
 	</div>

@@ -86,6 +86,7 @@ type CalculatedPlacement = {
 @customElement({
 	tag: "ui5-popover",
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		PopoverCss,
@@ -418,9 +419,6 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
-		const containingBlockClientLocation = this._getContainingBlockClientLocation();
-		left -= containingBlockClientLocation.left;
-		top -= containingBlockClientLocation.top;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -472,8 +470,12 @@ class Popover extends Popup {
 	}
 
 	_showOutsideViewport() {
+		if (this.isConnected) {
+			this.setAttribute("popover", "manual");
+			this.showPopover();
+		}
+
 		Object.assign(this.style, {
-			display: this._displayProp,
 			top: "-10000px",
 			left: "-10000px",
 		});

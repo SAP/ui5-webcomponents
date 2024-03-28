@@ -1,3 +1,4 @@
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -44,7 +45,6 @@ import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -154,9 +154,8 @@ type DatePickerInputEventDetail = {
 	tag: "ui5-date-picker",
 	languageAware: true,
 	template: DatePickerTemplate,
-	staticAreaTemplate: DatePickerPopoverTemplate,
-	styles: datePickerCss,
-	staticAreaStyles: [
+	styles: [
+		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
 	],
@@ -733,8 +732,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	_canOpenPicker() {

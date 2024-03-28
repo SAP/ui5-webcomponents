@@ -47,8 +47,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_d");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await toolbar.shadow$("ui5-popover");
 		const buttonText = await popover.$("ui5-button").getText();
 		const buttonDesign = await popover.$("ui5-button").getAttribute("design");
 		const buttonDisabled = await popover.$("ui5-button").getAttribute("disabled");
@@ -71,8 +70,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_d");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await toolbar.shadow$("ui5-popover");
 		const buttonAccName = await popover.$("ui5-button[accessible-name]");
 		const buttonAccessibleName = await buttonAccName.getAttribute("accessible-name");
 		const buttonAccessibleNameRef = await buttonAccName.getAttribute("accessible-name-ref");
@@ -88,8 +86,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_d");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await toolbar.shadow$("ui5-popover");
 		const buttonAccAttributes = await popover.$("ui5-button[accessible-name]").getProperty("accessibilityAttributes");
 
 		assert.strictEqual(buttonAccAttributes.expanded, "true", "Button accessibilityAttributes is correct inside popover");

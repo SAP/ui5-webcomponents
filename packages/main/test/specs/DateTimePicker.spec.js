@@ -21,8 +21,7 @@ const isPickerOpen = id => {
 };
 
 const getPicker = async id => {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${id}`);
-	return browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+	return browser.$(`#${id}`).shadow$("ui5-responsive-popover");
 };
 
 const getSubmitButton = async id => {
