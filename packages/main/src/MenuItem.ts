@@ -8,21 +8,20 @@ import type Menu from "./Menu.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-menu-item</code> is the item to use inside a <code>ui5-menu</code>.
+ * `ui5-menu-item` is the item to use inside a `ui5-menu`.
  * An arbitrary hierarchy structure can be represented by recursively nesting menu items.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <code>ui5-menu-item</code> is an abstract element, representing a node in a <code>ui5-menu</code>. The menu itself is rendered as a list,
- * and each <code>ui5-menu-item</code> is represented by a list item (<code>ui5-li</code>) in that list. Therefore, you should only use
- * <code>ui5-menu-item</code> directly in your apps. The <code>ui5-li</code> list item is internal for the list, and not intended for public use.
+ * `ui5-menu-item` is an abstract element, representing a node in a `ui5-menu`. The menu itself is rendered as a list,
+ * and each `ui5-menu-item` is represented by a list item (`ui5-li`) in that list. Therefore, you should only use
+ * `ui5-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/MenuItem.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -33,7 +32,6 @@ import type Menu from "./Menu.js";
 class MenuItem extends UI5Element {
 	/**
 	 * Defines the text of the tree item.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -41,9 +39,9 @@ class MenuItem extends UI5Element {
 	text!: string;
 
 	/**
-	 * Defines the <code>additionalText</code>, displayed in the end of the menu item.
-	 * <b>Note:</b> The additional text would not be displayed if the item has a submenu.
+	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
+	 * **Note:** The additional text would not be displayed if the item has a submenu.
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -54,11 +52,10 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous options.
-	 * <br><br>
-	 * <b>Example:</b>
-	 * <br />
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
+	 * **Example:**
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -67,7 +64,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines whether a visual separator should be rendered before the item.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -75,10 +71,9 @@ class MenuItem extends UI5Element {
 	startsSection!: boolean;
 
 	/**
-	 * Defines whether <code>ui5-menu-item</code> is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled <code>ui5-menu-item</code> is noninteractive.
+	 * Defines whether `ui5-menu-item` is in disabled state.
 	 *
+	 * **Note:** A disabled `ui5-menu-item` is noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -88,8 +83,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related one to the current <code>ui5-menu-item</code> sub-menu popover.
-	 *
+	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
 	 * @default false
 	 * @public
 	 * @since 1.13.0
@@ -99,7 +93,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
-	 *
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
@@ -109,7 +102,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.7.0
@@ -119,7 +111,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.23.0
@@ -153,7 +144,6 @@ class MenuItem extends UI5Element {
 
 	/**
 	 * Defines the items of this component.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -168,7 +158,7 @@ class MenuItem extends UI5Element {
 	}
 
 	get subMenuOpened() {
-		return !!this._subMenu;
+		return !!this._subMenu?._popover?.isOpen();
 	}
 
 	get _additionalText() {

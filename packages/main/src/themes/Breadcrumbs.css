@@ -81,11 +81,11 @@
 }
 
 :host([separator-style="BackSlash"]) .ui5-breadcrumbs-separator::after {
-	content: "\\";
+	content: "\\\\";
 }
 
 :host([separator-style="DoubleBackSlash"]) .ui5-breadcrumbs-separator::after {
-	content: "\\\\";
+	content: "\\\\\\\\";
 }
 
 :host([separator-style="GreaterThan"]) .ui5-breadcrumbs-separator::after {

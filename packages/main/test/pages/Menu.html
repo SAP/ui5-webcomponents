@@ -15,14 +15,13 @@
 <body class="bg">
 	<ui5-button id="btnOpen">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu" header-text="My ui5-menu">
-
-		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file" icon="add-document"></ui5-menu-item>
+		<ui5-menu-item text="New File(selection prevented)" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file - prevent default" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section busy-delay="100" busy>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
-				<ui5-menu-item text="Open from E"></ui5-menu-item>
+				<ui5-menu-item text="Open from E" disabled></ui5-menu-item>
 			</ui5-menu-item>
 			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L"></ui5-menu-item>
 		</ui5-menu-item>
@@ -59,6 +58,24 @@
 
 	<ui5-title level="H5" class="header-title">Event logger</ui5-title>
 	<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
+
+	<ui5-button id="btnOpen2">Open Menu</ui5-button> <br/>
+	<ui5-menu id="menu2" header-text="My ui5-menu">
+		<ui5-menu-item text="New Folder" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
+		<ui5-menu-item text="Open" icon="open-folder" starts-section>
+			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K"></ui5-menu-item>
+			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L" disabled></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Preferences" icon="action-settings" starts-section disabled></ui5-menu-item>
+		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
+	</ui5-menu>
+
+	<ui5-popover id="detailsPopover">
+			<div>
+				<ui5-label for="detailsLink">For more information:</ui5-label>
+			</div>
+			<ui5-link id="detailsLink" href="https://en.wikipedia.org/wiki/Google_logo" target="_blank"></ui5-link>
+	</ui5-popover>
 
 	<script>
 		btnOpen.accessibilityAttributes = {
@@ -102,7 +119,7 @@
 		menu.addEventListener("ui5-item-click", function(event) {
 			const item = event.detail.item;
 			selectionInput.value = item.text;
-			if (item && item.text === "New File") {
+			if (item && item.text === "New File(selection prevented)") {
 				event.preventDefault();
 			}
 		});
@@ -114,6 +131,7 @@
 		});
 
 		menu.addEventListener("ui5-after-open", function() {
+			shouldOpenDetailsPopover = true;
 			var opener = menu.opener.id ? menu.opener.id : menu.opener;
 			openerInput.value = opener;
 			eventLogger.value += "* [after-open] ";
@@ -121,10 +139,11 @@
 
 		menu.addEventListener("ui5-before-close", function(event) {
 			preventBeforeClose.checked && event.preventDefault();
-			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Esc]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
+			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Escape]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
 		});
 
 		menu.addEventListener("ui5-after-close", function() {
+			shouldOpenDetailsPopover = false;
 			openerInput.value = "";
 			btnToggleOpen.pressed = false;
 			eventLogger.value += "* [after-close]";
@@ -133,6 +152,48 @@
 		direction.addEventListener("ui5-change", function() {
 			document.body.setAttribute("dir", direction.checked ? "rtl" : "ltr");
 			window["sap-ui-webcomponents-bundle"].applyDirection();
+		});
+
+		btnOpen2.accessibilityAttributes = {
+			hasPopup: "Menu",
+		};
+
+		btnOpen2.addEventListener("click", function() {
+			menu2.showAt(btnOpen2);
+		});
+
+		let shouldOpenDetailsPopover = false;
+
+		detailsPopover.addEventListener("ui5-before-close", function() {
+			shouldOpenDetailsPopover = false;
+		});
+
+		detailsPopover.addEventListener("ui5-after-close", function() {
+			shouldOpenDetailsPopover = true;
+		});
+
+		menu2.addEventListener("ui5-after-open", function() {
+			shouldOpenDetailsPopover = true;
+		});
+
+		menu2.addEventListener("ui5-after-close", function() {
+			shouldOpenDetailsPopover = false;
+		});
+
+		menu2.addEventListener("ui5-item-focus", function(event) {
+			const item = event.detail.item;
+			const opener = event.detail.ref;
+			
+			if (detailsPopover.isOpen()) {
+				detailsPopover.close(false, false, true);
+			}
+			
+			if (item.disabled && shouldOpenDetailsPopover) {
+				const link = detailsPopover.querySelector("#detailsLink");
+				link.textContent = item.text;
+				detailsPopover.showAt(opener, true)
+				link.focus();
+			}
 		});
 
 	</script>

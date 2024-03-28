@@ -52,45 +52,59 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-dialog</code> component is used to temporarily display some information in a
+ * ### Overview
+ * The `ui5-dialog` component is used to temporarily display some information in a
  * size-limited window in front of the regular app screen.
  * It is used to prompt the user for an action or a confirmation.
- * The <code>ui5-dialog</code> interrupts the current app processing as it is the only focused UI element and
+ * The `ui5-dialog` interrupts the current app processing as it is the only focused UI element and
  * the main screen is dimmed/blocked.
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
- * <br><br>
- * The <code>ui5-dialog</code> is modal, which means that an user action is required before it is possible to return to the parent window.
- * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
- * The content of the <code>ui5-dialog</code> is fully customizable.
  *
- * <h3>Structure</h3>
- * A <code>ui5-dialog</code> consists of a header, content, and a footer for action buttons.
- * The <code>ui5-dialog</code> is usually displayed at the center of the screen.
- * Its position can be changed by the user. To enable this, you need to set the property <code>draggable</code> accordingly.
+ * The `ui5-dialog` is modal, which means that an user action is required before it is possible to return to the parent window.
+ * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
+ * The content of the `ui5-dialog` is fully customizable.
+ *
+ * ### Structure
+ * A `ui5-dialog` consists of a header, content, and a footer for action buttons.
+ * The `ui5-dialog` is usually displayed at the center of the screen.
+ * Its position can be changed by the user. To enable this, you need to set the property `draggable` accordingly.
 
  *
- * <h3>Responsive Behavior</h3>
- * The <code>stretch</code> property can be used to stretch the
- * <code>ui5-dialog</code> on full screen.
+ * ### Responsive Behavior
+ * The `stretch` property can be used to stretch the
+ * `ui5-dialog` on full screen.
  *
- * <b>Note:</b> When a <code>ui5-bar</code> is used in the header or in the footer, you should remove the default dialog's paddings.
- * <br>
+ * **Note:** When a `ui5-bar` is used in the header or in the footer, you should remove the default dialog's paddings.
+ *
  * For more information see the sample "Bar in Header/Footer".
 
+ * ### Keyboard Handling
  *
- * <h3>ES6 Module Import</h3>
+ * #### Basic Navigation
+ * When the `ui5-dialog` has the `draggable` property set to `true` and the header is focused, the user can move the dialog
+ * with the following keyboard shortcuts:
  *
- * <code>import "@ui5/webcomponents/dist/Dialog";</code>
+ * - [Up] or [Down] arrow keys - Move the dialog up/down.
+ * - [Left] or [Right] arrow keys - Move the dialog left/right.
  *
- * <b>Note: </b> We recommend placing popup-like components (<code>ui5-dialog</code> and <code>ui5-popover</code>)
+ * #### Resizing
+ * When the `ui5-dialog` has the `resizable` property set to `true` and the header is focused, the user can change the size of the dialog
+ * with the following keyboard shortcuts:
+ *
+ * - [Shift] + [Up] or [Down] - Decrease/Increase the height of the dialog.
+ * - [Shift] + [Left] or [Right] - Decrease/Increase the width of the dialog.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Dialog";`
+ *
+ * **Note:** We recommend placing popup-like components (`ui5-dialog` and `ui5-popover`)
  * outside any other components. Preferably, the popup-like components should be placed
  * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
  * the position and/or z-index management of the popup-like components.
  *
- * <b>Note:</b> We don't recommend nesting popup-like components (<code>ui5-dialog</code>, <code>ui5-popover</code>).
- *
+ * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
  * @constructor
  * @extends Popup
  * @public
@@ -113,9 +127,8 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 class Dialog extends Popup {
 	/**
 	 * Defines the header text.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
+	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
 	 * @default ""
 	 * @public
 	 */
@@ -124,10 +137,9 @@ class Dialog extends Popup {
 
 	/**
 	 * Determines whether the component should be stretched to fullscreen.
-	 * <br><br>
-	 * <b>Note:</b> The component will be stretched to approximately
-	 * 90% of the viewport.
 	 *
+	 * **Note:** The component will be stretched to approximately
+	 * 90% of the viewport.
 	 * @default false
 	 * @public
 	 */
@@ -137,10 +149,10 @@ class Dialog extends Popup {
 	/**
 	 * Determines whether the component is draggable.
 	 * If this property is set to true, the Dialog will be draggable by its header.
-	 * <br><br>
-	 * <b>Note:</b> The component can be draggable only in desktop mode.
-	 * <br><br>
-	 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
+	 *
+	 * **Note:** The component can be draggable only in desktop mode.
+	 *
+	 * **Note:** This property overrides the default HTML "draggable" attribute native behavior.
 	 * When "draggable" is set to true, the native browser "draggable"
 	 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
 	 * @default false
@@ -154,10 +166,10 @@ class Dialog extends Popup {
 	 * Configures the component to be resizable.
 	 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
 	 * In RTL languages, the resize handle will be placed in the bottom left corner.
-	 * <br><br>
-	 * <b>Note:</b> The component can be resizable only in desktop mode.
-	 * <br>
-	 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
+	 *
+	 * **Note:** The component can be resizable only in desktop mode.
+	 *
+	 * **Note:** Upon resizing, externally defined height and width styling will be ignored.
 	 * @default false
 	 * @since 1.0.0-rc.10
 	 * @public
@@ -166,9 +178,10 @@ class Dialog extends Popup {
 	resizable!: boolean;
 
 	/**
-	 * Defines the state of the <code>Dialog</code>.
-	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
-	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
+	 * Defines the state of the `Dialog`.
+	 *
+	 * **Note:** If `"Error"` and `"Warning"` state is set, it will change the
+	 * accessibility role to "alertdialog", if the accessibleRole property is set to `"Dialog"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -210,12 +223,11 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the header HTML Element.
-	 * <br><br>
-	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the header, you should remove the default dialog's paddings.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
-	 * <code>accessibleName</code> should be used.
 	 *
+	 * **Note:** When a `ui5-bar` is used in the header, you should remove the default dialog's paddings.
+	 *
+	 * **Note:** If `header` slot is provided, the labelling of the dialog is a responsibility of the application developer.
+	 * `accessibleName` should be used.
 	 * @public
 	 */
 	@slot()
@@ -223,9 +235,8 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
-	 * <br><br>
-	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
+	 * **Note:** When a `ui5-bar` is used in the footer, you should remove the default dialog's paddings.
 	 * @public
 	 */
 	@slot()
@@ -257,7 +268,6 @@ class Dialog extends Popup {
 
 	/**
 	 * Shows the dialog.
-	 *
 	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
 	 * @returns Resolves when the dialog is open

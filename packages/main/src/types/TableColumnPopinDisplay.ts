@@ -1,6 +1,5 @@
 /**
  * Table cell popin display.
- *
  * @public
  */
 enum TableColumnPopinDisplay {

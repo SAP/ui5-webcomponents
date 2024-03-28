@@ -8,6 +8,7 @@ import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
 
 // Template
@@ -21,38 +22,35 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-busy-indicator</code> signals that some operation is going on and that the
+ * The `ui5-busy-indicator` signals that some operation is going on and that the
  * user must wait. It does not block the current UI screen so other operations could be triggered in parallel.
  * It displays 3 dots and each dot expands and shrinks at a different rate, resulting in a cascading flow of animation.
  *
- * <h3>Usage</h3>
- * For the <code>ui5-busy-indicator</code> you can define the size, the text and whether it is shown or hidden.
+ * ### Usage
+ * For the `ui5-busy-indicator` you can define the size, the text and whether it is shown or hidden.
  * In order to hide it, use the "active" property.
- * <br><br>
- * In order to show busy state over an HTML element, simply nest the HTML element in a <code>ui5-busy-indicator</code> instance.
- * <br>
- * <b>Note:</b> Since <code>ui5-busy-indicator</code> has <code>display: inline-block;</code> by default and no width of its own,
- * whenever you need to wrap a block-level element, you should set <code>display: block</code> to the busy indicator as well.
  *
- * <h4>When to use:</h4>
- * <ul>
- * <li>The user needs to be able to cancel the operation.</li>
- * <li>Only part of the application or a particular component is affected.</li>
- * </ul>
+ * In order to show busy state over an HTML element, simply nest the HTML element in a `ui5-busy-indicator` instance.
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li>The operation takes less than one second.</li>
- * <li>You need to block the screen and prevent the user from starting another activity.</li>
- * <li>Do not show multiple busy indicators at once.</li>
- * </ul>
+ * **Note:** Since `ui5-busy-indicator` has `display: inline-block;` by default and no width of its own,
+ * whenever you need to wrap a block-level element, you should set `display: block` to the busy indicator as well.
  *
- * <h3>ES6 Module Import</h3>
+ * #### When to use:
  *
- * <code>import "@ui5/webcomponents/dist/BusyIndicator";</code>
+ * - The user needs to be able to cancel the operation.
+ * - Only part of the application or a particular component is affected.
  *
+ * #### When not to use:
+ *
+ * - The operation takes less than one second.
+ * - You need to block the screen and prevent the user from starting another activity.
+ * - Do not show multiple busy indicators at once.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/BusyIndicator.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -79,7 +77,6 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the size of the component.
-	 *
 	 * @default "Medium"
 	 * @public
 	 */
@@ -88,7 +85,6 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -97,12 +93,20 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
-	 *
 	 * @default 1000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
 	delay!: number;
+
+	/**
+	 * Defines the placement of the text.
+	 *
+	 * @default "Bottom"
+	 * @public
+	 */
+	@property({ type: BusyIndicatorTextPlacement, defaultValue: BusyIndicatorTextPlacement.Bottom })
+	textPlacement!: `${BusyIndicatorTextPlacement}`;
 
 	/**
 	 * Defines if the component is currently in busy state.
@@ -160,6 +164,12 @@ class BusyIndicator extends UI5Element {
 			root: {
 				"ui5-busy-indicator-root": true,
 			},
+		};
+	}
+	get textPosition() {
+		return {
+			top: this.text && this.textPlacement === BusyIndicatorTextPlacement.Top,
+			bottom: this.text && this.textPlacement === BusyIndicatorTextPlacement.Bottom,
 		};
 	}
 

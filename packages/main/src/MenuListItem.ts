@@ -10,7 +10,6 @@ import menuListItemCss from "./generated/themes/MenuListItem.css.js";
 
 /**
  * @class
- *
  * @constructor
  * @extends StandardListItem
  * @since 1.23.0

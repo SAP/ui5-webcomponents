@@ -1,6 +1,5 @@
 /**
  * Different drag and drop overlay modes of UploadCollection.
- *
  * @private
  */
 enum UploadCollectionDnDOverlayMode {

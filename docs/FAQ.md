@@ -26,7 +26,7 @@
 **A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](./5-development/01-custom-UI5-Web-Components-Packages.md)
 
 
-**Q: How can I cancustomize UI5 Web Components' styles?**
+**Q: How can I customize UI5 Web Components' styles?**
 
 **A:** Read the [Styling UI5 Web Components](./3-customizing/01-styles.md) article.
 

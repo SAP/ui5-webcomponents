@@ -28,7 +28,7 @@ describe("Menu interaction", () => {
 	it("Top level menu items appearance", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
+		const menuItems = await browser.$$("ui5-menu[id='menu']>ui5-menu-item");
 
 		openButton.click();
 
@@ -59,24 +59,22 @@ describe("Menu interaction", () => {
 
 		listItems[3].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu").waitForExist({
+		await submenuList.$("ui5-menu:nth-of-type(1)").waitForExist({
 			timeout: 1000,
-			timeoutMsg: "The second level sub-menu is should be created"
+			timeoutMsg: "First sub-menu is created"
 		})
 
 		assert.ok(await submenuList.$("ui5-menu"), "The second level sub-menu is being created"); // new ui5-menu element is created for the sub-menu
 
-		await browser.keys("ArrowLeft"); // back to main menu
-		await browser.keys("ArrowDown"); // go to the next menu item (close sub-menu)
+		listItems[4].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu").waitForExist({
-			reverse: true,
+		await submenuList.$("ui5-menu:nth-of-type(2)").waitForExist({
 			timeout: 1000,
-			timeoutMsg: "The second level sub-menu is should be destroyed"
+			timeoutMsg: "Second sub-menu is created"
 		})
 
-		assert.strictEqual(await submenuList.$$("ui5-menu").length, 0,
-								"The second level sub-menu is being destroyed"); // sub-menu ui5-menu element is destroyed
+		assert.strictEqual(await submenuList.$$("ui5-menu").length, 2,
+								"Two sub-menus are present");
 	});
 
 	it("Event firing after 'click' on menu item", async () => {
@@ -92,7 +90,7 @@ describe("Menu interaction", () => {
 
 		await listItems[0].click({x: 1, y: 1});
 
-		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Click on first item fires an event");
+		assert.strictEqual(await selectionInput.getAttribute("value"), "New File(selection prevented)", "Click on first item fires an event");
 	});
 
 	it("Event firing after [Space] on menu item", async () => {
@@ -107,7 +105,7 @@ describe("Menu interaction", () => {
 
 		await browser.keys("Space");
 
-		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Pressing [Space] on first item fires an event");
+		assert.strictEqual(await selectionInput.getAttribute("value"), "New File(selection prevented)", "Pressing [Space] on first item fires an event");
 	});
 
 	it("Event firing after [Enter] on menu item", async () => {
@@ -122,7 +120,7 @@ describe("Menu interaction", () => {
 
 		await browser.keys("Enter");
 
-		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Pressing [Enter] on first item fires an event");
+		assert.strictEqual(await selectionInput.getAttribute("value"), "New File(selection prevented)", "Pressing [Enter] on first item fires an event");
 	});
 
 	it("Events firing on open/close of the menu", async () => {
@@ -180,7 +178,7 @@ describe("Menu interaction", () => {
 			await browser.pause(100);
 
 			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const newFileItem = await menuPopover.$("ui5-menu-li[accessible-name='New File']");
+			const newFileItem = await menuPopover.$("ui5-menu-li[accessible-name='New File(selection prevented)']");
 			newFileItem.click();
 			await browser.pause(100);
 
@@ -217,11 +215,11 @@ describe("Menu Accessibility", () => {
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
-		assert.strictEqual(await listItems[0].getAttribute("tooltip"), "Select a file", "There is a tooltip");
+		assert.strictEqual(await listItems[0].getAttribute("tooltip"), "Select a file - prevent default", "There is a tooltip");
 		assert.strictEqual(await listItems[2].shadow$(".ui5-li-root").getAttribute("aria-haspopup"), "menu", "There is an aria-haspopup attribute");
 		assert.strictEqual(
 			await listItems[0].getAttribute("accessible-name"),
-			"New File Opens a file explorer",
+			"New File(selection prevented) Opens a file explorer",
 			"There is additional description added");
 	});
 });

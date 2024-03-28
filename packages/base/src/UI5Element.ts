@@ -1081,9 +1081,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get styles(): ComponentStylesData {
-		return "";
-	}
+	static styles: ComponentStylesData = "";
 
 	/**
 	 * Returns the Static Area CSS for this UI5 Web Component Class
