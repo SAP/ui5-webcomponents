@@ -1,0 +1,14 @@
+<div class="ui5-form-item-root">
+	<div class="ui5-form-item-layout">
+		<div class="ui5-form-item-label">
+			<slot name="labelContent"></slot>
+		</div>
+		<div class="ui5-form-item-content">
+			{{#each fields}}
+				<div class="ui5-form-item-content-child">
+					<slot name="{{this._individualSlot}}"></slot>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</div>
