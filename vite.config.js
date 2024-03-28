@@ -13,6 +13,9 @@ const toPosixPath = (pathStr) => {
 }
 
 const customResolver = (id, source, options) => {
+	if (id === "@ui5/webcomponents-base/dist/ssr-dom.js") {
+		return source.replace("UI5Element", "ssr-dom");
+	}
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
@@ -68,7 +71,7 @@ const customResolver = (id, source, options) => {
 			}
 			return resolved;
 		}
-		
+
 	}
 
 	// The `base/package.json` has exports that resolves the absolute import to "dist/ssr-dom.js".
@@ -77,7 +80,7 @@ const customResolver = (id, source, options) => {
 		return join("packages/base/src/ssr-dom.ts");
 	}
 
-	
+
 	// relative imports from fiori src that are to a folder starting with `illustrations` are in dist
 	if (source.includes("fiori/src/") && id.includes("/illustrations") && !id.includes("AllIllustrations") && id.startsWith(".")) {
 		let absoluteId = resolve(dirname(source), id);
@@ -103,13 +106,15 @@ const customResolver = (id, source, options) => {
 	}
 }
 
+const addChecker = !!process.env.NO_TS_CHECKER;
+
 module.exports = defineConfig(async () => {
 	return {
 		build: {
 			emptyOutDir: false,
 		},
 		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(),
-			checker({
+			addChecker && checker({
 				// e.g. use TypeScript check
 				typescript: {
 					tsconfigPath: "packages/fiori/tsconfig.json",

@@ -40,7 +40,9 @@
     "comment-parser": "^1.4.0",
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
+    "cypress": "^13.6.4",
     "custom-element-jet-brains-integration": "^1.4.4",
+    "cypress-real-events": "^1.12.0",
     "escodegen": "^2.0.0",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -78,6 +80,8 @@
     }
   },
   "devDependencies": {
+    "cypress-ct-lit": "^0.4.0",
+    "cypress-real-events": "^1.12.0",
     "esbuild": "^0.19.9",
     "yargs": "^17.5.1"
   }
