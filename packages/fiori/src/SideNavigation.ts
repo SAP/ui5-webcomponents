@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import updateShadowRoot from "@ui5/webcomponents-base/dist/updateShadowRoot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
@@ -290,7 +289,6 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 		this.closePicker();
 
-		updateShadowRoot(this);
 		this._popoverContents.item.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
@@ -306,7 +304,6 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 
 		this.closeMenu();
-		updateShadowRoot(this);
 
 		// When subitem is selected in collapsed mode parent element should be focused
 		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
@@ -320,12 +317,10 @@ class SideNavigation extends UI5Element {
 	}
 
 	getOverflowPopover() {
-		updateShadowRoot(this);
 		return this.shadowRoot!.querySelector<NavigationMenu>(".ui5-side-navigation-overflow-menu")!;
 	}
 
 	getPicker() {
-		updateShadowRoot(this);
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
