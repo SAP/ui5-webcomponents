@@ -10,7 +10,6 @@ import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
 import { Splitter } from 'react-splitter-light';
-import ResetIcon from "../../../local-cdn/local-cdn/icons/dist/v5/reset.svg";
 import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
 import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
 import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
@@ -96,7 +95,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     return new URL(baseUrl, origin).toString();
   }
 
-  function getContent() {
+  function getActiveExampleContent() {
     if (activeExample === "hello-world") {
       return { html: hellowWorldHTML, js: hellowWorldTS }
     }
@@ -193,6 +192,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     setActiveExample("hello-world");
     localStorage.setItem("activeExample", "hello-world");
   }
+
   const loadCounter = () => {
     resetProject();
     setActiveExample("counter");
@@ -201,10 +201,15 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
 
   useEffect(() => {
     projectRef.current = getProjectFromPool();
+
+    const activeExample = getActiveExampleContent();
+    let _html = activeExample.html || html;
+    let _js = activeExample.js || js;
+
     let newConfig = {
       files: {
         "index.html": {
-          content: addImportMap(fixAssetPaths(getContent()?.html || html)),
+          content: addImportMap(fixAssetPaths(_html)),
         },
         "playground-support.js": {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
@@ -214,7 +219,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
           content: `/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
-${fixAssetPaths(getContent()?.js || js)}`,
+${fixAssetPaths(_js)}`,
           selected: mainFileSelected,
         },
         "main.css": {
@@ -368,19 +373,23 @@ ${fixAssetPaths(getContent()?.js || js)}`,
   }
 
   function getExampleMenuInitialState() {
-    if (location.hash) {
-      return null;
+    if (ExecutionEnvironment.canUseDOM) {
+      if (location.hash) {
+        return null;
+      }
+
+      const savedActiveSample = localStorage.getItem("activeExample");
+      if (savedActiveSample) {
+        return savedActiveSample;
+      }
+
+      if (localStorage.getItem("project")) {
+        return null;
+      }
+
+      return "hello-world";
     }
 
-    const savedActiveSample = localStorage.getItem("activeExample");
-    if (savedActiveSample) {
-      return savedActiveSample;
-    }
-
-    if (localStorage.getItem("project")) {
-      return null;
-    }
-  
     return "hello-world";
   }
 
