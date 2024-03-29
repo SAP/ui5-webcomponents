@@ -3,6 +3,7 @@
 @import "./FlexibleColumnLayout-parameters.css";
 @import "../base/IllustratedMessage-parameters.css";
 @import "./MediaGallery-parameters.css";
+@import "../base/NotificationListItem-parameters.css";
 @import "../base/MediaGalleryItem-parameters.css";
 @import "./Page-parameters.css";
 @import "./ProductSwitchItem-parameters.css";

@@ -8,9 +8,9 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import Badge from "@ui5/webcomponents/dist/Badge.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Popover from "@ui5/webcomponents/dist/Popover.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import NotificationListItemState from "./types/NotificationListItemState.js";
@@ -20,6 +20,11 @@ import NotificationListItemBase from "./NotificationListItemBase.js";
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/high-priority.js";
+import "@ui5/webcomponents-icons/dist/message-success.js";
+import "@ui5/webcomponents-icons/dist/message-information.js";
+import "@ui5/webcomponents-icons/dist/message-error.js";
+import "@ui5/webcomponents-icons/dist/message-warning.js";
 
 // Texts
 import {
@@ -105,7 +110,7 @@ const ICON_PER_STATUS = {
 		Icon,
 		BusyIndicator,
 		Link,
-		Popover,
+		Badge,
 	],
 })
 
@@ -244,16 +249,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._onResizeBound);
-	}
-
-	onBeforeRendering() {
-		if (this.priority !== "None") {
-			console.warn("The property 'priority' is deprecated and removed from ui5-li-notification component. Please use 'state' property instead."); // eslint-disable-line
-		}
-
-		if (this.actions.length > 0) {
-			console.warn("ui5-notification-action is deprecated and removed as of version 2.0. For the ui5-li-notification use ui5-menu instead."); // eslint-disable-line
-		}
 	}
 
 	get hasState() {

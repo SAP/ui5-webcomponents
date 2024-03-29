@@ -1,10 +1,16 @@
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/Popover.js";
+import "@ui5/webcomponents/dist/Title.js";
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Menu.js";
+import "@ui5/webcomponents-icons/dist/action-settings.js"
+import "@ui5/webcomponents-icons/dist/sort.js"
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
+import "@ui5/webcomponents-fiori/dist/Bar.js";
 
 import "@ui5/webcomponents-icons/dist/employee.js";
 import "@ui5/webcomponents-icons/dist/message-error.js";

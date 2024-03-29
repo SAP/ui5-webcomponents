@@ -20,12 +20,22 @@
 				aria-label="{{menuBtnAccessibleName}}"
 			></ui5-button>
 		{{/if}}
+		{{#if showClose}}
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_onBtnCloseClick}}"
+				tooltip="{{closeBtnAccessibleName}}"
+				aria-label="{{closeBtnAccessibleName}}"
+				close-btn
+			></ui5-button>
+		{{/if}}
 	</div>
 	<div class="ui5-nli-content">
 		<div class="ui5-nli-title-text-wrapper">
 			{{#if hasState}}
 				<ui5-icon
-					class="ui5-prio-icon ui5-prio-icon--{{statusIcon}}"
+					class="ui5-state-icon ui5-state-icon--{{statusIcon}}"
 					name="{{statusIcon}}">
 				</ui5-icon>
 			{{/if}}
@@ -62,7 +72,7 @@
 		</div>
 
 		{{#if hasImportance}}
-			<ui5-badge class="ui5-nli-importance" design="set2" color-scheme="2">
+			<ui5-badge class="ui5-nli-importance" design="Set2" color-scheme="2">
 				<ui5-icon name="high-priority" slot="icon"></ui5-icon>
 				{{importanceText}}
 			</ui5-badge>

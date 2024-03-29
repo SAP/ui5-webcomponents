@@ -6,14 +6,11 @@ import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import "@ui5/webcomponents-icons/dist/overflow.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Texts
 import {
@@ -68,7 +65,6 @@ type NotificationListGroupItemToggleEventDetail = {
 		Button,
 		Icon,
 		BusyIndicator,
-		Popover,
 	],
 })
 
@@ -88,24 +84,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	collapsed!: boolean;
 
 	/**
-	 * Defines if the items `counter` would be displayed.
-	 * @default false
-	 * @private
-	 * @deprecated With the new design the items counter will not be shown.
-	 */
-	@property({ type: Boolean })
-	showCounter!: boolean;
-
-	/**
-	 * Defines if the `close` button would be displayed.
-	 * @default false
-	 * @private
-	 * @deprecated With the new design the close button will not be shown.
-	 */
-	@property({ type: Boolean })
-	showClose!: boolean;
-
-	/**
 	 * Defines the items of the `ui5-li-notification-group`,
 	 * usually `ui5-li-notification` items.
 	 * @public
@@ -116,22 +94,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	onBeforeRendering() {
 		if (this.busy) {
 			this.clearChildBusyIndicator();
-		}
-
-		if (this.showCounter) {
-			console.warn("The property 'showCounter' is deprecated and removed for the ui5-li-notification-group."); // eslint-disable-line
-		}
-
-		if (this.priority !== "None") {
-			console.warn("The property 'priority' is deprecated and removed for the ui5-li-notification-group."); // eslint-disable-line
-		}
-
-		if (this.showClose) {
-			console.warn("The property 'showClose' is deprecated and removed for the ui5-li-notification-group."); // eslint-disable-line
-		}
-
-		if (this.actions.length > 0) {
-			console.warn("ui5-notification-action is deprecated and removed as of version 2.0. For ui5-li-notification-group there are no group actions allowed."); // eslint-disable-line
 		}
 	}
 

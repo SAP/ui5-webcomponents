@@ -2,14 +2,10 @@
 
 :host(:not([hidden])) {
 	display: block;
-	width: 100%;
+	max-width: 100%;
 	min-height: var(--_ui5_list_item_base_height);
 	background: var(--ui5-listitem-background-color);
 	cursor: pointer;
-}
-
-:host([has-border]) {
-	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
 :host([focused]) .ui5-nli-focusable {
@@ -37,13 +33,4 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-}
-
-.ui5-nli-action {
-	flex-shrink: 0;
-	margin-inline-end: 0.5rem;
-}
-
-.ui5-nli-menu-btn {
-	margin-inline-end: 0.5rem;
 }

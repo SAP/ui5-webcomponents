@@ -1,5 +1,5 @@
 @import "./NotificationListItemBase.css";
-@import "./NotificationPrioIcon.css";
+@import "./NotificationStateIcon.css";
 
 :host([wrapping-type="None"]) .ui5-nli-title-text {
 	display: -webkit-box;
@@ -28,22 +28,35 @@
 }
 
 :host(:first-of-type) {
-	border-top-left-radius: var(--_ui5-notification_item-border-raius);
-	border-top-right-radius: var(--_ui5-notification_item-border-raius);
+	border-top-left-radius: var(--_ui5-notification_item-border-radius);
+	border-top-right-radius: var(--_ui5-notification_item-border-radius);
 }
 
 :host(:last-of-type) {
-	border-bottom-left-radius: var(--_ui5-notification_item-border-raius);
-	border-bottom-right-radius: var(--_ui5-notification_item-border-raius);
+	border-bottom-left-radius: var(--_ui5-notification_item-border-radius);
+	border-bottom-right-radius: var(--_ui5-notification_item-border-radius);
 }
 
 :host(:first-of-type) .ui5-nli-focusable:after {
-	border-top-left-radius: var(--_ui5-notification_item-border-raius);
-	border-top-right-radius: var(--_ui5-notification_item-border-raius);
+	border-top-left-radius: var(--_ui5-notification_item-border-radius);
+	border-top-right-radius: var(--_ui5-notification_item-border-radius);
 }
+
 :host(:last-of-type) .ui5-nli-focusable:after {
-	border-bottom-left-radius: var(--_ui5-notification_item-border-raius);
-	border-bottom-right-radius: var(--_ui5-notification_item-border-raius);
+	border-bottom-left-radius: var(--_ui5-notification_item-border-radius);
+	border-bottom-right-radius: var(--_ui5-notification_item-border-radius);
+}
+
+:host([has-border]) {
+	border-bottom: var(--_ui5-notification_item-border-bottom);
+}
+
+:host([ui5-li-notification]) {
+	margin: var(--_ui5-notification_item-margin);
+	border-left: var(--_ui5-notification_item-border-top-left-right);
+	border-right: var(--_ui5-notification_item-border-top-left-right);
+	border-top: var(--_ui5-notification_item-border-top-left-right);
+	border-radius: var(--_ui5-notification_item-border-radius);
 }
 /* End */
 
@@ -52,10 +65,23 @@
 	flex-direction: row-reverse;
 	position: relative;
 	width: 100%;
-	padding-inline: 1rem 0.5rem;
+	padding-inline: var(--_ui5-notification_item-root-padding-inline);
 	padding-block: 1rem;
 	box-sizing: border-box;
 	cursor: pointer;
+	border-radius: var(--_ui5-notification_item-border-radius);
+	border: 1px solid transparent;
+}
+
+.ui5-nli-root:hover {
+	background-color: var(--_ui5-notification_item-background-color-hover);
+	border-radius: var(--_ui5-notification_item-border-radius);
+}
+
+.ui5-nli-root:active {
+	background-color: var(--_ui5-notification_item-background-color-active);
+	border-radius: var(--_ui5-notification_item-border-radius);
+	border: var(--_ui5-notification_item-border-active);
 }
 
 .ui5-nli-content {
@@ -64,9 +90,15 @@
 	flex: 1;
 	min-width: 0; /* fixes Chrome flex issue */
 	width: 100%;
-	padding-inline: 0.75rem 1rem;
+	padding-inline: var(--_ui5-notification_item-content-padding);
 	font-family: "72override", var(--sapFontFamily);
 	box-sizing: border-box;
+}
+
+.ui5-nli-actions {
+	position: var(--_ui5-notification_item-actions-position);
+	top: 0.5rem;
+	right: 0.5rem;
 }
 
 .ui5-nli-title-text-wrapper {
@@ -76,11 +108,9 @@
 
 .ui5-nli-title-text {
 	display: flex;
-	margin-bottom: 0.25rem;
+	margin-bottom: var(--_ui5-notification_item-title-margin-bottom);
+	padding-right: var(--_ui5-notification_item-title-padding-right);
 	box-sizing: border-box;
-}
-
-.ui5-nli-title-text {
 	color: var(--sapGroup_TitleTextColor);
 	font-weight: bold;
 	font-size: var(--sapFontHeader6Size);
@@ -115,8 +145,8 @@
 	margin-inline-start: 1rem;
 }
 
-.ui5-nli-importance{
-	margin-top: 0.25rem;
+.ui5-nli-importance {
+	margin-top: 0.5rem;
 	width: fit-content;
 }
 
@@ -128,3 +158,14 @@
 	overflow: hidden;
 }
 
+.ui5-nli-menu-btn {
+	margin-inline-end: 0.125rem;
+}
+
+:host([focused]) .ui5-nli-focusable:not(ui5-nli-group-root)::after {
+	border-radius: var(--_ui5-notification_item-border-radius);
+	top: var(--_ui5-notification_item-focus-offset);
+	right: var(--_ui5-notification_item-focus-offset);
+	bottom: var(--_ui5-notification_item-focus-offset);
+	left: var(--_ui5-notification_item-focus-offset);
+}

@@ -23,7 +23,13 @@
 	horizontal-align="Right"
 	id="popover-with-notifications"
 >
-<ui5-list header-text="Notifications Grouped">
+<ui5-bar id="notificationsPopoverBar" design="Header">
+    <ui5-title level="H5" slot="startContent">Notifications</ui5-title>
+    <ui5-button design="Transparent" slot="endContent">Clear All</ui5-button>
+    <ui5-button design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
+    <ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+</ui5-bar>
+<ui5-list>
     <ui5-li-notification-group title-text="Orders" >
         <ui5-li-notification show-close
             title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
@@ -65,7 +71,7 @@
             <ui5-menu slot="menu">
                 <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
             </ui5-menu>
-            And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
+            And with a very long description - Lorem ipsum dolor sit amet,
             consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
             nec elementum lectus turpis at nunc.
         </ui5-li-notification>
@@ -79,7 +85,7 @@
             <ui5-menu slot="menu">
                 <ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
             </ui5-menu>
-            And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
+            And with a very long description - Lorem ipsum dolor sit amet,
             consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
             nec elementum lectus turpis at nunc.
         </ui5-li-notification>
@@ -91,7 +97,7 @@
             <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
             <span slot="footnotes">Office Notifications</span>
             <span slot="footnotes">3 Days</span>
-            And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
+            And with a very long description - Lorem ipsum dolor sit amet,
             consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
             nec elementum lectus turpis at nunc.
         </ui5-li-notification>
@@ -100,7 +106,7 @@
             <ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
             <span slot="footnotes">Office Notifications</span>
             <span slot="footnotes">3 Days</span>
-            And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
+            And with a very long description - Lorem ipsum dolor sit amet,
             consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor,
             nec elementum lectus turpis at nunc.
         </ui5-li-notification>

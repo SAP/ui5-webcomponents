@@ -1,5 +1,6 @@
 .notificationlistgroupitem1auto {
     background-color: var(--sapBackgroundColor);
+    margin: 0;
 }
 
 .notificationlistgroupitem2auto {
@@ -11,4 +12,10 @@
     justify-content: flex-end;
     padding: 0.25rem;
     border-bottom: 1px solid grey;
+}
+
+/* Remove the responsive paddings for the content area of the Popover */
+.notificationlistgroupitem2auto::part(content) {
+    padding-right: 0;
+    padding-left: 0;
 }

@@ -65,8 +65,8 @@
 					<span slot="footnotes">Office Notifications</span>
 					<span slot="footnotes">3 Days</span>
 
-					<ui5-menu slot="menu">
-						<ui5-menu-item id="acceptBtnInOverflow" icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu slot="menu" id="menuWithActions">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
 						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
 					</ui5-menu>
 				</ui5-li-notification>
@@ -177,7 +177,8 @@
 			customActionInput.value = ++counter;
 		});
 
-		acceptBtnInOverflow.addEventListener("ui5-click", function(event) {
+		menuWithActions.addEventListener("ui5-item-click", function(event) {
+			debugger;
 			customActionInput.value = ++counter;
 		});
 	</script>

@@ -1,9 +1,5 @@
 @import "./NotificationListItemBase.css";
-@import "./NotificationPrioIcon.css";
-
-:host {
-	--_ui5-notification_item-border-raius: 0px;
-}
+@import "./NotificationStateIcon.css";
 
 :host([collapsed]) .ui5-nli-group-items {
 	display: none;
@@ -28,7 +24,7 @@
 	padding-block: 0.75rem 0.25rem;
 	padding-inline: 0.75rem 0.5rem;
 	width: 100%;
-	border-bottom: 0.0625rem solid var(--sapList_GroupHeaderBorderColor);
+	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
 	cursor: default;
 }
@@ -41,7 +37,7 @@
 .ui5-nli-group-title-text {
 	color: var(--sapGroup_TitleTextColor);
 	font-family: "72override", var(--sapFontFamily);
-	font-size: var(--sapFontHeader6Size);
+	font-size: var(--sapFontHeader5Size);
 	font-weight: bold;
 	white-space: nowrap;
 	overflow: hidden;
