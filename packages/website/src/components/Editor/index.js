@@ -15,7 +15,12 @@ import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
 import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
 import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
-import ExampleLinks from "./ExampleLinks";
+import ExamplesMenu from '../ExamplesMenu/index.tsx';
+
+import hellowWorldHTML from "./examples/hello-world/html";
+import hellowWorldTS from "./examples/hello-world/main";
+import counterHTML from "./examples/counter/html";
+import counterTS from "./examples/counter/main";
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
@@ -53,6 +58,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
   const { textDirection, setTextDirection } = useContext(TextDirectionContext);
   const [copied, setCopied] = useState(false);
+  const [ activeExample, setActiveExample ] = useState("");
 
   function addImportMap(html) {
     return html.replace("<head>", `
@@ -86,6 +92,18 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
       origin = location.origin;
     }
     return new URL(baseUrl, origin).toString();
+  }
+
+  function getContent() {
+    if (activeExample === "hello-world") {
+      return { html: hellowWorldHTML, js: hellowWorldTS }
+    }
+    
+    if (activeExample === "counter") {
+      return { html: counterHTML, js: counterTS }
+    }
+
+    return {}
   }
 
   // samples should use the pattern "../assets/..." for their assets
@@ -146,6 +164,15 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     localStorage.setItem("project", JSON.stringify(files));
   }
 
+  const resetProject = () => {
+    localStorage.clear("project");
+    location.hash = "";
+  }
+
+  const resetExampleMenuSelection = () => {
+    localStorage.clear("activeExample");
+  }
+
   const baseUrl = useBaseUrl("/");
   const playUrl = useBaseUrl("/play");
 
@@ -156,6 +183,18 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     const hash = encodeToBase64(JSON.stringify(files));
     const url = new URL(`${playUrl}#${hash}`, location.origin);
     window.open(url, "_blank");
+    resetExampleMenuSelection();
+  }
+
+  const loadHelloWorld = () => {
+    resetProject();
+    setActiveExample("hello-world");
+    localStorage.setItem("activeExample", "hello-world");
+  }
+  const loadCounter = () => {
+    resetProject();
+    setActiveExample("counter");
+    localStorage.setItem("activeExample", "counter");
   }
 
   useEffect(() => {
@@ -163,7 +202,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     let newConfig = {
       files: {
         "index.html": {
-          content: addImportMap(fixAssetPaths(html)),
+          content: addImportMap(fixAssetPaths(getContent()?.html || html)),
         },
         "playground-support.js": {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
@@ -173,7 +212,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
           content: `/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
-${fixAssetPaths(js)}`,
+${fixAssetPaths(getContent()?.js || js)}`,
           selected: mainFileSelected,
         },
         "main.css": {
@@ -254,7 +293,7 @@ ${fixAssetPaths(js)}`,
       projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
-  }, []);
+  }, [activeExample]);
 
   useEffect(() => {
     if (firstRender) {
@@ -326,6 +365,23 @@ ${fixAssetPaths(js)}`,
     )
   }
 
+  function getExampleMenuInitialState() {
+    if (location.hash) {
+      return null;
+    }
+
+    const savedActiveSample = localStorage.getItem("activeExample");
+    if (savedActiveSample) {
+      return savedActiveSample;
+    }
+
+    if (localStorage.getItem("project")) {
+      return null;
+    }
+  
+    return "hello-world";
+  }
+
   return (
     <>
       <div ref={projectContainerRef}></div>
@@ -334,7 +390,7 @@ ${fixAssetPaths(js)}`,
         ?
           <>
             <div className={`${styles.editor__toolbar}`}>
-              <ExampleLinks />
+              <ExamplesMenu loadHelloWorld={loadHelloWorld} loadCounter={loadCounter} initialActiveState={getExampleMenuInitialState()}/>
               <div>
                 <button
                   className={`button button--secondary ${styles.previewResult__download}`}

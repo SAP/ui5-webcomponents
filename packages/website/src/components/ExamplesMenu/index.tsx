@@ -2,17 +2,11 @@ import Link from '@docusaurus/Link';
 import { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 
-const HelloWorldPaths = ["hello-world", "/hello-world", "/hello-world/"];
-const CounterPaths = ["counter", "/counter", "/counter/"];
-
-export default function () {
-	const paths = location.pathname.split("/play");
-	const hasHash = !!location.hash;
-	const initialState = paths.length ?  paths[paths.length - 1] : "";
-	const [ active, setActive ] = useState(initialState);
+export default function ({loadHelloWorld, loadCounter, initialActiveState }) {
+	const [ active, setActive ] = useState(initialActiveState);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [showDropdown, setShowDropdown] = useState(false);
-  
+
 	useEffect(() => {
 	  const handleClickOutside = (
 		event: MouseEvent | TouchEvent | FocusEvent,
@@ -50,20 +44,20 @@ export default function () {
 		<ul className='dropdown__menu '>
 			<li>
 				<Link 
-					to="/play/hello-world"
-					className={clsx('dropdown__link', {"menu__link--active": HelloWorldPaths.includes(active) && !hasHash })}
+					className={clsx('dropdown__link', {"menu__link--active": active === "hello-world" })}
 					onClick={() => { 
 						setActive("hello-world");
+						loadHelloWorld()
 					}}>
 						Hello World
 				</Link>
 			</li>
 			<li>
 				<Link 
-					to="/play/counter"
-					className={clsx('dropdown__link', {"menu__link--active": CounterPaths.includes(active) && !hasHash })}
+					className={clsx('dropdown__link', {"menu__link--active": active === "counter" })}
 					onClick={() => { 
 						setActive("counter");
+						loadCounter();
 					}}>
 					Counter
 				</Link>
