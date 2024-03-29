@@ -20,19 +20,9 @@ describe("Notification List Item Tests", () => {
 
 	it("tests itemClose fired", async () => {
 		const closeInput = await browser.$("#closeInput");
-		// const EXPECTED_RESULT_1 = "Orders";
 		const EXPECTED_RESULT_2 = "New order #2201";
-		const firstGroupItem = await browser.$("#nlgi1");
 		const firstItem = await browser.$("#nli1");
-		// const btnListGroupItemClose = await firstGroupItem.shadow$("[close-btn]");
 		const btnListItemClose = await firstItem.shadow$("[close-btn]");
-
-		// // act
-		// await btnListGroupItemClose.click();
-
-		// // assert
-		// assert.strictEqual(await closeInput.getProperty("value"), EXPECTED_RESULT_1,
-		// 	"The itemClose of list group item has been fired.");
 
 		// act
 		await btnListItemClose.click();
