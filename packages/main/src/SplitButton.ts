@@ -280,16 +280,11 @@ class SplitButton extends UI5Element {
 		this.focus();
 	}
 
-	_textButtonFocusIn(e?: FocusEvent) {
-		e?.stopPropagation();
+	_onInnerButtonFocusIn(e: FocusEvent) {
+		e.stopPropagation();
 		this._setTabIndexValue(true);
-		this.textButton!.focus();
-	}
-
-	_arrowButtonFocusIn(e?: FocusEvent) {
-		e?.stopPropagation();
-		this._setTabIndexValue(true);
-		this.arrowButton!.focus();
+		const target = e.target as Button;
+		target.focus();
 	}
 
 	_onKeyDown(e: KeyboardEvent) {

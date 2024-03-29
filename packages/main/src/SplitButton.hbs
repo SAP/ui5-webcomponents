@@ -20,7 +20,7 @@
 		@touchstart={{_textButtonPress}}
 		@mousedown={{_textButtonPress}}
 		@mouseup={{_textButtonRelease}}
-		@focusin={{_textButtonFocusIn}}
+		@focusin={{_onInnerButtonFocusIn}}
 		@focusout={{_onFocusOut}}
 	>
 		{{#if isTextButton}}
@@ -39,7 +39,7 @@
 		@click="{{_handleArrowButtonAction}}"
 		@mousedown={{_arrowButtonPress}}
 		@mouseup={{_arrowButtonRelease}}
-		@focusin={{_arrowButtonFocusIn}}
+		@focusin={{_onInnerButtonFocusIn}}
 		@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
 	>
 	</ui5-button>
