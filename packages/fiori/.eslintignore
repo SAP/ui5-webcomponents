@@ -10,5 +10,4 @@ rollup.config*.js
 wdio.conf.cjs
 postcss.config.cjs
 package-scripts.cjs
-src/illustrations/js-imports/illustrations.js
 .eslintrc.cjs
