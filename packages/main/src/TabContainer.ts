@@ -500,6 +500,10 @@ class TabContainer extends UI5Element {
 		this._setDraggedElement!((e.target as Tab).realTabReference);
 	}
 
+	_onPopoverDragStart(e: DragEvent) {
+		this._setDraggedElement!((e.target as Tab).realTabReference);
+	}
+
 	_onHeaderDragEnter(e: DragEvent) {
 		e.preventDefault();
 	}
