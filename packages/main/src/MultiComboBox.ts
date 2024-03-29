@@ -670,9 +670,13 @@ class MultiComboBox extends UI5Element {
 		const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
 		const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
 		const relatedTarget: HTMLElement | undefined = e.relatedTarget as HTMLElement;
+		const responsivePopover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+		const popover = this.shadowRoot!.querySelector("[ui5-popover]");
+		const isFocusingPopover = [responsivePopover, popover].includes(relatedTarget as Element);
 		const isFocusingInput = this._inputDom === relatedTarget;
+		const isFocusingMorePopover = e.relatedTarget === this._tokenizer?.shadowRoot?.querySelector("[ui5-responsive-popover]");
 
-		if (!relatedTarget?.hasAttribute("ui5-token") && !isFocusingInput) {
+		if (!relatedTarget?.hasAttribute("ui5-token") && !isFocusingPopover && !isFocusingInput && !isFocusingMorePopover) {
 			this._tokenizer.tokens.forEach(token => {
 				token.selected = false;
 			});
@@ -1704,7 +1708,9 @@ class MultiComboBox extends UI5Element {
 
 			this._tokenizer.expanded = this.open;
 			// remove the value if user focus out the input and focus is not going in the popover
-			if (!isPhone() && !this.allowCustomValues) {
+			const responsivePopover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+			const popover = this.shadowRoot!.querySelector("[ui5-popover]");
+			if (!isPhone() && !this.allowCustomValues && ![responsivePopover, popover].includes(e.relatedTarget as Element)) {
 				this.value = "";
 			}
 		}

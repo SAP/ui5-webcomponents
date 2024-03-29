@@ -214,10 +214,10 @@ describe("Items selection", () => {
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
 
-		const listItemCheckbox = await mcb.shadow$("ui5-responsive-popover").$$("ui5-li")[2].shadow$("ui5-checkbox");
+		const listItemCheckbox = await multiCombo.shadow$("ui5-responsive-popover").$$("ui5-li")[2].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
-		const dialogCloseButton = await mcb.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
+		const dialogCloseButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 		await dialogCloseButton.click();
 
 		const tokens = await multiCombo.shadow$("ui5-tokenizer").$$("ui5-token");
