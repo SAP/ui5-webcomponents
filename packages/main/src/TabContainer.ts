@@ -52,9 +52,9 @@ import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
-import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
-import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
 
 // Templates
@@ -78,7 +78,7 @@ interface ITab extends UI5Element {
 	isSingleClickArea?: boolean;
 	requiresExpandButton?: boolean;
 	selected?: boolean;
-	subTabs?: Array<ITab>;
+	items?: Array<ITab>;
 	tabs?: Array<ITab>
 	text?: string;
 	hasOwnContent?: boolean;
@@ -222,19 +222,6 @@ class TabContainer extends UI5Element {
 	collapsed!: boolean;
 
 	/**
-	 * Defines whether the overflow select list is displayed.
-	 *
-	 * The overflow select list represents a list, where all tabs are displayed
-	 * so that it's easier for the user to select a specific tab.
-	 * @default false
-	 * @public
-	 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
-	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the `overflowButton` and / or `startOverflowButton` slots.
-	 */
-	@property({ type: Boolean })
-	showOverflow!: boolean;
-
-	/**
 	 * Defines the alignment of the content and the `additionalText` of a tab.
 	 *
 	 * **Note:**
@@ -257,8 +244,8 @@ class TabContainer extends UI5Element {
 	 * @since 1.1.0
 	 * @public
 	 */
-	@property({ type: TabsOverflowMode, defaultValue: TabsOverflowMode.End })
-	tabsOverflowMode!: `${TabsOverflowMode}`;
+	@property({ type: OverflowMode, defaultValue: OverflowMode.End })
+	overflowMode!: `${OverflowMode}`;
 
 	/**
 	 * Sets the background color of the Tab Container's header as `Solid`, `Transparent`, or `Translucent`.
@@ -266,8 +253,8 @@ class TabContainer extends UI5Element {
 	 * @since 1.10.0
 	 * @public
 	 */
-	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
-	headerBackgroundDesign!: `${TabContainerBackgroundDesign}`;
+	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
+	headerBackgroundDesign!: `${BackgroundDesign}`;
 
 	/**
 	 * Sets the background color of the Tab Container's content as `Solid`, `Transparent`, or `Translucent`.
@@ -275,8 +262,8 @@ class TabContainer extends UI5Element {
 	 * @since 1.10.0
 	 * @public
 	 */
-	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
-	contentBackgroundDesign!: `${TabContainerBackgroundDesign}`;
+	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
+	contentBackgroundDesign!: `${BackgroundDesign}`;
 
 	/**
 	 * Defines the placement of the tab strip relative to the actual tabs' content.
@@ -403,10 +390,6 @@ class TabContainer extends UI5Element {
 
 		if (!this._animationRunning) {
 			this._contentCollapsed = this.collapsed;
-		}
-
-		if (this.showOverflow) {
-			console.warn(`The "show-overflow" property is deprecated and will be removed in a future release.`); // eslint-disable-line
 		}
 	}
 
@@ -552,7 +535,7 @@ class TabContainer extends UI5Element {
 				return false;
 			});
 
-			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.subTabs.length) {
+			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.items.length) {
 				popoverTarget = closestPosition.element;
 			} else if (!acceptedPlacement) {
 				this.dropIndicatorDOM!.targetReference = null;
@@ -787,8 +770,8 @@ class TabContainer extends UI5Element {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item.forcedLevel = level;
 
-				if (item.subTabs) {
-					this._setIndentLevels(item.subTabs, level + 1);
+				if (item.items) {
+					this._setIndentLevels(item.items, level + 1);
 				}
 			}
 		});
@@ -1202,7 +1185,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get isModeStartAndEnd() {
-		return this.tabsOverflowMode === TabsOverflowMode.StartAndEnd;
+		return this.overflowMode === OverflowMode.StartAndEnd;
 	}
 
 	_updateOverflowCounters() {
@@ -1294,10 +1277,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isTabInStrip(targetOwner)) {
-			return targetOwner.realTabReference.subTabs;
+			return targetOwner.realTabReference.items;
 		}
 
-		return targetOwner.subTabs;
+		return targetOwner.items;
 	}
 
 	_setPopoverItems(items: Array<ITab>) {
@@ -1333,11 +1316,11 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	get hasSubTabs(): boolean {
+	get hasItems(): boolean {
 		const tabs = this._getTabs();
 
 		for (let i = 0; i < tabs.length; i++) {
-			if (tabs[i].subTabs.length > 0) {
+			if (tabs[i].items.length > 0) {
 				return true;
 			}
 		}
@@ -1452,7 +1435,7 @@ class TabContainer extends UI5Element {
 	}
 
 	get tablistAriaDescribedById() {
-		return this.hasSubTabs ? `${this._id}-invisibleText` : undefined;
+		return this.hasItems ? `${this._id}-invisibleText` : undefined;
 	}
 
 	get shouldAnimate() {
@@ -1481,8 +1464,8 @@ const getTab = (el: HTMLElement | null) => {
 const walk = (tabs: Array<ITab>, callback: (_: ITab) => void) => {
 	[...tabs].forEach(tab => {
 		callback(tab);
-		if (tab.subTabs) {
-			walk(tab.subTabs, callback);
+		if (tab.items) {
+			walk(tab.items, callback);
 		}
 	});
 };

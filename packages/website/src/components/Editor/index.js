@@ -19,6 +19,7 @@ import downloadSample from './download.js';
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
+  require('./html-autocomplete.js');
 }
 
 const projectPool = [];
