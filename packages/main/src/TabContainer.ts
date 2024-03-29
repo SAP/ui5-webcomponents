@@ -220,19 +220,6 @@ class TabContainer extends UI5Element {
 	collapsed!: boolean;
 
 	/**
-	 * Defines whether the overflow select list is displayed.
-	 *
-	 * The overflow select list represents a list, where all tabs are displayed
-	 * so that it's easier for the user to select a specific tab.
-	 * @default false
-	 * @public
-	 * @deprecated Since the introduction of OverflowMode, overflows will always be visible if there is not enough space for all tabs,
-	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the `overflowButton` and / or `startOverflowButton` slots.
-	 */
-	@property({ type: Boolean })
-	showOverflow!: boolean;
-
-	/**
 	 * Defines the alignment of the content and the `additionalText` of a tab.
 	 *
 	 * **Note:**
@@ -402,10 +389,6 @@ class TabContainer extends UI5Element {
 
 		if (!this._animationRunning) {
 			this._contentCollapsed = this.collapsed;
-		}
-
-		if (this.showOverflow) {
-			console.warn(`The "show-overflow" property is deprecated and will be removed in a future release.`); // eslint-disable-line
 		}
 	}
 
