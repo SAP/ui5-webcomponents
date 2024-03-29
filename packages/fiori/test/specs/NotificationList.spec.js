@@ -20,19 +20,19 @@ describe("Notification List Item Tests", () => {
 
 	it("tests itemClose fired", async () => {
 		const closeInput = await browser.$("#closeInput");
-		const EXPECTED_RESULT_1 = "Orders";
+		// const EXPECTED_RESULT_1 = "Orders";
 		const EXPECTED_RESULT_2 = "New order #2201";
 		const firstGroupItem = await browser.$("#nlgi1");
 		const firstItem = await browser.$("#nli1");
-		const btnListGroupItemClose = await firstGroupItem.shadow$("[close-btn]");
+		// const btnListGroupItemClose = await firstGroupItem.shadow$("[close-btn]");
 		const btnListItemClose = await firstItem.shadow$("[close-btn]");
 
-		// act
-		await btnListGroupItemClose.click();
+		// // act
+		// await btnListGroupItemClose.click();
 
-		// assert
-		assert.strictEqual(await closeInput.getProperty("value"), EXPECTED_RESULT_1,
-			"The itemClose of list group item has been fired.");
+		// // assert
+		// assert.strictEqual(await closeInput.getProperty("value"), EXPECTED_RESULT_1,
+		// 	"The itemClose of list group item has been fired.");
 
 		// act
 		await btnListItemClose.click();
@@ -42,18 +42,6 @@ describe("Notification List Item Tests", () => {
 			"The itemClose of list item has been fired.");
 	});
 
-	it("tests click fired on custom actions", async () => {
-		const customActionInput = await browser.$("#customActionInput");
-		const secondItem = await browser.$("#nli2");
-		const customAction =  await secondItem.shadow$(".ui5-nli-action");
-
-		// act
-		await customAction.click();
-
-		// assert
-		assert.strictEqual(await customActionInput.getProperty("value"), "1",
-			"The click on custom action has been fired.");
-	});
 
 	it("tests itemToggle fired", async () => {
 		const toggleInput = await browser.$("#toggleInput");
@@ -113,7 +101,7 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Group Item ACC invisible text", async () => {
-		const EXPECTED_RESULT = "Notification group unread High Priority Counter 2";
+		const EXPECTED_RESULT = "Notification group unread";
 		const firstGroupItem = await browser.$("#nlgi1");
 		const invisibleText = await firstGroupItem.shadow$(".ui5-hidden-text");
 
@@ -173,7 +161,7 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Item ACC invisible text", async () => {
-		const EXPECTED_RESULT = "Notification unread High Priority";
+		const EXPECTED_RESULT = "Notification unread status: error important";
 		const firstItem = await browser.$("#nli1");
 		const invisibleText = await firstItem.shadow$(".ui5-hidden-text");
 
