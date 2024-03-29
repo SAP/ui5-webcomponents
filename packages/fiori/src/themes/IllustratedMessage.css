@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: center;
     height:inherit;
+    flex-basis: content;
 }
 
 .ui5-illustrated-message-illustration {
