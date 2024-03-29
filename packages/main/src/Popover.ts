@@ -238,7 +238,7 @@ class Popover extends Popup {
 		super();
 	}
 
-	openPopup() {
+	async openPopup() {
 		let opener;
 
 		if (this.opener instanceof HTMLElement) {
@@ -248,11 +248,11 @@ class Popover extends Popup {
 		}
 
 		if (!opener) {
-			console.warn("Valid opener id is required."); // eslint-disable-line
+			console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
 			return;
 		}
 
-		this.showAt(opener);
+		await this.showAt(opener);
 	}
 
 	isOpenerClicked(e: MouseEvent) {

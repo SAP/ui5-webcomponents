@@ -175,8 +175,8 @@ class ColorPalettePopover extends UI5Element {
 	 */
 	showAt(opener: HTMLElement): void {
 		console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
-		this.open = true;
 		this.opener = opener;
+		this.open = true;
 	}
 
 	/**

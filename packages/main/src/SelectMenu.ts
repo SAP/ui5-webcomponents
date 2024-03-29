@@ -141,8 +141,8 @@ class SelectMenu extends UI5Element {
 	 */
 	showAt(opener: Select, openerWidth: number) {
 		this.selectWidth = openerWidth;
-		this.respPopover.open = true;
 		this.respPopover.opener = opener;
+		this.respPopover.open = true;
 		this.hasValueState = !!opener.hasValueState;
 		this.hasValueStateSlot = opener.valueStateMessageText.length > 0;
 		this.valueStateText = opener.valueStateText;

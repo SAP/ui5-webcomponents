@@ -234,7 +234,7 @@ abstract class Popup extends UI5Element {
 			get: (): boolean => {
 				return this.opened;
 			},
-			set: (value: boolean) => {
+			set: async (value: boolean) => {
 				this._updateAttribute("open", value);
 
 				if (this.opened === value) {
@@ -242,7 +242,7 @@ abstract class Popup extends UI5Element {
 				}
 
 				if (value) {
-					this.openPopup();
+					await this.openPopup();
 				} else {
 					this.close();
 				}
@@ -273,8 +273,8 @@ abstract class Popup extends UI5Element {
 		ResizeHandler.deregister(this, this._resizeHandler);
 	}
 
-	openPopup() {
-		this._open(false);
+	async openPopup() {
+		await this._open(false);
 	}
 
 	get _displayProp() {
