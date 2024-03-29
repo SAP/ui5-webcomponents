@@ -16,6 +16,7 @@ import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@u
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -143,6 +144,14 @@ abstract class Popup extends UI5Element {
 	preventFocusRestore!: boolean;
 
 	/**
+	 * Indicates if the element is already open
+	 * @private
+	 * @default false
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	opened!: boolean;
+
+	/**
 	 * Indicates if the element is open
 	 * @public
 	 * @default false
@@ -150,14 +159,6 @@ abstract class Popup extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	open!: boolean;
-
-	/**
-	 * Indicates if the element is already open
-	 * @private
-	 * @default false
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	opened!: boolean;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -228,6 +229,27 @@ abstract class Popup extends UI5Element {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
+
+		Object.defineProperty(this, "open", {
+			get: (): boolean => {
+				return this.opened;
+			},
+			set: (value: boolean) => {
+				this._updateAttribute("open", value);
+
+				if (this.opened === value) {
+					return;
+				}
+
+				if (value) {
+					this.openPopup();
+				} else {
+					this.close();
+				}
+
+				this.opened = value;
+			},
+		});
 	}
 
 	onBeforeRendering() {
@@ -249,6 +271,10 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+	}
+
+	openPopup() {
+		this._open(false);
 	}
 
 	get _displayProp() {
@@ -376,8 +402,10 @@ abstract class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	async applyInitialFocus() {
-		await this.applyFocus();
+	async applyInitialFocus(preventInitialFocus: boolean) {
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			await this.applyFocus();
+		}
 	}
 
 	/**
@@ -406,7 +434,10 @@ abstract class Popup extends UI5Element {
 			if (element === this._root) {
 				element.tabIndex = -1;
 			}
-			element.focus();
+
+			if (element !== getActiveElement()) {
+				element.focus();
+			}
 		}
 	}
 
@@ -455,11 +486,11 @@ abstract class Popup extends UI5Element {
 		this.opened = true;
 		this.open = true;
 
+		await this.applyInitialFocus(preventInitialFocus);
+
 		await renderFinished();
 
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			await this.applyInitialFocus();
-		}
+		await this.applyInitialFocus(preventInitialFocus);
 
 		this.fireEvent("after-open", {}, false, false);
 	}

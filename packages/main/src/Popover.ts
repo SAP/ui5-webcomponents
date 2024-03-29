@@ -238,27 +238,21 @@ class Popover extends Popup {
 		super();
 	}
 
-	onAfterRendering() {
-		super.onAfterRendering();
+	openPopup() {
+		let opener;
 
-		if (!this.isOpen() && this.open) {
-			let opener;
-
-			if (this.opener instanceof HTMLElement) {
-				opener = this.opener;
-			} else if (typeof this.opener === "string") {
-				opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
-			}
-
-			if (!opener) {
-				console.warn("Valid opener id is required."); // eslint-disable-line
-				return;
-			}
-
-			this.showAt(opener);
-		} else if (this.isOpen() && !this.open) {
-			this.close();
+		if (this.opener instanceof HTMLElement) {
+			opener = this.opener;
+		} else if (typeof this.opener === "string") {
+			opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
 		}
+
+		if (!opener) {
+			console.warn("Valid opener id is required."); // eslint-disable-line
+			return;
+		}
+
+		this.showAt(opener);
 	}
 
 	isOpenerClicked(e: MouseEvent) {
