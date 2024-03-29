@@ -172,7 +172,7 @@ class MultiInput extends Input {
 		const isFocusingMorePopover = e.relatedTarget === this.tokenizer.staticAreaItem;
 
 		if (!this.contains(e.relatedTarget as HTMLElement) && !isFocusingMorePopover) {
-			this.tokenizer._tokens.forEach(token => { token.selected = false; });
+			this.tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
 
@@ -197,7 +197,7 @@ class MultiInput extends Input {
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
 
-		this.tokenizer._getTokens().forEach(token => {
+		this.tokens.forEach(token => {
 			token.selected = false;
 		});
 	}
@@ -347,7 +347,7 @@ class MultiInput extends Input {
 	 * @protected
 	 */
 	get _placeholder() {
-		if (this.tokenizer && this.tokenizer._tokens.length) {
+		if (this.tokens.length) {
 			return "";
 		}
 

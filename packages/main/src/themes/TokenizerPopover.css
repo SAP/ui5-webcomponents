@@ -3,6 +3,14 @@
 	padding: 0;
 }
 
+[ui5-responsive-popover] .ui5-responsive-popover-header {
+	min-height: 2rem;
+}
+
+[ui5-responsive-popover] .ui5-responsive-popover-header .row{
+	justify-content: left;
+}
+
 #ui5-tokenizer-dialog-confirm-btn {
 	height: 100%;
 	min-width: 4rem;

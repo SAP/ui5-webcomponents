@@ -9,7 +9,7 @@
 >
 	{{#unless _isPhone}}
 			{{#unless noValueStatePopover}}
-				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+				<div class="ui5-valuestatemessage-root ui5-valuestatemessage-header {{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 					{{#each valueStateMessageText}}
 						{{this}}
@@ -19,8 +19,8 @@
 	{{/unless}}
 
 	{{#if _isPhone}}
-		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
-			<div class="row" style="{{styles.popoverHeaderTitle}}">
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
 				<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{morePopoverTitle}}</ui5-title>
 				<ui5-button
 					class="ui5-responsive-popover-close-btn"
@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		{{#unless noValueStatePopover}}
-			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+			<div class="ui5-valuestatemessage-root ui5-valuestatemessage-header {{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 				{{#each valueStateMessageText}}
 					{{this}}

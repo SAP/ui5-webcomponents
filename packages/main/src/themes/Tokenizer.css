@@ -12,6 +12,14 @@
 	pointer-events: none;
 }
 
+:host(:not([expanded])) .ui5-tokenizer-root {
+	overflow: hidden;
+}
+
+:host([_tokens-count="0"]) .ui5-tokenizer-root {
+	padding: 0;
+}
+
 .ui5-tokenizer-root {
 	height: 100%;
 	display: flex;
@@ -19,14 +27,6 @@
 	box-sizing: border-box;
 	touch-action: none;
 	font-family: "72override", var(--sapFontFamily);
-}
-
-.ui5-tokenizer-no-padding {
-	padding: 0;
-}
-
-.ui5-tokenizer-root.ui5-tokenizer-nmore--wrapper {
-	overflow: hidden;
 }
 
 .ui5-tokenizer--token--wrapper {
