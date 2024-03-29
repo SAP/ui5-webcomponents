@@ -98,7 +98,7 @@ class DatePickerTestPage {
 
 	async getDisplayedYear(index) {
 
-		const items = await this._sut.shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
+		const items = await browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`)
 			.$$(".ui5-yp-item");
 
 		return items[index];
@@ -106,7 +106,7 @@ class DatePickerTestPage {
 
 	async getDisplayedMonth(index) {
 
-		const items = await this._sut.shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
+		const items = await browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`.ui5-mp-root`)
 			.$$(".ui5-mp-item");
 
 		return items[index];
@@ -114,14 +114,14 @@ class DatePickerTestPage {
 
 	async getDisplayedDay(index) {
 
-		const items = await this._sut.shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$(".ui5-dp-item");
+		const items = await browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$(".ui5-dp-item");
 
 		return items[index];
 	}
 
 	async getDayPickerContent() {
 
-		return this._sut.shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$$(".ui5-dp-content > div");
+		return browser.$(this._sut).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`.ui5-dp-root`).$$(".ui5-dp-content > div");
 	}
 
 	async getDayPickerDayNames() {
