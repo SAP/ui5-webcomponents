@@ -234,7 +234,8 @@ abstract class Popup extends UI5Element {
 			get: (): boolean => {
 				return this.opened;
 			},
-			set: async (value: boolean) => {
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
+			set: async (value: boolean): Promise<void> => {
 				this._updateAttribute("open", value);
 
 				if (this.opened === value) {
