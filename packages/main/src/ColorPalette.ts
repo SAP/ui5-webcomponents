@@ -173,7 +173,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature?: ColorPaletteMoreColors;
+	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
 
 	static i18nBundle: I18nBundle;
 
@@ -449,18 +449,6 @@ class ColorPalette extends UI5Element {
 
 	get _showMoreColors() {
 		return this.showMoreColors && this.moreColorsFeature;
-	}
-
-	get _moreColorsFeatureDialogTitle() {
-		return this.moreColorsFeature?.colorPaletteDialogTitle;
-	}
-
-	get _moreColorsFeatureDialogOKButton() {
-		return this.moreColorsFeature?.colorPaletteDialogOKButton;
-	}
-
-	get _moreColorsFeatureDialogCancelButton() {
-		return this.moreColorsFeature?.colorPaletteCancelButton;
 	}
 
 	get rowSize() {
