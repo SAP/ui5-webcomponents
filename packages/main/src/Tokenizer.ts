@@ -12,7 +12,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
 	isSpaceCtrl,
@@ -72,6 +72,8 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import ListItem from "./ListItem.js";
+
+type TokenCountMapType = { [x: number]: I18nText };
 
 type TokenizerTokenDeleteEventDetail = {
 	ref: Token;
@@ -964,12 +966,13 @@ class Tokenizer extends UI5Element {
 	_tokensCountText() {
 		const iTokenCount = this._tokens.length;
 
-		if (iTokenCount === 0) {
-			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_TOKEN);
-		}
+		const tokenCountMap: TokenCountMapType = {
+			0: TOKENIZER_ARIA_CONTAIN_TOKEN,
+			1: TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
+		};
 
-		if (iTokenCount === 1) {
-			return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_ONE_TOKEN);
+		if (iTokenCount in tokenCountMap) {
+			return Tokenizer.i18nBundle.getText(tokenCountMap[iTokenCount]);
 		}
 
 		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
