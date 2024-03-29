@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
+
+
+### Features
+
+* **ui5-side-navigation:** make items customizable ([#8479](https://github.com/SAP/ui5-webcomponents/issues/8479)) ([95f6891](https://github.com/SAP/ui5-webcomponents/commit/95f68918c44055b8c005462b8ed083f7aecf61fb))
+
+
+
+
+
 # [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
 
 
