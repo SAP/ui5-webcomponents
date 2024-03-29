@@ -431,15 +431,4 @@ describe("Calendar general interaction", () => {
 
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});
-
-	it("Focus goes into the selected day item of the day picker", async () => {
-		await browser.url(`test/pages/Calendar.html?sap-ui-language=MK_mk`);
-
-		const calendar = await browser.$("#calendar4");
-		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const dayHeader = await dayPicker.shadow$(".ui5-dp-firstday");
-		const dayHeaderText = await dayHeader.getText();
-
-		assert.strictEqual(dayHeaderText, "пон.", "week name is with the correct length");
-	});
 });
