@@ -492,15 +492,11 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderDragStart(e: DragEvent) {
+	_onDragStart(e: DragEvent) {
 		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 			return;
 		}
 
-		this._setDraggedElement!((e.target as Tab).realTabReference);
-	}
-
-	_onPopoverDragStart(e: DragEvent) {
 		this._setDraggedElement!((e.target as Tab).realTabReference);
 	}
 
