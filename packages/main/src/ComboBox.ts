@@ -494,7 +494,8 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!(this.shadowRoot!.contains(toBeFocused))) {
+		const popover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+		if (!(this.getDomRef()!.contains(toBeFocused)) && (popover !== e.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}
