@@ -813,7 +813,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		this._calendarCurrentPicker = this.firstPicker;
 		this.responsivePopover = await this._respPopover();
 
-		this.responsivePopover.showAt(this);
+		await this.responsivePopover.showAt(this);
 	}
 
 	togglePicker() {
