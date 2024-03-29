@@ -314,8 +314,6 @@ describe("Input general interaction", () => {
 
 		await input.click();
 
-
-
 		// -1.33e-2
 		// Press Backspace to remove the "2" character
 		await input.keys("Backspace");
@@ -1288,7 +1286,7 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
@@ -1315,7 +1313,7 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
 

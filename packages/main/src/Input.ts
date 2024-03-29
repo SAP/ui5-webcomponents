@@ -698,7 +698,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const innerInput = this.getInputDOMRefSync()!;
 
 		if (this.Suggestions && this.showSuggestions) {
-			this.Suggestions.toggle(this.open, {
+			await this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
 			});
 

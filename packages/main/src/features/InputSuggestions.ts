@@ -237,13 +237,13 @@ class Suggestions {
 		return false;
 	}
 
-	toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
+	async toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
-			this.open();
+			await this.open();
 		} else {
-			this.close(options.preventFocusRestore);
+			await this.close(options.preventFocusRestore);
 		}
 	}
 
@@ -252,11 +252,11 @@ class Suggestions {
 		return sc.offsetHeight < sc.scrollHeight;
 	}
 
-	open() {
+	async open() {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		this.responsivePopover!.showAt(this._getComponent());
+		await (await this._getSuggestionPopover()).showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
