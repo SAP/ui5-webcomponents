@@ -261,10 +261,6 @@ abstract class Popup extends UI5Element {
 		ResizeHandler.deregister(this, this._resizeHandler);
 	}
 
-	get _displayProp() {
-		return "block";
-	}
-
 	_resize() {
 		this._updateMediaRange();
 	}
