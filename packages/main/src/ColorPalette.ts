@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -401,19 +400,19 @@ class ColorPalette extends UI5Element {
 		return this.colorPaletteNavigationElements[0];
 	}
 
-	async _chooseCustomColor() {
-		const colorPicker = await this.getColorPicker();
+	_chooseCustomColor() {
+		const colorPicker = this.getColorPicker();
 		this._setColor(colorPicker.value);
 		this._closeDialog();
 	}
 
-	async _closeDialog() {
-		const dialog = await this._getDialog();
+	_closeDialog() {
+		const dialog = this._getDialog();
 		dialog.close();
 	}
 
-	async _openMoreColorsDialog() {
-		const dialog = await this._getDialog();
+	_openMoreColorsDialog() {
+		const dialog = this._getDialog();
 		dialog.show();
 	}
 
@@ -510,13 +509,12 @@ class ColorPalette extends UI5Element {
 		};
 	}
 
-	async _getDialog() {
-		await renderFinished();
+	_getDialog() {
 		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
-	async getColorPicker() {
-		const dialog = await this._getDialog();
+	getColorPicker() {
+		const dialog = this._getDialog();
 		return dialog.content[0].querySelector<ColorPicker>("[ui5-color-picker]")!;
 	}
 }
