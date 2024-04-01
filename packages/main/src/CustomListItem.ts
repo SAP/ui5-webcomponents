@@ -1,4 +1,5 @@
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isTabPrevious, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -43,8 +44,17 @@ class CustomListItem extends ListItem {
 	@property()
 	declare accessibleName: string;
 
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+
+		if (isF2(e)) {
+			const focusDomRef = this.getFocusDomRef()!;
+			if (this.focused) {
+				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+			} else {
+				focusDomRef.focus(); // stop content editing
+			}
+		}
 
 		if (!isTab && !this.focused) {
 			return;

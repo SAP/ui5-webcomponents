@@ -1,6 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import { isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import TreeItemBase from "./TreeItemBase.js";
 
 // Template
@@ -61,6 +63,19 @@ class TreeItemCustom extends TreeItemBase {
 	 */
 	get placeSelectionElementAfter() {
 		return !this.hideSelectionElement && super.placeSelectionElementAfter;
+	}
+
+	async _onkeydown(e: KeyboardEvent) {
+		super._onkeydown(e);
+
+		if (isF2(e)) {
+			const focusDomRef = this.getFocusDomRef()!;
+			if (this.focused) {
+				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+			} else {
+				focusDomRef.focus(); // stop content editing
+			}
+		}
 	}
 }
 
