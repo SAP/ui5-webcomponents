@@ -47,9 +47,9 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
-import { TabInStrip, TabInOverflow } from "./Tab.js";
+import type { TabInStrip, TabInOverflow } from "./Tab.js";
 import type TabSeparator from "./TabSeparator.js";
-import { TabSeparatorInStrip } from "./TabSeparator.js";
+import type { TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -72,6 +72,19 @@ type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | TabInStrip;
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
+
+type TabContainerTabInStripInfo = {
+	getElementInStrip: () => HTMLElement | undefined;
+	isInline?: boolean;
+	mixedMode?: boolean;
+	posinset?: number;
+	setsize?: number;
+	isTopLevelTab?: boolean;
+}
+
+type TabContainerTabInOverflowInfo = {
+	style: Record<string, any>;
+}
 
 type TabContainerTabSelectEventDetail = {
 	tab: Tab;
@@ -349,7 +362,13 @@ class TabContainer extends UI5Element {
 			this._selectedTab.forcedSelected = true;
 		}
 
-		this._setItemsPrivateProperties(this.items);
+		walk(this.items, item => {
+			if (!item.isSeparator) {
+				(item as Tab)._selectedTabReference = this._selectedTab;
+			}
+		});
+
+		this._sendStripPresentationInfos(this.items);
 
 		if (!this._animationRunning) {
 			this._contentCollapsed = this.collapsed;
@@ -411,28 +430,30 @@ class TabContainer extends UI5Element {
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
-	_setItemsPrivateProperties(items: Array<Tab | TabSeparator>) {
-		// set real dom ref to all items, then return only the tabs for further processing
-		const allTabs = items.filter((item): item is Tab => {
-			item.getElementInStrip = () => this.getDomRef()!.querySelector<HTMLElement>(`[id="${item._id}"]`)!;
-			return !item.isSeparator;
-		});
+	_sendStripPresentationInfos(items: Array<Tab | TabSeparator>) {
+		const setsize = this._getTabs().length;
+		let posinset = 1;
 
-		allTabs.forEach((tab, index, arr) => {
-			tab.isInline = this.tabLayout === TabLayout.Inline;
-			tab.forcedMixedMode = this.mixedMode;
-			tab.forcedPosinset = index + 1;
-			tab.forcedSetsize = arr.length;
-			tab.isTopLevelTab = items.some(i => i === tab);
-		});
+		items.forEach(item => {
+			let info: TabContainerTabInStripInfo = {
+				getElementInStrip: () => this.getDomRef()!.querySelector<HTMLElement>(`[id="${item._id}"]`)!,
+			};
 
-		walk(items, item => {
 			if (!item.isSeparator) {
-				(item as Tab)._selectedTabReference = this._selectedTab;
-			}
-		});
+				info = {
+					...info,
+					isInline: this.tabLayout === TabLayout.Inline,
+					mixedMode: this.mixedMode,
+					posinset,
+					setsize,
+					isTopLevelTab: items.some(i => i === item),
+				};
 
-		this._setIndentLevels(items);
+				posinset++;
+			}
+
+			item.receiveStripPresentationInfo(info);
+		});
 	}
 
 	_onHeaderFocusin(e: FocusEvent) {
@@ -732,18 +753,6 @@ class TabContainer extends UI5Element {
 		return this._flatten(this.items);
 	}
 
-	_setIndentLevels(items: Array<Tab | TabSeparator>, level = 1) {
-		items.forEach(item => {
-			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
-				item.forcedLevel = level;
-
-				if (item.hasAttribute("ui5-tab")) {
-					this._setIndentLevels((item as Tab).items, level + 1);
-				}
-			}
-		});
-	}
-
 	_flatten(items: Array<Tab | TabSeparator>) {
 		const result: Array<Tab | TabSeparator> = [];
 
@@ -863,23 +872,27 @@ class TabContainer extends UI5Element {
 		await this._togglePopover(opener, true);
 	}
 
-	_addStyleIndent(itemsFlat: Array<Tab | TabSeparator>) {
-		const extraIndent = itemsFlat
-			.filter((tab): tab is Tab => !tab.isSeparator)
+	_setIndentLevels(items: Array<Tab | TabSeparator>, level: number, extraIndent: boolean) {
+		items.forEach(item => {
+			item.receiveOverflowPresentationInfo({
+				style: {
+					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
+					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
+				},
+			});
+
+			if (!item.isSeparator) {
+				this._setIndentLevels((item as Tab).items, level + 1, extraIndent);
+			}
+		});
+	}
+
+	_sendOverflowPresentationInfos(items: Array<Tab | TabSeparator>) {
+		const extraIndent = items
+			.filter((item): item is Tab => !item.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
-		itemsFlat.forEach(item => {
-			let level = item.forcedLevel! - 1;
-
-			if (item.isSeparator) {
-				level += 1;
-			}
-
-			item.forcedStyle = {
-				[getScopedVarName("--_ui5-tab-indentation-level")]: level,
-				[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
-			};
-		});
+		this._setIndentLevels(this.items, 0, extraIndent);
 	}
 
 	async _onOverflowKeyDown(e: KeyboardEvent) {
@@ -1245,11 +1258,11 @@ class TabContainer extends UI5Element {
 	}
 
 	_setPopoverItems(items: Array<Tab | TabSeparator>) {
+		this._sendOverflowPresentationInfos(items);
 		const newItemsFlat = this._flatten(items);
 
 		if (!arraysAreEqual(this._popoverItemsFlat, newItemsFlat)) {
 			this._popoverItemsFlat = newItemsFlat;
-			this._addStyleIndent(this._popoverItemsFlat);
 		}
 	}
 
@@ -1432,8 +1445,8 @@ const getTabInStrip = (el: HTMLElement | null) => {
 	return false;
 };
 
-const walk = (tabs: Array<Tab | TabSeparator>, callback: (_: Tab | TabSeparator) => void) => {
-	[...tabs].forEach(tab => {
+const walk = (items: Array<Tab | TabSeparator>, callback: (_: Tab | TabSeparator) => void) => {
+	[...items].forEach(tab => {
 		callback(tab);
 		if (tab.hasAttribute("ui5-tab")) {
 			walk((tab as Tab).items, callback);
@@ -1447,4 +1460,6 @@ export default TabContainer;
 export type {
 	TabContainerTabSelectEventDetail,
 	TabContainerMoveEventDetail,
+	TabContainerTabInStripInfo,
+	TabContainerTabInOverflowInfo,
 };

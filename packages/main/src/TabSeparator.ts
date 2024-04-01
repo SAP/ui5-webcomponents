@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
+import type { TabContainerTabInStripInfo, TabContainerTabInOverflowInfo } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -29,10 +30,9 @@ interface TabSeparatorInStrip extends HTMLElement {
 	renderer: litRender,
 })
 class TabSeparator extends UI5Element {
-	forcedLevel?: number;
-	forcedStyle?: Record<string, any>;
+	_forcedStyleInOverflow?: Record<string, any>;
 
-	getElementInStrip?: () => HTMLElement | undefined;
+	_getElementInStrip?: () => HTMLElement | undefined;
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -54,6 +54,14 @@ class TabSeparator extends UI5Element {
 		return true;
 	}
 
+	receiveStripPresentationInfo({ getElementInStrip }: TabContainerTabInStripInfo) {
+		this._getElementInStrip = getElementInStrip;
+	}
+
+	receiveOverflowPresentationInfo({ style }: TabContainerTabInOverflowInfo) {
+		this._forcedStyleInOverflow = style;
+	}
+
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
 	 *
@@ -61,8 +69,8 @@ class TabSeparator extends UI5Element {
 	 * @public
 	 */
 	getTabInStripDomRef(): HTMLElement | undefined {
-		if (this.getElementInStrip) {
-			return this.getElementInStrip();
+		if (this._getElementInStrip) {
+			return this._getElementInStrip();
 		}
 
 		return undefined;
