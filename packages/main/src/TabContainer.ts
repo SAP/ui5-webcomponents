@@ -73,7 +73,7 @@ const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
-type TabContainerTabInStripInfo = {
+type TabContainerStripInfo = {
 	getElementInStrip: () => HTMLElement | undefined;
 	isInline?: boolean;
 	mixedMode?: boolean;
@@ -82,7 +82,7 @@ type TabContainerTabInStripInfo = {
 	isTopLevelTab?: boolean;
 }
 
-type TabContainerTabInOverflowInfo = {
+type TabContainerOverflowInfo = {
 	style: Record<string, any>;
 }
 
@@ -435,7 +435,7 @@ class TabContainer extends UI5Element {
 		let posinset = 1;
 
 		items.forEach(item => {
-			let info: TabContainerTabInStripInfo = {
+			let info: TabContainerStripInfo = {
 				getElementInStrip: () => this.getDomRef()!.querySelector<HTMLElement>(`[id="${item._id}"]`)!,
 			};
 
@@ -452,7 +452,7 @@ class TabContainer extends UI5Element {
 				posinset++;
 			}
 
-			item.receiveStripPresentationInfo(info);
+			item.receiveStripInfo(info);
 		});
 	}
 
@@ -874,7 +874,7 @@ class TabContainer extends UI5Element {
 
 	_setIndentLevels(items: Array<Tab | TabSeparator>, level: number, extraIndent: boolean) {
 		items.forEach(item => {
-			item.receiveOverflowPresentationInfo({
+			item.receiveOverflowInfo({
 				style: {
 					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
 					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
@@ -1460,6 +1460,6 @@ export default TabContainer;
 export type {
 	TabContainerTabSelectEventDetail,
 	TabContainerMoveEventDetail,
-	TabContainerTabInStripInfo,
-	TabContainerTabInOverflowInfo,
+	TabContainerStripInfo,
+	TabContainerOverflowInfo,
 };

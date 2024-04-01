@@ -25,7 +25,7 @@ import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
 import type TabSeparator from "./TabSeparator.js";
-import type { TabContainerTabInStripInfo, TabContainerTabInOverflowInfo } from "./TabContainer.js";
+import type { TabContainerStripInfo, TabContainerOverflowInfo } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -259,9 +259,9 @@ class Tab extends UI5Element implements ITabbable {
 		return willShowContent(this.content);
 	}
 
-	receiveStripPresentationInfo({
+	receiveStripInfo({
 		getElementInStrip, posinset, setsize, isInline, isTopLevelTab, mixedMode,
-	}: TabContainerTabInStripInfo) {
+	}: TabContainerStripInfo) {
 		this._getElementInStrip = getElementInStrip;
 		this._forcedPosinset = posinset;
 		this._forcedSetsize = setsize;
@@ -270,7 +270,7 @@ class Tab extends UI5Element implements ITabbable {
 		this._isTopLevelTab = !!isTopLevelTab;
 	}
 
-	receiveOverflowPresentationInfo({ style }: TabContainerTabInOverflowInfo) {
+	receiveOverflowInfo({ style }: TabContainerOverflowInfo) {
 		this._forcedStyleInOverflow = style;
 	}
 
