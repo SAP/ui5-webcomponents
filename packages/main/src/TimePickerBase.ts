@@ -232,7 +232,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is open
 	 */
-	openPicker() {
+	openPicker(): void {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
 		const responsivePopover = this._getPopover();
 		responsivePopover.showAt(this);
@@ -243,7 +243,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is closed
 	 */
-	closePicker() {
+	closePicker(): void {
 		const responsivePopover = this._getPopover();
 		responsivePopover.close();
 		this._isPickerOpen = false;
