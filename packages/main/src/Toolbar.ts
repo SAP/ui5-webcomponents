@@ -322,12 +322,12 @@ class Toolbar extends UI5Element {
 	 * Returns if the overflow popup is open.
 	 * @public
 	 */
-	isOverflowOpen() {
+	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
 		return overflowPopover!.isOpen();
 	}
 
-	openOverflow() {
+	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
 		overflowPopover!.showAt(this.overflowButtonDOM!);
 		this.reverseOverflow = overflowPopover!.actualPlacementType === "Top";
