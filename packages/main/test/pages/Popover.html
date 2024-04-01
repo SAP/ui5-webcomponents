@@ -682,6 +682,7 @@ z-index: 1;
 
 			pop.addEventListener("ui5-before-open", async () => {
 				var applyFocusResult = pop.applyFocus();
+				pop.remove();
 
 				try {
 					await applyFocusResult;
@@ -690,8 +691,6 @@ z-index: 1;
 					createAndRemoveResult.innerText = e.toString();
 				}
 				createAndRemoveResult.style.display = "";
-
-				pop.remove();
 			});
 
 			var inp = document.createElement("ui5-input");
