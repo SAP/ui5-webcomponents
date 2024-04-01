@@ -6,27 +6,31 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
-import GroupListItemTemplate from "./generated/templates/GroupListItemTemplate.lit.js";
+import ListItemGroupTemplate from "./generated/templates/ListItemGroupTemplate.lit.js";
 
 // Styles
-import groupListItemCss from "./generated/themes/GroupListItem.css.js";
+import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
 import StandardListItem from "./StandardListItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 /**
  * @class
+ *
+ * @csspart header - The group header of the list item.
+ *
  * @constructor
  * @extends ListItemBase
  * @public
+ *
  */
 @customElement({
 	tag: "ui5-li-group",
 	languageAware: true,
-	template: GroupListItemTemplate,
-	styles: [groupListItemCss],
-	dependencies: [StandardListItem, GroupHeaderListItem],
+	template: ListItemGroupTemplate,
+	styles: [ListItemGroupCss],
+	dependencies: [StandardListItem, ListItemGroupHeader],
 })
-class GroupListItem extends ListItemBase {
+class ListItemGroup extends ListItemBase {
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -51,14 +55,14 @@ class GroupListItem extends ListItemBase {
 	items!: Array<ListItemBase>;
 
 	static async onDefine() {
-		GroupListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		ListItemGroup.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get groupHeaderItem() {
-		return this.shadowRoot!.querySelector<GroupHeaderListItem>("[ui5-li-groupheader]")!;
+		return this.shadowRoot!.querySelector<ListItemGroupHeader>("[ui5-li-group-header]")!;
 	}
 }
 
-GroupListItem.define();
+ListItemGroup.define();
 
-export default GroupListItem;
+export default ListItemGroup;

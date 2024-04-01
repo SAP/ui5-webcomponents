@@ -59,7 +59,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
@@ -190,7 +190,7 @@ type MultiComboboxItemWithSelection = {
 		Popover,
 		List,
 		StandardListItem,
-		GroupHeaderListItem,
+		ListItemGroupHeader,
 		ToggleButton,
 		Button,
 		CheckBox,

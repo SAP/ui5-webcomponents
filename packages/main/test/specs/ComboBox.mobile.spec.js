@@ -273,9 +273,9 @@ describe("Picker filtering", () => {
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 3, "All of the group header list items are shown (3)");
+		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 3, "All of the group header list items are shown (3)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is only 1 visible group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is only 1 visible group header");
 	});
 });
 

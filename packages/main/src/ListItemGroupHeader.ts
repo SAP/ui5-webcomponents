@@ -7,28 +7,28 @@ import ListItemBase from "./ListItemBase.js";
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import GroupHeaderListItemTemplate from "./generated/templates/GroupHeaderListItemTemplate.lit.js";
+import ListItemGroupHeaderTemplate from "./generated/templates/ListItemGroupHeaderTemplate.lit.js";
 
 // Styles
-import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.js";
+import ListItemGroupHeaderCss from "./generated/themes/ListItemGroupHeader.css.js";
 
 /**
  * @class
- * The `ui5-li-groupheader` is a special list item, used only to separate other list items into logical groups.
+ * The `ui5-li-group-header` is a special list item, used only to separate other list items into logical groups.
  * @slot {Node[]} default - Defines the text of the component.
  *
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @constructor
  * @extends ListItemBase
- * @public
+ * @private
  */
 @customElement({
-	tag: "ui5-li-groupheader",
+	tag: "ui5-li-group-header",
 	languageAware: true,
-	template: GroupHeaderListItemTemplate,
-	styles: [ListItemBase.styles, groupheaderListItemCss],
+	template: ListItemGroupHeaderTemplate,
+	styles: [ListItemBase.styles, ListItemGroupHeaderCss],
 })
-class GroupHeaderListItem extends ListItemBase {
+class ListItemGroupHeader extends ListItemBase {
 	/**
 	 * Defines the text alternative of the component.
 	 *
@@ -47,7 +47,7 @@ class GroupHeaderListItem extends ListItemBase {
 	}
 
 	get groupHeaderText() {
-		return GroupHeaderListItem.i18nBundle.getText(GROUP_HEADER_TEXT);
+		return ListItemGroupHeader.i18nBundle.getText(GROUP_HEADER_TEXT);
 	}
 
 	get ariaLabelText() {
@@ -55,10 +55,10 @@ class GroupHeaderListItem extends ListItemBase {
 	}
 
 	static async onDefine() {
-		GroupHeaderListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		ListItemGroupHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
-GroupHeaderListItem.define();
+ListItemGroupHeader.define();
 
-export default GroupHeaderListItem;
+export default ListItemGroupHeader;

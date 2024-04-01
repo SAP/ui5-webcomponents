@@ -187,7 +187,7 @@ describe("Picker filtering", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput")
 		const dialogList = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is 1 filtered group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is 1 filtered group header");
 	});
 });
 

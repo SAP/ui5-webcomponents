@@ -33,7 +33,7 @@
 	<ui5-input id="growingScrollTestCounter" value="0"></ui5-input>
 	<section class="list_test_page3auto">
 		<ui5-list id="growingScrollTest" growing="Scroll">
-			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+			<ui5-li-group header-text="New Items"></ui5-li-group>
 		</ui5-list>
 	</section>
 
@@ -103,9 +103,10 @@
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
 	<ui5-list id="listSelectedItem" mode="MultiSelect">
-		<ui5-li-groupheader id="group-header">New Items</ui5-li-groupheader>
-		<ui5-li id="not-selected-country">Argentina</ui5-li>
-		<ui5-li id="selected-country" selected >Bulgaria</ui5-li>
+		<ui5-li-group id="group" header-text="New Items">
+			<ui5-li id="not-selected-country">Argentina</ui5-li>
+			<ui5-li id="selected-country" selected >Bulgaria</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 	<br><br><br>
 	<ui5-list id="listEvents2" mode="MultiSelect">
@@ -118,16 +119,18 @@
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
 	<br><br><br>
-	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" >Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+	<ui5-list id="list1" header-text="API: ListItemGroupHeader">
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+			<ui5-li image="./img/HT-1010.jpg" >Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		</ui5-li-group>
 
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 
 	<label id="lblResult">0</label>
@@ -447,14 +450,16 @@
 	</script>
 
 	<ui5-list growing="Scroll">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa.</ui5-li>
-		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li id="listItem" image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa.</ui5-li>
+			<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
+			<ui5-li id="listItem" image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+		</ui5-li-group>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 
 	<script>

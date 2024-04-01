@@ -55,7 +55,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
-import GroupListItem from "./GroupListItem.js";
+import ListItemGroup from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -113,7 +113,7 @@ type ListItemClickEventDetail = {
  *
  * - `ui5-li`
  * - `ui5-li-custom`
- * - `ui5-li-groupheader`
+ * - `ui5-li-group`
  *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
@@ -151,7 +151,7 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
  *
- * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
+ * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -162,7 +162,7 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator, DropIndicator, GroupListItem],
+	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
  * Fired when an item is activated, unless the item's `type` property
@@ -777,8 +777,8 @@ class List extends UI5Element {
 
 		slottedItems.forEach(item => {
 			if (item.hasAttribute("ui5-li-group")) {
-				const groupItem = item as GroupListItem;
-				const groupItems = [groupItem.groupHeaderItem, ...groupItem.items];
+				const groupItem = item as ListItemGroup;
+				const groupItems = [groupItem.groupHeaderItem, ...groupItem.items].filter(Boolean);
 				items.push(...groupItems);
 			} else {
 				items.push(item);

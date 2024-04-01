@@ -113,7 +113,7 @@ describe("List Tests", () => {
 		const header = await list.getHeader();
 
 		assert.ok(await header.hasClass("ui5-list-header"), "header has the right classes");
-		assert.ok(await header.getHTML(false), "API: GroupHeaderListItem");
+		assert.ok(await header.getHTML(false), "API: ListItemGroupHeader");
 	});
 
 	it("Tests header slot", async () => {
@@ -552,7 +552,7 @@ describe("List Tests", () => {
 	});
 
 	it('group headers should not be with role options', async () => {
-		const groupHeader = await browser.$("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
+		const groupHeader = await browser.$(">>>#listSelectedItem #group .ui5-ghli-root");
 
 		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
 	});

@@ -175,8 +175,8 @@ import List from "./List.js";
 // console.log({List})
 import StandardListItem from "./StandardListItem.js";
 import CustomListItem from "./CustomListItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
-import GroupListItem from "./GroupListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import ListItemGroup from "./ListItemGroup.js";
 
 // Features
 import "./features/InputElementsFormSupport.js";
