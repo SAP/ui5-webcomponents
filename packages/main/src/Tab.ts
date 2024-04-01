@@ -24,7 +24,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
+import type TabSeparator from "./TabSeparator.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -55,7 +55,6 @@ const DESIGN_DESCRIPTIONS = {
  * @abstract
  * @constructor
  * @extends UI5Element
- * @implements {ITab}
  * @public
  */
 @customElement({
@@ -70,7 +69,7 @@ const DESIGN_DESCRIPTIONS = {
 		CustomListItem,
 	],
 })
-class Tab extends UI5Element implements ITab, ITabbable {
+class Tab extends UI5Element implements ITabbable {
 	/**
 	 * The text to be displayed for the item.
 	 * @default ""
@@ -180,12 +179,16 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			slots: false,
 		},
 	})
-	items!: Array<ITab>
+	items!: Array<Tab | TabSeparator>
 
 	isInline?: boolean;
 	forcedMixedMode?: boolean;
-	getElementInStrip?: () => ITab | null;
+	getElementInStrip?: () => HTMLElement | undefined;
 	_individualSlot!: string;
+	forcedPosinset?: number;
+	forcedSetsize?: number;
+	forcedLevel?: number;
+	forcedStyle?: Record<string, any>;
 
 	static i18nBundle: I18nBundle;
 
@@ -260,12 +263,12 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */
-	getTabInStripDomRef(): ITab | null {
+	getTabInStripDomRef(): HTMLElement | undefined {
 		if (this.getElementInStrip) {
 			return this.getElementInStrip();
 		}
 
-		return null;
+		return undefined;
 	}
 
 	getFocusDomRef() {

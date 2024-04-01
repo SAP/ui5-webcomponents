@@ -4,7 +4,6 @@ import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTempla
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -20,18 +19,20 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
  * @constructor
  * @extends UI5Element
  * @abstract
- * @implements {ITab}
  * @public
  */
 @customElement({
 	tag: "ui5-tab-separator",
 	renderer: litRender,
 })
-class TabSeparator extends UI5Element implements ITab {
+class TabSeparator extends UI5Element {
+	forcedLevel?: number;
+	forcedStyle?: Record<string, any>;
+
 	@property({ type: Object, defaultValue: null })
 	realTabReference!: TabSeparator;
 
-	getElementInStrip?: () => ITab | null;
+	getElementInStrip?: () => HTMLElement | undefined;
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -59,12 +60,12 @@ class TabSeparator extends UI5Element implements ITab {
 	 * **Note:** Tabs and separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
 	 * @public
 	 */
-	getTabInStripDomRef(): ITab | null {
+	getTabInStripDomRef(): HTMLElement | undefined {
 		if (this.getElementInStrip) {
 			return this.getElementInStrip();
 		}
 
-		return null;
+		return undefined;
 	}
 
 	get stableDomRef() {

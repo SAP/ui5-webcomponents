@@ -47,6 +47,7 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
+import type TabSeparator from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -65,36 +66,6 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
-/**
- * Interface for components that may be slotted inside `ui5-tabcontainer` as items
- * @public
- */
-interface ITab extends UI5Element {
-	isSeparator: boolean;
-	getTabInStripDomRef: () => ITab | null;
-	additionalText?: string;
-	design?: `${SemanticColor}`;
-	disabled?: boolean;
-	icon?: string;
-	isSingleClickArea?: boolean;
-	requiresExpandButton?: boolean;
-	selected?: boolean;
-	items?: Array<ITab>;
-	tabs?: Array<ITab>
-	text?: string;
-	hasOwnContent?: boolean;
-	forcedLevel?: number;
-	forcedSelected?: boolean;
-	getElementInStrip?: () => ITab | null;
-	isInline?: boolean;
-	forcedMixedMode?: boolean;
-	forcedPosinset?: number;
-	forcedSetsize?: number;
-	realTabReference: ITab;
-	isTopLevelTab?: boolean;
-	forcedStyle?: Record<string, any>;
-}
-
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
 
 const tabStyles: Array<StyleData> = [];
@@ -102,7 +73,7 @@ const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 type TabContainerTabSelectEventDetail = {
-	tab: ITab;
+	tab: Tab;
 	tabIndex: number;
 }
 
@@ -184,7 +155,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 })
 /**
  * Fired when a tab is selected.
- * @param {ITab} tab The selected `tab`.
+ * @param {Tab} tab The selected `tab`.
  * @param {Integer} tabIndex The selected `tab` index in the flattened array of all tabs and their subTabs, provided by the `allItems` getter.
  * @public
  * @allowPreventDefault
@@ -299,7 +270,7 @@ class TabContainer extends UI5Element {
 	_endOverflowText!: string;
 
 	@property({ type: Object, multiple: true })
-	_popoverItemsFlat!: Array<ITab>;
+	_popoverItemsFlat!: Array<Tab | TabSeparator>;
 
 	@property({ validator: Integer, noAttribute: true })
 	_width?: number;
@@ -319,7 +290,7 @@ class TabContainer extends UI5Element {
 			slots: true,
 		},
 	})
-	items!: Array<ITab>;
+	items!: Array<Tab | TabSeparator>;
 
 	/**
 	 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
@@ -340,7 +311,7 @@ class TabContainer extends UI5Element {
 	startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
-	_itemsFlat?: Array<ITab>;
+	_itemsFlat?: Array<Tab | TabSeparator>;
 	responsivePopover?: ResponsivePopover;
 	_hasScheduledPopoverOpen = false;
 	_handleResizeBound: () => void;
@@ -376,7 +347,7 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected tab
-		const selectedTabs = this._itemsFlat.filter(tab => tab.selected) as Array<Tab>;
+		const selectedTabs = this._itemsFlat.filter((tab): tab is Tab => !tab.isSeparator && (tab as Tab).selected);
 		if (selectedTabs.length) {
 			this._selectedTab.forcedSelected = false;
 			this._selectedTab = selectedTabs[0];
@@ -447,10 +418,10 @@ class TabContainer extends UI5Element {
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
-	_setItemsPrivateProperties(items: Array<ITab>) {
+	_setItemsPrivateProperties(items: Array<Tab | TabSeparator>) {
 		// set real dom ref to all items, then return only the tabs for further processing
-		const allTabs = items.filter(item => {
-			item.getElementInStrip = () => this.getDomRef()!.querySelector(`[id="${item._id}"]`);
+		const allTabs = items.filter((item): item is Tab => {
+			item.getElementInStrip = () => this.getDomRef()!.querySelector<HTMLElement>(`[id="${item._id}"]`)!;
 			return !item.isSeparator;
 		});
 
@@ -582,7 +553,7 @@ class TabContainer extends UI5Element {
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement();
-		const dropTarget = (destination.element as ITab).realTabReference;
+		const dropTarget = (destination.element as Tab | TabSeparator).realTabReference;
 
 		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
 			return;
@@ -765,24 +736,24 @@ class TabContainer extends UI5Element {
 	 * @public
 	 * @default []
 	 */
-	get allItems() : Array<ITab> {
+	get allItems() : Array<Tab | TabSeparator> {
 		return this._flatten(this.items);
 	}
 
-	_setIndentLevels(items: Array<ITab>, level = 1) {
+	_setIndentLevels(items: Array<Tab | TabSeparator>, level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item.forcedLevel = level;
 
-				if (item.items) {
-					this._setIndentLevels(item.items, level + 1);
+				if (item.hasAttribute("ui5-tab")) {
+					this._setIndentLevels((item as Tab).items, level + 1);
 				}
 			}
 		});
 	}
 
-	_flatten(items: Array<ITab>) {
-		const result: Array<ITab> = [];
+	_flatten(items: Array<Tab | TabSeparator>) {
+		const result: Array<Tab | TabSeparator> = [];
 
 		walk(items, item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
@@ -805,11 +776,13 @@ class TabContainer extends UI5Element {
 
 		// update selected property on all items
 		this._itemsFlat!.forEach((item, index) => {
-			const selected = selectedTabIndex === index;
-			item.selected = selected;
+			if (!item.isSeparator) {
+				const selected = selectedTabIndex === index;
+				(item as Tab).selected = selected;
 
-			if (item.forcedSelected) {
-				item.forcedSelected = false;
+				if ((item as Tab).forcedSelected) {
+					(item as Tab).forcedSelected = false;
+				}
 			}
 		});
 
@@ -898,9 +871,9 @@ class TabContainer extends UI5Element {
 		await this._togglePopover(opener, true);
 	}
 
-	_addStyleIndent(itemsFlat: Array<ITab>) {
+	_addStyleIndent(itemsFlat: Array<Tab | TabSeparator>) {
 		const extraIndent = itemsFlat
-			.filter(tab => !tab.isSeparator)
+			.filter((tab): tab is Tab => !tab.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
 		itemsFlat.forEach(item => {
@@ -937,7 +910,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!);
+		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!) as Array<Tab | TabSeparator>;
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -979,11 +952,11 @@ class TabContainer extends UI5Element {
 		return tab;
 	}
 
-	_updateEndOverflow(itemsDomRefs: Array<ITab>) {
+	_updateEndOverflow(itemsDomRefs: Array<Tab | TabSeparator>) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as Tab;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -997,10 +970,10 @@ class TabContainer extends UI5Element {
 		this._endOverflowText = this.overflowButtonText;
 	}
 
-	_updateStartAndEndOverflow(itemsDomRefs: Array<ITab>) {
+	_updateStartAndEndOverflow(itemsDomRefs: Array<Tab | TabSeparator>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as Tab;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1062,7 +1035,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<Tab | TabSeparator>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index === 0) {
 			return false;
 		}
@@ -1087,7 +1060,7 @@ class TabContainer extends UI5Element {
 		return hasStartOverflow;
 	}
 
-	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<Tab | TabSeparator>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index >= itemsDomRefs.length) {
 			return false;
 		}
@@ -1119,7 +1092,7 @@ class TabContainer extends UI5Element {
 		return itemDomRef.offsetWidth + margins;
 	}
 
-	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<ITab>, selectedTabDomRef: ITab) {
+	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<Tab | TabSeparator>, selectedTabDomRef: Tab | TabSeparator) {
 		let index = itemsDomRefs.indexOf(selectedTabDomRef);
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
@@ -1143,7 +1116,7 @@ class TabContainer extends UI5Element {
 		};
 	}
 
-	_findFirstVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
+	_findFirstVisibleItem(itemsDomRefs: Array<Tab | TabSeparator>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
 		if (startIndex === undefined) {
 			startIndex = itemsDomRefs.length - 1;
 		}
@@ -1164,7 +1137,7 @@ class TabContainer extends UI5Element {
 		return lastVisible;
 	}
 
-	_findLastVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
+	_findLastVisibleItem(itemsDomRefs: Array<Tab | TabSeparator>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
 		let lastVisibleIndex = startIndex - 1;
 		let index = startIndex;
 
@@ -1287,7 +1260,7 @@ class TabContainer extends UI5Element {
 		return targetOwner.items;
 	}
 
-	_setPopoverItems(items: Array<ITab>) {
+	_setPopoverItems(items: Array<Tab | TabSeparator>) {
 		const newItemsFlat = this._flatten(items);
 
 		if (!arraysAreEqual(this._popoverItemsFlat, newItemsFlat)) {
@@ -1399,15 +1372,17 @@ class TabContainer extends UI5Element {
 	}
 
 	get mixedMode() {
-		return this.items.some(item => item.icon) && this.items.some(item => item.text);
+		const tabs = this._getTabs();
+
+		return tabs.some(item => item.icon) && tabs.some(item => item.text);
 	}
 
 	get textOnly() {
-		return this.items.every(item => !item.icon);
+		return this._getTabs().every(item => !item.icon);
 	}
 
 	get withAdditionalText() {
-		return this.items.some(item => !!item.additionalText);
+		return this._getTabs().some(item => !!item.additionalText);
 	}
 
 	get standardTabLayout() {
@@ -1473,11 +1448,11 @@ const getTab = (el: HTMLElement | null) => {
 	return false;
 };
 
-const walk = (tabs: Array<ITab>, callback: (_: ITab) => void) => {
+const walk = (tabs: Array<Tab | TabSeparator>, callback: (_: Tab | TabSeparator) => void) => {
 	[...tabs].forEach(tab => {
 		callback(tab);
-		if (tab.items) {
-			walk(tab.items, callback);
+		if (tab.hasAttribute("ui5-tab")) {
+			walk((tab as Tab).items, callback);
 		}
 	});
 };
@@ -1486,7 +1461,6 @@ TabContainer.define();
 
 export default TabContainer;
 export type {
-	ITab,
 	TabContainerTabSelectEventDetail,
 	TabContainerMoveEventDetail,
 };
