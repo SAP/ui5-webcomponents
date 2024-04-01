@@ -745,9 +745,7 @@ describe("Block layers", () => {
 	it("test dialog overlay when dialog isn't open", async () => {
 		const isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialog");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
-
-			done(!staticAreaItemDomRef.querySelector(".ui5-block-layer").matches(":popover-open"));
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");
@@ -758,9 +756,9 @@ describe("Block layers", () => {
 
 		const isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
-			done(!staticAreaItemDomRef.querySelector(".ui5-block-layer").matches(":popover-open"));
+
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.notOk(isBlockLayerHidden, "the block layer is visible");
@@ -774,18 +772,18 @@ describe("Block layers", () => {
 
 		let isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
-			done(!staticAreaItemDomRef.querySelector(".ui5-block-layer").matches(":popover-open"));
+
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");
 
 		isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog2");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
-			done(!staticAreaItemDomRef.querySelector(".ui5-block-layer").matches(":popover-open"));
+
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.notOk(isBlockLayerHidden, "the block layer is visible");
@@ -794,9 +792,9 @@ describe("Block layers", () => {
 
 		isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
-			done(!staticAreaItemDomRef.querySelector(".ui5-block-layer").matches(":popover-open"));
+
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.notOk(isBlockLayerHidden, "the block layer is visible");
@@ -805,9 +803,9 @@ describe("Block layers", () => {
 
 		isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
-			done(!staticAreaItemDomRef.querySelector(".ui5-block-layer").matches(":popover-open"));
+
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");

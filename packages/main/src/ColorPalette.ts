@@ -20,7 +20,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
 import type Dialog from "./Dialog.js";
@@ -75,9 +74,7 @@ type ColorPaletteItemClickEventDetail = {
 	tag: "ui5-color-palette",
 	renderer: litRender,
 	template: ColorPaletteTemplate,
-	staticAreaTemplate: ColorPaletteDialogTemplate,
-	styles: ColorPaletteCss,
-	staticAreaStyles: ColorPaletteStaticAreaCss,
+	styles: [ColorPaletteCss, ColorPaletteStaticAreaCss],
 	get dependencies() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
@@ -175,7 +172,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature?: ColorPaletteMoreColors;
+	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
 
 	static i18nBundle: I18nBundle;
 
@@ -403,19 +400,19 @@ class ColorPalette extends UI5Element {
 		return this.colorPaletteNavigationElements[0];
 	}
 
-	async _chooseCustomColor() {
-		const colorPicker = await this.getColorPicker();
-		this._setColor(colorPicker.color);
+	_chooseCustomColor() {
+		const colorPicker = this.getColorPicker();
+		this._setColor(colorPicker.value);
 		this._closeDialog();
 	}
 
-	async _closeDialog() {
-		const dialog = await this._getDialog();
+	_closeDialog() {
+		const dialog = this._getDialog();
 		dialog.close();
 	}
 
-	async _openMoreColorsDialog() {
-		const dialog = await this._getDialog();
+	_openMoreColorsDialog() {
+		const dialog = this._getDialog();
 		dialog.show();
 	}
 
@@ -512,13 +509,12 @@ class ColorPalette extends UI5Element {
 		};
 	}
 
-	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+	_getDialog() {
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
-	async getColorPicker() {
-		const dialog = await this._getDialog();
+	getColorPicker() {
+		const dialog = this._getDialog();
 		return dialog.content[0].querySelector<ColorPicker>("[ui5-color-picker]")!;
 	}
 }

@@ -149,6 +149,9 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	@property({ type: Boolean })
 	isTopLevelTab!: boolean;
 
+	@property({ type: Object, defaultValue: null })
+	_selectedTabReference!: Tab;
+
 	/**
 	 * Holds the content associated with this tab.
 	 * @public
@@ -177,7 +180,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			slots: false,
 		},
 	})
-	subTabs!: Array<ITab>
+	items!: Array<ITab>
 
 	isInline?: boolean;
 	forcedMixedMode?: boolean;
@@ -221,19 +224,19 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get requiresExpandButton() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+		return this.items.length > 0 && this.isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isSingleClickArea() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
+		return this.items.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
 	}
 
 	get isTwoClickArea() {
-		return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+		return this.items.length > 0 && this.isTopLevelTab && this.hasOwnContent;
 	}
 
 	get isOnSelectedTabPath(): boolean {
-		return this.selected || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+		return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
 	get _effectiveSlotName() {
@@ -241,7 +244,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _defaultSlotName() {
-		return this.selected ? "" : "disabled-slot";
+		return this._selectedTabReference === this ? "" : "disabled-slot";
 	}
 
 	get hasOwnContent() {
@@ -251,7 +254,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 *
-	 * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+	 * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
 	 *
 	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
@@ -306,7 +309,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get tabs(): Array<Tab> {
-		return this.subTabs.filter((tab): tab is Tab => !tab.isSeparator);
+		return this.items.filter((tab): tab is Tab => !tab.isSeparator);
 	}
 
 	get ariaLabelledBy() {
@@ -398,7 +401,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _roleDescription() {
-		return this.subTabs.length > 0 ? Tab.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
+		return this.items.length > 0 ? Tab.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
 	}
 
 	get _ariaHasPopup() {

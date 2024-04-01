@@ -53,6 +53,7 @@ describe("Carousel general interaction", () => {
 		const navigation = await carousel.shadow$(".ui5-carousel-navigation > .ui5-carousel-navigation-text");
 
 		assert.ok(await navigation.isExisting(), "Navigation is rendered");
+		assert.ok(await navigation.getAttribute("dir"), "auto", "text direction is auto");
 	});
 
 	it("Buttons are rendered in the content only when hovering (arrows-placement)", async () => {

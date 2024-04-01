@@ -25,8 +25,8 @@ const Template: UI5StoryArgs<Tab, StoryArgsSlots> = (args) => {
 	?selected="${ifDefined(args.selected)}"
 	text="${ifDefined(args.text)}"
 	>
-		${unsafeHTML(args.default)}	
-		${unsafeHTML(args.subTabs)}	
+		${unsafeHTML(args.default)}
+		${unsafeHTML(args.items)}
 	</ui5-tab>
 </ui5-tabcontainer>`;
 };
@@ -36,16 +36,16 @@ Basic.tags = ["_hidden_"];
 Basic.args = {
 	text: "Products",
 	default: `Products go here`,
-	subTabs: `	<ui5-tab slot="subTabs" text="Computers">
+	items: `	<ui5-tab slot="items" text="Computers">
 	Computers go here ...
-	<ui5-tab slot="subTabs" text="Laptops">
+	<ui5-tab slot="items" text="Laptops">
 		Laptops go here ...
 	</ui5-tab>
-	<ui5-tab slot="subTabs" text="Desktops">
-		<ui5-tab slot="subTabs" text="Work Stations">
+	<ui5-tab slot="items" text="Desktops">
+		<ui5-tab slot="items" text="Work Stations">
 			Work Stations go here ...
 		</ui5-tab>
-		<ui5-tab slot="subTabs" text="Game Stations">
+		<ui5-tab slot="items" text="Game Stations">
 			Game Stations go here ...
 		</ui5-tab>
 		Desktops go here ...

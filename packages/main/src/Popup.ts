@@ -4,7 +4,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import { getUseNativePopovers } from "@ui5/webcomponents-base/dist/config/NativePopover.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
@@ -13,18 +12,17 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
-import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import popupStlyes from "./generated/themes/Popup.css.js";
-import popupStaticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import popupBlockLayerStyles from "./generated/themes/PopupBlockLayer.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 const createBlockingStyle = (): void => {
@@ -78,10 +76,8 @@ type PopupBeforeCloseEventDetail = {
  */
 @customElement({
 	renderer: litRender,
-	styles: popupStlyes,
+	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
-	staticAreaTemplate: PopupBlockLayer,
-	staticAreaStyles: popupStaticAreaStyles,
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
@@ -200,12 +196,6 @@ abstract class Popup extends UI5Element {
 	@property({ type: Boolean })
 	_disableInitialFocus!: boolean;
 
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_useNativePopover!: boolean;
-
 	@property({ type: Boolean })
 	_blockLayerHidden!: boolean;
 
@@ -236,37 +226,29 @@ abstract class Popup extends UI5Element {
 
 		this._resizeHandler = this._resize.bind(this);
 
-		if (getUseNativePopovers()) {
-			this._getRealDomRef = () => {
-				return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
-			};
-		}
+		this._getRealDomRef = () => {
+			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
+		};
 	}
 
 	onBeforeRendering() {
-		this._useNativePopover = getUseNativePopovers();
-
-		if (getUseNativePopovers()) {
-			if (this._getBlockingLayer) {
-				if (!this.isOpen() || !this.isTopModalPopup) {
-					this._getBlockingLayer.hidePopover();
-				} else if (!this.shouldHideBackdrop) {
-					this._getBlockingLayer.showPopover();
-				}
+		if (this._getBlockingLayer) {
+			if (!this.isOpen() || !this.isTopModalPopup) {
+				this._getBlockingLayer.hidePopover();
+			} else if (!this.shouldHideBackdrop) {
+				this._getBlockingLayer.showPopover();
 			}
-		} else {
-			this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
 		}
 	}
 
 	onAfterRendering() {
-		this._updateMediaRange();
+		renderFinished().then(() => {
+			this._updateMediaRange();
+		});
 	}
 
 	onEnterDOM() {
-		if (getUseNativePopovers()) {
-			this.setAttribute("popover", "manual");
-		}
+		this.setAttribute("popover", "manual");
 		ResizeHandler.register(this, this._resizeHandler);
 	}
 
@@ -277,10 +259,6 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
-	}
-
-	get _displayProp() {
-		return "block";
 	}
 
 	_resize() {
@@ -469,18 +447,9 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
-			if (getUseNativePopovers()) {
-				this._getBlockingLayer.showPopover();
-			} else {
-				this.getStaticAreaItemDomRef();
-			}
+			this._getBlockingLayer.showPopover();
 			this._blockLayerHidden = false;
 			Popup.blockPageScrolling(this);
-		}
-
-		if (!getUseNativePopovers()) {
-			this._zIndex = getNextZIndex();
-			this.style.zIndex = this._zIndex?.toString() || "";
 		}
 
 		this._focusedElementBeforeOpen = getFocusedElement();
@@ -531,9 +500,7 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			if (getUseNativePopovers()) {
-				this._getBlockingLayer.hidePopover();
-			}
+			this._getBlockingLayer.hidePopover();
 			Popup.unblockPageScrolling(this);
 		}
 
@@ -578,13 +545,9 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	_show() {
-		if (getUseNativePopovers()) {
-			if (this.isConnected) {
-				this.setAttribute("popover", "manual");
-				this.showPopover();
-			}
-		} else {
-			this.style.display = this._displayProp;
+		if (this.isConnected) {
+			this.setAttribute("popover", "manual");
+			this.showPopover();
 		}
 	}
 
@@ -593,11 +556,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	hide() {
-		if (getUseNativePopovers()) {
-			this.isConnected && this.hidePopover();
-		} else {
-			this.style.display = "none";
-		}
+		this.isConnected && this.hidePopover();
 	}
 
 	/**
@@ -646,9 +605,6 @@ abstract class Popup extends UI5Element {
 		return {
 			root: {},
 			content: {},
-			blockLayer: {
-				"zIndex": !getUseNativePopovers() && this._zIndex ? this._zIndex - 1 : "",
-			},
 		};
 	}
 

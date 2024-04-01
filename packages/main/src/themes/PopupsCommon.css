@@ -6,10 +6,6 @@
     box-sizing: border-box;
 }
 
-:host(:not([_use-native-popover])) {
-    display: none;
-}
-
 .ui5-popup-root {
     background: inherit;
     border-radius: inherit;

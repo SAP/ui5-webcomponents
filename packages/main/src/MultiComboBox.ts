@@ -93,7 +93,6 @@ import {
 
 // Templates
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import multiCbxStyles from "./generated/themes/MultiComboBox.css.js";
@@ -106,6 +105,7 @@ import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input, { InputEventDetail } from "./Input.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-multi-combobox` as items
@@ -153,7 +153,7 @@ type MultiComboboxItemWithSelection = {
  *
  * #### Picker
  * If the `ui5-multi-combobox` is focused,
- * you can open or close the drop-down by pressing `F4`, `ALT+UP` or `ALT+DOWN` keys.
+ * you can open or close the drop-down by pressing [F4], [Alt] + [Up] or [Alt] + [Down] keys.
  * Once the drop-down is opened, you can use the `UP` and `DOWN` arrow keys
  * to navigate through the available options and select one by pressing the `Space` or `Enter` keys.
  *
@@ -177,9 +177,13 @@ type MultiComboboxItemWithSelection = {
 	languageAware: true,
 	renderer: litRender,
 	template: MultiComboBoxTemplate,
-	staticAreaTemplate: MultiComboBoxPopoverTemplate,
-	styles: multiCbxStyles,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover],
+	styles: [
+		multiCbxStyles,
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SuggestionsCss,
+		MultiComboBoxPopover,
+	],
 	dependencies: [
 		MultiComboBoxItem,
 		MultiComboBoxGroupItem,
@@ -453,7 +457,7 @@ class MultiComboBox extends UI5Element {
 	_isOpenedByKeyboard?: boolean;
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
-	selectedItems?: Array<IMultiComboBoxItem>;
+	selectedItems: Array<IMultiComboBoxItem>;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
 
@@ -461,6 +465,7 @@ class MultiComboBox extends UI5Element {
 		super();
 
 		this._filteredItems = [];
+		this.selectedItems = [];
 		this._previouslySelectedItems = [];
 		this.selectedValues = [];
 		this._itemsBeforeOpen = [];
@@ -665,9 +670,11 @@ class MultiComboBox extends UI5Element {
 		const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
 		const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
 		const relatedTarget: HTMLElement | undefined = e.relatedTarget as HTMLElement;
-		const isFocusingPopover = this.staticAreaItem === relatedTarget;
+		const responsivePopover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+		const popover = this.shadowRoot!.querySelector("[ui5-popover]");
+		const isFocusingPopover = [responsivePopover, popover].includes(relatedTarget as Element);
 		const isFocusingInput = this._inputDom === relatedTarget;
-		const isFocusingMorePopover = e.relatedTarget === this._tokenizer.staticAreaItem;
+		const isFocusingMorePopover = e.relatedTarget === this._tokenizer?.shadowRoot?.querySelector("[ui5-responsive-popover]");
 
 		if (!relatedTarget?.hasAttribute("ui5-token") && !isFocusingPopover && !isFocusingInput && !isFocusingMorePopover) {
 			this._tokenizer.tokens.forEach(token => {
@@ -1402,13 +1409,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _getRespPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.allItemsPopover = staticAreaItem!.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`)!;
+		await renderFinished();
+		this.allItemsPopover = this.shadowRoot!.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`)!;
 	}
 
 	async _getList(): Promise<List> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.list = staticAreaItem!.querySelector(".ui5-multi-combobox-all-items-list")!;
+		await renderFinished();
+		this.list = this.shadowRoot!.querySelector(".ui5-multi-combobox-all-items-list")!;
 		return this.list;
 	}
 
@@ -1652,13 +1659,13 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return (staticAreaItem!.querySelector<Popover>("[ui5-popover]"))!;
+		await renderFinished();
+		return (this.shadowRoot!.querySelector<Popover>("[ui5-popover]"))!;
 	}
 
 	async _getResponsivePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	async _setValueStateHeader() {
@@ -1701,7 +1708,9 @@ class MultiComboBox extends UI5Element {
 
 			this._tokenizer.expanded = this.open;
 			// remove the value if user focus out the input and focus is not going in the popover
-			if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== e.relatedTarget)) {
+			const responsivePopover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+			const popover = this.shadowRoot!.querySelector("[ui5-popover]");
+			if (!isPhone() && !this.allowCustomValues && ![responsivePopover, popover].includes(e.relatedTarget as Element)) {
 				this.value = "";
 			}
 		}
@@ -1881,8 +1890,8 @@ class MultiComboBox extends UI5Element {
 		return shouldBeExpanded;
 	}
 
-	get _valueStatePopoverHorizontalAlign() {
-		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir !== "rtl" ? "Start" : "End";
 	}
 
 	get iconsCount() {

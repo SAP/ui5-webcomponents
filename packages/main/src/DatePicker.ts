@@ -39,12 +39,11 @@ import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -103,8 +102,8 @@ type DatePickerInputEventDetail = {
  * ### Keyboard Handling
  * The `ui5-date-picker` provides advanced keyboard handling.
  * If the `ui5-date-picker` is focused,
- * you can open or close the drop-down by pressing `F4`, `ALT+UP` or `ALT+DOWN` keys.
- * Once the drop-down is opened, you can use the `UP`, `DOWN`, `LEFT`, `RIGHT` arrow keys
+ * you can open or close the drop-down by pressing [F4], [Alt] + [Up] or [Alt] + [Down] keys.
+ * Once the drop-down is opened, you can use the [Up], [Down], [Left] or [Right] arrow keys
  * to navigate through the dates and select one by pressing the `Space` or `Enter` keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
  *
@@ -112,12 +111,12 @@ type DatePickerInputEventDetail = {
  * then users can increment or decrement the date referenced by `dateValue` property
  * by using the following shortcuts:
  *
- * - [PAGEDOWN] - Decrements the corresponding day of the month by one
- * - [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
- * - [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
- * - [PAGEUP] - Increments the corresponding day of the month by one
- * - [SHIFT] + [PAGEUP] - Increments the corresponding month by one
- * - [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
+ * - [Page Down] - Decrements the corresponding day of the month by one
+ * - [Shift] + [Page Down] - Decrements the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Down] - Decrements the corresponding year by one
+ * - [Page Up] - Increments the corresponding day of the month by one
+ * - [Shift] + [Page Up] - Increments the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Up] - Increments the corresponding year by one
  *
  * ### Calendar types
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
@@ -154,9 +153,8 @@ type DatePickerInputEventDetail = {
 	tag: "ui5-date-picker",
 	languageAware: true,
 	template: DatePickerTemplate,
-	staticAreaTemplate: DatePickerPopoverTemplate,
-	styles: datePickerCss,
-	staticAreaStyles: [
+	styles: [
+		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
 	],
@@ -732,9 +730,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return isDesktop();
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	_canOpenPicker() {
@@ -763,9 +760,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @param e
 	 * @protected
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
-		const newValue = e.detail.values && e.detail.values[0];
+		const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		this.closePicker();
@@ -812,9 +809,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	async openPicker(): Promise<void> {
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = this.firstPicker;
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 
-		this.responsivePopover.showAt(this);
+		await this.responsivePopover.showAt(this);
 	}
 
 	togglePicker() {

@@ -1,11 +1,12 @@
 <ui5-responsive-popover
 	id="{{_id}}-overflowMenu"
-	horizontal-align="Right"
+	horizontal-align="End"
 	placement-type="Bottom"
 	content-only-on-desktop
 	hide-arrow
 	_hide-header
 	class="ui5-tab-container-responsive-popover"
+	@dragstart="{{_onDragStart}}"
 >
 	<ui5-list
 		mode="SingleSelect"

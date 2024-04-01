@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -16,13 +17,13 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
@@ -77,11 +78,9 @@ type ExceededText = {
 @customElement({
 	tag: "ui5-textarea",
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles],
+	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
 	renderer: litRender,
 	template: TextAreaTemplate,
-	staticAreaTemplate: TextAreaPopoverTemplate,
-	staticAreaStyles: valueStateMessageStyles,
 	dependencies: [Popover, Icon],
 })
 /**
@@ -473,8 +472,8 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_tokenizeText(value: string) {
@@ -617,8 +616,8 @@ class TextArea extends UI5Element implements IFormElement {
 		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
-	get _valueStatePopoverHorizontalAlign() {
-		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir !== "rtl" ? "Start" : "End";
 	}
 
 	/**

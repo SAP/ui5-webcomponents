@@ -21,7 +21,6 @@ import {
 import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
-import ToolbarPopoverTemplate from "./generated/templates/ToolbarPopoverTemplate.lit.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarAlign from "./types/ToolbarAlign.js";
@@ -34,7 +33,6 @@ import type ToolbarSeparator from "./ToolbarSeparator.js";
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
-	getRegisteredStaticAreaStyles,
 	getRegisteredDependencies,
 } from "./ToolbarRegistry.js";
 
@@ -61,7 +59,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * The `ui5-toolbar` provides advanced keyboard handling.
  *
  * - The control is not interactive, but can contain of interactive elements
- * - [TAB] - iterates through elements
+ * - [Tab] - iterates through elements
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Toolbar.js";`
@@ -75,7 +73,6 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	languageAware: true,
 	renderer: litRender,
 	template: ToolbarTemplate,
-	staticAreaTemplate: ToolbarPopoverTemplate,
 })
 class Toolbar extends UI5Element {
 	static i18nBundle: I18nBundle;
@@ -149,13 +146,6 @@ class Toolbar extends UI5Element {
 		const styles = getRegisteredStyles();
 		return [
 			ToolbarCss,
-			...styles,
-		];
-	}
-
-	static get staticAreaStyles() {
-		const styles = getRegisteredStaticAreaStyles();
-		return [
 			ToolbarPopoverCss,
 			...styles,
 		];
@@ -357,8 +347,8 @@ class Toolbar extends UI5Element {
 	}
 
 	async getOverflowPopover(): Promise<Popover | null> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-overflow-popover");
+		await renderFinished();
+		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
 	}
 
 	/**

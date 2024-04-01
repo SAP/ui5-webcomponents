@@ -6,11 +6,11 @@ import type { Meta, StoryFn } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import type Bar from "@ui5/webcomponents-fiori/dist/Bar.js";
-import BarDesign from "@ui5/webcomponents-fiori/dist/types/BarDesign.js";
+import type Bar from "@ui5/webcomponents/dist/Bar.js";
+import BarDesign from "@ui5/webcomponents/dist/types/BarDesign.js";
 
 export default {
-	title: "Fiori/Bar",
+	title: "Main/Bar",
 	component: "Bar",
 	argTypes,
 } as Meta<Bar>;
