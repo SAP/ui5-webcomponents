@@ -80,7 +80,7 @@
 			li.description = "the description goes here " + i;
 			li.additionalText = "Available";
 			li.additionalTextState = "Success";
-			li.icon = "nutrition-activity" 
+			li.icon = "nutrition-activity"
 			return li;
 		}
 
@@ -106,7 +106,7 @@
 <section>
 	<h3>List in Single-selection Mode</h3>
 	<div class="snippet">
-		<ui5-list id="country-selector" class="full-width" mode="SingleSelect" header-text="Select a country:">
+		<ui5-list id="country-selector" class="full-width" selection-mode="Single" header-text="Select a country:">
 			<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 			<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 			<ui5-li icon="map" icon-end>China</ui5-li>
@@ -122,7 +122,7 @@
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-list id="country-selector" mode="SingleSelect" header-text="Select a country:">
+<ui5-list id="country-selector" selection-mode="Single" header-text="Select a country:">
 	<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 	<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 	<ui5-li icon="map" icon-end>China</ui5-li>
@@ -141,9 +141,9 @@
 
 <!-- Multi Selection -->
 <section>
-	<h3>List in Multi-selection Mode</h3>
+	<h3>List in Multiple-selection Mode</h3>
 	<div class="snippet">
-		<ui5-list id="myList1" class="samples-margin-bottom full-width" mode='MultiSelect' header-text="Multiple selection is possible">
+		<ui5-list id="myList1" class="samples-margin-bottom full-width" selection-mode='Multiple' header-text="Multiple selection is possible">
 				<ui5-li >Pineapple</ui5-li>
 				<ui5-li selected>Orange</ui5-li>
 				<ui5-li>Banana</ui5-li>
@@ -151,7 +151,7 @@
 		</ui5-list>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-list id="myList1" mode='MultiSelect' header-text="Multiple selection is possible">
+<ui5-list id="myList1" selection-mode='Multiple' header-text="Multiple selection is possible">
 	<ui5-li>Pineapple</ui5-li>
 	<ui5-li selected>Orange</ui5-li>
 	<ui5-li>Banana</ui5-li>
@@ -175,7 +175,7 @@
 <section>
 	<h3>List With GroupHeaders</h3>
 	<div class="snippet">
-		<ui5-list header-text="Community" mode="MultiSelect">
+		<ui5-list header-text="Community" selection-mode="Multiple">
 			<ui5-li-groupheader>Front End Developers</ui5-li-groupheader>
 			<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
 			<ui5-li image="../../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
@@ -193,7 +193,7 @@
 		</ui5-list>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-list header-text="Team Members" mode="MultiSelect">
+<ui5-list header-text="Team Members" selection-mode="Multiple">
 	<ui5-li-groupheader>Front End Developers</ui5-li-groupheader>
 	<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
 	<ui5-li image="../../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
@@ -253,7 +253,7 @@
 <section>
 	<h3>List in Delete Mode</h3>
 	<div class="snippet">
-		<ui5-list id="myList5" class="full-width" mode="Delete" header-text="Note: The list items removal is up to application developers">
+		<ui5-list id="myList5" class="full-width" selection-mode="Delete" header-text="Note: The list items removal is up to application developers">
 			<ui5-li>Argentina</ui5-li>
 			<ui5-li>Bulgaria</ui5-li>
 			<ui5-li>China</ui5-li>
@@ -265,7 +265,7 @@
 		</ui5-list>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-list id="myList5" mode="Delete" header-text="Note: The list items removal is up to application developers">
+<ui5-list id="myList5" selection-mode="Delete" header-text="Note: The list items removal is up to application developers">
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li>Bulgaria</ui5-li>
 	<ui5-li>China</ui5-li>

@@ -51,7 +51,7 @@
 	</ui5-list>
 
 	<br/>
-	<ui5-list id="listEvents" mode="SingleSelectEnd">
+	<ui5-list id="listEvents" selection-mode="SingleSelectEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 		<ui5-li id="country3">China</ui5-li>
@@ -65,14 +65,14 @@
 	<br><br><br>
 
 	<br>
-	<ui5-list id="listPreventSelectionChangeSingleSelect" mode="SingleSelect" header-text="Prevent ui5-selection-change on SingleSelect">
+	<ui5-list id="listPreventSelectionChangeSingleSelect" selection-mode="Single" header-text="Prevent ui5-selection-change on Single">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
 		<ui5-li id="country3" selected >China</ui5-li>
 	</ui5-list>
 
 	<br/>
-	<ui5-list id="listPreventSelectionChangeMultiSelect" mode="MultiSelect" header-text="Prevent ui5-selection-change on MultiSelect">
+	<ui5-list id="listPreventSelectionChangeMultiSelect" selection-mode="Multiple" header-text="Prevent ui5-selection-change on Multiple">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 		<ui5-li id="country3" selected >China</ui5-li>
@@ -81,7 +81,7 @@
 	<br><br><br>
 
 	<br/>
-	<ui5-list id="listPreventClickEvent" mode="SingleSelect">
+	<ui5-list id="listPreventClickEvent" selection-mode="Single">
 		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 	</ui5-list>
@@ -91,24 +91,24 @@
 	<ui5-list id="justList">
 		<ui5-li id="justList-country">Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="listDelete" mode="Delete">
+	<ui5-list id="listDelete" selection-mode="Delete">
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="emptyListDelete" mode="Delete">
+	<ui5-list id="emptyListDelete" selection-mode="Delete">
 	</ui5-list>
-	<ui5-list id="listMultiSelect" mode="MultiSelect">
+	<ui5-list id="listMultiSelect" selection-mode="Multiple">
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="listSingleSelect" mode="SingleSelect">
+	<ui5-list id="listSingleSelect" selection-mode="Single">
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="listSelectedItem" mode="MultiSelect">
+	<ui5-list id="listSelectedItem" selection-mode="Multiple">
 		<ui5-li-groupheader id="group-header">New Items</ui5-li-groupheader>
 		<ui5-li id="not-selected-country">Argentina</ui5-li>
 		<ui5-li id="selected-country" selected >Bulgaria</ui5-li>
 	</ui5-list>
 	<br><br><br>
-	<ui5-list id="listEvents2" mode="MultiSelect">
+	<ui5-list id="listEvents2" selection-mode="Multiple">
 		<ui5-li id="country11">Argentina</ui5-li>
 		<ui5-li id="country22" selected >Bulgaria</ui5-li>
 		<ui5-li id="country33">China</ui5-li>
@@ -138,13 +138,13 @@
 		<ui5-li image="./img/HT-2002.jpg"  description="2GB RAM, Intel i7 4.5 GHz">DVD set</ui5-li>
 	</ui5-list>
 
-	<ui5-list id="listMultiSel" mode="MultiSelect">
+	<ui5-list id="listMultiSel" selection-mode="Multiple">
 		<ui5-li id="option1">Option #1</ui5-li>
 		<ui5-li>Option #2</ui5-li>
 		<ui5-li>Option #3</ui5-li>
 	</ui5-list>
 
-	<ui5-list id="default-slot-test" mode="SingleSelect">
+	<ui5-list id="default-slot-test" selection-mode="Single">
 		<ui5-li>Option #1</ui5-li>
 		<ui5-li>Option #2</ui5-li>
 		<ui5-li>Option #3</ui5-li>
@@ -187,7 +187,7 @@
 
 	<ui5-list
 		id="header-slot-list"
-		mode="MultiSelect"
+		selection-mode="Multiple"
 		header-text="Text when no header provided"
 		footer-text="Copyright"
 		no-data-text="No data">
@@ -213,14 +213,14 @@
 
 	<br/><br/>
 
-	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" selection-mode="Multiple">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
-	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" selection-mode="SingleSelectBegin">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>

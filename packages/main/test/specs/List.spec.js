@@ -73,7 +73,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await secondItem.getProperty("id"), await selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
-	it("selection is reverted if selectionChange event is prevented and the mode is SingleSelect", async () => {
+	it("selection is reverted if selectionChange event is prevented and the selectionMode is Single", async () => {
 		const firstItem = await browser.$("#listPreventSelectionChangeSingleSelect #country1");
 		const thirdItem = await browser.$("#listPreventSelectionChangeSingleSelect #country3");
 
@@ -85,7 +85,7 @@ describe("List Tests", () => {
 		assert.ok(await thirdItem.getAttribute("selected"), "Selection reverted to third item");
 	});
 
-	it("selection is reverted if selectionChange event is prevented  and the mode is MultiSelect", async () => {
+	it("selection is reverted if selectionChange event is prevented and the selectionMode is Multiple", async () => {
 		const firstItem = await browser.$("#listPreventSelectionChangeMultiSelect #country1");
 		const secondItem = await browser.$("#listPreventSelectionChangeMultiSelect #country2");
 		const thirdItem = await browser.$("#listPreventSelectionChangeMultiSelect #country3");
@@ -170,20 +170,20 @@ describe("List Tests", () => {
 		assert.notOk(await secondItem.getAttribute("selected"), "The second item is not selected");
 	});
 
-	it("mode: none. clicking item does not select it", async () => {
+	it("selectionMode: none. clicking item does not select it", async () => {
 		list.id = "#list1";
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
 
 		const root = await list.getRoot();
-		assert.equal(await root.getProperty("mode"), "None", "default mode is None");
+		assert.equal(await root.getProperty("selectionMode"), "None", "default selectionMode is None");
 		assert.notOk(await firstItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: singleselect. clicking item selects it", async () => {
+	it("selectionMode: single. clicking item selects it", async () => {
 		const root = await list.getRoot();
-		await root.setProperty("mode", "SingleSelect");
+		await root.setProperty("selectionMode", "Single");
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
@@ -191,7 +191,7 @@ describe("List Tests", () => {
 		assert.ok(await firstItem.getAttribute("selected"), "item is selected");
 	});
 
-	it("mode: singleselect. clicking another item selects deselects the first", async () => {
+	it("selectionMode: single. clicking another item selects deselects the first", async () => {
 		const firstItem = await list.getItem(0);
 		const secondItem = await list.getItem(1);
 		await secondItem.click();
@@ -200,10 +200,10 @@ describe("List Tests", () => {
 		assert.notOk(await firstItem.getAttribute("selected"), "first item is not selected");
 	});
 
-	it("mode: multiselect. clicking every item selects it independently from the other items", async () => {
+	it("selectionMode: multiple. clicking every item selects it independently from the other items", async () => {
 		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
-		await root.setProperty("mode", "MultiSelect");
+		await root.setProperty("selectionMode", "Multiple");
 
 		const firstItem = await list.getItem(0);
 		const secondItem = await list.getItem(1);
@@ -219,10 +219,10 @@ describe("List Tests", () => {
 		assert.notOk(await secondItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: delete. items have X buttons which delete them", async () => {
+	it("selectionMode: delete. items have X buttons which delete them", async () => {
 		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
-		await root.setProperty("mode", "Delete");
+		await root.setProperty("selectionMode", "Delete");
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
@@ -236,10 +236,10 @@ describe("List Tests", () => {
 		assert.equal(await browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
 	});
 
-	it("mode: delete. DELETE key press - deletes item", async () => {
+	it("selectionMode: delete. DELETE key press - deletes item", async () => {
 		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
-		await root.setProperty("mode", "Delete");
+		await root.setProperty("selectionMode", "Delete");
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();

@@ -93,7 +93,7 @@
 {{/inline}}
 
 {{#*inline "suggestionsList"}}
-	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" mode="SingleSelect">
+	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" selection-mode="Single">
 		{{#each suggestionObjects}}
 			{{#if groupItem}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>

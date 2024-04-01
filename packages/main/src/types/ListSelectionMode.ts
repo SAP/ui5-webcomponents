@@ -1,8 +1,8 @@
 /**
- * Different list modes.
+ * Different list selection modes.
  * @public
  */
-enum ListMode {
+enum ListSelectionMode {
 	/**
 	 * Default mode (no selection).
 	 * @public
@@ -13,7 +13,7 @@ enum ListMode {
 	 * Right-positioned single selection mode (only one list item can be selected).
 	 * @public
 	 */
-	SingleSelect = "SingleSelect",
+	Single = "Single",
 
 	/**
 	 * Left-positioned single selection mode (only one list item can be selected).
@@ -39,7 +39,7 @@ enum ListMode {
 	 * Multi selection mode (more than one list item can be selected).
 	 * @public
 	 */
-	MultiSelect = "MultiSelect",
+	Multiple = "Multiple",
 
 	/**
 	 * Delete mode (only one list item can be deleted via provided delete button)
@@ -48,4 +48,4 @@ enum ListMode {
 	Delete = "Delete",
 }
 
-export default ListMode;
+export default ListSelectionMode;

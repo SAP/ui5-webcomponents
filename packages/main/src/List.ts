@@ -28,7 +28,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
@@ -116,7 +116,7 @@ type ListItemClickEventDetail = {
  *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
- * `SingleSelect`, `MultiSelect` and `Delete`.
+ * `Single`, `Multiple` and `Delete`.
  *
  * Additionally, the `ui5-list` provides header, footer, and customization for the list item separators.
  *
@@ -132,10 +132,10 @@ type ListItemClickEventDetail = {
  * - [End] - Navigates to the last item
  *
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
- * when the `mode` property is in use:
+ * when the `selectionMode` property is in use:
  *
- * - [Space] - Select an item (if `type` is 'Active') when `mode` is selection
- * - [Delete] - Delete an item if `mode` property is `Delete`
+ * - [Space] - Select an item (if `type` is 'Active') when `selectionMode` is selection
+ * - [Delete] - Delete an item if `selectionMode` property is `Delete`
  *
  * #### Fast Navigation
  * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
@@ -218,7 +218,7 @@ type ListItemClickEventDetail = {
  * Fired when the Delete button of any item is pressed.
  *
  * **Note:** A Delete button is displayed on each item,
- * when the component `mode` property is set to `Delete`.
+ * when the component `selectionMode` property is set to `Delete`.
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -233,7 +233,7 @@ type ListItemClickEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
+ * in `Single`, `SingleSelectBegin`, `SingleSelectEnd` and `Multiple` selection modes.
  * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
@@ -311,12 +311,12 @@ class List extends UI5Element {
 	indent!: boolean;
 
 	/**
-	 * Defines the mode of the component.
+	 * Defines the selection mode of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+	selectionMode!: `${ListSelectionMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -556,20 +556,20 @@ class List extends UI5Element {
 	}
 
 	get isDelete() {
-		return this.mode === ListMode.Delete;
+		return this.selectionMode === ListSelectionMode.Delete;
 	}
 
 	get isSingleSelect() {
 		return [
-			ListMode.SingleSelect,
-			ListMode.SingleSelectBegin,
-			ListMode.SingleSelectEnd,
-			ListMode.SingleSelectAuto,
-		].includes(this.mode as ListMode);
+			ListSelectionMode.Single,
+			ListSelectionMode.SingleSelectBegin,
+			ListSelectionMode.SingleSelectEnd,
+			ListSelectionMode.SingleSelectAuto,
+		].includes(this.selectionMode as ListSelectionMode);
 	}
 
 	get isMultiSelect() {
-		return this.mode === ListMode.MultiSelect;
+		return this.selectionMode === ListSelectionMode.Multiple;
 	}
 
 	get ariaLabelledBy() {
@@ -659,7 +659,7 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			if (item.hasConfigurableMode) {
-				(item as ListItem)._mode = this.mode;
+				(item as ListItem)._selectionMode = this.selectionMode;
 			}
 			item.hasBorder = showBottomBorder;
 		});
@@ -701,8 +701,8 @@ class List extends UI5Element {
 		let selectionChange = false;
 		this._selectionRequested = true;
 
-		if (this.mode !== ListMode.None && this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](e.detail.item, !!e.detail.selected);
+		if (this.selectionMode !== ListSelectionMode.None && this[`handle${this.selectionMode}`]) {
+			selectionChange = this[`handle${this.selectionMode}`](e.detail.item, !!e.detail.selected);
 		}
 
 		if (selectionChange) {
@@ -719,7 +719,7 @@ class List extends UI5Element {
 		}
 	}
 
-	handleSingleSelect(item: ListItemBase): boolean {
+	handleSingle(item: ListItemBase): boolean {
 		if (item.selected) {
 			return false;
 		}
@@ -731,18 +731,18 @@ class List extends UI5Element {
 	}
 
 	handleSingleSelectBegin(item: ListItemBase): boolean {
-		return this.handleSingleSelect(item);
+		return this.handleSingle(item);
 	}
 
 	handleSingleSelectEnd(item: ListItemBase): boolean {
-		return this.handleSingleSelect(item);
+		return this.handleSingle(item);
 	}
 
 	handleSingleSelectAuto(item: ListItemBase): boolean {
-		return this.handleSingleSelect(item);
+		return this.handleSingle(item);
 	}
 
-	handleMultiSelect(item: ListItemBase, selected: boolean): boolean {
+	handleMultiple(item: ListItemBase, selected: boolean): boolean {
 		item.selected = selected;
 		return true;
 	}
@@ -1018,7 +1018,7 @@ class List extends UI5Element {
 		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
-		if (this.mode === ListMode.SingleSelectAuto) {
+		if (this.selectionMode === ListSelectionMode.SingleSelectAuto) {
 			const detail: SelectionRequestEventDetail = {
 				item: target,
 				selectionComponentPressed: false,
@@ -1037,7 +1037,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
+		if (!this._selectionRequested && this.selectionMode !== ListSelectionMode.Delete) {
 			this._selectionRequested = true;
 			const detail: SelectionRequestEventDetail = {
 				item: pressedItem,
