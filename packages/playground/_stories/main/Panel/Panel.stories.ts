@@ -65,7 +65,7 @@ Fixed.args = {
 	accessibleRole: PanelAccessibleRole.Complementary,
 	fixed: true,
 	default: `
-	<ui5-list mode="SingleSelectBegin">
+	<ui5-list selection-mode="SingleSelectBegin">
 		<ui5-li key="country1">Argentina</ui5-li>
 		<ui5-li key="country2">Bulgaria</ui5-li>
 		<ui5-li key="country3">China</ui5-li>
@@ -149,7 +149,7 @@ CustomHeader.args = {
 		</div>
 	</div>`,
 	default: `
-	<ui5-list mode="MultiSelect">
+	<ui5-list selection-mode="Multiple">
 		<ui5-li key="country1">Argentina</ui5-li>
 		<ui5-li key="country2">Bulgaria</ui5-li>
 		<ui5-li key="country3">China</ui5-li>
