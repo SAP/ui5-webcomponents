@@ -47,7 +47,8 @@
 	outline: none;
 }
 
-.ui5-sn-item:focus::after {
+:host([desktop]) .ui5-sn-item:focus::after,
+.ui5-sn-item:focus-visible::after {
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
 	content: "";
