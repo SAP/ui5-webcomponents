@@ -1,4 +1,3 @@
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -731,8 +730,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return isDesktop();
 	}
 
-	async _respPopover() {
-		await renderFinished();
+	_respPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
@@ -811,7 +809,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	async openPicker(): Promise<void> {
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = this.firstPicker;
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 
 		await this.responsivePopover.showAt(this);
 	}

@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -341,24 +340,23 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		const popover = await this._getPopover();
+	openValueStatePopover() {
+		const popover = this._getPopover();
 
 		if (popover) {
 			popover.showAt(this);
 		}
 	}
 
-	async closeValueStatePopover() {
-		const popover = await this._getPopover();
+	closeValueStatePopover() {
+		const popover = this._getPopover();
 
 		if (popover) {
 			popover.close();
 		}
 	}
 
-	async _getPopover(): Promise<Popover> {
-		await renderFinished();
+	_getPopover(): Popover {
 		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 

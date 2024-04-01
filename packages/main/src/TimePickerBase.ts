@@ -1,6 +1,5 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -233,9 +232,9 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is open
 	 */
-	async openPicker(): Promise<void> {
+	openPicker() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const responsivePopover = await this._getPopover();
+		const responsivePopover = this._getPopover();
 		responsivePopover.showAt(this);
 	}
 
@@ -244,8 +243,8 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is closed
 	 */
-	async closePicker(): Promise<void> {
-		const responsivePopover = await this._getPopover();
+	closePicker() {
+		const responsivePopover = this._getPopover();
 		responsivePopover.close();
 		this._isPickerOpen = false;
 	}
@@ -275,9 +274,9 @@ class TimePickerBase extends UI5Element {
 		this._isPickerOpen = false;
 	}
 
-	async onResponsivePopoverAfterOpen() {
+	onResponsivePopoverAfterOpen() {
 		this._isPickerOpen = true;
-		const responsivePopover = await this._getPopover();
+		const responsivePopover = this._getPopover();
 		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
 	}
 
@@ -286,9 +285,9 @@ class TimePickerBase extends UI5Element {
 	 * @private
 	 * @returns Resolves when the Inputs popover is open
 	 */
-	async openInputsPopover(): Promise<void> {
+	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const popover = await this._getInputsPopover();
+		const popover = this._getInputsPopover();
 		popover.showAt(this);
 		this._isInputsPopoverOpen = true;
 	}
@@ -298,8 +297,8 @@ class TimePickerBase extends UI5Element {
 	 * @private
 	 * @returns Resolves when the Inputs popover is closed
 	 */
-	async closeInputsPopover(): Promise<void> {
-		const popover = await this._getInputsPopover();
+	closeInputsPopover() {
+		const popover = this._getInputsPopover();
 		popover.close();
 	}
 
@@ -324,8 +323,8 @@ class TimePickerBase extends UI5Element {
 		this.closeInputsPopover();
 	}
 
-	async onInputsPopoverAfterOpen() {
-		const popover = await this._getInputsPopover();
+	onInputsPopoverAfterOpen() {
+		const popover = this._getInputsPopover();
 		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
@@ -398,13 +397,11 @@ class TimePickerBase extends UI5Element {
 		return !this.disabled && this._isPhone;
 	}
 
-	async _getPopover() {
-		await renderFinished();
+	_getPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async _getInputsPopover() {
-		await renderFinished();
+	_getInputsPopover() {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
@@ -542,11 +539,11 @@ class TimePickerBase extends UI5Element {
 		setTimeout(() => { this._getInput().readonly = false; }, 0);
 	}
 
-	async _onfocusin(evt: FocusEvent) {
+	_onfocusin(evt: FocusEvent) {
 		if (this._isPhone) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
-				const popover = await this._getInputsPopover();
+				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
 			evt.preventDefault();
