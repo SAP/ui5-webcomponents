@@ -239,6 +239,10 @@ class Popover extends Popup {
 	}
 
 	async openPopup() {
+		if (!this.getDomRef()) {
+			return;
+		}
+
 		let opener;
 
 		if (this.opener instanceof HTMLElement) {

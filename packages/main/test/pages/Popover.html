@@ -680,8 +680,8 @@ z-index: 1;
 		createAndRemove.addEventListener("click", function () {
 			var pop = document.createElement("ui5-popover");
 
-			pop.setAttribute("open", true);
 			pop.setAttribute("opener", "createAndRemove");
+			pop.setAttribute("open", true);
 
 			var inp = document.createElement("ui5-input");
 			inp.setAttribute("slot", "header")

@@ -384,6 +384,8 @@ describe("Popover general interaction", () => {
 		const createAndRemovePopover = await browser.$("#createAndRemove");
 		const result = await browser.$("#createAndRemoveResult");
 
+		await createAndRemovePopover.scrollIntoView();
+
 		await createAndRemovePopover.click();
 		await result.waitForDisplayed({ timeout: 3000 })
 
