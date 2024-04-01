@@ -310,6 +310,9 @@ class Carousel extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._onResizeBound);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
