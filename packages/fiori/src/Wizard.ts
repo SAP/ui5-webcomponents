@@ -635,7 +635,7 @@ class Wizard extends UI5Element {
 		responsivePopover.showAt(oDomTarget);
 	}
 
-	async _onGroupedTabClick(e: MouseEvent) {
+	_onGroupedTabClick(e: MouseEvent) {
 		const eTarget = e.target as WizardTab;
 
 		if (this._isGroupAtStart(eTarget)) {
