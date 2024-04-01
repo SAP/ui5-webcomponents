@@ -32,6 +32,10 @@ class DatePickerTestPage {
 		return browser.$(this._sut).shadow$("ui5-input");
 	}
 
+	async getInputPopover() {
+		return browser.$(this._sut).shadow$("ui5-input").shadow$("ui5-popover");
+	}
+
 	async getInnerInput() {
 		return browser.$(this._sut).shadow$("ui5-input").shadow$("input");
 	}
