@@ -435,7 +435,7 @@ class MultiComboBox extends UI5Element {
 	icon!: Array<IIcon>;
 
 	/**
-	 * Defines the value state message that will be displayed as pop up under the component.
+	 * Defines the value state message that will be displayed as pop up under the component. The value state message slot should contain only one root element.
 	 * <br><br>
 	 *
 	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
