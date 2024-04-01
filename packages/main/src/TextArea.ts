@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -462,17 +461,16 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	async openPopover() {
-		this.valueStatePopover = await this._getPopover();
+		this.valueStatePopover = this._getPopover();
 		this.valueStatePopover && await this.valueStatePopover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
 	}
 
-	async closePopover() {
-		this.valueStatePopover = await this._getPopover();
+	closePopover() {
+		this.valueStatePopover = this._getPopover();
 		this.valueStatePopover && this.valueStatePopover.close();
 	}
 
-	async _getPopover() {
-		await renderFinished();
+	_getPopover() {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 

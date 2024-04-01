@@ -322,19 +322,19 @@ class Toolbar extends UI5Element {
 	 * Returns if the overflow popup is open.
 	 * @public
 	 */
-	async isOverflowOpen(): Promise<boolean> {
-		const overflowPopover = await this.getOverflowPopover();
+	isOverflowOpen() {
+		const overflowPopover = this.getOverflowPopover();
 		return overflowPopover!.isOpen();
 	}
 
-	async openOverflow(): Promise<void> {
-		const overflowPopover = await this.getOverflowPopover();
+	openOverflow() {
+		const overflowPopover = this.getOverflowPopover();
 		overflowPopover!.showAt(this.overflowButtonDOM!);
 		this.reverseOverflow = overflowPopover!.actualPlacementType === "Top";
 	}
 
-	async closeOverflow() {
-		const overflowPopover = await this.getOverflowPopover();
+	closeOverflow() {
+		const overflowPopover = this.getOverflowPopover();
 		overflowPopover!.close();
 	}
 
@@ -346,8 +346,7 @@ class Toolbar extends UI5Element {
 		}
 	}
 
-	async getOverflowPopover(): Promise<Popover | null> {
-		await renderFinished();
+	getOverflowPopover(): Popover | null {
 		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
 	}
 
@@ -503,8 +502,8 @@ class Toolbar extends UI5Element {
 	 * Private members
 	 */
 
-	async attachListeners() {
-		const popover = await this.getOverflowPopover();
+	attachListeners() {
+		const popover = this.getOverflowPopover();
 
 		this.subscribedEvents.forEach((e: string) => {
 			this.itemsDOM?.addEventListener(e, this._onInteract);
@@ -512,8 +511,8 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	async detachListeners() {
-		const popover = await this.getOverflowPopover();
+	detachListeners() {
+		const popover = this.getOverflowPopover();
 
 		this.subscribedEvents.forEach((e: string) => {
 			this.itemsDOM?.removeEventListener(e, this._onInteract);
