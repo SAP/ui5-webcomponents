@@ -47,6 +47,14 @@ const DESIGN_DESCRIPTIONS = {
 	[SemanticColor.Critical]: TAB_ARIA_DESIGN_CRITICAL,
 };
 
+interface TabInStrip extends HTMLElement {
+	realTabReference: Tab;
+}
+
+interface TabInOverflow extends CustomListItem {
+	realTabReference: Tab;
+}
+
 /**
  * @class
  * The `ui5-tab` represents a selectable item inside a `ui5-tabcontainer`.
@@ -141,9 +149,6 @@ class Tab extends UI5Element implements ITabbable {
 
 	@property({ type: Boolean })
 	forcedSelected!: boolean;
-
-	@property({ type: Object, defaultValue: null })
-	realTabReference!: Tab;
 
 	@property({ type: Boolean })
 	isTopLevelTab!: boolean;
@@ -496,3 +501,7 @@ TabContainer.registerTabStyles(draggableElementStyles);
 TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default Tab;
+export type {
+	TabInStrip,
+	TabInOverflow,
+};

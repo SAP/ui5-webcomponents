@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TabContainer from "./TabContainer.js";
 
 // Templates
@@ -12,6 +11,10 @@ import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorIn
 // Styles
 import stripCss from "./generated/themes/TabSeparatorInStrip.css.js";
 import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
+
+interface TabSeparatorInStrip extends HTMLElement {
+	realTabReference: TabSeparator;
+}
 
 /**
  * @class
@@ -28,9 +31,6 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 class TabSeparator extends UI5Element {
 	forcedLevel?: number;
 	forcedStyle?: Record<string, any>;
-
-	@property({ type: Object, defaultValue: null })
-	realTabReference!: TabSeparator;
 
 	getElementInStrip?: () => HTMLElement | undefined;
 
@@ -87,3 +87,6 @@ TabContainer.registerTabStyles(stripCss);
 TabContainer.registerStaticAreaTabStyles(overflowCss);
 
 export default TabSeparator;
+export type {
+	TabSeparatorInStrip,
+};

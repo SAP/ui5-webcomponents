@@ -47,9 +47,10 @@ import Icon from "./Icon.js";
 import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
+import { TabInStrip, TabInOverflow } from "./Tab.js";
 import type TabSeparator from "./TabSeparator.js";
+import { TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
-import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -66,7 +67,7 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
-type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
+type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | TabInStrip;
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
@@ -85,14 +86,6 @@ type TabContainerMoveEventDetail = {
 		element: HTMLElement;
 		placement: `${MovePlacement}`
 	}
-}
-
-interface TabContainerExpandButton extends Button {
-	tab: Tab;
-}
-
-interface TabContainerTabInOverflow extends CustomListItem {
-	realTabReference: Tab;
 }
 
 /**
@@ -443,7 +436,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderFocusin(e: FocusEvent) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 
 		if (tab) {
 			this._itemNavigation.setCurrentItem(tab.realTabReference);
@@ -455,7 +448,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._setDraggedElement!((e.target as Tab).realTabReference);
+		this._setDraggedElement!((e.target as TabInStrip).realTabReference);
 	}
 
 	_onHeaderDragEnter(e: DragEvent) {
@@ -482,7 +475,7 @@ class TabContainer extends UI5Element {
 			popoverTarget = overflowButton;
 			e.preventDefault();
 		} else if (closestPosition) {
-			const dropTarget = (closestPosition.element as Tab).realTabReference;
+			const dropTarget = (closestPosition.element as TabInStrip).realTabReference;
 			let placements = closestPosition.placements;
 
 			if (dropTarget === draggedElement) {
@@ -510,7 +503,7 @@ class TabContainer extends UI5Element {
 				return false;
 			});
 
-			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as Tab).realTabReference.items.length) {
+			if (acceptedPlacement === MovePlacement.On && (closestPosition.element as TabInStrip).realTabReference.items.length) {
 				popoverTarget = closestPosition.element;
 			} else if (!acceptedPlacement) {
 				this.dropIndicatorDOM!.targetReference = null;
@@ -533,7 +526,7 @@ class TabContainer extends UI5Element {
 				element: draggedElement,
 			},
 			destination: {
-				element: (this.dropIndicatorDOM!.targetReference as Tab).realTabReference,
+				element: (this.dropIndicatorDOM!.targetReference as TabInStrip).realTabReference,
 				placement: this.dropIndicatorDOM!.placement,
 			},
 		});
@@ -553,7 +546,7 @@ class TabContainer extends UI5Element {
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement();
-		const dropTarget = (destination.element as Tab | TabSeparator).realTabReference;
+		const dropTarget = (destination.element as TabInStrip | TabSeparatorInStrip).realTabReference;
 
 		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
 			return;
@@ -587,7 +580,7 @@ class TabContainer extends UI5Element {
 				element: draggedElement,
 			},
 			destination: {
-				element: (destination.element as Tab).realTabReference,
+				element: (destination.element as TabInStrip).realTabReference,
 				placement: destination.placement,
 			},
 		}, true);
@@ -597,7 +590,7 @@ class TabContainer extends UI5Element {
 	}
 
 	async _onTabStripClick(e: Event) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
@@ -623,23 +616,22 @@ class TabContainer extends UI5Element {
 		e.stopPropagation();
 		e.preventDefault();
 
-		let tabInstance: Tab;
+		let tabInstance: TabInStrip;
 
 		if (isTabInStrip(e.target as HTMLElement)) {
-			tabInstance = e.target as Tab;
+			tabInstance = e.target as TabInStrip;
 		} else {
-			tabInstance = (e.target as TabContainerExpandButton).tab;
+			tabInstance = getTabInStrip(e.target as HTMLElement) as TabInStrip;
 		}
-
-		let opener = e.target as HTMLElement;
 
 		if (tabInstance) {
 			tabInstance.focus();
 		}
 
-		if (e.type === "keydown" && !(e.target as Tab).realTabReference.isSingleClickArea) {
-			opener = (e.target as Tab).querySelector<TabContainerExpandButton>(".ui5-tab-expand-button [ui5-button]")!;
-			tabInstance = (e.target as Tab).realTabReference;
+		let opener = e.target as HTMLElement;
+
+		if (e.type === "keydown" && !(e.target as TabInStrip).realTabReference.isSingleClickArea) {
+			opener = (e.target as TabInStrip).querySelector(".ui5-tab-expand-button [ui5-button]")!;
 		}
 
 		// if clicked between the expand button and the tab
@@ -659,17 +651,17 @@ class TabContainer extends UI5Element {
 	}
 
 	_getSelectedTabInOverflow() {
-		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
-			return (<TabContainerTabInOverflow>item).realTabReference && (<TabContainerTabInOverflow>item).realTabReference.selected;
+		return <TabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
+			return (<TabInOverflow>item).realTabReference && (<TabInOverflow>item).realTabReference.selected;
 		});
 	}
 
 	_getFirstFocusableItemInOverflow() {
-		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
+		return <TabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
@@ -697,7 +689,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onTabStripKeyUp(e: KeyboardEvent) {
-		const tab = getTab(e.target as HTMLElement);
+		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
 			return;
 		}
@@ -910,7 +902,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!) as Array<Tab | TabSeparator>;
+		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!) as Array<TabInStrip | TabSeparatorInStrip>;
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -952,11 +944,11 @@ class TabContainer extends UI5Element {
 		return tab;
 	}
 
-	_updateEndOverflow(itemsDomRefs: Array<Tab | TabSeparator>) {
+	_updateEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as Tab;
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as TabInStrip;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -970,10 +962,10 @@ class TabContainer extends UI5Element {
 		this._endOverflowText = this.overflowButtonText;
 	}
 
-	_updateStartAndEndOverflow(itemsDomRefs: Array<Tab | TabSeparator>) {
+	_updateStartAndEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as Tab;
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as TabInStrip;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1035,7 +1027,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<Tab | TabSeparator>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index === 0) {
 			return false;
 		}
@@ -1060,7 +1052,7 @@ class TabContainer extends UI5Element {
 		return hasStartOverflow;
 	}
 
-	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<Tab | TabSeparator>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index >= itemsDomRefs.length) {
 			return false;
 		}
@@ -1092,12 +1084,12 @@ class TabContainer extends UI5Element {
 		return itemDomRef.offsetWidth + margins;
 	}
 
-	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<Tab | TabSeparator>, selectedTabDomRef: Tab | TabSeparator) {
+	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedTabDomRef: TabInStrip) {
 		let index = itemsDomRefs.indexOf(selectedTabDomRef);
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
 
-		if (itemsDomRefs[index - 1] && itemsDomRefs[index - 1].isSeparator) {
+		if (itemsDomRefs[index - 1] && itemsDomRefs[index - 1].realTabReference.isSeparator) {
 			selectedSeparator = itemsDomRefs[index - 1];
 			width += this._getItemWidth(selectedSeparator);
 		}
@@ -1116,7 +1108,7 @@ class TabContainer extends UI5Element {
 		};
 	}
 
-	_findFirstVisibleItem(itemsDomRefs: Array<Tab | TabSeparator>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
+	_findFirstVisibleItem(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
 		if (startIndex === undefined) {
 			startIndex = itemsDomRefs.length - 1;
 		}
@@ -1137,7 +1129,7 @@ class TabContainer extends UI5Element {
 		return lastVisible;
 	}
 
-	_findLastVisibleItem(itemsDomRefs: Array<Tab | TabSeparator>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
+	_findLastVisibleItem(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
 		let lastVisibleIndex = startIndex - 1;
 		let index = startIndex;
 
@@ -1154,7 +1146,7 @@ class TabContainer extends UI5Element {
 
 		// if prev item is separator - hide it
 		const prevItem = itemsDomRefs[index - 1];
-		if (prevItem && prevItem.isSeparator) {
+		if (prevItem && prevItem.realTabReference.isSeparator) {
 			lastVisibleIndex -= 1;
 		}
 
@@ -1229,11 +1221,7 @@ class TabContainer extends UI5Element {
 			return "end-overflow";
 		}
 
-		if (opener instanceof Button) {
-			return (opener as TabContainerExpandButton).tab;
-		}
-
-		return (opener as Tab);
+		return getTabInStrip(opener) as TabInStrip;
 	}
 
 	_getPopoverItemsFor(targetOwner: TabContainerPopoverOwner) {
@@ -1253,11 +1241,7 @@ class TabContainer extends UI5Element {
 			});
 		}
 
-		if (isTabInStrip(targetOwner)) {
-			return targetOwner.realTabReference.items;
-		}
-
-		return targetOwner.items;
+		return targetOwner.realTabReference.items;
 	}
 
 	_setPopoverItems(items: Array<Tab | TabSeparator>) {
@@ -1331,7 +1315,7 @@ class TabContainer extends UI5Element {
 		if (!this._setDraggedElementInStaticArea) {
 			this._setDraggedElementInStaticArea = DragRegistry.addSelfManagedArea(this.staticAreaItem!);
 			staticAreaItemDomRef!.addEventListener("dragstart", e => {
-				this._setDraggedElementInStaticArea!((e.target as Tab).realTabReference);
+				this._setDraggedElementInStaticArea!((e.target as TabInOverflow).realTabReference);
 			});
 		}
 
@@ -1436,10 +1420,10 @@ class TabContainer extends UI5Element {
 
 const isTabInStrip = (el: HTMLElement) => el.localName === "div" && el.getAttribute("role") === "tab";
 
-const getTab = (el: HTMLElement | null) => {
+const getTabInStrip = (el: HTMLElement | null) => {
 	while (el) {
 		if (isTabInStrip(el)) {
-			return el as Tab;
+			return el as TabInStrip;
 		}
 
 		el = el.parentElement;
