@@ -1333,7 +1333,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys(["Control", "v"]);
 
 			assert.strictEqual(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
-			assert.ok(await mcb2.getProperty("open"), "Condensed", "Popover should be open");
+			assert.ok(await mcb2.getProperty("open"), "Popover should be open");
 
 			await input.keys(["Control", "v"]);
 
