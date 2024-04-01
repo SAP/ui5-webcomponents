@@ -135,15 +135,15 @@ type ComboBoxSelectionChangeEventDetail = {
  *
  * The `ui5-combobox` provides advanced keyboard handling.
  *
- * - [F4], [ALT]+[UP], or [ALT]+[DOWN] - Toggles the picker.
- * - [ESC] - Closes the picker, if open. If closed, cancels changes and reverts the typed in value.
- * - [ENTER] or [RETURN] - If picker is open, takes over the currently selected item and closes it.
- * - [DOWN] - Selects the next matching item in the picker.
- * - [UP] - Selects the previous matching item in the picker.
- * - [PAGEDOWN] - Moves selection down by page size (10 items by default).
- * - [PAGEUP] - Moves selection up by page size (10 items by default).
- * - [HOME] - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
- * - [END] - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
+ * - [F4], [Alt]+[Up], or [Alt]+[Down] - Toggles the picker.
+ * - [Escape] - Closes the picker, if open. If closed, cancels changes and reverts the typed in value.
+ * - [Enter] or [Return] - If picker is open, takes over the currently selected item and closes it.
+ * - [Down] - Selects the next matching item in the picker.
+ * - [Up] - Selects the previous matching item in the picker.
+ * - [Page Down] - Moves selection down by page size (10 items by default).
+ * - [Page Up] - Moves selection up by page size (10 items by default).
+ * - [Home] - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
+ * - [End] - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
  *
  * ### ES6 Module Import
  *

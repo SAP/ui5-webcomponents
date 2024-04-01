@@ -151,7 +151,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * ### Keyboard Handling
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -483,6 +483,12 @@ class TabContainer extends UI5Element {
 			tab.forcedPosinset = index + 1;
 			tab.forcedSetsize = arr.length;
 			tab.isTopLevelTab = items.some(i => i === tab);
+		});
+
+		walk(items, item => {
+			if (!item.isSeparator) {
+				(item as Tab)._selectedTabReference = this._selectedTab;
+			}
 		});
 
 		this._setIndentLevels(items);

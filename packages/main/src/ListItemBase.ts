@@ -119,7 +119,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	/*
 	* Determines if th current list item either has no tabbable content or
-	* [TAB] is performed onto the last tabbale content item.
+	* [Tab] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter() {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);
