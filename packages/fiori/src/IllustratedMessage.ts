@@ -363,8 +363,7 @@ class IllustratedMessage extends UI5Element {
 		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth
 			&& lastKnownOffsetHeight && currOffsetHeight === lastKnownOffsetHeight)
 			|| this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0
-			|| this._lastKnownOffsetHeightForMedia[this._lastKnownMedia] === 0
-			|| this._lastKnownMedia !== newMedia) {
+			|| this._lastKnownOffsetHeightForMedia[this._lastKnownMedia] === 0) {
 			this.media = newMedia;
 			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
 			this._lastKnownOffsetHeightForMedia[newMedia] = currOffsetHeight;
