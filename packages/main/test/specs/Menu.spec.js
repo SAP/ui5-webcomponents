@@ -143,36 +143,31 @@ describe("Menu interaction", () => {
 		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
 
-	/*
 	it("Menu and Menu items busy indication", async () => {
 			await browser.url(`test/pages/Menu.html`);
 			const openButton = await browser.$("#btnOpen");
-			openButton.click();
-			await browser.pause(100);
+			await openButton.click();
 
-			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const visualOpenItem = await menuPopover.$("ui5-li[accessible-name='Open']");
-			const visualCloseItem = await menuPopover.$("ui5-li[accessible-name='Close']");
+			const menu = await browser.$("#menu");
+			const menuPopover = await menu.shadow$("ui5-responsive-popover");
+			const visualOpenItem = await menuPopover.$("ui5-menu-li[accessible-name='Open']");
+			const visualCloseItem = await menuPopover.$("ui5-menu-li[accessible-name='Close']");
 
-			visualOpenItem.click();
-			await browser.pause(350);
-			const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+			await visualOpenItem.click();
+			const openSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
 			const openMenuList = await openSubmenuPopover.$("ui5-list");
 
 			// assert.ok(await openMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
-			await browser.pause(650);
-			assert.strictEqual(await openMenuList.$$("ui5-li").length, 4, "Two additional nodes have been added.");
+			assert.strictEqual((await openMenuList.$$("ui5-menu-li")).length, 4, "Two additional nodes have been added.");
 
-			visualCloseItem.click();
-			await browser.pause(350);
+			await visualCloseItem.click();
 
-			const closeSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+			const closeSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
 			const busyIndicator = await closeSubmenuPopover.$("ui5-busy-indicator");
 			assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
-			assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
+			assert.strictEqual(await busyIndicator.getProperty("size"), "M", "Size attribute is properly set.");
 			assert.strictEqual(await busyIndicator.getProperty("delay"), 100, "Delay attribute is properly set.");
 		});
-	 */
 
 		it("Prevent menu closing on item press", async () => {
 			await browser.url(`test/pages/Menu.html`);
