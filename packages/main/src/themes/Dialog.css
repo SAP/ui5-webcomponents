@@ -10,6 +10,10 @@
 	border-radius: var(--sapElement_BorderCornerRadius);
 }
 
+:host([open]) {
+	display: flex;
+}
+
 :host([stretch]) {
 	width: 90%;
 	height: 94%;

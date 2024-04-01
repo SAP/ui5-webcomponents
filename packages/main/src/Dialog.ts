@@ -315,10 +315,6 @@ class Dialog extends Popup {
 		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
 	}
 
-	get _displayProp() {
-		return "flex";
-	}
-
 	/**
 	 * Determines if the header should be shown.
 	 */
