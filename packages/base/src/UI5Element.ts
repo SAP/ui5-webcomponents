@@ -222,6 +222,7 @@ abstract class UI5Element extends HTMLElement {
 			this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
 		}
 
+		this._domRefReadyPromise._deferredResolve!();
 		cancelRender(this);
 	}
 

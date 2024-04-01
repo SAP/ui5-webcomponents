@@ -239,16 +239,19 @@ class Popover extends Popup {
 	}
 
 	async openPopup() {
-		if (!this.getDomRef()) {
-			return;
-		}
-
 		let opener;
 
 		if (this.opener instanceof HTMLElement) {
 			opener = this.opener;
 		} else if (typeof this.opener === "string") {
-			opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
+			const rootNode = this.getRootNode();
+			if (rootNode instanceof Document) {
+				opener = rootNode.getElementById(this.opener);
+			}
+
+			if (!opener) {
+				opener =  document.getElementById(this.opener);
+			}
 		}
 
 		if (!opener) {

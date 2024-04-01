@@ -680,15 +680,6 @@ z-index: 1;
 		createAndRemove.addEventListener("click", function () {
 			var pop = document.createElement("ui5-popover");
 
-			pop.setAttribute("opener", "createAndRemove");
-			pop.setAttribute("open", true);
-
-			var inp = document.createElement("ui5-input");
-			inp.setAttribute("slot", "header")
-			pop.appendChild(inp)
-
-			document.body.appendChild(pop)
-
 			pop.addEventListener("ui5-before-open", async () => {
 				var applyFocusResult = pop.applyFocus();
 				pop.remove();
@@ -696,11 +687,20 @@ z-index: 1;
 				try {
 					await applyFocusResult;
 					createAndRemoveResult.innerText = "No uncaught errors";
- 				} catch (e) {
+				} catch (e) {
 					createAndRemoveResult.innerText = e.toString();
 				}
 				createAndRemoveResult.style.display = "";
-			})
+			});
+
+			var inp = document.createElement("ui5-input");
+			inp.setAttribute("slot", "header");
+			pop.appendChild(inp);
+
+			document.body.appendChild(pop);
+
+			pop.setAttribute("opener", "createAndRemove");
+			pop.setAttribute("open", true);
 		});
 
 		openPopoverInsideContainingBlockButton.addEventListener("click", function () {
