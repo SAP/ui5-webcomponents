@@ -14,6 +14,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Avatar                   | `ui5-avatar`                | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Avatar Group             | `ui5-avatar-group`          | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
 | Badge                    | `ui5-badge`                 | `import "@ui5/webcomponents/dist/Badge.js";`               |
+| Bar                      | `ui5-bar`                   | `import "@ui5/webcomponents/dist/Bar.js";`                 |
 | Breadcrumbs              | `ui5-breadcrumbs`           | `import "@ui5/webcomponents/dist/Breadcrumbs.js";`         |
 | Breadcrumbs Item         | `ui5-breadcrumbs-item`      | comes with `ui5-breadcrumbs`                               |
 | Badge                    | `ui5-badge`                 | `import "@ui5/webcomponents/dist/Badge.js";`               |

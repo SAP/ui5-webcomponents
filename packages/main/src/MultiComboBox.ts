@@ -106,6 +106,7 @@ import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input, { InputEventDetail } from "./Input.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-multi-combobox` as items
@@ -153,7 +154,7 @@ type MultiComboboxItemWithSelection = {
  *
  * #### Picker
  * If the `ui5-multi-combobox` is focused,
- * you can open or close the drop-down by pressing `F4`, `ALT+UP` or `ALT+DOWN` keys.
+ * you can open or close the drop-down by pressing [F4], [Alt] + [Up] or [Alt] + [Down] keys.
  * Once the drop-down is opened, you can use the `UP` and `DOWN` arrow keys
  * to navigate through the available options and select one by pressing the `Space` or `Enter` keys.
  *
@@ -1881,8 +1882,8 @@ class MultiComboBox extends UI5Element {
 		return shouldBeExpanded;
 	}
 
-	get _valueStatePopoverHorizontalAlign() {
-		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir !== "rtl" ? "Start" : "End";
 	}
 
 	get iconsCount() {

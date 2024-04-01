@@ -632,7 +632,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * If the dialog is closed by [ESC] key, do the same as if the `Cancel` button is pressed.
+	 * If the dialog is closed by [Escape] key, do the same as if the `Cancel` button is pressed.
 	 * @param evt
 	 */
 	_restoreConfirmedOnEscape(evt: CustomEvent) { // Dialog#before-close

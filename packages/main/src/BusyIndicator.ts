@@ -77,10 +77,10 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the size of the component.
-	 * @default "Medium"
+	 * @default "M"
 	 * @public
 	 */
-	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
+	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.M })
 	size!: `${BusyIndicatorSize}`;
 
 	/**
@@ -163,10 +163,6 @@ class BusyIndicator extends UI5Element {
 		return {
 			root: {
 				"ui5-busy-indicator-root": true,
-			},
-			textPosition: {
-				"ui5-busy-indicator-text-placement-top ": this.textPlacement === BusyIndicatorTextPlacement.Top,
-				"ui5-busy-indicator-text-placement-bottom ": this.textPlacement === BusyIndicatorTextPlacement.Bottom,
 			},
 		};
 	}

@@ -15,7 +15,7 @@ import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 
 /**
  * @class
@@ -38,12 +38,12 @@ import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
  * increment or decrement respectively the range start or end date, depending on where the cursor is.
  * The following shortcuts are available:
  *
- * - [PAGEDOWN] - Decrements the corresponding day of the month by one
- * - [SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one
- * - [SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one
- * - [PAGEUP] - Increments the corresponding day of the month by one
- * - [SHIFT] + [PAGEUP] - Increments the corresponding month by one
- * - [SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one
+ * - [Page Down] - Decrements the corresponding day of the month by one
+ * - [Shift] + [Page Down] - Decrements the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Down] - Decrements the corresponding year by one
+ * - [Page Up] - Increments the corresponding day of the month by one
+ * - [Shift] + [Page Up] - Increments the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Up] - Increments the corresponding year by one
  * @constructor
  * @extends DatePicker
  * @since 1.0.0-rc.8
@@ -215,9 +215,9 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(event: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
-		const values = event.detail.values;
+		const values = event.detail.selectedValues;
 
 		if (values.length === 0) {
 			return;
@@ -227,7 +227,7 @@ class DateRangePicker extends DatePicker {
 			this._tempValue = values[0];
 			return;
 		}
-		const newValue = this._buildValue(event.detail.dates[0], event.detail.dates[1]); // the value will be normalized so we don't need to order them here
+		const newValue = this._buildValue(event.detail.selectedDates[0], event.detail.selectedDates[1]); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 		this.closePicker();
 	}

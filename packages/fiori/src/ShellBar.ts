@@ -28,6 +28,7 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
@@ -152,7 +153,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * ### Keyboard Handling
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -1208,8 +1209,8 @@ class ShellBar extends UI5Element {
 		return this.primaryTitle || this.showLogoInMenuButton;
 	}
 
-	get popoverHorizontalAlign() {
-		return this.effectiveDir === "rtl" ? "Left" : "Right";
+	get popoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir === "rtl" ? "Start" : "End";
 	}
 
 	get hasSearchField() {

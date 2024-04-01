@@ -210,21 +210,21 @@ z-index: 1;
 	<ui5-button id="btnMoveFocus">focusable element</ui5-button>
 	<br>
 	<br>
-	<ui5-title>placement-type="Right" (default)</ui5-title>
-	<p>No space on the Right, try Left, Bottom, Top</p>
+	<ui5-title>placement-type="End" (default)</ui5-title>
+	<p>No space on the End, try Start, Bottom, Top</p>
 	<ui5-button id="btnFullWidth" class="fullWidth">Click me !</ui5-button>
 	<ui5-button id="btnNormalWidth">Click me !</ui5-button>
 	<br>
 	<br>
-	<ui5-title>placement-type="Right" (default) and allow-target-overlap=true </ui5-title>
-	<p>No space on the right, try Left, Bottom, Top and if nothing works, the target will be overlapped</p>
+	<ui5-title>placement-type="End" (default) and allow-target-overlap=true </ui5-title>
+	<p>No space on the End, try Start, Bottom, Top and if nothing works, the target will be overlapped</p>
 	<ui5-button id="btnFullWidthTargetOverlap" class="fullWidth">Click me !</ui5-button>
 	<ui5-button id="btnNormalWidthTargetOverlap">Click me !</ui5-button>
 
 	<br>
 	<br>
-	<ui5-title>placement-type="Left"</ui5-title>
-	<p>No space on the Left, try Right, Bottom, Top</p>
+	<ui5-title>placement-type="Start"</ui5-title>
+	<p>No space on the Start, try End, Bottom, Top</p>
 	<ui5-button id="btnFullWidthLeft" class="fullWidth">Click me !</ui5-button>
 	<div class="popover13auto">
 		<ui5-button id="btnNormalWidthLeft">Click me !</ui5-button>
@@ -232,8 +232,8 @@ z-index: 1;
 
 	<br>
 	<br>
-	<ui5-title>placement-type="Left" and allow-target-overlap=true</ui5-title>
-	<p>No space on the right, try Right, Bottom, Top and if nothing works, the target will be overlapped</p>
+	<ui5-title>placement-type="Start" and allow-target-overlap=true</ui5-title>
+	<p>No space on the Start, try End, Bottom, Top and if nothing works, the target will be overlapped</p>
 	<ui5-button id="btnFullWidthLeftTargetOverlap" class="fullWidth">Click me !</ui5-button>
 	<div class="popover13auto">
 		<ui5-button id="btnNormalWidthLeftTargetOverlap">Click me !</ui5-button>
@@ -282,7 +282,7 @@ z-index: 1;
 	</ui5-popover>
 
 
-	<ui5-popover header-text="My Heading" id="popFullWidthLeft" class="popover6auto" placement-type="Left">
+	<ui5-popover header-text="My Heading" id="popFullWidthLeft" class="popover6auto" placement-type="Start">
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -294,7 +294,7 @@ z-index: 1;
 		</ui5-list>
 	</ui5-popover>
 
-	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" class="popover6auto" placement-type="Left" allow-target-overlap>
+	<ui5-popover header-text="My Heading" id="popFullWidthLeftTargetOverlap" class="popover6auto" placement-type="Start" allow-target-overlap>
 		<div slot="header">
 			<ui5-button id="first-focusable">I am in the header</ui5-button>
 		</div>
@@ -332,7 +332,7 @@ z-index: 1;
 	</ui5-popover>
 
 
-	<ui5-popover id="quickViewCard" placement-type="Right" height="500px">
+	<ui5-popover id="quickViewCard" placement-type="End" height="500px">
 		<ui5-input id="searchInput" class="popover6auto">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
@@ -352,11 +352,11 @@ z-index: 1;
 
 
 	<div class="popover11auto">
-		<p>Right-aligned Popover, wider than button, arrow should be centered on the button</p>
+		<p>End-aligned Popover, wider than button, arrow should be centered on the button</p>
 		<ui5-button id="btnOpenXRightWide">Open</ui5-button>
 	</div>
 
-	<ui5-popover id="popXRightWide" placement-type="Bottom" horizontal-align="Right">
+	<ui5-popover id="popXRightWide" placement-type="Bottom" horizontal-align="End">
 		Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni architecto tenetur quia nam reprehenderit quas eveniet possimus similique quisquam culpa distinctio ex doloremque molestiae maxime sed harum, in exercitationem! Incidunt?
 	</ui5-popover>
 
@@ -436,8 +436,8 @@ z-index: 1;
 	<div>
 		<ui5-radio-button name="horizontalAlign" checked text="Center"></ui5-radio-button>
 		<ui5-radio-button name="horizontalAlign" text="Stretch"></ui5-radio-button>
-		<ui5-radio-button name="horizontalAlign" text="Left"></ui5-radio-button>
-		<ui5-radio-button name="horizontalAlign" text="Right"></ui5-radio-button>
+		<ui5-radio-button name="horizontalAlign" text="Start"></ui5-radio-button>
+		<ui5-radio-button name="horizontalAlign" text="End"></ui5-radio-button>
 	</div>
 	<div>
 		<ui5-checkbox id="rtlCb" text="rtl"></ui5-checkbox>
