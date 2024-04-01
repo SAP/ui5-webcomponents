@@ -517,7 +517,7 @@ class ShellBar extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
-	_headerPress: () => Promise<void>;
+	_headerPress: () => void;
 
 	static get CO_PILOT_ICON_PRESSED() {
 		return "sap-icon://da-2";
@@ -563,19 +563,20 @@ class ShellBar extends UI5Element {
 			this._updateClonedMenuItems();
 		});
 
-		this._headerPress = async () => {
+		this._headerPress = () => {
 			this._updateClonedMenuItems();
 
 			if (this.hasMenuItems) {
-				const menuPopover = await this._getMenuPopover();
+				const menuPopover = this._getMenuPopover();
 				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
 			}
 		};
 
 		this._handleResize = () => {
-			this._debounce(async () => {
-				await this._getResponsivePopover();
-				this.overflowPopover!.close();
+			this._debounce(() => {
+				this.menuPopover = this._getMenuPopover();
+				this.overflowPopover = this._getOverflowPopover();
+				this.overflowPopover.close();
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
@@ -587,7 +588,7 @@ class ShellBar extends UI5Element {
 		this._coPilotPressed = !this._coPilotPressed;
 	}
 
-	_debounce(fn: () => Promise<void>, delay: number) {
+	_debounce(fn: () => void, delay: number) {
 		clearTimeout(this._debounceInterval!);
 		this._debounceInterval = setTimeout(() => {
 			this._debounceInterval = null;
@@ -790,9 +791,9 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(newItems);
 	}
 
-	async _toggleActionPopover() {
+	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
-		const overflowPopover = await this._getOverflowPopover();
+		const overflowPopover = this._getOverflowPopover();
 		overflowPopover.showAt(overflowButton, true);
 	}
 
@@ -1102,19 +1103,11 @@ class ShellBar extends UI5Element {
 		});
 	}
 
-	async _getResponsivePopover() {
-		await renderFinished();
-		this.overflowPopover = this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
-		this.menuPopover = this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-menu-popover");
-	}
-
-	async _getOverflowPopover() {
-		await renderFinished();
+	_getOverflowPopover() {
 		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-overflow-popover")!;
 	}
 
-	async _getMenuPopover() {
-		await renderFinished();
+	_getMenuPopover() {
 		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-menu-popover")!;
 	}
 
