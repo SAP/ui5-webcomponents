@@ -250,7 +250,7 @@ class Popover extends Popup {
 			}
 
 			if (!opener) {
-				opener =  document.getElementById(this.opener);
+				opener = document.getElementById(this.opener);
 			}
 		}
 
