@@ -9,8 +9,8 @@ const menu = [...document.getElementsByTagName("ui5-menu")][0];
 const splitBtn = [...document.getElementsByTagName("ui5-split-button")][0];
 
 splitBtn.addEventListener("arrow-click", function() {
-	menu.opener = splitBtn;
 	menu.open = !menu.open;
+	menu.opener = splitBtn;
 	splitBtn.activeArrowButton = menu.open;
 });
 
