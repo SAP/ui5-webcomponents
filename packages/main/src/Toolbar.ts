@@ -330,7 +330,7 @@ class Toolbar extends UI5Element {
 	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
 		overflowPopover!.showAt(this.overflowButtonDOM!);
-		this.reverseOverflow = overflowPopover!.actualPlacementType === "Top";
+		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
 	}
 
 	closeOverflow() {

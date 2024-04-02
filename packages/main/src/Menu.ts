@@ -29,7 +29,7 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverPlacement from "./types/PopoverPlacement.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
@@ -338,7 +338,7 @@ class Menu extends UI5Element {
 		return this.effectiveDir === "rtl";
 	}
 
-	get placementType(): `${PopoverPlacementType}` {
+	get placement(): `${PopoverPlacement}` {
 		const placement = this.isRtl ? "Start" : "End";
 		return this._isSubMenu ? placement : "Bottom";
 	}

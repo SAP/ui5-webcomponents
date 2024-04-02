@@ -8,58 +8,58 @@
 	box-shadow: var(--_ui5_popover_no_arrow_box_shadow);
 }
 
-:host([opened][actual-placement-type="Top"]) {
+:host([opened][actual-placement="Top"]) {
 	margin-top: var(--_ui5-popover-margin-bottom);
 }
 
-:host([opened][actual-placement-type="Bottom"]) {
+:host([opened][actual-placement="Bottom"]) {
 	margin-top: var(--_ui5-popover-margin-top);
 }
 
 /* pointing upward arrow */
-:host([actual-placement-type="Bottom"]) .ui5-popover-arrow {
+:host([actual-placement="Bottom"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	top: -0.5rem;
 	height: 0.5625rem;
 }
 
-:host([actual-placement-type="Bottom"]) .ui5-popover-arrow:after {
+:host([actual-placement="Bottom"]) .ui5-popover-arrow:after {
 	margin: var(--_ui5_popover_upward_arrow_margin);
 }
 
 /* pointing right arrow */
-:host([actual-placement-type="Start"]) .ui5-popover-arrow {
+:host([actual-placement="Start"]) .ui5-popover-arrow {
 	top: calc(50% - 0.5625rem);
 	right: -0.5625rem;
 	width: 0.5625rem;
 }
 
-:host([actual-placement-type="Start"]) .ui5-popover-arrow:after {
+:host([actual-placement="Start"]) .ui5-popover-arrow:after {
 	margin: var(--_ui5_popover_right_arrow_margin);
 }
 
 /* pointing downward arrow */
-:host([actual-placement-type="Top"]) .ui5-popover-arrow {
+:host([actual-placement="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
 	height: 0.5625rem;
 	top: 100%;
 }
 
-:host([actual-placement-type="Top"]) .ui5-popover-arrow:after {
+:host([actual-placement="Top"]) .ui5-popover-arrow:after {
 	margin: var(--_ui5_popover_downward_arrow_margin);
 }
 
 /* pointing left arrow */
-:host(:not([actual-placement-type])) .ui5-popover-arrow,
-:host([actual-placement-type="End"]) .ui5-popover-arrow {
+:host(:not([actual-placement])) .ui5-popover-arrow,
+:host([actual-placement="End"]) .ui5-popover-arrow {
 	left: -0.5625rem;
 	top: calc(50% - 0.5625rem);
 	width: 0.5625rem;
 	height: 1rem;
 }
 
-:host(:not([actual-placement-type])) .ui5-popover-arrow:after,
-:host([actual-placement-type="End"]) .ui5-popover-arrow:after {
+:host(:not([actual-placement])) .ui5-popover-arrow:after,
+:host([actual-placement="End"]) .ui5-popover-arrow:after {
 	margin: var(--_ui5_popover_left_arrow_margin);
 }
 

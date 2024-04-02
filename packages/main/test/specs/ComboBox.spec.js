@@ -72,11 +72,11 @@ describe("General interaction", () => {
 		assert.strictEqual(await input.getProperty("value"), "Bahrain", "Value should be Bahrain");
 
 
-		// const selection = await browser.executeAsync(done => {
-		// 	return window.getSelection().toString();
-		// });
+		const selection = await browser.executeAsync(done => {
+			return done(window.getSelection().toString());
+		});
 
-		// assert.strictEqual(selection, "ahrain", "ahrain should be selected");
+		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
 		const listItems = await popover.$("ui5-list").$$("ui5-li");
 		assert.ok(await listItems[0].getProperty("selected"), "List Item should be selected");
 
