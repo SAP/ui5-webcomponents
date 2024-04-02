@@ -236,6 +236,25 @@ class Popover extends Popup {
 
 	constructor() {
 		super();
+
+		Object.defineProperty(this, "opener", {
+			get: (): HTMLElement | undefined => {
+				return this._opener;
+			},
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
+			set: async (value: HTMLElement): Promise<void> => {
+				if (this._opener === value) {
+					return;
+				}
+
+				this._opener = value;
+				this._updateAttribute("opener", value);
+
+				if (value && this.open) {
+					await this.openPopup();
+				}
+			},
+		});
 	}
 
 	async openPopup() {
@@ -285,7 +304,7 @@ class Popover extends Popup {
 	 * @returns Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
-		if (!opener || this.opened) {
+		if (!opener) {
 			return;
 		}
 
@@ -363,6 +382,8 @@ class Popover extends Popup {
 	}
 
 	_show() {
+		super._show();
+
 		if (!this.opened) {
 			this._showOutsideViewport();
 		}
@@ -474,7 +495,6 @@ class Popover extends Popup {
 
 	_showOutsideViewport() {
 		Object.assign(this.style, {
-			display: this._displayProp,
 			top: "-10000px",
 			left: "-10000px",
 		});

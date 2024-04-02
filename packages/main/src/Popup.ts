@@ -242,13 +242,13 @@ abstract class Popup extends UI5Element {
 					return;
 				}
 
+				this.opened = value;
+
 				if (value) {
 					await this.openPopup();
 				} else {
 					this.close();
 				}
-
-				this.opened = value;
 			},
 		});
 	}
