@@ -175,7 +175,7 @@ class Grid extends UI5Element {
 			// Overflow Handling: Move columns into the popin until overflow is resolved
 			const overflow = scrollWidth - clientWidth;
 			const headers = this._getPopinOrderedColumns(false);
-			headers.reduce((totalPoppedInWidth, headerCell) => {
+			const poppedInWidth = headers.reduce((totalPoppedInWidth, headerCell) => {
 				if (totalPoppedInWidth <= overflow && !headerCell._popin) {
 					const headerWidth = Math.ceil(headerCell.getBoundingClientRect().width);
 					totalPoppedInWidth += headerWidth;
@@ -184,15 +184,15 @@ class Grid extends UI5Element {
 				return totalPoppedInWidth;
 			}, 0);
 			// Calculate container width considering popped-in columns
-			const lastPoppedIn = headers.filter(headerCell => headerCell._popin).toReversed()[0];
-			this.containerWidth = scrollWidth - lastPoppedIn._popinWidth - overflow;
+			const columnOverflow = poppedInWidth - overflow;
+			this.containerWidth = clientWidth - columnOverflow;
 		} else {
 			// Underflow Handling: Restore columns from popin until container width is met
 			const headers = this._getPopinOrderedColumns(true).filter(it => it._popin);
 
 			headers.every(headerCell => {
 				const underflow = clientWidth - this.containerWidth;
-				if (underflow > headerCell._popinWidth) {
+				if (underflow >= headerCell._popinWidth) {
 					this.containerWidth += headerCell._popinWidth;
 					this._setHeaderPopinState(headerCell, false, 0);
 					return true;

@@ -73,7 +73,6 @@ class GridHeaderCell extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this.setAttribute("role", "columnheader");
 		this.style.minWidth = this.minWidth;
 		this.style.maxWidth = this.maxWidth;
 		this.style.width = this.width;
@@ -81,6 +80,10 @@ class GridHeaderCell extends UI5Element {
 
 	onBeforeRendering() {
 		this.setAttribute("tabindex", this.forcedTabIndex);
+		this.setAttribute("role", "columnheader");
+		if (this._popin) {
+			this.removeAttribute("role");
+		}
 	}
 
 	getFocusDomRef() {
