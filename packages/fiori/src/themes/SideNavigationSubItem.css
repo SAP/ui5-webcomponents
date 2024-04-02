@@ -1,0 +1,22 @@
+@import "./SideNavigationItemBase.css";
+
+:host {
+	color: var(--sapList_TextColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	font-weight: normal;
+}
+
+.ui5-sn-item-level2 {
+	padding-inline-start: var(--_ui5_side_navigation_group_icon_width);
+}
+
+:host(:last-child) .ui5-sn-item.ui5-sn-item-level2:not(.ui5-sn-item-selected)::before {
+	border: var(--_ui5_side_navigation_group_border_style_color);
+	border-width: var(--_ui5_side_navigation_group_border_width);
+}
+
+.ui5-sn-item.ui5-sn-item-level2::before {
+	border: var(--_ui5_side_navigation_item_border_style_color);
+	border-width: var(--_ui5_side_navigation_item_border_width);
+}
