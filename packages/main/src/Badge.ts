@@ -80,7 +80,7 @@ class Badge extends UI5Element {
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ defaultValue: BadgeDesign.Set3 })
+	@property({ defaultValue: BadgeDesign.Neutral })
 	design!: `${BadgeDesign}`;
 
 	/**
@@ -92,7 +92,7 @@ class Badge extends UI5Element {
 	 * @default "1"
 	 * @public
 	 */
-	@property({ defaultValue: "1" })
+	@property({ defaultValue: "7" })
 	colorScheme!: string;
 
 	/**
