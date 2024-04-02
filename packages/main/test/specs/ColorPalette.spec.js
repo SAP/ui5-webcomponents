@@ -79,8 +79,7 @@ describe("ColorPalette interactions", () => {
 
 		await colorPaletteMoreColorsButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#cp3");
-		const colorPicker = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-color-picker");
+		const colorPicker = await browser.$(`#cp3`).shadow$("ui5-color-picker");
 
 		assert.ok(colorPicker, "Color picker is rendered");
 
