@@ -52,22 +52,19 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-toolbar</code> component is used to create a horizontal layout with items.
+ * The `ui5-toolbar` component is used to create a horizontal layout with items.
  * The items can be overflowing in a popover, when the space is not enough to show all of them.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-toolbar</code> provides advanced keyboard handling.
- * <br>
- * <ul>
- * <li>The control is not interactive, but can contain of interactive elements </li>
- * <li>[TAB] - iterates through elements</li>
- * </ul>
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-toolbar` provides advanced keyboard handling.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Toolbar";</code>
+ * - The control is not interactive, but can contain of interactive elements
+ * - [Tab] - iterates through elements
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Toolbar.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -85,7 +82,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
-	 *
 	 * @public
 	 * @default "End"
 	 */
@@ -117,7 +113,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -126,7 +121,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -136,8 +130,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Defines the items of the component.
      *
-     * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
-	 *
+     * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -280,7 +273,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: HasPopup.Menu,
+					hasPopup: HasPopup.Menu.toLowerCase(),
 				},
 			},
 		};
@@ -337,7 +330,6 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Returns if the overflow popup is open.
-	 *
 	 * @public
 	 */
 	async isOverflowOpen(): Promise<boolean> {
@@ -468,14 +460,14 @@ class Toolbar extends UI5Element {
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "false";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
 		}
 	}
 
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "true";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = true;
 		}
 	}
 

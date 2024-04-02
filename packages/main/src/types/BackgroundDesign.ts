@@ -1,6 +1,5 @@
 /**
  * Defines background designs.
- *
  * @public
  */
 enum BackgroundDesign {

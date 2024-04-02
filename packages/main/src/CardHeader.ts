@@ -9,7 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { ICardHeader } from "./Interfaces.js";
+import type { ICardHeader } from "./Card.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {
@@ -23,19 +23,18 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-card-header</code> is a component, meant to be used as a header of the <code>ui5-card</code> component.
- * It displays valuable information, that can be defined with several properties, such as: <code>titleText</code>, <code>subtitleText</code>, <code>status</code>
- * and two slots: <code>avatar</code> and <code>action</code>.
+ * The `ui5-card-header` is a component, meant to be used as a header of the `ui5-card` component.
+ * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `status`
+ * and two slots: `avatar` and `action`.
  *
- * <h3>Keyboard handling</h3>
- * In case you enable <code>interactive</code> property, you can press the <code>ui5-card-header</code> by Space and Enter keys.
+ * ### Keyboard handling
+ * In case you enable `interactive` property, you can press the `ui5-card-header` by Space and Enter keys.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/CardHeader";</code>
- *
+ * `import "@ui5/webcomponents/dist/CardHeader";`
  * @constructor
  * @implements {ICardHeader}
  * @extends UI5Element
@@ -55,8 +54,8 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 })
 /**
  * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
+ *
+ * **Note:** The event would be fired only if the `interactive` property is set to true.
  * @public
  */
 @event("click")
@@ -87,7 +86,7 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	/**
 	 * Defines if the component would be interactive,
-	 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
+	 * e.g gets hover effect, gets focus outline and `click` event is fired, when pressed.
 	 * @default false
 	 * @public
 	*/
@@ -95,8 +94,9 @@ class CardHeader extends UI5Element implements ICardHeader {
 	interactive!: boolean;
 
 	/**
-	 * Define the <code>aria-level</code> attribute of the component
-	 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
+	 * Define the `aria-level` attribute of the component
+	 *
+	 * **Note: ** If the interactive property is set, `aria-level` attribute is not rendered at all.
 	 * @private
 	 * @default 3
 	*/

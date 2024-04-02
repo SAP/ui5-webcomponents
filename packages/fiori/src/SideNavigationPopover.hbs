@@ -1,16 +1,15 @@
 {{#if isOverflow}}
-<ui5-navigation-menu 
+<ui5-navigation-menu
 	id="{{_id}}-side-navigation-overflow-menu"
-	@ui5-after-close={{_onAfterMenuClose}}
 	@ui5-before-open="{{_onBeforeMenuOpen}}"
 	@ui5-before-close="{{_onBeforeMenuClose}}"
 	@ui5-item-click="{{handleOverflowItemClick}}"
 	class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu">
 	{{#each _menuPopoverItems}}
-		<ui5-navigation-menu-item 
+		<ui5-navigation-menu-item
 			text="{{text}}"
 			icon="{{icon}}"
-			?disabled="{{disabled}}"			
+			?disabled="{{disabled}}"
 			expanded="true"
 			href="{{href}}"
 			target="{{target}}"
@@ -42,7 +41,7 @@
 >
 	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 		<ui5-side-navigation
-			_in-popover
+			in-popover
 			class="ui5-side-navigation-in-popover"
 		>
 			<ui5-side-navigation-item

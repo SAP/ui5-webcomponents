@@ -19,8 +19,11 @@ import {
 	isClass,
 	normalizeTagType,
 	logDocumentationError,
-	displayDocumentationErrors
+	displayDocumentationErrors,
+	toKebabCase
 } from "./utils.mjs";
+import { generateCustomData } from "cem-plugin-vs-code-custom-data-generator";
+import { customElementJetBrainsPlugin } from "custom-element-jet-brains-integration";
 
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"));
 
@@ -166,7 +169,24 @@ function processClass(ts, classNode, moduleDoc) {
 
 				if (propertyDecorator) {
 					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
-					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind  === ts.SyntaxKind.TrueKeyword || undefined;
+					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind === ts.SyntaxKind.TrueKeyword || undefined;
+				}
+
+				if (currClass.customElement && member.privacy === "public" && !propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "multiple") && !["object"].includes(member._ui5validator?.toLowerCase())) {
+					const filename = classNode.getSourceFile().fileName;
+					const sourceFile = typeProgram.getSourceFile(filename);
+					const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
+					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isPropertyDeclaration(m) && m.name?.text === member.name);
+					const attributeValue = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramMember), tsProgramMember);
+
+					currClass.attributes.push({
+						description: member.description,
+						name: toKebabCase(member.name),
+						default: member.default,
+						fieldName: member.name,
+						type: { text: attributeValue },
+						deprecated: member.deprecated
+					})
 				}
 
 				if (hasTag(memberParsedJsDoc, "formProperty")) {
@@ -334,7 +354,7 @@ const processPublicAPI = object => {
 		if ((key === "privacy" && object[key] !== "public") || (key === "_ui5privacy" && object[key] !== "public")) {
 			return true;
 		} else if (typeof object[key] === "object") {
-			if (key === "cssParts" || key === "_ui5implements") {
+			if (key === "cssParts" || key === "attributes" || key === "_ui5implements") {
 				continue;
 			}
 
@@ -468,9 +488,6 @@ export default {
 						}
 					}
 				})
-
-				moduleDoc.exports = moduleDoc.exports.
-					filter(e => moduleDoc.declarations.find(d => d.name === e.declaration.name && ["class", "function", "variable", "enum"].includes(d.kind)) || e.name === "default");
 			},
 			packageLinkPhase({ context }) {
 				if (context.dev) {
@@ -478,5 +495,7 @@ export default {
 				}
 			}
 		},
+		generateCustomData({ outdir: "dist", cssFileName: null, cssPropertiesDocs: false }),
+		customElementJetBrainsPlugin({ outdir: "dist", cssFileName: null, cssPropertiesDocs: false })
 	],
 };

@@ -55,13 +55,26 @@ import {
 	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
 } from "./generated/i18n/i18n-defaults.js";
-import type { ITableRow } from "./Interfaces.js";
 
 // Template
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
+
+/**
+ * Interface for components that may be slotted inside a `ui5-table` as rows
+ * @public
+ */
+interface ITableRow extends HTMLElement, ITabbable {
+	mode: `${TableMode}`,
+	selected: boolean,
+	forcedBusy: boolean,
+	forcedAriaPosition: string,
+	_columnsInfoString: string,
+	_columnsInfo: Array<TableColumnInfo>,
+	tabbableElements: Array<HTMLElement>,
+}
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -101,65 +114,59 @@ enum TableFocusTargetElement {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design.
+ * The `ui5-table` component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
- * <br><br>
- * To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the
- * order of the item <code>cells</code> in the <code>rows</code>.
- * <br><br>
+ *
+ * To render the `Table` properly, the order of the `columns` should match with the
+ * order of the item `cells` in the `rows`.
+ *
  * Desktop and tablet devices are supported.
  * On tablets, special consideration should be given to the number of visible columns
  * and rows due to the limited performance of some devices.
  *
- * <h3>Selection</h3>
- * To benefit from the selection mechanism of <code>ui5-table</code> component, you can use the available selection modes:
- * <code>SingleSelect</code> and <code>MultiSelect</code>.
- * <br>
- * In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between
- * <code>Active</code> or <code>Inactive</code>.
- * <br><br>
- * In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or
- * by pressing the <code>Space</code> or <code>Enter</code> keys.
- * <br>
- * In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
- * <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row.
+ * ### Selection
+ * To benefit from the selection mechanism of `ui5-table` component, you can use the available selection modes:
+ * `SingleSelect` and `MultiSelect`.
+ *
+ * In additition to the used mode, you can also specify the `ui5-table-row` type choosing between
+ * `Active` or `Inactive`.
+ *
+ * In `SingleSelect` mode, you can select both an `Active` and `Inactive` row via mouse or
+ * by pressing the `Space` or `Enter` keys.
+ *
+ * In `MultiSelect` mode, you can select both an `Active` and `Inactive` row by pressing the
+ * `Space` key when a row is on focus or via mouse click over the selection checkbox of the row.
  * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
- * <br><br>
- * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
- * <h3>Keyboard Handling</h3>
+ * **Note:** Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * ### Keyboard Handling
+ *
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
- * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
- * <br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <ul>
- * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
- * <li>[CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.</li>
- * <li>[HOME]/[END] - Focuses the first/last item.</li>
- * <li>[PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).</li>
- * <li>[ALT]+[DOWN]/[UP] - Switches focus between header, last focused item, and More button (if applies) in either direction.</li>
- * <li>[SHIFT]+[DOWN]/[UP] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).</li>
- * <li>[SHIFT]+[HOME]/[END] - Range selection to the first/last item of the List.</li>
- * <li>[CTRL]+[HOME]/[END] - Same behavior as HOME & END.</li>
- * </ul>
+ * Furthermore, you can interact with `ui5-table` via the following keys.
  *
- * <h3>ES6 Module Import</h3>
+ * - [F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.
+ * - [Ctrl]+[A] - Selects all items, if MultiSelect mode is enabled.
+ * - [Home]/[End] - Focuses the first/last item.
+ * - [Page Up]/[Page Down] - Moves focus up/down by page size (20 items by default).
+ * - [Alt]+[Down]/[Up] - Switches focus between header, last focused item, and More button (if applies) in either direction.
+ * - [Shift]+[Down]/[Up] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).
+ * - [Shift]+[Home]/[End] - Range selection to the first/last item of the List.
+ * - [Ctrl]+[Home]/[End] - Same behavior as HOME & END.
  *
- * <code>import "@ui5/webcomponents/dist/Table.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents/dist/Table.js";`
+ * `import "@ui5/webcomponents/dist/TableColumn.js";` (`ui5-table-column`)
+ * `import "@ui5/webcomponents/dist/TableRow.js";` (`ui5-table-row`)
+ * `import "@ui5/webcomponents/dist/TableGroupRow.js";` (`ui5-table-group-row`)
+ * `import "@ui5/webcomponents/dist/TableCell.js";` (`ui5-table-cell`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -172,11 +179,10 @@ enum TableFocusTargetElement {
 	template: TableTemplate,
 	dependencies: [BusyIndicator, CheckBox],
 })
-/** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
-*
-* @param {HTMLElement} row the activated row.
-* @public
-*/
+/** Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
+ * @param {HTMLElement} row the activated row.
+ * @public
+ */
 @event<TableRowClickEventDetail>("row-click", {
 	detail: {
 		/**
@@ -187,12 +193,11 @@ enum TableFocusTargetElement {
 })
 
 /**
-* Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
-*
-* @param {Array} poppedColumns popped-in columns.
-* @since 1.0.0-rc.6
-* @public
-*/
+ * Fired when `ui5-table-column` is shown as a pop-in instead of hiding it.
+ * @param {Array} poppedColumns popped-in columns.
+ * @since 1.0.0-rc.6
+ * @public
+ */
 @event<TablePopinChangeEventDetail>("popin-change", {
 	detail: {
 		/**
@@ -205,24 +210,22 @@ enum TableFocusTargetElement {
 })
 
 /**
-* Fired when the user presses the <code>More</code> button or scrolls to the table's end.
-* <br><br>
-*
-* <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
-* @public
-* @since 1.0.0-rc.11
-*/
+ * Fired when the user presses the `More` button or scrolls to the table's end.
+ *
+ * **Note:** The event will be fired if `growing` is set to `Button` or `Scroll`.
+ * @public
+ * @since 1.0.0-rc.11
+ */
 @event("load-more")
 
 /**
-* Fired when selection is changed by user interaction
-* in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
-*
-* @param {Array} selectedRows An array of the selected rows.
-* @param {Array} previouslySelectedRows An array of the previously selected rows.
-* @public
-* @since 1.0.0-rc.15
-*/
+ * Fired when selection is changed by user interaction
+ * in `SingleSelect` and `MultiSelect` modes.
+ * @param {Array} selectedRows An array of the selected rows.
+ * @param {Array} previouslySelectedRows An array of the previously selected rows.
+ * @public
+ * @since 1.0.0-rc.15
+ */
 @event<TableSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
@@ -237,8 +240,7 @@ enum TableFocusTargetElement {
 })
 class Table extends UI5Element {
 	/**
-	 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is not present.
-	 *
+	 * Defines the text that will be displayed when there is no data and `hideNoData` is not present.
 	 * @default ""
 	 * @public
 	 */
@@ -249,11 +251,9 @@ class Table extends UI5Element {
 	 * Defines the text that will be displayed inside the growing button at the bottom of the table,
 	 * meant for loading more rows upon press.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> If not specified a built-in text will be displayed.
-	 * <br>
-	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
+	 * **Note:** If not specified a built-in text will be displayed.
 	 *
+	 * **Note:** This property takes effect if `growing` is set to `Button`.
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -262,11 +262,9 @@ class Table extends UI5Element {
 	growingButtonText!: string;
 
 	/**
-	 * Defines the subtext that will be displayed under the <code>growingButtonText</code>.
+	 * Defines the subtext that will be displayed under the `growingButtonText`.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
-	 *
+	 * **Note:** This property takes effect if `growing` is set to `Button`.
 	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -275,8 +273,7 @@ class Table extends UI5Element {
 	growingButtonSubtext!: string;
 
 	/**
-	 * Defines if the value of <code>noDataText</code> will be diplayed when there is no rows present in the table.
-	 *
+	 * Defines if the value of `noDataText` will be diplayed when there is no rows present in the table.
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -285,22 +282,19 @@ class Table extends UI5Element {
 	hideNoData!: boolean;
 
 	/**
-	 * Defines whether the table will have growing capability either by pressing a <code>More</code> button,
-	 * or via user scroll. In both cases <code>load-more</code> event is fired.
-	 * <br><br>
+	 * Defines whether the table will have growing capability either by pressing a `More` button,
+	 * or via user scroll. In both cases `load-more` event is fired.
 	 *
 	 * Available options:
-	 * <br><br>
-	 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the table, pressing of which triggers the <code>load-more</code> event.
-	 * <br>
-	 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the table;
-	 * <br>
-	 * <code>None</code> (default) - The growing is off.
-	 * <br><br>
 	 *
-	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
-	 * and the component will fallback to <code>growing="Button"</code>.
+	 * `Button` - Shows a `More` button at the bottom of the table, pressing of which triggers the `load-more` event.
 	 *
+	 * `Scroll` - The `load-more` event is triggered when the user scrolls to the bottom of the table;
+	 *
+	 * `None` (default) - The growing is off.
+	 *
+	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
+	 * and the component will fallback to `growing="Button"`.
 	 * @default "None"
 	 * @since 1.0.0-rc.12
 	 * @public
@@ -310,11 +304,9 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines if the table is in busy state.
-	 * <b>
 	 *
 	 * In this state the component's opacity is reduced
 	 * and busy indicator is displayed at the bottom of the table.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.12
 	 * @public
@@ -324,7 +316,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
 	 * @default 1000
 	 * @public
 	 */
@@ -334,25 +325,20 @@ class Table extends UI5Element {
 	/**
 	 * Determines whether the column headers remain fixed at the top of the page during
 	 * vertical scrolling as long as the Web Component is in the viewport.
-	 * <br><br>
-	 * <b>Restrictions:</b>
-	 * <ul>
-	 * <li>Browsers that do not support this feature:
-	 * <ul>
-	 * <li>Internet Explorer</li>
-	 * <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li>
-	 * <li>Mozilla Firefox lower than version 59</li>
-	 * </ul>
-	 * </li>
-	 * <li>Scrolling behavior:
-	 * <ul>
-	 * <li>If the Web Component is placed in layout containers that have the <code>overflow: hidden</code>
-	 * or <code>overflow: auto</code> style definition, this can
-	 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.</li>
-	 * </ul>
-	 * </li>
-	 * </ul>
 	 *
+	 * **Restrictions:**
+	 *
+	 * - Browsers that do not support this feature:
+	 *
+	 * - Internet Explorer
+	 * - Microsoft Edge lower than version 41 (EdgeHTML 16)
+	 * - Mozilla Firefox lower than version 59
+	 *
+	 * - Scrolling behavior:
+	 *
+	 * - If the Web Component is placed in layout containers that have the `overflow: hidden`
+	 * or `overflow: auto` style definition, this can
+	 * prevent the sticky elements of the Web Component from becoming fixed at the top of the viewport.
 	 * @default false
 	 * @public
 	 */
@@ -361,7 +347,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -371,7 +356,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default undefined
 	 * @public
 	 * @since 1.3.0
@@ -381,7 +365,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.3.0
@@ -396,7 +379,7 @@ class Table extends UI5Element {
 	_noDataDisplayed!: boolean;
 
 	/**
-	 * Defines the active state of the <code>More</code> button.
+	 * Defines the active state of the `More` button.
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -418,7 +401,6 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -428,9 +410,8 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the component rows.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-table-row` for the intended design.
 	 * @public
 	 */
 	@slot({
@@ -443,9 +424,8 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the configuration for the columns of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-table-column` for the intended design.
 	 * @public
 	 */
 	@slot({
@@ -474,6 +454,7 @@ class Table extends UI5Element {
 	visibleColumnsCount?: number;
 	lastFocusedElement: HTMLElement | null;
 	growingIntersectionObserver?: IntersectionObserver | null;
+	initialIntersection: boolean;
 
 	_forwardingFocus: boolean;
 	_prevNestedElementIndex: number;
@@ -487,10 +468,10 @@ class Table extends UI5Element {
 		super();
 
 		this.visibleColumns = []; // template loop should always have a defined array
-		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
+		// The ItemNavigation requires each item to 1) have a "forcedTabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
 		this._columnHeader = {
 			id: `${this._id}-columnHeader`,
-			_tabIndex: "0",
+			forcedTabIndex: "0",
 		};
 
 		this._itemNavigation = new ItemNavigation(this, {
@@ -514,6 +495,10 @@ class Table extends UI5Element {
 
 		// Stores the last focused nested element index (within a table row) for F7 navigation.
 		this._prevNestedElementIndex = 0;
+
+		// Indicates the Table bottom most part has been detected by the IntersectionObserver
+		// for the first time.
+		this.initialIntersection = true;
 	}
 
 	onBeforeRendering() {
@@ -528,8 +513,8 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
-			row._busy = this.busy;
+			row.forcedAriaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
+			row.forcedBusy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
@@ -801,12 +786,12 @@ class Table extends UI5Element {
 	 */
 	_handleF7(e: CustomEvent<TableRowF7PressEventDetail>) {
 		const row = e.detail.row;
-		row._tabbables = getTabbableElements(row);
+		row.tabbableElements = getTabbableElements(row);
 		const activeElement = getActiveElement();
-		const lastFocusedElement = row._tabbables[this._prevNestedElementIndex] || row._tabbables[0];
-		const targetIndex = row._tabbables.indexOf(activeElement as HTMLElement);
+		const lastFocusedElement = row.tabbableElements[this._prevNestedElementIndex] || row.tabbableElements[0];
+		const targetIndex = row.tabbableElements.indexOf(activeElement as HTMLElement);
 
-		if (!row._tabbables.length) {
+		if (!row.tabbableElements.length) {
 			return;
 		}
 
@@ -955,6 +940,11 @@ class Table extends UI5Element {
 	}
 
 	onInteresection(entries: Array<IntersectionObserverEntry>) {
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
+		}
+
 		if (entries.some(entry => entry.isIntersecting)) {
 			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
 		}

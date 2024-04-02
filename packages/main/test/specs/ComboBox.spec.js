@@ -76,11 +76,11 @@ describe("General interaction", () => {
 		assert.strictEqual(await input.getProperty("value"), "Bahrain", "Value should be Bahrain");
 
 
-		// const selection = await browser.executeAsync(done => {
-		// 	return window.getSelection().toString();
-		// });
+		const selection = await browser.executeAsync(done => {
+			return done(window.getSelection().toString());
+		});
 
-		// assert.strictEqual(selection, "ahrain", "ahrain should be selected");
+		assert.strictEqual(selection, "ahrain", "ahrain should be selected");
 		const listItems = await popover.$("ui5-list").$$("ui5-li");
 		assert.ok(await listItems[0].getProperty("selected"), "List Item should be selected");
 
@@ -603,6 +603,25 @@ describe("General interaction", () => {
 
 		assert.strictEqual(await $("#clear-icon-change-count").getText(), "1", "change event is fired once");
 		assert.strictEqual(await $("#clear-icon-input-count").getText(), "1", "input event is fired once");
+	});
+
+	it ("Should show all items if value does not match any item and arrow is pressed", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cb = await $("#combo");
+		const arrow = await cb.shadow$("[input-icon]");
+		const input = cb.shadow$("input");
+
+		await input.click();
+		await input.keys("z");
+		await arrow.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		// assert
+		assert.strictEqual(listItems.length, 11, "All items are shown");
 	});
 });
 

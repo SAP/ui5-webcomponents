@@ -21,17 +21,18 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-group-row</code> component represents a group row in the <code>ui5-table</code>.
- *
+ * The `ui5-table-group-row` component represents a group row in the `ui5-table`.
  * @constructor
  * @since 1.0.0-rc.15
  * @implements {ITableRow}
  * @extends UI5Element
  * @public
- * @slot {Node[]} default - Defines the text of the component. <br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
- * @csspart group-row - Used to style the native <code>tr</code> element
+ * @slot {Node[]} default - Defines the text of the component.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ * @csspart group-row - Used to style the native `tr` element
  */
 @customElement({
 	tag: "ui5-table-group-row",
@@ -46,7 +47,6 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 class TableGroupRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the mode of the row
-	 *
 	 * @default "None"
 	 * @private
 	 */
@@ -57,17 +57,17 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	_columnsInfo!: Array<TableColumnInfo>;
 
 	@property({ defaultValue: "-1" })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
-	_busy!: boolean;
+	forcedBusy!: boolean;
 
 	@property({ defaultValue: "", noAttribute: true })
-	_ariaPosition!: string;
+	forcedAriaPosition!: string;
 
 	// Properties, set and handled by the Table
 	selected = false;
-	_tabbables: Array<HTMLElement> = [];
+	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
 	static i18nBundle: I18nBundle;
@@ -79,7 +79,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	}
 
 	get ariaLabelText() {
-		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this._ariaPosition}`;
+		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this.forcedAriaPosition}`;
 	}
 
 	visibleColCount(): number {

@@ -1,0 +1,47 @@
+---
+slug: ../../MultiComboBox
+---
+
+import Basic from "../../../_samples/main/MultiComboBox/Basic/Basic.md";
+import ClearIcon from "../../../_samples/main/MultiComboBox/ClearIcon/ClearIcon.md";
+import MultiComboBoxCustomValue from "../../../_samples/main/MultiComboBox/MultiComboBoxCustomValue/MultiComboBoxCustomValue.md";
+import MultiComboBoxGrouping from "../../../_samples/main/MultiComboBox/MultiComboBoxGrouping/MultiComboBoxGrouping.md";
+import MultiComboBoxSelectAll from "../../../_samples/main/MultiComboBox/MultiComboBoxSelectAll/MultiComboBoxSelectAll.md";
+import SuggestionsWrapping from "../../../_samples/main/MultiComboBox/SuggestionsWrapping/SuggestionsWrapping.md";
+
+<%COMPONENT_OVERVIEW%>
+
+## Basic Sample
+<Basic />
+
+<%COMPONENT_METADATA%>
+
+## More Samples
+
+### Clear Icon
+The MultiComboBox can show a clear icon, visble when there is a value, typed by the user.
+When pressed, the value gets cleared.
+
+<ClearIcon />
+
+### Custom values
+By default, typing of non-existing items is permitted.
+Use <b>allowCustomValues</b> to allow typing values that are not present as items.
+
+<MultiComboBoxCustomValue />
+
+### Select All Items
+When <b>showSelectAll</b> is enabled, "Select All" checkbox is displayed to allow users select all item at once.
+
+<MultiComboBoxSelectAll />
+
+### Items Grouping
+The <b>ui5-mcb-group-item</b> can be used to implement grouping.
+
+<MultiComboBoxGrouping />
+
+### Items Text Wrapping
+The sample demonstrates how the text of the items wrap when too long.
+<b>Note:</b> their representation in the input field (known as token) will truncate.
+
+<SuggestionsWrapping />

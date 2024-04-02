@@ -60,6 +60,7 @@
 
 :host([design="Subheader"]){
 	height: var(--_ui5_bar_subheader_height);
+	margin-top: var(--_ui5_bar_subheader_margin-top);
 }
 
 :host([design="FloatingFooter"]){

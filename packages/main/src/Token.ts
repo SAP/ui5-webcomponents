@@ -18,7 +18,8 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
-import type { IIcon, IToken } from "./Interfaces.js";
+import type { IIcon } from "./Icon.js";
+import type { IToken } from "./MultiInput.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
@@ -32,13 +33,13 @@ type TokenDeleteEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Token.js";</code>
+ * `import "@ui5/webcomponents/dist/Token.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.9
@@ -55,14 +56,12 @@ type TokenDeleteEventDetail = {
 })
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
- *
  * @public
  */
 @event("select")
 
 /**
  * Fired when the backspace, delete or close icon of the token is pressed
- *
  * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
@@ -77,7 +76,6 @@ type TokenDeleteEventDetail = {
 class Token extends UI5Element implements IToken {
 	/**
 	 * Defines the text of the token.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -86,10 +84,9 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component can not be deleted or selected,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component can not be deleted or selected,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
@@ -98,7 +95,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is selected or not.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -107,7 +103,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -119,7 +114,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is focused or not.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -129,7 +123,6 @@ class Token extends UI5Element implements IToken {
 	/**
 	 * Defines whether the token is being deleted
 	 * This flag is used in the ui5-multi-combobox
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -138,16 +131,14 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines the tabIndex of the component.
-	 *
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
-	 * Accepts <code>ui5-icon</code>.
-	 *
+	 * Accepts `ui5-icon`.
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */

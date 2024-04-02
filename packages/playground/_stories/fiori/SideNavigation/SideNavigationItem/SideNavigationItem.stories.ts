@@ -21,6 +21,7 @@ const Template: UI5StoryArgs<SideNavigationItem, StoryArgsSlots> = (args) => {
 		text="${ifDefined(args.text)}"
 		icon="${ifDefined(args.icon)}"
 		?expanded="${ifDefined(args.expanded)}"
+		?disabled="${ifDefined(args.disabled)}"
 		?whole-item-toggleable="${ifDefined(args.wholeItemToggleable)}"
 		href="${ifDefined(args.href)}"
 		?selected="${ifDefined(args.selected)}"

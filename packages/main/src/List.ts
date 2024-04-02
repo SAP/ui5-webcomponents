@@ -16,6 +16,8 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -24,9 +26,12 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
+import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
@@ -72,6 +77,16 @@ type ListItemDeleteEventDetail = {
 	item: ListItemBase,
 }
 
+type ListMoveEventDetail = {
+	source: {
+		element: HTMLElement,
+	},
+	destination: {
+		element: HTMLElement,
+		placement: `${MovePlacement}`,
+	}
+}
+
 // ListItem-based events
 type ListItemCloseEventDetail = {
 	item: ListItemBase,
@@ -88,62 +103,54 @@ type ListItemClickEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard
+ * The `ui5-list` component allows displaying a list of items, advanced keyboard
  * handling support for navigating between items, and predefined modes to improve the development efficiency.
- * <br><br>
- * The <code>ui5-list</code> is a container for the available list items:
- * <ul>
- * <li><code>ui5-li</code></li>
- * <li><code>ui5-li-custom</code></li>
- * <li><code>ui5-li-groupheader</code></li>
- * </ul>
- * <br><br>
+ *
+ * The `ui5-list` is a container for the available list items:
+ *
+ * - `ui5-li`
+ * - `ui5-li-custom`
+ * - `ui5-li-groupheader`
+ *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
- * <code>SingleSelect</code>, <code>MultiSelect</code> and <code>Delete</code>.
- * <br><br>
- * Additionally, the <code>ui5-list</code> provides header, footer, and customization for the list item separators.
+ * `SingleSelect`, `MultiSelect` and `Delete`.
  *
- * <br><br>
- * <h3>Keyboard Handling</h3>
+ * Additionally, the `ui5-list` provides header, footer, and customization for the list item separators.
  *
- * <h4>Basic Navigation</h4>
- * The <code>ui5-list</code> provides advanced keyboard handling.
+ * ### Keyboard Handling
+ *
+ * #### Basic Navigation
+ * The `ui5-list` provides advanced keyboard handling.
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
  *
- * <ul>
- * <li>[UP/DOWN] - Navigates up and down the items</li>
- * <li>[HOME] - Navigates to first item</li>
- * <li>[END] - Navigates to the last item</li>
- * </ul>
+ * - [Up] or [Down] - Navigates up and down the items
+ * - [Home] - Navigates to first item
+ * - [End] - Navigates to the last item
  *
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
- * when the <code>mode</code> property is in use:
- * <ul>
- * <li>[SPACE] - Select an item (if <code>type</code> is 'Active') when <code>mode</code> is selection</li>
- * <li>[DELETE] - Delete an item if <code>mode</code> property is <code>Delete</code></li>
- * </ul>
+ * when the `mode` property is in use:
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * - [Space] - Select an item (if `type` is 'Active') when `mode` is selection
+ * - [Delete] - Delete an item if `mode` property is `Delete`
+ *
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/List.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
- * <br>
- * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-groupheader</code>)
+ * `import "@ui5/webcomponents/dist/List.js";`
  *
+ * `import "@ui5/webcomponents/dist/StandardListItem.js";` (for `ui5-li`)
+ *
+ * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
+ *
+ * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -154,12 +161,11 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator],
+	dependencies: [BusyIndicator, DropIndicator],
 })
 /**
- * Fired when an item is activated, unless the item's <code>type</code> property
- * is set to <code>Inactive</code>.
- *
+ * Fired when an item is activated, unless the item's `type` property
+ * is set to `Inactive`.
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
@@ -174,11 +180,10 @@ type ListItemClickEventDetail = {
 })
 
 /**
- * Fired when the <code>Close</code> button of any item is clicked
- * <br><br>
- * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
- * not to be confused with <code>item-delete</code>.
+ * Fired when the `Close` button of any item is clicked
  *
+ * **Note:** This event is only applicable to list items that can be closed (such as notification list items),
+ * not to be confused with `item-delete`.
  * @param {HTMLElement} item the item about to be closed.
  * @public
  * @since 1.0.0-rc.8
@@ -193,10 +198,9 @@ type ListItemClickEventDetail = {
 })
 
 /**
- * Fired when the <code>Toggle</code> button of any item is clicked.
- * <br><br>
- * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
+ * Fired when the `Toggle` button of any item is clicked.
  *
+ * **Note:** This event is only applicable to list items that can be toggled (such as notification group list items).
  * @param {HTMLElement} item the toggled item.
  * @public
  * @since 1.0.0-rc.8
@@ -212,10 +216,9 @@ type ListItemClickEventDetail = {
 
 /**
  * Fired when the Delete button of any item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the component <code>mode</code> property is set to <code>Delete</code>.
  *
+ * **Note:** A Delete button is displayed on each item,
+ * when the component `mode` property is set to `Delete`.
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -230,8 +233,7 @@ type ListItemClickEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
- *
+ * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
  * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
@@ -266,9 +268,8 @@ type ListItemClickEventDetail = {
 
 /**
  * Fired when the user scrolls to the bottom of the list.
- * <br><br>
- * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
  *
+ * **Note:** The event is fired when the `growing='Scroll'` property is enabled.
  * @public
  * @since 1.0.0-rc.6
  */
@@ -285,9 +286,8 @@ type ListItemClickEventDetail = {
 class List extends UI5Element {
 	/**
 	 * Defines the component header text.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 	 *
+	 * **Note:** If `header` is set this property is ignored.
 	 * @default ""
 	 * @public
 	 */
@@ -296,7 +296,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the footer text.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -305,7 +304,6 @@ class List extends UI5Element {
 
 	/**
 	 * Determines whether the component is indented.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -314,7 +312,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -323,7 +320,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -332,7 +328,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the item separator style that is used.
-	 *
 	 * @default "All"
 	 * @public
 	 */
@@ -340,11 +335,11 @@ class List extends UI5Element {
 	separators!: `${ListSeparators}`;
 
 	/**
-	 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
-	 * or via user scroll. In both cases <code>load-more</code> event is fired.
-	 * <br><br>
-	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
-	 * on IE the component will fallback to <code>growing="Button"</code>.
+	 * Defines whether the component will have growing capability either by pressing a `More` button,
+	 * or via user scroll. In both cases `load-more` event is fired.
+	 *
+	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
+	 * on IE the component will fallback to `growing="Button"`.
 	 * @default "None"
 	 * @since 1.0.0-rc.13
 	 * @public
@@ -353,8 +348,20 @@ class List extends UI5Element {
 	growing!: `${ListGrowingMode}`;
 
 	/**
-	 * Defines if the component would display a loading indicator over the list.
+	 * Defines the text that will be displayed inside the growing button.
 	 *
+	 * **Note:** If not specified a built-in text will be displayed.
+	 *
+	 * **Note:** This property takes effect if the `growing` property is set to the `Button`.
+	 * @default ""
+	 * @since 1.24
+	 * @public
+	 */
+	@property()
+	growingButtonText!: string;
+
+	/**
+	 * Defines if the component would display a loading indicator over the list.
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.6
@@ -364,7 +371,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-	 *
 	 * @default 1000
 	 * @public
 	 */
@@ -373,7 +379,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the accessible name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -383,7 +388,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the input.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -393,7 +397,6 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the accessible role of the component.
-	 * <br><br>
 	 * @public
 	 * @default "list"
 	 * @since 1.0.0-rc.15
@@ -418,7 +421,7 @@ class List extends UI5Element {
 	_inViewport!: boolean;
 
 	/**
-	 * Defines the active state of the <code>More</code> button.
+	 * Defines the active state of the `More` button.
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -426,9 +429,8 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the items of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-groupheader` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -436,10 +438,9 @@ class List extends UI5Element {
 
 	/**
 	 * Defines the component header.
-	 * <br><br>
-	 * <b>Note:</b> When <code>header</code> is set, the
-	 * <code>headerText</code> property is ignored.
 	 *
+	 * **Note:** When `header` is set, the
+	 * `headerText` property is ignored.
 	 * @public
 	 */
 	@slot()
@@ -491,10 +492,15 @@ class List extends UI5Element {
 		this.initialIntersection = true;
 	}
 
+	onEnterDOM() {
+		DragRegistry.subscribe(this);
+	}
+
 	onExitDOM() {
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
+		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering() {
@@ -535,6 +541,10 @@ class List extends UI5Element {
 
 	get listEndDOM() {
 		return this.shadowRoot!.querySelector(".ui5-list-end-marker");
+	}
+
+	get dropIndicatorDOM(): DropIndicator | null {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
 	}
 
 	get hasData() {
@@ -612,7 +622,7 @@ class List extends UI5Element {
 	}
 
 	get _growingButtonText(): string {
-		return List.i18nBundle.getText(LOAD_MORE_TEXT);
+		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get busyIndPosition() {
@@ -752,7 +762,7 @@ class List extends UI5Element {
 	}
 
 	getEnabledItems(): Array<ListItemBase> {
-		return this.getItems().filter(item => !item.disabled);
+		return this.getItems().filter(item => item._focusable);
 	}
 
 	getItems(): Array<ListItemBase> {
@@ -848,7 +858,7 @@ class List extends UI5Element {
 		}
 
 		if (lastTabbableEl === target) {
-			if (this.getFirstItem(x => x.selected && !x.disabled)) {
+			if (this.getFirstItem(x => x.selected && x._focusable)) {
 				this.focusFirstSelectedItem();
 			} else if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -895,6 +905,86 @@ class List extends UI5Element {
 		}
 
 		this.setForwardingFocus(false);
+	}
+
+	_ondragenter(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	_ondragleave(e: DragEvent) {
+		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
+			return;
+		}
+
+		this.dropIndicatorDOM!.targetReference = null;
+	}
+
+	_ondragover(e: DragEvent) {
+		const draggedElement = DragRegistry.getDraggedElement();
+
+		if (!(e.target instanceof HTMLElement) || !draggedElement) {
+			return;
+		}
+
+		const closestPosition = findClosestPosition(
+			this.items,
+			e.clientY,
+			Orientation.Vertical,
+		);
+
+		if (!closestPosition) {
+			this.dropIndicatorDOM!.targetReference = null;
+			return;
+		}
+
+		let placements = closestPosition.placements;
+
+		if (closestPosition.element === draggedElement) {
+			placements = placements.filter(placement => placement !== MovePlacement.On);
+		}
+
+		const placementAccepted = placements.some(placement => {
+			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
+				source: {
+					element: draggedElement,
+				},
+				destination: {
+					element: closestPosition.element,
+					placement,
+				},
+			}, true);
+
+			if (beforeItemMovePrevented) {
+				e.preventDefault();
+				this.dropIndicatorDOM!.targetReference = closestPosition.element;
+				this.dropIndicatorDOM!.placement = placement;
+				return true;
+			}
+
+			return false;
+		});
+
+		if (!placementAccepted) {
+			this.dropIndicatorDOM!.targetReference = null;
+		}
+	}
+
+	_ondrop(e: DragEvent) {
+		e.preventDefault();
+		const draggedElement = DragRegistry.getDraggedElement()!;
+
+		this.fireEvent<ListMoveEventDetail>("move", {
+			source: {
+				element: draggedElement,
+			},
+			destination: {
+				element: this.dropIndicatorDOM!.targetReference!,
+				placement: this.dropIndicatorDOM!.placement,
+			},
+		});
+
+		this.dropIndicatorDOM!.targetReference = null;
+		draggedElement.focus();
 	}
 
 	isForwardElement(element: HTMLElement) {
@@ -1023,7 +1113,7 @@ class List extends UI5Element {
 	 */
 	focusFirstItem() {
 		// only enabled items are focusable
-		const firstItem = this.getFirstItem(x => !x.disabled);
+		const firstItem = this.getFirstItem(x => x._focusable);
 
 		if (firstItem) {
 			firstItem.focus();
@@ -1040,7 +1130,7 @@ class List extends UI5Element {
 
 	focusFirstSelectedItem() {
 		// only enabled items are focusable
-		const firstSelectedItem = this.getFirstItem(x => x.selected && !x.disabled);
+		const firstSelectedItem = this.getFirstItem(x => x.selected && x._focusable);
 
 		if (firstSelectedItem) {
 			firstSelectedItem.focus();
@@ -1135,4 +1225,5 @@ export type {
 	ListItemCloseEventDetail,
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
+	ListMoveEventDetail,
 };

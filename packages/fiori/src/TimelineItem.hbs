@@ -1,6 +1,5 @@
 <div
 	class="ui5-tli-root"
-	dir="{{effectiveDir}}"
 >
 	<div class="{{classes.indicator}}">
 		<div class="ui5-tli-icon-outer">
@@ -11,7 +10,7 @@
 			{{/if}}
 		</div>
 	</div>
-	<div class="ui5-tli-bubble" tabindex="{{_tabIndex}}" data-sap-focus-ref>
+	<div class="ui5-tli-bubble" tabindex="{{forcedTabIndex}}" data-sap-focus-ref>
 		<div class="ui5-tli-title">
 			{{#if name}}
 				{{> name}}
@@ -20,7 +19,7 @@
 		</div>
 		<div class="ui5-tli-subtitle">{{subtitleText}}</div>
 
-		{{#if textContent}}
+		{{#if innerHTML}}
 			<div class="ui5-tli-desc">
 				<slot></slot>
 			</div>

@@ -1,6 +1,5 @@
 /**
  * Different types of SemanticColor.
- *
  * @public
  */
 enum SemanticColor {

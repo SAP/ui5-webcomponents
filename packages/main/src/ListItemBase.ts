@@ -11,19 +11,20 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
 /**
  * @class
  * A class to serve as a foundation
- * for the <code>ListItem</code> and <code>GroupHeaderListItem</code> classes.
- *
+ * for the `ListItem` and `GroupHeaderListItem` classes.
  * @constructor
+ * @abstract
  * @extends UI5Element
  * @public
  */
 @customElement({
 	renderer: litRender,
-	styles,
+	styles: [styles, draggableElementStyles],
 })
 @event("_request-tabindex-change")
 @event("_focused")
@@ -31,12 +32,20 @@ import styles from "./generated/themes/ListItemBase.css.js";
 @event("_forward-before")
 class ListItemBase extends UI5Element implements ITabbable {
 	/**
-	 * Defines the selected state of the <code>ListItem</code>.
+	 * Defines the selected state of the `ListItem`.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
+
+	/**
+	 * Defines whether the item is movable.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
 
 	/**
 	* Defines if the list item should display its bottom border.
@@ -46,12 +55,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 	hasBorder!: boolean;
 
 	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	/**
-	* Defines whether <code>ui5-li</code> is in disabled state.
-	* <br><br>
-	* <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+	* Defines whether `ui5-li` is in disabled state.
+	*
+	* **Note:** A disabled `ui5-li` is noninteractive.
 	* @default false
 	* @protected
 	* @since 1.0.0-rc.12
@@ -110,7 +119,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	/*
 	* Determines if th current list item either has no tabbable content or
-	* [TAB] is performed onto the last tabbale content item.
+	* [Tab] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter() {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);
@@ -129,7 +138,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		return {
 			main: {
 				"ui5-li-root": true,
-				"ui5-li--focusable": !this.disabled,
+				"ui5-li--focusable": this._focusable,
 			},
 		};
 	}
@@ -138,18 +147,22 @@ class ListItemBase extends UI5Element implements ITabbable {
 		return this.disabled ? true : undefined;
 	}
 
+	get _focusable() {
+		return !this.disabled;
+	}
+
 	get hasConfigurableMode() {
 		return false;
 	}
 
 	get _effectiveTabIndex() {
-		if (this.disabled) {
+		if (!this._focusable) {
 			return -1;
 		}
 		if (this.selected) {
 			return 0;
 		}
-		return this._tabIndex;
+		return this.forcedTabIndex;
 	}
 }
 

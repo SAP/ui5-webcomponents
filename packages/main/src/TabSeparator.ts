@@ -2,8 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TabContainer from "./TabContainer.js";
-import type { ITab } from "./Interfaces.js";
+import type { ITab } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -15,8 +16,7 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 
 /**
  * @class
- * The <code>ui5-tab-separator</code> represents a vertical line to separate tabs inside a <code>ui5-tabcontainer</code>.
- *
+ * The `ui5-tab-separator` represents a vertical line to separate tabs inside a `ui5-tabcontainer`.
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -28,7 +28,10 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
 	renderer: litRender,
 })
 class TabSeparator extends UI5Element implements ITab {
-	_getElementInStrip?: () => ITab | null;
+	@property({ type: Object, defaultValue: null })
+	realTabReference!: TabSeparator;
+
+	getElementInStrip?: () => ITab | null;
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -52,13 +55,13 @@ class TabSeparator extends UI5Element implements ITab {
 
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
-	 * <b>Note:</b> Tabs and separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return <code>null</code>.
 	 *
+	 * **Note:** Tabs and separators, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
 	 * @public
 	 */
 	getTabInStripDomRef(): ITab | null {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
+		if (this.getElementInStrip) {
+			return this.getElementInStrip();
 		}
 
 		return null;

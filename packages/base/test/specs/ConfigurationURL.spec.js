@@ -5,14 +5,6 @@ describe("Some settings can be set via SAP UI URL params", () => {
 		await browser.url("test/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb@https://example.com&sap-ui-animationMode=basic");
 	});
 
-	it("Tests that RTL is applied", async () => {
-		const res = await browser.executeAsync(done => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			done(config.getRTL());
-		});
-		assert.strictEqual(res, true, "RTL is true");
-	});
-
 	it("Tests that language is applied", async () => {
 		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;

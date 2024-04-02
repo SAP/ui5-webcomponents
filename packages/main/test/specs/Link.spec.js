@@ -83,7 +83,7 @@ describe("General API", () => {
 	it("Open dialog link has propper aria-haspopup attribute", async () => {
 		const link = await browser.$("#signInLink");
 
-		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "Dialog", "Proper aria-haspopup attribute is set");
+		assert.strictEqual(await link.shadow$("a").getAttribute("aria-haspopup"), "dialog", "Proper aria-haspopup attribute is set");
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {

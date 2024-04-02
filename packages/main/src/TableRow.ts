@@ -56,16 +56,15 @@ type TableRowF7PressEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-row</code> component represents a row in the <code>ui5-table</code>.
- *
+ * The `ui5-table-row` component represents a row in the `ui5-table`.
  * @constructor
  * @extends UI5Element
  * @implements {ITableRow}
  * @public
- * @csspart row - Used to style the native <code>tr</code> element
- * @csspart popin-row - Used to style the <code>tr</code> element when a row pops in
+ * @csspart row - Used to style the native `tr` element
+ * @csspart popin-row - Used to style the `tr` element when a row pops in
  */
 @customElement({
 	tag: "ui5-table-row",
@@ -75,8 +74,7 @@ type TableRowF7PressEventDetail = {
 	dependencies: [CheckBox],
 })
 /**
- * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
- *
+ * Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
  * @since 1.0.0-rc.15
  * @private
  */
@@ -84,14 +82,12 @@ type TableRowF7PressEventDetail = {
 @event("_focused")
 /**
  * Fired on selection change of an active row.
- *
  * @since 1.0.0-rc.15
  * @private
  */
 @event("selection-requested")
 /**
  * Fired when F7 is pressed.
- *
  * @since 1.2.0
  * @private
  */
@@ -100,9 +96,8 @@ class TableRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the visual indication and behavior of the component.
 	 *
-	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
-	 * while with type <code>Inactive</code>-will not.
-	 *
+	 * **Note:** When set to `Active`, the item will provide visual response upon press,
+	 * while with type `Inactive`-will not.
 	 * @default "Inactive"
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -112,7 +107,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Defines the row's selected state.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -122,7 +116,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Indicates if the table row is navigated.
-	 *
 	 * @default false
 	 * @since 1.9.0
 	 * @public
@@ -132,7 +125,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-	 *
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -142,7 +134,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	/**
 	 * Indicates if the table row is active.
-	 *
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -154,19 +145,18 @@ class TableRow extends UI5Element implements ITableRow {
 	_columnsInfo!: Array<TableColumnInfo>;
 
 	@property({ defaultValue: "-1" })
-	_tabIndex!: string;
+	forcedTabIndex!: string;
 
 	@property({ type: Boolean })
-	_busy!: boolean;
+	forcedBusy!: boolean;
 
 	@property({ defaultValue: "", noAttribute: true })
-	_ariaPosition!: string;
+	forcedAriaPosition!: string;
 
 	/**
 	 * Defines the cells of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-table-cell` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
@@ -180,7 +170,7 @@ class TableRow extends UI5Element implements ITableRow {
 	_ontouchstart: PassiveEventListenerObject;
 
 	// Properties, set and handled by the Table
-	_tabbables: Array<HTMLElement> = [];
+	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
 	constructor() {
@@ -400,10 +390,10 @@ class TableRow extends UI5Element implements ITableRow {
 		}).join(" ");
 
 		if (isRowSelectable) {
-			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
+			return `${ariaLabel}. ${this.forcedAriaPosition}. ${isSelected}`;
 		}
 
-		return `${ariaLabel}. ${this._ariaPosition}`;
+		return `${ariaLabel}. ${this.forcedAriaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {

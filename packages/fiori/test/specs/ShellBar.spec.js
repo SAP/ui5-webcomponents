@@ -47,7 +47,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests acc custom roles", async () => {
-			const sb = await browser.$("#sbAccRoles");
+			const sb = await browser.$("#sb");
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
 			// assertHANDLE_RESIZE_DEBOUNCE_RATE_WAIT
@@ -56,7 +56,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests accessibilityAttributes property", async () => {
-			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "Dialog";
+			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "dialog";
 			const sb = await browser.$("#sbAccAttr");
 
 			assert.strictEqual(await sb.getProperty("_notificationsHasPopup"), NOTIFICATIONS_BTN_ARIA_HASPOPUP,
@@ -389,6 +389,30 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await input.getValue(), "CoPilot", "Input value is set by click event of CoPilot");
 			});
 
+			it("tests search-button-click event", async () => {
+				setTimeout(async () => {
+					const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+					const input = await browser.$("#press-input");
+
+					await searchIcon.click();
+					assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
+				}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+
+			});
+
+			it("tests search-button-click event", async () => {
+				setTimeout(async () => {
+					const searchButton  = await browser.$("#sb").shadow$(".ui5-shellbar-search-button");
+					const searchField  = await browser.$("#sb").shadow$(".ui5-shellbar-search-field");
+					assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
+
+					await searchButton .click();
+					assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
+				}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+
+			});
+
+
 			it("tests menuItemClick event", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
 				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
@@ -522,30 +546,18 @@ describe("Component Behavior", () => {
 			});
 
 			it("Shows translated label for predefined buttons, as button text when in Overflow Popover", async () => {
+				await browser.url(`test/pages/ShellBar.html?sap-ui-language=de_DE`);
 				const shellBar = await browser.$("#shellbar");
 				const overflowButton = await shellBar.shadow$(".ui5-shellbar-overflow-button");
 				let psButtonText;
 
-				await browser.executeAsync(function(done) {
-					window['sap-ui-webcomponents-bundle'].configuration.setLanguage("de_DE");
-					done();
-				});
-				await browser.setWindowSize(500, 1080);
-
-				overflowButton.click();
 				const popover = await getOverflowPopover("shellbar");
 				const items = await popover.$$("ui5-li");
+				await overflowButton.click();
 
 				psButtonText = await [...items][5].getText();
 
 				assert.strictEqual(psButtonText, await shellBar.getProperty("_productsText"), "Product switch button text is translated in overflow popover");
-
-				await browser.setWindowSize(500, 1080);
-				await browser.executeAsync(function(done) {
-					window['sap-ui-webcomponents-bundle'].configuration.setLanguage("en_EN");
-					done();
-				});
-
 			});
 		});
 	});

@@ -87,6 +87,7 @@ slot[name="profile"] {
 	min-width: 0;
 	width: 2rem;
 	height: 2rem;
+	min-height: 2rem;
 	padding: .25rem;
 	pointer-events: none;
 }
@@ -106,7 +107,6 @@ slot[name="profile"] {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: var(--sapShell_TextColor);
-	flex: auto;
 }
 
 :host(:not([primary-title])) .ui5-shellbar-menu-button {
@@ -143,6 +143,19 @@ slot[name="profile"] {
 	width: 0;
 	flex-shrink: 0;
 	width: 7.5rem;
+}
+
+.ui5-shellbar-mid-content {
+	height: var(--_ui5_shellbar_overflow_container_middle_height);
+	width: 33.4%;
+}
+
+.ui5-shellbar-overflow-container-left:has(+ .ui5-shellbar-mid-content) {
+	width: 33.3%;
+}
+
+.ui5-shellbar-mid-content + .ui5-shellbar-overflow-container-right {
+	width: 33.3%;
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-middle {

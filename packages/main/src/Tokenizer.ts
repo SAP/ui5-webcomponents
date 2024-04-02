@@ -45,7 +45,7 @@ import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import type Token from "./Token.js";
-import type { IToken } from "./Interfaces.js";
+import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -79,10 +79,9 @@ enum ClipboardDataOperation {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * A container for tokens.
- *
  * @constructor
  * @extends UI5Element
  * @private
@@ -131,7 +130,6 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -139,7 +137,6 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -153,7 +150,6 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Indicates the value state of the related input component.
-	 *
 	 * @default "None"
 	 * @private
 	 */
@@ -329,7 +325,6 @@ class Tokenizer extends UI5Element {
 	/**
 	 * Removes a token from the Tokenizer.
 	 * This method should only be used by ui5-multi-combobox and ui5-multi-input
-	 *
 	 * @protected
 	 * @param token Token to be focused.
 	 * @param forwardFocusToPrevious Indicates whether the focus will be forwarded to previous or next token after deletion.

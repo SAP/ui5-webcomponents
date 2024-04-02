@@ -1,11 +1,12 @@
 <ui5-li-custom
 	id="{{this._id}}-li"
 	class="{{this.overflowClasses}}"
+	style="{{this.forcedStyle}}"
 	type="{{this.overflowState}}"
 	aria-disabled="{{this.effectiveDisabled}}"
 	aria-selected="{{this.effectiveSelected}}"
-	._realTab="{{this}}"
-	style="{{this._style}}"
+	?movable="{{this.movable}}"
+	.realTabReference="{{this}}"
 >
 	<div class="ui5-tab-overflow-itemContent-wrapper">
 		<div class="ui5-tab-overflow-itemContent">
@@ -27,6 +28,3 @@
 		</div>
 	</div>
 </ui5-li-custom>
-{{#each subTabs}}
-	{{overflowPresentation}}
-{{/each}}

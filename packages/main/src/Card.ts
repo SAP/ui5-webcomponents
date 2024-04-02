@@ -8,7 +8,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
-import type { ICardHeader } from "./CardHeader.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
@@ -18,22 +17,32 @@ import {
 import cardCss from "./generated/themes/Card.css.js";
 
 /**
+ * Interface for components that may be slotted inside `ui5-card` as header
+ * @public
+ */
+interface ICardHeader extends HTMLElement {
+	subtitleText: string,
+	titleText: string,
+	status: string,
+	interactive: boolean,
+}
+
+/**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-card</code> is a component that represents information in the form of a
+ * The `ui5-card` is a component that represents information in the form of a
  * tile with separate header and content areas.
- * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
- * The header can be used through slot <code>header</code>. For which there is a <code>ui5-card-header</code> component to achieve the card look and feel.
+ * The content area of a `ui5-card` can be arbitrary HTML content.
+ * The header can be used through slot `header`. For which there is a `ui5-card-header` component to achieve the card look and feel.
  *
- * Note: We recommend the usage of <code>ui5-card-header</code> for the header slot, so advantage can be taken for keyboard handling, styling and accessibility.
+ * Note: We recommend the usage of `ui5-card-header` for the header slot, so advantage can be taken for keyboard handling, styling and accessibility.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Card";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/CardHeader.js";</code> (for <code>ui5-card-header</code>)
+ * `import "@ui5/webcomponents/dist/Card";`
  *
+ * `import "@ui5/webcomponents/dist/CardHeader.js";` (for `ui5-card-header`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -51,9 +60,8 @@ import cardCss from "./generated/themes/Card.css.js";
 class Card extends UI5Element {
 	/**
 	 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
-	 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
 	 *
-	 *
+	 * **Note:** `accessibleName` should be always set, unless `accessibleNameRef` is set.
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -63,7 +71,6 @@ class Card extends UI5Element {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -80,8 +87,8 @@ class Card extends UI5Element {
 
 	/**
 	 * Defines the header of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-card-header` for the intended design.
 	 * @since 1.0.0-rc.15
 	 * @public
 	*/
@@ -122,3 +129,7 @@ class Card extends UI5Element {
 Card.define();
 
 export default Card;
+
+export type {
+	ICardHeader,
+};

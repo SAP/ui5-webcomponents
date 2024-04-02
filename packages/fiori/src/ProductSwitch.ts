@@ -2,6 +2,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -23,33 +24,40 @@ import {
 
 // Styles
 import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
-import type IProductSwitchItem from "./ProductSwitchItem.js";
+
+/**
+ * Interface for components that may be slotted inside `ui5-product-switch` as items
+ * @public
+ */
+interface IProductSwitchItem extends HTMLElement, ITabbable {
+	titleText: string,
+	subtitleText: string,
+	icon: string,
+	target: string,
+	targetSrc: string,
+	selected: boolean,
+}
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-product-switch</code> is an SAP Fiori specific web component that is used in <code>ui5-shellbar</code>
+ * The `ui5-product-switch` is an SAP Fiori specific web component that is used in `ui5-shellbar`
  * and allows the user to easily switch between products.
- * <br><br>
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-product-switch</code> provides advanced keyboard handling.
+ * ### Keyboard Handling
+ * The `ui5-product-switch` provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
- * <ul>
- * <li>[TAB] - Move focus to the next interactive element after the <code>ui5-product-switch</code></li>
- * <li>[UP/DOWN] - Navigates up and down the items </li>
- * <li>[LEFT/RIGHT] - Navigates left and right the items</li>
- * </ul>
- * <br>
- * <br>
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
+ * - [Tab] - Move focus to the next interactive element after the `ui5-product-switch`
+ * - [Up] or [Down] - Navigates up and down the items
+ * - [Left] or [Right] - Navigates left and right the items
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`
+ *
+ * `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";` (for `ui5-product-switch-item`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -84,8 +92,7 @@ class ProductSwitch extends UI5Element {
 	desktopColumns?: number;
 
 	/**
-	 * Defines the items of the <code>ui5-product-switch</code>.
-	 *
+	 * Defines the items of the `ui5-product-switch`.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
@@ -179,3 +186,7 @@ class ProductSwitch extends UI5Element {
 ProductSwitch.define();
 
 export default ProductSwitch;
+
+export type {
+	IProductSwitchItem,
+};
