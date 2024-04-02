@@ -106,6 +106,12 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
+	_show() {
+		if (!isPhone()) {
+			super._show();
+		}
+	}
+
 	/**
 	 * Closes the popover/dialog.
 	 * @public

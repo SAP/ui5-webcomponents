@@ -515,10 +515,6 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
-		if (!this.opened) {
-			return;
-		}
-
 		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
 		if (prevented) {
 			return;
