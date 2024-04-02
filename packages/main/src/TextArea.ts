@@ -294,7 +294,6 @@ class TextArea extends UI5Element implements IFormElement {
    	 *
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
-   	 * <br><br>
 	 * **Note:** The `valueStateMessage` would be displayed if the component has
 	 * `valueState` of type `Information`, `Warning` or `Error`.
 	 * @since 1.0.0-rc.7
