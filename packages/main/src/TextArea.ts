@@ -297,7 +297,6 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
-	 * <br><br>
 	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * <br><br>
