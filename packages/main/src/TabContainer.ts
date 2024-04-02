@@ -97,7 +97,6 @@ interface ITab extends UI5Element {
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
 
 const tabStyles: Array<StyleData> = [];
-const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 type TabContainerTabSelectEventDetail = {
@@ -172,7 +171,6 @@ interface TabContainerTabInOverflow extends CustomListItem {
 		tabStyles,
 		tabContainerCss,
 		ResponsivePopoverCommonCss,
-		staticAreaTabStyles,
 	],
 	renderer: litRender,
 	template: TabContainerTemplate,
@@ -350,10 +348,6 @@ class TabContainer extends UI5Element {
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
-	}
-
-	static registerStaticAreaTabStyles(styles: StyleData) {
-		staticAreaTabStyles.push(styles);
 	}
 
 	static i18nBundle: I18nBundle;

@@ -490,6 +490,6 @@ Tab.define();
 
 TabContainer.registerTabStyles(stripCss);
 TabContainer.registerTabStyles(draggableElementStyles);
-TabContainer.registerStaticAreaTabStyles(overflowCss);
+TabContainer.registerTabStyles(overflowCss);
 
 export default Tab;

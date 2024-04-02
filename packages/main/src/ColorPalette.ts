@@ -34,7 +34,7 @@ import {
 
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
-import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
+import ColorPaletteDialogCss from "./generated/themes/ColorPaletteDialog.css.js";
 
 /**
  * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
@@ -74,7 +74,7 @@ type ColorPaletteItemClickEventDetail = {
 	tag: "ui5-color-palette",
 	renderer: litRender,
 	template: ColorPaletteTemplate,
-	styles: [ColorPaletteCss, ColorPaletteStaticAreaCss],
+	styles: [ColorPaletteCss, ColorPaletteDialogCss],
 	get dependencies() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
