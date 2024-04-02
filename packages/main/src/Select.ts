@@ -79,7 +79,6 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
  */
 interface IOption extends UI5Element {
 	selected: boolean,
-	disabled: boolean,
 	title: string,
 	icon?: string | null,
 	value: string,
@@ -487,7 +486,7 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	set value(newValue: string) {
 		const menu = this._getSelectMenu();
-		const selectOptions = Array.from(menu ? menu.children : this.children).filter(option => !option.getAttribute("disabled")) as Array<IOption>;
+		const selectOptions = Array.from(menu ? menu.children : this.children) as Array<IOption>;
 
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -1095,7 +1094,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _filteredItems() {
-		return this.options.filter(option => !option.disabled);
+		return this.options;
 	}
 
 	itemSelectionAnnounce() {
