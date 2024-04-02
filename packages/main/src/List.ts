@@ -439,7 +439,7 @@ class List extends UI5Element {
 		invalidateOnChildChange: true,
 		type: HTMLElement,
 	})
-	items!: Array<ListItemBase>;
+	items!: Array<ListItemBase | ListItemGroup>;
 
 	/**
 	 * Defines the component header.
@@ -495,6 +495,16 @@ class List extends UI5Element {
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
+	}
+
+	/**
+	 * Returns an array containing the list item instances without the groups in a flat structure.
+	 * @default []
+	 * @since 2.0.0
+	 * @public
+	 */
+	get listItems(): ListItemBase[] {
+		return this.getItems();
 	}
 
 	onEnterDOM() {
@@ -776,9 +786,8 @@ class List extends UI5Element {
 		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
 
 		slottedItems.forEach(item => {
-			if (item.hasAttribute("ui5-li-group")) {
-				const groupItem = item as ListItemGroup;
-				const groupItems = [groupItem.groupHeaderItem, ...groupItem.items].filter(Boolean);
+			if (item instanceof ListItemGroup) {
+				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
 				items.push(...groupItems);
 			} else {
 				items.push(item);

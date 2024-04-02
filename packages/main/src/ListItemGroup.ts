@@ -3,6 +3,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
@@ -15,37 +17,41 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 /**
  * @class
+ * ### Overview
+ * The `ui5-li-group` is a special list item, used only to create groups of list items.
  *
- * @csspart header - The group header of the list item.
+ * This is the item to use inside a `ui5-list`.
  *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/ListItemGroup.js";`
+ * @csspart header - Used to style the header item of the group
  * @constructor
- * @extends ListItemBase
+ * @extends UI5Element
  * @public
- *
+ * @since 2.0
  */
 @customElement({
 	tag: "ui5-li-group",
+	renderer: litRender,
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
 	dependencies: [StandardListItem, ListItemGroupHeader],
 })
-class ListItemGroup extends ListItemBase {
-	static i18nBundle: I18nBundle;
+class ListItemGroup extends UI5Element {
+		static i18nBundle: I18nBundle;
 
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
-	 * <br><br>
+	 * @public
+	 * @default ""
 	 */
-	@property({ type: String })
+	@property()
 	headerText!: string;
 
 	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
-	 * <br><br>
-	 *
 	 * @public
-	 * @slot items
 	 */
 	@slot({
 		"default": true,

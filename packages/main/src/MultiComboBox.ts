@@ -1079,7 +1079,7 @@ class MultiComboBox extends UI5Element {
 
 	async _handleArrowDown() {
 		const isOpen = this.allItemsPopover?.opened;
-		const firstListItem = this.list?.items[0];
+		const firstListItem = this.list?.listItems[0];
 
 		if (isOpen) {
 			firstListItem && this.list?._itemNavigation.setCurrentItem(firstListItem);
@@ -1343,7 +1343,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		// sync list items and cb items
-		this.syncItems((e.target as List).items);
+		this.syncItems((e.target as List).listItems);
 
 		// don't call selection change right after selection as user can cancel it on phone
 		if (!isPhone()) {
