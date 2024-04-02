@@ -53,9 +53,10 @@ type TokenDeleteEventDetail = {
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
+
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
- * @public
+ * @private
  */
 @event("select")
 

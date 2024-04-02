@@ -76,7 +76,11 @@ import ListItem from "./ListItem.js";
 type TokenCountMapType = { [x: number]: I18nText };
 
 type TokenizerTokenDeleteEventDetail = {
-	ref: Token;
+	deletedTokens: Token[];
+}
+
+type TokenizerSelectionChangeEventDetail = {
+	selectedTokens: Token[];
 }
 
 enum ClipboardDataOperation {
@@ -117,12 +121,25 @@ enum ClipboardDataOperation {
 
 /**
  * Fired when a token is deleted (delete icon, delete or bacspace is pressed)
+ *
  * @param {HTMLElement} ref DOM ref of the token to be deleted.
  * @public
  */
 @event<TokenizerTokenDeleteEventDetail>("token-delete", {
 	detail: {
-		ref: { type: HTMLElement },
+		deletedTokens: { type: Array },
+	},
+})
+
+/**
+ * Fired when token selection is changed by user interaction
+ *
+ * @param {Array<Token>} selectedTokens An array of the selected items.
+ * @public
+ */
+@event<TokenizerSelectionChangeEventDetail>("selection-change", {
+	detail: {
+		selectedTokens: { type: Array },
 	},
 })
 
@@ -183,7 +200,6 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Prevents tokens to be part of the tab chain.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -391,8 +407,8 @@ class Tokenizer extends UI5Element {
 		const nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
 
 		this._handleCurrentItemAfterDeletion(nextToken);
-
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
+debugger;
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { deletedTokens: [token] || [target] });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -435,8 +451,10 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._handleCurrentItemAfterDeletion(nextToken);
-
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+debugger;
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", {
+			deletedTokens: this._selectedTokens,
+		});
 	}
 
 	async itemDelete(e: CustomEvent) {
@@ -448,14 +466,16 @@ class Tokenizer extends UI5Element {
 			const morePopover = await this.getPopover();
 
 			morePopover.addEventListener("ui5-after-close", () => {
-				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+				debugger;
+				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { deletedTokens: [token] });
 			}, {
 				once: true,
 			});
 
 			morePopover.close();
 		} else {
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+			debugger;
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { deletedTokens: [token] });
 
 			const currentListItem = e.detail.item as ListItem;
 			const nextListItem = currentListItem.nextElementSibling;
@@ -508,7 +528,7 @@ class Tokenizer extends UI5Element {
 
 			if (isCut) {
 				const cutResult = this._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
-
+				debugger;
 				selectedTokens.forEach(token => {
 					this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 				});
@@ -618,10 +638,19 @@ class Tokenizer extends UI5Element {
 		const tokens = this.tokens;
 		const target = e.target as Token;
 		const currentTokenIdx = tokens.indexOf(target);
+		const previousSelectedTokens = [...this._selectedTokens];
 
 		tokens.filter((token, index) => index <= currentTokenIdx).forEach(token => {
 			token.selected = true;
 		});
+
+		const selectedTokensChanged = JSON.stringify(previousSelectedTokens) !== JSON.stringify(this._selectedTokens);
+
+		if (selectedTokensChanged) {
+			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+				selectedTokens: this._selectedTokens,
+			});
+		}
 
 		tokens[0].focus();
 		this._itemNav.setCurrentItem(tokens[0]);
@@ -631,10 +660,19 @@ class Tokenizer extends UI5Element {
 		const tokens = this.tokens;
 		const target = e.target as Token;
 		const currentTokenIdx = tokens.indexOf(target);
+		const previousSelectedTokens = [...this._selectedTokens];
 
 		tokens.filter((token, index) => index >= currentTokenIdx).forEach(token => {
 			token.selected = true;
 		});
+
+		const selectedTokensChanged = JSON.stringify(previousSelectedTokens) !== JSON.stringify(this._selectedTokens);
+
+		if (selectedTokensChanged) {
+			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+				selectedTokens: this._selectedTokens,
+			});
+		}
 
 		tokens[tokens.length - 1].focus();
 		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
@@ -677,6 +715,7 @@ class Tokenizer extends UI5Element {
 	_handleArrowShift(focusedToken: Token, tokens: Array<Token>, backwards: boolean) {
 		const focusedTokenIndex = tokens.indexOf(focusedToken);
 		const nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
+		const previousSelectedTokens = [...this._selectedTokens];
 
 		if (nextIndex === -1 || nextIndex === tokens.length) {
 			return;
@@ -684,6 +723,15 @@ class Tokenizer extends UI5Element {
 
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
+
+		const selectedTokensChanged = JSON.stringify(previousSelectedTokens) !== JSON.stringify(this._selectedTokens);
+
+		if (selectedTokensChanged) {
+			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+				selectedTokens: this._selectedTokens,
+			});
+		}
+
 		setTimeout(() => {
 			tokens[nextIndex].focus();
 		}, 0);
@@ -694,6 +742,9 @@ class Tokenizer extends UI5Element {
 
 	_click(e: MouseEvent) {
 		if (e.metaKey || e.ctrlKey) {
+			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+				selectedTokens: this._selectedTokens,
+			});
 			return;
 		}
 
@@ -723,6 +774,10 @@ class Tokenizer extends UI5Element {
 					token.selected = i >= start && i <= end;
 				});
 			}
+
+			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+				selectedTokens: this._selectedTokens,
+			});
 
 			return;
 		}
@@ -761,6 +816,10 @@ class Tokenizer extends UI5Element {
 
 		const tokensAreSelected = tokens.every(token => token.selected);
 		tokens.forEach(token => { token.selected = !tokensAreSelected; });
+
+		this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			selectedTokens: this._selectedTokens,
+		});
 	}
 
 	_handleTokenSelection(e: KeyboardEvent | MouseEvent, deselectAll = true) {
@@ -772,6 +831,10 @@ class Tokenizer extends UI5Element {
 				if (token !== target) {
 					token.selected = false;
 				}
+			});
+
+			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+				selectedTokens: this._selectedTokens,
 			});
 		}
 	}

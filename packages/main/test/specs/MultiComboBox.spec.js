@@ -1353,7 +1353,6 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened1");
 
-			await input.click();
 			await input.keys(["Control", "i"]);
 
 			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed2");
