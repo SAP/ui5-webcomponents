@@ -124,13 +124,7 @@
 
 /* Buttons */
 .ui5-uci-root-editing .ui5-li-detailbtn,
-.ui5-uci-root-editing .ui5-li-deletebtn,
-.ui5-uci-root-uploading .ui5-li-detailbtn,
-.ui5-uci-root-uploading .ui5-li-deletebtn {
-	display: none;
-}
-
-.ui5-li-deletebtn {
+.ui5-uci-root-uploading .ui5-li-detailbtn {
 	display: none;
 }
 

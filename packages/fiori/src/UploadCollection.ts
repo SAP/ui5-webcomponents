@@ -10,7 +10,6 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
@@ -31,6 +30,7 @@ import {
 } from "./upload-utils/UploadCollectionBodyDnD.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
+import UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
@@ -123,8 +123,8 @@ class UploadCollection extends UI5Element {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property({ type: UploadCollectionSelectionMode, defaultValue: UploadCollectionSelectionMode.None })
+	mode!: `${UploadCollectionSelectionMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
