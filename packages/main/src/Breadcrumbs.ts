@@ -154,7 +154,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separatorStyle!: `${BreadcrumbsSeparatorStyle}`;
+	separators!: `${BreadcrumbsSeparatorStyle}`;
 
 	/**
 	 * Holds the number of items in the overflow.
