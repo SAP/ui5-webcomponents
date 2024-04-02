@@ -33,40 +33,6 @@ describe("Dialog general interaction", () => {
 		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
 	});
 
-	/* POPOVER API: you don't set z-index as the order of opening is what matters
-	it("tests popover in dialog", async () => {
-		const btnOpenDialog = await browser.$("#btnOpenDialog");
-		const select = await browser.$("#mySelect");
-
-		await btnOpenDialog.click();
-		await select.click();
-
-		const dialogZIndex = parseInt((await browser.$("#dialog").getCSSProperty("z-index")).value);
-		const popoverZIndex = parseInt((await browser.$(`.${await select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty("z-index")).value);
-
-		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
-	});
-	*/
-
-	/* POPOVER API: do not check for static area items
-	it("tests dialog lifecycle", async () => {
-		await browser.url(`test/pages/DialogLifecycle.html`);
-
-		let staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
-		assert.notOk(await staticAreaItem.isExisting(), "No static area item.");
-
-		const openDialogButton = await browser.$("#openDialogButton");
-		await openDialogButton.click();
-
-		staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
-		assert.ok(await staticAreaItem.isExisting(), "Static area item exists.");
-
-		const closeDialogButton = await browser.$("#closeDialogButton");
-		await closeDialogButton.click();
-
-	});
-	*/
-
 	it("dialog repositions after screen resize", async () => {
 		await browser.url(`test/pages/Dialog.html`);
 
