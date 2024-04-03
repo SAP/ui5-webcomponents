@@ -639,15 +639,12 @@ class Suggestions {
 	}
 
 	_focusValueState() {
-		const items = this._getItems();
-
 		this.component._isValueStateFocused = true;
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = 0;
 		this.component.value = this.component.typedInValue;
 
-		items && this._scrollItemIntoView(items[0]);
 		this._deselectItems();
 	}
 
