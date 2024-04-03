@@ -1,6 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace, isEnter, isDelete, isF2,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -287,7 +290,7 @@ abstract class ListItem extends ListItemBase {
 		document.removeEventListener("touchend", this.deactivate);
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -303,6 +306,15 @@ abstract class ListItem extends ListItemBase {
 
 		if (isEnter(e)) {
 			this.fireItemPress(e);
+		}
+
+		if (isF2(e)) {
+			const focusDomRef = this.getFocusDomRef()!;
+			if (this.focused) {
+				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+			} else {
+				focusDomRef.focus(); // stop content editing
+			}
 		}
 	}
 

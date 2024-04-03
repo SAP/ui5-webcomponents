@@ -335,6 +335,22 @@ describe("List Tests", () => {
 		assert.ok(await afterBtn.isFocused(), "element outside of the list is focused");
 	});
 
+	it("keyboard handling on F2", async () => {
+		const item = await browser.$("ui5-li-custom.item");
+		const itemBtn = await browser.$("ui5-button.itemBtn");
+
+		await item.click();
+		assert.ok(await item.isFocused(), "item is focused");
+
+		// act: F2 from item -> the focus should go to "Click me" button
+		await item.keys("F2");
+		assert.ok(await itemBtn.isFocused(), "the 1st tabbable element (button) is focused");
+
+		// act: f2 from the "Click me" button - the focus should go back to the parent item
+		await itemBtn.keys("F2");
+		assert.ok(await item.isFocused(), "the parent item is focused");
+	});
+
 	it("keyboard handling on TAB when 2 level nested UI5Element is focused", async () => {
 		const list = await browser.$("#focusAfterList");
 		const breadcrumbsItem = await list.$(".breadcrumbsItem");

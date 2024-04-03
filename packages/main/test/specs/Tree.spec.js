@@ -44,7 +44,23 @@ describe("Tree general interaction", () => {
 		await toggleButton.click();
 		const listItemsAfter = await getItemsCount("#tree");
 		assert.isAbove(listItemsAfter, listItemsBefore, "After expanding a node, there are more items in the list");
-	})
+	});
+
+	it("keyboard handling on F2", async () => {
+		const item = await browser.$("ui5-tree-item-custom.item");
+		const itemBtn = await browser.$("ui5-button.itemBtn");
+
+		await item.click();
+		assert.ok(await item.isFocused(), "item is focused");
+
+		// act: F2 from item -> the focus should go to "Click me" button
+		await item.keys("F2");
+		assert.ok(await itemBtn.isFocused(), "the 1st tabbable element (button) is focused");
+
+		// act: f2 from the "Click me" button - the focus should go back to the parent item
+		await itemBtn.keys("F2");
+		assert.ok(await item.isFocused(), "the parent item is focused");
+	});
 
 });
 
