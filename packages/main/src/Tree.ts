@@ -387,13 +387,15 @@ class Tree extends UI5Element {
 
 		closestPosition.element = allItemsTraversed[allLiNodesTraversed.indexOf(closestPosition.element)];
 
+		if (draggedElement.contains(closestPosition.element)) { return; }
+
 		if (closestPosition.element === draggedElement) {
 			placements = placements.filter(placement => placement !== MovePlacement.On);
 		}
 
 		const placementAccepted = placements.some(placement => {
 			const closestElement = closestPosition.element;
-			const beforeItemMovePrevented = !draggedElement.contains(closestElement) && !this.fireEvent<TreeMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireEvent<TreeMoveEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},

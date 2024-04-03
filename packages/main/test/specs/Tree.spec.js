@@ -215,16 +215,16 @@ describe("Tree slots", () => {
 
 describe("Tree drag and drop tests", () => {
 	const getDragOffset = async (draggedElement, dropTargetElement, targetPosition) => {
-		const EXTRA_OFFSET = 5;
 		const draggedRectangle = {
 			...await draggedElement.getLocation(),
 			...await draggedElement.getSize()
 		};
-
+		
 		const dropTargetElementRectangle = {
 			...await dropTargetElement.getLocation(),
 			...await dropTargetElement.getSize()
 		}
+		const EXTRA_OFFSET = Math.floor(dropTargetElementRectangle.height / 3);
 
 		const draggedElementCenter = (draggedRectangle.y + draggedRectangle.height / 2);
 		const droppedElementCenter = (dropTargetElementRectangle.y + dropTargetElementRectangle.height / 2);
@@ -240,8 +240,13 @@ describe("Tree drag and drop tests", () => {
 		return offsetToCenter;
 	};
 
-	const compareItemsOrder = async (treeId, expectedItems) => {
-		const treeItems = await browser.$$(`#${treeId} > *`);
+	const compareItemsOrder = async (treeId, expectedItems, nestedTag) => {
+		let treeItems;
+		if (nestedTag) {
+			treeItems = await browser.$$(`#${treeId} [${nestedTag}]`);
+		} else {
+			treeItems = await browser.$$(`#${treeId} > *`); // direct children
+		}
 		const results = await Promise.all(expectedItems.map((item, i) => item.isEqual(treeItems[i])));
 
 		return results.every(value => value);
@@ -252,9 +257,10 @@ describe("Tree drag and drop tests", () => {
 	});
 
 	it("Moving item After another", async () => {
-		const [firstItem, secondItem, thirdItem] = await browser.$$("#tree [ui5-tree-item]");
+		const [firstItem, secondItem, thirdItem] = await browser.$$("#tree > [ui5-tree-item]");
 
 		let dragOffset = await getDragOffset(firstItem, secondItem, "After");
+
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("tree", [secondItem, firstItem, thirdItem]), "Items order has changed");
 
@@ -264,7 +270,7 @@ describe("Tree drag and drop tests", () => {
 	});
 
 	it("Moving item Before another", async () => {
-		const [secondItem, thirdItem, firstItem] = await browser.$$("#tree [ui5-tree-item]");
+		const [secondItem, thirdItem, firstItem] = await browser.$$("#tree > [ui5-tree-item]");
 
 		let dragOffset = await getDragOffset(firstItem, thirdItem, "Before");
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
@@ -276,41 +282,45 @@ describe("Tree drag and drop tests", () => {
 	});
 
 	it("Moving item ON another", async () => {
-		const [firstItem, secondItem, thirdItem] = await browser.$$("#tree [ui5-tree-item]");
+		const [firstItem, secondItem, thirdItem] = await browser.$$("#tree > [ui5-tree-item]");
 
 		await firstItem.dragAndDrop({ x: 0, y: 0 });
 		assert.ok(await compareItemsOrder("tree", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
 
 		const dragOffset = await getDragOffset(firstItem, secondItem);
 		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
-		assert.ok(await compareItemsOrder("tree", [secondItem, thirdItem]), "Items order has changed");
-		assert.ok(false, "First item is nested in second item");
+		assert.ok(await compareItemsOrder("tree", [secondItem, thirdItem]), "First item nested in second");
 	});
 
-	// it("Moving item from one list to another", async () => {
-	// 	const [listOneFirstItem, listOneSecondItem, listOneThirdItem] = await browser.$$("#listDnd1 [ui5-li]");
-	// 	const listTwoItem = await browser.$("#bg2")
+	it("Rearranging leafs", async () => {
+		const toggleButton = await browser.$(">>>#tree ui5-tree-item ui5-icon.ui5-li-tree-toggle-icon");
+		await toggleButton.click();
 
-	// 	const dragOffset = await getDragOffset(listTwoItem, listOneFirstItem, "After");
-	// 	await listTwoItem.dragAndDrop({ x: 0, y: dragOffset});
-	// 	assert.ok(await compareItemsOrder("listDnd1", [listOneFirstItem, listTwoItem, listOneSecondItem, listOneThirdItem]), "Items order has changed");
-	// });
+		const allItems = await browser.$$("#tree [ui5-tree-item]");
+		let secondToLastLeaf = allItems[12];
+		let lastLeaf = allItems[13];
 
-	// it("Moving link to list that doesn't accept it", async () => {
-	// 	const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd1 [ui5-li]");
-	// 	const link = await browser.$("#link")
+		let dragOffset = await getDragOffset(secondToLastLeaf, lastLeaf, "After");
+		await secondToLastLeaf.dragAndDrop({ x: 0, y: dragOffset});
+		[allItems[12], allItems[13]] = [allItems[13], allItems[12]];
+		assert.ok(await compareItemsOrder("tree", allItems, 'ui5-tree-item'), "Second-to-last leaf moved after last");
 
-	// 	const dragOffset = await getDragOffset(link, firstItem, "After");
-	// 	await link.dragAndDrop({ x: 0, y: dragOffset});
-	// 	assert.ok(await compareItemsOrder("listDnd1", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
-	// });
+		secondToLastLeaf = allItems[12];
+		lastLeaf = allItems[13];
 
-	// it("Moving link to list that accepts it", async () => {
-	// 	const [firstItem, secondItem] = await browser.$$("#listDnd2 [ui5-li]");
-	// 	const link = await browser.$("#link")
+		dragOffset = await getDragOffset(lastLeaf, secondToLastLeaf, "Before");
+		await lastLeaf.dragAndDrop({ x: 0, y: dragOffset});
+		[allItems[13], allItems[12]] = [allItems[12], allItems[13]];
+		assert.ok(await compareItemsOrder("tree", allItems, 'ui5-tree-item'), "Last leaf moved before second-to-last");
+	});
 
-	// 	const dragOffset = await getDragOffset(link, secondItem, "Before");
-	// 	await link.dragAndDrop({ x: 0, y: dragOffset});
-	// 	assert.ok(await compareItemsOrder("listDnd2", [firstItem, link, secondItem]), "Items order has changed");
-	// });
+	it("Nesting parent among its children should be impossible", async () => {
+		const allItems = await browser.$$("#tree [ui5-tree-item]");
+		const parent = allItems[0];
+		const child = allItems[1];
+
+		const dragOffset = await getDragOffset(parent, child, "After");
+		await parent.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("tree", allItems, 'ui5-tree-item'), "Order stays the same. Parent not nested among its children.");
+	});
 });
