@@ -11,7 +11,7 @@ import "@ui5/webcomponents/dist/Dialog.js";
 
 import "@ui5/webcomponents-fiori/dist/Wizard.js";
 import "@ui5/webcomponents-fiori/dist/WizardStep.js";
-import "@ui5/webcomponents-fiori/dist/Bar.js";
+import "@ui5/webcomponents/dist/Bar.js";
 
 import "@ui5/webcomponents-icons/dist/product.js";
 import "@ui5/webcomponents-icons/dist/hint.js";

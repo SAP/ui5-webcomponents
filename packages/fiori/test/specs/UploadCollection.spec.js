@@ -216,7 +216,7 @@ describe("UploadCollection", () => {
 			await browser.keys("last.reports-edited");
 			await browser.keys("Enter");
 
-			// assert.strictEqual(await latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
+			assert.strictEqual(await latestReportsPdf.getProperty("fileName"), "last.reports-edited.pdf", "file extension '.pdf' should be preserved");
 
 			// reset the item
 			await browser.$("#errorState").removeAttribute("_editing");

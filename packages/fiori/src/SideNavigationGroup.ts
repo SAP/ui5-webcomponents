@@ -21,7 +21,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
+import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.js";
 
 /**
  * @class
@@ -45,7 +45,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
 	tag: "ui5-side-navigation-group",
 	renderer: litRender,
 	template: SideNavigationGroupTemplate,
-	styles: SideNavigationItemCss,
+	styles: SideNavigationGroupCss,
 	dependencies: [
 		Icon,
 	],
