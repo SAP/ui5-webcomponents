@@ -15,8 +15,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 	styles?: Styles,
 	template?: Template,
 	dependencies?: Array<typeof UI5Element>,
-	staticAreaStyles?: Styles,
-	staticAreaTemplate?: Template,
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
@@ -49,9 +47,8 @@ const customElement = (tagNameOrComponentSettings: string | {
 			target.metadata.fastNavigation = fastNavigation;
 		}
 
-		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
-			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
-			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
+		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {
+			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
 				get: () => customElementEntityValue,

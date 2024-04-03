@@ -192,7 +192,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(await eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
-	it("page-indicator-style property", async () => {
+	it("page-indicator-type property", async () => {
 		const carousel = await browser.$("#carouselNumericPageIndicator");
 		await carousel.scrollIntoView();
 

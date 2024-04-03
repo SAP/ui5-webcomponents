@@ -10,11 +10,13 @@ import UI5ElementMetadata, {
 	Metadata,
 } from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
-import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
-import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
 import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
-import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
+import {
+	renderDeferred,
+	renderImmediately,
+	cancelRender,
+} from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
@@ -25,7 +27,6 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
@@ -35,7 +36,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => void;
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => void;
 
 type RendererOptions = {
 	/**
@@ -103,17 +104,10 @@ abstract class UI5Element extends HTMLElement {
 	_state: State;
 	_getRealDomRef?: () => HTMLElement;
 
-	staticAreaItem?: StaticAreaItem;
-
 	static template?: TemplateFunction;
-	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
 
-	/**
-	 * @deprecated
-	 */
-	static render: Renderer;
-	static renderer?: Renderer;
+	static renderer: Renderer;
 
 	constructor() {
 		super();
@@ -159,11 +153,6 @@ abstract class UI5Element extends HTMLElement {
 
 	render() {
 		const template = (this.constructor as typeof UI5Element).template;
-		return executeTemplate(template!, this);
-	}
-
-	renderStatic() {
-		const template = (this.constructor as typeof UI5Element).staticAreaTemplate;
 		return executeTemplate(template!, this);
 	}
 
@@ -216,10 +205,6 @@ abstract class UI5Element extends HTMLElement {
 		if (this._fullyConnected) {
 			this.onExitDOM();
 			this._fullyConnected = false;
-		}
-
-		if (this.staticAreaItem && this.staticAreaItem.parentElement) {
-			this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
 		}
 
 		cancelRender(this);
@@ -646,9 +631,9 @@ abstract class UI5Element extends HTMLElement {
 	 *   1) children: immediate children (HTML elements or text nodes) were added, removed or reordered in the slot
 	 *   2) textcontent: text nodes in the slot changed value (or nested text nodes were added or changed value). Can only trigger for slots of "type: Node"
 	 *   3) slotchange: a slot element, slotted inside that slot had its "slotchange" event listener called. This practically means that transitively slotted children changed.
-	 *      Can only trigger if the child of a slot is a slot element itself.
+	 *	  Can only trigger if the child of a slot is a slot element itself.
 	 *   4) childchange: indicates that a UI5Element child in that slot was invalidated and in turn invalidated the component.
-	 *      Can only trigger for slots with "invalidateOnChildChange" metadata descriptor
+	 *	  Can only trigger for slots with "invalidateOnChildChange" metadata descriptor
 	 *
 	 *  - newValue: the new value of the property (for type="property" only)
 	 *
@@ -706,9 +691,6 @@ abstract class UI5Element extends HTMLElement {
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
-		if (this.staticAreaItem) {
-			this.staticAreaItem.update();
-		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		if (hasIndividualSlots) {
@@ -756,12 +738,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		const children = [...this.shadowRoot.children].filter(child => !["link", "style"].includes(child.localName));
-		if (children.length !== 1) {
-			console.warn(`The shadow DOM for ${(this.constructor as typeof UI5Element).getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
-		}
-
-		return children[0] as HTMLElement;
+		return this.shadowRoot.children[0] as HTMLElement;
 	}
 
 	/**
@@ -923,32 +900,6 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	static _needsStaticArea() {
-		return !!this.staticAreaTemplate || Object.prototype.hasOwnProperty.call(this.prototype, "renderStatic");
-	}
-
-	/**
-	 * @public
-	 */
-	getStaticAreaItemDomRef(): Promise<ShadowRoot | null> {
-		if (!(this.constructor as typeof UI5Element)._needsStaticArea()) {
-			throw new Error("This component does not use the static area");
-		}
-
-		if (!this.staticAreaItem) {
-			this.staticAreaItem = StaticAreaItem.createInstance();
-			this.staticAreaItem.setOwnerElement(this);
-		}
-		if (!this.staticAreaItem.parentElement) {
-			getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
-		}
-
-		return this.staticAreaItem.getDomRef();
-	}
-
-	/**
-	 * @private
-	 */
 	static _generateAccessors() {
 		const proto = this.prototype;
 		const slotsAreManaged = this.getMetadata().slotsAreManaged();
@@ -1068,14 +1019,6 @@ abstract class UI5Element extends HTMLElement {
 	static styles: ComponentStylesData = "";
 
 	/**
-	 * Returns the Static Area CSS for this UI5 Web Component Class
-	 * @protected
-	 */
-	static get staticAreaStyles(): ComponentStylesData {
-		return "";
-	}
-
-	/**
 	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
 	 *  - composed components (used in its shadow root or static area item)
 	 *  - slotted components that the component may need to communicate with
@@ -1139,7 +1082,6 @@ abstract class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
-			preloadLinks(this);
 		}
 		return this;
 	}
@@ -1175,7 +1117,9 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 };
 
 export default UI5Element;
-export { instanceOfUI5Element };
+export {
+	instanceOfUI5Element,
+};
 export type {
 	ChangeInfo,
 	Renderer,

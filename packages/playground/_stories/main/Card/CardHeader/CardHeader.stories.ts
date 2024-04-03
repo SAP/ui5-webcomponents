@@ -20,7 +20,7 @@ const Template: UI5StoryArgs<CardHeader, StoryArgsSlots> = (args) => {
 	slot="header"
 	title-text="${ifDefined(args.titleText)}"
 	subtitle-text="${ifDefined(args.subtitleText)}"
-	status="${ifDefined(args.status)}"
+	additional-text="${ifDefined(args.additionalText)}"
 	?interactive="${ifDefined(args.interactive)}"
 	>
 	${unsafeHTML(args.avatar)}
@@ -40,7 +40,7 @@ Basic.tags = ["_hidden_"]
 Basic.args = {
 	titleText: "Team Space",
 	subtitleText: "Direct Reports",
-	status: "3 of 10",
+	additionalText: "3 of 10",
 	action: `<ui5-button design="Transparent" slot="action">View All</ui5-button>`,
 	avatar: `<ui5-icon name="group" slot="avatar"></ui5-icon>`,
 	interactive: true,

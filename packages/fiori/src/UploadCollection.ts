@@ -14,6 +14,7 @@ import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
+import type UploadCollectionItem from "./UploadCollectionItem.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
@@ -37,18 +38,12 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-/**
- * Interface for components that may be slotted inside `ui5-upload-collection` as items
- * @public
- */
-interface IUploadCollectionItem extends HTMLElement { }
-
 type UploadCollectionSelectionChangeEventDetail = {
-	selectedItems: Array<IUploadCollectionItem>,
+	selectedItems: Array<UploadCollectionItem>,
 };
 
 type UploadCollectionItemDeleteEventDetail = {
-	item: IUploadCollectionItem,
+	item: UploadCollectionItem,
 };
 
 /**
@@ -183,7 +178,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<IUploadCollectionItem>;
+	items!: Array<UploadCollectionItem>;
 
 	/**
 	 * Defines the `ui5-upload-collection` header.
@@ -272,11 +267,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(e: CustomEvent) {
-		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as IUploadCollectionItem });
+		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
 	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as IUploadCollectionItem[] });
+		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {
@@ -338,7 +333,6 @@ UploadCollection.define();
 
 export default UploadCollection;
 export type {
-	IUploadCollectionItem,
 	UploadCollectionItemDeleteEventDetail,
 	UploadCollectionSelectionChangeEventDetail,
 };
