@@ -31,7 +31,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerPopoverTemplate.lit.js";
+import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate.lit.js";
 
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
@@ -110,13 +110,10 @@ type PreviewValues = {
  */
 @customElement({
 	tag: "ui5-datetime-picker",
-	staticAreaTemplate: DateTimePickerPopoverTemplate,
+	template: DateTimePickerTemplate,
 	styles: [
-		DateTimePicker.styles,
+		DatePicker.styles,
 		DateTimePickerCss,
-	],
-	staticAreaStyles: [
-		DatePicker.staticAreaStyles,
 		DateTimePickerPopoverCss,
 	],
 	dependencies: [
@@ -382,9 +379,8 @@ class DateTimePicker extends DatePicker {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	async getPicker() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	getPicker() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	getSelectedDateTime() {

@@ -17,7 +17,7 @@ export default {
 const Template: UI5StoryArgs<Breadcrumbs, StoryArgsSlots> = (args) =>
     html`<ui5-breadcrumbs
         design="${ifDefined(args.design)}"
-        separator-style="${ifDefined(args.separatorStyle)}"
+        separators="${ifDefined(args.separators)}"
     >
 	${unsafeHTML(args.default)}
 </ui5-breadcrumbs>`;
@@ -30,9 +30,9 @@ Basic.args = {
 	`,
 };
 
-export const SeparatorStyle: StoryFn = () => html`
+export const Separators: StoryFn = () => html`
     <div>
-        <ui5-breadcrumbs design ="NoCurrentPage" separator-style="Slash">
+        <ui5-breadcrumbs design ="NoCurrentPage" separators="Slash">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>
@@ -43,7 +43,7 @@ export const SeparatorStyle: StoryFn = () => html`
         </ui5-breadcrumbs>
     </div>
     <div>
-        <ui5-breadcrumbs separator-style="BackSlash">
+        <ui5-breadcrumbs separators="BackSlash">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>
@@ -54,7 +54,7 @@ export const SeparatorStyle: StoryFn = () => html`
         </ui5-breadcrumbs>
     </div>
     <div>
-        <ui5-breadcrumbs separator-style="DoubleBackSlash">
+        <ui5-breadcrumbs separators="DoubleBackSlash">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>
@@ -65,7 +65,7 @@ export const SeparatorStyle: StoryFn = () => html`
         </ui5-breadcrumbs>
     </div>
     <div>
-        <ui5-breadcrumbs separator-style="DoubleGreaterThan">
+        <ui5-breadcrumbs separators="DoubleGreaterThan">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>
@@ -76,7 +76,7 @@ export const SeparatorStyle: StoryFn = () => html`
         </ui5-breadcrumbs>
     </div>
     <div>
-        <ui5-breadcrumbs separator-style="DoubleSlash">
+        <ui5-breadcrumbs separators="DoubleSlash">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>
@@ -87,7 +87,7 @@ export const SeparatorStyle: StoryFn = () => html`
         </ui5-breadcrumbs>
     </div>
     <div>
-        <ui5-breadcrumbs separator-style="GreaterThan">
+        <ui5-breadcrumbs separators="GreaterThan">
             <ui5-breadcrumbs-item href="https://www.sap.com"
                 >Root Page
             </ui5-breadcrumbs-item>

@@ -59,7 +59,6 @@ import type { IButton } from "./Button.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
-import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopoverTemplate.lit.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -98,7 +97,6 @@ interface ITab extends UI5Element {
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
 
 const tabStyles: Array<StyleData> = [];
-const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 type TabContainerTabSelectEventDetail = {
@@ -169,11 +167,13 @@ interface TabContainerTabInOverflow extends CustomListItem {
 	tag: "ui5-tabcontainer",
 	languageAware: true,
 	fastNavigation: true,
-	styles: [tabStyles, tabContainerCss],
-	staticAreaStyles: [ResponsivePopoverCommonCss, staticAreaTabStyles],
+	styles: [
+		tabStyles,
+		tabContainerCss,
+		ResponsivePopoverCommonCss,
+	],
 	renderer: litRender,
 	template: TabContainerTemplate,
-	staticAreaTemplate: TabContainerPopoverTemplate,
 	dependencies: [
 		Button,
 		Icon,
@@ -345,14 +345,9 @@ class TabContainer extends UI5Element {
 	_hasScheduledPopoverOpen = false;
 	_handleResizeBound: () => void;
 	_setDraggedElement?: SetDraggedElementFunction;
-	_setDraggedElementInStaticArea?: SetDraggedElementFunction;
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
-	}
-
-	static registerStaticAreaTabStyles(styles: StyleData) {
-		staticAreaTabStyles.push(styles);
 	}
 
 	static i18nBundle: I18nBundle;
@@ -426,11 +421,6 @@ class TabContainer extends UI5Element {
 		DragRegistry.unsubscribe(this);
 		DragRegistry.removeSelfManagedArea(this);
 		this._setDraggedElement = undefined;
-
-		if (this.staticAreaItem && this._setDraggedElementInStaticArea) {
-			DragRegistry.removeSelfManagedArea(this.staticAreaItem);
-			this._setDraggedElementInStaticArea = undefined;
-		}
 	}
 
 	_handleResize() {
@@ -479,7 +469,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_onHeaderDragStart(e: DragEvent) {
+	_onDragStart(e: DragEvent) {
 		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 			return;
 		}
@@ -1353,16 +1343,8 @@ class TabContainer extends UI5Element {
 	}
 
 	async _respPopover() {
-		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-
-		if (!this._setDraggedElementInStaticArea) {
-			this._setDraggedElementInStaticArea = DragRegistry.addSelfManagedArea(this.staticAreaItem!);
-			staticAreaItemDomRef!.addEventListener("dragstart", e => {
-				this._setDraggedElementInStaticArea!((e.target as Tab).realTabReference);
-			});
-		}
-
-		return staticAreaItemDomRef!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
+		await renderFinished();
+		return this.shadowRoot!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
 	_closePopover() {
