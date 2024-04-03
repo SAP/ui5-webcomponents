@@ -76,7 +76,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
 class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
-	 * @default "Set3"
+	 * @default "Neutral"
 	 * @public
 	 * @since 1.22.0
 	 */
@@ -89,7 +89,7 @@ class Badge extends UI5Element {
 	 * To use one you can set a number from `"1"` to `"10"`. The `colorScheme` `"1"` will be set by default.
 	 *
 	 * **Note:** Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
-	 * @default "1"
+	 * @default "7"
 	 * @public
 	 */
 	@property({ defaultValue: "7" })
