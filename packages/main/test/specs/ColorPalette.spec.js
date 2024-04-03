@@ -79,12 +79,11 @@ describe("ColorPalette interactions", () => {
 
 		await colorPaletteMoreColorsButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#cp3");
-		const colorPicker = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-color-picker");
+		const colorPicker = await browser.$(`#cp3`).shadow$("ui5-color-picker");
 
 		assert.ok(colorPicker, "Color picker is rendered");
 
-		await colorPicker.setProperty("color", "#fafafa");
+		await colorPicker.setProperty("value", "#fafafa");
 
 		// The initial focus is on the HEX input
 		await browser.keys("Tab"); // Slider 1

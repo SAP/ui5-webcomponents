@@ -99,6 +99,7 @@ import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
 import Badge from "./Badge.js";
+import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";

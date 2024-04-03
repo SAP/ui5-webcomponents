@@ -119,13 +119,13 @@ class IllustratedMessage extends UI5Element {
 	* Determines which illustration breakpoint variant is used.
 	*
 	* As `IllustratedMessage` adapts itself around the `Illustration`, the other
-	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
+	* elements of the component are displayed differently on the different breakpoints/illustration designs.
 	* @default "Auto"
 	* @public
 	* @since 1.5.0
 	*/
 	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	size!: `${IllustrationMessageSize}`;
+	design!: `${IllustrationMessageSize}`;
 
 	/**
 	* Defines the subtitle of the component.
@@ -172,7 +172,7 @@ class IllustratedMessage extends UI5Element {
 	titleLevel!: `${TitleLevel}`;
 
 	/**
-	* Illustration breakpoint variant for the <code>Dot</code> size.
+	* Illustration breakpoint variant for the <code>Dot</code> design.
 	*
 	* @private
 	* @since 1.24.0
@@ -181,7 +181,7 @@ class IllustratedMessage extends UI5Element {
 	dotSvg!: string;
 
 	/**
-	* Illustration breakpoint variant for the <code>Spot</code> size.
+	* Illustration breakpoint variant for the <code>Spot</code> design.
 	*
 	* @private
 	* @since 1.9.0
@@ -190,7 +190,7 @@ class IllustratedMessage extends UI5Element {
 	spotSvg!: string;
 
 	/**
-	* Illustration breakpoint variant for the `Scene` size.
+	* Illustration breakpoint variant for the `Scene` design.
 	* @private
 	* @since 1.9.0
 	*/
@@ -198,7 +198,7 @@ class IllustratedMessage extends UI5Element {
 	sceneSvg!: string;
 
 	/**
-	* Illustration breakpoint variant for the `Dialog` size.
+	* Illustration breakpoint variant for the `Dialog` design.
 	* @private
 	* @since 1.9.0
 	*/
@@ -314,7 +314,7 @@ class IllustratedMessage extends UI5Element {
 		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData!.title);
 		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData!.subtitle);
 
-		if (this.size !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageSize.Auto) {
 			this._handleCustomSize();
 		}
 	}
@@ -328,7 +328,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	handleResize() {
-		if (this.size !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageSize.Auto) {
 			this._adjustHeightToFitContainer();
 			return;
 		}
@@ -341,17 +341,17 @@ class IllustratedMessage extends UI5Element {
 		const currOffsetWidth = this.offsetWidth,
 			currOffsetHeight = this.offsetHeight;
 
-		const size = heightChange ? currOffsetHeight : currOffsetWidth,
+		const design = heightChange ? currOffsetHeight : currOffsetWidth,
 			oBreakpounts = heightChange ? IllustratedMessage.BREAKPOINTS_HEIGHT : IllustratedMessage.BREAKPOINTS;
 		let newMedia = "";
 
-		if (size <= oBreakpounts.BASE) {
+		if (design <= oBreakpounts.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
-		} else if (size <= oBreakpounts.DOT) {
+		} else if (design <= oBreakpounts.DOT) {
 			newMedia = IllustratedMessage.MEDIA.DOT;
-		} else if (size <= oBreakpounts.SPOT) {
+		} else if (design <= oBreakpounts.SPOT) {
 			newMedia = IllustratedMessage.MEDIA.SPOT;
-		} else if (size <= oBreakpounts.DIALOG) {
+		} else if (design <= oBreakpounts.DIALOG) {
 			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
@@ -407,7 +407,7 @@ class IllustratedMessage extends UI5Element {
 	 * @since 1.5.0
 	 */
 	_handleCustomSize() {
-		switch (this.size) {
+		switch (this.design) {
 		case IllustrationMessageSize.Base:
 			this.media = IllustratedMessage.MEDIA.BASE;
 			return;

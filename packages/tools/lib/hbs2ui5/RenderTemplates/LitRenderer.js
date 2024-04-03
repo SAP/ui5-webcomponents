@@ -1,8 +1,4 @@
 const tsImports = (controlName, hasTypes) => {
-	if (!process.env.UI5_TS) {
-		return "";
-	}
-
 	const importPrefix = process.env.UI5_BASE ? "../../../" : "@ui5/webcomponents-base/dist/"
 
 	return `import type UI5Element from "${importPrefix}UI5Element.js";

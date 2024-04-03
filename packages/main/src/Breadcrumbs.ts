@@ -38,7 +38,6 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
-import BreadcrumbsPopoverTemplate from "./generated/templates/BreadcrumbsPopoverTemplate.lit.js";
 
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
@@ -86,9 +85,7 @@ type BreadcrumbsItemClickEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: BreadcrumbsTemplate,
-	staticAreaTemplate: BreadcrumbsPopoverTemplate,
-	styles: breadcrumbsCss,
-	staticAreaStyles: breadcrumbsPopoverCss,
+	styles: [breadcrumbsCss, breadcrumbsPopoverCss],
 	dependencies: [
 		BreadcrumbsItem,
 		Link,
@@ -389,13 +386,12 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async _toggleRespPopover() {
-		this.responsivePopover = await this._respPopover();
+	_toggleRespPopover() {
+		this.responsivePopover = this._respPopover();
 
 		if (this._isPickerOpen) {
 			this._closeRespPopover();
@@ -408,8 +404,8 @@ class Breadcrumbs extends UI5Element {
 		this.responsivePopover && this.responsivePopover.close();
 	}
 
-	async _openRespPopover() {
-		this.responsivePopover = await this._respPopover();
+	_openRespPopover() {
+		this.responsivePopover = this._respPopover();
 		this.responsivePopover.showAt(this._dropdownArrowLink);
 	}
 

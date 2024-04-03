@@ -44,7 +44,6 @@ import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -154,9 +153,8 @@ type DatePickerInputEventDetail = {
 	tag: "ui5-date-picker",
 	languageAware: true,
 	template: DatePickerTemplate,
-	staticAreaTemplate: DatePickerPopoverTemplate,
-	styles: datePickerCss,
-	staticAreaStyles: [
+	styles: [
+		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
 	],
@@ -732,9 +730,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return isDesktop();
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	_canOpenPicker() {
@@ -812,9 +809,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	async openPicker(): Promise<void> {
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = this.firstPicker;
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 
-		this.responsivePopover.showAt(this);
+		await this.responsivePopover.showAt(this);
 	}
 
 	togglePicker() {

@@ -182,9 +182,7 @@ class MultiInput extends Input {
 	}
 
 	_tokenizerFocusOut(e: FocusEvent) {
-		const isFocusingMorePopover = e.relatedTarget === this.tokenizer.staticAreaItem;
-
-		if (!this.contains(e.relatedTarget as HTMLElement) && !isFocusingMorePopover) {
+		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
