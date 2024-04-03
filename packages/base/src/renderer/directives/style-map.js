@@ -1,5 +1,3 @@
-// @ts-nocheck
-/* eslint-disable */
 /**
  * @license
  * Copyright 2018 Google LLC

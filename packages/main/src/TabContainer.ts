@@ -479,12 +479,6 @@ class TabContainer extends UI5Element {
 			tab.isTopLevelTab = items.some(i => i === tab);
 		});
 
-		walk(items, item => {
-			if (!item.isSeparator) {
-				(item as Tab)._selectedTabReference = this._selectedTab;
-			}
-		});
-
 		this._setIndentLevels(items);
 	}
 

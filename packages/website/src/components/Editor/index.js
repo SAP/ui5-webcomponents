@@ -10,7 +10,6 @@ import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
 import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
 import { Splitter } from 'react-splitter-light';
-import ResetIcon from "../../../local-cdn/local-cdn/icons/dist/v5/reset.svg";
 import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
 import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
 import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
@@ -19,7 +18,6 @@ import downloadSample from './download.js';
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
-  require('./html-autocomplete.js');
 }
 
 const projectPool = [];
@@ -125,12 +123,6 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     delete files["playground-support.js"];
 
     return files;
-  }
-
-  const reset = () => {
-    localStorage.removeItem("project");
-    location.hash = "";
-    location.reload();
   }
 
   const download = () => {
@@ -340,14 +332,6 @@ ${fixAssetPaths(js)}`,
         ?
           <>
             <div className={`${styles.editor__toolbar}`}>
-              <button
-                className={`button button--secondary ${styles.previewResult__download}`}
-                onClick={ reset }
-              >
-               <ResetIcon className={`${styles.btn__icon}`}/>
-                Reset example
-              </button>
-
               <button
                 className={`button button--secondary ${styles.previewResult__download}`}
                 onClick={ download }

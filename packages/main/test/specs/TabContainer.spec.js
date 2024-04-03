@@ -17,13 +17,6 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(selectedFilter.id, selectedTab.id, "The IDs of the ui5-tab and the rendered tab matches.");
 	});
 
-	it("tests initially no explicitly selected tab", async () => {
-		const tabContainer = await browser.$("#tabContainerIconOnly");
-		const selectedSlot = await tabContainer.shadow$('slot[name="default-1"]');
-
-		assert.ok(await selectedSlot.isExisting(), "selected slot is correct");
-	});
-
 	it("tests empty tab container", async () => {
 		assert.ok(await browser.$("#tabContainerEmpty").isDisplayed(), "Empty tab container is rendered.");
 	});
@@ -526,7 +519,7 @@ describe("TabContainer drag and drop tests", () => {
 		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
-
+		
 		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
 		draggedStripItem = displayedStripItems[1];
 		dropTargetStripItem = displayedStripItems[displayedStripItems.length - 1];
@@ -541,7 +534,7 @@ describe("TabContainer drag and drop tests", () => {
 		let draggedStripItem = displayedStripItems[displayedStripItems.length - 1];
 		let dropTargetStripItem = displayedStripItems[displayedStripItems.length - 2];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
-
+		
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
 		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
@@ -581,7 +574,7 @@ describe("TabContainer drag and drop tests", () => {
 		let draggedPopoverItem = displayedPopoverItems[0];
 		let dropTargetPopoverItem = displayedPopoverItems[2];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
-
+		
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
 		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");

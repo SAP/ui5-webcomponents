@@ -476,7 +476,7 @@
 				token && token.remove();
 			});
 
-		document.getElementById("token-unique").addEventListener("ui5-paste", function (event) {
+		document.getElementById("token-unique").addEventListener("paste", function (event) {
 			event.preventDefault();
 
 			let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;

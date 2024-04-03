@@ -16,7 +16,6 @@ import "@ui5/webcomponents-icons/dist/source-code.js";
 import "@ui5/webcomponents-icons/dist/background.js";
 import "@ui5/webcomponents-icons/dist/activity-assigned-to-goal.js";
 import "@ui5/webcomponents-icons/dist/action-settings.js";
-import "@ui5/webcomponents-icons/dist/chain-link.js";
 
 var sidenav = document.querySelector("ui5-side-navigation");
 document.getElementById("toggle").addEventListener("click", () => {

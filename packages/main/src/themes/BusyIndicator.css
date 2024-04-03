@@ -131,14 +131,13 @@
 	text-align: center;
 }
 
-:host([text-placement="Top"]) .ui5-busy-indicator-text {
+.ui5-busy-indicator-text-placement-top {
 	margin-bottom: 0.5rem
- }
- 
- :host(:not([text-placement])) .ui5-busy-indicator-text,
- :host([text-placement="Bottom"]) .ui5-busy-indicator-text {
-	  margin-top: 0.5rem;
- }
+}
+
+.ui5-busy-indicator-text-placement-bottom {
+	margin-top: 0.5rem;
+}
 
 @keyframes grow {
 	0%, 50%, 100% {

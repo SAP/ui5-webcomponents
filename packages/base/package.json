@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "1.24.0-rc.3",
+  "version": "1.24.0-rc.2",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -44,9 +44,9 @@
     "lit-html": "^2.0.1"
   },
   "devDependencies": {
-    "@openui5/sap.ui.core": "1.120.5",
-    "@ui5/webcomponents-tools": "1.24.0-rc.3",
-    "chromedriver": "^122.0.6",
+    "@openui5/sap.ui.core": "1.120.3",
+    "@ui5/webcomponents-tools": "1.24.0-rc.2",
+    "chromedriver": "^121.0.2",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",

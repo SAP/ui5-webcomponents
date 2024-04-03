@@ -1,8 +1,10 @@
-name: Deploy Storybook Nightly [auto]
+name: Deploy Storybook [on latest release]
 
 on:
-  schedule:
-  - cron: "00 17 * * *"
+  release:
+    types:
+      - 'released'
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -21,10 +23,13 @@ jobs:
         yarn install
         yarn ci:deploybuild
 
+    - name: Write version.md
+      run: git log -1 &>> packages/playground/dist/version.md
+
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/playground/dist # The folder the action should deploy.
-        target-folder: storybook
+        target-folder: storybook-latest
         clean: true

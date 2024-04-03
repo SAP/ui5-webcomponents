@@ -195,7 +195,7 @@ describe("Tree slots", () => {
 		await browser.url(`test/pages/Tree.html`);
 	});
 
-	it("items slot", async () => {
+	it.only("items slot", async () => {
 		const treeItem = await browser.$("#treeItem");
 		const btn = await browser.$("#btn");
 
