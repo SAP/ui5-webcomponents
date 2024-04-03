@@ -9,7 +9,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
@@ -157,19 +156,6 @@ class IllustratedMessage extends UI5Element {
 	*/
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
-
-	/**
-	* Defines the semantic level of the title.
-	*
-	* **Note:** Used for accessibility purposes only.
-	*
-	* **Note:** Doesn't take effect when `title` slot is being used.
-	* @default "H2"
-	* @public
-	* @since 1.20.0
-	*/
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	titleLevel!: `${TitleLevel}`;
 
 	/**
 	* Illustration breakpoint variant for the <code>Dot</code> size.

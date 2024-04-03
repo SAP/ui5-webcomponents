@@ -80,31 +80,6 @@ describe("Accessibility", () => {
 
 	});
 
-	it("title-level", async () => {
-		// Arrange
-		const illustratedMsg = await browser.$("#illustratedMsg2"),
-			  illustratedMsgTitle = await browser.$("#illustratedMsg2").shadow$(".ui5-illustrated-message-root ui5-title"),
-			  EXPECTED_TITLE_lEVEL = "H6",
-			  NEW_TITLE_LEVEL = "H3",
-			  DEFAULT_TITLE_LEVEL = "H2";
-
-		// Assert
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), EXPECTED_TITLE_lEVEL, "level is set");
-
-		// Act
-		await illustratedMsg.setAttribute("title-level", NEW_TITLE_LEVEL);
-
-		// Assert
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), NEW_TITLE_LEVEL, "level is set");
-
-		// Act
-		await illustratedMsg.removeAttribute("title-level");
-
-		// Assert
-		assert.strictEqual(await illustratedMsgTitle.getAttribute("level"), DEFAULT_TITLE_LEVEL, "level has the default value");
-
-	});
-
 });
 
 describe("Vertical responsiveness", () => {
@@ -208,12 +183,12 @@ describe("Dot size resource handling", () => {
 	it("uses substitute Spot illustration", async () => {
 
 		const illustratedMsg = await browser.$("#illustratedMsg1");
-		
+
 		// Act
 		await illustratedMsg.setProperty("name", "BeforeSearch"); // set an illustration which doesn't have original Dot SVG
 		await illustratedMsg.setProperty("size", "Dot");
 		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
-		
+
 		// Check
 		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Spot-BeforeSearch", "Spot SVG is used when no Dot is present");
 	});
@@ -221,12 +196,12 @@ describe("Dot size resource handling", () => {
 	it("uses original Dot illustration", async () => {
 
 		const illustratedMsg = await browser.$("#illustratedMsg1");
-		
+
 		// Act
 		await illustratedMsg.setProperty("name", "AddPeople"); // set an illustration which has original Dot SVG
 		await illustratedMsg.setProperty("size", "Dot");
 		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
-		
+
 		// Check
 		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Dot-AddPeople", "Dot is present, therefore used");
 	});
