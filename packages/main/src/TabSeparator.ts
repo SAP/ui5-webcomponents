@@ -92,7 +92,7 @@ class TabSeparator extends UI5Element {
 TabSeparator.define();
 
 TabContainer.registerTabStyles(stripCss);
-TabContainer.registerStaticAreaTabStyles(overflowCss);
+TabContainer.registerTabStyles(overflowCss);
 
 export default TabSeparator;
 export type {
