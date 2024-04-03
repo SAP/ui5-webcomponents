@@ -378,7 +378,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	namesTooLong(dayNames: Array<string>): boolean {
-		return dayNames.some(dayName => dayName.length > 3);
+		return dayNames.some(dayName => dayName.length > 4);
 	}
 
 	onAfterRendering() {
