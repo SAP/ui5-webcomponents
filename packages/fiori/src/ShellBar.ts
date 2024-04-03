@@ -15,6 +15,7 @@ import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
@@ -175,6 +176,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 	styles: shellBarStyles,
 	staticAreaStyles: [ShellBarPopoverCss],
 	dependencies: [
+		Icon,
 		Button,
 		List,
 		Popover,
