@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-fiori",
-  "version": "1.23.1",
+  "version": "1.23.2",
   "description": "UI5 Web Components: webcomponents.fiori",
   "ui5": {
     "webComponentsPackage": true
@@ -46,7 +46,7 @@
     "directory": "packages/fiori"
   },
   "dependencies": {
-    "@ui5/webcomponents": "1.23.1",
+    "@ui5/webcomponents": "1.23.2",
     "@ui5/webcomponents-base": "1.23.1",
     "@ui5/webcomponents-icons": "1.23.1",
     "@ui5/webcomponents-theming": "1.23.1",

@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "1.23.1",
+  "version": "1.23.2",
   "description": "UI5 Web Components: webcomponents.main",
   "ui5": {
     "webComponentsPackage": true

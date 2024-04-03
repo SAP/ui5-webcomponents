@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1...v1.23.2) (2024-04-03)
+
+
+### Bug Fixes
+
+* **ui5-tabcontainer:** fix tab selection ([#8547](https://github.com/SAP/ui5-webcomponents/issues/8547)) ([05e0c0a](https://github.com/SAP/ui5-webcomponents/commit/05e0c0a97e7850f61179e098d998887f43f214cd))
+
+
+
+
+
 ## [1.23.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1-rc.0...v1.23.1) (2024-03-08)
 
 

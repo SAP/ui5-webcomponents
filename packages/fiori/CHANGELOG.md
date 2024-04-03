@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.2](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1...v1.23.2) (2024-04-03)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** fixed infinite resize ([#8584](https://github.com/SAP/ui5-webcomponents/issues/8584)) ([56c9628](https://github.com/SAP/ui5-webcomponents/commit/56c96283249cc4cadc5d8f29f91e958457c0bc47)), closes [#5852](https://github.com/SAP/ui5-webcomponents/issues/5852)
+* **ui5-illustrated-message:** vertical alignment ([#8566](https://github.com/SAP/ui5-webcomponents/issues/8566)) ([4bc8769](https://github.com/SAP/ui5-webcomponents/commit/4bc8769f0396da1d42d570b60096731a206e690d)), closes [#8490](https://github.com/SAP/ui5-webcomponents/issues/8490)
+
+
+
+
+
 ## [1.23.1](https://github.com/SAP/ui5-webcomponents/compare/v1.23.1-rc.0...v1.23.1) (2024-03-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
