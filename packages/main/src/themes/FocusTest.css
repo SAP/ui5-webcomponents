@@ -1,0 +1,11 @@
+:host {
+	display: block;
+}
+
+:host(:focus) {
+	border: 2px solid blue;
+}
+
+:host(:focus-within) {
+	outline: 1px solid red;
+}

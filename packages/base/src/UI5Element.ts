@@ -144,7 +144,11 @@ abstract class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 
 		if (ctor._needsShadowDOM()) {
-			this.attachShadow({ mode: "open" });
+			if (this.tagName === "UI5-ICON") {
+				this.attachShadow({ mode: "open", delegatesFocus: false });
+			} else {
+				this.attachShadow({ mode: "open", delegatesFocus: false });
+			}
 		}
 	}
 
