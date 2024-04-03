@@ -581,7 +581,7 @@ class Select extends UI5Element implements IFormElement {
 	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
-		const options = this._filteredItems;
+		const options = this.options;
 		const syncOpts = options.map((opt, index) => {
 			if (opt.selected) {
 				lastSelectedOptionIndex = index;
@@ -932,7 +932,7 @@ class Select extends UI5Element implements IFormElement {
 		if (menu) {
 			return menu.options;
 		}
-		return this._filteredItems;
+		return this.options;
 	}
 
 	get hasCustomLabel() {
@@ -1055,8 +1055,8 @@ class Select extends UI5Element implements IFormElement {
 				"max-width": `${this.offsetWidth}px`,
 			},
 			responsivePopoverHeader: {
-				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
+				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
 			},
 			responsivePopover: {
 				"min-width": `${this.offsetWidth}px`,
@@ -1091,10 +1091,6 @@ class Select extends UI5Element implements IFormElement {
 
 	get _isPhone() {
 		return isPhone();
-	}
-
-	get _filteredItems() {
-		return this.options;
 	}
 
 	itemSelectionAnnounce() {
