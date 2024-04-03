@@ -1,8 +1,8 @@
 /**
- * Different Breadcrumbs separator styles.
+ * Different Breadcrumbs separators.
  * @public
  */
-enum BreadcrumbsSeparatorStyle {
+enum BreadcrumbsSeparator {
 
 	/**
 	 * The separator appears as "/".
@@ -41,4 +41,4 @@ enum BreadcrumbsSeparatorStyle {
 	GreaterThan = "GreaterThan",
 }
 
-export default BreadcrumbsSeparatorStyle;
+export default BreadcrumbsSeparator;

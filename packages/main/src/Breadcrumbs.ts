@@ -18,7 +18,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
-import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
+import BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
@@ -153,8 +153,8 @@ class Breadcrumbs extends UI5Element {
 	 * @default "Slash"
 	 * @public
 	 */
-	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separators!: `${BreadcrumbsSeparatorStyle}`;
+	@property({ type: BreadcrumbsSeparator, defaultValue: BreadcrumbsSeparator.Slash })
+	separators!: `${BreadcrumbsSeparator}`;
 
 	/**
 	 * Holds the number of items in the overflow.
