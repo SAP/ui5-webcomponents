@@ -701,7 +701,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this._listWidth = await this.Suggestions._getListWidth();
 		}
 
-		if (this.shouldDisplayOnlyValueStateMessage && this.tagName.toLowerCase() !== "ui5-multi-input") {
+		if (this.shouldDisplayOnlyValueStateMessage) {
 			this.openPopover();
 		} else {
 			this.closePopover();
