@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.3...v1.24.0-rc.4) (2024-04-04)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** correct badge style ([#8564](https://github.com/SAP/ui5-webcomponents/issues/8564)) ([e3a373d](https://github.com/SAP/ui5-webcomponents/commit/e3a373d38ae1c4e724f789a60bd004327f995593)), closes [#7564](https://github.com/SAP/ui5-webcomponents/issues/7564) [#8491](https://github.com/SAP/ui5-webcomponents/issues/8491)
+* **ui5-day-picker:** improve  day name length check ([#8578](https://github.com/SAP/ui5-webcomponents/issues/8578)) ([38012fe](https://github.com/SAP/ui5-webcomponents/commit/38012fe1f34f1535bb547c2ea14e1262f354b8c3))
+* **ui5-illustrated-message:** fixed infinite resize ([#8584](https://github.com/SAP/ui5-webcomponents/issues/8584)) ([aa1301b](https://github.com/SAP/ui5-webcomponents/commit/aa1301b9e1449f67668beaa1373699d54c50270c)), closes [#5852](https://github.com/SAP/ui5-webcomponents/issues/5852)
+* **ui5-illustrated-message:** tnt chart illustrations alignment ([#8562](https://github.com/SAP/ui5-webcomponents/issues/8562)) ([2ee2ea8](https://github.com/SAP/ui5-webcomponents/commit/2ee2ea8a33b799b4b7488cfa2ca0ce845685e980))
+* **ui5-illustrated-message:** vertical alignment ([#8566](https://github.com/SAP/ui5-webcomponents/issues/8566)) ([3141327](https://github.com/SAP/ui5-webcomponents/commit/3141327366e6b274e86e17519aadd660813048da)), closes [#8490](https://github.com/SAP/ui5-webcomponents/issues/8490)
+* **ui5-input, ui5-combobox:** improve samples with value state message ([#8595](https://github.com/SAP/ui5-webcomponents/issues/8595)) ([63de7ee](https://github.com/SAP/ui5-webcomponents/commit/63de7eebd07e4061e1d4fb93f8e3c1cb0aaa789b)), closes [#8581](https://github.com/SAP/ui5-webcomponents/issues/8581) [#8581](https://github.com/SAP/ui5-webcomponents/issues/8581) [#8581](https://github.com/SAP/ui5-webcomponents/issues/8581)
+* **ui5-input:** prevent scroll on value state focus ([#8603](https://github.com/SAP/ui5-webcomponents/issues/8603)) ([964afb6](https://github.com/SAP/ui5-webcomponents/commit/964afb64330aeb000ddd77a7519083feefcb57f5)), closes [#8582](https://github.com/SAP/ui5-webcomponents/issues/8582)
+* **ui5-multi-input:** create token from pasted text on change ([#8592](https://github.com/SAP/ui5-webcomponents/issues/8592)) ([2072b2e](https://github.com/SAP/ui5-webcomponents/commit/2072b2ee35357f5623570fa9b9725a83aa6e9d97))
+* **ui5-shellbar:** scope internally used icons ([#8613](https://github.com/SAP/ui5-webcomponents/issues/8613)) ([8419ac5](https://github.com/SAP/ui5-webcomponents/commit/8419ac560851bba08cd7cf24ab18b085a5e212c4)), closes [#8609](https://github.com/SAP/ui5-webcomponents/issues/8609)
+
+
+### Features
+
+* enable property decorator for property accessors ([#8587](https://github.com/SAP/ui5-webcomponents/issues/8587)) ([12b6f1a](https://github.com/SAP/ui5-webcomponents/commit/12b6f1a7611bba909dd54ab5ee4549fde2173e6a))
+* **ui5-progress-indicator:** introduce "bar" CSS part ([#8599](https://github.com/SAP/ui5-webcomponents/issues/8599)) ([831fad3](https://github.com/SAP/ui5-webcomponents/commit/831fad3c537c457b7bb08552561d6245fe193f8d)), closes [#6140](https://github.com/SAP/ui5-webcomponents/issues/6140)
+
+
+
+
+
 # [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
 
 
