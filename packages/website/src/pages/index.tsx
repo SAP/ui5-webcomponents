@@ -43,8 +43,11 @@ function HomepageHeader() {
 
 function Banner() {
   return (
-    <div className="alert alert--info" role="alert" style={{fontSize: "1.25rem"}}>
-        🎉 Get ready for the arrival of <b>UI5 Web Components 2.0!</b> Discover the <b><a href="https://github.com/SAP/ui5-webcomponents/issues/8608">release timelines and the exciting features in store!</a></b> 🎉 
+    <div className="alert alert--info" role="alert" style={{fontSize: "1.5rem", textAlign: "center"}}>
+        🎉&nbsp;Get ready for the <b>UI5 Web Components 2.0!</b>
+          <div>Discover the <b><a href="https://github.com/SAP/ui5-webcomponents/issues/8608">timelines and the exciting features in store!
+            </a></b>&nbsp;🎉
+          </div>
     </div>
   );
 }
