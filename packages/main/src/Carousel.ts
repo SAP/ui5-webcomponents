@@ -23,6 +23,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import {
+	CAROUSEL,
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
@@ -671,6 +672,10 @@ class Carousel extends UI5Element {
 
 	get ariaActiveDescendant() {
 		return this.content.length ? `${this._id}-carousel-item-${this._selectedIndex + 1}` : undefined;
+	}
+
+	get ariaLabel() {
+		return Carousel.i18nBundle.getText(CAROUSEL);
 	}
 
 	get nextPageText() {
