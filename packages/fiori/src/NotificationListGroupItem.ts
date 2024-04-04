@@ -37,6 +37,7 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -73,7 +74,10 @@ type NotificationListGroupItemToggleEventDetail = {
 @customElement({
 	tag: "ui5-li-notification-group",
 	languageAware: true,
-	styles: NotificationListGroupItemCss,
+	styles: [
+		NotificationListGroupItemCss,
+		NotificationOverflowActionsPopoverCss,
+	],
 	template: NotificationListGroupItemTemplate,
 	dependencies: [
 		List,

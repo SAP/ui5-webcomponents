@@ -52,7 +52,6 @@
     "globby": "^13.1.1",
     "handlebars": "^4.7.7",
     "is-port-reachable": "^3.1.0",
-    "jsdoc": "^3.6.6",
     "json-beautify": "^1.1.1",
     "mkdirp": "^1.0.4",
     "nps": "^5.10.0",

@@ -8,9 +8,6 @@ import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/
 import { writeFileIfChanged, stripThemingBaseContent, getFileContent } from "./shared.mjs";
 import scopeVariables from "./scope-variables.mjs";
 
-const tsMode = process.env.UI5_TS === "true";
-const extension = tsMode ? ".css.ts" : ".css.js";
-
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
 
 let inputFiles = await globby("src/**/parameters-bundle.css");
@@ -50,8 +47,8 @@ let scopingPlugin = {
                 writeFileIfChanged(jsonPath, JSON.stringify({_: data}));
 
                 // JS/TS
-                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
-                const jsContent = getFileContent(tsMode, jsPath, packageJSON.name, "\`" + newText + "\`");
+                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", ".css.ts");
+                const jsContent = getFileContent(jsPath, packageJSON.name, "\`" + newText + "\`");
                 writeFileIfChanged(jsPath, jsContent);
             });
         })

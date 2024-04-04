@@ -209,7 +209,7 @@ assert.notOk(text.includes(NOT_EXPECTED_TEXT), "Text not found")
 
 Avoid complex expressions inside `assert`s by extracting parts of them to variables and only asserting the variables.
 
-## 6. Using the synchronous syntax for writing texts
+## 6. Using the synchronous syntax for writing tests
 
 WebdriverIO still supports (although now deprecated) the *synchronous* syntax for writing tests. Click [here](https://webdriver.io/docs/sync-vs-async/) for more information on "sync vs async".
 
@@ -219,31 +219,3 @@ If you have already written tests for your custom UI5 Web Components using the *
 You have 2 options:
  - Rewrite all tests to use the *asynchronous* syntax. Click the link above to see some examples. This is the **recommended** approach, because the *synchronous* syntax will no longer work with future `nodejs` versions.
  - For the time being, adapt your WebdriverIO configuration to continue supporting the *synchronous* syntax.
-
-### 6.1 Supporting the synchronous syntax for writing tests
-
- - Change your `config/wdio.conf.js` file content from:
-
- ```js
- module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
- ```
- to:
-
- ```js
- module.exports = require("@ui5/webcomponents-tools/components-package/wdio.sync.js");
- ```
-
- This will give you the exact same WebdriverIO configuration, but with *synchronous* custom commands (such as `getProperty`, `setProperty`, `hasClass`, etc.).
-
- - Manually install `@wdio/sync`
-
- You can install it with `npm`:
-
- `npm i --save-dev @wdio/sync`
-
- or with `yarn`:
-
- `yarn add -D @wdio/sync`
-
- Just installing the package (with no extra configuration) is enough to let WebdriverIO run the *synchronous* tests.
-

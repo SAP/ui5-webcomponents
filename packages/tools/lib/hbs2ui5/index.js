@@ -87,7 +87,7 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 
 		await fs.mkdir(outputDir, { recursive: true });
 
-		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.${process.env.UI5_TS ? "ts" : "js"}`;
+		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.ts`;
 
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");
