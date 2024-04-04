@@ -701,7 +701,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this._listWidth = await this.Suggestions._getListWidth();
 		}
 
-		if (this.shouldDisplayOnlyValueStateMessage) {
+		if (this.shouldDisplayOnlyValueStateMessage && UI5Element.getMetadata().getTag() === "ui5-input") {
 			this.openPopover();
 		} else {
 			this.closePopover();

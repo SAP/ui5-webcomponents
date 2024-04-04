@@ -348,6 +348,13 @@ class MultiInput extends Input {
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
 	}
 
+	async onAfterRendering() {
+		await super.onAfterRendering();
+		if (this.shouldDisplayOnlyValueStateMessage && !this.tokenizer._isOpen) {
+			this.openPopover();
+		}
+	}
+
 	get iconsCount() {
 		return super.iconsCount + (this.showValueHelpIcon ? 1 : 0);
 	}
