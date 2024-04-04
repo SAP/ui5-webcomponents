@@ -293,10 +293,6 @@ abstract class ListItem extends ListItemBase {
 		const itemActive = this.type === ListItemType.Active,
 			itemNavigated = this.typeNavigation;
 
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
 		if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
 			this.activate();
 		}
