@@ -194,7 +194,7 @@ InShellBar.decorators = [
 	notifications-count="4"
 ></ui5-shellbar>
 <ui5-popover
-	placement-type="Bottom"
+	placement="Bottom"
 	horizontal-align="End"
 	id="popover-with-notifications"
 >

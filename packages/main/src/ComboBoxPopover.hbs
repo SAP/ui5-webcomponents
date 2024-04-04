@@ -1,7 +1,7 @@
 <ui5-responsive-popover
 	class="{{classes.popover}}"
 	hide-arrow
-	placement-type="Bottom"
+	placement="Bottom"
 	horizontal-align="Start"
 	style="{{styles.suggestionsPopover}}"
 	@ui5-after-open={{_afterOpenPopover}}
@@ -96,7 +96,7 @@
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
-		placement-type="Bottom"
+		placement="Bottom"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>

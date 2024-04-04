@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -28,16 +29,16 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverPlacement from "./types/PopoverPlacement.js";
 import type { ListItemClickEventDetail } from "./List.js";
-import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 
 type CurrentItem = {
 	item: MenuItem,
@@ -98,8 +99,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 @customElement({
 	tag: "ui5-menu",
 	renderer: litRender,
-	staticAreaStyles: staticAreaMenuCss,
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: menuCss,
+	template: menuTemplate,
 	dependencies: [
 		ResponsivePopover,
 		Button,
@@ -337,7 +338,7 @@ class Menu extends UI5Element {
 		return this.effectiveDir === "rtl";
 	}
 
-	get placementType(): `${PopoverPlacementType}` {
+	get placement(): `${PopoverPlacement}` {
 		const placement = this.isRtl ? "Start" : "End";
 		return this._isSubMenu ? placement : "Bottom";
 	}
@@ -431,8 +432,8 @@ class Menu extends UI5Element {
 
 	async _createPopover() {
 		if (!this._popover) {
-			const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-			this._popover = staticAreaItemDomRef!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+			await renderFinished();
+			this._popover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		}
 		return this._popover;
 	}
@@ -476,7 +477,7 @@ class Menu extends UI5Element {
 		subMenu.busyDelay = item.busyDelay;
 		const fragment = this._clonedItemsFragment(item);
 		subMenu.appendChild(fragment);
-		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
+		this.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
@@ -548,7 +549,7 @@ class Menu extends UI5Element {
 		const menuListItem = target.hasAttribute("ui5-menu-li")
 			? target as MenuListItem
 			: (target.getRootNode() as ShadowRoot).host as MenuListItem;
-		const item = menuListItem.associatedItem as MenuItem;
+		const item = menuListItem.associatedItem;
 		const mainMenu = this._findMainMenu(item);
 		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: menuListItem, item });
 	}

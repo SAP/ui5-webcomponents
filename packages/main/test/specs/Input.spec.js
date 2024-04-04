@@ -59,8 +59,7 @@ describe("Input general interaction", () => {
 
 	it("Should not open suggestions popover when focused", async () => {
 		const input = await browser.$("#myInput2");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput2");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await input.shadow$("ui5-responsive-popover");
 
 		// focus the input field which will display the suggestions
 		await input.click();
@@ -315,8 +314,6 @@ describe("Input general interaction", () => {
 
 		await input.click();
 
-
-
 		// -1.33e-2
 		// Press Backspace to remove the "2" character
 		await input.keys("Backspace");
@@ -364,8 +361,8 @@ describe("Input general interaction", () => {
 		let item;
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 		const inputResult = await browser.$("#inputResult").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput")
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const popover = await input.shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("p");
@@ -418,8 +415,8 @@ describe("Input general interaction", () => {
 
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		// paste a value completely corresponding to item text
 		await suggestionsInput.click();
@@ -469,8 +466,6 @@ describe("Input general interaction", () => {
 
 		const suggestionsInput = await browser.$("#myInputGrouping").shadow$("input");
 		const inputResult = await browser.$("#inputResultGrouping").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("C");
@@ -489,8 +484,8 @@ describe("Input general interaction", () => {
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
 		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("C");
@@ -516,8 +511,8 @@ describe("Input general interaction", () => {
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
 		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const input = await browser.$("#myInput");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("C");
@@ -543,9 +538,8 @@ describe("Input general interaction", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await browser.$("#myInputGrouping");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
 
 		await input.click();
 		await input.keys("C");
@@ -558,8 +552,7 @@ describe("Input general interaction", () => {
 
 	it("checks if the suggestions popover width is minimum the size of the input", async () => {
 		const input = await browser.$("#myInputGrouping");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInputGrouping");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const listItem = await input.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		await input.click();
 		await input.keys("a");
@@ -569,8 +562,7 @@ describe("Input general interaction", () => {
 
 	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
 		const input = await browser.$("#long-sugg");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#long-sugg");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const listItem = await input.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		await input.click();
 		await input.keys("a");
@@ -595,9 +587,9 @@ describe("Input general interaction", () => {
 
 	it("Checks if valueStateMessage is shown", async () => {
 		const inputShadowRef = await browser.$("#inputError").shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
+		const input = await browser.$("#inputError");
+		const popover = await input.shadow$("ui5-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-header");
 
 		await inputShadowRef.click();
 
@@ -617,8 +609,8 @@ describe("Input general interaction", () => {
 		await browser.pause(2000);
 		await input.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#dynamic-value-state");
-		const valueStatePopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const inputElement = await browser.$("#dynamic-value-state");
+		const valueStatePopover = await inputElement.shadow$("ui5-popover");
 		const initialContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
 
 		await browser.pause(2000);
@@ -663,8 +655,7 @@ describe("Input general interaction", () => {
 		const inputSuccess = await browser.$("#vs-success-default");
 		const inputInformation = await browser.$("#vs-information-default");
 
-		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-error-default");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		let popover = await inputError.shadow$("ui5-popover");
 
 		await inputError.click();
 
@@ -676,8 +667,7 @@ describe("Input general interaction", () => {
 
 		await inputWarning.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await inputWarning.shadow$("ui5-popover");
 
 		ariaHiddenText = await inputWarning.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();
@@ -687,8 +677,7 @@ describe("Input general interaction", () => {
 
 		await inputInformation.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-information-default");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await inputInformation.shadow$("ui5-popover");
 
 		ariaHiddenText = await inputInformation.shadow$(".ui5-hidden-text").getText();
 		valueStateText = await popover.$("div").getText();
@@ -702,14 +691,14 @@ describe("Input general interaction", () => {
 
 	it("Value state type should be added to the screen readers custom value states announcement", async () => {
 		const inputError = await browser.$("#inputError");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
 
 		inputError.click();
 		inputError.keys("a");
 
-		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
+		const popoverHeader = await inputError.shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getText();
-		const ariaHiddenText = await inputError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getText();
+		const _id = await inputError.getProperty("_id");
+		const ariaHiddenText = await inputError.shadow$(`#${_id}-valueStateDesc`).getText();
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");
@@ -773,8 +762,8 @@ describe("Input general interaction", () => {
 		await inputItemPreview.keys("ArrowDown");
 
 		// assert
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputPreview2");
-		const inputPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const inputElement = await browser.$("#inputPreview2")
+		const inputPopover = await inputElement.shadow$("ui5-responsive-popover");
 		const helpPopover = await browser.$("#quickViewCard2");
 
 		assert.strictEqual(await suggestionItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
@@ -798,8 +787,7 @@ describe("Input general interaction", () => {
 		//act
 		await button.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputInDialog");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await input.shadow$("ui5-responsive-popover");
 		const dialog = await browser.$("#inputInDialog");
 
 		await input.keys("c");
@@ -909,8 +897,7 @@ describe("Input general interaction", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await $("#readonly-value-state-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-input");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await input.shadow$("ui5-popover");
 
 		await input.click();
 
@@ -1024,8 +1011,7 @@ describe("Input general interaction", () => {
 
 	it("Should open suggestions popover if openPicker() is called on focusin", async () => {
 		const input = await browser.$("#openPickerInput");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#openPickerInput");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await input.shadow$("ui5-responsive-popover");
 
 		await input.click();
 
@@ -1107,8 +1093,7 @@ describe("Input general interaction", () => {
 			return done(document.getElementById("change-event-value").openPicker());
 		});
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-event-value");
-		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const listItem = await input.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
 
 		await listItem.click();
 
@@ -1153,13 +1138,12 @@ describe("Input arrow navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
 		await suggestionsInput.keys("ArrowDown");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
@@ -1188,13 +1172,12 @@ describe("Input arrow navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputError");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
 		await suggestionsInput.keys("ArrowDown");
 
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
@@ -1251,14 +1234,13 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const caretPosition = await browser.execute(() =>{
 			return document.getElementById("myInput2").getCaretPosition();
@@ -1273,7 +1255,6 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
@@ -1283,7 +1264,7 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cozy", "First item has been selected");
@@ -1295,7 +1276,6 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputError");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#inputError");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
@@ -1306,7 +1286,7 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
@@ -1323,7 +1303,6 @@ describe("Input HOME navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
@@ -1334,7 +1313,7 @@ describe("Input HOME navigation", () => {
 
 		await suggestionsInput.keys("Home");
 
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
@@ -1350,7 +1329,6 @@ describe("Input END navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
@@ -1358,7 +1336,7 @@ describe("Input END navigation", () => {
 		await suggestionsInput.keys("ArrowLeft");
 		await suggestionsInput.keys("End");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		const caretPosition = await browser.execute(() =>{
 			return document.getElementById("myInput2").getCaretPosition();
@@ -1373,7 +1351,6 @@ describe("Input END navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#inputCompact");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#inputCompact");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
@@ -1383,7 +1360,7 @@ describe("Input END navigation", () => {
 
 		await suggestionsInput.keys("End");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item:last-child");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Chili", "Last item has been selected");
@@ -1397,12 +1374,11 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput2");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("c");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		let caretPosition = await browser.execute(() =>{
 			return document.getElementById("myInput2").getCaretPosition();
@@ -1438,7 +1414,6 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const suggestionsInput = await browser.$("#myInput");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
 
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
@@ -1448,7 +1423,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 
 		await suggestionsInput.keys("PageDown");
 
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const tenthListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item:nth-child(11)");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Azerbaijan", "Tenth item has been selected");
@@ -1462,8 +1437,6 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		const suggestionsInput = await browser.$("#myInput");
 		await suggestionsInput.scrollIntoView();
 
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
-
 		await suggestionsInput.click();
 		await suggestionsInput.keys("a");
 
@@ -1473,8 +1446,13 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.keys("PageDown");
 		await suggestionsInput.keys("PageUp");
 
+<<<<<<< HEAD
 		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
 		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
+=======
+		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupheader");
+>>>>>>> origin/release-2.0
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "No item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1501,8 +1479,7 @@ describe("XSS tests for suggestions", () => {
 
 		await input.keys("a");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#xss-input");
-		const listItems = await $(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
+		const listItems = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
 		const expected = [
 			"",
 			"<b></b>",
@@ -1534,11 +1511,7 @@ describe("Prevent suggestion-item-select event", () => {
         await input.click();
         await input.keys(SUGGESTION_TEXT.at(0));
 
-        const staticAreaItemClassName =
-            await browser.getStaticAreaItemClassName(INPUT_ID_SELECTOR);
-        const respPopover = await browser
-            .$(`.${staticAreaItemClassName}`)
-            .shadow$("ui5-responsive-popover");
+        const respPopover = await input.shadow$("ui5-responsive-popover");
 
         // Select first suggestion item that has event prevent
         const firstSuggestion = await respPopover
@@ -1559,11 +1532,7 @@ describe("Prevent suggestion-item-select event", () => {
         await input.click();
         await input.keys(SUGGESTION_TEXT.at(0));
 
-        const staticAreaItemClassName =
-            await browser.getStaticAreaItemClassName(INPUT_ID_SELECTOR);
-        const respPopover = await browser
-            .$(`.${staticAreaItemClassName}`)
-            .shadow$("ui5-responsive-popover");
+        const respPopover = await input.shadow$("ui5-responsive-popover");
 
         const secondSuggestion = await respPopover
             .$("ui5-list")
@@ -1586,8 +1555,7 @@ describe("Lazy loading", () => {
 	it("Lazy loading opens the picker once items are populated", async () => {
 		const input = await $("#field");
 		const inner = await input.shadow$("input");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
-		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await inner.click();
 		await inner.keys("a");
@@ -1601,8 +1569,7 @@ describe("Lazy loading", () => {
 	it("Does not reopeon picker on focus in", async () => {
 		const input = await $("#field");
 		const inner = await input.shadow$("input");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field");
-		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await inner.click();
 		await inner.keys("a");
@@ -1621,8 +1588,7 @@ describe("Lazy loading", () => {
 	it("Should not close picker when items are updated", async () => {
 		const input = await $("#field1");
 		const inner = await input.shadow$("input");
-		const staticAreaClassName = await browser.getStaticAreaItemClassName("#field1");
-		const respPopover = await $(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		await inner.click();
 		await inner.keys("S");

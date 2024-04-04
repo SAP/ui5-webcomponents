@@ -2,7 +2,7 @@
  * Tabs overflow mode in TabContainer.
  * @public
  */
-enum TabsOverflowMode {
+enum OverflowMode {
 	/**
 	 * End type is used if there should be only one overflow with hidden the tabs at the end of the tab container.
 	 * @public
@@ -16,4 +16,4 @@ enum TabsOverflowMode {
 	StartAndEnd = "StartAndEnd",
 }
 
-export default TabsOverflowMode;
+export default OverflowMode;
