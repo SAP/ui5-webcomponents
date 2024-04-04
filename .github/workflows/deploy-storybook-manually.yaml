@@ -2,7 +2,11 @@ name: Deploy Storybook [manual]
 
 on:
   workflow_dispatch:
-
+    inputs:
+      targetFolder:
+        description: 'target folder'
+        required: true
+        default: 'storybook'
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,5 +29,5 @@ jobs:
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/playground/dist # The folder the action should deploy.
-        target-folder: storybook
+        target-folder: ${{ github.event.inputs.targetFolder }}
         clean: true

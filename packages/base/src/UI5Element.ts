@@ -990,8 +990,26 @@ abstract class UI5Element extends HTMLElement {
 				throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
 			}
 
+			const descriptor = Object.getOwnPropertyDescriptor(proto, prop);
+			// if the decorator is on a setter, proxy the new setter to it
+			let origSet: (v: any) => void;
+			if (descriptor?.set) {
+				// eslint-disable-next-line @typescript-eslint/unbound-method
+				origSet = descriptor.set;
+			}
+			// if the decorator is on a setter, there will be a corresponding getter - proxy the new getter to it
+			let origGet: () => PropertyValue;
+			if (descriptor?.get) {
+				// eslint-disable-next-line @typescript-eslint/unbound-method
+				origGet = descriptor.get;
+			}
+
 			Object.defineProperty(proto, prop, {
 				get(this: UI5Element) {
+					// proxy the getter to the original accessor if there was one
+					if (origGet) {
+						return origGet.call(this);
+					}
 					if (this._state[prop] !== undefined) {
 						return this._state[prop];
 					}
@@ -1017,7 +1035,7 @@ abstract class UI5Element extends HTMLElement {
 					value = metadataCtor.validatePropertyValue(value, propData);
 					const propertyType = propData.type;
 					let propertyValidator = propData.validator as typeof DataType;
-					const oldState = this._state[prop];
+					const oldState = origGet ? origGet.call(this) : this._state[prop];
 
 					if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
 						propertyValidator = propertyType as typeof DataType;
@@ -1032,7 +1050,12 @@ abstract class UI5Element extends HTMLElement {
 					}
 
 					if (isDifferent) {
-						this._state[prop] = value;
+						// if the decorator is on a setter, use it for storage
+						if (origSet) {
+							origSet.call(this, value);
+						} else {
+							this._state[prop] = value;
+						}
 						_invalidate.call(this, {
 							type: "property",
 							name: prop,
