@@ -20,9 +20,7 @@ const Template: UI5StoryArgs<Carousel, StoryArgsSlots> = (args) => {
 	return html`
 <ui5-carousel
 	?cyclic="${ifDefined(args.cyclic)}"
-	items-per-page-s="${ifDefined(args.itemsPerPageS)}"
-	items-per-page-m="${ifDefined(args.itemsPerPageM)}"
-	items-per-page-l="${ifDefined(args.itemsPerPageL)}"
+	items-per-page="${ifDefined(args.itemsPerPage)}"
 	?hide-navigation-arrows="${ifDefined(args.hideNavigationArrows)}"
 	?hide-page-indicator="${ifDefined(args.hidePageIndicator)}"
 	page-indicator-type="${ifDefined(args.pageIndicatorType)}"
@@ -50,9 +48,7 @@ ${story()}`
 
 export const MultipleItemsPerPage = Template.bind({});
 MultipleItemsPerPage.args = {
-	itemsPerPageS: 1,
-	itemsPerPageM: 2,
-	itemsPerPageL: 2,
+	itemsPerPage: "S1 M2 L2",
 	arrowsPlacement: CarouselArrowsPlacement.Navigation,
 	default: `<ui5-card class="medium">
 	<ui5-card-header slot="header" title-text="Activities" subtitle-text="For Today"></ui5-card-header>

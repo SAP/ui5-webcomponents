@@ -109,7 +109,7 @@ type CarouselNavigateEventDetail = {
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
- * based on the `items-per-page-l`, `items-per-page-m` and `items-per-page-s` properties.
+ * based on the `items-per-page`property.
  * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
@@ -133,28 +133,12 @@ class Carousel extends UI5Element {
 	cyclic!: boolean;
 
 	/**
-	 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-	 * @default 1
+	 * Defines the number of items per page depending on the page width. One item per page is shown by default.
+	 * @default "S1 M1 L1"
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageS!: number;
-
-	/**
-	 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-	 * @default 1
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageM!: number;
-
-	/**
-	 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-	 * @default 1
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageL!: number;
+	@property({ type: String, defaultValue: "S1 M1 L1" })
+	itemsPerPage!: string;
 
 	/**
 	 * Defines the visibility of the navigation arrows.
@@ -527,19 +511,33 @@ class Carousel extends UI5Element {
 	}
 
 	get effectiveItemsPerPage(): number {
+		const itemsPerPageArray = this.itemsPerPage.split(" ");
+		let S = 1,
+			M = 1,
+			L = 1;
+		itemsPerPageArray.forEach(element => {
+			if (element.indexOf("S") === 0) {
+				S = Number(element.slice(1));
+			} else if (element.indexOf("M") === 0) {
+				M = Number(element.slice(1));
+			} else if (element.indexOf("L") === 0) {
+				L = Number(element.slice(1));
+			}
+		});
+
 		if (!this._width) {
-			return this.itemsPerPageL;
+			return L;
 		}
 
 		if (this._width <= 640) {
-			return this.itemsPerPageS;
+			return S;
 		}
 
 		if (this._width <= 1024) {
-			return this.itemsPerPageM;
+			return M;
 		}
 
-		return this.itemsPerPageL;
+		return L;
 	}
 
 	isItemInViewport(index: number): boolean {
