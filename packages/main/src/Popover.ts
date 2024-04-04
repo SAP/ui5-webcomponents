@@ -165,15 +165,6 @@ class Popover extends Popup {
 	allowTargetOverlap!: boolean;
 
 	/**
-	 * Defines the ID or DOM Reference of the element that the popover is shown at
-	 * @public
-	 * @default undefined
-	 * @since 1.2.0
-	 */
-	@property({ validator: DOMReference })
-	opener?: HTMLElement | string;
-
-	/**
 	 * Defines whether the content is scrollable.
 	 * @default false
 	 * @private
@@ -236,25 +227,29 @@ class Popover extends Popup {
 
 	constructor() {
 		super();
+	}
 
-		Object.defineProperty(this, "opener", {
-			get: (): HTMLElement | undefined => {
-				return this._opener;
-			},
-			// eslint-disable-next-line @typescript-eslint/no-misused-promises
-			set: async (value: HTMLElement): Promise<void> => {
-				if (this._opener === value) {
-					return;
-				}
+	/**
+	 * Defines the ID or DOM Reference of the element that the popover is shown at
+	 * @public
+	 * @default undefined
+	 * @since 1.2.0
+	 */
+	@property({ validator: DOMReference })
+	set opener(value: HTMLElement) {
+		if (this._opener === value) {
+			return;
+		}
 
-				this._opener = value;
-				this._updateAttribute("opener", value);
+		this._opener = value;
 
-				if (value && this.open) {
-					await this.openPopup();
-				}
-			},
-		});
+		if (value && this.open) {
+			this.openPopup();
+		}
+	}
+
+	get opener(): HTMLElement | undefined {
+		return this._opener;
 	}
 
 	async openPopup() {

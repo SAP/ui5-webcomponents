@@ -16,7 +16,6 @@ import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@u
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -144,15 +143,6 @@ abstract class Popup extends UI5Element {
 	preventFocusRestore!: boolean;
 
 	/**
-	 * Indicates if the element is open
-	 * @public
-	 * @default false
-	 * @since 1.2.0
-	 */
-	@property({ type: Boolean })
-	open!: boolean;
-
-	/**
 	 * Indicates if the element is already open
 	 * @private
 	 * @default false
@@ -231,28 +221,6 @@ abstract class Popup extends UI5Element {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
-
-		Object.defineProperty(this, "open", {
-			get: (): boolean => {
-				return this.opened;
-			},
-			// eslint-disable-next-line @typescript-eslint/no-misused-promises
-			set: async (value: boolean): Promise<void> => {
-				this._updateAttribute("open", value);
-
-				if (this.opened === value) {
-					return;
-				}
-
-				this.opened = value;
-
-				if (value) {
-					await this.openPopup();
-				} else {
-					this.close();
-				}
-			},
-		});
 	}
 
 	onBeforeRendering() {
@@ -274,6 +242,31 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+	}
+
+	/**
+	 * Indicates if the element is open
+	 * @public
+	 * @default false
+	 * @since 1.2.0
+	 */
+	@property({ type: Boolean })
+	set open(value: boolean) {
+		if (this.opened === value) {
+			return;
+		}
+
+		this.opened = value;
+
+		if (value) {
+			this.openPopup();
+		} else {
+			this.close();
+		}
+	}
+
+	get open(): boolean {
+		return this.opened;
 	}
 
 	async openPopup() {
@@ -438,9 +431,7 @@ abstract class Popup extends UI5Element {
 				element.tabIndex = -1;
 			}
 
-			if (element !== getActiveElement()) {
-				element.focus();
-			}
+			element.focus();
 		}
 	}
 
@@ -490,13 +481,9 @@ abstract class Popup extends UI5Element {
 		this.opened = true;
 		this.open = true;
 
-		// try to focus the element if it is already created
 		await this.applyInitialFocus(preventInitialFocus);
 
 		await renderFinished();
-
-		// try to focus the element if it is dinalically created
-		await this.applyInitialFocus(preventInitialFocus);
 
 		this.fireEvent("after-open", {}, false, false);
 	}
