@@ -118,7 +118,7 @@
 
 	<br/><br/>
 
-	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" selection-mode="SingleSelectBegin">
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" selection-mode="SingleStart">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
@@ -164,7 +164,7 @@
 	<ui5-label id="itemClick">[Event] itemClick :: n/a</ui5-label>
 	<br/><br/>
 	<ui5-label id="selectionChange">[Event] selectionChange :: n/a</ui5-label>
-	<ui5-list id="myList2" selection-mode="SingleSelectEnd" header-text="API: selectionMode='SingleSelectEnd'">
+	<ui5-list id="myList2" selection-mode="SingleEnd" header-text="API: selectionMode='SingleEnd'">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 		<ui5-li id="country3" >China</ui5-li>
@@ -174,7 +174,7 @@
 
 	<br/><br/>
 
-	<ui5-list id="myList3" selection-mode="SingleSelectBegin" header-text="API: selectionMode='SingleSelectBegin'">
+	<ui5-list id="myList3" selection-mode="SingleStart" header-text="API: selectionMode='SingleStart'">
 		<ui5-li id="country1" >Dolor dolor ipsum culpa proident esse quis quis incididunt. Sunt duis eu ad deserunt dolor sunt Lorem incididunt est irure qui dolore minim consectetur. Voluptate minim veniam aliqua aute et consectetur magna commodo sit. Duis fugiat esse culpa ea velit sit excepteur duis deserunt aliquip minim laborum. Amet aliquip excepteur esse aute ut dolore labore.</ui5-li>
 		<ui5-li id="country2"  selected>Bulgaria</ui5-li>
 		<ui5-li id="country3" >China</ui5-li>
@@ -230,7 +230,7 @@
 
 	<ui5-list header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 
-	<ui5-list header-text="API: CustomListItem" selection-mode="SingleSelectEnd">
+	<ui5-list header-text="API: CustomListItem" selection-mode="SingleEnd">
 		<ui5-li-custom>
 			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
@@ -300,8 +300,8 @@
 	<ui5-select id="select">
 		<ui5-option selected>None</ui5-option>
 		<ui5-option>Single</ui5-option>
-		<ui5-option>SingleSelectBegin</ui5-option>
-		<ui5-option>SingleSelectEnd</ui5-option>
+		<ui5-option>SingleStart</ui5-option>
+		<ui5-option>SingleEnd</ui5-option>
 		<ui5-option>Multiple</ui5-option>
 		<ui5-option>Delete</ui5-option>
 	</ui5-select>
@@ -331,7 +331,7 @@
 
 		var mutated = false;
 		var singleSelectList = document.getElementById('myList');
-		var singleSelectEndList = document.getElementById('myList2');
+		var singleEndList = document.getElementById('myList2');
 		var multiSelectList = document.getElementById('myList4');
 		var singleSelectListPrevent = document.getElementById('listPrevent');
 
@@ -349,8 +349,8 @@
 		var selectionModes = {
 			"None": undefined,
 			"Single": "Single",
-			"SingleSelectBegin": "SingleSelectBegin",
-			"SingleSelectEnd": "SingleSelectEnd",
+			"SingleStart": "SingleStart",
+			"SingleEnd": "SingleEnd",
 			"Multiple": "Multiple",
 			"Delete": "Delete"
 		}
@@ -425,15 +425,15 @@
 			alert("Selection changed: " + selectedItems.map(function(item) { return item.id}).join("/"));
 		});
 
-		singleSelectEndList.addEventListener("ui5-item-press", function (event) {
+		singleEndList.addEventListener("ui5-item-press", function (event) {
 			var pressedItem = event.detail.item;
 			lblItemPress.innerHTML = "Event] itemPress :: " + pressedItem.id;
 		});
-		singleSelectEndList.addEventListener("ui5-item-click", function (event) {
+		singleEndList.addEventListener("ui5-item-click", function (event) {
 			lblItemClick.innerHTML = "Event] itemClick :: " + event.detail.item.id;
 		});
 
-		singleSelectEndList.addEventListener("ui5-selection-change", function (event) {
+		singleEndList.addEventListener("ui5-selection-change", function (event) {
 			var selectedItems = event.detail.selectedItems;
 			lblSelectionChange.innerHTML = "|Event] selectionChange :: " + selectedItems.map(function(item) { return item.id}).join("/");
 		});

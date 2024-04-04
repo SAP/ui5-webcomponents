@@ -74,7 +74,7 @@ describe("Tree proxies properties to list", () => {
 		const treeItem = await browser.$("#firstCollapsedItem");
 		assert.strictEqual(await treeItem.getAttribute("_selection-mode"), "Multiple", "SelectionMode applied to the tree item");
 
-		const modes = ["None", "Single", "SingleSelectBegin", "SingleSelectEnd", "Multiple", "Delete"];
+		const modes = ["None", "Single", "SingleStart", "SingleEnd", "Multiple", "Delete"];
 		modes.forEach(async selectionMode => {
 			await tree.setAttribute("selection-mode", selectionMode);
 			assert.strictEqual(await list.getAttribute("selection-mode"), selectionMode, "SelectionMode applied");

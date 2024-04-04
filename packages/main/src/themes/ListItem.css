@@ -207,7 +207,7 @@
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
-:host([_selection-mode="SingleSelectBegin"]) .ui5-li-root {
+:host([_selection-mode="SingleStart"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
@@ -215,7 +215,7 @@
 	padding-inline: 0 1rem;
 }
 
-:host([_selection-mode="SingleSelectEnd"]) .ui5-li-root {
+:host([_selection-mode="SingleEnd"]) .ui5-li-root {
 	padding-inline: 1rem 0;
 }
 

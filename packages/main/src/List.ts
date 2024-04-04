@@ -233,7 +233,7 @@ type ListItemClickEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in `Single`, `SingleSelectBegin`, `SingleSelectEnd` and `Multiple` selection modes.
+ * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
  * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
@@ -562,9 +562,9 @@ class List extends UI5Element {
 	get isSingleSelect() {
 		return [
 			ListSelectionMode.Single,
-			ListSelectionMode.SingleSelectBegin,
-			ListSelectionMode.SingleSelectEnd,
-			ListSelectionMode.SingleSelectAuto,
+			ListSelectionMode.SingleStart,
+			ListSelectionMode.SingleEnd,
+			ListSelectionMode.SingleAuto,
 		].includes(this.selectionMode as ListSelectionMode);
 	}
 
@@ -730,15 +730,15 @@ class List extends UI5Element {
 		return true;
 	}
 
-	handleSingleSelectBegin(item: ListItemBase): boolean {
+	handleSingleStart(item: ListItemBase): boolean {
 		return this.handleSingle(item);
 	}
 
-	handleSingleSelectEnd(item: ListItemBase): boolean {
+	handleSingleEnd(item: ListItemBase): boolean {
 		return this.handleSingle(item);
 	}
 
-	handleSingleSelectAuto(item: ListItemBase): boolean {
+	handleSingleAuto(item: ListItemBase): boolean {
 		return this.handleSingle(item);
 	}
 
@@ -1018,7 +1018,7 @@ class List extends UI5Element {
 		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
-		if (this.selectionMode === ListSelectionMode.SingleSelectAuto) {
+		if (this.selectionMode === ListSelectionMode.SingleAuto) {
 			const detail: SelectionRequestEventDetail = {
 				item: target,
 				selectionComponentPressed: false,

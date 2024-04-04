@@ -102,7 +102,7 @@ type UploadCollectionItemDeleteEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in `Single` and `Multiple` modes.
+ * in `Single` and `Multiple` selection modes.
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */

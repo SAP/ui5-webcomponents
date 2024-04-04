@@ -108,12 +108,12 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
-		it("in 'SingleSelectBegin' selectionMode there should be a radio button", async () => {
+		it("in 'SingleStart' selectionMode there should be a radio button", async () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
 			await select.keys("ArrowDown"); // for "Single"
-			await select.keys("ArrowDown"); // for "SingleSelectBegin"
+			await select.keys("ArrowDown"); // for "SingleStart"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");

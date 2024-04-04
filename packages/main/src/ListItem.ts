@@ -412,18 +412,18 @@ abstract class ListItem extends ListItemBase {
 
 	get placeSelectionElementBefore() {
 		return this._selectionMode === ListSelectionMode.Multiple
-			|| this._selectionMode === ListSelectionMode.SingleSelectBegin;
+			|| this._selectionMode === ListSelectionMode.SingleStart;
 	}
 
 	get placeSelectionElementAfter() {
 		return !this.placeSelectionElementBefore
-			&& (this._selectionMode === ListSelectionMode.SingleSelectEnd || this._selectionMode === ListSelectionMode.Delete);
+			&& (this._selectionMode === ListSelectionMode.SingleEnd || this._selectionMode === ListSelectionMode.Delete);
 	}
 
 	get modeSingleSelect() {
 		return [
-			ListSelectionMode.SingleSelectBegin,
-			ListSelectionMode.SingleSelectEnd,
+			ListSelectionMode.SingleStart,
+			ListSelectionMode.SingleEnd,
 			ListSelectionMode.Single,
 		].includes(this._selectionMode as ListSelectionMode);
 	}

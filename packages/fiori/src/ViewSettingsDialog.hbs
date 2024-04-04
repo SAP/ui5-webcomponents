@@ -54,7 +54,7 @@
 			{{#if isModeSort}}
 				<div class="ui5-vsd-sort">
 					<ui5-list
-						selection-mode="SingleSelectBegin"
+						selection-mode="SingleStart"
 						@ui5-item-click="{{_onSortOrderChange}}"
 						sort-order
 						accessible-name-ref="{{_id}}-label">
@@ -66,7 +66,7 @@
 						{{/each}}
 					</ui5-list>
 					<ui5-list
-						selection-mode="SingleSelectBegin"
+						selection-mode="SingleStart"
 						@ui5-item-click={{_onSortByChange}}
 						sort-by>
 						<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>

@@ -286,7 +286,7 @@
 					<ui5-button id="button2" icon="add">Add</ui5-button>
 					<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 				</div>
-				<ui5-list id="myList2" selection-mode="SingleSelectBegin">
+				<ui5-list id="myList2" selection-mode="SingleStart">
 					<ui5-li id="arg2">Up</ui5-li>
 					<ui5-li id="bg2">Down</ui5-li>
 					<ui5-li id="ch2">Charm</ui5-li>
@@ -394,8 +394,8 @@
 						<ui5-select id="modeSelect">
 							<ui5-option>None</ui5-option>
 							<ui5-option>Single</ui5-option>
-							<ui5-option>SingleSelectBegin</ui5-option>
-							<ui5-option>SingleSelectEnd</ui5-option>
+							<ui5-option>SingleStart</ui5-option>
+							<ui5-option>SingleEnd</ui5-option>
 							<ui5-option selected>Multiple</ui5-option>
 
 							<ui5-option>Delete</ui5-option>
@@ -458,7 +458,7 @@
 		</section>
 
 		<section class="row">
-			<ui5-list header-text="Products" selection-mode="SingleSelectEnd">
+			<ui5-list header-text="Products" selection-mode="SingleEnd">
 				<ui5-li-custom>
 					<div class="kitchen12auto">
 						<span>Laptop HP 2GB RAM Dual-core</span>

@@ -189,7 +189,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 
 /**
  * Fired when selection is changed by user interaction
- * in `Single`, `SingleSelectBegin`, `SingleSelectEnd` and `Multiple` modes.
+ * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` modes.
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @param {HTMLElement} targetItem The item triggering the event.
