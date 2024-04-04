@@ -95,7 +95,7 @@
 /* Set3 (BTP) Design Type */
 
 /* Scheme 1 */
-:host([design="Set3"][color-scheme="1"]) .ui5-badge-root {
+:host([design="Set3"]) .ui5-badge-root {
 	background-color: var(--ui5-badge-color-scheme-1-background);
 	border-color: var(--ui5-badge-color-scheme-1-border);
 	color: var(--ui5-badge-color-scheme-1-color);
@@ -137,7 +137,7 @@
 }
 
 /* Scheme 7 */
-:host([design="Set3"]) .ui5-badge-root {
+:host([design="Set3"][color-scheme="7"]) .ui5-badge-root {
 	background-color: var(--ui5-badge-color-scheme-7-background);
 	border-color: var(--ui5-badge-color-scheme-7-border);
 	color: var(--ui5-badge-color-scheme-7-color);
@@ -266,17 +266,17 @@
 	text-shadow: var(--ui5-badge-contrast-text-shadow);
 }
 
-:host([design="Set1"][color-scheme="1"]) .ui5-badge-root {
+:host([design="Set1"]) .ui5-badge-root {
 	background-color: var(--sapIndicationColor_1_Background);
 	border-color: var(--sapIndicationColor_1_BorderColor);
 	color: var(--sapIndicationColor_1_TextColor);
 }
 
-:host([interactive][design="Set1"][color-scheme="1"]) .ui5-badge-root:hover {
+:host([interactive][design="Set1"]) .ui5-badge-root:hover {
 	background-color: var(--sapIndicationColor_1_Hover_Background);
 }
 
-:host([interactive][design="Set1"][color-scheme="1"]) .ui5-badge-root:active {
+:host([interactive][design="Set1"]) .ui5-badge-root:active {
 	background-color: var(--sapIndicationColor_1_Active_Background);
 	border-color: var(--sapIndicationColor_1_Active_BorderColor);
 	color: var(--sapIndicationColor_1_Active_TextColor);
@@ -362,17 +362,17 @@
 	color: var(--sapIndicationColor_6_Active_TextColor);
 }
 
-:host([design="Set1"]) .ui5-badge-root {
+:host([design="Set1"][color-scheme="7"]) .ui5-badge-root {
 	background-color: var(--sapIndicationColor_7_Background);
 	border-color: var(--sapIndicationColor_7_BorderColor);
 	color: var(--sapIndicationColor_7_TextColor);
 }
 
-:host([interactive][design="Set1"]) .ui5-badge-root:hover {
+:host([interactive][design="Set1"][color-scheme="7"]) .ui5-badge-root:hover {
 	background-color: var(--sapIndicationColor_7_Hover_Background);
 }
 
-:host([interactive][design="Set1"]) .ui5-badge-root:active {
+:host([interactive][design="Set1"][color-scheme="7"]) .ui5-badge-root:active {
 	background-color: var(--sapIndicationColor_7_Active_Background);
 	border-color: var(--sapIndicationColor_7_Active_BorderColor);
 	color: var(--sapIndicationColor_7_Active_TextColor);
@@ -432,17 +432,17 @@
 	text-shadow: var(--ui5-badge-text-shadow);
 }
 
-:host([design="Set2"][color-scheme="1"]) .ui5-badge-root {
+:host([design="Set2"]) .ui5-badge-root {
 	background-color: var(--ui5-badge-set2-color-scheme-1-background);
 	border-color: var(--ui5-badge-set2-color-scheme-1-border);
 	color: var(--ui5-badge-set2-color-scheme-1-color);
 }
 
-:host([interactive][design="Set2"][color-scheme="1"]) .ui5-badge-root:hover {
+:host([interactive][design="Set2"]) .ui5-badge-root:hover {
 	background-color: var(--ui5-badge-set2-color-scheme-1-hover-background);
 }
 
-:host([interactive][design="Set2"][color-scheme="1"]) .ui5-badge-root:active {
+:host([interactive][design="Set2"]) .ui5-badge-root:active {
 	background-color: var(--ui5-badge-set2-color-scheme-1-active-background);
 	border-color: var(--ui5-badge-set2-color-scheme-1-active-border);
 	color: var(--ui5-badge-set2-color-scheme-1-active-color);
@@ -528,17 +528,17 @@
 	color: var(--ui5-badge-set2-color-scheme-6-active-color);
 }
 
-:host([design="Set2"]) .ui5-badge-root {
+:host([design="Set2"][color-scheme="7"]) .ui5-badge-root {
 	background-color: var(--ui5-badge-set2-color-scheme-7-background);
 	border-color: var(--ui5-badge-set2-color-scheme-7-border);
 	color: var(--ui5-badge-set2-color-scheme-7-color);
 }
 
-:host([interactive][design="Set2"]) .ui5-badge-root:hover {
+:host([interactive][design="Set2"][color-scheme="7"]) .ui5-badge-root:hover {
 	background-color: var(--ui5-badge-set2-color-scheme-7-hover-background);
 }
 
-:host([interactive][design="Set2"]) .ui5-badge-root:active {
+:host([interactive][design="Set2"][color-scheme="7"]) .ui5-badge-root:active {
 	background-color: var(--ui5-badge-set2-color-scheme-7-active-background);
 	border-color: var(--ui5-badge-set2-color-scheme-7-active-border);
 	color: var(--ui5-badge-set2-color-scheme-7-active-color);
