@@ -62,6 +62,25 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests popover is closed after click outside of it after multiple 'showAt'", async () => {
+		await browser.executeAsync((done) => {
+			const btn = document.getElementById("btn");
+			const popover = document.getElementById("pop");
+
+			popover.showAt(btn);
+			popover.showAt(btn);
+			popover.showAt(btn);
+			popover.showAt(btn);
+
+			done();
+		});
+
+		await browser.$("body").click();
+		const popover = await browser.$("#pop");
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
 	// it("tests if popover auto closes when opener goes out of the viewport", async () => {
 	// 	const btnOpenPopover = await browser.$("#btnOpenWithAttr");
 	// 	const btnAccNameRef = await browser.$("#btnAccNameRef");
