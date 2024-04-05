@@ -211,7 +211,7 @@ abstract class Popup extends UI5Element {
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_actualOpen!: boolean;
+	_isOpened!: boolean;
 
 	constructor() {
 		super();
@@ -221,16 +221,6 @@ abstract class Popup extends UI5Element {
 		this._getRealDomRef = () => {
 			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
 		};
-	}
-
-	onBeforeRendering() {
-		if (this._getBlockingLayer) {
-			if (!this._actualOpen || !this.isTopModalPopup) {
-				this._getBlockingLayer.hidePopover();
-			} else if (!this.shouldHideBackdrop) {
-				this._getBlockingLayer.showPopover();
-			}
-		}
 	}
 
 	onAfterRendering() {
@@ -444,7 +434,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	isOpen() : boolean {
-		return this.opened;
+		return this.open;
 	}
 
 	isFocusWithin() {
@@ -462,9 +452,11 @@ abstract class Popup extends UI5Element {
 	async _open(preventInitialFocus: boolean) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 
-		if (prevented || this._actualOpen) {
+		if (prevented || this._isOpened) {
 			return;
 		}
+
+		this._isOpened = true;
 
 		// Await render before trying to access the blocking layer
 		await renderFinished();
@@ -486,8 +478,6 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
-		this._actualOpen = true;
-		// this.opened = true;
 		this.open = true;
 
 		await this.applyInitialFocus(preventInitialFocus);
@@ -512,7 +502,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
-		if (!this._actualOpen) {
+		if (!this._isOpened) {
 			return;
 		}
 
@@ -521,6 +511,8 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
+		this._isOpened = false;
+
 		if (this.isModal) {
 			this._blockLayerHidden = true;
 			this._getBlockingLayer.hidePopover();
@@ -528,8 +520,6 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.hide();
-		this._actualOpen = false;
-		// this.opened = false;
 		this.open = false;
 
 		if (!preventRegistryUpdate) {

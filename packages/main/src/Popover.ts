@@ -300,7 +300,7 @@ class Popover extends Popup {
 	 * @returns Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
-		if (!opener || this._actualOpen) {
+		if (!opener || this._isOpened) {
 			return;
 		}
 
@@ -380,7 +380,7 @@ class Popover extends Popup {
 	_show() {
 		super._show();
 
-		if (!this._actualOpen) {
+		if (!this._isOpened) {
 			this._showOutsideViewport();
 		}
 
@@ -487,11 +487,6 @@ class Popover extends Popup {
 	}
 
 	_showOutsideViewport() {
-		if (this.isConnected) {
-			this.setAttribute("popover", "manual");
-			this.showPopover();
-		}
-
 		Object.assign(this.style, {
 			top: "-10000px",
 			left: "-10000px",
