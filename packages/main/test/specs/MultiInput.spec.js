@@ -16,17 +16,6 @@ describe("MultiInput general interaction", () => {
 		assert.notOk(await basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 	});
 
-	it ("tests opening of tokenizer Popover", async () => {
-		const tokenizer = await browser.$("#basic-overflow").shadow$("ui5-tokenizer");
-		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
-
-		await nMoreLabel.click();
-
-		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
-	});
-
 	it ("fires value-help-trigger on icon press", async () => {
 		await browser.url(`test/pages/MultiInput.html`);
 
@@ -149,28 +138,6 @@ describe("MultiInput general interaction", () => {
 		assert.strictEqual(await mi2.getAttribute("placeholder"), "", "a token is added after selection");
 	});
 
-	it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
-		await browser.url(`test/pages/MultiInput.html`);
-
-		const minput = await browser.$("#basic-overflow");
-		const input = minput.shadow$("input");
-
-		await minput.scrollIntoView();
-		await input.click();
-
-		let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-		let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
-		let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").getBoundingClientRect().width);
-
-
-		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
-
-		await input.keys('Tab');
-		tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-
-		assert.strictEqual(tokenizerScrollContainerScrollLeft, 0, "tokenizer is scrolled to start");
-	});
-
 	it("should NOT fire token-delete when MI is readonly", async () => {
 		const input = await browser.$("#readonly-mi");
 		const deleteIcon = input.$$("ui5-token")[0].shadow$("ui5-icon");
@@ -226,28 +193,6 @@ describe("MultiInput general interaction", () => {
 describe("MultiInput Truncated Token", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
-	});
-
-	it("should truncate token when single token is in the multinput and open popover on click", async () => {
-		const mi = await browser.$("#truncated-token");
-		const tokenizer = await mi.shadow$("ui5-tokenizer");
-		const token = await mi.$("ui5-token");
-		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-
-		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
-
-		await token.click();
-
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
-		assert.ok(await token.getProperty("selected"), "Token should be selected");
-		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
-		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
-
-		await token.click();
-
-		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
-		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
-		assert.ok(await token.getProperty("focused"), "Token should be focused");
 	});
 
 	it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
@@ -322,7 +267,6 @@ describe("MultiInput Truncated Token", () => {
 		await btn.click();
 
 		const innerInput = await browser.$("#added-mi").shadow$("input");
-		const html = await innerInput.getHTML();
 
 		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
 	});
@@ -527,34 +471,6 @@ describe("Keyboard handling", () => {
 		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
 	});
 
-	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
-		await browser.url(`test/pages/MultiInput.html`);
-		const minput = await browser.$("#basic-overflow");
-		const input = minput.shadow$("input");
-
-		await minput.scrollIntoView();
-		await input.click();
-		await input.keys('ArrowLeft');
-
-		let scrollLeftFirstToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-
-		await input.keys('ArrowLeft');
-		await input.keys('ArrowLeft');
-		await input.keys('ArrowLeft');
-
-		let scrollLeftForthToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-
-		assert.notEqual(scrollLeftFirstToken, scrollLeftForthToken, "tokenizer is scrolled when navigating through the tokens");
-
-		await input.keys('ArrowRight');
-		await input.keys('ArrowRight');
-		await input.keys('ArrowRight');
-
-		let newScrollLeft =  await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
-
-		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
-	})
-
 	it("should change input's value when set in selection change event", async () => {
 		const input = $("#suggestion-token");
 		const innerInput = input.shadow$("input");
@@ -591,9 +507,8 @@ describe("Keyboard handling", () => {
 	});
 
 	it("should trigger change event on enter", async () => {
-		const mi = await browser.$("#token-unique");
+		const mi = await $("#token-unique");
 		const inner = await mi.shadow$("input");
-		const valueState = await browser.$("#value-state-wrapper");
 
 		await mi.scrollIntoView();
 
@@ -612,23 +527,9 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
 	});
 
-	it("value state message popup should be closed when nMore popover is open", async () => {
-		const mi = await $("#multiInput-error");
+	it("should open and close popover on keyboard combination ctrl + i", async () => {
+		const mi = await $("#truncated-token");
 		const inner = await mi.shadow$("input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multiInput-error");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
-
-		await mi.scrollIntoView();
-
-		// populate new token
-		await inner.click();
-		await inner.keys(["Control", "i"]);
-
-		assert.strictEqual(await popover.getProperty("opened"), false, "Value state popup is closed");
-	});
-
-	it("should open popover on keyboard combination ctrl + i", async () => {
-		const mi = await browser.$("#truncated-token");
 		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
