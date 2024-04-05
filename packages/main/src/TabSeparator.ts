@@ -65,15 +65,11 @@ class TabSeparator extends UI5Element {
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
 	 *
-	 * **Note:** Tabs and separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
+	 * **Note:** Separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such separators will return `undefined`.
 	 * @public
 	 */
-	getTabInStripDomRef(): HTMLElement | undefined {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
-		}
-
-		return undefined;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	get stableDomRef() {
