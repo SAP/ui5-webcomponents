@@ -26,7 +26,6 @@ const EXCLUDE_LIST = [
     "onEnterDOM",
     "onExitDOM",
     "onInvalidation",
-    "getStaticAreaItemDomRef",
 ];
 
 const loadManifest = () => {

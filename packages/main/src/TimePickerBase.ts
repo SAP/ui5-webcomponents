@@ -30,7 +30,6 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -67,9 +66,12 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 	languageAware: true,
 	renderer: litRender,
 	template: TimePickerTemplate,
-	styles: TimePickerCss,
-	staticAreaTemplate: TimePickerPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, PopoverCss, TimePickerPopoverCss],
+	styles: [
+		TimePickerCss,
+		ResponsivePopoverCommonCss,
+		PopoverCss,
+		TimePickerPopoverCss,
+	],
 	dependencies: [
 		Icon,
 		Popover,
@@ -230,9 +232,9 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is open
 	 */
-	async openPicker(): Promise<void> {
+	openPicker(): void {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const responsivePopover = await this._getPopover();
+		const responsivePopover = this._getPopover();
 		responsivePopover.showAt(this);
 	}
 
@@ -241,8 +243,8 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is closed
 	 */
-	async closePicker(): Promise<void> {
-		const responsivePopover = await this._getPopover();
+	closePicker(): void {
+		const responsivePopover = this._getPopover();
 		responsivePopover.close();
 		this._isPickerOpen = false;
 	}
@@ -272,9 +274,9 @@ class TimePickerBase extends UI5Element {
 		this._isPickerOpen = false;
 	}
 
-	async onResponsivePopoverAfterOpen() {
+	onResponsivePopoverAfterOpen() {
 		this._isPickerOpen = true;
-		const responsivePopover = await this._getPopover();
+		const responsivePopover = this._getPopover();
 		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
 	}
 
@@ -283,9 +285,9 @@ class TimePickerBase extends UI5Element {
 	 * @private
 	 * @returns Resolves when the Inputs popover is open
 	 */
-	async openInputsPopover(): Promise<void> {
+	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const popover = await this._getInputsPopover();
+		const popover = this._getInputsPopover();
 		popover.showAt(this);
 		this._isInputsPopoverOpen = true;
 	}
@@ -295,8 +297,8 @@ class TimePickerBase extends UI5Element {
 	 * @private
 	 * @returns Resolves when the Inputs popover is closed
 	 */
-	async closeInputsPopover(): Promise<void> {
-		const popover = await this._getInputsPopover();
+	closeInputsPopover() {
+		const popover = this._getInputsPopover();
 		popover.close();
 	}
 
@@ -321,8 +323,8 @@ class TimePickerBase extends UI5Element {
 		this.closeInputsPopover();
 	}
 
-	async onInputsPopoverAfterOpen() {
-		const popover = await this._getInputsPopover();
+	onInputsPopoverAfterOpen() {
+		const popover = this._getInputsPopover();
 		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
@@ -395,14 +397,12 @@ class TimePickerBase extends UI5Element {
 		return !this.disabled && this._isPhone;
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_getPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async _getInputsPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
+	_getInputsPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_getInput(): Input {
@@ -539,11 +539,11 @@ class TimePickerBase extends UI5Element {
 		setTimeout(() => { this._getInput().readonly = false; }, 0);
 	}
 
-	async _onfocusin(evt: FocusEvent) {
+	_onfocusin(evt: FocusEvent) {
 		if (this._isPhone) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
-				const popover = await this._getInputsPopover();
+				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
 			evt.preventDefault();

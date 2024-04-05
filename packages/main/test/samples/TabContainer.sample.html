@@ -151,7 +151,7 @@
 <section>
 		<h2>Text only Start and End Overflow</h2>
 		<div>
-			<ui5-tabcontainer collapsed fixed tabs-overflow-mode="StartAndEnd">
+			<ui5-tabcontainer collapsed fixed overflow-mode="StartAndEnd">
 				<ui5-tab text="Tab 1">
 				</ui5-tab>
 				<ui5-tab text="Tab 2">
@@ -249,7 +249,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer collapsed fixed tabs-overflow-mode="StartAndEnd">
+<ui5-tabcontainer collapsed fixed overflow-mode="StartAndEnd">
 	<ui5-tab text="Info" additional-text="3">
 	</ui5-tab>
 	<ui5-tab text="Attachments" additional-text="24" selected>
@@ -316,26 +316,26 @@
 			</ui5-tab>
 			<ui5-tab text="Products">
 				Products go here ...
-				<ui5-tab slot="subTabs" text="Computers">
+				<ui5-tab slot="items" text="Computers">
 					Computers go here ...
-					<ui5-tab slot="subTabs" text="Laptops">
+					<ui5-tab slot="items" text="Laptops">
 						Laptops go here ...
 					</ui5-tab>
-					<ui5-tab slot="subTabs" text="Desktops">
-						<ui5-tab slot="subTabs" text="Work Stations">
+					<ui5-tab slot="items" text="Desktops">
+						<ui5-tab slot="items" text="Work Stations">
 							Work Stations go here ...
 						</ui5-tab>
-						<ui5-tab slot="subTabs" text="Game Stations">
+						<ui5-tab slot="items" text="Game Stations">
 							Game Stations go here ...
 						</ui5-tab>
 						Desktops go here ...
 					</ui5-tab>
 				</ui5-tab>
-				<ui5-tab text="Phones" slot="subTabs">
-					<ui5-tab text="Smartphones" slot="subTabs">
+				<ui5-tab text="Phones" slot="items">
+					<ui5-tab text="Smartphones" slot="items">
 						Smartphones go here ...
 					</ui5-tab>
-					<ui5-tab text="Tablets" slot="subTabs">
+					<ui5-tab text="Tablets" slot="items">
 						Tablets go here ...
 					</ui5-tab>
 					Phones go here ...
@@ -343,7 +343,7 @@
 			</ui5-tab>
 			<ui5-tab text="Orders">
 				Orders go here ...
-				<ui5-tab slot="subTabs" text="Attachments">
+				<ui5-tab slot="items" text="Attachments">
 					Order attachments go here ...
 				</ui5-tab>
 			</ui5-tab>
@@ -356,26 +356,26 @@
 	</ui5-tab>
 	<ui5-tab text="Products">
 		Products go here ...
-		<ui5-tab slot="subTabs" text="Computers">
+		<ui5-tab slot="items" text="Computers">
 			Computers go here ...
-			<ui5-tab slot="subTabs" text="Laptops">
+			<ui5-tab slot="items" text="Laptops">
 				Laptops go here ...
 			</ui5-tab>
-			<ui5-tab slot="subTabs" text="Desktops">
-				<ui5-tab slot="subTabs" text="Work Stations">
+			<ui5-tab slot="items" text="Desktops">
+				<ui5-tab slot="items" text="Work Stations">
 					Work Stations go here ...
 				</ui5-tab>
-				<ui5-tab slot="subTabs" text="Game Stations">
+				<ui5-tab slot="items" text="Game Stations">
 					Game Stations go here ...
 				</ui5-tab>
 				Desktops go here ...
 			</ui5-tab>
 		</ui5-tab>
-		<ui5-tab text="Phones" slot="subTabs">
-			<ui5-tab text="Smartphones" slot="subTabs">
+		<ui5-tab text="Phones" slot="items">
+			<ui5-tab text="Smartphones" slot="items">
 				Smartphones go here ...
 			</ui5-tab>
-			<ui5-tab text="Tablets" slot="subTabs">
+			<ui5-tab text="Tablets" slot="items">
 				Tablets go here ...
 			</ui5-tab>
 			Phones go here ...
@@ -383,7 +383,7 @@
 	</ui5-tab>
 	<ui5-tab text="Orders">
 		Orders go here ...
-		<ui5-tab slot="subTabs" text="Attachments">
+		<ui5-tab slot="items" text="Attachments">
 			Order attachments go here ...
 		</ui5-tab>
 	</ui5-tab>

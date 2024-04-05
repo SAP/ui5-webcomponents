@@ -1,8 +1,8 @@
 /**
- * Popover placement types.
+ * Popover placements.
  * @public
  */
-enum PopoverPlacementType {
+enum PopoverPlacement {
 	/**
 	 * Popover will be placed at the start of the reference element.
 	 * @public
@@ -28,4 +28,4 @@ enum PopoverPlacementType {
 	Bottom = "Bottom",
 }
 
-export default PopoverPlacementType;
+export default PopoverPlacement;
