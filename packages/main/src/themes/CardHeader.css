@@ -12,7 +12,7 @@
 	align-items: flex-start;
 }
 
-:host([desktop]) .ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus:before,
+:host([desktop]) .ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus-within:before,
 .ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus-visible:before {
 	outline: none;
 	content: "";

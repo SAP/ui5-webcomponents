@@ -96,7 +96,7 @@
 	outline: none;
 }
 
-:host([desktop]) .ui5-popup-header-root:focus-within:after,
+:host([desktop]) .ui5-popup-header-root:focus:after,
 .ui5-popup-header-root:focus-visible:after {
 	content: '';
 	position: absolute;
