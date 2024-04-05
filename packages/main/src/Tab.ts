@@ -198,11 +198,11 @@ class Tab extends UI5Element implements ITabbable {
 	static i18nBundle: I18nBundle;
 
 	set forcedTabIndex(val: string) {
-		this.getTabInStripDomRef()!.setAttribute("tabindex", val);
+		this.getDomRefInStrip()!.setAttribute("tabindex", val);
 	}
 
 	get forcedTabIndex() {
-		return this.getTabInStripDomRef()!.getAttribute("tabindex")!;
+		return this.getDomRefInStrip()!.getAttribute("tabindex")!;
 	}
 
 	get displayText() {
@@ -277,18 +277,14 @@ class Tab extends UI5Element implements ITabbable {
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 *
-	 * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+	 * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `undefined`.
 	 *
 	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */
-	getTabInStripDomRef(): HTMLElement | undefined {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
-		}
-
-		return undefined;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	getFocusDomRef() {
