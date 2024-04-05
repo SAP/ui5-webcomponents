@@ -1063,3 +1063,4 @@ Tokenizer.define();
 export default Tokenizer;
 export { ClipboardDataOperation };
 export type { TokenizerTokenDeleteEventDetail };
+export type { TokenizerSelectionChangeEventDetail };

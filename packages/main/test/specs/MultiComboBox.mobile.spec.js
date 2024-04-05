@@ -247,6 +247,7 @@ describe("Items selection", () => {
 
 	it("Should not allow additional selection when readonly", async () => {
 		const multiCombo = await browser.$("#mcb-ro");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 
 		await multiCombo.scrollIntoView();
 		await mcbInput.click();
