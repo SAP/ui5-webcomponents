@@ -17,7 +17,6 @@ const options = {
 	portStep: 2,
 	dev: true,
 	fioriPackage: true,
-	typescript: true,
 	noWatchTS: true,
 	illustrationsData: [
 		{

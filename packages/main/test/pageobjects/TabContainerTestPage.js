@@ -1,7 +1,7 @@
 class TabContainerTestPage {
 	async getItemsIds(tabContainerId) {
 		const items = await browser.$$(`#${tabContainerId} > *`);
-	
+
 		return Promise.all(items.map(item => item.getAttribute("id")));
 	}
 
@@ -32,8 +32,7 @@ class TabContainerTestPage {
 	}
 
 	async getCurrentPopoverItems(tabContainerId) {
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${tabContainerId}`);
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#${tabContainerId}`).shadow$("ui5-responsive-popover");
 
 		return popover.$$("[ui5-li-custom]");
 	}
