@@ -1,5 +1,9 @@
 ui5-side-navigation {
     height: 600px;
+    border-radius: 0.5rem 0.5rem 0 0;
+    box-shadow:
+        0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+        0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
 }
 
 ui5-shellbar::part(root) {
