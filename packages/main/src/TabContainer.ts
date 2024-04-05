@@ -529,6 +529,10 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderDrop(e: DragEvent) {
+		if (e.target === this._getStartOverflowBtnDOM() || e.target === this._getEndOverflowBtnDOM()) {
+			return;
+		}
+
 		e.preventDefault();
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
@@ -556,16 +560,20 @@ class TabContainer extends UI5Element {
 
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination } = e.detail;
-		const draggedElement = DragRegistry.getDraggedElement();
+		const draggedElement = DragRegistry.getDraggedElement()!;
 		const dropTarget = (destination.element as TabInStrip | TabSeparatorInStrip).realTabReference;
 
 		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
 			return;
 		}
 
+		if (draggedElement !== dropTarget && draggedElement.contains(dropTarget)) {
+			return;
+		}
+
 		const placementAccepted = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
 			source: {
-				element: draggedElement!,
+				element: draggedElement,
 			},
 			destination: {
 				element: dropTarget,
