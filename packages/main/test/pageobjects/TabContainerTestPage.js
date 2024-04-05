@@ -2,7 +2,7 @@ class TabContainerTestPage {
 	async getItemsIds(tabContainerId) {
 		const items = await browser.$$(`#${tabContainerId} > *`);
 
-		return Promise.all(items.map(item => item.getAttribute("id")));
+		return Promise.all([...items].map(item => item.getAttribute("id")));
 	}
 
 	async getDisplayedTabStripItems(tabContainerId) {

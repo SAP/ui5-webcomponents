@@ -137,7 +137,7 @@ describe("Tree has screen reader support", () => {
 	it("List item acc attributes correct", async () => {
 		const listItems = await browser.$$("#tree ui5-tree-item");
 
-		const promises = listItems.map(async (item, idx) => {
+		const promises = [...listItems].map(async (item, idx) => {
 			const li = await item.shadow$("li");
 			const itemExpandable = await item.getProperty("showToggleButton");
 			const itemExpanded = await item.getProperty("expanded");
