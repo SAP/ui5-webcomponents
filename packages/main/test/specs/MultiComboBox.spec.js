@@ -11,10 +11,10 @@ describe("MultiComboBox general interaction", () => {
 			const popover = await $("#multi1").shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
 			await icon.click();
-			assert.ok(await popover.getProperty("open"), "Popover should be displayed in the viewport");
+			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
 
 			await icon.click();
-			assert.notOk(await popover.getProperty("open"), "Popover should close");
+			assert.notOk(await popover.getProperty("opened"), "Popover should close");
 		});
 
 		it("Checks focus state", async () => {
@@ -86,7 +86,7 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 			await showMore.click();
 
-			assert.ok(await allPopover.getProperty("open"), "All popover should not be displayed");
+			assert.ok(await allpopover.getProperty("opened"), "All popover should not be displayed");
 		});
 
 		it("Checks if tokenizer is expanded when adding items dynamically", async () => {
@@ -123,7 +123,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await icon.click();
 
-			assert.ok(await popover.getProperty("open"), "Popover should be displayed in the viewport");
+			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
 			assert.equal(await firstItem.getAttribute("selected"), null, "First item should not be selected");
 
 			await firstItemCheckbox.click();
@@ -151,7 +151,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await icon.click();
 
-			assert.ok(await popover.getProperty("open"), "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 
 			await firstItem.click();
 
@@ -168,7 +168,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const list = await popover.$(".ui5-multi-combobox-all-items-list");
 
-			assert.ok(await popover.getProperty("open"), "Popover should be displayed in the viewport");
+			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown");
 
 			await input.keys("o");
@@ -247,12 +247,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys("c");
 
-			assert.ok(await popover.getProperty("open"), "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItem.click();
 
-			assert.notOk(await popover.getProperty("open"), "When the content is clicked, the popover should close");
+			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.ok(await browser.$("#another-mcb").getProperty("focused"), "MultiComboBox should be focused.");
 		});
@@ -267,12 +267,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("c");
 			await browser.pause(500);
 
-			assert.ok(await popover.getProperty("open"), "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "Cosy", "Value is correct");
 
 			await firstItemCheckbox.click();
 
-			assert.ok(await popover.getProperty("open"), "When the content is clicked, the popover should close");
+			assert.ok(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "c", "When the content is clicked, the value should be the typed-in value");
 		});
 
@@ -530,12 +530,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.click();
 			await input.keys("i");
 
-			assert.ok(await popover.getProperty("open"), "The popover should be opened");
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
 			assert.strictEqual(await input.getValue(), "Item 1", "Value is correct");
 
 			await firstItem.click();
 
-			assert.notOk(await popover.getProperty("open"), "When the content is clicked, the popover should close");
+			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.equal(mcbTokens.length, 1, "1 token is created.");
 		});
@@ -1657,7 +1657,7 @@ describe("MultiComboBox general interaction", () => {
 			const popover = await mcb.shadow$("ui5-popover");
 
 			await mcb.click();
-			assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
+			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
 		});
 
 		it("Should apply correct text to the tokens overflow indicator", async () => {
@@ -1932,7 +1932,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("Backspace");
 			await input.keys(['E', 'u', 'r', 'o', 'p', 'e']);
 
-			assert.equal(await popover.getProperty("open"), false, "Popover should not be open");
+			assert.equal(await popover.getProperty("opened"), false, "Popover should not be open");
 		});
 
 		it ("Tests group item focusability", async () => {
@@ -1969,13 +1969,13 @@ describe("MultiComboBox general interaction", () => {
 			await groupItem.keys("Enter");
 
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
+			assert.equal(await popover.getProperty("opened"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated");
 
 			await groupItem.keys("Space");
 
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
+			assert.equal(await popover.getProperty("opened"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
 
 			await groupItem.keys("ArrowUp");

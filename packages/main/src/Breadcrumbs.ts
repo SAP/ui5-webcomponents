@@ -520,7 +520,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return !!this.responsivePopover && this.responsivePopover.open;
+		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
 	get _accessibleNameText() {

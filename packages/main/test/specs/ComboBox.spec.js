@@ -9,11 +9,11 @@ describe("General interaction", () => {
 		const arrow = await combo.shadow$("[input-icon]");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
 
 		await arrow.click();
 
-		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
 	});
 
 	it ("Should close the popover when clicking on the arrow second time", async () => {
@@ -21,11 +21,11 @@ describe("General interaction", () => {
 		const arrow = await combo.shadow$("[input-icon]");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
 
 		await arrow.click();
 
-		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
 	});
 
 	it ("Items filtration", async () => {
@@ -64,7 +64,7 @@ describe("General interaction", () => {
 		await input.click();
 		await input.keys("b");
 
-		await browser.waitUntil(() => popover.getProperty("open"), {
+		await browser.waitUntil(() => popover.getProperty("opened"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -146,7 +146,7 @@ describe("General interaction", () => {
 
 		// assert
 		assert.strictEqual(listItems.length, 0, "Items should be 0");
-		assert.notOk(await popover.getProperty("open"), "Popover should close");
+		assert.notOk(await popover.getProperty("opened"), "Popover should close");
 	});
 
 	it ("Should close popover on item click / change event", async () => {
@@ -163,24 +163,24 @@ describe("General interaction", () => {
 		await input.keys("b");
 
 		// assert
-		assert.ok(await popover.getProperty("open"), "Popover should be opened");
+		assert.ok(await popover.getProperty("opened"), "Popover should be opened");
 
 		// act
 		await input.keys("Enter");
 
 		// assert
-		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
+		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
 
 		// act
 		await arrow.click();
 
-		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
 
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		await listItems[0].click();
 
 		// assert
-		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
+		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
 	});
 
 	it ("Tests change event", async () => {
@@ -683,7 +683,7 @@ describe("Grouping", () => {
 		await input.keys("ArrowDown");
 		await input.keys("Enter");
 
-		assert.ok(await popover.getProperty("open"), "Popover remains open");
+		assert.ok(await popover.getProperty("opened"), "Popover remains open");
 	});
 });
 
@@ -1084,7 +1084,7 @@ describe("Keyboard navigation", async () => {
 		await input.click();
 		await input.keys("A");
 
-		await browser.waitUntil(() => popover.getProperty("open"), {
+		await browser.waitUntil(() => popover.getProperty("opened"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1107,7 +1107,7 @@ describe("Keyboard navigation", async () => {
 		await input.click();
 		await input.keys("b");
 
-		await browser.waitUntil(() => popover.getProperty("open"), {
+		await browser.waitUntil(() => popover.getProperty("opened"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});

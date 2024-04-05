@@ -468,7 +468,7 @@ class ComboBox extends UI5Element {
 	async shouldClosePopover(): Promise<boolean> {
 		const popover: ResponsivePopover = await this._getPicker();
 
-		return popover.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
+		return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(e: FocusEvent) {
@@ -526,7 +526,7 @@ class ComboBox extends UI5Element {
 	async _toggleRespPopover() {
 		const picker: ResponsivePopover = await this._getPicker();
 
-		if (picker.open) {
+		if (picker.opened) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -858,7 +858,7 @@ class ComboBox extends UI5Element {
 
 			this._fireChangeEvent();
 
-			if (picker?.open && !focusedItem?.isGroupItem) {
+			if (picker?.opened && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
@@ -1207,7 +1207,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get open(): boolean {
-		return this?.responsivePopover?.open || false;
+		return this?.responsivePopover?.opened || false;
 	}
 
 	get _isPhone(): boolean {

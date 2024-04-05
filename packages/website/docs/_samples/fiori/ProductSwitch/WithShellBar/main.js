@@ -22,7 +22,7 @@ import "@ui5/webcomponents-icons/dist/credit-card.js";
 var shellBar = document.getElementById("shellbar");
 var popover = document.getElementById("productswitch-popover");
 shellBar.addEventListener("product-switch-click", (event) => {
-    if (popover.open) {
+    if (popover.opened) {
         popover.close();
     } else {
         event.preventDefault();
