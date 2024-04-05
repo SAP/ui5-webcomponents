@@ -70,8 +70,6 @@ class MyElement extends UI5Element {
 }
 ```
 
-**Note**: the `static get render()` that we use when developing in JavaScript (still supported for backward compatibility) is replaced with **`renderer`** in the `@customElement` decorator.
-
 ### Property decorators
 
 These are used inside the class and are associated with accessors (class members).
@@ -679,9 +677,8 @@ It's important to note that casting the returned result will exclude "`null`." A
 
 
 ```ts
-async _getDialog() {
-	const staticAreaItem = await this.getStaticAreaItemDomRef();
-	return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+_getDialog() {
+	return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 }
 ```
 

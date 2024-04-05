@@ -1,9 +1,9 @@
-.ui5-tc__separator {
+div.ui5-tc__separator {
 	position: relative;
 	width: 0.5625rem;
 }
 
-.ui5-tc__separator::before {
+div.ui5-tc__separator::before {
 	content: " ";
 	position: absolute;
 	width: 0.0625rem;

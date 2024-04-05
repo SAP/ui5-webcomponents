@@ -61,7 +61,7 @@ However, we mostly recommend changing the main ones `sapPrimary1` - `sapPrimary7
 @sapPrimary2: violet;
 ```
 
-### 3. Generating the custom CSS vars
+### 3. Generating the custom CSS variables
 
 - Install `less` to compile `less` to `css`.
 

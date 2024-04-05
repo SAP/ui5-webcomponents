@@ -43,7 +43,7 @@ ${caseImports}
 const importAndCheck = async (localeId) => {
 	const data = await importCldrJson(localeId);
 	if (typeof data === "string" && data.endsWith(".json")) {
-        throw new Error(\`[LocaleData] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the \"Assets\" documentation for more information.\`);
+        throw new Error(\`[LocaleData] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build. Check the \"Assets\" documentation for more information.\`);
 	}
 	return data;
 }
