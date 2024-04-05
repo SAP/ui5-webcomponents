@@ -8,6 +8,5 @@
 	--ui5_upload_collection_drag_overlay_icon_color: var(--sapTextColor);
 	--ui5_upload_collection_drag_overlay_border: var(--sapField_BorderColor);
 	--ui5_upload_collection_drop_overlay_background: var(--sapContent_DragAndDropActiveColor);
-	--ui5_upload_collection_drag_overlay_border_radius: 0.5rem;
 	--ui5_upload_collection_drag_overlay_opacity: 0.5;
 }
