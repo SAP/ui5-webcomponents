@@ -37,8 +37,7 @@ function HTMLLitVisitor(componentName, debug) {
 	this.blockLevel = 0;
 	this.componentName = componentName
 	const blockParametersDefinitionTS = [`this: ${componentName}`, "context: UI5Element", "tags: string[]", "suffix: string | undefined"];
-	const blockParametersDefinitionJS = ["context", "tags", "suffix"];
-	this.blockParametersDefinition = process.env.UI5_TS ? blockParametersDefinitionTS : blockParametersDefinitionJS;
+	this.blockParametersDefinition = blockParametersDefinitionTS;
 	this.blockParametersUsage = ["this", "context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
@@ -110,11 +109,7 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		if (isNodeValue && !mustache.escaped) {
 			parsedCode = `\${unsafeHTML(${path})}`;
 		} else if (hasCalculatingClasses) {
-			if (process.env.UI5_TS) {
-				parsedCode = `\${classMap(${path} as ClassMapValue)}`;
-			} else {
-				parsedCode = `\${classMap(${path})}`;
-			}
+			parsedCode = `\${classMap(${path} as ClassMapValue)}`;
 		} else if (isStyleAttribute) {
 			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
@@ -180,8 +175,7 @@ function visitEachBlock(block) {
 	visitSubExpression.call(this, block);
 
 	const reapeatDirectiveParamsTS = "(item, index) => (item as typeof item & {_id?: any})._id || index, (item, index: number)";
-	const reapeatDirectiveParamsJS = "(item, index) => item._id || index, (item, index)";
-	const repleatDirectiveParams = process.env.UI5_TS ? reapeatDirectiveParamsTS : reapeatDirectiveParamsJS;
+	const repleatDirectiveParams = reapeatDirectiveParamsTS;
 	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", " + repleatDirectiveParams + " => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockLevel++;
@@ -191,13 +185,9 @@ function visitEachBlock(block) {
 	if (!this.blockParametersUsage.includes("index")) {
 		// last item is not index, but an each block is processed, add the paramters for further nested blocks
 		bParamAdded = true;
-		if (process.env.UI5_TS) {
-			this.blockParametersDefinition.push("item: any");
-			this.blockParametersDefinition.push("index: number");
-		} else {
-			this.blockParametersDefinition.push("item");
-			this.blockParametersDefinition.push("index");
-		}
+		this.blockParametersDefinition.push("item: any");
+		this.blockParametersDefinition.push("index: number");
+
 		this.blockParametersUsage.push("item");
 		this.blockParametersUsage.push("index");
 	}

@@ -13,17 +13,12 @@ const internals = {
 		}
 		return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 	},
-	get ie() {
-		if (isSSR) {
-			return false;
-		}
-		return /(msie|trident)/i.test(internals.userAgent);
-	},
+
 	get chrome() {
 		if (isSSR) {
 			return false;
 		}
-		return !internals.ie && /(Chrome|CriOS)/.test(internals.userAgent);
+		return /(Chrome|CriOS)/.test(internals.userAgent);
 	},
 	get firefox() {
 		if (isSSR) {
@@ -35,13 +30,13 @@ const internals = {
 		if (isSSR) {
 			return false;
 		}
-		return !internals.ie && !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
+		return !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
 	},
 	get webkit() {
 		if (isSSR) {
 			return false;
 		}
-		return !internals.ie && /webkit/.test(internals.userAgent);
+		return /webkit/.test(internals.userAgent);
 	},
 	get windows() {
 		if (isSSR) {
@@ -156,11 +151,10 @@ const detectTablet = () => {
 		return;
 	}
 
-	tablet = (internals.ie && internals.userAgent.indexOf("Touch") !== -1) || (internals.android && !internals.androidPhone);
+	tablet = internals.userAgent.indexOf("Touch") !== -1 || (internals.android && !internals.androidPhone);
 };
 
 const supportsTouch = (): boolean => internals.touch;
-const isIE = (): boolean => internals.ie;
 const isSafari = (): boolean => internals.safari;
 const isChrome = (): boolean => internals.chrome;
 const isFirefox = (): boolean => internals.firefox;
@@ -200,7 +194,6 @@ const isAndroid = (): boolean => {
 
 export {
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,

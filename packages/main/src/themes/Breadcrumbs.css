@@ -76,22 +76,22 @@
 }
 
 /* separator styles */
-:host([separator-style="DoubleSlash"]) .ui5-breadcrumbs-separator::after {
+:host([separators="DoubleSlash"]) .ui5-breadcrumbs-separator::after {
 	content: "//";
 }
 
-:host([separator-style="BackSlash"]) .ui5-breadcrumbs-separator::after {
+:host([separators="BackSlash"]) .ui5-breadcrumbs-separator::after {
 	content: "\\\\";
 }
 
-:host([separator-style="DoubleBackSlash"]) .ui5-breadcrumbs-separator::after {
+:host([separators="DoubleBackSlash"]) .ui5-breadcrumbs-separator::after {
 	content: "\\\\\\\\";
 }
 
-:host([separator-style="GreaterThan"]) .ui5-breadcrumbs-separator::after {
+:host([separators="GreaterThan"]) .ui5-breadcrumbs-separator::after {
 	content: ">";
 }
 
-:host([separator-style="DoubleGreaterThan"]) .ui5-breadcrumbs-separator::after {
+:host([separators="DoubleGreaterThan"]) .ui5-breadcrumbs-separator::after {
 	content: ">>";
 }
