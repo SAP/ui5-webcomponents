@@ -84,11 +84,40 @@ enum ClipboardDataOperation {
 	cut = "cut",
 	copy = "copy",
 }
+
 /**
  * @class
  *
  * ### Overview
- * A `ui5-tokenizer` is a container for `ui5-tokens`. It also handles all actions associated with the `ui5-tokens` like adding, deleting, selecting and editing.
+ *
+ * A `ui5-tokenizer` is an invisible container for `ui5-tokens` that supports keyboard navigation and token selection.
+ *
+ * The `ui5-tokenizer` consists of two parts:
+ * - Tokens - displays the available tokens.
+ * - N-more indicator - contains the number of the remaining tokens that cannot be displayed due to the limited space.
+ *
+ * ### Keyboard Handling
+ *
+ * #### Basic Navigation
+ * The `ui5-tokenizer` provides advanced keyboard handling.
+ * When a tokem is focused the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ *
+ * - [Left] or [Right] / [Up] or [Down] - Navigates left and right through the tokens.
+ * - [Home] - Navigates to first token.
+ * - [End] - Navigates to the last token.
+ *
+ * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
+ * when the `mode` property is in use:
+ *
+ * - [Space] - Selects a token.
+ * - [Backspace] / [Delete] - Deletes a token.
+ * **Note:** The deletion of a token is handled by the application with the use of the `token-delete` event.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Tokenizer.js";`
+ *
  * @constructor
  * @extends sap.ui.webc.base.UI5Element
  * @since 2.0
@@ -301,8 +330,9 @@ class Tokenizer extends UI5Element {
 
 	_onmousedown(e: MouseEvent) {
 		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
-			this.expanded = true;
 			const target = e.target as Token;
+			this.expanded = true;
+
 			if (!target.toBeDeleted) {
 				this._itemNav.setCurrentItem(target);
 				this._scrollToToken(target);
@@ -502,7 +532,7 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 
 			const isCut = e.key.toLowerCase() === "x" || isDeleteShift(e);
-			const selectedTokens = this.tokens.filter(token => token.selected);
+			const selectedTokens = this._tokens.filter(token => token.selected);
 
 			if (isCut) {
 				const cutResult = this._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
@@ -517,7 +547,7 @@ class Tokenizer extends UI5Element {
 			return this._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
 		}
 
-		if (isCtrl && e.key.toLowerCase() === "i" && this.tokens.length > 0) {
+		if (isCtrl && e.key.toLowerCase() === "i" && this._tokens.length > 0) {
 			e.preventDefault();
 
 			this._skipExpanding = true;
@@ -571,8 +601,8 @@ class Tokenizer extends UI5Element {
 
 	_handleItemNavigation(e: KeyboardEvent, tokens: Array<Token>) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
-
 		const target = e.target as Token;
+
 		if (isLeftCtrl(e) || isRightCtrl(e) || isDownCtrl(e) || isUpCtrl(e)) {
 			return this._handleArrowCtrl(e, target, tokens, isRightCtrl(e) || isDownCtrl(e));
 		}
@@ -611,7 +641,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleHomeShift(e: KeyboardEvent) {
-		const tokens = this.tokens;
+		const tokens = this._tokens;
 		const target = e.target as Token;
 		const currentTokenIdx = tokens.indexOf(target);
 		const previousSelectedTokens = [...this._selectedTokens];
@@ -632,7 +662,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_handleEndShift(e: KeyboardEvent) {
-		const tokens = this.tokens;
+		const tokens = this._tokens;
 		const target = e.target as Token;
 		const currentTokenIdx = tokens.indexOf(target);
 		const previousSelectedTokens = [...this._selectedTokens];
@@ -656,12 +686,14 @@ class Tokenizer extends UI5Element {
 		if (!tokens.length) {
 			return -1;
 		}
+
 		const focusedTokenIndex = tokens.indexOf(focusedToken);
 		let nextIndex = backwards ? (focusedTokenIndex + 1) : (focusedTokenIndex - 1);
 
 		if (nextIndex >= tokens.length) {
 			nextIndex = tokens.length - 1;
 		}
+
 		if (nextIndex < 0) {
 			nextIndex = 0;
 		}
@@ -705,9 +737,7 @@ class Tokenizer extends UI5Element {
 			});
 		}
 
-		setTimeout(() => {
-			tokens[nextIndex].focus();
-		}, 0);
+		tokens[nextIndex].focus();
 
 		this._scrollToToken(tokens[nextIndex]);
 	}
@@ -835,7 +865,7 @@ class Tokenizer extends UI5Element {
 	/**
 	 * Scrolls the container of the tokens to its beginning.
 	 * This method is used by MultiInput and MultiComboBox.
-	 * @private
+	 * @protected
 	 */
 	scrollToStart() {
 		if (this._scrollEnablement.scrollContainer) {
@@ -846,7 +876,7 @@ class Tokenizer extends UI5Element {
 	/**
 	 * Scrolls the container of the tokens to its end when expanded.
 	 * This method is used by MultiInput and MultiComboBox.
-	 * @private
+	 * @protected
 	 */
 	scrollToEnd() {
 		const expandedTokenizerScrollWidth = this.contentDom && (this.effectiveDir !== "rtl" ? this.contentDom.scrollWidth : -this.contentDom.scrollWidth);
@@ -858,7 +888,7 @@ class Tokenizer extends UI5Element {
 	/**
 	 * Scrolls token to the visible area of the container.
 	 * Adds 4 pixels to the scroll position to ensure padding and border visibility on both ends
-	 * @private
+	 * @protected
 	 */
 	_scrollToToken(token: IToken) {
 		if (!this.contentDom) {
@@ -947,6 +977,7 @@ class Tokenizer extends UI5Element {
 	get _selectedTokens() {
 		return this._tokens.filter(token => token.selected);
 	}
+
 	get _nMoreListMode() {
 		if (this.readonly || this.disabled) {
 			return ListMode.None;
@@ -982,13 +1013,13 @@ class Tokenizer extends UI5Element {
 	 * @protected
 	 */
 	_focusLastToken() {
-		if (this.tokens.length === 0) {
+		const tokens = this._tokens;
+		if (tokens.length === 0) {
 			return;
 		}
 
-		const lastToken = this.tokens[this.tokens.length - 1];
+		const lastToken = tokens[tokens.length - 1];
 		lastToken.focus();
-		this._itemNav.setCurrentItem(lastToken);
 	}
 
 	static async onDefine() {
