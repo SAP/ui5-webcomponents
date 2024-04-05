@@ -68,7 +68,7 @@
 <section>
 	<h3>Tree with multiple selection</h3>
 	<div class="snippet">
-		<ui5-tree id="myTree" class="full-width" mode="MultiSelect">
+		<ui5-tree id="myTree" class="full-width" selection-mode="Multiple">
 			<ui5-tree-item expanded text="Tree 1" icon="paste" selected>
 				<ui5-tree-item expanded text="Tree 1.1" selected>
 					<ui5-tree-item text="Tree 1.1.1"></ui5-tree-item>
@@ -124,7 +124,7 @@
 	<h3>Tree with dynamic content</h3>
 	<div class="snippet">
 		<ui5-busy-indicator id="busy" class="full-width">
-			<ui5-tree id="treeDynamic" mode="None" class="full-width">
+			<ui5-tree id="treeDynamic" selection-mode="None" class="full-width">
 				<ui5-tree-item text="Has pre-loaded children">
 					<ui5-tree-item text="Child 1"></ui5-tree-item>
 					<ui5-tree-item text="Child 2"></ui5-tree-item>
@@ -138,7 +138,7 @@
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-busy-indicator id="busy" class="full-width">
-	<ui5-tree id="treeDynamic" mode="None" class="full-width">
+	<ui5-tree id="treeDynamic" selection-mode="None" class="full-width">
 		<ui5-tree-item text="Has pre-loaded children">
 			<ui5-tree-item text="Child 1"></ui5-tree-item>
 			<ui5-tree-item text="Child 2"></ui5-tree-item>
@@ -198,7 +198,7 @@
 <section>
 	<h3>Tree with custom items</h3>
 	<div class="snippet">
-		<ui5-tree mode="MultiSelect">
+		<ui5-tree selection-mode="Multiple">
 			<div slot="header" class="hdr">
 				<ui5-title>Tree with custom items</ui5-title>
 			</div>
@@ -210,7 +210,7 @@
 				level="1"
 			>
 				<ui5-button slot="content">Level 1</ui5-button>
-		
+
 				<ui5-tree-item-custom
 					type="Active"
 					show-toggle-button
@@ -222,7 +222,7 @@
 						<ui5-option>Option 2.1</ui5-option>
 						<ui5-option>Option 2.3</ui5-option>
 					</ui5-select>
-		
+
 					<ui5-tree-item-custom
 						hide-selection-element
 						type="Active"
@@ -235,7 +235,7 @@
 		</ui5-tree>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tree mode="MultiSelect">
+<ui5-tree selection-mode="Multiple">
 	<div slot="header" class="hdr">
 		<ui5-title>Tree with custom items</ui5-title>
 	</div>
