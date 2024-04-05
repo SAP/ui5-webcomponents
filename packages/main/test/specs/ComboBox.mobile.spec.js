@@ -180,7 +180,7 @@ describe("Eventing", () => {
 	});
 
 	it ("Should set clear icon to dialog's input", async () => {
-		const cb = await $("#clear-icon-cb");
+		const cb = await browser.$("#clear-icon-cb");
 
 		await cb.shadow$("input").click();
 

@@ -206,8 +206,8 @@ describe("Customisation", async () => {
 	});
 
 	it("should check sizes to the toast", async () => {
-		const btn = await $("#wcBtnShowToastStyled");
-		const styledToast = await $("#wcToastStyled")
+		const btn = await browser.$("#wcBtnShowToastStyled");
+		const styledToast = await browser.$("#wcToastStyled")
 
 		await btn.click();
 

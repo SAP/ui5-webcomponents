@@ -601,8 +601,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("Checks if valueStateMessage gets updated dynamically", async () => {
-		const btn = await $("#dynamic-value-state-trigger");
-		const input = await $("#dynamic-value-state").shadow$("input");
+		const btn = await browser.$("#dynamic-value-state-trigger");
+		const input = await browser.$("#dynamic-value-state").shadow$("input");
 
 		await input.scrollIntoView();
 		await btn.click();
@@ -807,8 +807,8 @@ describe("Input general interaction", () => {
 	it("Suggestions count should be read out when necessary", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const inputDynamicSuggestions = await $("#inputCompact");
-		const inputSuggestions = await $("#myInput2");
+		const inputDynamicSuggestions = await browser.$("#inputCompact");
+		const inputSuggestions = await browser.$("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
 		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
 		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
@@ -840,8 +840,8 @@ describe("Input general interaction", () => {
 	it("Suggestions announcement", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const inputWithGroups = await $("#inputCompact");
-		const inputSuggestions = await $("#myInput2");
+		const inputWithGroups = await browser.$("#inputCompact");
+		const inputSuggestions = await browser.$("#myInput2");
 		const inputWithGroupsInnerInput = await inputWithGroups.shadow$("input");
 		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#${await inputWithGroups.getProperty("_id")}-selectionText`);
 		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-selectionText`);
@@ -884,7 +884,7 @@ describe("Input general interaction", () => {
 	it("Should close the Popover when no suggestions are available", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#myInput");
+		const input = await browser.$("#myInput");
 		const innerInput = await input.shadow$("input");
 
 		await browser.keys("A");
@@ -896,7 +896,7 @@ describe("Input general interaction", () => {
 	it("Should not open value state message when input is in readonly state", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#readonly-value-state-input");
+		const input = await browser.$("#readonly-value-state-input");
 		const popover = await input.shadow$("ui5-popover");
 
 		await input.click();
@@ -907,10 +907,10 @@ describe("Input general interaction", () => {
 	it("Displays clear icon when typing and pressing it clears the value", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#clear-input");
+		const input = await browser.$("#clear-input");
 		const innerInput = await input.shadow$("input");
-		const changeCounter = await $("#clear-input-change-event-count");
-		const inputCounter = await $("#clear-input-input-event-count");
+		const changeCounter = await browser.$("#clear-input-change-event-count");
+		const inputCounter = await browser.$("#clear-input-input-event-count");
 
 		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should not be shown");
 
@@ -936,10 +936,10 @@ describe("Input general interaction", () => {
 	it("Change event is called when value of input is cleared with clear icon and input is focused out", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#clear-input");
+		const input = await browser.$("#clear-input");
 		const innerInput = await input.shadow$("input");
-		const changeCounter = await $("#clear-input-change-event-count");
-		const inputCounter = await $("#clear-input-input-event-count");
+		const changeCounter = await browser.$("#clear-input-change-event-count");
+		const inputCounter = await browser.$("#clear-input-input-event-count");
 
 		// type
 		await innerInput.click();
@@ -958,10 +958,10 @@ describe("Input general interaction", () => {
 	it("Change event calling after clear icon is pressed", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#clear-input");
+		const input = await browser.$("#clear-input");
 		const innerInput = await input.shadow$("input");
-		const changeCounter = await $("#clear-input-change-event-count");
-		const inputCounter = await $("#clear-input-input-event-count");
+		const changeCounter = await browser.$("#clear-input-change-event-count");
+		const inputCounter = await browser.$("#clear-input-input-event-count");
 
 		// type
 		await innerInput.click();
@@ -992,9 +992,9 @@ describe("Input general interaction", () => {
 	it("Setting readonly or disabled hides clear icon", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#clear-input-compact");
-		const readonly = await $("#clear-icon-readonly-toggle");
-		const disable = await $("#clear-icon-disabled-toggle");
+		const input = await browser.$("#clear-input-compact");
+		const readonly = await browser.$("#clear-icon-readonly-toggle");
+		const disable = await browser.$("#clear-icon-disabled-toggle");
 
 		await readonly.click();
 		assert.notOk(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be not be shown when readonly");
@@ -1084,7 +1084,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("Changes text if cleared in change event handler", async () => {
-		const input = await $("#change-event-value");
+		const input = await browser.$("#change-event-value");
 		const inner = await input.shadow$("input");
 
 		await input.scrollIntoView();
@@ -1459,8 +1459,8 @@ describe("XSS tests for suggestions", () => {
 	it("add suggestion item with XSS", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const btn = await $("#xss-btn");
-		const span = await $("#xss-result");
+		const btn = await browser.$("#xss-btn");
+		const span = await browser.$("#xss-result");
 
 		await btn.click();
 
@@ -1470,7 +1470,7 @@ describe("XSS tests for suggestions", () => {
 	it("tests dangerous items highlighting", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#xss-input");
+		const input = await browser.$("#xss-input");
 
 		await browser.keys("a");
 
@@ -1548,7 +1548,7 @@ describe("Lazy loading", () => {
 	});
 
 	it("Lazy loading opens the picker once items are populated", async () => {
-		const input = await $("#field");
+		const input = await browser.$("#field");
 		const inner = await input.shadow$("input");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 
@@ -1562,7 +1562,7 @@ describe("Lazy loading", () => {
 	});
 
 	it("Does not reopeon picker on focus in", async () => {
-		const input = await $("#field");
+		const input = await browser.$("#field");
 		const inner = await input.shadow$("input");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 
@@ -1581,7 +1581,7 @@ describe("Lazy loading", () => {
 	});
 
 	it("Should not close picker when items are updated", async () => {
-		const input = await $("#field1");
+		const input = await browser.$("#field1");
 		const inner = await input.shadow$("input");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 

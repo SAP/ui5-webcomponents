@@ -521,7 +521,7 @@ describe("Page scrolling", () => {
 		// scroll position might change slightly when the scrollbars hide and then appear again
 		const SCROLLBAR_DELTA = 20;
 		await browser.$("#cbScrollable").click();
-		const scrolledButton = await $("#scrolledBtn");
+		const scrolledButton = await browser.$("#scrolledBtn");
 		await scrolledButton.scrollIntoView();
 		const scrollLeftBefore = await browser.$("html").getProperty("scrollLeft");
 		const scrollTopBefore = await browser.$("html").getProperty("scrollTop");

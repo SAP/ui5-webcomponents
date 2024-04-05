@@ -25,7 +25,7 @@
 
 // 		await browser.keys("F6");
 // 		let activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
 
 // 		await browser.keys("F6");
 // 		assert.ok(panel.isFocusedDeepElement(await panelButton.getHTML()), "First focusable element in the panel is focused");
@@ -35,36 +35,36 @@
 
 // 		await browser.keys("F6");
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
 
 // 		await browser.keys("F6");
 // 		assert.ok(tabContainer.isFocusedDeepElement(await tab.getHTML()), "First focusable element in the tab container is focused");
 
 // 		await browser.keys("F6");
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
 
 // 		await browser.keys("F6");
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
 
 // 		await browser.keys("F6");
 // 		assert.ok(shellbar.isFocusedDeepElement(await shellbarItem.getHTML()), "First focusable element is in the shellbar");
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		assert.ok(tabContainer.isFocusedDeepElement(await tab.getHTML()), "First focusable element in the tab container is focused");
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		assert.ok(table.isFocusedDeepElement(await tr.getHTML()), "First focusable element in the table is focused");
@@ -74,7 +74,7 @@
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
 
 // 		await browser.keys(["Shift", "F6"]);
 // 		assert.ok(shellbar.isFocusedDeepElement(await shellbarItem.getHTML()), "First focusable element is in the shellbar");
@@ -101,7 +101,7 @@
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		let activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		assert.ok(panel.isFocusedDeepElement(await panelButton.getHTML()), "First focusable element in the panel is focused");
@@ -111,36 +111,36 @@
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		assert.ok(tabContainer.isFocusedDeepElement(await tab.getHTML()), "First focusable element in the tab container is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowDown"]);
 // 		assert.ok(shellbar.isFocusedDeepElement(await shellbarItem.getHTML()), "First focusable element is in the shellbar");
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divEndButton.getHTML(), "First focusable element in the end div is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await fclLi.getHTML(), "First focusable element in the tab container is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		assert.ok(tabContainer.isFocusedDeepElement(await tab.getHTML()), "First focusable element in the tab container is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await listItem.getHTML(), "First focusable element in the list is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		assert.ok(table.isFocusedDeepElement(await tr.getHTML()), "First focusable element in the table is focused");
@@ -150,7 +150,7 @@
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		activeElement = await browser.getActiveElement();
-// 		assert.strictEqual(await $(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
+// 		assert.strictEqual(await browser.$(activeElement).getHTML(), await divButton.getHTML(), "First focusable element in the div is focused");
 
 // 		await browser.keys(["Control", "Alt", "ArrowUp"]);
 // 		assert.ok(shellbar.isFocusedDeepElement(await shellbarItem.getHTML()), "First focusable element is in the shellbar");

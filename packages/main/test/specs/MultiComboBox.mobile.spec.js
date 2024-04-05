@@ -92,7 +92,7 @@ describe("Basic interaction", () => {
 	});
 
 	it("Should set clear icon to dialog's input", async () => {
-		const cb = await $("#clear-icon-cb");
+		const cb = await browser.$("#clear-icon-cb");
 
 		await cb.shadow$("input").click();
 
@@ -263,9 +263,9 @@ describe("Items selection", () => {
 	});
 
 	it ("should select all items when clicking select all", async () => {
-		const cb = await $("#mcb-select-all-vs");
+		const cb = await browser.$("#mcb-select-all-vs");
 		const popover = await cb.shadow$("ui5-responsive-popover");
-		const spanRef = await $("#select-all-event");
+		const spanRef = await browser.$("#select-all-event");
 
 		await cb.click();
 

@@ -17,7 +17,7 @@ describe("General interaction", () => {
 	});
 
 	it ("Should close the popover when clicking on the arrow second time", async () => {
-		const combo = await $("#combo");
+		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
@@ -538,8 +538,8 @@ describe("General interaction", () => {
 	it ("Should add items dynamically items to the picker", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
-		const cb = await $("#dynamic-items");
-		const btn = await $("#add-items-btn");
+		const cb = await browser.$("#dynamic-items");
+		const btn = await browser.$("#add-items-btn");
 		const arrow = await cb.shadow$("[input-icon]");
 
 		await btn.click();
@@ -557,7 +557,7 @@ describe("General interaction", () => {
 	it ("Should check clear icon availability", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
-		const cb = await $("#clear-icon-cb");
+		const cb = await browser.$("#clear-icon-cb");
 		const inner = cb.shadow$("input");
 		const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
 
@@ -576,21 +576,21 @@ describe("General interaction", () => {
 	it ("Should check clear icon events", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
-		const cb = await $("#clear-icon-cb");
+		const cb = await browser.$("#clear-icon-cb");
 		const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
 
 		await clearIcon.click();
 		// focus out the combo
-		await $("#dynamic-items").click();
+		await browser.$("#dynamic-items").click();
 
-		assert.strictEqual(await $("#clear-icon-change-count").getText(), "1", "change event is fired once");
-		assert.strictEqual(await $("#clear-icon-input-count").getText(), "1", "input event is fired once");
+		assert.strictEqual(await browser.$("#clear-icon-change-count").getText(), "1", "change event is fired once");
+		assert.strictEqual(await browser.$("#clear-icon-input-count").getText(), "1", "input event is fired once");
 	});
 
 	it ("Should show all items if value does not match any item and arrow is pressed", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
-		const cb = await $("#combo");
+		const cb = await browser.$("#combo");
 		const arrow = await cb.shadow$("[input-icon]");
 		const input = cb.shadow$("input");
 

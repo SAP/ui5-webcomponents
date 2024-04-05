@@ -7,8 +7,8 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("toggling", () => {
 		it("opens/closes", async () => {
-			const icon = await $("#multi1").shadow$("[input-icon]");
-			const popover = await $("#multi1").shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const icon = await browser.$("#multi1").shadow$("[input-icon]");
+			const popover = await browser.$("#multi1").shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
 			await icon.click();
 			assert.ok(await popover.getProperty("opened"), "Popover should be displayed in the viewport");
@@ -93,8 +93,8 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
-			const btn = await $("#add");
-			const mcb = await $("#mcb-dynamic-selection");
+			const btn = await browser.$("#add");
+			const mcb = await browser.$("#mcb-dynamic-selection");
 
 			await btn.click();
 
@@ -207,7 +207,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if entering valid text is possible while validation is triggered", async () => {
-			const mcb = await $("#mcb-validation");
+			const mcb = await browser.$("#mcb-validation");
 			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
 
 			await innerInput.click();
@@ -225,7 +225,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if item is created when enter is pressed while validation is ongoing", async () => {
-			const mcb = await $("#mcb-validation");
+			const mcb = await browser.$("#mcb-validation");
 			const innerInput = mcb.shadow$("#ui5-multi-combobox-input");
 
 			await innerInput.click();
@@ -288,7 +288,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
-			const mcb = await $("#more-mcb");
+			const mcb = await browser.$("#more-mcb");
 			const icon = await mcb.shadow$("[input-icon]");
 			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
@@ -325,7 +325,7 @@ describe("MultiComboBox general interaction", () => {
 		it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await $("#more-mcb");
+			const mcb = await browser.$("#more-mcb");
 			const input = mcb.shadow$("input");
 
 			await mcb.scrollIntoView();
@@ -343,7 +343,7 @@ describe("MultiComboBox general interaction", () => {
 		it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await $("#more-mcb");
+			const mcb = await browser.$("#more-mcb");
 			const input = mcb.shadow$("input");
 
 			await mcb.scrollIntoView();
@@ -365,7 +365,7 @@ describe("MultiComboBox general interaction", () => {
 		it("tests if tokenizer is not expanded/collapsed when the suggestions are opened from a selected token", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await $("#more-mcb");
+			const mcb = await browser.$("#more-mcb");
 			let tokenizer = await mcb.shadow$("ui5-tokenizer")
 			let tokens = await browser.$("#more-mcb").shadow$$(".ui5-multi-combobox-token");
 			const input = mcb.shadow$("input");
@@ -397,7 +397,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
-			const mcb = await $("#more-mcb");
+			const mcb = await browser.$("#more-mcb");
 			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
 			await mcb.scrollIntoView();
@@ -474,7 +474,7 @@ describe("MultiComboBox general interaction", () => {
 		it ("should reset typeahead on item navigation and restore it on focus input", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await $("#mcb");
+			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$("[input-icon]");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
@@ -575,9 +575,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("should select all items", async () => {
-			const cb = await $("#mcb-select-all-vs");
+			const cb = await browser.$("#mcb-select-all-vs");
 			const arrow = await cb.shadow$("[input-icon]");
-			const spanRef = await $("#select-all-event");
+			const spanRef = await browser.$("#select-all-event");
 
 			await arrow.click();
 			await browser.keys("ArrowDown");
@@ -597,9 +597,9 @@ describe("MultiComboBox general interaction", () => {
 		it ("should select a few items and show Select All in selected items Popover", async () => {
 			await browser.setWindowSize(1920, 1080);
 
-			const cb = await $("#mcb-select-all-vs");
+			const cb = await browser.$("#mcb-select-all-vs");
 			const arrow = await cb.shadow$("[input-icon]");
-			const spanRef = await $("#select-all-event");
+			const spanRef = await browser.$("#select-all-event");
 
 			await arrow.click();
 			await browser.keys("ArrowDown");
@@ -1521,7 +1521,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Backspace deletes token and forwards the focus to the last token without collapsing the tokenizer", async () => {
-			const mcb = await $("#n-more-many-items");
+			const mcb = await browser.$("#n-more-many-items");
 			const inner = await mcb.shadow$("input");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
@@ -1541,7 +1541,7 @@ describe("MultiComboBox general interaction", () => {
 		// TODO: Fix this with Tokenizer standalone PR
 		// Basically, keydown of the items gets bubbled to the tokenizer since the popover is now in the shadow dom instad of the static area
 		it.skip ("should open/close popover on keyboard combination ctrl + i", async () => {
-			const mcb = await $("#truncated-token");
+			const mcb = await browser.$("#truncated-token");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
@@ -1563,7 +1563,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
-			const mcb = await $("#mcb-no-typeahead");
+			const mcb = await browser.$("#mcb-no-typeahead");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
@@ -1661,8 +1661,8 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should apply correct text to the tokens overflow indicator", async () => {
-			const mcNItems = await $("#mc-items");
-			const mcNMore = await $("#mc-more");
+			const mcNItems = await browser.$("#mc-items");
+			const mcNMore = await browser.$("#mc-more");
 			const tokenizerNItems = await mcNItems.shadow$("ui5-tokenizer");
 			const tokenizerNMore = await mcNMore.shadow$("ui5-tokenizer");
 			const nItemsLabel = await tokenizerNItems.shadow$(".ui5-tokenizer-more-text");
@@ -1683,7 +1683,7 @@ describe("MultiComboBox general interaction", () => {
 		it ("Should check clear icon availability", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const cb = await $("#clear-icon-cb");
+			const cb = await browser.$("#clear-icon-cb");
 			const inner = cb.shadow$("input");
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
 
@@ -1698,7 +1698,7 @@ describe("MultiComboBox general interaction", () => {
 		it ("Should check clear icon events", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const cb = await $("#clear-icon-cb");
+			const cb = await browser.$("#clear-icon-cb");
 
 			await cb.shadow$("input").click();
 			await cb.shadow$("input").keys("c");
@@ -1708,8 +1708,8 @@ describe("MultiComboBox general interaction", () => {
 			// focus out the combo
 			await clearIcon.click();
 
-			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
-			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
+			assert.strictEqual(await browser.$("#clear-icon-change-count").getText(), "0", "change event is not fired");
+			assert.strictEqual(await browser.$("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
 	});
 
@@ -1719,7 +1719,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should truncate token when single token is in the multicombobox and open popover on click", async () => {
-			const mcb = await $("#truncated-token");
+			const mcb = await browser.$("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -1741,7 +1741,7 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
-			const mcb = await $("#truncated-token");
+			const mcb = await browser.$("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -1750,14 +1750,14 @@ describe("MultiComboBox general interaction", () => {
 
 			await token.click();
 
-			await $("#dummy-btn").click();
+			await browser.$("#dummy-btn").click();
 
 			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
 			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		});
 
 		it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
-			const mcb = await $("#truncated-token");
+			const mcb = await browser.$("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const rpo = await tokenizer.shadow$("ui5-responsive-popover");

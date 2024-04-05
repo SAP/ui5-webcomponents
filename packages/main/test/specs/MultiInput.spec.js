@@ -652,7 +652,7 @@ describe("Keyboard handling", () => {
 	});
 
 	it("value state message popup should be closed when nMore popover is open", async () => {
-		const mi = await $("#multiInput-error");
+		const mi = await browser.$("#multiInput-error");
 		const inner = await mi.shadow$("input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multiInput-error");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");

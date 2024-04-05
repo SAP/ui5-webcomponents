@@ -132,9 +132,9 @@ describe("ARIA attributes", () => {
 	});
 
 	it ("role set correctly", async () => {
-		const avatar = await $("#myInteractiveAvatar");;
+		const avatar = await browser.$("#myInteractiveAvatar");;
 		const avatarRoot = await avatar.shadow$(".ui5-avatar-root");
-		const nonInteractiveAvatar = await $("#non-interactive-avatar");;
+		const nonInteractiveAvatar = await browser.$("#non-interactive-avatar");;
 		const nonInteractiveavatarRoot = await nonInteractiveAvatar.shadow$(".ui5-avatar-root");
 
 		assert.strictEqual(await avatarRoot.getAttribute("role"), "button", "should have role button for interactive avatar");
@@ -143,21 +143,21 @@ describe("ARIA attributes", () => {
 	});
 
 	it ("aria-haspopup is correct for interactive avatar", async () => {
-		const avatar = await $("#myInteractiveAvatar");;
+		const avatar = await browser.$("#myInteractiveAvatar");;
 		const ariaHasPopup = await avatar.getProperty("_ariaHasPopup");
 
 		assert.strictEqual(ariaHasPopup, "menu", "should have aria-haspopup set");
 	});
 
 	it ("aria-haspopup is correct for non-interactive avatar", async () => {
-		const avatar = await $("#non-interactive-avatar");;
+		const avatar = await browser.$("#non-interactive-avatar");;
 		const ariaHasPopup = await avatar.getProperty("_ariaHasPopup");
 
 		assert.notExists(ariaHasPopup, "should not have aria-haspopup set");
 	});
 
 	it ("aria-label is correctly set", async () => {
-		const avatar = await $("#interactive-avatar"),
+		const avatar = await browser.$("#interactive-avatar"),
 			  avatarRoot = avatar.shadow$(".ui5-avatar-root");
 
 		assert.equal(await avatarRoot.getAttribute("aria-label"), await avatar.getAttribute("accessible-name"), "aria-label should be set according to accessibleName property");

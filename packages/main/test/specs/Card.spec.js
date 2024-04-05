@@ -87,7 +87,7 @@ describe("Card general interaction", () => {
 	});
 
 	it("tests aria-level property", async () => {
-		const cardHeader = await $("#card2").$("ui5-card-header");
+		const cardHeader = await browser.$("#card2").$("ui5-card-header");
 
 		// Default value
 		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "3");

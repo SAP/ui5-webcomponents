@@ -137,9 +137,9 @@ describe("Table general interaction", () => {
 			await browser.url(`test/pages/TableAllPopin.html`);
 			await browser.setWindowSize(500, 1200);
 
-			const input = await $("#tbl2 #interactive");
-			const btn = await $("#btn-focused");
-			const secondInput = await $("#input-second-focused");
+			const input = await browser.$("#tbl2 #interactive");
+			const btn = await browser.$("#btn-focused");
+			const secondInput = await browser.$("#input-second-focused");
 
 			await input.click();
 			await browser.keys("Tab");
