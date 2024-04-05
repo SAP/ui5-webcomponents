@@ -1546,6 +1546,17 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return slottedIconsCount + clearIconCount;
 	}
 
+	get _suggestionsPopoverMaxWidth(): string {
+		const clientWidth = document.documentElement.clientWidth;
+		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
+
+		if (this._inputWidth && clientWidth > this._inputWidth) {
+			return this._inputWidth && (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem";
+		}
+
+		return `${clientWidth}px`;
+	}
+
 	get classes(): ClassMap {
 		return {
 			popover: {
@@ -1565,8 +1576,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get styles() {
-		const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
-
 		const stylesObject = {
 			popoverHeader: {
 				"max-width": this._inputWidth ? `${this._inputWidth}px` : "",
@@ -1576,8 +1585,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"width": this._listWidth ? `${this._listWidth}px` : "",
 			},
 			suggestionsPopover: {
-				"min-width": this._inputWidth ? `${this._inputWidth}px` : "",
-				"max-width": this._inputWidth && (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
+				"margin-left": this._inputWidth && this._inputWidth >= document.documentElement.clientWidth ? "10px" : "0", // 10px is the Popover's 'VIEWPORT_MARGIN'
+				"min-width": this._inputWidth && this._inputWidth < document.documentElement.clientWidth ? `${this._inputWidth}px` : `${document.documentElement.clientWidth - 10}px`,
+				"max-width": this._suggestionsPopoverMaxWidth,
 			},
 			innerInput: {
 				"padding": "",
