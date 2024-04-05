@@ -13,14 +13,6 @@ async function getResourceBundleTexts(keys) {
 	}, keys);
 }
 
-const getTokenizerPopoverId = async (tokenizerId) => {
-	return await browser.executeAsync(async (tokenizerId, done) => {
-		const staticAreaItem = await (document.querySelector(`#${tokenizerId}`).getStaticAreaItemDomRef());
-
-		done(staticAreaItem.host.classList[0]);
-	}, tokenizerId);
-}
-
 describe("General interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/Tokenizer.html`);
@@ -57,8 +49,7 @@ describe("General interaction", () => {
 
 		await nMoreLabel.click();
 
-		const rpoClassName = await getTokenizerPopoverId("nmore-tokenizer");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
 
 		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
@@ -121,8 +112,7 @@ describe("Single token", () => {
 	it("should open popover on click of single token", async () => {
 		const tokenizer = await $("#single-token-tokenizer");
 		const token = await tokenizer.$("ui5-token");
-		const rpoClassName = await getTokenizerPopoverId("single-token-tokenizer");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 
@@ -343,9 +333,7 @@ describe("Keyboard handling", () => {
 	it("should open popover on keyboard combination ctrl + i", async () => {
 		const tokenizer = await $("#long-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
-
-		const rpoClassName = await getTokenizerPopoverId("long-tokenizer");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		await firstToken.click();
 		await browser.keys(["Control", "i"]);

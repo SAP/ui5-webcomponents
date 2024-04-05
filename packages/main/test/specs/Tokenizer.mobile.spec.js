@@ -20,8 +20,7 @@ describe("Tokenizer general interaction", () => {
 
 		await nMoreLabel.click();
 
-		const rpoClassName = await getTokenizerPopoverId("nmore-tokenizer");
-		const nMoreDialog = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const nMoreDialog = await tokenizer.shadow$("ui5-responsive-popover");
 
 		assert.ok(await nMoreDialog.getProperty("opened"), "More Popover should be open");
 		assert.ok(await nMoreDialog.$(".ui5-responsive-popover-header .ui5-responsive-popover-close-btn").isDisplayed(), "More Popover close button is shown");
@@ -41,8 +40,7 @@ describe("Deleting tokens", () => {
 
 		await nMoreLabel.click();
 
-		const rpoClassName = await getTokenizerPopoverId("delete-tokenizer");
-		const nMoreDialog = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const nMoreDialog = await tokenizer.shadow$("ui5-responsive-popover");
 		const listItemDeleteButton = await nMoreDialog.$$("ui5-li")[0].shadow$('.ui5-li-deletebtn ui5-button');
 
 		await listItemDeleteButton.click();
