@@ -224,7 +224,7 @@ describe("UploadCollection", () => {
 
 		it("should be able to add extension, if there isn't such", async () => {
 			const noFileExtensionItem = await browser.$("#readyState");
-			const editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
+			let editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 			const newFileName = "newFileName.newExtension";
 
 			await editButton.click();
@@ -235,6 +235,7 @@ describe("UploadCollection", () => {
 
 			const newFileName2 = "newFileName2";
 
+			editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 			await editButton.click();
 			await browser.keys(newFileName2);
 			await browser.keys("Enter");
