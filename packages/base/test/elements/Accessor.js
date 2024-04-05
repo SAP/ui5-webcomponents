@@ -4,28 +4,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import UI5Element from "../../dist/UI5Element.js";
+import AccessorBase from "./AccessorBase.js";
 import customElement from "../../dist/decorators/customElement.js";
 import property from "../../dist/decorators/property.js";
 import litRender, { html } from "../../dist/renderer/LitRenderer.js";
-let Accessor = class Accessor extends UI5Element {
+let Accessor = class Accessor extends AccessorBase {
     constructor() {
         super(...arguments);
-        this.storage = false;
-    }
-    set myProp(value) {
-        this.storage = value;
-    }
-    get myProp() {
-        return this.storage;
     }
     render() {
         return html `<div>${this.myProp}</div>`;
     }
 };
-__decorate([
-    property({type: Boolean})
-], Accessor.prototype, "myProp", null);
 Accessor = __decorate([
     customElement({
         tag: "ui5-test-accessor",

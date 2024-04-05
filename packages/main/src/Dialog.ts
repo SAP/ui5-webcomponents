@@ -116,6 +116,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,
@@ -312,10 +313,6 @@ class Dialog extends Popup {
 
 	get ariaDescribedByHeaderTextDraggableAndResizable() {
 		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
-	}
-
-	get _displayProp() {
-		return "flex";
 	}
 
 	/**

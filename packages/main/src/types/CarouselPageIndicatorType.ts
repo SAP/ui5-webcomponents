@@ -1,8 +1,8 @@
 /**
- * Different Carousel page indicator styles.
+ * Different Carousel page indicator types.
  * @public
  */
-enum CarouselPageIndicatorStyle {
+enum CarouselPageIndicatorType {
 	/**
 	 * The page indicator will be visualized as dots if there are fewer than 9 pages.
 	 * If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)
@@ -17,4 +17,4 @@ enum CarouselPageIndicatorStyle {
 	Numeric = "Numeric",
 }
 
-export default CarouselPageIndicatorStyle;
+export default CarouselPageIndicatorType;

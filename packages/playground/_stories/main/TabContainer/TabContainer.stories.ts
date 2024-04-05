@@ -19,7 +19,7 @@ const Template: UI5StoryArgs<TabContainer, StoryArgsSlots> = (args) => {
 	?fixed="${ifDefined(args.fixed)}"
 	?collapsed="${ifDefined(args.collapsed)}"
 	tab-layout="${ifDefined(args.tabLayout)}"
-	tabs-overflow-mode="${ifDefined(args.tabsOverflowMode)}"
+	overflow-mode="${ifDefined(args.overflowMode)}"
 	header-background-design="${ifDefined(args.headerBackgroundDesign)}"
 	content-background-design="${ifDefined(args.contentBackgroundDesign)}"
 	tabs-placement="${ifDefined(args.tabsPlacement)}"
@@ -105,26 +105,26 @@ NestedTabs.args = {
 </ui5-tab>
 <ui5-tab text="Products">
 	Products go here ...
-	<ui5-tab slot="subTabs" text="Computers">
+	<ui5-tab slot="items" text="Computers">
 		Computers go here ...
-		<ui5-tab slot="subTabs" text="Laptops" selected>
+		<ui5-tab slot="items" text="Laptops" selected>
 			Laptops go here ...
 		</ui5-tab>
-		<ui5-tab slot="subTabs" text="Desktops">
-			<ui5-tab slot="subTabs" text="Work Stations">
+		<ui5-tab slot="items" text="Desktops">
+			<ui5-tab slot="items" text="Work Stations">
 				Work Stations go here ...
 			</ui5-tab>
-			<ui5-tab slot="subTabs" text="Game Stations">
+			<ui5-tab slot="items" text="Game Stations">
 				Game Stations go here ...
 			</ui5-tab>
 			Desktops go here ...
 		</ui5-tab>
 	</ui5-tab>
-	<ui5-tab text="Phones" slot="subTabs">
-		<ui5-tab text="Smartphones" slot="subTabs">
+	<ui5-tab text="Phones" slot="items">
+		<ui5-tab text="Smartphones" slot="items">
 			Smartphones go here ...
 		</ui5-tab>
-		<ui5-tab text="Tablets" slot="subTabs">
+		<ui5-tab text="Tablets" slot="items">
 			Tablets go here ...
 		</ui5-tab>
 		Phones go here ...
@@ -132,7 +132,7 @@ NestedTabs.args = {
 </ui5-tab>
 <ui5-tab text="Orders">
 	Orders go here ...
-	<ui5-tab slot="subTabs" text="Attachments">
+	<ui5-tab slot="items" text="Attachments">
 		Order attachments go here ...
 	</ui5-tab>
 </ui5-tab>`,
