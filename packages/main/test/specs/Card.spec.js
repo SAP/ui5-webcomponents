@@ -11,10 +11,10 @@ describe("Card general interaction", () => {
 		assert.ok(await card.isExisting(), "The component has shadow root.");
 	});
 
-	it("tests status is rendered, when action is set", async () => {
-		const status = await browser.$("#actionCardHeader").shadow$(".ui5-card-header-status");
+	it("tests additionalText is rendered, when action is set", async () => {
+		const additionalText = await browser.$("#actionCardHeader").shadow$(".ui5-card-header-additionalText");
 
-		assert.ok(await status.isExisting(), "The status DOM is rendered.");
+		assert.ok(await additionalText.isExisting(), "The element is rendered.");
 	});
 
 	it("tests interactive header results in interactive class on the card", async () => {
@@ -108,7 +108,7 @@ describe("CardHeader", () => {
 		const header2 = await browser.$("#header2").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
 		const headerId = await browser.$("#header").getProperty("_id");
 		const headerId2 = await browser.$("#header2").getProperty("_id");
-		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${headerId}-title ${headerId}-subtitle ${headerId}-status`;
+		const EXPECTED_ARIA_LABELLEDBY_HEADER = `${headerId}-title ${headerId}-subtitle ${headerId}-additionalText`;
 		const EXPECTED_ARIA_LABELLEDBY_HEADER2 = `${headerId2}-title ${headerId2}-subtitle`;
 
 		assert.strictEqual(await header.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLEDBY_HEADER,
@@ -117,6 +117,7 @@ describe("CardHeader", () => {
 			"The aria-labelledby is correctly set.");
 	});
 });
+
 describe("Card Accessibility", () => {
 	before(async () => {
 		await browser.url(`test/pages/Card.html`);
