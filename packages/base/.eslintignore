@@ -14,3 +14,4 @@ package-scripts.cjs
 src/renderer/directives/style-map.js
 src/util/metaUrl.js
 src/ssr-dom*
+index.js
