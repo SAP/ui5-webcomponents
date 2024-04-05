@@ -239,6 +239,7 @@ class Tokenizer extends UI5Element {
 	_openedByNmore!: boolean;
 	_skipExpanding!: boolean;
 	_previousToken!: Token | null;
+	_isOpen: boolean;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -255,6 +256,7 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
+		this._isOpen = false;
 	}
 
 	onBeforeRendering() {
@@ -304,8 +306,8 @@ class Tokenizer extends UI5Element {
 	async openMorePopover() {
 		// the morePopoverProperty is an object so it will always return 'true', so we check for keys
 		const popoverOpener = Object.keys(this.morePopoverOpener).length === 0 ? this : this.morePopoverOpener;
-
 		(await this.getPopover()).showAt(popoverOpener);
+		this._isOpen = true;
 	}
 
 	get _tokens() {
@@ -892,6 +894,7 @@ class Tokenizer extends UI5Element {
 
 	async closeMorePopover() {
 		(await this.getPopover()).close(false, false, true);
+		this._isOpen = false;
 	}
 
 	get _nMoreText() {

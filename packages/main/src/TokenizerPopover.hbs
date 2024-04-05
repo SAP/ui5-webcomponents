@@ -1,10 +1,10 @@
 <ui5-responsive-popover
 	tokenizer-popover="true"
 	style={{styles.popover}}
-	?content-only-on-desktop="{{hasValueState}}"
-	placement-type="Bottom"
-	horizontal-align="Left"
-	@ui5-before-close={{handleBeforeClose}}
+	?content-only-on-desktop="{{noValueStatePopover}}"
+	placement="Bottom"
+	horizontal-align="Start"
+	@ui5-before-close="{{handleBeforeClose}}"
 	@ui5-before-open="{{handleBeforeOpen}}"
 >
 	{{#unless _isPhone}}

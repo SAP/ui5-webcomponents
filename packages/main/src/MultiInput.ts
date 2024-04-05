@@ -369,6 +369,10 @@ class MultiInput extends Input {
 
 		return this;
 	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer._isOpen;
+	}
 }
 
 MultiInput.define();
