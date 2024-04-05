@@ -28,7 +28,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
  */
 interface ISegmentedButtonItem extends UI5Element, ITabbable {
 	disabled: boolean,
-	pressed: boolean,
+	selected: boolean,
 }
 
 type SegmentedButtonSelectionChangeEventDetail = {
@@ -179,7 +179,7 @@ class SegmentedButton extends UI5Element {
 		switch (this.mode) {
 		case SegmentedButtonMode.MultiSelect:
 			if (e instanceof KeyboardEvent) {
-				target.pressed = !target.pressed;
+				target.selected = !target.selected;
 			}
 			break;
 		default:
@@ -199,9 +199,9 @@ class SegmentedButton extends UI5Element {
 
 	_applySingleSelection(item: ISegmentedButtonItem) {
 		this.items.forEach(currentItem => {
-			currentItem.pressed = false;
+			currentItem.selected = false;
 		});
-		item.pressed = true;
+		item.selected = true;
 		this._selectedItem = item;
 	}
 
@@ -269,7 +269,7 @@ class SegmentedButton extends UI5Element {
 	 * @default []
 	 */
 	get selectedItems(): Array<ISegmentedButtonItem> {
-		return this.items.filter(item => item.pressed);
+		return this.items.filter(item => item.selected);
 	}
 
 	get ariaDescribedBy() {

@@ -1,19 +1,24 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
+import { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
-import ToggleButton from "./ToggleButton.js";
-import ButtonDesign from "./types/ButtonDesign.js";
-import ButtonType from "./types/ButtonType.js";
-import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
-import { AccessibilityAttributes } from "./Button.js";
+import { IButton } from "./Button.js";
 import Icon from "./Icon.js";
 
-import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
-
+import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
 /**
  * @class
  *
@@ -30,63 +35,79 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  *
  * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
  * @constructor
- * @extends ToggleButton
+ * @extends UI5Element
  * @implements { ISegmentedButtonItem }
  * @public
  */
 @customElement({
 	tag: "ui5-segmented-button-item",
+	renderer: litRender,
 	template: SegmentedButtonItemTemplate,
+	styles: segmentedButtonItemCss,
 	dependencies: [Icon],
 })
-class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
+class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButtonItem {
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "Default"
-	 * @public
-	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	declare design: `${ButtonDesign}`;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * Defines whether the component is disabled.
+	 * A disabled component can't be pressed or
+	 * focused, and it is not in the tab chain.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare iconEnd: boolean;
+	disabled!: boolean;
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * Determines whether the component is displayed as selected.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare submits: boolean;
+	selected!: boolean;
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default {}
+	 * Defines the tooltip of the component.
+	 *
+	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
+	 * @default ""
 	 * @public
+	 * @since 1.2.0
 	 */
-    @property({ type: Object })
-    declare accessibilityAttributes: AccessibilityAttributes;
+	@property()
+	tooltip!: string;
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "Button"
+	 * Defines the icon, displayed as graphical element within the component.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
 	 * @public
 	 */
-	@property({ type: ButtonType, defaultValue: ButtonType.Button })
-	declare type: `${ButtonType}`;
+	@property()
+	icon!: string;
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "Button"
-	 * @public
+	 * Indicates if the element if focusable
+	 * @private
 	 */
-	@property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Button })
-	declare accessibleRole: `${ButtonAccessibleRole}`;
+	@property({ type: Boolean })
+	nonInteractive!: boolean;
+
+	/**
+	 * Defines the tabIndex of the component.
+	 * @private
+	 */
+	@property({ defaultValue: "0", noAttribute: true })
+	forcedTabIndex!: string;
+
+	/**
+	 * Indicates if the elements is on focus
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
@@ -104,8 +125,110 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	@property({ validator: Integer, defaultValue: 0 })
 	sizeOfSet!: number;
 
+	/**
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true })
+	text!: Array<Node>;
+
+	static i18nBundle: I18nBundle;
+
+	_ontouchstart: PassiveEventListenerObject;
+
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
+	}
+
+	constructor() {
+		super();
+		
+		const handleTouchStartEvent = () => {
+			if (this.nonInteractive) {
+				return;
+			}
+		};
+
+		this._ontouchstart = {
+			handleEvent: handleTouchStartEvent,
+			passive: true,
+		};
+	}
+
+	_onfocusout() {
+		if (this.nonInteractive) {
+			return;
+		}
+
+		if (isDesktop()) {
+			this.focused = false;
+		}
+	}
+
+	_onfocusin() {
+		if (this.nonInteractive) {
+			return;
+		}
+
+		if (isDesktop()) {
+			this.focused = true;
+		}
+	}
+
+	_onclick() {
+		this.selected = !this.selected;
+
+		if (isSafari()) {
+			this.getDomRef()!.focus();
+		}
+	}
+	
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpaceShift(e)) {
+			e.preventDefault();
+			return;
+		}
+	}
+
+	_onmousedown(e: MouseEvent) {
+		if (this.nonInteractive) {
+			return;
+		}
+	}
+
+	_ontouchend(e: TouchEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	}
+
+	get isIconOnly() {
+		return !willShowContent(this.text);
+	}
+
+	get tabIndexValue() {
+		const tabindex = this.getAttribute("tabindex");
+
+		if (tabindex) {
+			return tabindex;
+		}
+
+		return this.nonInteractive ? "-1" : this.forcedTabIndex;
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
+	get showIconTooltip() {
+		return this.isIconOnly && !this.tooltip;
+	}
+
+	static async onDefine() {
+		SegmentedButtonItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

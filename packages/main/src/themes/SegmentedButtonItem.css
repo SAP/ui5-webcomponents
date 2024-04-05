@@ -1,0 +1,155 @@
+@import "./FormComponents.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host {
+	min-width: var(--_ui5_button_base_min_width);
+	height: var(--_ui5_button_base_height);
+	line-height: normal;
+	font-family: var(--_ui5_button_fontFamily);
+	font-size: var(--sapFontSize);
+	text-shadow: var(--_ui5_button_text_shadow);
+	border-radius: var(--_ui5_button_border_radius);
+	cursor: pointer;
+	background-color: var(--sapButton_Background);
+	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
+	color: var(--sapButton_TextColor);
+	box-sizing: border-box;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ui5-button-root {
+	min-width: inherit;
+	cursor: inherit;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: none;
+	padding: 0 var(--_ui5_button_base_padding);
+	position: relative;
+	background: transparent;
+	border: none;
+	color: inherit;
+	text-shadow: inherit;
+	font: inherit;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	line-height: inherit;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+:host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host(:not([hidden]):not([disabled]).ui5_hovered) {
+	background: var(--sapButton_Hover_Background);
+	border: 1px solid var(--sapButton_Hover_BorderColor);
+	color: var(--sapButton_Hover_TextColor);
+}
+
+.ui5-button-icon {
+	color: inherit;
+	flex-shrink: 0;
+}
+
+:host([icon-end]) .ui5-button-root {
+	flex-direction: row-reverse;
+}
+
+:host([icon-end]) .ui5-button-icon {
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
+}
+
+:host([icon-only]) .ui5-button-root {
+	min-width: auto;
+	padding: 0;
+}
+
+:host([icon-only]) .ui5-button-text {
+	display: none;
+}
+
+.ui5-button-text {
+	outline: none;
+	position: relative;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
+}
+
+:host([has-icon]:not([icon-end])) .ui5-button-text {
+	margin-inline-start: var(--_ui5_button_base_icon_margin);
+}
+
+:host([has-icon][icon-end]) .ui5-button-text {
+	margin-inline-start: 0;
+}
+
+:host([disabled]) {
+	opacity: var(--sapContent_DisabledOpacity);
+	pointer-events: unset;
+	cursor: default;
+}
+
+:host([has-icon]:not([icon-only])) .ui5-button-text{
+	/* calculating the minimum width by removing the icon size  */
+	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
+}
+:host([disabled]:active) {
+	pointer-events: none;
+}
+
+:host([focused]:not([active])) .ui5-button-root:after,
+:host([focused][active]) .ui5-button-root:before {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	border: var(--_ui5_button_focused_border);
+	border-radius: var(--_ui5_button_focused_border_radius);
+}
+
+:host([focused][active]) .ui5-button-root:before {
+	border-color: var(--_ui5_button_pressed_focused_border_color);
+}
+
+.ui5-button-root::-moz-focus-inner {
+	border: 0;
+}
+
+bdi {
+	display: block;
+	white-space: inherit;
+	overflow: inherit;
+	text-overflow: inherit;
+}
+
+/* SegmentedButton and ToggleButton */
+:host([ui5-segmented-button-item][active][focused]) .ui5-button-root:after,
+:host([selected][focused]) .ui5-button-root:after {
+	border-color: var(--_ui5_button_pressed_focused_border_color);
+	outline: none;
+}
+
+:host([ui5-segmented-button-item][focused]:not(:last-child)) .ui5-button-root:after {
+	border-top-right-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-bottom-right-radius: var(--_ui5_button_focused_inner_border_radius);
+}
+
+:host([ui5-segmented-button-item][focused]:not(:first-child)) .ui5-button-root:after {
+	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
+}

@@ -34,6 +34,7 @@
 @import "./RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
+@import "./SegmentedButtonItem-parameters.css";
 @import "./Select-parameters.css";
 @import "./SplitButton-parameters.css";
 @import "./Switch-parameters.css";

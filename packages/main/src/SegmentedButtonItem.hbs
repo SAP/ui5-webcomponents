@@ -3,17 +3,14 @@
 		aria-roledescription="{{ariaDescription}}"
 		aria-posinset="{{posInSet}}"
 		aria-setsize="{{sizeOfSet}}"
-		aria-selected="{{pressed}}"
+		aria-selected="{{selected}}"
 		class="ui5-button-root"
 		aria-disabled="{{disabled}}"
 		data-sap-focus-ref
-	{{> ariaPressed}}
 		@focusout={{_onfocusout}}
 		@focusin={{_onfocusin}}
 		@click={{_onclick}}
 		@mousedown={{_onmousedown}}
-		@mouseup={{_onmouseup}}
-		@keydown={{_onkeydown}}
 		@keyup={{_onkeyup}}
 		@touchstart="{{_ontouchstart}}"
 		@touchend="{{_ontouchend}}"
@@ -26,7 +23,7 @@
 			class="ui5-button-icon"
 			name="{{icon}}"
 			part="icon"
-			?show-tooltip={{showIconTooltip}}
+			?show-tooltip={{isIconOnly}}
 		></ui5-icon>
 	{{/if}}
 
@@ -37,5 +34,3 @@
 	</span>
 
 </li>
-
-{{#*inline "ariaPressed"}}{{/inline}}

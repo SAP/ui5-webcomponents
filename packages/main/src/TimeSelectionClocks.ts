@@ -214,8 +214,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 			// A/P selects AM/PM segmented button item
 			const buttonAmPm = this._buttonAmPm();
 			if (buttonAmPm) {
-				buttonAmPm.items[0].pressed = isKeyA(evt);
-				buttonAmPm.items[1].pressed = isKeyP(evt);
+				buttonAmPm.items[0].selected = isKeyA(evt);
+				buttonAmPm.items[1].selected = isKeyP(evt);
 				const period = isKeyA(evt) ? buttonAmPm.items[0].textContent : buttonAmPm.items[1].textContent;
 				period && this._calculatePeriodChange(period);
 			}
