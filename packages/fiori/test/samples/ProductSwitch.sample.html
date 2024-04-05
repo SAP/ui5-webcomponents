@@ -64,7 +64,7 @@
 			var popover = document.getElementById("productswitch-popover");
 
 			shellbar.addEventListener("product-switch-click", function(event) {
-				if (popover.opened) {
+				if (popover.open) {
 					popover.close();
 				} else {
 					event.preventDefault();
@@ -106,7 +106,7 @@
 	var popover = document.getElementById("productswitch-popover");
 
 	shellbar.addEventListener("product-switch-click", event => {
-		if (popover.opened) {
+		if (popover.open) {
 			popover.close();
 		} else {
 			popover.showAt(event.detail.targetRef);

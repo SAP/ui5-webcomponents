@@ -140,14 +140,6 @@ abstract class Popup extends UI5Element {
 	preventFocusRestore!: boolean;
 
 	/**
-	 * Indicates if the element is already open
-	 * @private
-	 * @default false
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	opened!: boolean;
-
-	/**
 	 * Defines the accessible name of the component.
 	 * @default undefined
 	 * @public
@@ -211,6 +203,7 @@ abstract class Popup extends UI5Element {
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
+	_opened!: boolean;
 	_isOpened!: boolean;
 
 	constructor() {
@@ -251,11 +244,11 @@ abstract class Popup extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	set open(value: boolean) {
-		if (this.opened === value) {
+		if (this._opened === value) {
 			return;
 		}
 
-		this.opened = value;
+		this._opened = value;
 
 		if (value) {
 			this.openPopup();
@@ -265,7 +258,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	get open() : boolean {
-		return this.opened;
+		return this._opened;
 	}
 
 	async openPopup() {
@@ -458,9 +451,6 @@ abstract class Popup extends UI5Element {
 
 		this._isOpened = true;
 
-		// Await render before trying to access the blocking layer
-		await renderFinished();
-
 		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
 			this._getBlockingLayer.showPopover();
@@ -481,6 +471,9 @@ abstract class Popup extends UI5Element {
 		this.open = true;
 
 		await this.applyInitialFocus(preventInitialFocus);
+
+		// Await render before trying to access the blocking layer
+		await renderFinished();
 
 		this.fireEvent("after-open", {}, false, false);
 	}

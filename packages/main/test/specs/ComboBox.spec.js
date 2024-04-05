@@ -453,7 +453,7 @@ describe("General interaction", () => {
 
 		await input.keys("a");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
-		assert.notOk(popover.opened, "Popover should be closed when no match");
+		assert.notOk(popover.open, "Popover should be closed when no match");
 	});
 
 	it ("Tests selection-change event and its parameters", async () => {
