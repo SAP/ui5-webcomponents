@@ -400,7 +400,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		return !!(this.responsivePopover && this.responsivePopover.open);
+		return !!(this.responsivePopover && this.responsivePopover.opened);
 	}
 
 	_handleItemNavigation(forward: boolean) {

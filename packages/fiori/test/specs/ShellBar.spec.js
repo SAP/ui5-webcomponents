@@ -75,7 +75,7 @@ describe("Component Behavior", () => {
 			await primaryTitle.click();
 			await firstMenuItem.click();
 
-			assert.strictEqual(await menuPopover.getProperty("open"), true, "Popover remains open");
+			assert.strictEqual(await menuPopover.getProperty("opened"), true, "Popover remains open");
 		});
 
 		it("tests close on content click", async () => {
@@ -89,7 +89,7 @@ describe("Component Behavior", () => {
 			await primaryTitle.click();
 			await firstMenuItem.click();
 
-			assert.strictEqual(await menuPopover.getProperty("open"), false, "Popover is closed");
+			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Popover is closed");
 		});
 	});
 

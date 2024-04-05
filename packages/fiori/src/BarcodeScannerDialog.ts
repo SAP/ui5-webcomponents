@@ -219,7 +219,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_closeDialog() {
-		if (this.dialog && this.dialog.open) {
+		if (this.dialog && this.dialog.opened) {
 			this.dialog.close();
 			this.open = false;
 		}

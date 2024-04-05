@@ -1555,7 +1555,7 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await inner.keys("a");
 
-		await browser.waitUntil(() => resppopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
 			timeout: 3000,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1577,7 +1577,7 @@ describe("Lazy loading", () => {
 
 		await browser.pause(3000);
 
-		assert.notOk(await resppopover.getProperty("opened"), "Picker should not be open");
+		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
 	});
 
 	it("Should not close picker when items are updated", async () => {
@@ -1588,13 +1588,13 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await inner.keys("S");
 
-		await browser.waitUntil(() => resppopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("opened"), {
 			timeout: 2000,
 			timeoutMsg: "Popover should be displayed"
 		});
 
 		await inner.keys("b");
 
-		assert.strictEqual(await resppopover.getProperty("opened"), true, "Picker should not be open");
+		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
 	});
 });

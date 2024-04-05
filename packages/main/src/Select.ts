@@ -459,7 +459,7 @@ class Select extends UI5Element implements IFormElement {
 			return menu.open;
 		}
 
-		return !!this.responsivePopover && this.responsivePopover.open;
+		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
 	_respPopover() {
@@ -1010,7 +1010,7 @@ class Select extends UI5Element implements IFormElement {
 	get _effectiveTabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.open) ? "-1" : "0";
+		&& this.responsivePopover.opened) ? "-1" : "0";
 	}
 
 	 /**
