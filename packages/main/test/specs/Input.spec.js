@@ -1446,13 +1446,8 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.keys("PageDown");
 		await suggestionsInput.keys("PageUp");
 
-<<<<<<< HEAD
-		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
-=======
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupheader");
->>>>>>> origin/release-2.0
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "No item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
