@@ -172,6 +172,7 @@ class Tokenizer extends UI5Element {
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
+	_isOpen: boolean;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -188,6 +189,7 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
+		this._isOpen = false;
 	}
 
 	onBeforeRendering() {
@@ -220,6 +222,7 @@ class Tokenizer extends UI5Element {
 
 	async openMorePopover() {
 		(await this.getPopover()).showAt(this.morePopoverOpener || this);
+		this._isOpen = true;
 	}
 
 	_getTokens() {
@@ -616,6 +619,7 @@ class Tokenizer extends UI5Element {
 
 	async closeMorePopover() {
 		(await this.getPopover()).close(false, false, true);
+		this._isOpen = false;
 	}
 
 	get _nMoreText() {
