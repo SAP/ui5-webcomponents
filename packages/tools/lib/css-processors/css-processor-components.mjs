@@ -7,6 +7,9 @@ import chokidar from "chokidar";
 import scopeVariables from "./scope-variables.mjs";
 import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 
+const tsMode = process.env.UI5_TS === "true";
+const extension = tsMode ? ".css.ts" : ".css.js";
+
 const packageJSON = JSON.parse(fs.readFileSync("./package.json"))
 const inputFilesGlob = "src/themes/*.css";
 const restArgs = process.argv.slice(2);
@@ -24,8 +27,8 @@ let customPlugin = {
                 writeFile(f.path, newText);
 
                 // JS/TS
-                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", ".css.ts");
-                const jsContent = getFileContent(jsPath, packageJSON.name, "\`" + newText + "\`", true);
+                const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
+                const jsContent = getFileContent(tsMode, jsPath, packageJSON.name, "\`" + newText + "\`", true);
                 writeFileIfChanged(jsPath, jsContent);
             });
         })
