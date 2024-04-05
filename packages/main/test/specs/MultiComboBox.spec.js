@@ -86,7 +86,7 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 			await showMore.click();
 
-			assert.ok(await allpopover.getProperty("opened"), "All popover should not be displayed");
+			assert.ok(await allPopover.getProperty("opened"), "All popover should not be displayed");
 		});
 
 		it("Checks if tokenizer is expanded when adding items dynamically", async () => {
@@ -1547,19 +1547,19 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
-			assert.ok(await rpo.getProperty("open"), "Focused MCB - n-more popover should be opened");
+			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("open"), "Focused MCB - n-more popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
 
 			await mcb.click();
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Control", "i"]);
-			assert.ok(await rpo.getProperty("open"), "Focused Token - n-more popover should be opened");
+			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
 			await mcb.click();
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("open"), "Focused Token - n-more popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
 		});
 
 		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
@@ -1569,7 +1569,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("open"), "n-more popover should be closed since no tokens");
+			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
 
 		});
 	});
@@ -1728,14 +1728,14 @@ describe("MultiComboBox general interaction", () => {
 
 			await token.click();
 
-			assert.ok(await rpo.getProperty("open"), "More Popover should be open");
+			assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
 			assert.ok(await token.getProperty("selected"), "Token should be selected");
 			assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
 			assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
 			await token.click();
 
-			assert.notOk(await rpo.getProperty("open"), "More Popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
 			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 			assert.ok(await token.getProperty("focused"), "Token should be focused");
 		});
@@ -1752,7 +1752,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await $("#dummy-btn").click();
 
-			assert.notOk(await rpo.getProperty("open"), "More Popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
 			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		});
 
@@ -1767,7 +1767,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await inner.click();
 
-			assert.notOk(await rpo.getProperty("open"), "More Popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
 			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		});
 	});
