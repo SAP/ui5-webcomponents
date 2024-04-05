@@ -80,6 +80,7 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | `checked`                   | `aria-checked`                                    | Defines whether the component is checked.                                                                                                                                                           |
 | `level`, `headerLevel`      | `aria-level`                                      | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
 | `interactive`               | `tabindex`                                        | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
+| `tooltip`                   | `title`                                           | Defines the tooltip of the component.       
 
 ### accessibleName
 
