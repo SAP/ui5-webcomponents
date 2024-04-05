@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -42,7 +41,6 @@ import {
 	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import ListMode from "./types/ListMode.js";
@@ -67,7 +65,6 @@ import {
 import TokenizerCss from "./generated/themes/Tokenizer.css.js";
 import TokenizerPopoverCss from "./generated/themes/TokenizerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
@@ -105,7 +102,6 @@ enum ClipboardDataOperation {
 	styles: [
 		TokenizerCss,
 		ResponsivePopoverCommonCss,
-		ValueStateMessageCss,
 		SuggestionsCss,
 		TokenizerPopoverCss,
 	],
@@ -211,14 +207,6 @@ class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	preventPopoverOpen!: boolean;
 
-	/**
-	 * Indicates the value state of the related input component.
-	 * @default "None"
-	 * @private
-	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
-
 	@property({ validator: Integer })
 	_nMoreCount!: number;
 
@@ -227,9 +215,6 @@ class Tokenizer extends UI5Element {
 
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	tokens!: Array<Token>;
-
-	@slot()
-	valueStateMessage!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
 	_resizeHandler: ResizeObserverCallback;
@@ -320,9 +305,7 @@ class Tokenizer extends UI5Element {
 			const target = e.target as Token;
 			if (!target.toBeDeleted) {
 				this._itemNav.setCurrentItem(target);
-				setTimeout(() => {
-					this._scrollToToken(target);
-				}, 0);
+				this._scrollToToken(target);
 			}
 		}
 	}
@@ -957,28 +940,6 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
-	get noValueStatePopover() {
-		return this.valueState === ValueState.None || this.valueState === ValueState.Success;
-	}
-
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
-	}
-
-	/**
-	 * This method is relevant for sap_horizon theme only
-	 */
-	get _valueStateMessageIcon() {
-		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
-			Information: "information",
-		};
-
-		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
-	}
-
 	get _isPhone() {
 		return isPhone();
 	}
@@ -994,28 +955,10 @@ class Tokenizer extends UI5Element {
 		return ListMode.Delete;
 	}
 
-	get classes(): ClassMap {
-		return {
-			popover: {
-				"ui5-popover-with-value-state-header-phone": this._isPhone && !this.noValueStatePopover,
-				"ui5-popover-with-value-state-header": !this._isPhone && !this.noValueStatePopover,
-			},
-			popoverValueState: {
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
 	get styles() {
 		return {
 			popover: {
 				"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : `${this.getBoundingClientRect().width}px`,
-			},
-			popoverValueStateMessage: {
-				"width": this.popoverMinWidth && !isPhone() ? `${this.popoverMinWidth}px` : "100%",
 			},
 		};
 	}

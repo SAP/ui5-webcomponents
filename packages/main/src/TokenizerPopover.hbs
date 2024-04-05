@@ -1,23 +1,12 @@
 <ui5-responsive-popover
 	tokenizer-popover="true"
 	style={{styles.popover}}
-	?content-only-on-desktop="{{noValueStatePopover}}"
+	content-only-on-desktop
 	placement="Bottom"
 	horizontal-align="Start"
 	@ui5-before-close="{{handleBeforeClose}}"
 	@ui5-before-open="{{handleBeforeOpen}}"
 >
-	{{#unless _isPhone}}
-			{{#unless noValueStatePopover}}
-				<div class="ui5-valuestatemessage-root ui5-valuestatemessage-header {{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-					{{#each valueStateMessageText}}
-						{{this}}
-					{{/each}}
-				</div>
-			{{/unless}}
-	{{/unless}}
-
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
@@ -31,14 +20,6 @@
 				</ui5-button>
 			</div>
 		</div>
-		{{#unless noValueStatePopover}}
-			<div class="ui5-valuestatemessage-root ui5-valuestatemessage-header {{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{#each valueStateMessageText}}
-					{{this}}
-				{{/each}}
-			</div>
-		{{/unless}}
 	{{/if}}
 	<ui5-list
 		class="ui5-tokenizer-list"

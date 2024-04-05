@@ -1657,9 +1657,7 @@ class MultiComboBox extends UI5Element {
 		if (!isPhone()) {
 			this.focused = true;
 			this._tokenizer.expanded = true;
-			setTimeout(() => {
-				this._tokenizer.scrollToEnd();
-			}, 0);
+			this._tokenizer.scrollToEnd();
 		} else {
 			this._innerInput.blur();
 		}
