@@ -49,8 +49,7 @@ describe("Breadcrumbs general interaction", () => {
 		// Act
 		await overflowArrowLink.click(); // open the overflow
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+		const firstItem = (await browser.$(`#breadcrumbs1`).shadow$$("ui5-li"))[0];
 
 		await firstItem.click();
 
@@ -159,8 +158,7 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
@@ -173,8 +171,7 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
@@ -190,8 +187,7 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
@@ -206,8 +202,7 @@ describe("Breadcrumbs general interaction", () => {
 	it("renders accessible names of overflowing link items", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsWithAccName"),
-			listItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[1],
+		const listItem = (await browser.$(`#breadcrumbsWithAccName`).shadow$$("ui5-li"))[1],
 			expectedAriaLabel = "first link acc name";
 
 		// Check

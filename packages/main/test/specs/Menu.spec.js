@@ -5,11 +5,12 @@ describe("Menu interaction", () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await openButton.click();
 
-		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
+		const menu = await browser.$("#menu");
+		const popover = await menu.shadow$("ui5-responsive-popover");
+		const _id = await menu.getProperty("_id");
+		assert.strictEqual(await popover.getAttribute("id"), `${_id}-menu-rp`, "There is popover for the menu created in the static area");
 	});
 
 	it("Menu opens after setting of opener and open", async () => {
@@ -17,12 +18,14 @@ describe("Menu interaction", () => {
 		const openerButton = await browser.$("#btnAddOpener");
 		const openButton = await browser.$("#btnToggleOpen");
 
-		openerButton.click();
-		openButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		await openerButton.click();
+		await openButton.click();
 
-		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
+		const menu = await browser.$("#menu");
+		const popover = await menu.shadow$("ui5-responsive-popover");
+		const _id = await menu.getProperty("_id");
+
+		assert.strictEqual(await popover.getAttribute("id"), `${_id}-menu-rp`, "There is popover for the menu created in the static area");
 	});
 
 	it("Top level menu items appearance", async () => {
@@ -30,10 +33,10 @@ describe("Menu interaction", () => {
 		const openButton = await browser.$("#btnOpen");
 		const menuItems = await browser.$$("ui5-menu[id='menu']>ui5-menu-item");
 
-		openButton.click();
+		await openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 
 		assert.strictEqual(await menuItems.length, 7, "There are proper count of menu items in the top level menu");
@@ -49,15 +52,15 @@ describe("Menu interaction", () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
+		await openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
-		const popover = staticAreaItem.shadow$("ui5-responsive-popover");
+
+		const menu = await browser.$("#menu");
+		const popover = await menu.shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
-		const submenuList = await staticAreaItem.shadow$(".ui5-menu-submenus");
+		const submenuList = await menu.shadow$(".ui5-menu-submenus");
 
-		listItems[3].click(); // open sub-menu
+		await listItems[3].click(); // open sub-menu
 
 		await submenuList.$("ui5-menu:nth-of-type(1)").waitForExist({
 			timeout: 1000,
@@ -66,7 +69,7 @@ describe("Menu interaction", () => {
 
 		assert.ok(await submenuList.$("ui5-menu"), "The second level sub-menu is being created"); // new ui5-menu element is created for the sub-menu
 
-		listItems[4].click(); // open sub-menu
+		await listItems[4].click(); // open sub-menu
 
 		await submenuList.$("ui5-menu:nth-of-type(2)").waitForExist({
 			timeout: 1000,
@@ -81,10 +84,10 @@ describe("Menu interaction", () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
+		await openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 		const selectionInput = await browser.$("#selectionInput");
 
@@ -97,10 +100,10 @@ describe("Menu interaction", () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
+		await openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Space");
@@ -112,10 +115,10 @@ describe("Menu interaction", () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
+		await openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const selectionInput = await browser.$("#selectionInput");
 
 		await browser.keys("Enter");
@@ -128,7 +131,7 @@ describe("Menu interaction", () => {
 		const openButton = await browser.$("#btnOpen");
 		const eventLogger = await browser.$("#eventLogger");
 
-		openButton.click();
+		await openButton.click();
 		await browser.pause(100);
 		await browser.keys("Escape");
 
@@ -140,47 +143,42 @@ describe("Menu interaction", () => {
 		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
 
-	/*
 	it("Menu and Menu items busy indication", async () => {
 			await browser.url(`test/pages/Menu.html`);
 			const openButton = await browser.$("#btnOpen");
-			openButton.click();
-			await browser.pause(100);
+			await openButton.click();
 
-			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const visualOpenItem = await menuPopover.$("ui5-li[accessible-name='Open']");
-			const visualCloseItem = await menuPopover.$("ui5-li[accessible-name='Close']");
+			const menu = await browser.$("#menu");
+			const menuPopover = await menu.shadow$("ui5-responsive-popover");
+			const visualOpenItem = await menuPopover.$("ui5-menu-li[accessible-name='Open']");
+			const visualCloseItem = await menuPopover.$("ui5-menu-li[accessible-name='Close']");
 
-			visualOpenItem.click();
-			await browser.pause(350);
-			const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+			await visualOpenItem.click();
+			const openSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
 			const openMenuList = await openSubmenuPopover.$("ui5-list");
 
 			// assert.ok(await openMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
-			await browser.pause(650);
-			assert.strictEqual(await openMenuList.$$("ui5-li").length, 4, "Two additional nodes have been added.");
+			assert.strictEqual((await openMenuList.$$("ui5-menu-li")).length, 4, "Two additional nodes have been added.");
 
-			visualCloseItem.click();
-			await browser.pause(350);
+			await visualCloseItem.click();
 
-			const closeSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+			const closeSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
 			const busyIndicator = await closeSubmenuPopover.$("ui5-busy-indicator");
 			assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
-			assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
+			assert.strictEqual(await busyIndicator.getProperty("size"), "M", "Size attribute is properly set.");
 			assert.strictEqual(await busyIndicator.getProperty("delay"), 100, "Delay attribute is properly set.");
 		});
-	 */
 
 		it("Prevent menu closing on item press", async () => {
 			await browser.url(`test/pages/Menu.html`);
 			const openButton = await browser.$("#btnOpen");
-			openButton.click();
-			await browser.pause(100);
+			await openButton.click();
 
-			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const newFileItem = await menuPopover.$("ui5-menu-li[accessible-name='New File(selection prevented)']");
-			newFileItem.click();
-			await browser.pause(100);
+			const menu = await browser.$("#menu");
+			const menuPopover = await menu.shadow$("ui5-responsive-popover");
+
+			const newFileItem = await menuPopover.$("ui5-menu-li[accessible-name='New File(selection prevented) Opens a file explorer']");
+			await newFileItem.click();
 
 			assert.ok(await menuPopover.getProperty("open"), "Menu is still opened.");
 		});
@@ -188,13 +186,13 @@ describe("Menu interaction", () => {
 		it("Enable navigaion over disabled items", async () => {
 			await browser.url(`test/pages/Menu.html`);
 			const openButton = await browser.$("#btnOpen");
-			openButton.click();
-			await browser.pause(100);
+			await openButton.click();
 
-			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+			const menu = await browser.$("#menu");
+			const menuPopover = await menu.shadow$("ui5-responsive-popover");
+
 			const listItem = await menuPopover.$("ui5-menu-li[accessible-name='Preferences']");
-			listItem.click();
-			await browser.pause(100);
+			await listItem.click();
 
 			assert.ok(await listItem.getProperty("disabled"), "The menu item is disabled");
 			assert.ok(await listItem.getProperty("focused"), "The menu item is focused");
@@ -206,10 +204,10 @@ describe("Menu Accessibility", () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
+		await openButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		const popover = await browser.$("#menu").shadow$("ui5-responsive-popover");
 		const list = await popover.$("ui5-list");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 

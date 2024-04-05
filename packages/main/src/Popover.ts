@@ -11,7 +11,7 @@ import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElemen
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
-import PopoverPlacementType from "./types/PopoverPlacementType.js";
+import PopoverPlacement from "./types/PopoverPlacement.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
@@ -39,7 +39,7 @@ type CalculatedPlacement = {
 	arrow: ArrowPosition,
 	top: number,
 	left: number,
-	placementType: `${PopoverPlacementType}`,
+	placement: `${PopoverPlacement}`,
 }
 
 /**
@@ -86,6 +86,7 @@ type CalculatedPlacement = {
 @customElement({
 	tag: "ui5-popover",
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		PopoverCss,
@@ -105,11 +106,11 @@ class Popover extends Popup {
 
 	/**
 	 * Determines on which side the component is placed at.
-	 * @default "Right"
+	 * @default "End"
 	 * @public
 	 */
-	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
-	placementType!: `${PopoverPlacementType}`;
+	@property({ type: PopoverPlacement, defaultValue: PopoverPlacement.End })
+	placement!: `${PopoverPlacement}`;
 
 	/**
 	 * Determines the horizontal alignment of the component.
@@ -199,8 +200,8 @@ class Popover extends Popup {
 	 * Returns the calculated placement depending on the free space
 	 * @private
 	 */
-	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
-	actualPlacementType!: `${PopoverPlacementType}`;
+	@property({ type: PopoverPlacement, defaultValue: PopoverPlacement.End })
+	actualPlacement!: `${PopoverPlacement}`;
 
 	@property({ validator: Integer, noAttribute: true })
 	_maxHeight?: number;
@@ -310,11 +311,11 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
-	shouldCloseDueToOverflow(placement: `${PopoverPlacementType}`, openerRect: DOMRect): boolean {
+	shouldCloseDueToOverflow(placement: `${PopoverPlacement}`, openerRect: DOMRect): boolean {
 		const threshold = 32;
 		const limits = {
-			"Right": openerRect.right,
-			"Left": openerRect.left,
+			"Start": openerRect.right,
+			"End": openerRect.left,
 			"Top": openerRect.top,
 			"Bottom": openerRect.bottom,
 		};
@@ -392,7 +393,7 @@ class Popover extends Popup {
 		}
 
 		this._oldPlacement = placement;
-		this.actualPlacementType = placement.placementType;
+		this.actualPlacement = placement.placement;
 
 		let left = clamp(
 			this._left!,
@@ -400,7 +401,7 @@ class Popover extends Popup {
 			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
-		if (this.actualPlacementType === PopoverPlacementType.Right) {
+		if (this.actualPlacement === PopoverPlacement.End) {
 			left = Math.max(left, this._left!);
 		}
 
@@ -410,7 +411,7 @@ class Popover extends Popup {
 			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
 
-		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
+		if (this.actualPlacement === PopoverPlacement.Bottom) {
 			top = Math.max(top, this._top!);
 		}
 
@@ -418,9 +419,6 @@ class Popover extends Popup {
 		this.arrowTranslateY = placement.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
-		const containingBlockClientLocation = this._getContainingBlockClientLocation();
-		left -= containingBlockClientLocation.left;
-		top -= containingBlockClientLocation.top;
 
 		Object.assign(this.style, {
 			top: `${top}px`,
@@ -472,8 +470,12 @@ class Popover extends Popup {
 	}
 
 	_showOutsideViewport() {
+		if (this.isConnected) {
+			this.setAttribute("popover", "manual");
+			this.showPopover();
+		}
+
 		Object.assign(this.style, {
-			display: this._displayProp,
 			top: "-10000px",
 			left: "-10000px",
 		});
@@ -497,12 +499,12 @@ class Popover extends Popup {
 		let maxHeight = clientHeight;
 		let maxWidth = clientWidth;
 
-		const placementType = this.getActualPlacementType(targetRect, popoverSize);
+		const placement = this.getActualPlacement(targetRect, popoverSize);
 
-		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placementType, targetRect);
+		this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placement, targetRect);
 
-		const isVertical = placementType === PopoverPlacementType.Top
-			|| placementType === PopoverPlacementType.Bottom;
+		const isVertical = placement === PopoverPlacement.Top
+			|| placement === PopoverPlacement.Bottom;
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && isVertical) {
 			popoverSize.width = targetRect.width;
@@ -514,8 +516,8 @@ class Popover extends Popup {
 		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
 
 		// calc popover positions
-		switch (placementType) {
-		case PopoverPlacementType.Top:
+		switch (placement) {
+		case PopoverPlacement.Top:
 			left = this.getVerticalLeft(targetRect, popoverSize);
 			top = Math.max(targetRect.top - popoverSize.height - arrowOffset, 0);
 
@@ -523,7 +525,7 @@ class Popover extends Popup {
 				maxHeight = targetRect.top - arrowOffset;
 			}
 			break;
-		case PopoverPlacementType.Bottom:
+		case PopoverPlacement.Bottom:
 			left = this.getVerticalLeft(targetRect, popoverSize);
 			top = targetRect.bottom + arrowOffset;
 
@@ -533,7 +535,7 @@ class Popover extends Popup {
 				maxHeight = clientHeight - targetRect.bottom - arrowOffset;
 			}
 			break;
-		case PopoverPlacementType.Left:
+		case PopoverPlacement.Start:
 			left = Math.max(targetRect.left - popoverSize.width - arrowOffset, 0);
 			top = this.getHorizontalTop(targetRect, popoverSize);
 
@@ -541,7 +543,7 @@ class Popover extends Popup {
 				maxWidth = targetRect.left - arrowOffset;
 			}
 			break;
-		case PopoverPlacementType.Right:
+		case PopoverPlacement.End:
 			left = targetRect.left + targetRect.width + arrowOffset;
 			top = this.getHorizontalTop(targetRect, popoverSize);
 
@@ -586,7 +588,7 @@ class Popover extends Popup {
 			arrow: arrowPos,
 			top: this._top,
 			left: this._left,
-			placementType,
+			placement,
 		};
 	}
 
@@ -605,11 +607,11 @@ class Popover extends Popup {
 		const horizontalAlign = this._actualHorizontalAlign;
 		let arrowXCentered = horizontalAlign === PopoverHorizontalAlign.Center || horizontalAlign === PopoverHorizontalAlign.Stretch;
 
-		if (horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
+		if (horizontalAlign === PopoverHorizontalAlign.End && left <= targetRect.left) {
 			arrowXCentered = true;
 		}
 
-		if (horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+		if (horizontalAlign === PopoverHorizontalAlign.Start && left + popoverSize.width >= targetRect.left + targetRect.width) {
 			arrowXCentered = true;
 		}
 
@@ -649,57 +651,57 @@ class Popover extends Popup {
 	 * Fallbacks to new placement, prioritizing `Left` and `Right` placements.
 	 * @private
 	 */
-	fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType | undefined {
+	fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacement | undefined {
 		if (targetRect.left > popoverSize.width) {
-			return PopoverPlacementType.Left;
+			return PopoverPlacement.Start;
 		}
 
 		if (clientWidth - targetRect.right > targetRect.left) {
-			return PopoverPlacementType.Right;
+			return PopoverPlacement.End;
 		}
 
 		if (clientHeight - targetRect.bottom > popoverSize.height) {
-			return PopoverPlacementType.Bottom;
+			return PopoverPlacement.Bottom;
 		}
 
 		if (clientHeight - targetRect.bottom < targetRect.top) {
-			return PopoverPlacementType.Top;
+			return PopoverPlacement.Top;
 		}
 	}
 
-	getActualPlacementType(targetRect: DOMRect, popoverSize: PopoverSize): `${PopoverPlacementType}` {
-		const placementType = this.placementType;
-		let actualPlacementType = placementType;
+	getActualPlacement(targetRect: DOMRect, popoverSize: PopoverSize): `${PopoverPlacement}` {
+		const placement = this.placement;
+		let actualPlacement = placement;
 
 		const clientWidth = document.documentElement.clientWidth;
 		const clientHeight = document.documentElement.clientHeight;
 
-		switch (placementType) {
-		case PopoverPlacementType.Top:
+		switch (placement) {
+		case PopoverPlacement.Top:
 			if (targetRect.top < popoverSize.height
 				&& targetRect.top < clientHeight - targetRect.bottom) {
-				actualPlacementType = PopoverPlacementType.Bottom;
+				actualPlacement = PopoverPlacement.Bottom;
 			}
 			break;
-		case PopoverPlacementType.Bottom:
+		case PopoverPlacement.Bottom:
 			if (clientHeight - targetRect.bottom < popoverSize.height
 				&& clientHeight - targetRect.bottom < targetRect.top) {
-				actualPlacementType = PopoverPlacementType.Top;
+				actualPlacement = PopoverPlacement.Top;
 			}
 			break;
-		case PopoverPlacementType.Left:
+		case PopoverPlacement.Start:
 			if (targetRect.left < popoverSize.width) {
-				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
+				actualPlacement = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placement;
 			}
 			break;
-		case PopoverPlacementType.Right:
+		case PopoverPlacement.End:
 			if (clientWidth - targetRect.right < popoverSize.width) {
-				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
+				actualPlacement = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placement;
 			}
 			break;
 		}
 
-		return actualPlacementType;
+		return actualPlacement;
 	}
 
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
@@ -711,10 +713,10 @@ class Popover extends Popup {
 		case PopoverHorizontalAlign.Stretch:
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
 			break;
-		case PopoverHorizontalAlign.Left:
+		case PopoverHorizontalAlign.Start:
 			left = targetRect.left;
 			break;
-		case PopoverHorizontalAlign.Right:
+		case PopoverHorizontalAlign.End:
 			left = targetRect.right - popoverSize.width;
 			break;
 		}
@@ -793,12 +795,12 @@ class Popover extends Popup {
 
 	get _actualHorizontalAlign() {
 		if (this.effectiveDir === "rtl") {
-			if (this.horizontalAlign === PopoverHorizontalAlign.Left) {
-				return PopoverHorizontalAlign.Right;
+			if (this.horizontalAlign === PopoverHorizontalAlign.Start) {
+				return PopoverHorizontalAlign.End;
 			}
 
-			if (this.horizontalAlign === PopoverHorizontalAlign.Right) {
-				return PopoverHorizontalAlign.Left;
+			if (this.horizontalAlign === PopoverHorizontalAlign.End) {
+				return PopoverHorizontalAlign.Start;
 			}
 		}
 
