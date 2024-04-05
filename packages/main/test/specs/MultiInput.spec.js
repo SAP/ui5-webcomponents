@@ -543,6 +543,7 @@ describe("Keyboard handling", () => {
 
 	it("should open popover on keyboard combination ctrl + i", async () => {
 		const mi = await browser.$("#truncated-token");
+		const inner = await mi.shadow$("input");
 		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 

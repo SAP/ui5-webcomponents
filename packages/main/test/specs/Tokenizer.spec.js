@@ -19,24 +19,36 @@ describe("General interaction", () => {
 	});
 
 	it("tests expanding of tokenizer + focus handling", async () => {
-		const tokenizer = await browser.$("#long-tokenizer");
-		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const longTokenizer = await browser.$("#long-tokenizer");
+		const selectedTokenizer = await browser.$("#selected-tokenizer");
+		const selectedToken = await selectedTokenizer.$("ui5-token:nth-child(2)");
+		const secondToken = await longTokenizer.$("ui5-token:nth-child(2)");
 
 		await secondToken.click();
 
-		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+		assert.ok(await longTokenizer.getProperty("expanded"), "Tokenizer should be expanded upon token focus.");
 		assert.ok(await secondToken.getProperty("selected"), "Second token should be selected.");
 		assert.ok(await secondToken.getProperty("focused"), "Second token should be focused");
 
 		await browser.keys('Tab');
 
 		assert.ok(await secondToken.getProperty("selected"), "Second token should stay selected after focusout.");
-		assert.notOk(await tokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
+		assert.notOk(await longTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 
 		await browser.keys(['Shift', 'Tab']);
 
-		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+		assert.ok(await longTokenizer.getProperty("expanded"), "Tokenizer should be expanded upon token focus.");
 		assert.ok(await secondToken.getProperty("focused"), "Focus should go back to the selected token.");
+
+		await browser.keys(['Shift', 'Tab']);
+
+		assert.ok(await selectedToken.getProperty("focused"), "Upon Tab navigation, focus should go to the selected token if any.");
+	});
+});
+
+describe("nMore Popover", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Tokenizer.html`);
 	});
 
 	it("tests opening of nMore Popover", async () => {
@@ -53,7 +65,7 @@ describe("General interaction", () => {
 		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
 
 		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
-		assert.ok(await rpo.getProperty("opened"), "nMore Popover should be open");
+		assert.ok(await rpo.getProperty("opened"), "nMore Popover should be opened upon click of nMore label.");
 		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
 
 		await browser.keys('Escape');
@@ -61,6 +73,29 @@ describe("General interaction", () => {
 		assert.ok(await lastToken.getProperty("focused"), "Last token should be focused, after Escape key is pressed.");
 	});
 
+	it("tests [F7] list item navigation", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+
+		await nMoreLabel.click();
+
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
+		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
+		const itemDeleteButton = await firstListItem.shadow$('ui5-button');
+
+		assert.ok(await rpo.getProperty("opened"), "nMore Popover should be opened upon click of nMore label.");
+		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+
+		await browser.keys('F7');
+
+		assert.ok(await itemDeleteButton.getProperty("focused"), "Delete button should be focused upon F7 key press.");
+		assert.notOk(await firstListItem.getProperty("focused"), "List item should no longer be focused.");
+
+		await browser.keys('F7');
+
+		assert.notOk(await itemDeleteButton.getProperty("focused"), "List item should be focused upon F7 key press.");
+		assert.ok(await firstListItem.getProperty("focused"), "Delete button should no longer be focused.");
+	});
 });
 
 describe("Readonly", () => {
@@ -82,7 +117,7 @@ describe("Readonly", () => {
 		assert.strictEqual(tokens.length, 5, "The tokenizer has 5 tokens");
 	});
 
-	it("tests expanding of tokenizer + focus handling", async () => {
+	it("tests expanding of tokenizer + focus handling in readonly mode.", async () => {
 		const tokenizer = await browser.$("#readonly-tokenizer");
 		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 
@@ -172,7 +207,7 @@ describe("Keyboard handling", () => {
 		assert.notOk(await secondToken.getProperty("selected"), "The second token is deselected");
 	});
 
-	it("left/right arrow navigation", async () => {
+	it("[LeftArrow]/[RightArrow] navigation", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
@@ -188,7 +223,7 @@ describe("Keyboard handling", () => {
 		assert.ok(await firstToken.getProperty("focused"), "The first token is focused");
 	});
 
-	it("home/end navigation", async () => {
+	it("[Home]/[End] navigation", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const lastToken = await tokenizer.$("ui5-token:last-child");
@@ -272,29 +307,29 @@ describe("Keyboard handling", () => {
 
 		let tokens = await tokenizer.$$("ui5-token");
 
-		assert.equal(tokens.length, 5, "should have 5 tokens");
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
 
 		await deleteIcon.click();
 
 		tokens = await tokenizer.$$("ui5-token");
 
-		assert.equal(tokens.length, 4, "should have 4 tokens");
+		assert.equal(tokens.length, 4, "Should have 4 tokens after deletion");
 		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
 	});
 
-	it("should delete token on backspace", async () => {
+	it("should delete token on [Backspace]", async () => {
 		const tokenizer = await browser.$("#delete-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 		let tokens = await tokenizer.$$("ui5-token");
 
-		assert.equal(tokens.length, 5, "should have 5 tokens");
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
 
 		await firstToken.click();
 		await browser.keys("Backspace");
 		tokens = await tokenizer.$$("ui5-token");
 
-		assert.ok(await secondToken.getProperty("focused"), "The second token is focused on Backspace");
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused on [Backspace]");
 		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
 
 		await browser.keys(["Control", "A"]);
@@ -304,6 +339,34 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
 	});
 
+	it("should delete token on [Delete]", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const thirdToken = await tokenizer.$("ui5-token:nth-child(3)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+
+		// reset token selection
+		await browser.keys(["Control", "A"]);
+		await browser.keys(["Control", "A"]);
+
+		await browser.keys("ArrowRight");
+		await browser.keys("Delete");
+
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await thirdToken.getProperty("focused"), "The next token should be focused after [Delete] key is pressed");
+		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
+
+		await browser.keys(["Control", "A"]);
+		await browser.keys("Delete");
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
+	});
 
 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
@@ -330,7 +393,7 @@ describe("Keyboard handling", () => {
 		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
 	})
 
-	it("should open popover on keyboard combination ctrl + i", async () => {
+	it("should open popover on keyboard combination [Ctrl] + [I]", async () => {
 		const tokenizer = await $("#long-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
