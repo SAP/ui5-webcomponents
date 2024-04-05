@@ -1,17 +1,16 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
-import { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+
+import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
@@ -136,25 +135,12 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 
 	static i18nBundle: I18nBundle;
 
-	_ontouchstart: PassiveEventListenerObject;
-
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
 	}
 
 	constructor() {
 		super();
-		
-		const handleTouchStartEvent = () => {
-			if (this.nonInteractive) {
-				return;
-			}
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
 	}
 
 	_onfocusout() {
@@ -184,17 +170,10 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 			this.getDomRef()!.focus();
 		}
 	}
-	
+
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpaceShift(e)) {
 			e.preventDefault();
-			return;
-		}
-	}
-
-	_onmousedown(e: MouseEvent) {
-		if (this.nonInteractive) {
-			return;
 		}
 	}
 
