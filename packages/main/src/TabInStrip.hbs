@@ -4,8 +4,8 @@
 	role="tab"
 	aria-roledescription="{{_roleDescription}}"
 	aria-haspopup="{{_ariaHasPopup}}"
-	aria-posinset="{{this.forcedPosinset}}"
-	aria-setsize="{{this.forcedSetsize}}"
+	aria-posinset="{{this._forcedPosinset}}"
+	aria-setsize="{{this._forcedSetsize}}"
 	aria-controls="ui5-tc-content"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-disabled="{{this.effectiveDisabled}}"
@@ -29,7 +29,7 @@
 	{{/if}}
 
 	<div class="ui5-tab-strip-itemContent">
-		{{#unless this.isInline}}
+		{{#unless this._isInline}}
 			{{> additionalText}}
 		{{/unless}}
 

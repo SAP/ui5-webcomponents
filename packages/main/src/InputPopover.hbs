@@ -3,8 +3,8 @@
 		class="{{classes.popover}}"
 		hide-arrow
 		_disable-initial-focus
-		placement-type="Bottom"
-		horizontal-align="Left"
+		placement="Bottom"
+		horizontal-align="Start"
 		style="{{styles.suggestionsPopover}}"
 		@ui5-after-open="{{_afterOpenPopover}}"
 		@ui5-after-close="{{_afterClosePopover}}"
@@ -72,7 +72,7 @@
 			prevent-focus-restore
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
-			placement-type="Bottom"
+			placement="Bottom"
 			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">

@@ -1,8 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const resolve = require("resolve");
 const LIB = path.join(__dirname, `../lib/`);
-const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const getScripts = (options) => {
 
@@ -14,22 +12,17 @@ const getScripts = (options) => {
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
-	const tsOption = options.typescript;
-	const tsCommandOld = tsOption ? "tsc" : "";
-	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
+	let tsWatchCommandStandalone = "tsc --watch";
 	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
 	if (options.noWatchTS) {
 		tsWatchCommandStandalone = "";
 	}
-	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
 
-	if (tsOption) {
-		try {
-			require("typescript");
-		} catch(e) {
-			console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
-			process.exit(e.code);
-		}
+	try {
+		require("typescript");
+	} catch(e) {
+		console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
+		process.exit(e.code);
 	}
 
 	let viteConfig;
@@ -54,23 +47,23 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
-			default: `${tsCrossEnv} nps prepare.all`,
+			default: "nps prepare.all",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all copy prepare.typescript generateAPI`,
+			default: "nps clean prepare.all copy prepare.typescript generateAPI",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
-			typescript: tsCommandOld,
+			typescript: "tsc",
 		},
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
-			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
+			templates: `mkdirp src/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
 				default: `concurrently "nps build.styles.themes" "nps build.styles.components" "nps build.styles.componentStyles"`,
 				themes: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
@@ -102,7 +95,7 @@ const getScripts = (options) => {
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `concurrently "nps watch.templates" "nps watch.typescript" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommandStandalone,
@@ -137,14 +130,9 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: `nps ${ tsOption ? "generateAPI.generateCEM generateAPI.validateCEM" : "generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest generateAPI.validateCEM"}`,
+			default: "nps generateAPI.generateCEM generateAPI.validateCEM",
 			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
 			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
-			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
-			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
-			jsdoc: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-			cleanup: "rimraf jsdoc-dist/"
 		},
 	};
 

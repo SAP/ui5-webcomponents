@@ -14,7 +14,7 @@
 
 	<ui5-title level="H5">Test case 1 - Default Color Button to be focused</ui5-title>
 	<ui5-button id="colorPaletteBtnTest">Open</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopoverTest" show-recent-colors show-more-colors show-default-color default-color="green">
+	<ui5-color-palette-popover id="colorPalettePopoverTest" show-recent-colors show-more-colors show-default-color default-color="green" opener="colorPaletteBtnTest">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -31,7 +31,7 @@
 
 	<ui5-title level="H5">Test case 2 - Default Color works</ui5-title>
 	<ui5-button id="colorPaletteBtnTest2">Open</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopoverTest2" show-recent-colors show-more-colors show-default-color default-color="green">
+	<ui5-color-palette-popover id="colorPalettePopoverTest2" show-recent-colors show-more-colors show-default-color default-color="green" opener="colorPaletteBtnTest2">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -48,7 +48,7 @@
 
 	<ui5-title level="H5">Test case 3 - Arrow Down to select displayed color</ui5-title>
 	<ui5-button id="colorPaletteBtnTest3">Open</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopoverTest3" show-recent-colors show-more-colors show-default-color default-color="green">
+	<ui5-color-palette-popover id="colorPalettePopoverTest3" show-recent-colors show-more-colors show-default-color default-color="green" opener="colorPaletteBtnTest3">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -66,7 +66,7 @@
 
 	<ui5-title level="H5">Test case 4 - Arrow Up focuses MoreColors button</ui5-title>
 	<ui5-button id="colorPaletteBtnTest4">Open</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopoverTest4" show-recent-colors show-more-colors  show-default-color default-color="green">
+	<ui5-color-palette-popover id="colorPalettePopoverTest4" show-recent-colors show-more-colors  show-default-color default-color="green" opener="colorPaletteBtnTest4">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -83,7 +83,7 @@
 
 	<ui5-title level="H5">Test case 5 - Tests navigation with recent colors</ui5-title>
 	<ui5-button id="colorPaletteBtnTest5">Open</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopoverTest5" show-recent-colors show-more-colors  show-default-color default-color="green">
+	<ui5-color-palette-popover id="colorPalettePopoverTest5" show-recent-colors show-more-colors  show-default-color default-color="green" opener="colorPaletteBtnTest5">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -102,7 +102,7 @@
 	<ui5-button id="colorPaletteBtnTest6">Open</ui5-button>
 	<ui5-input id="inpOpenChangeCounter" placeholder="'close' event count"></ui5-input>
 	<ui5-button id="btnFocusOut">Press</ui5-button>
-	<ui5-color-palette-popover id="colorPalettePopoverTest6" show-recent-colors show-more-colors  show-default-color default-color="green">
+	<ui5-color-palette-popover id="colorPalettePopoverTest6" show-recent-colors show-more-colors  show-default-color default-color="green" opener="colorPaletteBtnTest6">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -170,7 +170,7 @@
 
 	<ui5-title level="H5">show-recent-colors, show-more-colors and show-default-color</ui5-title>
 	<ui5-button id="btnColPop4">Open</ui5-button>
-	<ui5-color-palette-popover id="ColPop4" show-recent-colors show-more-colors show-default-color default-color="green" openr="btnColPop4">
+	<ui5-color-palette-popover id="ColPop4" show-recent-colors show-more-colors show-default-color default-color="green" opener="btnColPop4">
 		<ui5-color-palette-item value="pink"></ui5-color-palette-item>
 		<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
 		<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
@@ -205,27 +205,27 @@
 
 		// Tests - default color btn should be on focus after open
 		colorPaletteBtnTest.addEventListener("click", function(event) {
-			colorPalettePopoverTest.showAt(this);
+			colorPalettePopoverTest.open = !colorPalettePopoverTest.open;
 		});
 
 		colorPaletteBtnTest2.addEventListener("click", function(event) {
-			colorPalettePopoverTest2.showAt(this)
+			colorPalettePopoverTest2.open = !colorPalettePopoverTest2.open;
 		});
 
 		colorPaletteBtnTest3.addEventListener("click", function(event) {
-			colorPalettePopoverTest3.showAt(this);
+			colorPalettePopoverTest3.open = !colorPalettePopoverTest3.open;
 		});
 
 		colorPaletteBtnTest4.addEventListener("click", function(event) {
-			colorPalettePopoverTest4.showAt(this);
+			colorPalettePopoverTest4.open = !colorPalettePopoverTest4.open;
 		});
 
 		colorPaletteBtnTest5.addEventListener("click", function(event) {
-			colorPalettePopoverTest5.showAt(this);
+			colorPalettePopoverTest5.open = !colorPalettePopoverTest5.open;
 		});
 
 		colorPaletteBtnTest6.addEventListener("click", function(event) {
-			colorPalettePopoverTest6.showAt(this);
+			colorPalettePopoverTest6.open = !colorPalettePopoverTest6.open;
 		});
 
 		let openChangeCounter = 0;
