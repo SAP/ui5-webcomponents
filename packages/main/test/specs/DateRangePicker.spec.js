@@ -9,8 +9,8 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = await browser.$("#daterange-picker3");
 
 		await daterangepicker.click();
-		await daterangepicker.keys("123123123");
-		await daterangepicker.keys("Enter");
+		await browser.keys("123123123");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
 	});
@@ -20,8 +20,8 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = await browser.$("#daterange-picker3");
 
 		await daterangepicker.click();
-		await daterangepicker.keys("09/09/2020 - 10/10/2020");
-		await daterangepicker.keys("Enter");
+		await browser.keys("09/09/2020 - 10/10/2020");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
 	});
@@ -39,15 +39,15 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(await daterangepicker.getProperty("delimiter"), "@", "The delimiter is set to @");
 
 		await daterangepicker.click();
-		await daterangepicker.keys("Feb 25, 2022 @ Feb 28, 2022");
-		await daterangepicker.keys("Enter");
+		await browser.keys("Feb 25, 2022 @ Feb 28, 2022");
+		await browser.keys("Enter");
 		await daterangepicker.setAttribute("delimiter", "###");
 
 		assert.strictEqual(await daterangepicker.getAttribute("value"), "Feb 25, 2022 ### Feb 28, 2022", "Value is updated with the new delimiter");
 
 		await daterangepicker.doubleClick();
-		await daterangepicker.keys("Backspace");
-		await daterangepicker.keys("Enter");
+		await browser.keys("Backspace");
+		await browser.keys("Enter");
 	});
 
 	it("startDateValue and endDateValue getter", async () => {
@@ -200,8 +200,8 @@ describe("DateRangePicker general interaction", () => {
 		const daterangepicker = await browser.$("#daterange-picker6");
 
 		await daterangepicker.click();
-		await daterangepicker.keys("2020-09-09 - 2020-10-10");
-		await daterangepicker.keys("Enter");
+		await browser.keys("2020-09-09 - 2020-10-10");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "None", "The value state is on none");
 	});
@@ -256,8 +256,8 @@ describe("DateRangePicker general interaction", () => {
 		const dateRangePickerInput = await daterangepicker.shadow$("ui5-input");
 
 		await daterangepicker.click();
-		await daterangepicker.keys("10.02.2023 г. - 25.07.2023 г.");
-		await daterangepicker.keys("Enter");
+		await browser.keys("10.02.2023 г. - 25.07.2023 г.");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Error", "Min and max dates are set correctly");
 	});

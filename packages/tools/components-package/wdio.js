@@ -1,5 +1,3 @@
-const dns = require("node:dns");
-
 exports.config = {
 	//
 	// ====================
@@ -20,7 +18,7 @@ exports.config = {
 	// directory is where your package.json resides, so `wdio` will be called from there.
 	//
 	specs: [
-		'./test/specs/**/*.js'
+		'../test/specs/**/*.js'
 	],
 	// Patterns to exclude.
 	exclude: [
@@ -59,13 +57,13 @@ exports.config = {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
 			args: [
-				'--headless',
-				'--start-maximized',
-				'--no-sandbox',
-				'--disable-gpu',
-				'--disable-infobars',
-				'--disable-extensions',
-				'--disable-dev-shm-usage',
+				'--headless',             // start in headless mode
+				'--start-maximized',      // maximize the window
+				'--no-sandbox',           // disable sandbox isolation
+				'--disable-infobars',     // disable the infos
+				'--disable-gpu',          // on windows disable gpu hw acceleration
+				'--disable-extensions',   // disable extensions
+				'--disable-dev-shm-usage' // disable /dev/shm in CI
 			],
 			// args: ['--disable-gpu'],
 		}
@@ -109,7 +107,9 @@ exports.config = {
 	// Services take over a specific job you don't want to take care of. They enhance
 	// your test setup with almost no effort. Unlike plugins, they don't add new
 	// commands. Instead, they hook themselves up into the test process.
-	services: ['chromedriver', ['static-server', {
+	services: [
+		'chromedriver',
+		['static-server', {
 			folders: [
 				{ mount: '/', path: './dist' },
 			],
@@ -162,9 +162,6 @@ exports.config = {
 	 */
 	// beforeSession: function (config, capabilities, specs) {
 	// },
-	beforeSession: () => {
-        dns.setDefaultResultOrder('ipv4first');
-    },
 	/**
 	 * Gets executed before test execution begins. At this point you can access to all global
 	 * variables like `browser`. It is the perfect place to define custom commands.
@@ -202,40 +199,40 @@ exports.config = {
 			}, this, element);
 		}, true);
 
-		await browser.addCommand("setProperty", async function(property, value) {
+		await browser.addCommand("setProperty", async function (property, value) {
 			return browser.executeAsync((elem, property, value, done) => {
 				elem[property] = value;
 				done();
 			}, this, property, value);
 		}, true);
 
-		await browser.addCommand("setAttribute", async function(attribute, value) {
+		await browser.addCommand("setAttribute", async function (attribute, value) {
 			return browser.executeAsync((elem, attribute, value, done) => {
 				elem.setAttribute(attribute, value);
 				done();
 			}, this, attribute, value);
 		}, true);
 
-		await browser.addCommand("removeAttribute", async function(attribute) {
+		await browser.addCommand("removeAttribute", async function (attribute) {
 			return browser.executeAsync((elem, attribute, done) => {
 				elem.removeAttribute(attribute);
 				done();
 			}, this, attribute);
 		}, true);
 
-		await browser.addCommand("hasClass", async function(className) {
+		await browser.addCommand("hasClass", async function (className) {
 			return browser.executeAsync((elem, className, done) => {
 				done(elem.classList.contains(className));
 			}, this, className);
 		}, true);
 
-		await browser.addCommand("hasAttribute", async function(attrName) {
+		await browser.addCommand("hasAttribute", async function (attrName) {
 			return browser.executeAsync((elem, attrName, done) => {
 				done(elem.hasAttribute(attrName));
 			}, this, attrName);
 		}, true);
 
-		await browser.addCommand("matches", async function(selector) {
+		await browser.addCommand("matches", async function (selector) {
 			return browser.executeAsync((elem, selector, done) => {
 				done(elem.matches(selector));
 			}, this, selector);
@@ -329,7 +326,7 @@ exports.config = {
 
 		// url -> set configuration first
 		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
-			await browser.executeAsync(function(done) {
+			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
 				done();
 			});

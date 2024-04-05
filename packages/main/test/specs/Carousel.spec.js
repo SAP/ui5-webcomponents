@@ -184,15 +184,15 @@ describe("Carousel general interaction", () => {
 
 		// using the keyboard navigation
 		await carousel.click();
-		await carousel.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		assert.strictEqual(await selectedIndex.getProperty("value"), "1", "The selectedIndex is correct.");
 		assert.strictEqual(await eventCounter.getProperty("value"), "5", "The navigate event is fired.");
 
-		await carousel.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 		assert.strictEqual(await selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
 		assert.strictEqual(await eventCounter.getProperty("value"), "6", "The navigate event is fired.");
 
-		await carousel.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 		assert.strictEqual(await selectedIndex.getProperty("value"), "0", "The selectedIndex is correct.");
 		assert.strictEqual(await eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});

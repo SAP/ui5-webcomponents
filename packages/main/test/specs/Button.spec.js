@@ -40,8 +40,8 @@ describe("Button general interaction", () => {
 		const field = await browser.$("#click-counter");
 
 		await button.click();
-		await button.keys("Space");
-		await button.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Click should be called 3 times");
 	});
@@ -51,8 +51,8 @@ describe("Button general interaction", () => {
 		const nativeButton = await button.shadow$("button");
 
 		// don't test space and enter, as wdio always fires a click but the browser not.
-		// await button.keys("Space");
-		// await button.keys("Enter");
+		// await browser.keys("Space");
+		// await browser.keys("Enter");
 
 		await button.click();
 
@@ -82,8 +82,8 @@ describe("Button general interaction", () => {
 		const field = await browser.$("#click-counter");
 
 		await button.click();
-		await button.keys("Space");
-		await button.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 3 times");
 	});
@@ -93,8 +93,8 @@ describe("Button general interaction", () => {
 		const field = await browser.$("#click-counter");
 
 		// don't test space and enter, as wdio always fires a click but the browser not.
-		// await button.keys("Space");
-		// await button.keys("Enter");
+		// await browser.keys("Space");
+		// await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 6 times");
 	});

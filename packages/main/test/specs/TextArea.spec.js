@@ -94,9 +94,9 @@ describe("disabled and readonly textarea", () => {
 		const textAreaInnerReadonly = await browser.$("#readonly-textarea");
 
 		await textAreaInnerReadonly.click();
-		await textAreaInnerReadonly.keys("a");
-		await textAreaInnerReadonly.keys("b");
-		await textAreaInnerReadonly.keys("c");
+		await browser.keys("a");
+		await browser.keys("b");
+		await browser.keys("c");
 
 		assert.strictEqual(await textAreaInnerReadonly.getValue(), "", "Value should be empty string");
 	});
@@ -158,18 +158,18 @@ describe("when enabled", () => {
 
 		// Start typing.
 		await textAreaInner.click();
-		await textarea.keys("a");
-		await textarea.keys("b");
-		await textarea.keys("c");
+		await browser.keys("a");
+		await browser.keys("b");
+		await browser.keys("c");
 
 		// Click somewhere else to focus out - should fire change event.
 		await changeResult.click();
 
 		// Get back and continue typing.
 		await textAreaInner.click();
-		await textarea.keys("d");
-		await textarea.keys("e");
-		await textarea.keys("f");
+		await browser.keys("d");
+		await browser.keys("e");
+		await browser.keys("f");
 
 		// Click somewhere else to force focus out - should fire change event.
 		await changeResult.click();
@@ -183,9 +183,9 @@ describe("when enabled", () => {
 		const inputResult = await browser.$("#inputResult");
 
 		await textAreaInner.click();
-		await textarea.keys("a");
-		await textarea.keys("b");
-		await textarea.keys("c");
+		await browser.keys("a");
+		await browser.keys("b");
+		await browser.keys("c");
 
 		assert.strictEqual(await inputResult.getValue(), "3", "input is fired 3 times");
 	});
@@ -284,14 +284,14 @@ describe("Value update", () => {
 
 		// act
 		await textarea.click();
-		await textarea.keys("1");
-		await textarea.keys("2");
+		await browser.keys("1");
+		await browser.keys("2");
 
 		// assert
 		assert.strictEqual(await textarea.getProperty("value"), "12", "Value is updated");
 
 		// act
-		await textarea.keys("Escape");
+		await browser.keys("Escape");
 
 		// assert
 		assert.strictEqual(await textarea.getProperty("value"), "", "Value is reverted");

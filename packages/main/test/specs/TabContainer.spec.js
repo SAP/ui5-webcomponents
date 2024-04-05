@@ -374,7 +374,7 @@ describe("TabContainer keyboard handling", () => {
 		assert.strictEqual(await item.getProperty("innerText"), "Four", "Correct tab is found");
 
 		await item.click();
-		await item.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		const popover = await tabContainer.shadow$("ui5-responsive-popover");
 

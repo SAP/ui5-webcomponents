@@ -12,10 +12,10 @@ describe("ToggleButton general interaction", () => {
 		await toggleButton.click();
 		assert.strictEqual(await result.getText(), "ToggleButton: false", "click event changed pressed state");
 
-		await toggleButton.keys("Space");
+		await browser.keys("Space");
 		assert.strictEqual(await result.getText(), "ToggleButton: true", "Space triggered click and changed pressed state");
 
-		await toggleButton.keys("Enter");
+		await browser.keys("Enter");
 		assert.strictEqual(await result.getText(), "ToggleButton: false", "Enter triggered click and changed pressed state");
 	});
 
@@ -27,10 +27,10 @@ describe("ToggleButton general interaction", () => {
 
 		// don't test space and enter, as wdio always fires a click but the browser not.
 
-		// await toggleButton.keys("Space");
+		// await browser.keys("Space");
 		// assert.strictEqual(await result.getText(), "ToggleButton: true", "2Press event is fired with: { pressed: true }");
 
-		// await toggleButton.keys("Enter");
+		// await browser.keys("Enter");
 		// assert.strictEqual(await result.getText(), "ToggleButton: true", "3Press event is fired with: { pressed: true }");
 	});
 });

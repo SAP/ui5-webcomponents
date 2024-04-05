@@ -7,7 +7,7 @@ src/thirdparty
 bundle.esm.js
 bundle.es5.js
 rollup.config*.js
-wdio.conf.cjs
+wdio.conf.cj
 postcss.config.cjs
 package-scripts.cjs
 .eslintrc.cjs

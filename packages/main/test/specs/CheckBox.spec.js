@@ -20,8 +20,8 @@ describe("CheckBox general interaction", () => {
 		const field = await browser.$("#field");
 
 		await checkBox.click();
-		await checkBox.keys("Space");
-		await checkBox.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should be fired 3 times");
 	});
@@ -57,8 +57,8 @@ describe("CheckBox general interaction", () => {
 		const field = await browser.$("#field");
 
 		await checkBox.click();
-		await checkBox.keys("Space");
-		await checkBox.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more");
 	});
@@ -68,8 +68,8 @@ describe("CheckBox general interaction", () => {
 		const field = await browser.$("#field");
 
 		await checkBox.click();
-		await checkBox.keys("Space");
-		await checkBox.keys("Enter");
+		await browser.keys("Space");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should not be called any more");
 	});

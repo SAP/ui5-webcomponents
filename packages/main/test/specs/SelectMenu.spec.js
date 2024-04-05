@@ -37,14 +37,14 @@ describe("Select Menu general interaction", () => {
 
 		// make sure focus is on closed select
 		await select.click();
-		await select.keys("Escape");
+		await browser.keys("Escape");
 
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
 		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
 		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
@@ -88,8 +88,8 @@ describe("Select Menu general interaction", () => {
 		const EXPECTED_SELECTION_TEXT2 = "item2";
 
 		await select.click();
-		await select.keys("ArrowDown");
-		await select.keys("Enter");
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired 'live-change' event once.");
 		assert.strictEqual(await inpTestChange.getProperty("value"), "1", "Fired 'change' event once.");
@@ -98,8 +98,8 @@ describe("Select Menu general interaction", () => {
 		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.click();
-		await select.keys("ArrowUp");
-		await select.keys("Space");
+		await browser.keys("ArrowUp");
+		await browser.keys("Space");
 
 		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "2", "Fired 'live-change' once more.");
 		assert.strictEqual(await inpTestChange.getProperty("value"), "2", "Fired 'change' event once more.");
@@ -121,8 +121,8 @@ describe("Select Menu general interaction", () => {
 		const selectedOption = await browser.$("#selectOptionsTest ui5-select-menu-option[selected]");
 
 		await select.click();
-		await select.keys("ArrowDown");
-		await select.keys("Escape");
+		await browser.keys("ArrowDown");
+		await browser.keys("Escape");
 
 		const selectTextAfterEscape = await select.shadow$(".ui5-select-label-root").getHTML(false);
 
@@ -142,7 +142,7 @@ describe("Select Menu general interaction", () => {
 		const inpTestPreviewChange = await browser.$("#testPreview");
 
 		await select.click();
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired live-change event once.");
 
 		// focus out select

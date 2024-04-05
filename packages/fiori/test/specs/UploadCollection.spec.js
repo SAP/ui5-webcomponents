@@ -94,7 +94,7 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await select.keys("m"); // for "MultiSelect"
+			await browser.keys("m"); // for "MultiSelect"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");
@@ -104,7 +104,7 @@ describe("UploadCollection", () => {
 
 			// revert the UCI mode "None"
 			await select.click(); // open select
-			await select.keys("n");
+			await browser.keys("n");
 			await browser.keys("Enter")
 		});
 
@@ -112,8 +112,8 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await select.keys("ArrowDown"); // for "SingleSelect"
-			await select.keys("ArrowDown"); // for "SingleSelectBegin"
+			await browser.keys("ArrowDown"); // for "SingleSelect"
+			await browser.keys("ArrowDown"); // for "SingleSelectBegin"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");
@@ -123,7 +123,7 @@ describe("UploadCollection", () => {
 
 			// revert the UCI  mode "None"
 			await select.click(); // open select
-			await select.keys("n");
+			await browser.keys("n");
 			await browser.keys("Enter")
 		});
 
@@ -138,7 +138,7 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeType");
 			await select.click(); // open select
-			await select.keys("d");
+			await browser.keys("d");
 			await browser.keys("Enter");
 
 			const secondItem = await browser.$("#secondItem");
@@ -156,7 +156,7 @@ describe("UploadCollection", () => {
 
 			// revert the UCI "Active" type
 			await select.click(); // open select
-			await select.keys("a");
+			await browser.keys("a");
 			await browser.keys("Enter")
 		});
 

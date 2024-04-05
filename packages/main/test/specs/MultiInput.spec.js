@@ -11,7 +11,7 @@ describe("MultiInput general interaction", () => {
 		const basicTokenizer = await basic.shadow$("ui5-tokenizer");
 
 		await basicInner.click();
-		await basicInner.keys("Tab");
+		await browser.keys("Tab");
 
 		assert.notOk(await basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 	});
@@ -128,7 +128,7 @@ describe("MultiInput general interaction", () => {
 		const popover = await mi.shadow$("ui5-responsive-popover");
 
 		await input.click();
-		await input.keys("c");
+		await browser.keys("c");
 
 		assert.ok(await popover.getProperty("opened"), "Suggestion Popovoer is open");
 		let allTokens = await mi.$$("ui5-token");
@@ -165,7 +165,7 @@ describe("MultiInput general interaction", () => {
 
 		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
 
-		await input.keys('Tab');
+		await browser.keys('Tab');
 		tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
 		assert.strictEqual(tokenizerScrollContainerScrollLeft, 0, "tokenizer is scrolled to start");
@@ -293,7 +293,7 @@ describe("MultiInput Truncated Token", () => {
 		// populate new token
 		await inner.click();
 		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
-		await inner.keys("Enter");
+		await browser.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
@@ -375,9 +375,9 @@ describe("ARIA attributes", () => {
 
 		await browser.$("#suggestion-token").scrollIntoView();
 		await innerInput.click();
-		await innerInput.keys("a");
-		await innerInput.keys("ArrowDown");
-		await innerInput.keys("Enter");
+		await browser.keys("a");
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
 	});
@@ -402,11 +402,11 @@ describe("Keyboard handling", () => {
 		const lastToken = await browser.$("#basic-overflow ui5-token:last-child");
 
 		await innerInput.click();
-		await innerInput.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused");
 		assert.notOk(await input.getProperty("focused"), "The input loses focus");
 
-		await innerInput.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		assert.notOk(await lastToken.getProperty("focused"), "The last token is not focused anymore");
 	});
 
@@ -418,13 +418,13 @@ describe("Keyboard handling", () => {
 		let caretPosition;
 
 		await innerInput.click();
-		await innerInput.keys("Home");
+		await browser.keys("Home");
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
 
-		await innerInput.keys("End");
+		await browser.keys("End");
 		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token is focused");
 
-		await innerInput.keys("End");
+		await browser.keys("End");
 		assert.strictEqual(await lastToken.getProperty("focused"), false, "The last token is not focused anymore");
 
 		caretPosition = await browser.execute(() =>{
@@ -434,7 +434,7 @@ describe("Keyboard handling", () => {
 
 		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at 0 index");
 
-		await innerInput.keys("Home");
+		await browser.keys("Home");
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused on Home press, if the cursor is at 0 index");
 	});
 
@@ -446,7 +446,7 @@ describe("Keyboard handling", () => {
 		const thirdToken = await browser.$("#basic-overflow ui5-token:nth-child(9)");
 
 		await innerInput.click();
-		await innerInput.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 		await browser.keys(["Shift", "ArrowLeft"]);
 
 		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
@@ -475,7 +475,7 @@ describe("Keyboard handling", () => {
 		await browser.$("#two-tokens").scrollIntoView();
 
 		await innerInput.click();
-		await innerInput.keys("End");
+		await browser.keys("End");
 
 		caretPosition = await browser.execute(() => {
 			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
@@ -484,7 +484,7 @@ describe("Keyboard handling", () => {
 
 		assert.strictEqual(caretPosition, 3, "The inner input's cursor is at the end");
 
-		await innerInput.keys("Home");
+		await browser.keys("Home");
 
 		caretPosition = await browser.execute(() => {
 			const multiInputShadowRoot = document.getElementById("two-tokens").shadowRoot;
@@ -494,7 +494,7 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(caretPosition, 0, "The inner input's cursor is at the beginning");
 		assert.strictEqual(await firstToken.getProperty("focused"), false, "The first token is not focused, as text was present");
 
-		await innerInput.keys("Home");
+		await browser.keys("Home");
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
 	});
 
@@ -507,8 +507,8 @@ describe("Keyboard handling", () => {
 
 		await input.setProperty("value", "");
 		await innerInput.click();
-		await innerInput.keys("ArrowLeft");
-		await innerInput.keys("Space");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Space");
 
 		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
 
@@ -573,21 +573,21 @@ describe("Keyboard handling", () => {
 
 		await minput.scrollIntoView();
 		await input.click();
-		await input.keys('ArrowLeft');
+		await browser.keys('ArrowLeft');
 
 		let scrollLeftFirstToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-		await input.keys('ArrowLeft');
-		await input.keys('ArrowLeft');
-		await input.keys('ArrowLeft');
+		await browser.keys('ArrowLeft');
+		await browser.keys('ArrowLeft');
+		await browser.keys('ArrowLeft');
 
 		let scrollLeftForthToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
 		assert.notEqual(scrollLeftFirstToken, scrollLeftForthToken, "tokenizer is scrolled when navigating through the tokens");
 
-		await input.keys('ArrowRight');
-		await input.keys('ArrowRight');
-		await input.keys('ArrowRight');
+		await browser.keys('ArrowRight');
+		await browser.keys('ArrowRight');
+		await browser.keys('ArrowRight');
 
 		let newScrollLeft =  await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
@@ -600,17 +600,17 @@ describe("Keyboard handling", () => {
 
 		await input.scrollIntoView();
 		await innerInput.click();
-		await innerInput.keys('a');
-		await innerInput.keys("Enter");
+		await browser.keys('a');
+		await browser.keys("Enter");
 
 		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
 		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
 
-		await innerInput.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
 
-		await innerInput.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
 	});
@@ -621,7 +621,7 @@ describe("Keyboard handling", () => {
 
 		await mi.scrollIntoView();
 		await inner.click();
-		await inner.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		await browser.keys(["Shift", "Tab"]);
 		await browser.keys("Tab");
@@ -638,12 +638,12 @@ describe("Keyboard handling", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.keys("a");
-		await inner.keys("Enter");
+		await browser.keys("a");
+		await browser.keys("Enter");
 
 		await inner.click();
-		await inner.keys("a");
-		await inner.keys("Enter");
+		await browser.keys("a");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await mi.getProperty("valueState"), "Error", "Value state is Error");
 
@@ -661,7 +661,7 @@ describe("Keyboard handling", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.keys(["Control", "i"]);
+		await browser.keys(["Control", "i"]);
 
 		assert.strictEqual(await popover.getProperty("opened"), false, "Value state popup is closed");
 	});
@@ -672,12 +672,12 @@ describe("Keyboard handling", () => {
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		await mi.click();
-		await mi.keys(["Control", "i"]);
+		await browser.keys(["Control", "i"]);
 		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
 
 		await mi.click();
-		await mi.keys("ArrowLeft");
-		await mi.keys(["Control", "i"]);
+		await browser.keys("ArrowLeft");
+		await browser.keys(["Control", "i"]);
 		assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
 	});
 
@@ -687,7 +687,7 @@ describe("Keyboard handling", () => {
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		await mi.click();
-		await mi.keys(["Control", "i"]);
+		await browser.keys(["Control", "i"]);
 		assert.notOk(await rpo.getProperty("opened"), "n-more popover shouldn't be opened since no tokens");
 	});
 
@@ -697,7 +697,7 @@ describe("Keyboard handling", () => {
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
 		await mi.click();
-		await mi.keys(["Control", "i"]);
+		await browser.keys(["Control", "i"]);
 		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
 		const listItems = await rpo.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 2, "All items are shown");

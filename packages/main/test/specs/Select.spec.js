@@ -101,8 +101,8 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
 		await select.click();
-		await select.keys("ArrowUp");
-		await select.keys("Enter");
+		await browser.keys("ArrowUp");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "1", "Fired change event is called once more.");
 		let selectTextHtml = await selectText.getHTML(false);
@@ -110,8 +110,8 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
 		await select.click();
-		await select.keys("ArrowDown");
-		await select.keys("Space");
+		await browser.keys("ArrowDown");
+		await browser.keys("Space");
 
 		assert.strictEqual(await inputResult.getProperty("value"), "2", "Fired change event is called once more.");
 		selectTextHtml = await selectText.getHTML(false);
@@ -130,14 +130,14 @@ describe("Select general interaction", () => {
 
 		// make sure focus is on closed select
 		await select.click();
-		await select.keys("Escape");
+		await browser.keys("Escape");
 
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
 		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
 
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
 		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
@@ -158,27 +158,27 @@ describe("Select general interaction", () => {
 
 		// open picker without following interaction
 		await select.click();
-		await select.keys("Escape");
+		await browser.keys("Escape");
 
 		// change selection with picker closed
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		let politeSpanHtml = await politeSpan.getHTML(false);
 		assert.include(politeSpanHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up should change selected item");
 
 		// change selection with picker closed
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		politeSpanHtml = await politeSpan.getHTML(false);
 		assert.include(politeSpanHtml, EXPECTED_SELECTION_TEXT2, "Arrow Down should change selected item");
 
 		// change previewed item with picker opened
 		await select.click();
-		await select.keys("ArrowUp");
-		await select.keys("Escape");
+		await browser.keys("ArrowUp");
+		await browser.keys("Escape");
 
 		// change selection with picker opened
 		await select.click();
-		await select.keys("ArrowUp");
-		await select.keys("Enter");
+		await browser.keys("ArrowUp");
+		await browser.keys("Enter");
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Up and Enter should change selected item");
@@ -202,13 +202,13 @@ describe("Select general interaction", () => {
 		assert.notOk(await popover.getProperty("opened"), "Select remains closed.");
 
 		// act - try to change selection when dropdown is closed
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		// assert
 		let selectOptionTextHtml = await selectOptionText.getHTML(false);
 		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains " + EXPECTED_SELECTION_TEXT);
 
 		// act - try to change selection when dropdown is closed
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		// assert
 		selectOptionTextHtml = await selectOptionText.getHTML(false);
 		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option remains" + EXPECTED_SELECTION_TEXT);
@@ -237,10 +237,10 @@ describe("Select general interaction", () => {
 
 		await select.click(); // Open select
 		await select.click(); // Close select. Focus is on the select now
-		await select.keys("Space");
+		await browser.keys("Space");
 
-		await select.keys("ArrowUp");
-		await select.keys("Tab");
+		await browser.keys("ArrowUp");
+		await browser.keys("Tab");
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
 		const selectTextHtml = await selectText.getHTML(false);
@@ -259,9 +259,9 @@ describe("Select general interaction", () => {
 
 		await select.click(); // Open select
 		await select.click(); // Close select. Focus is on the select now
-		await select.keys("Space");
+		await browser.keys("Space");
 
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		await browser.keys(["Shift", "Tab"]);
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
@@ -285,12 +285,12 @@ describe("Select general interaction", () => {
 		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text is " + EXPECTED_SELECTION_TEXT);
 
 		// The last item is already selected - pressing ArrowDown should not change the focus or the selection
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		selectOptionTextHtml = await selectOptionText.getHTML(false);
 		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
 
 		// Close the select not to cover other components that tests would try to click
-		await select.keys("Escape");
+		await browser.keys("Escape");
 	});
 
 	it("tests selection does not cycle with ArrowUp", async () => {
@@ -303,12 +303,12 @@ describe("Select general interaction", () => {
 		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text is " + EXPECTED_SELECTION_TEXT);
 
 		// The last item is already selected - pressing ArrowUp should not change the focus or the selection
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		selectOptionTextHtml = await selectOptionText.getHTML(false);
 		assert.include(selectOptionTextHtml, EXPECTED_SELECTION_TEXT, "Selected option text remains " + EXPECTED_SELECTION_TEXT);
 
 		// Close the select not to cover other components that tests would try to click
-		await select.keys("Escape");
+		await browser.keys("Escape");
 	});
 
 	it("changes selection with typing single letter", async () => {
@@ -316,7 +316,7 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Banana";
 
 		await select.click(); // Open select
-		await select.keys("b");
+		await browser.keys("b");
 
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
@@ -329,8 +329,8 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Brazil";
 
 		await select.click(); // Open select
-		await select.keys("b");
-		await select.keys("r");
+		await browser.keys("b");
+		await browser.keys("r");
 
 		const selectText = await select.shadow$(".ui5-select-label-root");
 
@@ -372,7 +372,7 @@ describe("Select general interaction", () => {
 		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
-		await btn.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys("Space");
 		assert.ok(await popover.getProperty("opened"), "Select is opened.");
@@ -386,7 +386,7 @@ describe("Select general interaction", () => {
 		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
-		await btn.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys("F4");
 		assert.ok(await popover.getProperty("opened"), "Select is opened.");
@@ -403,7 +403,7 @@ describe("Select general interaction", () => {
 		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
-		await btn.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 		assert.ok(await popover.getProperty("opened"), "Select is opened.");
@@ -420,7 +420,7 @@ describe("Select general interaction", () => {
 		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await btn.click();
-		await btn.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
 		assert.ok(await popover.getProperty("opened"), "Select is opened.");
@@ -454,8 +454,8 @@ describe("Select general interaction", () => {
 		const inputResult = await browser.$("#inputResult").shadow$("input");
 
 		await select.click();
-		await select.keys("ArrowDown");
-		await select.keys("Escape");
+		await browser.keys("ArrowDown");
+		await browser.keys("Escape");
 
 		const selectedOption = await browser.$("#mySelect ui5-option[selected]");
 		const selectTextAfterEscape = await browser.$("#mySelect").shadow$(".ui5-select-label-root").getHTML(false);
@@ -473,7 +473,7 @@ describe("Select general interaction", () => {
 		const btn = await browser.$("#myBtn2");
 
 		await select.click();
-		await select.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		// focus out select
 		await btn.click();
@@ -488,9 +488,9 @@ describe("Select general interaction", () => {
 		const inputResult = await browser.$("#inputResult").shadow$("input");
 
 		await select.click();
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
-		await select.keys("Escape");
+		await browser.keys("Escape");
 
 		await select.click();
 		const popover = await select.shadow$("ui5-responsive-popover");
@@ -518,7 +518,7 @@ describe("Select general interaction", () => {
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
 
 		// verify that ESC does not interfere when the picker is closed
-		await select.keys("Escape");
+		await browser.keys("Escape");
 		await select.click();
 		await thirdItem.click();
 
@@ -608,9 +608,9 @@ describe("Select general interaction", () => {
 		await select.click();
 		assert.ok(await popover.getProperty("opened"), "Select is opened.");
 
-		await select.keys("ArrowDown");
-		await select.keys("ArrowDown");
-		await select.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		const selectedOption = await popover.$("ui5-list").$("ui5-li[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");

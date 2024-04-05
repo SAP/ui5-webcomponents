@@ -246,7 +246,7 @@ describe("List Tests", () => {
 
 		assert.notOk(await firstItem.getAttribute("selected"), "item is selected");
 
-		await firstItem.keys("Delete")
+		await browser.keys("Delete")
 		assert.equal(await browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
 	});
 
@@ -270,20 +270,20 @@ describe("List Tests", () => {
 		assert.ok(await afterBtn.isFocused(), "after btn is focused");
 
 		// act: Shift + Tab from element outside of the list -> tab should go to growing button if exist
-		await afterBtn.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 		assert.ok(await growingBtn.isFocusedDeep(), "growing buton is focused");
 
 		// act: Shift + Tab from growing button -> should focus previously focused item or first item
-		await growingBtn.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 		assert.ok(await firstItem.isFocused(), "first item is focused");
 
 		// act: Shift + Tab from first item -> focus should go to the header content (if there is tabbable element)
-		await firstItem.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 		assert.ok(await headerBtn.isFocused(), "header button item is focused");
 
 		// act: Shift + Tab from the growing button - the focus should leave the ui5-list
 		// and before button should be focused
-		await headerBtn.keys(["Shift", "Tab"]);
+		await browser.keys(["Shift", "Tab"]);
 		assert.ok(await beforeBtn.isFocused(), "first item is focused");
 	});
 
@@ -303,35 +303,35 @@ describe("List Tests", () => {
 		assert.ok(await beforeBtn.isFocused(), "before button is focused");
 
 		// act: Tab from element outside of the list -> focus should go to the header content (if there is tabbable element)
-		await beforeBtn.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await headerBtn.isFocused(), "header button is focused");
 
 		// act: TAB from headerButton -> the focus should go to the 1st item
-		await headerBtn.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await firstItem.isFocused(), "first item is focused");
 
-		await firstItem.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.ok(await item.isFocused(), "custom item is focused");
 
 		// act: TAB from item -> the focus should go to "Click me" button
-		await item.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await itemBtn.isFocused(), "the 1st tabbable element (button) is focused");
 
 		// act: TAB from the "Click me" button - the the focus should go to "UI5 Link" anchor
-		await itemBtn.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await itemLink.isFocused(), "the 2nd tabbable element (link) is focused");
 
 		// act: TAB from the "UI5 Link" anchor - the the focus should skip the "Disabled" button
 		// and go to the "Option B" radio button
-		await itemLink.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await itemRadioBtn.isFocused(), "the last tabbable element (radio) is focused");
 
-		await firstItem.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await growingBtn.isFocusedDeep(), "growing buton is focused");
 
 		// act: TAB from the growing button - the focus should leave the ui5-list
 		// and after button should be focused
-		await growingBtn.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await afterBtn.isFocused(), "element outside of the list is focused");
 	});
 
@@ -346,11 +346,11 @@ describe("List Tests", () => {
 		assert.ok(await breadcrumbsItem.isFocused(), "breadcrumb is focused");
 
 		// act: Tab from list item to breadcrumbs
-		await breadcrumbsItem.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await breadcrumb.isFocused(), "breadcrumb is focused");
 
 		// act: Tab to element outside of the list -> focus should go to after button
-		await breadcrumb.keys("Tab");
+		await browser.keys("Tab");
 		assert.ok(await afterBtn.isFocused(), "after button is focused");
 	});
 
@@ -360,12 +360,12 @@ describe("List Tests", () => {
 
 		await firstListItem.click();
 
-		await firstListItem.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		assert.ok(await firstListItem.isFocused(), "First item remains focussed");
 		assert.notOk(await secondListItem.isFocused(), "Second list item not should be focused");
 
-		await firstListItem.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
 
 		assert.ok(await firstListItem.isFocused(), "First item remains focussed");
 	});
@@ -531,7 +531,7 @@ describe("List Tests", () => {
 
 		// navigate from the first item to the next focusable item
 		await item1.click();
-		await item1.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
 	});
@@ -572,7 +572,7 @@ describe("List Tests", () => {
 		const itemCloseResult = await browser.$("#customListItemSelectResult");
 
 		await select.click();
-		await select.keys("Escape");
+		await browser.keys("Escape");
 
 		assert.strictEqual(await itemCloseResult.getProperty("value"), "0", "item-close event is not fired when the button is pressed.");
 	});
