@@ -220,10 +220,31 @@ abstract class Popup extends UI5Element {
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_opening = false;
+	_actualOpen!: boolean;
 
 	constructor() {
 		super();
+
+		Object.defineProperty(this, "open", {
+			get: (): boolean => {
+				return this.opened;
+			},
+			set: (value: boolean) => {
+				this._updateAttribute("open", value);
+
+				if (this.opened === value) {
+					return;
+				}
+
+				this.opened = value;
+
+				if (value) {
+					this.openPopup();
+				} else {
+					this.close();
+				}
+			},
+		});
 
 		this._resizeHandler = this._resize.bind(this);
 
@@ -260,6 +281,10 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+	}
+
+	async openPopup() {
+		await this._open(false);
 	}
 
 	_resize() {
@@ -383,8 +408,10 @@ abstract class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	async applyInitialFocus() {
-		await this.applyFocus();
+	async applyInitialFocus(preventInitialFocus: boolean) {
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			await this.applyFocus();
+		}
 	}
 
 	/**
@@ -440,11 +467,9 @@ abstract class Popup extends UI5Element {
 	async _open(preventInitialFocus: boolean) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 
-		if (prevented || this._opening) {
+		if (prevented || this._actualOpen) {
 			return;
 		}
-
-		this._opening = true;
 
 		// Await render before trying to access the blocking layer
 		await renderFinished();
@@ -466,13 +491,11 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
-		this._opening = false;
+		this._actualOpen = true;
 		this.opened = true;
 		this.open = true;
 
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			await this.applyInitialFocus();
-		}
+		await this.applyInitialFocus(preventInitialFocus);
 
 		this.fireEvent("after-open", {}, false, false);
 	}
@@ -494,7 +517,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
-		if (!this.opened) {
+		if (!this._actualOpen) {
 			return;
 		}
 
@@ -510,6 +533,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.hide();
+		this._actualOpen = false;
 		this.opened = false;
 		this.open = false;
 
