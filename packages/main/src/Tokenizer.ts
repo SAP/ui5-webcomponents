@@ -76,7 +76,7 @@ import ListItem from "./ListItem.js";
 type TokenCountMapType = { [x: number]: I18nText };
 
 type TokenizerTokenDeleteEventDetail = {
-	deletedTokens: Token[];
+	ref: Token;
 }
 
 type TokenizerSelectionChangeEventDetail = {
@@ -127,7 +127,7 @@ enum ClipboardDataOperation {
  */
 @event<TokenizerTokenDeleteEventDetail>("token-delete", {
 	detail: {
-		deletedTokens: { type: Array },
+		ref: { type: HTMLElement },
 	},
 })
 
@@ -407,14 +407,12 @@ class Tokenizer extends UI5Element {
 		const nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
 
 		this._handleCurrentItemAfterDeletion(nextToken);
-debugger;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { deletedTokens: [token] || [target] });
+
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
 		if (nextToken && !isPhone()) {
-			this._itemNav.setCurrentItem(nextToken); // update the item navigation with the new token or undefined, if the last was deleted
-
 			setTimeout(() => {
 				nextToken.focus();
 			}, 0);
@@ -451,10 +449,8 @@ debugger;
 		}
 
 		this._handleCurrentItemAfterDeletion(nextToken);
-debugger;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", {
-			deletedTokens: this._selectedTokens,
-		});
+
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
 	async itemDelete(e: CustomEvent) {
@@ -467,7 +463,7 @@ debugger;
 
 			morePopover.addEventListener("ui5-after-close", () => {
 				debugger;
-				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { deletedTokens: [token] });
+				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 			}, {
 				once: true,
 			});
@@ -475,7 +471,7 @@ debugger;
 			morePopover.close();
 		} else {
 			debugger;
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { deletedTokens: [token] });
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 
 			const currentListItem = e.detail.item as ListItem;
 			const nextListItem = currentListItem.nextElementSibling;
@@ -619,7 +615,6 @@ debugger;
 			e.preventDefault();
 			const nextTokenIdx = this._calcNextTokenIndex(this._tokens.find(token => token.focused)!, tokens, (isRight(e) || isDown(e)));
 			this._scrollToToken(tokens[nextTokenIdx]);
-			tokens[nextTokenIdx].focus();
 		}
 	}
 
@@ -631,7 +626,6 @@ debugger;
 		const index = endKeyPressed ? tokens.length - 1 : 0;
 
 		tokens[index].focus();
-		this._itemNav.setCurrentItem(tokens[index]);
 	}
 
 	_handleHomeShift(e: KeyboardEvent) {
@@ -653,7 +647,6 @@ debugger;
 		}
 
 		tokens[0].focus();
-		this._itemNav.setCurrentItem(tokens[0]);
 	}
 
 	_handleEndShift(e: KeyboardEvent) {
@@ -675,7 +668,6 @@ debugger;
 		}
 
 		tokens[tokens.length - 1].focus();
-		this._itemNav.setCurrentItem(tokens[tokens.length - 1]);
 	}
 
 	_calcNextTokenIndex(focusedToken: IToken, tokens: Array<IToken>, backwards: boolean) {
@@ -709,7 +701,6 @@ debugger;
 		}, 0);
 
 		this._scrollToToken(tokens[nextIndex]);
-		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_handleArrowShift(focusedToken: Token, tokens: Array<Token>, backwards: boolean) {
@@ -737,7 +728,6 @@ debugger;
 		}, 0);
 
 		this._scrollToToken(tokens[nextIndex]);
-		this._itemNav.setCurrentItem(tokens[nextIndex]);
 	}
 
 	_click(e: MouseEvent) {
@@ -785,7 +775,11 @@ debugger;
 		this._handleTokenSelection(e);
 	}
 
-	_onfocusin() {
+	_onfocusin(e: FocusEvent) {
+		const target = e.target as Token;
+
+		this._itemNav.setCurrentItem(target);
+
 		if (!this.expanded) {
 			this.expanded = true;
 		}

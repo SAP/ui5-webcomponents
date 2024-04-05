@@ -175,11 +175,6 @@ class MultiInput extends Input {
 			this.tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
-
-		if (e.relatedTarget === this.nativeInput) {
-			this.tokenizer.closeMorePopover();
-			this.tokenizer.expanded = true;
-		}
 	}
 
 	valueHelpMouseUp() {

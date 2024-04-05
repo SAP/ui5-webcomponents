@@ -171,10 +171,6 @@
 			const token = event.detail?.ref;
 			token && token.remove();
 		});
-		//ctrl + click, shift + arrow,
-		document.getElementById("selected-tokenizer").addEventListener("ui5-selection-change", event => {
-			console.log(event.detail.selectedTokens)
-		});
 
 		document.getElementById("readonly-tokenizer").addEventListener("ui5-token-delete", event => {
 			const token = event.detail?.ref;
