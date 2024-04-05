@@ -260,22 +260,22 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Thirteen", "The first item in the overflow is 13");
 	});
 
-	it("selecting a tab programatically will update the tab strip", async () => {
+	it("selecting a tab programmatically will update the tab strip", async () => {
 		// Setup
-		const getTabInStripDomRef = tab => tab.getTabInStripDomRef();
+		const getDomRefInStrip = tab => tab.getDomRefInStrip();
 		const getElementInBrowser = el => document.querySelector(el);
 
 		const tabContainer = await browser.$("#tcSmall");
 		await tabContainer.scrollIntoView();
 
 		const firstTab = await browser.execute(getElementInBrowser, "#firstTab");
-		const firstTabInStrip = await browser.$(await browser.execute(getTabInStripDomRef, firstTab));
+		const firstTabInStrip = await browser.$(await browser.execute(getDomRefInStrip, firstTab));
 
 		const lastTab = await browser.execute(getElementInBrowser, "#lastTab");
-		const lastTabInStrip = await browser.$(await browser.execute(getTabInStripDomRef, lastTab));
+		const lastTabInStrip = await browser.$(await browser.execute(getDomRefInStrip, lastTab));
 
 		const nestedTabParentTab = await browser.execute(getElementInBrowser, "#nestedTabParent");
-		const nestedTabParentInTabStrip = await browser.$(await browser.execute(getTabInStripDomRef, nestedTabParentTab));
+		const nestedTabParentInTabStrip = await browser.$(await browser.execute(getDomRefInStrip, nestedTabParentTab));
 
 		// Assert
 		assert.notOk(await lastTabInStrip.isDisplayed(), "last tab in strip is not visible");
@@ -333,7 +333,7 @@ describe("TabContainer general interaction", () => {
 		// Assert
 		assert.ok(productsTabDomRef.isEqual(productsTabStableDomRef) , "Stable dom ref of the tab is the same as its dom ref");
 
-		const productsTabDomRefInStrip = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getTabInStripDomRef());
+		const productsTabDomRefInStrip = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getDomRefInStrip());
 		const productsTabDomRefInStripExpected = await browser.$(() => document.getElementById("tabContainer1").getDomRef().querySelector(".ui5-tab-strip-item:first-child"));
 
 		// Assert
@@ -352,7 +352,7 @@ describe("TabContainer general interaction", () => {
 	it("test that tab can be focused right after is inserted in the tab container", async () => {
 		await browser.$("#insertAndFocusNewTab").click();
 		const isNewTabFocused = await browser.executeAsync((done) => {
-			const tabInStripDomRef = document.getElementById("newlyInsertedFocusedTab").getTabInStripDomRef();
+			const tabInStripDomRef = document.getElementById("newlyInsertedFocusedTab").getDomRefInStrip();
 			const activeElement = document.activeElement.shadowRoot.activeElement;
 
 			done(tabInStripDomRef === activeElement);
