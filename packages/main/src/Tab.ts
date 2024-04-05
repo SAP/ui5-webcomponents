@@ -277,11 +277,7 @@ class Tab extends UI5Element implements ITabbable {
 	/**
 	 * Returns the DOM reference of the tab that is placed in the header.
 	 *
-<<<<<<< HEAD
-	 * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
-=======
 	 * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `undefined`.
->>>>>>> main
 	 *
 	 * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
 	 * @public
