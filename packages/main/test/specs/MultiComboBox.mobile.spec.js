@@ -396,7 +396,7 @@ describe("Validation", () => {
 
 		const dialogInput = await multiCombo.shadow$("ui5-responsive-popover").$("ui5-input")
 		await dialogInput.shadow$("input").click();
-		await dialogInput.shadow$("input").keys("m");
+		await browser.keys("m");
 
 		const dialogStateHeader = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-valuestatemessage-header");
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");

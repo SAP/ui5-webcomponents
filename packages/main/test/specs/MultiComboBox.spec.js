@@ -372,11 +372,11 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.scrollIntoView();
 			await tokens[1].click();
-			await tokens[1].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
-			await tokens[1].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 
@@ -384,11 +384,11 @@ describe("MultiComboBox general interaction", () => {
 
 			await input.click();
 			await tokens[2].click();
-			await tokens[2].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 
-			await tokens[2].keys('F4');
+			await browser.keys('F4');
 
 			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
 		})
@@ -1323,7 +1323,7 @@ describe("MultiComboBox general interaction", () => {
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "c"]);
+			await browser.keys(["Control", "c"]);
 			await input.click();
 			await browser.keys(["Control", "v"]);
 
@@ -1344,7 +1344,7 @@ describe("MultiComboBox general interaction", () => {
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "c"]);
+			await browser.keys(["Control", "c"]);
 			await input.click();
 			await browser.keys(["Control", "v"]);
 
@@ -1362,7 +1362,7 @@ describe("MultiComboBox general interaction", () => {
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "x"]);
+			await browser.keys(["Control", "x"]);
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
@@ -1382,7 +1382,7 @@ describe("MultiComboBox general interaction", () => {
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Shift", "Delete"]);
+			await browser.keys(["Shift", "Delete"]);
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			assert.equal(await tokens.length, 2, "One of the tokens is cut from the control");
@@ -1402,7 +1402,7 @@ describe("MultiComboBox general interaction", () => {
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[1].click();
-			await tokens[1].keys(["Control", "Insert"]);
+			await browser.keys(["Control", "Insert"]);
 			await input.click();
 			await browser.keys(["Shift", "Insert"]);
 
@@ -1467,7 +1467,7 @@ describe("MultiComboBox general interaction", () => {
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			await tokens[2].click();
-			await tokens[2].keys(["Alt", "ArrowDown"]);
+			await browser.keys(["Alt", "ArrowDown"]);
 
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[3];
 
@@ -1701,7 +1701,7 @@ describe("MultiComboBox general interaction", () => {
 			const cb = await browser.$("#clear-icon-cb");
 
 			await cb.shadow$("input").click();
-			await cb.shadow$("input").keys("c");
+			await browser.keys("c");
 
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
 
