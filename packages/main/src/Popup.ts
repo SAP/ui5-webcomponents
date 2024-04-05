@@ -140,15 +140,6 @@ abstract class Popup extends UI5Element {
 	preventFocusRestore!: boolean;
 
 	/**
-	 * Indicates if the element is open
-	 * @public
-	 * @default false
-	 * @since 1.2.0
-	 */
-	@property({ type: Boolean })
-	open!: boolean;
-
-	/**
 	 * Indicates if the element is already open
 	 * @private
 	 * @default false
@@ -225,27 +216,6 @@ abstract class Popup extends UI5Element {
 	constructor() {
 		super();
 
-		Object.defineProperty(this, "open", {
-			get: (): boolean => {
-				return this.opened;
-			},
-			set: (value: boolean) => {
-				this._updateAttribute("open", value);
-
-				if (this.opened === value) {
-					return;
-				}
-
-				this.opened = value;
-
-				if (value) {
-					this.openPopup();
-				} else {
-					this.close();
-				}
-			},
-		});
-
 		this._resizeHandler = this._resize.bind(this);
 
 		this._getRealDomRef = () => {
@@ -255,7 +225,7 @@ abstract class Popup extends UI5Element {
 
 	onBeforeRendering() {
 		if (this._getBlockingLayer) {
-			if (!this.isOpen() || !this.isTopModalPopup) {
+			if (!this._actualOpen || !this.isTopModalPopup) {
 				this._getBlockingLayer.hidePopover();
 			} else if (!this.shouldHideBackdrop) {
 				this._getBlockingLayer.showPopover();
@@ -281,6 +251,31 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+	}
+
+	/**
+	 * Indicates if the element is open
+	 * @public
+	 * @default false
+	 * @since 1.2.0
+	 */
+	@property({ type: Boolean })
+	set open(value: boolean) {
+		if (this.opened === value) {
+			return;
+		}
+
+		this.opened = value;
+
+		if (value) {
+			this.openPopup();
+		} else {
+			this.close();
+		}
+	}
+
+	get open() : boolean {
+		return this.opened;
 	}
 
 	async openPopup() {
@@ -492,7 +487,7 @@ abstract class Popup extends UI5Element {
 		this._addOpenedPopup();
 
 		this._actualOpen = true;
-		this.opened = true;
+		// this.opened = true;
 		this.open = true;
 
 		await this.applyInitialFocus(preventInitialFocus);
@@ -534,7 +529,7 @@ abstract class Popup extends UI5Element {
 
 		this.hide();
 		this._actualOpen = false;
-		this.opened = false;
+		// this.opened = false;
 		this.open = false;
 
 		if (!preventRegistryUpdate) {

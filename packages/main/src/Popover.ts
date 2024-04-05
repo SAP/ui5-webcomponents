@@ -368,7 +368,7 @@ class Popover extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this.opened) {
+		if (this.open) {
 			this.reposition();
 		}
 	}
@@ -380,7 +380,7 @@ class Popover extends Popup {
 	_show() {
 		super._show();
 
-		if (!this.opened) {
+		if (!this._actualOpen) {
 			this._showOutsideViewport();
 		}
 
