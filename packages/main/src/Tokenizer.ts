@@ -104,11 +104,10 @@ enum ClipboardDataOperation {
  * shortcuts in order to perform a navigation:
  *
  * - [Left] or [Right] / [Up] or [Down] - Navigates left and right through the tokens.
- * - [Home] - Navigates to first token.
+ * - [Home] - Navigates to the first token.
  * - [End] - Navigates to the last token.
  *
- * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
- * when the `mode` property is in use:
+ * The user can use the following keyboard shortcuts to perform actions (such as select, delete):
  *
  * - [Space] - Selects a token.
  * - [Backspace] / [Delete] - Deletes a token.
@@ -203,7 +202,7 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
-	 * @private
+	 * @protected
 	 */
 	@property({ type: Boolean })
 	expanded!: boolean;
@@ -848,18 +847,13 @@ class Tokenizer extends UI5Element {
 	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<IToken>) {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
-		/* fill clipboard with tokens' texts so parent can handle creation */
-		const cutToClipboard = (e: ClipboardEvent) => {
-			if (e.clipboardData) {
-				e.clipboardData.setData("text/plain", tokensTexts);
-			}
-
-			e.preventDefault();
+		const copyToClipboard = () => {
+			navigator.clipboard.writeText(tokensTexts);
 		};
 
-		document.addEventListener(shortcutName, cutToClipboard);
-		document.execCommand(shortcutName);
-		document.removeEventListener(shortcutName, cutToClipboard);
+		document.addEventListener(shortcutName, copyToClipboard);
+		copyToClipboard();
+		document.removeEventListener(shortcutName, copyToClipboard);
 	}
 
 	/**
