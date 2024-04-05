@@ -1299,6 +1299,8 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it ("Backspace deletes token and forwards the focus to the last token without collapsing the tokenizer", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
 			const mcb = await $("#n-more-many-items");
 			const inner = await mcb.shadow$("input");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
@@ -1316,19 +1318,17 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
 		});
 
-		// TODO: Fix this with Tokenizer standalone PR
-		// Basically, keydown of the items gets bubbled to the tokenizer since the popover is now in the shadow dom instad of the static area
-		it.skip ("should open/close popover on keyboard combination ctrl + i", async () => {
+		it ("should open/close popover on keyboard combination ctrl + i", async () => {
 			const mcb = await $("#truncated-token");
-			const tokenizer = await mcb.shadow$("ui5-tokenizer");
-			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
+			const inner = await mcb.shadow$("input");
+			const rpo = await mcb.shadow$("ui5-responsive-popover");
 
-			await input.click();
-			await input.keys(["Control", "i"]);
+			await inner.click();
+			await inner.keys(["Control", "i"]);
 
 			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened1");
 
-			await input.keys(["Control", "i"]);
+			await inner.keys(["Control", "i"]);
 
 			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed2");
 		});
@@ -1341,7 +1341,6 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
 			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
-
 		});
 	});
 

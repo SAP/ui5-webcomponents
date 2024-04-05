@@ -1,13 +1,5 @@
 import { assert } from "chai";
 
-const getTokenizerPopoverId = async (tokenizerId) => {
-	return await browser.executeAsync(async (tokenizerId, done) => {
-		const staticAreaItem = await (document.querySelector(`#${tokenizerId}`).getStaticAreaItemDomRef());
-
-		done(staticAreaItem.host.classList[0]);
-	}, tokenizerId);
-}
-
 describe("Tokenizer general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/Tokenizer.html`);
