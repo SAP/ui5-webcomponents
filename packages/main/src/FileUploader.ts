@@ -25,7 +25,6 @@ import Icon from "./Icon.js";
 
 // Template
 import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
-import FileUploaderPopoverTemplate from "./generated/templates/FileUploaderPopoverTemplate.lit.js";
 
 // Styles
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
@@ -66,10 +65,12 @@ type FileUploaderChangeEventDetail = {
 	tag: "ui5-file-uploader",
 	languageAware: true,
 	renderer: litRender,
-	styles: FileUploaderCss,
+	styles: [
+		FileUploaderCss,
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+	],
 	template: FileUploaderTemplate,
-	staticAreaTemplate: FileUploaderPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss],
 	dependencies: [
 		Input,
 		Popover,
@@ -357,25 +358,24 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		const popover = await this._getPopover();
+	openValueStatePopover() {
+		const popover = this._getPopover();
 
 		if (popover) {
 			popover.showAt(this);
 		}
 	}
 
-	async closeValueStatePopover() {
-		const popover = await this._getPopover();
+	closeValueStatePopover() {
+		const popover = this._getPopover();
 
 		if (popover) {
 			popover.close();
 		}
 	}
 
-	async _getPopover(): Promise<Popover> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
+	_getPopover(): Popover {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	/**
