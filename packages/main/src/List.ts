@@ -789,9 +789,6 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isSpace(e) && e.target instanceof ListItemBase) {
-			e.preventDefault();
-		}
 		if (isTabNext(e)) {
 			this._handleTabNext(e);
 		}
