@@ -101,7 +101,7 @@ const _generateIconsPage = (sourceDir, config) => {
 
                     setTimeout(() => {
                         acceptSVG.classList.remove("icon__svg--accept--visible");
-                    }, 600);
+                    }, 2000);
                 }
             }}>
 

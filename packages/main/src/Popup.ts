@@ -220,6 +220,7 @@ abstract class Popup extends UI5Element {
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
+	_opening = false;
 
 	constructor() {
 		super();
@@ -438,9 +439,12 @@ abstract class Popup extends UI5Element {
 	 */
 	async _open(preventInitialFocus: boolean) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
-		if (prevented) {
+
+		if (prevented || this._opening) {
 			return;
 		}
+
+		this._opening = true;
 
 		// Await render before trying to access the blocking layer
 		await renderFinished();
@@ -462,6 +466,7 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
+		this._opening = false;
 		this.opened = true;
 		this.open = true;
 
