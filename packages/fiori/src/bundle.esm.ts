@@ -12,7 +12,6 @@ import "./features/CoPilotAnimation.js";
 import "./illustrations/AllIllustrations.js";
 
 // FIORI components
-import Bar from "./Bar.js";
 import BarcodeScannerDialog from "./BarcodeScannerDialog.js";
 import DynamicPage from "./DynamicPage.js";
 import DynamicPageHeader from "./DynamicPageHeader.js";

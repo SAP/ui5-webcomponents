@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [1.24.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.3...v1.24.0-rc.4) (2024-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
+
+
+### Features
+
+* **framework:** support sr, mk, cnr locales ([#8534](https://github.com/SAP/ui5-webcomponents/issues/8534)) ([5b410d6](https://github.com/SAP/ui5-webcomponents/commit/5b410d65267e79d4420b1a6d6788db6495abc962)), closes [#8163](https://github.com/SAP/ui5-webcomponents/issues/8163)
+
+
+
+
+
 # [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
+
+
+### Features
+
+* **ui5-carousel:** add accessibleName and accessibleNameRef ([#8631](https://github.com/SAP/ui5-webcomponents/issues/8631)) ([0d0d765](https://github.com/SAP/ui5-webcomponents/commit/0d0d765b3025c71cc13cd1dcc6f066d079f74396))
+
+
+
+
+
+# [1.24.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.3...v1.24.0-rc.4) (2024-04-04)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** correct badge style ([#8564](https://github.com/SAP/ui5-webcomponents/issues/8564)) ([e3a373d](https://github.com/SAP/ui5-webcomponents/commit/e3a373d38ae1c4e724f789a60bd004327f995593)), closes [#7564](https://github.com/SAP/ui5-webcomponents/issues/7564) [#8491](https://github.com/SAP/ui5-webcomponents/issues/8491)
+* **ui5-day-picker:** improve  day name length check ([#8578](https://github.com/SAP/ui5-webcomponents/issues/8578)) ([38012fe](https://github.com/SAP/ui5-webcomponents/commit/38012fe1f34f1535bb547c2ea14e1262f354b8c3))
+* **ui5-input, ui5-combobox:** improve samples with value state message ([#8595](https://github.com/SAP/ui5-webcomponents/issues/8595)) ([63de7ee](https://github.com/SAP/ui5-webcomponents/commit/63de7eebd07e4061e1d4fb93f8e3c1cb0aaa789b)), closes [#8581](https://github.com/SAP/ui5-webcomponents/issues/8581) [#8581](https://github.com/SAP/ui5-webcomponents/issues/8581) [#8581](https://github.com/SAP/ui5-webcomponents/issues/8581)
+* **ui5-input:** prevent scroll on value state focus ([#8603](https://github.com/SAP/ui5-webcomponents/issues/8603)) ([964afb6](https://github.com/SAP/ui5-webcomponents/commit/964afb64330aeb000ddd77a7519083feefcb57f5)), closes [#8582](https://github.com/SAP/ui5-webcomponents/issues/8582)
+* **ui5-multi-input:** create token from pasted text on change ([#8592](https://github.com/SAP/ui5-webcomponents/issues/8592)) ([2072b2e](https://github.com/SAP/ui5-webcomponents/commit/2072b2ee35357f5623570fa9b9725a83aa6e9d97))
+
+
+### Features
+
+* **ui5-progress-indicator:** introduce "bar" CSS part ([#8599](https://github.com/SAP/ui5-webcomponents/issues/8599)) ([831fad3](https://github.com/SAP/ui5-webcomponents/commit/831fad3c537c457b7bb08552561d6245fe193f8d)), closes [#6140](https://github.com/SAP/ui5-webcomponents/issues/6140)
+
+
+
+
+
+# [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** revise active state styles ([#8474](https://github.com/SAP/ui5-webcomponents/issues/8474)) ([3f9430c](https://github.com/SAP/ui5-webcomponents/commit/3f9430c64cfd349319b5f17ebc753ce0639a4ab8)), closes [#8309](https://github.com/SAP/ui5-webcomponents/issues/8309)
+* **ui5-button:** fix focus in belize ([#8498](https://github.com/SAP/ui5-webcomponents/issues/8498)) ([483d942](https://github.com/SAP/ui5-webcomponents/commit/483d942c3ba6227bd56dead070fba2313c2d97c2))
+* **ui5-carousel:** Fixed paging indicator numbers in right-to-left (RTL) mode ([#8543](https://github.com/SAP/ui5-webcomponents/issues/8543)) ([c032c0c](https://github.com/SAP/ui5-webcomponents/commit/c032c0cadbe4f9fc2e3b642d0155830ffb52325a))
+* **ui5-file-uploader:** adjust mouse cursor style ([#8485](https://github.com/SAP/ui5-webcomponents/issues/8485)) ([37a2e0d](https://github.com/SAP/ui5-webcomponents/commit/37a2e0df5643b643915284d5b36084803104bd6e)), closes [#7794](https://github.com/SAP/ui5-webcomponents/issues/7794)
+* **ui5-tabcontainer:** fix tab selection ([#8547](https://github.com/SAP/ui5-webcomponents/issues/8547)) ([5eaa835](https://github.com/SAP/ui5-webcomponents/commit/5eaa83574e98a251043b38efc34fc4477f79777c))
+
+
+
+
+
 # [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
 
 

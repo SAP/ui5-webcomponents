@@ -1,4 +1,4 @@
-name: Deploy Storybook Nightly [auto]
+name: Deploy Storybook [on-nighlty-schedule]
 
 on:
   schedule:

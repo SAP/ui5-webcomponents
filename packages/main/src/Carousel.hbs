@@ -2,6 +2,7 @@
 	class="ui5-carousel-root ui5-carousel-background-{{_backgroundDesign}}"
 	tabindex="0"
 	role="listbox"
+	aria-label="{{ariaLabelTxt}}"
 	aria-activedescendant="{{ariaActiveDescendant}}"
 	@focusin="{{_onfocusin}}"
 	@keydown={{_onkeydown}}
@@ -49,7 +50,7 @@
 							></div>
 						{{/each}}
 					{{else}}
-						<div class="ui5-carousel-navigation-text">{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</div>
+						<div dir="auto" class="ui5-carousel-navigation-text">{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</div>
 					{{/if}}
 				{{/unless}}
 			</div>

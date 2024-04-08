@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.24.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.3...v1.24.0-rc.4) (2024-04-04)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** fixed infinite resize ([#8584](https://github.com/SAP/ui5-webcomponents/issues/8584)) ([aa1301b](https://github.com/SAP/ui5-webcomponents/commit/aa1301b9e1449f67668beaa1373699d54c50270c)), closes [#5852](https://github.com/SAP/ui5-webcomponents/issues/5852)
+* **ui5-illustrated-message:** tnt chart illustrations alignment ([#8562](https://github.com/SAP/ui5-webcomponents/issues/8562)) ([2ee2ea8](https://github.com/SAP/ui5-webcomponents/commit/2ee2ea8a33b799b4b7488cfa2ca0ce845685e980))
+* **ui5-illustrated-message:** vertical alignment ([#8566](https://github.com/SAP/ui5-webcomponents/issues/8566)) ([3141327](https://github.com/SAP/ui5-webcomponents/commit/3141327366e6b274e86e17519aadd660813048da)), closes [#8490](https://github.com/SAP/ui5-webcomponents/issues/8490)
+* **ui5-shellbar:** scope internally used icons ([#8613](https://github.com/SAP/ui5-webcomponents/issues/8613)) ([8419ac5](https://github.com/SAP/ui5-webcomponents/commit/8419ac560851bba08cd7cf24ab18b085a5e212c4)), closes [#8609](https://github.com/SAP/ui5-webcomponents/issues/8609)
+
+
+
+
+
+# [1.24.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.2...v1.24.0-rc.3) (2024-03-28)
+
+
+### Features
+
+* **ui5-side-navigation:** make items customizable ([#8479](https://github.com/SAP/ui5-webcomponents/issues/8479)) ([95f6891](https://github.com/SAP/ui5-webcomponents/commit/95f68918c44055b8c005462b8ed083f7aecf61fb))
+
+
+
+
+
 # [1.24.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.1...v1.24.0-rc.2) (2024-03-21)
 
 
