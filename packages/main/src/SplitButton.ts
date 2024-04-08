@@ -156,14 +156,6 @@ class SplitButton extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Indicates if the elements is on focus
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
 	 * Accessibility-related properties for inner elements of the Split Button
 	 * @private
 	 */
