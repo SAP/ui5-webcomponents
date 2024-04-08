@@ -7,7 +7,7 @@ import packageJson from "./package.json";
 console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
 
 const LATEST_URL_PARTH = "/ui5-webcomponents/";
-const NIGHTLY_URL_PARTH = "/ui5-webcomponents/v2/";
+const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nigthly/";
 
 const LATEST_DEPLOYMENT = process.env.DEPLOYMENT_TYPE === "latest";
 const DEVELOPMENT_ENVIRONMENT =  process.env.NODE_ENV === "development";
