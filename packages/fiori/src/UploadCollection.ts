@@ -102,7 +102,7 @@ type UploadCollectionItemDeleteEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in `SingleSelect` and `MultiSelect` modes.
+ * in `Single` and `Multiple` modes.
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
@@ -116,15 +116,13 @@ type UploadCollectionItemDeleteEventDetail = {
 })
 class UploadCollection extends UI5Element {
 	/**
-	 * Defines the mode of the `ui5-upload-collection`.
+	 * Defines the selection mode of the `ui5-upload-collection`.
 	 *
-	 * **Note:**
-	 * Mode "Delete" has no effect. The delete button is controlled by the `hideDeleteButton` property of UploadCollectionItem
 	 * @default "None"
 	 * @public
 	 */
 	@property({ type: UploadCollectionSelectionMode, defaultValue: UploadCollectionSelectionMode.None })
-	mode!: `${UploadCollectionSelectionMode}`;
+	selectionMode!: `${UploadCollectionSelectionMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
