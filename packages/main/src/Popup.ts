@@ -487,7 +487,6 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
-		this.opened = true;
 		this.open = true;
 
 		await this.applyInitialFocus(preventInitialFocus);
