@@ -10,7 +10,6 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListSelectionMode from "@ui5/webcomponents/dist/types/ListSelectionMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
@@ -31,6 +30,7 @@ import {
 } from "./upload-utils/UploadCollectionBodyDnD.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
+import UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
@@ -118,13 +118,11 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Defines the selection mode of the `ui5-upload-collection`.
 	 *
-	 * **Note:**
-	 * Selection mode "Delete" has no effect. The delete button is controlled by the `hideDeleteButton` property of UploadCollectionItem
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
-	selectionMode!: `${ListSelectionMode}`;
+	@property({ type: UploadCollectionSelectionMode, defaultValue: UploadCollectionSelectionMode.None })
+	selectionMode!: `${UploadCollectionSelectionMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.

@@ -8,7 +8,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import UploadCollection from "@ui5/webcomponents-fiori/dist/UploadCollection.js";
 import UploadState from "@ui5/webcomponents-fiori/dist/types/UploadState.js";
-import ListSelectionMode from "@ui5/webcomponents/dist/types/ListSelectionMode.js";
+import UploadCollectionSelectionMode from "@ui5/webcomponents-fiori/dist/types/UploadCollectionSelectionMode.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 
 export default {
@@ -122,7 +122,7 @@ const handleFileUpload: Decorator = (story) => {
 };
 export const Basic = Template.bind({});
 Basic.args = {
-	selectionMode: ListSelectionMode.Delete,
+	selectionMode: UploadCollectionSelectionMode.None,
 	id: "uploadCollection",
 	accessibleName: "Uploaded (2)",
 	header: `<div slot="header" class="header">
