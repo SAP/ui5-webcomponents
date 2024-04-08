@@ -8,8 +8,9 @@ const generate = async () => {
 
 	const messageBundle = path.normalize(`${process.argv[2]}/messagebundle.properties`);
 	const messageBundleDefaultLanguage = path.normalize(`${process.argv[2]}/messagebundle_${defaultLanguage}.properties`);
+	const tsMode = process.env.UI5_TS === "true"; // In Typescript mode, we output .ts files and set the required types, otherwise - output pure .js files
 
-	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.ts`);
+	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.${tsMode ? "ts": "js"}`);
 
 	if (!messageBundle || !outputFile) {
 		return;
@@ -30,7 +31,7 @@ const generate = async () => {
 	// (2) as the messagebundle.properties file is always written in English,
 	// it makes sense to consider the messagebundle.properties content only when the default language is "en".
 	if (defaultLanguage === "en") {
-		defaultLanguageProperties = Object.assign({}, defaultLanguageProperties, properties);
+		defaultLanguageProperties = Object.assign({}, defaultLanguageProperties, properties);  
 	}
 
 	/*
@@ -46,7 +47,10 @@ const generate = async () => {
 		let effectiveValue = defaultLanguageValue || value;
 		effectiveValue = effectiveValue.replace(/\"/g, "\\\""); // escape double quotes in translations
 
-		return `const ${key}: I18nText = {key: "${key}", defaultText: "${effectiveValue}"};`;
+		if (tsMode) {
+			return `const ${key}: I18nText = {key: "${key}", defaultText: "${effectiveValue}"};`;
+		}
+		return `const ${key} = {key: "${key}", defaultText: "${effectiveValue}"};`;
 	};
 
 	/*
@@ -64,7 +68,7 @@ const generate = async () => {
 		const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties && defaultLanguageProperties[prop])).join('');
 
 		// tabs are intentionally mixed to have proper identation in the produced file
-		return `import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+		return `${tsMode ? `import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";` : ""}
 ${texts}
 export {${textKeys.join()}};`;
 	};
