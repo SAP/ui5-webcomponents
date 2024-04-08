@@ -13,7 +13,7 @@
 <body class="tabcontainer1auto">
 	<ui5-checkbox id="reorder" text="Movable tabs" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel" value="2"></ui5-step-input>
+	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel"></ui5-step-input>
 
 	<section>
 		<h2>Drag and drop</h2>
@@ -95,13 +95,13 @@
 				return;
 			}
 
-			let potentialNestingLevel = getTabLevel(destination.element);
+			let targetNestingLevel = getTabLevel(destination.element);
 
 			if (destination.placement === "On") {
-				potentialNestingLevel += 1;
+				targetNestingLevel += 1;
 			}
 
-			if (potentialNestingLevel > maxNestingLevel + 1) {
+			if (targetNestingLevel > maxNestingLevel) {
 				return;
 			}
 
