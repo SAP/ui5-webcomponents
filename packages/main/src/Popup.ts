@@ -482,6 +482,8 @@ abstract class Popup extends UI5Element {
 		// Await render before trying to access the blocking layer
 		await renderFinished();
 
+		await this.applyInitialFocus(preventInitialFocus);
+
 		this.fireEvent("after-open", {}, false, false);
 	}
 

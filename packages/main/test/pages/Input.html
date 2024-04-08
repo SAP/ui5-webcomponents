@@ -471,6 +471,7 @@
 		const dynamicValueStateTrigger = document.getElementById("dynamic-value-state-trigger");
 
 		dynamicValueStateTrigger.addEventListener("click", () => {
+			dynamicValueState.focus();
 			const valueState = dynamicValueState.querySelector("[slot='valueStateMessage']");
 
 			setInterval(() => {
