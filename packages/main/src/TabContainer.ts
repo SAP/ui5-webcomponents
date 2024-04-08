@@ -14,6 +14,9 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
+import {
 	isSpace,
 	isEnter,
 	isDown,
@@ -397,6 +400,9 @@ class TabContainer extends UI5Element {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 		DragRegistry.subscribe(this);
 		this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {

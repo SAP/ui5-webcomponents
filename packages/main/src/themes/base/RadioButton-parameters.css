@@ -22,7 +22,6 @@
 	--_ui5_radio_button_outer_ring_padding_with_label: 0 0.6875rem;
 	--_ui5_radio_button_border_radius: 0;
 	--_ui5_radio_button_border: none;
-	--_ui5_radio_button_focus_border: none;
 	--_ui5_radio_button_focus_outline: block;
 	--_ui5_radio_button_focus_dist: 0.5rem;
 	--_ui5_radio_button_color: var(--sapField_BorderColor);
