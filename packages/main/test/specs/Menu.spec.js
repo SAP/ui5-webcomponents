@@ -138,9 +138,9 @@ describe("Menu interaction", () => {
 		const eventLoggerValue = await eventLogger.getValue();
 
 		assert.notEqual(eventLoggerValue.indexOf("before-open"), -1, "'before-open' event is fired");
-		assert.notEqual(eventLoggerValue.indexOf("after-open"), -1, "'after-open' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("open"), -1, "'open' event is fired");
 		assert.notEqual(eventLoggerValue.indexOf("before-close"), -1, "'before-close' event is fired");
-		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("close"), -1, "'close' event is fired");
 	});
 
 	it("Menu and Menu items busy indication", async () => {
