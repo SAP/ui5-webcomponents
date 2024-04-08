@@ -234,6 +234,7 @@ class MultiInput extends Input {
 
 		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
 			e.preventDefault();
+			this.closePopover();
 			this.tokenizer.openMorePopover();
 		}
 	}
