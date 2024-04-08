@@ -367,15 +367,15 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.6
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
 	 * @default 1000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -625,7 +625,7 @@ class List extends UI5Element {
 		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
-	get busyIndPosition() {
+	get loadingIndPosition() {
 		if (!this.grows) {
 			return "absolute";
 		}
@@ -635,8 +635,8 @@ class List extends UI5Element {
 
 	get styles() {
 		return {
-			busyInd: {
-				position: this.busyIndPosition,
+			loadingInd: {
+				position: this.loadingIndPosition,
 			},
 		};
 	}
