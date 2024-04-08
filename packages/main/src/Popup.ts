@@ -456,9 +456,17 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
+		let isRenderFinished = false;
+
 		this._isOpened = true;
 
 		if (this.isModal && !this.shouldHideBackdrop) {
+			if (!this._getBlockingLayer) {
+				// Await render before trying to access the blocking layer
+				await renderFinished();
+				isRenderFinished = true;
+			}
+
 			// create static area item ref for block layer
 			this._getBlockingLayer.showPopover();
 			this._blockLayerHidden = false;
@@ -479,10 +487,10 @@ abstract class Popup extends UI5Element {
 
 		await this.applyInitialFocus(preventInitialFocus);
 
-		// Await render before trying to access the blocking layer
-		await renderFinished();
-
-		await this.applyInitialFocus(preventInitialFocus);
+		if (!isRenderFinished) {
+			await renderFinished();
+			await this.applyInitialFocus(preventInitialFocus);
+		}
 
 		this.fireEvent("after-open", {}, false, false);
 	}
