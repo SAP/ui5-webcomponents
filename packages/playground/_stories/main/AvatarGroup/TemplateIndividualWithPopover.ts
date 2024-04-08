@@ -8,7 +8,7 @@ export default () => {
             header-text="Person Card"
             class="personPopover"
             style="width: 300px"
-            placement-type="Bottom"
+            placement="Bottom"
             prevent-focus-restore=""
         >
             <div class="avatar-slot" style="display: inline-block;">
@@ -23,7 +23,7 @@ export default () => {
             header-text="My people"
             class="peoplePopover"
             style="width: 400px"
-            placement-type="Bottom"
+            placement="Bottom"
         >
             <div
                 class="placeholder"

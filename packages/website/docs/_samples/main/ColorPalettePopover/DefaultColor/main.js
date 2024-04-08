@@ -4,6 +4,6 @@ import "@ui5/webcomponents/dist/Button.js";
 
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"
 
-colorPaletteBtn.addEventListener("click", function () {
-    colorPalettePopover.showAt(this);
+colorPaletteBtn.addEventListener("click", () => {
+	colorPalettePopover.open = !colorPalettePopover.open;
 });

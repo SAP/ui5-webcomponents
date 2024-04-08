@@ -33,12 +33,12 @@ const Template: UI5StoryArgs<Card, StoryArgsSlots> = (args) => {
 	`;
 };
 
-const header = (titleText: string, subtitleText: string, status?: string, actions?: string[], avatar?: string, interactive?: boolean) => {
+const header = (titleText: string, subtitleText: string, additionalText?: string, actions?: string[], avatar?: string, interactive?: boolean) => {
 	return `<ui5-card-header
 	slot="header"
 	title-text="${titleText}"
 	subtitle-text="${subtitleText}"
-	${status ? `status="${status}"` : ""}
+	${additionalText ? `additional-text="${additionalText}"` : ""}
 	${interactive ? "interactive" : ""}
 >
 	${avatar ? avatar : ""}
