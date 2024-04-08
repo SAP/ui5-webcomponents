@@ -144,8 +144,7 @@ class UploadCollectionItem extends ListItem {
 	declare disableDeleteButton: boolean;
 
 	/**
-	 * By default, the delete button will always be shown.
-	 * Setting this property to `true` will hide the delete button.
+	 * Hides the delete button.
 	 * @default false
 	 * @public
 	 */

@@ -19,21 +19,21 @@ enum UploadCollectionSelectionMode {
 	 * Left-positioned single selection mode (only one list item can be selected).
 	 * @public
 	 */
-	SingleSelectBegin = "SingleSelectBegin",
+	SingleStart = "SingleStart",
 
 	/**
 	 * Selected item is highlighted but no selection element is visible
 	 * (only one list item can be selected).
 	 * @public
 	 */
-	SingleSelectEnd = "SingleSelectEnd",
+	SingleEnd = "SingleEnd",
 
 	/**
 	 * Selected item is highlighted and selection is changed upon arrow navigation
 	 * (only one list item can be selected - this is always the focused item).
 	 * @public
 	 */
-	SingleSelectAuto = "SingleSelectAuto",
+	SingleAuto = "SingleAuto",
 
 	/**
 	 * Multi selection mode (more than one list item can be selected).
