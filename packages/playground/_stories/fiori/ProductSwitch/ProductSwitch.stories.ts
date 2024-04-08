@@ -40,7 +40,7 @@ WithShellBar.decorators = [
             show-co-pilot=""
         >
         </ui5-shellbar>
-        <ui5-popover id="productswitch-popover" placement-type="Bottom">
+        <ui5-popover id="productswitch-popover" placement="Bottom">
             ${story()}
         </ui5-popover>
         <script>
