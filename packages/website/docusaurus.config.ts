@@ -28,13 +28,14 @@ const getFullURL = () => {
   return DEVELOPMENT_ENVIRONMENT ? `${BASE_URL}` : `https://sap.github.io${BASE_URL}`
 }
 
+
 const config: Config = {
   title: 'UI5 Web Components',
   tagline: 'An open-source UI components library for building enterprise-ready applications!',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: `https://sap.github.io`,
+  url: 'https://sap.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: BASE_URL,
