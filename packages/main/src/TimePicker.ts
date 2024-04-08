@@ -3,6 +3,8 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TimePickerBase from "./TimePickerBase.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import type {
 	TimePickerBaseChangeEventDetail as TimePickerChangeEventDetail,
@@ -76,7 +78,7 @@ import {
  * @since 1.0.0-rc.6
  */
 @customElement("ui5-time-picker")
-class TimePicker extends TimePickerBase {
+class TimePicker extends TimePickerBase implements IFormElement {
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
@@ -102,10 +104,33 @@ class TimePicker extends TimePickerBase {
 	@property()
 	formatPattern!: string;
 
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	name!: string;
+
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
+	}
+
 	onBeforeRendering() {
 		if (this.value) {
 			this.value = this.normalizeValue(this.value) || this.value;
 		}
+	}
+
+	onAfterRendering() {
+		super.onAfterRendering();
+
+		FormSupport.setValueFormElement(this);
 	}
 
 	get _formatPattern() {

@@ -54,7 +54,6 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import MultiComboBoxItem from "./MultiComboBoxItem.js";
@@ -101,7 +100,8 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input, { InputEventDetail } from "./Input.js";
@@ -234,7 +234,7 @@ type MultiComboboxItemWithSelection = {
 	},
 })
 
-class MultiComboBox extends UI5Element {
+class MultiComboBox extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value of the component.
 	 *
@@ -246,6 +246,16 @@ class MultiComboBox extends UI5Element {
 	 */
 	@property()
 	value!: string;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
@@ -458,8 +468,40 @@ class MultiComboBox extends UI5Element {
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
-	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
+
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
+	}
+
+	get validationMessage() {
+		return "Custom message";
+	}
+
+	get validity() {
+		const selectedItems = (this.items || []).filter(item => item.selected);
+
+		return { valueMissing: this.required && !this.value && !selectedItems.length };
+	}
+
+	get validFormValue() {
+		const selectedItems = (this.items || []).filter(item => item.selected);
+
+		if (selectedItems.length) {
+			const formData = new FormData();
+
+			for (let i = 0; i < selectedItems.length; i++) {
+				formData.append(this.name, selectedItems[i].text);
+			}
+
+			return formData;
+		}
+
+		return null;
+	}
 
 	constructor() {
 		super();
@@ -476,7 +518,6 @@ class MultiComboBox extends UI5Element {
 		this.valueBeforeAutoComplete = "";
 		this._lastValue = this.getAttribute("value") || "";
 		this.currentItemIdx = -1;
-		this.FormSupport = undefined;
 	}
 
 	onEnterDOM() {
@@ -1194,8 +1235,8 @@ class MultiComboBox extends UI5Element {
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
-		if (this.FormSupport) {
-			this.FormSupport.triggerFormSubmit(this);
+		if (this.internals_?.form) {
+			FormSupport.submitForm(this);
 		}
 
 		if (matchingItem) {
@@ -1521,7 +1562,6 @@ class MultiComboBox extends UI5Element {
 		}
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
-		this.FormSupport = getFeature("FormSupport");
 		this._inputLastValue = value;
 
 		if (input && !input.value) {
@@ -1566,6 +1606,8 @@ class MultiComboBox extends UI5Element {
 		this._deleting = false;
 		// force resize of the tokenizer on invalidation
 		this._tokenizer._handleResize();
+
+		FormSupport.setValueFormElement(this);
 	}
 
 	get _isPhone() {

@@ -22,6 +22,7 @@ import Token from "./Token.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
 import type {
@@ -92,7 +93,7 @@ type MultiInputTokenDeleteEventDetail = {
 	},
 })
 
-class MultiInput extends Input {
+class MultiInput extends Input implements IFormElement {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
@@ -127,6 +128,28 @@ class MultiInput extends Input {
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
+
+	get validity() {
+		const tokens = (this.tokens || []);
+
+		return { valueMissing: this.required && !this.value && !tokens.length };
+	}
+
+	get validFormValue() {
+		const tokens = (this.tokens || []);
+
+		const formData = new FormData();
+
+		for (let i = 0; i < tokens.length; i++) {
+			formData.append(this.name, tokens[i].text);
+		}
+
+		if (this.value) {
+			formData.append(this.name, this.value);
+		}
+
+		return formData;
+	}
 
 	constructor() {
 		super();

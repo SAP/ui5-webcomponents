@@ -21,7 +21,6 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isBackSpace,
 	isDelete,
@@ -78,7 +77,8 @@ import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input, { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
@@ -207,7 +207,7 @@ type ComboBoxSelectionChangeEventDetail = {
 	},
 })
 
-class ComboBox extends UI5Element {
+class ComboBox extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value of the component.
 	 * @default ""
@@ -217,6 +217,16 @@ class ComboBox extends UI5Element {
 	 */
 	@property()
 	value!: string;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
@@ -394,8 +404,22 @@ class ComboBox extends UI5Element {
 	_userTypedValue: string;
 	responsivePopover?: ResponsivePopover;
 	valueStatePopover?: Popover;
-	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
+
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
+	}
+
+	get validationMessage() {
+		return "Custom message";
+	}
+
+	get validity() {
+		return { valueMissing: this.required && !this.value };
+	}
 
 	constructor() {
 		super();
@@ -414,8 +438,6 @@ class ComboBox extends UI5Element {
 
 	onBeforeRendering() {
 		const popover: Popover | undefined = this.valueStatePopover;
-
-		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
@@ -463,6 +485,8 @@ class ComboBox extends UI5Element {
 			this.value = this.inner.value;
 			this._selectMatchingItem();
 		}
+
+		FormSupport.setValueFormElement(this);
 	}
 
 	async shouldClosePopover(): Promise<boolean> {
@@ -862,8 +886,8 @@ class ComboBox extends UI5Element {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
-			} else if (this.FormSupport) {
-				this.FormSupport.triggerFormSubmit(this);
+			} else if (this.internals_?.form) {
+				FormSupport.submitForm(this);
 			}
 		}
 

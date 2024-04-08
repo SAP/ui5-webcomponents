@@ -16,6 +16,7 @@ import type {
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 /**
  * @class
@@ -53,7 +54,7 @@ import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
 })
-class DateRangePicker extends DatePicker {
+class DateRangePicker extends DatePicker implements IFormElement {
 	 /**
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
@@ -71,6 +72,26 @@ class DateRangePicker extends DatePicker {
 	_tempValue!: string;
 
 	private _prevDelimiter: string | null;
+
+	get validationMessage() {
+		return "Custom message";
+	}
+
+	get validFormValue() {
+		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);
+
+		if (values.length) {
+			const formData = new FormData();
+
+			for (let i = 0; i < values.length; i++) {
+				formData.append(this.name, values[i]);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();

@@ -79,6 +79,5 @@ import CustomListItem from "../../dist/CustomListItem.js";
 import GroupHeaderListItem from "../../dist/GroupHeaderListItem.js";
 
 // Features
-import "../../dist/features/InputElementsFormSupport.js";
 import "../../dist/features/ColorPaletteMoreColors.js";
 import "../../dist/features/InputSuggestions.js";

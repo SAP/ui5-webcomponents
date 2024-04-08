@@ -6,6 +6,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
@@ -75,7 +76,7 @@ import {
 	template: SliderTemplate,
 	dependencies: [Icon],
 })
-class Slider extends SliderBase {
+class Slider extends SliderBase implements IFormElement {
 	/**
 	 * Current value of the slider
 	 * @default 0

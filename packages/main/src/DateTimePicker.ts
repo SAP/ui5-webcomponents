@@ -37,6 +37,7 @@ import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -125,7 +126,7 @@ type PreviewValues = {
 		TimeSelectionClocks,
 	],
 })
-class DateTimePicker extends DatePicker {
+class DateTimePicker extends DatePicker implements IFormElement {
 	/**
 	 * Defines the visibility of the time view in `phoneMode`.
 	 * For more information, see the `phoneMode` property.

@@ -12,6 +12,8 @@ import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Styles
 import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
@@ -42,7 +44,7 @@ type DirectionStart = "left" | "right";
  * @extends UI5Element
  * @public
  */
-abstract class SliderBase extends UI5Element {
+abstract class SliderBase extends UI5Element implements IFormElement {
 	/**
 	 * Defines the minimum value of the slider.
 	 * @default 0
@@ -58,6 +60,16 @@ abstract class SliderBase extends UI5Element {
 	 */
 	@property({ validator: Float, defaultValue: 100 })
 	max!: number;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
@@ -141,6 +153,13 @@ abstract class SliderBase extends UI5Element {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
+
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
+	}
 
 	constructor() {
 		super();
@@ -246,6 +265,8 @@ abstract class SliderBase extends UI5Element {
 		if (this.notResized) {
 			this._resizeHandler();
 		}
+
+		FormSupport.setValueFormElement(this);
 	}
 
 	/** Shows the tooltip(s) if the `showTooltip` property is set to true

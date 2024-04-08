@@ -178,7 +178,6 @@ import CustomListItem from "./CustomListItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
 // Features
-import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 

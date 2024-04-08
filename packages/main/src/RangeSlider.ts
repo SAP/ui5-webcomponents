@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
 // Texts
@@ -90,7 +91,7 @@ type AffectedValue = "startValue" | "endValue";
 	dependencies: [Icon],
 	styles: [SliderBase.styles, rangeSliderStyles],
 })
-class RangeSlider extends SliderBase {
+class RangeSlider extends SliderBase implements IFormElement {
 	/**
 	 * Defines start point of a selection - position of a first handle on the slider.
 	 * @default 0
@@ -129,6 +130,15 @@ class RangeSlider extends SliderBase {
 	_reversedValues = false;
 
 	static i18nBundle: I18nBundle;
+
+	get validFormValue() {
+		const formData = new FormData();
+
+		formData.append(this.name, `${this.startValue}`);
+		formData.append(this.name, `${this.endValue}`);
+
+		return formData;
+	}
 
 	constructor() {
 		super();

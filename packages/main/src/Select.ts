@@ -19,7 +19,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -66,8 +65,8 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
@@ -227,15 +226,9 @@ class Select extends UI5Element implements IFormElement {
 	disabled!: boolean;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
-	 * The value of the component will be the value of the currently selected `ui5-option`.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the `ui5-select` so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -350,14 +343,6 @@ class Select extends UI5Element implements IFormElement {
 	options!: Array<IOption>;
 
 	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
-	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
@@ -395,6 +380,33 @@ class Select extends UI5Element implements IFormElement {
 	_attachMenuListeners: (menu: HTMLElement) => void;
 	_detachMenuListeners: (menu: HTMLElement) => void;
 
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
+	}
+
+	get validity() {
+		const selectedOption = this.selectedOption;
+
+		return { valueMissing: this.required && (selectedOption && typeof selectedOption.getAttribute("value") === "string" && selectedOption.getAttribute("value") === "") };
+	}
+
+	get validationMessage() {
+		return "Custom message";
+	}
+
+	get validFormValue() {
+		const selectedOption = this.selectedOption;
+
+		if (selectedOption) {
+			return selectedOption.value || selectedOption.textContent || "";
+		}
+
+		return null;
+	}
+
 	constructor() {
 		super();
 
@@ -427,8 +439,6 @@ class Select extends UI5Element implements IFormElement {
 			this._syncSelection();
 		}
 
-		this._enableFormSupport();
-
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
 
@@ -442,6 +452,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 
 		this._attachRealDomRefs();
+		FormSupport.setValueFormElement(this);
 	}
 
 	_onfocusin() {
@@ -653,19 +664,6 @@ class Select extends UI5Element implements IFormElement {
 		menu.removeEventListener("ui5-option-click", this._onMenuClick);
 		// @ts-ignore
 		menu.removeEventListener("ui5-menu-change", this._onMenuChange);
-	}
-
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				const selectElement = (element as Select);
-				nativeInput.disabled = !!element.disabled;
-				nativeInput.value = selectElement.value;
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {

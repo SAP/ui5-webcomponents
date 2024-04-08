@@ -20,6 +20,8 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
 import Input from "./Input.js";
 import Slider from "./Slider.js";
@@ -87,7 +89,7 @@ type ColorCoordinates = {
  * @public
  */
 @event("change")
-class ColorPicker extends UI5Element {
+class ColorPicker extends UI5Element implements IFormElement {
 	/**
 	 * Defines the currently selected color of the component.
 	 *
@@ -97,6 +99,16 @@ class ColorPicker extends UI5Element {
 	 */
 	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
 	value!: string;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines the HEX code of the currently selected color
@@ -165,6 +177,13 @@ class ColorPicker extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
+	}
+
 	static async onDefine() {
 		ColorPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -198,6 +217,10 @@ class ColorPicker extends UI5Element {
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
+	}
+
+	onAfterRendering() {
+		FormSupport.setValueFormElement(this);
 	}
 
 	_handleMouseDown(e: MouseEvent) {

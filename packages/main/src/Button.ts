@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -23,6 +22,7 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -35,7 +35,6 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -108,7 +107,7 @@ type AccessibilityAttributes = {
  * @private
  */
 @event("_active-state-change")
-class Button extends UI5Element implements IFormElement, IButton {
+class Button extends UI5Element implements IButton, IFormElement {
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -151,8 +150,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * When set to `true`, the component will
 	 * automatically submit the nearest HTML form element on `press`.
 	 *
-	 * **Note:** For the `submits` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
+	 * **Note:** This property is only applicable within the context of an HTML Form element.`
 	 * @default false
 	 * @public
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
@@ -217,8 +215,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines whether the button has special form-related functionality.
 	 *
-	 * **Note:** For the `type` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default "Button"
 	 * @public
 	 * @since 1.15.0
@@ -315,6 +312,13 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	static i18nBundle: I18nBundle;
 
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this, true);
+	}
+
 	constructor() {
 		super();
 
@@ -351,14 +355,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	async onBeforeRendering() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (this.type !== ButtonType.Button && !formSupport) {
-			console.warn(`In order for the "type" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-		if (this.submits && !formSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 
@@ -371,12 +367,11 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport && this._isSubmit) {
-			formSupport.triggerFormSubmit(this);
+		if (this.internals_?.form && this._isSubmit) {
+			FormSupport.submitForm(this);
 		}
-		if (formSupport && this._isReset) {
-			formSupport.triggerFormReset(this);
+		if (this.internals_?.form && this._isReset) {
+			FormSupport.resetForm(this);
 		}
 
 		if (isSafari()) {

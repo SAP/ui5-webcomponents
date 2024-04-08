@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -30,8 +29,8 @@ import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
+import FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 type FileUploaderChangeEventDetail = {
 	files: FileList | null,
@@ -130,14 +129,9 @@ class FileUploader extends UI5Element implements IFormElement {
 	multiple!: boolean;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -199,27 +193,29 @@ class FileUploader extends UI5Element implements IFormElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
-	_internals: ElementInternals;
-
 	static emptyInput: HTMLInputElement;
 
 	static i18nBundle: I18nBundle;
 
-	static get formAssociated() {
-		return true;
+	internals_?: ElementInternals;
+	static formAssociated = true;
+
+	formAssociatedCallback() {
+		FormSupport.attachInternalsFormElement(this);
 	}
 
-	constructor() {
-		super();
-		this._internals = this.attachInternals && this.attachInternals();
+	get validFormValue() {
+		if (this.files) {
+			const formData = new FormData();
+
+			for (let i = 0; i < this.files.length; i++) {
+				formData.append(this.name, this.files[i]);
+			}
+
+			return formData;
+		}
+
+		return null;
 	}
 
 	_onmouseover() {
@@ -275,34 +271,14 @@ class FileUploader extends UI5Element implements IFormElement {
 		return FileUploader._emptyFilesList;
 	}
 
-	onBeforeRendering() {
-		this._enableFormSupport();
-	}
-
 	onAfterRendering() {
 		if (!this.value) {
 			this._input.value = "";
 		}
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
-	}
 
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-
-		if (formSupport) {
-			if (this._canUseNativeFormSupport) {
-				this._setFormValue();
-			} else {
-				formSupport.syncNativeFileInput(this,
-					(element: IFormElement, nativeInput: NativeFormElement) => {
-						nativeInput.disabled = !!element.disabled;
-					},
-					this._onChange.bind(this));
-			}
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
+		FormSupport.setValueFormElement(this);
 	}
 
 	_onChange(e: Event) {
@@ -318,18 +294,6 @@ class FileUploader extends UI5Element implements IFormElement {
 		this.value = Array.from(files || []).reduce((acc, currFile) => {
 			return `${acc}"${currFile.name}" `;
 		}, "");
-	}
-
-	_setFormValue() {
-		const formData = new FormData();
-
-		if (this.files) {
-			for (let i = 0; i < this.files.length; i++) {
-				formData.append(this.name, this.files[i]);
-			}
-		}
-
-		this._internals.setFormValue(formData);
 	}
 
 	toggleValueStatePopover(open: boolean) {
@@ -378,15 +342,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	get titleText(): string {
 		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
-	}
-
-	get _canUseNativeFormSupport(): boolean {
-		return !!(this._internals && this._internals.setFormValue);
-	}
-
-	get _keepInputInShadowDOM(): boolean {
-		// only put input in the light dom when ui5-file-uploader is placed inside form and there is no support for form elements
-		return this._canUseNativeFormSupport || !this.name;
 	}
 
 	get _input(): HTMLInputElement {
