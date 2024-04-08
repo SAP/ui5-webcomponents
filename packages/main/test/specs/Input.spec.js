@@ -599,7 +599,7 @@ describe("Input general interaction", () => {
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 
-		// Close suggestions
+		// Close popover
 		await inputShadowRef.keys("Escape");
 	});
 
