@@ -27,10 +27,10 @@ describe("List Tests", () => {
 
 	it("List is rendered", async () => {
 		const list = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
-		const busyInd = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
+		const loadingInd = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-loading-row");
 
 		assert.ok(await list.isExisting(), "List is rendered");
-		assert.notOk(await busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
+		assert.notOk(await loadingInd.isExisting(), "Busy indicator is not rendered, when List is not loading");
 	});
 
 	it("itemClick and selectionChange events are fired in Single selection", async () => {
