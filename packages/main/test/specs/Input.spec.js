@@ -621,6 +621,9 @@ describe("Input general interaction", () => {
 		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
 
 		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
+
+		// Close popover
+		await input.keys("Escape");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
@@ -660,7 +663,6 @@ describe("Input general interaction", () => {
 
 		let popover = await inputError.shadow$("ui5-popover");
 
-		await browser.keys("Escape");
 		await inputError.click();
 
 		let ariaHiddenText = await inputError.shadow$(".ui5-hidden-text").getText();
@@ -669,7 +671,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(ariaHiddenText, "Value State Error Invalid entry", "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText, "Invalid entry", "Displayed value state message text is correct");
 
-		await browser.keys("Escape");
 		await inputWarning.click();
 
 		popover = await inputWarning.shadow$("ui5-popover");
@@ -680,7 +681,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(ariaHiddenText, "Value State Warning Warning issued", "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText, "Warning issued", "Displayed value state message text is correct");
 
-		await browser.keys("Escape");
 		await inputInformation.click();
 
 		popover = await inputInformation.shadow$("ui5-popover");
@@ -691,7 +691,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(ariaHiddenText, "Value State Information Informative entry", "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText, "Informative entry", "Displayed value state message text is correct");
 
-		await browser.keys("Escape");
 		await inputSuccess.click();
 		assert.strictEqual(await inputSuccess.shadow$(".ui5-hidden-text").getText(), "Value State Success", "Hidden screen reader text is correct");
 	});
