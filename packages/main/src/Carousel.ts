@@ -22,6 +22,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
@@ -124,6 +125,24 @@ type CarouselNavigateEventDetail = {
 })
 
 class Carousel extends UI5Element {
+	/**
+	 * Defines the accessible name of the component.
+	 * @default ""
+	 * @public
+	 * @since 1.24
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Defines the IDs of the elements that label the input.
+	 * @default ""
+	 * @public
+	 * @since 1.24
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
+
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
 	 * @default false
@@ -671,6 +690,10 @@ class Carousel extends UI5Element {
 
 	get ariaActiveDescendant() {
 		return this.content.length ? `${this._id}-carousel-item-${this._selectedIndex + 1}` : undefined;
+	}
+
+	get ariaLabelTxt() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get nextPageText() {
