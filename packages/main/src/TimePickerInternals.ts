@@ -32,7 +32,7 @@ type TimePickerComponentIndexMap = {
 
 type TimeSelectionPeriodProperties = {
 	label: string,
-	pressed: boolean,
+	selected: boolean,
 }
 
 type TimeSelectionChangeEventDetail = {
@@ -419,7 +419,7 @@ class TimePickerInternals extends UI5Element {
 			this.periodsArray.forEach(item => {
 				this._periods.push({
 					"label": item,
-					"pressed": this._period === item,
+					"selected": this._period === item,
 				});
 			});
 		}
