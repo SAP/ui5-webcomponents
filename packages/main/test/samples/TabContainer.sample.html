@@ -60,7 +60,7 @@
 <section>
 	<h3>TabContainer with text only tabs</h3>
 	<div class="snippet">
-		<ui5-tabcontainer class="full-width" collapsed fixed>
+		<ui5-tabcontainer class="full-width" collapsed>
 			<ui5-tab text="Home"></ui5-tab>
 			<ui5-tab text="What's new" selected></ui5-tab>
 			<ui5-tab text="Who are we"></ui5-tab>
@@ -69,7 +69,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" collapsed fixed>
+<ui5-tabcontainer class="full-width" collapsed>
 	<ui5-tab text="Home"></ui5-tab>
 	<ui5-tab text="What's new" selected></ui5-tab>
 	<ui5-tab text="Who are we"></ui5-tab>
@@ -84,7 +84,7 @@
 <section>
 	<h3>Text only End Overflow</h3>
 	<div  class="snippet">
-		<ui5-tabcontainer collapsed fixed>
+		<ui5-tabcontainer collapsed>
 			<ui5-tab text="Tab 1">
 			</ui5-tab>
 			<ui5-tab text="Tab 2">
@@ -134,7 +134,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" collapsed fixed>
+<ui5-tabcontainer class="full-width" collapsed>
 	<ui5-tab text="Tab 1"></ui5-tab>
 	<ui5-tab text="Tab 2" ></ui5-tab>
 	...
@@ -151,7 +151,7 @@
 <section>
 		<h2>Text only Start and End Overflow</h2>
 		<div>
-			<ui5-tabcontainer collapsed fixed overflow-mode="StartAndEnd">
+			<ui5-tabcontainer collapsed overflow-mode="StartAndEnd">
 				<ui5-tab text="Tab 1">
 				</ui5-tab>
 				<ui5-tab text="Tab 2">
@@ -221,7 +221,7 @@
 			</ui5-tabcontainer>
 		</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer class="full-width" collapsed fixed>
+<ui5-tabcontainer class="full-width" collapsed>
 	<ui5-tab text="Tab 1"></ui5-tab>
 	<ui5-tab text="Tab 2" ></ui5-tab>
 	...
@@ -237,7 +237,7 @@
 <section>
 	<h3>TabContainer with text and additional-text</h3>
 	<div class="snippet">
-		<ui5-tabcontainer collapsed fixed tab-layout="Inline">
+		<ui5-tabcontainer collapsed tab-layout="Inline">
 			<ui5-tab text="Info" additional-text="3">
 			</ui5-tab>
 			<ui5-tab text="Attachments" additional-text="24" selected>
@@ -249,7 +249,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer collapsed fixed overflow-mode="StartAndEnd">
+<ui5-tabcontainer collapsed overflow-mode="StartAndEnd">
 	<ui5-tab text="Info" additional-text="3">
 	</ui5-tab>
 	<ui5-tab text="Attachments" additional-text="24" selected>
@@ -266,7 +266,7 @@
 <section>
 	<h3>TabContainer with tabLayout="Inline"</h3>
 	<div class="snippet">
-		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
+		<ui5-tabcontainer tab-layout="Inline" collapsed>
 			<ui5-tab text="Monitors" additional-text="10">
 			</ui5-tab>
 			<ui5-tab text="Cameras" additional-text="2" selected>
@@ -275,7 +275,7 @@
 			</ui5-tab>
 		</ui5-tabcontainer>
 
-		<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
+		<ui5-tabcontainer tab-layout="Inline" collapsed>
 			<ui5-tab icon="laptop" text="Monitors" additional-text="10">
 			</ui5-tab>
 			<ui5-tab icon="video" text="Cameras" additional-text="2" selected>
@@ -285,7 +285,7 @@
 		</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
+<ui5-tabcontainer tab-layout="Inline" collapsed>
 	<ui5-tab text="Monitors" additional-text="10">
 	</ui5-tab>
 	<ui5-tab text="Cameras" additional-text="2" selected>
@@ -294,7 +294,7 @@
 	</ui5-tab>
 </ui5-tabcontainer>
 
-<ui5-tabcontainer tab-layout="Inline" collapsed fixed>
+<ui5-tabcontainer tab-layout="Inline" collapsed>
 	<ui5-tab icon="laptop" text="Monitors" additional-text="10">
 	</ui5-tab>
 	<ui5-tab icon="video" text="Cameras" additional-text="2" selected>
@@ -467,7 +467,7 @@
 <section>
 	<div class="snippet">
 		<h3>Tab Container with Tabs with Icons and Tabs without Icons</h3>
-			<ui5-tabcontainer id="tabContainer1" fixed collapsed>
+			<ui5-tabcontainer id="tabContainer1" collapsed>
 				<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
 				<ui5-tab-separator></ui5-tab-separator>
 				<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></ui5-tab>
@@ -479,7 +479,7 @@
 			</ui5-tabcontainer>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-tabcontainer id="tabContainer1" fixed collapsed>
+<ui5-tabcontainer id="tabContainer1" collapsed>
 	<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
 	</ui5-tab>
 	<ui5-tab-separator></ui5-tab-separator>

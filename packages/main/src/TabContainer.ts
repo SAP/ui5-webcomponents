@@ -180,15 +180,6 @@ type TabContainerMoveEventDetail = {
 })
 class TabContainer extends UI5Element {
 	/**
-	 * Defines whether the tabs are in a fixed state that is not
-	 * expandable/collapsible by user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	fixed!: boolean;
-
-	/**
 	 * Defines whether the tab content is collapsed.
 	 * @default false
 	 * @public
@@ -776,10 +767,6 @@ class TabContainer extends UI5Element {
 				}
 			}
 		});
-
-		if (this.fixed) {
-			return;
-		}
 
 		if (!this.shouldAnimate) {
 			this.toggle(selectedTab, previousTab);
