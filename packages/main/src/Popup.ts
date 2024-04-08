@@ -140,14 +140,6 @@ abstract class Popup extends UI5Element {
 	preventFocusRestore!: boolean;
 
 	/**
-	 * Indicates if the element is already open
-	 * @private
-	 * @default false
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	opened!: boolean;
-
-	/**
 	 * Defines the accessible name of the component.
 	 * @default undefined
 	 * @public
@@ -212,6 +204,7 @@ abstract class Popup extends UI5Element {
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_isOpened!: boolean;
+	_opened!: boolean;
 
 	constructor() {
 		super();
@@ -251,11 +244,11 @@ abstract class Popup extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	set open(value: boolean) {
-		if (this.opened === value) {
+		if (this._opened === value) {
 			return;
 		}
 
-		this.opened = value;
+		this._opened = value;
 
 		if (value) {
 			this.openPopup();
@@ -265,7 +258,11 @@ abstract class Popup extends UI5Element {
 	}
 
 	get open() : boolean {
-		return this.opened;
+		return this._opened;
+	}
+
+	get opened() : boolean {
+		return this._opened;
 	}
 
 	async openPopup() {

@@ -53,7 +53,7 @@
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
     "husky:lint": "yarn lint && yarn lint:scope",
-    "husky:pre-push": "npm-run-all --sequential",
+    "husky:pre-push": "npm-run-all --sequential husky:commit-msg husky:lint",
     "postinstall": "patch-package"
   },
   "devDependencies": {
