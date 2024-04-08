@@ -264,6 +264,8 @@ abstract class Popup extends UI5Element {
 		return this._opened;
 	}
 
+	// for compatibility,
+	// it will be removed with another change
 	get opened() : boolean {
 		return this._opened;
 	}
