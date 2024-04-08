@@ -450,6 +450,10 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async _open(preventInitialFocus: boolean) {
+		if (this._isOpened) {
+			return;
+		}
+
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 
 		if (prevented || this._isOpened) {
@@ -483,6 +487,7 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
+		this.opened = true;
 		this.open = true;
 
 		await this.applyInitialFocus(preventInitialFocus);
