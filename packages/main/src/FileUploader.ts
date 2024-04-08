@@ -29,7 +29,7 @@ import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 type FileUploaderChangeEventDetail = {
@@ -201,7 +201,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get formattedFormValue() {
@@ -278,7 +278,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	_onChange(e: Event) {

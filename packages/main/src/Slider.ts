@@ -92,6 +92,10 @@ class Slider extends SliderBase implements IFormElement {
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 
+	get formattedFormValue() {
+		return this.value.toString();
+	}
+
 	static i18nBundle: I18nBundle;
 
 	constructor() {

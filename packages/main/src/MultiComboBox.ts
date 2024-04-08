@@ -100,7 +100,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement, submitForm } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
@@ -474,7 +474,7 @@ class MultiComboBox extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validationMessage() {
@@ -1236,7 +1236,7 @@ class MultiComboBox extends UI5Element implements IFormElement {
 		const innerInput = this._innerInput;
 
 		if (this.internals_?.form) {
-			FormSupport.submitForm(this);
+			submitForm(this);
 		}
 
 		if (matchingItem) {
@@ -1607,7 +1607,7 @@ class MultiComboBox extends UI5Element implements IFormElement {
 		// force resize of the tokenizer on invalidation
 		this._tokenizer._handleResize();
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	get _isPhone() {

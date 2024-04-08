@@ -25,7 +25,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
@@ -295,7 +295,7 @@ class StepInput extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	async formAnchor() {
@@ -304,14 +304,14 @@ class StepInput extends UI5Element implements IFormElement {
 		return focusRef;
 	}
 
-	get validationMessage() {
-		return "Custom message";
+	get formattedFormValue() {
+		return this.value.toString();
 	}
 
 	onAfterRendering() {
 		super.onAfterRendering();
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	static async onDefine() {

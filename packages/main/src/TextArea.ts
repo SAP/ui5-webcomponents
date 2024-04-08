@@ -22,7 +22,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import {
@@ -308,7 +308,7 @@ class TextArea extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validationMessage() {
@@ -317,6 +317,10 @@ class TextArea extends UI5Element implements IFormElement {
 
 	get validity() {
 		return { valueMissing: this.required && !this.value };
+	}
+
+	get formattedFormValue() {
+		return this.value;
 	}
 
 	static async onDefine() {
@@ -365,7 +369,7 @@ class TextArea extends UI5Element implements IFormElement {
 		this.toggleValueStateMessage(this.openValueStateMsgPopover);
 		this._firstRendering = false;
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	getInputDomRef() {

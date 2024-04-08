@@ -13,7 +13,7 @@ import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/complete.js";
 import "@ui5/webcomponents-icons/dist/border.js";
 import "@ui5/webcomponents-icons/dist/tri-state.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
@@ -237,7 +237,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validationMessage() {
@@ -268,7 +268,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	}
 
 	onAfterRendering() {
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	_onclick() {

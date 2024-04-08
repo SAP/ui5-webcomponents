@@ -19,7 +19,7 @@ import {
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 import WrappingType from "./types/WrappingType.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
@@ -221,7 +221,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	static i18nBundle: I18nBundle;
@@ -248,7 +248,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	onAfterRendering() {
 		this.syncGroup();
 
-		FormSupport.setValueFormElement(this, true);
+		setValueFormElement(this, true);
 	}
 
 	get formattedFormValue() {

@@ -20,7 +20,7 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
 import Input from "./Input.js";
@@ -181,7 +181,11 @@ class ColorPicker extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
+	}
+
+	get formattedFormValue() {
+		return this.value;
 	}
 
 	static async onDefine() {
@@ -220,7 +224,7 @@ class ColorPicker extends UI5Element implements IFormElement {
 	}
 
 	onAfterRendering() {
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	_handleMouseDown(e: MouseEvent) {

@@ -65,7 +65,7 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
@@ -384,13 +384,13 @@ class Select extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validity() {
 		const selectedOption = this.selectedOption;
 
-		return { valueMissing: this.required && (selectedOption && typeof selectedOption.getAttribute("value") === "string" && selectedOption.getAttribute("value") === "") };
+		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
 	}
 
 	get validationMessage() {
@@ -452,7 +452,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 
 		this._attachRealDomRefs();
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	_onfocusin() {

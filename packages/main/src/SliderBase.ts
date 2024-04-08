@@ -12,7 +12,7 @@ import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Styles
@@ -158,7 +158,7 @@ abstract class SliderBase extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	constructor() {
@@ -266,7 +266,7 @@ abstract class SliderBase extends UI5Element implements IFormElement {
 			this._resizeHandler();
 		}
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	/** Shows the tooltip(s) if the `showTooltip` property is set to true

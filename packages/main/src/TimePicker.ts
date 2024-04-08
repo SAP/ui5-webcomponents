@@ -3,7 +3,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TimePickerBase from "./TimePickerBase.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import type {
@@ -118,7 +118,11 @@ class TimePicker extends TimePickerBase implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
+	}
+
+	get formattedFormValue() {
+		return this.value || "";
 	}
 
 	onBeforeRendering() {
@@ -130,7 +134,7 @@ class TimePicker extends TimePickerBase implements IFormElement {
 	onAfterRendering() {
 		super.onAfterRendering();
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	get _formatPattern() {

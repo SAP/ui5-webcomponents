@@ -77,7 +77,7 @@ import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement, submitForm } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input, { InputEventDetail } from "./Input.js";
@@ -410,7 +410,7 @@ class ComboBox extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validationMessage() {
@@ -419,6 +419,10 @@ class ComboBox extends UI5Element implements IFormElement {
 
 	get validity() {
 		return { valueMissing: this.required && !this.value };
+	}
+
+	get formattedFormValue() {
+		return this.value;
 	}
 
 	constructor() {
@@ -486,7 +490,7 @@ class ComboBox extends UI5Element implements IFormElement {
 			this._selectMatchingItem();
 		}
 
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	async shouldClosePopover(): Promise<boolean> {
@@ -887,7 +891,7 @@ class ComboBox extends UI5Element implements IFormElement {
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
 			} else if (this.internals_?.form) {
-				FormSupport.submitForm(this);
+				submitForm(this);
 			}
 		}
 

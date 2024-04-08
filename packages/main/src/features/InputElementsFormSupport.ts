@@ -10,69 +10,72 @@ interface IFormElement extends UI5Element {
 	value?: string | number;
 }
 
-class FormSupport {
-	static attachInternalsFormElement(element: IFormElement, attachOnly = false) {
-		element.internals_ = element.attachInternals();
+const attachInternalsFormElement = (element: IFormElement, attachOnly = false) => {
+	element.internals_ = element.attachInternals();
 
-		if (!attachOnly) {
-			FormSupport.setValueFormElement(element);
-		}
+	if (!attachOnly) {
+		setValueFormElement(element);
+	}
+};
+
+const setValueFormElement = async (element: IFormElement, preventChangeValidity = false) => {
+	if (!element.internals_?.form) {
+		return;
 	}
 
-	static async setValueFormElement(element: IFormElement, preventChangeValidity = false) {
-		if (!element.internals_?.form) {
-			return;
-		}
-
-		if (element.validity && Object.keys(element.validity).some(key => key)) {
-			const focusRef = element.formAnchor ? await element.formAnchor() : element.getFocusDomRef();
-			element.internals_.setValidity(element.validity, element.validationMessage, focusRef);
-		} else if (!preventChangeValidity) {
-			element.internals_.setValidity({});
-		}
-
-		if (!element.name) {
-			element.internals_?.setFormValue(null);
-			return;
-		}
-
-		element.internals_.setFormValue(element.formattedFormValue || element.value?.toString() || null);
+	if (element.validity && Object.keys(element.validity).some(key => key)) {
+		const focusRef = element.formAnchor ? await element.formAnchor() : element.getFocusDomRef();
+		element.internals_.setValidity(element.validity, element.validationMessage, focusRef);
+	} else if (!preventChangeValidity) {
+		element.internals_.setValidity({});
 	}
 
-	static submitForm(element: IFormElement) {
-		if (!element.internals_?.form) {
-			return;
-		}
-
-		if (!element.internals_.form.checkValidity()) {
-			element.internals_.form.reportValidity();
-			return;
-		}
-
-		// eslint-disable-next-line no-undef
-		const submitPrevented = !element.internals_.form.dispatchEvent(new SubmitEvent("submit", {
-			bubbles: true,
-			cancelable: true,
-			submitter: element,
-		}));
-
-		if (submitPrevented) {
-			return;
-		}
-
-		element.internals_.form.submit();
+	if (!element.name) {
+		element.internals_?.setFormValue(null);
+		return;
 	}
 
-	static resetForm(element: IFormElement) {
-		if (!element.internals_?.form) {
-			return;
-		}
+	element.internals_.setFormValue(element.formattedFormValue || null);
+};
 
-		element.internals_?.form.reset();
+const submitForm = (element: IFormElement) => {
+	if (!element.internals_?.form) {
+		return;
 	}
-}
 
-export default FormSupport;
+	if (!element.internals_.form.checkValidity()) {
+		element.internals_.form.reportValidity();
+		return;
+	}
+
+	// eslint-disable-next-line no-undef
+	const submitPrevented = !element.internals_.form.dispatchEvent(new SubmitEvent("submit", {
+		bubbles: true,
+		cancelable: true,
+		submitter: element,
+	}));
+
+	if (submitPrevented) {
+		return;
+	}
+
+	element.internals_.form.submit();
+};
+
+const resetForm = (element: IFormElement) => {
+	if (!element.internals_?.form) {
+		return;
+	}
+
+	element.internals_?.form.reset();
+};
+
+export {
+	attachInternalsFormElement,
+	setValueFormElement,
+	submitForm,
+	resetForm,
+};
 
 export {
 	IFormElement,

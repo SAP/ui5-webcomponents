@@ -28,7 +28,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement, submitForm } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -366,7 +366,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validity() {
@@ -375,6 +375,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	get validationMessage() {
 		return "Custom message";
+	}
+
+	get formattedFormValue(): string | FormData {
+		return this.value;
 	}
 
 	async formAnchor() {
@@ -409,7 +413,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	onAfterRendering() {
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	/**
@@ -470,7 +474,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 		if (isEnter(e)) {
 			if (this.internals_?.form) {
-				FormSupport.submitForm(this);
+				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();

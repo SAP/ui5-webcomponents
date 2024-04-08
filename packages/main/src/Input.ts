@@ -49,7 +49,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { InputSuggestion, SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import { attachInternalsFormElement, setValueFormElement, submitForm } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
 import type { PopupScrollEventDetail } from "./Popup.js";
@@ -581,7 +581,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		FormSupport.attachInternalsFormElement(this);
+		attachInternalsFormElement(this);
 	}
 
 	get validationMessage() {
@@ -590,6 +590,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get validity() {
 		return { valueMissing: this.required && !this.value };
+	}
+
+	get formattedFormValue(): string | FormData {
+		return this.value;
 	}
 
 	constructor() {
@@ -719,7 +723,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this._performTextSelection = false;
-		FormSupport.setValueFormElement(this);
+		setValueFormElement(this);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -835,7 +839,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.lastConfirmedValue = this.value;
 
 			if (this.internals_?.form) {
-				FormSupport.submitForm(this);
+				submitForm(this);
 			}
 
 			return;
