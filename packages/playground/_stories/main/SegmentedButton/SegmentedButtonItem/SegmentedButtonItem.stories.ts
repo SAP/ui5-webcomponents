@@ -19,17 +19,10 @@ const Template: UI5StoryArgs<SegmentedButtonItem, StoryArgsSlots> = (args) => ht
 <ui5-segmented-button>
 	<ui5-segmented-button-item>Map</ui5-segmented-button-item>
 	<ui5-segmented-button-item
-		design="${ifDefined(args.design)}"
-		?icon-end="${ifDefined(args.iconEnd)}"
-		?submits="${ifDefined(args.submits)}"
 		?selected="${ifDefined(args.selected)}"
-		accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"
-		accessible-name="${ifDefined(args.accessibleName)}"
-		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 		?disabled="${ifDefined(args.disabled)}"
 		icon="${ifDefined(args.icon)}"
 		tooltip="${ifDefined(args.tooltip)}"
-		type="${ifDefined(args.type)}"
 	>${unsafeHTML(args.default)}</ui5-segmented-button-item>
 	<ui5-segmented-button-item>Terrain</ui5-segmented-button-item>
 </ui5-segmented-button>`;
