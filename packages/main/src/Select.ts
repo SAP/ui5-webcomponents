@@ -397,7 +397,7 @@ class Select extends UI5Element implements IFormElement {
 		return "Custom message";
 	}
 
-	get validFormValue() {
+	get formattedFormValue() {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {

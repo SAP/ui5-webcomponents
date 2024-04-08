@@ -4,7 +4,7 @@ interface IFormElement extends UI5Element {
 	name?: string;
 	validationMessage?: string;
 	validity?: ValidityStateFlags;
-	validFormValue?: FormData | string | null;
+	formattedFormValue?: FormData | string | null;
 	formAnchor?: () => HTMLElement | undefined | Promise<HTMLElement | undefined>;
 	internals_?: ElementInternals;
 	value?: string | number;
@@ -36,7 +36,7 @@ class FormSupport {
 			return;
 		}
 
-		element.internals_.setFormValue(element.validFormValue || element.value?.toString() || null);
+		element.internals_.setFormValue(element.formattedFormValue || element.value?.toString() || null);
 	}
 
 	static submitForm(element: IFormElement) {

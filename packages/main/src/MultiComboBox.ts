@@ -487,7 +487,7 @@ class MultiComboBox extends UI5Element implements IFormElement {
 		return { valueMissing: this.required && !this.value && !selectedItems.length };
 	}
 
-	get validFormValue() {
+	get formattedFormValue() {
 		const selectedItems = (this.items || []).filter(item => item.selected);
 
 		if (selectedItems.length) {

@@ -193,7 +193,7 @@ class Switch extends UI5Element implements IFormElement {
 		return { valueMissing: this.required && !this.checked };
 	}
 
-	get validFormValue() {
+	get formattedFormValue() {
 		return this.checked ? "on" : null;
 	}
 

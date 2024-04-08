@@ -204,7 +204,7 @@ class FileUploader extends UI5Element implements IFormElement {
 		FormSupport.attachInternalsFormElement(this);
 	}
 
-	get validFormValue() {
+	get formattedFormValue() {
 		if (this.files) {
 			const formData = new FormData();
 

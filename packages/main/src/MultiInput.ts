@@ -135,7 +135,7 @@ class MultiInput extends Input implements IFormElement {
 		return { valueMissing: this.required && !this.value && !tokens.length };
 	}
 
-	get validFormValue() {
+	get formattedFormValue() {
 		const tokens = (this.tokens || []);
 
 		const formData = new FormData();

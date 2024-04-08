@@ -251,7 +251,7 @@ class RadioButton extends UI5Element implements IFormElement {
 		FormSupport.setValueFormElement(this, true);
 	}
 
-	get validFormValue() {
+	get formattedFormValue() {
 		return this.checked ? (this.value || "on") : null;
 	}
 

@@ -131,7 +131,7 @@ class RangeSlider extends SliderBase implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	get validFormValue() {
+	get formattedFormValue() {
 		const formData = new FormData();
 
 		formData.append(this.name, `${this.startValue}`);
