@@ -598,6 +598,9 @@ describe("Input general interaction", () => {
 		await inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
+
+		// Close suggestions
+		await inputShadowRef.keys("Escape");
 	});
 
 	it("Checks if valueStateMessage gets updated dynamically", async () => {
