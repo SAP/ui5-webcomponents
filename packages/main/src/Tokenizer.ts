@@ -847,13 +847,17 @@ class Tokenizer extends UI5Element {
 	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<IToken>) {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
-		const copyToClipboard = () => {
-			navigator.clipboard.writeText(tokensTexts);
+		const cutToClipboard = (e: ClipboardEvent) => {
+			if (e.clipboardData) {
+				e.clipboardData.setData("text/plain", tokensTexts);
+			}
+
+			e.preventDefault();
 		};
 
-		document.addEventListener(shortcutName, copyToClipboard);
-		copyToClipboard();
-		document.removeEventListener(shortcutName, copyToClipboard);
+		document.addEventListener(shortcutName, cutToClipboard);
+		document.execCommand(shortcutName);
+		document.removeEventListener(shortcutName, cutToClipboard);
 	}
 
 	/**
