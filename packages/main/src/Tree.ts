@@ -9,7 +9,7 @@ import TreeItem from "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import TreeList from "./TreeList.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import type {
 	TreeItemBaseToggleEventDetail,
 	TreeItemBaseStepInEventDetail,
@@ -73,7 +73,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * - [Left] - Goes up the tree and collapses the tree nodes.
  *
  * The user can use the following keyboard shortcuts to perform selection,
- * when the `mode` property is in use:
+ * when the `selectionMode` property is in use:
  *
  * - [Space] - Selects the currently focused item upon keyup.
  * - [Enter]  - Selects the currently focused item upon keydown.
@@ -163,7 +163,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * Fired when the Delete button of any tree item is pressed.
  *
  * **Note:** A Delete button is displayed on each item,
- * when the component `mode` property is set to `Delete`.
+ * when the component `selectionMode` property is set to `Delete`.
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -189,7 +189,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 
 /**
  * Fired when selection is changed by user interaction
- * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
+ * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` modes.
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @param {HTMLElement} targetItem The item triggering the event.
@@ -213,13 +213,13 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 class Tree extends UI5Element {
 	/**
-	 * Defines the mode of the component. Since the tree uses a `ui5-list` to display its structure,
+	 * Defines the selection mode of the component. Since the tree uses a `ui5-list` to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
 	 * @public
 	 * @default "None"
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+	selectionMode!: `${ListSelectionMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
