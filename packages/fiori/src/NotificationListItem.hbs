@@ -91,9 +91,10 @@
 		<ui5-busy-indicator
 				delay="{{busyDelay}}"
 				active
-				size="Medium"
 				class="ui5-nli-busy"
 				data-sap-focus-ref
 		></ui5-busy-indicator>
 	{{/if}}
 </li>
+
+{{>include "./NotificationOverflowActionsPopover.hbs"}}

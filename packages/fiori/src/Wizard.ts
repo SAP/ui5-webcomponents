@@ -41,7 +41,6 @@ import WizardStep from "./WizardStep.js";
 
 // Template and Styles
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
-import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 
@@ -192,10 +191,9 @@ type StepInfo = {
 	styles: [
 		browserScrollbarCSS,
 		WizardCss,
+		WizardPopoverCss,
 	],
-	staticAreaStyles: WizardPopoverCss,
 	template: WizardTemplate,
-	staticAreaTemplate: WizardPopoverTemplate,
 	dependencies: [
 		WizardTab,
 		WizardStep,
@@ -622,7 +620,7 @@ class Wizard extends UI5Element {
 		return selectedStep.getAttribute(EXPANDED_STEP) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP) === "true" && (iStepNumber + 1 < this.steps.length);
 	}
 
-	async _showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
+	_showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		this._groupedTabs = [];
 
@@ -633,11 +631,11 @@ class Wizard extends UI5Element {
 			this._groupedTabs.push(tabs[i]);
 		}
 
-		const responsivePopover = await this._respPopover();
+		const responsivePopover = this._respPopover();
 		responsivePopover.showAt(oDomTarget);
 	}
 
-	async _onGroupedTabClick(e: MouseEvent) {
+	_onGroupedTabClick(e: MouseEvent) {
 		const eTarget = e.target as WizardTab;
 
 		if (this._isGroupAtStart(eTarget)) {
@@ -662,14 +660,13 @@ class Wizard extends UI5Element {
 		tabs[newlySelectedIndex].focus();
 	}
 
-	async _closeRespPopover() {
-		const responsivePopover = await this._respPopover();
+	_closeRespPopover() {
+		const responsivePopover = this._respPopover();
 		responsivePopover && responsivePopover.close();
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>(`.ui5-wizard-responsive-popover`)!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>(`.ui5-wizard-responsive-popover`)!;
 	}
 
 	/**

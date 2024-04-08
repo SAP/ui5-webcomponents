@@ -73,8 +73,8 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
 	renderer: litRender,
-	staticAreaTemplate: BarcodeScannerDialogTemplate,
-	staticAreaStyles: [BarcodeScannerDialogCss],
+	template: BarcodeScannerDialogTemplate,
+	styles: [BarcodeScannerDialogCss],
 	dependencies: [
 		Dialog,
 		BusyIndicator,
@@ -204,18 +204,16 @@ class BarcodeScannerDialog extends UI5Element {
 		return navigator.mediaDevices.getUserMedia(defaultMediaConstraints);
 	}
 
-	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+	_getDialog() {
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
-	async _getVideoElement() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
+	_getVideoElement() {
+		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
-	async _showDialog() {
-		this.dialog = await this._getDialog();
+	_showDialog() {
+		this.dialog = this._getDialog();
 		this.dialog.show();
 		this.open = true;
 	}
@@ -231,14 +229,14 @@ class BarcodeScannerDialog extends UI5Element {
 		this._decodeFromCamera();
 	}
 
-	async _resetReader() {
-		const videoElement = await this._getVideoElement();
+	_resetReader() {
+		const videoElement = this._getVideoElement();
 		videoElement.pause();
 		this._codeReader.reset();
 	}
 
-	async _decodeFromCamera() {
-		const videoElement = await this._getVideoElement();
+	_decodeFromCamera() {
+		const videoElement = this._getVideoElement();
 		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {
