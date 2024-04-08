@@ -9,7 +9,6 @@ const generate = async () => {
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
 	const inputFolder = path.normalize(process.argv[2]);
-	const outputFile = path.normalize(`${process.argv[3]}/i18n-static.${ext}`);
 	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.${ext}`);
 
 // All languages present in the file system
@@ -19,11 +18,10 @@ const generate = async () => {
 		return matches ? matches[1] : undefined;
 	}).filter(key => !!key);
 
-	let contentStatic, contentDynamic;
+	let contentDynamic;
 
 // No i18n - just import dependencies, if any
 	if (languages.length === 0) {
-		contentStatic = "";
 		contentDynamic = "";
 // There is i18n - generate the full file
 	} else {
@@ -33,31 +31,6 @@ const generate = async () => {
 
 		// Actual imports for json assets
 		const assetsImportsString = languages.map(key => `import _${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
-
-		// static imports
-		contentStatic = `// @ts-nocheck
-import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registries/i18n.js";
-
-${assetsImportsString}
-
-const bundleMap = {
-	${languagesKeysString}
-};
-
-const fetchMessageBundle = async (localeId) => {
-	if (typeof bundleMap[localeId] === "object") {
-		// inlined from build
-		throw new Error("[i18n] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs")
-	}
-	return (await fetch(bundleMap[localeId])).json()
-}
-
-const localeIds = [${languagesKeysStringArray}];
-
-localeIds.forEach(localeId => {
-	registerI18nLoader("${packageName}", localeId, fetchMessageBundle);
-});
-`;
 
 		// Actual imports for json assets
 		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");
@@ -91,9 +64,8 @@ import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registrie
 
 	}
 
-	await fs.mkdir(path.dirname(outputFile), { recursive: true });
+	await fs.mkdir(path.dirname(outputFileDynamic), { recursive: true });
 	return Promise.all([
-		fs.writeFile(outputFile, contentStatic),
 		fs.writeFile(outputFileDynamic, contentDynamic),
 	]);
 }
