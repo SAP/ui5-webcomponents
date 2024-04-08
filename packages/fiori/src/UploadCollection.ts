@@ -10,7 +10,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
+import ListSelectionMode from "@ui5/webcomponents/dist/types/ListSelectionMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
@@ -102,7 +102,7 @@ type UploadCollectionItemDeleteEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in `SingleSelect` and `MultiSelect` modes.
+ * in `Single` and `Multiple` modes.
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
@@ -116,15 +116,15 @@ type UploadCollectionItemDeleteEventDetail = {
 })
 class UploadCollection extends UI5Element {
 	/**
-	 * Defines the mode of the `ui5-upload-collection`.
+	 * Defines the selection mode of the `ui5-upload-collection`.
 	 *
 	 * **Note:**
-	 * Mode "Delete" has no effect. The delete button is controlled by the `hideDeleteButton` property of UploadCollectionItem
+	 * Selection mode "Delete" has no effect. The delete button is controlled by the `hideDeleteButton` property of UploadCollectionItem
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+	selectionMode!: `${ListSelectionMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
