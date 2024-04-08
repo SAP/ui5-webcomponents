@@ -22,7 +22,7 @@ const Template: UI5StoryArgs<SegmentedButtonItem, StoryArgsSlots> = (args) => ht
 		design="${ifDefined(args.design)}"
 		?icon-end="${ifDefined(args.iconEnd)}"
 		?submits="${ifDefined(args.submits)}"
-		?pressed="${ifDefined(args.pressed)}"
+		?selected="${ifDefined(args.selected)}"
 		accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"
 		accessible-name="${ifDefined(args.accessibleName)}"
 		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
@@ -38,5 +38,5 @@ export const Basic = Template.bind({});
 Basic.tags = ["_hidden_"];
 Basic.args = {
 	default: "Current item",
-	pressed: true,
+	selected: true,
 };
