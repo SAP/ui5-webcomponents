@@ -5,9 +5,6 @@ import * as defaultFioriTexts from "./generated/i18n/i18n-defaults.js";
 // FIORI assets
 import "./Assets.js";
 
-// FIORI features
-import "./features/CoPilotAnimation.js";
-
 // FIORI illustrations
 import "./illustrations/AllIllustrations.js";
 

@@ -200,7 +200,6 @@ Basic.args = {
           notifications-count="4"
           show-notifications=""
           show-product-switch=""
-          show-co-pilot=""
         >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"

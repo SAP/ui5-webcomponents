@@ -30,6 +30,7 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
+::slotted([ui5-toggle-button][slot="assistant"]),
 ::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
@@ -56,6 +57,7 @@
 	margin-inline-start: 0;
 }
 
+::slotted([ui5-toggle-button][slot="assistant"]:hover),
 ::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
@@ -65,6 +67,7 @@
 	color: var(--sapShell_TextColor);
 }
 
+::slotted([ui5-toggle-button][slot="assistant"][active]),
 ::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
