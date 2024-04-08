@@ -26,11 +26,7 @@ const generate = async () => {
 // There is i18n - generate the full file
 	} else {
 		// Keys for the array
-		const languagesKeysString = languages.map(key => `"${key}": _${key},`).join("\n\t");
 		const languagesKeysStringArray = languages.map(key => `"${key}",`).join("\n\t");
-
-		// Actual imports for json assets
-		const assetsImportsString = languages.map(key => `import _${key} from "../assets/i18n/messagebundle_${key}.json";`).join("\n");
 
 		// Actual imports for json assets
 		const dynamicImportsString = languages.map(key => `		case "${key}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-messagebundle-${key}" */ "../assets/i18n/messagebundle_${key}.json")).default;`).join("\n");

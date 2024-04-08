@@ -21,8 +21,6 @@ const generate = async () => {
 
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
-	const importLines = themesOnFileSystem.map(theme => `import ${theme} from "../assets/themes/${theme}/parameters-bundle.css.json";`).join("\n");
-	const themeUrlsByName = "{\n" + themesOnFileSystem.join(",\n") + "\n}";
 	const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
 	const dynamicImportLines = themesOnFileSystem.map(theme => `\t\tcase "${theme}": return (await import(/* webpackChunkName: "${packageName.replace("@", "").replace("/", "-")}-${theme.replace("_", "-")}-parameters-bundle" */"../assets/themes/${theme}/parameters-bundle.css.json")).default;`).join("\n");
 
