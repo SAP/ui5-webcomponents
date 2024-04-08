@@ -737,7 +737,7 @@ class TabContainer extends UI5Element {
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-		selectedTopLevel.getTabInStripDomRef()!.focus();
+		selectedTopLevel.getDomRefInStrip()!.focus();
 	}
 
 	/**
@@ -913,7 +913,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!) as Array<TabInStrip | TabSeparatorInStrip>;
+		const itemsDomRefs = this.items.map(item => item.getDomRefInStrip()) as Array<TabInStrip | TabSeparatorInStrip>;
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -959,7 +959,7 @@ class TabContainer extends UI5Element {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as TabInStrip;
+		const selectedTabDomRef = selectedTab.getDomRefInStrip()! as TabInStrip;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -976,7 +976,7 @@ class TabContainer extends UI5Element {
 	_updateStartAndEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef()! as TabInStrip;
+		const selectedTabDomRef = selectedTab.getDomRefInStrip()! as TabInStrip;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1173,7 +1173,7 @@ class TabContainer extends UI5Element {
 		let endOverflowItemsCount = 0;
 
 		this._getTabs()
-			.map(tab => tab.getTabInStripDomRef()!)
+			.map(tab => tab.getDomRefInStrip()!)
 			.forEach(tab => {
 				if (tab.hasAttribute("start-overflow")) {
 					startOverflowItemsCount++;
@@ -1200,7 +1200,7 @@ class TabContainer extends UI5Element {
 		}
 
 		this._getTabs().forEach(tab => {
-			const ref = tab.getTabInStripDomRef();
+			const ref = tab.getDomRefInStrip();
 			const focusable = ref && !ref.hasAttribute("hidden");
 
 			if (focusable) {
@@ -1238,7 +1238,7 @@ class TabContainer extends UI5Element {
 	_getPopoverItemsFor(targetOwner: TabContainerPopoverOwner) {
 		if (targetOwner === "start-overflow") {
 			return this.items.filter(item => {
-				const stripRef = item.getTabInStripDomRef();
+				const stripRef = item.getDomRefInStrip();
 
 				return stripRef && stripRef.hasAttribute("start-overflow");
 			});
@@ -1246,7 +1246,7 @@ class TabContainer extends UI5Element {
 
 		if (targetOwner === "end-overflow") {
 			return this.items.filter(item => {
-				const stripRef = item.getTabInStripDomRef();
+				const stripRef = item.getDomRefInStrip();
 
 				return stripRef && stripRef.hasAttribute("end-overflow");
 			});

@@ -108,7 +108,7 @@ const getScripts = (options) => {
 				componentStyles: `nps "build.styles.componentStyles -w"`,
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
-			api: 'chokidar "test/**/*.sample.html" -c "nps generateAPI"',
+			api: 'nps generateAPI',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",
