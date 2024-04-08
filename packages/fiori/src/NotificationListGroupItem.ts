@@ -26,7 +26,6 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
-import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -61,7 +60,6 @@ type NotificationListGroupItemToggleEventDetail = {
 	languageAware: true,
 	styles: [
 		NotificationListGroupItemCss,
-		NotificationOverflowActionsPopoverCss,
 	],
 	template: NotificationListGroupItemTemplate,
 	dependencies: [

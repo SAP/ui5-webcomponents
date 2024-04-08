@@ -47,7 +47,6 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
-import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 type NotificationListItemCloseEventDetail = {
 	item: HTMLElement,
@@ -106,7 +105,6 @@ const ICON_PER_STATUS = {
 	languageAware: true,
 	styles: [
 		NotificationListItemCss,
-		NotificationOverflowActionsPopoverCss,
 	],
 	template: NotificationListItemTemplate,
 	dependencies: [
