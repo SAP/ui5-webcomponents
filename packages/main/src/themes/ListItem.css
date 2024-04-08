@@ -71,16 +71,8 @@
 	height: 5rem;
 }
 
-:host([has-title][image]) {
+:host([_has-image]) {
 	height: 5rem;
-}
-
-:host([_has-image-content]) {
-	height: 5rem;
-}
-
-:host([image]) .ui5-li-content {
-	height: 3rem;
 }
 
 :host([description]) .ui5-li-root {
@@ -152,23 +144,12 @@
 	align-self: flex-end;
 }
 
-.ui5-li-img {
-	width: var(--_ui5_list_item_img_size);
-	height: var(--_ui5_list_item_img_size);
-	border-radius: var(--ui5-avatar-border-radius);
-}
-
-.ui5-li-img,
-.ui5-li-imgContent {
+.ui5-li-image {
 	min-width: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin-top: var(--_ui5_list_item_img_top_margin);
 	margin-bottom: var(--_ui5_list_item_img_bottom_margin);
 	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
-}
-
-.ui5-li-img-inner {
-	object-fit: contain;
 }
 
 .ui5-li-icon {

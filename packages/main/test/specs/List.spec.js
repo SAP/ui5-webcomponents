@@ -138,12 +138,12 @@ describe("List Tests", () => {
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
-	it("Tests rendering of imageContent slot", async () => {
-		const imageContentSlot = await browser.executeAsync(done => {
-			done(document.getElementById("imageContent-slot-li").shadowRoot.querySelector("slot[name='imageContent']").assignedNodes()[0].querySelector("#imageContent-slot-avatar"));
+	it("Tests rendering of image slot", async () => {
+		const imageSlot = await browser.executeAsync(done => {
+			done(document.getElementById("image-slot-li").shadowRoot.querySelector("slot[name='image']").assignedNodes()[0].querySelector("#image-slot-avatar"));
 		});
 
-		assert.ok(imageContentSlot, "the content of imageContent slot is rendered");
+		assert.ok(imageSlot, "the content of image slot is rendered");
 	});
 
 	it("Clicking on inactive items does not change single selection", async () => {

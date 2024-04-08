@@ -24,19 +24,16 @@ const Template: UI5StoryArgs<GroupHeaderListItem, StoryArgsSlots> = (args) => {
     ${unsafeHTML(args.default)}
   </ui5-li-groupheader>
   <ui5-li
-  image="../assets/images/avatars/woman_avatar_3.png"
   icon="navigation-right-arrow"
   icon-end=""
   >Jennifer</ui5-li
 >
 <ui5-li
-  image="../assets/images/avatars/woman_avatar_4.png"
   icon="navigation-right-arrow"
   icon-end=""
   >Lora</ui5-li
 >
 <ui5-li
-  image="../assets/images/avatars/woman_avatar_5.png"
   icon="navigation-right-arrow"
   icon-end=""
   >Carlotta</ui5-li
