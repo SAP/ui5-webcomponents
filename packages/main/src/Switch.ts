@@ -68,16 +68,6 @@ import switchCss from "./generated/themes/Switch.css.js";
 @event("change")
 class Switch extends UI5Element implements IFormElement {
 	/**
-	 * Defines the form value of the component.
-	 *
-	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	value!: string;
-
-	/**
 	 * Defines the component design.
 	 *
 	 * **Note:** If `Graphical` type is set,
@@ -204,7 +194,7 @@ class Switch extends UI5Element implements IFormElement {
 	}
 
 	get validFormValue() {
-		return this.checked ? this.value || "on" : null;
+		return this.checked ? "on" : null;
 	}
 
 	onAfterRendering() {

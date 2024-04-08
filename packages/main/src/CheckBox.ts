@@ -95,16 +95,6 @@ let activeCb: CheckBox;
 
 class CheckBox extends UI5Element implements IFormElement {
 	/**
-	 * Defines the form value of the component.
-	 *
-	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	value!: string;
-
-	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @default ""
 	 * @public
@@ -259,7 +249,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	}
 
 	get validFormValue() {
-		return this.checked ? this.value || "on" : null;
+		return this.checked ? "on" : null;
 	}
 
 	constructor() {
