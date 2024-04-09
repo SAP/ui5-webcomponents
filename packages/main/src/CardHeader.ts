@@ -7,7 +7,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isFirefox,
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
@@ -119,6 +122,12 @@ class CardHeader extends UI5Element {
 	action!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
 
 	get classes() {
 		return {
