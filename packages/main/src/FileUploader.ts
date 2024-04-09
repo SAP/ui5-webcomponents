@@ -254,7 +254,7 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
-	_ondrag(e: MouseEvent) {
+	_ondrag(e: DragEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 	}
