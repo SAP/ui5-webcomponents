@@ -624,6 +624,7 @@ describe("Input general interaction", () => {
 
 		// Close popover
 		await browser.keys("Escape");
+		await browser.keys("Tab");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
