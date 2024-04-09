@@ -145,8 +145,8 @@ class Grid extends UI5Element {
 		if (this.columnMode === GridColumnMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
-		this._gridNavigation = new GridNavigation(this);
 		this.features.forEach(feature => feature.onGridActivate(this));
+		this._gridNavigation = new GridNavigation(this);
 	}
 
 	onExitDOM() {
@@ -250,6 +250,22 @@ class Grid extends UI5Element {
 
 	get _gridOverflowX() {
 		return (this.columnMode === GridColumnMode.Popin) ? "hidden" : "auto";
+	}
+
+	get _nodataRow() {
+		return this.shadowRoot!.getElementById("nodata-row") as GridRow;
+	}
+
+	get _beforeElement() {
+		return this.shadowRoot!.getElementById("before") as HTMLElement;
+	}
+
+	get _afterElement() {
+		return this.shadowRoot!.getElementById("after") as HTMLElement;
+	}
+
+	get _gridElement() {
+		return this.shadowRoot!.getElementById("grid") as HTMLElement;
 	}
 
 	get _effectiveNoDataText() {

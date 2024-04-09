@@ -70,9 +70,6 @@ class GridHeaderRow extends UI5Element {
 	})
 	cells!: Array<GridHeaderCell>;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
-
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
@@ -95,7 +92,6 @@ class GridHeaderRow extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.setAttribute("tabindex", this.forcedTabIndex);
 		if (this._isMultiSelect) {
 			this.setAttribute("aria-selected", `${this._isSelected}`);
 		} else {

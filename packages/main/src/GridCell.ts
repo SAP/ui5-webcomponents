@@ -44,9 +44,6 @@ class GridCell extends UI5Element {
 	@slot({ type: Node, "default": true })
 	content!: Array<Node>;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
-
 	@property({ type: Boolean })
 	_popin!: boolean;
 
@@ -57,7 +54,6 @@ class GridCell extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.setAttribute("tabindex", this.forcedTabIndex);
 		if (this._popin) {
 			this.removeAttribute("role");
 		} else {

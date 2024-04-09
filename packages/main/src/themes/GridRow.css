@@ -5,7 +5,7 @@
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
 }
 
-:host(:focus-visible) {
+:host(:focus[tabindex]) {
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
