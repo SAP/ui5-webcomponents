@@ -269,7 +269,6 @@ class SplitButton extends UI5Element {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
-		this.focus();
 	}
 
 	_onInnerButtonFocusIn(e: FocusEvent) {
