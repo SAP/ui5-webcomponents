@@ -144,8 +144,7 @@ class UploadCollectionItem extends ListItem {
 	declare disableDeleteButton: boolean;
 
 	/**
-	 * By default, the delete button will always be shown, regardless of the `ui5-upload-collection`'s property `mode`.
-	 * Setting this property to `true` will hide the delete button.
+	 * Hides the delete button.
 	 * @default false
 	 * @public
 	 */
@@ -342,13 +341,6 @@ class UploadCollectionItem extends ListItem {
 				"ui5-uci-root-uploading": this.uploadState === UploadState.Uploading,
 			},
 		};
-	}
-
-	/**
-	 * @override
-	 */
-	get renderUploadCollectionDeleteButton() {
-		return !this.hideDeleteButton;
 	}
 
 	get _fileNameWithoutExtension() {
