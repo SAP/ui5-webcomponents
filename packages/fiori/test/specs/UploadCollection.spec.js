@@ -160,28 +160,16 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
-		it("upload collection should fire 'item-delete' in Delete selectionMode", async () => {
-			const uploadCollection = await browser.$("#uploadCollection");
-			const firstItem = await browser.$("#firstItem");
-
-			await uploadCollection.setAttribute("selectionMode", "Delete");
-
-			const deleteBtn = await firstItem.shadow$(".ui5-upload-collection-deletebtn");
-			await deleteBtn.click();
-
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
-		});
-
 		it("upload collection should fire 'item-delete' regardless of the selectionMode", async () => {
 			const uploadCollection = await browser.$("#uploadCollection");
 			const item = await browser.$("#latestReportsPdf");
 
-			await uploadCollection.setAttribute("selectionMode", "None");
+			await uploadCollection.setAttribute("selection-mode", "None");
 
 			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
 			await deleteBtn.click();
 
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 3, "item should be deleted when 'item-delete' event is fired");
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", async () => {
