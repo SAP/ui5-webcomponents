@@ -3,7 +3,7 @@ import { assert } from "chai";
 
 describe("Date Picker Tests", () => {
 	before(async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 	});
 
 	it("input renders", async () => {
@@ -45,7 +45,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("custom formatting", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp2";
 
 		assert.ok(await datepicker.isValid("2018, 05/05"), "custom value is valid");
@@ -192,7 +192,7 @@ describe("Date Picker Tests", () => {
 		await calendarDate_8_Jan_2015.click();
 
 		//check if the picker is closed and the datepicker value is correct
-		assert.notOk(await datepicker.isPickerOpen(), "picker is closed");
+		assert.notOk(datepicker.isOpen(), "picker is closed");
 		const input = await datepicker.getInput();
 		assert.equal(await input.getProperty("value"), "Jan 8, 2015", "datepicker value is Jan 8, 2015");
 
@@ -209,7 +209,7 @@ describe("Date Picker Tests", () => {
 
 		//check if the picker is open and the selected date in the calendar is correct
 
-		assert.ok(await datepicker.isPickerOpen(), "picker is open");
+		assert.ok(datepicker.isOpen(), "picker is open");
 		assert.notOk(await calendarDate_6_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 		assert.notOk(await calendarDate_8_Jan_2015.hasClass("ui5-dp-item--selected"), "calendar selected dates is ok");
 
@@ -236,7 +236,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("if today is 30 jan, clicking next month does not skip feb", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 
 		datepicker.id = "#dp7_2";
 
@@ -254,7 +254,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("picker stays open on input click", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 
 		datepicker.id = "#dp6";
 
@@ -264,7 +264,7 @@ describe("Date Picker Tests", () => {
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
 
-		assert.ok(datepicker.isPickerOpen(), "picker is open");
+		assert.ok(datepicker.isOpen(), "picker is open");
 		assert.ok(await innerInput.isFocusedDeep(), "input is focused");
 	});
 
@@ -332,7 +332,7 @@ describe("Date Picker Tests", () => {
 	it("does not open, if disabled", async () => {
 		datepicker.id = "#dp10";
 
-		assert.notOk(await datepicker.isPickerOpen(), "picker is closed initially.");
+		assert.notOk(datepicker.isOpen(), "picker is closed initially.");
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
 		assert.equal((await valueHelpIcon.getCSSProperty('pointer-events')).value, "none", "pointer events are none");
 	});
@@ -340,45 +340,45 @@ describe("Date Picker Tests", () => {
 	it("[F4] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(datepicker.isOpen(), "datepicker is closed");
 
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
 		await browser.keys("F4");
 
-		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(datepicker.isOpen(), "datepicker is open");
 	});
 
 	it("[Alt] + [Up] toggles the calendar", async () => {
 		datepicker.id = "#dp9";
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(datepicker.isOpen(), "datepicker is closed");
 
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 
-		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(datepicker.isOpen(), "datepicker is open");
 
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(datepicker.isOpen(), "datepicker is closed");
 	});
 
 	it("[Alt] + [Down] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(datepicker.isOpen(), "datepicker is closed");
 
 		const innerInput = await datepicker.getInnerInput();
 		await innerInput.click();
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
+		assert.ok(datepicker.isOpen(), "datepicker is open");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
 
-		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
+		assert.notOk(datepicker.isOpen(), "datepicker is closed");
 	});
 
 	it("[F4] shows year picker after date picker is open", async () => {
@@ -462,13 +462,13 @@ describe("Date Picker Tests", () => {
 
 		await browser.keys("F4");
 
-		assert.ok(await datepicker.isPickerOpen(), "Datepicker remains open");
+		assert.ok(datepicker.isOpen(), "Datepicker remains open");
 	});
 
 	it("daypicker extreme values max", async () => {
 		var _28Nov9999 = "253399363200";
 
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -485,7 +485,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker extreme values min", async () => {
 		var _31Dec0000 = "-62135683200";
 
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -501,7 +501,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker prev extreme values min", async () => {
 		var _31Dec0000 = "-62135683200";
 
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -520,7 +520,7 @@ describe("Date Picker Tests", () => {
 	it("daypicker next extreme values max", async () => {
 		var _28Nov9999 = "253399363200";
 
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -537,7 +537,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("monthpicker next extreme values max", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -557,7 +557,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("monthpicker prev extreme values min", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -577,7 +577,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker extreme values max", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -594,7 +594,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker extreme values min", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -611,7 +611,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker prev page extreme values min", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -635,7 +635,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker next page extreme values max", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -659,7 +659,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker click extreme values max", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -683,7 +683,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker click extreme values min above 10", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -700,7 +700,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("yearpicker click extreme values min below 10", async () => {
-		await datepicker.open();
+		datepicker.togglePicker();
 		datepicker.id = "#dp12";
 
 		const root = await datepicker.getRoot();
@@ -928,7 +928,7 @@ describe("Date Picker Tests", () => {
 
 	it("DayPicker content wrapped", async () => {
 		datepicker.id = "#dp19";
-		await datepicker.open();
+		datepicker.togglePicker();
 		let arr = await datepicker.getDayPickerContent();
 
 		arr.forEach(async function(el){
@@ -1232,7 +1232,7 @@ describe("Date Picker Tests", () => {
 		const calendarDate_30_Jan_2020 = await datepicker.getPickerDate(timestamp_30_Jan_2020);
 		await calendarDate_30_Jan_2020.click();
 
-		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after day selection");
+		assert.isFalse(datepicker.isOpen(), "picker is closed after day selection");
 	});
 
 	it("should open calendar picker in CalendarMode.MONTH_YEAR mode", async () => {
@@ -1259,7 +1259,7 @@ describe("Date Picker Tests", () => {
 		const calendarDate_Nov_2023 = await datepicker.getPickerMonth(timestamp_Nov_2023);
 		await calendarDate_Nov_2023.click();
 
-		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after month selection");
+		assert.isFalse(datepicker.isOpen(), "picker is closed after month selection");
 	});
 
 	it("should open calendar picker in CalendarMode.YEAR mode", async () => {
@@ -1286,7 +1286,7 @@ describe("Date Picker Tests", () => {
 		const calendarDate_2014 = await datepicker.getPickerYear(timestamp_2014);
 		await calendarDate_2014.click();
 
-		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
+		assert.isFalse(datepicker.isOpen(), "picker is closed after year selection");
 	});
 
 	it("Min and max dates are set, with no format pattern provided, using valid ISO format", async () => {

@@ -322,6 +322,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	hideWeekNumbers!: boolean;
 
 	/**
+	 * Defines the open | closed state of the popover.
+	 * @public
+	 * @default false
+	 * @since 2.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
 	 * Defines the aria-label attribute for the component.
 	 * @default ""
 	 * @public
@@ -338,9 +347,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 */
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
-
-	@property({ type: Boolean, noAttribute: true })
-	_isPickerOpen!: boolean;
 
 	@property({ type: Object })
 	_respPopoverConfig!: object;
@@ -381,7 +387,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @protected
 	 */
 	onResponsivePopoverAfterClose() {
-		this._isPickerOpen = false;
+		// this.open = false;
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
 		} else {
@@ -459,7 +465,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if ((this._getInput().isEqualNode(e.target as Node) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-			this.closePicker();
+			this.togglePicker();
 		}
 
 		if (this.isOpen()) {
@@ -553,11 +559,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		if (eventPrevented) {
 			this.valueState = previousValueState;
 		}
-	}
-
-	_toggleAndFocusInput() {
-		this.togglePicker();
-		this._getInput().focus();
 	}
 
 	_getInput(): Input {
@@ -765,7 +766,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		this.closePicker();
+		this.togglePicker();
 	}
 
 	/**
@@ -793,33 +794,13 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return this.getFormat().format(date);
 	}
 
-	/**
-	 * Closes the picker.
-	 * @public
-	 */
-	closePicker(): void {
-		this.responsivePopover!.close();
-	}
-
-	/**
-	 * Opens the picker.
-	 * @public
-	 * @returns Resolves when the picker is open
-	 */
-	async openPicker(): Promise<void> {
-		this._isPickerOpen = true;
-		this._calendarCurrentPicker = this.firstPicker;
-		this.responsivePopover = this._respPopover();
-
-		await this.responsivePopover.showAt(this);
-	}
-
 	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
-		} else if (this._canOpenPicker()) {
-			this.openPicker();
-		}
+		this.open = !this.open;
+	}
+
+	_toggleAndFocusInput() {
+		this.togglePicker();
+		this._getInput().focus();
 	}
 
 	/**
@@ -828,7 +809,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @returns true if the picker is open, false otherwise
 	 */
 	isOpen(): boolean {
-		return !!this._isPickerOpen;
+		return this.open;
 	}
 
 	/**

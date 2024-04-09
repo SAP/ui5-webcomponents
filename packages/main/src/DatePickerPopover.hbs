@@ -1,5 +1,7 @@
 <ui5-responsive-popover
 	id="{{_id}}-responsive-popover"
+	opener="{{_id}}-value-help"
+	open="{{isOpen}}"
 	allow-target-overlap
 	placement="Bottom"
 	horizontal-align="Start"
@@ -27,7 +29,7 @@
 				class="ui5-responsive-popover-close-btn"
 				icon="decline"
 				design="Transparent"
-				@click="{{closePicker}}"
+				@click="{{togglePicker}}"
 			>
 			</ui5-button>
 		</div>
