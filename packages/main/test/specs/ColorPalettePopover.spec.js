@@ -17,7 +17,7 @@ describe("ColorPalette interactions", () => {
 		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
 
 		// assert - default btn is focused
-		assert.ok(await defaultButton.matchesFocus(),  "The first element is focused");
+		assert.ok(await defaultButton.matches(":focus"),  "The first element is focused");
 
 		// act - close popover
 		await defaultButton.click();
@@ -76,7 +76,7 @@ describe("ColorPalette interactions", () => {
 		await defaultButton.keys("ArrowUp");
 
 		// assert - MoreColors button is focused
-		assert.ok(await moreColorsButton.matchesFocus(),  "Button 'MoreColors' is focused");
+		assert.ok(await moreColorsButton.matches(":focus"),  "Button 'MoreColors' is focused");
 
 		// act - close popover
 		await defaultButton.click();
@@ -103,7 +103,7 @@ describe("ColorPalette interactions", () => {
 		await firstRecentColorsElement.keys("ArrowUp");
 
 		// assert - MoreColors is focused
-		assert.ok(await moreColorsButton.matchesFocus(),  "Check if more colors button is focused");
+		assert.ok(await moreColorsButton.matches(":focus"),  "Check if more colors button is focused");
 
 		// act - close popover
 		await defaultButton.click();
