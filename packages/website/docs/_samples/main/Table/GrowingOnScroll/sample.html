@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample</title>
 </head>
-<body style="background-color: var(--sapBackgroundColor); height: 500px; overflow: visible;">
+<body style="background-color: var(--sapBackgroundColor)">
 <!-- playground-fold-end -->
 
-
-<div style="height: 300px; overflow-y: hidden;">
-    <ui5-table growing="Scroll">
+<div style="height: 200px; overflow: scroll;">
+    <ui5-table growing="Scroll" busy-delay="0">
         <ui5-table-column slot="columns">
             <span>Product</span>
         </ui5-table-column>

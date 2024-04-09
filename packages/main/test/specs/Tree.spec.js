@@ -67,23 +67,23 @@ describe("Tree proxies properties to list", () => {
 		assert.strictEqual(await inputMouseout.getAttribute("value"), "1", "Mouseout event is fired when the first item is not hovered");
 	})
 
-	it("Mode works", async () => {
+	it("SelectionMode works", async () => {
 		const tree = await browser.$("#tree");
 		const list = await tree.shadow$("ui5-tree-list");
 
 		const treeItem = await browser.$("#firstCollapsedItem");
-		assert.strictEqual(await treeItem.getAttribute("_mode"), "MultiSelect", "Mode applied to the tree item");
+		assert.strictEqual(await treeItem.getAttribute("_selection-mode"), "Multiple", "SelectionMode applied to the tree item");
 
-		const modes = ["None", "SingleSelect", "SingleSelectBegin", "SingleSelectEnd", "MultiSelect", "Delete"];
-		modes.forEach(async mode => {
-			await tree.setAttribute("mode", mode);
-			assert.strictEqual(await list.getAttribute("mode"), mode, "Mode applied");
+		const modes = ["None", "Single", "SingleStart", "SingleEnd", "Multiple", "Delete"];
+		modes.forEach(async selectionMode => {
+			await tree.setAttribute("selection-mode", selectionMode);
+			assert.strictEqual(await list.getAttribute("selection-mode"), selectionMode, "SelectionMode applied");
 		});
 	});
 
-	it("Mode works recursively", async () => {
-		const lastItem = await browser.$(">>>#allItemsMultiSelect .lastItem");
-		assert.strictEqual(await lastItem.getAttribute("_mode"), "MultiSelect", "Mode applied to the last tree item");
+	it("SelectionMode works recursively", async () => {
+		const lastItem = await browser.$(">>>#allItemsMultiple .lastItem");
+		assert.strictEqual(await lastItem.getAttribute("_selection-mode"), "Multiple", "SelectionMode applied to the last tree item");
 	});
 
 	it("headerText, footerText, noDataText work", async () => {
@@ -195,7 +195,7 @@ describe("Tree slots", () => {
 		await browser.url(`test/pages/Tree.html`);
 	});
 
-	it.only("items slot", async () => {
+	it("items slot", async () => {
 		const treeItem = await browser.$("#treeItem");
 		const btn = await browser.$("#btn");
 

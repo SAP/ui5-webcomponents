@@ -12,6 +12,9 @@
 	@touchstart="{{_ontouchstart}}"
 	@touchend="{{_ontouchend}}"
 	@click="{{_onclick}}"
+	draggable="{{movable}}"
+	@dragstart="{{_ondragstart}}"
+	@dragend="{{_ondragend}}"
 	role="{{_accInfo.role}}"
 	aria-expanded="{{_accInfo.ariaExpanded}}"
 	title="{{_accInfo.tooltip}}"
@@ -31,6 +34,10 @@
 
 		{{#if placeSelectionElementBefore}}
 			{{> selectionElement}}
+		{{/if}}
+
+		{{#if _hasHighlightColor}}
+			<div class="ui5-li-highlight"></div>
 		{{/if}}
 
 		<div part="content" id="{{_id}}-content" class="ui5-li-content">
@@ -89,7 +96,7 @@
 		</ui5-radio-button>
 	{{/if}}
 
-	{{#if modeMultiSelect}}
+	{{#if modeMultiple}}
 		<ui5-checkbox
 				part="checkbox"
 				?disabled="{{isInactive}}"

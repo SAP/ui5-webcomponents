@@ -1,13 +1,13 @@
 # Accessibility in UI5 Web Components
 
-Accessibility refers to the possibility for everyone, including and especially people with disabilities, to access and use IT products. Making software work for more people should be of high priority. All users should be able to operate our software without loss of meaningful content, functionality, and efficiency when using assistive technologies.
+Accessibility refers to the possibility for everyone, including and especially people with special needs, to access and use IT products. Making software work for more people should be of high priority. All users should be able to operate our software without loss of meaningful content, functionality, and efficiency when using assistive technologies.
 
 Following those principles in an ongoing approach, we at UI5 Web Components aim to bring accessibility to life by providing the appropriate accessibility features, and following precise accessibility requirements and processes. 
 
 
 ## Web Components & Accessibility
 
-Web Components allow developers to make their own custom components with native HTML and JavaScript with the usage of custom elements, shadow DOM, and templates. In HTML you can define an element using a role.  When you use semantic elements, you don’t need to define a role as these elements receive all relevant aria mappings out of the box. However, this is not the case when you use custom elements where you should add all relevant accessibility attributes yourselves.
+Web Components allow developers to make their own custom components with native HTML and JavaScript using custom elements, shadow DOM, and templates. In HTML, you can define an element using a role.  When you use semantic elements, you don’t need to define a role as these elements receive all relevant aria mappings out of the box. However, this is not the case when you use custom elements where you should add all relevant accessibility attributes yourselves.
 
 This is not needed in UI5 Web Components, because when using our elements, all relevant accessibility attributes for a certain component will be applied in the shadow DOM, without further setup. Additionally, many accessibility-related APIs are available. They can be used to enhance the accessibility in the context of each application.
 
@@ -23,7 +23,7 @@ Many accessibility features are built into the core design elements upfront and 
 
 UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards support in order to aid people using screen reader software.
 
-Navigation with the keyboard and screen reader should work properly together. In order for this to happen, you need to use the correct ARIA attributes and to map them to their HTML counterparts. With UI5 Web Components you will receive ARIA mapped elements out of the box. For example let's add a `ui5-combobox` component:
+Navigation with the keyboard and screen reader should work properly together. In order for this to happen, you need to use the correct ARIA attributes and to map them to their HTML counterparts. With UI5 Web Components, you will receive ARIA mapped elements out of the box. For example, let's add a `ui5-combobox` component:
 
 ```html
 <ui5-combobox>
@@ -43,7 +43,7 @@ The Invisible Messaging service is designed to be used both internally in the co
 * ` InvisibleMessageMode.Assertive` - indicates that updates to the region have the highest priority and should be presented to the user immediately.
 * `InvisibleMessageMode.Polite` - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
 
-According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the `announce` method.
+According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message as early as possible in the application. Then, you should specify the text that has to be announced by the screen reader and the live region mode using the `announce` method.
 Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-messagestrip--docs)
 
 
@@ -51,7 +51,7 @@ Here is an example usage of the invisible messaging service - [Dynamic MessageSt
 
 All standard UI elements and controls are designed to be keyboard-enabled. All suitable input channels (such as mouse, keyboard, or touch) are treated equally according to the capabilities of the device or the individual preferences of the user. For example, some users may prefer using the keyboard instead of a mouse, which lets them work faster.
 
-Support for standard keystrokes, based on the role of the component element is available. Complex components also provide advanced keyboard handling, which is described in the Overview section of each component.
+Support for standard keystrokes based on the role of the component element is available. Complex components also provide advanced keyboard handling, which is described in the Overview section of each component.
 
 
 ### **Theming**
@@ -66,7 +66,7 @@ For more information regarding the available themes and how to use them, see the
 The mapping of the accessibility APIs to ARIA attributes is described in the following table:
 
 
-| UI5 Web Components Property | HTML attribute                                    | Description                                                                                                                                                                                         |
+| UI5 Web Components Property | HTML Attribute                                    | Description                                                                                                                                                                                         |
 | --------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `accessibleName`            | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
 | `accessibleNameRef`         | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
@@ -176,7 +176,7 @@ The `accessibilityTexts` property is currently supported in:
 
 ### accessibilityAttributes
 
-This property accepts an `object` with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in [Button](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-button--docs/). 
+This property accepts an `object` with property values, which will be used to generate additional accessibility attributes to the root element. For more detailed information on every object property, read the API description in [Button](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-button--docs/). 
 
 Setting the property on the custom element as:
 ```html
@@ -317,7 +317,7 @@ For Screen Reader Support, we recommend using JAWS 2021 + Chrome (latest), and f
 
 Please note that reference testing environments may change over time to reflect changes in the usage of different browsers, their maintenance period, and increased accessibility compliance.
 
-When reporting issues with different testing environments, please ensure that the issue is not false positive, a real accessibility concern is present, and there is an impact over the users. Therefore, we recommend to retest the issue using the mentioned reference testing tools and additionally with plain HTML.
+When reporting issues with different testing environments, please ensure that the issue is not false positive, a real accessibility concern is present, and there is an impact on the users. Therefore, we recommend to retest the issue using the mentioned reference testing tools and additionally with plain HTML.
 
 In order to process the issues correctly, we would like to have the following information provided:
 
@@ -339,7 +339,5 @@ In order to process the issues correctly, we would like to have the following in
 
 ## Note
 
-Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the SAPUI5 High Contrast theme and you are using browser different than Chrome and Edge this may cause conflicts, and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
+Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the SAPUI5 High Contrast theme and you are using browser different from Chrome and Edge, this may cause conflicts and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
 
-
-Next: [CSP](./08-CSP.md)

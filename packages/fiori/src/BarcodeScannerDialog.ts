@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -73,8 +73,8 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
 	renderer: litRender,
-	staticAreaTemplate: BarcodeScannerDialogTemplate,
-	staticAreaStyles: [BarcodeScannerDialogCss],
+	template: BarcodeScannerDialogTemplate,
+	styles: [BarcodeScannerDialogCss],
 	dependencies: [
 		Dialog,
 		BusyIndicator,
@@ -116,6 +116,16 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 class BarcodeScannerDialog extends UI5Element {
 	/**
+	 * Indicates whether the dialog is open.
+	 *
+	 * @public
+	 * @default false
+	 * @since 1.24.0
+	*/
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 * @default false
 	 * @private
@@ -136,9 +146,20 @@ class BarcodeScannerDialog extends UI5Element {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.type === "property" && changeInfo.name === "open") {
+			if (changeInfo.newValue) {
+				this.show();
+			} else {
+				this.close();
+			}
+		}
+	}
+
 	/**
 	 * Shows a dialog with the camera videostream. Starts a scan session.
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> property.
 	 */
 	show(): void {
 		if (this.loading) {
@@ -164,6 +185,7 @@ class BarcodeScannerDialog extends UI5Element {
 	/**
 	 * Closes the dialog and the scan session.
 	 * @public
+	 * @deprecated The method is deprecated in favour of <code>open</code> property.
 	 */
 	close():void {
 		this._closeDialog();
@@ -182,24 +204,24 @@ class BarcodeScannerDialog extends UI5Element {
 		return navigator.mediaDevices.getUserMedia(defaultMediaConstraints);
 	}
 
-	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+	_getDialog() {
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
-	async _getVideoElement() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
+	_getVideoElement() {
+		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
-	async _showDialog() {
-		this.dialog = await this._getDialog();
+	_showDialog() {
+		this.dialog = this._getDialog();
 		this.dialog.show();
+		this.open = true;
 	}
 
 	_closeDialog() {
 		if (this.dialog && this.dialog.opened) {
 			this.dialog.close();
+			this.open = false;
 		}
 	}
 
@@ -207,14 +229,14 @@ class BarcodeScannerDialog extends UI5Element {
 		this._decodeFromCamera();
 	}
 
-	async _resetReader() {
-		const videoElement = await this._getVideoElement();
+	_resetReader() {
+		const videoElement = this._getVideoElement();
 		videoElement.pause();
 		this._codeReader.reset();
 	}
 
-	async _decodeFromCamera() {
-		const videoElement = await this._getVideoElement();
+	_decodeFromCamera() {
+		const videoElement = this._getVideoElement();
 		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {

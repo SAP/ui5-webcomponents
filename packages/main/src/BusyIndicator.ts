@@ -7,7 +7,11 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
 
 // Template
@@ -76,10 +80,10 @@ class BusyIndicator extends UI5Element {
 
 	/**
 	 * Defines the size of the component.
-	 * @default "Medium"
+	 * @default "M"
 	 * @public
 	 */
-	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
+	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.M })
 	size!: `${BusyIndicatorSize}`;
 
 	/**
@@ -97,6 +101,15 @@ class BusyIndicator extends UI5Element {
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
 	delay!: number;
+
+	/**
+	 * Defines the placement of the text.
+	 *
+	 * @default "Bottom"
+	 * @public
+	 */
+	@property({ type: BusyIndicatorTextPlacement, defaultValue: BusyIndicatorTextPlacement.Bottom })
+	textPlacement!: `${BusyIndicatorTextPlacement}`;
 
 	/**
 	 * Defines if the component is currently in busy state.
@@ -125,6 +138,9 @@ class BusyIndicator extends UI5Element {
 		this.addEventListener("keyup", this._preventEventHandler, {
 			capture: true,
 		});
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -154,6 +170,12 @@ class BusyIndicator extends UI5Element {
 			root: {
 				"ui5-busy-indicator-root": true,
 			},
+		};
+	}
+	get textPosition() {
+		return {
+			top: this.text && this.textPlacement === BusyIndicatorTextPlacement.Top,
+			bottom: this.text && this.textPlacement === BusyIndicatorTextPlacement.Bottom,
 		};
 	}
 

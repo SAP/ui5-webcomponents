@@ -6,62 +6,62 @@
 	color: var(--_ui5_busy_indicator_color);
 }
 
-:host([size="Small"]) .ui5-busy-indicator-root {
+:host([size="S"]) .ui5-busy-indicator-root {
 	min-width: 1.625rem; /*width of the dots plus the gap between them*/
 	min-height: .5rem;
 }
 
-:host([size="Small"][text]:not([text=""])) .ui5-busy-indicator-root {
+:host([size="S"][text]:not([text=""])) .ui5-busy-indicator-root {
 	min-height: 1.75rem;
 }
 
-:host([size="Small"]) .ui5-busy-indicator-circle {
+:host([size="S"]) .ui5-busy-indicator-circle {
 	width: .5rem;
 	height: .5rem;
 }
 
-:host([size="Small"]) .ui5-busy-indicator-circle:first-child,
-:host([size="Small"]) .ui5-busy-indicator-circle:nth-child(2) {
+:host([size="S"]) .ui5-busy-indicator-circle:first-child,
+:host([size="S"]) .ui5-busy-indicator-circle:nth-child(2) {
 	margin-inline-end: 0.0625rem;
 }
 
 :host(:not([size])) .ui5-busy-indicator-root,
-:host([size="Medium"]) .ui5-busy-indicator-root {
+:host([size="M"]) .ui5-busy-indicator-root {
 	min-width: 3.375rem; /*width of the dots plus the gap between them*/
 	min-height: 1rem;
 }
 
-:host([size="Medium"]) .ui5-busy-indicator-circle:first-child,
-:host([size="Medium"]) .ui5-busy-indicator-circle:nth-child(2) {
+:host([size="M"]) .ui5-busy-indicator-circle:first-child,
+:host([size="M"]) .ui5-busy-indicator-circle:nth-child(2) {
 	margin-inline-end: 0.1875rem;
 }
 
 :host(:not([size])[text]:not([text=""])) .ui5-busy-indicator-root,
-:host([size="Medium"][text]:not([text=""])) .ui5-busy-indicator-root {
+:host([size="M"][text]:not([text=""])) .ui5-busy-indicator-root {
 	min-height: 2.25rem;
 }
 
 :host(:not([size])) .ui5-busy-indicator-circle,
-:host([size="Medium"])  .ui5-busy-indicator-circle {
+:host([size="M"])  .ui5-busy-indicator-circle {
 	width: 1rem;
 	height: 1rem;
 }
 
-:host([size="Large"]) .ui5-busy-indicator-root {
+:host([size="L"]) .ui5-busy-indicator-root {
 	min-width: 6.5rem; /*width of the dots plus the gap between them*/
 	min-height: 2rem;
 }
 
-:host([size="Large"]) .ui5-busy-indicator-circle:first-child,
-:host([size="Large"]) .ui5-busy-indicator-circle:nth-child(2) {
+:host([size="L"]) .ui5-busy-indicator-circle:first-child,
+:host([size="L"]) .ui5-busy-indicator-circle:nth-child(2) {
 	margin-inline-end: 0.25rem;
 }
 
-:host([size="Large"][text]:not([text=""])) .ui5-busy-indicator-root {
+:host([size="L"][text]:not([text=""])) .ui5-busy-indicator-root {
 	min-height: 3.25rem;
 }
 
-:host([size="Large"]) .ui5-busy-indicator-circle {
+:host([size="L"]) .ui5-busy-indicator-circle {
 	width: 2rem;
 	height: 2rem;
 }
@@ -89,10 +89,11 @@
 	flex-direction: column;
 }
 
-.ui5-busy-indicator-busy-area:focus {
+:host([desktop]) .ui5-busy-indicator-busy-area:focus,
+.ui5-busy-indicator-busy-area:focus-visible {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
-    border-radius: var(--_ui5_busy_indicator_focus_border_radius);
+	border-radius: var(--_ui5_busy_indicator_focus_border_radius);
 }
 
 .ui5-busy-indicator-circles-wrapper {
@@ -128,9 +129,17 @@
 
 .ui5-busy-indicator-text {
 	width: 100%;
-	margin-top: .25rem;
 	text-align: center;
 }
+
+:host([text-placement="Top"]) .ui5-busy-indicator-text {
+	margin-bottom: 0.5rem
+ }
+ 
+ :host(:not([text-placement])) .ui5-busy-indicator-text,
+ :host([text-placement="Bottom"]) .ui5-busy-indicator-text {
+	  margin-top: 0.5rem;
+ }
 
 @keyframes grow {
 	0%, 50%, 100% {
@@ -140,7 +149,7 @@
 	}
 	25% {
 		-webkit-transform: scale(1);
-		-moz-transform: scale(1);
+		-moz-transform: scale(1);   
 		transform: scale(1);
 	}
 }

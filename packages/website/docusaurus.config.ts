@@ -3,6 +3,32 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import packageJson from "./package.json";
 
+
+console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
+
+const LATEST_URL_PARTH = "/ui5-webcomponents/";
+const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nightly/";
+
+const LATEST_DEPLOYMENT = process.env.DEPLOYMENT_TYPE === "latest";
+const DEVELOPMENT_ENVIRONMENT =  process.env.NODE_ENV === "development";
+
+const getBaseURL = () => {
+  // localhost
+  if (DEVELOPMENT_ENVIRONMENT) {
+    return "/";
+  }
+
+  // latest deployment or nightly deployment
+  return LATEST_DEPLOYMENT ? LATEST_URL_PARTH : NIGHTLY_URL_PARTH;
+};
+
+const BASE_URL = getBaseURL();
+
+const getFullURL = () => {
+  return DEVELOPMENT_ENVIRONMENT ? `${BASE_URL}` : `https://sap.github.io${BASE_URL}`
+}
+
+
 const config: Config = {
   title: 'UI5 Web Components',
   tagline: 'An open-source UI components library for building enterprise-ready applications!',
@@ -12,7 +38,7 @@ const config: Config = {
   url: 'https://sap.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/ui5-webcomponents/preview/',
+  baseUrl: BASE_URL,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -79,6 +105,11 @@ const config: Config = {
           activeBasePath: 'icons',
         },
         {
+          to: 'play/',
+          label: 'Playground',
+          activeBasePath: 'play',
+        },
+        {
           type: 'custom-settingsNavbarItem',
           position: "right",
         },
@@ -106,7 +137,7 @@ const config: Config = {
       copyright: `© Copyright ${new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors`,
       logo: {
         alt: 'SAP Logo',
-        src: 'https://sap.github.io/ui5-webcomponents/assets/footer/sap-1920-1440.svg',
+        src: 'https://sap.github.io/ui5-webcomponents/img/footer/sap-1920-1440.svg',
         width: 160,
         height: 51,
       },
@@ -168,11 +199,19 @@ const config: Config = {
           items: [
             {
               label: 'Privacy',
-              href: 'https://www.sap.com/about/legal/privacy.html',
+              href: `${getFullURL()}Privacy`,
             },
             {
               label: 'Legal Disclosure',
-              href: 'https://www.sap.com/about/legal/impressum.html',
+              href: 'https://www.sap.com/impressum',
+            },
+            {
+              label: 'Terms of Use',
+              href: 'https://www.sap.com/terms-of-use',
+            },
+            {
+              label: 'Trademark',
+              href: 'https://www.sap.com/trademark',
             },
           ],
         },

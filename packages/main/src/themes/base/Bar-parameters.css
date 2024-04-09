@@ -1,0 +1,8 @@
+:root {
+	--_ui5_bar_base_height: 2.75rem;
+	--_ui5_bar_subheader_height: 3rem;
+	--_ui5_bar-start-container-padding-start: 0.75rem;
+	--_ui5_bar-mid-container-padding-start-end: 0.5rem;
+	--_ui5_bar-end-container-padding-end: 0.75rem;
+	--_ui5_bar_subheader_margin-top: -0.0625rem;
+}

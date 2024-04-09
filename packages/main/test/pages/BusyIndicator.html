@@ -21,33 +21,34 @@
 
 
 <link rel="stylesheet" type="text/css" href="./styles/BusyIndicator.css">
+<link rel="stylesheet" type="text/css" href="./styles/Dialog.css">
 </head>
 
 <body class="busyindicator1auto">
 	<ui5-title>Large ui5-busy-indicator</ui5-title>
-	<ui5-busy-indicator active size="Large"></ui5-busy-indicator>
+	<ui5-busy-indicator active size="L"></ui5-busy-indicator>
 	<br/>
 	<br/>
 
 	<ui5-title>Default Medium ui5-busy-indicator</ui5-title>
-	<ui5-busy-indicator size="Medium" active id="indicator1"></ui5-busy-indicator>
+	<ui5-busy-indicator size="M" active id="indicator1"></ui5-busy-indicator>
 
 	<br />
 	<br />
-	<ui5-busy-indicator size="Medium" active id="indicator2"></ui5-busy-indicator>
+	<ui5-busy-indicator size="M" active id="indicator2"></ui5-busy-indicator>
 
 	<ui5-title>ui5-busy-indicator with text</ui5-title>
 
 	<br />
 	<br />
-	<ui5-busy-indicator active text="Loading" class="busyindicator2auto"></ui5-busy-indicator>
-
+	<ui5-busy-indicator id="busy-indicator-text-placement-bottom" active text="Loading" class="busyindicator2auto"></ui5-busy-indicator>
+	<ui5-busy-indicator id="busy-indicator-text-placement-top" text="Loading" text-placement="Top" active class="busyindicator2auto"></ui5-busy-indicator>
 	<br />
 	<br />
 
 	<div>
 		<ui5-button id="beforeIndicatorWithBtn">focus stop before</ui5-button>
-		<ui5-busy-indicator id="indicatorWithBtn" size="Medium" active>
+		<ui5-busy-indicator id="indicatorWithBtn" size="M" active>
 			<ui5-button>Hello World</ui5-button>
 		</ui5-busy-indicator>
 		<ui5-button id="afterIndicatorWithBtn" >focus stop after</ui5-button>
@@ -55,7 +56,7 @@
 
 	<br />
 	<br />
-	<ui5-busy-indicator size="Medium" active text="Loading">
+	<ui5-busy-indicator size="M" active text="Loading">
 		<ui5-checkbox text="Hello World"></ui5-checkbox>
 	</ui5-busy-indicator>
 
@@ -65,7 +66,7 @@
 	<ui5-button id="fetch-btn" class="busyindicator3auto">Fetch List Data</ui5-button>
 	<br>
 	<br>
-	<ui5-busy-indicator id="busy-container" class="busyindicator4auto" size="Medium" text="Loading">
+	<ui5-busy-indicator id="busy-container" class="busyindicator4auto" size="M" text="Loading">
 		<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items" class="busyindicator5auto"></ui5-list>
 	</ui5-busy-indicator>
 
@@ -75,7 +76,7 @@
 	<br>
 	<br>
 
-	<ui5-busy-indicator size="Medium" active class="busyindicator6auto">
+	<ui5-busy-indicator size="M" active class="busyindicator6auto">
 		<ui5-list class="busyindicator7auto">
 			<ui5-li>Item 1</ui5-li>
 			<ui5-li>Item 2</ui5-li>
@@ -83,7 +84,7 @@
 		</ui5-list>
 	</ui5-busy-indicator>
 
-	<ui5-busy-indicator size="Medium" active class="busyindicator6auto" text="Custom loading text">
+	<ui5-busy-indicator size="M" active class="busyindicator6auto" text="Custom loading text">
 		<ui5-list class="busyindicator7auto">
 			<ui5-li>Item 1</ui5-li>
 			<ui5-li>Item 2</ui5-li>
@@ -106,21 +107,21 @@
 
 	<br>
 	<br>
-	<ui5-busy-indicator size="Small" active></ui5-busy-indicator>
+	<ui5-busy-indicator size="S" active></ui5-busy-indicator>
 	<br>
 	<br>
 	<span>Medium </span>
 
 	<br>
 	<br>
-	<ui5-busy-indicator size="Medium" active></ui5-busy-indicator>
+	<ui5-busy-indicator size="M" active></ui5-busy-indicator>
 	<br>
 	<br>
 	<span>Large </span>
 
 	<br>
 	<br>
-	<ui5-busy-indicator size="Large" active></ui5-busy-indicator>
+	<ui5-busy-indicator size="L" active></ui5-busy-indicator>
 	<br>
 	<br>
 
@@ -172,6 +173,15 @@
 		</div>
 	</ui5-dialog>
 
+	<ui5-button id="open-dialog-loading-text">Open Dialog with loading text indicator</ui5-button>
+	<ui5-dialog id="dialog-loading-text"  header-text="Loading Data" initial-focus="btnOk">
+			<ui5-busy-indicator style="display: block;" active text="Loading data from backend server" text-placement="Top">
+			</ui5-busy-indicator>
+			<div slot="footer" class="dialogFooter">
+				<ui5-button id="btnOk" design="Emphasized">OK</ui5-button>
+			</div>
+	</ui5-dialog>
+
 	<br>
 	<br>
 	<span>Indicator with delay</span>
@@ -207,6 +217,7 @@
       </div>
     </div>
     <br />
+
 
 	<script>
 		document.getElementById("fetch-btn").addEventListener("click", function(event) {
@@ -270,6 +281,11 @@
 			document.getElementById("dialog-delayed-indicator-indicator").active = true;
 			document.getElementById("dialog-delayed-indicator").show();
 		});
+
+		document.getElementById("open-dialog-loading-text").addEventListener("click", function () {
+			document.getElementById("dialog-loading-text").show();
+		});
+
 	</script>
 </body>
 

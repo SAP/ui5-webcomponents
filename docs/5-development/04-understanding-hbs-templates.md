@@ -1,8 +1,8 @@
-# Understanding the Handlebars (.hbs) templates
+# Understanding the Handlebars (.hbs) Templates
 
 The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.
 
-## Table of contents
+## Table of Contents
 1. [Handlebars compilation](#compilation)
 2. [Design goals](#design_goals)
 3. [The context in `.hbs` files](#context)
@@ -37,7 +37,7 @@ The following `src/Demo.hbs` template
 <button>{{text}}</button>
 ```
 
-will be compiled to `dist/generated/templates/DemoTemplate.lit.js` with the following content:
+will be compiled to `dist/generated/templates/DemoTemplate.lit.js` with the following content,
 
 ```js
 import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -47,7 +47,7 @@ export default block0;
 
 and later tree-shaken by the bundler and bundled along with the rest of the component's code.
 
-Therefore, the `.hbs` file is there just for convenience, the end result will always be optimized lit-html.
+Therefore, the `.hbs` file is there just for convenience, the end result will always be an optimized lit-html.
 
 ## 2. Design goals of the Handlebars templates <a name="design_goals"></a>
 
@@ -89,7 +89,7 @@ but `this` is optional, so it's almost never used.
 
 ### 3.2 Context in loops  <a name="context_loops"></a>
 
-In a loop the context is always the current item, and not the component itself. 
+In a loop, the context is always the current item, and not the component itself. 
 
 Example:
 
@@ -216,7 +216,7 @@ In this example, even though we're looping over an item from the array, we can s
 
 You can use the following features when writing `.hbs` templates:
 
-### Bindings <a name="syntax_bindings"></a>
+### 4.1 Bindings <a name="syntax_bindings"></a>
 
 You can access any property from the context (generally the web component instance) in your `.hbs` template with `{{` and `}}`.
 
@@ -346,7 +346,7 @@ while the example above demonstrates passing an _HTML element_ (hence `Object`, 
 *Note:* Although this technique is allowed and has its uses (such as cloning slotted elements to another component),
 passing HTML directly is strongly discouraged. The best practice is to always write your HTML explicitly in the template. 
 
-### Conditions <a name="syntax_conditional"></a>
+### 4.2 Conditions <a name="syntax_conditional"></a>
 
 You can use `if`, `else` and `unless` to create conditions.
 
@@ -414,7 +414,7 @@ and then use this value in `Demo.hbs`:
 {{/if}}
 ```
 
-### Loops <a name="syntax_loops"></a>
+### 4.3 Loops <a name="syntax_loops"></a>
 
 You can use `each` to loop over arrays.
 
@@ -453,7 +453,7 @@ See the previous section (especially the [Context in loops](#context_loops) part
 
 You can access the index of the currently looped item with the special `{{@index}}` variable. Note that `{{@index}}` is zero-based.
 
-For example, the following template:
+For example, the following template,
 
 ```handlebars
 {{#each items}}
@@ -473,7 +473,7 @@ will produce:
 This is a common technique to create unique [shadow parts](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) for items
 within a UI5 Web Component.
 
-### Property assignment (the `.` prefix) <a name="syntax_dot"></a>
+### 4.4 Property assignment (the `.` prefix) <a name="syntax_dot"></a>
 
 The `.` prefix allows you to bind by property, rather than by attribute.
 
@@ -514,7 +514,7 @@ document.getElementById("myId").item
 
 would return the `item` object because it was set as a property.
 
-### Boolean attribute assignment (the `?` prefix) <a name="syntax_question_mark"></a>
+### 4.5 Boolean attribute assignment (the `?` prefix) <a name="syntax_question_mark"></a>
 
 The `?` prefix signifies that an attribute must not be set in DOM at all, if the bound value is falsy.
 
@@ -556,7 +556,7 @@ The output in DOM would be:
 
 All attributes that had the `?` prefix and were bound to a falsy value are gone from DOM.
 
-However, if you did not use the `?` prefix:
+However, if you did not use the `?` prefix
 
 ```handlebars
 <input
@@ -571,7 +571,7 @@ However, if you did not use the `?` prefix:
 />
 ```
 
-even though `checked`, `readonly`, and `disabled` are equal to `false`, the resulting DOM would be:
+even though `checked`, `readonly`, and `disabled` are equal to `false`, the resulting DOM would be
 
 ```html
 <input
@@ -589,7 +589,7 @@ even though `checked`, `readonly`, and `disabled` are equal to `false`, the resu
 which is not what we want, since boolean HTML attributes don't need to have a value at all to be considered set, only their presence is required.
 Therefore, always bind boolean attributes with `?`. 
 
-### Event handlers assignment (the `@` prefix) <a name="syntax_at"></a>
+### 4.6 Event handlers assignment (the `@` prefix) <a name="syntax_at"></a>
 
 You can bind events as follows:
 
@@ -605,11 +605,11 @@ In the `Demo.hbs` file:
 <button @click="{{onClick}}"></button>
 ```
 
-### Style maps <a name="syntax_style_maps"></a>
+### 4.7 Style maps <a name="syntax_style_maps"></a>
 
 Style maps are an easy and useful tool to apply multiple styles to an element dynamically.
 
-In order to use a style map in your `.hbs` template you must bind a `styles` property (or as in the next example, a getter called `styles`).
+In order to use a style map in your `.hbs` template, you must bind a `styles` property (or as in the next example, a getter called `styles`).
 Any binding to a `styles` object on a `style` attribute will be treated as a style map.
 
 In the `Demo.js` file:
@@ -655,14 +655,14 @@ this.styles = "display: none; visibility: hidden";
 <div style="{{styles}}"></div>
 ```
 
-In the first example we build a style value manually, and in the second example we pass hard-coded styles as a string. None of these are CSP-compliant.
+In the first example, we build a style value manually, and in the second example we pass hard-coded styles as a string. None of these are CSP-compliant.
 The correct way would be to pass objects (as in the first example), in which case a style map will be used.
 
-### Class maps <a name="syntax_class_maps"></a>
+### 4.8 Class maps <a name="syntax_class_maps"></a>
 
 Class maps are an easy tool to set multiple classes to an element - either conditionally, or unconditionally.
 
-In order to use a class map in your `.hbs` template you must bind a `classes` property (or as in the next example, a getter called `classes`) to a `class` attribute:
+In order to use a class map in your `.hbs` template, you must bind a `classes` property (or as in the next example, a getter called `classes`) to a `class` attribute:
 
 ```js
 get classes() {
@@ -693,7 +693,7 @@ get classes() {
 Here, all 3 HTML elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
 are unconditional (`ui5-demo-main` and `ui5-section`) so these classes will always be set, however the rest are going to be set only if certain criteria are met.
 
-### Partials <a name="syntax_partials"></a>
+### 4.9 Partials <a name="syntax_partials"></a>
 
 You can use partials to reuse code in `.hbs` templates:
 
@@ -751,7 +751,7 @@ Here we define two empty partials (`beforeContent` and `afterContent`) for other
 *Note:* Partials do not have their own context. When a partial is processed, its content is treated as if directly
 written at the partial's insertion point.
 
-### Include <a name="syntax_include"></a>
+### 4.10 Include <a name="syntax_include"></a>
 
 You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PATH_TO_FILE` is a relative or absolute path to the `.hbs` file you want to include.
 
@@ -785,11 +785,11 @@ In `Demo2.hbs`:
 {{/inline}}
 ```
 
-Then the `Demo2` component will use the `.hbs` file of the `Demo` component, however with its own version of its partials.
+Then the `Demo2` component will use the `.hbs` file of the `Demo` component but with its own version of its partials.
 
 ## 5. Using the `slot` element <a name="slots"></a>
 
-### Rendering slots <a name="slots_rendering"></a>
+### 5.1 Rendering slots <a name="slots_rendering"></a>
 
 The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component, in a desired place in the shadow DOM.
 You should render each slot, defined in your component's metadata (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)), somewhere in the `.hbs` template.
@@ -846,12 +846,12 @@ In `Page.hbs`:
 
 We render 3 `slot` elements - a default slot (unnamed) and 2 named slots - respectively with `name` equal to `header` and `footer`.
 
-All children, passed to the component, with no `slot` attribute will then be rendered by the browser where the default `<slot></slot>` is,
+All children, passed to the component with no `slot` attribute, will then be rendered by the browser where the default `<slot></slot>` is,
 and all children with attributes `slot="header"` / `slot="footer"` will be rendered where the respective named `slot` is.
 
-### Individual slots <a name="slots_individual"></a>
+### 5.2 Individual slots <a name="slots_individual"></a>
 
-All children, assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
+All children assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
 Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component. 
 
 The `individualSlots` slot metadata configuration setting (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)) allows you to have a separate physical slot for each child belonging to a certain slot.
@@ -900,4 +900,3 @@ The resulting DOM from the loop above will look like this:
 
 This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally rendered next to each other in a single slot.
 
-Next: [Testing UI5 Web Components](./05-testing-UI5-Web-Components.md)

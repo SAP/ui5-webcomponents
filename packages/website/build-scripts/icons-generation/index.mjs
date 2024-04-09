@@ -81,7 +81,7 @@ const _generateIconsPage = (sourceDir, config) => {
 
             const iconNameImport = `${fileNameImportName}SvgName`;
             const svgImport = `${capitalize(fileNameImportName)}Svg`;
-            
+    
             imports += `
             import ${iconNameImport} from "../local-cdn/local-cdn/${config.dir}/dist/${fileName}.js";
             import ${svgImport} from "../local-cdn/local-cdn/${config.dir}/dist/${config.version}/${fileName}.svg";
@@ -91,6 +91,7 @@ const _generateIconsPage = (sourceDir, config) => {
         <div
             tabIndex="-1"
             className="icon__wrapper"
+            data-icon-name={${iconNameImport}.replace("tnt/", "").replace("business-suite/", "")}
             onClick={function(e) {
                 const target = e.target;
 
@@ -100,10 +101,10 @@ const _generateIconsPage = (sourceDir, config) => {
 
                     setTimeout(() => {
                         acceptSVG.classList.remove("icon__svg--accept--visible");
-                    }, 600);
+                    }, 2000);
                 }
             }}>
-    
+
             <AcceptSvg id="${svgImport}_accept" className="icon__svg--accept"/>
             <div id="${svgImport}_svg"  className="icon__wrapper__svg"><${svgImport} fill="var(--ifm-font-color-base)"/></div>
             <span className="icon__wrapper__title">{${iconNameImport}.replace("tnt/", "").replace("business-suite/", "")}</span>
@@ -132,12 +133,31 @@ const _generateIconsPage = (sourceDir, config) => {
                 <div style={{
                         padding: "2rem 2rem",
                     }}>
-                    
-                    <Heading as="h2" style={{ marginBottom: "0.125rem" }}>${config.title}</Heading>
-                    <Link to="${config.npmLink}">${config.npmPackage}</Link>
-    
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            <Heading as="h2" style={{ marginBottom: "0.125rem" }}>${config.title}</Heading>
+                            <Link to="${config.npmLink}">${config.npmPackage}</Link>
+                        </div>
+                        <div style={{ marginTop: "1rem" }}>
+                        <span role="presentation"></span>
+                        <input className="icons__search" type="search" placeholder="Filter icons..." aria-label="Filter icons" onInput={function (e) {
+                            [...document.querySelectorAll("[data-icon-name]")].forEach(iconWrapper => {
+                                const iconName = iconWrapper.getAttribute("data-icon-name").toLowerCase();
+                                iconWrapper.classList.toggle("hidden", !iconName.includes(e.target.value))
+                            })
+
+                            document
+                                .querySelector(".icon__not__found")
+                                .classList
+                                .toggle("hidden", ![...document.querySelectorAll("[data-icon-name]")].every(iconWrapper => iconWrapper.classList.contains("hidden")))
+                        }} />
+                    </div>
+                    </div>
                     <div className="icon__grid">
                         ${icons}
+                    </div>
+                    <div className="icon__not__found hidden">
+                        <h2>No matching icons found</h2>
                     </div>
                 </div>
         );
@@ -162,7 +182,7 @@ ${additionalImports}
 ${imports}
 ${classDef}`;
     }
-   
+
     writeFile(config.dir, content);
 };
 

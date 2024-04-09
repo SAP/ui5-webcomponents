@@ -27,10 +27,10 @@ describe("List Tests", () => {
 
 	it("List is rendered", async () => {
 		const list = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
-		const busyInd = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-busy-row");
+		const loadingInd = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-loading-row");
 
 		assert.ok(await list.isExisting(), "List is rendered");
-		assert.notOk(await busyInd.isExisting(), "Busy indicator is not rendered, when List is not busy");
+		assert.notOk(await loadingInd.isExisting(), "Busy indicator is not rendered, when List is not loading");
 	});
 
 	it("itemClick and selectionChange events are fired in Single selection", async () => {
@@ -73,7 +73,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await secondItem.getProperty("id"), await selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
-	it("selection is reverted if selectionChange event is prevented and the mode is SingleSelect", async () => {
+	it("selection is reverted if selectionChange event is prevented and the selectionMode is Single", async () => {
 		const firstItem = await browser.$("#listPreventSelectionChangeSingleSelect #country1");
 		const thirdItem = await browser.$("#listPreventSelectionChangeSingleSelect #country3");
 
@@ -85,10 +85,10 @@ describe("List Tests", () => {
 		assert.ok(await thirdItem.getAttribute("selected"), "Selection reverted to third item");
 	});
 
-	it("selection is reverted if selectionChange event is prevented  and the mode is MultiSelect", async () => {
-		const firstItem = await browser.$("#listPreventSelectionChangeMultiSelect #country1");
-		const secondItem = await browser.$("#listPreventSelectionChangeMultiSelect #country2");
-		const thirdItem = await browser.$("#listPreventSelectionChangeMultiSelect #country3");
+	it("selection is reverted if selectionChange event is prevented  and the selectionMode is Multiple", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeMultiple #country1");
+		const secondItem = await browser.$("#listPreventSelectionChangeMultiple #country2");
+		const thirdItem = await browser.$("#listPreventSelectionChangeMultiple #country3");
 
 		assert.notOk(await firstItem.getAttribute("selected"), "The first item is initially not selected");
 		assert.ok(await secondItem.getAttribute("selected"), "The second item is initially selected");
@@ -170,20 +170,20 @@ describe("List Tests", () => {
 		assert.notOk(await secondItem.getAttribute("selected"), "The second item is not selected");
 	});
 
-	it("mode: none. clicking item does not select it", async () => {
+	it("selectionMode: none. clicking item does not select it", async () => {
 		list.id = "#list1";
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
 
 		const root = await list.getRoot();
-		assert.equal(await root.getProperty("mode"), "None", "default mode is None");
+		assert.equal(await root.getProperty("selectionMode"), "None", "default selectionMode is None");
 		assert.notOk(await firstItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: singleselect. clicking item selects it", async () => {
+	it("selectionMode: Single. clicking item selects it", async () => {
 		const root = await list.getRoot();
-		await root.setProperty("mode", "SingleSelect");
+		await root.setProperty("selectionMode", "Single");
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
@@ -191,7 +191,7 @@ describe("List Tests", () => {
 		assert.ok(await firstItem.getAttribute("selected"), "item is selected");
 	});
 
-	it("mode: singleselect. clicking another item selects deselects the first", async () => {
+	it("selectionMode: single. clicking another item selects deselects the first", async () => {
 		const firstItem = await list.getItem(0);
 		const secondItem = await list.getItem(1);
 		await secondItem.click();
@@ -200,10 +200,10 @@ describe("List Tests", () => {
 		assert.notOk(await firstItem.getAttribute("selected"), "first item is not selected");
 	});
 
-	it("mode: multiselect. clicking every item selects it independently from the other items", async () => {
+	it("selectionMode: Multiple. clicking every item selects it independently from the other items", async () => {
 		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
-		await root.setProperty("mode", "MultiSelect");
+		await root.setProperty("selectionMode", "Multiple");
 
 		const firstItem = await list.getItem(0);
 		const secondItem = await list.getItem(1);
@@ -219,10 +219,10 @@ describe("List Tests", () => {
 		assert.notOk(await secondItem.getAttribute("selected"), "item is not selected");
 	});
 
-	it("mode: delete. items have X buttons which delete them", async () => {
+	it("selectionMode: delete. items have X buttons which delete them", async () => {
 		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
-		await root.setProperty("mode", "Delete");
+		await root.setProperty("selectionMode", "Delete");
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
@@ -236,10 +236,10 @@ describe("List Tests", () => {
 		assert.equal(await browser.$('#lblResult').getHTML(false), "Laptop HP: 1", "itemDelete event was fired for the right item");
 	});
 
-	it("mode: delete. DELETE key press - deletes item", async () => {
+	it("selectionMode: delete. DELETE key press - deletes item", async () => {
 		await browser.url(`test/pages/List_test_page.html`);
 		const root = await list.getRoot();
-		await root.setProperty("mode", "Delete");
+		await root.setProperty("selectionMode", "Delete");
 
 		const firstItem = await list.getItem(0);
 		await firstItem.click();
@@ -375,17 +375,17 @@ describe("List Tests", () => {
 		assert.strictEqual(await loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
 	});
 
-	// it("tests 'loadMore' event fired upon infinite scroll", async () => {
-	// 	const btn = await browser.$("#btnTrigger");
-	// 	const loadMoreResult = await browser.$("#loadMoreResult");
+	it("tests 'loadMore' event fired upon infinite scroll", async () => {
+		const btn = await browser.$("#btnTrigger");
+		const loadMoreResult = await browser.$("#loadMoreResult");
 
-	// 	await btn.click();
+		await btn.click();
 
-	// 	await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
-	// 		timeout: 5000,
-	// 		timeoutMsg: "The event loadMore must be fired"
-	// 	});
-	// });
+		await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
+			timeout: 5000,
+			timeoutMsg: "The event loadMore must be fired"
+		});
+	});
 
 	it("detailPress event is fired", async () => {
 		const detailCounterResult = await browser.$("#detailPressCounter");
@@ -424,7 +424,7 @@ describe("List Tests", () => {
 		const justList = await browser.$("#justList");
 		const listDelete = await browser.$("#listDelete");
 		const emptyListDelete = await browser.$("#emptyListDelete");
-		const listMultiSelect = await browser.$("#listMultiSelect");
+		const listMultiple = await browser.$("#listMultiple");
 		const listSingleSelect = await browser.$("#listSingleSelect");
 
 		const keys = [
@@ -437,7 +437,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), "", "aria-label mode message is correct");
 		assert.strictEqual(await emptyListDelete.getProperty("ariaLabelModeText"), "", "aria-label mode message is empty when there are no items");
 		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
-		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
+		assert.strictEqual(await listMultiple.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
 	});
 
@@ -614,5 +614,142 @@ describe("List Tests", () => {
 
 		assert.strictEqual(rootTooltip, newTooltip, "Tooltip of root element is updated correctly at runtime.");
 		assert.strictEqual(rootTooltip, innerTooltip, "Tooltip of root element and title of inner li element are equal after runtime change.");
+	});
+
+	it("Tests the highlight property", async () => {
+		const listItem = await browser.$("#highlight ui5-li:nth-child(1)");
+		const initialValueState = "Error";
+		let highlightValue = await listItem.getProperty("highlight");
+
+		assert.strictEqual(highlightValue, initialValueState, "Highlight property is correctly set to the list item.");
+
+		const newValueState = "Information";
+		await listItem.setProperty("highlight", "Information");
+		highlightValue = await listItem.getProperty("highlight");
+
+		assert.strictEqual(highlightValue, newValueState, "Highlight property is correctly changed.");
+
+	});
+
+	it("Tests the growingButtonText property", async () => {
+		const list = await browser.$("#infiniteScrollEx2");
+		const btnText = "Custom text"
+		let growingBtnText = await list.getProperty("growingButtonText");
+
+		assert.strictEqual(growingBtnText, btnText, "GrowingButtonText property is correctly set to the list.");
+
+		const newBtnText = "New custom text";
+		await list.setProperty("growingButtonText", newBtnText);
+ 		growingBtnText = await list.getProperty("growingButtonText");
+
+		assert.strictEqual(growingBtnText, newBtnText, "GrowingButtonText property is correctly changed.");
+
+	});
+});
+
+describe("List drag and drop tests", () => {
+	const getDragOffset = async (draggedElement, dropTargetElement, targetPosition) => {
+		const EXTRA_OFFSET = 5;
+		const draggedRectangle = {
+			...await draggedElement.getLocation(),
+			...await draggedElement.getSize()
+		};
+
+		const dropTargetElementRectangle = {
+			...await dropTargetElement.getLocation(),
+			...await dropTargetElement.getSize()
+		}
+
+		const draggedElementCenter = (draggedRectangle.y + draggedRectangle.height / 2);
+		const droppedElementCenter = (dropTargetElementRectangle.y + dropTargetElementRectangle.height / 2);
+
+		let offsetToCenter = Math.round(droppedElementCenter - draggedElementCenter);
+
+		if (targetPosition === "Before") {
+			offsetToCenter -= EXTRA_OFFSET
+		} else if (targetPosition === "After") {
+			offsetToCenter += EXTRA_OFFSET;
+		}
+
+		return offsetToCenter;
+	};
+
+	const compareItemsOrder = async (listId, expectedItems) => {
+		const listItems = await browser.$$(`#${listId} > *`);
+		const results = await Promise.all(expectedItems.map((item, i) => item.isEqual(listItems[i])));
+
+		return results.every(value => value);
+	};
+
+	before(async () => {
+		await browser.url(`test/pages/ListDragAndDrop.html`);
+	});
+
+	it("Moving item After another", async () => {
+		const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd1 [ui5-li]");
+
+		let dragOffset = await getDragOffset(firstItem, secondItem, "After");
+		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd1", [secondItem, firstItem, thirdItem]), "Items order has changed");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
+
+		dragOffset = await getDragOffset(firstItem, thirdItem, "After");
+		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd1", [secondItem, thirdItem, firstItem]), "Items order has changed");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
+	});
+
+	it("Moving item Before another", async () => {
+		const [secondItem, thirdItem, firstItem] = await browser.$$("#listDnd1 [ui5-li]");
+
+		let dragOffset = await getDragOffset(firstItem, thirdItem, "Before");
+		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd1", [secondItem, firstItem, thirdItem]), "Items order has changed");
+
+		dragOffset = await getDragOffset(firstItem, secondItem, "Before")
+		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd1", [firstItem, secondItem, thirdItem]), "Items order has changed");
+	});
+
+	it("Moving item ON another", async () => {
+		const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd2 [ui5-li]");
+
+		await firstItem.dragAndDrop({ x: 0, y: 0 });
+		assert.ok(await compareItemsOrder("listDnd2", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
+
+		const dragOffset = await getDragOffset(firstItem, secondItem);
+		await firstItem.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd2", [secondItem, thirdItem]), "Items order has changed");
+		assert.ok(await secondItem.$("[ui5-li]").isEqual(firstItem), "First item is nested in second item");
+		assert.ok(await firstItem.isFocused(), "Item is focused");
+	});
+
+	it("Moving item from one list to another", async () => {
+		const [listOneFirstItem, listOneSecondItem, listOneThirdItem] = await browser.$$("#listDnd1 [ui5-li]");
+		const listTwoItem = await browser.$("#bg2")
+
+		const dragOffset = await getDragOffset(listTwoItem, listOneFirstItem, "After");
+		await listTwoItem.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd1", [listOneFirstItem, listTwoItem, listOneSecondItem, listOneThirdItem]), "Items order has changed");
+		assert.ok(await listTwoItem.isFocused(), "Item is focused");
+	});
+
+	it("Moving link to list that doesn't accept it", async () => {
+		const [firstItem, secondItem, thirdItem] = await browser.$$("#listDnd1 [ui5-li]");
+		const link = await browser.$("#link")
+
+		const dragOffset = await getDragOffset(link, firstItem, "After");
+		await link.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd1", [firstItem, secondItem, thirdItem]), "Items order has NOT changed");
+	});
+
+	it("Moving link to list that accepts it", async () => {
+		const [firstItem, secondItem] = await browser.$$("#listDnd2 [ui5-li]");
+		const link = await browser.$("#link")
+
+		const dragOffset = await getDragOffset(link, secondItem, "Before");
+		await link.dragAndDrop({ x: 0, y: dragOffset});
+		assert.ok(await compareItemsOrder("listDnd2", [firstItem, link, secondItem]), "Items order has changed");
 	});
 });

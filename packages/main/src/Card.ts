@@ -12,20 +12,10 @@ import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
 } from "./generated/i18n/i18n-defaults.js";
+import type CardHeader from "./CardHeader.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
-
-/**
- * Interface for components that may be slotted inside `ui5-card` as header
- * @public
- */
-interface ICardHeader extends HTMLElement {
-	subtitleText: string,
-	titleText: string,
-	status: string,
-	interactive: boolean,
-}
 
 /**
  * @class
@@ -40,7 +30,7 @@ interface ICardHeader extends HTMLElement {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Card";`
+ * `import "@ui5/webcomponents/dist/Card.js";`
  *
  * `import "@ui5/webcomponents/dist/CardHeader.js";` (for `ui5-card-header`)
  * @constructor
@@ -93,7 +83,7 @@ class Card extends UI5Element {
 	 * @public
 	*/
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	header!: Array<ICardHeader>;
+	header!: Array<CardHeader>;
 
 	static i18nBundle: I18nBundle;
 
@@ -129,7 +119,3 @@ class Card extends UI5Element {
 Card.define();
 
 export default Card;
-
-export type {
-	ICardHeader,
-};

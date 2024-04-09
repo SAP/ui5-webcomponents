@@ -15,7 +15,6 @@ export default {
 
 const Template: UI5StoryArgs<ProgressIndicator, StoryArgsSlots> = (args) =>
     html`<ui5-progress-indicator
-        ?disabled="${ifDefined(args.disabled)}"
         ?hide-value="${ifDefined(args.hideValue)}"
         value="${ifDefined(args.value)}"
         display-value="${ifDefined(args.displayValue)}"

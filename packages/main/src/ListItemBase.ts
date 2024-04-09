@@ -11,6 +11,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
 /**
  * @class
@@ -23,7 +24,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  */
 @customElement({
 	renderer: litRender,
-	styles,
+	styles: [styles, draggableElementStyles],
 })
 @event("_request-tabindex-change")
 @event("_focused")
@@ -37,6 +38,14 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
+
+	/**
+	 * Defines whether the item is movable.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
 
 	/**
 	* Defines if the list item should display its bottom border.
@@ -110,7 +119,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	/*
 	* Determines if th current list item either has no tabbable content or
-	* [TAB] is performed onto the last tabbale content item.
+	* [Tab] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter() {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);

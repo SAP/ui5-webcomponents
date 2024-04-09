@@ -65,7 +65,7 @@ let activeCb: CheckBox;
  *
  * The user can use the following keyboard shortcuts to toggle the checked state of the `ui5-checkbox`.
  *
- * - [SPACE, ENTER] - Toggles between different states: checked, not checked.
+ * - [Space],[Enter] - Toggles between different states: checked, not checked.
  *
  * ### ES6 Module Import
  *
@@ -75,6 +75,7 @@ let activeCb: CheckBox;
  * @public
  * @csspart root - Used to style the outermost wrapper of the `ui5-checkbox`
  * @csspart label - Used to style the label of the `ui5-checkbox`
+ * @csspart icon - Used to style the icon of the `ui5-checkbox`
  */
 @customElement({
 	tag: "ui5-checkbox",
@@ -264,6 +265,12 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	onBeforeRendering() {
 		this._enableFormSupport();
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	_enableFormSupport() {

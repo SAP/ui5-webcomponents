@@ -1,31 +1,31 @@
 import { assert } from "chai";
 
-describe("IllustratedMessage 'size' property", () => {
+describe("IllustratedMessage 'design' property", () => {
 	before(async () => {
 		await browser.url(`test/pages/IllustratedMessage.html`);
 	});
 
-	it("should return correct size", async () => {
+	it("should return correct design", async () => {
 		// Arrange
 		const illustratedMsg = await browser.$("#illustratedMsg2");
-		let illustratedMsgSize = await illustratedMsg.getProperty("size");
+		let illustratedMsgDesign = await illustratedMsg.getProperty("design");
 
 		// Assert
-		assert.strictEqual(illustratedMsgSize, "Auto", "'size' should be equal to 'Auto' by default");
+		assert.strictEqual(illustratedMsgDesign, "Auto", "'design' should be equal to 'Auto' by default");
 
 		// Act
-		await illustratedMsg.setProperty("size", "Base");
-		illustratedMsgSize = await illustratedMsg.getProperty("size");
+		await illustratedMsg.setProperty("design", "Base");
+		illustratedMsgDesign = await illustratedMsg.getProperty("design");
 
 		// Assert
-		assert.strictEqual(illustratedMsgSize, "Base", "'size' should be equal to 'Base'");
+		assert.strictEqual(illustratedMsgDesign, "Base", "'design' should be equal to 'Base'");
 
 		// Act
-		await illustratedMsg.setProperty("size", "Invalid");
-		illustratedMsgSize = await illustratedMsg.getProperty("size");
+		await illustratedMsg.setProperty("design", "Invalid");
+		illustratedMsgDesign = await illustratedMsg.getProperty("design");
 
 		// Assert
-		assert.strictEqual(illustratedMsgSize, "Auto", "'size' should be equal to 'Auto' when invalid value is passed");
+		assert.strictEqual(illustratedMsgDesign, "Auto", "'design' should be equal to 'Auto' when invalid value is passed");
 	});
 
 	it("should show up properly, when in panel and it expand/collapse", async () => {
@@ -112,7 +112,7 @@ describe("Vertical responsiveness", () => {
 		await browser.url(`test/pages/IllustratedMessage.html`);
 	});
 
-	it("content with auto size shrinks to fit the parent container", async () => {
+	it("content with auto design shrinks to fit the parent container", async () => {
 
 		const newContainerHeight = 300,
 			expectedMedia = "dialog",
@@ -134,7 +134,7 @@ describe("Vertical responsiveness", () => {
 		assert.strictEqual(illustratedMsgMedia, expectedMedia, "correct media");
 	});
 
-	it("content with auto size expands to fit the parent container", async () => {
+	it("content with auto design expands to fit the parent container", async () => {
 
 		const newContainerHeight = 500,
 			expectedMedia = "scene",
@@ -156,14 +156,14 @@ describe("Vertical responsiveness", () => {
 		assert.strictEqual(illustratedMsgMedia, expectedMedia, "correct media");
 	});
 
-	it("content with fixed size fits the parent container", async () => {
+	it("content with fixed design fits the parent container", async () => {
 
 		const newContainerHeight = 200,
 			expectedMedia = "dialog",
 			illustratedMsg = await browser.$("#illustratedMsg5");
 
-		// set fixed size
-		illustratedMsg.setProperty("size", "Dialog");
+		// set fixed design
+		illustratedMsg.setProperty("design", "Dialog");
 
 		// Act: apply new height
 		await browser.executeAsync(async (newContainerHeight, done) => {
@@ -200,7 +200,7 @@ describe("Vertical responsiveness", () => {
 	});
 });
 
-describe("Dot size resource handling", () => {
+describe("Dot design resource handling", () => {
 	before(async () => {
 		await browser.url(`test/pages/IllustratedMessage.html`);
 	});
@@ -208,12 +208,12 @@ describe("Dot size resource handling", () => {
 	it("uses substitute Spot illustration", async () => {
 
 		const illustratedMsg = await browser.$("#illustratedMsg1");
-		
+
 		// Act
 		await illustratedMsg.setProperty("name", "BeforeSearch"); // set an illustration which doesn't have original Dot SVG
-		await illustratedMsg.setProperty("size", "Dot");
+		await illustratedMsg.setProperty("design", "Dot");
 		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
-		
+
 		// Check
 		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Spot-BeforeSearch", "Spot SVG is used when no Dot is present");
 	});
@@ -221,12 +221,12 @@ describe("Dot size resource handling", () => {
 	it("uses original Dot illustration", async () => {
 
 		const illustratedMsg = await browser.$("#illustratedMsg1");
-		
+
 		// Act
 		await illustratedMsg.setProperty("name", "AddPeople"); // set an illustration which has original Dot SVG
-		await illustratedMsg.setProperty("size", "Dot");
+		await illustratedMsg.setProperty("design", "Dot");
 		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
-		
+
 		// Check
 		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Dot-AddPeople", "Dot is present, therefore used");
 	});
