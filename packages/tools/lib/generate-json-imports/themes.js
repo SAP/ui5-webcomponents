@@ -2,9 +2,12 @@ const fs = require("fs").promises;
 const path = require('path');
 const assets = require("../../assets-meta.js");
 
+const isTypeScript = process.env.UI5_TS;
+const ext = isTypeScript ? 'ts' : 'js';
+
 const generate = async () => {
 	const inputFolder = path.normalize(process.argv[2]);
-	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.ts`);
+	const outputFileDynamic = path.normalize(`${process.argv[3]}/Themes.${ext}`);
 
 // All supported optional themes
 	const allThemes = assets.themes.all;

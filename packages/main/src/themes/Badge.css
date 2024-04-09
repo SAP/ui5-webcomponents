@@ -51,7 +51,8 @@
 	cursor: pointer;
 }
 
-:host([interactive]) .ui5-badge-root:focus {
+:host([desktop][interactive]) .ui5-badge-root:focus,
+:host([interactive]) .ui5-badge-root:focus-visible {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: 1px;
 }

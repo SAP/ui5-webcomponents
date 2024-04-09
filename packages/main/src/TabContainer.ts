@@ -10,9 +10,10 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isSpace,
 	isEnter,
@@ -179,15 +180,6 @@ type TabContainerMoveEventDetail = {
 	},
 })
 class TabContainer extends UI5Element {
-	/**
-	 * Defines whether the tabs are in a fixed state that is not
-	 * expandable/collapsible by user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	fixed!: boolean;
-
 	/**
 	 * Defines whether the tab content is collapsed.
 	 * @default false
@@ -397,6 +389,9 @@ class TabContainer extends UI5Element {
 		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 		DragRegistry.subscribe(this);
 		this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -756,7 +751,6 @@ class TabContainer extends UI5Element {
 	}
 
 	_onItemSelect(selectedTabId: string) {
-		const previousTab = this._selectedTab;
 		const selectedTabIndex = this._itemsFlat!.findIndex(item => item.__id === selectedTabId);
 		const selectedTab = this._itemsFlat![selectedTabIndex] as Tab;
 
@@ -776,45 +770,6 @@ class TabContainer extends UI5Element {
 				}
 			}
 		});
-
-		if (this.fixed) {
-			return;
-		}
-
-		if (!this.shouldAnimate) {
-			this.toggle(selectedTab, previousTab);
-		} else {
-			this.toggleAnimated(selectedTab, previousTab);
-		}
-	}
-
-	async toggleAnimated(selectedTab: Tab, previousTab: Tab) {
-		const content = this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__content")!;
-		let animationPromise = null;
-
-		this._animationRunning = true;
-
-		if (selectedTab === previousTab) {
-			// click on already selected tab - animate both directions
-			this.collapsed = !this.collapsed;
-			animationPromise = this.collapsed ? this.slideContentUp(content) : this.slideContentDown(content);
-		} else {
-			// click on new tab - animate if the content is currently collapsed
-			animationPromise = this.collapsed ? this.slideContentDown(content) : Promise.resolve();
-			this.collapsed = false;
-		}
-
-		await animationPromise;
-		this._contentCollapsed = this.collapsed;
-		this._animationRunning = false;
-	}
-
-	toggle(selectedTab: Tab, previousTab: Tab) {
-		if (selectedTab === previousTab) {
-			this.collapsed = !this.collapsed;
-		} else {
-			this.collapsed = false;
-		}
 	}
 
 	/**
@@ -1402,10 +1357,6 @@ class TabContainer extends UI5Element {
 
 	get tablistAriaDescribedById() {
 		return this.hasItems ? `${this._id}-invisibleText` : undefined;
-	}
-
-	get shouldAnimate() {
-		return getAnimationMode() !== AnimationMode.None;
 	}
 
 	static async onDefine() {
