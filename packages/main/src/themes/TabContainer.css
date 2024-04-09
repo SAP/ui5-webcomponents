@@ -93,6 +93,7 @@
 	color: var(--_ui5_tc_overflow_text_color);
 }
 
+/*TODO checkout out how button is implemented */
 .ui5-tc__overflow > [ui5-button][focused] {
 	outline-offset: 0.125rem;
 	--_ui5_button_focused_border: none;

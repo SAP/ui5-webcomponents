@@ -48,10 +48,13 @@ function getSVGBlock(input, blockCounter) {
 	const definitionTS = `\nfunction blockSVG${blockCounter} (this: any, context: UI5Element, tags: string[], suffix: string | undefined) {
 		return svg\`${input}\`;
 	};`;
+	const definitionJS = `\nfunction blockSVG${blockCounter} (context, tags, suffix) {
+		return svg\`${input}\`;
+	};`;
 
 	return {
 		usage: `\${blockSVG${blockCounter}.call(this, context, tags, suffix)}`,
-		definition: definitionTS,
+		definition: process.env.UI5_TS ? definitionTS : definitionJS,
 	};
 }
 

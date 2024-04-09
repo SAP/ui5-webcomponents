@@ -1,5 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 
@@ -54,6 +57,12 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	inPopover!: boolean;
 
 	_sideNavigation!: SideNavigation;
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
 
 	get _tooltip() {
 		return this.title || undefined;
