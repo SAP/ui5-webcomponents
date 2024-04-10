@@ -1,9 +1,14 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import CustomListItem from "./CustomListItem.js";
+import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import type Menu from "./Menu.js";
+import HasPopup from "./types/HasPopup.js";
+
+// Styles
+import menuItemCss from "./generated/themes/MenuItem.css.js";
 
 /**
  * @class
@@ -15,21 +20,24 @@ import type Menu from "./Menu.js";
  *
  * ### Usage
  *
- * `ui5-menu-item` is an abstract element, representing a node in a `ui5-menu`. The menu itself is rendered as a list,
- * and each `ui5-menu-item` is represented by a list item (`ui5-li`) in that list. Therefore, you should only use
+ * `ui5-menu-item` represents a node in a `ui5-menu`. The menu itself is rendered as a list,
+ * and each `ui5-menu-item` is represented by a list item in that list. Therefore, you should only use
  * `ui5-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
  *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends CustomListItem
  * @since 1.3.0
  * @public
  */
-@customElement("ui5-menu-item")
-class MenuItem extends UI5Element {
+@customElement({
+	tag: "ui5-menu-item",
+	template: MenuItemTemplate,
+	styles: [CustomListItem.styles, menuItemCss],
+})
+class MenuItem extends CustomListItem {
 	/**
 	 * Defines the text of the tree item.
 	 * @default ""
@@ -119,12 +127,6 @@ class MenuItem extends UI5Element {
 	tooltip!: string;
 
 	/**
-	 * Indicates whether any of the element siblings have children items.
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithChildren!: boolean;
-
-	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -153,20 +155,30 @@ class MenuItem extends UI5Element {
 		return !!(this.items.length || this.busy);
 	}
 
-	get hasDummyIcon() {
-		return this._siblingsWithIcon && !this.icon;
+	get hasIcon() {
+		return !!this.icon;
 	}
 
 	get subMenuOpened() {
 		return !!this._subMenu?._popover?.isOpen();
 	}
 
-	get _additionalText() {
-		return this.hasSubmenu ? "" : this.additionalText;
-	}
-
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
+	}
+
+	get _focusable() {
+		return true;
+	}
+
+	get _accInfo() {
+		const accInfoSettings = {
+			role: "menuitem",
+			listItemAriaLabel: this.text,
+			ariaHaspopup: this.hasSubmenu ? HasPopup.Menu.toLowerCase() as Lowercase<HasPopup> : undefined,
+		};
+
+		return { ...super._accInfo, ...accInfoSettings };
 	}
 }
 

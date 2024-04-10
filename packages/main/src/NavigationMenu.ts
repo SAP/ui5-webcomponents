@@ -7,7 +7,6 @@ import {
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
 import type { MenuItemClickEventDetail } from "./Menu.js";
-import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
 import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
@@ -19,8 +18,6 @@ import menuCss from "./generated/themes/Menu.css.js";
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-
-type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * @class
@@ -64,21 +61,14 @@ class NavigationMenu extends Menu {
 	}
 
 	_itemMouseOver(e: MouseEvent) {
+		this._busyMouseOver();
+
 		if (isDesktop()) {
 			// respect mouseover only on desktop
-			const opener = e.target as OpenerStandardListItem;
-			let item = opener.associatedItem;
-
-			if (!item) {
-				// for nested <a>
-				const test = opener.parentElement as any;
-				if (opener.parentElement) {
-					item = test.associatedItem;
-				}
-			}
+			const item = e.target as MenuItem;
 
 			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item, opener);
+			this._startOpenTimeout(item);
 		}
 	}
 
@@ -99,8 +89,7 @@ class NavigationMenu extends Menu {
 	}
 
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const opener = e.detail.item as OpenerStandardListItem;
-		const item = opener.associatedItem;
+		const item = e.detail.item as MenuItem;
 		const mainMenu = this._findMainMenu(item);
 		const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
 			"item": item,
@@ -120,7 +109,7 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		this._prepareSubMenu(item, opener);
+		this._prepareSubMenu(item);
 	}
 
 	get accSideNavigationPopoverHiddenText() {

@@ -17,7 +17,7 @@
 		slot="header"
 		class="ui5-menu-dialog-header"
 	>
-	{{#if isSubMenuOpened}}
+	{{#if isSubMenuOpen}}
 		<ui5-button
 			icon="nav-back"
 			class="ui5-menu-back-button"
@@ -46,7 +46,7 @@
 	<div
 		id="{{_id}}-menu-main"
 	>
-	{{#if _currentItems.length}}
+	{{#if items.length}}
 		<ui5-list
 			id="{{_id}}-menu-list"
 			selection-mode="None"
@@ -55,30 +55,12 @@
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@ui5-item-focused={{_onItemFocus}}
+			@mouseover={{_itemMouseOver}}
+			@mouseout={{_itemMouseOut}}
+			@keydown={{_itemKeyDown}}
 		>
-		{{#each _currentItems}}
-			<ui5-menu-li
-				.associatedItem="{{this.item}}"
-				class="ui5-menu-item"
-				id="{{../_id}}-menu-item-{{@index}}"
-				.icon="{{this.item.icon}}"
-				accessible-name={{this.item.ariaLabelledByText}}
-				accessible-role="menuitem"
-				.additionalText="{{this.item._additionalText}}"
-				tooltip="{{this.item.tooltip}}"
-				selected="{{this.item.subMenuOpened}}"
-				?disabled={{this.item.disabled}}
-				?starts-section={{this.item.startsSection}}
-				?selected={{this.item.subMenuOpened}}
-				?is-phone={{../isPhone}}
-				@mouseover={{../_itemMouseOver}}
-				@mouseout={{../_itemMouseOut}}
-				@keydown={{../_itemKeyDown}}
-				@_focused={{../_onfocusin}}
-			>
-			</ui5-menu-li>
-		{{/each}}
+			<slot></slot>
 		</ui5-list>
 	{{else if busy}}
 		<ui5-busy-indicator

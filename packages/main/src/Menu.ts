@@ -24,13 +24,14 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
-import MenuListItem from "./MenuListItem.js";
-import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
-import type MenuItem from "./MenuItem.js";
+import MenuItem from "./MenuItem.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
-import type { ListItemClickEventDetail } from "./List.js";
+import type {
+	ListItemClickEventDetail,
+	ListItemFocusEventDetail,
+} from "./List.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -39,12 +40,6 @@ import {
 
 // Styles
 import menuCss from "./generated/themes/Menu.css.js";
-
-type CurrentItem = {
-	item: MenuItem,
-	position: number,
-	ariaHasPopup: string | undefined,
-}
 
 const MENU_OPEN_DELAY = 300;
 const MENU_CLOSE_DELAY = 400;
@@ -61,8 +56,6 @@ type MenuItemFocusEventDetail = {
 	ref: HTMLElement,
 	item: MenuItem,
 };
-
-type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * @class
@@ -105,8 +98,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		ResponsivePopover,
 		Button,
 		List,
-		StandardListItem,
-		MenuListItem,
+		MenuItem,
 		Icon,
 		BusyIndicator,
 	],
@@ -270,23 +262,6 @@ class Menu extends UI5Element {
 	_isSubMenu!: boolean;
 
 	/**
-	 * Stores id of a list item that opened sub-menu.
-	 * @private
-	 */
-	@property()
-	_subMenuOpenerId!: string;
-
-	/**
-	 * Defines the currently available menu items.
-	 * (in case of non-phone devices these are the items of the menu,
-	 * but for phone devices the items of the currently opened sub-menu
-	 * will be populated here)
-	 * @private
-	 */
-	@property({ type: Object, multiple: true })
-	_currentItems!: Array<CurrentItem>;
-
-	/**
 	 * Stores the ResponsivePopover instance
 	 */
 	@property({ type: Object, defaultValue: undefined })
@@ -297,12 +272,6 @@ class Menu extends UI5Element {
 	 */
 	@property({ type: Object, defaultValue: undefined })
 	_parentMenuItem?: MenuItem;
-
-	/**
-	 * Stores parent menu item DOM representation (if there is such).
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_opener?: HTMLElement;
 
 	/**
 	 * Stores menu item that have sub-menu opened.
@@ -326,12 +295,8 @@ class Menu extends UI5Element {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	get itemsWithChildren() {
-		return !!this._currentItems.filter(item => item.item.items.length).length;
-	}
-
 	get itemsWithIcon() {
-		return !!this._currentItems.filter(item => item.item.icon !== "").length;
+		return !!this.items.filter(item => item.icon !== "").length;
 	}
 
 	get isRtl() {
@@ -359,7 +324,7 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
-	get isSubMenuOpened() {
+	get isSubMenuOpen() {
 		return this._parentMenuItem && this._popover?.isOpen();
 	}
 
@@ -368,25 +333,20 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._prepareCurrentItems(this.items);
-
-		const itemsWithChildren = this.itemsWithChildren;
 		const itemsWithIcon = this.itemsWithIcon;
 
-		this._currentItems.forEach(item => {
-			item.item._siblingsWithChildren = itemsWithChildren;
-			item.item._siblingsWithIcon = itemsWithIcon;
-			const subMenu = item.item._subMenu;
-			const menuItem = item.item;
+		this.items.forEach(item => {
+			item._siblingsWithIcon = itemsWithIcon;
+			const subMenu = item._subMenu;
 			if (subMenu && subMenu.busy) {
 				subMenu.innerHTML = "";
-				const fragment = this._clonedItemsFragment(menuItem);
+				const fragment = this._clonedItemsFragment(item);
 				subMenu.appendChild(fragment);
 			}
 
 			if (subMenu) {
-				subMenu.busy = item.item.busy;
-				subMenu.busyDelay = item.item.busyDelay;
+				subMenu.busy = item.busy;
+				subMenu.busyDelay = item.busyDelay;
 			}
 		});
 	}
@@ -398,7 +358,7 @@ class Menu extends UI5Element {
 
 		if (this.open) {
 			const opener = this.getOpener();
-			if (opener && !this.isSubMenuOpened) {
+			if (opener && !this.isSubMenuOpen) {
 				this.showAt(opener);
 			}
 		} else {
@@ -414,12 +374,9 @@ class Menu extends UI5Element {
 	async showAt(opener: HTMLElement): Promise<void> {
 		if (!this._isSubMenu) {
 			this._parentMenuItem = undefined;
-			this._opener = undefined;
 		}
-		const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
 		const popover = await this._createPopover();
-		popover.initialFocus = `${this._id}-menu-item-0`;
-		popover.showAt(opener, busyWithoutItems);
+		popover.showAt(opener, true);
 	}
 
 	/**
@@ -452,17 +409,7 @@ class Menu extends UI5Element {
 		mainMenu?.close();
 	}
 
-	_prepareCurrentItems(items: Array<MenuItem>) {
-		this._currentItems = items.map((item, index) => {
-			return {
-				item,
-				position: index + 1,
-				ariaHasPopup: item.hasSubmenu ? "menu" : undefined,
-			};
-		});
-	}
-
-	_createSubMenu(item: MenuItem, opener: HTMLElement) {
+	_createSubMenu(item: MenuItem) {
 		if (item._subMenu) {
 			return;
 		}
@@ -470,9 +417,7 @@ class Menu extends UI5Element {
 		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
 
 		subMenu._isSubMenu = true;
-		subMenu.setAttribute("id", `submenu-${opener.id}`);
 		subMenu._parentMenuItem = item;
-		subMenu._opener = opener;
 		subMenu.busy = item.busy;
 		subMenu.busyDelay = item.busyDelay;
 		const fragment = this._clonedItemsFragment(item);
@@ -492,15 +437,15 @@ class Menu extends UI5Element {
 		return fragment;
 	}
 
-	_openItemSubMenu(item: MenuItem, opener: HTMLElement) {
+	_openItemSubMenu(item: MenuItem) {
 		const mainMenu = this._findMainMenu(item);
 		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._subMenu!.showAt(opener);
+		item._subMenu!.showAt(item);
+		item.selected = true;
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
-		this._subMenuOpenerId = opener.id;
 	}
 
 	_closeItemSubMenu(item: MenuItem, forceClose = false, keyboard = false) {
@@ -520,46 +465,42 @@ class Menu extends UI5Element {
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
 				subMenu.close();
+				parentItem.selected = false;
 				if (keyboard) {
-					subMenu._opener?.focus();
+					parentItem?.focus();
 				}
 				this._openedSubMenuItem = undefined;
-				this._subMenuOpenerId = "";
 			}
 		}
 	}
 
-	_prepareSubMenu(item: MenuItem, opener: HTMLElement) {
-		if (opener.id !== this._subMenuOpenerId || (item && item.hasSubmenu)) {
-			// close opened sub-menu if there is any opened
+	_prepareSubMenu(item: MenuItem) {
+		if (!this._openedSubMenuItem?.isEqualNode(item)) {
 			this._closeItemSubMenu(this._openedSubMenuItem!, true);
 		}
+
 		if (item && item.hasSubmenu) {
 			// create new sub-menu
-			this._createSubMenu(item, opener);
-			this._openItemSubMenu(item, opener);
+			this._createSubMenu(item);
+			this._openItemSubMenu(item);
 		}
 		if (this._parentMenuItem) {
 			this._parentMenuItem._preventSubMenuClose = true;
 		}
 	}
 
-	_onfocusin(e: FocusEvent): void {
-		const target = e.target as HTMLElement;
-		const menuListItem = target.hasAttribute("ui5-menu-li")
-			? target as MenuListItem
-			: (target.getRootNode() as ShadowRoot).host as MenuListItem;
-		const item = menuListItem.associatedItem;
+	_onItemFocus(e: CustomEvent<ListItemFocusEventDetail>): void {
+		const item = e.detail.item as MenuItem;
 		const mainMenu = this._findMainMenu(item);
-		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: menuListItem, item });
+		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: item, item });
 	}
 
-	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem) {
+	_startOpenTimeout(item: MenuItem) {
 		clearTimeout(this._timeout);
 
 		// Sets the new timeout
 		this._timeout = setTimeout(() => {
-			this._prepareSubMenu(item, opener);
+			this._prepareSubMenu(item);
 		}, MENU_OPEN_DELAY);
 	}
 
@@ -573,15 +514,16 @@ class Menu extends UI5Element {
 	}
 
 	_itemMouseOver(e: MouseEvent) {
+		this._busyMouseOver();
+
 		if (isDesktop()) {
 			// respect mouseover only on desktop
-			const opener = e.target as OpenerStandardListItem;
-			const item = opener.associatedItem;
+			const item = e.target as MenuItem;
 
-			opener.focus();
+			item.focus();
 
 			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item, opener);
+			this._startOpenTimeout(item);
 		}
 	}
 
@@ -593,10 +535,7 @@ class Menu extends UI5Element {
 
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
-			const opener = e.target as OpenerStandardListItem;
-			const item = opener.associatedItem;
-
-			clearTimeout(this._timeout);
+			const item = e.target as MenuItem;
 
 			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
@@ -615,10 +554,8 @@ class Menu extends UI5Element {
 			e.preventDefault();
 		}
 		if (shouldOpenMenu) {
-			const opener = e.target as OpenerStandardListItem;
-			const item = opener.associatedItem;
-
-			item.hasSubmenu && this._prepareSubMenu(item, opener);
+			const item = e.target as MenuItem;
+			this._prepareSubMenu(item);
 		} else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
 			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
 			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true, true);
@@ -626,8 +563,7 @@ class Menu extends UI5Element {
 	}
 
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const opener = e.detail.item as OpenerStandardListItem;
-		const item = opener.associatedItem;
+		const item = e.detail.item as MenuItem;
 
 		if (!item.hasSubmenu) {
 			// click on an item that doesn't have sub-items fires an "item-click" event
@@ -662,7 +598,7 @@ class Menu extends UI5Element {
 				}
 			}
 		} else {
-			this._prepareSubMenu(item, opener);
+			this._prepareSubMenu(item);
 		}
 	}
 
@@ -690,6 +626,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
+		this.items[0]?.focus();
 		this.fireEvent("open", {}, false, false);
 	}
 
