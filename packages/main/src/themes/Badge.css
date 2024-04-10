@@ -592,3 +592,23 @@
 	border-color: var(--ui5-badge-set2-color-scheme-2-active-border);
 	color: var(--ui5-badge-set2-color-scheme-2-active-color);
 }
+
+/* Sizes */
+:host([size="Large"]) .ui5-badge-root,
+:host([size="Large"]) ::slotted([ui5-icon]) {
+	font-size: 1.25rem;
+	font-family: var(--_ui5-badge-font);
+}
+
+:host([size="Large"][_icon-only]) .ui5-badge-root {
+	padding: 0.125rem 0.25rem;
+	min-width: var(--_ui5-badge-icon-min_width_size_large);
+	width: 1.5rem;
+	height: var(--_ui5-badge-icon-height_size_large);
+}
+
+:host([size="Large"]) [ui5-icon],
+:host([size="Large"][_icon-only]) ::slotted([ui5-icon]) {
+	min-width: var(--_ui5-badge-icon-min_width_size_large);
+	font-size: 1.5rem;
+}

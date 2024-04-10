@@ -157,4 +157,8 @@
 	--ui5-badge-set2-color-scheme-10-active-color: var(--sapIndicationColor_10_Active_TextColor);
 	--ui5-badge-set2-color-scheme-10-active-background: var(--sapIndicationColor_10_Active_Background);
 	--ui5-badge-set2-color-scheme-10-active-border: var(--sapIndicationColor_10_Active_BorderColor);
+
+	/* Sizes */
+	--_ui5-badge-icon-height_size_large: 1.5rem;
+	--_ui5-badge-icon-min_width_size_large: 1.75rem;
 }
