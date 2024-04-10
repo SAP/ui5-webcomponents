@@ -47,7 +47,7 @@
 	}
 
 	document.getElementById("changeMode").addEventListener("ui5-change", function(event) {
-		uploadCollection.mode = event.detail.selectedOption.textContent;
+		uploadCollection.selectionMode = event.detail.selectedOption.textContent;
 	});
 
 	document.getElementById("changeType").addEventListener("ui5-change", function(event) {
