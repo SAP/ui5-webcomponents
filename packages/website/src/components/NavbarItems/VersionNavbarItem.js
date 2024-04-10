@@ -2,6 +2,7 @@ import "./index.css";
 import clsx from "clsx";
 import { useState } from "react";
 import NavbarNavLink from "@theme/NavbarItem/NavbarNavLink";
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import NavbarItem from "@theme/NavbarItem";
 import packageJson from "../../../package.json";
 
@@ -13,10 +14,12 @@ import {
 
 
 function getVersion() {
-    if (!location.pathname.includes("nightly") ) {
-        return "v1";
+    if (ExecutionEnvironment.canUseDOM) {
+        if (!location.pathname.includes("nightly") ) {
+            return "v1";
+        }
+        return "Nightly";
     }
-    return "Nightly";
 }
 
 
