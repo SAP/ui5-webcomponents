@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import connectToComponent from "@ui5/webcomponents-base/dist/connectToComponent.js";
 import {
 	isSpace,
 	isUp,
@@ -17,7 +16,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
