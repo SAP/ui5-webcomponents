@@ -144,7 +144,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
-		for (let i = 0; i < PAGE_SIZE; i++) {
+		for (let i = 0; i < 12; i++) {
 			tempDate.setMonth(i);
 			timestamp = tempDate.valueOf() / 1000;
 
@@ -210,7 +210,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHomeCtrl(e)) {
 			this._setTimestamp(parseInt(this._months[0].timestamp)); // first month of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[PAGE_SIZE - 1].timestamp)); // last month of last row
+			this._setTimestamp(parseInt(this._months[this._months.length - 1].timestamp)); // last month of last row
 		} else {
 			preventDefault = false;
 		}
@@ -221,7 +221,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_onHomeOrEnd(homePressed: boolean) {
-		this._setTimestamp(parseInt(this._months[homePressed ? 0 : PAGE_SIZE - 1].timestamp));
+		this._setTimestamp(parseInt(this._months[homePressed ? 0 : this._months.length - 1].timestamp));
 	}
 
 	/**
