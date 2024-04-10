@@ -361,14 +361,12 @@ class Tree extends UI5Element {
 
 	_ondragover(e: DragEvent) {
 		const draggedElement = DragRegistry.getDraggedElement();
-		const allItemsTraversed: Array<TreeItemBase> = []; // use the actual items for rearranging
 		const allLiNodesTraversed: Array<HTMLElement> = []; // use the only <li> nodes to determine positioning
 		if (!(e.target instanceof HTMLElement) || !draggedElement) {
 			return;
 		}
 
 		this.walk(item => {
-			allItemsTraversed.push(item);
 			allLiNodesTraversed.push(item.shadowRoot!.querySelector("li")!);
 		});
 
@@ -385,7 +383,7 @@ class Tree extends UI5Element {
 
 		let placements = closestPosition.placements;
 
-		closestPosition.element = allItemsTraversed[allLiNodesTraversed.indexOf(closestPosition.element)];
+		closestPosition.element = <HTMLElement>(<ShadowRoot>closestPosition.element.getRootNode()).host;
 
 		if (draggedElement.contains(closestPosition.element)) { return; }
 
