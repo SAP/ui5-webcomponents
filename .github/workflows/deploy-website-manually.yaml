@@ -2,7 +2,11 @@ name: Deploy Website [manual]
 
 on:
   workflow_dispatch:
-
+    inputs:
+      targetFolder:
+        description: 'target folder'
+        required: true
+        default: 'nightly'
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -33,5 +37,5 @@ jobs:
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/website/build # The folder the action should deploy.
-        target-folder: nightly
+        target-folder: ${{ github.event.inputs.targetFolder }}
         clean: true
