@@ -21,7 +21,7 @@
 }
 
 :host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover,
-:host(:not([_mode="None"]):not([_mode="Delete"]):not([active]):not([selected])) .ui5-li-root-tree:hover {
+:host(:not([_selection-mode="None"]):not([_selection-mode="Delete"]):not([active]):not([selected])) .ui5-li-root-tree:hover {
 	background: var(--sapList_Hover_Background);
 	cursor: pointer;
 }
@@ -42,7 +42,7 @@
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
-:host(:not([_mode="None"]):not([_mode="Delete"]):not([active])[selected]) .ui5-li-root-tree:hover {
+:host(:not([_selection-mode="None"]):not([_selection-mode="Delete"]):not([active])[selected]) .ui5-li-root-tree:hover {
 	background-color: var(--sapList_Hover_SelectionBackground);
 	cursor: pointer;
 }

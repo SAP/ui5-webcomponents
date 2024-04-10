@@ -1,9 +1,29 @@
 class TabContainerTestPage {
-	async getItemsIds(tabContainerId) {
-		const items = await browser.$$(`#${tabContainerId} > *`);
-	
-		return Promise.all(items.map(item => item.getAttribute("id")));
+	getItemsIds(tabContainerId) {
+		return browser.executeAsync((tabContainerId, done) => {
+			const tabContainer = document.getElementById(tabContainerId);
+
+			const buildTree = (el) => {
+				return el.items.map((item) => {
+					if (item.isSeparator) {
+						return {
+							id: item.id
+						};
+					}
+
+					return {
+						id: item.id,
+						items: buildTree(item)
+					}
+				});
+			}
+
+			buildTree(tabContainer);
+
+			done(buildTree(tabContainer));
+		}, tabContainerId)
 	}
+
 
 	async getDisplayedTabStripItems(tabContainerId) {
 		return browser.$(`#${tabContainerId}`).shadow$$(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])");
@@ -32,8 +52,7 @@ class TabContainerTestPage {
 	}
 
 	async getCurrentPopoverItems(tabContainerId) {
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${tabContainerId}`);
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#${tabContainerId}`).shadow$("ui5-responsive-popover");
 
 		return popover.$$("[ui5-li-custom]");
 	}

@@ -4,8 +4,8 @@
 	class={{classes.popover}}
 	?content-only-on-desktop="{{noValueStatePopover}}"
 	hide-arrow
-	placement-type="Bottom"
-	horizontal-align="Left"
+	placement="Bottom"
+	horizontal-align="Start"
 	@before-close={{handleBeforeClose}}
 	@before-open="{{handleBeforeOpen}}"
 >
@@ -46,7 +46,7 @@
 	{{/if}}
 	<ui5-list
 		class="ui5-tokenizer-list"
-		mode="Delete"
+		selection-mode="Delete"
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}

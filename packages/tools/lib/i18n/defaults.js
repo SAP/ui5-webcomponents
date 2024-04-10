@@ -31,7 +31,7 @@ const generate = async () => {
 	// (2) as the messagebundle.properties file is always written in English,
 	// it makes sense to consider the messagebundle.properties content only when the default language is "en".
 	if (defaultLanguage === "en") {
-		defaultLanguageProperties = Object.assign({}, defaultLanguageProperties, properties);  
+		defaultLanguageProperties = Object.assign({}, defaultLanguageProperties, properties);
 	}
 
 	/*

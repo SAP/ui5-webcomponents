@@ -25,7 +25,7 @@ const Template: UI5StoryArgs<Carousel, StoryArgsSlots> = (args) => {
 	items-per-page-l="${ifDefined(args.itemsPerPageL)}"
 	?hide-navigation-arrows="${ifDefined(args.hideNavigationArrows)}"
 	?hide-page-indicator="${ifDefined(args.hidePageIndicator)}"
-	page-indicator-style="${ifDefined(args.pageIndicatorStyle)}"
+	page-indicator-type="${ifDefined(args.pageIndicatorType)}"
 	arrows-placement="${ifDefined(args.arrowsPlacement)}"
 >
 	${unsafeHTML(args.default)}

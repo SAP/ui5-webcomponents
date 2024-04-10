@@ -3,8 +3,8 @@
 		class="{{classes.popover}}"
 		hide-arrow
 		_disable-initial-focus
-		placement-type="Bottom"
-		horizontal-align="Left"
+		placement="Bottom"
+		horizontal-align="Start"
 		style="{{styles.suggestionsPopover}}"
 		@ui5-after-open="{{_afterOpenPopover}}"
 		@ui5-after-close="{{_afterClosePopover}}"
@@ -72,7 +72,7 @@
 			prevent-focus-restore
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
-			placement-type="Bottom"
+			placement="Bottom"
 			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
@@ -93,7 +93,7 @@
 {{/inline}}
 
 {{#*inline "suggestionsList"}}
-	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" mode="SingleSelect">
+	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" selection-mode="Single">
 		{{#each suggestionObjects}}
 			{{#if groupItem}}
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
