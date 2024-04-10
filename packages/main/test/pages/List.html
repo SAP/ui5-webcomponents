@@ -468,11 +468,11 @@
 
 		infiniteScrollEx.addEventListener("ui5-load-more", function(e) {
 			var el = infiniteScrollEx;
-			el.busy = true;
+			el.loading = true;
 
 			setTimeout(function() {
 				insertItems(el, 3);
-				el.busy = false;
+				el.loading = false;
 				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);
 			}, 1000);
 		});
@@ -480,11 +480,11 @@
 
 		infiniteScrollEx2.addEventListener("ui5-load-more", function(e) {
 			var el = infiniteScrollEx2;
-			el.busy = true;
+			el.loading = true;
 
 			setTimeout(function() {
 				insertItems(el, 3);
-				el.busy = false;
+				el.loading = false;
 				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);
 			}, 1000);
 		});
