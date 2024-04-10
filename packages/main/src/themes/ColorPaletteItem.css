@@ -1,7 +1,7 @@
 :host(:not([hidden])) {
 	height: var(--_ui5_color-palette-item-height);
 	width: var(--_ui5_color-palette-item-height);
-	border: 1px solid var(--sapContent_ForegroundBorderColor);
+	border: 0.0625rem solid var(--sapContent_ForegroundBorderColor);
 	border-radius: var(--_ui5_color-palette-item-outer-border-radius);
 	display: inline-block;
 	margin: var(--_ui5_color-palette-item-margin);
@@ -17,15 +17,21 @@
 }
 
 :host(:not([hidden])[on-phone]) {
-	width: 100%;
-	padding-top: calc(100% - 0.125rem); /* padding-top is used to base the height on dynamic width and we remove 2px for the top and bottom borders*/
-	border: 1px solid var(--sapContent_ForegroundBorderColor);
+	width: calc(100% - 0.5rem);
+	padding-block-start: calc(100% - 0.625rem); /* padding-block-start is used to base the height on dynamic width */
+	border: 0.0625rem solid var(--sapContent_ForegroundBorderColor);
 	border-radius: 0.25rem;
 	display: inline-block;
-	margin: 0px;
+	margin: 0.625rem;
+	height: 0; /* since height is determined by the padding-block-start we have to nullify the height on phone */
 	max-width: 4.5rem;
 	max-height: 4.5rem;
-	height: auto;
+}
+
+:host([selected][on-phone]) {
+	padding-block-start: calc(100% - .125rem);
+	width: 100%;
+	margin: 0;
 }
 
 .ui5-cp-item {
@@ -46,9 +52,14 @@
 
 .ui5-cp-item:hover:not(:focus),
 :host(:not([on-phone])) .ui5-cp-item.ui5-cp-selected {
-	border: 0.0625rem solid var(--sapGroup_ContentBackground);
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;
+}
+
+:host([selected]:not([_disabled]):not([on-phone]):not(:hover):focus) .ui5-cp-item.ui5-cp-selected,
+:host(:not([selected]):not([_disabled]):not([on-phone]):hover:focus) .ui5-cp-item, 
+:host([selected]:not([_disabled]):not([on-phone]):hover:focus) .ui5-cp-item.ui5-cp-selected {
+	border: var(--_ui5_color-palette-item-selected-focused-border);
 }
 
 .ui5-cp-item.ui5-cp-selected:focus,
@@ -65,10 +76,7 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: var(--_ui5_color-palette-item-before-focus-offset);
-	top: var(--_ui5_color-palette-item-before-focus-offset);
-	right: var(--_ui5_color-palette-item-before-focus-offset);
-	bottom: var(--_ui5_color-palette-item-before-focus-offset);
+	inset: var(--_ui5_color-palette-item-before-focus-inset);
 	border: var(--_ui5_color-palette-item-before-focus-color);
 	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
 	pointer-events: none;
@@ -78,10 +86,7 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: var(--_ui5_color-palette-item-after-focus-offset);
-	top: var(--_ui5_color-palette-item-after-focus-offset);
-	right: var(--_ui5_color-palette-item-after-focus-offset);
-	bottom: var(--_ui5_color-palette-item-after-focus-offset);
+	inset: var(--_ui5_color-palette-item-after-focus-inset);
 	border: var(--_ui5_color-palette-item-after-focus-color);
 	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
 	pointer-events: none;
@@ -91,32 +96,36 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: var(--_ui5_color-palette-item-before-focus-hover-offset);
-	top: var(--_ui5_color-palette-item-before-focus-hover-offset);
-	right: var(--_ui5_color-palette-item-before-focus-hover-offset);
-	bottom: var(--_ui5_color-palette-item-before-focus-hover-offset);
+	inset: var(--_ui5_color-palette-item-before-focus-hover-inset);
 	border: var(--_ui5_color-palette-item-before-focus-color);
 	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
 	pointer-events: none;
 }
 
-:host(:not([_disabled]):not([on-phone]):hover:focus) .ui5-cp-item:focus:not(:hover)::after {
+:host(:not([_disabled]):not([on-phone]):focus:not(:hover)) .ui5-cp-item:focus:not(:hover)::after {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: var(--_ui5_color-palette-item-after-focus-hover-offset);
-	top: var(--_ui5_color-palette-item-after-focus-hover-offset);
-	right: var(--_ui5_color-palette-item-after-focus-hover-offset);
-	bottom: var(--_ui5_color-palette-item-after-focus-hover-offset);
+	inset: var(--_ui5_color-palette-item-after-focus-hover-inset);
 	border: var(--_ui5_color-palette-item-after-focus-color);
 	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
 	pointer-events: none;
 }
 
+:host([selected]:not([_disabled]):not([on-phone]):not(:focus):not(:hover)) .ui5-cp-item::after,
+:host([selected]:not([_disabled]):not([on-phone]):not(:focus):hover) .ui5-cp-item::after,
+:host(:not([selected]):hover) .ui5-cp-item::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: calc(var(--_ui5_color-palette-item-after-focus-hover-inset) - 0.0625rem);
+	border: var(--_ui5_color-palette-item-after-not-focus-color);
+	border-radius: calc(var(--_ui5_color-palette-item-after-focus-border-radius) + 0.0625rem);
+	pointer-events: none;
+}
 
-:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::after,
-:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::after {
-	border: var(--_ui5_color-palette-item-selected-focused-border-after);
+:host(:not([_disabled]):not([on-phone]):not([selected]):not(:hover)) .ui5-cp-item:focus:not(:hover)::after {
+	border: var(--_ui5_color-palette-item-after-focus-not-selected-border);
 }
 
 :host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
@@ -124,10 +133,7 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	left: var(--_ui5_color-palette-item-selected-focused-border-before);
-	top: var(--_ui5_color-palette-item-selected-focused-border-before);
-	right: var(--_ui5_color-palette-item-selected-focused-border-before);
-	bottom: var(--_ui5_color-palette-item-selected-focused-border-before);
+	inset: var(--_ui5_color-palette-item-selected-focused-border-before);
 	border: var(--_ui5_color-palette-item-before-focus-color);
 	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
 	pointer-events: none;

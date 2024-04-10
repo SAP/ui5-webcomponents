@@ -53,7 +53,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 *
 	 * @public
 	 * @default false
-	 * @since 1.24.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;

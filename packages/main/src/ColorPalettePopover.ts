@@ -204,6 +204,8 @@ class ColorPalettePopover extends UI5Element {
 		const colorPalette = this._colorPalette;
 		if (colorPalette.showDefaultColor && !colorPalette._currentlySelected) {
 			colorPalette.colorPaletteNavigationElements[0].focus();
+		} else if (colorPalette._shouldFocusRecentColors && colorPalette.showRecentColors) {
+			colorPalette.recentColorsElements[0].focus();
 		} else {
 			colorPalette._currentlySelected?.focus();
 		}

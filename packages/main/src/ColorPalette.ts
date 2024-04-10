@@ -176,7 +176,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature?: ColorPaletteMoreColors;
+	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
 	_currentlySelected?: ColorPaletteItem;
 	_shouldFocusRecentColors!: boolean;
 
@@ -238,9 +238,15 @@ class ColorPalette extends UI5Element {
 			this.recentColorsElements[0].selected = true;
 			this.recentColorsElements[0].focus();
 
-			this._shouldFocusRecentColors = false;
-
 			this._ensureSingleSelectionOrDeselectAll();
+		}
+
+		if (this.popupMode) {
+			if (this.showDefaultColor) {
+				this.focusFirstFocusableElement();
+			} else {
+				this.focusFirstDisplayColorElement();
+			}
 		}
 	}
 
@@ -473,7 +479,9 @@ class ColorPalette extends UI5Element {
 		const colorPicker = await this.getColorPicker();
 		this._setColor(colorPicker.color);
 		this._closeDialog();
-		this._shouldFocusRecentColors = true;
+		this._shouldFocusRecentColors = !this.popupMode;
+		this.recentColorsElements[0].selected = true;
+		this._currentlySelected = colorPicker.color ? this.recentColorsElements[0] : undefined;
 	}
 
 	_addRecentColor(color: string) {
@@ -498,17 +506,11 @@ class ColorPalette extends UI5Element {
 	_onDefaultColorClick() {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
-			const defaultColorItem = this.defaultColorItem;
-
 			this._addRecentColor(this.defaultColor);
 
-			if (defaultColorItem && defaultColorItem.selected) {
-				this.focusColorElement(defaultColorItem, this._itemNavigation);
-				return;
-			}
-
-			if (defaultColorItem && !this.showRecentColors) {
-				this.handleSelection(defaultColorItem as ColorPaletteItem);
+			if (this.selectedItem) {
+				this.selectedItem.selected = false;
+				this._currentlySelected = undefined;
 			}
 		}
 	}
@@ -518,6 +520,13 @@ class ColorPalette extends UI5Element {
 	 */
 	get defaultColorItem() {
 		return this.effectiveColorItems.find(item => item.value === this.defaultColor);
+	}
+
+	/**
+	 * Returns the selected item.
+	 */
+	get selectedItem() {
+		return [...this.effectiveColorItems, ...this.recentColorsElements].find(item => item.selected);
 	}
 
 	get allColorsInPalette() {
