@@ -53,7 +53,7 @@ class GridNavigation {
 		return [row, ...row.shadowRoot!.children].map(element => {
 			return element.localName === "slot" ? (element as HTMLSlotElement).assignedElements() : element;
 		}).flat().filter(element => {
-			return element.localName.includes("ui5-grid") && !element.hasAttribute("excluded-from-navigation");
+			return element.localName.includes("ui5-grid-") && !element.hasAttribute("excluded-from-navigation");
 		}) as HTMLElement[];
 	}
 
@@ -70,12 +70,12 @@ class GridNavigation {
 		return items;
 	}
 
-	_setCurrentNavigationItem(e: Event, callback: (currentItem: HTMLElement) => void) {
+	_setCurrentNavigationItem(e: Event, callback?: (currentItem: HTMLElement) => void) {
 		const navigationItems = this._getNavigationItemsOfGrid().flat();
 		const navigationItem = e.composedPath().find(target => navigationItems.includes(target as HTMLElement)) as HTMLElement;
 		if (navigationItem) {
 			this._gridWalker.setCurrent(navigationItem);
-			callback(navigationItem);
+			callback && callback(navigationItem);
 		}
 	}
 
@@ -106,10 +106,6 @@ class GridNavigation {
 		const navigationItems = this._getNavigationItemsOfGrid().flat();
 		if (navigationItems.includes(activeElement)) {
 			activeElement.removeAttribute("tabindex");
-		}
-
-		if (navigationItems.includes(element)) {
-			element.setAttribute("tabindex", "0");
 		}
 
 		this._ignoreFocusIn = ignoreFocusIn;
@@ -289,6 +285,8 @@ class GridNavigation {
 		if (evetOrigin === this._grid._beforeElement || evetOrigin === this._grid._afterElement) {
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
+		} else {
+			this._setCurrentNavigationItem(e);
 		}
 	}
 }

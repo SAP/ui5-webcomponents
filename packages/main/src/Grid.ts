@@ -156,10 +156,6 @@ class Grid extends UI5Element {
 		}
 	}
 
-	getDomRef(): HTMLElement | undefined {
-		return this.shadowRoot!.querySelector("#grid") as HTMLElement;
-	}
-
 	_getFeature<Klass>(klass: any): Klass | undefined {
 		return this.features.find(feature => feature instanceof klass) as Klass;
 	}
@@ -169,7 +165,7 @@ class Grid extends UI5Element {
 	}
 
 	_onResize() {
-		const { clientWidth, scrollWidth } = this.getDomRef()!;
+		const { clientWidth, scrollWidth } = this._gridElement;
 
 		if (scrollWidth > clientWidth) {
 			// Overflow Handling: Move columns into the popin until overflow is resolved

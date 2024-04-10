@@ -10,7 +10,7 @@ class GridWalker {
 	colPos: number;
 	pageSize: number;
 
-	constructor(grid: unknown[][] = [[]], pageSize = 2, rowPos = 1, colPos = 0) {
+	constructor(grid: unknown[][] = [[]], pageSize = 20, rowPos = 1, colPos = 0) {
 		this.grid = grid;
 		this.pageSize = pageSize;
 		this.rowPos = rowPos;

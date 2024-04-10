@@ -103,6 +103,11 @@ class GridHeaderRow extends UI5Element {
 		return this;
 	}
 
+	focus(focusOptions?: FocusOptions | undefined): Promise<void> {
+		this.setAttribute("tabindex", "-1");
+		return UI5Element.prototype.focus.call(this, focusOptions);
+	}
+
 	_informSelectionChange() {
 		this._gridSelection?.informHeaderRowSelectionChange();
 	}
