@@ -1,6 +1,8 @@
 @import "./FormComponents.css";
 @import "./InputIcon.css";
 @import "./Input.css";
+@import "./ValueStateMessage.css";
+@import "./ResponsivePopoverCommon.css";
 
 .ui5-select-root {
 	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)));
@@ -38,4 +40,9 @@
 
 :host(:not([disabled])) {
 	cursor: pointer;
+}
+
+.ui5-select-popover::part(content),
+.ui5-select-popover::part(header) {
+	padding: 0;
 }
