@@ -62,7 +62,7 @@ function VersionNavbarItemDesktop() {
                 label={getLabel("Nightly")}
                 isDropdownItem
                 target="_self"
-                href="http://localhost:3000/nightly"
+                href="https://sap.github.io/ui5-webcomponents/nightly"
                 onClick={() => { setVersion("Nightly") }}
                 className={clsx({ 'menu__link--active': version === "Nightly" })}
             />
@@ -70,7 +70,7 @@ function VersionNavbarItemDesktop() {
                 label={getLabel("v1")}
                 isDropdownItem
                 target="_self"
-                href="http://localhost:3000/"
+                href="https://sap.github.io/ui5-webcomponents/"
                 onClick={() => { setVersion("v1") }}
                 className={clsx({ 'menu__link--active': version === "v1" })}
             />
@@ -100,7 +100,7 @@ function VersionNavbarItemMobile() {
                 <NavbarItem
                     label={getLabel("Nightly")}
                     mobile
-                    href="http://localhost:3000/nightly"
+                    href="https://sap.github.io/ui5-webcomponents/nightly"
                     isDropdownItem
                     onClick={() => { setVersion("nightly") }}
                     className={clsx({ "menu__link--active": version === "nightly" })}
@@ -108,7 +108,7 @@ function VersionNavbarItemMobile() {
                  <NavbarItem
                     label={getLabel("v1")}
                     mobile
-                    href="http://localhost:3000/v1"
+                    href="https://sap.github.io/ui5-webcomponents"
                     isDropdownItem
                     onClick={() => { setVersion("v1") }}
                     className={clsx({ "menu__link--active": version === "v1" })}
