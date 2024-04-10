@@ -100,7 +100,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 		}
 		// go up the prototype chain
 		proto = Object.getPrototypeOf(proto);
-	} while (proto);
+	} while (proto && proto !== HTMLElement.prototype);
 }
 
 /**
