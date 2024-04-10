@@ -29,7 +29,7 @@ import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 type FileUploaderChangeEventDetail = {
@@ -201,10 +201,20 @@ class FileUploader extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get formattedFormValue() {
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formElementFormattedValue() {
 		if (this.files) {
 			const formData = new FormData();
 
@@ -277,8 +287,6 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
-
-		setValueFormElement(this);
 	}
 
 	_onChange(e: Event) {
@@ -294,6 +302,8 @@ class FileUploader extends UI5Element implements IFormElement {
 		this.value = Array.from(files || []).reduce((acc, currFile) => {
 			return `${acc}"${currFile.name}" `;
 		}, "");
+
+		setFormElementValue(this);
 	}
 
 	toggleValueStatePopover(open: boolean) {

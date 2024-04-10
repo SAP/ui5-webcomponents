@@ -22,6 +22,7 @@ import Token from "./Token.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
+import { setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
@@ -123,32 +124,38 @@ class MultiInput extends Input implements IFormElement {
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot()
+	@slot({ type: HTMLElement, formRelated: true })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
 
-	get validity() {
+	static formAssociated = true;
+
+	get formElementValidity(): ValidityStateFlags {
 		const tokens = (this.tokens || []);
 
 		return { valueMissing: this.required && !this.value && !tokens.length };
 	}
 
-	get formattedFormValue() {
+	get formElementFormattedValue(): FormData | string | null {
 		const tokens = (this.tokens || []);
 
-		const formData = new FormData();
+		if (tokens.length) {
+			const formData = new FormData();
 
-		for (let i = 0; i < tokens.length; i++) {
-			formData.append(this.name, tokens[i].text);
+			for (let i = 0; i < tokens.length; i++) {
+				formData.append(this.name, tokens[i].text);
+			}
+
+			if (this.value) {
+				formData.append(this.name, this.value);
+			}
+
+			return formData;
 		}
 
-		if (this.value) {
-			formData.append(this.name, this.value);
-		}
-
-		return formData;
+		return this.value || null;
 	}
 
 	constructor() {
@@ -168,6 +175,11 @@ class MultiInput extends Input implements IFormElement {
 		this.expandedTokenizer = false;
 		this.focus();
 	}
+
+	// async onAfterRendering(): Promise<void> {
+	// 	await super.onAfterRendering();
+	// 	setFormElementValue(this);
+	// }
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		const focusedToken = e.detail.ref;
@@ -207,6 +219,7 @@ class MultiInput extends Input implements IFormElement {
 	_tokenizerFocusOut(e: FocusEvent) {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
+			setFormElementValue(this);
 			this.tokenizer.scrollToStart();
 		}
 
@@ -229,6 +242,7 @@ class MultiInput extends Input implements IFormElement {
 		this.tokenizer._getTokens().forEach(token => {
 			token.selected = false;
 		});
+		setFormElementValue(this);
 	}
 
 	_onkeydown(e: KeyboardEvent) {

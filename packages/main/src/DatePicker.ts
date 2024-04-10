@@ -28,7 +28,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import { attachInternalsFormElement, setValueFormElement, submitForm } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue, submitForm } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -366,25 +366,29 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get validity() {
-		return { valueMissing: this.required && !this.value };
-	}
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
 
-	get validationMessage() {
+	get formElementValidityMessage() {
 		return "Custom message";
 	}
 
-	get formattedFormValue(): string | FormData {
-		return this.value;
+	get formElementValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
 	}
 
-	async formAnchor() {
-		const focusRef = await (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	async formElementAnchor() {
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	}
 
-		return focusRef;
+	get formElementFormattedValue(): FormData | string | null {
+		return this.value;
 	}
 
 	/**
@@ -409,11 +413,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		});
 
 		this.value = this.normalizeValue(this.value) || this.value;
+		setFormElementValue(this);
 		this.liveValue = this.value;
-	}
-
-	onAfterRendering() {
-		setValueFormElement(this);
 	}
 
 	/**
@@ -528,6 +529,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		if (updateValue) {
 			this._getInput().value = value;
 			this.value = value;
+			setFormElementValue(this);
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 
@@ -545,6 +547,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			this._getInput().value = previousValue;
 
 			this.value = previousValue;
+			setFormElementValue(this);
 		}
 	}
 

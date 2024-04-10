@@ -1,4 +1,4 @@
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
+import type UI5Element from "../UI5Element.js";
 
 interface IFormElement extends UI5Element {
 	name?: string;

@@ -12,7 +12,7 @@ import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Styles
@@ -158,7 +158,21 @@ abstract class SliderBase extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
+	}
+
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	get formElementValidityMessage() {
+		return "Custom message";
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
 	}
 
 	constructor() {
@@ -266,7 +280,7 @@ abstract class SliderBase extends UI5Element implements IFormElement {
 			this._resizeHandler();
 		}
 
-		setValueFormElement(this);
+		setFormElementValue(this);
 	}
 
 	/** Shows the tooltip(s) if the `showTooltip` property is set to true

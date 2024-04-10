@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
+import { setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
 
@@ -131,7 +132,7 @@ class RangeSlider extends SliderBase implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	get formattedFormValue() {
+	get formElementFormattedValue() {
 		const formData = new FormData();
 
 		formData.append(this.name, `${this.startValue}`);
@@ -230,11 +231,13 @@ class RangeSlider extends SliderBase implements IFormElement {
 			// min and max bounderies and update the previous state reference.
 			const normalizedStartValue = SliderBase.clipValue(this.startValue, this._effectiveMin, this._effectiveMax);
 			this.startValue = normalizedStartValue;
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("startValue");
 			this.storePropertyState("startValue");
 
 			const normalizedEndValue = SliderBase.clipValue(this.endValue, this._effectiveMin, this._effectiveMax);
 			this.endValue = normalizedEndValue;
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("endValue");
 			this.storePropertyState("endValue");
 		}
@@ -396,9 +399,11 @@ class RangeSlider extends SliderBase implements IFormElement {
 	update(affectedValue: string | undefined, startValue: number | undefined, endValue: number | undefined) {
 		if (!affectedValue) {
 			this.startValue = startValue!;
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("startValue");
 
 			this.endValue = endValue!;
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("endValue");
 			this._updateHandlesAndRange(0);
 		} else {
@@ -407,11 +412,13 @@ class RangeSlider extends SliderBase implements IFormElement {
 
 			if (affectedValue === "startValue") {
 				this.startValue = newValue!;
+				setFormElementValue(this);
 				this.updateStateStorageAndFireInputEvent("startValue");
 			}
 
 			if (affectedValue === "endValue") {
 				this.endValue = newValue!;
+				setFormElementValue(this);
 				this.updateStateStorageAndFireInputEvent("endValue");
 			}
 		}
@@ -766,12 +773,14 @@ class RangeSlider extends SliderBase implements IFormElement {
 			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
+			setFormElementValue(this);
 		}
 
 		if (affectedValue === "endValue" && this.endValue < this.startValue) {
 			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
+			setFormElementValue(this);
 		}
 
 		this._setValuesAreReversed();

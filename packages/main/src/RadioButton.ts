@@ -19,7 +19,7 @@ import {
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 import WrappingType from "./types/WrappingType.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
@@ -213,6 +213,16 @@ class RadioButton extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	active!: boolean;
 
+	/**
+	 * Defines if the component is selected in specific group
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, formRelated: true, noAttribute: true })
+	_groupChecked!: boolean;
+	@property({ type: Boolean, formRelated: true, noAttribute: true })
+	_groupRequired!: boolean;
+
 	_deactivate: () => void;
 	_name!: string;
 	_checked!: boolean;
@@ -221,7 +231,29 @@ class RadioButton extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
+	}
+
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	get formElementValidityMessage() {
+		return "Custom message";
+	}
+
+	get formElementValidity(): ValidityStateFlags {
+		return { valueMissing: this._groupRequired && !this._groupChecked };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formElementFormattedValue() {
+		return this.checked ? (this.value || "on") : null;
 	}
 
 	static i18nBundle: I18nBundle;
@@ -247,12 +279,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	onAfterRendering() {
 		this.syncGroup();
-
-		setValueFormElement(this, true);
-	}
-
-	get formattedFormValue() {
-		return this.checked ? (this.value || "on") : null;
 	}
 
 	onExitDOM() {
@@ -289,18 +315,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 		this._name = this.name;
 		this._checked = this.checked;
-	}
-
-	_resetFormValidity() {
-		this.internals_?.setValidity({});
-	}
-
-	_invalidateForm() {
-		this.internals_?.setValidity(
-			{ valueMissing: true },
-			this.radioButtonGroupRequiredText,
-			this.shadowRoot!.firstElementChild as HTMLElement,
-		);
 	}
 
 	_onclick() {

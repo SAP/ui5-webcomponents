@@ -65,7 +65,7 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
@@ -384,24 +384,34 @@ class Select extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get validity() {
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	get formElementValidityMessage() {
+		return "Custom message";
+	}
+
+	get formElementValidity(): ValidityStateFlags {
 		const selectedOption = this.selectedOption;
 
 		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
 	}
 
-	get validationMessage() {
-		return "Custom message";
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
 	}
 
-	get formattedFormValue() {
+	get formElementFormattedValue() {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
-			return selectedOption.value || selectedOption.textContent || "";
+			return selectedOption && selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
 		}
 
 		return null;
@@ -452,7 +462,6 @@ class Select extends UI5Element implements IFormElement {
 		}
 
 		this._attachRealDomRefs();
-		setValueFormElement(this);
 	}
 
 	_onfocusin() {
@@ -499,6 +508,7 @@ class Select extends UI5Element implements IFormElement {
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
 		});
+		setFormElementValue(this);
 	}
 
 	get value(): string {
@@ -633,6 +643,8 @@ class Select extends UI5Element implements IFormElement {
 				this._text = options[firstEnabledOptionIndex].textContent;
 			}
 		}
+
+		setFormElementValue(this);
 
 		this._syncedOptions = syncOpts as Array<IOption>;
 	}
@@ -788,6 +800,7 @@ class Select extends UI5Element implements IFormElement {
 
 		this._selectedIndex = index;
 		this.selectOptions[index].selected = true;
+		setFormElementValue(this);
 	}
 
 	/**
@@ -872,6 +885,7 @@ class Select extends UI5Element implements IFormElement {
 		const nextOption = options[newIndex];
 		nextOption.selected = true;
 		nextOption.focused = true;
+		setFormElementValue(this);
 
 		this._selectedIndex = newIndex;
 

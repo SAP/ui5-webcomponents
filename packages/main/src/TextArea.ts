@@ -22,7 +22,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import {
@@ -308,18 +308,28 @@ class TextArea extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get validationMessage() {
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	get formElementValidityMessage() {
 		return "Custom message";
 	}
 
-	get validity() {
+	get formElementValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.value };
 	}
 
-	get formattedFormValue() {
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formElementFormattedValue(): FormData | string | null {
 		return this.value;
 	}
 
@@ -348,6 +358,7 @@ class TextArea extends UI5Element implements IFormElement {
 		if (!this.value) {
 			// fallback to default value
 			this.value = "";
+			setFormElementValue(this);
 		}
 
 		this._exceededTextProps = this._calcExceededText();
@@ -368,8 +379,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 		this.toggleValueStateMessage(this.openValueStateMsgPopover);
 		this._firstRendering = false;
-
-		setValueFormElement(this);
 	}
 
 	getInputDomRef() {
@@ -383,6 +392,7 @@ class TextArea extends UI5Element implements IFormElement {
 			const nativeTextArea = this.getInputDomRef();
 
 			this.value = this.previousValue;
+			setFormElementValue(this);
 			nativeTextArea.value = this.value;
 			this.fireEvent("input");
 		}
@@ -430,6 +440,7 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		this.value = nativeTextArea.value;
+		setFormElementValue(this);
 		const valueLength = this.value.length;
 
 		if (e.inputType === "insertFromPaste" && this.maxlength && valueLength > this.maxlength) {

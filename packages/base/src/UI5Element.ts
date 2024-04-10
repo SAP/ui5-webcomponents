@@ -35,6 +35,7 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
+import { setFormElementValue } from "./features/InputElementsFormSupport.js";
 
 let autoId = 0;
 
@@ -155,7 +156,7 @@ abstract class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 
 		if (ctor._needsShadowDOM()) {
-			this.attachShadow({ mode: "open" });
+			this.attachShadow({ mode: "open", delegatesFocus: true });
 		}
 	}
 
@@ -380,6 +381,9 @@ abstract class UI5Element extends HTMLElement {
 			const propertyName = slotData.propertyName || slotName;
 
 			if (slottedChildrenMap.has(propertyName)) {
+				if (slotData.formRelated) {
+					setFormElementValue(this);
+				}
 				slottedChildrenMap.get(propertyName)!.push({ child, idx });
 			} else {
 				slottedChildrenMap.set(propertyName, [{ child, idx }]);
@@ -404,7 +408,12 @@ abstract class UI5Element extends HTMLElement {
 					name: propertyNameToSlotMap.get(propertyName)!,
 					reason: "children",
 				});
+
 				invalidated = true;
+
+				if (slotData.formRelated) {
+					setFormElementValue(this);
+				}
 			}
 		}
 
@@ -998,7 +1007,6 @@ abstract class UI5Element extends HTMLElement {
 					let isDifferent;
 					const ctor = this.constructor as typeof UI5Element;
 					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
-
 					value = metadataCtor.validatePropertyValue(value, propData);
 					const propertyType = propData.type;
 					let propertyValidator = propData.validator as typeof DataType;
@@ -1029,6 +1037,10 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
+
+						if (propData.formRelated) {
+							setFormElementValue(this);
+						}
 						this._updateAttribute(prop, value);
 					}
 				},

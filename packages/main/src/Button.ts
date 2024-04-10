@@ -22,7 +22,7 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import { attachInternalsFormElement, submitForm, resetForm } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, submitForm, resetForm } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -316,7 +316,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this, true);
+		attachFormElementInternals(this, true);
 	}
 
 	constructor() {

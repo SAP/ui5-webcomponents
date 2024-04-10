@@ -3,7 +3,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TimePickerBase from "./TimePickerBase.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import type {
@@ -118,23 +118,28 @@ class TimePicker extends TimePickerBase implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get formattedFormValue() {
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formElementFormattedValue(): FormData | string | null {
 		return this.value || "";
 	}
 
 	onBeforeRendering() {
 		if (this.value) {
 			this.value = this.normalizeValue(this.value) || this.value;
+			setFormElementValue(this);
 		}
-	}
-
-	onAfterRendering() {
-		super.onAfterRendering();
-
-		setValueFormElement(this);
 	}
 
 	get _formatPattern() {

@@ -20,7 +20,7 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
 import Input from "./Input.js";
@@ -181,10 +181,20 @@ class ColorPicker extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get formattedFormValue() {
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formElementFormattedValue() {
 		return this.value;
 	}
 
@@ -221,10 +231,6 @@ class ColorPicker extends UI5Element implements IFormElement {
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
-	}
-
-	onAfterRendering() {
-		setValueFormElement(this);
 	}
 
 	_handleMouseDown(e: MouseEvent) {
@@ -453,6 +459,7 @@ class ColorPicker extends UI5Element implements IFormElement {
 
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
+		setFormElementValue(this);
 		this._wrongHEX = !this.isValidRGBColor(color);
 		this.fireEvent("change");
 	}

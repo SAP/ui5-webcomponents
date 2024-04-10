@@ -13,7 +13,7 @@ import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/complete.js";
 import "@ui5/webcomponents-icons/dist/border.js";
 import "@ui5/webcomponents-icons/dist/tri-state.js";
-import { attachInternalsFormElement, setValueFormElement } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
@@ -237,18 +237,28 @@ class CheckBox extends UI5Element implements IFormElement {
 	static formAssociated = true;
 
 	formAssociatedCallback() {
-		attachInternalsFormElement(this);
+		attachFormElementInternals(this);
+		setFormElementValue(this);
 	}
 
-	get validationMessage() {
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
+
+	get formElementValidityMessage() {
 		return "Custom message";
 	}
 
-	get validity() {
+	get formElementValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.checked };
 	}
 
-	get formattedFormValue() {
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formElementFormattedValue() {
 		return this.checked ? "on" : null;
 	}
 
@@ -265,10 +275,6 @@ class CheckBox extends UI5Element implements IFormElement {
 			document.addEventListener("mouseup", this._deactivate);
 			isGlobalHandlerAttached = true;
 		}
-	}
-
-	onAfterRendering() {
-		setValueFormElement(this);
 	}
 
 	_onclick() {
@@ -329,12 +335,15 @@ class CheckBox extends UI5Element implements IFormElement {
 				this.checked = !this.checked;
 			}
 
+			setFormElementValue(this);
+
 			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding
 			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
 
 			if (changePrevented || valueChagnePrevented) {
 				this.checked = lastState.checked;
+				setFormElementValue(this);
 				this.indeterminate = lastState.indeterminate;
 			}
 		}

@@ -73,11 +73,7 @@ class DateRangePicker extends DatePicker implements IFormElement {
 
 	private _prevDelimiter: string | null;
 
-	get validationMessage() {
-		return "Custom message";
-	}
-
-	get formattedFormValue() {
+	get formElementFormattedValue() {
 		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);
 
 		if (values.length) {

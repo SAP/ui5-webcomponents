@@ -6,6 +6,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
+import { setFormElementValue } from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
@@ -92,7 +93,7 @@ class Slider extends SliderBase implements IFormElement {
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 
-	get formattedFormValue() {
+	get formElementFormattedValue() {
 		return this.value.toString();
 	}
 
@@ -139,6 +140,7 @@ class Slider extends SliderBase implements IFormElement {
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
 			// min and max bounderies and update the previous state reference.
 			this.value = SliderBase.clipValue(this.value, this._effectiveMin, this._effectiveMax);
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("value");
 			this.storePropertyState("value");
 		}
@@ -179,6 +181,7 @@ class Slider extends SliderBase implements IFormElement {
 		if (!this._isHandlePressed(ctor.getPageXValueFromEvent(e))) {
 			this._updateHandleAndProgress(newValue);
 			this.value = newValue;
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
@@ -230,6 +233,7 @@ class Slider extends SliderBase implements IFormElement {
 
 		this._updateHandleAndProgress(newValue);
 		this.value = newValue;
+		setFormElementValue(this);
 		this.updateStateStorageAndFireInputEvent("value");
 	}
 
@@ -276,6 +280,7 @@ class Slider extends SliderBase implements IFormElement {
 		if (newValue !== currentValue) {
 			this._updateHandleAndProgress(newValue!);
 			this.value = newValue!;
+			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
