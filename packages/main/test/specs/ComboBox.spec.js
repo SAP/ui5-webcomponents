@@ -357,6 +357,46 @@ describe("General interaction", () => {
 		assert.strictEqual(await combo.getProperty("value"), "Algeria", "Value should be restored to the last confirmed one");
 	});
 
+	it ("Tests change event on open picker and item navigation", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const counter = await browser.$("#change-count");
+		const combo = await browser.$("#change-cb");
+		const arrow = await combo.shadow$("[input-icon]");
+		const input = await combo.shadow$("[inner-input]");
+
+		await arrow.click();
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on item navigation.");
+
+		const popover = await combo.shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li"))[0].click();
+
+		assert.strictEqual(await counter.getText(), "1", "Change event should be fired on item selection.");
+	});
+
+	it ("Tests change event on closed picker and item navigation", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const counter = await browser.$("#change-count");
+		const combo = await browser.$("#change-cb");
+		const input = await combo.shadow$("[inner-input]");
+
+		await input.click();
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on inline item navigation.");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on inline item navigation.");
+
+		await input.keys("Enter");
+
+		assert.strictEqual(await counter.getText(), "1", "Change event should be fired on item selection.");
+	});
+
 	it ("Tests change event after type and item select", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -372,7 +412,7 @@ describe("General interaction", () => {
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li"))[0].click();
 
-		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should correspond to item.");
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 	});
 
