@@ -25,8 +25,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
@@ -93,6 +92,7 @@ type StepInputValueStateChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-step-input",
+	formAssociated: true,
 	renderer: litRender,
 	styles: StepInputCss,
 	template: StepInputTemplate,
@@ -132,13 +132,13 @@ type StepInputValueStateChangeEventDetail = {
 		},
 	},
 })
-class StepInput extends UI5Element implements IFormElement {
+class StepInput extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a value of the component.
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
+	@property({ validator: Float, defaultValue: 0, formProperty: true })
 	value!: number;
 
 	/**
@@ -291,19 +291,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	async formElementAnchor() {
 		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
 	}
@@ -452,7 +439,6 @@ class StepInput extends UI5Element implements IFormElement {
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
 		this.value = this._preciseValue(parseFloat(this.input.value));
-		setFormElementValue(this);
 		value = this.value + modifier;
 		if (this.min !== undefined && value < this.min) {
 			value = this.min;
@@ -463,7 +449,6 @@ class StepInput extends UI5Element implements IFormElement {
 		value = this._preciseValue(value);
 		if (value !== this.value) {
 			this.value = value;
-			setFormElementValue(this);
 			this._validate();
 			this._setButtonState();
 			this.focused = true;
@@ -497,7 +482,6 @@ class StepInput extends UI5Element implements IFormElement {
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
 			this.value = inputValue;
-			setFormElementValue(this);
 			this._validate();
 			this._setButtonState();
 			this._fireChangeEvent();
@@ -532,7 +516,6 @@ class StepInput extends UI5Element implements IFormElement {
 		} else if (isEscape(e)) {
 			// return previous value
 			this.value = this._previousValue;
-			setFormElementValue(this);
 			this.input.value = this.value.toFixed(this.valuePrecision);
 		} else if (this.max !== undefined && (isPageUpShift(e) || isUpShiftCtrl(e))) {
 			// step to max

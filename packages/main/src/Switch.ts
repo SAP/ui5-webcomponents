@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -13,8 +14,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
@@ -54,6 +53,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  */
 @customElement({
 	tag: "ui5-switch",
+	formAssociated: true,
 	languageAware: true,
 	styles: switchCss,
 	renderer: litRender,
@@ -66,7 +66,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @allowPreventDefault
  */
 @event("change")
-class Switch extends UI5Element implements IFormElement {
+class Switch extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the component design.
 	 *
@@ -88,7 +88,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, formProperty: true })
 	checked!: boolean;
 
 	/**
@@ -178,19 +178,6 @@ class Switch extends UI5Element implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	get formElementValidityMessage() {
 		return "Custom message";
 	}
@@ -234,14 +221,12 @@ class Switch extends UI5Element implements IFormElement {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			setFormElementValue(this);
 			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding;
 			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;
-				setFormElementValue(this);
 			}
 		}
 	}

@@ -9,6 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
@@ -29,8 +30,6 @@ import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 type FileUploaderChangeEventDetail = {
 	files: FileList | null,
@@ -63,6 +62,7 @@ type FileUploaderChangeEventDetail = {
 @customElement({
 	tag: "ui5-file-uploader",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	styles: [
 		FileUploaderCss,
@@ -91,7 +91,7 @@ type FileUploaderChangeEventDetail = {
 		files: { type: FileList },
 	},
 })
-class FileUploader extends UI5Element implements IFormElement {
+class FileUploader extends UI5Element implements IFormInputElement {
 	/**
 	 * Comma-separated list of file types that the component should accept.
 	 *
@@ -153,7 +153,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property()
+	@property({ formProperty: true })
 	value!: string;
 
 	/**
@@ -196,19 +196,6 @@ class FileUploader extends UI5Element implements IFormElement {
 	static emptyInput: HTMLInputElement;
 
 	static i18nBundle: I18nBundle;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
@@ -302,8 +289,6 @@ class FileUploader extends UI5Element implements IFormElement {
 		this.value = Array.from(files || []).reduce((acc, currFile) => {
 			return `${acc}"${currFile.name}" `;
 		}, "");
-
-		setFormElementValue(this);
 	}
 
 	toggleValueStatePopover(open: boolean) {

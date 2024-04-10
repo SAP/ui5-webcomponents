@@ -6,6 +6,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -37,7 +38,6 @@ import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -126,7 +126,7 @@ type PreviewValues = {
 		TimeSelectionClocks,
 	],
 })
-class DateTimePicker extends DatePicker implements IFormElement {
+class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * Defines the visibility of the time view in `phoneMode`.
 	 * For more information, see the `phoneMode` property.

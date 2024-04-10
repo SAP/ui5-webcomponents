@@ -8,6 +8,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isSpace,
 	isEnter,
@@ -19,8 +20,6 @@ import {
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 import WrappingType from "./types/WrappingType.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -74,6 +73,7 @@ let activeRadio: RadioButton;
 @customElement({
 	tag: "ui5-radio-button",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: RadioButtonTemplate,
 	styles: radioButtonCss,
@@ -86,7 +86,7 @@ let activeRadio: RadioButton;
  */
 @event("change")
 
-class RadioButton extends UI5Element implements IFormElement {
+class RadioButton extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -129,7 +129,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, formProperty: true })
 	checked!: boolean;
 
 	/**
@@ -171,7 +171,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @default ""
 	 * @public
 	 */
-	@property()
+	@property({ formProperty: true })
 	value!: string;
 
 	/**
@@ -218,27 +218,14 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @default false
 	 * @private
 	 */
-	@property({ type: Boolean, formRelated: true, noAttribute: true })
+	@property({ type: Boolean, formProperty: true, noAttribute: true })
 	_groupChecked!: boolean;
-	@property({ type: Boolean, formRelated: true, noAttribute: true })
+	@property({ type: Boolean, formProperty: true, noAttribute: true })
 	_groupRequired!: boolean;
 
 	_deactivate: () => void;
 	_name!: string;
 	_checked!: boolean;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
 
 	get formElementValidityMessage() {
 		return "Custom message";

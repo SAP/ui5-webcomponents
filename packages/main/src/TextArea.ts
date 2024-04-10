@@ -13,6 +13,7 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -22,8 +23,6 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -75,6 +74,7 @@ type ExceededText = {
  */
 @customElement({
 	tag: "ui5-textarea",
+	formAssociated: true,
 	languageAware: true,
 	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
 	renderer: litRender,
@@ -111,7 +111,7 @@ type ExceededText = {
  */
 @event("scroll")
 
-class TextArea extends UI5Element implements IFormElement {
+class TextArea extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component.
 	 * @formEvents change input
@@ -119,7 +119,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @default ""
 	 * @public
 	 */
-	@property()
+	@property({ formProperty: true })
 	value!: string;
 	/**
 	 * Indicates whether the user can interact with the component or not.
@@ -304,19 +304,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	get formElementValidityMessage() {
 		return "Custom message";
 	}
@@ -358,7 +345,6 @@ class TextArea extends UI5Element implements IFormElement {
 		if (!this.value) {
 			// fallback to default value
 			this.value = "";
-			setFormElementValue(this);
 		}
 
 		this._exceededTextProps = this._calcExceededText();
@@ -392,7 +378,6 @@ class TextArea extends UI5Element implements IFormElement {
 			const nativeTextArea = this.getInputDomRef();
 
 			this.value = this.previousValue;
-			setFormElementValue(this);
 			nativeTextArea.value = this.value;
 			this.fireEvent("input");
 		}
@@ -440,7 +425,6 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		this.value = nativeTextArea.value;
-		setFormElementValue(this);
 		const valueLength = this.value.length;
 
 		if (e.inputType === "insertFromPaste" && this.maxlength && valueLength > this.maxlength) {

@@ -11,6 +11,8 @@ import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getR
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isPageUp,
 	isPageDown,
@@ -28,8 +30,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import { attachFormElementInternals, setFormElementValue, submitForm } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
@@ -152,6 +152,7 @@ type DatePickerInputEventDetail = {
 @customElement({
 	tag: "ui5-date-picker",
 	languageAware: true,
+	formAssociated: true,
 	template: DatePickerTemplate,
 	styles: [
 		datePickerCss,
@@ -238,7 +239,7 @@ type DatePickerInputEventDetail = {
 		},
 	},
 })
-class DatePicker extends DateComponentBase implements IFormElement {
+class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * Defines a formatted date value.
 	 * @default ""
@@ -246,7 +247,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property()
+	@property({ formProperty: true })
 	value!: string
 
 	/**
@@ -362,19 +363,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	get formElementValidityMessage() {
 		return "Custom message";
 	}
@@ -413,7 +401,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		});
 
 		this.value = this.normalizeValue(this.value) || this.value;
-		setFormElementValue(this);
 		this.liveValue = this.value;
 	}
 
@@ -529,7 +516,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		if (updateValue) {
 			this._getInput().value = value;
 			this.value = value;
-			setFormElementValue(this);
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 
@@ -547,7 +533,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			this._getInput().value = previousValue;
 
 			this.value = previousValue;
-			setFormElementValue(this);
 		}
 	}
 

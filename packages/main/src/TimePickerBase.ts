@@ -35,7 +35,6 @@ import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
-import { setFormElementValue } from "./features/InputElementsFormSupport.js";
 
 import {
 	TIMEPICKER_SUBMIT_BUTTON,
@@ -66,6 +65,7 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 @customElement({
 	languageAware: true,
 	renderer: litRender,
+	formAssociated: true,
 	template: TimePickerTemplate,
 	styles: [
 		TimePickerCss,
@@ -137,7 +137,7 @@ class TimePickerBase extends UI5Element {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property({ defaultValue: undefined, formProperty: true })
 	value?: string;
 
 	/**
@@ -363,7 +363,6 @@ class TimePickerBase extends UI5Element {
 		if (!eventsNames.includes("input")) {
 			this.value = ""; // Do not remove! DurationPicker (an external component extending TimePickerBase) use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
 			this.value = value;
-			setFormElementValue(this);
 		}
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed

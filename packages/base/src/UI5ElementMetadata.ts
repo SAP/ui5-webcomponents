@@ -11,7 +11,7 @@ type SlotInvalidation = {
 type Slot = {
 	type: typeof Node | typeof HTMLElement,
 	default?: boolean,
-	formRelated?: boolean,
+	formSlot?: boolean,
 	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
@@ -24,7 +24,7 @@ type Property = {
 	type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
 	validator?: DataType,
 	defaultValue?: PropertyValue,
-	formRelated?: boolean
+	formProperty?: boolean
 	noAttribute?: boolean,
 	multiple?: boolean,
 	compareValues?: boolean,
@@ -43,6 +43,7 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
+	formAssociated?: boolean,
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -273,6 +274,13 @@ class UI5ElementMetadata {
 	 */
 	 isThemeAware(): boolean {
 		return !!this.metadata.themeAware;
+	}
+
+	/**
+	 * Determines whether this UI5 Element has any theme dependant carachteristics.
+	 */
+	 isFormAssociated(): boolean {
+		return !!this.metadata.formAssociated;
 	}
 
 	/**

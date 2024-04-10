@@ -2,9 +2,8 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import TimePickerBase from "./TimePickerBase.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import type {
 	TimePickerBaseChangeEventDetail as TimePickerChangeEventDetail,
@@ -78,7 +77,7 @@ import {
  * @since 1.0.0-rc.6
  */
 @customElement("ui5-time-picker")
-class TimePicker extends TimePickerBase implements IFormElement {
+class TimePicker extends TimePickerBase implements IFormInputElement {
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
@@ -114,19 +113,6 @@ class TimePicker extends TimePickerBase implements IFormElement {
 	@property()
 	name!: string;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
 	}
@@ -138,7 +124,6 @@ class TimePicker extends TimePickerBase implements IFormElement {
 	onBeforeRendering() {
 		if (this.value) {
 			this.value = this.normalizeValue(this.value) || this.value;
-			setFormElementValue(this);
 		}
 	}
 

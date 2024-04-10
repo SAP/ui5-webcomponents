@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
@@ -16,7 +17,6 @@ import type {
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 /**
  * @class
@@ -54,7 +54,7 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
 })
-class DateRangePicker extends DatePicker implements IFormElement {
+class DateRangePicker extends DatePicker implements IFormInputElement {
 	 /**
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.

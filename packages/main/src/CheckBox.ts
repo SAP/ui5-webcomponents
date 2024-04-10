@@ -13,8 +13,7 @@ import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/complete.js";
 import "@ui5/webcomponents-icons/dist/border.js";
 import "@ui5/webcomponents-icons/dist/tri-state.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
 import WrappingType from "./types/WrappingType.js";
@@ -78,6 +77,7 @@ let activeCb: CheckBox;
 @customElement({
 	tag: "ui5-checkbox",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: CheckBoxTemplate,
 	styles: checkboxCss,
@@ -93,7 +93,7 @@ let activeCb: CheckBox;
  */
 @event("change")
 
-class CheckBox extends UI5Element implements IFormElement {
+class CheckBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @default ""
@@ -184,7 +184,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, formProperty: true })
 	checked!: boolean;
 
 	/**
@@ -232,19 +232,6 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
 
 	get formElementValidityMessage() {
 		return "Custom message";
@@ -335,15 +322,12 @@ class CheckBox extends UI5Element implements IFormElement {
 				this.checked = !this.checked;
 			}
 
-			setFormElementValue(this);
-
 			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding
 			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
 
 			if (changePrevented || valueChagnePrevented) {
 				this.checked = lastState.checked;
-				setFormElementValue(this);
 				this.indeterminate = lastState.indeterminate;
 			}
 		}

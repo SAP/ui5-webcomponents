@@ -10,6 +10,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getRGBColor,
 	HSLToRGB,
@@ -20,8 +21,6 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
 import Input from "./Input.js";
 import Slider from "./Slider.js";
@@ -76,6 +75,7 @@ type ColorCoordinates = {
 @customElement({
 	tag: "ui5-color-picker",
 	renderer: litRender,
+	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,
 	dependencies: [
@@ -89,7 +89,7 @@ type ColorCoordinates = {
  * @public
  */
 @event("change")
-class ColorPicker extends UI5Element implements IFormElement {
+class ColorPicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the currently selected color of the component.
 	 *
@@ -97,7 +97,7 @@ class ColorPicker extends UI5Element implements IFormElement {
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
-	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
+	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)", formProperty: true })
 	value!: string;
 
 	/**
@@ -176,19 +176,6 @@ class ColorPicker extends UI5Element implements IFormElement {
 	mouseIn: boolean;
 
 	static i18nBundle: I18nBundle;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
@@ -459,7 +446,6 @@ class ColorPicker extends UI5Element implements IFormElement {
 
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
-		setFormElementValue(this);
 		this._wrongHEX = !this.isValidRGBColor(color);
 		this.fireEvent("change");
 	}

@@ -4,10 +4,9 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
-import { setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
@@ -74,10 +73,11 @@ import {
 @customElement({
 	tag: "ui5-slider",
 	languageAware: true,
+	formAssociated: true,
 	template: SliderTemplate,
 	dependencies: [Icon],
 })
-class Slider extends SliderBase implements IFormElement {
+class Slider extends SliderBase implements IFormInputElement {
 	/**
 	 * Current value of the slider
 	 * @default 0
@@ -85,7 +85,7 @@ class Slider extends SliderBase implements IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
+	@property({ validator: Float, defaultValue: 0, formProperty: true })
 	value!: number;
 
 	_valueInitial?: number;
@@ -140,7 +140,6 @@ class Slider extends SliderBase implements IFormElement {
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
 			// min and max bounderies and update the previous state reference.
 			this.value = SliderBase.clipValue(this.value, this._effectiveMin, this._effectiveMax);
-			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("value");
 			this.storePropertyState("value");
 		}
@@ -181,7 +180,6 @@ class Slider extends SliderBase implements IFormElement {
 		if (!this._isHandlePressed(ctor.getPageXValueFromEvent(e))) {
 			this._updateHandleAndProgress(newValue);
 			this.value = newValue;
-			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
@@ -233,7 +231,6 @@ class Slider extends SliderBase implements IFormElement {
 
 		this._updateHandleAndProgress(newValue);
 		this.value = newValue;
-		setFormElementValue(this);
 		this.updateStateStorageAndFireInputEvent("value");
 	}
 
@@ -280,7 +277,6 @@ class Slider extends SliderBase implements IFormElement {
 		if (newValue !== currentValue) {
 			this._updateHandleAndProgress(newValue!);
 			this.value = newValue!;
-			setFormElementValue(this);
 			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}

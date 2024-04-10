@@ -22,8 +22,8 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import { attachFormElementInternals, submitForm, resetForm } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
@@ -86,6 +86,7 @@ type AccessibilityAttributes = {
  */
 @customElement({
 	tag: "ui5-button",
+	formAssociated: true,
 	languageAware: true,
 	renderer: litRender,
 	template: ButtonTemplate,
@@ -311,13 +312,6 @@ class Button extends UI5Element implements IButton, IFormElement {
 	_ontouchstart: PassiveEventListenerObject;
 
 	static i18nBundle: I18nBundle;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this, true);
-	}
 
 	constructor() {
 		super();

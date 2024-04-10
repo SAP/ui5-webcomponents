@@ -12,8 +12,6 @@ import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 // Styles
 import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
@@ -44,7 +42,7 @@ type DirectionStart = "left" | "right";
  * @extends UI5Element
  * @public
  */
-abstract class SliderBase extends UI5Element implements IFormElement {
+abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
 	 * @default 0
@@ -153,19 +151,6 @@ abstract class SliderBase extends UI5Element implements IFormElement {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
 
 	get formElementValidityMessage() {
 		return "Custom message";
@@ -279,8 +264,6 @@ abstract class SliderBase extends UI5Element implements IFormElement {
 		if (this.notResized) {
 			this._resizeHandler();
 		}
-
-		setFormElementValue(this);
 	}
 
 	/** Shows the tooltip(s) if the `showTooltip` property is set to true

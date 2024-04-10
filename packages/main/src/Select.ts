@@ -34,6 +34,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import {
@@ -65,8 +66,6 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
-import { attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
@@ -142,6 +141,7 @@ type SelectLiveChangeEventDetail = {
 @customElement({
 	tag: "ui5-select",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: SelectTemplate,
 	styles: [
@@ -200,7 +200,7 @@ type SelectLiveChangeEventDetail = {
  * @public
  */
 @event("close")
-class Select extends UI5Element implements IFormElement {
+class Select extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -315,7 +315,12 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
+	@property({
+		validator: Integer,
+		defaultValue: -1,
+		noAttribute: true,
+		formProperty: true,
+	 })
 	_selectedIndex!: number;
 
 	_syncedOptions: Array<IOption>;
@@ -339,7 +344,12 @@ class Select extends UI5Element implements IFormElement {
 	 * **Note:** Use the `ui5-option` component to define the desired options.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+		formSlot: true,
+	})
 	options!: Array<IOption>;
 
 	/**
@@ -379,19 +389,6 @@ class Select extends UI5Element implements IFormElement {
 	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
 	_attachMenuListeners: (menu: HTMLElement) => void;
 	_detachMenuListeners: (menu: HTMLElement) => void;
-
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
 
 	get formElementValidityMessage() {
 		return "Custom message";
@@ -508,7 +505,6 @@ class Select extends UI5Element implements IFormElement {
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
 		});
-		setFormElementValue(this);
 	}
 
 	get value(): string {
@@ -643,8 +639,6 @@ class Select extends UI5Element implements IFormElement {
 				this._text = options[firstEnabledOptionIndex].textContent;
 			}
 		}
-
-		setFormElementValue(this);
 
 		this._syncedOptions = syncOpts as Array<IOption>;
 	}
@@ -800,7 +794,6 @@ class Select extends UI5Element implements IFormElement {
 
 		this._selectedIndex = index;
 		this.selectOptions[index].selected = true;
-		setFormElementValue(this);
 	}
 
 	/**
@@ -885,7 +878,6 @@ class Select extends UI5Element implements IFormElement {
 		const nextOption = options[newIndex];
 		nextOption.selected = true;
 		nextOption.focused = true;
-		setFormElementValue(this);
 
 		this._selectedIndex = newIndex;
 

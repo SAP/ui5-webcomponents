@@ -1,23 +1,26 @@
 import type UI5Element from "../UI5Element.js";
 
 interface IFormElement extends UI5Element {
-	name?: string;
-	formElementFormattedValue?: FormData | string | null;
-	formElementValidityMessage?: string;
-	formElementValidity?: ValidityStateFlags;
-	formElementAnchor?: () => HTMLElement | undefined | Promise<HTMLElement | undefined>;
 	internals_?: ElementInternals;
 }
 
-const attachFormElementInternals = (element: IFormElement, attachOnly = false) => {
+interface IFormInputElement extends IFormElement {
+	name: string;
+	formElementFormattedValue: FormData | string | null;
+	formElementValidityMessage?: string;
+	formElementValidity?: ValidityStateFlags;
+	formElementAnchor?: () => HTMLElement | undefined | Promise<HTMLElement | undefined>;
+}
+
+const attachFormElementInternals = (element: IFormInputElement | IFormElement) => {
 	element.internals_ = element.attachInternals();
 
-	if (!attachOnly) {
+	if (isInputElement(element)) {
 		setFormElementValue(element);
 	}
 };
 
-const setFormElementValue = (element: IFormElement, test = false) => {
+const setFormElementValue = (element: IFormInputElement, test = false) => {
 	if (!element.internals_?.form) {
 		return;
 	}
@@ -34,7 +37,7 @@ const setFormElementValue = (element: IFormElement, test = false) => {
 	element.internals_.setFormValue(element.formElementFormattedValue || null);
 };
 
-const setFormElementValidity = async (element: IFormElement) => {
+const setFormElementValidity = async (element: IFormInputElement) => {
 	if (!element.internals_?.form) {
 		return;
 	}
@@ -62,6 +65,10 @@ const resetForm = (element: IFormElement) => {
 	element.internals_?.form.reset();
 };
 
+const isInputElement = (element: IFormInputElement | IFormElement): element is IFormInputElement => {
+	return true;
+};
+
 export {
 	attachFormElementInternals,
 	setFormElementValue,
@@ -71,5 +78,6 @@ export {
 };
 
 export {
+	IFormInputElement,
 	IFormElement,
 };

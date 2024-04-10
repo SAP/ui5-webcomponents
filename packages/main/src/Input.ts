@@ -32,6 +32,8 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getAssociatedLabelForTexts,
 	getAllAccessibleNameRefTexts,
@@ -49,8 +51,6 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { InputSuggestion, SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
-import { attachFormElementInternals, setFormElementValue, submitForm } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
 import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
@@ -194,6 +194,7 @@ type InputSuggestionScrollEventDetail = {
 @customElement({
 	tag: "ui5-input",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: InputTemplate,
 	styles: [
@@ -276,7 +277,7 @@ type InputSuggestionScrollEventDetail = {
 		scrollContainer: { type: HTMLElement },
 	},
 })
-class Input extends UI5Element implements SuggestionComponent, IFormElement {
+class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
@@ -361,7 +362,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ formRelated: true })
+	@property({ formProperty: true })
 	value!: string;
 
 	/**
@@ -577,19 +578,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	get formElementValidityMessage() {
 		return "Custom message";
 	}
@@ -792,7 +780,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		// So, the (native) change event is always fired with the old value
 		if (isDelete(e)) {
 			this.value = (e.target as HTMLInputElement).value;
-			setFormElementValue(this);
 		}
 
 		this._keyDown = false;
@@ -896,7 +883,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (!isOpen) {
 			this.value = this.lastConfirmedValue ? this.lastConfirmedValue : this.previousValue;
-			setFormElementValue(this);
 			return;
 		}
 
@@ -914,7 +900,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (isAutoCompleted) {
 			this.value = this.typedInValue;
-			setFormElementValue(this);
 		}
 
 		if (this._isValueStateFocused) {
@@ -1013,7 +998,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_clear() {
 		this.value = "";
-		setFormElementValue(this);
 		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
 		if (!this._isPhone) {
 			this.focus();
@@ -1089,7 +1073,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			if (delimiterCase || eNotationCase || minusRemovalCase) {
 				this.value = (e.target as HTMLInputElement).value;
-				setFormElementValue(this);
 				this._keepInnerValue = true;
 			}
 			// ----------------- End ------------------
@@ -1137,7 +1120,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this._innerValue = value;
 		this.value = value;
-		setFormElementValue(this);
 		this._performTextSelection = true;
 
 		this._shouldAutocomplete = false;
@@ -1256,7 +1238,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (fireInput) {
 			this.value = itemText;
-			setFormElementValue(this);
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 
@@ -1289,7 +1270,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				// revert properties set during fireInput
 				if (itemText === this.value) { // If no chnages were made to the input value after suggestion-item-select was prevented - revert value to the original text
 					this.value = valueOriginal;
-					setFormElementValue(this);
 				}
 				this.valueBeforeItemSelection = valueBeforeItemSelectionOriginal;
 				this.lastConfirmedValue = lastConfirmedValueOriginal;
@@ -1320,7 +1300,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent || "");
 
 		this.value = itemValue;
-		setFormElementValue(this);
 		this._performTextSelection = true;
 	}
 
@@ -1346,7 +1325,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const isUserInput = action === INPUT_ACTIONS.ACTION_ENTER;
 
 		this.value = inputValue;
-		setFormElementValue(this);
 		this.typedInValue = inputValue;
 		this.valueBeforeItemPreview = inputValue;
 

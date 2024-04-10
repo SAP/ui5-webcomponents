@@ -35,7 +35,7 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { setFormElementValue } from "./features/InputElementsFormSupport.js";
+import { IFormInputElement, attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
 
 let autoId = 0;
 
@@ -125,6 +125,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
+	internals_?: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -381,9 +382,6 @@ abstract class UI5Element extends HTMLElement {
 			const propertyName = slotData.propertyName || slotName;
 
 			if (slottedChildrenMap.has(propertyName)) {
-				if (slotData.formRelated) {
-					setFormElementValue(this);
-				}
 				slottedChildrenMap.get(propertyName)!.push({ child, idx });
 			} else {
 				slottedChildrenMap.set(propertyName, [{ child, idx }]);
@@ -411,8 +409,8 @@ abstract class UI5Element extends HTMLElement {
 
 				invalidated = true;
 
-				if (slotData.formRelated) {
-					setFormElementValue(this);
+				if (slotData.formSlot) {
+					setFormElementValue(this as unknown as IFormInputElement);
 				}
 			}
 		}
@@ -527,6 +525,20 @@ abstract class UI5Element extends HTMLElement {
 
 			(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
 		}
+	}
+
+	formAssociatedCallback() {
+		const ctor = this.constructor as typeof UI5Element;
+
+		if (!ctor.getMetadata().isFormAssociated()) {
+			return;
+		}
+
+		attachFormElementInternals(this);
+	}
+
+	static get formAssociated() {
+		return this.getMetadata().isFormAssociated();
 	}
 
 	/**
@@ -1038,8 +1050,8 @@ abstract class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 
-						if (propData.formRelated) {
-							setFormElementValue(this);
+						if (propData.formProperty) {
+							setFormElementValue(this as unknown as IFormInputElement);
 						}
 						this._updateAttribute(prop, value);
 					}
@@ -1172,6 +1184,11 @@ abstract class UI5Element extends HTMLElement {
 		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
+
+	get validity() { return this.internals_?.validity; }
+	get validationMessage() { return this.internals_?.validationMessage; }
+	checkValidity() { return this.internals_?.checkValidity(); }
+	reportValidity() { return this.internals_?.reportValidity(); }
 }
 
 /**

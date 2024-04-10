@@ -14,6 +14,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
@@ -22,8 +23,6 @@ import Token from "./Token.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
-import { setFormElementValue } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
 import type {
@@ -64,6 +63,7 @@ type MultiInputTokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-multi-input",
 	renderer: litRender,
+	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
 	dependencies: [
@@ -94,7 +94,7 @@ type MultiInputTokenDeleteEventDetail = {
 	},
 })
 
-class MultiInput extends Input implements IFormElement {
+class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
@@ -124,13 +124,11 @@ class MultiInput extends Input implements IFormElement {
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, formRelated: true })
+	@slot({ type: HTMLElement, formSlot: true })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
-
-	static formAssociated = true;
 
 	get formElementValidity(): ValidityStateFlags {
 		const tokens = (this.tokens || []);
@@ -176,11 +174,6 @@ class MultiInput extends Input implements IFormElement {
 		this.focus();
 	}
 
-	// async onAfterRendering(): Promise<void> {
-	// 	await super.onAfterRendering();
-	// 	setFormElementValue(this);
-	// }
-
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		const focusedToken = e.detail.ref;
 		const selectedTokens = this.tokens.filter(token => token.selected);
@@ -219,7 +212,6 @@ class MultiInput extends Input implements IFormElement {
 	_tokenizerFocusOut(e: FocusEvent) {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
-			setFormElementValue(this);
 			this.tokenizer.scrollToStart();
 		}
 
@@ -242,7 +234,6 @@ class MultiInput extends Input implements IFormElement {
 		this.tokenizer._getTokens().forEach(token => {
 			token.selected = false;
 		});
-		setFormElementValue(this);
 	}
 
 	_onkeydown(e: KeyboardEvent) {

@@ -21,6 +21,8 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isBackSpace,
 	isDelete,
@@ -77,8 +79,6 @@ import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
-import { attachFormElementInternals, setFormElementValue, submitForm } from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input, { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
@@ -156,6 +156,7 @@ type ComboBoxSelectionChangeEventDetail = {
 @customElement({
 	tag: "ui5-combobox",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	styles: [
 		ComboBoxCss,
@@ -207,7 +208,7 @@ type ComboBoxSelectionChangeEventDetail = {
 	},
 })
 
-class ComboBox extends UI5Element implements IFormElement {
+class ComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component.
 	 * @default ""
@@ -215,7 +216,7 @@ class ComboBox extends UI5Element implements IFormElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property()
+	@property({ formProperty: true })
 	value!: string;
 
 	/**
@@ -406,19 +407,6 @@ class ComboBox extends UI5Element implements IFormElement {
 	valueStatePopover?: Popover;
 	static i18nBundle: I18nBundle;
 
-	internals_?: ElementInternals;
-	static formAssociated = true;
-
-	formAssociatedCallback() {
-		attachFormElementInternals(this);
-		setFormElementValue(this);
-	}
-
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
-
 	get formElementValidityMessage() {
 		return "Custom message";
 	}
@@ -497,7 +485,6 @@ class ComboBox extends UI5Element implements IFormElement {
 
 		if (isPhone()) {
 			this.value = this.inner.value;
-			setFormElementValue(this);
 			this._selectMatchingItem();
 		}
 	}
@@ -625,7 +612,6 @@ class ComboBox extends UI5Element implements IFormElement {
 		const { target } = e;
 		this.filterValue = (target as Input).value;
 		this.value = (target as Input).value;
-		setFormElementValue(this);
 		this.fireEvent("input");
 	}
 
@@ -643,7 +629,6 @@ class ComboBox extends UI5Element implements IFormElement {
 		this._filteredItems = this._filterItems(value);
 
 		this.value = value;
-		setFormElementValue(this);
 		this.filterValue = value;
 
 		this._clearFocus();
@@ -756,13 +741,11 @@ class ComboBox extends UI5Element implements IFormElement {
 		if (isOpen) {
 			this._itemFocused = true;
 			this.value = isGroupItem ? "" : currentItem.text;
-			setFormElementValue(this);
 			this.focused = false;
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
 			this.value = isGroupItem ? nextItem.text : currentItem.text;
-			setFormElementValue(this);
 			currentItem.focused = false;
 		}
 
@@ -911,7 +894,6 @@ class ComboBox extends UI5Element implements IFormElement {
 		if (isEscape(e)) {
 			this.focused = true;
 			this.value = !this.open ? this._lastValue : this.value;
-			setFormElementValue(this);
 			this._isValueStateFocused = false;
 		}
 
@@ -953,13 +935,11 @@ class ComboBox extends UI5Element implements IFormElement {
 
 		if (e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
 			this.value = this._selectedItemText;
-			setFormElementValue(this);
 			this.filterValue = this._selectedItemText;
 		}
 
 		if (e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn")) {
 			this.value = this._lastValue || "";
-			setFormElementValue(this);
 			this.filterValue = this._lastValue || "";
 		}
 
@@ -1007,7 +987,6 @@ class ComboBox extends UI5Element implements IFormElement {
 
 		if (currentlyFocusedItem?.isGroupItem) {
 			this.value = this.filterValue;
-			setFormElementValue(this);
 			return;
 		}
 
@@ -1026,7 +1005,6 @@ class ComboBox extends UI5Element implements IFormElement {
 			this.inner.setSelectionRange(filterValue.length, value.length);
 		}
 		this.value = value;
-		setFormElementValue(this);
 	}
 
 	_selectMatchingItem() {
@@ -1073,7 +1051,6 @@ class ComboBox extends UI5Element implements IFormElement {
 		}
 
 		this.value = this._selectedItemText;
-		setFormElementValue(this);
 
 		if (!listItem.mappedItem.selected) {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
@@ -1120,7 +1097,6 @@ class ComboBox extends UI5Element implements IFormElement {
 		}
 
 		this.value = "";
-		setFormElementValue(this);
 		this.fireEvent("input");
 
 		if (this._isPhone) {
