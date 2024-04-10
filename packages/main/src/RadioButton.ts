@@ -268,6 +268,12 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		this.syncGroup();
 	}
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	onExitDOM() {
 		this.syncGroup(true);
 	}

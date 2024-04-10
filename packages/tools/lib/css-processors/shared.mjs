@@ -47,7 +47,15 @@ registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", async () => 
 `;
 };
 
-const getFileContent = (targetFile, packageName, css, includeDefaultTheme) => {
+const getFileContent = (tsMode, targetFile, packageName, css, includeDefaultTheme) => {
+	if (tsMode) {
+		return getTSContent(targetFile, packageName, css, includeDefaultTheme);
+	}
+
+	return getJSContent(targetFile, packageName, css, includeDefaultTheme);
+}
+
+const getTSContent = (targetFile, packageName, css, includeDefaultTheme) => {
 	const typeImport = "import type { StyleData } from \"@ui5/webcomponents-base/dist/types.js\";"
 	const defaultTheme = includeDefaultTheme ? getDefaultThemeCode(packageName) : "";
 
@@ -57,6 +65,12 @@ ${defaultTheme}
 const styleData: StyleData = {packageName:"${packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}};
 export default styleData;
 	`;
+}
+
+const getJSContent = (targetFile, packageName, css, includeDefaultTheme) => {
+	const defaultTheme = includeDefaultTheme ? getDefaultThemeCode(packageName) : "";
+
+	return `${defaultTheme}export default {packageName:"${packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}}`
 }
 
 export { writeFileIfChanged, stripThemingBaseContent, getFileContent}

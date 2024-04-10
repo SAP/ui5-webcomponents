@@ -264,6 +264,12 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	_onclick() {
 		this.toggle();
 	}

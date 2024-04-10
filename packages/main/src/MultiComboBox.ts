@@ -1768,7 +1768,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get selectedItemsListMode() {
-		return this.readonly ? "None" : "MultiSelect";
+		return this.readonly ? "None" : "Multiple";
 	}
 
 	get _listItemsType() {

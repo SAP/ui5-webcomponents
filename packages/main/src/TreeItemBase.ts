@@ -128,7 +128,7 @@ class TreeItemBase extends ListItem {
 	* -  If a tree node has `selected` set to `true` and `indeterminate` set to `false`, it is displayed as selected.
 	* -  If a tree node has `selected` set to `false`, it is displayed as not selected regardless of the value of the `indeterminate` property.
 	*
-	* **Note:** This property takes effect only when the `ui5-tree` is in `MultiSelect` mode.
+	* **Note:** This property takes effect only when the `ui5-tree` is in `Multiple` mode.
 	* @default false
 	* @public
 	* @since 1.1.0

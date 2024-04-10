@@ -9,13 +9,13 @@ The Button samples can be found in the `/packages/website/docs/_samples/main/But
 
 ## Run the Website
 
-Runs project build + website start
+Runs project build + website start.
 
 ```bash
 yarn start:website
 ```
 
-However, in most cases you have the project built, so faster would be
+However, in most cases you have the project built, so it would be faster
 to just start the website:
 
 ```bash
@@ -43,7 +43,7 @@ import "@ui5/webcomponents-icons/dist/account.js";
 
 ### The `sample.html` file
 
-In the `sample.html` file, we use the web components as in regular HTML page
+In the `sample.html` file, we use the web components as in regular HTML page.
 
 **For example:**
 
@@ -90,23 +90,23 @@ import js from '!!raw-loader!./main.js';
 
 ## Show the Sample
 
-In the previous step we have created our sample. Now it's time to show and document it.
+In the previous step we have created our sample. Now, it's time to show and document it.
 
 
-- Open the `packages/website/docs/_components_pages` folder
+- Open the `packages/website/docs/_components_pages` folder.
 
 - Find your component's `.mdx` file.
 
 **For example:** `packages/website/docs/_components_pages/main/Button.mdx`
 
-- Import the newly created sample
+- Import the newly created sample.
 
 **For example:** 
 ```js
 import MyNewSample from "../../_samples/main/Button/MyNewSample/MyNewSample.md";`
 ```
 
-- Instantiate the sample and add title + description
+- Instantiate the sample and add title + description.
 
 **For example:**
 
@@ -129,7 +129,7 @@ The Button supports several designs to indicate the priority or the nature of th
 - Regarding the naming, it's best to consult with KM and use existing ones as reference.
 
 ### Sample Title and Description
-The title ("My New Sample") and the description ("The Button..") will be displayed on top of the sample itself. Adding title and description is recommended -  they help viewers better understand what they are looking at.
+The title ("My New Sample") and the description ("The Button..") will be displayed at the top of the sample itself. Adding title and description is recommended -  they help viewers better understand what they are looking at.
 
 
 ### Sample Order
@@ -137,4 +137,4 @@ Add new samples in the "More Samples" section where it best fits among the exist
 
 
 ### The "Basic" Sample
-All components have sample, called "Basic" and it's used as the first sample, displayed right-after the component's overview. Don't use "Basic" for other samples.
+All components have a sample called "Basic" used as the first sample displayed right-after the component's overview. Don't use "Basic" for other samples.

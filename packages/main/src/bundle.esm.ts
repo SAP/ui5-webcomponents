@@ -144,6 +144,7 @@ import MessageStrip from "./MessageStrip.js";
 import MultiComboBox from "./MultiComboBox.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import RatingIndicator from "./RatingIndicator.js";
+import Text from "./Text.js";
 import TabContainer from "./TabContainer.js";
 import Tab from "./Tab.js";
 import TabSeparator from "./TabSeparator.js";
