@@ -388,7 +388,7 @@
 		</div>
 	</ui5-dialog>
 
-	<ui5-popover header-text="My Heading" id="pop" class="dialog8auto" placement-type="Top">
+	<ui5-popover header-text="My Heading" id="pop" class="dialog8auto" placement="Top">
 		<!-- <div slot="header">
 			Hello World
 		</div> -->
@@ -424,7 +424,7 @@
 		</div>
 	</ui5-popover>
 
-	<ui5-dialog placement-type="Bottom" id='danger'>
+	<ui5-dialog placement="Bottom" id='danger'>
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>World</ui5-li>
@@ -575,7 +575,7 @@
 		<ui5-button id="fistButtonInDialog">Confirm</ui5-button>
 
 		<div slot="header">Header text</div>
-	
+
 		<div slot="footer" class="dialog-footer">
 			<div style="flex: 1"></div>
 			<ui5-button id="closeDialogFocusButton" design="Emphasized">Close</ui5-button>
@@ -584,7 +584,7 @@
 	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
-		<ui5-list id="listContainerId" mode="SingleSelect">
+		<ui5-list id="listContainerId" selection-mode="Single">
 			<ui5-li>Test1</ui5-li>
 			<ui5-li id="listContainerItemId">Test2</ui5-li>
 			<ui5-li>Test3</ui5-li>

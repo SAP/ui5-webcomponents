@@ -6,24 +6,23 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
-import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import popupStlyes from "./generated/themes/Popup.css.js";
-import popupStaticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import popupBlockLayerStyles from "./generated/themes/PopupBlockLayer.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 const createBlockingStyle = (): void => {
@@ -77,10 +76,8 @@ type PopupBeforeCloseEventDetail = {
  */
 @customElement({
 	renderer: litRender,
-	styles: popupStlyes,
+	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
-	staticAreaTemplate: PopupBlockLayer,
-	staticAreaStyles: popupStaticAreaStyles,
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
@@ -223,23 +220,40 @@ abstract class Popup extends UI5Element {
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
+	_opening = false;
 
 	constructor() {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
+
+		this._getRealDomRef = () => {
+			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
+		};
 	}
 
 	onBeforeRendering() {
-		this._blockLayerHidden = !this.isOpen() || !this.isTopModalPopup;
+		if (this._getBlockingLayer) {
+			if (!this.isOpen() || !this.isTopModalPopup) {
+				this._getBlockingLayer.hidePopover();
+			} else if (!this.shouldHideBackdrop) {
+				this._getBlockingLayer.showPopover();
+			}
+		}
 	}
 
 	onAfterRendering() {
-		this._updateMediaRange();
+		renderFinished().then(() => {
+			this._updateMediaRange();
+		});
 	}
 
 	onEnterDOM() {
+		this.setAttribute("popover", "manual");
 		ResizeHandler.register(this, this._resizeHandler);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -249,10 +263,6 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
-	}
-
-	get _displayProp() {
-		return "block";
 	}
 
 	_resize() {
@@ -422,25 +432,32 @@ abstract class Popup extends UI5Element {
 		return isFocusedElementWithinNode(this._root);
 	}
 
+	get _getBlockingLayer() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-block-layer")!;
+	}
+
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
 	 */
 	async _open(preventInitialFocus: boolean) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
-		if (prevented) {
+
+		if (prevented || this._opening) {
 			return;
 		}
 
+		this._opening = true;
+
+		// Await render before trying to access the blocking layer
+		await renderFinished();
+
 		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
-			this.getStaticAreaItemDomRef();
+			this._getBlockingLayer?.showPopover();
 			this._blockLayerHidden = false;
 			Popup.blockPageScrolling(this);
 		}
-
-		this._zIndex = getNextZIndex();
-		this.style.zIndex = this._zIndex?.toString() || "";
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 
@@ -452,10 +469,9 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
+		this._opening = false;
 		this.opened = true;
 		this.open = true;
-
-		await renderFinished();
 
 		if (!this._disableInitialFocus && !preventInitialFocus) {
 			await this.applyInitialFocus();
@@ -492,6 +508,7 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
+			this._getBlockingLayer?.hidePopover();
 			Popup.unblockPageScrolling(this);
 		}
 
@@ -536,7 +553,10 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	_show() {
-		this.style.display = this._displayProp;
+		if (this.isConnected) {
+			this.setAttribute("popover", "manual");
+			this.showPopover();
+		}
 	}
 
 	/**
@@ -544,7 +564,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	hide() {
-		this.style.display = "none";
+		this.isConnected && this.hidePopover();
 	}
 
 	/**
@@ -593,9 +613,6 @@ abstract class Popup extends UI5Element {
 		return {
 			root: {},
 			content: {},
-			blockLayer: {
-				"zIndex": this._zIndex ? this._zIndex - 1 : "",
-			},
 		};
 	}
 

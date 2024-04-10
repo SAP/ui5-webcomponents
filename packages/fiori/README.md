@@ -12,7 +12,6 @@ such as a common header (ShellBar).
 
 | Web Component                             | Tag name                       | Module import                                                         |
 |-------------------------------------------|--------------------------------|-----------------------------------------------------------------------|
-| Bar                                       | `ui5-bar`                      | `import "@ui5/webcomponents-fiori/dist/Bar.js";`                      |
 | Barcode Scanner Dialog                    | `ui5-barcode-scanner-dialog`   | `import "@ui5/webcomponents-fiori/dist/BarcodeScannerDialog.js";`     |
 | Dynamic Side Content                      | `ui5-dynamic-side-content`     | `import "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";`       |
 | Flexible Column Layout                    | `ui5-flexible-column-layout`   | `import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";`     |

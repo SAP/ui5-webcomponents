@@ -1,7 +1,6 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -166,7 +165,6 @@ class Toast extends UI5Element {
 		this.style.transitionDuration = this.open ? `${transitionDuration}ms` : "";
 		this.style.transitionDelay = this.open ? `${this.effectiveDuration - transitionDuration}ms` : "";
 		this.style.opacity = this.open && !this.hover && !this.focused ? "0" : "";
-		this.style.zIndex = `${getNextZIndex()}`;
 
 		if (!globalListenerAdded) {
 			document.addEventListener("keydown", handleGlobalKeydown);

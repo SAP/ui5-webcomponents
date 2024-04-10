@@ -57,8 +57,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("ui5-toolbar");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await toolbar.shadow$("ui5-popover");
 		const valueState = await popover.$("ui5-select").getAttribute("value-state");
 		const disabled = await popover.$("ui5-select[disabled]").getAttribute("disabled");
 

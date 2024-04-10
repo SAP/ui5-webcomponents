@@ -92,6 +92,7 @@ type AccessibilityAttributes = {
 	template: ButtonTemplate,
 	styles: buttonCss,
 	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component is activated either with a

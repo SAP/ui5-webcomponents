@@ -216,7 +216,7 @@ Basic.args = {
           ></ui5-shellbar-item>
         </ui5-shellbar>
         <br /><br />
-        <ui5-list id="col1list" header-text="Products (13)" mode="SingleSelect">
+        <ui5-list id="col1list" header-text="Products (13)" selection-mode="Single">
           <ui5-li
             description="HT-2001"
             icon="slim-arrow-right"

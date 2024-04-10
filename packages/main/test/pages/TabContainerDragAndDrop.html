@@ -17,21 +17,21 @@
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed fixed tabs-overflow-mode="StartAndEnd">
+		<ui5-tabcontainer id="tabContainerDnd" collapsed overflow-mode="StartAndEnd">
 			<ui5-tab id="tabOne" movable design="Positive" text="One"></ui5-tab>
 			<ui5-tab id="tabTwo" movable design="Negative" text="Two" disabled>
-				<ui5-tab slot="subTabs" movable text="2.1"></ui5-tab>
+				<ui5-tab slot="items" movable text="2.1"></ui5-tab>
 			</ui5-tab>
 			<ui5-tab id="tabThree" movable design="Critical" text="Three">
-				<ui5-tab slot="subTabs" movable design="Positive" text="3.1">
+				<ui5-tab slot="items" movable design="Positive" text="3.1">
 					<ui5-button>Button 3</ui5-button>
 				</ui5-tab>
 				content
 			</ui5-tab>
 			<ui5-tab id="tabFour" movable text="Four (forbids nesting)"></ui5-tab>
 			<ui5-tab id="tabFive" movable text="Five">
-				<ui5-tab slot="subTabs" movable text="nested in Five">
-					<ui5-tab slot="subTabs" movable text="nested deeper in Five">text</ui5-tab>
+				<ui5-tab slot="items" movable text="nested in Five">
+					<ui5-tab slot="items" movable text="nested deeper in Five">text</ui5-tab>
 					text
 				</ui5-tab>
 			</ui5-tab>
@@ -131,7 +131,7 @@
 			const newParent = source.element.parentElement;
 
 			if (newParent.hasAttribute("ui5-tab")) {
-				source.element.slot = "subTabs";
+				source.element.slot = "items";
 			} else {
 				source.element.slot = "";
 			}
