@@ -138,9 +138,9 @@ describe("Menu interaction", () => {
 		const eventLoggerValue = await eventLogger.getValue();
 
 		assert.notEqual(eventLoggerValue.indexOf("before-open"), -1, "'before-open' event is fired");
-		assert.notEqual(eventLoggerValue.indexOf("after-open"), -1, "'after-open' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("open"), -1, "'open' event is fired");
 		assert.notEqual(eventLoggerValue.indexOf("before-close"), -1, "'before-close' event is fired");
-		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("close"), -1, "'close' event is fired");
 	});
 
 	it("Menu and Menu items busy indication", async () => {
@@ -158,7 +158,9 @@ describe("Menu interaction", () => {
 			const openMenuList = await openSubmenuPopover.$("ui5-list");
 
 			// assert.ok(await openMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
-			assert.strictEqual((await openMenuList.$$("ui5-menu-li")).length, 4, "Two additional nodes have been added.");
+			await browser.waitUntil(async () => {
+				return (await openMenuList.$$("ui5-menu-li")).length === 4;
+			}, 1500, "Two additional nodes have been added.");
 
 			await visualCloseItem.click();
 

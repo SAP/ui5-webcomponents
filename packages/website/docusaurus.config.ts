@@ -110,21 +110,12 @@ const config: Config = {
           activeBasePath: 'play',
         },
         {
-          type: 'custom-settingsNavbarItem',
+          type: 'custom-versionsNavbarItem',
           position: "right",
         },
-        // {
-        //   type: 'custom-contentDensityNavbarItem',
-        //   position: "right",
-        // },
-        // {
-        //   type: 'custom-TextDirectionNavbarItem',
-        //   position: "right",
-        // },
         {
-          label: `v${packageJson.version}`,
+          type: 'custom-settingsNavbarItem',
           position: "right",
-          to: `https://github.com/SAP/ui5-webcomponents/releases/tag/v${packageJson.version}`,
         },
         {
           type: 'custom-GitHubNavbarItem',
@@ -137,7 +128,7 @@ const config: Config = {
       copyright: `© Copyright ${new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors`,
       logo: {
         alt: 'SAP Logo',
-        src: 'https://sap.github.io/ui5-webcomponents/assets/footer/sap-1920-1440.svg',
+        src: 'https://sap.github.io/ui5-webcomponents/img/footer/sap-1920-1440.svg',
         width: 160,
         height: 51,
       },

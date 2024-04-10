@@ -19,11 +19,11 @@ export default {
 const Template: UI5StoryArgs<List, StoryArgsSlots> = (args) => {
   return html` <ui5-list
     selection-mode="${ifDefined(args.selectionMode)}"
-    ?busy="${ifDefined(args.busy)}"
+    ?loading="${ifDefined(args.loading)}"
     ?indent="${ifDefined(args.indent)}"
     ?growing="${ifDefined(args.growing)}"
     growing-button-text="${ifDefined(args.growingButtonText)}"
-    busy-delay="${ifDefined(args.busyDelay)}"
+    loading-delay="${ifDefined(args.loadingDelay)}"
     separators="${ifDefined(args.separators)}"
     header-text="${ifDefined(args.headerText)}"
     footer-text="${ifDefined(args.footerText)}"
@@ -105,10 +105,10 @@ export const Growing: StoryFn = () =>
       }
       infiniteScrollEx.addEventListener("load-more", (e) => {
         var el = infiniteScrollEx;
-        el.busy = true;
+        el.loading = true;
         setTimeout(() => {
           insertItems(el, 5);
-          el.busy = false;
+          el.loading = false;
         }, 200);
       });
     </script>`;
