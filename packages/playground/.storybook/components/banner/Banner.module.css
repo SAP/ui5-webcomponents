@@ -1,0 +1,13 @@
+.banner {
+  width: 100%;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: rgba(84,199,236,.15);
+  border-bottom: 0.0625rem solid var(--sapPageFooter_BorderColor);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  margin-bottom: 2rem !important;
+}

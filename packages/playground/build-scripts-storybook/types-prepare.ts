@@ -25,11 +25,13 @@ const generateFileContent = (content: string, kind: string) => {
 	return `import { Meta } from "@storybook/blocks";
 
 import { Footer } from "@sb/components/footer/Footer.tsx";
+import { Banner } from "@sb/components/banner/Banner.tsx";
 import {
 	Title
 } from "@storybook/addon-docs";
 
 <Meta name="${kind}" />
+<Banner />
 
 <header>
 	<span className="sb-ui5-title">
