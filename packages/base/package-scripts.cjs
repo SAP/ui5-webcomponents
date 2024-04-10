@@ -13,7 +13,7 @@ const LIB = path.join(__dirname, `../tools/lib/`);
 const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
 
 const scripts = {
-	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
+	clean: "rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint .`,
 	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates",
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript integrate.no-remaining-require",

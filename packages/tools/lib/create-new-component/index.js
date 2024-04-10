@@ -58,21 +58,15 @@ const getLibraryName = packageName => {
 	return packageName.substr("webcomponents-".length);
 };
 
-const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
+const generateFiles = (componentName, tagName, library, packageName) => {
 	componentName = capitalizeFirstLetter(componentName);
 	const filePaths = {
-		"main": isTypeScript 
-			? `./src/${componentName}.ts` 
-			: `./src/${componentName}.js`,
+		"main": `./src/${componentName}.ts`,
 		"css": `./src/themes/${componentName}.css`,
 		"template": `./src/${componentName}.hbs`,
 	};
 
-	const FileContentTemplate = isTypeScript 
-		? tsFileContentTemplate(componentName, tagName, library, packageName) 
-		: jsFileContentTemplate(componentName, tagName, library, packageName);
-
-	fs.writeFileSync(filePaths.main, FileContentTemplate, { flag: "wx+" });
+	fs.writeFileSync(filePaths.main, tsFileContentTemplate(componentName, tagName, library, packageName), { flag: "wx+" });
 	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
 	fs.writeFileSync(filePaths.template, "<div>Hello World</div>", { flag: "wx+" });
 
@@ -112,10 +106,9 @@ const createWebComponent = async () => {
 		}
 	}
 
-	const isTypeScript = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 	const tagName = hyphaneteComponentName(componentName);
 
-	generateFiles(componentName, tagName, library, packageName, isTypeScript);
+	generateFiles(componentName, tagName, library, packageName);
 };
 
 createWebComponent();

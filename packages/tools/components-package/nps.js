@@ -1,8 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const resolve = require("resolve");
 const LIB = path.join(__dirname, `../lib/`);
-const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const getScripts = (options) => {
 
@@ -14,7 +12,7 @@ const getScripts = (options) => {
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
     const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
-	const tsOption = options.typescript;
+	const tsOption = !options.legacy;
 	const tsCommandOld = tsOption ? "tsc" : "";
 	let tsWatchCommandStandalone = tsOption ? "tsc --watch" : "";
 	// this command is only used for standalone projects. monorepo projects get their watch from vite, so opt-out here
@@ -54,7 +52,7 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
@@ -115,7 +113,7 @@ const getScripts = (options) => {
 				componentStyles: `nps "build.styles.componentStyles -w"`,
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
-			api: 'chokidar "test/**/*.sample.html" -c "nps generateAPI"',
+			api: 'nps generateAPI',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",
@@ -137,14 +135,9 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: `nps ${ tsOption ? "generateAPI.generateCEM generateAPI.validateCEM" : "generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest generateAPI.validateCEM"}`,
+			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
 			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
 			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
-			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
-			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
-			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
-			jsdoc: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-			cleanup: "rimraf jsdoc-dist/"
 		},
 	};
 

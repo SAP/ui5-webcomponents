@@ -1,6 +1,7 @@
 @import "./Avatar-parameters.css";
 @import "../base/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
+@import "../base/Bar-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
@@ -29,7 +30,7 @@
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "./PopupsCommon-parameters.css";
-@import "../base/PopupStaticAreaStyles-parameters.css";
+@import "../base/PopupBlockLayer-parameters.css";
 @import "../sap_horizon_hcb/ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
@@ -43,6 +44,7 @@
 @import "./TableRow-parameters.css";
 @import "./TableGroupRow-parameters.css";
 @import "./GrowingButton-parameters.css";
+@import "../base/Text-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";

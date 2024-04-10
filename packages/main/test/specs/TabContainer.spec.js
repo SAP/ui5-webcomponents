@@ -137,31 +137,30 @@ describe("TabContainer general interaction", () => {
 
 	it("tests start and end overflow behavior", async () => {
 
-		assert.strictEqual(await browser.$("#tabContainerStartAndEndOverflow").getAttribute("tabs-overflow-mode"), "StartAndEnd", "overflow mode is set to StartAndEnd");
+		assert.strictEqual(await browser.$("#tabContainerStartAndEndOverflow").getAttribute("overflow-mode"), "StartAndEnd", "overflow mode is set to StartAndEnd");
 
 		// Resize
 		await browser.setWindowSize(1000, 1080);
-		const tabcontainer = await browser.$("#tabContainerStartAndEndOverflow");
-		const startOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--start");
+		const tabContainer = await browser.$("#tabContainerStartAndEndOverflow");
+		const startOverflow = await tabContainer.shadow$(".ui5-tc__overflow--start");
 		assert.strictEqual(await startOverflow.getProperty("innerText"), "+12", "12 tabs in start overflow");
 
 		await browser.setWindowSize(800, 1080);
 		assert.strictEqual(await startOverflow.getProperty("innerText"), "+14", "14 tabs in start overflow");
 
 		// Select
-		const initiallySelectedItem = await tabcontainer.$("[selected]");
+		const initiallySelectedItem = await tabContainer.$("[selected]");
 		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Twenty", "Initially selected item is Twenty");
 
 		await startOverflow.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerStartAndEndOverflow");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await tabContainer.shadow$("ui5-responsive-popover");
 		const item = await (await popover.$("ui5-list").$$("ui5-li-custom"))[0];
 
 		assert.strictEqual(await item.getProperty("innerText"), "One", "First item in overflow is 1");
 
 		await item.click()
-		const newlySelectedItem = await tabcontainer.$("[selected]");
+		const newlySelectedItem = await tabContainer.$("[selected]");
 
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "One", "Newly selected item is One");
 	});
@@ -170,20 +169,19 @@ describe("TabContainer general interaction", () => {
 
 		await browser.setWindowSize(1000, 1080);
 
-		const tabcontainer = await browser.$("#tabContainerEndOverflow");
-		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		const tabContainer = await browser.$("#tabContainerEndOverflow");
+		const endOverflow = await tabContainer.shadow$(".ui5-tc__overflow--end");
 
 		// Select
-		const initiallySelectedItem = await tabcontainer.$("[selected]");
+		const initiallySelectedItem = await tabContainer.$("[selected]");
 		assert.strictEqual(await initiallySelectedItem.getProperty("text"), "Thirteen", "Initially selected item is 13");
 
 		await endOverflow.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await tabContainer.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
 
-		const newlySelectedItem = await tabcontainer.$("[selected]");
+		const newlySelectedItem = await tabContainer.$("[selected]");
 
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Eleven", "The first item in the overflow is 11");
 
@@ -204,9 +202,8 @@ describe("TabContainer general interaction", () => {
 		assert.ok(await expandButton.getAttribute("tooltip"), "Expand button tooltip is set");
 
 		await expandButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
 
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await tabContainer.shadow$("ui5-responsive-popover");
 		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed");
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
 		let newlySelectedItem = await tabContainer.$("[selected]");
@@ -246,8 +243,7 @@ describe("TabContainer general interaction", () => {
 
 		const startButton = await browser.$("#startOverflowButton");
 		startButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerCustomOverflowButtons");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let popover = await tabContainer.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
 
 		let newlySelectedItem = await tabContainer.$("[selected]");
@@ -256,7 +252,7 @@ describe("TabContainer general interaction", () => {
 
 		const endButton = await browser.$("#endOverflowButton");
 		endButton.click();
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		popover = await tabContainer.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
 
 		newlySelectedItem = await tabContainer.$("[selected]");
@@ -264,22 +260,22 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "Thirteen", "The first item in the overflow is 13");
 	});
 
-	it("selecting a tab programatically will update the tab strip", async () => {
+	it("selecting a tab programmatically will update the tab strip", async () => {
 		// Setup
-		const getTabInStripDomRef = tab => tab.getTabInStripDomRef();
+		const getDomRefInStrip = tab => tab.getDomRefInStrip();
 		const getElementInBrowser = el => document.querySelector(el);
 
 		const tabContainer = await browser.$("#tcSmall");
 		await tabContainer.scrollIntoView();
 
 		const firstTab = await browser.execute(getElementInBrowser, "#firstTab");
-		const firstTabInStrip = await browser.$(await browser.execute(getTabInStripDomRef, firstTab));
+		const firstTabInStrip = await browser.$(await browser.execute(getDomRefInStrip, firstTab));
 
 		const lastTab = await browser.execute(getElementInBrowser, "#lastTab");
-		const lastTabInStrip = await browser.$(await browser.execute(getTabInStripDomRef, lastTab));
+		const lastTabInStrip = await browser.$(await browser.execute(getDomRefInStrip, lastTab));
 
 		const nestedTabParentTab = await browser.execute(getElementInBrowser, "#nestedTabParent");
-		const nestedTabParentInTabStrip = await browser.$(await browser.execute(getTabInStripDomRef, nestedTabParentTab));
+		const nestedTabParentInTabStrip = await browser.$(await browser.execute(getDomRefInStrip, nestedTabParentTab));
 
 		// Assert
 		assert.notOk(await lastTabInStrip.isDisplayed(), "last tab in strip is not visible");
@@ -337,7 +333,7 @@ describe("TabContainer general interaction", () => {
 		// Assert
 		assert.ok(productsTabDomRef.isEqual(productsTabStableDomRef) , "Stable dom ref of the tab is the same as its dom ref");
 
-		const productsTabDomRefInStrip = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getTabInStripDomRef());
+		const productsTabDomRefInStrip = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getDomRefInStrip());
 		const productsTabDomRefInStripExpected = await browser.$(() => document.getElementById("tabContainer1").getDomRef().querySelector(".ui5-tab-strip-item:first-child"));
 
 		// Assert
@@ -356,7 +352,7 @@ describe("TabContainer general interaction", () => {
 	it("test that tab can be focused right after is inserted in the tab container", async () => {
 		await browser.$("#insertAndFocusNewTab").click();
 		const isNewTabFocused = await browser.executeAsync((done) => {
-			const tabInStripDomRef = document.getElementById("newlyInsertedFocusedTab").getTabInStripDomRef();
+			const tabInStripDomRef = document.getElementById("newlyInsertedFocusedTab").getDomRefInStrip();
 			const activeElement = document.activeElement.shadowRoot.activeElement;
 
 			done(tabInStripDomRef === activeElement);
@@ -372,16 +368,15 @@ describe("TabContainer keyboard handling", () => {
 	});
 
 	it("[Arrow Down] on two-click area tab", async () => {
-		const tabcontainer = await browser.$("#tabContainerNestedTabs");
-		const item = tabcontainer.shadow$$(".ui5-tab-strip-item")[3];
+		const tabContainer = await browser.$("#tabContainerNestedTabs");
+		const item = tabContainer.shadow$$(".ui5-tab-strip-item")[3];
 
 		assert.strictEqual(await item.getProperty("innerText"), "Four", "Correct tab is found");
 
 		await item.click();
 		await item.keys("ArrowDown");
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await tabContainer.shadow$("ui5-responsive-popover");
 
 		assert.ok(await popover.isDisplayed(), "Popover is opened");
 	});
@@ -394,12 +389,11 @@ describe("TabContainer popover", () => {
 	});
 
 	it("tests popover after new tab is inserted", async () => {
-		const tabcontainer = await browser.$("#tabContainerEndOverflow");
-		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		const tabContainer = await browser.$("#tabContainerEndOverflow");
+		const endOverflow = await tabContainer.shadow$(".ui5-tc__overflow--end");
 		await endOverflow.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerEndOverflow");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItemsCount = await popover.$$("[ui5-li-custom]").length;
+		const popover = await tabContainer.shadow$("ui5-responsive-popover");
+		const listItemsCount = (await popover.$$("[ui5-li-custom]")).length;
 
 		assert.ok(listItemsCount > 0, "There are items in the overflow");
 
@@ -411,17 +405,16 @@ describe("TabContainer popover", () => {
 			done();
 		});
 
-		const newListItemsCount = await popover.$$("[ui5-li-custom]").length;
+		const newListItemsCount = (await popover.$$("[ui5-li-custom]")).length;
 
 		assert.strictEqual(newListItemsCount, listItemsCount + 1, "Overflow list displays all its items");
 	});
 
 	it("tests popover items indentation", async () => {
-		const tabcontainer = await browser.$("#tabContainerNestedTabs");
-		const endOverflow = await tabcontainer.shadow$(".ui5-tc__overflow--end");
+		const tabContainer = await browser.$("#tabContainerNestedTabs");
+		const endOverflow = await tabContainer.shadow$(".ui5-tc__overflow--end");
 		await endOverflow.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await tabContainer.shadow$("ui5-responsive-popover");
 
 		const tabAssertions = [
 			{ tabText: "Ten", expectedIndent: 0 },
@@ -485,15 +478,47 @@ describe("TabContainer drag and drop tests", () => {
 		};
 	};
 
-	const moveElementById = (arr, id1, id2) => {
-		const newArr = [...arr];
-		const index1 = newArr.indexOf(id1);
-		const index2 = newArr.indexOf(id2);
+	const moveElementById = (items, id1, id2, targetPosition) => {
+		const findAndExecute = (items, matcher, cb) => {
+			const index = items.findIndex(matcher);
+			
+			if (index !== -1) {
+				cb(items, index);
+				return;
+			}
 
-		const [item] = newArr.splice(index1, 1);
-		newArr.splice(index2, 0, item);
+			items.forEach(item => {
+				if (!item.isSeparator) {
+					findAndExecute(item.items, matcher, cb);
+				}
+			});
+		}
 
-		return newArr;
+		let movedItem;
+
+		// remove the item
+		findAndExecute(
+			items,
+			(item) => item.id === id1,
+			(items, index) => [movedItem] = items.splice(index, 1)
+		);
+
+		// insert the item at new place
+		findAndExecute(
+			items,
+			(item) => item.id === id2,
+			(items, index) => {
+				if (targetPosition === "Before") {
+					items.splice(index, 0, movedItem);
+				} else if (targetPosition === "After") {
+					items.splice(index + 1, 0, movedItem);
+				} else { // On
+					items[index].items.unshift(movedItem);
+				}
+			}
+		);
+
+		return items;
 	};
 
 	const dragAndDropInStrip = async (stripItemToDrag, stripDropTarget, placement) => {
@@ -523,7 +548,7 @@ describe("TabContainer drag and drop tests", () => {
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "After");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "After");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 
@@ -531,7 +556,7 @@ describe("TabContainer drag and drop tests", () => {
 		draggedStripItem = displayedStripItems[1];
 		dropTargetStripItem = displayedStripItems[displayedStripItems.length - 1];
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "After");
-		expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
+		expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "After");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -543,7 +568,7 @@ describe("TabContainer drag and drop tests", () => {
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "Before");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 
@@ -551,7 +576,7 @@ describe("TabContainer drag and drop tests", () => {
 		draggedStripItem = displayedStripItems[displayedStripItems.length - 1];
 		dropTargetStripItem = displayedStripItems[0];
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
-		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem));
+		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "Before");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -569,7 +594,7 @@ describe("TabContainer drag and drop tests", () => {
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has NOT changed");
 
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "On");
-		expectedOrder = currentOrder.filter(id => id !== draggedStripItemId);
+		expectedOrder = moveElementById(currentOrder, draggedStripItemId, await tabContainer.getRealTabId(dropTargetStripItem), "On");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -583,7 +608,7 @@ describe("TabContainer drag and drop tests", () => {
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem), "After");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
@@ -596,13 +621,30 @@ describe("TabContainer drag and drop tests", () => {
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
-		await browser.pause(10000); // TODO: this workaround avoids test crash. Find way to avoid it
 
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem));
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem), "Before");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
+	});
+
+	it("Moving item On another in end overflow popover", async () => {
+		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		let draggedPopoverItem = displayedPopoverItems[3];
+		let dropTargetPopoverItem = displayedPopoverItems[4];
+		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		console.error("POPOVER", await tabContainer.getRealTabId(draggedPopoverItem), "asd:", await tabContainer.getRealTabId(dropTargetPopoverItem))
+
+		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "On");
+		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem), "On");
+		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
+
+		await dragAndDropInPopover(dropTargetPopoverItem, draggedPopoverItem, "On");
+		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		assert.deepEqual(currentOrder, expectedOrder, "Items order has NOT changed when attempted to drag item on top of a child item");
 
 		// close the popover
 		await tabContainer.getEndOverflow("tabContainerDnd").click();
 	});
+	
 });

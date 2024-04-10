@@ -30,7 +30,7 @@ const Template: UI5StoryArgs<Popover, StoryArgsSlots> = (args) => {
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	accessible-role="${ifDefined(args.accessibleRole)}"
 	header-text="${ifDefined(args.headerText)}"
-	placement-type="${ifDefined(args.placementType)}"
+	placement="${ifDefined(args.placement)}"
 	horizontal-align="${ifDefined(args.horizontalAlign)}"
 	vertical-align="${ifDefined(args.verticalAlign)}"
 	?modal="${ifDefined(args.modal)}"
