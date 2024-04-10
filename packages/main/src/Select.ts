@@ -65,8 +65,6 @@ import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
 import selectCss from "./generated/themes/Select.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
-import type SelectMenu from "./SelectMenu.js";
-import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 import type { IOption } from "./Option.js";
 
 type SelectChangeEventDetail = {
@@ -91,16 +89,6 @@ type SelectLiveChangeEventDetail = {
  *
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
- *
- * 2. With SelectMenu (`ui5-select-menu`) and SelectMenuOption (`ui5-select-menu-option`) web components:
- *
- * The SelectMenu can be used as alternative to define the Select's dropdown
- * and can be used via the `menu` property of the Select to reference SelectMenu by its ID.
- * The component gives the possibility to customize the Select's dropdown
- * by slotting entirely custom options (via the SelectMenuOption component) and adding custom styles.
- *
- * **Note:** SelectMenu is a popover and placing it top-level in the HTML page is recommended,
- * because some page styles (for example transitions) can misplace the SelectMenu.
  *
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
@@ -179,18 +167,6 @@ type SelectLiveChangeEventDetail = {
 @event("close")
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
-
-	/**
-	 * Defines a reference (ID or DOM element) of component's menu of options
-	 * as alternative to define the select's dropdown.
-	 *
-	 * **Note:** Usage of `ui5-select-menu` is recommended.
-	 * @default undefined
-	 * @public
-	 * @since 1.17.0
-	 */
-	@property({ validator: DOMReference })
-	menu?: HTMLElement | string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -303,8 +279,6 @@ class Select extends UI5Element implements IFormElement {
 	responsivePopover!: ResponsivePopover;
 	valueStatePopover?: Popover;
 
-	selectMenu?: SelectMenu;
-
 	/**
 	 * Defines the component options.
 	 *
@@ -344,9 +318,6 @@ class Select extends UI5Element implements IFormElement {
 	 * Defines the HTML element that will be displayed in the component input part,
 	 * representing the selected option.
 	 *
-	 * **Note:** If not specified and `ui5-select-menu-option` is used,
-	 * either the option's `display-text` or its textContent will be displayed.
-	 *
 	 * **Note:** If not specified and `ui5-option` is used,
 	 * the option's textContent will be displayed.
 	 * @public
@@ -354,14 +325,6 @@ class Select extends UI5Element implements IFormElement {
 	*/
 	@slot()
 	label!: Array<HTMLElement>;
-
-	_onMenuClick: (e: CustomEvent<SelectMenuOptionClick>) => void;
-	_onMenuClose: () => void;
-	_onMenuOpen: () => void;
-	_onMenuBeforeOpen: () => void;
-	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
-	_attachMenuListeners: (menu: HTMLElement) => void;
-	_detachMenuListeners: (menu: HTMLElement) => void;
 
 	constructor() {
 		super();
@@ -371,14 +334,6 @@ class Select extends UI5Element implements IFormElement {
 		this._lastSelectedOption = null;
 		this._typedChars = "";
 
-		this._onMenuClick = this.onMenuClick.bind(this);
-		this._onMenuClose = this.onMenuClose.bind(this);
-		this._onMenuOpen = this.onMenuOpen.bind(this);
-		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
-		this._onMenuChange = this.onMenuChange.bind(this);
-		this._attachMenuListeners = this.attachMenuListeners.bind(this);
-		this._detachMenuListeners = this.detachMenuListeners.bind(this);
-
 		this._upgradeProperty("value");
 	}
 
@@ -387,15 +342,6 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	onBeforeRendering() {
-		const menu = this._getSelectMenu();
-
-		if (menu) {
-			menu.value = this.value;
-			// To cause invalidation when the menu is used for another Select that could have the same value as the previous.
-			// Otherwise, the menu won't re-render.
-			menu.selectId = this.__id;
-		}
-
 		this._enableFormSupport();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
@@ -420,12 +366,6 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _isPickerOpen() {
-		const menu = this._getSelectMenu();
-
-		if (menu) {
-			return menu.open;
-		}
-
 		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
@@ -449,8 +389,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const menu = this._getSelectMenu();
-		const selectOptions = Array.from(menu ? menu.children : this.children) as Array<IOption>;
+		const selectOptions = Array.from(this.children) as Array<IOption>;
 
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -478,48 +417,6 @@ class Select extends UI5Element implements IFormElement {
 		return this._text || this.selectedOption?.textContent || "";
 	}
 
-	onMenuClick(e: CustomEvent<SelectMenuOptionClick>) {
-		const optionIndex: number = e.detail.optionIndex;
-		this._handleSelectionChange(optionIndex);
-	}
-
-	onMenuBeforeOpen() {
-		this._beforeOpen();
-	}
-
-	onMenuOpen() {
-		this._afterOpen();
-	}
-
-	onMenuClose() {
-		this._afterClose();
-	}
-
-	onMenuChange(e: CustomEvent<SelectMenuChange>) {
-		this._text = e.detail.text;
-	}
-
-	_toggleSelectMenu() {
-		const menu = this._getSelectMenu();
-
-		if (!menu) {
-			return;
-		}
-
-		if (menu.open) {
-			menu.close();
-		} else {
-			menu.showAt(this, this.offsetWidth);
-		}
-	}
-
-	onExitDOM(): void {
-		const menu = this._getSelectMenu();
-		if (menu) {
-			this._detachMenuListeners(menu);
-		}
-	}
-
 	_toggleRespPopover() {
 		if (this.disabled || this.readonly) {
 			return;
@@ -527,47 +424,12 @@ class Select extends UI5Element implements IFormElement {
 
 		this._iconPressed = true;
 
-		const menu = this._getSelectMenu();
-		if (menu) {
-			this._toggleSelectMenu();
-			return;
-		}
-
 		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
 			this.responsivePopover.showAt(this);
 		}
-	}
-
-	_getSelectMenu(): SelectMenu | undefined {
-		return connectToComponent({
-			host: this,
-			propName: "menu",
-			onConnect: this._attachMenuListeners,
-			onDisconnect: this._detachMenuListeners,
-		}) as SelectMenu;
-	}
-
-	attachMenuListeners(menu: HTMLElement) {
-		menu.addEventListener("ui5-after-close", this._onMenuClose);
-		menu.addEventListener("ui5-after-open", this._onMenuOpen);
-		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
-		// @ts-ignore
-		menu.addEventListener("ui5-option-click", this._onMenuClick);
-		// @ts-ignore
-		menu.addEventListener("ui5-menu-change", this._onMenuChange);
-	}
-
-	detachMenuListeners(menu: HTMLElement) {
-		menu.removeEventListener("ui5-after-close", this._onMenuClose);
-		menu.removeEventListener("ui5-after-open", this._onMenuOpen);
-		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
-		// @ts-ignore
-		menu.removeEventListener("ui5-option-click", this._onMenuClick);
-		// @ts-ignore
-		menu.removeEventListener("ui5-menu-change", this._onMenuChange);
 	}
 
 	_enableFormSupport() {
@@ -587,12 +449,7 @@ class Select extends UI5Element implements IFormElement {
 		const isTab = (isTabNext(e) || isTabPrevious(e));
 
 		if (isTab && this._isPickerOpen) {
-			const menu = this._getSelectMenu();
-			if (menu) {
-				menu.close(false, false, true /* preventFocusRestore */);
-			} else {
-				this.responsivePopover.close();
-			}
+			this.responsivePopover.close();
 		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
@@ -804,10 +661,6 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_getNextOptionIndex() {
-		const menu = this._getSelectMenu();
-		if (menu) {
-			return this._selectedIndex === (menu.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
-		}
 		return this._selectedIndex === (this.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
 	}
 
@@ -843,10 +696,6 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get selectOptions(): Array<IOption> {
-		const menu = this._getSelectMenu();
-		if (menu) {
-			return menu.options;
-		}
 		return this.options;
 	}
 
