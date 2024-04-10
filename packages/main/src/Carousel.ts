@@ -56,7 +56,7 @@ type CarouselNavigateEventDetail = {
  *
  * There are several ways to perform navigation:
  *
- * - on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.
+ * - on desktop - the user can navigate using the navigation arrows or with keyboard shortcuts.
  * - on mobile - the user can use swipe gestures.
  *
  * ### Usage
@@ -153,10 +153,10 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page depending on the page width. One item per page is shown by default.
-	 * @default "S1 M1 L1"
+	 * @default "S1 M1 L1 XL1"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "S1 M1 L1" })
+	@property({ type: String, defaultValue: "S1 M1 L1 XL1" })
 	itemsPerPage!: string;
 
 	/**
@@ -298,6 +298,21 @@ class Carousel extends UI5Element {
 		this._orderOfLastFocusedPages = [];
 	}
 
+	/**
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageSizeS!: number;
+
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageSizeM!: number;
+
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageSizeL!: number;
+
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageSizeXL!: number;
+
 	onBeforeRendering() {
 		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
 			this._visibleNavigationArrows = true;
@@ -313,9 +328,6 @@ class Carousel extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._onResizeBound);
-		if (isDesktop()) {
-			this.setAttribute("desktop", "");
-		}
 	}
 
 	onExitDOM() {
@@ -534,32 +546,36 @@ class Carousel extends UI5Element {
 
 	get effectiveItemsPerPage(): number {
 		const itemsPerPageArray = this.itemsPerPage.split(" ");
-		let S = 1,
-			M = 1,
-			L = 1;
+
 		itemsPerPageArray.forEach(element => {
-			if (element.indexOf("S") === 0) {
-				S = Number(element.slice(1));
-			} else if (element.indexOf("M") === 0) {
-				M = Number(element.slice(1));
-			} else if (element.indexOf("L") === 0) {
-				L = Number(element.slice(1));
+			if (element.startsWith("S")) {
+				this.itemsPerPageSizeS = Number(element.slice(1));
+			} else if (element.startsWith("M")) {
+				this.itemsPerPageSizeM = Number(element.slice(1));
+			} else if (element.startsWith("L")) {
+				this.itemsPerPageSizeL = Number(element.slice(1));
+			} else if (element.startsWith("XL")) {
+				this.itemsPerPageSizeXL = Number(element.slice(2));
 			}
 		});
 
 		if (!this._width) {
-			return L;
+			return this.itemsPerPageSizeL;
 		}
 
-		if (this._width <= 640) {
-			return S;
+		if (this._width <= 600) {
+			return this.itemsPerPageSizeS;
 		}
 
-		if (this._width <= 1024) {
-			return M;
+		if (this._width >= 600 && this._width <= 1024) {
+			return this.itemsPerPageSizeM;
 		}
 
-		return L;
+		if (this._width >= 1024 && this._width <= 1440) {
+			return this.itemsPerPageSizeL;
+		}
+
+		return this.itemsPerPageSizeXL;
 	}
 
 	isItemInViewport(index: number): boolean {
