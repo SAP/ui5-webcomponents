@@ -454,7 +454,7 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal && !this.shouldHideBackdrop) {
 			// create static area item ref for block layer
-			this._getBlockingLayer.showPopover();
+			this._getBlockingLayer?.showPopover();
 			this._blockLayerHidden = false;
 			Popup.blockPageScrolling(this);
 		}
@@ -508,7 +508,7 @@ abstract class Popup extends UI5Element {
 
 		if (this.isModal) {
 			this._blockLayerHidden = true;
-			this._getBlockingLayer.hidePopover();
+			this._getBlockingLayer?.hidePopover();
 			Popup.unblockPageScrolling(this);
 		}
 
