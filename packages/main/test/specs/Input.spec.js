@@ -598,6 +598,9 @@ describe("Input general interaction", () => {
 		await inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
+
+		// Close popover
+		await browser.keys("Escape");
 	});
 
 	it("Checks if valueStateMessage gets updated dynamically", async () => {
@@ -618,6 +621,10 @@ describe("Input general interaction", () => {
 		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
 
 		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
+
+		// Close popover
+		await browser.keys("Escape");
+		await browser.keys("Tab");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {

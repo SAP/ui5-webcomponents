@@ -230,6 +230,8 @@ abstract class UI5Element extends HTMLElement {
 			this._fullyConnected = false;
 		}
 
+		this._domRefReadyPromise._deferredResolve!();
+
 		cancelRender(this);
 	}
 
