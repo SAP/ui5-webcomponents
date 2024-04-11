@@ -387,7 +387,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @protected
 	 */
 	onResponsivePopoverAfterClose() {
-		// this.open = false;
+		this.open = false;
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
 		} else {
@@ -455,7 +455,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		if (isShow(e)) {
 			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
-			if (this.isOpen()) {
+			if (this.open) {
 				if (!isF4(e)) {
 					this._toggleAndFocusInput();
 				}
@@ -464,11 +464,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			}
 		}
 
-		if ((this._getInput().isEqualNode(e.target as Node) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if ((this._getInput().isEqualNode(e.target as Node) && this.open) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this.togglePicker();
 		}
 
-		if (this.isOpen()) {
+		if (this.open) {
 			return;
 		}
 
@@ -794,22 +794,17 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return this.getFormat().format(date);
 	}
 
-	togglePicker() {
+	/**
+	 * Opens or closes the picker.
+	 * @public
+	 */
+	togglePicker(): void {
 		this.open = !this.open;
 	}
 
 	_toggleAndFocusInput() {
 		this.togglePicker();
 		this._getInput().focus();
-	}
-
-	/**
-	 * Checks if the picker is open.
-	 * @public
-	 * @returns true if the picker is open, false otherwise
-	 */
-	isOpen(): boolean {
-		return this.open;
 	}
 
 	/**

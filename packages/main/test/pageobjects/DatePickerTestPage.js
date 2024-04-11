@@ -150,14 +150,14 @@ class DatePickerTestPage {
 
 	async isPickerOpen() {
 		return browser.executeAsync((id, done) => {
-			done(document.querySelector(id).isOpen());
+			done(document.querySelector(id).open);
 		}, this._sut);
 	}
 
-	async openPicker(options) {
-		return browser.executeAsync((id, options, done) => {
-			done(document.querySelector(id).openPicker(options));
-		}, this._sut, options);
+	async togglePicker() {
+		return browser.executeAsync((id, done) => {
+			done(document.querySelector(id).togglePicker());
+		}, this._sut);
 	}
 
 	async open() {
