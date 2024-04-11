@@ -25,7 +25,7 @@ import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
 import TabContainer from "./TabContainer.js";
 import type TabSeparator from "./TabSeparator.js";
-import type { TabContainerStripInfo, TabContainerOverflowInfo } from "./TabContainer.js";
+import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -64,6 +64,7 @@ interface TabInOverflow extends CustomListItem {
  * @abstract
  * @constructor
  * @extends UI5Element
+ * @implements {ITab}
  * @public
  */
 @customElement({
@@ -78,7 +79,7 @@ interface TabInOverflow extends CustomListItem {
 		CustomListItem,
 	],
 })
-class Tab extends UI5Element implements ITabbable {
+class Tab extends UI5Element implements ITabbable, ITab {
 	/**
 	 * The text to be displayed for the item.
 	 * @default ""
