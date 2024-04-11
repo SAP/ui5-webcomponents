@@ -464,6 +464,11 @@ class List extends UI5Element {
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
 
+	onItemFocusedBound: (e: CustomEvent) => void;
+	onForwardAfterBound: (e: CustomEvent) => void;
+	onForwardBeforeBound: (e: CustomEvent) => void;
+	onItemTabIndexChangeBound: (e: CustomEvent) => void;
+
 	static async onDefine() {
 		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -495,6 +500,11 @@ class List extends UI5Element {
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
+
+		this.onItemFocusedBound = this.onItemFocused.bind(this);
+		this.onForwardAfterBound = this.onForwardAfter.bind(this);
+		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
+		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
 	}
 
 	/**
@@ -519,10 +529,12 @@ class List extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.detachGroupHeaderEvents();
 		this.prepareListItems();
 	}
 
 	onAfterRendering() {
+		this.attachGroupHeaderEvents();
 		if (this.growsOnScroll) {
 			this.observeListEnd();
 		} else if (this.listEndObserved) {
@@ -533,6 +545,30 @@ class List extends UI5Element {
 			this.checkListInViewport();
 			this.attachForResize();
 		}
+	}
+
+	attachGroupHeaderEvents() {
+		// events fired by the group headers are not bubbling through the shadow
+		// dom of the groups because of capture: false of the custom events
+		this.getItems().forEach(item => {
+			if (item.hasAttribute("ui5-li-group-header")) {
+				item.addEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
+				item.addEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
+				item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
+				item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+			}
+		});
+	}
+
+	detachGroupHeaderEvents() {
+		this.getItems().forEach(item => {
+			if (item.hasAttribute("ui5-li-group-header")) {
+				item.removeEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
+				item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
+				item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
+				item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+			}
+		});
 	}
 
 	attachForResize() {
