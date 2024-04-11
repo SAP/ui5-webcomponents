@@ -5,6 +5,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import {
 	isEnter,
 	isSpace,
@@ -125,7 +126,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	get rowSize() {
-		return this.secondaryCalendarType === "Islamic" || this.secondaryCalendarType === "Persian" ? 2 : 3;
+		return this.secondaryCalendarType === CalendarType.Islamic || this.secondaryCalendarType === CalendarType.Persian ? 2 : 3;
 	}
 
 	_buildMonths() {

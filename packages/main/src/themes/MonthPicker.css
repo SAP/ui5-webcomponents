@@ -11,22 +11,24 @@
 .ui5-mp-root {
 	box-sizing: border-box;
 	padding: 2rem 0 1rem 0;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: var(--_ui5_monthpicker_item_margin);
+	display: flex;
+	flex-direction: column;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
+	justify-content: center;
+	align-items: center;
 }
 
 .ui5-mp-item {
 	display: flex;
 	flex-direction: column;
-	box-sizing: border-box;
-	height: calc(var(--_ui5_month_picker_item_height) - var(--_ui5_monthpicker_item_margin));
+	width: calc(33.333% - 0.125rem);
+	height: var(--_ui5_month_picker_item_height);
 	color: var(--sapButton_Lite_TextColor);
 	background-color: var(--sapLegend_WorkingBackground);
 	align-items: center;
 	justify-content: center;
+	margin: var(--_ui5_monthpicker_item_margin);
 	box-sizing: border-box;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -80,9 +82,30 @@
 	border-radius: var(--_ui5_monthpicker_item_focus_after_border_radius);
 }
 
+.ui5-mp-quarter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
 /* Switching to a two column layout */
 :host([secondary-calendar-type="Persian"]) .ui5-mp-root,
 :host([secondary-calendar-type="Islamic"]) .ui5-mp-root {
+	display: grid;
 	padding: 1rem 0 1rem;
 	grid-template-columns: repeat(2, 1fr);
+	gap: var(--_ui5_monthpicker_item_margin);
+}
+
+:host([secondary-calendar-type="Persian"]) .ui5-mp-item,
+:host([secondary-calendar-type="Islamic"]) .ui5-mp-item {
+	margin: 0;
+	width: auto;
+}
+
+:host([secondary-calendar-type="Persian"]) .ui5-mp-quarter,
+:host([secondary-calendar-type="Islamic"]) .ui5-mp-quarter {
+	width: 100%;
+	display: contents;
 }
