@@ -157,7 +157,8 @@ abstract class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 
 		if (ctor._needsShadowDOM()) {
-			this.attachShadow({ mode: "open", delegatesFocus: true });
+			const defaultOptions = { mode: "open" } as ShadowRootInit;
+			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
 		}
 	}
 

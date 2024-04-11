@@ -39,6 +39,8 @@ const config: Config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: BASE_URL,
+  // github pages makes a redirect to a trailing slash url, which prevents pages from being crawled by google
+  trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -110,21 +112,12 @@ const config: Config = {
           activeBasePath: 'play',
         },
         {
-          type: 'custom-settingsNavbarItem',
+          type: 'custom-versionsNavbarItem',
           position: "right",
         },
-        // {
-        //   type: 'custom-contentDensityNavbarItem',
-        //   position: "right",
-        // },
-        // {
-        //   type: 'custom-TextDirectionNavbarItem',
-        //   position: "right",
-        // },
         {
-          label: `v${packageJson.version}`,
+          type: 'custom-settingsNavbarItem',
           position: "right",
-          to: `https://github.com/SAP/ui5-webcomponents/releases/tag/v${packageJson.version}`,
         },
         {
           type: 'custom-GitHubNavbarItem',
