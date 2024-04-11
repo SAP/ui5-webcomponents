@@ -3,6 +3,7 @@
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
+    min-height: var(--_ui5_list_item_base_height);
 }
 
 :host(:focus[tabindex]) {

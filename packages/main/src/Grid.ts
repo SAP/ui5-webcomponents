@@ -21,6 +21,7 @@ import GridNavigation from "./GridNavigation.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
+import GridGrowing from "./GridGrowing.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>.
@@ -28,21 +29,72 @@ import {
  * @public
  */
 interface IGridFeature extends HTMLElement {
+	/**
+	 * Called when the grid is activated.
+	 * @param grid grid instance
+	 */
 	onGridActivate(grid: Grid): void;
+	/**
+	 * Called when the grid finished rendering.
+	 */
+	onGridRendered(): void;
+}
+
+/**
+ * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>
+ * and provide growing/data loading functionality.
+ * @public
+ */
+interface IGridGrowing extends IGridFeature {
+	/**
+	 * Called when the table needs to load more data.
+	 */
+	loadMore(): void;
+	/**
+	 * Determines whether the table has a growing control, that should be rendered in the grid.
+	 */
+	hasGrowingControl(): boolean;
 }
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * The `ui5-grid` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner.
  *
- * <h3>Usage</h3>
+ * To render the `ui5-grid`, you need to define the columns and rows. You can use the provided `ui5-grid-row` and `ui5-grid-column` components for this purpose.
+ * The `ui5-grid` can be enhanced in its functionality by applying different features selection (`ui5-grid-selection`) or growing (`ui5-grid-growing`).
  *
- * For the <code>grid</code>
- * <h3>ES6 Module Import</h3>
+ * ### Keyboard Handling
  *
- * <code>import @ui5/webcomponents/dist/Grid.js";</code>
+ * The `ui5-grid` distinguishes between row and cell navigation.
+ *
+ * If the focus is on a row, the following keyboard shortcuts are available:
+ * * <kbd>ARROW_DOWN</kbd> - Navigates down
+ * * <kbd>ARROW_UP</kbd> - Navigates up
+ * * <kbd>ARROW_RIGHT</kbd> - Selects the first cell of the focused row
+ * * <kbd>SPACE</kbd> - Selects/deselects the focused row
+ * * <kbd>HOME</kbd> - Navigates to the first row
+ * * <kbd>END</kbd> - Navigates to the last row
+ * * <kbd>PAGE_UP</kbd> - Navigates one page up
+ * * <kbd>PAGE_DOWN</kbd> - Navigates one page down
+ *
+ * If the focus is on a cell, the following keyboard shortcuts are available:
+ * * <kbd>ARROW_DOWN</kbd> - Navigates down
+ * * <kbd>ARROW_UP</kbd> - Navigates up
+ * * <kbd>ARROW_RIGHT</kbd> - Navigates right
+ * * <kbd>ARROW_LEFT</kbd> - Navigates left. If the focus is on the first cell of the row, the focus is moved to the row.
+ * * <kbd>HOME</kbd> - Navigates to the first cell of the current row
+ * * <kbd>END</kbd> - Navigates to the last cell of the current row
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Grid.js";`
+ * `import "@ui5/webcomponents/dist/GridRow.js";` (`ui5-grid-row`)
+ * `import "@ui5/webcomponents/dist/GridCell.js";` (`ui5-grid-cell`)
+ * `import "@ui5/webcomponents/dist/GridHeaderRow.js";` (`ui5-grid-header-row`)
+ * `import "@ui5/webcomponents/dist/GridHeaderCell.js";` (`ui5-grid-header-cell`)
  *
  * @constructor
  * @extends UI5Element
@@ -86,7 +138,11 @@ class Grid extends UI5Element {
 	@slot({ type: HTMLElement })
 	nodata!: Array<HTMLElement>;
 
-	@slot({ type: HTMLElement })
+	/**
+	 * Defines the features of the component.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, individualSlots: true })
 	features!: Array<IGridFeature>;
 
 	/**
@@ -116,14 +172,34 @@ class Grid extends UI5Element {
 	@property()
 	noDataText!: string;
 
+	/**
+	 * Defines the mode of the <code>ui5-grid</code> columns.
+	 *
+	 * Available options are:
+	 * * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
+	 * * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
+	 *
+	 * @default GridColumnMode.Popin
+	 * @public
+	 */
 	@property({ type: GridColumnMode, defaultValue: GridColumnMode.Popin })
-	columnMode!: GridColumnMode;
+	columnMode!: `${GridColumnMode}`;
 
-	poppedIn: Array<{col: GridHeaderCell, width: float}>;
-	containerWidth: number;
+	/**
+	 * Defines if the component is in busy state.
+	 *
+	 * <b>Note:</b> When the component is in busy state, it is non-interactive.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean, defaultValue: false })
+	busy!: boolean;
 
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
+
+	poppedIn: Array<{col: GridHeaderCell, width: float}>;
+	containerWidth: number;
 
 	static i18nBundle: I18nBundle;
 
@@ -156,12 +232,28 @@ class Grid extends UI5Element {
 		}
 	}
 
+	onBeforeRendering(): void {
+		this._refreshPopinState();
+	}
+
+	onAfterRendering(): void {
+		this.features.forEach(feature => feature.onGridRendered());
+	}
+
+	getDomRef(): HTMLElement | undefined {
+		return this.shadowRoot!.querySelector("#grid") as HTMLElement;
+	}
+
 	_getFeature<Klass>(klass: any): Klass | undefined {
 		return this.features.find(feature => feature instanceof klass) as Klass;
 	}
 
 	_getSelection(): GridSelection | undefined {
 		return this._getFeature(GridSelection);
+	}
+
+	_getGrowing(): GridGrowing | undefined {
+		return this._getFeature(GridGrowing);
 	}
 
 	_onResize() {
@@ -198,6 +290,27 @@ class Grid extends UI5Element {
 		}
 	}
 
+	/**
+	 * Refreshes the popin state of the columns.
+	 * Syncs the popin state of the columns with the popin state of the header cells.
+	 * This is needed when additional rows are manually added and no resize happens.
+	 * @private
+	 */
+	_refreshPopinState() {
+		this.headerRow.cells.forEach((header, index) => {
+			this.rows.forEach(row => {
+				const cell = row.cells[index];
+				if (cell._popin !== header._popin) {
+					cell._popin = header._popin;
+				}
+			});
+		});
+	}
+
+	_onGrow() {
+		this._getGrowing()?.loadMore();
+	}
+
 	_getPopinOrderedColumns(reverse: boolean) {
 		let headers = [...this.headerRow.cells];
 		headers = headers.reverse(); // reverse the "visual" order
@@ -225,6 +338,7 @@ class Grid extends UI5Element {
 			grid: {
 				"grid-template-columns": this._gridTemplateColumns,
 				"overflow-x": this._gridOverflowX,
+				"overflow-y": this._gridOverflowY,
 			},
 		};
 	}
@@ -246,6 +360,10 @@ class Grid extends UI5Element {
 
 	get _gridOverflowX() {
 		return (this.columnMode === GridColumnMode.Popin) ? "hidden" : "auto";
+	}
+
+	get _gridOverflowY() {
+		return "auto";
 	}
 
 	get _nodataRow() {
@@ -276,6 +394,14 @@ class Grid extends UI5Element {
 		const selection = this._getSelection();
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
 	}
+
+	get _showGrowingControl() {
+		return this.rows.length && this._getGrowing()?.hasGrowingControl();
+	}
+
+	get _growingControl() {
+		return this._getGrowing()!;
+	}
 }
 
 Grid.define();
@@ -284,4 +410,5 @@ export default Grid;
 
 export type {
 	IGridFeature,
+	IGridGrowing,
 };

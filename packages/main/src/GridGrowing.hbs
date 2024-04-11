@@ -1,0 +1,18 @@
+{{#if _hasGrowingButton}}
+	<div
+		id="growing-button"
+		tabindex="-1"
+		tabindex="0"
+		?active="{{_activeState}}"
+		@click="{{loadMore}}"
+		@keydown="{{_onKeydown}}"
+		@keyup="{{_onKeyup}}"
+		@focusout="{{_onFocusout}}"
+		role="button"
+		aria-label="growing">
+		<span id="growing-text">{{_growingButtonText}}</span>
+		{{#if growingSubText}}
+			<span id="growing-subtext">{{growingSubText}}</span>
+		{{/if}}
+	</div>
+{{/if}}

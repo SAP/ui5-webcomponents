@@ -4,6 +4,7 @@
     grid-column: 1 / -1;
     background: var(--sapList_HeaderBackground);
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
+    min-height: var(--_ui5_list_item_base_height);
 }
 
 :host([hidden]) {

@@ -68,6 +68,9 @@ class GridSelection extends UI5Element implements IGridFeature {
 		this._invalidateGridAndRows();
 	}
 
+	onGridRendered() {
+	}
+
 	isSelectable(): boolean {
 		return this.mode !== GridSelectionMode.None;
 	}

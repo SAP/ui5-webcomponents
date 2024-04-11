@@ -67,6 +67,9 @@ class GridNavigation {
 		} else {
 			items.push(this._getNavigationItemsOfRow(this._grid._nodataRow));
 		}
+		if (this._grid._showGrowingControl) {
+			items.push([this._grid._growingControl]);
+		}
 		return items;
 	}
 

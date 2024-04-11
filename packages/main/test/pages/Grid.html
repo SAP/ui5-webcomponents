@@ -16,7 +16,8 @@
 		<ui5-title tabindex="0" level="H3" id="title">My Selectable Products (3)</ui5-title>
 		<ui5-slider id="slider" min="0" max="100" step="1" value="100" label-interval="0"></ui5-slider>
 		<ui5-grid id="grid" column-mode="Popin" accessible-name-ref="title" no-data-text="No data found">
-			<ui5-grid-selection selected="0 2" slot="features"></ui5-grid-selection>
+			<ui5-grid-growing id="growing" type="Button" slot="features"></ui5-grid-growing>
+			<ui5-grid-selection id="selection" selected="0 2" slot="features"></ui5-grid-selection>
 			<ui5-grid-header-row slot="header-row">
 				<ui5-grid-header-cell id="produtCol" width="300px"><span>Product</span></ui5-grid-header-cell>
 				<ui5-grid-header-cell id="supplierCol">Supplier</ui5-grid-header-cell>
@@ -45,6 +46,34 @@
 				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
 			</ui5-grid-row>
+			<ui5-grid-row key="3">
+				<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
+			</ui5-grid-row>
+			<ui5-grid-row key="4">
+				<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
+			</ui5-grid-row>
+			<ui5-grid-row key="5">
+				<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
+			</ui5-grid-row>
+			<ui5-grid-row key="6">
+				<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
+			</ui5-grid-row>
 		</ui5-grid>
 		<ui5-input value="after grid"></ui5-input>
 	</div>
@@ -54,6 +83,32 @@
 		const grid = document.getElementById("grid");
 		slider.addEventListener("input", (e) => {
 			grid.style.width = `${e.target.value}%`;
+		});
+
+		const growing = document.getElementById("growing");
+		growing.addEventListener("load-more", (e) => {
+			grid.busy = true;
+			// add 10 more additional rows to the ui5-grid element by utilizing a loop
+			for (let i = 0; i < 10; i++) {
+				const newRow = document.createElement("ui5-grid-row");
+				newRow.setAttribute("key", grid.rows.length + i);
+				newRow.innerHTML = `
+					<ui5-grid-cell><ui5-label><b>Notebook Basic ${18 + grid.rows.length + i}</b><br>HT-100${2 + grid.rows.length + i}</ui5-label></ui5-grid-cell>
+					<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+					<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+					<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+					<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
+				`;
+				grid.appendChild(newRow);
+			}
+			setTimeout(() => {
+				grid.busy = false;
+			}, 500);
+		});
+		
+		const selection = document.getElementById("selection");
+		selection.addEventListener("change", (e) => {
+			console.log(e.target.selected);
 		});
 	</script>
 </body>
