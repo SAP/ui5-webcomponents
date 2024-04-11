@@ -113,7 +113,7 @@ describe("Popover general interaction", () => {
 		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(await popover.getProperty("opened"), true,
+		assert.strictEqual(await popover.getProperty("open"), true,
 			"Popover remains open.");
 		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -385,6 +385,8 @@ describe("Popover general interaction", () => {
 	it("tests initial focus when the popover is removed from the DOM in the meantime", async () => {
 		const createAndRemovePopover = await browser.$("#createAndRemove");
 		const result = await browser.$("#createAndRemoveResult");
+
+		await createAndRemovePopover.scrollIntoView();
 
 		await createAndRemovePopover.click();
 		await result.waitForDisplayed({ timeout: 3000 })
