@@ -183,31 +183,6 @@ type MenuItemFocusEventDetail = {
  */
 @event("close")
 
-/**
- * Fired when a menu item receives focus.
- *
- * @public
- * @param { HTMLElement } ref The currently focused element representing a <code>ui5-menu-item</code>.
- * @param { HTMLElement } item The <code>ui5-menu-item</code> represented by the focused element.
- * @since 1.23.1
- */
-@event<MenuItemFocusEventDetail>("item-focus", {
-	detail: {
-		/**
-		 * @public
-		 */
-		ref: {
-			type: HTMLElement,
-		},
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
-})
-
 class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
@@ -489,12 +464,6 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_onItemFocus(e: CustomEvent<ListItemFocusEventDetail>): void {
-		const item = e.detail.item as MenuItem;
-		const mainMenu = this._findMainMenu(item);
-		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: item, item });
-	}
-
 	_startOpenTimeout(item: MenuItem) {
 		clearTimeout(this._timeout);
 
@@ -660,5 +629,4 @@ export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
-	MenuItemFocusEventDetail,
 };

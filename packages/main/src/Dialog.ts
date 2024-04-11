@@ -282,7 +282,7 @@ class Dialog extends Popup {
 	}
 
 	get shouldHideBackdrop() {
-		return isPhone();
+		return false;
 	}
 
 	get _ariaLabelledBy() {
