@@ -148,6 +148,10 @@
   fill: var(--ifm-navbar-link-hover-color);
 }
 
+.dropdown__link svg {
+  display: none;
+}
+
 code {
   overflow-wrap: anywhere;
 }
