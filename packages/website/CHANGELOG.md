@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
+
+
+### Features
+
+* **ui5-text:** introduce Text web component ([#8299](https://github.com/SAP/ui5-webcomponents/issues/8299)) ([91acaf5](https://github.com/SAP/ui5-webcomponents/commit/91acaf5edadc63b19172a6f3a882023c31779878)), closes [#6788](https://github.com/SAP/ui5-webcomponents/issues/6788)
+
+
+
+
+
 # [2.0.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v2.0.0-rc.0) (2024-04-09)
 
 

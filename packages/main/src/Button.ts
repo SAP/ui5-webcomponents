@@ -16,9 +16,6 @@ import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
-	isPhone,
-	isTablet,
-	isCombi,
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
@@ -92,6 +89,7 @@ type AccessibilityAttributes = {
 	template: ButtonTemplate,
 	styles: buttonCss,
 	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component is activated either with a
@@ -253,13 +251,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	iconOnly!: boolean;
 
 	/**
-	 * Indicates if the elements is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
 	 * Indicates if the elements has a slotted icon
 	 * @private
 	 */
@@ -267,7 +258,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	hasIcon!: boolean;
 
 	/**
-	 * Indicates if the element if focusable
+	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -347,7 +338,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	onEnterDOM() {
-		this._isTouch = (isPhone() || isTablet()) && !isCombi();
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	async onBeforeRendering() {
@@ -385,7 +378,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (this.nonInteractive || this._isTouch) {
+		if (this.nonInteractive) {
 			return;
 		}
 
@@ -437,10 +430,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		if (this.active) {
 			this._setActiveState(false);
 		}
-
-		if (isDesktop()) {
-			this.focused = false;
-		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -449,9 +438,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		if (isDesktop()) {
-			this.focused = true;
-		}
 	}
 
 	_setActiveState(active: boolean) {
