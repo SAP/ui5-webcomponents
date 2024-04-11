@@ -97,7 +97,7 @@ class MenuItem extends CustomListItem {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
@@ -106,7 +106,7 @@ class MenuItem extends CustomListItem {
 	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -152,7 +152,7 @@ class MenuItem extends CustomListItem {
 	items!: Array<MenuItem>;
 
 	get hasSubmenu() {
-		return !!(this.items.length || this.busy);
+		return !!(this.items.length || this.loading);
 	}
 
 	get hasIcon() {

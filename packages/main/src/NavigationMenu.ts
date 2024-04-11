@@ -61,7 +61,7 @@ class NavigationMenu extends Menu {
 	}
 
 	_itemMouseOver(e: MouseEvent) {
-		this._busyMouseOver();
+		this._loadingMouseOver();
 
 		if (isDesktop()) {
 			// respect mouseover only on desktop

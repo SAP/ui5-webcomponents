@@ -233,7 +233,7 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
@@ -242,7 +242,7 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
@@ -338,15 +338,15 @@ class Menu extends UI5Element {
 		this.items.forEach(item => {
 			item._siblingsWithIcon = itemsWithIcon;
 			const subMenu = item._subMenu;
-			if (subMenu && subMenu.busy) {
+			if (subMenu && subMenu.loading) {
 				subMenu.innerHTML = "";
 				const fragment = this._clonedItemsFragment(item);
 				subMenu.appendChild(fragment);
 			}
 
 			if (subMenu) {
-				subMenu.busy = item.busy;
-				subMenu.busyDelay = item.busyDelay;
+				subMenu.loading = item.loading;
+				subMenu.loadingDelay = item.loadingDelay;
 			}
 		});
 	}
@@ -401,7 +401,7 @@ class Menu extends UI5Element {
 	}
 
 	_navigateBack() {
-		this._closeItemSubMenu(this._parentMenuItem as MenuItem, true);
+		this.close();
 	}
 
 	_closeAll() {
@@ -418,8 +418,8 @@ class Menu extends UI5Element {
 
 		subMenu._isSubMenu = true;
 		subMenu._parentMenuItem = item;
-		subMenu.busy = item.busy;
-		subMenu.busyDelay = item.busyDelay;
+		subMenu.loading = item.loading;
+		subMenu.loadingDelay = item.loadingDelay;
 		const fragment = this._clonedItemsFragment(item);
 		subMenu.appendChild(fragment);
 		this.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
@@ -514,7 +514,7 @@ class Menu extends UI5Element {
 	}
 
 	_itemMouseOver(e: MouseEvent) {
-		this._busyMouseOver();
+		this._loadingMouseOver();
 
 		if (isDesktop()) {
 			// respect mouseover only on desktop
@@ -527,7 +527,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_busyMouseOver() {
+	_loadingMouseOver() {
 		if (this._parentMenuItem) {
 			this._parentMenuItem._preventSubMenuClose = true;
 		}
@@ -536,6 +536,8 @@ class Menu extends UI5Element {
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
 			const item = e.target as MenuItem;
+
+			clearTimeout(this._timeout);
 
 			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
