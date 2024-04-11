@@ -123,8 +123,8 @@ class OpenUI5Support {
 	}
 
 	static patchPopup(Popup: OpenUI5Popup) {
+		// 1. Patch open
 		const origOpen = Popup.prototype.open;
-		const origClose = Popup.prototype.close;
 		Popup.prototype.open = function (...args: any[]) {
 			origOpen.apply(this, args);
 			if (this.isOpen()) {
@@ -133,6 +133,9 @@ class OpenUI5Support {
 				el.showPopover();
 			}
 		};
+
+		// 2. Patch close
+		const origClose = Popup.prototype.close;
 		Popup.prototype.close = function (...args: any[]) {
 			origClose.apply(this, args);
 			if (!this.isOpen()) {
@@ -142,8 +145,9 @@ class OpenUI5Support {
 			}
 		};
 
+		// 3. Create the required CSS for the expected coordinate system
 		const stylesheet = new CSSStyleSheet();
-		stylesheet.replaceSync(`:popover-open { inset: unset; }`);
+		stylesheet.replaceSync(`.sapMPopup-CTX:popover-open { inset: unset; }`);
 		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 	}
 

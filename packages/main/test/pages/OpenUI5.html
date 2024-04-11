@@ -6,12 +6,6 @@
 
     <title>OpenUI5 Latest Stable + UI5 Web Components</title>
 
-	<style>
-		:popover-open {
-			inset: unset;
-		}
-	</style>
-
     <script id='sap-ui-bootstrap'
             src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
             data-sap-ui-theme='sap_belize_hcb'
@@ -92,7 +86,10 @@
 	<ui5-popover id="popup" header-text="Popover"></ui5-popover>
 
 	<ui5-button id="componentPopoverOpener">Open a WC Popover that in turn opens an OpenUI5 popover</ui5-button>
-	<ui5-dialog id="componentPopover" opener="componentPopoverOpener" header-text="This is a ui5-dialog"></ui5-dialog>
+	<ui5-dialog id="componentPopover" opener="componentPopoverOpener" header-text="This is a ui5-dialog">
+		<ui5-title>Use the buttons in the footer to open UI5 controls</ui5-title>
+		<div id="componentPopoverFooter" slot="footer"></div>
+	</ui5-dialog>
 
 	<div id='content'></div>
 </body>
@@ -113,8 +110,12 @@
 		if (done) {
 			return;
 		}
-		const openButton = new sap.m.Button({text: "Open an OpenUI5 Popover"});
-		openButton.placeAt("componentPopover");
+		const openPopoverButton = new sap.m.Button({text: "Open an OpenUI5 Popover"});
+		const openDialogButton = new sap.m.Button({text: "Open an OpenUI5 Dialog"});
+		const toolbar = new sap.m.Toolbar({
+			content: [openPopoverButton, openDialogButton]
+		});
+		toolbar.placeAt("componentPopoverFooter");
 
 		const sapMPopover = new sap.m.Popover({
 			title: "This is a sap.m.Popover",
@@ -124,11 +125,20 @@
 			],
 		});
 
-		openButton.attachPress(() => {
-			sapMPopover.openBy(openButton);
-			// const domRef = sapMPopover.getDomRef();
-			// domRef.popover = "manual";
-			// domRef.showPopover();
+		const sapMDialog = new sap.m.Dialog({
+			title: "This is a sap.m.Dialog",
+			content: [
+				new sap.m.Label({text: "Some dialog content"}),
+				new sap.m.TimePicker()
+			],
+		});
+
+		openPopoverButton.attachPress(() => {
+			sapMPopover.openBy(openPopoverButton);
+		});
+
+		openDialogButton.attachPress(() => {
+			sapMDialog.open();
 		});
 		done = true;
 	});
