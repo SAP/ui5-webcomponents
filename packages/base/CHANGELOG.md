@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
+
+
+### Bug Fixes
+
+* decorators stop searching for accessors when reaching HTMLElement ([#8718](https://github.com/SAP/ui5-webcomponents/issues/8718)) ([dbc48cd](https://github.com/SAP/ui5-webcomponents/commit/dbc48cd14d01681a8ec53c268eca3187056aa2b4))
+
+
+### Features
+
+* add shadowRootOptions for [@custom](https://github.com/custom)Element decorator ([#8703](https://github.com/SAP/ui5-webcomponents/issues/8703)) ([7168dc2](https://github.com/SAP/ui5-webcomponents/commit/7168dc297f411d9b5d64127a47e2361f17442439))
+
+
+
+
+
 # [2.0.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v2.0.0-rc.0) (2024-04-09)
 
 

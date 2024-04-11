@@ -99,6 +99,12 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
+	_show() {
+		if (!isPhone()) {
+			super._show();
+		}
+	}
+
 	/**
 	 * Closes the popover/dialog.
 	 * @public
@@ -163,14 +169,14 @@ class ResponsivePopover extends Popover {
 	}
 
 	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+		this._isOpened = true;
 		this.open = true;
-		this.opened = true;
 		this._propagateDialogEvent(e);
 	}
 
 	_afterDialogClose(e: CustomEvent) {
+		this._isOpened = false;
 		this.open = false;
-		this.opened = false;
 		this._propagateDialogEvent(e);
 	}
 
