@@ -138,7 +138,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0, formProperty: true })
+	@property({ validator: Float, defaultValue: 0, updatesFormValue: true })
 	value!: number;
 
 	/**
@@ -178,7 +178,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -295,7 +295,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue(): FormData | string | null {
+	get formFormattedValue(): FormData | string | null {
 		return this.value.toString();
 	}
 

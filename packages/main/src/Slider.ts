@@ -85,7 +85,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0, formProperty: true })
+	@property({ validator: Float, defaultValue: 0, updatesFormValue: true })
 	value!: number;
 
 	_valueInitial?: number;
@@ -93,7 +93,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		return this.value.toString();
 	}
 

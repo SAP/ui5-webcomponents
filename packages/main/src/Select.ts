@@ -49,6 +49,7 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
+	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -249,7 +250,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -319,7 +320,7 @@ class Select extends UI5Element implements IFormInputElement {
 		validator: Integer,
 		defaultValue: -1,
 		noAttribute: true,
-		formProperty: true,
+		updatesFormValue: true,
 	 })
 	_selectedIndex!: number;
 
@@ -348,7 +349,7 @@ class Select extends UI5Element implements IFormInputElement {
 		"default": true,
 		type: HTMLElement,
 		invalidateOnChildChange: true,
-		formSlot: true,
+		updatesFormValue: true,
 	})
 	options!: Array<IOption>;
 
@@ -390,11 +391,11 @@ class Select extends UI5Element implements IFormInputElement {
 	_attachMenuListeners: (menu: HTMLElement) => void;
 	_detachMenuListeners: (menu: HTMLElement) => void;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		const selectedOption = this.selectedOption;
 
 		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
@@ -404,7 +405,7 @@ class Select extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
@@ -495,7 +496,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @default ""
 	 * @since 1.20.0
-	 * @formProperty
+	 * @updatesFormValue
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {

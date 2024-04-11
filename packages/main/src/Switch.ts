@@ -16,6 +16,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
+import { FORM_CHECKABLE_REQUIRED } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
@@ -88,7 +89,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: Boolean, formProperty: true })
+	@property({ type: Boolean, updatesFormValue: true })
 	checked!: boolean;
 
 	/**
@@ -162,7 +163,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.16.0
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -178,11 +179,11 @@ class Switch extends UI5Element implements IFormInputElement {
 
 	static i18nBundle: I18nBundle;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return Switch.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.checked };
 	}
 
@@ -190,7 +191,7 @@ class Switch extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		return this.checked ? "on" : null;
 	}
 

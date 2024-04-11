@@ -117,7 +117,7 @@ class TimePicker extends TimePickerBase implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue(): FormData | string | null {
+	get formFormattedValue(): FormData | string | null {
 		return this.value || "";
 	}
 

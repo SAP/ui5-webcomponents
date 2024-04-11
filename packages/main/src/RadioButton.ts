@@ -30,7 +30,7 @@ import {
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
-	RADIO_BUTTON_GROUP_REQUIRED,
+	FORM_SELECTABLE_REQUIRED2,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -114,7 +114,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.9.0
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -129,7 +129,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: Boolean, formProperty: true })
+	@property({ type: Boolean, updatesFormValue: true })
 	checked!: boolean;
 
 	/**
@@ -171,7 +171,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @default ""
 	 * @public
 	 */
-	@property({ formProperty: true })
+	@property({ updatesFormValue: true })
 	value!: string;
 
 	/**
@@ -218,20 +218,20 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @private
 	 */
-	@property({ type: Boolean, formProperty: true, noAttribute: true })
+	@property({ type: Boolean, updatesFormValue: true, noAttribute: true })
 	_groupChecked!: boolean;
-	@property({ type: Boolean, formProperty: true, noAttribute: true })
+	@property({ type: Boolean, updatesFormValue: true, noAttribute: true })
 	_groupRequired!: boolean;
 
 	_deactivate: () => void;
 	_name!: string;
 	_checked!: boolean;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return RadioButton.i18nBundle.getText(FORM_SELECTABLE_REQUIRED2);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this._groupRequired && !this._groupChecked };
 	}
 
@@ -239,7 +239,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		return this.checked ? (this.value || "on") : null;
 	}
 
@@ -435,10 +435,6 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		default:
 			return "";
 		}
-	}
-
-	get radioButtonGroupRequiredText(): string {
-		return RadioButton.i18nBundle.getText(RADIO_BUTTON_GROUP_REQUIRED);
 	}
 
 	get effectiveTabIndex() {

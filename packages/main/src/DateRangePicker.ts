@@ -73,7 +73,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 
 	private _prevDelimiter: string | null;
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);
 
 		if (values.length) {

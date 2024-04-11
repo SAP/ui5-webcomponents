@@ -35,6 +35,7 @@ import {
 	VALUE_STATE_TYPE_WARNING,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -119,7 +120,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @default ""
 	 * @public
 	 */
-	@property({ formProperty: true })
+	@property({ updatesFormValue: true })
 	value!: string;
 	/**
 	 * Indicates whether the user can interact with the component or not.
@@ -146,7 +147,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.3
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -304,11 +305,11 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	static i18nBundle: I18nBundle;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return TextArea.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.value };
 	}
 
@@ -316,7 +317,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue(): FormData | string | null {
+	get formFormattedValue(): FormData | string | null {
 		return this.value;
 	}
 

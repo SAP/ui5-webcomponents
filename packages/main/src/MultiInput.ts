@@ -124,19 +124,19 @@ class MultiInput extends Input implements IFormInputElement {
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, formSlot: true })
+	@slot({ type: HTMLElement, updatesFormValue: true })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		const tokens = (this.tokens || []);
 
 		return { valueMissing: this.required && !this.value && !tokens.length };
 	}
 
-	get formElementFormattedValue(): FormData | string | null {
+	get formFormattedValue(): FormData | string | null {
 		const tokens = (this.tokens || []);
 
 		if (tokens.length) {

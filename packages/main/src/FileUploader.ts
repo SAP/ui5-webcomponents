@@ -153,7 +153,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ formProperty: true })
+	@property({ updatesFormValue: true })
 	value!: string;
 
 	/**
@@ -201,7 +201,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		if (this.files) {
 			const formData = new FormData();
 

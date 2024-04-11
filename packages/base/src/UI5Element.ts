@@ -35,7 +35,7 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { IFormInputElement, attachFormElementInternals, setFormElementValue } from "./features/InputElementsFormSupport.js";
+import { IFormInputElement, attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
 
 let autoId = 0;
 
@@ -410,8 +410,8 @@ abstract class UI5Element extends HTMLElement {
 
 				invalidated = true;
 
-				if (slotData.formSlot) {
-					setFormElementValue(this as unknown as IFormInputElement);
+				if (slotData.updatesFormValue) {
+					setFormValue(this as unknown as IFormInputElement);
 				}
 			}
 		}
@@ -1051,8 +1051,8 @@ abstract class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 
-						if (propData.formProperty) {
-							setFormElementValue(this as unknown as IFormInputElement);
+						if (propData.updatesFormValue) {
+							setFormValue(this as unknown as IFormInputElement);
 						}
 						this._updateAttribute(prop, value);
 					}

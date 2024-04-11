@@ -33,7 +33,12 @@ import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATEPICKER_OPEN_ICON_TITLE,
+	DATEPICKER_DATE_DESCRIPTION,
+	INPUT_SUGGESTIONS_TITLE,
+	FORM_TEXTFIELD_REQUIRED,
+} from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -247,7 +252,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ formProperty: true })
+	@property({ updatesFormValue: true })
 	value!: string
 
 	/**
@@ -264,7 +269,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -363,11 +368,11 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	static i18nBundle: I18nBundle;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.value };
 	}
 
@@ -375,7 +380,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue(): FormData | string | null {
+	get formFormattedValue(): FormData | string | null {
 		return this.value;
 	}
 

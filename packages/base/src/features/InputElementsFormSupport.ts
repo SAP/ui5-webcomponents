@@ -6,9 +6,9 @@ interface IFormElement extends UI5Element {
 
 interface IFormInputElement extends IFormElement {
 	name: string;
-	formElementFormattedValue: FormData | string | null;
-	formElementValidityMessage?: string;
-	formElementValidity?: ValidityStateFlags;
+	formFormattedValue: FormData | string | null;
+	formValidityMessage?: string;
+	formValidity?: ValidityStateFlags;
 	formElementAnchor?: () => HTMLElement | undefined | Promise<HTMLElement | undefined>;
 }
 
@@ -16,11 +16,11 @@ const attachFormElementInternals = (element: IFormInputElement | IFormElement) =
 	element.internals_ = element.attachInternals();
 
 	if (isInputElement(element)) {
-		setFormElementValue(element);
+		setFormValue(element);
 	}
 };
 
-const setFormElementValue = (element: IFormInputElement, test = false) => {
+const setFormValue = (element: IFormInputElement) => {
 	if (!element.internals_?.form) {
 		return;
 	}
@@ -30,20 +30,18 @@ const setFormElementValue = (element: IFormInputElement, test = false) => {
 		return;
 	}
 
-	if (!test) {
-		setFormElementValidity(element);
-	}
+	setFormValidity(element);
 
-	element.internals_.setFormValue(element.formElementFormattedValue || null);
+	element.internals_.setFormValue(element.formFormattedValue || null);
 };
 
-const setFormElementValidity = async (element: IFormInputElement) => {
+const setFormValidity = async (element: IFormInputElement) => {
 	if (!element.internals_?.form) {
 		return;
 	}
-	if (element.formElementValidity && Object.keys(element.formElementValidity).some(key => key)) {
+	if (element.formValidity && Object.keys(element.formValidity).some(key => key)) {
 		const focusRef = await element.formElementAnchor?.();
-		element.internals_.setValidity(element.formElementValidity, element.formElementValidityMessage, focusRef);
+		element.internals_.setValidity(element.formValidity, element.formValidityMessage, focusRef);
 	} else {
 		element.internals_.setValidity({});
 	}
@@ -71,8 +69,8 @@ const isInputElement = (element: IFormInputElement | IFormElement): element is I
 
 export {
 	attachFormElementInternals,
-	setFormElementValue,
-	setFormElementValidity,
+	setFormValue,
+	setFormValidity,
 	submitForm,
 	resetForm,
 };

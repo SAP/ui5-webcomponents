@@ -52,6 +52,8 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 		if (formAssociated) {
 			target.metadata.formAssociated = formAssociated;
+		}
+
 		if (shadowRootOptions) {
 			target.metadata.shadowRootOptions = shadowRootOptions;
 		}

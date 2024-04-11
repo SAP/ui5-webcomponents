@@ -21,6 +21,7 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
+	FORM_CHECKABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -153,7 +154,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.3.0
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -181,10 +182,10 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * pressing the Enter or Space key.
 	 * @default false
 	 * @formEvents change
-	 * @formProperty
+	 * @updatesFormValue
 	 * @public
 	 */
-	@property({ type: Boolean, formProperty: true })
+	@property({ type: Boolean, updatesFormValue: true })
 	checked!: boolean;
 
 	/**
@@ -233,11 +234,11 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return CheckBox.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.checked };
 	}
 
@@ -245,7 +246,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		return this.checked ? "on" : null;
 	}
 

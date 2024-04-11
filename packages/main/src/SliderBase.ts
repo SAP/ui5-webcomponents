@@ -152,10 +152,6 @@ abstract class SliderBase extends UI5Element {
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
 
-	get formElementValidityMessage() {
-		return "Custom message";
-	}
-
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
 	}

@@ -137,7 +137,7 @@ class TimePickerBase extends UI5Element {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ defaultValue: undefined, formProperty: true })
+	@property({ defaultValue: undefined, updatesFormValue: true })
 	value?: string;
 
 	/**

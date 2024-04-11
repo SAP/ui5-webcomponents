@@ -97,7 +97,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
-	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)", formProperty: true })
+	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)", updatesFormValue: true })
 	value!: string;
 
 	/**
@@ -181,7 +181,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		return this.value;
 	}
 

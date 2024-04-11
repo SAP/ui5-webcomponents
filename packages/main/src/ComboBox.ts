@@ -55,6 +55,7 @@ import {
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
 	INPUT_CLEAR_ICON_ACC_NAME,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -216,7 +217,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ formProperty: true })
+	@property({ updatesFormValue: true })
 	value!: string;
 
 	/**
@@ -293,7 +294,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -407,11 +408,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	valueStatePopover?: Popover;
 	static i18nBundle: I18nBundle;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return ComboBox.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.value };
 	}
 
@@ -419,7 +420,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue() {
+	get formFormattedValue() {
 		return this.value;
 	}
 

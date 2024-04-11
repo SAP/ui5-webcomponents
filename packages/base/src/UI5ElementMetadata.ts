@@ -11,7 +11,7 @@ type SlotInvalidation = {
 type Slot = {
 	type: typeof Node | typeof HTMLElement,
 	default?: boolean,
-	formSlot?: boolean,
+	updatesFormValue?: boolean,
 	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
@@ -24,7 +24,7 @@ type Property = {
 	type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
 	validator?: DataType,
 	defaultValue?: PropertyValue,
-	formProperty?: boolean
+	updatesFormValue?: boolean,
 	noAttribute?: boolean,
 	multiple?: boolean,
 	compareValues?: boolean,

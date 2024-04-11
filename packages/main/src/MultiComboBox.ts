@@ -90,6 +90,7 @@ import {
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 	MCB_SELECTED_ITEMS,
 	INPUT_CLEAR_ICON_ACC_NAME,
+	FORM_MIXED_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -245,7 +246,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ formProperty: true })
+	@property({ updatesFormValue: true })
 	value!: string;
 
 	/**
@@ -319,7 +320,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.5
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, updatesFormValue: true })
 	required!: boolean;
 
 	/**
@@ -429,7 +430,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		type: HTMLElement,
 		"default": true,
 		invalidateOnChildChange: true,
-		formSlot: true,
+		updatesFormValue: true,
 	})
 	items!: Array<IMultiComboBoxItem>;
 
@@ -476,11 +477,11 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	selectedItems: Array<IMultiComboBoxItem>;
 	static i18nBundle: I18nBundle;
 
-	get formElementValidityMessage() {
-		return "Custom message";
+	get formValidityMessage() {
+		return MultiComboBox.i18nBundle.getText(FORM_MIXED_TEXTFIELD_REQUIRED);
 	}
 
-	get formElementValidity(): ValidityStateFlags {
+	get formValidity(): ValidityStateFlags {
 		const selectedItems = (this.items || []).filter(item => item.selected);
 
 		return { valueMissing: this.required && !this.value && !selectedItems.length };
@@ -490,7 +491,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
-	get formElementFormattedValue(): FormData | string | null {
+	get formFormattedValue(): FormData | string | null {
 		const selectedItems = (this.items || []).filter(item => item.selected);
 
 		if (selectedItems.length) {
