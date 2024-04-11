@@ -92,7 +92,7 @@
 	<ui5-popover id="popup" header-text="Popover"></ui5-popover>
 
 	<ui5-button id="componentPopoverOpener">Open a WC Popover that in turn opens an OpenUI5 popover</ui5-button>
-	<ui5-popover id="componentPopover" opener="componentPopoverOpener" header-text="This is a ui5-popover"></ui5-popover>
+	<ui5-dialog id="componentPopover" opener="componentPopoverOpener" header-text="This is a ui5-dialog"></ui5-dialog>
 
 	<div id='content'></div>
 </body>
@@ -108,23 +108,29 @@
 		dg2.show();
 	})
 
+	let done = false;
 	componentPopover.addEventListener("after-open", () => {
+		if (done) {
+			return;
+		}
 		const openButton = new sap.m.Button({text: "Open an OpenUI5 Popover"});
 		openButton.placeAt("componentPopover");
 
 		const sapMPopover = new sap.m.Popover({
 			title: "This is a sap.m.Popover",
 			content: [
-				new sap.m.Label({text: "Some popover content"})
+				new sap.m.Label({text: "Some popover content"}),
+				new sap.m.DatePicker()
 			],
 		});
 
 		openButton.attachPress(() => {
 			sapMPopover.openBy(openButton);
-			const domRef = sapMPopover.getDomRef();
-			domRef.popover = "manual";
-			domRef.showPopover();
-		})
+			// const domRef = sapMPopover.getDomRef();
+			// domRef.popover = "manual";
+			// domRef.showPopover();
+		});
+		done = true;
 	});
 
 	componentPopoverOpener.addEventListener("click", () => {

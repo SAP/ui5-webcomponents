@@ -3,6 +3,17 @@ import { setTheme } from "../config/Theme.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
 
+type OpenUI5Popup = {
+	prototype: {
+		open: (...args: any[]) => void,
+		close: (...args: any[]) => void,
+		isOpen: () => boolean,
+		oContent: {
+			getDomRef: () => HTMLElement,
+		},
+	}
+};
+
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
 	ready: () => Promise<void>,
@@ -84,7 +95,7 @@ class OpenUI5Support {
 		return new Promise<void>(resolve => {
 			window.sap.ui.require(["sap/ui/core/Core"], async (Core: OpenUI5Core) => {
 				const callback = () => {
-					let deps: Array<string> = ["sap/ui/core/LocaleData"];
+					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
 					if (OpenUI5Support.isAtLeastVersion116()) { // for versions since 1.116.0 and onward, use the modular core
 						deps = [
 							...deps,
@@ -95,7 +106,10 @@ class OpenUI5Support {
 							"sap/ui/core/date/CalendarUtils",
 						];
 					}
-					window.sap.ui.require(deps, resolve);
+					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
+						OpenUI5Support.patchPopup(Popup);
+						resolve();
+					});
 				};
 				if (OpenUI5Support.isAtLeastVersion116()) {
 					await Core.ready();
@@ -105,6 +119,31 @@ class OpenUI5Support {
 				}
 			});
 		});
+	}
+
+	static patchPopup(Popup: OpenUI5Popup) {
+		const origOpen = Popup.prototype.open;
+		const origClose = Popup.prototype.close;
+		Popup.prototype.open = function (...args: any[]) {
+			origOpen.apply(this, args);
+			if (this.isOpen()) {
+				const el = this.oContent.getDomRef();
+				el.popover = "manual";
+				el.showPopover();
+			}
+		};
+		Popup.prototype.close = function (...args: any[]) {
+			origClose.apply(this, args);
+			if (!this.isOpen()) {
+				const el = this.oContent.getDomRef();
+				el.hidePopover();
+				el.removeAttribute("popover");
+			}
+		};
+
+		const stylesheet = new CSSStyleSheet();
+		stylesheet.replaceSync(`:popover-open { inset: unset; }`);
+		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 	}
 
 	static getConfigurationSettingsObject() {
