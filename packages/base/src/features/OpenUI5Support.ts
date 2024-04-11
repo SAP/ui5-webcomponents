@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
