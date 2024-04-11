@@ -127,8 +127,6 @@
         <ui5-multi-input id="multi_input4" value="ok">
             <ui5-token slot="tokens" text="ok"></ui5-token>
         </ui5-multi-input>
-
-
         <ui5-multi-input id="multi_input5" name="multi_input5"></ui5-multi-input>
         <ui5-multi-input id="multi_input6" name="multi_input6" value="ok"></ui5-multi-input>
         <ui5-multi-input id="multi_input7" name="multi_input7">
@@ -148,7 +146,23 @@
         </ui5-multi-input>
         <ui5-button id="multi_input_btn1" submits>Submits form</ui5-button>
     </form>
-    <ui5-title>ui5-radio-button</ui5-title>
+    <form>
+        <ui5-title>ui5-radio-button</ui5-title>
+        <ui5-radio-button id="rb_1" required name="rb1"></ui5-radio-button>
+        <ui5-button id="rb_btn1" submits>Submits form</ui5-button>
+    </form>
+    <form>
+        <ui5-title>ui5-radio-button</ui5-title>
+        <ui5-radio-button required id="rb_2" required checked></ui5-radio-button>
+        <ui5-button id="rb_btn2" submits>Submits form</ui5-button>
+    </form>
+    <form>
+        <ui5-title>ui5-radio-button</ui5-title>
+        <ui5-radio-button required name="rb3" id="rb_3" value="A" text="A"></ui5-radio-button>
+        <ui5-radio-button required name="rb3" id="rb_4" value="B" text="B"></ui5-radio-button>
+        <ui5-radio-button required value="C" text="C" checked></ui5-radio-button>
+        <ui5-button id="rb_btn3" submits>Submits form</ui5-button>
+    </form>
     <form method="get">
         <ui5-title>ui5-range-slider</ui5-title>
         <ui5-range-slider id="range_slider1"></ui5-range-slider>

@@ -12,7 +12,7 @@ describe("Form support", () => {
 		});
 
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const cb5 = await browser.$("#cb5");
 		await cb5.click();
@@ -22,7 +22,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?checkbox4=on&checkbox5=on"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-color-picker in form", async () => {
@@ -34,7 +34,7 @@ describe("Form support", () => {
 		const hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?color_picker3=rgba%28255%2C+255%2C+255%2C+1%29&color_picker4=blue"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-combobox in form", async () => {
@@ -47,7 +47,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const combobox5 = await browser.$("#combobox5");
 		await combobox5.click();
@@ -58,7 +58,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?combobox4=ok&combobox5=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-date-picker in form", async () => {
@@ -71,7 +71,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const date_picker5 = await browser.$("#date_picker5");
 		await date_picker5.click();
@@ -82,7 +82,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?date_picker4=ok&date_picker5=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-daterange-picker in form", async () => {
@@ -95,7 +95,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const daterange_picker5 = await browser.$("#daterange_picker5");
 		await daterange_picker5.click();
@@ -106,7 +106,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?daterange_picker4=ok&daterange_picker5=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-datetime-picker in form", async () => {
@@ -119,7 +119,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const datetime_picker5 = await browser.$("#datetime_picker5");
 		await datetime_picker5.click();
@@ -130,7 +130,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?datetime_picker4=ok&datetime_picker5=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-input in form", async () => {
@@ -143,7 +143,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const input5 = await browser.$("#input5");
 		await input5.click();
@@ -154,7 +154,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?input4=ok&input5=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-multi-combobox in form", async () => {
@@ -167,7 +167,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const multi_combobox9 = await browser.$("#multi_combobox9");
 		await multi_combobox9.click();
@@ -178,7 +178,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?multi_combobox6=ok&multi_combobox7=ok&multi_combobox8=ok&multi_combobox8=ok&multi_combobox9=ok&multi_combobox10=ok&multi_combobox11=ok&multi_combobox12=ok&multi_combobox12=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-multi-input in form", async () => {
@@ -191,7 +191,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const multi_input9 = await browser.$("#multi_input9");
 		await multi_input9.click();
@@ -202,7 +202,66 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?multi_input6=ok&multi_input7=ok&multi_input8=ok&multi_input8=ok&multi_input9=ok&multi_input10=ok&multi_input11=ok&multi_input12=ok&multi_input12=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
+	});
+
+	it("ui5-radio-button in form 1", async () => {
+		await browser.url(`test/pages/FormSupport.html`);
+
+		const submitBtn = await browser.$("#rb_btn1");
+		await submitBtn.click();
+
+		let hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html"));
+		});
+
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
+
+		const rb_1 = await browser.$("#rb_1");
+		await rb_1.click();
+
+		await submitBtn.click();
+
+		hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html?rb1=on"));
+		});
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
+	});
+
+	it("ui5-radio-button in form 2", async () => {
+		await browser.url(`test/pages/FormSupport.html`);
+
+		const submitBtn = await browser.$("#rb_btn2");
+		await submitBtn.click();
+
+		let hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html?"));
+		});
+
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
+	});
+
+	it("ui5-radio-button in form 3", async () => {
+		await browser.url(`test/pages/FormSupport.html`);
+
+		const submitBtn = await browser.$("#rb_btn3");
+		await submitBtn.click();
+
+		let hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html"));
+		});
+
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
+
+		const rb_4 = await browser.$("#rb_4");
+		await rb_4.click();
+
+		await submitBtn.click();
+
+		hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html?rb3=B"));
+		});
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-range-slider in form", async () => {
@@ -214,7 +273,7 @@ describe("Form support", () => {
 		const hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?range_slider3=0&range_slider3=100&range_slider4=25&range_slider4=75"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-select in form", async () => {
@@ -229,7 +288,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const select9 = await browser.$("#select9");
 		await select9.click();
@@ -242,7 +301,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html?select4=Option+1&select5=option2&select7=Option+1&select8=option2&select9=option2"));
 		});
 
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-slider in form", async () => {
@@ -254,7 +313,7 @@ describe("Form support", () => {
 		const hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?slider3=0&slider4=100"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-step-input in form", async () => {
@@ -266,7 +325,7 @@ describe("Form support", () => {
 		const hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?step_input3=0&step_input4=4"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-switch in form", async () => {
@@ -279,8 +338,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const switch5 = await browser.$("#switch5");
 		await switch5.click();
@@ -290,7 +348,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?switch4=on&switch5=on"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-textarea in form", async () => {
@@ -303,8 +361,7 @@ describe("Form support", () => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
 
-
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
 
 		const textarea5 = await browser.$("#textarea5");
 		await textarea5.click();
@@ -315,7 +372,7 @@ describe("Form support", () => {
 		hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?textarea4=ok&textarea5=ok"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("ui5-time-picker in form", async () => {
@@ -327,7 +384,7 @@ describe("Form support", () => {
 		const hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html?time_picker4=1%3A10%3A10%E2%80%AFPM"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("Normal button does not submit forms", async () => {
@@ -339,7 +396,7 @@ describe("Form support", () => {
 		const hrefIsSame = await browser.executeAsync(done => {
 			done(location.href.endsWith("FormSupport.html"));
 		});
-		assert.ok(hrefIsSame, "By default the button does not submit a form");
+		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
 
 	it("Submit button does submit forms", async () => {
