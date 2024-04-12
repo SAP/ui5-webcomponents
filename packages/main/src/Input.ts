@@ -1493,7 +1493,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get accInfo() {
-		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaHasPopupDefault = this.showSuggestions ? "dialog" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
 		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 

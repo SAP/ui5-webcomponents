@@ -140,23 +140,6 @@ abstract class Popup extends UI5Element {
 	preventFocusRestore!: boolean;
 
 	/**
-	 * Indicates if the element is open
-	 * @public
-	 * @default false
-	 * @since 1.2.0
-	 */
-	@property({ type: Boolean })
-	open!: boolean;
-
-	/**
-	 * Indicates if the element is already open
-	 * @private
-	 * @default false
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	opened!: boolean;
-
-	/**
 	 * Defines the accessible name of the component.
 	 * @default undefined
 	 * @public
@@ -220,7 +203,8 @@ abstract class Popup extends UI5Element {
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_opening = false;
+	_isOpened!: boolean;
+	_opened!: boolean;
 
 	constructor() {
 		super();
@@ -230,16 +214,6 @@ abstract class Popup extends UI5Element {
 		this._getRealDomRef = () => {
 			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
 		};
-	}
-
-	onBeforeRendering() {
-		if (this._getBlockingLayer) {
-			if (!this.isOpen() || !this.isTopModalPopup) {
-				this._getBlockingLayer.hidePopover();
-			} else if (!this.shouldHideBackdrop) {
-				this._getBlockingLayer.showPopover();
-			}
-		}
 	}
 
 	onAfterRendering() {
@@ -263,6 +237,35 @@ abstract class Popup extends UI5Element {
 		}
 
 		ResizeHandler.deregister(this, this._resizeHandler);
+	}
+
+	/**
+	 * Indicates if the element is open
+	 * @public
+	 * @default false
+	 * @since 1.2.0
+	 */
+	@property({ type: Boolean })
+	set open(value: boolean) {
+		if (this._opened === value) {
+			return;
+		}
+
+		this._opened = value;
+
+		if (value) {
+			this.openPopup();
+		} else {
+			this.close();
+		}
+	}
+
+	get open() : boolean {
+		return this._opened;
+	}
+
+	async openPopup() {
+		await this._open(false);
 	}
 
 	_resize() {
@@ -386,8 +389,10 @@ abstract class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	async applyInitialFocus() {
-		await this.applyFocus();
+	async applyInitialFocus(preventInitialFocus: boolean) {
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			await this.applyFocus();
+		}
 	}
 
 	/**
@@ -425,7 +430,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	isOpen() : boolean {
-		return this.opened;
+		return this.open;
 	}
 
 	isFocusWithin() {
@@ -441,18 +446,27 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async _open(preventInitialFocus: boolean) {
-		const prevented = !this.fireEvent("before-open", {}, true, false);
-
-		if (prevented || this._opening) {
+		if (this._isOpened) {
 			return;
 		}
 
-		this._opening = true;
+		const prevented = !this.fireEvent("before-open", {}, true, false);
 
-		// Await render before trying to access the blocking layer
-		await renderFinished();
+		if (prevented || this._isOpened) {
+			return;
+		}
+
+		let isRenderFinished = false;
+
+		this._isOpened = true;
 
 		if (this.isModal && !this.shouldHideBackdrop) {
+			if (!this._getBlockingLayer) {
+				// Await render before trying to access the blocking layer
+				await renderFinished();
+				isRenderFinished = true;
+			}
+
 			// create static area item ref for block layer
 			this._getBlockingLayer?.showPopover();
 			this._blockLayerHidden = false;
@@ -469,12 +483,16 @@ abstract class Popup extends UI5Element {
 
 		this._addOpenedPopup();
 
-		this._opening = false;
-		this.opened = true;
 		this.open = true;
 
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			await this.applyInitialFocus();
+		// initial focus, if focused element is statically created
+		await this.applyInitialFocus(preventInitialFocus);
+
+		if (!isRenderFinished) {
+			await renderFinished();
+
+			// initial focus, if focused element is dynamically created
+			await this.applyInitialFocus(preventInitialFocus);
 		}
 
 		this.fireEvent("after-open", {}, false, false);
@@ -497,7 +515,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
-		if (!this.opened) {
+		if (!this._isOpened) {
 			return;
 		}
 
@@ -506,6 +524,8 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
+		this._isOpened = false;
+
 		if (this.isModal) {
 			this._blockLayerHidden = true;
 			this._getBlockingLayer?.hidePopover();
@@ -513,7 +533,6 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.hide();
-		this.opened = false;
 		this.open = false;
 
 		if (!preventRegistryUpdate) {
