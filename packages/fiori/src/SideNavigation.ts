@@ -153,7 +153,7 @@ class SideNavigation extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<SideNavigationItem | SideNavigationGroup>;
+	items!: Array<SideNavigationItemBase>;
 
 	/**
 	 * Defines the fixed items at the bottom of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
@@ -164,7 +164,7 @@ class SideNavigation extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	fixedItems!: Array<SideNavigationItem | SideNavigationGroup>;
+	fixedItems!: Array<SideNavigationItemBase>;
 
 	/**
 	 * Defines the header of the `ui5-side-navigation`.
@@ -224,7 +224,7 @@ class SideNavigation extends UI5Element {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
-		this._getAllItems(this.items).concat(this._getAllItems(this.fixedItems)).forEach(item => {
+		this._getAllItems(this.items as Array<SideNavigationItem | SideNavigationGroup>).concat(this._getAllItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>)).forEach(item => {
 			item.sideNavCollapsed = this.collapsed;
 			item.inPopover = this.inPopover;
 			item.sideNavigation = this;
@@ -236,7 +236,7 @@ class SideNavigation extends UI5Element {
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
 		const tree = await this.getPickerTree();
-		const selectedItem = tree._findSelectedItem(tree.items);
+		const selectedItem = tree._findSelectedItem(tree.items as Array<SideNavigationItem | SideNavigationGroup>);
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
@@ -386,11 +386,11 @@ class SideNavigation extends UI5Element {
 	}
 
 	getEnabledFixedItems() : Array<ITabbable> {
-		return this.getEnabledItems(this.fixedItems);
+		return this.getEnabledItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>);
 	}
 
 	getEnabledFlexibleItems() : Array<ITabbable> {
-		const items = this.getEnabledItems(this.items);
+		const items = this.getEnabledItems(this.items as Array<SideNavigationItem | SideNavigationGroup>);
 
 		if (this._overflowItem) {
 			items.push(this._overflowItem);
@@ -425,12 +425,12 @@ class SideNavigation extends UI5Element {
 
 	onAfterRendering() {
 		if (!this.getDomRef()?.matches(":focus-within")) {
-			let selectedItem = this._findSelectedItem(this.items);
+			let selectedItem = this._findSelectedItem(this.items as Array<SideNavigationItem | SideNavigationGroup>);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
 			}
 
-			selectedItem = this._findSelectedItem(this.fixedItems);
+			selectedItem = this._findSelectedItem(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>);
 			if (selectedItem) {
 				this._fixedItemNavigation.setCurrentItem(selectedItem);
 			}
@@ -549,7 +549,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	get overflowItems() : Array<HTMLElement> {
-		return this.items.reduce((result, item) => {
+		return (this.items as Array<SideNavigationItem | SideNavigationGroup>).reduce((result, item) => {
 			return result.concat(item.overflowItems);
 		}, new Array<HTMLElement>());
 	}
@@ -609,8 +609,8 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		let items = this._getSelectableItems(this.items);
-		items = items.concat(this._getSelectableItems(this.fixedItems));
+		let items = this._getSelectableItems(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+		items = items.concat(this._getSelectableItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>));
 
 		items.forEach(current => {
 			current.selected = false;
