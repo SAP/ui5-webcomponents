@@ -16,6 +16,7 @@ import GridGrowingCss from "./generated/themes/GridGrowing.css.js";
 import GridColumnMode from "./types/GridColumnMode.js";
 import {
 	GRID_MORE,
+	GRID_MORE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // The documentation should be similar to the Table.ts class documentation!
@@ -266,6 +267,10 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 
 	get _growingButtonText() {
 		return this.growingText || Grid.i18nBundle.getText(GRID_MORE);
+	}
+
+	get _growingButtonDescription() {
+		return Grid.i18nBundle.getText(GRID_MORE_DESCRIPTION);
 	}
 
 	get _hasGrowingButton() {
