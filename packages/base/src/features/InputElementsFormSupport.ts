@@ -25,12 +25,12 @@ const setFormValue = (element: IFormInputElement) => {
 		return;
 	}
 
+	setFormValidity(element);
+
 	if (!element.name) {
 		element.internals_?.setFormValue(null);
 		return;
 	}
-
-	setFormValidity(element);
 
 	element.internals_.setFormValue(element.formFormattedValue || null);
 };
