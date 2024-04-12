@@ -21,7 +21,6 @@ import GridNavigation from "./GridNavigation.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
-import GridGrowing from "./GridGrowing.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>.
@@ -54,6 +53,7 @@ interface IGridGrowing extends IGridFeature {
 	 * Determines whether the table has a growing control, that should be rendered in the grid.
 	 */
 	hasGrowingControl(): boolean;
+	_individualSlot?: string;
 }
 
 /**
@@ -252,8 +252,8 @@ class Grid extends UI5Element {
 		return this._getFeature(GridSelection);
 	}
 
-	_getGrowing(): GridGrowing | undefined {
-		return this._getFeature(GridGrowing);
+	_getGrowing(): IGridGrowing | undefined {
+		return this.features.find(feature => this._isGrowingFeature(feature)) as IGridGrowing;
 	}
 
 	_onResize() {
@@ -331,6 +331,14 @@ class Grid extends UI5Element {
 		this.rows.forEach(row => {
 			row.cells[headerIndex]._popin = inPopin;
 		});
+	}
+
+	_isFeature(feature: any) {
+		return Boolean(feature.onGridActivate && feature.onGridRendered);
+	}
+
+	_isGrowingFeature(feature: any) {
+		return Boolean(feature.loadMore && feature.hasGrowingControl && this._isFeature(feature));
 	}
 
 	get styles() {

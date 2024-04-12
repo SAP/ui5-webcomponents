@@ -123,6 +123,7 @@ import GridHeaderCell from "./GridHeaderCell.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridRow from "./GridRow.js";
 import GridSelection from "./GridSelection.js";
+import GridGrowing from "./GridGrowing.js";
 import GridNavigation from "./GridNavigation.js";
 import GridWalker from "./GridWalker.js";
 import Icon from "./Icon.js";
