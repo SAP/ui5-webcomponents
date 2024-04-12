@@ -224,7 +224,6 @@ describe("UploadCollection", () => {
 			const newFileName2 = "newFileName2";
 
 			editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
-
 			await editButton.click();
 			await browser.keys(newFileName2);
 			await browser.keys("Enter");
