@@ -418,7 +418,7 @@ class TabContainer extends UI5Element {
 			this._itemNavigation.setCurrentItem(focusStart);
 		}
 
-		if (this.responsivePopover?.opened) {
+		if (this.responsivePopover?.open) {
 			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner(this.responsivePopover._opener!));
 
 			if (popoverItems.length) {
@@ -446,7 +446,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_handleResize() {
-		if (this.responsivePopover && this.responsivePopover.opened) {
+		if (this.responsivePopover && this.responsivePopover.open) {
 			this._closePopover();
 		}
 
