@@ -57,4 +57,16 @@ describe("Framework boot", async () => {
 		assert.strictEqual(res2[2], false, "internal storage is updated");
 	});
 
+	it("should stop searching for accessors when HTMLElement is reached", async () => {
+		const res = await browser.executeAsync( async (done) => {
+			const el = document.getElementById("accessor");
+			await window["sap-ui-webcomponents-bundle"].renderFinished();
+			// return as string, seems that WDIO changes return undefined to null
+			done([`${el.title}`]);
+		});
+
+		// HTMLElement.title will always return '', but if the getter is coming from the framework, it should return undefined
+		assert.strictEqual(res[0], "undefined", "getter is coming from field, not HTMLElement.(get title)");
+	});
+
 });

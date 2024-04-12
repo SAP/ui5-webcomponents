@@ -130,11 +130,11 @@
 			eventLogger.value = "* [before-open]" + (preventBeforeOpen.checked ? "[prevented]" : "") + " ";
 		});
 
-		menu.addEventListener("ui5-after-open", function() {
+		menu.addEventListener("ui5-open", function() {
 			shouldOpenDetailsPopover = true;
 			var opener = menu.opener.id ? menu.opener.id : menu.opener;
 			openerInput.value = opener;
-			eventLogger.value += "* [after-open] ";
+			eventLogger.value += "* [open] ";
 		});
 
 		menu.addEventListener("ui5-before-close", function(event) {
@@ -142,11 +142,11 @@
 			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Escape]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
 		});
 
-		menu.addEventListener("ui5-after-close", function() {
+		menu.addEventListener("ui5-close", function() {
 			shouldOpenDetailsPopover = false;
 			openerInput.value = "";
 			btnToggleOpen.pressed = false;
-			eventLogger.value += "* [after-close]";
+			eventLogger.value += "* [close]";
 		});
 
 		direction.addEventListener("ui5-change", function() {
@@ -168,15 +168,15 @@
 			shouldOpenDetailsPopover = false;
 		});
 
-		detailsPopover.addEventListener("ui5-after-close", function() {
+		detailsPopover.addEventListener("ui5-close", function() {
 			shouldOpenDetailsPopover = true;
 		});
 
-		menu2.addEventListener("ui5-after-open", function() {
+		menu2.addEventListener("ui5-open", function() {
 			shouldOpenDetailsPopover = true;
 		});
 
-		menu2.addEventListener("ui5-after-close", function() {
+		menu2.addEventListener("ui5-close", function() {
 			shouldOpenDetailsPopover = false;
 		});
 

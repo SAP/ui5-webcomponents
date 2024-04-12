@@ -61,14 +61,6 @@ class ProgressIndicator extends UI5Element {
 	accessibleName!: string;
 
 	/**
-	 * Defines whether component is in disabled state.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
-
-	/**
 	 * Defines whether the component value is shown.
 	 * @default false
 	 * @public
@@ -193,10 +185,6 @@ class ProgressIndicator extends UI5Element {
 
 	get valueStateIcon() {
 		return this.valueStateIconMappings()[this.valueState];
-	}
-
-	get _ariaDisabled() {
-		return this.disabled || undefined;
 	}
 
 	static async onDefine() {

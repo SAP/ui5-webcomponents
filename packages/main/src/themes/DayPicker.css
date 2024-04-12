@@ -223,11 +223,8 @@
 	outline: none;
 }
 
-.ui5-dp-item.ui5-dp-item--selected-between .ui5-dp-daytext,
-.ui5-dp-item[hovered] .ui5-dp-daytext {
-	border: var(--_ui5_daypicker_item_select_between_border);
+.ui5-dp-item.ui5-dp-item--selected-between .ui5-dp-daytext {
 	border-radius: var(--_ui5_daypicker_item_border_radius);
-	background-color: var(--_ui5_daypicker_item_selected_between_text_background);
 	color: var(--sapTextColor);
 	font-weight: var(--_ui5_daypicker_item_selected_between_text_font);
 }
@@ -240,8 +237,8 @@
 	border-radius: var(--_ui5_daypicker_item_now_selected_between_border_radius);
 }
 
-.ui5-dp-item.ui5-dp-item--selected-between,
-.ui5-dp-item[hovered] {
+.ui5-dp-item.ui5-dp-item--selected-between {
+	border: var(--_ui5_daypicker_item_select_between_border);
 	border-radius: var(--_ui5_daypicker_item_selected_between_border);
 	background: var(--_ui5_daypicker_item_selected_between_background);
 }
