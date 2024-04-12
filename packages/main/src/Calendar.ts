@@ -14,6 +14,7 @@ import {
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -305,7 +306,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true)); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -342,7 +343,7 @@ class Calendar extends CalendarPart {
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
 		validSpecialDates.forEach(date => {
-			const dateFromValue = new Date(date.value);
+			const dateFromValue = UI5Date.getInstance(date.value);
 			const timestamp = dateFromValue.getTime();
 
 			if (!uniqueDates.has(timestamp)) {
@@ -484,7 +485,7 @@ class Calendar extends CalendarPart {
 			return;
 		}
 
-		const localDate = new Date(this._timestamp * 1000);
+		const localDate = UI5Date.getInstance(this._timestamp * 1000);
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType as Exclude<typeof this.secondaryCalendarType, undefined> });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
