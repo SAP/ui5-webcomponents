@@ -858,6 +858,15 @@ describe("Accessibility", async () => {
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error"), true, "Displayed value state message text is correct");
 	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo");
+		const innerInput = await combo.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
+	});
 });
 
 describe("Keyboard navigation", async () => {

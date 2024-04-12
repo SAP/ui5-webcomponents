@@ -325,7 +325,7 @@ describe("MultiInput Truncated Token", () => {
 		const innerInput = await browser.$("#added-mi").shadow$("input");
 		const html = await innerInput.getHTML();
 
-		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
+		assert.ok(html, "new MI should be displayed");
 	});
 });
 
@@ -387,6 +387,13 @@ describe("ARIA attributes", () => {
 		const innerInput = await mi.shadow$("input");
 
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
+	});
+
+	it("aria-haspopup attribute with value 'dialog'", async () => {
+		const mi = await browser.$("#suggestion-token");
+		const innerInput = await mi.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 	});
 });
 

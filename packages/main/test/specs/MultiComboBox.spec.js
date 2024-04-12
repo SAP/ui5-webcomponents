@@ -1853,6 +1853,13 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
 		});
 
+		it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+			const mcb = await browser.$("#mcb-compact");
+			const innerInput = await mcb.shadow$("input");
+
+			assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
+		});
+
 		it("Value state type should be added to the screen readers default value states announcement", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
