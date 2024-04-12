@@ -53,6 +53,7 @@
     "eslint": "^7.22.0",
     "mkdirp": "^1.0.4",
     "replace-in-file": "^6.3.5",
-    "resolve": "^1.20.0"
+    "resolve": "^1.20.0",
+    "touch": "^3.1.0"
   }
 }
