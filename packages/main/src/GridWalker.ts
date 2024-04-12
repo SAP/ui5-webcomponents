@@ -47,10 +47,12 @@ class GridWalker {
 
 	pageup() {
 		this.rowPos = Math.max(0, this.rowPos - this.pageSize);
+		this._updateColPos();
 	}
 
 	pagedown() {
 		this.rowPos = Math.min(this.grid.length - 1, this.rowPos + this.pageSize);
+		this._updateColPos();
 	}
 
 	home() {

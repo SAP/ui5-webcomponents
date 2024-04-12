@@ -111,6 +111,10 @@ class GridNavigation {
 			activeElement.removeAttribute("tabindex");
 		}
 
+		if (navigationItems.includes(element)) {
+			element.setAttribute("tabindex", "-1");
+		}
+
 		this._ignoreFocusIn = ignoreFocusIn;
 		element.focus();
 		if (element instanceof HTMLInputElement) {

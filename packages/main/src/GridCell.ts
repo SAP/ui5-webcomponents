@@ -65,11 +65,6 @@ class GridCell extends UI5Element {
 		return this;
 	}
 
-	focus(focusOptions?: FocusOptions | undefined): Promise<void> {
-		this.setAttribute("tabindex", "-1");
-		return UI5Element.prototype.focus.call(this, focusOptions);
-	}
-
 	get _popinHeader() {
 		const row = this.parentElement as GridRow;
 		const grid = row.parentElement as Grid;
