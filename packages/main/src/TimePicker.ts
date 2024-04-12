@@ -43,26 +43,26 @@ import {
  * a valid value string is "11:42:35" and the same is displayed in the input.
  *
  * ### Keyboard handling
- * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
+ * [F4], [Alt]+[Up], [Alt]+[Down] Open/Close picker dialog and move focus to it.
  *
  * When closed:
  *
- * - [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
- * - [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
- * - [SHIFT]+[PAGEUP] - Increments minutes by 1.
- * - [SHIFT]+[PAGEDOWN] - Decrements minutes by 1.
- * - [SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.
- * - [SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.
+ * - [Page Up] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
+ * - [Page Down] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
+ * - [Shift]+[Page Up] - Increments minutes by 1.
+ * - [Shift]+[Page Down] - Decrements minutes by 1.
+ * - [Shift]+[Ctrl]+[Page Up] - Increments seconds by 1.
+ * - [Shift]+[Ctrl]+[Page Down] - Decrements seconds by 1.
  * -
  *
  * When opened:
  *
- * - [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
- * - [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
- * - [SHIFT]+[PAGEUP] - Increments minutes by 1.
- * - [SHIFT]+[PAGEDOWN] - Decrements minutes by 1.
- * - [SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.
- * - [SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.
+ * - [Page Up] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
+ * - [Page Down] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
+ * - [Shift]+[Page Up] - Increments minutes by 1.
+ * - [Shift]+[Page Down] - Decrements minutes by 1.
+ * - [Shift]+[Ctrl]+[Page Up] - Increments seconds by 1.
+ * - [Shift]+[Ctrl]+[Page Down] - Decrements seconds by 1.
  * - [A] or [P] - Selects AM or PM respectively.
  * - [0]-[9] - Allows direct time selecting (hours/minutes/seconds).
  * - [:] - Allows switching between hours/minutes/seconds clocks. If the last clock is displayed and [:] is pressed, the first clock is beind displayed.

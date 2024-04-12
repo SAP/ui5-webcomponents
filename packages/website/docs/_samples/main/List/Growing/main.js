@@ -24,10 +24,10 @@ const insertItems = (list) => {
 }
 
 growingList.addEventListener("load-more", (e) => {
-    growingList.busy = true;
+    growingList.loading = true;
     
     setTimeout(() => {
         insertItems(growingList);
-        growingList.busy = false;
+        growingList.loading = false;
     }, 1500);
 });

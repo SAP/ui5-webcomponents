@@ -1,6 +1,6 @@
 <ui5-responsive-popover
-	placement-type="Bottom"
-	horizontal-align="Left"
+	placement="Bottom"
+	horizontal-align="Start"
 	class="{{classes.popover}}"
 	hide-arrow
 	_disable-initial-focus
@@ -68,7 +68,7 @@
 	{{/unless}}
 
 	{{#if filterSelected}}
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
 					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
@@ -78,7 +78,7 @@
 			{{/each}}
 		</ui5-list>
 	{{else}}
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
 					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
@@ -106,8 +106,9 @@
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
-		placement-type="Bottom"
+		placement="Bottom"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
+		tabindex="-1"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>

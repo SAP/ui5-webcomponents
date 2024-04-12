@@ -20,6 +20,7 @@
 	box-sizing: border-box;
 	height: var(--_ui5_input_height);
 	position: relative;
+	margin: var(--_ui5_input_margin_top_bottom) 0;
 	min-width: var(--_ui5_step_input_min_width);
 	text-align: right;
 	user-select: none;

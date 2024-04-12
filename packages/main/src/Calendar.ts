@@ -50,9 +50,9 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
-type CalendarSelectedDatesChangeEventDetail = {
-	values: Array<string>,
-	dates: Array<number>,
+type CalendarSelectionChangeEventDetail = {
+	selectedValues: Array<string>,
+	selectedDates: Array<number>,
 	timestamp: number | undefined,
 }
 
@@ -73,7 +73,7 @@ type SpecialCalendarDateT = {
  * date string, correctly formatted according to the `ui5-calendar`'s `formatPattern` property.
  * Whenever the user changes the date selection, `ui5-calendar` will automatically create/remove instances
  * of `ui5-date` in itself, unless you prevent this behavior by calling `preventDefault()` for the
- * `selected-dates-change` event. This is useful if you want to control the selected dates externally.
+ * `selection-change` event. This is useful if you want to control the selected dates externally.
  *
  * ### Usage
  *
@@ -92,38 +92,38 @@ type SpecialCalendarDateT = {
  * - Day picker:
  *
  * - [F4] - Shows month picker
- * - [SHIFT] + [F4] - Shows year picker
- * - [PAGEUP] - Navigate to the previous month
- * - [PAGEDOWN] - Navigate to the next month
- * - [SHIFT] + [PAGEUP] - Navigate to the previous year
- * - [SHIFT] + [PAGEDOWN] - Navigate to the next year
- * - [CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards
- * - [CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards
- * - [HOME] - Navigate to the first day of the week
- * - [END] - Navigate to the last day of the week
- * - [CTRL] + [HOME] - Navigate to the first day of the month
- * - [CTRL] + [END] - Navigate to the last day of the month
+ * - [Shift] + [F4] - Shows year picker
+ * - [Page Up] - Navigate to the previous month
+ * - [Page Down] - Navigate to the next month
+ * - [Shift] + [Page Up] - Navigate to the previous year
+ * - [Shift] + [Page Down] - Navigate to the next year
+ * - [Ctrl] + [Shift] + [Page Up] - Navigate ten years backwards
+ * - [Ctrl] + [Shift] + [Page Down] - Navigate ten years forwards
+ * - [Home] - Navigate to the first day of the week
+ * - [End] - Navigate to the last day of the week
+ * - [Ctrl] + [Home] - Navigate to the first day of the month
+ * - [Ctrl] + [End] - Navigate to the last day of the month
  *
  * - Month picker:
  *
- * - [PAGEUP] - Navigate to the previous year
- * - [PAGEDOWN] - Navigate to the next year
- * - [HOME] - Navigate to the first month of the current row
- * - [END] - Navigate to the last month of the current row
- * - [CTRL] + [HOME] - Navigate to the first month of the current year
- * - [CTRL] + [END] - Navigate to the last month of the year
+ * - [Page Up] - Navigate to the previous year
+ * - [Page Down] - Navigate to the next year
+ * - [Home] - Navigate to the first month of the current row
+ * - [End] - Navigate to the last month of the current row
+ * - [Ctrl] + [Home] - Navigate to the first month of the current year
+ * - [Ctrl] + [End] - Navigate to the last month of the year
  *
  * - Year picker:
  *
- * - [PAGEUP] - Navigate to the previous year range
- * - [PAGEDOWN] - Navigate the next year range
- * - [HOME] - Navigate to the first year of the current row
- * - [END] - Navigate to the last year of the current row
- * - [CTRL] + [HOME] - Navigate to the first year of the current year range
- * - [CTRL] + [END] - Navigate to the last year of the current year range
+ * - [Page Up] - Navigate to the previous year range
+ * - [Page Down] - Navigate the next year range
+ * - [Home] - Navigate to the first year of the current row
+ * - [End] - Navigate to the last year of the current row
+ * - [Ctrl] + [Home] - Navigate to the first year of the current year range
+ * - [Ctrl] + [End] - Navigate to the last year of the current year range
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -178,20 +178,20 @@ type SpecialCalendarDateT = {
  * **Note:** If you call `preventDefault()` for this event, the component will not
  * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
  * @allowPreventDefault
- * @param {Array<string>} values The selected dates
- * @param {Array<number>} dates The selected dates as UTC timestamps
+ * @param {Array<string>} selectedValues The selected dates
+ * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
  */
-@event<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", {
+@event<CalendarSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
 		 */
-		dates: { type: Array },
+		selectedDates: { type: Array },
 		/**
 		 * @public
 		 */
-		values: { type: Array },
+		selectedValues: { type: Array },
 
 		timestamp: { type: Number },
 	},
@@ -559,7 +559,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -643,6 +643,6 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
-	CalendarSelectedDatesChangeEventDetail,
+	CalendarSelectionChangeEventDetail,
 	SpecialCalendarDateT,
 };

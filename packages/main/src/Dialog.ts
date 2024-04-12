@@ -85,15 +85,15 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * When the `ui5-dialog` has the `draggable` property set to `true` and the header is focused, the user can move the dialog
  * with the following keyboard shortcuts:
  *
- * - [UP/DOWN] arrow keys - Move the dialog up/down.
- * - [LEFT/RIGHT] arrow keys - Move the dialog left/right.
+ * - [Up] or [Down] arrow keys - Move the dialog up/down.
+ * - [Left] or [Right] arrow keys - Move the dialog left/right.
  *
  * #### Resizing
  * When the `ui5-dialog` has the `resizable` property set to `true` and the header is focused, the user can change the size of the dialog
  * with the following keyboard shortcuts:
  *
- * - [SHIFT] + [UP/DOWN] - Decrease/Increase the height of the dialog.
- * - [SHIFT] + [LEFT/RIGHT] - Decrease/Increase the width of the dialog.
+ * - [Shift] + [Up] or [Down] - Decrease/Increase the height of the dialog.
+ * - [Shift] + [Left] or [Right] - Decrease/Increase the width of the dialog.
  *
  * ### ES6 Module Import
  *
@@ -116,6 +116,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,
@@ -314,10 +315,6 @@ class Dialog extends Popup {
 		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
 	}
 
-	get _displayProp() {
-		return "flex";
-	}
-
 	/**
 	 * Determines if the header should be shown.
 	 */
@@ -384,16 +381,6 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-	}
-
-	onAfterRendering() {
-		super.onAfterRendering();
-
-		if (!this.isOpen() && this.open) {
-			this.show();
-		} else if (this.isOpen() && !this.open) {
-			this.close();
-		}
 	}
 
 	onEnterDOM() {

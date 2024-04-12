@@ -1,22 +1,19 @@
 import { assert } from "chai";
 
 async function getTreeItemsInPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const items = await browser.$$(`>>>.${staticAreaItemClassName} [ui5-side-navigation-item], .${staticAreaItemClassName} [ui5-side-navigation-sub-item]`);
+	const items = await browser.$$(`>>>#sn1 [ui5-side-navigation-item], #sn1 [ui5-side-navigation-sub-item]`);
 
 	return items;
 }
 
 async function getRenderedTreeItemsInPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const items = await browser.$$(`>>>.${staticAreaItemClassName} .ui5-sn-item`);
+	const items = await browser.$$(`>>>#sn1 .ui5-sn-item`);
 
 	return items;
 }
 
 async function getRootItemInPopover() {
-	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-	const rootItem = await browser.$(`>>>.${staticAreaItemClassName} ui5-responsive-popover .ui5-sn-root`);
+	const rootItem = await browser.$(`>>>#sn1 ui5-responsive-popover .ui5-sn-root`);
 
 	return rootItem;
 }
@@ -98,43 +95,55 @@ describe("Component Behavior", () => {
 		});
 
 		it("Tests tooltips when expanded", async () => {
-			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
+			const itemsTitles = await browser.executeAsync(function(done) {
+				const result = [...document.querySelectorAll("#sn1 ui5-side-navigation-item,ui5-side-navigation-sub-item")].map(el => el.shadowRoot.querySelector(".ui5-sn-item").title);
+				done(result);
+			});
 
 			// items
-			assert.strictEqual(await items[0].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
-			assert.notOk(await items[1].getAttribute("title"), "No tooltip");
+			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("tooltip"), "Tooltip is set to root item");
+			assert.notOk(itemsTitles[1], "No tooltip");
 
 			// sub items
-			assert.strictEqual(await items[2].getAttribute("title"), await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
-			assert.notOk(await items[3].getAttribute("title"), "No tooltip");
+			assert.strictEqual(itemsTitles[2], await browser.$("#item21").getAttribute("tooltip"), "Tooltip is set to root item");
+			assert.notOk(itemsTitles[3], "No tooltip");
 		});
 
 		it("Tests tooltips when collapsed", async () => {
 			await browser.$("#sn1").setProperty("collapsed", true);
 
-			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
+			const itemsTitles = await browser.executeAsync(function(done) {
+				const result = [...document.querySelectorAll("#sn1 ui5-side-navigation-item,ui5-side-navigation-sub-item")].map(el => el.shadowRoot.querySelector(".ui5-sn-item")?.title);
+				done(result);
+			});
 
-			assert.strictEqual(await items[1].getAttribute("title"), await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
-			assert.notOk(await items[2].getAttribute("title"), "No tooltip");
+			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("tooltip"), "Tooltip is set to root item");
+			assert.notOk(itemsTitles[1], "No tooltip");
 
 			await browser.$("#item2").click();
 
-			const popoverItems = await getRenderedTreeItemsInPopover();
+			const popoverItemsTitles = await browser.executeAsync(async function(done) {
+				const result = [...document.querySelector("#sn1").shadowRoot.querySelector("ui5-responsive-popover").querySelectorAll("ui5-side-navigation-item,ui5-side-navigation-sub-item")].map(el => el.shadowRoot.querySelector(".ui5-sn-item").title);
+				done(result);
+			});
 
-			assert.notOk(await popoverItems[0].getAttribute("title"), "No tooltip");
-			assert.strictEqual(await popoverItems[1].getAttribute("title"), await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.notOk(popoverItemsTitles[0], "No tooltip");
+			assert.strictEqual(popoverItemsTitles[1], await browser.$("#item21").getAttribute("tooltip"), "Tooltip is set to root item");
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);
 		});
 
 		it("tests the prevention of the ui5-selection-change event", async () => {
-			const items = await browser.$$(">>>#sn1 .ui5-sn-item");
+			const itemsAriaCurrent = await browser.executeAsync(function(done) {
+				const result = [...document.querySelectorAll("#sn1 ui5-side-navigation-item,ui5-side-navigation-sub-item")].map(el => el.shadowRoot.querySelector(".ui5-sn-item")?.getAttribute("aria-current"));
+				done(result);
+			});
 
 			await browser.$("#item21").click();
 
 			assert.ok(await browser.$("#item21").getProperty("selected"), "new item is selected");
-			assert.strictEqual(await items[2].getAttribute("aria-current"), "page", "aria-current is set");
+			assert.strictEqual(itemsAriaCurrent[2], "page", "aria-current is set");
 
 			const selectionChangeCheckbox = await browser.$("#prevent-selection");
 			await selectionChangeCheckbox.click();
@@ -142,10 +151,10 @@ describe("Component Behavior", () => {
 			await browser.$("#item1").click();
 
 			assert.notOk(await browser.$("#item1").getProperty("selected"), "new item is not selected");
-			assert.notExists(await items[0].getAttribute("aria-current"),  "aria-current is not changed");
+			assert.notExists(itemsAriaCurrent[0],  "aria-current is not changed");
 
 			assert.ok(await browser.$("#item21").getProperty("selected"), "initially selected item has not changed");
-			assert.strictEqual(await items[2].getAttribute("aria-current"), "page", "aria-current is not changed");
+			assert.strictEqual(itemsAriaCurrent[2], "page", "aria-current is not changed");
 
 			await selectionChangeCheckbox.click();
 		});

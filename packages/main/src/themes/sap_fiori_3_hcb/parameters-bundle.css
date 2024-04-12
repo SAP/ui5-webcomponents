@@ -1,6 +1,7 @@
 @import "./Avatar-parameters.css";
 @import "../base/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
+@import "./Bar-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
 @import "../base/BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
@@ -29,7 +30,7 @@
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "./PopupsCommon-parameters.css";
-@import "../base/PopupStaticAreaStyles-parameters.css";
+@import "../base/PopupBlockLayer-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";
@@ -44,6 +45,7 @@
 @import "../base/TableGroupRow-parameters.css";
 @import "../base/Toolbar-parameters.css";
 @import "./GrowingButton-parameters.css";
+@import "../base/Text-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";

@@ -5,7 +5,6 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -13,6 +12,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 import {
 	isPhone,
 	isTablet,
@@ -29,7 +29,6 @@ import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationGroup from "./SideNavigationGroup.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
-import SideNavigationPopoverTemplate from "./generated/templates/SideNavigationPopoverTemplate.lit.js";
 
 import {
 	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
@@ -84,7 +83,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * ### Keyboard Handling
  *
  * ### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -109,9 +108,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: litRender,
 	template: SideNavigationTemplate,
-	staticAreaTemplate: SideNavigationPopoverTemplate,
-	styles: SideNavigationCss,
-	staticAreaStyles: SideNavigationPopoverCss,
+	styles: [SideNavigationCss, SideNavigationPopoverCss],
 	dependencies: [
 		ResponsivePopover,
 		SideNavigationGroup,
@@ -231,11 +228,11 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
-	async _onAfterPopoverOpen() {
+	_onAfterPopoverOpen() {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
-		const tree = await this.getPickerTree();
+		const tree = this.getPickerTree();
 		const selectedItem = tree._findSelectedItem(tree.items);
 		if (selectedItem) {
 			selectedItem.focus();
@@ -244,23 +241,23 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	async _onBeforePopoverOpen() {
-		const popover = await this.getPicker();
+	_onBeforePopoverOpen() {
+		const popover = this.getPicker();
 		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
 	}
 
-	async _onBeforePopoverClose() {
-		const popover = await this.getPicker();
+	_onBeforePopoverClose() {
+		const popover = this.getPicker();
 		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
-	async _onBeforeMenuOpen() {
-		const popover = await this.getOverflowPopover();
+	_onBeforeMenuOpen() {
+		const popover = this.getOverflowPopover();
 		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
 	}
 
-	async _onBeforeMenuClose() {
-		const popover = await this.getOverflowPopover();
+	_onBeforeMenuClose() {
+		const popover = this.getOverflowPopover();
 		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
@@ -281,7 +278,7 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	async handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
+	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -293,11 +290,10 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 		this.closePicker();
 
-		await renderFinished();
 		this._popoverContents.item.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	async handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
+	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
 		associatedItem.fireEvent("click");
@@ -309,7 +305,6 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 
 		this.closeMenu();
-		await renderFinished();
 
 		// When subitem is selected in collapsed mode parent element should be focused
 		if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
@@ -322,42 +317,42 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	async getOverflowPopover() {
-		return (await this.getStaticAreaItemDomRef())!.querySelector<NavigationMenu>(".ui5-side-navigation-overflow-menu")!;
+	getOverflowPopover() {
+		return this.shadowRoot!.querySelector<NavigationMenu>(".ui5-side-navigation-overflow-menu")!;
 	}
 
-	async getPicker() {
-		return (await this.getStaticAreaItemDomRef())!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	getPicker() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async openPicker(opener: HTMLElement) {
+	openPicker(opener: HTMLElement) {
 		opener.classList.add("ui5-sn-item-active");
 
-		const responsivePopover = await this.getPicker();
+		const responsivePopover = this.getPicker();
 		responsivePopover.opener = opener;
 		responsivePopover.showAt(opener);
 	}
 
-	async openOverflowMenu(opener: HTMLElement) {
+	openOverflowMenu(opener: HTMLElement) {
 		opener.classList.add("ui5-sn-item-active");
 
-		const menu = await this.getOverflowPopover();
+		const menu = this.getOverflowPopover();
 		menu.opener = opener;
 		menu.showAt(opener);
 	}
 
-	async closePicker() {
-		const responsivePopover = await this.getPicker();
+	closePicker() {
+		const responsivePopover = this.getPicker();
 		responsivePopover.close();
 	}
 
-	async closeMenu() {
-		const menu = await this.getOverflowPopover();
+	closeMenu() {
+		const menu = this.getOverflowPopover();
 		menu.close();
 	}
 
-	async getPickerTree() {
-		const picker = await this.getPicker();
+	getPickerTree() {
+		const picker = this.getPicker();
 		return picker.querySelector<SideNavigation>("[ui5-side-navigation]")!;
 	}
 

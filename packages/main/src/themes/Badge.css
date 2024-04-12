@@ -51,7 +51,8 @@
 	cursor: pointer;
 }
 
-:host([interactive]) .ui5-badge-root:focus {
+:host([desktop][interactive]) .ui5-badge-root:focus,
+:host([interactive]) .ui5-badge-root:focus-visible {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: 1px;
 }
@@ -79,8 +80,8 @@
 
 [ui5-icon],
 ::slotted([ui5-icon]) {
-	width: 0.75rem;
-	min-width: 0.75rem;
+	width: var(--_ui5-badge-icon-width);
+	min-width: var(--_ui5-badge-icon-width);
 	height: var(--_ui5-badge-height);
 	min-height: var(--_ui5-badge-height);
 	color: inherit;
@@ -590,16 +591,4 @@
 	background-color: var(--ui5-badge-set2-color-scheme-2-active-background);
 	border-color: var(--ui5-badge-set2-color-scheme-2-active-border);
 	color: var(--ui5-badge-set2-color-scheme-2-active-color);
-}
-
-/* ---Slotted Badges--- */
-/* [ui5-avatar] - Badge icon styles */
-/* Make icon take full width minus padding.
- [ui5-avatar] is the only component using an icon for badge,
- therefore no additional scoping is needed. */
-:host([slot="badge"]) ::slotted([ui5-icon][slot="icon"]) {
-	width: 100%;
-	height: 100%;
-	min-width: 100%;
-	min-height: 100%;
 }

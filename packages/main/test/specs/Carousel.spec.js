@@ -53,6 +53,7 @@ describe("Carousel general interaction", () => {
 		const navigation = await carousel.shadow$(".ui5-carousel-navigation > .ui5-carousel-navigation-text");
 
 		assert.ok(await navigation.isExisting(), "Navigation is rendered");
+		assert.ok(await navigation.getAttribute("dir"), "auto", "text direction is auto");
 	});
 
 	it("Buttons are rendered in the content only when hovering (arrows-placement)", async () => {
@@ -121,6 +122,11 @@ describe("Carousel general interaction", () => {
 		// check root tag ARIA after navigating to 2nd page
 		await carousel.shadow$(".ui5-carousel-navigation-button:nth-child(2)").click();
 		assert.strictEqual(await carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_2, "The aria-activedescendant of carousel is correct.");
+
+		const carouselWithAccessibleName1 = await browser.$("#carouselAccName").shadow$(".ui5-carousel-root");;
+		const carouselWithAccessibleName2 = await browser.$("#carouselAccNameRef").shadow$(".ui5-carousel-root");;
+		assert.strictEqual(await carouselWithAccessibleName1.getAttribute("aria-label"), "Buttons Carousel", "The aria-label is set.");
+		assert.strictEqual(await carouselWithAccessibleName2.getAttribute("aria-label"), "Many Buttons Carousel", "The aria-label is set.");
 	});
 
 	it("all visible elements in the current page have correct tabindex values", async () => {
@@ -191,7 +197,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(await eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
-	it("page-indicator-style property", async () => {
+	it("page-indicator-type property", async () => {
 		const carousel = await browser.$("#carouselNumericPageIndicator");
 		await carousel.scrollIntoView();
 

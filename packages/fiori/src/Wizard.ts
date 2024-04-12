@@ -41,7 +41,6 @@ import WizardStep from "./WizardStep.js";
 
 // Template and Styles
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
-import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 
@@ -125,14 +124,14 @@ type StepInfo = {
  *
  * #### Wizard Progress Navigation
  *
- * 	- [LEFT], [DOWN] - Focus moves backward to the WizardProgressNavAnchors.
- * 	- [UP], [RIGHT] - Focus moves forward to the WizardProgressNavAnchor.
- * 	- [SPACE] or [ENTER], [RETURN] - Selects an active step
- * 	- [HOME] or [PAGE UP] - Focus goes to the first step
- * 	- [END] or [PAGE DOWN] - Focus goes to the last step
+ * 	- [Left] or [Down] - Focus moves backward to the WizardProgressNavAnchors.
+ * 	- [Up] or [Right] - Focus moves forward to the WizardProgressNavAnchor.
+ * 	- [Space] / [Enter] or [Return] - Selects an active step
+ * 	- [Home] or [PAGE UP] - Focus goes to the first step
+ * 	- [End] or [PAGE DOWN] - Focus goes to the last step
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -192,10 +191,9 @@ type StepInfo = {
 	styles: [
 		browserScrollbarCSS,
 		WizardCss,
+		WizardPopoverCss,
 	],
-	staticAreaStyles: WizardPopoverCss,
 	template: WizardTemplate,
-	staticAreaTemplate: WizardPopoverTemplate,
 	dependencies: [
 		WizardTab,
 		WizardStep,
@@ -622,7 +620,7 @@ class Wizard extends UI5Element {
 		return selectedStep.getAttribute(EXPANDED_STEP) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP) === "true" && (iStepNumber + 1 < this.steps.length);
 	}
 
-	async _showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
+	_showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		this._groupedTabs = [];
 
@@ -633,11 +631,11 @@ class Wizard extends UI5Element {
 			this._groupedTabs.push(tabs[i]);
 		}
 
-		const responsivePopover = await this._respPopover();
+		const responsivePopover = this._respPopover();
 		responsivePopover.showAt(oDomTarget);
 	}
 
-	async _onGroupedTabClick(e: MouseEvent) {
+	_onGroupedTabClick(e: MouseEvent) {
 		const eTarget = e.target as WizardTab;
 
 		if (this._isGroupAtStart(eTarget)) {
@@ -662,14 +660,13 @@ class Wizard extends UI5Element {
 		tabs[newlySelectedIndex].focus();
 	}
 
-	async _closeRespPopover() {
-		const responsivePopover = await this._respPopover();
+	_closeRespPopover() {
+		const responsivePopover = this._respPopover();
 		responsivePopover && responsivePopover.close();
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>(`.ui5-wizard-responsive-popover`)!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>(`.ui5-wizard-responsive-popover`)!;
 	}
 
 	/**
