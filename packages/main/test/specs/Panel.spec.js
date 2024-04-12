@@ -29,11 +29,11 @@ describe("Panel general interaction", () => {
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is still visible");
 
-		await header.keys("Space");
+		await browser.keys("Space");
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is still visible");
 
-		await header.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is still visible");
 	});
@@ -49,11 +49,11 @@ describe("Panel general interaction", () => {
 
 		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
 
-		await header.keys("Space");
+		await browser.keys("Space");
 
 		assert.ok(await content.isDisplayedInViewport(), "The content is visible");
 
-		await header.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
 	});
@@ -70,7 +70,7 @@ describe("Panel general interaction", () => {
 			timeoutMsg: "Press called"
 		});
 
-		await header.keys("Space");
+		await browser.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
 			timeout: 500,
@@ -78,7 +78,7 @@ describe("Panel general interaction", () => {
 			timeoutMsg: "Press called"
 		});
 
-		await header.keys("Enter");
+		await browser.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
 			timeout: 500,
@@ -99,7 +99,7 @@ describe("Panel general interaction", () => {
 			timeoutMsg: "Press called"
 		});
 
-		await icon.keys("Space");
+		await browser.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
 			timeout: 500,
@@ -107,7 +107,7 @@ describe("Panel general interaction", () => {
 			timeoutMsg: "Press called"
 		});
 
-		await icon.keys("Enter");
+		await browser.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
 			timeout: 500,

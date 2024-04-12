@@ -47,7 +47,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await textButton.keys("Space");
+		await browser.keys("Space");
 
 		assert.strictEqual(await field.getValue(), "ui5-click", "'click' is fired");
 	});
@@ -61,7 +61,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await textButton.keys("Enter");
+		await browser.keys("Enter");
 
 		assert.strictEqual(await field.getValue(), "ui5-click", "'click' is fired");
 	});
@@ -86,7 +86,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await arrowButton.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await field.getValue(), "ui5-arrow-click", "'arrow-click' is fired");
 	});
@@ -100,7 +100,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await arrowButton.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await field.getValue(), "ui5-arrow-click", "'arrow-click' is fired");
 	});
@@ -114,7 +114,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await arrowButton.keys(["Alt", "ArrowDown"]);
+		await browser.keys(["Alt", "ArrowDown"]);
 
 		assert.strictEqual(await field.getValue(), "ui5-arrow-click", "'arrow-click' is fired");
 	});
@@ -128,7 +128,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await arrowButton.keys(["Alt", "ArrowUp"]);
+		await browser.keys(["Alt", "ArrowUp"]);
 
 		assert.strictEqual(await field.getValue(), "ui5-arrow-click", "'arrow-click' is fired");
 	});
@@ -142,7 +142,7 @@ describe("Split Button general interaction", () => {
 		// tab to focus on first button
 		await browser.keys("Tab");
 
-		await arrowButton.keys("F4");
+		await browser.keys("F4");
 
 		assert.strictEqual(await field.getValue(), "ui5-arrow-click", "'arrow-click' is fired");
 	});

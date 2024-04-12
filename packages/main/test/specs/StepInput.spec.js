@@ -69,13 +69,13 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await siMinMax.getProperty("value"), initValue + 1, "Value is increased correctly to " + (initValue + 1));
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await siMinMax.getProperty("value"), initValue + 5, "Value is increased correctly to " + (initValue + 5));
 	});
 
@@ -88,9 +88,9 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await siMinMax.getProperty("value"), maxValue, "Value is increased correctly to " + maxValue);
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await siMinMax.getProperty("value"), maxValue, "Value is not increased to " + (maxValue + 1));
 	});
 
@@ -104,13 +104,13 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await siMinMax.getProperty("value"), maxValue - 1, "Value is decreased correctly to " + (maxValue - 1));
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.strictEqual(await siMinMax.getProperty("value"), maxValue - 5, "Value is decreased correctly to " + (maxValue - 5));
 	});
 
@@ -124,9 +124,9 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.strictEqual(await siMinMax.getProperty("value"), minValue, "Value is decreased correctly to " + minValue);
-		await siMinMax.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.strictEqual(await siMinMax.getProperty("value"), minValue, "Value is not decreased to " + (minValue - 1));
 	});
 
@@ -137,7 +137,7 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys(["Shift", "PageUp"]);
+		await browser.keys(["Shift", "PageUp"]);
 		assert.strictEqual(await siMinMax.getProperty("value"), maxValue, "Value is increased correctly to " + maxValue);
 	});
 
@@ -151,7 +151,7 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys(["Shift", "PageDown"]);
+		await browser.keys(["Shift", "PageDown"]);
 		assert.strictEqual(await siMinMax.getProperty("value"), minValue, "Value is increased correctly to " + minValue);
 	});
 
@@ -162,7 +162,7 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys(["Control", "Shift", "ArrowUp"]);
+		await browser.keys(["Control", "Shift", "ArrowUp"]);
 		assert.strictEqual(await siMinMax.getProperty("value"), maxValue, "Value is increased correctly to " + maxValue);
 	});
 
@@ -176,7 +176,7 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys(["Control", "Shift", "ArrowDown"]);
+		await browser.keys(["Control", "Shift", "ArrowDown"]);
 		assert.strictEqual(await siMinMax.getProperty("value"), minValue, "Value is increased correctly to " + minValue);
 	});
 
@@ -187,12 +187,12 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await siMinMax.getProperty("value"), initValue + 4, "Value is increased correctly to " + (initValue + 4));
-		await siMinMax.keys("Escape");
+		await browser.keys("Escape");
 		assert.strictEqual(await siMinMax.getProperty("value"), initValue, "Value is restored correctly to " + initValue);
 	});
 
@@ -202,8 +202,8 @@ describe("Keyboard interactions", () => {
 
 		// focus the step input field
 		await siMinMax.doubleClick();
-		await siMinMax.keys("6");
-		await siMinMax.keys("Enter");
+		await browser.keys("6");
+		await browser.keys("Enter");
 		assert.strictEqual(await siMinMax.getProperty("value"), 6, "Value is changed correctly to 6");
 	});
 
@@ -329,14 +329,14 @@ describe("'change' event firing", () => {
 		const changeResult = await browser.$("#changeResult");
 
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 0, "'change' event is fired 0 times");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 		assert.strictEqual(await siMinMax.getProperty("value"), 0, "Value is increased correctly to 0");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 0, "'change' event is fired 0 times");
 	});
@@ -347,12 +347,12 @@ describe("'change' event firing", () => {
 		const changeResult = await browser.$("#changeResult");
 
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		assert.strictEqual(await siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 0, "'change' event is fired 0 times");
-		await siMinMax.keys("Escape");
+		await browser.keys("Escape");
 		assert.strictEqual(await siMinMax.getProperty("value"), 0, "Value is increased correctly to 0");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 0, "'change' event is fired 0 times");
 	});
@@ -363,16 +363,16 @@ describe("'change' event firing", () => {
 		const changeResult = await browser.$("#changeResult");
 
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("Enter");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("Enter");
 		assert.strictEqual(await siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("ArrowDown");
-		await siMinMax.keys("Enter");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
 		assert.strictEqual(await siMinMax.getProperty("value"), 0, "Value is increased correctly to 0");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
@@ -383,13 +383,13 @@ describe("'change' event firing", () => {
 		const changeResult = await browser.$("#changeResult");
 
 		await siMinMax.doubleClick();
-		await siMinMax.keys("1");
-		await siMinMax.keys("Enter");
+		await browser.keys("1");
+		await browser.keys("Enter");
 		assert.strictEqual(await siMinMax.getProperty("value"), 1, "Value is increased correctly to 1");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
 		await siMinMax.doubleClick();
-		await siMinMax.keys("6");
-		await siMinMax.keys("Enter");
+		await browser.keys("6");
+		await browser.keys("Enter");
 		assert.strictEqual(await siMinMax.getProperty("value"), 6, "Value is increased correctly to 6");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
@@ -401,14 +401,14 @@ describe("'change' event firing", () => {
 		const changeResult = await browser.$("#changeResult");
 
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		await siCozy.click();
 		assert.strictEqual(await siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
 		await siMinMax.doubleClick();
-		await siMinMax.keys("1");
+		await browser.keys("1");
 		await siCozy.click();
 		assert.strictEqual(await siMinMax.getProperty("value"), 1, "Value is increased correctly to 1");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
@@ -421,14 +421,14 @@ describe("'change' event firing", () => {
 		const changeResult = await browser.$("#changeResult");
 
 		await siMinMax.click();
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
-		await siMinMax.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		await siCozy.click();
 		assert.strictEqual(await siMinMax.getProperty("value"), 3, "Value is increased correctly to 3");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
 		await siMinMax.doubleClick();
-		await siMinMax.keys("Backspace");
+		await browser.keys("Backspace");
 		await siCozy.click();
 		assert.strictEqual(await siMinMax.getProperty("value"), 0, "Value is increased correctly to 1");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
@@ -450,8 +450,8 @@ describe("'change' event firing", () => {
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
 
 		await siChange2.doubleClick();
-		await siChange2.keys(initValue2.toString());
-		await siChange2.keys("Tab");
+		await browser.keys(initValue2.toString());
+		await browser.keys("Tab");
 		assert.strictEqual(await siChange2.getProperty("value"), initValue2, "Value of the second step input is set correctly to " + initValue2);
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});

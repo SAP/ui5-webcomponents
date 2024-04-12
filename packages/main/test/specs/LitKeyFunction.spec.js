@@ -11,9 +11,9 @@ describe("Lit HTML key function for #each", async () => {
 		await input.click();
 
 		// Type "usa"
-		await input.keys("u");
-		await input.keys("s");
-		await input.keys("a");
+		await browser.keys("u");
+		await browser.keys("s");
+		await browser.keys("a");
 
 		// Click on the first item
 		const popover = await browser.$("#mcb").shadow$(".ui5-multi-combobox-all-items-responsive-popover");

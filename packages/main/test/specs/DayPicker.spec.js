@@ -17,7 +17,7 @@ describe("Day Picker Tests", () => {
 		const today = await browser.$(`#${daypicker._sut}`).shadow$(".ui5-dp-item--now");
 
 		await today.click();
-		await today.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		await browser.keys("Space");
 
 		const selectedDate = await browser.executeAsync(done => {
@@ -34,7 +34,7 @@ describe("Day Picker Tests", () => {
 		const today = await browser.$(`#${daypicker._sut}`).shadow$(".ui5-dp-item--now");
 
 		await today.click();
-		await today.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 		await browser.keys("Enter");
 
 		const selectedDate = await browser.executeAsync(done => {

@@ -60,11 +60,11 @@ describe("Table general interaction", () => {
 		lblHtml = await lbl.getHTML();
 		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 
-		await cellInRow1.keys("Space");
+		await browser.keys("Space");
 		lblHtml = await lbl.getHTML();
 		assert.ok(lblHtml.indexOf(row1Data), "Event row-click fired and intercepted.");
 
-		await cellInRow2.keys("Enter");
+		await browser.keys("Enter");
 		lblHtml = await lbl.getHTML();
 		assert.ok(lblHtml.indexOf(row2Data), "Event row-click fired and intercepted.");
 	});
@@ -167,13 +167,13 @@ describe("Table general interaction", () => {
 				"The load-more is fired.");
 
 			// act
-			await loadMoreTrigger.keys("Space");
+			await browser.keys("Space");
 			// assert
 			assert.strictEqual(await inputResult.getProperty("value"), "2",
 				"The load-more is fired 2nd time.");
 
 			// act
-			await loadMoreTrigger.keys("Enter");
+			await browser.keys("Enter");
 			// assert
 			assert.strictEqual(await inputResult.getProperty("value"), "3",
 				"The load-more is fired 3rd time.");
@@ -267,7 +267,7 @@ describe("Table general interaction", () => {
 
 			// act
 			await browser.keys(["Shift", "Tab"]);
-			await firstRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Active row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
@@ -275,7 +275,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowSingleSelect", "The first row is selected");
 
 			// act
-			await firstRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an already selected row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Enter key over an already selected row should trigger row-click event");
@@ -284,7 +284,7 @@ describe("Table general interaction", () => {
 			// act
 			await browser.keys("ArrowDown");
 			await browser.keys("ArrowDown");
-			await thirdRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Inactive row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Enter key over an Inactive row should not trigger row-click event");
@@ -293,7 +293,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "Prevously the first row was selected");
 
 			// act
-			await thirdRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an already selected row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an already selected row should not trigger row-click event");
@@ -301,7 +301,7 @@ describe("Table general interaction", () => {
 
 			// act
 			await browser.keys("ArrowDown");
-			await forthRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an Inactive row should not trigger row-click event");
@@ -310,7 +310,7 @@ describe("Table general interaction", () => {
 			// act
 			await browser.keys("ArrowUp");
 			await browser.keys("ArrowUp");
-			await secondRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Active row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an Active row should not trigger row-click event");
@@ -320,7 +320,7 @@ describe("Table general interaction", () => {
 
 			// act
 			await browser.keys(["Shift", "Tab"]);
-			await contentButton.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change on Space key over an active table cell content
 			assert.strictEqual(await rowClickCount.getProperty("value"), "3", "Space key over an active element within a table cell should not trigger row-click event");
@@ -393,7 +393,7 @@ describe("Table general interaction", () => {
 			// act
 			await browser.keys("ArrowUp");
 			await browser.keys("ArrowUp");
-			await firstRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Active row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
@@ -402,7 +402,7 @@ describe("Table general interaction", () => {
 			// act
 			await browser.keys("Tab");
 			await browser.keys("Tab");
-			await contentButton.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change on Enter key over an active table cell content
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an active element within a table cell should not trigger row-click event");
@@ -411,7 +411,7 @@ describe("Table general interaction", () => {
 			// act
 			await browser.keys("Tab");
 			await browser.execute(el => el.focus(), checkBoxFirstCell);
-			await checkBoxFirstCell.keys("Enter");
+			await browser.keys("Enter");
 
 			// test Space over the selection checkbox within each row in MultiSelect mode
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over the selection checkbox should not trigger row-click event");
@@ -420,7 +420,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowMultiSelect", "Prevously the first row was selected");
 
 			// act
-			await checkBoxFirstCell.keys("Space");
+			await browser.keys("Space");
 
 			// test Space key over the selection checkbox of already selected row in MultiSelect mode
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over the selection checkbox should not trigger row-click event");
@@ -430,7 +430,7 @@ describe("Table general interaction", () => {
 
 			// act
 			await browser.keys(["Shift", "Tab"]);
-			await secondRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Active row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over an Active row should not trigger row-click event");
@@ -440,7 +440,7 @@ describe("Table general interaction", () => {
 
 			// act
 			await browser.keys("ArrowDown");
-			await thirdRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over an Inactive row should not trigger row-click event");
@@ -449,7 +449,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "secondRowMultiSelect", "The previously selected row is the second row");
 
 			// act
-			await thirdRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an already selected row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2",  "Enter key over an already selected Inactive row should not trigger row-click event");
@@ -509,14 +509,14 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Click over a row in a default mode table should not trigger selection-change event");
 
 			// act
-			await firstRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Active row
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Active row should trigger row-click event");
 
 			// act
-			await firstRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Active row
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
@@ -530,14 +530,14 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Click over an Inactive row should trigger row-click event");
 
 			// act
-			await thirdRow.keys("Enter");
+			await browser.keys("Enter");
 
 			// test row-click and selection-change events on Enter key activation over an Inactive row
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Enter key over a row in a default mode table should not trigger selection-change event");
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over an Inactive row should not trigger row-click event");
 
 			// act
-			await thirdRow.keys("Space");
+			await browser.keys("Space");
 
 			// test row-click and selection-change events on Space key activation over an Inactive row
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Space key over a row in a default mode table should not trigger selection-change event");
@@ -551,9 +551,9 @@ describe("Table general interaction", () => {
 			const inner = await input.shadow$("input");
 
 			await inner.click();
-			await inner.keys("a");
-			await inner.keys("Space");
-			await inner.keys("b");
+			await browser.keys("a");
+			await browser.keys("Space");
+			await browser.keys("b");
 
 			assert.strictEqual(await inner.getValue(), "a b", "space should be visible");
 		});

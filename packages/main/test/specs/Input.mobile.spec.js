@@ -81,7 +81,7 @@ describe("Eventing", () => {
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("b");
+		await browser.keys("b");
 
 		const suggestionItem = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item")[2];
 		await suggestionItem.click();
@@ -112,7 +112,7 @@ describe("Typeahead", () => {
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("c");
+		await browser.keys("c");
 		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
 	});
 
@@ -125,7 +125,7 @@ describe("Typeahead", () => {
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("c");
+		await browser.keys("c");
 
 		assert.strictEqual(await dialogInput.getProperty("value"), "c", "Value is not autocompleted");
 	});
@@ -146,7 +146,7 @@ describe("Clear icon", () => {
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 
 		assert.strictEqual(await dialogInput.getAttribute("_effective-show-clear-icon"), null, "There is no clear icon initially");
-		await dialogInput.keys("t");
+		await browser.keys("t");
 
 		assert.strictEqual(await dialogInput.getAttribute("_effective-show-clear-icon"), "", "Clear icon is shown");
 	});
@@ -168,7 +168,7 @@ describe("Picker filtering", () => {
 		const dialogList = await input.shadow$("ui5-responsive-popover").$('ui5-list')
 
 		assert.strictEqual(await dialogList.$$('ui5-li-suggestion-item').length, 0, "There are no filtered items initially");
-		await dialogInput.keys("B");
+		await browser.keys("B");
 		assert.strictEqual(await dialogList.$$('ui5-li-suggestion-item').length, 4, "There are 4 filtered items");
 	});
 

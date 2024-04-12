@@ -31,11 +31,11 @@ describe("Icon general interaction", () => {
 		assert.strictEqual(await inpClickRes.getAttribute("value"), "1", "The 'click' event is fired.");
 		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click.");
 
-		await interactiveIcon.keys("Enter");
+		await browser.keys("Enter");
 		assert.strictEqual(await inpClickRes.getAttribute("value"), "2", "Enter fires 'click'");
 		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "1", "Enter fires 'ui5-click'");
 
-		await interactiveIcon.keys("Space");
+		await browser.keys("Space");
 		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "Space fires 'click'");
 		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "2", "Space fires 'ui5-click'");
 

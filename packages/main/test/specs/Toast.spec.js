@@ -180,7 +180,7 @@ describe("Keyboard handling", () => {
 		await browser.pause(3000);
 		assert.ok(await toast.getProperty("open"), "Toast should stay open");
 
-		await toast.keys("Escape");
+		await browser.keys("Escape");
 		await browser.pause(5000);
 		assert.notOk(await toast.getProperty("open"), "Toast should be closed");
 	});

@@ -92,9 +92,9 @@ describe("Eventing", () => {
 
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]").shadow$("input");
 
-		await dialogInput.keys("A");
-		await dialogInput.keys("B");
-		await dialogInput.keys("C");
+		await browser.keys("A");
+		await browser.keys("B");
+		await browser.keys("C");
 
 		const inputText = await browser.$("#input-placeholder").getText();
 		assert.strictEqual(inputText, "ABC", "Input event value property was correct");
@@ -223,7 +223,7 @@ describe("Typeahead", () => {
 		await combo.click();
 
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]").shadow$("input");
-		await dialogInput.keys("b");
+		await browser.keys("b");
 		assert.strictEqual(await dialogInput.getProperty("value"), "b", "Value is not autocompleted");
 	});
 });
@@ -244,7 +244,7 @@ describe("Picker filtering", () => {
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
 		assert.strictEqual(await dialogList.$$('ui5-li').length, 8, "All of the items are shown (8)");
-		await dialogInput.keys("B");
+		await browser.keys("B");
 		assert.strictEqual(await dialogList.$$('ui5-li').length, 3, "There are 3 filtered items");
 	});
 
@@ -260,7 +260,7 @@ describe("Picker filtering", () => {
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
 		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 3, "All of the group header list items are shown (3)");
-		await dialogInput.keys("B");
+		await browser.keys("B");
 		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is only 1 visible group header");
 	});
 });

@@ -23,8 +23,8 @@ describe("ColorPalette interactions", () => {
 
 		await item.click();
 
-		await item.keys("ArrowRight");
-		await item.keys("Space");
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
 
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "pink", "Check if selected value is pink");
 	});
@@ -37,10 +37,10 @@ describe("ColorPalette interactions", () => {
 
 		await item.click();
 
-		await item.keys("ArrowLeft");
-		await item.keys("Space");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Space");
 
-		await colorPalette.keys("Space");
+		await browser.keys("Space");
 
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "#ff6699", "Check if selected value is #ff6699");
 	});
@@ -53,8 +53,8 @@ describe("ColorPalette interactions", () => {
 
 		await item.click();
 
-		await item.keys("ArrowUp");
-		await item.keys("Space");
+		await browser.keys("ArrowUp");
+		await browser.keys("Space");
 
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "orange", "Check if selected value is orange");
 	});
@@ -67,8 +67,8 @@ describe("ColorPalette interactions", () => {
 
 		await item.click();
 
-		await item.keys("ArrowDown");
-		await item.keys("Space");
+		await browser.keys("ArrowDown");
+		await browser.keys("Space");
 
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "darkblue", "Check if selected value is darkblue");
 	});

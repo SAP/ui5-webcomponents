@@ -94,7 +94,7 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await select.keys("m"); // for "Multiple"
+			await browser.keys("m"); // for "Multiple"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");
@@ -104,7 +104,7 @@ describe("UploadCollection", () => {
 
 			// revert the UCI mode "None"
 			await select.click(); // open select
-			await select.keys("n");
+			await browser.keys("n");
 			await browser.keys("Enter")
 		});
 
@@ -112,18 +112,18 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await select.keys("ArrowDown"); // for "Single"
-			await select.keys("ArrowDown"); // for "SingleStart"
+			await browser.keys("ArrowDown"); // for "Single"
+			await browser.keys("ArrowDown"); // for "SingleStart"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");
 
-			assert.ok(await firstItem.shadow$(".ui5-li-singlesel-radiobtn").isDisplayed(), "radio button is visible");
-			assert.notOk(await firstItem.shadow$(".ui5-li-multisel-cb").isDisplayed(), "checkbox is not visible");
+			assert.ok(await (await firstItem.shadow$(".ui5-li-singlesel-radiobtn")).isDisplayed(), "radio button is visible");
+			assert.notOk(await (await firstItem.shadow$(".ui5-li-multisel-cb")).isDisplayed(), "checkbox is not visible");
 
 			// revert the UCI  selectionMode "None"
 			await select.click(); // open select
-			await select.keys("n");
+			await browser.keys("n");
 			await browser.keys("Enter")
 		});
 
@@ -138,7 +138,7 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeType");
 			await select.click(); // open select
-			await select.keys("d");
+			await browser.keys("d");
 			await browser.keys("Enter");
 
 			const secondItem = await browser.$("#secondItem");
@@ -156,7 +156,7 @@ describe("UploadCollection", () => {
 
 			// revert the UCI "Active" type
 			await select.click(); // open select
-			await select.keys("a");
+			await browser.keys("a");
 			await browser.keys("Enter")
 		});
 
@@ -212,7 +212,7 @@ describe("UploadCollection", () => {
 
 		it("should be able to add extension, if there isn't such", async () => {
 			const noFileExtensionItem = await browser.$("#readyState");
-			const editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
+			let editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 			const newFileName = "newFileName.newExtension";
 
 			await editButton.click();
@@ -222,6 +222,8 @@ describe("UploadCollection", () => {
 			assert.strictEqual(await noFileExtensionItem.getProperty("fileName"), newFileName, "file name should be changed");
 
 			const newFileName2 = "newFileName2";
+
+			editButton = await noFileExtensionItem.shadow$(".ui5-li-detailbtn");
 
 			await editButton.click();
 			await browser.keys(newFileName2);
