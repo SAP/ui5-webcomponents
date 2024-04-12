@@ -101,11 +101,11 @@ describe("Component Behavior", () => {
 			});
 
 			// items
-			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("tooltip"), "Tooltip is set to root item");
 			assert.notOk(itemsTitles[1], "No tooltip");
 
 			// sub items
-			assert.strictEqual(itemsTitles[2], await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.strictEqual(itemsTitles[2], await browser.$("#item21").getAttribute("tooltip"), "Tooltip is set to root item");
 			assert.notOk(itemsTitles[3], "No tooltip");
 		});
 
@@ -117,7 +117,7 @@ describe("Component Behavior", () => {
 				done(result);
 			});
 
-			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("tooltip"), "Tooltip is set to root item");
 			assert.notOk(itemsTitles[1], "No tooltip");
 
 			await browser.$("#item2").click();
@@ -128,7 +128,7 @@ describe("Component Behavior", () => {
 			});
 
 			assert.notOk(popoverItemsTitles[0], "No tooltip");
-			assert.strictEqual(popoverItemsTitles[1], await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.strictEqual(popoverItemsTitles[1], await browser.$("#item21").getAttribute("tooltip"), "Tooltip is set to root item");
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);

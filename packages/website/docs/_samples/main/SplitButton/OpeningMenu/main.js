@@ -14,6 +14,6 @@ splitBtn.addEventListener("arrow-click", function() {
 	splitBtn.activeArrowButton = menu.open;
 });
 
-menu.addEventListener("after-close", function() {
+menu.addEventListener("close", function() {
 	splitBtn.activeArrowButton = false;
 });

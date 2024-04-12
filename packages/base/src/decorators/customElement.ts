@@ -18,6 +18,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	shadowRootOptions?: Partial<ShadowRootInit>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -34,6 +35,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			shadowRootOptions,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
@@ -45,6 +47,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
+		}
+		if (shadowRootOptions) {
+			target.metadata.shadowRootOptions = shadowRootOptions;
 		}
 
 		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {

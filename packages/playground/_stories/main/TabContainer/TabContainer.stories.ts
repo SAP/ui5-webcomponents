@@ -16,7 +16,6 @@ export default {
 
 const Template: UI5StoryArgs<TabContainer, StoryArgsSlots> = (args) => {
 	return html`<ui5-tabcontainer
-	?fixed="${ifDefined(args.fixed)}"
 	?collapsed="${ifDefined(args.collapsed)}"
 	tab-layout="${ifDefined(args.tabLayout)}"
 	overflow-mode="${ifDefined(args.overflowMode)}"
@@ -51,7 +50,6 @@ Basic.args = {
 export const TextOnlyTabs = Template.bind({});
 TextOnlyTabs.args = {
 	collapsed: true,
-	fixed: true,
 	default: `<ui5-tab text="Home"></ui5-tab>
 <ui5-tab text="What's new" selected></ui5-tab>
 <ui5-tab text="Who are we"></ui5-tab>
@@ -62,7 +60,6 @@ TextOnlyTabs.args = {
 export const TextOnlyEndOverflow = Template.bind({});
 TextOnlyEndOverflow.args = {
 	collapsed: true,
-	fixed: true,
 	default: `<ui5-tab text="Tab 1"></ui5-tab>
 <ui5-tab text="Tab 2"></ui5-tab>
 <ui5-tab text="Tab 3"></ui5-tab>
@@ -92,7 +89,6 @@ export const InlineTabLayout = Template.bind({});
 InlineTabLayout.args = {
 	tabLayout: TabLayout.Inline,
 	collapsed: true,
-	fixed: true,
 	default: `<ui5-tab icon="laptop" text="Monitors" additional-text="10"></ui5-tab>
 <ui5-tab icon="video" text="Cameras" additional-text="2" selected></ui5-tab>
 <ui5-tab icon="home" text="Rooms" additional-text="16"></ui5-tab>`,
