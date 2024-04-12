@@ -1,4 +1,7 @@
-// Mockup of OpenUI5's Element.js
+// OpenUI5's delegates object
+type DelegatesMap = { [key: string]: () => void; }
+
+// OpenUI5's Element.js subset
 type Element = {
 	getDomRef: () => HTMLElement | null,
 	addDelegate: (delegate: DelegatesMap) => void,
@@ -15,7 +18,6 @@ type OpenUI5Popup = {
 	}
 };
 
-type DelegatesMap = { [key: string]: () => void; }
 const delegatesRegistry = new Map<HTMLElement, DelegatesMap>();
 
 /**
@@ -47,8 +49,7 @@ const closeNativePopover = (domRef: HTMLElement) => {
 	}
 };
 
-const patchPopup = (Popup: OpenUI5Popup) => {
-	// 1. Patch open (show the popover before all animations have started)
+const patchOpen = (Popup: OpenUI5Popup) => {
 	const origOpen = Popup.prototype.open;
 	Popup.prototype.open = function open(...args: any[]) {
 		origOpen.apply(this, args); // call open first to initiate opening
@@ -65,8 +66,9 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 			}
 		}
 	};
+};
 
-	// 2. Patch _closed (hide the popover after all animations have ended)
+const patchClosed = (Popup: OpenUI5Popup) => {
 	const _origClosed = Popup.prototype._closed;
 	Popup.prototype._closed = function _closed(...args: any[]) {
 		const element = this.getContent();
@@ -80,11 +82,18 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 			closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
 		}
 	};
+};
 
-	// 3. Create the required CSS for the expected coordinate system
+const createGlobalStyles = () => {
 	const stylesheet = new CSSStyleSheet();
 	stylesheet.replaceSync(`.sapMPopup-CTX:popover-open { inset: unset; }`);
 	document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
+};
+
+const patchPopup = (Popup: OpenUI5Popup) => {
+	patchOpen(Popup); // Popup.prototype.open
+	patchClosed(Popup); // Popup.prototype._closed
+	createGlobalStyles(); // Ensures correct popover positioning by OpenUI5 (otherwise 0,0 is the center of the screen)
 };
 
 export default patchPopup;
