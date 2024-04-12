@@ -120,7 +120,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @default ""
 	 * @public
 	 */
-	@property({ updatesFormValue: true })
+	@property({ type: String, updatesFormValue: true })
 	value!: string;
 	/**
 	 * Indicates whether the user can interact with the component or not.

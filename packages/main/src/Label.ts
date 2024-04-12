@@ -74,7 +74,7 @@ class Label extends UI5Element {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**

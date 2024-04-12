@@ -171,7 +171,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @default ""
 	 * @public
 	 */
-	@property({ updatesFormValue: true })
+	@property({ type: String, updatesFormValue: true })
 	value!: string;
 
 	/**

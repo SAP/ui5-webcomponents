@@ -496,7 +496,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @default ""
 	 * @since 1.20.0
-	 * @updatesFormValue
+	 * @formProperty
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {

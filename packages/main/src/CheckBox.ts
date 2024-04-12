@@ -182,7 +182,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * pressing the Enter or Space key.
 	 * @default false
 	 * @formEvents change
-	 * @updatesFormValue
+	 * @formProperty
 	 * @public
 	 */
 	@property({ type: Boolean, updatesFormValue: true })

@@ -363,7 +363,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @formProperty
 	 * @public
 	 */
-	@property({ updatesFormValue: true })
+	@property({ type: String, updatesFormValue: true })
 	value!: string;
 
 	/**

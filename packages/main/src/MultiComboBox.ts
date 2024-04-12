@@ -246,7 +246,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ updatesFormValue: true })
+	@property({ type: String, updatesFormValue: true })
 	value!: string;
 
 	/**
