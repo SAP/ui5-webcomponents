@@ -18,8 +18,8 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    flex: 1 1 auto;
     outline: none;
-    justify-content: space-between;
 }
 
 .ui5-popup-root .ui5-popup-header-root {
