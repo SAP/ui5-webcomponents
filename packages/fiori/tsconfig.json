@@ -14,6 +14,7 @@
       "experimentalDecorators": true,
       "importsNotUsedAsValues": "preserve",
       "ignoreDeprecations": "5.0",
+      "exactOptionalPropertyTypes": true,
       "paths": {
         "@ui5/webcomponents-base/dist/*": ["../base/src/*"],
         "@ui5/webcomponents/dist/*": ["../main/src/*"],

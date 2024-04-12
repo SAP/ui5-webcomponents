@@ -56,14 +56,14 @@ type AccInfo = {
 	ariaLevel?: number;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
-	ariaSelectedText?: string;
-	ariaHaspopup?: `${Lowercase<HasPopup>}`;
-	posinset?: number;
-	setsize?: number;
+	ariaSelectedText: string | undefined;
+	ariaHaspopup?: `${Lowercase<HasPopup>}` | undefined;
+	posinset: number | undefined;
+	setsize: number | undefined;
 	ariaSelected?: boolean;
 	ariaChecked?: boolean;
-	listItemAriaLabel?: string;
-	ariaOwns?: string;
+	listItemAriaLabel?: string | undefined;
+	ariaOwns?: string | undefined;
 	tooltip?: string;
 }
 
@@ -502,12 +502,10 @@ abstract class ListItem extends ListItemBase {
 	get _accInfo(): AccInfo {
 		return {
 			role: this.accessibleRole || this.role,
-			ariaExpanded: undefined,
-			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup>,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
 			tooltip: this.tooltip || this.title,

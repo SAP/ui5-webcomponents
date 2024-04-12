@@ -455,10 +455,10 @@ class MultiComboBox extends UI5Element {
 	_shouldAutocomplete?: boolean;
 	_preventTokenizerToggle?: boolean;
 	_isOpenedByKeyboard?: boolean;
-	_itemToFocus?: IMultiComboBoxItem;
+	_itemToFocus?: IMultiComboBoxItem | undefined;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
-	FormSupport?: typeof FormSupportT;
+	FormSupport: typeof FormSupportT | undefined;
 	static i18nBundle: I18nBundle;
 
 	constructor() {

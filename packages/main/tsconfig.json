@@ -18,6 +18,7 @@
       "importsNotUsedAsValues": "preserve",
       "ignoreDeprecations": "5.0",
       // "verbatimModuleSyntax": true,
+      "exactOptionalPropertyTypes": true,
       "paths": {
         "@ui5/webcomponents-base/dist/*": ["../base/src/*"],
         "@ui5/webcomponents-localization/dist/*": ["../localization/src/*"],

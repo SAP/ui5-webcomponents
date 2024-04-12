@@ -13,6 +13,7 @@
 		"moduleResolution": "node",
 		"composite": true,
 		"rootDir": "src",
+		"exactOptionalPropertyTypes": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": ["../base/src/*"],

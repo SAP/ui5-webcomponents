@@ -206,7 +206,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @private
 	 */
 	@property({ type: Object, defaultValue: undefined, noAttribute: true })
-	accData?: I18nText;
+	accData: I18nText | undefined;
 
 	/**
 	 * @private
@@ -224,15 +224,15 @@ class Icon extends UI5Element implements IIcon {
 	 * @private
 	 */
 	@property({ noAttribute: true, defaultValue: undefined })
-	effectiveAccessibleName?: string;
+	effectiveAccessibleName: string | undefined;
 
-	ltr?: boolean;
+	ltr: boolean | undefined;
 	packageName?: string;
 	viewBox?: string;
 	customSvg?: object;
 
-	_onfocusout?: ((event: FocusEvent) => void);
-	_onfocusin?: ((event: FocusEvent) => void);
+	_onfocusout: ((event: FocusEvent) => void) | undefined;
+	_onfocusin: ((event: FocusEvent) => void) | undefined;
 
 	_onFocusInHandler() {
 		if (this.interactive) {

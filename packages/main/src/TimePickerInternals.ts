@@ -157,14 +157,14 @@ class TimePickerInternals extends UI5Element {
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true })
-	_typeCooldownId?: ReturnType<typeof setTimeout>;
+	_typeCooldownId: ReturnType<typeof setTimeout> | undefined;
 
 	/**
 	 * Exact match number buffer
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true })
-	_exactMatch?: number;
+	_exactMatch?: number | undefined;
 
 	/**
 	 * Buffer for entered by keyboard numbers

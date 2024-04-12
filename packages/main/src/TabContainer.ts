@@ -455,7 +455,7 @@ class TabContainer extends UI5Element {
 		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
 		DragRegistry.unsubscribe(this);
 		DragRegistry.removeSelfManagedArea(this);
-		this._setDraggedElement = undefined;
+		delete this._setDraggedElement;
 	}
 
 	_handleResize() {
@@ -816,7 +816,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_onItemSelect(selectedTabId: string) {
-		const selectedTabIndex = this._itemsFlat!.findIndex(item => item.__id === selectedTabId);
+		const selectedTabIndex = this._itemsFlat!.findIndex(item => item._id === selectedTabId);
 		const selectedTab = this._itemsFlat![selectedTabIndex] as Tab;
 
 		const selectionSuccessful = this.selectTab(selectedTab, selectedTabIndex);

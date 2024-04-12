@@ -391,7 +391,7 @@ class Calendar extends CalendarPart {
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
 
-		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType as Exclude<typeof this.primaryCalendarType, undefined> });
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._headerMonthButtonText = localeData.getMonthsStandAlone("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
 
@@ -461,7 +461,7 @@ class Calendar extends CalendarPart {
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
-		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
+		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType as Exclude<typeof this.secondaryCalendarType, undefined> });
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
@@ -485,7 +485,7 @@ class Calendar extends CalendarPart {
 		}
 
 		const localDate = new Date(this._timestamp * 1000);
-		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
+		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType as Exclude<typeof this.secondaryCalendarType, undefined> });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
 		const secondYearText = secondYearFormat.format(localDate, true);

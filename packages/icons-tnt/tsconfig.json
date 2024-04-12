@@ -14,6 +14,7 @@
       	"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
+		"exactOptionalPropertyTypes": true,
 		"composite": true,
 		"rootDir": "src",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",

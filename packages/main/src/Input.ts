@@ -504,7 +504,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @private
 	 */
 	@property({ type: String, noAttribute: true, defaultValue: undefined })
-	_associatedLabelsTexts?: string;
+	_associatedLabelsTexts: string | undefined;
 
 	/**
 	 * Constantly updated value of texts collected from the accessibleNameRef elements
@@ -587,7 +587,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
-	_performTextSelection?: boolean;
+	_performTextSelection: boolean = false;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 

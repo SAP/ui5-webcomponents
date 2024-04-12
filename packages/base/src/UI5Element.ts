@@ -55,7 +55,7 @@ type ChangeInfo = {
 	type: "property" | "slot",
 	name: string,
 	reason?: string,
-	child?: SlotValue,
+	child?: SlotValue | undefined,
 	target?: UI5Element,
 	newValue?: PropertyValue,
 	oldValue?: PropertyValue,
@@ -112,7 +112,10 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
-	__id?: string;
+	/**
+	 * @deprecated - This property is not guaranteed in future release
+	 */
+	_id: string = `ui5wc_${++autoId}`;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
 	_invalidationEventProvider: EventProvider<InvalidationInfo, void>;
@@ -121,7 +124,7 @@ abstract class UI5Element extends HTMLElement {
 	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
-	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
+	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve | undefined };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
 	_getRealDomRef?: () => HTMLElement;
@@ -158,20 +161,6 @@ abstract class UI5Element extends HTMLElement {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
 			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
 		}
-	}
-
-	/**
-	 * Returns a unique ID for this UI5 Element
-	 *
-	 * @deprecated - This property is not guaranteed in future releases
-	 * @protected
-	 */
-	get _id() {
-		if (!this.__id) {
-			this.__id = `ui5wc_${++autoId}`;
-		}
-
-		return this.__id;
 	}
 
 	render() {
@@ -826,7 +815,7 @@ abstract class UI5Element extends HTMLElement {
 
 	_fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
 		const noConflictEvent = new CustomEvent<T>(`ui5-${name}`, {
-			detail: data,
+			detail: data as Exclude<typeof data, undefined>,
 			composed: false,
 			bubbles,
 			cancelable,
@@ -840,7 +829,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const normalEvent = new CustomEvent<T>(name, {
-			detail: data,
+			detail: data as Exclude<typeof data, undefined>,
 			composed: false,
 			bubbles,
 			cancelable,

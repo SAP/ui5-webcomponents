@@ -226,7 +226,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	@slot()
 	badge!: Array<HTMLElement>;
 
-	_onclick?: (e: MouseEvent) => void;
+	_onclick: ((e: MouseEvent) => void) | undefined;
 	static i18nBundle: I18nBundle;
 	_handleResizeBound: ResizeObserverCallback;
 

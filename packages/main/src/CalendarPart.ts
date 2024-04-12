@@ -24,10 +24,14 @@ class CalendarPart extends DateComponentBase {
 	 * @protected
 	 */
 	@property({ validator: Integer })
-	timestamp?: number;
+	timestamp?: number | undefined;
 
 	get _minTimestamp() {
 		return this._minDate.valueOf() / 1000;
+	}
+
+	get test(): boolean {
+		return "timestamp" in this;
 	}
 
 	get _maxTimestamp() {

@@ -134,7 +134,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const pageSize = this._getPageSize();
 		const locale = getLocale() as unknown as LocaleT;
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
-		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
+		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType as Exclude<typeof this.secondaryCalendarType, undefined> }, locale);
 		this._calculateFirstYear();
 		this._lastYear = this._firstYear! + pageSize - 1;
 

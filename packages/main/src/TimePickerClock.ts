@@ -20,9 +20,9 @@ type TimePickerClockChangeEventDetail = {
 }
 
 type TimePickerClockItem = {
-	angle?: number,
+	angle?: number | undefined,
 	item?: string,
-	innerItem?: string,
+	innerItem?: string | undefined,
 	outerStyles?: object,
 	innerStyles?: object,
 }

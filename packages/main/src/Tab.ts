@@ -187,12 +187,12 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	})
 	items!: Array<ITab>
 
-	_isInline?: boolean;
-	_forcedMixedMode?: boolean;
+	_isInline: boolean = false;
+	_forcedMixedMode: boolean = false;
 	_getElementInStrip?: () => HTMLElement | undefined;
 	_individualSlot!: string;
-	_forcedPosinset?: number;
-	_forcedSetsize?: number;
+	_forcedPosinset?: number | undefined;
+	_forcedSetsize?: number | undefined;
 	_forcedStyleInOverflow?: Record<string, any>;
 
 	static i18nBundle: I18nBundle;
@@ -265,8 +265,8 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		this._getElementInStrip = getElementInStrip;
 		this._forcedPosinset = posinset;
 		this._forcedSetsize = setsize;
-		this._forcedMixedMode = mixedMode;
-		this._isInline = isInline;
+		this._forcedMixedMode = mixedMode ?? false;
+		this._isInline = isInline ?? false;
 		this._isTopLevelTab = !!isTopLevelTab;
 	}
 

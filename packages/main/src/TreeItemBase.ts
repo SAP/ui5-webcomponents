@@ -249,14 +249,14 @@ class TreeItemBase extends ListItem {
 	get _accInfo() {
 		const accInfoSettings = {
 			role: "treeitem",
-			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
+			ariaExpanded: this.showToggleButton ? this.expanded : false,
 			ariaLevel: this.level,
 			posinset: this.forcedPosinset,
 			setsize: this.forcedSetsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
-			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup>,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };

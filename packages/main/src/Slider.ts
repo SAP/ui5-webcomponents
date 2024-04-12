@@ -86,8 +86,8 @@ class Slider extends SliderBase {
 	@property({ validator: Float, defaultValue: 0 })
 	value!: number;
 
-	_valueInitial?: number;
-	_valueOnInteractionStart?: number;
+	_valueInitial?: number | undefined;
+	_valueOnInteractionStart?: number | undefined;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 

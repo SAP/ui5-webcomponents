@@ -998,7 +998,7 @@ class ShellBar extends UI5Element {
 				return {
 					icon: item.icon,
 					id: item._id,
-					count: item.count || undefined,
+					count: item.count,
 					refItemid: item._id,
 					text: item.text,
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",

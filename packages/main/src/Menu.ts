@@ -296,19 +296,19 @@ class Menu extends UI5Element {
 	 * Stores parent menu item (if there is such).
 	 */
 	@property({ type: Object, defaultValue: undefined })
-	_parentMenuItem?: MenuItem;
+	_parentMenuItem?: MenuItem | undefined;
 
 	/**
 	 * Stores parent menu item DOM representation (if there is such).
 	 */
 	@property({ type: Object, defaultValue: undefined })
-	_opener?: HTMLElement;
+	_opener?: HTMLElement | undefined;
 
 	/**
 	 * Stores menu item that have sub-menu opened.
 	 */
 	@property({ type: Object, defaultValue: undefined })
-	_openedSubMenuItem?: MenuItem;
+	_openedSubMenuItem?: MenuItem | undefined;
 
 	/**
 	 * Defines the items of this component.

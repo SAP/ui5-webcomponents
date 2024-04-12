@@ -182,7 +182,7 @@ class TimePickerBase extends UI5Element {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
-	tempValue?: string;
+	tempValue?: string | undefined;
 
 	static i18nBundle: I18nBundle;
 
@@ -461,11 +461,11 @@ class TimePickerBase extends UI5Element {
 
 		if (this._isPattern) {
 			dateFormat = DateFormat.getDateInstance({
-				pattern: this._formatPattern,
+				pattern: this._formatPattern as Exclude<typeof this._formatPattern, undefined>,
 			});
 		} else {
 			dateFormat = DateFormat.getDateInstance({
-				style: this._formatPattern,
+				style: this._formatPattern as Exclude<typeof this._formatPattern, undefined>,
 			});
 		}
 

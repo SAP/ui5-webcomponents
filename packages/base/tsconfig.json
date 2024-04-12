@@ -15,6 +15,7 @@
       "moduleResolution": "node",
       "composite": true,
       "rootDir": "src",
+      "exactOptionalPropertyTypes": true,
       "tsBuildInfoFile": "dist/.tsbuildinfo",
     },
 }

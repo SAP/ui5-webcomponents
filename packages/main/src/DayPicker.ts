@@ -72,7 +72,7 @@ type Day = {
 	ariaSelected: string,
 	ariaDisabled: string | undefined,
 	disabled: boolean,
-	secondDay?: number,
+	secondDay: number | undefined,
 	weekNum?: number,
 	isHidden?: boolean,
 	type?: string,
@@ -87,7 +87,7 @@ type Week = Array<Day | WeekNumber>;
 
 type DayPickerChangeEventDetail = {
 	dates: Array<number>,
-	timestamp?: number,
+	timestamp: number | undefined,
 }
 
 type DayPickerNavigateEventDetail = {
@@ -182,7 +182,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	 @property()
-	_secondTimestamp?: number;
+	_secondTimestamp: number | undefined;
 
 	/**
 	 * Array of special calendar dates (if such are passed) from the calendar.

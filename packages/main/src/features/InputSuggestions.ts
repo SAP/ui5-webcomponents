@@ -44,9 +44,9 @@ interface SuggestionComponent extends UI5Element {
 type InputSuggestion = {
 	text: string;
 	description?: string;
-	image?: string;
-	icon?: string;
-	type?: `${ListItemType}`;
+	image?: string | undefined;
+	icon?: string | undefined;
+	type?: `${ListItemType}` | undefined;
 	additionalText?: string;
 	additionalTextState?: `${ValueState}`;
 	groupItem: boolean;
@@ -73,7 +73,7 @@ class Suggestions {
 	handleFocus: boolean;
 	highlight: boolean;
 	selectedItemIndex: number;
-	accInfo?: SuggestionsAccInfo;
+	accInfo?: SuggestionsAccInfo | undefined;
 	responsivePopover?: ResponsivePopover;
 	_scrollContainer?: HTMLElement;
 	_handledPress?: boolean;
@@ -121,14 +121,9 @@ class Suggestions {
 			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
 
 			return suggestions.push({
+				...suggestion,
 				text,
 				description,
-				image: suggestion.image || undefined,
-				icon: suggestion.icon || undefined,
-				type: suggestion.type || undefined,
-				additionalText: suggestion.additionalText || undefined,
-				additionalTextState: suggestion.additionalTextState,
-				groupItem: suggestion.groupItem,
 				key: idx,
 			});
 		});

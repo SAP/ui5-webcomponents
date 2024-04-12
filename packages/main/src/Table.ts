@@ -86,7 +86,7 @@ type TableColumnInfo = {
 	text?: string | null,
 	visible?: boolean,
 	demandPopin?: boolean,
-	popinText?: string,
+	popinText?: string | undefined,
 	popinDisplay?: `${TableColumnPopinDisplay}`,
 	popinDisplayInline?: boolean,
 	classes?: string,

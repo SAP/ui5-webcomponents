@@ -269,7 +269,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	buttonTitle?: string;
+	buttonTitle: string | undefined;
 
 	/**
 	 * @private
