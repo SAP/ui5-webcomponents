@@ -1,4 +1,3 @@
-/* eslint-disable func-names */
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
@@ -126,7 +125,7 @@ class OpenUI5Support {
 	static patchPopup(Popup: OpenUI5Popup) {
 		// 1. Patch open (show the popover before all animations have started)
 		const origOpen = Popup.prototype.open;
-		Popup.prototype.open = function (...args: any[]) {
+		Popup.prototype.open = function open(...args: any[]) {
 			origOpen.apply(this, args);
 			const topLayerAlreadyInUse = !!document.body.querySelector(":popover-open"); // check if there is already something in the top layer
 			const openingInitiated = ["OPENING", "OPEN"].includes(this.getOpenState());
@@ -139,7 +138,7 @@ class OpenUI5Support {
 
 		// 2. Patch _closed (hide the popover after all animations have ended)
 		const _origClosed = Popup.prototype._closed;
-		Popup.prototype._closed = function (...args: any[]) {
+		Popup.prototype._closed = function _closed(...args: any[]) {
 			_origClosed.apply(this, args);
 			const el = this.oContent?.getDomRef();
 			if (!el) {
