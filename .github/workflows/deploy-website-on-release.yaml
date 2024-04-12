@@ -41,4 +41,4 @@ jobs:
             nightly
             storybook
             playground
-            v2
+            v1

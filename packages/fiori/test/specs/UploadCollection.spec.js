@@ -90,11 +90,11 @@ describe("UploadCollection", () => {
 		});
 
 
-		it("in 'MultiSelect' mode there should be a checkbox", async () => {
+		it("in 'Multiple' selectionMode there should be a checkbox", async () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await browser.keys("m"); // for "MultiSelect"
+			await browser.keys("m"); // for "Multiple"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");
@@ -108,12 +108,12 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
-		it("in 'SingleSelectBegin' mode there should be a radio button", async () => {
+		it("in 'SingleStart' mode there should be a radio button", async () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await browser.keys("ArrowDown"); // for "SingleSelect"
-			await browser.keys("ArrowDown"); // for "SingleSelectBegin"
+			await browser.keys("ArrowDown"); // for "Single"
+			await browser.keys("ArrowDown"); // for "SingleStart"
 			await browser.keys("Enter");
 
 			const firstItem = await browser.$("#firstItem");
@@ -121,7 +121,7 @@ describe("UploadCollection", () => {
 			assert.ok(await (await firstItem.shadow$(".ui5-li-singlesel-radiobtn")).isDisplayed(), "radio button is visible");
 			assert.notOk(await (await firstItem.shadow$(".ui5-li-multisel-cb")).isDisplayed(), "checkbox is not visible");
 
-			// revert the UCI  mode "None"
+			// revert the UCI  selectionMode "None"
 			await select.click(); // open select
 			await browser.keys("n");
 			await browser.keys("Enter")
@@ -160,28 +160,16 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
-		it("upload collection should fire 'item-delete' in Delete mode", async () => {
-			const uploadCollection = await browser.$("#uploadCollection");
-			const firstItem = await browser.$("#firstItem");
-
-			await uploadCollection.setAttribute("mode", "Delete");
-
-			const deleteBtn = await firstItem.shadow$(".ui5-upload-collection-deletebtn");
-			await deleteBtn.click();
-
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
-		});
-
-		it("upload collection should fire 'item-delete' regardless of the mode", async () => {
+		it("upload collection should fire 'item-delete' regardless of the selectionMode", async () => {
 			const uploadCollection = await browser.$("#uploadCollection");
 			const item = await browser.$("#latestReportsPdf");
 
-			await uploadCollection.setAttribute("mode", "None");
+			await uploadCollection.setAttribute("selection-mode", "None");
 
 			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
 			await deleteBtn.click();
 
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 3, "item should be deleted when 'item-delete' event is fired");
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", async () => {

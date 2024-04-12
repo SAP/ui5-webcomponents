@@ -1,12 +1,15 @@
 const fs = require("fs").promises;
 const path = require('path');
 
+const isTypeScript = process.env.UI5_TS;
+const ext = isTypeScript ? 'ts' : 'js';
+
 const generate = async () => {
 
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
 
 	const inputFolder = path.normalize(process.argv[2]);
-	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.ts`);
+	const outputFileDynamic = path.normalize(`${process.argv[3]}/i18n.${ext}`);
 
 // All languages present in the file system
 	const files = await fs.readdir(inputFolder);

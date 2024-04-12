@@ -121,15 +121,15 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		await browser.keys(["Shift", "Tab"]);
 		await browser.keys("Space");
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		await browser.keys(["Shift", "Tab"]);
 		await browser.keys("Enter");
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(await step2.getAttribute("selected"), null,

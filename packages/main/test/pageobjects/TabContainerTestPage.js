@@ -1,9 +1,29 @@
 class TabContainerTestPage {
-	async getItemsIds(tabContainerId) {
-		const items = await browser.$$(`#${tabContainerId} > *`);
+	getItemsIds(tabContainerId) {
+		return browser.executeAsync((tabContainerId, done) => {
+			const tabContainer = document.getElementById(tabContainerId);
 
-		return Promise.all([...items].map(item => item.getAttribute("id")));
+			const buildTree = (el) => {
+				return el.items.map((item) => {
+					if (item.isSeparator) {
+						return {
+							id: item.id
+						};
+					}
+
+					return {
+						id: item.id,
+						items: buildTree(item)
+					}
+				});
+			}
+
+			buildTree(tabContainer);
+
+			done(buildTree(tabContainer));
+		}, tabContainerId)
 	}
+
 
 	async getDisplayedTabStripItems(tabContainerId) {
 		return browser.$(`#${tabContainerId}`).shadow$$(".ui5-tab-strip-item:not([start-overflow]):not([end-overflow])");

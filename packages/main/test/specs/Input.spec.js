@@ -367,7 +367,7 @@ describe("Input general interaction", () => {
 		await suggestionsInput.click();
 		await browser.keys("p");
 
-		assert.ok(await popover.getProperty("opened"), "suggestions are opened.");
+		assert.ok(await popover.getProperty("open"), "suggestions are opened.");
 
 		// This test is passing when the test is executed on browser that is NOT headless
 
@@ -376,7 +376,7 @@ describe("Input general interaction", () => {
 
 		// await item.click();
 
-		// assert.ok(!await popover.getProperty("opened"), "suggestions are closed");
+		// assert.ok(!await popover.getProperty("open"), "suggestions are closed");
 		// assert.strictEqual(await suggestionsInput.getValue(), "Portugal", "First item has been selected");
 		// assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
@@ -593,11 +593,14 @@ describe("Input general interaction", () => {
 
 		await inputShadowRef.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+		assert.ok(await popover.getProperty("open"), "Popover with valueStateMessage should be opened.");
 
 		await browser.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
+
+		// Close popover
+		await browser.keys("Escape");
 	});
 
 	it("Checks if valueStateMessage gets updated dynamically", async () => {
@@ -618,6 +621,10 @@ describe("Input general interaction", () => {
 		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
 
 		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
+
+		// Close popover
+		await browser.keys("Escape");
+		await browser.keys("Tab");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
@@ -647,6 +654,13 @@ describe("Input general interaction", () => {
 
 		assert.notOk(await innerInputWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
 		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
+	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+		const input = await browser.$("#myInput");
+		const innerInput = await input.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 	});
 
 	it("Value state type should be added to the screen readers default value states announcement", async () => {
@@ -901,7 +915,7 @@ describe("Input general interaction", () => {
 
 		await input.click();
 
-		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+		assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
 	});
 
 	it("Displays clear icon when typing and pressing it clears the value", async () => {
@@ -1555,7 +1569,7 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await browser.keys("a");
 
-		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("open"), {
 			timeout: 3000,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1577,7 +1591,7 @@ describe("Lazy loading", () => {
 
 		await browser.pause(3000);
 
-		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
+		assert.notOk(await respPopover.getProperty("open"), "Picker should not be open");
 	});
 
 	it("Should not close picker when items are updated", async () => {
@@ -1588,13 +1602,13 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await browser.keys("S");
 
-		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("open"), {
 			timeout: 2000,
 			timeoutMsg: "Popover should be displayed"
 		});
 
 		await browser.keys("b");
 
-		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Picker should not be open");
 	});
 });
