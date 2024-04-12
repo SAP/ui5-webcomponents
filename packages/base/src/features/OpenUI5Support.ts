@@ -7,7 +7,7 @@ import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormat
 type OpenUI5Popup = {
 	prototype: {
 		open: (...args: any[]) => void,
-		close: (...args: any[]) => void,
+		_closed: (...args: any[]) => void,
 		isOpen: () => boolean,
 		oContent: {
 			getDomRef: () => HTMLElement,
@@ -127,19 +127,21 @@ class OpenUI5Support {
 		const origOpen = Popup.prototype.open;
 		Popup.prototype.open = function (...args: any[]) {
 			origOpen.apply(this, args);
-			if (this.isOpen()) {
+			const topLayerUsed = !!document.body.querySelector(":popover-open"); // check if there is already something in the top layer
+			if (this.isOpen() && topLayerUsed) { // The open function was successful and the top layer is used - go on with the popover API
 				const el = this.oContent.getDomRef();
-				el.popover = "manual";
+				el.setAttribute("popover", "manual");
 				el.showPopover();
 			}
 		};
 
 		// 2. Patch close
-		const origClose = Popup.prototype.close;
-		Popup.prototype.close = function (...args: any[]) {
+		const origClose = Popup.prototype._closed;
+		Popup.prototype._closed = function (...args: any[]) {
 			origClose.apply(this, args);
-			if (!this.isOpen()) {
-				const el = this.oContent.getDomRef();
+			const el = this.oContent.getDomRef();
+			const popoverUsed = el?.hasAttribute("popover"); // check if this Popup was opened with the popover API
+			if (popoverUsed) {
 				el.hidePopover();
 				el.removeAttribute("popover");
 			}
