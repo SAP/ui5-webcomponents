@@ -30,7 +30,6 @@ import MenuItem from "./MenuItem.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
 import type {
 	ListItemClickEventDetail,
-	ListItemFocusEventDetail,
 } from "./List.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
@@ -51,11 +50,6 @@ type MenuItemClickEventDetail = {
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
-
-type MenuItemFocusEventDetail = {
-	ref: HTMLElement,
-	item: MenuItem,
-};
 
 /**
  * @class
