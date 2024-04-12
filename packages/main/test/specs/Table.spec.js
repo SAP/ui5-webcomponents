@@ -144,10 +144,10 @@ describe("Table general interaction", () => {
 			await input.click();
 			await browser.keys("Tab");
 
-			assert.equal(await btn.getProperty("focused"), true, "Button is focused")
+			assert.equal(await btn.matches(":focus"), true, "Button is focused")
 
 			await browser.keys("Tab");
-			assert.equal(await secondInput.getProperty("focused"), true, "Input is focused")
+			assert.equal(await secondInput.matches(":focus"), true, "Input is focused")
 
 			await browser.setWindowSize(1600, 1200);
 		});

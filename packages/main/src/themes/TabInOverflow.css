@@ -59,6 +59,7 @@
 	color: var(--_ui5_tc_overflowItem_current_color);
 }
 
+/*TODO checkout out how li is implemented */
 .ui5-tab-container-responsive-popover [ui5-li-custom][focused]::part(native-li)::after {
 	inset: var(--_ui5_tc_overflowItem_focus_offset);
 }

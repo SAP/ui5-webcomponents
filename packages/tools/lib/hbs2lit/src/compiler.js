@@ -17,10 +17,12 @@ const hbs2lit = async (file, componentName) => {
 
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
+	const blockSignature = process.env.UI5_TS ? `this: ${componentName}` : ""
+
 	// icons hack
 	if (sPreprocessed.startsWith("<g ") || sPreprocessed.startsWith("<g>")) {
 		return `
-		function block0 (this: ${componentName}) {
+		function block0 (${blockSignature}) {
 			return svg\`${sPreprocessed}\`
 		}`;
 	}

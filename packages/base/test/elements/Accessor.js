@@ -22,6 +22,9 @@ Accessor = __decorate([
         renderer: litRender,
     })
 ], Accessor);
+__decorate([
+    property({ type: String, defaultValue: undefined })
+], Accessor.prototype, "title", void 0);
 Accessor.define();
 export default Accessor;
 
@@ -36,16 +39,8 @@ import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRender
 	renderer: litRender,
 })
 class Accessor extends UI5Element {
-	storage: boolean = false;
-
-	@property()
-	set myProp(value: boolean) {
-		this.storage = value;
-	}
-
-	get myProp() {
-		return this.storage;
-	}
+	@property({ type: String, defaultValue: undefined})
+	title!: string;
 
 	render() {
 		return html`<div>${this.myProp}</div>`;

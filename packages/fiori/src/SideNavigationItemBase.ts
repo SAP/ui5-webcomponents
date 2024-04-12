@@ -1,5 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 
@@ -37,12 +40,14 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tooltip of the component.
+	 *
+	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
 	 * @default ""
-	 * @private
-	 * @since 1.0.0-rc.16
+	 * @public
+	 * @since 2.0
 	 */
 	@property()
-	title!: string;
+	tooltip!: string;
 
 	@property({ defaultValue: "-1", noAttribute: true })
 	forcedTabIndex!: string;
@@ -55,8 +60,14 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	_sideNavigation!: SideNavigation;
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	get _tooltip() {
-		return this.title || undefined;
+		return this.tooltip || undefined;
 	}
 
 	get classesArray() {

@@ -16,11 +16,11 @@
 	border-bottom: 0;
 }
 
-:host([busy]) {
+:host([loading]) {
 	opacity: 0.72;
 }
 
-:host([busy]) .ui5-list-busy-row {
+:host([loading]) .ui5-list-loading-row {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -29,7 +29,7 @@
 	outline: none;
 }
 
-:host([busy]) .ui5-list-busy-ind {
+:host([loading]) .ui5-list-loading-ind {
 	position: absolute;
 	top: 50%;
 	left: 50%;
