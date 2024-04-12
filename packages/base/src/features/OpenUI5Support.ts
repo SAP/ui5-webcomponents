@@ -4,11 +4,12 @@ import { setTheme } from "../config/Theme.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
 
+// The lifecycle is open -> _opened -> close -> _closed, we're interested in the first (open) and last (_closed)
 type OpenUI5Popup = {
 	prototype: {
 		open: (...args: any[]) => void,
 		_closed: (...args: any[]) => void,
-		isOpen: () => boolean,
+		getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING",
 		oContent: {
 			getDomRef: () => HTMLElement,
 		},
@@ -123,25 +124,28 @@ class OpenUI5Support {
 	}
 
 	static patchPopup(Popup: OpenUI5Popup) {
-		// 1. Patch open
+		// 1. Patch open (show the popover before all animations have started)
 		const origOpen = Popup.prototype.open;
 		Popup.prototype.open = function (...args: any[]) {
 			origOpen.apply(this, args);
-			const topLayerUsed = !!document.body.querySelector(":popover-open"); // check if there is already something in the top layer
-			if (this.isOpen() && topLayerUsed) { // The open function was successful and the top layer is used - go on with the popover API
+			const topLayerAlreadyInUse = !!document.body.querySelector(":popover-open"); // check if there is already something in the top layer
+			const openingInitiated = ["OPENING", "OPEN"].includes(this.getOpenState());
+			if (openingInitiated && topLayerAlreadyInUse) {
 				const el = this.oContent.getDomRef();
 				el.setAttribute("popover", "manual");
 				el.showPopover();
 			}
 		};
 
-		// 2. Patch close
-		const origClose = Popup.prototype._closed;
+		// 2. Patch _closed (hide the popover after all animations have ended)
+		const _origClosed = Popup.prototype._closed;
 		Popup.prototype._closed = function (...args: any[]) {
-			origClose.apply(this, args);
-			const el = this.oContent.getDomRef();
-			const popoverUsed = el?.hasAttribute("popover"); // check if this Popup was opened with the popover API
-			if (popoverUsed) {
+			_origClosed.apply(this, args);
+			const el = this.oContent?.getDomRef();
+			if (!el) {
+				return; // the popup was deleted from DOM, no need to unset the popover attribute and close it
+			}
+			if (el.hasAttribute("popover")) {
 				el.hidePopover();
 				el.removeAttribute("popover");
 			}
