@@ -1,19 +1,9 @@
+import patchPopup from "./patchPopup.js";
+import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
-
-// The lifecycle is open -> _opened -> close -> _closed, we're interested in the first (open) and last (_closed)
-type OpenUI5Popup = {
-	prototype: {
-		open: (...args: any[]) => void,
-		_closed: (...args: any[]) => void,
-		getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING",
-		oContent: {
-			getDomRef: () => HTMLElement,
-		},
-	}
-};
 
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
@@ -108,7 +98,7 @@ class OpenUI5Support {
 						];
 					}
 					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
-						OpenUI5Support.patchPopup(Popup);
+						patchPopup(Popup);
 						resolve();
 					});
 				};
@@ -120,40 +110,6 @@ class OpenUI5Support {
 				}
 			});
 		});
-	}
-
-	static patchPopup(Popup: OpenUI5Popup) {
-		// 1. Patch open (show the popover before all animations have started)
-		const origOpen = Popup.prototype.open;
-		Popup.prototype.open = function open(...args: any[]) {
-			origOpen.apply(this, args);
-			const topLayerAlreadyInUse = !!document.body.querySelector(":popover-open"); // check if there is already something in the top layer
-			const openingInitiated = ["OPENING", "OPEN"].includes(this.getOpenState());
-			if (openingInitiated && topLayerAlreadyInUse) {
-				const el = this.oContent.getDomRef();
-				el.setAttribute("popover", "manual");
-				el.showPopover();
-			}
-		};
-
-		// 2. Patch _closed (hide the popover after all animations have ended)
-		const _origClosed = Popup.prototype._closed;
-		Popup.prototype._closed = function _closed(...args: any[]) {
-			_origClosed.apply(this, args);
-			const el = this.oContent?.getDomRef();
-			if (!el) {
-				return; // the popup was deleted from DOM, no need to unset the popover attribute and close it
-			}
-			if (el.hasAttribute("popover")) {
-				el.hidePopover();
-				el.removeAttribute("popover");
-			}
-		};
-
-		// 3. Create the required CSS for the expected coordinate system
-		const stylesheet = new CSSStyleSheet();
-		stylesheet.replaceSync(`.sapMPopup-CTX:popover-open { inset: unset; }`);
-		document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 	}
 
 	static getConfigurationSettingsObject() {
