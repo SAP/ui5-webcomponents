@@ -51,7 +51,6 @@ import type { InputSuggestion, SuggestionComponent } from "./features/InputSugge
 import type InputSuggestions from "./features/InputSuggestions.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
-import type SuggestionListItem from "./SuggestionListItem.js";
 import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -93,11 +92,7 @@ import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 interface IInputSuggestionItem extends UI5Element {
 	text: string;
 	groupItem: boolean;
-	description?: string;
-	image?: string;
-	icon?: string;
 	additionalText?: string;
-	additionalTextState?: `${ValueState}`;
 	type?: `${ListItemType}`;
 }
 
@@ -142,7 +137,7 @@ type InputSuggestionItemSelectEventDetail = {
 
 type InputSuggestionItemPreviewEventDetail = {
 	item: IInputSuggestionItem;
-	targetRef: SuggestionListItem;
+	targetRef: SuggestionItem;
 }
 
 type InputSuggestionScrollEventDetail = {
@@ -244,6 +239,7 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 1.0.0-rc.8
  */
+
 @event<InputSuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 	detail: {
 		/**
@@ -588,7 +584,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
 	_performTextSelection?: boolean;
-	_previewItem?: SuggestionListItem;
+	_previewItem?: SuggestionItem;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -1288,7 +1284,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._forceOpen = false;
 	}
 
-	previewSuggestion(item: SuggestionListItem) {
+	previewSuggestion(item: SuggestionItem) {
 		this.valueBeforeItemSelection = this.value;
 		this.updateValueOnPreview(item);
 		this.announceSelectedItem();
@@ -1299,9 +1295,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Updates the input value on item preview.
 	 * @param item The item that is on preview
 	 */
-	updateValueOnPreview(item: SuggestionListItem) {
+	updateValueOnPreview(item: SuggestionItem) {
 		const noPreview = item.type === "Inactive" || item.groupItem;
-		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent || "");
+		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.textContent || "");
 
 		this.value = itemValue;
 		this._performTextSelection = true;
@@ -1383,7 +1379,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.getInputId();
 	}
 
-	getSuggestionByListItem(item: SuggestionListItem): IInputSuggestionItem {
+	getSuggestionByListItem(item: SuggestionItem): IInputSuggestionItem {
 		const key = parseInt(item.getAttribute("data-ui5-key")!);
 		return this.suggestionItems[key];
 	}
@@ -1407,7 +1403,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/* Suggestions interface  */
 	onItemMouseOver(e: MouseEvent) {
-		const item = e.target as SuggestionListItem;
+		const item = e.target as SuggestionItem;
 		const suggestion = this.getSuggestionByListItem(item);
 		suggestion && suggestion.fireEvent("mouseover", {
 			item: suggestion,
@@ -1416,7 +1412,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	onItemMouseOut(e: MouseEvent) {
-		const item = e.target as SuggestionListItem;
+		const item = e.target as SuggestionItem;
 		const suggestion = this.getSuggestionByListItem(item);
 		suggestion && suggestion.fireEvent("mouseout", {
 			item: suggestion,
@@ -1432,7 +1428,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.selectSuggestion(item, keyboardUsed);
 	}
 
-	onItemPreviewed(item: SuggestionListItem) {
+	onItemPreviewed(item: SuggestionItem) {
 		this.previewSuggestion(item);
 		this.fireEvent<InputSuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 			item: this.getSuggestionByListItem(item),

@@ -6,7 +6,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // @ts-ignore
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
@@ -16,7 +15,6 @@ import Button from "../Button.js";
 import Icon from "../Icon.js";
 import Popover from "../Popover.js";
 import GroupHeaderListItem from "../GroupHeaderListItem.js";
-import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -38,17 +36,13 @@ interface SuggestionComponent extends UI5Element {
 	onItemMouseOver: (e: MouseEvent) => void;
 	onItemMouseOut: (e: MouseEvent) => void;
 	onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
-	onItemPreviewed: (item: SuggestionListItem) => void;
+	onItemPreviewed: (item: SuggestionItem) => void;
 }
 
 type InputSuggestion = {
 	text: string;
-	description?: string;
-	image?: string;
-	icon?: string;
 	type?: `${ListItemType}`;
 	additionalText?: string;
-	additionalTextState?: `${ValueState}`;
 	groupItem: boolean;
 	key: number;
 }
@@ -58,7 +52,6 @@ type SuggestionsAccInfo = {
 	currentPos: number;
 	listSize: number;
 	itemText: string;
-	description: string;
 	additionalText: string;
 }
 
@@ -118,16 +111,11 @@ class Suggestions {
 
 		inputSuggestionItems.map((suggestion: IInputSuggestionItem, idx: number) => {
 			const text = highlight ? this.getHighlightedText(suggestion, hightlightValue) : this.getRowText(suggestion);
-			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
 
 			return suggestions.push({
 				text,
-				description,
-				image: suggestion.image || undefined,
-				icon: suggestion.icon || undefined,
 				type: suggestion.type || undefined,
 				additionalText: suggestion.additionalText || undefined,
-				additionalTextState: suggestion.additionalTextState,
 				groupItem: suggestion.groupItem,
 				key: idx,
 			});
@@ -284,7 +272,7 @@ class Suggestions {
 		this._getComponent().onItemMouseOut(e);
 	}
 
-	onItemSelected(selectedItem: SuggestionListItem | null, keyboardUsed: boolean) {
+	onItemSelected(selectedItem: SuggestionItem | null, keyboardUsed: boolean) {
 		const allItems = this._getItems();
 		const item = selectedItem || allItems[this.selectedItemIndex];
 		const nonGroupItems = this._getNonGroupItems();
@@ -296,7 +284,6 @@ class Suggestions {
 			currentPos: nonGroupItems.indexOf(item) + 1,
 			listSize: nonGroupItems.length,
 			itemText: this._getRealItems()[this.selectedItemIndex].text,
-			description: this._getRealItems()[this.selectedItemIndex].description,
 			additionalText: this._getRealItems()[this.selectedItemIndex].additionalText,
 		};
 
@@ -312,14 +299,14 @@ class Suggestions {
 		this._getComponent().open = false;
 	}
 
-	onItemPreviewed(item: SuggestionListItem) {
+	onItemPreviewed(item: SuggestionItem) {
 		this._getComponent().onItemPreviewed(item);
 	}
 
 	/* Private methods */
 	// Note: Split into two separate handlers
 	onItemPress(e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>) {
-		let pressedItem: ListItemBase; // SuggestionListItem
+		let pressedItem: ListItemBase; // SuggestionItem
 		const isPressEvent = e.type === "ui5-item-click";
 
 		// Only use the press e if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
@@ -335,7 +322,7 @@ class Suggestions {
 			pressedItem = (e.detail as ListSelectionChangeEventDetail).selectedItems[0];
 		}
 
-		this.onItemSelected(pressedItem as SuggestionListItem, false /* keyboardUsed */);
+		this.onItemSelected(pressedItem as SuggestionItem, false /* keyboardUsed */);
 	}
 
 	_beforeOpen() {
@@ -494,7 +481,6 @@ class Suggestions {
 			currentPos: nonGroupItems.indexOf(currentItem) + 1,
 			listSize: nonGroupItems.length,
 			itemText: this._getRealItems()[this.selectedItemIndex].text,
-			description: this._getRealItems()[items.indexOf(currentItem)].description,
 			additionalText: this._getRealItems()[items.indexOf(currentItem)].additionalText,
 		};
 
@@ -539,7 +525,7 @@ class Suggestions {
 		}
 	}
 
-	_isItemIntoView(item: SuggestionListItem) {
+	_isItemIntoView(item: SuggestionItem) {
 		const rectItem = item.getDomRef()!.getBoundingClientRect();
 		const rectInput = this._getComponent().getDomRef()!.getBoundingClientRect();
 		const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
@@ -547,7 +533,7 @@ class Suggestions {
 		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
 	}
 
-	async _scrollItemIntoView(item: SuggestionListItem) {
+	async _scrollItemIntoView(item: SuggestionItem) {
 		const pos = item.getDomRef()!.offsetTop;
 		const scrollContainer = await this._getScrollContainer();
 		scrollContainer.scrollTop = pos;
@@ -562,11 +548,11 @@ class Suggestions {
 		return this._scrollContainer;
 	}
 
-	_getItems(): Array<SuggestionListItem> {
-		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [];
+	_getItems(): Array<SuggestionItem> {
+		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionItem> : [];
 	}
 
-	_getNonGroupItems(): Array<SuggestionListItem> {
+	_getNonGroupItems(): Array<SuggestionItem> {
 		return this._getItems().filter(item => !item.groupItem);
 	}
 
@@ -606,24 +592,15 @@ class Suggestions {
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 		const groupItemText = Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
+		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.additionalText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion: IInputSuggestionItem) {
 		return this.sanitizeText(suggestion.text || suggestion.textContent || "");
 	}
 
-	getRowDesc(suggestion: IInputSuggestionItem) {
-		return this.sanitizeText(suggestion.description || "");
-	}
-
 	getHighlightedText(suggestion: IInputSuggestionItem, input: string) {
 		const text = suggestion.text || suggestion.textContent || "";
-		return this.hightlightInput(text, input);
-	}
-
-	getHighlightedDesc(suggestion: IInputSuggestionItem, input: string) {
-		const text = suggestion.description || "";
 		return this.hightlightInput(text, input);
 	}
 
@@ -664,7 +641,7 @@ class Suggestions {
 			SuggestionGroupItem,
 			ResponsivePopover,
 			List,
-			SuggestionListItem,
+			SuggestionItem,
 			GroupHeaderListItem,
 			Button,
 			Icon,
