@@ -1701,7 +1701,7 @@ describe("MultiComboBox general interaction", () => {
 			const cb = await $("#clear-icon-cb");
 
 			await cb.shadow$("input").click();
-			await cb.shadow$("input").keys("c");
+			await browser.keys("c");
 
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
 

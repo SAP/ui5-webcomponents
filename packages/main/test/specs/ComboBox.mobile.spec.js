@@ -112,10 +112,11 @@ describe("Eventing", () => {
 		await combo.scrollIntoView();
 		await combo.click();
 
-		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
+		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]").shadow$("input");
 		const closeButton = await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-close-btn");
 
-		await dialogInput.shadow$("input").keys("A");
+		await dialogInput.cick();
+		await browser.keys("A");
 		await closeButton.click();
 
 		assert.notOk(await combo.getAttribute("value"), "The combo box does not have value attribute");
@@ -135,8 +136,9 @@ describe("Eventing", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogOkButton = await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
 
+		await dialogInput.click();
 		await dialogInput.setProperty("value", "");
-		await dialogInput.shadow$("input").keys("A");
+		await browser.keys("A");
 		await dialogOkButton.click();
 
 		assert.strictEqual(await combo.getAttribute("value"), "Argentina", "The combo box have correct value attribute");
@@ -156,24 +158,25 @@ describe("Eventing", () => {
 		await cb.click();
 
 		const resPopover = await cb.shadow$("ui5-responsive-popover");
-		const dialogInput = await resPopover.$("[ui5-input]");
+		const dialogInput = await resPopover.$("[ui5-input]").shadow$("input");
 		const okBtn = await resPopover.$(".ui5-responsive-popover-footer").$("ui5-button");
 
-		await dialogInput.shadow$("input").click();
+		await dialogInput.click();
 		await dialogInput.setProperty("value", '');
-		await dialogInput.shadow$("input").keys('A');
+		await browser.keys('A');
 		await okBtn.click();
 
 		assert.strictEqual(await cb.getProperty("value"), "Algeria", "Value should be Algeria.");
 
+		await dialogInput.click();
 		await cb.click();
-		await dialogInput.shadow$("input").keys('Backspace');
-		await dialogInput.shadow$("input").keys('Backspace');
-		await dialogInput.shadow$("input").keys('Backspace');
-		await dialogInput.shadow$("input").keys('Backspace');
-		await dialogInput.shadow$("input").keys('Backspace');
-		await dialogInput.shadow$("input").keys('Backspace');
-		await dialogInput.shadow$("input").keys('Backspace');
+		await browser.keys('Backspace');
+		await browser.keys('Backspace');
+		await browser.keys('Backspace');
+		await browser.keys('Backspace');
+		await browser.keys('Backspace');
+		await browser.keys('Backspace');
+		await browser.keys('Backspace');
 		await okBtn.click();
 
 		assert.strictEqual(await cb.getProperty("value"), "", "Value should be empty.");

@@ -821,8 +821,8 @@ describe("Input general interaction", () => {
 	it("Suggestions count should be read out when necessary", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const inputDynamicSuggestions = await $("#inputCompact");
-		const inputSuggestions = await $("#myInput2");
+		const inputDynamicSuggestions = await browser.$("#inputCompact");
+		const inputSuggestions = await browser.$("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
 		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
 		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
@@ -845,7 +845,7 @@ describe("Input general interaction", () => {
 
 		//act
 		await inputSuggestions.click();
-		await (await inputSuggestions.shadow$("input")).keys("c");
+		await browser.keys("c");
 
 		//assert
 		assert.strictEqual(await suggestionsCount.getText(), "5 results are available", "Suggestions count is available since the suggestions popover is opened");
@@ -854,8 +854,8 @@ describe("Input general interaction", () => {
 	it("Suggestions announcement", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const inputWithGroups = await $("#inputCompact");
-		const inputSuggestions = await $("#myInput2");
+		const inputWithGroups = await browser.$("#inputCompact");
+		const inputSuggestions = await browser.$("#myInput2");
 		const inputWithGroupsInnerInput = await inputWithGroups.shadow$("input");
 		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#${await inputWithGroups.getProperty("_id")}-selectionText`);
 		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-selectionText`);
@@ -888,7 +888,7 @@ describe("Input general interaction", () => {
 
 		//act
 		await inputSuggestions.click();
-		await (await inputSuggestions.shadow$("input")).keys("c");
+		await browser.keys("c");
 		await browser.keys("ArrowDown");
 
 		//assert
