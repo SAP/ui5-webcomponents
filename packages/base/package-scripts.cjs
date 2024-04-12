@@ -41,7 +41,7 @@ const scripts = {
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
 	// these files are ignored in TS because the import in UI5Elments tries to load them from the dist and throws an error. create them empty here
-	generateSsrDom: `touch dist/ssr-dom.js dist/ssr-dom.d.ts`,
+	generateSsrDom: `yarn nodetouch dist/ssr-dom.js dist/ssr-dom.d.ts`,
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
 		default: "nps generateAPI.generateCEM generateAPI.validateCEM",
