@@ -28,6 +28,9 @@
 	<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
 	<br>
 	<br>
+	<ui5-button id="btnOpenDialogWithInput">Open Dialog with Input</ui5-button>
+	<br>
+	<br>
 	<ui5-button id="btnOpenDialog">Open Stretched Dialog</ui5-button>
 	<br>
 	<br>
@@ -73,6 +76,13 @@
 	<ui5-button id="multiple-show">Open dialog calling show() multiple times</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
+
+	<ui5-dialog id="dialogInput" header-text="Dialog">
+		<ui5-input></ui5-input>
+		<div slot="footer" class="dialogFooter">
+			<ui5-button design="Emphasized" id="btnCloseDialogWithInput">Close</ui5-button>
+		</div>
+	</ui5-dialog>
 
 	<ui5-dialog id="msg-dialog" header-text="Message dialog" class="dialog1auto">
 		<p>Build enterprise-ready web applications, responsive to all devices and running on the browser of your choice.
@@ -132,6 +142,7 @@
 	</ui5-dialog>
 
 	<ui5-dialog id="dlgAttr">
+		<ui5-input></ui5-input>
 		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
 		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-dialog>
@@ -575,7 +586,7 @@
 		<ui5-button id="fistButtonInDialog">Confirm</ui5-button>
 
 		<div slot="header">Header text</div>
-	
+
 		<div slot="footer" class="dialog-footer">
 			<div style="flex: 1"></div>
 			<ui5-button id="closeDialogFocusButton" design="Emphasized">Close</ui5-button>
@@ -584,7 +595,7 @@
 	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
-		<ui5-list id="listContainerId" mode="SingleSelect">
+		<ui5-list id="listContainerId" selection-mode="Single">
 			<ui5-li>Test1</ui5-li>
 			<ui5-li id="listContainerItemId">Test2</ui5-li>
 			<ui5-li>Test3</ui5-li>
@@ -626,6 +637,14 @@
 
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.show();
+		});
+
+		btnOpenDialogWithInput.addEventListener("click", function () {
+			dialogInput.show();
+		});
+
+		btnCloseDialogWithInput.addEventListener("click", function () {
+			dialogInput.close();
 		});
 
 		const focusCirBtn = document.getElementById("btn-focus-circ");

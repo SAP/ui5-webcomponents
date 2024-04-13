@@ -490,7 +490,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
-		if (!this._getRespPopover().opened) {
+		if (!this._getRespPopover().open) {
 			return;
 		}
 
@@ -718,7 +718,7 @@ class MultiComboBox extends UI5Element {
 
 		// CTRL + Arrow Down navigation is performed by the ItemNavigation module of the List,
 		// here we only implement the text selection of the selected item
-		if (isArrowDownCtrl && !this._getRespPopover().opened) {
+		if (isArrowDownCtrl && !this._getRespPopover().open) {
 			setTimeout(() => this._inputDom.setSelectionRange(0, this._inputDom.value.length), 0);
 		}
 
@@ -1050,7 +1050,7 @@ class MultiComboBox extends UI5Element {
 	_handleArrowNavigation(e: KeyboardEvent, isDownControl: boolean) {
 		const isArrowDown = isDownControl || isDown(e);
 		const hasSuggestions = this.items.length;
-		const isOpen = this._getRespPopover().opened;
+		const isOpen = this._getRespPopover().open;
 
 		e.preventDefault();
 
@@ -1081,7 +1081,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _handleArrowDown() {
-		const isOpen = this._getRespPopover().opened;
+		const isOpen = this._getRespPopover().open;
 		const firstListItem = this.list?.items[0];
 
 		if (isOpen) {
@@ -1541,7 +1541,7 @@ class MultiComboBox extends UI5Element {
 		this._tokenizer._handleResize();
 		this._tokenizer.preventInitialFocus = true;
 
-		if (this._getRespPopover()?.opened) {
+		if (this._getRespPopover()?.open) {
 			this._tokenizer.expanded = true;
 		}
 
@@ -1704,7 +1704,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	get selectedItemsListMode() {
-		return this.readonly ? "None" : "MultiSelect";
+		return this.readonly ? "None" : "Multiple";
 	}
 
 	get _listItemsType() {
@@ -1830,7 +1830,7 @@ class MultiComboBox extends UI5Element {
 
 	get _innerInput(): HTMLInputElement {
 		if (isPhone()) {
-			if (this._getRespPopover()?.opened) {
+			if (this._getRespPopover()?.open) {
 				return this._getRespPopover().querySelector("ui5-input")!.shadowRoot!.querySelector("input")!;
 			}
 		}

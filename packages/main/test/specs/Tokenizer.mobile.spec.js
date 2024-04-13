@@ -14,7 +14,8 @@ describe("Tokenizer general interaction", () => {
 
 		const nMoreDialog = await tokenizer.shadow$("ui5-responsive-popover");
 
-		assert.ok(await nMoreDialog.getProperty("opened"), "More Popover should be open");
+		assert.ok(await nMoreDialog.getProperty("open"), "More Popover should be open");
+		assert.ok(await nMoreDialog.$(".ui5-valuestatemessage--warning").isDisplayed(), "More Popover value state is shown");
 		assert.ok(await nMoreDialog.$(".ui5-responsive-popover-header .ui5-responsive-popover-close-btn").isDisplayed(), "More Popover close button is shown");
 		assert.ok(await nMoreDialog.$(".ui5-responsive-popover-footer ui5-button").isDisplayed(), "More Popover OK button is shown");
 	});

@@ -43,7 +43,7 @@ import {
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
@@ -978,10 +978,10 @@ class Tokenizer extends UI5Element {
 
 	get _nMoreListMode() {
 		if (this.readonly || this.disabled) {
-			return ListMode.None;
+			return ListSelectionMode.None;
 		}
 
-		return ListMode.Delete;
+		return ListSelectionMode.Delete;
 	}
 
 	get styles() {

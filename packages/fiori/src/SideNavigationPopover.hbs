@@ -47,7 +47,7 @@
 		>
 			<ui5-side-navigation-item
 				text="{{_popoverContents.item.text}}"
-				title="{{_popoverContents.item.title}}"
+				tooltip="{{_popoverContents.item._tooltip}}"
 				href="{{_popoverContents.item._href}}"
 				target="{{_popoverContents.item._target}}"
 				?disabled="{{_popoverContents.item.disabled}}"
@@ -60,7 +60,7 @@
 			{{#each _popoverContents.subItems}}
 				<ui5-side-navigation-sub-item
 					text="{{this.text}}"
-					title="{{this.title}}"
+					tooltip="{{this._tooltip}}"
 					href="{{this._href}}"
 					target="{{this._target}}"
 					?disabled="{{this.disabled}}"
