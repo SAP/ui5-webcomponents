@@ -85,7 +85,6 @@ import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
 import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
-import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
 import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
@@ -100,6 +99,7 @@ import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
 import Badge from "./Badge.js";
+import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
@@ -153,6 +153,7 @@ import MessageStrip from "./MessageStrip.js";
 import MultiComboBox from "./MultiComboBox.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import RatingIndicator from "./RatingIndicator.js";
+import Text from "./Text.js";
 import TabContainer from "./TabContainer.js";
 import Tab from "./Tab.js";
 import TabSeparator from "./TabSeparator.js";
@@ -197,11 +198,6 @@ window.sanitizeHTML = sanitizeHTML;
 window.URLListValidator = URLListValidator;
 ignoreCustomElements("app-");
 ignoreCustomElements("my-");
-// setUseLinks(true); // "true" to force all browsers to use links
-// setPackageCSSRoot("@ui5/webcomponents-base", "./resources/css/base/");
-// setPackageCSSRoot("@ui5/webcomponents-theming", "./resources/css/theming/");
-// setPackageCSSRoot("@ui5/webcomponents", "./resources/css/main/");
-// setPackageCSSRoot("@ui5/webcomponents-fiori", "./resources/css/fiori/");
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 

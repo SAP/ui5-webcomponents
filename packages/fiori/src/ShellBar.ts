@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -9,7 +10,6 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
@@ -17,6 +17,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
@@ -28,11 +29,11 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
-import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
 
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
@@ -152,7 +153,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * ### Keyboard Handling
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -171,11 +172,10 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 	languageAware: true,
 	renderer: litRender,
 	template: ShellBarTemplate,
-	staticAreaTemplate: ShellBarPopoverTemplate,
-	styles: shellBarStyles,
-	staticAreaStyles: [ShellBarPopoverCss],
+	styles: [shellBarStyles, ShellBarPopoverCss],
 	dependencies: [
 		Button,
+		Icon,
 		List,
 		Popover,
 		StandardListItem,
@@ -425,7 +425,7 @@ class ShellBar extends UI5Element {
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
 	@property({ type: Object, multiple: true })
-	_menuPopoverItems!: Array<HTMLElement>;
+	_menuPopoverItems: Array<HTMLElement>;
 
 	@property({ type: Boolean, noAttribute: true })
 	_menuPopoverExpanded!: boolean;
@@ -517,9 +517,9 @@ class ShellBar extends UI5Element {
 	coPilot?: ShellBarCoPilot;
 	_coPilotIcon: string;
 	_debounceInterval?: Timeout | null;
-	_hiddenIcons?: Array<IShelBarItemInfo>;
+	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
-	_headerPress: () => Promise<void>;
+	_headerPress: () => void;
 
 	static get CO_PILOT_ICON_PRESSED() {
 		return "sap-icon://da-2";
@@ -552,6 +552,8 @@ class ShellBar extends UI5Element {
 	constructor() {
 		super();
 
+		this._menuPopoverItems = [];
+		this._hiddenIcons = [];
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
 		this._coPilotIcon = ShellBar.CO_PILOT_ICON_UNPRESSED;
@@ -563,19 +565,20 @@ class ShellBar extends UI5Element {
 			this._updateClonedMenuItems();
 		});
 
-		this._headerPress = async () => {
+		this._headerPress = () => {
 			this._updateClonedMenuItems();
 
 			if (this.hasMenuItems) {
-				const menuPopover = await this._getMenuPopover();
-				menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+				const menuPopover = this._getMenuPopover();
+				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
 			}
 		};
 
 		this._handleResize = () => {
-			this._debounce(async () => {
-				await this._getResponsivePopover();
-				this.overflowPopover!.close();
+			this._debounce(() => {
+				this.menuPopover = this._getMenuPopover();
+				this.overflowPopover = this._getOverflowPopover();
+				this.overflowPopover.close();
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
@@ -587,7 +590,7 @@ class ShellBar extends UI5Element {
 		this._coPilotPressed = !this._coPilotPressed;
 	}
 
-	_debounce(fn: () => Promise<void>, delay: number) {
+	_debounce(fn: () => void, delay: number) {
 		clearTimeout(this._debounceInterval!);
 		this._debounceInterval = setTimeout(() => {
 			this._debounceInterval = null;
@@ -790,10 +793,10 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(newItems);
 	}
 
-	async _toggleActionPopover() {
+	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
-		const overflowPopover = await this._getOverflowPopover();
-		overflowPopover!.showAt(overflowButton, true);
+		const overflowPopover = this._getOverflowPopover();
+		overflowPopover.showAt(overflowButton, true);
 	}
 
 	onEnterDOM() {
@@ -1102,20 +1105,12 @@ class ShellBar extends UI5Element {
 		});
 	}
 
-	async _getResponsivePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.overflowPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
-		this.menuPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
+	_getOverflowPopover() {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-overflow-popover")!;
 	}
 
-	async _getOverflowPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
-	}
-
-	async _getMenuPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
+	_getMenuPopover() {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-menu-popover")!;
 	}
 
 	isIconHidden(name: string) {
@@ -1150,6 +1145,7 @@ class ShellBar extends UI5Element {
 				},
 				copilot: {
 					"ui5-shellbar-hidden-button": this.isIconHidden(this._coPilotIcon),
+					"ui5-shellbar-coPilot-pressed": this._coPilotPressed,
 				},
 				overflow: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("overflow"),
@@ -1208,8 +1204,8 @@ class ShellBar extends UI5Element {
 		return this.primaryTitle || this.showLogoInMenuButton;
 	}
 
-	get popoverHorizontalAlign() {
-		return this.effectiveDir === "rtl" ? "Left" : "Right";
+	get popoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir === "rtl" ? "Start" : "End";
 	}
 
 	get hasSearchField() {

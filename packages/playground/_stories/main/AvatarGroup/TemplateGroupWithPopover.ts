@@ -8,7 +8,7 @@ export default () => {
             header-text="My people"
             class="peoplePopover"
             style="width: 400px"
-            placement-type="Bottom"
+            placement="Bottom"
         >
             <div
                 class="placeholder"

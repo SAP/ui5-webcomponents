@@ -2,11 +2,12 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import "@ui5/webcomponents-icons/dist/arrow-right.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
 
 // Styles
-import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
+import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.css.js";
 
 /**
  * @class
@@ -29,7 +30,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
 	tag: "ui5-side-navigation-sub-item",
 	renderer: litRender,
 	template: SideNavigationSubItemTemplate,
-	styles: SideNavigationItemCss,
+	styles: SideNavigationSubItemCss,
 	dependencies: [
 		Icon,
 	],

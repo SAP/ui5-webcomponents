@@ -1,8 +1,8 @@
 <ui5-responsive-popover
 	id="{{_id}}-responsive-popover"
 	allow-target-overlap
-	placement-type="Bottom"
-	horizontal-align="Left"
+	placement="Bottom"
+	horizontal-align="Start"
 	hide-arrow
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
@@ -44,7 +44,7 @@
 		.selectionMode="{{_calendarSelectionMode}}"
 		.minDate="{{minDate}}"
 		.maxDate="{{maxDate}}"
-		@ui5-selected-dates-change="{{onSelectedDatesChange}}"
+		@ui5-selection-change="{{onSelectedDatesChange}}"
 		@ui5-show-month-press="{{onHeaderShowMonthPress}}"
 		@ui5-show-year-press="{{onHeaderShowYearPress}}"
 		?hide-week-numbers="{{hideWeekNumbers}}"

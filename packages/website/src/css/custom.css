@@ -148,6 +148,10 @@
   fill: var(--ifm-navbar-link-hover-color);
 }
 
+.dropdown__link svg {
+  display: none;
+}
+
 code {
   overflow-wrap: anywhere;
 }
@@ -188,4 +192,21 @@ code {
   .navbar__search-input {
     width: 8rem;
   }
+}
+
+.newComponentBadge {
+  position: relative;
+}
+
+.newComponentBadge:after {
+  content: "New";
+  color: #fff;
+  background: #334eff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
 }

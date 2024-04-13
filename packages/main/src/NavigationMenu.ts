@@ -3,8 +3,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isDesktop,
-	isPhone,
-	isTablet,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
@@ -12,11 +10,11 @@ import type { MenuItemClickEventDetail } from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
-import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
+import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
-import staticAreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import navigationMenuCss from "./generated/themes/NavigationMenu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
@@ -47,8 +45,8 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 @customElement({
 	tag: "ui5-navigation-menu",
 	renderer: litRender,
-	staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: [menuCss, navigationMenuCss],
+	template: menuTemplate,
 })
 
 class NavigationMenu extends Menu {
@@ -60,6 +58,10 @@ class NavigationMenu extends Menu {
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
+
+	_isMenu(element: HTMLElement) {
+		return element.hasAttribute("ui5-navigation-menu");
+	}
 
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
@@ -118,14 +120,9 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		if (isPhone()) {
-			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item);
-		} else if (isTablet()) {
-			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener);
-		}
+		this._prepareSubMenu(item, opener);
 	}
+
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
