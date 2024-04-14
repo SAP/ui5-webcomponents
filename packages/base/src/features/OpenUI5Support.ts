@@ -1,13 +1,7 @@
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
-import { getCurrentZIndex } from "../util/PopupUtils.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
-
-type OpenUI5Popup = {
-	setInitialZIndex: (zIndex: number) => void,
-	getNextZIndex: () => number,
-};
 
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
@@ -90,7 +84,7 @@ class OpenUI5Support {
 		return new Promise<void>(resolve => {
 			window.sap.ui.require(["sap/ui/core/Core"], async (Core: OpenUI5Core) => {
 				const callback = () => {
-					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
+					let deps: Array<string> = ["sap/ui/core/LocaleData"];
 					if (OpenUI5Support.isAtLeastVersion116()) { // for versions since 1.116.0 and onward, use the modular core
 						deps = [
 							...deps,
@@ -101,10 +95,7 @@ class OpenUI5Support {
 							"sap/ui/core/date/CalendarUtils",
 						];
 					}
-					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
-						Popup.setInitialZIndex(getCurrentZIndex());
-						resolve();
-					});
+					window.sap.ui.require(deps, resolve);
 				};
 				if (OpenUI5Support.isAtLeastVersion116()) {
 					await Core.ready();
@@ -214,29 +205,6 @@ class OpenUI5Support {
 		}
 
 		return !!link.href.match(/\/css(-|_)variables\.css/);
-	}
-
-	static getNextZIndex() {
-		if (!OpenUI5Support.isOpenUI5Detected()) {
-			return;
-		}
-
-		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
-
-		if (!Popup) {
-			console.warn(`The OpenUI5Support feature hasn't been initialized properly. Make sure you import the "@ui5/webcomponents-base/dist/features/OpenUI5Support.js" module before all components' modules.`); // eslint-disable-line
-		}
-
-		return Popup.getNextZIndex();
-	}
-
-	static setInitialZIndex() {
-		if (!OpenUI5Support.isOpenUI5Detected()) {
-			return;
-		}
-
-		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
-		Popup.setInitialZIndex(getCurrentZIndex());
 	}
 }
 

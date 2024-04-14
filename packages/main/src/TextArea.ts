@@ -16,13 +16,13 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
@@ -77,11 +77,9 @@ type ExceededText = {
 @customElement({
 	tag: "ui5-textarea",
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles],
+	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
 	renderer: litRender,
 	template: TextAreaTemplate,
-	staticAreaTemplate: TextAreaPopoverTemplate,
-	staticAreaStyles: valueStateMessageStyles,
 	dependencies: [Popover, Icon],
 })
 /**
@@ -290,7 +288,8 @@ class TextArea extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 *
+	 * The value state message slot should contain only one root element.
+   	 *
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed if the component has
@@ -463,18 +462,17 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	async openPopover() {
-		this.valueStatePopover = await this._getPopover();
+		this.valueStatePopover = this._getPopover();
 		this.valueStatePopover && await this.valueStatePopover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
 	}
 
-	async closePopover() {
-		this.valueStatePopover = await this._getPopover();
+	closePopover() {
+		this.valueStatePopover = this._getPopover();
 		this.valueStatePopover && this.valueStatePopover.close();
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
+	_getPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_tokenizeText(value: string) {
@@ -617,8 +615,8 @@ class TextArea extends UI5Element implements IFormElement {
 		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
-	get _valueStatePopoverHorizontalAlign() {
-		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir !== "rtl" ? "Start" : "End";
 	}
 
 	/**

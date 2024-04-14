@@ -235,12 +235,11 @@ exports.config = {
 			}, this, attrName);
 		}, true);
 
-		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
-			return browser.executeAsync(async (selector, done) => {
-				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				done(staticAreaItem.host.classList[0]);
-			}, selector);
-		}, false);
+		await browser.addCommand("matches", async function(selector) {
+			return browser.executeAsync((elem, selector, done) => {
+				done(elem.matches(selector));
+			}, this, selector);
+		}, true);
 
 		await browser.addLocatorStrategy('activeElement', (selector) => {
 			return document.querySelector(selector).shadowRoot.activeElement;
@@ -257,11 +256,11 @@ exports.config = {
 			"$$",
 			"getAttribute",
 			"hasAttribute", // custom
+			"matches", // custom
 			"getCSSProperty",
 			"getHTML",
 			"getProperty",
 			"getSize",
-			"getStaticAreaItemClassName", // custom
 			"getText",
 			"getValue",
 			"hasClass", // custom
@@ -273,7 +272,7 @@ exports.config = {
 			"isFocusedDeep", // custom
 			"isFocusedDeepElement", // custom
 			"shadow$",
-			"shadow$$",
+			"shadow$$"
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
