@@ -367,7 +367,7 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	get _displayValue() {
-		if ((this.value === 0) || (Number.isInteger(this.value) && !this.valuePrecision)) {
+		if ((this.value === 0) || (Number.isInteger(this.value))) {
 			return this.value.toFixed(this.valuePrecision);
 		}
 
@@ -455,7 +455,7 @@ class StepInput extends UI5Element implements IFormElement {
 	_updateValueState() {
 		const isWithinRange = (this.min === undefined || Number(this.input.value) >= this.min)
 							  && (this.max === undefined || Number(this.input.value) <= this.max);
-		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision();
+		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision;
 		const previousValueState = this.valueState;
 		const isValid = isWithinRange && isValueWithCorrectPrecision;
 
@@ -530,14 +530,13 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
-	_isValueWithCorrectPrecision() {
+	get _isValueWithCorrectPrecision() {
 		// gets either "." or "," as delimiter which is based on locale, and splits the number by it
 		const delimiter = this.input.value.includes(".") ? "." : ",";
 		const numberParts = this.input.value.split(delimiter);
 		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
-		const isValueWithCorrectPrecision = decimalPartLength === this.valuePrecision;
 
-		return isValueWithCorrectPrecision;
+		return decimalPartLength === this.valuePrecision;
 	}
 
 	_onInputChange() {
@@ -558,7 +557,7 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	_isValueChanged(inputValue: number) {
-		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision();
+		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision;
 		// Treat values as distinct when modified to match a specific precision (e.g., from 3.4000 to 3.40),
 		// even if JavaScript sees them as equal, to correctly update valueState based on expected valuePrecision.
 		const isPrecisionCorrectButValueStateError = isValueWithCorrectPrecision && this.valueState === ValueState.Error;
