@@ -1,13 +1,20 @@
 <ui5-responsive-popover
 	id="{{_id}}-overflowMenu"
-	horizontal-align="Right"
-	placement-type="Bottom"
+	horizontal-align="End"
+	placement="Bottom"
 	content-only-on-desktop
 	hide-arrow
 	_hide-header
 	class="ui5-tab-container-responsive-popover"
+	@dragstart="{{_onDragStart}}"
 >
-	<ui5-list mode="SingleSelect" separators="None" @ui5-item-click="{{_onOverflowListItemClick}}">
+	<ui5-list
+		selection-mode="Single"
+		separators="None"
+		@ui5-item-click="{{_onOverflowListItemClick}}"
+		@ui5-move-over="{{_onPopoverListMoveOver}}"
+		@ui5-move="{{_onPopoverListMove}}"
+	>
 		{{#each _popoverItemsFlat}}
 			{{overflowPresentation}}
 		{{/each}}
@@ -15,7 +22,7 @@
 	<div slot="footer" class="ui5-responsive-popover-footer">
 		<ui5-button
 			design="Transparent"
-			@click="{{_closeRespPopover}}"
+			@click="{{_closePopover}}"
 		>{{popoverCancelButtonText}}</ui5-button>
 	</div>
 </ui5-responsive-popover>

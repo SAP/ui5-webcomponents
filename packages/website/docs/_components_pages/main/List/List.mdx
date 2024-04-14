@@ -1,0 +1,51 @@
+---
+slug: ../../List
+---
+
+import Basic from "../../../_samples/main/List/Basic/Basic.md";
+import Growing from "../../../_samples/main/List/Growing/Growing.md";
+import GrowingOnButtonPress from "../../../_samples/main/List/GrowingOnButtonPress/GrowingOnButtonPress.md";
+import Modes from "../../../_samples/main/List/Modes/Modes.md";
+import NoData from "../../../_samples/main/List/NoData/NoData.md";
+import GroupHeaders from "../../../_samples/main/List/GroupHeaders/GroupHeaders.md";
+import SeparationTypes from "../../../_samples/main/List/SeparationTypes/SeparationTypes.md";
+
+<%COMPONENT_OVERVIEW%>
+
+## Basic Sample
+<Basic />
+
+<%COMPONENT_METADATA%>
+
+## More Samples
+
+### Growing On Scroll
+The List fires an <b>load-more</b> event when the user scrolls to the bottom.
+The event can be used for loading more data (items) as shown in the sample.
+
+<Growing />
+
+### Growing On Button Press
+The List fires an <b>load-more</b> event when the user clicks to the "Load More" button at the bottom.
+The event can be used for loading more data (items) as shown in the sample.
+
+<GrowingOnButtonPress />
+
+### Selection Modes
+The List supports several selection modes <b>None</b>, <b>Single</b>, <b>SingleStart</b>, <b>SingleEnd</b>, <b>SingleAuto</b>, <b>Multiple</b> and <b>Delete</b>.
+<Modes />
+
+### No data
+You can show a text when there aren't items (data) via the <b>noDataText</b> property.
+
+<NoData />
+
+### Grouping
+The <b>The GroupHeaderListItem</b> can be used to start group section and implement grouping.
+
+<GroupHeaders />
+
+### Separators
+The <b>separators</b> options (<b>All</b>, <b>Inner</b>, <b>None</b>) allows the outer lines (Inner) or all the lines (None) to be hidden.
+
+<SeparationTypes />

@@ -6,15 +6,15 @@
 >
 	{{#if this.showDefaultColor}}
 		<div class="ui5-cp-default-color-button-wrapper">
-			<ui5-button 
+			<ui5-button
 				class="ui5-cp-default-color-button"
-				design="Transparent" 
+				design="Transparent"
 				@click={{_onDefaultColorClick}}
 				@keydown={{_onDefaultColorKeyDown}}>{{colorPaletteDefaultColorText}}</ui5-button>
 			<div class="ui5-cp-separator"></div>
 		</div>
 	{{/if}}
-	<div class="ui5-cp-item-container" 
+	<div class="ui5-cp-item-container"
 		role="region"
 		aria-label="{{colorContainerLabel}}"
 		@keydown="{{_onColorContainerKeyDown}}"
@@ -50,3 +50,5 @@
 		</div>
 	{{/if}}
 </div>
+
+{{>include "./ColorPaletteDialog.hbs"}}

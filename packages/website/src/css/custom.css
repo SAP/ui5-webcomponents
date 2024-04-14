@@ -1,0 +1,212 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-table-background: transparent;
+  --ifm-table-stripe-background: transparent;
+  --playground-toolbar-bg: #334eff;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-table-background: transparent;
+  --ifm-table-stripe-background: transparent;
+}
+
+:root {
+  --ifm-color-primary: #fe7520;
+  --ifm-color-primary-dark: #fe6304;
+  --ifm-color-primary-darker: #f25d01;
+  --ifm-color-primary-darkest: #c74d01;
+  --ifm-color-primary-light: #fe873c;
+  --ifm-color-primary-lighter: #fe8f4b;
+  --ifm-color-primary-lightest: #feaa75;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #fe7520;
+  --ifm-color-primary-dark: #fe6304;
+  --ifm-color-primary-darker: #f25d01;
+  --ifm-color-primary-darkest: #c74d01;
+  --ifm-color-primary-light: #fe873c;
+  --ifm-color-primary-lighter: #fe8f4b;
+  --ifm-color-primary-lightest: #feaa75;
+}
+
+:root {
+    --playground-code-background: var(--sys-color-surface);
+    --playground-code-keyword-color: #708;
+    --playground-code-atom-color: #005cc5;
+    --playground-code-number-color: #005cc5;
+    --playground-code-def-color: #00f;
+    --playground-code-variable-color: #6f42c1;
+    --playground-code-property-color: #008176;
+    --playground-code-operator-color: #d92f3f;
+    --playground-code-variable-2-color: #000000;
+    --playground-code-variable-3-color: #000000;
+    --playground-code-type-color: #005cc5;
+    --playground-code-comment-color: #6a737d;
+    --playground-code-string-color: #a11;
+    --playground-code-string-2-color: #a11;
+    --playground-code-meta-color: #000000;
+    --playground-code-qualifier-color: #6f42c1;
+    --playground-code-builtin-color: #6f42c1;
+    --playground-code-tag-color: #30914c;
+    --playground-code-attribute-color: #6f42c1;
+    --playground-code-callee-color: #005cc5;
+    --playground-highlight-color: var(--sys-color-primary);
+    --playground-code-gutter-background: var(--playground-code-background);
+    --playground-code-cursor-color: var(--sys-color-on-surface);
+    --playground-code-selection-background: var(--sys-color-primary-transparent);
+}
+
+[data-theme='dark'] playground-file-editor {
+  --playground-code-background: #212121;
+  --playground-code-default-color: #eeffff;
+  --playground-code-keyword-color: #c792ea;
+  --playground-code-atom-color: #f78c6c;
+  --playground-code-number-color: #f78c6c;
+  --playground-code-def-color: #82aaff;
+  --playground-code-variable-color: #82aaff;
+  --playground-code-property-color: #b2ccd6;
+  --playground-code-operator-color: #c792ea;
+  --playground-code-variable-2-color: #eeffff;
+  --playground-code-variable-3-color: #c792ea;
+  --playground-code-type-color: #b2ccd6;
+  --playground-code-comment-color: #999999;
+  --playground-code-string-color: #eeffff;
+  --playground-code-string-2-color: #89ddff;
+  --playground-code-meta-color: #eeffff;
+  --playground-code-qualifier-color: #91ffff;
+  --playground-code-builtin-color: #eeffff;
+  --playground-code-tag-color: #89ddff;
+  --playground-code-attribute-color: #c792ea;
+  --playground-code-callee-color: #82aaff;
+}
+
+[data-theme='dark'] {
+  --playground-tab-bar-background: rgb(40, 40, 40);
+  --playground-tab-bar-foreground-color: rgb(254, 128, 25);
+  --playground-highlight-color: rgb(254, 128, 25);
+  --playground-preview-toolbar-background: rgb(40, 40, 40);
+  --playground-preview-toolbar-foreground-color: rgb(255, 255, 255);
+}
+
+[data-theme='dark'] playground-preview {
+  background-color: var(--ifm-background-color);
+}
+
+.navbar-dropdown-hidden {
+  display: none;
+}
+
+.hero--primary {
+  --ifm-hero-background-color: var(--ifm-background-color);
+}
+
+
+.header-github-link {
+  position: relative;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.header-github-link svg {
+  height: 1.5rem;
+  width: 1.5rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.header-github-link svg path {
+  fill: var(--ifm-font-color-base);
+}
+
+.header-github-link:hover svg path {
+  fill: var(--ifm-navbar-link-hover-color);
+}
+
+.dropdown__link svg {
+  display: none;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+
+.navbar__item li,
+.navbar__item li a {
+  cursor: pointer;
+}
+
+
+.menu__caret:before,
+.menu__link--sublist-caret:after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 1.25rem;
+}
+
+.mainPageContainer {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 996px) {
+  .navbar__title {
+    font-size: 0.875rem;
+  }
+
+  .navbar__search-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  /* .navbar__title, */
+  .navbar__logo {
+    display: none;
+  }
+
+  .navbar__search-input {
+    width: 8rem;
+  }
+}
+
+.newComponentBadge {
+  position: relative;
+}
+
+.newComponentBadge:after {
+  content: "New";
+  color: #fff;
+  background: #334eff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+}

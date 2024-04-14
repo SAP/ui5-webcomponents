@@ -1,6 +1,5 @@
 /**
  * SideContent FallDown options.
- *
  * @public
  */
 enum SideContentFallDown {

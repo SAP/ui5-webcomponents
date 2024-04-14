@@ -9,8 +9,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
@@ -63,6 +64,7 @@ type AccInfo = {
 	ariaChecked?: boolean;
 	listItemAriaLabel?: string;
 	ariaOwns?: string;
+	tooltip?: string;
 }
 
 type AccessibilityAttributes = {
@@ -73,8 +75,7 @@ type AccessibilityAttributes = {
 /**
  * @class
  * A class to serve as a base
- * for the <code>StandardListItem</code> and <code>CustomListItem</code> classes.
- *
+ * for the `StandardListItem` and `CustomListItem` classes.
  * @constructor
  * @abstract
  * @extends ListItemBase
@@ -90,8 +91,7 @@ type AccessibilityAttributes = {
 	],
 })
 /**
- * Fired when the user clicks on the detail button when type is <code>Detail</code>.
- *
+ * Fired when the user clicks on the detail button when type is `Detail`.
  * @public
  */
 @event("detail-click")
@@ -101,10 +101,10 @@ type AccessibilityAttributes = {
 abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
-	 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
-	 * <br><br> <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
-	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
+	 * Available options are `Active` (by default), `Inactive`, `Detail` and `Navigation`.
 	 *
+	 * **Note:** When set to `Active` or `Navigation`, the item will provide visual response upon press and hover,
+	 * while with type `Inactive` and `Detail` - will not.
 	 * @default "Active"
 	 * @public
 	*/
@@ -117,16 +117,12 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 *  It supports the following fields:
 	 *
-	 * <ul>
-	 * 		<li><code>ariaSetsize</code>: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
-	 * 		The value of each <code>aria-setsize</code> is an integer reflecting number of items in the complete set.
-	 * 		<b>Note: </b> If the size of the entire set is unknown, set <code>aria-setsize="-1"</code>.
-	 * 		</li>
-	 * 		<li><code>ariaPosinset</code>: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
-	 * 		The value of each <code>aria-posinset</code> is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
-	 * 		</li>
-	 * </ul>
+	 * - `ariaSetsize`: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
+	 * 	The value of each `aria-setsize` is an integer reflecting number of items in the complete set.
 	 *
+	 * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
+	 * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
+	 * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
 	 * @default {}
 	 * @public
 	 * @since 1.15.0
@@ -136,8 +132,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * The navigated state of the list item.
-	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
-	 *
+	 * If set to `true`, a navigation indicator is displayed at the end of the list item.
 	 * @default false
 	 * @public
 	 * @since 1.10.0
@@ -146,8 +141,16 @@ abstract class ListItem extends ListItemBase {
 	navigated!: boolean;
 
 	/**
+	 * Defines the text of the tooltip that would be displayed for the list item.
+	 * @default ""
+	 * @public
+	 * @since 1.23.0
+	 */
+	@property({ type: String, defaultValue: "" })
+	tooltip!: string;
+
+	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
-	 *
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -156,6 +159,7 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the tooltip of the component.
 	 * @default ""
+	 * @deprecated
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -163,8 +167,17 @@ abstract class ListItem extends ListItemBase {
 	title!: string;
 
 	/**
+	 * Defines the highlight state of the list items.
+	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * @default "None"
+	 * @public
+	 * @since 1.24
+	 */
+	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+	highlight!: `${HighlightTypes}`;
+
+	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 *
 	 * @private
 	*/
 	@property({ type: Boolean })
@@ -172,7 +185,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Used to define the role of the list item.
-	 *
 	 * @private
 	 * @default "listitem"
 	 * @since 1.0.0-rc.9
@@ -192,7 +204,6 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Used to define the role of the list item.
-	 *
 	 * @private
 	 * @default ""
 	 * @since 1.3.0
@@ -201,8 +212,8 @@ abstract class ListItem extends ListItemBase {
 	@property()
 	accessibleRole!: string;
 
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	_mode!: `${ListMode}`;
+	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+	_selectionMode!: `${ListSelectionMode}`;
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
@@ -214,9 +225,9 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
-	 * <b>Note:</b> While the slot allows custom buttons, to match
-	 * design guidelines, please use the <code>ui5-button</code> component.
-	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
+	 * **Note:** While the slot allows custom buttons, to match
+	 * design guidelines, please use the `ui5-button` component.
+	 * **Note:** When the slot is not present, a built-in delete button will be displayed.
 	 * @since 1.9.0
 	 * @public
 	*/
@@ -261,7 +272,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering() {
-		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
+		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	onEnterDOM() {
@@ -339,6 +350,18 @@ abstract class ListItem extends ListItemBase {
 		this.fireItemPress(e);
 	}
 
+	_ondragstart(e: DragEvent) {
+		if (e.target === this._listItem) {
+			this.setAttribute("data-moving", "");
+		}
+	}
+
+	_ondragend(e: DragEvent) {
+		if (e.target === this._listItem) {
+			this.removeAttribute("data-moving");
+		}
+	}
+
 	/*
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
@@ -374,7 +397,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive) {
+		if (this.isInactive || this.disabled) {
 			return;
 		}
 		if (isEnter(e as KeyboardEvent)) {
@@ -388,29 +411,29 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get placeSelectionElementBefore() {
-		return this._mode === ListMode.MultiSelect
-			|| this._mode === ListMode.SingleSelectBegin;
+		return this._selectionMode === ListSelectionMode.Multiple
+			|| this._selectionMode === ListSelectionMode.SingleStart;
 	}
 
 	get placeSelectionElementAfter() {
 		return !this.placeSelectionElementBefore
-			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+			&& (this._selectionMode === ListSelectionMode.SingleEnd || this._selectionMode === ListSelectionMode.Delete);
 	}
 
 	get modeSingleSelect() {
 		return [
-			ListMode.SingleSelectBegin,
-			ListMode.SingleSelectEnd,
-			ListMode.SingleSelect,
-		].includes(this._mode as ListMode);
+			ListSelectionMode.SingleStart,
+			ListSelectionMode.SingleEnd,
+			ListSelectionMode.Single,
+		].includes(this._selectionMode as ListSelectionMode);
 	}
 
-	get modeMultiSelect() {
-		return this._mode === ListMode.MultiSelect;
+	get modeMultiple() {
+		return this._selectionMode === ListSelectionMode.Multiple;
 	}
 
 	get modeDelete() {
-		return this._mode === ListMode.Delete;
+		return this._selectionMode === ListSelectionMode.Delete;
 	}
 
 	/**
@@ -437,7 +460,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get _ariaSelected() {
-		if (this.modeMultiSelect || this.modeSingleSelect) {
+		if (this.modeMultiple || this.modeSingleSelect) {
 			return this.selected;
 		}
 
@@ -487,11 +510,20 @@ abstract class ListItem extends ListItemBase {
 			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
+			tooltip: this.tooltip || this.title,
 		};
+	}
+
+	get _hasHighlightColor() {
+		return this.highlight !== HighlightTypes.None;
 	}
 
 	get hasConfigurableMode() {
 		return true;
+	}
+
+	get _listItem() {
+		return this.shadowRoot!.querySelector("li");
 	}
 
 	static async onDefine() {

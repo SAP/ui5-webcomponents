@@ -26,11 +26,11 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -58,7 +58,6 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 
 /**
  * @class
- *
  * @constructor
  * @extends UI5Element
  * @public
@@ -68,9 +67,12 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 	languageAware: true,
 	renderer: litRender,
 	template: TimePickerTemplate,
-	styles: TimePickerCss,
-	staticAreaTemplate: TimePickerPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, PopoverCss, TimePickerPopoverCss],
+	styles: [
+		TimePickerCss,
+		ResponsivePopoverCommonCss,
+		PopoverCss,
+		TimePickerPopoverCss,
+	],
 	dependencies: [
 		Icon,
 		Popover,
@@ -84,11 +86,10 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 /**
  * Fired when the input operation has finished by clicking the "OK" button or
  * when the text in the input field has changed and the focus leaves the input field.
- *
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<TimePickerBaseChangeEventDetail>("change", {
 	detail: {
 		/**
@@ -107,12 +108,11 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 })
 
 /**
- * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
- *
+ * Fired when the value of the `ui5-time-picker` is changed at each key stroke.
  * @public
  * @param {string} value The current value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<TimePickerBaseInputEventDetail>("input", {
 	detail: {
 		/**
@@ -132,7 +132,6 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 class TimePickerBase extends UI5Element {
 	/**
 	 * Defines a formatted time value.
-	 *
 	 * @default undefined
 	 * @formEvents change input
 	 * @formProperty
@@ -142,17 +141,7 @@ class TimePickerBase extends UI5Element {
 	value?: string;
 
 	/**
-	 * Defines the value state of the <code>ui5-time-picker</code>.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
-	 *
+	 * Defines the value state of the `ui5-time-picker`.
 	 * @default "None"
 	 * @public
 	 */
@@ -160,8 +149,7 @@ class TimePickerBase extends UI5Element {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
-	 *
+	 * Determines whether the `ui5-time-picker` is displayed as disabled.
 	 * @default false
 	 * @public
 	 */
@@ -169,8 +157,7 @@ class TimePickerBase extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Determines whether the <code>ui5-time-picker</code> is displayed as readonly.
-	 *
+	 * Determines whether the `ui5-time-picker` is displayed as readonly.
 	 * @default false
 	 * @public
 	 */
@@ -184,14 +171,12 @@ class TimePickerBase extends UI5Element {
 	_isInputsPopoverOpen!: boolean;
 
 	/**
-	 * Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>.
-	 * <br><br>
+	 * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the <code>ui5-time-picker</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -248,9 +233,9 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is open
 	 */
-	async openPicker(): Promise<void> {
-		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const responsivePopover = await this._getPopover();
+	openPicker(): void {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
+		const responsivePopover = this._getPopover();
 		responsivePopover.showAt(this);
 	}
 
@@ -259,8 +244,8 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @returns Resolves when the picker is closed
 	 */
-	async closePicker(): Promise<void> {
-		const responsivePopover = await this._getPopover();
+	closePicker(): void {
+		const responsivePopover = this._getPopover();
 		responsivePopover.close();
 		this._isPickerOpen = false;
 	}
@@ -290,9 +275,9 @@ class TimePickerBase extends UI5Element {
 		this._isPickerOpen = false;
 	}
 
-	async onResponsivePopoverAfterOpen() {
+	onResponsivePopoverAfterOpen() {
 		this._isPickerOpen = true;
-		const responsivePopover = await this._getPopover();
+		const responsivePopover = this._getPopover();
 		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
 	}
 
@@ -301,9 +286,9 @@ class TimePickerBase extends UI5Element {
 	 * @private
 	 * @returns Resolves when the Inputs popover is open
 	 */
-	async openInputsPopover(): Promise<void> {
-		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const popover = await this._getInputsPopover();
+	openInputsPopover() {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
+		const popover = this._getInputsPopover();
 		popover.showAt(this);
 		this._isInputsPopoverOpen = true;
 	}
@@ -313,8 +298,8 @@ class TimePickerBase extends UI5Element {
 	 * @private
 	 * @returns Resolves when the Inputs popover is closed
 	 */
-	async closeInputsPopover(): Promise<void> {
-		const popover = await this._getInputsPopover();
+	closeInputsPopover() {
+		const popover = this._getInputsPopover();
 		popover.close();
 	}
 
@@ -339,8 +324,8 @@ class TimePickerBase extends UI5Element {
 		this.closeInputsPopover();
 	}
 
-	async onInputsPopoverAfterOpen() {
-		const popover = await this._getInputsPopover();
+	onInputsPopoverAfterOpen() {
+		const popover = this._getInputsPopover();
 		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
@@ -413,14 +398,12 @@ class TimePickerBase extends UI5Element {
 		return !this.disabled && this._isPhone;
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_getPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async _getInputsPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
+	_getInputsPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_getInput(): Input {
@@ -492,7 +475,7 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
-	 * according to the <code>formatPattern</code> property of the TimePicker instance
+	 * according to the `formatPattern` property of the TimePicker instance
 	 * @param date A Java Script date object to be formatted as string
 	 * @public
 	 * @returns formatted value
@@ -502,10 +485,9 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * Checks if a value is valid against the current <code>formatPattern</code> value.
+	 * Checks if a value is valid against the current `formatPattern` value.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> an empty string is considered as valid value.
+	 * **Note:** an empty string is considered as valid value.
 	 * @param value The value to be tested against the current date format
 	 * @public
 	 */
@@ -543,7 +525,6 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * The listener for this event can't be passive as it calls preventDefault()
-	 *
 	 * @param e Wheel Event
 	 * @private
 	 */
@@ -559,11 +540,11 @@ class TimePickerBase extends UI5Element {
 		setTimeout(() => { this._getInput().readonly = false; }, 0);
 	}
 
-	async _onfocusin(evt: FocusEvent) {
+	_onfocusin(evt: FocusEvent) {
 		if (this._isPhone) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
-				const popover = await this._getInputsPopover();
+				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
 			evt.preventDefault();

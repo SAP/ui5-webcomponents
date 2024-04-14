@@ -49,7 +49,7 @@
 		<ui5-list
 			accessible-role="tree"
 			id="{{_id}}-menu-list"
-			mode="None"
+			selection-mode="None"
 			?busy="{{busy}}"
 			busy-delay="{{busyDelay}}"
 			separators="None"
@@ -90,7 +90,7 @@
 							{{else if this.item._siblingsWithChildren}}
 								<div class="ui5-menu-item-no-icon-end"></div>
 							{{/if}}
-							{{#if this.item.target}}
+							{{#if this.item.isExternalLink}}
 								<ui5-icon class="ui5-sn-item-external-link-icon"
 										  name="arrow-right"
 								></ui5-icon>

@@ -41,6 +41,7 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
+	shadowRootOptions?: Partial<ShadowRootInit>
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -113,7 +114,7 @@ class UI5ElementMetadata {
 	/**
 	 * Validates the property's value and returns it if correct
 	 * or returns the default value if not.
-	 * <b>Note:</b> Only intended for use by UI5Element.js
+	 * **Note:** Only intended for use by UI5Element.js
 	 * @public
 	 */
 	static validatePropertyValue(value: PropertyValue, propData: Property): PropertyValue {
@@ -127,7 +128,7 @@ class UI5ElementMetadata {
 	/**
 	 * Validates the slot's value and returns it if correct
 	 * or throws an exception if not.
-	 * <b>Note:</b> Only intended for use by UI5Element.js
+	 * **Note:** Only intended for use by UI5Element.js
 	 * @public
 	 */
 	static validateSlotValue(value: Node, slotData: Slot): Node {
@@ -271,6 +272,10 @@ class UI5ElementMetadata {
 	 */
 	 isThemeAware(): boolean {
 		return !!this.metadata.themeAware;
+	}
+
+	getShadowRootOptions(): Partial<ShadowRootInit> {
+		return this.metadata.shadowRootOptions || {};
 	}
 
 	/**

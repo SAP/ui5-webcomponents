@@ -3,47 +3,40 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isDesktop,
-	isPhone,
-	isTablet,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
+import type { MenuItemClickEventDetail } from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
-import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
+import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
-import staticAreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import navigationMenuCss from "./generated/themes/NavigationMenu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 
 import {
 	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
-type MenuItemClickEventDetail = {
-	item: MenuItem,
-	text: string,
-}
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-navigation-menu</code> component represents a hierarchical menu structure, inherits all the functionality of <code>ui5-menu<code>.
+ * `ui5-navigation-menu` component represents a hierarchical menu structure, inherits all the functionality of `ui5-menu`.
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
- *
- * <code>ui5-navigation-menu</code> contains <code>ui5-navigation-menu-item</code> components.
+ * `ui5-navigation-menu` contains `ui5-navigation-menu-item` components.
  * An arbitrary hierarchy structure can be represented by recursively nesting navigation menu items.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/NavigationMenu.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/NavigationMenu.js";`
  * @constructor
  * @extends Menu
  * @since 1.22.0
@@ -52,27 +45,29 @@ type MenuItemClickEventDetail = {
 @customElement({
 	tag: "ui5-navigation-menu",
 	renderer: litRender,
-	staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
-	staticAreaTemplate: staticAreaMenuTemplate,
+	styles: [menuCss, navigationMenuCss],
+	template: menuTemplate,
 })
 
 class NavigationMenu extends Menu {
 	/**
 	 * Defines the items of this component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-navigation-menu-item</code> for the intended design.
 	 *
+	 * **Note:** Use `ui5-navigation-menu-item` for the intended design.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
+
+	_isMenu(element: HTMLElement) {
+		return element.hasAttribute("ui5-navigation-menu");
+	}
 
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			let item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id")!;
 
 			if (!item) {
 				// for nested <a>
@@ -82,11 +77,8 @@ class NavigationMenu extends Menu {
 				}
 			}
 
-			// If there is a pending close operation, cancel it
-			this._clearTimeout();
-
 			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item, opener, hoverId);
+			this._startOpenTimeout(item, opener);
 		}
 	}
 
@@ -109,7 +101,6 @@ class NavigationMenu extends Menu {
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const opener = e.detail.item as OpenerStandardListItem;
 		const item = opener.associatedItem;
-		const actionId = opener.getAttribute("id")!;
 		const mainMenu = this._findMainMenu(item);
 		const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
 			"item": item,
@@ -129,14 +120,9 @@ class NavigationMenu extends Menu {
 			mainMenu._popover!.close();
 		}
 
-		if (isPhone()) {
-			// prepares and opens sub-menu on phone
-			this._prepareSubMenuPhone(item);
-		} else if (isTablet()) {
-			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener, actionId);
-		}
+		this._prepareSubMenu(item, opener);
 	}
+
 	get accSideNavigationPopoverHiddenText() {
 		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}

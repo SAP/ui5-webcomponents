@@ -52,14 +52,23 @@
 	word-spacing: inherit;
 }
 
+.ui5-shellbar-button[icon-only] {
+	color: var(--sapShell_InteractiveTextColor);
+}
+
+.ui5-shellbar-button[icon-only]:hover:not(:active) {
+	color: var(--sapShell_InteractiveTextColor);
+}
+
+
 ::slotted([ui5-button][slot="startButton"]) {
 	margin-inline-start: 0;
 }
 
-::slotted([ui5-button][slot="startButton"]:hover),
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
-.ui5-shellbar-button:hover,
-.ui5-shellbar-image-button:hover {
+::slotted([ui5-button][slot="startButton"]:hover:not([active])),
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover:not(:active),
+.ui5-shellbar-button:hover:not(:active),
+.ui5-shellbar-image-button:hover:not(:active) {
 	background: var(--sapShell_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	color: var(--sapShell_TextColor);
@@ -87,6 +96,7 @@ slot[name="profile"] {
 	min-width: 0;
 	width: 2rem;
 	height: 2rem;
+	min-height: 2rem;
 	padding: .25rem;
 	pointer-events: none;
 }
@@ -142,6 +152,19 @@ slot[name="profile"] {
 	width: 0;
 	flex-shrink: 0;
 	width: 7.5rem;
+}
+
+.ui5-shellbar-mid-content {
+	height: var(--_ui5_shellbar_overflow_container_middle_height);
+	width: 33.4%;
+}
+
+.ui5-shellbar-overflow-container-left:has(+ .ui5-shellbar-mid-content) {
+	width: 33.3%;
+}
+
+.ui5-shellbar-mid-content + .ui5-shellbar-overflow-container-right {
+	width: 33.3%;
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-middle {
@@ -450,6 +473,11 @@ slot[name="profile"] {
 .ui5-shellbar-co-pilot-placeholder {
 	width: 2.75rem;
 	height: 2.75rem;
+}
+
+.ui5-shellbar-coPilot-pressed,
+.ui5-shellbar-coPilot-pressed:hover {
+	color: var(--sapShell_Assistant_ForegroundColor);
 }
 
 ::slotted([ui5-button][slot="startButton"]) {

@@ -14,6 +14,7 @@ import {
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -49,9 +50,9 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
-type CalendarSelectedDatesChangeEventDetail = {
-	values: Array<string>,
-	dates: Array<number>,
+type CalendarSelectionChangeEventDetail = {
+	selectedValues: Array<string>,
+	selectedDates: Array<number>,
 	timestamp: number | undefined,
 }
 
@@ -63,108 +64,95 @@ type SpecialCalendarDateT = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-calendar</code> component allows users to select one or more dates.
- * <br><br>
- * Currently selected dates are represented with instances of <code>ui5-date</code> as
- * children of the <code>ui5-calendar</code>. The value property of each <code>ui5-date</code> must be a
- * date string, correctly formatted according to the <code>ui5-calendar</code>'s <code>formatPattern</code> property.
- * Whenever the user changes the date selection, <code>ui5-calendar</code> will automatically create/remove instances
- * of <code>ui5-date</code> in itself, unless you prevent this behavior by calling <code>preventDefault()</code> for the
- * <code>selected-dates-change</code> event. This is useful if you want to control the selected dates externally.
- * <br><br>
+ * The `ui5-calendar` component allows users to select one or more dates.
  *
- * <h3>Usage</h3>
+ * Currently selected dates are represented with instances of `ui5-date` as
+ * children of the `ui5-calendar`. The value property of each `ui5-date` must be a
+ * date string, correctly formatted according to the `ui5-calendar`'s `formatPattern` property.
+ * Whenever the user changes the date selection, `ui5-calendar` will automatically create/remove instances
+ * of `ui5-date` in itself, unless you prevent this behavior by calling `preventDefault()` for the
+ * `selection-change` event. This is useful if you want to control the selected dates externally.
+ *
+ * ### Usage
  *
  * The user can navigate to a particular date by:
- * <br>
- * <ul>
- * <li>Pressing over a month inside the months view</li>
- * <li>Pressing over an year inside the years view</li>
- * </ul>
- * <br>
- * The user can confirm a date selection by pressing over a date inside the days view.
- * <br><br>
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-calendar</code> provides advanced keyboard handling.
+ * - Pressing over a month inside the months view
+ * - Pressing over an year inside the years view
+ *
+ * The user can confirm a date selection by pressing over a date inside the days view.
+ *
+ * ### Keyboard Handling
+ * The `ui5-calendar` provides advanced keyboard handling.
  * When a picker is showed and focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
- * - Day picker: <br>
- * <ul>
- * <li>[F4] - Shows month picker</li>
- * <li>[SHIFT] + [F4] - Shows year picker</li>
- * <li>[PAGEUP] - Navigate to the previous month</li>
- * <li>[PAGEDOWN] - Navigate to the next month</li>
- * <li>[SHIFT] + [PAGEUP] - Navigate to the previous year</li>
- * <li>[SHIFT] + [PAGEDOWN] - Navigate to the next year</li>
- * <li>[CTRL] + [SHIFT] + [PAGEUP] - Navigate ten years backwards</li>
- * <li>[CTRL] + [SHIFT] + [PAGEDOWN] - Navigate ten years forwards</li>
- * <li>[HOME] - Navigate to the first day of the week</li>
- * <li>[END] - Navigate to the last day of the week</li>
- * <li>[CTRL] + [HOME] - Navigate to the first day of the month</li>
- * <li>[CTRL] + [END] - Navigate to the last day of the month</li>
- * </ul>
- * <br>
- * - Month picker: <br>
- * <ul>
- * <li>[PAGEUP] - Navigate to the previous year</li>
- * <li>[PAGEDOWN] - Navigate to the next year</li>
- * <li>[HOME] - Navigate to the first month of the current row</li>
- * <li>[END] - Navigate to the last month of the current row</li>
- * <li>[CTRL] + [HOME] - Navigate to the first month of the current year</li>
- * <li>[CTRL] + [END] - Navigate to the last month of the year</li>
- * </ul>
- * <br>
- * - Year picker: <br>
- * <ul>
- * <li>[PAGEUP] - Navigate to the previous year range</li>
- * <li>[PAGEDOWN] - Navigate the next year range</li>
- * <li>[HOME] - Navigate to the first year of the current row</li>
- * <li>[END] - Navigate to the last year of the current row</li>
- * <li>[CTRL] + [HOME] - Navigate to the first year of the current year range</li>
- * <li>[CTRL] + [END] - Navigate to the last year of the current year range</li>
- * </ul>
- * <br>
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * - Day picker:
+ *
+ * - [F4] - Shows month picker
+ * - [Shift] + [F4] - Shows year picker
+ * - [Page Up] - Navigate to the previous month
+ * - [Page Down] - Navigate to the next month
+ * - [Shift] + [Page Up] - Navigate to the previous year
+ * - [Shift] + [Page Down] - Navigate to the next year
+ * - [Ctrl] + [Shift] + [Page Up] - Navigate ten years backwards
+ * - [Ctrl] + [Shift] + [Page Down] - Navigate ten years forwards
+ * - [Home] - Navigate to the first day of the week
+ * - [End] - Navigate to the last day of the week
+ * - [Ctrl] + [Home] - Navigate to the first day of the month
+ * - [Ctrl] + [End] - Navigate to the last day of the month
+ *
+ * - Month picker:
+ *
+ * - [Page Up] - Navigate to the previous year
+ * - [Page Down] - Navigate to the next year
+ * - [Home] - Navigate to the first month of the current row
+ * - [End] - Navigate to the last month of the current row
+ * - [Ctrl] + [Home] - Navigate to the first month of the current year
+ * - [Ctrl] + [End] - Navigate to the last month of the year
+ *
+ * - Year picker:
+ *
+ * - [Page Up] - Navigate to the previous year range
+ * - [Page Down] - Navigate the next year range
+ * - [Home] - Navigate to the first year of the current row
+ * - [End] - Navigate to the last year of the current row
+ * - [Ctrl] + [Home] - Navigate to the first year of the current year range
+ * - [Ctrl] + [End] - Navigate to the last year of the current year range
+ *
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
-* <h3>Calendar types</h3>
+ * ### Calendar types
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
  * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
- * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
- * <br><br>
+ * you need to set the `primaryCalendarType` property and import one or more of the following modules:
  *
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
- * <br><br>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";`
  *
- * Or, you can use the global configuration and set the <code>calendarType</code> key:
- * <br>
- * <code>
- * &lt;script data-id="sap-ui-config" type="application/json"&gt;
- * {
- *	"calendarType": "Japanese"
- * }
- * &lt;/script&gt;
- * </code>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";`
  *
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";`
  *
- * <h3>ES6 Module Import</h3>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";`
  *
- * <code>import "@ui5/webcomponents/dist/Calendar";</code>
+ * Or, you can use the global configuration and set the `calendarType` key:
  *
+ * ```html
+ * <script data-id="sap-ui-config" type="application/json">
+ * 	{
+ * 		"calendarType": "Japanese"
+ * 	}
+ * </script>
+ * ```
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Calendar.js";`
  * @constructor
  * @extends CalendarPart
  * @public
@@ -186,24 +174,24 @@ type SpecialCalendarDateT = {
 })
 /**
  * Fired when the selected dates change.
- * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
- * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
  *
+ * **Note:** If you call `preventDefault()` for this event, the component will not
+ * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
  * @allowPreventDefault
- * @param {Array<string>} values The selected dates
- * @param {Array<number>} dates The selected dates as UTC timestamps
+ * @param {Array<string>} selectedValues The selected dates
+ * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
  */
-@event<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", {
+@event<CalendarSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
 		 */
-		dates: { type: Array },
+		selectedDates: { type: Array },
 		/**
 		 * @public
 		 */
-		values: { type: Array },
+		selectedValues: { type: Array },
 
 		timestamp: { type: Number },
 	},
@@ -214,12 +202,11 @@ type SpecialCalendarDateT = {
 class Calendar extends CalendarPart {
 	/**
 	 * Defines the type of selection used in the calendar component.
-	 * Accepted property values are:<br>
-	 * <ul>
-	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
-	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
-	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
-	 * </ul>
+	 * Accepted property values are:
+	 *
+	 * - `CalendarSelectionMode.Single` - enables a single date selection.(default value)
+	 * - `CalendarSelectionMode.Range` - enables selection of a date range.
+	 * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
 	 * @default "Single"
 	 * @public
 	 */
@@ -231,11 +218,9 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * Defines the visibility of the week numbers column.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> For calendars other than Gregorian,
+	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -278,9 +263,8 @@ class Calendar extends CalendarPart {
 	calendarLegend!: Array<CalendarLegend>;
 
 	/**
-	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
-	 * for this calendar as instances of <code>ui5-date</code>.
-	 *
+	 * Defines the selected date or dates (depending on the `selectionMode` property)
+	 * for this calendar as instances of `ui5-date`.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -322,7 +306,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true)); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -359,7 +343,7 @@ class Calendar extends CalendarPart {
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
 		validSpecialDates.forEach(date => {
-			const dateFromValue = new Date(date.value);
+			const dateFromValue = UI5Date.getInstance(date.value);
 			const timestamp = dateFromValue.getTime();
 
 			if (!uniqueDates.has(timestamp)) {
@@ -501,7 +485,7 @@ class Calendar extends CalendarPart {
 			return;
 		}
 
-		const localDate = new Date(this._timestamp * 1000);
+		const localDate = UI5Date.getInstance(this._timestamp * 1000);
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
@@ -540,7 +524,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -609,7 +593,7 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
+	 * Creates instances of `ui5-date` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
 	 * @protected
 	 * @deprecated
 	 * @param selectedDates Array of UTC timestamps
@@ -624,6 +608,6 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
-	CalendarSelectedDatesChangeEventDetail,
+	CalendarSelectionChangeEventDetail,
 	SpecialCalendarDateT,
 };

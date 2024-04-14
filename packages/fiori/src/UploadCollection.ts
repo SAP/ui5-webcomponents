@@ -10,10 +10,10 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
+import type UploadCollectionItem from "./UploadCollectionItem.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
@@ -30,6 +30,7 @@ import {
 } from "./upload-utils/UploadCollectionBodyDnD.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
+import UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
@@ -37,33 +38,25 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-/**
- * Interface for components that may be slotted inside <code>ui5-upload-collection</code> as items
- *
- * @public
- */
-interface IUploadCollectionItem extends HTMLElement { }
-
 type UploadCollectionSelectionChangeEventDetail = {
-	selectedItems: Array<IUploadCollectionItem>,
+	selectedItems: Array<UploadCollectionItem>,
 };
 
 type UploadCollectionItemDeleteEventDetail = {
-	item: IUploadCollectionItem,
+	item: UploadCollectionItem,
 };
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * This component allows you to represent files before uploading them to a server, with the help of <code>ui5-upload-collection-item</code>.
+ * ### Overview
+ * This component allows you to represent files before uploading them to a server, with the help of `ui5-upload-collection-item`.
  * It also allows you to show already uploaded files.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/UploadCollection.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";</code> (for <code>ui5-upload-collection-item</code>)
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`
  *
+ * `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";` (for `ui5-upload-collection-item`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -85,10 +78,9 @@ type UploadCollectionItemDeleteEventDetail = {
 })
 /**
  * Fired when an element is dropped inside the drag and drop overlay.
- * <br><br>
- * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
  *
- * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
+ * **Note:** The `drop` event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the `ui5-upload-collection`.
+ * @param {DataTransfer} dataTransfer The `drop` event operation data.
  * @public
  * @native
  */
@@ -96,8 +88,7 @@ type UploadCollectionItemDeleteEventDetail = {
 
 /**
  * Fired when the delete button of any item is pressed.
- *
- * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
+ * @param {HTMLElement} item The `ui5-upload-collection-item` which was deleted.
  * @public
  */
 @event<UploadCollectionItemDeleteEventDetail>("item-delete", {
@@ -111,8 +102,7 @@ type UploadCollectionItemDeleteEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
- *
+ * in `Single` and `Multiple` modes.
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
@@ -126,20 +116,16 @@ type UploadCollectionItemDeleteEventDetail = {
 })
 class UploadCollection extends UI5Element {
 	/**
-	 * Defines the mode of the <code>ui5-upload-collection</code>.
-	 *
-	 * <br><b>Note:</b>
-	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem
+	 * Defines the selection mode of the `ui5-upload-collection`.
 	 *
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property({ type: UploadCollectionSelectionMode, defaultValue: UploadCollectionSelectionMode.None })
+	selectionMode!: `${UploadCollectionSelectionMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -148,7 +134,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Allows you to set your own text for the 'No data' text.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -156,12 +141,11 @@ class UploadCollection extends UI5Element {
 	noDataText!: string;
 
 	/**
-	 * By default there will be drag and drop overlay shown over the <code>ui5-upload-collection</code> when files
+	 * By default there will be drag and drop overlay shown over the `ui5-upload-collection` when files
 	 * are dragged. If you don't intend to use drag and drop, set this property.
-	 * <br><br>
-	 * <b>Note:</b> It is up to the application developer to add handler for <code>drop</code> event and handle it.
-	 * <code>ui5-upload-collection</code> only displays an overlay.
 	 *
+	 * **Note:** It is up to the application developer to add handler for `drop` event and handle it.
+	 * `ui5-upload-collection` only displays an overlay.
 	 * @default false
 	 * @public
 	 */
@@ -170,7 +154,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.16
@@ -180,7 +163,6 @@ class UploadCollection extends UI5Element {
 
 	/**
 	 * Indicates what overlay to show when files are being dragged.
-	 *
 	 * @default "None"
 	 * @private
 	 */
@@ -188,21 +170,20 @@ class UploadCollection extends UI5Element {
 	_dndOverlayMode!: UploadCollectionDnDOverlayMode;
 
 	/**
-	 * Defines the items of the <code>ui5-upload-collection</code>.
-	 * <br><b>Note:</b> Use <code>ui5-upload-collection-item</code> for the intended design.
+	 * Defines the items of the `ui5-upload-collection`.
 	 *
+	 * **Note:** Use `ui5-upload-collection-item` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<IUploadCollectionItem>;
+	items!: Array<UploadCollectionItem>;
 
 	/**
-	 * Defines the <code>ui5-upload-collection</code> header.
-	 * <br><br>
-	 * <b>Note:</b> If <code>header</code> slot is provided,
-	 * the labelling of the <code>UploadCollection</code> is a responsibility of the application developer.
-	 * <code>accessibleName</code> should be used.
+	 * Defines the `ui5-upload-collection` header.
 	 *
+	 * **Note:** If `header` slot is provided,
+	 * the labelling of the `UploadCollection` is a responsibility of the application developer.
+	 * `accessibleName` should be used.
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -284,11 +265,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(e: CustomEvent) {
-		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as IUploadCollectionItem });
+		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
 	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as IUploadCollectionItem[] });
+		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {
@@ -350,7 +331,6 @@ UploadCollection.define();
 
 export default UploadCollection;
 export type {
-	IUploadCollectionItem,
 	UploadCollectionItemDeleteEventDetail,
 	UploadCollectionSelectionChangeEventDetail,
 };

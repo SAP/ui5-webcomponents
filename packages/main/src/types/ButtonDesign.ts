@@ -1,6 +1,5 @@
 /**
  * Different Button designs.
- *
  * @public
  */
 enum ButtonDesign {

@@ -1,6 +1,5 @@
 /**
  * Different table row types.
- *
  * @public
  */
 enum TableRowType {

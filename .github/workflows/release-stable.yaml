@@ -29,10 +29,7 @@ jobs:
     - name: Install
       run: yarn --frozen-lockfile
 
-    - name: Release Build
-      run: yarn ci:releasebuild
-
-    - name: Publish
+    - name: Version Bump
       env:
         NPM_USERNAME: ${{ secrets.NPM_USER }}
         NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
@@ -45,4 +42,14 @@ jobs:
         yarn lerna version ${{ github.event.inputs.release_type }}\
             ${{ (github.event.inputs.prerelease == 'true' && '--conventional-prerelease') || '--conventional-graduate' }} \
             --force-publish --yes --exact --create-release github 
-        yarn lerna publish from-git --yes
+
+    - name: Build
+      run: yarn ci:releasebuild
+
+    - name: Publish
+      env:
+        NPM_USERNAME: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+        GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+      run: yarn lerna publish from-git --yes

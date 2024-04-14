@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -57,7 +58,6 @@ import {
 
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
@@ -86,8 +86,7 @@ import SuggestionItem from "./SuggestionItem.js";
 const SKIP_ITEMS_SIZE = 10;
 
 /**
- * Interface for components that may be slotted inside a <code>ui5-combobox</code>
- *
+ * Interface for components that may be slotted inside a `ui5-combobox`
  * @public
  */
 interface IComboBoxItem {
@@ -119,44 +118,36 @@ type ComboBoxSelectionChangeEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-combobox</code> component represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
+ * The `ui5-combobox` component represents a drop-down menu with a list of the available options and a text input field to narrow down the options.
  *
  * It is commonly used to enable users to select an option from a predefined list.
  *
- * <h3>Structure</h3>
- * The <code>ui5-combobox</code> consists of the following elements:
+ * ### Structure
+ * The `ui5-combobox` consists of the following elements:
  *
- * <ul>
- * <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.</li>
- * <li> Drop-down arrow - expands\collapses the option list.</li>
- * <li> Option list - the list of available options.</li>
- * </ul>
+ * -  Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.
+ * -  Drop-down arrow - expands\collapses the option list.
+ * -  Option list - the list of available options.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * The <code>ui5-combobox</code> provides advanced keyboard handling.
- * <br>
+ * The `ui5-combobox` provides advanced keyboard handling.
  *
- * <ul>
- * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Toggles the picker.</li>
- * <li>[ESC] - Closes the picker, if open. If closed, cancels changes and reverts the typed in value.</li>
- * <li>[ENTER] or [RETURN] - If picker is open, takes over the currently selected item and closes it.</li>
- * <li>[DOWN] - Selects the next matching item in the picker.</li>
- * <li>[UP] - Selects the previous matching item in the picker.</li>
- * <li>[PAGEDOWN] - Moves selection down by page size (10 items by default).</li>
- * <li>[PAGEUP] - Moves selection up by page size (10 items by default). </li>
- * <li>[HOME] - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.</li>
- * <li>[END] - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.</li>
- * </ul>
+ * - [F4], [Alt]+[Up], or [Alt]+[Down] - Toggles the picker.
+ * - [Escape] - Closes the picker, if open. If closed, cancels changes and reverts the typed in value.
+ * - [Enter] or [Return] - If picker is open, takes over the currently selected item and closes it.
+ * - [Down] - Selects the next matching item in the picker.
+ * - [Up] - Selects the previous matching item in the picker.
+ * - [Page Down] - Moves selection down by page size (10 items by default).
+ * - [Page Up] - Moves selection up by page size (10 items by default).
+ * - [Home] - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
+ * - [End] - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
  *
+ * ### ES6 Module Import
  *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/ComboBox";</code>
- *
- *
+ * `import "@ui5/webcomponents/dist/ComboBox.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -166,15 +157,14 @@ type ComboBoxSelectionChangeEventDetail = {
 	tag: "ui5-combobox",
 	languageAware: true,
 	renderer: litRender,
-	styles: ComboBoxCss,
-	staticAreaStyles: [
+	styles: [
+		ComboBoxCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		ComboBoxPopoverCss,
 		SuggestionsCss,
 	],
 	template: ComboBoxTemplate,
-	staticAreaTemplate: ComboBoxPopoverTemplate,
 	dependencies: [
 		ComboBoxItem,
 		Icon,
@@ -192,21 +182,19 @@ type ComboBoxSelectionChangeEventDetail = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
- *
  * @public
  */
 @event("change")
 
 /**
  * Fired when typing in input or clear icon is pressed.
- * <br><br>
- * <b>Note:</b> filterValue property is updated, input is changed.
+ *
+ * **Note:** filterValue property is updated, input is changed.
  * @public
  */
 @event("input")
 /**
  * Fired when selection is changed by user interaction
- *
  * @param {IComboBoxItem} item item to be selected.
  * @public
  */
@@ -222,7 +210,6 @@ type ComboBoxSelectionChangeEventDetail = {
 class ComboBox extends UI5Element {
 	/**
 	 * Defines the value of the component.
-	 *
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
@@ -233,7 +220,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.19.0
@@ -243,12 +229,10 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the "live" value of the component.
-	 * <br><br>
-	 * <b>Note:</b> If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Initially the filter value is synced with value.
+	 * **Note:** If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
 	 *
+	 * **Note:** Initially the filter value is synced with value.
 	 * @default ""
 	 * @private
 	 */
@@ -258,7 +242,6 @@ class ComboBox extends UI5Element {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -267,9 +250,8 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
+	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -278,7 +260,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -287,10 +268,9 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
@@ -299,7 +279,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -308,7 +287,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Indicates whether a loading indicator should be shown in the picker.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -317,7 +295,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the filter type of the component.
-	 *
 	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
@@ -326,7 +303,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines whether the clear icon of the combobox will be shown.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.20.1
@@ -350,7 +326,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -381,7 +356,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the component items.
-	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
@@ -389,12 +363,12 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
+	 * The value state message slot should contain only one root element.
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the <code>ui5-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the `ui5-combobox` is in `Information`, `Warning` or `Error` value state.
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -403,7 +377,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the icon to be displayed in the input field.
-	 *
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
@@ -451,7 +424,9 @@ class ComboBox extends UI5Element {
 		}
 
 		if (this.open && !this._isKeyNavigation) {
-			this._filteredItems = this._filterItems(this.filterValue);
+			const items = this._filterItems(this.filterValue);
+
+			this._filteredItems = items.length ? items : this.items;
 		}
 
 		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
@@ -493,7 +468,7 @@ class ComboBox extends UI5Element {
 	async shouldClosePopover(): Promise<boolean> {
 		const popover: ResponsivePopover = await this._getPicker();
 
-		return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
+		return popover.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(e: FocusEvent) {
@@ -520,7 +495,8 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!(this.shadowRoot!.contains(toBeFocused)) && (this.staticAreaItem !== e.relatedTarget)) {
+		const popover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+		if (!(this.getDomRef()!.contains(toBeFocused)) && (popover !== e.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}
@@ -550,7 +526,7 @@ class ComboBox extends UI5Element {
 	async _toggleRespPopover() {
 		const picker: ResponsivePopover = await this._getPicker();
 
-		if (picker.opened) {
+		if (picker.open) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -580,8 +556,8 @@ class ComboBox extends UI5Element {
 	}
 
 	async _getValueStatePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const popover: Popover = staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
+		await renderFinished();
+		const popover: Popover = this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -882,9 +858,10 @@ class ComboBox extends UI5Element {
 
 			this._fireChangeEvent();
 
-			if (picker?.opened && !focusedItem?.isGroupItem) {
+			if (picker?.open && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
+				this.inner.setSelectionRange(this.value.length, this.value.length);
 			} else if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}
@@ -966,7 +943,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
-	 *
 	 * @private
 	 */
 	static _groupItemFilter(item: IComboBoxItem, idx: number, allItems: Array<IComboBoxItem>, filteredItems: Array<IComboBoxItem>) {
@@ -1144,8 +1120,8 @@ class ComboBox extends UI5Element {
 	}
 
 	async _getPicker() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const picker = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		const picker = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -1220,7 +1196,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
-		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Left : PopoverHorizontalAlign.Right;
+		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Start : PopoverHorizontalAlign.End;
 	}
 
 	/**
@@ -1231,7 +1207,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get open(): boolean {
-		return this?.responsivePopover?.opened || false;
+		return this?.responsivePopover?.open || false;
 	}
 
 	get _isPhone(): boolean {
@@ -1268,6 +1244,7 @@ class ComboBox extends UI5Element {
 				"min-width": `${this.offsetWidth || 0}px`,
 				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
+			popoverValueStateMessage: {},
 		};
 	}
 

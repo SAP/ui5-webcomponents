@@ -18,6 +18,7 @@ import {
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import timeSelectionTemplate from "./generated/templates/TimeSelectionTemplate.lit.js";
 import WheelSlider from "./WheelSlider.js";
 import {
@@ -50,7 +51,6 @@ type TimeSelectionSliderChangeEventDetail = {
 
 /**
  * @class
- *
  * @constructor
  * @extends UI5Element
  * @private
@@ -86,7 +86,6 @@ type TimeSelectionSliderChangeEventDetail = {
 class TimeSelection extends UI5Element {
 	/**
 	 * Defines a formatted time value.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -100,7 +99,6 @@ class TimeSelection extends UI5Element {
 	 * HH:mm:ss -> 11:42:35
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -110,7 +108,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -120,7 +117,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -130,7 +126,6 @@ class TimeSelection extends UI5Element {
 	/**
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -139,7 +134,6 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -148,7 +142,6 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -157,7 +150,6 @@ class TimeSelection extends UI5Element {
 
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -464,11 +456,11 @@ class TimeSelection extends UI5Element {
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value) as Date : new Date();
+		return this.value ? this.getFormat().parse(this.value) as Date : UI5Date.getInstance();
 	}
 
 	get validDateValue() {
-		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : UI5Date.getInstance();
 	}
 
 	get hoursSliderTitle() {

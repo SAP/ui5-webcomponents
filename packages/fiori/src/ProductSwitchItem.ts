@@ -13,25 +13,21 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-product-switch-item</code> web component represents the items displayed in the
- * <code>ui5-product-switch</code> web component.
- * <br><br>
- * <b>Note:</b> <code>ui5-product-switch-item</code> is not supported when used outside of <code>ui5-product-switch</code>.
- * <br><br>
+ * ### Overview
+ * The `ui5-product-switch-item` web component represents the items displayed in the
+ * `ui5-product-switch` web component.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-product-switch</code> provides advanced keyboard handling.
+ * **Note:** `ui5-product-switch-item` is not supported when used outside of `ui5-product-switch`.
+ *
+ * ### Keyboard Handling
+ * The `ui5-product-switch` provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
- * <ul>
- * <li>[SPACE/ENTER/RETURN] - Trigger <code>ui5-click</code> event</li>
- * </ul>
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code>
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -46,9 +42,8 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 	dependencies: [Icon],
 })
 /**
- * Fired when the <code>ui5-product-switch-item</code> is activated either with a
+ * Fired when the `ui5-product-switch-item` is activated either with a
  * click/tap or by using the Enter or Space key.
- *
  * @public
  */
 @event("click")
@@ -84,13 +79,12 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 
 	/**
 	 * Defines the icon to be displayed as a graphical element within the component.
-	 * <br><br>
+	 *
 	 * Example:
-	 * <br>
-	 * <pre>ui5-product-switch-item icon="palette"</pre>
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * `<ui5-product-switch-item icon="palette">`
 	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -98,16 +92,15 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	icon!: string;
 
 	/**
-	 * Defines a target where the <code>targetSrc</code> content must be open.
-	 * <br><br>
+	 * Defines a target where the `targetSrc` content must be open.
+	 *
 	 * Available options are:
-	 * <ul>
-	 * <li><code>_self</code></li>
-	 * <li><code>_top</code></li>
-	 * <li><code>_blank</code></li>
-	 * <li><code>_parent</code></li>
-	 * <li><code>_search</code></li>
-	 * </ul>
+	 *
+	 * - `_self`
+	 * - `_top`
+	 * - `_blank`
+	 * - `_parent`
+	 * - `_search`
 	 * @default "_self"
 	 * @public
 	 */
@@ -138,7 +131,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 
 	/**
 	 * Used to set the selected state of the component. Only one selected in a sequence.
-	 * <b>Note:</b> Set by the <code>ProductSwitch</code>
+	 * **Note:** Set by the `ProductSwitch`
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;

@@ -9,12 +9,15 @@
     padding: 1rem;
 }
 
-.ui5-illustrated-message-root {
+.ui5-illustrated-message-root,
+.ui5-illustrated-message-inner,
+.ui5-illustrated-message-text-and-actions-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height:inherit;
+    flex-basis: content;
 }
 
 .ui5-illustrated-message-illustration {
@@ -23,6 +26,7 @@
 
 .ui5-illustrated-message-illustration svg {
     max-height: 100%;
+	max-width: 100%;
 }
 
 .ui5-illustrated-message-illustration.ui5-illustrated-message-illustration-fit-content {
@@ -47,7 +51,7 @@
     text-align: center;
     margin-bottom: 1rem;
     line-height: 1.3;
-    max-width: 30rem;
+    max-width: 61.9375rem;
 }
 
 .ui5-illustrated-message-subtitle {
@@ -57,7 +61,7 @@
     line-height: 1.4;
     color: var(--sapContent_LabelColor);
     margin-bottom: 0.5rem;
-    max-width: 30rem;
+    max-width: 61.9375rem;
 }
 
 .ui5-illustrated-message-actions {
@@ -71,13 +75,13 @@
 :host([media="dialog"]) .ui5-illustrated-message-title {
     margin-bottom: 0.5rem;
     font-size: var(--sapFontHeader4Size);
-    max-width: 20rem;
+    max-width: 40.5625rem;
 }
 
 :host([media="dialog"]) .ui5-illustrated-message-subtitle {
 	margin-bottom: 0.5rem;
     font-size: var(--sapFontSize);
-    max-width: 20rem;
+    max-width: 40.5625rem;
 }
 
 :host([media="dialog"]) .ui5-illustrated-message-actions {
@@ -98,17 +102,50 @@
     margin-bottom: 0.5rem;
     font-size: var(--sapFontHeader5Size);
     line-height: 1.25rem;
-    max-width: 16rem;
+    max-width: 21.5rem;
 }
 
 :host([media="spot"]) .ui5-illustrated-message-subtitle {
     font-size: var(--sapFontSize);
-    max-width: 16rem;
+    max-width: 21.5rem;
     margin-bottom: 0.5rem;
 }
 
 :host([media="spot"]) .ui5-illustrated-message-actions {
     margin: 0.5rem 0;
+}
+
+:host([media="dot"]) {
+	padding: 0.25rem;
+	min-height: 4rem; /* needed to avoid infinite loop between "dot" and "base" when only illustration is used (no title, etc.) */
+}
+
+:host([media="dot"]) .ui5-illustrated-message-inner {
+	flex-direction: row;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-illustration {
+	margin: 0 0.25rem 0 0;
+	height: 2.8125rem;
+	width: 2.8125rem;
+	align-self: baseline;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-title {
+	margin-bottom: 0.25rem;
+	font-size: var(--sapFontHeader5Size);
+	line-height: 1.25rem;
+	max-width: 12.6875rem;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-subtitle {
+	font-size: var(--sapFontSize);
+	max-width: 12.6875rem;
+	margin-bottom: 0.25rem;
+}
+
+:host([media="dot"]) .ui5-illustrated-message-actions {
+	margin: 0.25rem 0;
 }
 
 :host([media="base"]) .ui5-illustrated-message-illustration {

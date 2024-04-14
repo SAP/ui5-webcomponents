@@ -69,8 +69,7 @@ describe("Date Picker Tests", () => {
 		const input = await datepicker.getInput();
 		await input.click();
 
-		const inputStaticAreaItem = await datepicker.getInputStaticAreaItem();
-		const popover = await inputStaticAreaItem.shadow$("ui5-popover");
+		const popover = await datepicker.getInputPopover();
 
 		const slot = await popover.$("#coolValueStateMessage");
 		assert.notOk(slot.error, "Value State message slot is working");
@@ -350,7 +349,7 @@ describe("Date Picker Tests", () => {
 		assert.ok(await datepicker.isPickerOpen(), "datepicker is open");
 	});
 
-	it("[Alt] + [UP] toggles the calendar", async () => {
+	it("[Alt] + [Up] toggles the calendar", async () => {
 		datepicker.id = "#dp9";
 
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
@@ -366,7 +365,7 @@ describe("Date Picker Tests", () => {
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
 	});
 
-	it("[Alt] + [DOWN] toggles the calendar", async () => {
+	it("[Alt] + [Down] toggles the calendar", async () => {
 		datepicker.id = "#dp11";
 
 		assert.notOk(await datepicker.isPickerOpen(), "datepicker is closed");
@@ -394,7 +393,7 @@ describe("Date Picker Tests", () => {
 		await valueHelpIcon.click(); // close the datepicker
 	});
 
-	it("[SHIFT] + [F4] shows year picker after date picker is open", async () => {
+	it("[Shift] + [F4] shows year picker after date picker is open", async () => {
 		datepicker.id = "#dp11";
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -420,7 +419,7 @@ describe("Date Picker Tests", () => {
 	});
 
 
-	it("[SHIFT] + [F4] shows year picker after month picker is open", async () => {
+	it("[Shift] + [F4] shows year picker after month picker is open", async () => {
 		datepicker.id = "#dp11";
 
 		const valueHelpIcon = await datepicker.getValueHelpIcon();
@@ -1344,5 +1343,29 @@ describe("Date Picker Tests", () => {
 		await browser.$("#dpVsChangePrevented").shadow$("ui5-input").shadow$("input").click(); // click elsewhere to focusout
 
 		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
+	});
+
+	it("should open date picker in daypicker", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		const calendar = await datepicker.getCalendar();
+		const datepickerRoot = await datepicker.getRoot();
+		await datepicker.openPicker();
+
+		let currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+
+		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
+		await datepicker.openPicker();
+		currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		const dayPicker = await calendar.shadow$("ui5-daypicker");
+		const monthPicker = await calendar.shadow$("ui5-monthpicker");
+		const yearPicker = await calendar.shadow$("ui5-yearpicker");
+		assert.notOk(await dayPicker.getAttribute("hidden"));
+		assert.ok(await monthPicker.getAttribute("hidden"));
+		assert.ok(await yearPicker.getAttribute("hidden"));
 	});
 });

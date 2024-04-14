@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
@@ -23,13 +22,16 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-responsive-popover</code> acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
+ * ### Overview
+ * The `ui5-responsive-popover` acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
  * The component improves tremendously the user experience on mobile.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * Use it when you want to make sure that all the content is visible on any device.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ResponsivePopover.js";`
  * @constructor
  * @extends Popover
  * @since 1.0.0-rc.6
@@ -67,8 +69,7 @@ class ResponsivePopover extends Popover {
 
 	/**
 	 * Defines whether a close button will be rendered in the header of the component
-	 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
-	 *
+	 * **Note:** If you are using the `header` slot, this property will have no effect
 	 * @private
 	 * @default false
 	 * @since 1.0.0-rc.16
@@ -94,13 +95,13 @@ class ResponsivePopover extends Popover {
 			await super.showAt(opener, preventInitialFocus);
 		} else {
 			this.style.display = "contents";
-			const nextZIndex = getNextZIndex();
-			if (!nextZIndex) {
-				return;
-			}
-
-			this.style.zIndex = nextZIndex.toString();
 			await this._dialog.show(preventInitialFocus);
+		}
+	}
+
+	_show() {
+		if (!isPhone()) {
+			super._show();
 		}
 	}
 
@@ -168,14 +169,14 @@ class ResponsivePopover extends Popover {
 	}
 
 	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+		this._isOpened = true;
 		this.open = true;
-		this.opened = true;
 		this._propagateDialogEvent(e);
 	}
 
 	_afterDialogClose(e: CustomEvent) {
+		this._isOpened = false;
 		this.open = false;
-		this.opened = false;
 		this._propagateDialogEvent(e);
 	}
 

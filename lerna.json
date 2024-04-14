@@ -10,9 +10,10 @@
     "packages/icons-tnt",
     "packages/tools",
     "packages/playground",
+    "packages/website",
     "packages/create-package"
   ],
-  "version": "1.22.1-rc.0",
+  "version": "2.0.0-rc.1",
   "command": {
     "publish": {
       "allowBranch": "*",

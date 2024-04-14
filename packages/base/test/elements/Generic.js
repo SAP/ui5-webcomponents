@@ -50,7 +50,7 @@ class Generic extends UI5Element {
 		return metadata;
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 

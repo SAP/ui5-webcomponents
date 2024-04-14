@@ -16,11 +16,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 	template?: Template,
 	childrenTemplate?: Template,
 	dependencies?: Array<typeof UI5Element>,
-	staticAreaStyles?: Styles,
-	staticAreaTemplate?: Template,
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	shadowRootOptions?: Partial<ShadowRootInit>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -37,6 +36,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			shadowRootOptions,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
@@ -49,8 +49,11 @@ const customElement = (tagNameOrComponentSettings: string | {
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
 		}
+		if (shadowRootOptions) {
+			target.metadata.shadowRootOptions = shadowRootOptions;
+		}
 
-		["render", "renderer", "template", "childrenTemplate", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
+		["renderer", "template", "childrenTemplate", "styles", "dependencies"].forEach((customElementEntity: string) => {
 			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
 			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
 

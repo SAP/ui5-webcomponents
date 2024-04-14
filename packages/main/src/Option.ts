@@ -6,10 +6,13 @@ import type { IOption } from "./Select.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-option</code> component defines the content of an option in the <code>ui5-select</code>.
+ * The `ui5-option` component defines the content of an option in the `ui5-select`.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Option.js";`
  * @constructor
  * @extends UI5Element
  * @implements {IOption}
@@ -27,17 +30,6 @@ class Option extends UI5Element implements IOption {
 	selected!: boolean;
 
 	/**
-	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is hidden.
-	 * @default false
-	 * @public
-	 * @since 1.0.0-rc.12
-	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
-
-	/**
 	 * Defines the tooltip of the component.
 	 * @default ""
 	 * @private
@@ -47,11 +39,11 @@ class Option extends UI5Element implements IOption {
 	title!: string;
 
 	/**
-	 * Defines the <code>icon</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b>
+	 * Defines the `icon` source URI.
+	 *
+	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default null
 	 * @public
 	 */
@@ -59,9 +51,8 @@ class Option extends UI5Element implements IOption {
 	icon?: string | null;
 
 	/**
-	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
-	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
-	 *
+	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
+	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
 	 * @default ""
 	 * @public
 	 */
@@ -88,9 +79,8 @@ class Option extends UI5Element implements IOption {
 
 	/**
 	 * Defines the text of the component.
-	 * <br><br>
-	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
