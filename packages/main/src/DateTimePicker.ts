@@ -184,20 +184,19 @@ class DateTimePicker extends DatePicker {
 	}
 
 	/**
-	 * PUBLIC METHODS
+	 * @override
+	 * @private
 	 */
+	_togglePicker() {
+		super._togglePicker();
 
-	/**
-	 * Opens the picker.
-	 * @public
-	 */
-	//  async openPicker(): Promise<void> {
-	// 	await super.openPicker();
-	// 	this._previewValues = {
-	// 		...this._previewValues,
-	// 		timeSelectionValue: this.value || this.getFormat().format(new Date()),
-	// 	};
-	// }
+		if (this.open) {
+			this._previewValues = {
+				...this._previewValues,
+				timeSelectionValue: this.value || this.getFormat().format(new Date()),
+			};
+		}
+	}
 
 	/**
 	 * Read-only getters
@@ -340,7 +339,7 @@ class DateTimePicker extends DatePicker {
 			this._updateValueAndFireEvents(value, true, ["change", "value-changed"]);
 		}
 
-		this.togglePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -348,7 +347,7 @@ class DateTimePicker extends DatePicker {
 	 * that would disregard the user selection.
 	 */
 	_cancelClick() {
-		this.togglePicker();
+		this._togglePicker();
 	}
 
 	/**

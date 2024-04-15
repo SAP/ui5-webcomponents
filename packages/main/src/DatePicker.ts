@@ -465,7 +465,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if ((this._getInput().isEqualNode(e.target as Node) && this.open) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-			this.togglePicker();
+			this._togglePicker();
 		}
 
 		if (this.open) {
@@ -766,7 +766,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		this.togglePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -794,16 +794,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return this.getFormat().format(date);
 	}
 
-	/**
-	 * Opens or closes the picker.
-	 * @public
-	 */
-	togglePicker(): void {
+	_togglePicker(): void {
 		this.open = !this.open;
 	}
 
 	_toggleAndFocusInput() {
-		this.togglePicker();
+		this._togglePicker();
 		this._getInput().focus();
 	}
 

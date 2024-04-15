@@ -1,22 +1,16 @@
 import { assert } from "chai";
 
-const openPickerById = async (id, options) => {
+const togglePickerById = async (id) => {
 	await browser.$(`#${id}`).scrollIntoView();
 
-	return browser.executeAsync((id, options, done) => {
-		done(document.querySelector(`[id="${id}"]`).openPicker(options));
-	}, id, options);
-};
-
-const closePickerById = id => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`[id="${id}"]`).closePicker());
+		done(document.querySelector(`[id="${id}"]`)._togglePicker());
 	}, id);
 };
 
 const isPickerOpen = id => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`[id="${id}"]`).isOpen());
+		done(document.querySelector(`[id="${id}"]`).open);
 	}, id);
 };
 
@@ -57,13 +51,13 @@ describe("DateTimePicker general interaction", () => {
 
 	it("tests picker opens/closes programmatically", async () => {
 		// act
-		await openPickerById("dt");
+		await togglePickerById("dt");
 
 		// assert
 		assert.ok(await isPickerOpen("dt"), "The picker opens programmatically.");
 
 		// act
-		await closePickerById("dt");
+		await togglePickerById("dt");
 
 		// assert
 		assert.notOk(await isPickerOpen("dt"), "The picker closes programmatically.");
@@ -74,7 +68,7 @@ describe("DateTimePicker general interaction", () => {
 		const dtPicker = await browser.$("#dtSeconds");
 
 		// act
-		await openPickerById("dtSeconds");
+		await togglePickerById("dtSeconds");
 
 		// assert
 		const currentValue = await dtPicker.shadow$("ui5-input").getValue();
@@ -121,7 +115,7 @@ describe("DateTimePicker general interaction", () => {
 		await browser.keys("wrongtext");
 		await browser.keys("Tab");
 
-		await openPickerById("dtSeconds");
+		await togglePickerById("dtSeconds");
 		// act
 		const picker = await getPicker("dtSeconds");
 		// select the next day (the right from the selected)
@@ -139,7 +133,7 @@ describe("DateTimePicker general interaction", () => {
 
 	it("tests change event is fired on submit", async () => {
 		// test submit from empty value to current date/time value
-		await openPickerById("dt1");
+		await togglePickerById("dt1");
 
 		const picker = await getPicker("dt1");
 		const inputCounter = await browser.$("#input1");
@@ -153,7 +147,7 @@ describe("DateTimePicker general interaction", () => {
 		assert.strictEqual(await inputCounter.getProperty("value"), "1", "Changed should be called 1 time.");
 
 		// tests submit on same value
-		await openPickerById("dt1");
+		await togglePickerById("dt1");
 
 		// act
 		await submitBtn.click();
@@ -164,7 +158,7 @@ describe("DateTimePicker general interaction", () => {
 	});
 
 	it("tests change event not fired on cancel", async () => {
-		await openPickerById("dt2");
+		await togglePickerById("dt2");
 
 		const inputCounter = await browser.$("#input3");
 		const cancelBtn = await getCancelButton("dt2");
@@ -184,7 +178,7 @@ describe("DateTimePicker general interaction", () => {
 		const expectedHoursMinSecPeriodCount = 1;
 
 		// act
-		await openPickerById("dtSeconds");
+		await togglePickerById("dtSeconds");
 
 		// assert
 		const hoursMinSecClocks = await getTimeSelectionClocksCount("dtSeconds");
@@ -194,10 +188,10 @@ describe("DateTimePicker general interaction", () => {
 		assert.strictEqual(hoursMinSecPeriod, expectedHoursMinSecPeriodCount,
 			"The picker have 1 Period Selector");
 
-		await closePickerById("dtSeconds");
+		await togglePickerById("dtSeconds");
 
 		// act
-		await openPickerById("dtMinutes");
+		await togglePickerById("dtMinutes");
 
 		// assert
 		const hoursMinClocks = await getTimeSelectionClocksCount("dtMinutes");
@@ -207,26 +201,26 @@ describe("DateTimePicker general interaction", () => {
 		assert.strictEqual(hoursMinPeriod, expectedHoursMinPeriodCount,
 				"The picker have 1 Period Selector");
 
-		await closePickerById("dtMinutes");
+		await togglePickerById("dtMinutes");
 	});
 
 	it("tests hours clock is active on picker open", async () => {
 		// act
-		await openPickerById("dt");
+		await togglePickerById("dt");
 
 		// assert
 		const picker = await getPicker("dt");
 		const active = await picker.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="hours"]`).getProperty("active");
 		assert.ok(active, "The hours clock is active.");
 
-		await closePickerById("dt");
+		await togglePickerById("dt");
 	});
 
 	it("tests selection of 12:34:56 AM", async () => {
 		const dtPicker = await browser.$("#dtTest12AM");
 
 		// act
-		await openPickerById("dtTest12AM");
+		await togglePickerById("dtTest12AM");
 
 		const picker = await getPicker("dtTest12AM");
 
@@ -246,7 +240,7 @@ describe("DateTimePicker general interaction", () => {
 		const dtPicker = await browser.$("#dtTest12PM");
 
 		// act
-		await openPickerById("dtTest12PM");
+		await togglePickerById("dtTest12PM");
 
 		const picker = await getPicker("dtTest12PM");
 
@@ -263,7 +257,7 @@ describe("DateTimePicker general interaction", () => {
 
 	it("tests change event is prevented on submit when prevent default is called", async () => {
 		// test submit from empty value to current date/time value
-		await openPickerById("dtPreventDefault");
+		await togglePickerById("dtPreventDefault");
 
 		const picker = await getPicker("dtPreventDefault");
 		const pickerInput = await browser.$("#dtPreventDefault");

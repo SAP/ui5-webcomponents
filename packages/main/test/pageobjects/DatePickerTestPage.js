@@ -156,7 +156,7 @@ class DatePickerTestPage {
 
 	async togglePicker() {
 		return browser.executeAsync((id, done) => {
-			done(document.querySelector(id).togglePicker());
+			done(document.querySelector(id)._togglePicker());
 		}, this._sut);
 	}
 
