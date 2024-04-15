@@ -45,6 +45,8 @@
 	--_ui5_avatar_focus_width: 0.0625rem;
 	--_ui5_avatar_focus_color: var(--sapContent_FocusColor);
 
+	--_ui5_avatar_overflow_button_focus_offset: 0.0625rem;
+
 	--_ui5_avatar_fontsize_XS: 0.75rem;
 	--_ui5_avatar_fontsize_S: 1.125rem;
 	--_ui5_avatar_fontsize_M: 1.625rem;

@@ -113,7 +113,7 @@ describe("Popover general interaction", () => {
 		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(await popover.getProperty("opened"), true,
+		assert.strictEqual(await popover.getProperty("open"), true,
 			"Popover remains open.");
 		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -222,7 +222,7 @@ describe("Popover general interaction", () => {
 
 		await btnOpenPopover.click();
 
-		assert.ok(await focusedButton.getProperty("focused"), "The button is focused.");
+		assert.ok(await focusedButton.matches(":focus"), "The button is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -233,17 +233,17 @@ describe("Popover general interaction", () => {
 
 		await btn.click();
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// list
 		await browser.keys("Tab");
 
-		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// button
 		await browser.keys("Tab");
 
-		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// select
 		await browser.keys("Tab");
@@ -254,7 +254,7 @@ describe("Popover general interaction", () => {
 		// goes to first focusable again
 		await browser.keys("Tab");
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -265,7 +265,7 @@ describe("Popover general interaction", () => {
 
 		await btn.click();
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// footer button
 		await browser.keys(["Shift", "Tab"]);
@@ -282,7 +282,7 @@ describe("Popover general interaction", () => {
 		// header button
 		await browser.keys(["Shift", "Tab"]);
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -385,6 +385,8 @@ describe("Popover general interaction", () => {
 	it("tests initial focus when the popover is removed from the DOM in the meantime", async () => {
 		const createAndRemovePopover = await browser.$("#createAndRemove");
 		const result = await browser.$("#createAndRemoveResult");
+
+		await createAndRemovePopover.scrollIntoView();
 
 		await createAndRemovePopover.click();
 		await result.waitForDisplayed({ timeout: 3000 })
