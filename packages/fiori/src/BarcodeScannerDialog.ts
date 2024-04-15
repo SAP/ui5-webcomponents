@@ -172,7 +172,9 @@ class BarcodeScannerDialog extends UI5Element {
 				return;
 			}
 
-			this.loading = true;
+			if (!this.permissionsGranted) {
+				this.loading = true;
+			}
 
 			this._getUserPermission()
 				.then(() => {
