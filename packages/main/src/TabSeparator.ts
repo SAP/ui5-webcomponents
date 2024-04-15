@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
-import type { TabContainerStripInfo, TabContainerOverflowInfo } from "./TabContainer.js";
+import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -22,6 +22,7 @@ interface TabSeparatorInStrip extends HTMLElement {
  * The `ui5-tab-separator` represents a vertical line to separate tabs inside a `ui5-tabcontainer`.
  * @constructor
  * @extends UI5Element
+ * @implements {ITab}
  * @abstract
  * @public
  */
@@ -29,7 +30,7 @@ interface TabSeparatorInStrip extends HTMLElement {
 	tag: "ui5-tab-separator",
 	renderer: litRender,
 })
-class TabSeparator extends UI5Element {
+class TabSeparator extends UI5Element implements ITab {
 	_forcedStyleInOverflow?: Record<string, any>;
 
 	_getElementInStrip?: () => HTMLElement | undefined;
@@ -65,15 +66,11 @@ class TabSeparator extends UI5Element {
 	/**
 	 * Returns the DOM reference of the separator that is placed in the header.
 	 *
-	 * **Note:** Tabs and separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
+	 * **Note:** Separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such separators will return `undefined`.
 	 * @public
 	 */
-	getTabInStripDomRef(): HTMLElement | undefined {
-		if (this._getElementInStrip) {
-			return this._getElementInStrip();
-		}
-
-		return undefined;
+	getDomRefInStrip(): HTMLElement | undefined {
+		return this._getElementInStrip?.();
 	}
 
 	get stableDomRef() {
