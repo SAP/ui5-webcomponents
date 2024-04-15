@@ -7,7 +7,7 @@ describe("SegmentedButton general interaction", () => {
 
 	it("tests if selected and tooltip attributes are applied", async () => {
 		const segmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");
-		const segmentedButtonItemInner = await segmentedButtonItem.shadow$(".ui5-button-root");
+		const segmentedButtonItemInner = await segmentedButtonItem.shadow$(".ui5-segmented-button-item-root");
 
 		assert.ok(await segmentedButtonItem.getProperty("selected"), "SegmentedButtonItem has property selected");
 		assert.strictEqual(await segmentedButtonItemInner.getProperty("title"), "Employee",
@@ -70,11 +70,11 @@ describe("SegmentedButton general interaction", () => {
 
 		await button1.click();
 		await button1.keys("Tab");
-		assert.ok(await segmentedButtonItem1.isFocused(), "The first SegmentedButtonItem should be focused.");
+		assert.ok(await segmentedButtonItem1.matches(":focus"), "The first SegmentedButtonItem should be focused.");
 
 		await button2.click();
 		await button2.keys("Tab");
-		assert.ok(await segmentedButtonItem2.isFocused(), "The selected SegmentedButtonItem should be focused.");
+		assert.ok(await segmentedButtonItem2.matches(":focus"), "The selected SegmentedButtonItem should be focused.");
 	});
 
 	it("tests programatical item pressing", async () => {

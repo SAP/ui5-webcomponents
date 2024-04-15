@@ -244,6 +244,7 @@ class SegmentedButton extends UI5Element {
 		// focus the selected item if such is present
 		if (this.selectedItems.length) {
 			this._itemNavigation.setCurrentItem(this.selectedItems[0]);
+			this.selectedItems[0].focus();
 			this.hasPreviouslyFocusedItem = true;
 		}
 	}
