@@ -434,11 +434,7 @@ class List extends UI5Element {
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
 	 * @public
 	 */
-	@slot({
-		"default": true,
-		invalidateOnChildChange: true,
-		type: HTMLElement,
-	})
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<ListItemBase | ListItemGroup>;
 
 	/**
