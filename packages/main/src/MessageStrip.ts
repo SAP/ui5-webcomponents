@@ -40,15 +40,6 @@ enum DesignClassesMapping {
 	ColorSet2 = "ui5-message-strip-root--color-set-2",
 }
 
-enum IconMappings {
-	Information = "information",
-	Positive = "sys-enter-2",
-	Negative = "error",
-	Warning = "alert",
-	ColorSet1 = "",
-	ColorSet2 = "",
-}
-
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 
 /**
@@ -207,7 +198,18 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return IconMappings[this.design];
+		switch (this.design) {
+		case MessageStripDesign.Warning:
+			return "alert";
+		case MessageStripDesign.Positive:
+			return "sys-enter-2";
+		case MessageStripDesign.Negative:
+			return "error";
+		case MessageStripDesign.Information:
+			return "information";
+		default:
+			return null;
+		}
 	}
 
 	get designClasses() {
