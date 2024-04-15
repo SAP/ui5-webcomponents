@@ -53,7 +53,7 @@
 :host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
 :host(:not([hidden]):not([disabled]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
-	border: 1px solid var(--sapButton_Hover_BorderColor);
+	border: 0.0625rem solid var(--sapButton_Hover_BorderColor);
 	color: var(--sapButton_Hover_TextColor);
 }
 
@@ -116,10 +116,7 @@
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
-	left: 0.0625rem;
-	top: 0.0625rem;
-	right: 0.0625rem;
-	bottom: 0.0625rem;
+	inset: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
@@ -150,12 +147,12 @@ bdi {
 
 :host([desktop]:not(:last-child)) .ui5-segmented-button-item-root:focus-within:after,
 :host(:not(:last-child)) .ui5-segmented-button-item-root:focus-visible:after  {
-	border-top-right-radius: var(--_ui5_button_focused_inner_border_radius);
-	border-bottom-right-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-start-end-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-end-end-radius: var(--_ui5_button_focused_inner_border_radius);
 }
 
 :host([desktop]:not(:first-child)) .ui5-segmented-button-item-root:focus-within:after,
 :host(:not(:first-child)) .ui5-segmented-button-item-root:focus-visible:after  {
-	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
-	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-start-start-radius: var(--_ui5_button_focused_inner_border_radius);
+	border-end-start-radius: var(--_ui5_button_focused_inner_border_radius);
 }
