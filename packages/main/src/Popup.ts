@@ -219,7 +219,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this.setAttribute("popover", "manual");
 		ResizeHandler.register(this, this._resizeHandler);
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -358,7 +357,7 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	async forwardToFirst() {
-		const firstFocusable = await getFirstFocusableElement(this);
+		const firstFocusable = await getFirstFocusableElement(this.getDomRef()!);
 
 		if (firstFocusable) {
 			firstFocusable.focus();
@@ -372,7 +371,7 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	async forwardToLast() {
-		const lastFocusable = await getLastFocusableElement(this);
+		const lastFocusable = await getLastFocusableElement(this.getDomRef()!);
 
 		if (lastFocusable) {
 			lastFocusable.focus();
@@ -411,7 +410,7 @@ abstract class Popup extends UI5Element {
 			|| document.getElementById(this.initialFocus);
 		}
 
-		element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
+		element = element || await getFirstFocusableElement(this.getDomRef()!) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			if (element === this._root) {

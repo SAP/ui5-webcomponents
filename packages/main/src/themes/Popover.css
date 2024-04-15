@@ -4,6 +4,10 @@
 	max-width: calc(100vw - (100vw - 100%) - 2 * var(--_ui5_popup_viewport_margin));
 }
 
+:host([open]) {
+	display: flex;
+}
+
 :host([hide-arrow]) {
 	box-shadow: var(--_ui5_popover_no_arrow_box_shadow);
 }
@@ -69,6 +73,7 @@
 
 .ui5-popover-root {
 	min-width: 6.25rem;
+	width: 100%;
 }
 
 .ui5-popover-arrow {

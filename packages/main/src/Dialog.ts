@@ -370,11 +370,6 @@ class Dialog extends Popup {
 		return this.accessibleRole.toLowerCase();
 	}
 
-	_show() {
-		super._show();
-		this._center();
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
@@ -404,12 +399,12 @@ class Dialog extends Popup {
 		super._resize();
 
 		if (!this._draggedOrResized) {
-			this._center();
+			// this._center();
 		}
 	}
 
 	_screenResize() {
-		this._center();
+		// this._center();
 	}
 
 	_attachScreenResizeHandler() {
@@ -709,6 +704,31 @@ class Dialog extends Popup {
 	_detachMouseResizeHandlers() {
 		window.removeEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.removeEventListener("mouseup", this._resizeMouseUpHandler);
+	}
+
+	/**
+	 * Sets "block" display to the popup. The property can be overriden by derivatives of Popup.
+	 * @protected
+	 */
+	_show() {
+		if (this.isConnected) {
+			(this.getDomRef() as HTMLDialogElement)!.showModal();
+		}
+	}
+
+	// _show() {
+	// 	super._show();
+	// 	this._center();
+	// }
+
+	/**
+	 * Sets "none" display to the popup
+	 * @protected
+	 */
+	hide() {
+		if (this.isConnected) {
+			(this.getDomRef() as HTMLDialogElement)!.close();
+		}
 	}
 }
 

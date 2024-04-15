@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
+import {isDesktop, isIOS} from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
@@ -22,6 +22,7 @@ import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler";
 
 const ARROW_SIZE = 8;
 
@@ -228,6 +229,11 @@ class Popover extends Popup {
 
 	constructor() {
 		super();
+	}
+
+	onEnterDOM() {
+		super.onEnterDOM();
+		this.setAttribute("popover", "manual");
 	}
 
 	/**

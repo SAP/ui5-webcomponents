@@ -6,14 +6,9 @@
     box-sizing: border-box;
 }
 
-:host([open]) {
-	display: flex;
-}
-
 .ui5-popup-root {
     background: inherit;
     border-radius: inherit;
-    width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
