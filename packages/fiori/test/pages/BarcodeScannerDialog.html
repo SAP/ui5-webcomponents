@@ -40,6 +40,7 @@
 
 		btnScan.addEventListener("click", (event) => {
 			dlgScan.open = true;
+			document.querySelector(".open-state").textContent = `${dlgScan.open}`;
 		});
 
 		dlgScan.addEventListener("ui5-scan-success", (event) => {
@@ -50,10 +51,6 @@
 		dlgScan.addEventListener("ui5-scan-error", (event) => {
 			scanError.innerHTML = event.detail.message;
 			dlgScan.open = false;
-		});
-
-		dlgScan.addEventListener("ui5-open", (event) => {
-			document.querySelector(".open-state").textContent = `${dlgScan.open}`;
 		});
 
 		dlgScan.addEventListener("ui5-close", (event) => {
