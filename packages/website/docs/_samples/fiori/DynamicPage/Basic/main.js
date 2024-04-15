@@ -1,8 +1,8 @@
 import "@ui5/webcomponents-fiori/dist/DynamicPage.js";
 import "@ui5/webcomponents-fiori/dist/DynamicPageTitle.js";
 import "@ui5/webcomponents-fiori/dist/DynamicPageHeader.js";
-import "@ui5/webcomponents-fiori/dist/Bar.js";
 
+import "@ui5/webcomponents/dist/Bar.js";
 import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents/dist/Badge.js";
 import "@ui5/webcomponents/dist/Breadcrumbs.js";
