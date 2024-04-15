@@ -81,6 +81,19 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		Button,
 	],
 })
+
+/**
+ * Fired after the component is opened.
+ * @public
+ */
+@event("open")
+
+/**
+ * Fired after the component is closed.
+ * @public
+ */
+@event("close")
+
 /**
  * Fires when the scan is completed successfuuly.
  * @param {string} text the scan result as string
@@ -216,12 +229,16 @@ class BarcodeScannerDialog extends UI5Element {
 		this.dialog = this._getDialog();
 		this.dialog.show();
 		this.open = true;
+
+		this.fireEvent("open");
 	}
 
 	_closeDialog() {
 		if (this.dialog && this.dialog.open) {
 			this.dialog.close();
 			this.open = false;
+
+			this.fireEvent("close");
 		}
 	}
 
