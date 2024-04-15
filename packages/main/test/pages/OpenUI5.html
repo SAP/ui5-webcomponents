@@ -45,9 +45,51 @@
 				},
 			});
 
+			// Chain opening
+			const dialogSpecial = new sap.m.Dialog({
+				contentWidth: "1000px",
+				contentHeight: "1000px",
+				title: "sap.m.Dialog that opens ui5-dialog that opens sap.m.Popover",
+				content: [
+					new sap.ui.core.HTML({
+						content: `
+							<ui5-button id="btnChain">Open ui5-dialog</ui5-button>
+							<ui5-dialog header-text="This is ui5-dialog" id="dialogChain" opener="btnChain">
+
+							</ui5-dialog>
+						`
+					}),
+				]
+			});
+			const btnSpecial = new sap.m.Button({
+				text: "Chain opening",
+				press: function() {
+					dialogSpecial.open();
+					btnChain.addEventListener("click", () => {
+						dialogChain.addEventListener("after-open", () => {
+							const popoverChain = new sap.m.Popover({
+								title: "This is a sap.m.Popover",
+								content: [
+									new sap.m.Label({text: "Some popover content"}),
+									new sap.m.DatePicker()
+								],
+							})
+							const btnChain2 = new sap.m.Button("btnChain2", {
+								text: "Open sap.m.Popover",
+								press: function() {
+									popoverChain.openBy(btnChain2);
+								},
+							});
+							btnChain2.placeAt("dialogChain")
+						});
+						dialogChain.open = true;
+					})
+				},
+			});
+
             const page = new sap.m.Page({
                 content: [
-                    dialog, dialog2, btn, btn2
+                    dialog, dialog2, btn, btn2, btnSpecial
                 ],
             });
 
