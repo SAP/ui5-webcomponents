@@ -18,6 +18,11 @@
 	color: var(--sapContent_NonInteractiveIconColor);
 }
 
+:host([active][actionable]:not([disabled]))::part(content),
+:host([active][actionable]:not([disabled]))::part(additional-text)  {
+	color: var(--sapList_Active_TextColor);
+}
+
 :host([focused]:not([active]):not([disabled])) {
 	background-color: var(--sapList_Hover_Background);
 }

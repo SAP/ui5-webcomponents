@@ -13,7 +13,8 @@
 	outline: none;
 }
 
-:host([type="Group"]) .ui5-avatar-group-items:focus {
+:host([type="Group"][desktop]) .ui5-avatar-group-items:focus-within,
+:host([type="Group"]) .ui5-avatar-group-items:focus-visible {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
 	border-radius: var(--_ui5_avatar_group_focus_border_radius);
@@ -38,6 +39,14 @@
 	pointer-events: none;
 }
 
+.ui5-avatar-group-overflow-btn {
+	overflow: visible;
+}
+
+.ui5-avatar-group-overflow-btn::part(button) {
+	min-width: auto;
+}
+
 ::slotted([ui5-button]:not([hidden])),
 .ui5-avatar-group-overflow-btn:not([hidden]) {
 	--_ui5_button_base_padding: 0;
@@ -47,10 +56,16 @@
 	z-index: 0; /* prevent last visible avatar from covering half of the button */
 }
 
-::slotted([ui5-button][focused]),
-.ui5-avatar-group-overflow-btn[focused] {
+::slotted([ui5-button][desktop]:focus-within),
+.ui5-avatar-group-overflow-btn[desktop]:focus-within {
+	outline: var(--_ui5_avatar_outline);
+	outline-offset: var(--_ui5_avatar_overflow_button_focus_offset);
+}
+
+.ui5-avatar-group-overflow-btn::part(button):focus-visible:after {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
+	border-radius: 50%;
 }
 
 .ui5-avatar-group-overflow-btn.ui5-avatar-group-overflow-btn-xs {

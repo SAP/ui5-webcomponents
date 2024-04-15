@@ -92,7 +92,7 @@
 				</ui5-button>
 			{{/if}}
 
-			{{#if renderUploadCollectionDeleteButton}}
+			{{#unless hideDeleteButton}}
 				<ui5-button
 						class="ui5-upload-collection-deletebtn"
 						tabindex="-1"
@@ -104,7 +104,7 @@
 						@click="{{_onDelete}}"
 						tooltip="{{deleteText}}"
 				></ui5-button>
-			{{/if}}
+			{{/unless}}
 		{{/if}}
 	</div>
 {{/inline}}
