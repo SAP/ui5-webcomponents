@@ -83,13 +83,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 })
 
 /**
- * Fired after the component is opened.
- * @public
- */
-@event("open")
-
-/**
- * Fired after the component is closed.
+ * Fired when the user closes the component.
  * @public
  */
 @event("close")
