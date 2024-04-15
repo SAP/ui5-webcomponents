@@ -1,3 +1,7 @@
+:host(:not([open])) {
+	display: none;
+}
+
 :host {
     background: var(--sapGroup_ContentBackground);
     border-radius: var(--_ui5_popup_border_radius);

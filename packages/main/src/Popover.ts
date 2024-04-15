@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import {isDesktop, isIOS} from "@ui5/webcomponents-base/dist/Device.js";
+import {isIOS} from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
@@ -229,11 +229,6 @@ class Popover extends Popup {
 
 	constructor() {
 		super();
-	}
-
-	onEnterDOM() {
-		super.onEnterDOM();
-		this.setAttribute("popover", "manual");
 	}
 
 	/**
@@ -823,6 +818,10 @@ class Popover extends Popup {
 		}
 
 		return this.horizontalAlign;
+	}
+
+	get isPopover() {
+		return true;
 	}
 }
 

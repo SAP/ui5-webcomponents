@@ -6,7 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import {isChrome, isSafari, isDesktop, isPhone} from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -219,6 +219,10 @@ abstract class Popup extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (this.isPopover) {
+			this.setAttribute("popover", "manual");
+		}
+
 		ResizeHandler.register(this, this._resizeHandler);
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -449,7 +453,7 @@ abstract class Popup extends UI5Element {
 
 		this._isOpened = true;
 
-		if (this.isModal && !this.shouldHideBackdrop) {
+		if (this.isPopover && this.isModal) {
 			Popup.blockPageScrolling(this);
 		}
 
@@ -504,7 +508,7 @@ abstract class Popup extends UI5Element {
 
 		this._isOpened = false;
 
-		if (this.isModal) {
+		if (this.isPopover && this.isModal) {
 			Popup.unblockPageScrolling(this);
 		}
 
@@ -560,6 +564,10 @@ abstract class Popup extends UI5Element {
 	 */
 	hide() {
 		this.isConnected && this.hidePopover();
+	}
+
+	get isPopover() {
+		return false;
 	}
 
 	/**
