@@ -399,13 +399,13 @@ class ShellBar extends UI5Element {
 	_isXXLBreakpoint!: boolean;
 
 	/**
-	 * Defines the `ui5-shellbar` assistant.
+	 * Defines the assistant slot.
 	 *
 	 * @since 2.0.0
 	 * @public
 	 */
 	@slot()
-	assistant!: Array<HTMLElement>;
+	assistant!: Array<IButton>;
 
 	/**
 	 * Defines the `ui5-shellbar` additional items.
