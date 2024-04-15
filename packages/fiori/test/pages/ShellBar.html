@@ -242,8 +242,8 @@
 
 	<script>
 
-		Array.prototype.slice.call(document.querySelectorAll("ui5-toggle-button")).forEach(function (el) {
-			el.addEventListener("click", function (event) {
+		[...document.querySelectorAll("ui5-toggle-button")].forEach(el => {
+			el.addEventListener("click", event => {
 				const toggleButton = event.target;
 				toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
 			});
