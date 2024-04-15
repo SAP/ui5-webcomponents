@@ -527,9 +527,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get allColorsInPalette() {
-		const colorItems = this.effectiveColorItems;
-
-		return [...colorItems, ...this.recentColorsElements];
+		return [...this.effectiveColorItems, ...this.recentColorsElements];
 	}
 
 	/**
