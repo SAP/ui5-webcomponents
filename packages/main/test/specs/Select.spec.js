@@ -199,7 +199,7 @@ describe("Select general interaction", () => {
 		const popover = await select.shadow$("ui5-responsive-popover");
 
 		// assert
-		assert.notOk(await popover.getProperty("opened"), "Select remains closed.");
+		assert.notOk(await popover.getProperty("open"), "Select remains closed.");
 
 		// act - try to change selection when dropdown is closed
 		await select.keys("ArrowUp");
@@ -375,7 +375,7 @@ describe("Select general interaction", () => {
 		await btn.keys("Tab");
 
 		await browser.keys("Space");
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 	});
 
 	it("toggles upon F4", async () => {
@@ -389,10 +389,10 @@ describe("Select general interaction", () => {
 		await btn.keys("Tab");
 
 		await browser.keys("F4");
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await browser.keys("F4");
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("toggles upon ALT + UP", async () => {
@@ -406,10 +406,10 @@ describe("Select general interaction", () => {
 		await btn.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await browser.keys(["Alt", "ArrowUp", "NULL"]);
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
@@ -423,10 +423,10 @@ describe("Select general interaction", () => {
 		await btn.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("adds unselected only items to select", async () => {
@@ -588,15 +588,15 @@ describe("Select general interaction", () => {
 
 		// select the first item
 		await select.click();
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 		await firstItem.click();
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 
 		// click the selected item again
 		await select.click();
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 		await firstItem.click();
-		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
 
 	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
@@ -606,7 +606,7 @@ describe("Select general interaction", () => {
 		const popover = await select.shadow$("ui5-responsive-popover");
 
 		await select.click();
-		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await select.keys("ArrowDown");
 		await select.keys("ArrowDown");
