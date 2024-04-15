@@ -1,6 +1,6 @@
 <div class="ui5-dynamic-page-root">
 	<div class="ui5-dynamic-page-scroll-container" @scroll="{{snapOnScroll}}">
-		<header 
+		<header
 			class="ui5-dynamic-page-title-header-wrapper"
 			id="{{_id}}-header"
 			aria-label="{{_headerLabel}}"
@@ -37,12 +37,12 @@
 	</div>
 
 	<div class="ui5-dynamic-page-footer">
-		<slot name="footer"></slot>
+		<slot name="footerArea"></slot>
 	</div>
 </div>
 
 {{#*inline "header-actions"}}
-	<ui5-dynamic-page-header-actions 
+	<ui5-dynamic-page-header-actions
 		?snapped="{{headerSnapped}}"
 		?pinned="{{headerPinned}}"
 		?hide-pin-button="{{hidePinButton}}"

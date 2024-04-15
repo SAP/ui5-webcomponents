@@ -64,7 +64,7 @@
     animation: bounceHide 0.35s forwards ease-in-out;
 }
 
-::slotted([slot="footer"]) {
+::slotted([slot="footerArea"]) {
     /* TODO css vars? */
     border-radius: 0.25rem;
     background-color: var(--_ui5_dynamic_page_header_background_color);
