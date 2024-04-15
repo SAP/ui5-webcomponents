@@ -18,7 +18,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
-import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
+import BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
@@ -38,7 +38,6 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
-import BreadcrumbsPopoverTemplate from "./generated/templates/BreadcrumbsPopoverTemplate.lit.js";
 
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
@@ -86,9 +85,7 @@ type BreadcrumbsItemClickEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: BreadcrumbsTemplate,
-	staticAreaTemplate: BreadcrumbsPopoverTemplate,
-	styles: breadcrumbsCss,
-	staticAreaStyles: breadcrumbsPopoverCss,
+	styles: [breadcrumbsCss, breadcrumbsPopoverCss],
 	dependencies: [
 		BreadcrumbsItem,
 		Link,
@@ -153,8 +150,8 @@ class Breadcrumbs extends UI5Element {
 	 * @default "Slash"
 	 * @public
 	 */
-	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separatorStyle!: `${BreadcrumbsSeparatorStyle}`;
+	@property({ type: BreadcrumbsSeparator, defaultValue: BreadcrumbsSeparator.Slash })
+	separators!: `${BreadcrumbsSeparator}`;
 
 	/**
 	 * Holds the number of items in the overflow.
@@ -389,13 +386,12 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async _toggleRespPopover() {
-		this.responsivePopover = await this._respPopover();
+	_toggleRespPopover() {
+		this.responsivePopover = this._respPopover();
 
 		if (this._isPickerOpen) {
 			this._closeRespPopover();
@@ -408,8 +404,8 @@ class Breadcrumbs extends UI5Element {
 		this.responsivePopover && this.responsivePopover.close();
 	}
 
-	async _openRespPopover() {
-		this.responsivePopover = await this._respPopover();
+	_openRespPopover() {
+		this.responsivePopover = this._respPopover();
 		this.responsivePopover.showAt(this._dropdownArrowLink);
 	}
 
@@ -524,7 +520,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _isPickerOpen() {
-		return !!this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover.open;
 	}
 
 	get _accessibleNameText() {

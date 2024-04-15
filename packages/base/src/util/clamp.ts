@@ -6,7 +6,8 @@
  * @returns {number}
  */
 const clamp = (val: number, min: number, max: number) => {
-	return Math.min(Math.max(val, min), max);
+	// handles case when max < min
+	return Math.min(Math.max(val, min), Math.max(min, max));
 };
 
 export default clamp;

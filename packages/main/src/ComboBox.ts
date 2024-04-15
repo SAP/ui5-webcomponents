@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -57,7 +58,6 @@ import {
 
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
@@ -157,15 +157,14 @@ type ComboBoxSelectionChangeEventDetail = {
 	tag: "ui5-combobox",
 	languageAware: true,
 	renderer: litRender,
-	styles: ComboBoxCss,
-	staticAreaStyles: [
+	styles: [
+		ComboBoxCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		ComboBoxPopoverCss,
 		SuggestionsCss,
 	],
 	template: ComboBoxTemplate,
-	staticAreaTemplate: ComboBoxPopoverTemplate,
 	dependencies: [
 		ComboBoxItem,
 		Icon,
@@ -469,7 +468,7 @@ class ComboBox extends UI5Element {
 	async shouldClosePopover(): Promise<boolean> {
 		const popover: ResponsivePopover = await this._getPicker();
 
-		return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
+		return popover.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(e: FocusEvent) {
@@ -496,7 +495,8 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!(this.shadowRoot!.contains(toBeFocused)) && (this.staticAreaItem !== e.relatedTarget)) {
+		const popover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+		if (!(this.getDomRef()!.contains(toBeFocused)) && (popover !== e.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}
@@ -526,7 +526,7 @@ class ComboBox extends UI5Element {
 	async _toggleRespPopover() {
 		const picker: ResponsivePopover = await this._getPicker();
 
-		if (picker.opened) {
+		if (picker.open) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -556,8 +556,8 @@ class ComboBox extends UI5Element {
 	}
 
 	async _getValueStatePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const popover: Popover = staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
+		await renderFinished();
+		const popover: Popover = this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -858,7 +858,7 @@ class ComboBox extends UI5Element {
 
 			this._fireChangeEvent();
 
-			if (picker?.opened && !focusedItem?.isGroupItem) {
+			if (picker?.open && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
@@ -1120,8 +1120,8 @@ class ComboBox extends UI5Element {
 	}
 
 	async _getPicker() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const picker = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		const picker = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -1196,7 +1196,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
-		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Left : PopoverHorizontalAlign.Right;
+		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Start : PopoverHorizontalAlign.End;
 	}
 
 	/**
@@ -1207,7 +1207,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get open(): boolean {
-		return this?.responsivePopover?.opened || false;
+		return this?.responsivePopover?.open || false;
 	}
 
 	get _isPhone(): boolean {
@@ -1244,6 +1244,7 @@ class ComboBox extends UI5Element {
 				"min-width": `${this.offsetWidth || 0}px`,
 				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
+			popoverValueStateMessage: {},
 		};
 	}
 

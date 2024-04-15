@@ -14,7 +14,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
@@ -215,8 +215,8 @@ abstract class ListItem extends ListItemBase {
 	@property()
 	accessibleRole!: string;
 
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	_mode!: `${ListMode}`;
+	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+	_selectionMode!: `${ListSelectionMode}`;
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
@@ -275,7 +275,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering() {
-		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
+		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	onEnterDOM() {
@@ -423,29 +423,29 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get placeSelectionElementBefore() {
-		return this._mode === ListMode.MultiSelect
-			|| this._mode === ListMode.SingleSelectBegin;
+		return this._selectionMode === ListSelectionMode.Multiple
+			|| this._selectionMode === ListSelectionMode.SingleStart;
 	}
 
 	get placeSelectionElementAfter() {
 		return !this.placeSelectionElementBefore
-			&& (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+			&& (this._selectionMode === ListSelectionMode.SingleEnd || this._selectionMode === ListSelectionMode.Delete);
 	}
 
 	get modeSingleSelect() {
 		return [
-			ListMode.SingleSelectBegin,
-			ListMode.SingleSelectEnd,
-			ListMode.SingleSelect,
-		].includes(this._mode as ListMode);
+			ListSelectionMode.SingleStart,
+			ListSelectionMode.SingleEnd,
+			ListSelectionMode.Single,
+		].includes(this._selectionMode as ListSelectionMode);
 	}
 
-	get modeMultiSelect() {
-		return this._mode === ListMode.MultiSelect;
+	get modeMultiple() {
+		return this._selectionMode === ListSelectionMode.Multiple;
 	}
 
 	get modeDelete() {
-		return this._mode === ListMode.Delete;
+		return this._selectionMode === ListSelectionMode.Delete;
 	}
 
 	/**
@@ -472,7 +472,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get _ariaSelected() {
-		if (this.modeMultiSelect || this.modeSingleSelect) {
+		if (this.modeMultiple || this.modeSingleSelect) {
 			return this.selected;
 		}
 

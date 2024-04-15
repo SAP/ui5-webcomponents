@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.24.0-rc.3",
+  "version": "2.0.0-rc.1",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -52,7 +52,6 @@
     "globby": "^13.1.1",
     "handlebars": "^4.7.7",
     "is-port-reachable": "^3.1.0",
-    "jsdoc": "^3.6.6",
     "json-beautify": "^1.1.1",
     "mkdirp": "^1.0.4",
     "nps": "^5.10.0",

@@ -12,9 +12,9 @@ describe("Framework boot", async () => {
 		});
 
 		const styleElement = await browser.executeAsync(done => {
-			return done(document.querySelector("head>style[data-ui5-theme-properties]"));
+			return done(window['sap-ui-webcomponents-bundle'].hasStyle("data-ui5-theme-properties", "@ui5/webcomponents-theming"));
 		});
 
-		assert.ok(styleElement, "style[data-ui5-theme-properties] tag is successfully created and theme applied.");
+		assert.ok(styleElement, "style are successfully created and theme applied.");
 	});
 });
