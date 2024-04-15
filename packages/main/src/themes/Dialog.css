@@ -4,15 +4,8 @@
 	display: contents;
 }
 
-:host .ui5-popup-root {
-	min-width: 20rem;
-	min-height: 6rem;
-	max-height: 94%;
-	max-width: 90%;
-	flex-direction: column;
-	box-shadow: var(--sapContent_Shadow3);
-	border-radius: var(--sapElement_BorderCornerRadius);
-	border: none;
+:host([open]) .ui5-popup-root  {
+	display: flex;
 }
 
 :host([stretch]) .ui5-popup-root {
@@ -42,6 +35,15 @@
 }
 
 .ui5-popup-root {
+	display: none;
+	min-width: 20rem;
+	min-height: 6rem;
+	max-height: 94%;
+	/*max-width: 90%;*/
+	flex-direction: column;
+	box-shadow: var(--sapContent_Shadow3);
+	border-radius: var(--sapElement_BorderCornerRadius);
+	border: none;
 	padding: 0;
 	max-width: 100vw;
 }
