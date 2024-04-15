@@ -482,7 +482,6 @@ describe("Input general interaction", () => {
 
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
-		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
 
 		const input = await browser.$("#myInput");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
@@ -500,7 +499,6 @@ describe("Input general interaction", () => {
 		});
 
 		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
-		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
 		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
 	});
 
@@ -509,7 +507,6 @@ describe("Input general interaction", () => {
 
 		const suggestionsInput = await browser.$("#myInput").shadow$("input");
 		const changeEventResult = await browser.$("#inputResult").shadow$("input");
-		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
 
 		const input = await browser.$("#myInput");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
@@ -530,7 +527,6 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await suggestionsInput.getValue(), "Cuba", "Item is selected");
 		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
-		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
 		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
 	});
 
@@ -748,11 +744,11 @@ describe("Input general interaction", () => {
 		assert.strictEqual(parseFloat(await input.getProperty("value")).toPrecision(3), "1.22", "Value is not lost");
 	});
 
-	it("fires suggestion-item-preview", async () => {
+	it("fires selection-change", async () => {
 		await browser.url(`test/pages/Input_quickview.html`);
 
 		const inputItemPreview = await browser.$("#inputPreview2").shadow$("input");
-		const suggestionItemPreviewRes = await browser.$("#suggestionItemPreviewRes");
+		const selectionChangeRes = await browser.$("#selectionChangeRes");
 		const EXPECTED_PREVIEW_ITEM_TEXT = "Laptop Lenovo";
 
 		// act
@@ -766,7 +762,7 @@ describe("Input general interaction", () => {
 		const inputPopover = await inputElement.shadow$("ui5-responsive-popover");
 		const helpPopover = await browser.$("#quickViewCard2");
 
-		assert.strictEqual(await suggestionItemPreviewRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
+		assert.strictEqual(await selectionChangeRes.getValue(), EXPECTED_PREVIEW_ITEM_TEXT, "First item has been previewed");
 		assert.ok(await helpPopover.isDisplayedInViewport(), "The help popover is open.");
 		assert.ok(await inputPopover.isDisplayedInViewport(), "The input popover is open.");
 
@@ -1009,7 +1005,7 @@ describe("Input general interaction", () => {
 		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 	});
 
-	it("Should open suggestions popover if openPicker() is called on focusin", async () => {
+	it("Should open suggestions popover if open is set on focusin", async () => {
 		const input = await browser.$("#openPickerInput");
 		const popover = await input.shadow$("ui5-responsive-popover");
 
@@ -1090,7 +1086,7 @@ describe("Input general interaction", () => {
 		await input.scrollIntoView();
 
 		await browser.executeAsync((done) =>{
-			return done(document.getElementById("change-event-value").openPicker());
+			return done(() => { document.getElementById("change-event-value").open = true; });
 		});
 
 		const listItem = await input.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
@@ -1489,7 +1485,7 @@ describe("XSS tests for suggestions", () => {
 	});
 });
 
-describe("Prevent suggestion-item-select event", () => {
+describe("Prevent selection-change event", () => {
     let input;
     let SUGGESTION_TEXT;
     const INPUT_ID_SELECTOR = "#input-prevent-suggestion-select";
@@ -1500,7 +1496,7 @@ describe("Prevent suggestion-item-select event", () => {
         input = await browser.$(INPUT_ID_SELECTOR);
     });
 
-    it("User can prevent suggested-item-select on desired item", async () => {
+    it("User can prevent selecting of desired suggestion item", async () => {
         SUGGESTION_TEXT = "Cozy";
 
         await input.click();
@@ -1517,7 +1513,7 @@ describe("Prevent suggestion-item-select event", () => {
         assert.strictEqual(
             await input.getProperty("value"),
             "test test",
-            "Prevent suggestion-item-select event does not work"
+            "Prevent value 'change' works as expected"
         );
     });
 
@@ -1537,7 +1533,7 @@ describe("Prevent suggestion-item-select event", () => {
         assert.strictEqual(
             await input.getProperty("value"),
             SUGGESTION_TEXT,
-            "Event suggestion-item-select works as expected for items without event prevention"
+            "Event selection-change works as expected for items without event prevention"
         );
     });
 });

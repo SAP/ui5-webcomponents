@@ -46,7 +46,7 @@
 	<br/>
 	<br/>
 	<h3>Input suggestions with ui5-li</h3>
-	<ui5-input id="myInput2" show-suggestions class="input3auto">
+	<ui5-input id="myInput2" show-suggestions class="input3auto" open="true">
 		<ui5-li>Cozy</ui5-li>
 		<ui5-li>Compact</ui5-li>
 		<ui5-li>Condensed</ui5-li>
@@ -423,7 +423,7 @@
 		<br />
 	</div>
 
-	<h3>Input with openPicker() on focusin</h3>
+	<h3>Input with open picker on focusin</h3>
 	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
 		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
@@ -657,7 +657,7 @@
 			compactClearIconInput.toggleAttribute("readonly");
 		});
 
-		document.getElementById("myInput").addEventListener("ui5-suggestion-item-select", event => {
+		document.getElementById("myInput").addEventListener("ui5-change", event => {
 			const resultInput = document.getElementById("input-selection-event-test");
 			resultInput.setAttribute("value", parseInt(resultInput.getAttribute("value") || 0) + 1);
 		});
@@ -665,7 +665,7 @@
 		const openPickerInput = document.getElementById("openPickerInput");
 		let recentItems = [];
 		openPickerInput.addEventListener("input", handleSuggestions);
-		openPickerInput.addEventListener("suggestion-item-select", handleSelection);
+		openPickerInput.addEventListener("change", handleSelection);
 		openPickerInput.addEventListener("click", handleHistory);
 		openPickerInput.addEventListener("focus", handleHistory);
 
@@ -730,7 +730,7 @@
 
 		function handleHistory() {
 			handleSuggestions();
-			openPickerInput.openPicker();
+			openPickerInput.open = true;
 		}
 
 		document.getElementById("clear-button").addEventListener("click", event => {

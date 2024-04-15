@@ -25,8 +25,7 @@ import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
 import type {
-	InputSuggestionItemSelectEventDetail as MultiInputSuggestionItemSelectEventDetail,
-	InputSuggestionItemPreviewEventDetail as MultiInputSuggestionItemPreviewEventDetail,
+	InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail,
 } from "./Input.js";
 
 interface IToken extends HTMLElement, ITabbable {
@@ -49,7 +48,7 @@ type MultiInputTokenDeleteEventDetail = {
  * Fiori Guidelines say that user should create tokens when:
  *
  * - Type a value in the input and press enter or focus out the input field (`change` event is fired)
- * - Select a value from the suggestion list (`suggestion-item-select` event is fired)
+ * - Select a value from the suggestion list (`change` event is fired)
  *
  * ### ES6 Module Import
  *
@@ -412,6 +411,5 @@ export default MultiInput;
 export type {
 	IToken,
 	MultiInputTokenDeleteEventDetail,
-	MultiInputSuggestionItemSelectEventDetail,
-	MultiInputSuggestionItemPreviewEventDetail,
+	MultiInputSelectionChangeEventDetail,
 };

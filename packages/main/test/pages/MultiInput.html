@@ -424,7 +424,7 @@
 			document.getElementById("dialog").show();
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-suggestion-item-select", function (event) {
+		document.getElementById("suggestion-token").addEventListener("ui5-selection-change", function (event) {
 			var item = event.detail.item;
 			var mi = event.target
 			var token = document.createElement("ui5-token");
@@ -526,7 +526,7 @@
 		document
 			.getElementById("token-unique")
 			.addEventListener("ui5-value-help-trigger", function (event) {
-				event.target.openPicker();
+				event.target.open = true;
 			});
 
 		document.getElementById("add-single-token").addEventListener("click", event => {
