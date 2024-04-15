@@ -101,7 +101,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 		}
 		// go up the prototype chain
 		proto = Object.getPrototypeOf(proto);
-	} while (proto);
+	} while (proto && proto !== HTMLElement.prototype);
 }
 
 /**
@@ -155,7 +155,8 @@ abstract class UI5Element extends HTMLElement {
 		this._upgradeAllProperties();
 
 		if (ctor._needsShadowDOM()) {
-			this.attachShadow({ mode: "open" });
+			const defaultOptions = { mode: "open" } as ShadowRootInit;
+			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
 		}
 	}
 
@@ -228,6 +229,8 @@ abstract class UI5Element extends HTMLElement {
 			this.onExitDOM();
 			this._fullyConnected = false;
 		}
+
+		this._domRefReadyPromise._deferredResolve!();
 
 		cancelRender(this);
 	}

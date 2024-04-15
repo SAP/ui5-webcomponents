@@ -54,7 +54,7 @@
 			{{#if isModeSort}}
 				<div class="ui5-vsd-sort">
 					<ui5-list
-						mode="SingleSelectBegin"
+						selection-mode="SingleStart"
 						@ui5-item-click="{{_onSortOrderChange}}"
 						sort-order
 						accessible-name-ref="{{_id}}-label">
@@ -67,7 +67,7 @@
 						</ui5-li-group>
 					</ui5-list>
 					<ui5-list
-						mode="SingleSelectBegin"
+						selection-mode="SingleStart"
 						@ui5-item-click={{_onSortByChange}}
 						sort-by>
 						<ui5-li-group header-text="{{_sortByLabel}}">
@@ -85,7 +85,7 @@
 				{{#if _filterStepTwo}}
 					<ui5-list
 						accessible-name-ref="{{_id}}-label"
-						mode="MultiSelect"
+						selection-mode="Multiple"
 						@ui5-item-click="{{_handleFilterValueItemClick}}"
 					>
 						{{#each _currentSettings.filters}}

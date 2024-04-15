@@ -10,9 +10,9 @@ const LIB = path.join(__dirname, `../tools/lib/`);
 module.exports = {
 	scripts: {
 		clean: "rimraf dist && rimraf src/generated",
-		generate: "nps build.postcss build.jsonImports",
+		generate: `cross-env UI5_TS=true nps build.postcss build.jsonImports`,
 		build: {
-			default: "nps clean build.src build.postcss build.jsonImports build.typescript generateReport",
+			default: `cross-env UI5_TS=true nps clean build.src build.postcss build.jsonImports build.typescript generateReport`,
 			src: `copy-and-watch "src/**/*.{json}" dist/`,
 			typescript: "tsc",
 			postcss: `node "${LIB}/css-processors/css-processor-themes.mjs"`,

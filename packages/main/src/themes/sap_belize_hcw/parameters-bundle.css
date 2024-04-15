@@ -44,6 +44,7 @@
 @import "../base/TableGroupRow-parameters.css";
 @import "../base/Toolbar-parameters.css";
 @import "./GrowingButton-parameters.css";
+@import "../base/Text-parameters.css";
 @import "./TextArea-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "../base/ToggleButton-parameters.css";
