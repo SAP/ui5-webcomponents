@@ -1,10 +1,9 @@
 @import "../base/MessageStrip-parameters.css";
 
 :root{
-	--_ui5_message_strip_close_button_right: 0.1875rem;
 	/* Next to variables below are hardcoded values of sapButton_Lite_Hover_Background parameter with specified opacity*/
-	--_ui5_message_strip_close_button_color_set_1_background: #222b351a;
-	--_ui5_message_strip_close_button_color_set_2_background: #222b3580;
+	--_ui5_message_strip_close_button_color_set_1_background: #062e4f1a;
+	--_ui5_message_strip_close_button_color_set_2_background: #062e4f80;
 	--_ui5_message_strip_close_button_color_set_1_color: var(--sapContent_ContrastIconColor);
 	--_ui5_message_strip_close_button_color_set_1_hover_color: var(--sapContent_ContrastIconColor);
 }

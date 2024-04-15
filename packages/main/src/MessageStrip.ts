@@ -25,6 +25,7 @@ import {
 	MESSAGE_STRIP_WARNING,
 	MESSAGE_STRIP_SUCCESS,
 	MESSAGE_STRIP_INFORMATION,
+	MESSAGE_STRIP_CUSTOM,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -35,13 +36,17 @@ enum DesignClassesMapping {
 	Positive = "ui5-message-strip-root--positive",
 	Negative = "ui5-message-strip-root--negative",
 	Warning = "ui5-message-strip-root--warning",
+	ColorSet1 = "ui5-message-strip-root--color-set-1",
+	ColorSet2 = "ui5-message-strip-root--color-set-2",
 }
 
-enum IconMapping {
+enum IconMappings {
 	Information = "information",
 	Positive = "sys-enter-2",
 	Negative = "error",
 	Warning = "alert",
+	ColorSet1 = "",
+	ColorSet2 = "",
 }
 
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
@@ -109,6 +114,17 @@ class MessageStrip extends UI5Element {
 	design!: `${MessageStripDesign}`;
 
 	/**
+	 * Defines the color scheme of the component.
+	 * There are 10 predefined schemes.
+	 * To use one you can set a number from `"1"` to `"10"`. The `colorScheme` `"1"` will be set by default.
+	 *
+	 * @default "1"
+	 * @public
+	 */
+	@property({ defaultValue: "1" })
+	colorScheme!: string;
+
+	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
 	 * You can directly provide an icon with the `icon` slot. Otherwise, the default icon for the type will be used.
 	 * @default false
@@ -158,6 +174,8 @@ class MessageStrip extends UI5Element {
 			Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
 			Negative: getTranslation(MESSAGE_STRIP_ERROR),
 			Warning: getTranslation(MESSAGE_STRIP_WARNING),
+			ColorSet1: getTranslation(MESSAGE_STRIP_CUSTOM),
+			ColorSet2: getTranslation(MESSAGE_STRIP_CUSTOM),
 		};
 	}
 
@@ -189,7 +207,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return IconMapping[this.design];
+		return IconMappings[this.design];
 	}
 
 	get designClasses() {
