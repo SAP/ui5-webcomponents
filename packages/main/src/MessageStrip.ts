@@ -118,6 +118,9 @@ class MessageStrip extends UI5Element {
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
 	 * You can directly provide an icon with the `icon` slot. Otherwise, the default icon for the type will be used.
+	 *
+	 *  * **Note:** If <code>MessageStripDesign.ColorSet1</code> or <code>MessageStripDesign.ColorSet2</code> value is set to the <code>design</code> property, default icon will not be presented.
+	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.15

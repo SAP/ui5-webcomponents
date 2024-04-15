@@ -28,13 +28,13 @@ enum MessageStripDesign {
 	Warning = "Warning",
 
 	/**
-	* Message is custom
+	* Message uses custom color set 1
 	* @public
 	*/
 	ColorSet1 = "ColorSet1",
 
 	/**
-	* Message is custom
+	*  Message uses custom color set 2
 	* @public
 	*/
 	ColorSet2 = "ColorSet2",
