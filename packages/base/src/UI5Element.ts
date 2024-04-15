@@ -127,6 +127,7 @@ abstract class UI5Element extends HTMLElement {
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
+	static childrenTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
 
 	static renderer: Renderer;
@@ -176,6 +177,11 @@ abstract class UI5Element extends HTMLElement {
 
 	render() {
 		const template = (this.constructor as typeof UI5Element).template;
+		return executeTemplate(template!, this);
+	}
+
+	renderChildren() {
+		const template = (this.constructor as typeof UI5Element).childrenTemplate;
 		return executeTemplate(template!, this);
 	}
 
@@ -715,6 +721,9 @@ abstract class UI5Element extends HTMLElement {
 		// Update shadow root and static area item
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
+		}
+		if (ctor.childrenTemplate) {
+			updateShadowRoot(this, true);
 		}
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM

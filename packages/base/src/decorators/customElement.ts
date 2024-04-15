@@ -14,6 +14,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	renderer?: Renderer,
 	styles?: Styles,
 	template?: Template,
+	childrenTemplate?: Template,
 	dependencies?: Array<typeof UI5Element>,
 	languageAware?: boolean,
 	themeAware?: boolean,
@@ -52,8 +53,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 			target.metadata.shadowRootOptions = shadowRootOptions;
 		}
 
-		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {
-			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
+		["renderer", "template", "childrenTemplate", "styles", "dependencies"].forEach((customElementEntity: string) => {
+			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
+			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
 				get: () => customElementEntityValue,
