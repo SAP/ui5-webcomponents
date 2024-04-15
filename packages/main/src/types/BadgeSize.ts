@@ -7,13 +7,13 @@ enum BadgeSize {
 	 * Standard size of the badge
 	 * @public
 	 */
-	Standard = "Standard",
+	M = "M",
 
 	/**
 	 * Large size of the badge
 	 * @public
 	 */
-	Large = "Large",
+	L = "L",
 }
 
 export default BadgeSize;

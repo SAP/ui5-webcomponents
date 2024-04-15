@@ -134,11 +134,11 @@ class Badge extends UI5Element {
 
 	/**
 	 * Defines predefined size of the component.
-	 * @default "Standard"
+	 * @default "M"
 	 * @public
 	 * @since 2.0
 	 */
-	@property({ type: BadgeSize, defaultValue: BadgeSize.Standard })
+	@property({ type: BadgeSize, defaultValue: BadgeSize.M })
 	size!: `${BadgeSize}`;
 
 	/**
