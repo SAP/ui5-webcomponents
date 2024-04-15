@@ -4,9 +4,11 @@
 	{{#if text}}
 		<div class="ui5-menu-item-text">{{text}}</div>
 	{{/if}}
-	{{#unless hasSubmenu}}
-		<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
-	{{/unless}}
+	{{#if additionalText}}
+		{{#unless hasSubmenu}}
+			<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
+		{{/unless}}
+	{{/if}}
 {{/inline}}
 
 {{#*inline "iconBegin"}}
