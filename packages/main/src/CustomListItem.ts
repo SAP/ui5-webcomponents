@@ -46,9 +46,11 @@ class CustomListItem extends ListItem {
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
 
-		if (isTab || this.focused || isF2(e)) {
-			await super._onkeydown(e);
+		if (!isTab && !this.focused && !isF2(e)) {
+			return;
 		}
+
+		await super._onkeydown(e);
 	}
 
 	_onkeyup(e: KeyboardEvent) {
