@@ -25,7 +25,7 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
  *
  * Users can use the `ui5-segmented-button-item` as part of a `ui5-segmented-button`.
  *
- * Clicking or tapping on a `ui5-segmented-button-item` changes its state to `pressed`.
+ * Clicking or tapping on a `ui5-segmented-button-item` changes its state to `selected`.
  * The item returns to its initial state when the user clicks or taps on it again.
  * By applying additional custom CSS-styling classes, apps can give a different style to any
  * `ui5-segmented-button-item`.
@@ -35,7 +35,7 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
  * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
  * @constructor
  * @extends UI5Element
- * @implements { ISegmentedButtonItem }
+ * @implements { ISegmentedButtonItem, IButton }
  * @public
  */
 @customElement({
@@ -102,13 +102,6 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	forcedTabIndex!: string;
 
 	/**
-	 * Indicates if the elements is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
 	 * Defines the index of the item inside of the SegmentedButton.
 	 * @default 0
 	 * @private
@@ -143,31 +136,13 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		super();
 	}
 
-	_onfocusout() {
-		if (this.nonInteractive) {
-			return;
-		}
-
-		if (isDesktop()) {
-			this.focused = false;
-		}
-	}
-
-	_onfocusin() {
-		if (this.nonInteractive) {
-			return;
-		}
-
-		if (isDesktop()) {
-			this.focused = true;
-		}
-	}
-
 	_onclick() {
 		this.selected = !this.selected;
+	}
 
-		if (isSafari()) {
-			this.getDomRef()!.focus();
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
 		}
 	}
 

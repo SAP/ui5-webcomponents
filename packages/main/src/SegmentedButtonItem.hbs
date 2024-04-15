@@ -4,11 +4,9 @@
 		aria-posinset="{{posInSet}}"
 		aria-setsize="{{sizeOfSet}}"
 		aria-selected="{{selected}}"
-		class="ui5-button-root"
+		class="ui5-segmentedbutton-item-root"
 		aria-disabled="{{disabled}}"
 		data-sap-focus-ref
-		@focusout={{_onfocusout}}
-		@focusin={{_onfocusin}}
 		@click={{_onclick}}
 		@keyup={{_onkeyup}}
 		@touchend="{{_ontouchend}}"
@@ -18,14 +16,14 @@
 >
 	{{#if icon}}
 		<ui5-icon
-			class="ui5-button-icon"
+			class="ui5-segmentedbutton-item-icon"
 			name="{{icon}}"
 			part="icon"
 			?show-tooltip={{isIconOnly}}
 		></ui5-icon>
 	{{/if}}
 
-	<span id="{{_id}}-content" class="ui5-button-text">
+	<span id="{{_id}}-content" class="ui5-segmentedbutton-item-text">
 		<bdi>
 			<slot></slot>
 		</bdi>

@@ -22,7 +22,7 @@
 	text-overflow: ellipsis;
 }
 
-.ui5-button-root {
+.ui5-segmentedbutton-item-root {
 	min-width: inherit;
 	cursor: inherit;
 	height: 100%;
@@ -57,29 +57,29 @@
 	color: var(--sapButton_Hover_TextColor);
 }
 
-.ui5-button-icon {
+.ui5-segmentedbutton-item-icon {
 	color: inherit;
 	flex-shrink: 0;
 }
 
-:host([icon-end]) .ui5-button-root {
+:host([icon-end]) .ui5-segmentedbutton-item-root {
 	flex-direction: row-reverse;
 }
 
-:host([icon-end]) .ui5-button-icon {
+:host([icon-end]) .ui5-segmentedbutton-item-icon {
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([icon-only]) .ui5-button-root {
+:host([icon-only]) .ui5-segmentedbutton-item-root {
 	min-width: auto;
 	padding: 0;
 }
 
-:host([icon-only]) .ui5-button-text {
+:host([icon-only]) .ui5-segmentedbutton-item-text {
 	display: none;
 }
 
-.ui5-button-text {
+.ui5-segmentedbutton-item-text {
 	outline: none;
 	position: relative;
 	white-space: inherit;
@@ -87,11 +87,11 @@
 	text-overflow: inherit;
 }
 
-:host([has-icon]:not([icon-end])) .ui5-button-text {
+:host([has-icon]:not([icon-end])) .ui5-segmentedbutton-item-text {
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([has-icon][icon-end]) .ui5-button-text {
+:host([has-icon][icon-end]) .ui5-segmentedbutton-item-text {
 	margin-inline-start: 0;
 }
 
@@ -101,7 +101,7 @@
 	cursor: default;
 }
 
-:host([has-icon]:not([icon-only])) .ui5-button-text{
+:host([has-icon]:not([icon-only])) .ui5-segmentedbutton-item-text{
 	/* calculating the minimum width by removing the icon size  */
 	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
 }
@@ -109,8 +109,10 @@
 	pointer-events: none;
 }
 
-:host([focused]:not([active])) .ui5-button-root:after,
-:host([focused][active]) .ui5-button-root:before {
+:host([desktop]:not([active])) .ui5-segmentedbutton-item-root:focus-within:after,
+:host(:not([active])) .ui5-segmentedbutton-item-root:focus-visible:after,
+:host([desktop][active]) .ui5-segmentedbutton-item-root:focus-within:before,
+:host([active]) .ui5-segmentedbutton-item-root:focus-visible:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -122,11 +124,12 @@
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
-:host([focused][active]) .ui5-button-root:before {
+:host([desktop][active]) .ui5-segmentedbutton-item-root:focus-within:before,
+:host([active]) .ui5-segmentedbutton-item-root:focus-visible:before {
 	border-color: var(--_ui5_button_pressed_focused_border_color);
 }
 
-.ui5-button-root::-moz-focus-inner {
+.ui5-segmentedbutton-item-root::-moz-focus-inner {
 	border: 0;
 }
 
@@ -137,19 +140,22 @@ bdi {
 	text-overflow: inherit;
 }
 
-/* SegmentedButton and ToggleButton */
-:host([ui5-segmented-button-item][active][focused]) .ui5-button-root:after,
-:host([selected][focused]) .ui5-button-root:after {
+:host([active][desktop]) .ui5-segmentedbutton-item-root:focus-within:after,
+:host([active]) .ui5-segmentedbutton-item-root:focus-visible:after,
+:host([pressed][desktop]) .ui5-segmentedbutton-item-root:focus-within:after,
+:host([pressed]) .ui5-segmentedbutton-item-root:focus-visible:after {
 	border-color: var(--_ui5_button_pressed_focused_border_color);
 	outline: none;
 }
 
-:host([ui5-segmented-button-item][focused]:not(:last-child)) .ui5-button-root:after {
+:host([desktop]:not(:last-child)) .ui5-segmentedbutton-item-root:focus-within:after,
+:host(:not(:last-child)) .ui5-segmentedbutton-item-root:focus-visible:after  {
 	border-top-right-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-right-radius: var(--_ui5_button_focused_inner_border_radius);
 }
 
-:host([ui5-segmented-button-item][focused]:not(:first-child)) .ui5-button-root:after {
+:host([desktop]:not(:first-child)) .ui5-segmentedbutton-item-root:focus-within:after,
+:host(:not(:first-child)) .ui5-segmentedbutton-item-root:focus-visible:after  {
 	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
 }

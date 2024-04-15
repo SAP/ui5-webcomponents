@@ -192,7 +192,6 @@ class SegmentedButton extends UI5Element {
 		});
 
 		this._itemNavigation.setCurrentItem(target);
-		target.focus();
 
 		return this;
 	}
@@ -244,7 +243,6 @@ class SegmentedButton extends UI5Element {
 		// If the component is focused for the first time
 		// focus the selected item if such is present
 		if (this.selectedItems.length) {
-			this.selectedItems[0].focus();
 			this._itemNavigation.setCurrentItem(this.selectedItems[0]);
 			this.hasPreviouslyFocusedItem = true;
 		}
