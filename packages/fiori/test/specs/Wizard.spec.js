@@ -121,15 +121,15 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Space");
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Enter");
-		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		assert.ok(await firstFocusableElement.matches(":focus"), "The First focusable element in the step content is focused.");
 
 		// assert - that second step in the content and in the header are not selected
 		assert.strictEqual(await step2.getAttribute("selected"), null,
@@ -342,8 +342,7 @@ describe("Wizard general interaction", () => {
 		// act - click on the stack of steps
 		await groupedStep.shadow$(`.ui5-wiz-step-root`).click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#wizTest")
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$("#wizTest").shadow$("ui5-responsive-popover");
 
 		// assert - the popup is open
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
@@ -352,8 +351,7 @@ describe("Wizard general interaction", () => {
 		// act - click on the disabled stack of steps
 		await groupedStepDisabled.shadow$(`.ui5-wiz-step-root`).click();
 
-		const staticAreaItemClassName2 = await browser.getStaticAreaItemClassName("#wizTest2")
-		const disabledPopover = await browser.$(`.${staticAreaItemClassName2}`).shadow$("ui5-responsive-popover");
+		const disabledPopover = await browser.$("#wizTest2").shadow$("ui5-responsive-popover");
 
 		// assert - the popup is open
 		assert.ok(await disabledPopover.isDisplayedInViewport(), "Popover is opened.");

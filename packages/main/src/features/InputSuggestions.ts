@@ -1,4 +1,5 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -236,13 +237,13 @@ class Suggestions {
 		return false;
 	}
 
-	toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
+	async toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
-			this.open();
+			await this.open();
 		} else {
-			this.close(options.preventFocusRestore);
+			await this.close(options.preventFocusRestore);
 		}
 	}
 
@@ -251,11 +252,11 @@ class Suggestions {
 		return sc.offsetHeight < sc.scrollHeight;
 	}
 
-	open() {
+	async open() {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		this.responsivePopover!.showAt(this._getComponent());
+		await (await this._getSuggestionPopover()).showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
@@ -399,7 +400,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		return !!(this.responsivePopover && this.responsivePopover.opened);
+		return !!(this.responsivePopover && this.responsivePopover.open);
 	}
 
 	_handleItemNavigation(forward: boolean) {
@@ -592,8 +593,8 @@ class Suggestions {
 			return this.responsivePopover;
 		}
 
-		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		this.responsivePopover = this._getComponent().shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 
@@ -639,15 +640,12 @@ class Suggestions {
 	}
 
 	_focusValueState() {
-		const items = this._getItems();
-
 		this.component._isValueStateFocused = true;
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = 0;
 		this.component.value = this.component.typedInValue;
 
-		items && this._scrollItemIntoView(items[0]);
 		this._deselectItems();
 	}
 

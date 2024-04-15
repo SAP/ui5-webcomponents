@@ -95,7 +95,7 @@ export const Advanced: StoryFn = () => {
             <ui5-li slot="menuItems">Application 4</ui5-li>
             <ui5-li slot="menuItems">Application 5</ui5-li>
         </ui5-shellbar>
-        <ui5-popover id="action-popover-${index}" placement-type="Bottom">
+        <ui5-popover id="action-popover-${index}" placement="Bottom">
             <div class="action-popover-header">
                 <ui5-title style="padding: 0.25rem 1rem 0rem 1rem"
                     >An Kimura</ui5-title

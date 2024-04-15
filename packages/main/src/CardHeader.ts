@@ -7,9 +7,11 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isFirefox,
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { ICardHeader } from "./Card.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {
@@ -26,7 +28,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * ### Overview
  *
  * The `ui5-card-header` is a component, meant to be used as a header of the `ui5-card` component.
- * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `status`
+ * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `additionalText`
  * and two slots: `avatar` and `action`.
  *
  * ### Keyboard handling
@@ -36,14 +38,13 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  *
  * `import "@ui5/webcomponents/dist/CardHeader";`
  * @constructor
- * @implements {ICardHeader}
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  * @csspart root - Used to style the root DOM element of the CardHeader
  * @csspart title - Used to style the title of the CardHeader
  * @csspart subtitle - Used to style the subtitle of the CardHeader
- * @csspart status - Used to style the status of the CardHeader
+ * @csspart additional-text - Used to style the additional text of the CardHeader
  */
 @customElement({
 	tag: "ui5-card-header",
@@ -59,7 +60,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * @public
  */
 @event("click")
-class CardHeader extends UI5Element implements ICardHeader {
+class CardHeader extends UI5Element {
 	/**
 	 * Defines the title text.
 	 * @default ""
@@ -77,12 +78,12 @@ class CardHeader extends UI5Element implements ICardHeader {
 	subtitleText!: string;
 
 	/**
-	 * Defines the status text.
+	 * Defines the additional text.
 	 * @default ""
 	 * @public
 	*/
 	@property()
-	status!: string;
+	additionalText!: string;
 
 	/**
 	 * Defines if the component would be interactive,
@@ -122,6 +123,12 @@ class CardHeader extends UI5Element implements ICardHeader {
 
 	static i18nBundle: I18nBundle;
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	get classes() {
 		return {
 			root: {
@@ -160,8 +167,8 @@ class CardHeader extends UI5Element implements ICardHeader {
 			labels.push(`${this._id}-subtitle`);
 		}
 
-		if (this.status) {
-			labels.push(`${this._id}-status`);
+		if (this.additionalText) {
+			labels.push(`${this._id}-additionalText`);
 		}
 
 		if (this.hasAvatar) {
@@ -238,6 +245,3 @@ class CardHeader extends UI5Element implements ICardHeader {
 CardHeader.define();
 
 export default CardHeader;
-export type {
-	ICardHeader,
-};

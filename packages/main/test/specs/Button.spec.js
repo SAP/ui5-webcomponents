@@ -64,8 +64,8 @@ describe("Button general interaction", () => {
 	it("tests clicking on disabled button whith Icon", async () => {
 		const button = await browser.$("#disabled-button-icon-only");
 		const buttonIcon = await button.shadow$("[ui5-icon]");
-		
-		
+
+
 		await button.click()
 
 		const field = await browser.$("#click-counter");
@@ -153,5 +153,12 @@ describe("Button general interaction", () => {
 		const button = await browser.$("#button1").shadow$("button");
 
 		assert.strictEqual(await button.getAttribute("role"), "button", "Attribute is reflected");
+	});
+
+	it("should be focused when the click is on a slotted element", async () => {
+		const button = await browser.$("#button-with-slot");
+		await button.click();
+
+		assert.ok(await button.matches(":focus"), "The button has received focus");
 	});
 });

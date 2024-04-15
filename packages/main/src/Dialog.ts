@@ -116,6 +116,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
+		Popup.styles,
 		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,
@@ -314,10 +315,6 @@ class Dialog extends Popup {
 		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
 	}
 
-	get _displayProp() {
-		return "flex";
-	}
-
 	/**
 	 * Determines if the header should be shown.
 	 */
@@ -384,16 +381,6 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
-	}
-
-	onAfterRendering() {
-		super.onAfterRendering();
-
-		if (!this.isOpen() && this.open) {
-			this.show();
-		} else if (this.isOpen() && !this.open) {
-			this.close();
-		}
 	}
 
 	onEnterDOM() {

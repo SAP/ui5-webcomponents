@@ -7,27 +7,25 @@ describe("General interaction", () => {
 
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
 
 		await arrow.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 	});
 
 	it ("Should close the popover when clicking on the arrow second time", async () => {
 		const combo = await $("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 
 		await arrow.click();
 
-		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
 	});
 
 	it ("Items filtration", async () => {
@@ -36,8 +34,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		const arrow = await combo.shadow$("[input-icon]");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// act
@@ -62,13 +59,12 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		const lazy = await browser.$("#lazy");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 
 		await input.click();
 		await input.keys("b");
 
-		await browser.waitUntil(() => popover.getProperty("opened"), {
+		await browser.waitUntil(() => popover.getProperty("open"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -94,8 +90,7 @@ describe("General interaction", () => {
 
 		const combo = await browser.$("#cb-filter-none");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#cb-filter-none");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// act
@@ -120,8 +115,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo2");
 		const arrow = await combo.shadow$("[input-icon]");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// act
@@ -152,7 +146,7 @@ describe("General interaction", () => {
 
 		// assert
 		assert.strictEqual(listItems.length, 0, "Items should be 0");
-		assert.notOk(await popover.getProperty("opened"), "Popover should close");
+		assert.notOk(await popover.getProperty("open"), "Popover should close");
 	});
 
 	it ("Should close popover on item click / change event", async () => {
@@ -161,8 +155,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo2");
 		const arrow = await combo.shadow$("[input-icon]");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// act
@@ -170,24 +163,24 @@ describe("General interaction", () => {
 		await input.keys("b");
 
 		// assert
-		assert.ok(await popover.getProperty("opened"), "Popover should be opened");
+		assert.ok(await popover.getProperty("open"), "Popover should be opened");
 
 		// act
 		await input.keys("Enter");
 
 		// assert
-		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
+		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
 
 		// act
 		await arrow.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		await listItems[0].click();
 
 		// assert
-		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
+		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
 	});
 
 	it ("Tests change event", async () => {
@@ -230,8 +223,7 @@ describe("General interaction", () => {
 		await arrow.click();
 
 		// click on first item
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li")[0]).click();
 
 		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should not be empty");
@@ -271,8 +263,7 @@ describe("General interaction", () => {
 		assert.strictEqual(await counter.getText(), "0", "Call count should be 0");
 
 		// click on first item
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-error");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		const link = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root a");
 
 		await link.click();
@@ -329,8 +320,7 @@ describe("General interaction", () => {
 		await input.keys("Bulgaria");
 
 		// Click on the item
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li")[0]).click();
 
 
@@ -379,8 +369,7 @@ describe("General interaction", () => {
 		await input.keys("a");
 
 		// click on first item
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li"))[0].click();
 
 		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should be empty");
@@ -421,8 +410,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#contains-cb");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#contains-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		await arrow.click();
@@ -449,8 +437,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#startswith-cb");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#startswith-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		await arrow.click();
@@ -466,15 +453,14 @@ describe("General interaction", () => {
 
 		await input.keys("a");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
-		assert.notOk(popover.opened, "Popover should be closed when no match");
+		assert.notOk(popover.open, "Popover should be closed when no match");
 	});
 
 	it ("Tests selection-change event and its parameters", async () => {
 		const combo = await browser.$("#combo");
 		const label = await browser.$("#selection-change-event-result");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		await arrow.click();
@@ -491,8 +477,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#combo");
 		let label = await browser.$("#selection-change-event-result");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		await arrow.click();
@@ -532,9 +517,8 @@ describe("General interaction", () => {
 
 	it ("Tests Combo with two-column layout", async () => {
 		const combo = await browser.$("#combobox-two-column-layout");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combobox-two-column-layout");
 		const arrow = await combo.shadow$("[input-icon]");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
 		await arrow.click();
@@ -545,8 +529,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const cb = await browser.$("#readonly-value-state-cb");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#readonly-value-state-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await cb.shadow$("ui5-popover");
 
 		await cb.click();
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover with valueStateMessage should not be opened.");
@@ -562,12 +545,11 @@ describe("General interaction", () => {
 		await btn.click();
 		await arrow.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#dynamic-items");
-		const initialListItems = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li");
+		const initialListItems = await cb.shadow$("ui5-responsive-popover").$$("ui5-li");
 
 		await browser.pause(2000);
 
-		const updatedListItems = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li");
+		const updatedListItems = await cb.shadow$("ui5-responsive-popover").$$("ui5-li");
 
 		assert.notEqual(initialListItems.length, updatedListItems.length, "item count should be updated");
 	});
@@ -616,8 +598,7 @@ describe("General interaction", () => {
 		await input.keys("z");
 		await arrow.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await cb.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// assert
@@ -633,8 +614,7 @@ describe("Grouping", () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -644,7 +624,7 @@ describe("Grouping", () => {
 
 		await input.keys("c");
 
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		popover = await combo.shadow$("ui5-responsive-popover");
 		groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -658,8 +638,7 @@ describe("Grouping", () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem;
 
 		await arrow.click();
@@ -674,8 +653,7 @@ describe("Grouping", () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem;
 
 		await input.keys("a");
@@ -698,8 +676,7 @@ describe("Grouping", () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 
 		await input.click();
 		await input.keys("a");
@@ -840,8 +817,7 @@ describe("Accessibility", async () => {
 		const cbSuccess = await browser.$("#vs-success-default");
 		const cbInformation = await browser.$("#vs-information-default");
 
-		let staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-warning-default");
-		let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		let popover = await cbWarning.shadow$("ui5-popover");
 
 		await cbWarning.click();
 
@@ -854,8 +830,7 @@ describe("Accessibility", async () => {
 		await cbWarning.keys("Escape");
 		await cbInformation.click();
 
-		staticAreaItemClassName = await browser.getStaticAreaItemClassName("#vs-information-default");
-		popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		popover = await cbInformation.shadow$("ui5-popover");
 
 		ariaHiddenText = await cbInformation.shadow$(".ui5-hidden-text").getHTML(false);
 		valueStateText = await popover.$("div").getHTML(false);
@@ -872,17 +847,25 @@ describe("Accessibility", async () => {
 
 	it("Value state type should be added to the screen readers custom value states announcement", async () => {
 		const cbError = await browser.$("#value-state-error");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-error");
 
 		await cbError.click();
 		await cbError.keys("a");
 
-		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
+		const popoverHeader = await cbError.shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getHTML(false);
 		const ariaHiddenText = await cbError.shadow$(`#value-state-description`).getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error"), true, "Displayed value state message text is correct");
+	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo");
+		const innerInput = await combo.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 	});
 });
 
@@ -893,8 +876,7 @@ describe("Keyboard navigation", async () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem, listItem;
 
 		await arrow.click();
@@ -925,8 +907,7 @@ describe("Keyboard navigation", async () => {
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let valueStateHeader, groupItem;
 
 		await arrow.click();
@@ -957,8 +938,7 @@ describe("Keyboard navigation", async () => {
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
 		await input.click();
@@ -998,8 +978,7 @@ describe("Keyboard navigation", async () => {
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#value-state-grouping");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
 		await input.click();
@@ -1056,8 +1035,7 @@ describe("Keyboard navigation", async () => {
 		const comboBox = await browser.$("#combo2");
 		const input = await comboBox.shadow$("#ui5-combobox-input");
 		const pickerIcon = await comboBox.shadow$("[input-icon]");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo2");
-		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const respPopover = await comboBox.shadow$("ui5-responsive-popover");
 		let listItem;
 
 		// Opened picker
@@ -1109,14 +1087,13 @@ describe("Keyboard navigation", async () => {
 
 		const comboBox = await browser.$("#same-name-suggestions-cb");
 		const input = await comboBox.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#same-name-suggestions-cb");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await comboBox.shadow$("ui5-responsive-popover");
 
 		// Opened picker
 		await input.click();
 		await input.keys("A");
 
-		await browser.waitUntil(() => popover.getProperty("opened"), {
+		await browser.waitUntil(() => popover.getProperty("open"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1134,13 +1111,12 @@ describe("Keyboard navigation", async () => {
 
 		const comboBox = await browser.$("#combo-without-type-ahead");
 		const input = await comboBox.shadow$("#ui5-combobox-input");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-without-type-ahead");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await comboBox.shadow$("ui5-responsive-popover");
 
 		await input.click();
 		await input.keys("b");
 
-		await browser.waitUntil(() => popover.getProperty("opened"), {
+		await browser.waitUntil(() => popover.getProperty("open"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});

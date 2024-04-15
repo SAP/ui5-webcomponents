@@ -14,12 +14,12 @@ attachCustomCSSChange((tag: string) => {
  * @param ElementClass
  * @returns {*}
  */
-const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = false) => {
+const getConstructableStyle = (ElementClass: typeof UI5Element) => {
 	const tag = ElementClass.getMetadata().getTag();
-	const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
+	const key = `${tag}_normal`;
 
 	if (!constructableStyleMap.has(key)) {
-		const styleContent = getEffectiveStyle(ElementClass, forStaticArea);
+		const styleContent = getEffectiveStyle(ElementClass);
 		const style = new CSSStyleSheet();
 		style.replaceSync(styleContent);
 		constructableStyleMap.set(key, [style]);

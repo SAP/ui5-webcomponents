@@ -1,5 +1,8 @@
 :host {
     min-width: 1px; /** So that it can always get focus **/
-    display: none;
-    position: fixed;
+    overflow: visible;
+    border: none;
+    inset: "unset";
+    margin: 0;
+    padding: 0;
 }

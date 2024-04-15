@@ -1,4 +1,3 @@
-import Bar from "../../dist/Bar.js";
 // zxing is using window
 // import BarcodeScannerDialog from "../../dist/BarcodeScannerDialog.js";
 import DynamicSideContent from "../../dist/DynamicSideContent.js";

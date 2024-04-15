@@ -14,6 +14,7 @@ import {
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
@@ -49,9 +50,9 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
-type CalendarSelectedDatesChangeEventDetail = {
-	values: Array<string>,
-	dates: Array<number>,
+type CalendarSelectionChangeEventDetail = {
+	selectedValues: Array<string>,
+	selectedDates: Array<number>,
 	timestamp: number | undefined,
 }
 
@@ -72,7 +73,7 @@ type SpecialCalendarDateT = {
  * date string, correctly formatted according to the `ui5-calendar`'s `formatPattern` property.
  * Whenever the user changes the date selection, `ui5-calendar` will automatically create/remove instances
  * of `ui5-date` in itself, unless you prevent this behavior by calling `preventDefault()` for the
- * `selected-dates-change` event. This is useful if you want to control the selected dates externally.
+ * `selection-change` event. This is useful if you want to control the selected dates externally.
  *
  * ### Usage
  *
@@ -177,20 +178,20 @@ type SpecialCalendarDateT = {
  * **Note:** If you call `preventDefault()` for this event, the component will not
  * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
  * @allowPreventDefault
- * @param {Array<string>} values The selected dates
- * @param {Array<number>} dates The selected dates as UTC timestamps
+ * @param {Array<string>} selectedValues The selected dates
+ * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
  */
-@event<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", {
+@event<CalendarSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 		 * @public
 		 */
-		dates: { type: Array },
+		selectedDates: { type: Array },
 		/**
 		 * @public
 		 */
-		values: { type: Array },
+		selectedValues: { type: Array },
 
 		timestamp: { type: Number },
 	},
@@ -305,7 +306,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true)); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -342,7 +343,7 @@ class Calendar extends CalendarPart {
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
 		validSpecialDates.forEach(date => {
-			const dateFromValue = new Date(date.value);
+			const dateFromValue = UI5Date.getInstance(date.value);
 			const timestamp = dateFromValue.getTime();
 
 			if (!uniqueDates.has(timestamp)) {
@@ -484,7 +485,7 @@ class Calendar extends CalendarPart {
 			return;
 		}
 
-		const localDate = new Date(this._timestamp * 1000);
+		const localDate = UI5Date.getInstance(this._timestamp * 1000);
 		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
 		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
@@ -523,7 +524,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -607,6 +608,6 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
-	CalendarSelectedDatesChangeEventDetail,
+	CalendarSelectionChangeEventDetail,
 	SpecialCalendarDateT,
 };

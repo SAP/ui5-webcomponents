@@ -12,6 +12,7 @@
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
+/*TODO after li is implemented*/
 :host([focused]) .ui5-nli-focusable {
 	outline: none;
 }

@@ -12,8 +12,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await otb.shadow$(".ui5-tb-overflow-btn");
 
 		await overflowButton.click();
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_d");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await otb.shadow$("ui5-popover");
 
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened, because of 'always overflow' item is inside");
 
@@ -28,8 +27,7 @@ describe("Toolbar general interaction", () => {
 
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#otb_a");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await otb.shadow$("ui5-popover");
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened on click on overflow button");
 		await browser.setWindowSize(1920, 1080);
 	});

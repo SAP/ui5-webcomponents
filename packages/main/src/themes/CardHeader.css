@@ -12,7 +12,8 @@
 	align-items: flex-start;
 }
 
-.ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus-within:before {
+:host([desktop]) .ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus-within:before,
+.ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus-visible:before {
 	outline: none;
 	content: "";
 	position: absolute;
@@ -29,7 +30,8 @@
 }
 
 /* cannot be combined with the above style, because :has selector breaks the whole style if FF */
-.ui5-card-header:not(.ui5-card-header-ff):not(.ui5-card-header-hide-focus):has(.ui5-card-header-focusable-element:focus):before {
+:host([desktop]) .ui5-card-header:not(.ui5-card-header-ff):not(.ui5-card-header-hide-focus):has(.ui5-card-header-focusable-element:focus):before,
+.ui5-card-header:not(.ui5-card-header-ff):not(.ui5-card-header-hide-focus):has(.ui5-card-header-focusable-element:focus-visible):before {
 	outline: none;
 	content: "";
 	position: absolute;
@@ -78,7 +80,7 @@
 	justify-content: space-between;
 }
 
-.ui5-card-header-status {
+.ui5-card-header-additionalText {
 	flex: none;
 }
 
@@ -105,7 +107,7 @@
 	border-radius: 50%;
 }
 
-.ui5-card-header .ui5-card-header-status {
+.ui5-card-header .ui5-card-header-additionalText {
 	display: inline-block;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
