@@ -48,3 +48,9 @@
 .tallFooter {
 	height: 4rem;
 }
+
+.dialogCustomBackground::backdrop {
+ 	background-image: url("Dialog-photon.svg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}

@@ -164,7 +164,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @public
  * @since 1.10.0
  */
-@event("after-open")
+@event("open")
 
 /**
  * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
@@ -189,7 +189,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @public
  * @since 1.10.0
  */
-@event("after-close")
+@event("close")
 
 /**
  * Fired when a menu item receives focus.
@@ -690,7 +690,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		this.fireEvent("after-open", {}, false, false);
+		this.fireEvent("open", {}, false, false);
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
@@ -710,7 +710,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("after-close", {}, false, false);
+		this.fireEvent("close", {}, false, false);
 	}
 }
 
