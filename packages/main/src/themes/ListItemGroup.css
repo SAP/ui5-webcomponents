@@ -6,7 +6,7 @@
 	color: var(--sapList_TableGroupHeaderTextColor);
 }
 
-.ui5-group-li-ul {
+.ui5-group-li-root {
     padding: 0;
     margin: 0;
     list-style-type: none;

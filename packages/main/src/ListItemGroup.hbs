@@ -1,8 +1,12 @@
-<li class="ui5-group-li-root">
-  <ul class="ui5-group-li-ul">
-    {{#if headerText}}
-      <ui5-li-group-header part="header">{{headerText}}</ui5-li-group-header>
+  <ul class="ui5-group-li-root">
+    {{#if hasHeader}}
+      <ui5-li-group-header part="header">
+          {{#if hasFormattedHeader}}
+            <slot name="header"></slot>
+          {{else}}
+            {{headerText}}
+          {{/if}}
+      </ui5-li-group-header>
     {{/if}}
     <slot></slot>
   </ul>
-</li>

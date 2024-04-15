@@ -35,7 +35,6 @@ class ListItemGroupHeader extends ListItemBase {
 	 * **Note:** If not provided a default text alternative will be set, if present.
 	 * @default ""
 	 * @public
-	 * @since 1.0.0-rc.15
 	 */
 	@property()
 	accessibleName!: string;

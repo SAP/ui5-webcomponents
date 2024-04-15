@@ -1,8 +1,6 @@
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ListItemBase from "./ListItemBase.js";
@@ -39,8 +37,6 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 	dependencies: [StandardListItem, ListItemGroupHeader],
 })
 class ListItemGroup extends UI5Element {
-		static i18nBundle: I18nBundle;
-
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
@@ -48,6 +44,14 @@ class ListItemGroup extends UI5Element {
 	 */
 	@property()
 	headerText!: string;
+
+	/**
+	 * Defines the accessible name of the header.
+	 * @public
+	 * @default ""
+	 */
+	@property({ type: String })
+	headerAccessibleName!: string;
 
 	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
@@ -60,12 +64,25 @@ class ListItemGroup extends UI5Element {
 	})
 	items!: Array<ListItemBase>;
 
-	static async onDefine() {
-		ListItemGroup.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
+	/**
+	* Defines the header of the component.
+	*
+	* **Note:** Using this slot, the default header text of group and the value of `headerText` property will be overwritten.
+	* @public
+	*/
+	@slot({ type: HTMLElement })
+	header!: Array<ListItemBase>;
 
 	get groupHeaderItem() {
 		return this.shadowRoot!.querySelector<ListItemGroupHeader>("[ui5-li-group-header]")!;
+	}
+
+	get hasHeader(): boolean {
+		return !!this.headerText || this.hasFormattedHeader;
+	}
+
+	get hasFormattedHeader(): boolean {
+		return !!this.header.length;
 	}
 }
 
