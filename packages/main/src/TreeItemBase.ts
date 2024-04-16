@@ -249,7 +249,7 @@ class TreeItemBase extends ListItem {
 	get _accInfo() {
 		const accInfoSettings = {
 			role: "treeitem",
-			ariaExpanded: this.showToggleButton ? this.expanded : false,
+			ariaExpanded: this.showToggleButton ? this.expanded : null,
 			ariaLevel: this.level,
 			posinset: this.forcedPosinset,
 			setsize: this.forcedSetsize,

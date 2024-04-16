@@ -52,7 +52,7 @@ type PressEventDetail = {
 
 type AccInfo = {
 	role: string;
-	ariaExpanded?: boolean;
+	ariaExpanded?: boolean | null;
 	ariaLevel?: number;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
