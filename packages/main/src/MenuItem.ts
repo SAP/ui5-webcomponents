@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CustomListItem from "./CustomListItem.js";
+import Icon from "./Icon.js";
 import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import type Menu from "./Menu.js";
 import HasPopup from "./types/HasPopup.js";
@@ -36,6 +37,7 @@ import menuItemCss from "./generated/themes/MenuItem.css.js";
 	tag: "ui5-menu-item",
 	template: MenuItemTemplate,
 	styles: [CustomListItem.styles, menuItemCss],
+	dependencies: [...CustomListItem.dependencies, Icon],
 })
 class MenuItem extends CustomListItem {
 	/**
