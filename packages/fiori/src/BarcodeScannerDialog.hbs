@@ -1,5 +1,6 @@
 <ui5-dialog stretch
 	class="ui5-barcode-scanner-dialog-root"
+	.open="{{_open}}"
 	@ui5-before-open={{_startReader}}
 	@ui5-after-close={{_resetReader}}>
 	<div class="ui5-barcode-scanner-dialog-video-wrapper">

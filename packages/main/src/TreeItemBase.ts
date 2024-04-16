@@ -284,8 +284,8 @@ class TreeItemBase extends ListItem {
 		this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {
