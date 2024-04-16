@@ -61,7 +61,7 @@ const patchOpen = (Popup: OpenUI5Popup) => {
 				const domRef = element.getDomRef();
 				if (domRef) {
 					openNativePopover(domRef);
-					element.addDelegate(getDelegate(domRef)); // add onAfterRendering delegate to restore the "popover" attribute that will be removed by RenderManager on re-rendering
+					// element.addDelegate(getDelegate(domRef)); // add onAfterRendering delegate to restore the "popover" attribute that will be removed by RenderManager on re-rendering
 				}
 			}
 		}
@@ -74,7 +74,7 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 		const element = this.getContent();
 		const domRef = element.getDomRef();
 		if (domRef && delegatesRegistry.has(domRef)) {
-			element.removeDelegate(getDelegate(domRef)); // remove the onAfterRendering delegate before calling _close to avoid issues
+			// element.removeDelegate(getDelegate(domRef)); // remove the onAfterRendering delegate before calling _close to avoid issues
 			delegatesRegistry.delete(domRef);
 		}
 		_origClosed.apply(this, args); // only then call _close

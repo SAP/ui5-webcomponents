@@ -87,9 +87,42 @@
 				},
 			});
 
+			const modal1 = new sap.m.Popover({
+				title: "Modal 1",
+				// modal: true,
+				contentWidth: "200px",
+				contentHeight: "200px"
+			});
+			const modal2 = new sap.m.Popover({
+				title: "Modal 2",
+				// modal: true,
+				contentWidth: "100px",
+				contentHeight: "300px"
+			});
+			const modal3 = new sap.m.Popover({
+				title: "Modal 3",
+				// modal: true,
+				contentWidth: "300px",
+				contentHeight: "100px"
+			});
+			const btnModal = new sap.m.Button("btnModal", {
+				text: "Open several modal sap.m.Popovers",
+				press: () => {
+					modal1.openBy(btnModal);
+					modal2.openBy(btnModal2);
+				}
+			});
+			const btnModal2 = new sap.m.Button("btnModal2", {
+				text: "Open several modal sap.m.Popovers",
+				press: () => {
+					modal2.openBy(btnModal2);
+				}
+			});
+
+
             const page = new sap.m.Page({
                 content: [
-                    dialog, dialog2, btn, btn2, btnSpecial
+                    dialog, dialog2, btn, btn2, btnSpecial, btnModal, btnModal2
                 ],
             });
 
