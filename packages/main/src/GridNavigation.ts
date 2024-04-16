@@ -79,6 +79,7 @@ class GridNavigation {
 		if (navigationItem) {
 			this._gridWalker.setCurrent(navigationItem);
 			callback && callback(navigationItem);
+			return navigationItem;
 		}
 	}
 
@@ -283,8 +284,9 @@ class GridNavigation {
 		const navigationItems = this._getNavigationItemsOfGrid();
 
 		this._gridWalker.setGrid(navigationItems);
+		const currentItem = this._setCurrentNavigationItem(e);
 		navigationItems.flat().forEach(element => {
-			if (element !== evetOrigin) {
+			if (element !== currentItem) {
 				element.removeAttribute("tabindex");
 			}
 		});
@@ -292,8 +294,6 @@ class GridNavigation {
 		if (evetOrigin === this._grid._beforeElement || evetOrigin === this._grid._afterElement) {
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
-		} else {
-			this._setCurrentNavigationItem(e);
 		}
 	}
 }

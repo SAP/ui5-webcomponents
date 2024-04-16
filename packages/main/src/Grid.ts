@@ -240,10 +240,6 @@ class Grid extends UI5Element {
 		this.features.forEach(feature => feature.onGridRendered());
 	}
 
-	getDomRef(): HTMLElement | undefined {
-		return this.shadowRoot!.querySelector("#grid") as HTMLElement;
-	}
-
 	_getFeature<Klass>(klass: any): Klass | undefined {
 		return this.features.find(feature => feature instanceof klass) as Klass;
 	}
@@ -300,7 +296,7 @@ class Grid extends UI5Element {
 		this.headerRow.cells.forEach((header, index) => {
 			this.rows.forEach(row => {
 				const cell = row.cells[index];
-				if (cell._popin !== header._popin) {
+				if (cell && cell._popin !== header._popin) {
 					cell._popin = header._popin;
 				}
 			});
