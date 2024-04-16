@@ -96,8 +96,8 @@ interface IInputSuggestionItem extends UI5Element {
 	description?: string;
 	image?: string;
 	icon?: string;
-	additionalText: string;
-	additionalTextState: `${ValueState}`;
+	additionalText?: string;
+	additionalTextState?: `${ValueState}`;
 	type?: `${ListItemType}`;
 }
 

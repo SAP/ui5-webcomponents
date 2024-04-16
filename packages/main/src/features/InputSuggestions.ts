@@ -47,8 +47,8 @@ type InputSuggestion = {
 	image?: string | undefined;
 	icon?: string | undefined;
 	type?: `${ListItemType}` | undefined;
-	additionalText: string;
-	additionalTextState?: `${ValueState}`;
+	additionalText?: string | undefined;
+	additionalTextState?: `${ValueState}` | undefined;
 	groupItem: boolean;
 	key: number;
 }
