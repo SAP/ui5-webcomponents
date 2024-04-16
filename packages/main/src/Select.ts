@@ -63,13 +63,12 @@ import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
 import selectCss from "./generated/themes/Select.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
-import type { IOption } from "./Option.js";
 
 type SelectChangeEventDetail = {
-	selectedOption: IOption,
+	selectedOption: Option,
 }
 type SelectLiveChangeEventDetail = {
-	selectedOption: IOption,
+	selectedOption: Option,
 }
 
 /**
@@ -127,7 +126,7 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the selected option changes.
  * @allowPreventDefault
- * @param {IOption} selectedOption the selected option.
+ * @param {Option} selectedOption the selected option.
  * @public
  */
 @event<SelectChangeEventDetail>("change", {
@@ -141,7 +140,7 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
- * @param {IOption} selectedOption the selected option.
+ * @param {Option} selectedOption the selected option.
  * @public
  * @since 1.17.0
  */
@@ -271,7 +270,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption: IOption | null;
+	_lastSelectedOption: Option | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
@@ -287,7 +286,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<IOption>;
+	options!: Array<Option>;
 
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
@@ -364,7 +363,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _isPickerOpen() {
-		return !!this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover._opened;
 	}
 
 	_respPopover() {
@@ -387,7 +386,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const selectOptions = Array.from(this.children) as Array<IOption>;
+		const selectOptions = Array.from(this.children) as Array<Option>;
 
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -407,7 +406,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 * @default undefined
 	 */
-	get selectedOption(): IOption | undefined {
+	get selectedOption(): Option | undefined {
 		return this.selectOptions.find(option => option.selected);
 	}
 
@@ -547,7 +546,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	_getItemIndex(item: IOption) {
+	_getItemIndex(item: Option) {
 		return this.selectOptions.indexOf(item);
 	}
 
@@ -566,7 +565,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item as unknown as IOption;
+		const item = e.detail.item as unknown as Option;
 		const selectedItemIndex = this._getItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
@@ -640,7 +639,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options: Array<IOption> = this.selectOptions;
+		const options: Array<Option> = this.selectOptions;
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
@@ -693,7 +692,7 @@ class Select extends UI5Element implements IFormElement {
 		this.fireEvent<CustomEvent>("close");
 	}
 
-	get selectOptions(): Array<IOption> {
+	get selectOptions(): Array<Option> {
 		return this.options;
 	}
 
@@ -701,7 +700,7 @@ class Select extends UI5Element implements IFormElement {
 		return !!this.label.length;
 	}
 
-	_fireChangeEvent(selectedOption: IOption) {
+	_fireChangeEvent(selectedOption: Option) {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
@@ -903,5 +902,5 @@ export default Select;
 export type {
 	SelectChangeEventDetail,
 	SelectLiveChangeEventDetail,
-	IOption,
+	Option,
 };
