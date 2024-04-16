@@ -144,7 +144,7 @@ describe("Component Behavior", () => {
 				const shellbar = await browser.$("#shellbar");
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const assistant = await browser.$("#shellbar ui5-button[slot='assistant'");
+				const assistant = await browser.$("#shellbar ui5-toggle-button[slot='assistant'");
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -156,7 +156,7 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XXL", "XXL Breakpoint class should be set");
 				assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
-				assert.ok(await assistant.isDisplayed(), "Back icon is visible");
+				assert.ok(await assistant.isDisplayed(), "assistant is visible");
 				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
 				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
 				assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
@@ -186,7 +186,7 @@ describe("Component Behavior", () => {
 				const shellbar = await browser.$("#shellbar");
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const assistant = await browser.$("#shellbar ui5-button[slot='assistant'");
+				const assistant = await browser.$("#shellbar ui5-toggle-button[slot='assistant'");
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -198,7 +198,7 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "L", "L Breakpoint class should be set");
 				assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
-				assert.ok(await assistant.isDisplayed(), "Back icon is visible");
+				assert.ok(await assistant.isDisplayed(), "assistant is visible");
 				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
 				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
 				assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
@@ -218,7 +218,7 @@ describe("Component Behavior", () => {
 				const shellbar = await browser.$("#shellbar");
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const assistant = await browser.$("#shellbar ui5-button[slot='assistant'");
+				const assistant = await browser.$("#shellbar ui5-toggle-button[slot='assistant'");
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -239,7 +239,7 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
 				assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
 				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
-				assert.ok(await assistant.isDisplayed(), "Back icon is visible");
+				assert.ok(await assistant.isDisplayed(), "assistant is visible");
 				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
 				assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
 				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
@@ -310,7 +310,7 @@ describe("Component Behavior", () => {
 				const shellbar = await browser.$("#shellbar");
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const assistant = await browser.$("#shellbar ui5-button[slot='assistant'");
+				const assistant = await browser.$("#shellbar ui5-toggle-button[slot='assistant'");
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
 				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
@@ -322,7 +322,7 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "S", "S Breakpoint class should be set");
 				assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
-				assert.ok(await assistant.isDisplayed(), "Back icon is visible");
+				assert.ok(await assistant.isDisplayed(), "assistant is visible");
 				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
 				assert.notOk(await primaryTitle.isDisplayed(), "Primary title should be hidden");
 				assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
