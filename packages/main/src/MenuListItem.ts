@@ -20,7 +20,7 @@ import menuListItemCss from "./generated/themes/MenuListItem.css.js";
 	tag: "ui5-menu-li",
 	template: MenuListItemTemplate,
 	styles: [CustomListItem.styles, menuListItemCss],
-	dependencies: [Icon],
+	dependencies: [...CustomListItem.dependencies, Icon],
 })
 class MenuListItem extends CustomListItem {
 	/**
