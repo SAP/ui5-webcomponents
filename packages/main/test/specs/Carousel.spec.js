@@ -274,4 +274,39 @@ describe("Carousel general interaction", () => {
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
 	});
+
+	it("Items per page", async () => {
+		const carousel = await browser.$("#itemsPerPage");
+		// set outer container width to < 600px (S)
+		await browser.setWindowSize(500, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem2 = await carousel.shadow$(".ui5-carousel-item:nth-child(2)");
+		assert.ok(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "Second Item is hidden only first is visible");
+
+		// set outer container width to < 1024px (M)
+		await browser.setWindowSize(1000, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem3 = await carousel.shadow$(".ui5-carousel-item:nth-child(3)");
+		assert.notOk(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "Second Item is visible");
+		assert.ok(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is hidden");
+
+		// set outer container width to < 1044px (L)
+		await browser.setWindowSize(1240, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem4 = await carousel.shadow$(".ui5-carousel-item:nth-child(4)");
+		assert.notOk(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is visible");
+		assert.ok(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is hidden");
+
+		// set outer container width to < 1044px (L)
+		await browser.setWindowSize(1240, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem5 = await carousel.shadow$(".ui5-carousel-item:nth-child(5)");
+		assert.notOk(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is visible");
+		assert.ok(await carouselItem5.hasClass("ui5-carousel-item--hidden"), "Fifth Item is hidden");
+
+	});
 });
