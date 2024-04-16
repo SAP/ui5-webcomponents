@@ -8,7 +8,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CheckBox from "./CheckBox.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
-import TableMode from "./types/TableMode.js";
+import TableSelectionMode from "./types/TableSelectionMode.js";
 
 // Texts
 import {
@@ -46,12 +46,12 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 @event("_focused")
 class TableGroupRow extends UI5Element implements ITableRow {
 	/**
-	 * Defines the mode of the row
+	 * Defines the selection mode of the row
 	 * @default "None"
 	 * @private
 	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
+	@property({ type: TableSelectionMode, defaultValue: TableSelectionMode.None })
+	selectionMode!: `${TableSelectionMode}`;
 
 	@property({ type: Object, multiple: true })
 	_columnsInfo!: Array<TableColumnInfo>;
@@ -87,7 +87,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 			return column.visible ? ++acc : acc;
 		}, 0);
 
-		if (this.mode === TableMode.MultiSelect) {
+		if (this.selectionMode === TableSelectionMode.Multi) {
 			count++;
 		}
 

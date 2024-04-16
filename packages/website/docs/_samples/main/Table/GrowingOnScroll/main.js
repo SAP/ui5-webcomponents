@@ -12,7 +12,7 @@ let endSliceIndex = 2;
 
 // Create handler for the "load-more" event
 const loadMore = () => {
-	growingTable.busy = true;
+	growingTable.loading = true;
 
 	setTimeout(() => {
 		endSliceIndex = sliceIndex + rows;
@@ -27,7 +27,7 @@ const loadMore = () => {
 		sliceIndex += rows;
 		growingTable.insertAdjacentHTML('beforeend', result);
 		growingTable.growingButtonSubtext = (++loads * rows) + " of " + products.length;
-		growingTable.busy = false;
+		growingTable.loading = false;
 
 		if (loads == products.length/2) {
 			growingTable.growing = "None"

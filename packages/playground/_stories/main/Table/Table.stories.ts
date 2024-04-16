@@ -8,7 +8,7 @@ import type Table from "@ui5/webcomponents/dist/Table.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
-import TableMode from "@ui5/webcomponents/dist/types/TableMode.js";
+import TableSelectionMode from "@ui5/webcomponents/dist/types/TableSelectionMode.js";
 import TableGrowingMode from "@ui5/webcomponents/dist/types/TableGrowingMode.js";
 let index = 0;
 
@@ -26,10 +26,10 @@ const Template: UI5StoryArgs<Table, StoryArgsSlots> = (args) => html`
 	growing-button-subtext="${ifDefined(args.growingButtonSubtext)}"
 	?hide-no-data="${ifDefined(args.hideNoData)}"
 	growing="${ifDefined(args.growing)}"
-	?busy="${ifDefined(args.busy)}"
+	?loading="${ifDefined(args.loading)}"
 	busy-delay="${ifDefined(args.busyDelay)}"
 	?sticky-column-header="${ifDefined(args.stickyColumnHeader)}"
-	mode="${ifDefined(args.mode)}"
+	selection-mode="${ifDefined(args.selectionMode)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
@@ -51,7 +51,7 @@ Basic.decorators = [
 	}
 ]
 Basic.args = {
-	mode: TableMode.None,
+	selectionMode: TableSelectionMode.None,
 	columns: `
 		<ui5-table-column slot="columns">
 			<span>Product</span>
@@ -370,12 +370,12 @@ GrowingTableMoreButton.decorators = [
 					growingTable${index}.insertAdjacentHTML('beforeend', result);
 				}
 				const loadMore${index} = () => {
-					growingTable${index}.busy = true;
+					growingTable${index}.loading = true;
 					setTimeout(() => {
 						++loads${index};
 						endSliceIndex${index} = sliceIndex${index} + rows${index};
 						init${index}(rows${index});
-						growingTable${index}.busy = false;
+						growingTable${index}.loading = false;
 					}, 1500);
 				}
 				growingTable${index}.addEventListener("load-more", loadMore${index});
@@ -447,7 +447,7 @@ GrowingTableScroll.decorators = [
 				}
 				const growOnScroll${index} = () => {
 					let timeout${index};
-					growingTableScroll${index}.busy = true;
+					growingTableScroll${index}.loading = true;
 					if (timeout${index}) {
 						clearTimeout(timeout${index});
 					}
@@ -455,7 +455,7 @@ GrowingTableScroll.decorators = [
 						loadsScroll${index}++
 						endSliceIndexScroll${index} = sliceIndexScroll${index} + rowsScroll${index};
 						fill${index}(rowsScroll${index});
-						growingTableScroll${index}.busy = false;
+						growingTableScroll${index}.loading = false;
 					}, 1500);
 				}
 				growingTableScroll${index}.addEventListener("load-more", growOnScroll${index});
@@ -473,7 +473,7 @@ GrowingTableScroll.storyName = "Growing on Scroll";
 
 export const GroupingTableSelect= Template.bind({});
 GroupingTableSelect.args = {
-	mode: TableMode.SingleSelect,
+	selectionMode: TableSelectionMode.Single,
 	columns: `
 		<ui5-table-column id="column-1" slot="columns">
 			<ui5-label>City</ui5-label>

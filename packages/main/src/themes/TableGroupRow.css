@@ -2,7 +2,7 @@
     display: contents;
 }
 
-:host([_busy]) .ui5-table-group-row-root {
+:host([_loading]) .ui5-table-group-row-root {
 	opacity: 0.72;
 	pointer-events: none;
 }

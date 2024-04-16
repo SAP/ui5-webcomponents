@@ -20,7 +20,7 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import CheckBox from "./CheckBox.js";
-import TableMode from "./types/TableMode.js";
+import TableSelectionMode from "./types/TableSelectionMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
@@ -124,13 +124,13 @@ class TableRow extends UI5Element implements ITableRow {
 	navigated!: boolean;
 
 	/**
-	 * Defines the mode of the row (None, SingleSelect, MultiSelect).
+	 * Defines the selection mode of the row (None, Single, Multi).
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @private
 	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
+	@property({ type: TableSelectionMode, defaultValue: TableSelectionMode.None })
+	selectionMode!: `${TableSelectionMode}`;
 
 	/**
 	 * Indicates if the table row is active.
@@ -401,11 +401,11 @@ class TableRow extends UI5Element implements ITableRow {
 	}
 
 	get isSingleSelect() {
-		return this.mode === TableMode.SingleSelect;
+		return this.selectionMode === TableSelectionMode.Single;
 	}
 
 	get isMultiSelect() {
-		return this.mode === TableMode.MultiSelect;
+		return this.selectionMode === TableSelectionMode.Multi;
 	}
 
 	get root() {

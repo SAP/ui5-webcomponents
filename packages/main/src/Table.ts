@@ -45,7 +45,7 @@ import type {
 import type TableCell from "./TableCell.js";
 import type TableColumn from "./TableColumn.js";
 import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
-import TableMode from "./types/TableMode.js";
+import TableSelectionMode from "./types/TableSelectionMode.js";
 import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
@@ -67,7 +67,7 @@ import tableStyles from "./generated/themes/Table.css.js";
  * @public
  */
 interface ITableRow extends HTMLElement, ITabbable {
-	mode: `${TableMode}`,
+	selectionMode: `${TableSelectionMode}`,
 	selected: boolean,
 	forcedBusy: boolean,
 	forcedAriaPosition: string,
@@ -128,15 +128,15 @@ enum TableFocusTargetElement {
  *
  * ### Selection
  * To benefit from the selection mechanism of `ui5-table` component, you can use the available selection modes:
- * `SingleSelect` and `MultiSelect`.
+ * `Single` and `Multi`.
  *
- * In additition to the used mode, you can also specify the `ui5-table-row` type choosing between
+ * In additition to the used selection mode, you can also specify the `ui5-table-row` type choosing between
  * `Active` or `Inactive`.
  *
- * In `SingleSelect` mode, you can select both an `Active` and `Inactive` row via mouse or
+ * In `Single` selection mode, you can select both an `Active` and `Inactive` row via mouse or
  * by pressing the `Space` or `Enter` keys.
  *
- * In `MultiSelect` mode, you can select both an `Active` and `Inactive` row by pressing the
+ * In `Multi` selection mode, you can select both an `Active` and `Inactive` row by pressing the
  * `Space` key when a row is on focus or via mouse click over the selection checkbox of the row.
  * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
  *
@@ -152,11 +152,11 @@ enum TableFocusTargetElement {
  * Furthermore, you can interact with `ui5-table` via the following keys.
  *
  * - [F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.
- * - [Ctrl]+[A] - Selects all items, if MultiSelect mode is enabled.
+ * - [Ctrl]+[A] - Selects all items, if Multi selection mode is enabled.
  * - [Home]/[End] - Focuses the first/last item.
  * - [Page Up]/[Page Down] - Moves focus up/down by page size (20 items by default).
  * - [Alt]+[Down]/[Up] - Switches focus between header, last focused item, and More button (if applies) in either direction.
- * - [Shift]+[Down]/[Up] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).
+ * - [Shift]+[Down]/[Up] - Selects the next/previous item in a Multi selection table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).
  * - [Shift]+[Home]/[End] - Range selection to the first/last item of the List.
  * - [Ctrl]+[Home]/[End] - Same behavior as HOME & END.
  *
@@ -220,7 +220,7 @@ enum TableFocusTargetElement {
 
 /**
  * Fired when selection is changed by user interaction
- * in `SingleSelect` and `MultiSelect` modes.
+ * in `Single` and `Multi` selection modes.
  * @param {Array} selectedRows An array of the selected rows.
  * @param {Array} previouslySelectedRows An array of the previously selected rows.
  * @public
@@ -303,7 +303,7 @@ class Table extends UI5Element {
 	growing!: `${TableGrowingMode}`;
 
 	/**
-	 * Defines if the table is in busy state.
+	 * Defines if the table is in loading state.
 	 *
 	 * In this state the component's opacity is reduced
 	 * and busy indicator is displayed at the bottom of the table.
@@ -312,7 +312,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
@@ -346,13 +346,13 @@ class Table extends UI5Element {
 	stickyColumnHeader!: boolean;
 
 	/**
-	 * Defines the mode of the component.
+	 * Defines the selection mode of the component.
 	 * @default "None"
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
+	@property({ type: TableSelectionMode, defaultValue: TableSelectionMode.None })
+	selectionMode!: `${TableSelectionMode}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -400,7 +400,7 @@ class Table extends UI5Element {
 	_inViewport!: boolean;
 
 	/**
-	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
+	 * Defines whether all rows are selected or not when table is in Multi selection mode.
 	 * @default false
 	 * @since 1.0.0-rc.15
 	 * @private
@@ -514,12 +514,12 @@ class Table extends UI5Element {
 			}
 
 			row.forcedAriaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
-			row.forcedBusy = this.busy;
+			row.forcedBusy = this.loading;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.removeEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
 			row.addEventListener("ui5-f7-pressed", this.fnHandleF7 as EventListener);
-			row.mode = this.mode;
+			row.selectionMode = this.selectionMode;
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
@@ -1139,7 +1139,7 @@ class Table extends UI5Element {
 
 	get styles() {
 		return {
-			busy: {
+			loading: {
 				position: this.busyIndPosition,
 			},
 		};
@@ -1192,11 +1192,11 @@ class Table extends UI5Element {
 	}
 
 	get isMultiSelect(): boolean {
-		return this.mode === TableMode.MultiSelect;
+		return this.selectionMode === TableSelectionMode.Multi;
 	}
 
 	get isSingleSelect(): boolean {
-		return this.mode === TableMode.SingleSelect;
+		return this.selectionMode === TableSelectionMode.Single;
 	}
 
 	get selectedRows(): Array<ITableRow> {

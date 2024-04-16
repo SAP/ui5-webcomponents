@@ -208,7 +208,7 @@ describe("Table general interaction", () => {
 	});
 
 	describe("Table selection modes", async () => {
-		it("test click over Active/Inactive row in SingleSelect mode", async () => {
+		it("test click over Active/Inactive row in Single selection mode", async () => {
 			await browser.url("test/pages/TableSelection.html");
 			const table = await browser.$("#single");
 			const firstRow = await browser.$("#firstRowSingleSelect");
@@ -224,9 +224,9 @@ describe("Table general interaction", () => {
 			// act
 			await firstCellFirstRowLabel.click();
 
-			// check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(await table.getAttribute("mode"), "SingleSelect", "The table's mode is SingleSelect");
-			assert.strictEqual(await firstRow.getAttribute("mode"), "SingleSelect", "The row's mode is SingleSelect");
+			// check whether the table's and row's selection-mode property is set correctly, as well as the row type property
+			assert.strictEqual(await table.getAttribute("selection-mode"), "Single", "The table's selection mode is Single");
+			assert.strictEqual(await firstRow.getAttribute("selection-mode"), "Single", "The row's selection mode is Single");
 			assert.strictEqual(await firstRow.getAttribute("type"), "Active", "The row's type is Active");
 			assert.strictEqual(await thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
 
@@ -254,7 +254,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await previouslySelectedRows.getProperty("value"), "firstRowSingleSelect", "The prevously  selected row is not changed");
 		});
 
-		it("test Space/Enter key interaction over Active/Inactive row in SingleSelect mode", async () => {
+		it("test Space/Enter key interaction over Active/Inactive row in Single selection mode", async () => {
 			const firstRow = await browser.$("#firstRowSingleSelect");
 			const secondRow = await browser.$("#secondRowSingleSelect");
 			const thirdRow = await browser.$("#thirdRowSingleSelect");
@@ -328,7 +328,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await selectedRow.getProperty("value"), "secondRowSingleSelect", "The selected row is not changed");
 		});
 
-		it("test click over Active/Inactive row in MultiSelect mode", async () => {
+		it("test click over Active/Inactive row in Multi selection mode", async () => {
 			const table = await browser.$("#multi");
 			const firstRow = await browser.$("#firstRowMultiSelect");
 			const thirdRow = await browser.$("#thirdRowMultiSelect");
@@ -344,20 +344,20 @@ describe("Table general interaction", () => {
 			// act
 			await firstCellFirstRowLabel.click();
 
-			// check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(await table.getAttribute("mode"), "MultiSelect", "The table's mode is MultiSelect");
-			assert.strictEqual(await firstRow.getAttribute("mode"), "MultiSelect", "The row's mode is MultiSelect");
+			// check whether the table's and row's selection-mode property is set correctly, as well as the row type property
+			assert.strictEqual(await table.getAttribute("selection-mode"), "Multi", "The table's selection mode is Multi");
+			assert.strictEqual(await firstRow.getAttribute("selection-mode"), "Multi", "The row's selection mode is Multi");
 			assert.strictEqual(await firstRow.getAttribute("type"), "Active", "The row's type is Active");
 			assert.strictEqual(await thirdRow.getAttribute("type"), "Inactive", "The row's type is Inactive")
 
 			// test row-click and selection-change events over an Active row
 			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over an Active row should trigger row-click event");
-			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Click over a row in a MultiSelect mode table should not trigger selection-change event");
+			assert.strictEqual(await selectionChangeCount.getProperty("value"), "", "Click over a row in a Multi selection mode table should not trigger selection-change event");
 
 			// act
 			await checkBoxFirstCell.click();
 
-			// test click over the selection checkbox within each row in MultiSelect mode
+			// test click over the selection checkbox within each row in Multi selection mode
 			assert.strictEqual(await rowClickCount.getProperty("value"), "1", "Click over the selection checkbox should not trigger row-click event");
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Click over the selection checkbox should trigger selection-change event");
 			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowMultiSelect", "The first row is selected");
@@ -379,7 +379,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "1", "Click over an Inactive row should not trigger selection-change event");
 		});
 
-		it("test Space/Enter key interaction over Active/Inactive row in MultiSelect mode", async () => {
+		it("test Space/Enter key interaction over Active/Inactive row in Multi selection mode", async () => {
 			const firstRow = await browser.$("#firstRowMultiSelect");
 			const secondRow = await browser.$("#secondRowMultiSelect");
 			const thirdRow = await browser.$("#thirdRowMultiSelect");
@@ -413,7 +413,7 @@ describe("Table general interaction", () => {
 			await browser.execute(el => el.focus(), checkBoxFirstCell);
 			await checkBoxFirstCell.keys("Enter");
 
-			// test Space over the selection checkbox within each row in MultiSelect mode
+			// test Space over the selection checkbox within each row in Multi selection mode
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Enter key over the selection checkbox should not trigger row-click event");
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "2", "Enter key over the selection checkbox should trigger selection-change event");
 			assert.strictEqual(await selectedRow.getProperty("value"), "secondRowMultiSelect", "The second row is currently selected");
@@ -422,7 +422,7 @@ describe("Table general interaction", () => {
 			// act
 			await checkBoxFirstCell.keys("Space");
 
-			// test Space key over the selection checkbox of already selected row in MultiSelect mode
+			// test Space key over the selection checkbox of already selected row in Multi selection mode
 			assert.strictEqual(await rowClickCount.getProperty("value"), "2", "Space key over the selection checkbox should not trigger row-click event");
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "3", "Space key over the selection checkbox of already selected row should trigger selection-change event");
 			assert.strictEqual(await selectedRow.getProperty("value"), "firstRowMultiSelect", "The second row is not selected");
@@ -456,7 +456,7 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await selectionChangeCount.getProperty("value"), "5",  "Enter key over an already selected row should trigger selection-change event");
 		});
 
-		it("test selectAll functionallity in MultiSelect mode", async () => {
+		it("test selectAll functionallity in Multi selection mode", async () => {
 			await browser.url("test/pages/TableSelection.html");
 			const firstRow = await browser.$("#firstRowMultiSelect");
 			const secondRow = await browser.$("#secondRowMultiSelect");
@@ -498,9 +498,9 @@ describe("Table general interaction", () => {
 			// act
 			await firstCellFirstRowLabel.click();
 
-			// Check whether the table's and row's mode property is set correctly, as well as the row type property
-			assert.strictEqual(await table.getProperty("mode"), "None", "The table's mode is None");
-			assert.strictEqual(await firstRow.getProperty("mode"), "None", "The row's mode is None");
+			// Check whether the table's and row's selection-mode property is set correctly, as well as the row type property
+			assert.strictEqual(await table.getProperty("selection-mode"), "None", "The table's selection mode is None");
+			assert.strictEqual(await firstRow.getProperty("selection-mode"), "None", "The row's selection mode is None");
 			assert.strictEqual(await firstRow.getProperty("type"), "Active", "The row's type is Active");
 			assert.strictEqual(await thirdRow.getProperty("type"), "Inactive", "The row's type is Inactive")
 

@@ -782,7 +782,7 @@
 		}
 
 		function loadMore() {
-			table.busy = true;
+			table.loading = true;
 
 			++loadMoreTracker;
 			inputLoadMoreCounter.value = loadMoreTracker - 1;
@@ -793,7 +793,7 @@
 
 			timeoutTracker = setTimeout(function() {
 				init(table, NEW_ROWS);
-				table.busy = false;
+				table.loading = false;
 			}, 1500);
 		}
 

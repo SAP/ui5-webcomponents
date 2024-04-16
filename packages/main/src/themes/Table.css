@@ -60,7 +60,7 @@ tr {
 	height: 0px;
 }
 
-:host([busy]) .ui5-table-busy-row {
+:host([loading]) .ui5-table-busy-row {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -70,7 +70,7 @@ tr {
 	z-index: 100;
 }
 
-:host([busy]) .ui5-table-busy-ind {
+:host([loading]) .ui5-table-busy-ind {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -78,7 +78,7 @@ tr {
 	z-index: 1;
 }
 
-:host([busy]) [growing-button] {
+:host([loading]) [growing-button] {
 	opacity: 0.72;
 }
 

@@ -7,7 +7,7 @@
 >
 	<div id="{{_id}}-before" tabindex="0" class="ui5-table-focusarea"></div>
 
-	{{#if busy}}
+	{{#if loading}}
 		{{> busyRow}}
 	{{/if}}
 
@@ -113,7 +113,7 @@
 		<ui5-busy-indicator
 			delay="{{busyDelay}}"
 			class="ui5-table-busy-ind"
-			style="{{styles.busy}}"
+			style="{{styles.loading}}"
 			active
 			data-sap-focus-ref
 		></ui5-busy-indicator>

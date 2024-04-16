@@ -767,7 +767,7 @@
 		var loadMoreTracker = 1;
 
 		function init(tbl, rows) {
-			tbl.busy = true;
+			tbl.loading = true;
 
 			var html = '';
 			products.ProductCollection.slice(0, ROWS).forEach(function (product, index, arr) {
@@ -781,7 +781,7 @@
 			inputLoadMoreCounter.value = loadMoreTracker - 1;
 
 			setTimeout(function() {
-				tbl.busy = false;
+				tbl.loading = false;
 			}, 1500);
 		}
 
