@@ -94,6 +94,7 @@ class DropIndicator extends UI5Element {
 		} = this.targetReference.getBoundingClientRect();
 		const {
 			top: containerTop,
+			height: containerHeight,
 		} = this.ownerReference.getBoundingClientRect();
 		const style = {
 			display: "",
@@ -102,18 +103,20 @@ class DropIndicator extends UI5Element {
 			height: "",
 		};
 		let position = 0;
+		let isLast = false;
+		let isFirst = false;
 
 		if (this.orientation === Orientation.Vertical) {
 			switch (this.placement) {
 			case MovePlacement.Before:
-				position = left - this._needle!.offsetWidth / 2;
+				position = left;
 				break;
 			case MovePlacement.On:
 				style.width = `${width}px`;
 				position = left;
 				break;
 			case MovePlacement.After:
-				position = right - this._needle!.offsetWidth / 2;
+				position = right;
 				break;
 			}
 
@@ -136,9 +139,19 @@ class DropIndicator extends UI5Element {
 
 			style.width = `${width}px`;
 			position -= containerTop;
+
+			if (position <= 0) {
+				isFirst = true;
+			}
+
+			if (position >= containerHeight) {
+				isLast = true;
+			}
 		}
 
 		style[this._positionProperty] = `${position}px`;
+		this.toggleAttribute("first", isFirst);
+		this.toggleAttribute("last", isLast);
 
 		Object.assign(this.style, style);
 	}
@@ -150,10 +163,6 @@ class DropIndicator extends UI5Element {
 				"ui5-di-needle": this.placement !== MovePlacement.On,
 			},
 		};
-	}
-
-	get _needle() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-di-needle");
 	}
 }
 
