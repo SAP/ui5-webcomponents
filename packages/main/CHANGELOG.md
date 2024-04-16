@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
+
+
+### Bug Fixes
+
+* **Popup:** prevent a rare runtime error ([#8707](https://github.com/SAP/ui5-webcomponents/issues/8707)) ([02eb1c7](https://github.com/SAP/ui5-webcomponents/commit/02eb1c766e46f1e9fe4697612492103e50bf2d45))
+* **ui5-menu:** adjust active menu item text color ([#8699](https://github.com/SAP/ui5-webcomponents/issues/8699)) ([1a7331d](https://github.com/SAP/ui5-webcomponents/commit/1a7331dbc1ad44138ae966c310043bdce3e29cc3)), closes [#8681](https://github.com/SAP/ui5-webcomponents/issues/8681)
+* **ui5-popup:** fix scrolling and visualization on iphone ([#8716](https://github.com/SAP/ui5-webcomponents/issues/8716)) ([d9ef14b](https://github.com/SAP/ui5-webcomponents/commit/d9ef14b3d44defd7f8886f4f8e6df285eda575a9))
+* **ui5-step-input:** align the input vertically ([#8696](https://github.com/SAP/ui5-webcomponents/issues/8696)) ([70322fc](https://github.com/SAP/ui5-webcomponents/commit/70322fc58c0855e3d17dd63f0e120762d9fa5cc3)), closes [#8667](https://github.com/SAP/ui5-webcomponents/issues/8667)
+* **ui5-tabcontainer:** don't allow parent item to be moved among its children ([#8665](https://github.com/SAP/ui5-webcomponents/issues/8665)) ([e265375](https://github.com/SAP/ui5-webcomponents/commit/e265375cf6f6531779ac73a7a9014ef7fbea4184))
+* **ui5-tree-item-custom:** improved key handling ([#8637](https://github.com/SAP/ui5-webcomponents/issues/8637)) ([eeb76fe](https://github.com/SAP/ui5-webcomponents/commit/eeb76fe39505cc44c38618c29ac47889a725e8d3)), closes [#7566](https://github.com/SAP/ui5-webcomponents/issues/7566)
+
+
+### Features
+
+* add shadowRootOptions for [@custom](https://github.com/custom)Element decorator ([#8703](https://github.com/SAP/ui5-webcomponents/issues/8703)) ([7168dc2](https://github.com/SAP/ui5-webcomponents/commit/7168dc297f411d9b5d64127a47e2361f17442439))
+* **ui5-button:** provide focus support for mobile ([#8414](https://github.com/SAP/ui5-webcomponents/issues/8414)) ([4d9e32f](https://github.com/SAP/ui5-webcomponents/commit/4d9e32fff1a594f774f9f36d549619c0389c1e07)), closes [#8178](https://github.com/SAP/ui5-webcomponents/issues/8178) [#8322](https://github.com/SAP/ui5-webcomponents/issues/8322)
+* **ui5-text:** introduce Text web component ([#8299](https://github.com/SAP/ui5-webcomponents/issues/8299)) ([91acaf5](https://github.com/SAP/ui5-webcomponents/commit/91acaf5edadc63b19172a6f3a882023c31779878)), closes [#6788](https://github.com/SAP/ui5-webcomponents/issues/6788)
+* **ui5-tree:** enable drag and drop ([#8477](https://github.com/SAP/ui5-webcomponents/issues/8477)) ([4514f57](https://github.com/SAP/ui5-webcomponents/commit/4514f57b513d74b108800576c5a893083e8f594d)), closes [#7562](https://github.com/SAP/ui5-webcomponents/issues/7562)
+
+
+
+
+
 # [2.0.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v2.0.0-rc.0) (2024-04-09)
 
 
