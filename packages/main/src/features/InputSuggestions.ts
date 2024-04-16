@@ -47,7 +47,7 @@ type InputSuggestion = {
 	image?: string | undefined;
 	icon?: string | undefined;
 	type?: `${ListItemType}` | undefined;
-	additionalText?: string;
+	additionalText: string;
 	additionalTextState?: `${ValueState}`;
 	groupItem: boolean;
 	key: number;
@@ -121,9 +121,14 @@ class Suggestions {
 			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
 
 			return suggestions.push({
-				...suggestion,
 				text,
 				description,
+				image: suggestion.image,
+				icon: suggestion.icon,
+				type: suggestion.type,
+				additionalText: suggestion.additionalText,
+				additionalTextState: suggestion.additionalTextState,
+				groupItem: suggestion.groupItem,
 				key: idx,
 			});
 		});
