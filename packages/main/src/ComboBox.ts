@@ -745,7 +745,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this.fireEvent("input");
-		this._fireChangeEvent();
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {

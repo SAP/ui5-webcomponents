@@ -89,3 +89,11 @@
 	box-shadow: var(--_ui5_popover_box_shadow);
 	transform: rotate(-45deg);
 }
+
+:host([modal]:not([hide-backdrop]))::backdrop {
+	background-color: var(--_ui5_popup_block_layer_background);
+}
+
+:host([modal]) .ui5-block-layer {
+	display: block;
+}
