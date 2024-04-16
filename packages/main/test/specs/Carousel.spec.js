@@ -300,8 +300,8 @@ describe("Carousel general interaction", () => {
 		assert.notOk(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is visible");
 		assert.ok(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is hidden");
 
-		// set outer container width to < 1044px (L)
-		await browser.setWindowSize(1240, 500);
+		// set outer container width to > 1044px (XL)
+		await browser.setWindowSize(1540, 500);
 		await carousel.scrollIntoView();
 
 		const carouselItem5 = await carousel.shadow$(".ui5-carousel-item:nth-child(5)");
