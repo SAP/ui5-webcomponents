@@ -301,7 +301,7 @@ describe("MultiInput Truncated Token", () => {
 
 		const innerInput = await browser.$("#added-mi").shadow$("input");
 
-		assert.ok(html, "new MI should be displayed");
+		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
 	});
 });
 
@@ -586,14 +586,12 @@ describe("Keyboard handling", () => {
 		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
-		await mi.click();
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("open"), "Focused MI - n-more popover should be opened");
+		await inner.click();
+		await inner.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("opened"), "n-more popover should be opened");
 
-		await mi.click();
-		await mi.keys("ArrowLeft");
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("open"), "Focused Token - n-more popover should be opened");
+		await inner.keys(["Control", "i"]);
+		assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed");
 	});
 
 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {

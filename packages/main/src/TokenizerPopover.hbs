@@ -11,19 +11,12 @@
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
 				<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{morePopoverTitle}}</ui5-title>
-				<ui5-button
-					class="ui5-responsive-popover-close-btn"
-					icon="decline"
-					design="Transparent"
-					@click="{{closeMorePopover}}"
-				>
-				</ui5-button>
 			</div>
 		</div>
 	{{/if}}
 	<ui5-list
 		class="ui5-tokenizer-list"
-		mode={{_nMoreListMode}}
+		selection-mode={{_nMoreListMode}}
 		separators="None"
 		@keydown="{{_onPopoverListKeydown}}"
 		@ui5-item-delete={{itemDelete}}
@@ -40,10 +33,13 @@
 	{{#if _isPhone}}
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
-				id="ui5-tokenizer-dialog-confirm-btn"
 				design="Emphasized"
 				@click="{{closeMorePopover}}"
 			>OK</ui5-button>
+			<ui5-button
+				design="Transparent"
+				@click="{{closeMorePopover}}"
+			>Cancel</ui5-button>
 		</div>
 	{{/if}}
 </ui5-responsive-popover>

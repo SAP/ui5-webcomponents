@@ -278,13 +278,7 @@ class Tokenizer extends UI5Element {
 
 		this._tokens.forEach(token => {
 			token.singleToken = tokensLength === 1;
-			if ((this.readonly || this.disabled)) {
-				token.readonly = true;
-			}
-
-			if (!this.readonly && !this.disabled) {
-				token.readonly = false;
-			}
+			token.readonly = this.readonly;
 		});
 
 		if (!tokensLength) {
@@ -343,7 +337,7 @@ class Tokenizer extends UI5Element {
 		const tokens = this._tokens;
 		const firstToken = tokens[0];
 
-		firstToken.forcedTabIndex = firstToken.selected ? "0" : "-1";
+		// firstToken.forcedTabIndex = firstToken.selected ? "0" : "-1";
 
 		if (tokens.length === 1 && firstToken.isTruncatable) {
 			if (firstToken.selected) {
@@ -370,10 +364,10 @@ class Tokenizer extends UI5Element {
 
 		this._nMoreCount = this.overflownTokens.length;
 		if (firstToken && !this.disabled && !this.preventInitialFocus) {
-			const hasSelectedToken = tokensArray.some(token => token.selected);
+			const hasSelectedToken = tokensArray.some(token => token.selected && !this.overflownTokens.includes(token));
 
 			tokensArray.forEach(token => {
-				token.forcedTabIndex = hasSelectedToken && token.selected ? "0" : "-1";
+				token.forcedTabIndex = token.selected ? "0" : "-1";
 			});
 
 			if (!hasSelectedToken && !this.preventInitialFocus) {
@@ -503,9 +497,15 @@ class Tokenizer extends UI5Element {
 
 		if (e.detail.escPressed && this._openedByNmore) {
 			const lastToken = tokensArray[tokensArray.length - 1];
+			const focusedToken = tokensArray.find(token => token.focused);
 
-			this._focusLastToken();
-			this._scrollToToken(lastToken);
+			if (focusedToken) {
+				this._scrollToToken(focusedToken);
+			} else {
+				this._focusLastToken();
+				this._scrollToToken(lastToken);
+			}
+
 			this._openedByNmore = false;
 
 			return;
@@ -536,9 +536,7 @@ class Tokenizer extends UI5Element {
 			if (isCut) {
 				const cutResult = this._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
 
-				selectedTokens.forEach(token => {
-					this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
-				});
+				selectedTokens.forEach(token => this.deleteToken(token));
 
 				return cutResult;
 			}

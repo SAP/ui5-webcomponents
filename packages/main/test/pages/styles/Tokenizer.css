@@ -25,6 +25,10 @@ ui5-tokenizer {
 	width: 240px;
 }
 
+ui5-tokenizer#expanded-tokenizer {
+	width: 100%;
+}
+
 ui5-tokenizer#nmore-tokenizer {
 	width: 100%;
 }

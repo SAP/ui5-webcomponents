@@ -11,6 +11,8 @@ import {
 	isRightCtrl,
 	isHome,
 	isEnd,
+	isUp,
+	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -182,10 +184,6 @@ class MultiInput extends Input {
 	}
 
 	innerFocusIn() {
-		if (this._readonly) {
-			return;
-		}
-
 		this.tokenizer.expanded = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
@@ -208,7 +206,7 @@ class MultiInput extends Input {
 			return this._focusFirstToken(e);
 		}
 
-		if (isLeft(e) || isBackSpace(e)) {
+		if (isLeft(e) || isUp(e) || isBackSpace(e)) {
 			this._skipOpenSuggestions = true;
 			return this._handleLeft(e);
 		}
@@ -228,7 +226,7 @@ class MultiInput extends Input {
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
-		if (isRight(e) || isEnd(e) || rightCtrl) {
+		if (isRight(e) || isDown(e) || isEnd(e) || rightCtrl) {
 			e.preventDefault();
 			const lastTokenIndex = this.tokens.length - 1;
 

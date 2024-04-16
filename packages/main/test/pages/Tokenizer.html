@@ -19,8 +19,18 @@
 
 <body>
 	<div class="wrapper">
+		<h1 class="sample-container-title">Expanded tokenizer</h1>
+		<div>
+			<ui5-tokenizer id="expanded-tokenizer" expanded>
+				<ui5-token text="Andora"></ui5-token>
+				<ui5-token text="Bulgaria"></ui5-token>
+				<ui5-token text="Canada"></ui5-token>
+				<ui5-token text="Denmark"></ui5-token>
+				<ui5-token text="Estonia"></ui5-token>
+			</ui5-tokenizer>
+		</div>
 		<h1 class="sample-container-title">Only nItems tokenizer</h1>
-		<ui5-tokenizer id="basic-tokenizer" show-more>
+		<ui5-tokenizer id="basic-tokenizer">
 			<ui5-token text="Your name and email address were configured automatically based
 			on your username and hostname. Please check that they are accurate."></ui5-token>
 			<ui5-token text="Your name and email address were configured automatically based
@@ -29,7 +39,7 @@
 
 		<h1 class="sample-container-title">Tokenizer with n-more items</h1>
 		<div class="tokenizer-container">
-			<ui5-tokenizer id="nmore-tokenizer" show-more>
+			<ui5-tokenizer id="nmore-tokenizer">
 				<ui5-token text="Andora"></ui5-token>
 				<ui5-token text="Bulgaria"></ui5-token>
 				<ui5-token text="Canada"></ui5-token>
@@ -40,7 +50,7 @@
 
 		<h1 class="sample-container-title">Tokenizer with selected token</h1>
 		<div class="tokenizer-container">
-			<ui5-tokenizer id="selected-tokenizer" show-more>
+			<ui5-tokenizer id="selected-tokenizer">
 				<ui5-token text="Andora"></ui5-token>
 				<ui5-token selected text="Bulgaria"></ui5-token>
 				<ui5-token text="Canada"></ui5-token>
@@ -51,7 +61,7 @@
 
 		<h1 class="sample-container-title">Tokenizer with long items</h1>
 		<div class="tokenizer-container">
-			<ui5-tokenizer id="long-tokenizer" show-more>
+			<ui5-tokenizer id="long-tokenizer">
 				<ui5-token text="Andora"></ui5-token>
 				<ui5-token text="Bulgaria"></ui5-token>
 				<ui5-token text="So close no matter how far"></ui5-token>
@@ -61,7 +71,7 @@
 
 		<h1 class="sample-container-title">Readonly tokenizer</h1>
 		<div class="tokenizer-container">
-			<ui5-tokenizer id="readonly-tokenizer" show-more readonly>
+			<ui5-tokenizer id="readonly-tokenizer" readonly>
 				<ui5-token text="Andora" readonly></ui5-token>
 				<ui5-token text="Bulgaria" readonly></ui5-token>
 				<ui5-token text="Canada" readonly></ui5-token>
@@ -73,7 +83,7 @@
 		<h1 class="sample-container-title">Disabled tokenizer</h1>
 
 		<div class="tokenizer-container">
-			<ui5-tokenizer id="disabled-tokenizer" show-more disabled>
+			<ui5-tokenizer id="disabled-tokenizer" disabled>
 				<ui5-token text="Andora"></ui5-token> </ui5-token>
 				<ui5-token text="Bulgaria"></ui5-token>
 				<ui5-token text="Canada"></ui5-token>
@@ -84,7 +94,7 @@
 
 		<h1 class="sample-container-title">Deletable tokens</h1>
 		<div class="tokenizer-container">
-			<ui5-tokenizer id="delete-tokenizer" show-more>
+			<ui5-tokenizer id="delete-tokenizer">
 				<ui5-token text="Andora"></ui5-token>
 				<ui5-token text="Bulgaria"></ui5-token>
 				<ui5-token text="Canada"></ui5-token>
@@ -119,7 +129,7 @@
 		<div class="row">
 			<div class="col">Regular</div>
 			<div class="col sapUiSizeCompact">
-				<ui5-tokenizer show-more>
+				<ui5-tokenizer>
 					<ui5-token text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
 					<ui5-token text="Token 3"></ui5-token>
@@ -128,7 +138,7 @@
 				</ui5-tokenizer>
 			</div>
 			<div class="col">
-				<ui5-tokenizer show-more>
+				<ui5-tokenizer>
 					<ui5-token text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
 					<ui5-token text="Token 3"></ui5-token>
@@ -141,7 +151,7 @@
 		<div class="row">
 			<div class="col">Selected on First Token</div>
 			<div class="col sapUiSizeCompact">
-				<ui5-tokenizer show-more>
+				<ui5-tokenizer>
 					<ui5-token selected text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
 					<ui5-token text="Token 3"></ui5-token>
@@ -150,7 +160,7 @@
 				</ui5-tokenizer>
 			</div>
 			<div class="col">
-				<ui5-tokenizer show-more>
+				<ui5-tokenizer>
 					<ui5-token selected text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
 					<ui5-token text="Token 3"></ui5-token>

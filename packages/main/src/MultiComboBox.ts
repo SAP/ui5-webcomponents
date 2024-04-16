@@ -1421,6 +1421,14 @@ class MultiComboBox extends UI5Element {
 		this.filterSelected = false;
 	}
 
+	_onPopoverFocusout(e: FocusEvent) {
+		if (e.relatedTarget === this._inputDom) {
+			return;
+		}
+
+		this._tokenizer.expanded = false;
+	}
+
 	_beforeOpen() {
 		this._itemsBeforeOpen = this.items.map(item => {
 			return {

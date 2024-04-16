@@ -381,6 +381,26 @@ describe("MultiComboBox general interaction", () => {
 			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
 		})
 
+		it("tests if tokenizer is collapsed after focusout of the Popover", async () => {
+			const mcb = await browser.$("#multi1");
+			const input = await mcb.shadow$("#ui5-multi-combobox-input");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const firstItemCheckbox = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
+
+			await input.click();
+			await input.keys("Comp");
+
+			assert.ok(await popover.getProperty("open"), "The popover should be opened");
+
+			await firstItemCheckbox.click();
+			await firstItemCheckbox.click();
+			await browser.keys("Tab");
+
+			assert.notOk(await popover.getProperty("open"), "The popover should not be opened.");
+			assert.notOk(await tokenizer.getProperty("expanded"), "The tokenizer should be collapsed.");
+		});
+
 		it("Tests autocomplete(type-ahead)", async () => {
 			let hasSelection;
 
@@ -1323,21 +1343,12 @@ describe("MultiComboBox general interaction", () => {
 			const inner = await mcb.shadow$("input");
 			const rpo = await mcb.shadow$("ui5-responsive-popover");
 
-			await mcb.click();
-			await mcb.keys(["Control", "i"]);
+			await inner.click();
+			await inner.keys(["Control", "i"]);
 			assert.ok(await rpo.getProperty("open"), "Focused MCB - n-more popover should be opened");
-			await mcb.click();
-			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("open"), "Focused MCB - n-more popover should be closed");
 
-			await mcb.click();
-			await mcb.keys("ArrowLeft");
-			await mcb.keys(["Control", "i"]);
-			assert.ok(await rpo.getProperty("open"), "Focused Token - n-more popover should be opened");
-			await mcb.click();
-			await mcb.keys("ArrowLeft");
-			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("open"), "Focused Token - n-more popover should be closed");
+			await inner.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("open"), "Focused MCB - n-more popover should be closed");
 		});
 
 		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
