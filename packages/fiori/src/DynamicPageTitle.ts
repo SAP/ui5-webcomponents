@@ -12,6 +12,7 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Template
 import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
@@ -184,6 +185,9 @@ class DynamicPageTitle extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -268,14 +272,6 @@ class DynamicPageTitle extends UI5Element {
 
 	onTitleClick() {
 		this.fireEvent("_toggle-title");
-	}
-
-	_onfocusout() {
-		this.focused = false;
-	}
-
-	_onfocusin() {
-		this.focused = true;
 	}
 
 	_onkeydown(e: KeyboardEvent) {

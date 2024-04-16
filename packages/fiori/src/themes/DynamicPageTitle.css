@@ -128,9 +128,10 @@
 }
 
 /* focus */
-:host([focused]) {
+:host([desktop]:focus),
+.ui5-dynamic-page-title-focus-area:focus-visible {
     outline: var(--_ui5_dynamic_page_title_focus_outline);
-    outline-offset: -0.0625rem;
+    outline-offset: var(--_ui5_dynamic_page_title_focus_outline_offset);
 }
 
 .ui5-dynamic-page-title-focus-area {
