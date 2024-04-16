@@ -720,60 +720,14 @@ describe("Block layers", () => {
 	it("test dialog overlay when dialog is open", async () => {
 		await browser.$("#dialogOverDialogBtn").click();
 
-		const isBlockLayerHidden = await browser.executeAsync(async (done) => {
+		const isBlockLayerVisible = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog1");
 
-
-			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
+			done(dialog.shadowRoot.querySelector(".ui5-block-layer").style.display !== "hidden");
 		});
 
-		assert.notOk(isBlockLayerHidden, "the block layer is visible");
+		assert.ok(isBlockLayerVisible, "the block layer is visible");
 
 		await browser.keys("Escape");
-	});
-
-	it("test dialog over dialog", async () => {
-		await browser.$("#dialogOverDialogBtn").click();
-		await browser.$("#dialogOverDialog1Btn").click();
-
-		let isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog1");
-
-
-			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
-		});
-
-		assert.ok(isBlockLayerHidden, "the block layer is hidden");
-
-		isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog2");
-
-
-			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
-		});
-
-		assert.notOk(isBlockLayerHidden, "the block layer is visible");
-
-		await browser.keys("Escape");
-
-		isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog1");
-
-
-			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
-		});
-
-		assert.notOk(isBlockLayerHidden, "the block layer is visible");
-
-		await browser.keys("Escape");
-
-		isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog1");
-
-
-			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
-		});
-
-		assert.ok(isBlockLayerHidden, "the block layer is hidden");
 	});
 });

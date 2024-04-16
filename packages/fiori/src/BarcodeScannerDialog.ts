@@ -1,4 +1,4 @@
-import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -81,6 +81,13 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		Button,
 	],
 })
+
+/**
+ * Fired when the user closes the component.
+ * @public
+ */
+@event("close")
+
 /**
  * Fires when the scan is completed successfuuly.
  * @param {string} text the scan result as string
@@ -133,6 +140,14 @@ class BarcodeScannerDialog extends UI5Element {
 	@property({ type: Boolean })
 	loading!: boolean;
 
+	/**
+	 * Indicates whether the user has granted permissions to use the camera.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	permissionsGranted!: boolean;
+
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
@@ -146,50 +161,36 @@ class BarcodeScannerDialog extends UI5Element {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	onInvalidation(changeInfo: ChangeInfo) {
-		if (changeInfo.type === "property" && changeInfo.name === "open") {
-			if (changeInfo.newValue) {
-				this.show();
-			} else {
-				this.close();
+	onAfterRendering() {
+		if (this.open) {
+			if (this.loading) {
+				return;
 			}
+
+			if (!this._hasGetUserMedia()) {
+				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+				return;
+			}
+
+			if (!this.permissionsGranted) {
+				this.loading = true;
+			}
+
+			this._getUserPermission()
+				.then(() => {
+					this.permissionsGranted = true;
+				})
+				.catch(err => {
+					this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
+					this.loading = false;
+				});
+		} else {
+			this.loading = false;
 		}
 	}
 
-	/**
-	 * Shows a dialog with the camera videostream. Starts a scan session.
-	 * @public
-	 * @deprecated The method is deprecated in favour of <code>open</code> property.
-	 */
-	show(): void {
-		if (this.loading) {
-			console.warn("Barcode scanning is already in progress.");  // eslint-disable-line
-			return;
-		}
-
-		if (!this._hasGetUserMedia()) {
-			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
-			return;
-		}
-
-		this.loading = true;
-
-		this._getUserPermission()
-			.then(() => this._showDialog())
-			.catch(err => {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
-				this.loading = false;
-			});
-	}
-
-	/**
-	 * Closes the dialog and the scan session.
-	 * @public
-	 * @deprecated The method is deprecated in favour of <code>open</code> property.
-	 */
-	close():void {
-		this._closeDialog();
-		this.loading = false;
+	get _open() {
+		return this.open && this.permissionsGranted;
 	}
 
 	/**
@@ -204,25 +205,13 @@ class BarcodeScannerDialog extends UI5Element {
 		return navigator.mediaDevices.getUserMedia(defaultMediaConstraints);
 	}
 
-	_getDialog() {
-		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
-	}
-
 	_getVideoElement() {
 		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
-	_showDialog() {
-		this.dialog = this._getDialog();
-		this.dialog.show();
-		this.open = true;
-	}
-
 	_closeDialog() {
-		if (this.dialog && this.dialog.opened) {
-			this.dialog.close();
-			this.open = false;
-		}
+		this.open = false;
+		this.fireEvent("close");
 	}
 
 	_startReader() {
