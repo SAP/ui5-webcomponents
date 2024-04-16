@@ -166,15 +166,6 @@ class Popover extends Popup {
 	allowTargetOverlap!: boolean;
 
 	/**
-	 * Defines the ID or DOM Reference of the element that the popover is shown at
-	 * @public
-	 * @default undefined
-	 * @since 1.2.0
-	 */
-	@property({ validator: DOMReference })
-	opener?: HTMLElement | string;
-
-	/**
 	 * Defines whether the content is scrollable.
 	 * @default false
 	 * @private
@@ -239,27 +230,51 @@ class Popover extends Popup {
 		super();
 	}
 
-	onAfterRendering() {
-		super.onAfterRendering();
+	/**
+	 * Defines the ID or DOM Reference of the element that the popover is shown at
+	 * @public
+	 * @default undefined
+	 * @since 1.2.0
+	 */
+	@property({ validator: DOMReference })
+	set opener(value: HTMLElement) {
+		if (this._opener === value) {
+			return;
+		}
 
-		if (!this.isOpen() && this.open) {
-			let opener;
+		this._opener = value;
 
-			if (this.opener instanceof HTMLElement) {
-				opener = this.opener;
-			} else if (typeof this.opener === "string") {
-				opener = (this.getRootNode() as Document).getElementById(this.opener) || document.getElementById(this.opener);
+		if (value && this.open) {
+			this.openPopup();
+		}
+	}
+
+	get opener(): HTMLElement | undefined {
+		return this._opener;
+	}
+
+	async openPopup() {
+		let opener;
+
+		if (this.opener instanceof HTMLElement) {
+			opener = this.opener;
+		} else if (typeof this.opener === "string") {
+			const rootNode = this.getRootNode();
+			if (rootNode instanceof Document) {
+				opener = rootNode.getElementById(this.opener);
 			}
 
 			if (!opener) {
-				console.warn("Valid opener id is required."); // eslint-disable-line
-				return;
+				opener = document.getElementById(this.opener);
 			}
-
-			this.showAt(opener);
-		} else if (this.isOpen() && !this.open) {
-			this.close();
 		}
+
+		if (!opener) {
+			console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
+			return;
+		}
+
+		await this.showAt(opener);
 	}
 
 	isOpenerClicked(e: MouseEvent) {
@@ -285,7 +300,7 @@ class Popover extends Popup {
 	 * @returns Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
-		if (!opener || this.opened) {
+		if (!opener || this._isOpened) {
 			return;
 		}
 
@@ -353,7 +368,7 @@ class Popover extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this.opened) {
+		if (this.open) {
 			this.reposition();
 		}
 	}
@@ -363,7 +378,9 @@ class Popover extends Popup {
 	}
 
 	_show() {
-		if (!this.opened) {
+		super._show();
+
+		if (!this._isOpened) {
 			this._showOutsideViewport();
 		}
 
@@ -470,11 +487,6 @@ class Popover extends Popup {
 	}
 
 	_showOutsideViewport() {
-		if (this.isConnected) {
-			this.setAttribute("popover", "manual");
-			this.showPopover();
-		}
-
 		Object.assign(this.style, {
 			top: "-10000px",
 			left: "-10000px",

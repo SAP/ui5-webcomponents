@@ -171,8 +171,8 @@ type InputSuggestionScrollEventDetail = {
  *
  * - [Escape] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.
  * - [Enter] or [Return] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.
- * - [Down] - Focuses the next matching item in the suggestion list.
- * - [Up] - Focuses the previous matching item in the suggestion list.
+ * - [Down] - Focuses the next matching item in the suggestion list. Selection-change event is fired.
+ * - [Up] - Focuses the previous matching item in the suggestion list. Selection-change event is fired.
  * - [Home] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.
  * - [End] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.
  * - [Page Up] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.
@@ -451,15 +451,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	@property({ type: Boolean })
-	isSuggestionsPopoverOpen!: boolean;
-
 	/**
-	 * Determines whether to manually show the suggestions popover
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_forceOpen!: boolean;
+	_openSuggestionsPopover!: boolean;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
@@ -556,7 +552,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	hasSuggestionItemSelected: boolean;
 	valueBeforeItemSelection: string;
-	valueBeforeItemPreview: string
+	valueBeforeSelectionStart: string
 	suggestionSelectionCancelled: boolean;
 	previousValue: string;
 	firstRendering: boolean;
@@ -575,7 +571,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
 	_performTextSelection?: boolean;
-	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -592,7 +587,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		// Represents the value before user moves selection between the suggestion items
 		// and its value remains the same when the user navigates up or down the list.
 		// Note: Used to cancel selection upon [Escape].
-		this.valueBeforeItemPreview = "";
+		this.valueBeforeSelectionStart = "";
 
 		// Indicates if the user selection has been canceled with [Escape].
 		this.suggestionSelectionCancelled = false;
@@ -649,10 +644,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot!.querySelector("input") === getActiveElement();
 
-		if (this._isPhone) {
-			this.isSuggestionsPopoverOpen = this.open;
+		if (this.disabled || this.readonly || !hasItems) {
+			this._openSuggestionsPopover = false;
+		} else if (this._isPhone) {
+			this._openSuggestionsPopover = this.open;
 		} else {
-			this.isSuggestionsPopoverOpen = this.open || (hasValue && hasItems && isFocused && this.isTyping);
+			this._openSuggestionsPopover = this.open || (hasValue && isFocused && this.isTyping);
 		}
 
 		if (this.FormSupport) {
@@ -684,7 +681,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const innerInput = this.getInputDOMRefSync()!;
 
 		if (this.Suggestions && this.showSuggestions) {
-			await this.Suggestions.toggle(this.isSuggestionsPopoverOpen, {
+			await this.Suggestions.toggle(this._openSuggestionsPopover, {
 				preventFocusRestore: true,
 			});
 
@@ -814,7 +811,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			if (!suggestionItemPressed) {
 				this.acceptSuggestion(matchingItem, null, true);
 
-				this.isSuggestionsPopoverOpen = false;
+				this._openSuggestionsPopover = false;
 			}
 		}
 
@@ -865,7 +862,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_handleEscape() {
 		const hasSuggestions = this.showSuggestions && !!this.Suggestions;
-		const isOpen = hasSuggestions && this.isSuggestionsPopoverOpen;
+		const isOpen = hasSuggestions && this._openSuggestionsPopover;
 		const innerInput = this.getInputDOMRefSync()!;
 		const isAutoCompleted = innerInput.selectionEnd! - innerInput.selectionStart! > 0;
 
@@ -878,7 +875,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (isOpen && this.Suggestions!._isItemOnTarget()) {
 			// Restore the value.
-			this.value = this.typedInValue || this.valueBeforeItemPreview;
+			this.value = this.typedInValue || this.valueBeforeSelectionStart;
 
 			// Mark that the selection has been cancelled, so the popover can close
 			// and not reopen, due to receiving focus.
@@ -907,7 +904,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.previousValue = this.value;
 		}
 
-		this.valueBeforeItemPreview = this.value;
+		this.valueBeforeSelectionStart = this.value;
 		this._inputIconFocused = !!e.target && e.target === this.querySelector<Icon>("[ui5-icon]");
 		this._focusedAfterClear = false;
 	}
@@ -941,7 +938,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		this.isSuggestionsPopoverOpen = false;
+		this._openSuggestionsPopover = false;
 		this._clearPopoverFocusAndSelection();
 
 		if (!this._clearIconClicked) {
@@ -951,7 +948,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
 		this.isTyping = false;
-		this.open = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -969,7 +965,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_click() {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this.open = true;
+			this._openSuggestionsPopover = true;
 		}
 	}
 
@@ -1144,8 +1140,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.focused = false;
 		}
 
-		this.open = false;
-		this.isSuggestionsPopoverOpen = false;
+		this._openSuggestionsPopover = false;
 
 		if (this.hasSuggestionItemSelected) {
 			this.focus();
@@ -1233,7 +1228,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.previousValue = this.value;
 		}
 
-		this.valueBeforeItemPreview = "";
+		this.valueBeforeSelectionStart = "";
 		this.suggestionSelectionCancelled = false;
 
 		if (!isChangePropagated) {
@@ -1255,17 +1250,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.isTyping = false;
-		this.open = false;
-		this.isSuggestionsPopoverOpen = false;
+		this._openSuggestionsPopover = false;
 	}
 
 	/**
-	 * Updates the input value on item preview.
-	 * @param item The item that is on preview
+	 * Updates the input value on item select.
+	 * @param item The item that is on select
 	 */
-	updateValueOnPreview(item: SuggestionListItem) {
-		const noPreview = item.type === "Inactive" || item.groupItem;
-		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent || "");
+	updateValueOnSelect(item: SuggestionListItem) {
+		const nonSelectable = item.type === "Inactive" || item.groupItem;
+		const itemValue = nonSelectable ? this.valueBeforeSelectionStart : (item.effectiveTitle || item.textContent || "");
 
 		this.value = itemValue;
 		this._performTextSelection = true;
@@ -1281,7 +1275,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.value = inputValue;
 		this.typedInValue = inputValue;
-		this.valueBeforeItemPreview = inputValue;
+		this.valueBeforeSelectionStart = inputValue;
 
 		if (isUserInput) { // input
 			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
@@ -1385,9 +1379,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onItemSelect(item: SuggestionListItem) {
 		this.valueBeforeItemSelection = this.value;
-		this.updateValueOnPreview(item);
+		this.updateValueOnSelect(item);
 		this.announceSelectedItem();
-		this._previewItem = item;
 
 		this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, {
 			item: this.getSuggestionByListItem(item),
@@ -1448,7 +1441,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get accInfo() {
-		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
+		const ariaHasPopupDefault = this.showSuggestions ? "dialog" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
 		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
@@ -1551,7 +1544,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.readonly && !this.isSuggestionsPopoverOpen && this.focused;
+		return this.hasValueStateMessage && !this.readonly && !this._openSuggestionsPopover && this.focused;
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
