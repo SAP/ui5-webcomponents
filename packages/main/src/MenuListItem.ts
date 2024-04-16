@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import CustomListItem from "./CustomListItem.js";
+import Icon from "./Icon.js";
 import MenuListItemTemplate from "./generated/templates/MenuListItemTemplate.lit.js";
 import MenuItem from "./MenuItem.js";
 import HasPopup from "./types/HasPopup.js";
@@ -19,6 +20,7 @@ import menuListItemCss from "./generated/themes/MenuListItem.css.js";
 	tag: "ui5-menu-li",
 	template: MenuListItemTemplate,
 	styles: [CustomListItem.styles, menuListItemCss],
+	dependencies: [...CustomListItem.dependencies, Icon],
 })
 class MenuListItem extends CustomListItem {
 	/**
