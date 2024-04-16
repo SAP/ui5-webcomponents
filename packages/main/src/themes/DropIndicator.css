@@ -12,11 +12,27 @@
 	background: var(--sapContent_DragAndDropActiveColor);
 }
 
+:host([orientation="Vertical"]) {
+	margin-left: -0.0625rem; /* half of the width */
+}
+
 :host([orientation="Horizontal"]) .ui5-di-needle {
 	height: 0.125rem;
 	width: 100%;
 	inset-inline: 0;
 	background: var(--sapContent_DragAndDropActiveColor);
+}
+
+:host([orientation="Horizontal"]) {
+	margin-top: -0.0625rem; /* half of the needle height */
+}
+
+:host([orientation="Horizontal"][placement="Before"][first]) {
+	margin-top: 0.3125rem; /* half of the needle height + half of the ear height */
+}
+
+:host([orientation="Horizontal"][placement="After"][last]) {
+	margin-top: -0.3125rem; /* half of the needle height + half of the ear height */
 }
 
 /* the ear of the needle */

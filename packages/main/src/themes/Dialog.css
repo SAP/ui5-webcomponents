@@ -138,3 +138,11 @@
 ::slotted([slot="header"][ui5-bar]) {
 	box-shadow: none;
 }
+
+:host::backdrop {
+	background-color: var(--_ui5_popup_block_layer_background);
+}
+
+.ui5-block-layer {
+	display: block;
+}
