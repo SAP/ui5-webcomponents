@@ -62,8 +62,8 @@ class ShellBarItem extends UI5Element {
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
-	@property()
-	count!: string;
+	@property({ type: String, defaultValue: undefined })
+	count?: string | undefined;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

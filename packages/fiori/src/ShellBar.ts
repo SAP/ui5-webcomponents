@@ -111,13 +111,13 @@ type ShellBarCoPilot = {
 	animationValues?: string,
 };
 
-interface IShelBarItemInfo {
+interface IShellBarItemInfo {
 	id: string,
 	icon?: string,
 	text: string,
 	priority: number,
 	show: boolean,
-	count?: string,
+	count?: string | undefined,
 	custom?: boolean,
 	title?: string,
 	stableDomRef?: string,
@@ -422,7 +422,7 @@ class ShellBar extends UI5Element {
 	withLogo!: boolean;
 
 	@property({ type: Object })
-	_itemsInfo!: Array<IShelBarItemInfo>;
+	_itemsInfo!: Array<IShellBarItemInfo>;
 
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems: Array<HTMLElement>;
@@ -517,7 +517,7 @@ class ShellBar extends UI5Element {
 	coPilot?: ShellBarCoPilot;
 	_coPilotIcon: string;
 	_debounceInterval?: Timeout | null;
-	_hiddenIcons: Array<IShelBarItemInfo>;
+	_hiddenIcons: Array<IShellBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_headerPress: () => void;
 
@@ -717,7 +717,7 @@ class ShellBar extends UI5Element {
 	_handleSizeS() {
 		const hasIcons = this.showNotifications || this.showProductSwitch || !!this.searchField.length || !!this.items.length;
 
-		const newItems = this._getAllItems(hasIcons).map((info): IShelBarItemInfo => {
+		const newItems = this._getAllItems(hasIcons).map((info): IShellBarItemInfo => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
@@ -979,7 +979,7 @@ class ShellBar extends UI5Element {
 			show: !!this.searchField.length,
 		};
 
-		const items: Array<IShelBarItemInfo> = [
+		const items: Array<IShellBarItemInfo> = [
 			{
 				icon: this._coPilotIcon,
 				text: this._copilotText,
@@ -1074,7 +1074,7 @@ class ShellBar extends UI5Element {
 		return items;
 	}
 
-	_updateItemsInfo(newItems: Array<IShelBarItemInfo>) {
+	_updateItemsInfo(newItems: Array<IShellBarItemInfo>) {
 		const isDifferent = JSON.stringify(this._itemsInfo) !== JSON.stringify(newItems);
 		if (isDifferent) {
 			this._itemsInfo = newItems;
