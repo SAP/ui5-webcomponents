@@ -66,6 +66,10 @@
 	margin-inline-start: 0;
 }
 
+::slotted([ui5-toggle-button][slot="assistant"][pressed]) {
+    color: var(--sapShell_Assistant_ForegroundColor);
+}
+
 ::slotted([ui5-toggle-button][slot="assistant"]:hover:not([active])),
 ::slotted([ui5-button][slot="startButton"]:hover:not([active])),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover:not(:active),
