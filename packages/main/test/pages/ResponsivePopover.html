@@ -17,6 +17,7 @@
 	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
 	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
 	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
+
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
 
 	<!-- with header and footer slots -->
@@ -76,7 +77,8 @@
 		</div>
 	</ui5-responsive-popover>
 
-	<ui5-responsive-popover id="popoverAttr" opener="btnOpenWithAttr">
+	<ui5-responsive-popover initial-focus="myInput" id="popoverAttr" opener="btnOpenWithAttr">
+		<ui5-input id="myInput"></ui5-input>
 		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
 		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-responsive-popover>
