@@ -588,10 +588,10 @@ describe("Keyboard handling", () => {
 
 		await inner.click();
 		await inner.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "n-more popover should be opened");
+		assert.ok(await rpo.getProperty("open"), "n-more popover should be opened");
 
 		await inner.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed");
+		assert.notOk(await rpo.getProperty("open"), "n-more popover should be closed");
 	});
 
 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
