@@ -207,8 +207,8 @@ class SelectMenu extends UI5Element {
 	}
 
 	_onOptionClick(e: CustomEvent) {
-		const option = e.detail.item;
-		const optionIndex = this.options.findIndex(_option => option.__id === _option._id);
+		const option = e.detail.item as SelectMenuOption;
+		const optionIndex = this.options.findIndex(_option => option._id === _option._id);
 
 		this.fireEvent<SelectMenuOptionClick>("option-click", {
 			option,
