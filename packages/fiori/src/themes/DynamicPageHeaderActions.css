@@ -12,6 +12,7 @@
 		background-color: var(--sapObjectHeader_Background);
 		border: 1px solid var(--sapButton_BorderColor);
 		box-shadow: var(--_ui5_dynamic_page_header-actions-box-shadow);
+		color: var(--_ui5_dynamic_page_header-actions-color);
 	}
 
 	.ui5-dynamic-page-header-actions--wrapper {

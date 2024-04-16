@@ -527,7 +527,6 @@
   "--sapObjectHeader_Background",
   "--sapObjectHeader_BorderColor",
   "--sapObjectHeader_Hover_Background",
-  "--sapObjectHeader_Subtitle_FontSize",
   "--sapObjectHeader_Subtitle_TextColor",
   "--sapObjectHeader_Title_FontFamily",
   "--sapObjectHeader_Title_FontSize",
