@@ -1,3 +1,6 @@
+import {
+	isSpace, isPlus, isMinus, isLeft, isRight, isDown, isUp,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -15,8 +18,8 @@ import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 // Texts
 import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,
-	NOTIFICATION_LIST_ITEM_READ,
-	NOTIFICATION_LIST_ITEM_UNREAD,
+	NOTIFICATION_LIST_GROUP_COLLAPSED,
+	NOTIFICATION_LIST_GROUP_EXPANDED,
 	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE,
 	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
@@ -46,6 +49,26 @@ type NotificationListGroupItemToggleEventDetail = {
  *
  * ### Usage
  * The component can be used in a standard `ui5-list`.
+ *
+ * ### Keyboard Handling
+ *
+ * #### Basic Navigation
+ * The `ui5-li-notification-group` provides advanced keyboard handling.
+ * When a list is focused the user can use the following keyboard
+ * shortcuts in order to perform a navigation:
+ *
+ * - [Up] or [Down] - Navigates up and down the items
+ * - [Home] - Navigates to first item
+ * - [End] - Navigates to the last item
+ *
+ * #### Fast Navigation
+ * This component provides a fast navigation when the Header si focused using the the following keyboard shortcuts:
+ *
+ * - [Space] - toggles "expand" / "collapse" of the group
+ * - [Plus] - expands the  group
+ * - [Minus] - collapses the  group
+ * - [Right] - expands the  group
+ * - [Left] - collapses the  group
  *
  * ### ES6 Module Import
  *
@@ -118,15 +141,16 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get accInvisibleText() {
-		return `${this.groupText} ${this.readText}`;
+		return `${this.groupText} ${this.expandText}`;
+		// return `${this.groupText}`;
 	}
 
-	get readText() {
-		if (this.read) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ);
+	get expandText() {
+		if (this.collapsed) {
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_COLLAPSED);
 		}
 
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_EXPANDED);
 	}
 
 	get groupText() {
@@ -135,14 +159,8 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
-		const ids = [];
 
-		if (this.hasTitleText) {
-			ids.push(`${id}-title-text`);
-		}
-
-		ids.push(`${id}-invisibleText`);
-		return ids.join(" ");
+		return this.hasTitleText ? `${id}-title-text` : "";
 	}
 
 	get _ariaExpanded() {
@@ -153,13 +171,71 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
 	}
 
+	toggleCollapsed() {
+		this.collapsed = !this.collapsed;
+		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
+	}
+
 	/**
 	 * Event handlers
 	 *
 	 */
 	_onBtnToggleClick() {
-		this.collapsed = !this.collapsed;
-		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
+		// handled by the Header with _onHeaderToggleClick
+	}
+
+	_onHeaderToggleClick() {
+		this.toggleCollapsed();
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		super._onkeydown(e);
+
+		const space = isSpace(e);
+		const plus = isPlus(e);
+		const minus = isMinus(e);
+		const left = isLeft(e);
+		const right = isRight(e);
+		const down = isDown(e);
+		const up = isUp(e);
+
+		if (space) {
+			this.toggleCollapsed();
+		}
+
+		if (plus || right) {
+			// expand
+			if (this.collapsed) {
+				this.toggleCollapsed();
+			}
+		}
+
+		if (minus || left) {
+			// collapse
+			if (!this.collapsed) {
+				this.toggleCollapsed();
+			}
+		}
+
+		if (down) {
+			const notificationItems = this.items;
+			const firstAvailableItem = notificationItems.find(item => !item.hasAttribute("busy"));
+
+			// if the focus is on the Header (whole group) move it to the first Notification item
+			if (!this.collapsed && this.hasAttribute("focused") && firstAvailableItem) {
+				firstAvailableItem.focus();
+			}
+		}
+
+		if (up) {
+			const notificationItems = this.items;
+			const firstAvailableItem = notificationItems.find(item => !item.hasAttribute("busy"));
+
+			// if the focus is on the first Notification item move it to the Header (whole group)
+			if (!this.collapsed && firstAvailableItem && e.target === firstAvailableItem) {
+				this.focus();
+			}
+		}
 	}
 }
 

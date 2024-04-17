@@ -212,6 +212,8 @@ const isF4 = (event: KeyboardEvent): boolean => {
 
 const isF4Shift = (event: KeyboardEvent): boolean => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
 
+const isF10Shift = (event: KeyboardEvent): boolean => (event.key ? event.key === "F10" : event.keyCode === KeyCodes.F10) && checkModifierKeys(event, false, false, true);
+
 const isF6Next = (event: KeyboardEvent): boolean => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, false))
 	|| ((event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, true, false));
 
@@ -284,6 +286,7 @@ export {
 	isShow,
 	isF4,
 	isF4Shift,
+	isF10Shift,
 	isF6Previous,
 	isF6Next,
 	isF7,

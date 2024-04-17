@@ -13,5 +13,19 @@ import "@ui5/webcomponents-icons/dist/accept.js";
 var notificationList = document.querySelector("ui5-list");
 
 notificationList.addEventListener("item-close", e => {
+    var visibleItems = 0;
+
+    // hide the closed Notification item
     e.detail.item.hidden = true;
+    
+    Array.from(e.detail.item.parentElement.childNodes).forEach((element) => {
+        if (element.nodeName === "UI5-LI-NOTIFICATION" && !element.hidden) {
+            visibleItems++;
+        }
+    });
+
+    // hide the Notification group if empty
+    if (visibleItems === 0) {
+        e.detail.item.parentElement.hidden = true;
+    }
 });

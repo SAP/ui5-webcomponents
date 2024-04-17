@@ -13,7 +13,7 @@
 	outline: none;
 }
 
-:host([focused]) .ui5-nli-focusable:after {
+:host([focused]) .ui5-nli-focusable:not(.ui5-nli-group-root)::after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;

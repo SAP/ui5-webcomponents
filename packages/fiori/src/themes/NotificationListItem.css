@@ -78,7 +78,7 @@
 	border-radius: var(--_ui5-notification_item-border-radius);
 }
 
-.ui5-nli-root:active {
+:host([focused]) .ui5-nli-root:active {
 	background-color: var(--_ui5-notification_item-background-color-active);
 	border-radius: var(--_ui5-notification_item-border-radius);
 	border: var(--_ui5-notification_item-border-active);
@@ -93,6 +93,11 @@
 	padding-inline: var(--_ui5-notification_item-content-padding);
 	font-family: "72override", var(--sapFontFamily);
 	box-sizing: border-box;
+}
+
+.ui5-nli-content.ui5-nli-content-with-importance {
+	/* to make space for the importance tag */
+	margin-bottom: 2rem;
 }
 
 .ui5-nli-actions {
@@ -146,8 +151,9 @@
 }
 
 .ui5-nli-importance {
-	margin-top: 0.5rem;
 	width: fit-content;
+	position: absolute;
+	bottom: 1rem;
 }
 
 ::slotted([slot^="footnotes"]) {

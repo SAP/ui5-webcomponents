@@ -1,4 +1,6 @@
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace, isEnter, isDelete, isF10Shift, isEnterShift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -34,9 +36,9 @@ import {
 	NOTIFICATION_LIST_ITEM_SHOW_MORE,
 	NOTIFICATION_LIST_ITEM_SHOW_LESS,
 	NOTIFICATION_LIST_ITEM_INFORMATION_STATUS_TXT,
-	NOTIFICATION_LIST_ITEM_SUCCESS_STATUS_TXT,
-	NOTIFICATION_LIST_ITEM_ERROR_STATUS_TXT,
-	NOTIFICATION_LIST_ITEM_WARNING_STATUS_TXT,
+	NOTIFICATION_LIST_ITEM_POSITIVE_STATUS_TXT,
+	NOTIFICATION_LIST_ITEM_NEGATIVE_STATUS_TXT,
+	NOTIFICATION_LIST_ITEM_CRITICAL_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_IMPORTANT_TXT,
@@ -89,6 +91,20 @@ const ICON_PER_STATUS = {
  *
  * ### Usage
  * The component can be used in a standard `ui5-list`.
+ *
+ * ### Keyboard Handling
+ *
+ * #### Basic Navigation
+ * The user can use the following keyboard shortcuts to perform actions (such as select, delete):
+ *
+ * - [Enter] - Select an item (trigger "item-click" event)
+ * - [Delete] - Close an item (trigger "item-close" event)
+ *
+ * #### Fast Navigation
+ * This component provides a fast navigation using the the following keyboard shortcuts:
+ *
+ * - [Shift + Enter] - "More"/"Less" link will be triggered
+ * - [Shift + F10] - Menu (actions) button will be triggered (clicked)
  *
  * ### ES6 Module Import
  *
@@ -265,6 +281,10 @@ class NotificationListItem extends NotificationListItemBase {
 		return this.importance !== NotificationListItemImportance.Standard;
 	}
 
+	get contentClasses() {
+		return this.hasImportance ? "ui5-nli-content ui5-nli-content-with-importance" : "ui5-nli-content";
+	}
+
 	get hasFootNotes() {
 		return !!this.footnotes.length;
 	}
@@ -345,6 +365,7 @@ class NotificationListItem extends NotificationListItemBase {
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
 		}
+
 		if (this.hasDesc) {
 			ids.push(`${id}-description`);
 		}
@@ -353,9 +374,12 @@ class NotificationListItem extends NotificationListItemBase {
 			ids.push(`${id}-footer`);
 		}
 
-		ids.push(`${id}-invisibleText`);
-
 		return ids.join(" ");
+	}
+
+	get ariaDescribedBy() {
+		const id = this._id;
+		return `${id}-invisibleText`;
 	}
 
 	get statusIcon() {
@@ -363,20 +387,27 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get importanceText() {
-		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_IMPORTANT_TXT);
+		let text;
+		if (this.hasImportance) {
+			text = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_IMPORTANT_TXT);
+		} else {
+			text = "";
+		}
+
+		return text;
 	}
 
 	get stateText() {
 		if (this.state === NotificationListItemState.Positive) {
-			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_SUCCESS_STATUS_TXT);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_POSITIVE_STATUS_TXT);
 		}
 
 		if (this.state === NotificationListItemState.Critical) {
-			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_WARNING_STATUS_TXT);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CRITICAL_STATUS_TXT);
 		}
 
 		if (this.state === NotificationListItemState.Negative) {
-			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_ERROR_STATUS_TXT);
+			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_NEGATIVE_STATUS_TXT);
 		}
 
 		if (this.state === NotificationListItemState.Information) {
@@ -389,10 +420,9 @@ class NotificationListItem extends NotificationListItemBase {
 	get accInvisibleText() {
 		const notificationText = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
 		const readText = this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
-		const stateText = this.stateText;
 		const importanceText = this.importanceText;
 
-		return `${notificationText} ${readText} ${stateText} ${importanceText}`;
+		return `${notificationText} ${importanceText} ${readText}`;
 	}
 
 	get menuButtonDOM() {
@@ -421,6 +451,10 @@ class NotificationListItem extends NotificationListItemBase {
 		if (isEnter(e)) {
 			this.fireItemPress(e);
 		}
+
+		if (isF10Shift(e)) {
+			e.preventDefault();
+		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -433,8 +467,16 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		if (space) {
-			this.fireItemPress(e);
+		if (isDelete(e)) {
+			this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		}
+
+		if (isF10Shift(e)) {
+			this._onBtnMenuClick();
+		}
+
+		if (isEnterShift(e)) {
+			this._showMorePressed = !this._showMorePressed;
 		}
 	}
 

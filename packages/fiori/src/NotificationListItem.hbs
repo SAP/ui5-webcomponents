@@ -5,33 +5,19 @@
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
-	role="listitem"
 	tabindex="{{forcedTabIndex}}"
 	aria-labelledby="{{ariaLabelledBy}}"
+	aria-describedby="{{ariaDescribedBy}}"
 >
-	<div class="ui5-nli-actions">
-		{{#if showMenu}}
-			<ui5-button
-				icon="overflow"
-				design="Transparent"
-				@click="{{_onBtnMenuClick}}"
-				class="ui5-nli-menu-btn"
-				tooltip="{{menuBtnAccessibleName}}"
-				aria-label="{{menuBtnAccessibleName}}"
-			></ui5-button>
-		{{/if}}
-		{{#if showClose}}
-			<ui5-button
-				icon="decline"
-				design="Transparent"
-				@click="{{_onBtnCloseClick}}"
-				tooltip="{{closeBtnAccessibleName}}"
-				aria-label="{{closeBtnAccessibleName}}"
-				close-btn
-			></ui5-button>
-		{{/if}}
-	</div>
-	<div class="ui5-nli-content">
+	
+	<div class="{{contentClasses}}">
+		
+			{{#if hasImportance}}
+				<ui5-badge class="ui5-nli-importance" design="Set2" color-scheme="2">
+					<ui5-icon name="high-priority" slot="icon"></ui5-icon>
+					{{importanceText}}
+				</ui5-badge>
+			{{/if}}	
 		<div class="ui5-nli-title-text-wrapper">
 			{{#if hasState}}
 				<ui5-icon
@@ -41,6 +27,7 @@
 			{{/if}}
 
 			<div id="{{_id}}-title-text" class="ui5-nli-title-text" part="title-text">
+				<span class="ui5-hidden-text">{{stateText}}</span>
 				{{titleText}}
 			</div>
 		</div>
@@ -71,17 +58,33 @@
 			</ui5-link>
 		</div>
 
-		{{#if hasImportance}}
-			<ui5-badge class="ui5-nli-importance" design="Set2" color-scheme="2">
-				<ui5-icon name="high-priority" slot="icon"></ui5-icon>
-				{{importanceText}}
-			</ui5-badge>
-		{{/if}}
-
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
 
-	<div class="ui5-nli-avatar">
+	<div class="ui5-nli-actions">
+		{{#if showMenu}}
+			<ui5-button
+				icon="overflow"
+				design="Transparent"
+				@click="{{_onBtnMenuClick}}"
+				class="ui5-nli-menu-btn"
+				tooltip="{{menuBtnAccessibleName}}"
+				aria-haspopup="menu"
+			></ui5-button>
+		{{/if}}
+		{{#if showClose}}
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				@click="{{_onBtnCloseClick}}"
+				tooltip="{{closeBtnAccessibleName}}"
+				aria-label="{{closeBtnAccessibleName}}"
+				close-btn
+			></ui5-button>
+		{{/if}}
+	</div>
+
+	<div class="ui5-nli-avatar" aria-hidden="true">
 		<slot name="avatar"></slot>
 	</div>
 

@@ -18,7 +18,9 @@
 	</ui5-shellbar>
 	<ui5-button id="btnCompact">Toggle sapUiSizeCompact</ui5-button>
 
-	<ui5-list id="notificationList" header-text="Notifications grouped">
+	<!-- the list that we create to contain several NotificationGroups should have 
+		aria-label="Notifications". All applications should do the same -->
+	<ui5-list id="notificationList" header-text="Notifications grouped" aria-label="Notifications">
 		<ui5-li-notification-group
 			show-close
 			show-counter
@@ -26,6 +28,7 @@
 			priority="High"
 		>
 			<ui5-li-notification
+				importance="Important"
 				show-close
 				title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="Low"
@@ -181,12 +184,103 @@
 		</ui5-li-notification-group>
 	</ui5-list>
 
+	<!-- the list that we create to contain several NotificationGroups should have 
+	 aria-label="Notifications". All applications should do the same -->
+	<ui5-list id="ACCtestGroup" header-text="ACC test" aria-label="Notifications">
+		
+		<ui5-li-notification-group
+			show-close
+			show-counter
+			title-text="Today"
+		>
+			<ui5-li-notification
+				importance="Important"
+				show-close
+				title-text="Message 1"
+				state="Positive"
+				importance="Important"
+			>
+				Text with details.
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+				<span slot="footnotes">Office</span>
+				<span slot="footnotes">3 Days</span>
+
+				<ui5-notification-action icon="accept" text="Accept-deprecated" slot="actions"></ui5-notification-action>
+
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
+			</ui5-li-notification>
+
+			<ui5-li-notification
+				show-close
+				title-text="Message 2"
+				state="Negative"
+			>
+				And with a very long description and long labels of the action buttons"
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+				<span slot="footnotes">Office</span>
+				<span slot="footnotes">3 Days</span>
+
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+				</ui5-menu>
+			</ui5-li-notification>
+		</ui5-li-notification-group>
+		<ui5-li-notification-group
+			show-close
+			show-counter
+			title-text="Yesterday"
+			collapsed="true"
+		>
+			<ui5-li-notification
+				importance="Important"
+				show-close
+				title-text="Message 1"
+				state="Positive"
+				importance="Important"
+			>
+				Text with details.
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+				<span slot="footnotes">Office</span>
+				<span slot="footnotes">3 Days</span>
+
+				<ui5-notification-action icon="accept" text="Accept-deprecated" slot="actions"></ui5-notification-action>
+
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
+			</ui5-li-notification>
+
+			<ui5-li-notification
+				show-close
+				title-text="Message 2"
+				state="Negative"
+			>
+				And with a very long description and long labels of the action buttons"
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+				<span slot="footnotes">Office</span>
+				<span slot="footnotes">3 Days</span>
+
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+				</ui5-menu>
+			</ui5-li-notification>
+		</ui5-li-notification-group>
+	</ui5-list>
+
 	<br><br>
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" class="notificationlistgroupitem2auto" placement="Bottom" horizontal-align="End">
-		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'">
+		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'"  aria-label="Notifications">
 			<ui5-li-notification-group				
 				title-text="Orders"
 			>
@@ -270,12 +364,12 @@
 
 	<script>
 		notificationList.addEventListener("item-click", function(event) {
-			wcToastBS.textContent = event.detail.item.titleText;
+			wcToastBS.textContent = "Clicked: " + event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
 		notificationList.addEventListener("item-close", function(event) {
-			wcToastBS.textContent = event.detail.item.titleText;
+			wcToastBS.textContent = "Closed: " + event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
