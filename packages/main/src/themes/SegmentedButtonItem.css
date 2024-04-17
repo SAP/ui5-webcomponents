@@ -139,8 +139,8 @@ bdi {
 
 :host([active][desktop]) .ui5-segmented-button-item-root:focus-within:after,
 :host([active]) .ui5-segmented-button-item-root:focus-visible:after,
-:host([pressed][desktop]) .ui5-segmented-button-item-root:focus-within:after,
-:host([pressed]) .ui5-segmented-button-item-root:focus-visible:after {
+:host([selected][desktop]) .ui5-segmented-button-item-root:focus-within:after,
+:host([selected]) .ui5-segmented-button-item-root:focus-visible:after {
 	border-color: var(--_ui5_button_pressed_focused_border_color);
 	outline: none;
 }
