@@ -43,7 +43,7 @@ import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0
 import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
 const pathDataPromise = new Promise(async resolve => {
-	return (await isLegacyThemeFamilyAsync()) ? pathData${versions[0]} : pathData${versions[1]};
+	resolve((await isLegacyThemeFamilyAsync()) ? pathData${versions[0]} : pathData${versions[1]});
 });
 
 export default "${fullName}";
@@ -58,13 +58,13 @@ declare const _default: "${collection}/${name}";
 export default _default;
 export { pathData, ltr, accData };`
 
-const collectionTypeDefinitionTemplate = (name, accData) => `declare const pathData: string;
+const collectionTypeDefinitionTemplate = (name, accData) => `declare const pathDataPromise: Promise<string>;
 declare const ltr: boolean;
 declare const accData: ${accData ? '{ key: string; defaultText: string; }' : null}
 declare const _default: "${name}";
 
 export default _default;
-export { pathData, ltr, accData };`
+export { pathDataPromise, ltr, accData };`
 
 
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
