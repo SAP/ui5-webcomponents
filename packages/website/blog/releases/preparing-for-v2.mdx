@@ -1,0 +1,132 @@
+---
+title: Preparing for UI5 Web Components 2.0
+tags: [release]
+slug: /releases/preparing-for-v2
+---
+
+UI5 Web Components 2.0 version is on the horizon.
+Here's a summary of everything you need to know (release information, key features and breaking changes)
+and start preparing for it.
+
+## Release Timelines
+- Release `2.0` RC versions in April
+   - [2.0.0-rc.0](https://github.com/SAP/ui5-webcomponents/releases/tag/v2.0.0-rc.0) (2024-04-09)
+   - [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/releases/tag/v2.0.0-rc.1) (2024-04-11)
+- Release `2.0` between `mid June - mid July`
+
+## Migration Support
+- [Migration guide](../../docs/Migrating%20to%20version%202.0%20guide/)
+
+## Maintenance of 1.x
+- Support until the end of the year
+- Downport of bug fixes only
+
+## 2.0 Features
+
+### Framework Features
+- Integration of the [`popover`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover) API in all pop-up based components 
+- Form Support with [`Form-Associated Custom Elements`](https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/) standard
+- Timezone support in all date-time components
+ 
+### New Components
+
+- Dynamic Page
+- Form
+- Text
+- Tokenizer
+
+### Components Features
+
+- List Drag and Drop (comes with TabContainer)?
+- Tree Drag and Drop
+- TabContainer Drag and Drop
+- New Notifications Experience
+
+### Reusable component CSS styles 
+Styles for creating patterns/layouts or other common styling
+
+### New Site for Documentation, Samples and API reference
+See the [preview](https://sap.github.io/ui5-webcomponents/nightly/).
+
+- Live editor
+- Playground
+- Dark mode
+- Icons view
+
+## 2.0 Breaking changes
+
+- 90% is pure API renaming for better consistency 
+- several APIs are replaced by alternatives (listed below)
+- few APIs are removed without alternatives (listed below)
+
+
+### Theming
+- Removal of Belize (recommendation: migrate to Horizon)
+
+### Framework
+-  CSP (Content Security Policy) will be ensured via [adoptedStyleSheets](https://developer.mozilla.org/en-US/docs/Web/API/Document/adoptedStyleSheets) only.
+The adoptedStyleSheets are CSP compliant by design and all components styles will be defined as adoptedStyleSheets.
+
+The `CSP.js` module is removed and the creation of `<style>` and `<link>` tags is no longer required as all browsers now support adoptedStyleSheets.
+
+As a result, hte following APIs are not available any more and should not be used:
+```ts
+import { setUseLinks } from "@ui5/webcomponents-base/dist/CSP.js"
+import { setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js"
+import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"
+```
+
+### Renamed APIs
+See the full list [here](https://github.com/SAP/ui5-webcomponents/issues/8461).
+
+### Replaced APIs
+
+- Methods `openPicker` will be replaced by `open/opener` properties to promote declarative API
+
+- **Grouping of Items**
+
+Instead of using `ui5-li-groupheader` as separator in a flat structure:
+
+```html
+<ui5-list>
+	<ui5-li-groupheader>group<ui5-li-groupheader/>
+	<ui5-li></ui5-li>
+	<ui5-li></ui5-li>
+	<ui5-li></ui5-li>
+</ui5-list>
+```
+
+true nesting will be provided of ListItems inside ListItemGroup 
+to easier bind hierarchical data model to the UI:
+
+```html
+<ui5-list>
+	<ui5-li-group header-text="group">
+		<ui5-li></ui5-li>
+		<ui5-li></ui5-li>
+		<ui5-li></ui5-li>
+	<ui5-li-group>
+</ui5-list>
+```
+
+
+- **Menu**: the property `starts-section` will be replaced by `ui5-menu-separator` component.
+- **List**: the property `image` will be replaced by slot `image`
+- **TabContainer:** the property `show-overflow` property is will be replaced by slot `overflowButton`.
+- **IllustratedMessage:** the property `titleLevel` will be replaced by slot `title`.
+
+
+### Removed APIs without alternative
+
+#### Progress Indicator (ui5-progress-indicator)
+- The `disabled` property will be removed. Progress indicator isn't an interactive element so disabled property make no sense. 
+Also aria-disabled is deprecated on the progressbar role since ARIA 1.2 .
+
+
+#### Selects's Option (ui5-option)
+- The `disabled` property will be removed. The UX and ACC standards suggest to not include any disabled items in the dropdown
+
+
+#### Token (ui5-token)
+- The `readonly` property will be removed.
+
