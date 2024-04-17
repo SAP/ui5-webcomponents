@@ -537,14 +537,14 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_togglePopover() {
-		this._tokenizer.closeMorePopover();
+		this._tokenizer.open = false;
 		this._getRespPopover().toggle(this);
 	}
 
 	togglePopoverByDropdownIcon() {
 		this._shouldFilterItems = false;
 		this._getRespPopover().toggle(this);
-		this._tokenizer.closeMorePopover();
+		this._tokenizer.open = false;
 	}
 
 	_showFilteredItems() {

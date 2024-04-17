@@ -165,7 +165,7 @@ class MultiInput extends Input {
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
 		this.closePopover();
-		this.tokenizer.closeMorePopover();
+		this.tokenizer.open = false;
 		this._valueHelpIconPressed = true;
 		target.focus();
 	}
@@ -220,7 +220,7 @@ class MultiInput extends Input {
 		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
 			e.preventDefault();
 			this.closePopover();
-			this.tokenizer.openMorePopover();
+			this.tokenizer.open = true;
 		}
 	}
 
@@ -370,7 +370,7 @@ class MultiInput extends Input {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer._isOpen;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer.open;
 	}
 }
 

@@ -4,6 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -207,22 +208,31 @@ class Tokenizer extends UI5Element {
 	expanded!: boolean;
 
 	/**
-	 * Sets the nMore Popover opener.
-	 * @private
+	 * Indicates if the nMore popover is open
+	 * @protected
+	 * @default false
 	 */
-	@property({ type: Object })
-	morePopoverOpener!: Tokenizer;
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
+	 * Defines the ID or DOM Reference of the element that the menu is shown at
+	 * @protected
+	 * @default ""
+	 */
+	@property({ validator: DOMReference, defaultValue: "" })
+	opener!: HTMLElement;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
-	 * @private
+	 * @protected
 	 */
 	@property({ validator: Integer })
 	popoverMinWidth?: number;
 
 	/**
 	 * Prevents tokens to be part of the tab chain.
-	 * @private
+	 * @proteceted
 	 */
 	@property({ type: Boolean })
 	preventInitialFocus!: boolean;
@@ -252,7 +262,6 @@ class Tokenizer extends UI5Element {
 	_tokenDeleting!: boolean;
 	_skipExpanding!: boolean;
 	_previousToken!: Token | null;
-	_isOpen: boolean;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -269,7 +278,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this._isOpen = false;
 		this._tokenDeleting = false;
 	}
 
@@ -281,10 +289,6 @@ class Tokenizer extends UI5Element {
 			token.singleToken = tokensLength === 1;
 			token.readonly = this.readonly;
 		});
-
-		if (!tokensLength) {
-			this.closeMorePopover();
-		}
 	}
 
 	onEnterDOM() {
@@ -304,22 +308,11 @@ class Tokenizer extends UI5Element {
 		this.expanded = true;
 
 		if (!this.preventPopoverOpen) {
-			this.openMorePopover();
+			this.open = true;
 			this.scrollToEnd();
 		}
 
 		this.fireEvent("show-more-items-press");
-	}
-
-	openMorePopover() {
-		// the morePopoverProperty is an object so it will always return 'true', so we check for keys
-		const popoverOpener = Object.keys(this.morePopoverOpener).length === 0 ? this : this.morePopoverOpener;
-		this.getPopover().showAt(popoverOpener);
-		this._isOpen = true;
-	}
-
-	get _tokens() {
-		return this.getSlottedNodes<Token>("tokens");
 	}
 
 	_onmousedown(e: MouseEvent) {
@@ -338,14 +331,8 @@ class Tokenizer extends UI5Element {
 		const tokens = this._tokens;
 		const firstToken = tokens[0];
 
-		// firstToken.forcedTabIndex = firstToken.selected ? "0" : "-1";
-
 		if (tokens.length === 1 && firstToken.isTruncatable) {
-			if (firstToken.selected) {
-				this.openMorePopover();
-			} else {
-				this.closeMorePopover();
-			}
+			this.open = firstToken.selected;
 		}
 	}
 
@@ -376,11 +363,6 @@ class Tokenizer extends UI5Element {
 			}
 		}
 
-		if (!tokensArray.length) {
-			const popover = this.getPopover();
-			popover.close();
-		}
-
 		this._scrollEnablement.scrollContainer = this.contentDom;
 
 		if (this.expanded) {
@@ -395,10 +377,8 @@ class Tokenizer extends UI5Element {
 
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
+			this.open = !this._tokens.length;
 
-			if (this._tokens.length) {
-				this.closeMorePopover();
-			}
 			return;
 		}
 
@@ -478,8 +458,6 @@ class Tokenizer extends UI5Element {
 			}, {
 				once: true,
 			});
-
-			morePopover.close();
 		} else {
 			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 
@@ -531,6 +509,10 @@ class Tokenizer extends UI5Element {
 		this.fireEvent("before-more-popover-open");
 	}
 
+	handleAfterClose() {
+		this.open = false;
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
@@ -555,7 +537,7 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 
 			this._skipExpanding = true;
-			this.openMorePopover();
+			this.open = true;
 		}
 
 		if (isSpaceShift(e)) {
@@ -585,8 +567,7 @@ class Tokenizer extends UI5Element {
 		if (isCtrl && e.key.toLowerCase() === "i") {
 			e.preventDefault();
 
-			const popover = this.getPopover();
-			popover.close();
+			this.closeMorePopover();
 		}
 
 		if (e.key.toLowerCase() === "f7") {
@@ -911,8 +892,15 @@ class Tokenizer extends UI5Element {
 	}
 
 	closeMorePopover() {
-		this.getPopover().close(false, false, true);
-		this._isOpen = false;
+		this.open = false;
+	}
+
+	get _tokens() {
+		return this.getSlottedNodes<Token>("tokens");
+	}
+
+	get morePopoverOpener(): HTMLElement {
+		return Object.keys(this.opener).length === 0 ? this : this.opener;
 	}
 
 	get _nMoreText() {

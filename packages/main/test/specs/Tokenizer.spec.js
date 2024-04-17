@@ -339,6 +339,26 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
 	});
 
+	it("should delete first and last token with [Backspace]", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("End");
+		await browser.keys("Space");
+		await browser.keys("Backspace");
+
+		tokens = await tokenizer.$$("ui5-token");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused after [Backspace]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
+	});
+
 	it("should delete token on [Delete]", async () => {
 		const tokenizer = await browser.$("#delete-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
