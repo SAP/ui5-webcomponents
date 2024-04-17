@@ -271,7 +271,7 @@ class MultiComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	allowCustomValues!: boolean;
+	noValidation!: boolean;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -492,14 +492,14 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
-		if (!this._getRespPopover().opened) {
+		if (!this._getRespPopover().open) {
 			return;
 		}
 
 		const target = e.target as Input;
 		const value = target.value;
 
-		if (!this.allowCustomValues && !this._filterItems(value).length) {
+		if (!this.noValidation && !this._filterItems(value).length) {
 			this._dialogInputValueState = ValueState.Error;
 		} else {
 			this._dialogInputValueState = this.valueState;
@@ -603,7 +603,7 @@ class MultiComboBox extends UI5Element {
 
 		this._effectiveValueState = this.valueState;
 
-		if (!filteredItems.length && value && !this.allowCustomValues) {
+		if (!filteredItems.length && value && !this.noValidation) {
 			const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
 
 			input.value = newValue;
@@ -720,7 +720,7 @@ class MultiComboBox extends UI5Element {
 
 		// CTRL + Arrow Down navigation is performed by the ItemNavigation module of the List,
 		// here we only implement the text selection of the selected item
-		if (isArrowDownCtrl && !this._getRespPopover().opened) {
+		if (isArrowDownCtrl && !this._getRespPopover().open) {
 			setTimeout(() => this._inputDom.setSelectionRange(0, this._inputDom.value.length), 0);
 		}
 
@@ -871,7 +871,7 @@ class MultiComboBox extends UI5Element {
 			this.value = this.valueBeforeAutoComplete;
 		}
 
-		if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
+		if (!this.noValidation || (!this.open && this.noValidation)) {
 			this.value = this._lastValue;
 		}
 	}
@@ -1052,7 +1052,7 @@ class MultiComboBox extends UI5Element {
 	_handleArrowNavigation(e: KeyboardEvent, isDownControl: boolean) {
 		const isArrowDown = isDownControl || isDown(e);
 		const hasSuggestions = this.items.length;
-		const isOpen = this._getRespPopover().opened;
+		const isOpen = this._getRespPopover().open;
 
 		e.preventDefault();
 
@@ -1083,7 +1083,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _handleArrowDown() {
-		const isOpen = this._getRespPopover().opened;
+		const isOpen = this._getRespPopover().open;
 		const firstListItem = this.list?.items[0];
 
 		if (isOpen) {
@@ -1625,7 +1625,7 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
-		if (!this.allowCustomValues) {
+		if (!this.noValidation) {
 			this.value = "";
 		}
 
@@ -1706,7 +1706,7 @@ class MultiComboBox extends UI5Element {
 
 			this._tokenizer.expanded = this.open;
 			// remove the value if user focus out the input and focus is not going in the popover
-			if (!isPhone() && !this.allowCustomValues && !focusIsGoingInPopover) {
+			if (!isPhone() && !this.noValidation && !focusIsGoingInPopover) {
 				this.value = "";
 			}
 		}
@@ -1847,7 +1847,7 @@ class MultiComboBox extends UI5Element {
 
 	get _innerInput(): HTMLInputElement {
 		if (isPhone()) {
-			if (this._getRespPopover()?.opened) {
+			if (this._getRespPopover()?.open) {
 				return this._getRespPopover().querySelector("ui5-input")!.shadowRoot!.querySelector("input")!;
 			}
 		}

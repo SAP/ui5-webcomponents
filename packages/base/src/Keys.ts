@@ -206,6 +206,10 @@ const isShow = (event: KeyboardEvent): boolean => {
 	return (event.keyCode === KeyCodes.F4 && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.ARROW_DOWN && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
 };
 
+const isF2 = (event: KeyboardEvent): boolean => {
+	return event.key === "F2" && !hasModifierKeys(event);
+};
+
 const isF4 = (event: KeyboardEvent): boolean => {
 	return event.key === "F4" && !hasModifierKeys(event);
 };
@@ -284,6 +288,7 @@ export {
 	isBackSpace,
 	isDelete,
 	isShow,
+	isF2,
 	isF4,
 	isF4Shift,
 	isF10Shift,
