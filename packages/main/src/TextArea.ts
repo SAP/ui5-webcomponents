@@ -61,7 +61,7 @@ type ExceededText = {
  *
  * ### Overview
  *
- * The `ui5-textarea` component is used to enter multiple lines of text.
+ * The `ui5-textarea` component is used to enter multiple rows of text.
  *
  * When empty, it can hold a placeholder similar to a `ui5-input`.
  * You can define the rows of the `ui5-textarea` and also determine specific behavior when handling long texts.
@@ -172,7 +172,7 @@ class TextArea extends UI5Element implements IFormElement {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Defines the number of visible text lines for the component.
+	 * Defines the number of visible text rows for the component.
 	 *
 	 * **Notes:**
 	 *
@@ -216,12 +216,12 @@ class TextArea extends UI5Element implements IFormElement {
 	growing!: boolean;
 
 	/**
-	 * Defines the maximum number of lines that the component can grow.
+	 * Defines the maximum number of rows that the component can grow.
 	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
-	growingMaxLines!: number;
+	growingMaxRows!: number;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -450,7 +450,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_setCSSParams() {
 		this.style.setProperty("--_textarea_rows", this.rows ? String(this.rows) : "2");
-		this.style.setProperty("--_textarea_growing_max_lines", String(this.growingMaxLines));
+		this.style.setProperty("--_textarea_growing_max_rows", String(this.growingMaxRows));
 	}
 
 	toggleValueStateMessage(toggle: boolean) {
