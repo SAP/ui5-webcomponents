@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -250,6 +249,7 @@ class Tokenizer extends UI5Element {
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
 	_openedByNmore!: boolean;
+	_tokenDeleting!: boolean;
 	_skipExpanding!: boolean;
 	_previousToken!: Token | null;
 	_isOpen: boolean;
@@ -270,6 +270,7 @@ class Tokenizer extends UI5Element {
 
 		this._scrollEnablement = new ScrollEnablement(this);
 		this._isOpen = false;
+		this._tokenDeleting = false;
 	}
 
 	onBeforeRendering() {
@@ -294,7 +295,7 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _handleNMoreClick() {
+	_handleNMoreClick() {
 		if (this.disabled) {
 			return;
 		}
@@ -303,17 +304,17 @@ class Tokenizer extends UI5Element {
 		this.expanded = true;
 
 		if (!this.preventPopoverOpen) {
-			await this.openMorePopover();
+			this.openMorePopover();
 			this.scrollToEnd();
 		}
 
 		this.fireEvent("show-more-items-press");
 	}
 
-	async openMorePopover() {
+	openMorePopover() {
 		// the morePopoverProperty is an object so it will always return 'true', so we check for keys
 		const popoverOpener = Object.keys(this.morePopoverOpener).length === 0 ? this : this.morePopoverOpener;
-		(await this.getPopover()).showAt(popoverOpener);
+		this.getPopover().showAt(popoverOpener);
 		this._isOpen = true;
 	}
 
@@ -358,7 +359,7 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
-	async onAfterRendering() {
+	onAfterRendering() {
 		const tokensArray = this._tokens;
 		const firstToken = tokensArray[0];
 
@@ -376,7 +377,7 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (!tokensArray.length) {
-			const popover = await this.getPopover();
+			const popover = this.getPopover();
 			popover.close();
 		}
 
@@ -385,6 +386,8 @@ class Tokenizer extends UI5Element {
 		if (this.expanded) {
 			this._expandedScrollWidth = this.contentDom.scrollWidth;
 		}
+
+		this._tokenDeleting = false;
 	}
 
 	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
@@ -415,6 +418,7 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
+		this._tokenDeleting = true;
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
 	}
 
@@ -457,16 +461,17 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
+		this._tokenDeleting = true;
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
-	async itemDelete(e: CustomEvent) {
+	itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 		const tokensArray = this._tokens;
 
 		// delay the token deletion in order to close the popover before removing token of the DOM
 		if (tokensArray.length === 1 && tokensArray[0].isTruncatable) {
-			const morePopover = await this.getPopover();
+			const morePopover = this.getPopover();
 
 			morePopover.addEventListener("ui5-after-close", () => {
 				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
@@ -517,7 +522,9 @@ class Tokenizer extends UI5Element {
 			});
 		}
 
-		this.expanded = false;
+		if (!this._tokenDeleting) {
+			this.expanded = false;
+		}
 	}
 
 	handleBeforeOpen() {
@@ -572,13 +579,13 @@ class Tokenizer extends UI5Element {
 		this._handleItemNavigation(e, this._tokens);
 	}
 
-	async _onPopoverListKeydown(e: KeyboardEvent) {
+	_onPopoverListKeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
 		if (isCtrl && e.key.toLowerCase() === "i") {
 			e.preventDefault();
 
-			const popover = await this.getPopover();
+			const popover = this.getPopover();
 			popover.close();
 		}
 
@@ -809,7 +816,9 @@ class Tokenizer extends UI5Element {
 			this._itemNav._currentIndex = -1;
 		}
 
-		this.expanded = false;
+		if (!this._tokenDeleting) {
+			this.expanded = false;
+		}
 	}
 
 	_toggleTokenSelection(tokens: Array<Token>) {
@@ -901,8 +910,8 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	async closeMorePopover() {
-		(await this.getPopover()).close(false, false, true);
+	closeMorePopover() {
+		this.getPopover().close(false, false, true);
 		this._isOpen = false;
 	}
 
@@ -1022,8 +1031,7 @@ class Tokenizer extends UI5Element {
 		Tokenizer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	async getPopover() {
-		await renderFinished();
+	getPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 }
