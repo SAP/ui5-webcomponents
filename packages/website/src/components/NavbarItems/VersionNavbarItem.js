@@ -16,8 +16,10 @@ import {
 function getVersion() {
     if (ExecutionEnvironment.canUseDOM) {
         if (!location.pathname.includes("nightly") ) {
+            console.log("v1") // eslint-disable-line
             return "v1";
         }
+        console.log("Nightly") // eslint-disable-line
         return "Nightly";
     }
 }
@@ -63,7 +65,6 @@ function VersionNavbarItemDesktop() {
                 isDropdownItem
                 target="_self"
                 href="https://sap.github.io/ui5-webcomponents/nightly"
-                onClick={() => { setVersion("Nightly") }}
                 className={clsx({ 'menu__link--active': version === "Nightly" })}
             />
             <NavbarItem
@@ -71,7 +72,6 @@ function VersionNavbarItemDesktop() {
                 isDropdownItem
                 target="_self"
                 href="https://sap.github.io/ui5-webcomponents/"
-                onClick={() => { setVersion("v1") }}
                 className={clsx({ 'menu__link--active': version === "v1" })}
             />
         </ul>
@@ -102,7 +102,6 @@ function VersionNavbarItemMobile() {
                     mobile
                     href="https://sap.github.io/ui5-webcomponents/nightly"
                     isDropdownItem
-                    onClick={() => { setVersion("nightly") }}
                     className={clsx({ "menu__link--active": version === "nightly" })}
                 />
                  <NavbarItem
@@ -110,7 +109,6 @@ function VersionNavbarItemMobile() {
                     mobile
                     href="https://sap.github.io/ui5-webcomponents"
                     isDropdownItem
-                    onClick={() => { setVersion("v1") }}
                     className={clsx({ "menu__link--active": version === "v1" })}
                 />
             </Collapsible>
