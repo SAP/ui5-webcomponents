@@ -179,9 +179,6 @@ abstract class Popup extends UI5Element {
 	@property({ type: Boolean })
 	_disableInitialFocus!: boolean;
 
-	@property({ type: Boolean })
-	_blockLayerHidden!: boolean;
-
 	/**
 	 * Indicates if the element is the top modal popup
 	 *
@@ -201,7 +198,6 @@ abstract class Popup extends UI5Element {
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
-	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_isOpened!: boolean;
 	_opened!: boolean;
@@ -437,10 +433,6 @@ abstract class Popup extends UI5Element {
 		return isFocusedElementWithinNode(this._root);
 	}
 
-	get _getBlockingLayer() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-block-layer")!;
-	}
-
 	/**
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
@@ -456,20 +448,9 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		let isRenderFinished = false;
-
 		this._isOpened = true;
 
 		if (this.isModal && !this.shouldHideBackdrop) {
-			if (!this._getBlockingLayer) {
-				// Await render before trying to access the blocking layer
-				await renderFinished();
-				isRenderFinished = true;
-			}
-
-			// create static area item ref for block layer
-			this._getBlockingLayer?.showPopover();
-			this._blockLayerHidden = false;
 			Popup.blockPageScrolling(this);
 		}
 
@@ -488,12 +469,10 @@ abstract class Popup extends UI5Element {
 		// initial focus, if focused element is statically created
 		await this.applyInitialFocus(preventInitialFocus);
 
-		if (!isRenderFinished) {
-			await renderFinished();
+		await renderFinished();
 
-			// initial focus, if focused element is dynamically created
-			await this.applyInitialFocus(preventInitialFocus);
-		}
+		// initial focus, if focused element is dynamically created
+		await this.applyInitialFocus(preventInitialFocus);
 
 		this.fireEvent("after-open", {}, false, false);
 	}
@@ -527,8 +506,6 @@ abstract class Popup extends UI5Element {
 		this._isOpened = false;
 
 		if (this.isModal) {
-			this._blockLayerHidden = true;
-			this._getBlockingLayer?.hidePopover();
 			Popup.unblockPageScrolling(this);
 		}
 
