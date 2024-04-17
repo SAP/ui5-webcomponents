@@ -38,14 +38,16 @@ export { pathData, ltr, accData };`;
 
 
 
-const collectionTemplate = (name, versions, fullName) => `import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+const collectionTemplate = (name, versions, fullName) => `import { isLegacyThemeFamilyAsync } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0]}/${name}.js";
 import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
-const pathData = isLegacyThemeFamily() ? pathData${versions[0]} : pathData${versions[1]};
+const pathDataPromise = new Promise(async resolve => {
+	return (await isLegacyThemeFamilyAsync()) ? pathData${versions[0]} : pathData${versions[1]};
+});
 
 export default "${fullName}";
-export { pathData, ltr, accData };`;
+export { pathDataPromise, ltr, accData };`;
 
 
 const typeDefinitionTemplate = (name, accData, collection) => `declare const pathData: string;
@@ -91,7 +93,7 @@ const createIcons = async (file) => {
 
 		// For versioned icons collections, the script creates top level (unversioned) module that internally imports the versioned ones.
 		// For example, the top level "@ui5/ui5-webcomponents-icons/dist/accept.js" imports:
-		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js" 
+		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js"
 		// - "@ui5/ui5-webcomponents-icons/dist/v4/accept.js"
 
 		if (json.version) {
