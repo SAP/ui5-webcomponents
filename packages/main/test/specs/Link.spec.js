@@ -89,8 +89,8 @@ describe("General API", () => {
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {
 		const linkShadow = await browser.$("#linkAccName").shadow$("a");
 
-		assert.strictEqual(linkShadow.getAttribute("aria-label"), "more info", "aria-lavel attribute is set");
-		assert.strictEqual(linkShadow.getAttribute("title"), "more info", "title attribute is set");
+		assert.strictEqual(await linkShadow.getAttribute("aria-label"), "more info", "aria-label attribute is set");
+		assert.strictEqual(await linkShadow.getAttribute("title"), "more info", "title attribute is set");
 	});
 
 
