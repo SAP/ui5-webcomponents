@@ -110,7 +110,7 @@ type CarouselNavigateEventDetail = {
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
- * based on the `items-per-page`property.
+ * based on the `items-per-page` property.
  * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
@@ -152,7 +152,12 @@ class Carousel extends UI5Element {
 	cyclic!: boolean;
 
 	/**
-	 * Defines the number of items per page depending on the page width. One item per page is shown by default.
+	 * Defines the number of items per page depending on the page width.
+	 * 'S' for screens smaller than 600 pixels.
+	 * 'M' for screens greater than or equal to 600 pixels and smaller than 1024 pixels.
+	 * 'L' for screens greater than or equal to 1024 pixels and smaller than 1440 pixels.
+	 * 'XL' for screens greater than or equal to 1440 pixels.
+	 * One item per page is shown by default.
 	 * @default "S1 M1 L1 XL1"
 	 * @public
 	 */
@@ -297,21 +302,6 @@ class Carousel extends UI5Element {
 		this._lastFocusedElements = [];
 		this._orderOfLastFocusedPages = [];
 	}
-
-	/**
-	 * @private
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageSizeS!: number;
-
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageSizeM!: number;
-
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageSizeL!: number;
-
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageSizeXL!: number;
 
 	onBeforeRendering() {
 		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
@@ -546,36 +536,40 @@ class Carousel extends UI5Element {
 
 	get effectiveItemsPerPage(): number {
 		const itemsPerPageArray = this.itemsPerPage.split(" ");
+		let itemsPerPageSizeS = 1,
+			itemsPerPageSizeM = 1,
+			itemsPerPageSizeL = 1,
+			itemsPerPageSizeXL = 1;
 
 		itemsPerPageArray.forEach(element => {
 			if (element.startsWith("S")) {
-				this.itemsPerPageSizeS = Number(element.slice(1));
+				itemsPerPageSizeS = Number(element.slice(1));
 			} else if (element.startsWith("M")) {
-				this.itemsPerPageSizeM = Number(element.slice(1));
+				itemsPerPageSizeM = Number(element.slice(1));
 			} else if (element.startsWith("L")) {
-				this.itemsPerPageSizeL = Number(element.slice(1));
+				itemsPerPageSizeL = Number(element.slice(1));
 			} else if (element.startsWith("XL")) {
-				this.itemsPerPageSizeXL = Number(element.slice(2));
+				itemsPerPageSizeXL = Number(element.slice(2));
 			}
 		});
 
 		if (!this._width) {
-			return this.itemsPerPageSizeL;
+			return itemsPerPageSizeL;
 		}
 
 		if (this._width <= 600) {
-			return this.itemsPerPageSizeS;
+			return itemsPerPageSizeS;
 		}
 
 		if (this._width >= 600 && this._width <= 1024) {
-			return this.itemsPerPageSizeM;
+			return itemsPerPageSizeM;
 		}
 
 		if (this._width >= 1024 && this._width <= 1440) {
-			return this.itemsPerPageSizeL;
+			return itemsPerPageSizeL;
 		}
 
-		return this.itemsPerPageSizeXL;
+		return itemsPerPageSizeXL;
 	}
 
 	isItemInViewport(index: number): boolean {
