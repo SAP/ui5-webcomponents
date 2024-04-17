@@ -49,7 +49,7 @@ import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
-import type { TabSeparatorInStrip } from "./TabSeparator.js";
+import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -81,6 +81,7 @@ type TabContainerStripInfo = {
 }
 
 type TabContainerOverflowInfo = {
+	getElementInOverflow: () => HTMLElement | undefined;
 	style: Record<string, any>;
 }
 
@@ -731,6 +732,14 @@ class TabContainer extends UI5Element {
 		return <TabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
+	_findTabInOverflow(realTab: ITab) {
+		if (!this.responsivePopover!.isOpen()) {
+			return undefined;
+		}
+
+		return ((this.responsivePopover!.content[0] as List).items as Array<TabInOverflow | TabSeparatorInOverflow>).find(item => item.realTabReference === realTab);
+	}
+
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
@@ -885,6 +894,9 @@ class TabContainer extends UI5Element {
 	_setIndentLevels(items: Array<ITab>, level: number, extraIndent: boolean) {
 		items.forEach(item => {
 			item.receiveOverflowInfo({
+				getElementInOverflow: () => {
+					return this._findTabInOverflow(item);
+				},
 				style: {
 					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
 					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,

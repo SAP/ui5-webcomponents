@@ -190,6 +190,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_isInline?: boolean;
 	_forcedMixedMode?: boolean;
 	_getElementInStrip?: () => HTMLElement | undefined;
+	_getElementInOverflow?: () => HTMLElement | undefined;
 	_individualSlot!: string;
 	_forcedPosinset?: number;
 	_forcedSetsize?: number;
@@ -270,7 +271,8 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		this._isTopLevelTab = !!isTopLevelTab;
 	}
 
-	receiveOverflowInfo({ style }: TabContainerOverflowInfo) {
+	receiveOverflowInfo({ getElementInOverflow, style }: TabContainerOverflowInfo) {
+		this._getElementInOverflow = getElementInOverflow;
 		this._forcedStyleInOverflow = style;
 	}
 
@@ -288,10 +290,10 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	}
 
 	getFocusDomRef() {
-		let focusedDomRef = super.getFocusDomRef();
+		let focusedDomRef = this._getElementInOverflow?.();
 
-		if (this._getElementInStrip && this._getElementInStrip()) {
-			focusedDomRef = this._getElementInStrip()!;
+		if (!focusedDomRef) {
+			focusedDomRef = this._getElementInStrip?.();
 		}
 
 		return focusedDomRef;
