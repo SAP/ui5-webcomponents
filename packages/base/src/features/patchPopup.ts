@@ -1,11 +1,6 @@
-// OpenUI5's delegates object
-type DelegatesMap = { [key: string]: () => void; }
-
 // OpenUI5's Element.js subset
 type Element = {
 	getDomRef: () => HTMLElement | null,
-	addDelegate: (delegate: DelegatesMap) => void,
-	removeDelegate: (delegate: DelegatesMap) => void,
 }
 
 // The lifecycle of Popup.js is open -> _opened -> close -> _closed, we're interested in the first (open) and last (_closed)
@@ -16,25 +11,6 @@ type OpenUI5Popup = {
 		getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING",
 		getContent: () => Element, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
 	}
-};
-
-const delegatesRegistry = new Map<HTMLElement, DelegatesMap>();
-
-/**
- * Ensures a unique delegate for each element, because removeDelegate expects the same object pased to addDelegate
- * @param domRef HTML element to use the popover API
- */
-const getDelegate = (domRef: HTMLElement) => {
-	if (!delegatesRegistry.has(domRef)) {
-		const delegate = {
-			"onAfterRendering": () => {
-				openNativePopover(domRef);
-			},
-		};
-		delegatesRegistry.set(domRef, delegate);
-	}
-
-	return delegatesRegistry.get(domRef)!;
 };
 
 const openNativePopover = (domRef: HTMLElement) => {
@@ -61,7 +37,6 @@ const patchOpen = (Popup: OpenUI5Popup) => {
 				const domRef = element.getDomRef();
 				if (domRef) {
 					openNativePopover(domRef);
-					// element.addDelegate(getDelegate(domRef)); // add onAfterRendering delegate to restore the "popover" attribute that will be removed by RenderManager on re-rendering
 				}
 			}
 		}
@@ -73,10 +48,6 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 	Popup.prototype._closed = function _closed(...args: any[]) {
 		const element = this.getContent();
 		const domRef = element.getDomRef();
-		if (domRef && delegatesRegistry.has(domRef)) {
-			// element.removeDelegate(getDelegate(domRef)); // remove the onAfterRendering delegate before calling _close to avoid issues
-			delegatesRegistry.delete(domRef);
-		}
 		_origClosed.apply(this, args); // only then call _close
 		if (domRef) {
 			closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
