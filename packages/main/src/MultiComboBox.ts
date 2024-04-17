@@ -271,7 +271,7 @@ class MultiComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	allowCustomValues!: boolean;
+	noValidation!: boolean;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -499,7 +499,7 @@ class MultiComboBox extends UI5Element {
 		const target = e.target as Input;
 		const value = target.value;
 
-		if (!this.allowCustomValues && !this._filterItems(value).length) {
+		if (!this.noValidation && !this._filterItems(value).length) {
 			this._dialogInputValueState = ValueState.Error;
 		} else {
 			this._dialogInputValueState = this.valueState;
@@ -603,7 +603,7 @@ class MultiComboBox extends UI5Element {
 
 		this._effectiveValueState = this.valueState;
 
-		if (!filteredItems.length && value && !this.allowCustomValues) {
+		if (!filteredItems.length && value && !this.noValidation) {
 			const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
 
 			input.value = newValue;
@@ -871,7 +871,7 @@ class MultiComboBox extends UI5Element {
 			this.value = this.valueBeforeAutoComplete;
 		}
 
-		if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
+		if (!this.noValidation || (!this.open && this.noValidation)) {
 			this.value = this._lastValue;
 		}
 	}
@@ -1625,7 +1625,7 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
-		if (!this.allowCustomValues) {
+		if (!this.noValidation) {
 			this.value = "";
 		}
 
@@ -1706,7 +1706,7 @@ class MultiComboBox extends UI5Element {
 
 			this._tokenizer.expanded = this.open;
 			// remove the value if user focus out the input and focus is not going in the popover
-			if (!isPhone() && !this.allowCustomValues && !focusIsGoingInPopover) {
+			if (!isPhone() && !this.noValidation && !focusIsGoingInPopover) {
 				this.value = "";
 			}
 		}
