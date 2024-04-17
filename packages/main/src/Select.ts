@@ -285,7 +285,12 @@ class Select extends UI5Element implements IFormElement {
 	 * **Note:** Use the `ui5-option` component to define the desired options.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: true,
+	})
 	options!: Array<Option>;
 
 	/**
@@ -512,7 +517,7 @@ class Select extends UI5Element implements IFormElement {
 
 		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return orderedOptions.find(option => (option.displayText || option.textContent || "").toLowerCase().startsWith(text));
+		return orderedOptions.find(option => (option.textContent || "").toLowerCase().startsWith(text));
 	}
 
 	_handleHomeKey(e: KeyboardEvent) {

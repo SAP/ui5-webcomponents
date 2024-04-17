@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import CustomListItem from "./CustomListItem.js";
 
 import optionCss from "./generated/themes/Option.css.js";
@@ -28,7 +29,7 @@ import optionCss from "./generated/themes/Option.css.js";
 	],
 	dependencies: [CustomListItem],
 })
-class Option extends CustomListItem {
+class Option extends UI5Element {
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -86,13 +87,11 @@ class Option extends CustomListItem {
 	focused!: boolean;
 
 	/**
-	 * Defines the text of the component.
-	 *
-	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * Defines the content of the component.
 	 * @public
 	 */
-	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
-	text!: Array<Node>;
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
