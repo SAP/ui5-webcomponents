@@ -59,7 +59,7 @@ function VersionNavbarItemDesktop() {
         </NavbarNavLink>
         <ul className="dropdown__menu">
             <NavbarItem
-                label={getLabel("Nightly")}
+                label="Nightly 🚧"
                 isDropdownItem
                 target="_self"
                 href="https://sap.github.io/ui5-webcomponents/nightly"
@@ -67,7 +67,7 @@ function VersionNavbarItemDesktop() {
                 className={clsx({ 'menu__link--active': version === "Nightly" })}
             />
             <NavbarItem
-                label={getLabel("v1")}
+                label="v1"
                 isDropdownItem
                 target="_self"
                 href="https://sap.github.io/ui5-webcomponents/"
@@ -98,7 +98,7 @@ function VersionNavbarItemMobile() {
                 }} />
             <Collapsible lazy as="ul" className="menu__list" collapsed={collapsed}>
                 <NavbarItem
-                    label={getLabel("Nightly")}
+                    label="Nightly 🚧"
                     mobile
                     href="https://sap.github.io/ui5-webcomponents/nightly"
                     isDropdownItem
@@ -106,7 +106,7 @@ function VersionNavbarItemMobile() {
                     className={clsx({ "menu__link--active": version === "nightly" })}
                 />
                  <NavbarItem
-                    label={getLabel("v1")}
+                    label="v1"
                     mobile
                     href="https://sap.github.io/ui5-webcomponents"
                     isDropdownItem
