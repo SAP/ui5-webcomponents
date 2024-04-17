@@ -72,7 +72,7 @@ function VersionNavbarItemDesktop() {
                 isDropdownItem
                 target="_self"
                 href="https://sap.github.io/ui5-webcomponents/"
-                className={clsx({ 'menu__link--active': version === "v1" })}
+                className={clsx({ "menu__link--active": version === "v1" })}
             />
         </ul>
     </div>;
@@ -102,7 +102,7 @@ function VersionNavbarItemMobile() {
                     mobile
                     href="https://sap.github.io/ui5-webcomponents/nightly"
                     isDropdownItem
-                    className={clsx({ "menu__link--active": version === "nightly" })}
+                    className={clsx({ "menu__link--active": version === "Nightly" })}
                 />
                  <NavbarItem
                     label="v1"
