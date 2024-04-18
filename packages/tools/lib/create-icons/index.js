@@ -42,12 +42,12 @@ const collectionTemplate = (name, versions, fullName) => `import { isLegacyTheme
 import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0]}/${name}.js";
 import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
-const pathDataPromise = new Promise(async resolve => {
-	resolve((await isLegacyThemeFamilyAsync()) ? pathData${versions[0]} : pathData${versions[1]});
-});
+const getPathData = async() => {
+	return await isLegacyThemeFamilyAsync() ? pathDatav4 : pathDatav5;
+};
 
 export default "${fullName}";
-export { pathDataPromise, ltr, accData };`;
+export { getPathData, ltr, accData };`;
 
 
 const typeDefinitionTemplate = (name, accData, collection) => `declare const pathData: string;
@@ -58,13 +58,13 @@ declare const _default: "${collection}/${name}";
 export default _default;
 export { pathData, ltr, accData };`
 
-const collectionTypeDefinitionTemplate = (name, accData) => `declare const pathDataPromise: Promise<string>;
+const collectionTypeDefinitionTemplate = (name, accData) => `declare const getPathData: () => Promise<string>;
 declare const ltr: boolean;
 declare const accData: ${accData ? '{ key: string; defaultText: string; }' : null}
 declare const _default: "${name}";
 
 export default _default;
-export { pathDataPromise, ltr, accData };`
+export { getPathData, ltr, accData };`
 
 
 const svgTemplate = (pathData) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
