@@ -937,6 +937,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this._openSuggestionsPopover = false;
+		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
 		if (!this._clearIconClicked) {

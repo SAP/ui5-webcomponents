@@ -32,6 +32,7 @@
 			Change event count: <span id="myInput-change-count"></span>
 		</div>
 		<div id="myInput-change-result"></div>
+		<div id="myInput-selection-change-result"></div>
 	</div>
 
 	<div class="sapUiSizeCompact">
@@ -557,17 +558,27 @@
 			labelLiveChange.innerHTML = "Event [input] :: " + value;
 		};
 
+		var changeCounter = 0;
+		var inputCounter = 0;
+		var selectionChangeCounter = 0;
+
 		input.addEventListener("ui5-input", suggest);
 		inputCompact.addEventListener("ui5-input", suggest);
 		inputError.addEventListener("ui5-input", suggest);
 
-		input.addEventListener("ui5-change", function (event) {
-			labelChange.innerHTML = "Event [change] :: " + event.target.value;
+		input.addEventListener("ui5-selection-change", function (event) {
+			var item = event.detail.item;
+			labelSelectionChange.innerHTML = "Event [selectionChange] :: " + item.id;
+			selectionChangeCounter += 1;
+			const myInputSelectionChangeResult = document.getElementById('#myInput-selection-change-result');
+			myInputSelectionChangeResult.innerText = selectionChangeCounter;
 		});
 
-		var changeCounter = 0;
-		var inputCounter = 0;
-		var selectionChangeCounter = 0;
+		input.addEventListener("ui5-change", function (event) {
+			labelChange.innerHTML = "Event [change] :: " + event.target.value;
+			changeCounter += 1;
+			inputResult.value = changeCounter;
+		});
 
 		input1.addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
