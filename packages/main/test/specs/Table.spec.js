@@ -499,8 +499,8 @@ describe("Table general interaction", () => {
 			await firstCellFirstRowLabel.click();
 
 			// Check whether the table's and row's selection-mode property is set correctly, as well as the row type property
-			assert.strictEqual(await table.getProperty("selection-mode"), "None", "The table's selection mode is None");
-			assert.strictEqual(await firstRow.getProperty("selection-mode"), "None", "The row's selection mode is None");
+			assert.strictEqual(await table.getProperty("selectionMode"), "None", "The table's selection mode is None");
+			assert.strictEqual(await firstRow.getProperty("selectionMode"), "None", "The row's selection mode is None");
 			assert.strictEqual(await firstRow.getProperty("type"), "Active", "The row's type is Active");
 			assert.strictEqual(await thirdRow.getProperty("type"), "Inactive", "The row's type is Inactive")
 
