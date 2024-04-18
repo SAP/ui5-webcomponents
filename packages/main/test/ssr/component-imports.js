@@ -76,7 +76,7 @@ import List from "../../dist/List.js";
 // console.log({List})
 import StandardListItem from "../../dist/StandardListItem.js";
 import CustomListItem from "../../dist/CustomListItem.js";
-import GroupHeaderListItem from "../../dist/GroupHeaderListItem.js";
+import ListItemGroupHeader from "../../dist/ListItemGroupHeader.js";
 
 // Features
 import "../../dist/features/InputElementsFormSupport.js";
