@@ -891,8 +891,12 @@ class TabContainer extends UI5Element {
 		await this._togglePopover(opener, true);
 	}
 
-	_setIndentLevels(items: Array<ITab>, level: number, extraIndent: boolean) {
-		items.forEach(item => {
+	_sendOverflowPresentationInfos(items: Array<ITab>) {
+		const extraIndent = items
+			.filter((item): item is Tab => !item.isSeparator)
+			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
+
+		walk(items, (item, level) => {
 			item.receiveOverflowInfo({
 				getElementInOverflow: () => {
 					return this._findTabInOverflow(item);
@@ -902,19 +906,7 @@ class TabContainer extends UI5Element {
 					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
 				},
 			});
-
-			if (item.items) {
-				this._setIndentLevels(item.items, level + 1, extraIndent);
-			}
 		});
-	}
-
-	_sendOverflowPresentationInfos(items: Array<ITab>) {
-		const extraIndent = items
-			.filter((item): item is Tab => !item.isSeparator)
-			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
-
-		this._setIndentLevels(this.items, 0, extraIndent);
 	}
 
 	async _onOverflowKeyDown(e: KeyboardEvent) {
@@ -1455,13 +1447,17 @@ const getTabInStrip = (el: HTMLElement | null) => {
 	return false;
 };
 
-const walk = (items: Array<ITab>, callback: (_: ITab) => void) => {
+const _walk = (items: Array<ITab>, callback: (arg0: ITab, arg1: number) => void, level: number) => {
 	[...items].forEach(item => {
-		callback(item);
+		callback(item, level);
 		if (item.hasAttribute("ui5-tab") && item.items) {
-			walk(item.items, callback);
+			_walk(item.items, callback, level + 1);
 		}
 	});
+};
+
+const walk = (items: Array<ITab>, callback: (arg0: ITab, arg1: number) => void) => {
+	_walk(items, callback, 0);
 };
 
 TabContainer.define();
