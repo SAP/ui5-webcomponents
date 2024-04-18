@@ -79,11 +79,11 @@ import badgeCss from "./generated/themes/Badge.css.js";
 class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
-	 * @default "Set3"
+	 * @default "Neutral"
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ defaultValue: BadgeDesign.Set3 })
+	@property({ defaultValue: BadgeDesign.Neutral })
 	design!: `${BadgeDesign}`;
 
 	/**
