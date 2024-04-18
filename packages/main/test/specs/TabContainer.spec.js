@@ -361,7 +361,7 @@ describe("TabContainer general interaction", () => {
 		assert.ok(isNewTabFocused, "Tab in strip should be focused");
 	});
 
-	it("test focus() on tab in in overflow", async () => {
+	it("test focus() on tab in overflow", async () => {
 		await tabContainer.getEndOverflow("narrowTabContainer").click();
 
 		// Act
