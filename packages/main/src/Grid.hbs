@@ -1,16 +1,13 @@
 <div id="before" role="none" tabindex="0" ui5-grid-dummy-focus-area></div>
 
 {{#if busy}}
-    <div tabindex="-1" id="busy-indicator-row">
-		<ui5-busy-indicator
-            id="busy-indicator"
-			delay="50"
-			class="ui5-table-busy-ind"
-			active
-			size="Medium"
-			data-sap-focus-ref
-		></ui5-busy-indicator>
-	</div>
+    <ui5-busy-indicator
+        id="busy-indicator"
+        delay="50"
+        class="ui5-table-busy-ind"
+        active
+        data-sap-focus-ref
+    ></ui5-busy-indicator>
 {{/if}}
 
 <div id="grid" role="grid"
@@ -32,7 +29,7 @@
         </ui5-grid-row>
     {{/unless}}
 
-    {{#if _showGrowingControl}}
+    {{#if _shouldRenderGrowing}}
         <div id="footer" role="rowgroup">
             {{> growingRow}}
         </div>
@@ -43,11 +40,11 @@
 <div id="after" role="none" tabindex="0" ui5-grid-dummy-focus-area></div>
 
 {{#*inline "growingRow"}}
-    <ui5-grid-row id="growing-control-row">
-        <ui5-grid-cell id="growing-control-cell">
+    <ui5-grid-row id="growing-row">
+        <ui5-grid-cell id="growing-cell">
             <!-- The growing button is a div filling the cell -->
             <!-- It has a growing text at the top and a growingSubText at the bottom -->
-            <slot name="{{_growingControl._individualSlot}}"></slot>
+            <slot name="{{_growing._individualSlot}}"></slot>
         </ui5-grid-cell>
     </ui5-grid-row>
 {{/inline}}

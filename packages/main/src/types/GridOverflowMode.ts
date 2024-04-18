@@ -3,7 +3,7 @@
  *
  * @public
  */
-enum GridColumnMode {
+enum GridOverflowMode {
 	/**
 	 * Shows a scrollbar, when the table cannot fit all columns.
 	 * @public
@@ -17,4 +17,4 @@ enum GridColumnMode {
 	Popin = "Popin"
 }
 
-export default GridColumnMode;
+export default GridOverflowMode;

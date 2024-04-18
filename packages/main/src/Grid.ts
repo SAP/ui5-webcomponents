@@ -16,7 +16,7 @@ import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridSelection from "./GridSelection.js";
 import GridHeaderCell from "./GridHeaderCell.js";
-import GridColumnMode from "./types/GridColumnMode.js";
+import GridOverflowMode from "./types/GridOverflowMode.js";
 import GridNavigation from "./GridNavigation.js";
 import {
 	GRID_NO_DATA,
@@ -27,7 +27,7 @@ import {
  *
  * @public
  */
-interface IGridFeature extends HTMLElement {
+interface IGridFeature extends UI5Element {
 	/**
 	 * Called when the grid is activated.
 	 * @param grid grid instance
@@ -36,7 +36,7 @@ interface IGridFeature extends HTMLElement {
 	/**
 	 * Called when the grid finished rendering.
 	 */
-	onGridRendered(): void;
+	onGridRendered?(): void;
 }
 
 /**
@@ -52,7 +52,7 @@ interface IGridGrowing extends IGridFeature {
 	/**
 	 * Determines whether the table has a growing control, that should be rendered in the grid.
 	 */
-	hasGrowingControl(): boolean;
+	hasGrowingComponent(): boolean;
 	_individualSlot?: string;
 }
 
@@ -173,17 +173,17 @@ class Grid extends UI5Element {
 	noDataText!: string;
 
 	/**
-	 * Defines the mode of the <code>ui5-grid</code> columns.
+	 * Defines the mode of the <code>ui5-grid</code> overflow behavior.
 	 *
 	 * Available options are:
 	 * * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 * * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
 	 *
-	 * @default GridColumnMode.Popin
+	 * @default GridOverflowMode.Popin
 	 * @public
 	 */
-	@property({ type: GridColumnMode, defaultValue: GridColumnMode.Popin })
-	columnMode!: `${GridColumnMode}`;
+	@property({ type: GridOverflowMode, defaultValue: GridOverflowMode.Popin })
+	overflowMode!: `${GridOverflowMode}`;
 
 	/**
 	 * Defines if the component is in busy state.
@@ -198,8 +198,8 @@ class Grid extends UI5Element {
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
-	poppedIn: Array<{col: GridHeaderCell, width: float}>;
-	containerWidth: number;
+	_poppedIn: Array<{col: GridHeaderCell, width: float}>;
+	_containerWidth: number;
 
 	static i18nBundle: I18nBundle;
 
@@ -212,13 +212,13 @@ class Grid extends UI5Element {
 
 	constructor() {
 		super();
-		this.poppedIn = [];
-		this.containerWidth = 0;
+		this._poppedIn = [];
+		this._containerWidth = 0;
 		this._onResizeBound = this._onResize.bind(this);
 	}
 
 	onEnterDOM() {
-		if (this.columnMode === GridColumnMode.Popin) {
+		if (this.overflowMode === GridOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
 		this.features.forEach(feature => feature.onGridActivate(this));
@@ -227,7 +227,7 @@ class Grid extends UI5Element {
 
 	onExitDOM() {
 		this._gridNavigation = undefined;
-		if (this.columnMode === GridColumnMode.Popin) {
+		if (this.overflowMode === GridOverflowMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}
 	}
@@ -237,11 +237,7 @@ class Grid extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		this.features.forEach(feature => feature.onGridRendered());
-	}
-
-	getDomRef(): HTMLElement | undefined {
-		return this.shadowRoot!.querySelector("#grid") as HTMLElement;
+		this.features.forEach(feature => feature.onGridRendered?.());
 	}
 
 	_getFeature<Klass>(klass: any): Klass | undefined {
@@ -250,10 +246,6 @@ class Grid extends UI5Element {
 
 	_getSelection(): GridSelection | undefined {
 		return this._getFeature(GridSelection);
-	}
-
-	_getGrowing(): IGridGrowing | undefined {
-		return this.features.find(feature => this._isGrowingFeature(feature)) as IGridGrowing;
 	}
 
 	_onResize() {
@@ -273,15 +265,15 @@ class Grid extends UI5Element {
 			}, 0);
 			// Calculate container width considering popped-in columns
 			const columnOverflow = poppedInWidth - overflow;
-			this.containerWidth = clientWidth - columnOverflow;
+			this._containerWidth = clientWidth - columnOverflow;
 		} else {
 			// Underflow Handling: Restore columns from popin until container width is met
 			const headers = this._getPopinOrderedColumns(true).filter(it => it._popin);
 
 			headers.every(headerCell => {
-				const underflow = clientWidth - this.containerWidth;
+				const underflow = clientWidth - this._containerWidth;
 				if (underflow >= headerCell._popinWidth) {
-					this.containerWidth += headerCell._popinWidth;
+					this._containerWidth += headerCell._popinWidth;
 					this._setHeaderPopinState(headerCell, false, 0);
 					return true;
 				}
@@ -308,7 +300,7 @@ class Grid extends UI5Element {
 	}
 
 	_onGrow() {
-		this._getGrowing()?.loadMore();
+		this._growing?.loadMore();
 	}
 
 	_getPopinOrderedColumns(reverse: boolean) {
@@ -338,7 +330,7 @@ class Grid extends UI5Element {
 	}
 
 	_isGrowingFeature(feature: any) {
-		return Boolean(feature.loadMore && feature.hasGrowingControl && this._isFeature(feature));
+		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
 	}
 
 	get styles() {
@@ -367,7 +359,7 @@ class Grid extends UI5Element {
 	}
 
 	get _gridOverflowX() {
-		return (this.columnMode === GridColumnMode.Popin) ? "hidden" : "auto";
+		return (this.overflowMode === GridOverflowMode.Popin) ? "hidden" : "auto";
 	}
 
 	get _gridOverflowY() {
@@ -403,12 +395,23 @@ class Grid extends UI5Element {
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
 	}
 
-	get _showGrowingControl() {
-		return this.rows.length && this._getGrowing()?.hasGrowingControl();
+	get _shouldRenderGrowing() {
+		return this.rows.length && this._growing?.hasGrowingComponent();
 	}
 
-	get _growingControl() {
-		return this._getGrowing()!;
+	get _growing() {
+		return this.features.find(feature => this._isGrowingFeature(feature)) as IGridGrowing;
+	}
+
+	get _scrollContainer() {
+		let element = this as HTMLElement;
+		while (element.scrollHeight <= element.clientHeight) {
+			element = element.parentElement as HTMLElement;
+			if (!element) {
+				break;
+			}
+		}
+		return element;
 	}
 }
 

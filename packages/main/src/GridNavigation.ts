@@ -67,8 +67,8 @@ class GridNavigation {
 		} else {
 			items.push(this._getNavigationItemsOfRow(this._grid._nodataRow));
 		}
-		if (this._grid._showGrowingControl) {
-			items.push([this._grid._growingControl]);
+		if (this._grid._shouldRenderGrowing) {
+			items.push([this._grid._growing.getFocusDomRef()]);
 		}
 		return items;
 	}
@@ -285,7 +285,7 @@ class GridNavigation {
 		this._gridWalker.setGrid(navigationItems);
 		navigationItems.flat().forEach(element => {
 			if (element !== evetOrigin) {
-				element.removeAttribute("tabindex");
+				element?.removeAttribute("tabindex");
 			}
 		});
 

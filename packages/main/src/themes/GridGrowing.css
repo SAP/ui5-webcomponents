@@ -3,7 +3,7 @@
 	flex-grow: 1;
 }
 
-#growing-button:focus[tabindex] {
+#growing-button:focus {
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
@@ -18,8 +18,10 @@
     cursor: pointer;
 }
 
-#growing-button:hover {
-    background: var(--sapButton_Hover_Background);
+@media (hover: hover) {
+    #growing-button:hover {
+        background: var(--sapButton_Hover_Background);
+    }
 }
 
 #growing-button:active,#growing-button[active] {
