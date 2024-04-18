@@ -6,6 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -209,12 +210,6 @@ class Icon extends UI5Element implements IIcon {
 	accData?: I18nText;
 
 	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
 	* @private
 	*/
 	@property({ type: Boolean })
@@ -230,19 +225,6 @@ class Icon extends UI5Element implements IIcon {
 	packageName?: string;
 	viewBox?: string;
 	customSvg?: object;
-
-	_onfocusout?: ((event: FocusEvent) => void);
-	_onfocusin?: ((event: FocusEvent) => void);
-
-	_onFocusInHandler() {
-		if (this.interactive) {
-			this.focused = true;
-		}
-	}
-
-	_onFocusOutHandler() {
-		this.focused = false;
-	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (!this.interactive) {
@@ -303,6 +285,12 @@ class Icon extends UI5Element implements IIcon {
 		return this.effectiveAccessibleName ? "img" : PRESENTATION_ROLE;
 	}
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	async onBeforeRendering() {
 		const name = this.name;
 		if (!name) {
@@ -340,9 +328,6 @@ class Icon extends UI5Element implements IIcon {
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
-
-		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
-		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;

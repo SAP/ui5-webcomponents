@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* **u5-dialog:** soft keyboard is correctly opened on iOS devices ([#8583](https://github.com/SAP/ui5-webcomponents/issues/8583)) ([6cf1d74](https://github.com/SAP/ui5-webcomponents/commit/6cf1d746e59352430d0d086cf0814dc7ce7fdb9c))
+* **ui5-popover:** fix popover going out of the viewport ([#8735](https://github.com/SAP/ui5-webcomponents/issues/8735)) ([bca8f2a](https://github.com/SAP/ui5-webcomponents/commit/bca8f2a3ff15d002ce778bf85e1d2dd8da789059))
+
+
+### Features
+
+* **ui5-li:** add support for F2 key ([#8619](https://github.com/SAP/ui5-webcomponents/issues/8619)) ([24c3807](https://github.com/SAP/ui5-webcomponents/commit/24c380758f88b3f66dce46e2f57297634b42a85a)), closes [#7736](https://github.com/SAP/ui5-webcomponents/issues/7736)
+
+
+
+
+
 # [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
 
 

@@ -50,7 +50,8 @@
 	color: var(--sapPositiveElementColor);
 }
 
-:host([interactive][focused]) .ui5-icon-root {
+:host([interactive][desktop]) .ui5-icon-root:focus-within,
+:host([interactive]) .ui5-icon-root:focus-visible {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--ui5-icon-focus-border-radius);
 }
