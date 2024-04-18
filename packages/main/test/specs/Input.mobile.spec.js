@@ -87,8 +87,8 @@ describe("Eventing", () => {
 		await suggestionItem.click();
 
 
-		const selectedKey = await browser.$("#myLabel").getText();
-		assert.strictEqual(selectedKey.split(" :: ")[1], sExpectedSelectedKey, "Selected key event property was correct");
+		const selectedKey = await browser.$("#myLabelSelectionChange").getText();
+		assert.strictEqual(selectedKey.split(" :: ")[1], sExpectedSelectedKey, "Selection change event property was correct");
 
 		const change = await browser.$("#myLabelChange").getText();
 		assert.strictEqual(change.split(" :: ")[1], sChangeText, "Change event property was correct");
@@ -175,7 +175,7 @@ describe("Picker filtering", () => {
 	it("Should filter group header list items", async () => {
 		const dialogList = await browser.$("#myInput").shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is 1 filtered group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is 1 filtered group header");
 	});
 });
 

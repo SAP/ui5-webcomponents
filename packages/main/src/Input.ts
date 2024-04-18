@@ -937,6 +937,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this._openSuggestionsPopover = false;
+		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
 		if (!this._clearIconClicked) {
@@ -963,7 +964,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_click() {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this._openSuggestionsPopover = true;
+			this.open = true;
 		}
 	}
 
