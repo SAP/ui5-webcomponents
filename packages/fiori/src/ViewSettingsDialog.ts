@@ -514,7 +514,7 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.show(true);
+		this._dialog.show();
 
 		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
 	}

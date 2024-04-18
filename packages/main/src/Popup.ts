@@ -253,7 +253,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		await this._open(false);
+		await this._open();
 	}
 
 	_resize() {
@@ -384,8 +384,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Focuses the element denoted by `initialFocus`, if provided,
-	 * or the first focusable element otherwise.
+	 * Focuses the first focusable element if element with "autofocus" attribute is not specified.
 	 * @public
 	 * @returns Promise that resolves when the focus is applied
 	 */
@@ -400,7 +399,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		let element = await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
+		const element = await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			if (element === this._root) {

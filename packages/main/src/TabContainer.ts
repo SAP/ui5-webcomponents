@@ -574,7 +574,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (popoverTarget && isLongDragOver) {
-			this._showPopoverAt(popoverTarget, false, true);
+			this._showPopoverAt(popoverTarget);
 		} else {
 			this._closePopover();
 		}
@@ -711,7 +711,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		await this._togglePopover(opener, true);
+		await this._togglePopover(opener);
 	}
 
 	_setPopoverAutoFocus() {
@@ -883,7 +883,7 @@ class TabContainer extends UI5Element {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
-		await this._togglePopover(opener, true);
+		await this._togglePopover(opener);
 	}
 
 	_setIndentLevels(items: Array<ITab>, level: number, extraIndent: boolean) {
