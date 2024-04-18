@@ -101,7 +101,7 @@
 }
 
 .ui5-nli-actions {
-	position: var(--_ui5-notification_item-actions-position);
+	position: absolute;
 	top: 0.5rem;
 	right: 0.5rem;
 }
@@ -114,7 +114,7 @@
 .ui5-nli-title-text {
 	display: flex;
 	margin-bottom: var(--_ui5-notification_item-title-margin-bottom);
-	padding-right: var(--_ui5-notification_item-title-padding-right);
+	padding-right: 4.375rem;
 	box-sizing: border-box;
 	color: var(--sapGroup_TitleTextColor);
 	font-weight: bold;

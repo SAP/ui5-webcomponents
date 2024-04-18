@@ -20,7 +20,7 @@
 
 	<!-- the list that we create to contain several NotificationGroups should have 
 		aria-label="Notifications". All applications should do the same -->
-	<ui5-list id="notificationList" header-text="Notifications grouped" aria-label="Notifications">
+	<ui5-list id="notificationList" aria-label="Notifications">
 		<ui5-li-notification-group
 			show-close
 			show-counter
@@ -184,9 +184,10 @@
 		</ui5-li-notification-group>
 	</ui5-list>
 
+	<ui5-title>ACC test</ui5-title>
 	<!-- the list that we create to contain several NotificationGroups should have 
 	 aria-label="Notifications". All applications should do the same -->
-	<ui5-list id="ACCtestGroup" header-text="ACC test" aria-label="Notifications">
+	<ui5-list id="ACCtestGroup" aria-label="Notifications">
 		
 		<ui5-li-notification-group
 			show-close
@@ -280,7 +281,7 @@
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" class="notificationlistgroupitem2auto" placement="Bottom" horizontal-align="End">
-		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'"  aria-label="Notifications">
+		<ui5-list id="notificationListTop" aria-label="Notifications">
 			<ui5-li-notification-group				
 				title-text="Orders"
 			>
