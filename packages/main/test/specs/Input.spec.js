@@ -598,9 +598,6 @@ describe("Input general interaction", () => {
 		await inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
-
-		// Close popover
-		await browser.keys("Escape");
 	});
 
 	it("Checks if valueStateMessage gets updated dynamically", async () => {
@@ -621,10 +618,6 @@ describe("Input general interaction", () => {
 		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
 
 		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
-
-		// Close popover
-		await browser.keys("Escape");
-		await browser.keys("Tab");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
@@ -711,8 +704,7 @@ describe("Input general interaction", () => {
 
 		const popoverHeader = await inputError.shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getText();
-		const _id = await inputError.getProperty("_id");
-		const ariaHiddenText = await inputError.shadow$(`#${_id}-valueStateDesc`).getText();
+		const ariaHiddenText = await inputError.shadow$(`#valueStateDesc`).getText();
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");
@@ -824,8 +816,8 @@ describe("Input general interaction", () => {
 		const inputDynamicSuggestions = await $("#inputCompact");
 		const inputSuggestions = await $("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
-		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
-		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
+		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#suggestionsCount`);
+		const suggestionsCount = await inputSuggestions.shadow$(`#suggestionsCount`);
 
 		//act
 		await inputDynamicSuggestions.click();
@@ -857,8 +849,8 @@ describe("Input general interaction", () => {
 		const inputWithGroups = await $("#inputCompact");
 		const inputSuggestions = await $("#myInput2");
 		const inputWithGroupsInnerInput = await inputWithGroups.shadow$("input");
-		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#${await inputWithGroups.getProperty("_id")}-selectionText`);
-		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-selectionText`);
+		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#selectionText`);
+		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#selectionText`);
 
 		//act
 		await inputWithGroups.click();

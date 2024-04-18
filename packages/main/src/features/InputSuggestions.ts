@@ -1,5 +1,4 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -102,8 +101,6 @@ class Suggestions {
 		this.fnOnSuggestionItemPress = this.onItemPress.bind(this);
 		this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
 		this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
-
-		this._getSuggestionPopover();
 
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
@@ -237,34 +234,30 @@ class Suggestions {
 		return false;
 	}
 
-	async toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
+	toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
-			await this.open();
+			this.open();
 		} else {
-			await this.close(options.preventFocusRestore);
+			this.close(options.preventFocusRestore);
 		}
 	}
 
-	async _isScrollable() {
-		const sc = await this._getScrollContainer();
+	_isScrollable() {
+		const sc = this._getScrollContainer();
 		return sc.offsetHeight < sc.scrollHeight;
 	}
 
-	async open() {
+	open() {
 		this._getComponent().open = true;
-		this._beforeOpen();
-
-		await (await this._getSuggestionPopover()).showAt(this._getComponent());
 	}
 
-	async close(preventFocusRestore = false) {
+	close(preventFocusRestore = false) {
 		const selectedItem = this._getItems() && this._getItems()[this.selectedItemIndex];
 
 		this._getComponent().open = false;
-		this.responsivePopover = await this._getSuggestionPopover();
-		this.responsivePopover.close(false, false, preventFocusRestore);
+		this._getPicker().close(false, false, preventFocusRestore);
 
 		if (selectedItem && selectedItem.focused) {
 			selectedItem.focused = false;
@@ -338,39 +331,6 @@ class Suggestions {
 		this.onItemSelected(pressedItem as SuggestionListItem, false /* keyboardUsed */);
 	}
 
-	_beforeOpen() {
-		this._attachItemsListeners();
-		this._attachPopupListeners();
-	}
-
-	async _attachItemsListeners() {
-		const list = await this._getList();
-		list.removeEventListener("ui5-item-click", this.fnOnSuggestionItemPress as EventListener);
-		list.addEventListener("ui5-item-click", this.fnOnSuggestionItemPress as EventListener);
-		list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress as EventListener);
-		list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress as EventListener);
-		list.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
-		list.addEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
-		list.removeEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
-		list.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
-	}
-
-	_attachPopupListeners() {
-		if (!this.handleFocus) {
-			return;
-		}
-
-		if (!this.attachedAfterOpened) {
-			this.responsivePopover!.addEventListener("ui5-after-open", this._onOpen.bind(this));
-			this.attachedAfterOpened = true;
-		}
-
-		if (!this.attachedAfterClose) {
-			this.responsivePopover!.addEventListener("ui5-after-close", this._onClose.bind(this));
-			this.attachedAfterClose = true;
-		}
-	}
-
 	_onOpen() {
 		this._applyFocus();
 	}
@@ -381,7 +341,7 @@ class Suggestions {
 
 	_applyFocus() {
 		if (this.selectedItemIndex) {
-			this._getItems()[this.selectedItemIndex].focus();
+			this._getItems()[this.selectedItemIndex]?.focus();
 		}
 	}
 
@@ -400,7 +360,7 @@ class Suggestions {
 	}
 
 	isOpened() {
-		return !!(this.responsivePopover && this.responsivePopover.open);
+		return !!(this._getPicker()?.open);
 	}
 
 	_handleItemNavigation(forward: boolean) {
@@ -547,23 +507,22 @@ class Suggestions {
 		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
 	}
 
-	async _scrollItemIntoView(item: SuggestionListItem) {
+	_scrollItemIntoView(item: SuggestionListItem) {
 		const pos = item.getDomRef()!.offsetTop;
-		const scrollContainer = await this._getScrollContainer();
+		const scrollContainer = this._getScrollContainer();
 		scrollContainer.scrollTop = pos;
 	}
 
-	async _getScrollContainer() {
+	_getScrollContainer() {
 		if (!this._scrollContainer) {
-			await this._getSuggestionPopover();
-			this._scrollContainer = this.responsivePopover!.shadowRoot!.querySelector(".ui5-popup-content")!;
+			this._scrollContainer = this._getPicker()!.shadowRoot!.querySelector(".ui5-popup-content")!;
 		}
 
 		return this._scrollContainer;
 	}
 
 	_getItems(): Array<SuggestionListItem> {
-		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [];
+		return [...this._getList()!.items] as Array<SuggestionListItem> || [];
 	}
 
 	_getNonGroupItems(): Array<SuggestionListItem> {
@@ -574,28 +533,20 @@ class Suggestions {
 		return this.component;
 	}
 
-	async _getList() {
-		this.responsivePopover = await this._getSuggestionPopover();
-		return this.responsivePopover.querySelector<List>("[ui5-list]")!;
+	_getList() {
+		return this._getPicker().querySelector<List>("[ui5-list]")!;
 	}
 
-	async _getListWidth() {
-		const list = await this._getList();
-		return list.offsetWidth;
+	_getListWidth() {
+		return this._getList().offsetWidth;
 	}
 
 	_getRealItems() {
 		return this._getComponent().getSlottedNodes<SuggestionItem>(this.slotName);
 	}
 
-	async _getSuggestionPopover() {
-		if (this.responsivePopover) {
-			return this.responsivePopover;
-		}
-
-		await renderFinished();
-		this.responsivePopover = this._getComponent().shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-		return this.responsivePopover;
+	_getPicker() {
+		return this._getComponent().shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	get itemSelectionAnnounce() {

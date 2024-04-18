@@ -2,13 +2,17 @@
 	<ui5-responsive-popover
 		class="{{classes.popover}}"
 		hide-arrow
+		prevent-focus-restore
 		_disable-initial-focus
 		placement="Bottom"
 		horizontal-align="Start"
+		tabindex="-1"
 		style="{{styles.suggestionsPopover}}"
-		@ui5-after-open="{{_afterOpenPopover}}"
-		@ui5-after-close="{{_afterClosePopover}}"
+		@ui5-after-open="{{_afterOpenPicker}}"
+		@ui5-after-close="{{_afterClosePicker}}"
 		@ui5-scroll="{{_scroll}}"
+		.open={{open}}
+		.opener={{this}}
 	>
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
@@ -18,7 +22,7 @@
 					class="ui5-responsive-popover-close-btn"
 					icon="decline"
 					design="Transparent"
-					@click="{{_closeRespPopover}}"
+					@click="{{_closePicker}}"
 				>
 				</ui5-button>
 			</div>
@@ -59,7 +63,7 @@
 			<div slot="footer" class="ui5-responsive-popover-footer">
 				<ui5-button
 					design="Transparent"
-					@click="{{_closeRespPopover}}"
+					@click="{{_closePicker}}"
 				>OK</ui5-button>
 			</div>
 		{{/if}}
@@ -73,7 +77,11 @@
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
 			placement="Bottom"
+			tabindex="-1"
 			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
+			.opener={{this}}
+			.open={{valueStateOpen}}
+			@ui5-after-close="{{_handleValueStatePopoverAfterClose}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
@@ -93,7 +101,15 @@
 {{/inline}}
 
 {{#*inline "suggestionsList"}}
-	<ui5-list separators="{{suggestionSeparators}}" @mousedown="{{onItemMouseDown}}" selection-mode="Single">
+	<ui5-list
+		separators="{{suggestionSeparators}}"
+		selection-mode="Single"
+		@mousedown="{{onItemMouseDown}}"
+		@mouseover="{{_handleItemMouseOver}}"
+		@mouseout="{{_handleItemMouseOut}}"
+		@ui5-item-click="{{_handleSuggestionItemPress}}"
+		@ui5-selection-change="{{_handleSelectionChange}}"
+	>
 		{{#each suggestionObjects}}
 			{{#if groupItem}}
 				<ui5-li-group-header data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-group-header>
