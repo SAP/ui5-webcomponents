@@ -418,7 +418,8 @@ class Menu extends UI5Element {
 		}
 		const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
 		const popover = await this._createPopover();
-		popover.initialFocus = `${this._id}-menu-item-0`;
+		popover.querySelectorAll("[ui5-menu-li]").forEach(item => item.removeAttribute("autofocus"))
+		popover.querySelector(`#${this._id}-menu-item-0`)?.setAttribute("autofocus", "");
 		popover.showAt(opener, busyWithoutItems);
 	}
 

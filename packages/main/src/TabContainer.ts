@@ -717,7 +717,11 @@ class TabContainer extends UI5Element {
 	_setPopoverInitialFocus() {
 		const selectedTabInOverflow = this._getSelectedTabInOverflow();
 		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
+		const list = (<List> this.responsivePopover!.content[0]);
 
+		list.items.forEach(item => item.removeAttribute("autofocus"));
+
+		list._itemNavigation.setCurrentItem(tab);
 		tab.setAttribute("autofocus", "");
 		// this.responsivePopover!.initialFocus = `${tab.realTabReference._id}-li`;
 	}
@@ -1292,9 +1296,7 @@ class TabContainer extends UI5Element {
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
 
-		if (setInitialFocus) {
-			this._setPopoverInitialFocus();
-		}
+		this._setPopoverInitialFocus();
 
 		if (this._hasScheduledPopoverOpen) {
 			await this.responsivePopover.showAt(opener, preventInitialFocus);
