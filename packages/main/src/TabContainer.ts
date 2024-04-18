@@ -714,7 +714,7 @@ class TabContainer extends UI5Element {
 		await this._togglePopover(opener, true);
 	}
 
-	_setPopoverInitialFocus() {
+	_setPopoverAutoFocus() {
 		const selectedTabInOverflow = this._getSelectedTabInOverflow();
 		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
 		const list = (<List> this.responsivePopover!.content[0]);
@@ -723,7 +723,6 @@ class TabContainer extends UI5Element {
 
 		list._itemNavigation.setCurrentItem(tab);
 		tab.setAttribute("autofocus", "");
-		// this.responsivePopover!.initialFocus = `${tab.realTabReference._id}-li`;
 	}
 
 	_getSelectedTabInOverflow() {
@@ -1281,25 +1280,25 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _togglePopover(opener: HTMLElement, setInitialFocus = false) {
+	async _togglePopover(opener: HTMLElement) {
 		this.responsivePopover = await this._respPopover();
 
 		if (this.responsivePopover.isOpen()) {
 			this._closePopover();
 		} else {
-			await this._showPopoverAt(opener, setInitialFocus);
+			await this._showPopoverAt(opener);
 		}
 	}
 
-	async _showPopoverAt(opener: HTMLElement, setInitialFocus = false, preventInitialFocus = false) {
+	async _showPopoverAt(opener: HTMLElement) {
 		this._hasScheduledPopoverOpen = true;
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
 
-		this._setPopoverInitialFocus();
+		this._setPopoverAutoFocus();
 
 		if (this._hasScheduledPopoverOpen) {
-			await this.responsivePopover.showAt(opener, preventInitialFocus);
+			await this.responsivePopover.showAt(opener);
 		}
 	}
 

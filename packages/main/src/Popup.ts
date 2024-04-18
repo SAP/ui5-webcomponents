@@ -122,14 +122,6 @@ type PopupBeforeCloseEventDetail = {
 @event("scroll")
 abstract class Popup extends UI5Element {
 	/**
-	 * Defines the ID of the HTML Element, which will get the initial focus.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	initialFocus!: string;
-
-	/**
 	 * Defines if the focus should be returned to the previously focused element,
 	 * when the popup closes.
 	 * @default false
@@ -385,8 +377,8 @@ abstract class Popup extends UI5Element {
 	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
 	 * @protected
 	 */
-	async applyInitialFocus(preventInitialFocus: boolean) {
-		if (!this._disableInitialFocus && !preventInitialFocus) {
+	async applyInitialFocus() {
+		if (!this._disableInitialFocus) {
 			await this.applyFocus();
 		}
 	}
@@ -434,7 +426,7 @@ abstract class Popup extends UI5Element {
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
 	 */
-	async _open(preventInitialFocus: boolean) {
+	async _open() {
 		if (this._isOpened) {
 			return;
 		}
@@ -464,12 +456,12 @@ abstract class Popup extends UI5Element {
 		this.open = true;
 
 		// initial focus, if focused element is statically created
-		await this.applyInitialFocus(preventInitialFocus);
+		await this.applyInitialFocus();
 
 		await renderFinished();
 
 		// initial focus, if focused element is dynamically created
-		await this.applyInitialFocus(preventInitialFocus);
+		await this.applyInitialFocus();
 
 		this.fireEvent("after-open", {}, false, false);
 	}
