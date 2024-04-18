@@ -152,7 +152,7 @@ class Carousel extends UI5Element {
 	cyclic!: boolean;
 
 	/**
-	 * Defines the number of items per page depending on the page width.
+	 * Defines the number of items per page depending on the carousel width.
 	 *
 	 * - 'S' for screens smaller than 600 pixels.
 	 * - 'M' for screens greater than or equal to 600 pixels and smaller than 1024 pixels.
