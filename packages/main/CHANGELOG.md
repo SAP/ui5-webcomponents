@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* **u5-dialog:** soft keyboard is correctly opened on iOS devices ([#8583](https://github.com/SAP/ui5-webcomponents/issues/8583)) ([6cf1d74](https://github.com/SAP/ui5-webcomponents/commit/6cf1d746e59352430d0d086cf0814dc7ce7fdb9c))
+* **ui5-calendar, ui5-daterange-picker:** align range selection styling with vd specification ([#8585](https://github.com/SAP/ui5-webcomponents/issues/8585)) ([d4f0e0e](https://github.com/SAP/ui5-webcomponents/commit/d4f0e0e93bc9dcd9c4261b2c3eed37cf4f85435f))
+* **ui5-menu-item:** apply scoping to internal `Icon` ([#8751](https://github.com/SAP/ui5-webcomponents/issues/8751)) ([ce55755](https://github.com/SAP/ui5-webcomponents/commit/ce55755c05a5588759d751da9749dbde0bbba722))
+* **ui5-progress-indicator:** hidden value design ([#8545](https://github.com/SAP/ui5-webcomponents/issues/8545)) ([bf094d3](https://github.com/SAP/ui5-webcomponents/commit/bf094d3df92311d7d051b10aff8167b832e84d26))
+* **ui5-responsive-popover:** fix dialog initial focus ([#8774](https://github.com/SAP/ui5-webcomponents/issues/8774)) ([27b522f](https://github.com/SAP/ui5-webcomponents/commit/27b522f145d21be814cc5f02ee74674c8e3db745))
+* **ui5-split-button:** add correct opacity when disabled ([#8738](https://github.com/SAP/ui5-webcomponents/issues/8738)) ([399144e](https://github.com/SAP/ui5-webcomponents/commit/399144e8b186dd61d2eb23ed42e5050335e5ecd7)), closes [#8615](https://github.com/SAP/ui5-webcomponents/issues/8615)
+* **ui5-tabcontainer:** prevent endless resizing when moving after last overflow item ([#8725](https://github.com/SAP/ui5-webcomponents/issues/8725)) ([c33ba40](https://github.com/SAP/ui5-webcomponents/commit/c33ba404c559109a2dfe2166722f03f2c5c6b691))
+* **ui5-tabcontainer:** replace default slot union type with interface ([#8734](https://github.com/SAP/ui5-webcomponents/issues/8734)) ([ac6b44f](https://github.com/SAP/ui5-webcomponents/commit/ac6b44f9eaeb1604f1bbd4ae6f37e6dec817c1ef))
+
+
+### Code Refactoring
+
+* **ui5-multi-combobox:** rename property allowCustomValues to noValidation ([#8765](https://github.com/SAP/ui5-webcomponents/issues/8765)) ([bb27acb](https://github.com/SAP/ui5-webcomponents/commit/bb27acbc2f8321219d99c7732d8536a00ae38272))
+* **ui5-textarea:** rename property growingMaxLines to growingMaxRows ([#8756](https://github.com/SAP/ui5-webcomponents/issues/8756)) ([3fd33ab](https://github.com/SAP/ui5-webcomponents/commit/3fd33aba0164e0a5c06bd44d057157a1dd54b522)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+
+
+### Features
+
+* **ui5-avatar-group:** update focus handling ([#8550](https://github.com/SAP/ui5-webcomponents/issues/8550)) ([0bb5c9d](https://github.com/SAP/ui5-webcomponents/commit/0bb5c9d8632092d875fa6333d817475aa73f1e71)), closes [#8320](https://github.com/SAP/ui5-webcomponents/issues/8320)
+* **ui5-date-*:** adapt date and time controls to timezone feature ([#8610](https://github.com/SAP/ui5-webcomponents/issues/8610)) ([1acae01](https://github.com/SAP/ui5-webcomponents/commit/1acae010eb81f4d50368587b66c8840bdf886d04)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-li:** add support for F2 key ([#8619](https://github.com/SAP/ui5-webcomponents/issues/8619)) ([24c3807](https://github.com/SAP/ui5-webcomponents/commit/24c380758f88b3f66dce46e2f57297634b42a85a)), closes [#7736](https://github.com/SAP/ui5-webcomponents/issues/7736)
+* **ui5-link:** introduce `tooltip` property ([#8670](https://github.com/SAP/ui5-webcomponents/issues/8670)) ([ef64000](https://github.com/SAP/ui5-webcomponents/commit/ef640006e466a9a3e01bb9d241c3a3fc2962d8d0))
+* **ui5-message-strip:** introduce custom colors ([#8757](https://github.com/SAP/ui5-webcomponents/issues/8757)) ([d30f424](https://github.com/SAP/ui5-webcomponents/commit/d30f4240df5922888854d027dfcff732b5316ccc))
+
+
+### BREAKING CHANGES
+
+* **ui5-multi-combobox:** The `allowCustomValues` property have been renamed to `noValidation`.
+If you have previously used the `allowCustomValues` property
+`<ui5-multi-combobox allow-custom-values></ui5-multi-combobox>`
+Now use noValidation instead:
+`<ui5-multi-combobox no-validation></ui5-multi-combobox>`
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-textarea:** The `growingMaxLines` property have been renamed to `growingMaxRows`.
+
+
+
+
+
 # [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
 
 
