@@ -538,7 +538,7 @@ class Suggestions {
 	}
 
 	_getListWidth() {
-		return this._getList().offsetWidth;
+		return this._getList()?.offsetWidth;
 	}
 
 	_getRealItems() {
@@ -613,13 +613,11 @@ class Suggestions {
 		return [
 			SuggestionItem,
 			SuggestionGroupItem,
-			ResponsivePopover,
 			List,
 			SuggestionListItem,
 			ListItemGroupHeader,
 			Button,
 			Icon,
-			Popover,
 		];
 	}
 

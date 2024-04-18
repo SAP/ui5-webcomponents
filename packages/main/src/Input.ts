@@ -85,6 +85,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
@@ -204,7 +205,7 @@ type InputSuggestionScrollEventDetail = {
 	],
 	get dependencies() {
 		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
+		return ([Popover, ResponsivePopover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	},
 })
 
@@ -1130,6 +1131,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_closePicker() {
 		this.open = false;
+		this.openOnMobile = false;
 	}
 
 	_afterOpenPicker() {
