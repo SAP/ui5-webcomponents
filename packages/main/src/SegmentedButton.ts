@@ -90,7 +90,7 @@ class SegmentedButton extends UI5Element {
 
 	/**
 	 * Defines the component selection mode.
-	 * @default "SingleSelect"
+	 * @default "Single"
 	 * @public
 	 * @since 1.14.0
 	 */
