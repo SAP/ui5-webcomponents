@@ -23,7 +23,6 @@ export default {
 
 const Template: UI5StoryArgs<ResponsivePopover, StoryArgsSlots> = (args) => {
 	return html`<ui5-responsive-popover
-	initial-focus="${ifDefined(args.initialFocus)}"
 	?prevent-focus-restore="${ifDefined(args.preventFocusRestore)}"
 	?open="${ifDefined(args.open)}"
 	accessible-name="${ifDefined(args.accessibleName)}"

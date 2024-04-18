@@ -162,6 +162,7 @@ type ListItemClickEventDetail = {
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
 	dependencies: [BusyIndicator, DropIndicator],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when an item is activated, unless the item's `type` property

@@ -92,6 +92,7 @@ type AccessibilityAttributes = {
 		RadioButton,
 		CheckBox,
 	],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the user clicks on the detail button when type is `Detail`.

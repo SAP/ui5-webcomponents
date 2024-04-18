@@ -33,7 +33,6 @@ const Template: UI5StoryArgs<Dialog, StoryArgsSlots> = (args) => {
 	?draggable="${ifDefined(args.draggable)}"
 	?resizable="${ifDefined(args.resizable)}"
 	state="${ifDefined(args.state)}"
-	initial-focus="${ifDefined(args.initialFocus)}"
 	?prevent-focus-restore="${ifDefined(args.preventFocusRestore)}"
 	?open="${ifDefined(args.open)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
@@ -47,7 +46,7 @@ const Template: UI5StoryArgs<Dialog, StoryArgsSlots> = (args) => {
 
 <script>
 	var dialogOpener = document.getElementById("dialogOpener");
-	var dialog = document.getElementById("dialog"); 
+	var dialog = document.getElementById("dialog");
 	var dialogClosers = [...dialog.querySelectorAll(".dialogCloser")];
 
 	dialogOpener.accessibilityAttributes = {
@@ -101,7 +100,7 @@ Basic.decorators = [
 		align-items: flex-start;
 		margin: 3rem 6rem;
 	}
-	
+
 	.login-form > div {
 		display: grid;
 		width: 15rem;

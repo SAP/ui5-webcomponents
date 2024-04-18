@@ -28,7 +28,7 @@
 		<content id="popover"></content>
 	</div>
 
-	<ui5-popover placement="Bottom" horizontal-align="Stretch" hide-arrow initial-focus="input1" class="wcPopoverWithList">
+	<ui5-popover placement="Bottom" horizontal-align="Stretch" hide-arrow class="wcPopoverWithList">
 		<ui5-list id="myList" indent separators="Inner" selection-mode="Multiple" footer-text="Copyright" no-data-text="No data">
 			<!-- Header -->
 			<div class="popups3auto" slot="header">
@@ -66,7 +66,7 @@
 
 		<ui5-button class="wcBtnOpenDialog">Open Dialog</ui5-button>
 
-			<ui5-dialog class="wcDialog" initial-focus="focusButton" header-text="Web Component Dialog">
+			<ui5-dialog class="wcDialog" header-text="Web Component Dialog">
 
 				<div slot="header" id="head1" class="popups4auto">
 					<div class="popups5auto">Custom Header</div>
@@ -75,7 +75,7 @@
 
 				<div slot="footer" class="popups4auto">
 					<div class="popups5auto">Custom Footer</div>
-					<ui5-button id="focusButton">Accept</ui5-button>
+					<ui5-button id="focusButton" autofocus>Accept</ui5-button>
 				</div>
 				<ui5-date-picker></ui5-date-picker>
 				<ui5-button class="wcBtnOpenNewDialog">Open New Dialog</ui5-button>

@@ -718,7 +718,8 @@ class TabContainer extends UI5Element {
 		const selectedTabInOverflow = this._getSelectedTabInOverflow();
 		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
 
-		this.responsivePopover!.initialFocus = `${tab.realTabReference._id}-li`;
+		tab.setAttribute("autofocus", "");
+		// this.responsivePopover!.initialFocus = `${tab.realTabReference._id}-li`;
 	}
 
 	_getSelectedTabInOverflow() {

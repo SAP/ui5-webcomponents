@@ -191,7 +191,7 @@ z-index: 1;
 
 	<ui5-button id="btnPopFocus">Opens popover with initial focus!</ui5-button>
 
-	<ui5-popover id="popFocus" initial-focus="focusMe" header-text="Popover header">
+	<ui5-popover id="popFocus" header-text="Popover header">
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>Again</ui5-li>
@@ -199,7 +199,7 @@ z-index: 1;
 		</ui5-list>
 
 		<div slot="footer">
-			<ui5-button id="focusMe">Close</ui5-button>
+			<ui5-button id="focusMe" autofocus>Close</ui5-button>
 		</div>
 	</ui5-popover>
 
