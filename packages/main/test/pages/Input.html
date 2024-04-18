@@ -15,9 +15,9 @@
 
 <body class="input1auto">
 	<h3> Input with suggestions: type 'a'</h3>
-	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelSelectionChange">Event [selectionChange] :: N/A</ui5-label><br/>
 
 	<div>
 		<h3>Input in Cozy</h3>
@@ -133,9 +133,6 @@
 
 	<h3> 'selection-item-select' event result</h3>
 	<ui5-input id="input-selection-event-test"></ui5-input>
-
-	<h3> 'suggestionItemSelect' event result on group item</h3>
-	<ui5-input id="inputResultGrouping"></ui5-input>
 
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
@@ -514,14 +511,12 @@
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
 		var inputResult = document.getElementById('inputResult');
-		var inputResultGrouping = document.getElementById('inputResultGrouping');
 		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
-		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var oXSSButton = document.getElementById("xss-btn");
+		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 
-		var suggestionSelectedCounterWithGrouping = 0;
 
 		var suggest = function (event) {
 			var input = event.target;
@@ -566,26 +561,13 @@
 		inputCompact.addEventListener("ui5-input", suggest);
 		inputError.addEventListener("ui5-input", suggest);
 
-		input.addEventListener("ui5-suggestionItemSelect", function (event) {
-			var item = event.detail.item;
-			label.innerHTML = "Event [suggestionSelectEvent] :: " + item.id;
-			suggestionSelectedCounter += 1;
-			inputResult.value = suggestionSelectedCounter;
-		});
-
-		inputGrouping.addEventListener("ui5-suggestionItemSelect", function (event) {
-			var item = event.detail.item;
-			suggestionSelectedCounterWithGrouping += 1;
-			inputResultGrouping.value = suggestionSelectedCounterWithGrouping;
-		});
-
 		input.addEventListener("ui5-change", function (event) {
 			labelChange.innerHTML = "Event [change] :: " + event.target.value;
 		});
 
 		var changeCounter = 0;
 		var inputCounter = 0;
-		var suggestionSelectedCounter = 0;
+		var selectionChangeCounter = 0;
 
 		input1.addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
@@ -597,11 +579,6 @@
 			inputLiveChangeResult.value = inputCounter;
 		});
 
-		myInput2.addEventListener("ui5-suggestionItemSelect", function (event) {
-			var item = event.detail.item;
-			suggestionSelectedCounter += 1;
-			inputResult.value = suggestionSelectedCounter;
-		});
 
 		var inputChangeResultCounter = 0;
 
@@ -657,15 +634,11 @@
 			compactClearIconInput.toggleAttribute("readonly");
 		});
 
-		document.getElementById("myInput").addEventListener("ui5-change", event => {
-			const resultInput = document.getElementById("input-selection-event-test");
-			resultInput.setAttribute("value", parseInt(resultInput.getAttribute("value") || 0) + 1);
-		});
 
 		const openPickerInput = document.getElementById("openPickerInput");
 		let recentItems = [];
 		openPickerInput.addEventListener("input", handleSuggestions);
-		openPickerInput.addEventListener("change", handleSelection);
+		openPickerInput.addEventListener("selection-change", handleSelection);
 		openPickerInput.addEventListener("click", handleHistory);
 		openPickerInput.addEventListener("focus", handleHistory);
 
@@ -758,15 +731,6 @@
 		});
 
 		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
-
-		const inputWithPreventableSelection = document.getElementById("input-prevent-suggestion-select");
-		inputWithPreventableSelection.addEventListener("ui5-suggestionItemSelect", (e) => {
-			const selectedItemText = e.detail.item.text || e.detail.item.textContent;
-			if(selectedItemText === "Cozy"){
-				e.preventDefault();
-				inputWithPreventableSelection.value = "test test";
-			}
-		});
 	</script>
 </body>
 </html>

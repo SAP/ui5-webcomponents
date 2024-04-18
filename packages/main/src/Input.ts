@@ -644,10 +644,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot!.querySelector("input") === getActiveElement();
 
-		if (this.disabled || this.readonly || !hasItems) {
-			this._openSuggestionsPopover = false;
-		} else if (this._isPhone) {
+		if (this._isPhone) {
 			this._openSuggestionsPopover = this.open;
+		} else if (this.disabled || this.readonly || !hasItems) {
+			this._openSuggestionsPopover = false;
 		} else {
 			this._openSuggestionsPopover = this.open || (hasValue && isFocused && this.isTyping);
 		}
@@ -810,8 +810,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			innerInput.setSelectionRange(itemText.length, itemText.length);
 			if (!suggestionItemPressed) {
 				this.acceptSuggestion(matchingItem, null, true);
-
-				this._openSuggestionsPopover = false;
 			}
 		}
 
@@ -1141,6 +1139,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this._openSuggestionsPopover = false;
+		this.open = false;
 
 		if (this.hasSuggestionItemSelected) {
 			this.focus();
@@ -1238,7 +1237,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			if (fireInput) {
 				// revert properties set during fireInput
-				if (itemText === this.value) { // If no chnages were made to the input value after selection-change was prevented - revert value to the original text
+				if (itemText === this.value) {
 					this.value = valueOriginal;
 				}
 				this.valueBeforeItemSelection = valueBeforeItemSelectionOriginal;
