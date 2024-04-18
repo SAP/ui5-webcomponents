@@ -539,7 +539,7 @@ describe("Input general interaction", () => {
 
 		const input = await browser.$("#myInputGrouping");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
 
 		await input.click();
 		await input.keys("C");
@@ -1194,7 +1194,7 @@ describe("Input arrow navigation", () => {
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1303,7 +1303,7 @@ describe("Input HOME navigation", () => {
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1329,7 +1329,7 @@ describe("Input HOME navigation", () => {
 
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
@@ -1461,7 +1461,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.keys("PageUp");
 
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupheader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "No item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
