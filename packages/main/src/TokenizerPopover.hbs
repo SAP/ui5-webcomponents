@@ -37,11 +37,12 @@
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
 				design="Emphasized"
-				@click="{{closeMorePopover}}"
+				data-ui5-tokenizer-dialog-ok-button
+				@click="{{handleDialogButtonPress}}"
 			>OK</ui5-button>
 			<ui5-button
 				design="Transparent"
-				@click="{{closeMorePopover}}"
+				@click="{{handleDialogButtonPress}}"
 			>Cancel</ui5-button>
 		</div>
 	{{/if}}

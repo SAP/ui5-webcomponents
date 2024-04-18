@@ -80,6 +80,10 @@ type TokenizerSelectionChangeEventDetail = {
 	selectedTokens: Token[];
 }
 
+type TokenizerDialogButtonPressDetail = {
+	confirm: boolean;
+}
+
 enum ClipboardDataOperation {
 	cut = "cut",
 	copy = "copy",
@@ -167,6 +171,18 @@ enum ClipboardDataOperation {
 })
 
 /**
+ * Fired when a dialog button is pressed.
+ *
+ * @param {Boolean} confirm Indicates if the action is confirm.
+ * @public
+ */
+@event<TokenizerDialogButtonPressDetail>("dialog-button-press", {
+	detail: {
+		confirm: { type: Boolean },
+	},
+})
+
+/**
  * Fired when nMore link is pressed.
  * @private
  */
@@ -232,7 +248,7 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Prevents tokens to be part of the tab chain.
-	 * @proteceted
+	 * @protected
 	 */
 	@property({ type: Boolean })
 	preventInitialFocus!: boolean;
@@ -513,6 +529,14 @@ class Tokenizer extends UI5Element {
 		this.open = false;
 	}
 
+	handleDialogButtonPress(e: MouseEvent) {
+		const isOkButton = (e.target as HTMLElement).hasAttribute("data-ui5-tokenizer-dialog-ok-button");
+		const confirm = !!isOkButton;
+
+		this.fireEvent("dialog-button-press", { confirm });
+		this.open = false;
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
@@ -537,7 +561,7 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 
 			this._skipExpanding = true;
-			this.open = true;
+			this.open = !this.open;
 		}
 
 		if (isSpaceShift(e)) {
@@ -567,7 +591,7 @@ class Tokenizer extends UI5Element {
 		if (isCtrl && e.key.toLowerCase() === "i") {
 			e.preventDefault();
 
-			this.closeMorePopover();
+			this.open = false;
 		}
 
 		if (e.key.toLowerCase() === "f7") {
@@ -889,10 +913,6 @@ class Tokenizer extends UI5Element {
 		} else if (tokenRect.right > tokenContainerRect.right) {
 			this._scrollEnablement.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
 		}
-	}
-
-	closeMorePopover() {
-		this.open = false;
 	}
 
 	get _tokens() {
