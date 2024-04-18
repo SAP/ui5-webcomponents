@@ -1,5 +1,7 @@
 # UI5 Web Components 2.0 migration guide
 
+This documentation will assist you in seamlessly transitioning from UI5 Web Components v1.x to the latest version, UI5 Web Components 2.0.
+
 ## General and Framework
 
 
