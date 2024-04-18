@@ -292,7 +292,7 @@ class Grid extends UI5Element {
 		this.headerRow.cells.forEach((header, index) => {
 			this.rows.forEach(row => {
 				const cell = row.cells[index];
-				if (cell._popin !== header._popin) {
+				if (cell && cell._popin !== header._popin) {
 					cell._popin = header._popin;
 				}
 			});
