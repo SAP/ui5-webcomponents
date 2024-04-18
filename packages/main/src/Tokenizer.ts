@@ -105,6 +105,7 @@ enum ClipboardDataOperation {
 		Title,
 		Button,
 	],
+	shadowRootOptions: { delegatesFocus: true },
 })
 
 @event("token-delete", {
