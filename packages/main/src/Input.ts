@@ -206,6 +206,7 @@ type InputSuggestionScrollEventDetail = {
 		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
 		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	},
+	shadowRootOptions: { delegatesFocus: true },
 })
 
 /**

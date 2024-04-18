@@ -398,20 +398,17 @@ abstract class Popup extends UI5Element {
 	 * @returns Promise that resolves when the focus is applied
 	 */
 	async applyFocus(): Promise<void> {
+		if (this.querySelector("[autofocus]")) {
+			return;
+		}
+
 		await this._waitForDomRef();
 
 		if (this.getRootNode() === this) {
 			return;
 		}
 
-		let element;
-
-		if (this.initialFocus) {
-			element = (this.getRootNode() as Document).getElementById(this.initialFocus)
-			|| document.getElementById(this.initialFocus);
-		}
-
-		element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
+		let element = await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			if (element === this._root) {
