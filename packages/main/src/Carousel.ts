@@ -153,10 +153,12 @@ class Carousel extends UI5Element {
 
 	/**
 	 * Defines the number of items per page depending on the page width.
-	 * 'S' for screens smaller than 600 pixels.
-	 * 'M' for screens greater than or equal to 600 pixels and smaller than 1024 pixels.
-	 * 'L' for screens greater than or equal to 1024 pixels and smaller than 1440 pixels.
-	 * 'XL' for screens greater than or equal to 1440 pixels.
+	 *
+	 * - 'S' for screens smaller than 600 pixels.
+	 * - 'M' for screens greater than or equal to 600 pixels and smaller than 1024 pixels.
+	 * - 'L' for screens greater than or equal to 1024 pixels and smaller than 1440 pixels.
+	 * - 'XL' for screens greater than or equal to 1440 pixels.
+	 *
 	 * One item per page is shown by default.
 	 * @default "S1 M1 L1 XL1"
 	 * @public
@@ -318,6 +320,9 @@ class Carousel extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._onResizeBound);
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -543,13 +548,13 @@ class Carousel extends UI5Element {
 
 		itemsPerPageArray.forEach(element => {
 			if (element.startsWith("S")) {
-				itemsPerPageSizeS = Number(element.slice(1));
+				itemsPerPageSizeS = Number(element.slice(1)) || 1;
 			} else if (element.startsWith("M")) {
-				itemsPerPageSizeM = Number(element.slice(1));
+				itemsPerPageSizeM = Number(element.slice(1)) || 1;
 			} else if (element.startsWith("L")) {
-				itemsPerPageSizeL = Number(element.slice(1));
+				itemsPerPageSizeL = Number(element.slice(1)) || 1;
 			} else if (element.startsWith("XL")) {
-				itemsPerPageSizeXL = Number(element.slice(2));
+				itemsPerPageSizeXL = Number(element.slice(2)) || 1;
 			}
 		});
 
@@ -557,15 +562,15 @@ class Carousel extends UI5Element {
 			return itemsPerPageSizeL;
 		}
 
-		if (this._width <= 600) {
+		if (this._width < 600) {
 			return itemsPerPageSizeS;
 		}
 
-		if (this._width >= 600 && this._width <= 1024) {
+		if (this._width >= 600 && this._width < 1024) {
 			return itemsPerPageSizeM;
 		}
 
-		if (this._width >= 1024 && this._width <= 1440) {
+		if (this._width >= 1024 && this._width < 1440) {
 			return itemsPerPageSizeL;
 		}
 
