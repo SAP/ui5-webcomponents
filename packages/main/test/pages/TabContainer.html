@@ -806,8 +806,8 @@
 		</section>
 		<section>
 			<h3>No explicitly selected tab</h3>
-			<ui5-button id="buttonAddTabAtNoSelectedTab">add new tab at the beginning</ui5-button>
-			<ui5-tabcontainer id="tabContainerNoSelectedTab">
+			<ui5-button id="buttonAddTabAtNoExplicitlySelectedTab">add new tab at the beginning</ui5-button>
+			<ui5-tabcontainer id="tabContainerNoExplicitlySelectedTab">
 				<ui5-tab text="Tab 0"></ui5-tab>
 				<ui5-tab text="Tab 1"></ui5-tab>
 			</ui5-tabcontainer>
@@ -945,11 +945,11 @@
 			addTab();
 		});
 
-		document.getElementById("buttonAddTabAtNoSelectedTab").addEventListener("click", function () {
+		document.getElementById("buttonAddTabAtNoExplicitlySelectedTab").addEventListener("click", function () {
 			const newTab = document.createElement("ui5-tab");
 			newTab.text = "New Tab";
 
-			document.getElementById("tabContainerNoSelectedTab").prepend(newTab);
+			document.getElementById("tabContainerNoExplicitlySelectedTab").prepend(newTab);
 		});
 
 		document.getElementById("insertAndFocusNewTab").addEventListener("click", () => {
