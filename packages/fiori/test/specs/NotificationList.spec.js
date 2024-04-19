@@ -270,21 +270,24 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Group Item Button aria-expanded, aria-controls, tooltip when collapsed and expanded", async () => {
-		const groupItem3 = await browser.$("#nlgi3");
-		const groupItemsList3ID = await groupItem3.shadow$(".ui5-nli-group-items").getAttribute("id");
-		const groupItemToggleBtn3 = await groupItem3.shadow$(".ui5-nli-group-toggle-btn");
+		const groupItem2 = await browser.$("#nlgi2");
+		const groupItemsList2ID = await groupItem2.shadow$(".ui5-nli-group-items").getAttribute("id");
+		const groupItemToggleBtn2 = await groupItem2.shadow$(".ui5-nli-group-toggle-btn");
 
 		// assert
-		assert.strictEqual(await groupItemToggleBtn3.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
-		assert.strictEqual(await groupItemToggleBtn3.getAttribute("aria-controls"), groupItemsList3ID, "The aria-controls value is correct.");
-		assert.strictEqual(await groupItemToggleBtn3.getAttribute("tooltip"), "Expand", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("tooltip"), "Collapse", "The tooltip value is correct.");
 
 		// act
-		await groupItemToggleBtn3.click();
+		await groupItemToggleBtn2.click();
 
 		// assert
-		assert.strictEqual(await groupItemToggleBtn3.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
-		assert.strictEqual(await groupItemToggleBtn3.getAttribute("aria-controls"), groupItemsList3ID, "The aria-controls value is correct.");
-		assert.strictEqual(await groupItemToggleBtn3.getAttribute("tooltip"), "Collapse", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("tooltip"), "Expand", "The tooltip value is correct.");
+
+		// reset
+		await groupItemToggleBtn2.click();
 	});
 });
