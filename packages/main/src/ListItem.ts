@@ -70,7 +70,7 @@ type AccInfo = {
 	tooltip?: string;
 }
 
-type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaSetsize" | "ariaPosinset">;
+type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
 
 /**
  * @class
@@ -202,14 +202,6 @@ abstract class ListItem extends ListItemBase {
 
 	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
 	_selectionMode!: `${ListSelectionMode}`;
-
-	/**
-	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @since 1.10.0
-	 * @private
-	 */
-	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: `${HasPopup}`;
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
@@ -504,7 +496,7 @@ abstract class ListItem extends ListItemBase {
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
+			ariaHaspopup: this.accessibilityAttributes.hasPopup,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
 			tooltip: this.tooltip,
