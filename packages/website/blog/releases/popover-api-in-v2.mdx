@@ -69,12 +69,10 @@ It's that simple!
 ### What are the **practical** benefits?
 
 #### Simpler and more robust components
-
     - Easier to develop and maintain
     - Everything belonging to a component is now in one place! This includes code logic, HTML and CSS.
 
 #### Enhanced overstyling capabilities for apps
-
     - We can now provide [CSS Shadow Parts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_shadow_parts) also for the "popup part", not just in the "main part" of the component!
     - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) set on the comopnent will also have effect for its "popup part"!
 
@@ -104,7 +102,6 @@ Consider the following example:
 Since the popover is now part of the component, component authors can provide CSS Shadow Parts for elements in the popover, in addition to the existing CSS Shadow Parts.
 
 #### Components with popups can now have physical children!
-
     - Web components with popups had a **hard limitation** of not being able to slot children to the popup
 
 Example of `ui5-select`'s (simplified) DOM structure in **v. 1.24**
@@ -167,17 +164,14 @@ Now that the popover is part of the `ui5-select` itself, it's possible to have *
 This allows us to provide support for **custom user content** for components that had strict predefined APIs in the past!
 
 #### Easier testing for both apps and component package authors
-
     - Tests no longer need to know how to find the static area item, associated with a given component - everything is directly in the shadow root!
     - Writing tests is much simplified
 
 #### Cross-framework popup compatibility for the future
-
     - Frameworks who use the native browser popover API no longer need to synchronize themselves (negotiate `z-index` values, etc.)
     - The last popup to be opened will always be on top (guarnateed by the browser)!
 
 ### Is it safe to start using the popover API productively?
-
     - The current versions of all supported browsers (Chrome, Safari, Edge, and now also Firefox as of version 125) fully support the popover API.
     - By the time **v. 2.0** is officially released (we are at **v. 2.0-r.c.2** as of writing this blog post) we expect that each major browser will have already released at lest 3 stable versions since the introduction of the popover API.
 
