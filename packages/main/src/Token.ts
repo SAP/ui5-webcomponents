@@ -53,6 +53,7 @@ type TokenDeleteEventDetail = {
 	template: TokenTemplate,
 	styles: tokenStyles,
 	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
