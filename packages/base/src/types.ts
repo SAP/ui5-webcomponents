@@ -45,8 +45,17 @@ type AccessibilityInfo = {
 	children?: Array<HTMLElement>,
 }
 
+type AccessibilityAttributes = {
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: "dialog" | "grid" | "menu" | "listbox" | "tree",
+	controls?: LowercaseString<string>
+	ariaSetsize?: number,
+	ariaPosinset?: number,
+}
+
 export type {
 	AccessibilityInfo,
+	AccessibilityAttributes,
 	PromiseResolve,
 	Timeout,
 	Interval,
