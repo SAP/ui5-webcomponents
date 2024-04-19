@@ -8,7 +8,7 @@ export const Highlight = ({children, color}) => (
   <span
     style={{
       backgroundColor: color,
-      borderRadius: '3px',
+      borderRadius: '5px',
       color: '#fff',
       padding: '0.1rem',
     }}>
@@ -36,7 +36,7 @@ The following `2.0` RC versions have been released:
 - **Time zone Support**: Date and time components are enhanced to seamlessly adapt to different time zones, ensuring accurate presentation of dates across various regions. : [#8610](https://github.com/SAP/ui5-webcomponents/issues/8610)
 
 - **New Components**: Explore new additions to the UI5 Web Components family, expanding your toolkit for building rich UIs:
-    - Text (ui5-text): [#8299](https://github.com/SAP/ui5-webcomponents/pull/8299)
+    - Text: The ui5-text component displays text that can be used in any content area of an application. By default, the text will wrap when the space is not enough. In addition, the component supports truncation via the max-lines property, by defining the number of lines the text should wrap before start truncating. [#8299](https://github.com/SAP/ui5-webcomponents/pull/8299)
 
 - **Components enhancements**: Benefit from enhancements to existing components such:
     - ui5-message-strip: introduce custom colors [#8757](https://github.com/SAP/ui5-webcomponents/pull/8757)
@@ -44,8 +44,6 @@ The following `2.0` RC versions have been released:
     - ui5-avatar-group: update focus handling [#8550](https://github.com/SAP/ui5-webcomponents/issues/8550) 
     - ui5-barcode-scanner-dialog: add support for close and open events [#8753](https://github.com/SAP/ui5-webcomponents/issues/8753)
     - ui5-li: add support for F2 key [#8619](https://github.com/SAP/ui5-webcomponents/issues/8619)
-    - ui5-link: introduce tooltip property [#8670](https://github.com/SAP/ui5-webcomponents/issues/8670)
-    - ui5-message-strip: introduce custom colors [#8757](https://github.com/SAP/ui5-webcomponents/issues/8757)
     - add shadowRootOptions for @customElement decorator [#8703](https://github.com/SAP/ui5-webcomponents/issues/8703)
     - ui5-button: provide focus support for mobile [#8414](https://github.com/SAP/ui5-webcomponents/issues/8414)
     - ui5-tree: enable drag and drop [#8477](https://github.com/SAP/ui5-webcomponents/issues/8477)
@@ -107,9 +105,9 @@ Anticipate the official 2.0 release between mid-June to mid-July, featuring: ðŸš
 
 :::warning[**This properties will be removed without alternative**:]
 
--   Progress Indicator (ui5-progress-indicator): Remove disabled property 
--   Selects's Option (ui5-option): Remove disabled property - UX and ACC standards suggest to not include any disabled items in the dropdown
--   Token (ui5-token): Remove the readonly property 
+-   Progress Indicator (ui5-progress-indicator): Remove `disabled` property 
+-   Selects's Option (ui5-option): Remove `disabled` property - UX and ACC standards suggest to not include any disabled items in the dropdown
+-   Token (ui5-token): Remove the `readonly` property 
 
 :::
 
