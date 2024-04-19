@@ -370,10 +370,7 @@ describe("Calendar general interaction", () => {
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 
-		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
-			const text = await span.getText();
-			return text === "2025";
-		}).parentElement();
+		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1744934400"]`)
 
 		assert.strictEqual(await year2025.hasClass("ui5-yp-item--disabled"), true, "Year 2025 is disabled");
 	});
@@ -384,22 +381,21 @@ describe("Calendar general interaction", () => {
 		const calendar = await browser.$("#calendar1");
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
-		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
+
+		const newMaxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0));
+		await calendar.setAttribute("max-date", `${newMaxDate}`);
 		await calendar.setAttribute("min-date", "25.10.2018");
-		console.log(await calendar.getAttribute("max-date"));
+		
+		const maxDate = await calendar.getAttribute("max-date");
+
+		assert.strictEqual(maxDate, newMaxDate.toString(), "Max date was applied correctly")
 
 		await yearButton.click();
-		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
-			const text = await span.getText();
-			return text === "2016";
-		}).parentElement();
+		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1461024000"]`)
 
 		assert.strictEqual(await year2016.hasClass("ui5-yp-item--disabled"), false, "Year 2016 is not disabled");
 
-		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
-			const text = await span.getText();
-			return text === "2024";
-		}).parentElement();
+		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1713484800"]`)
 
 		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});
@@ -422,12 +418,12 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), false, "Secondary Calendar class is applied correctly");
 	});
 
-	it("Focus goes into the selected day item of the day picker", async () => {
+	it("Focus goes into first selected day of the range selection", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 
-		const calendar = await browser.$("#calendar4");
+		const calendar = await browser.$("#calendar7");
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="1594166400"]`);
+		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="1611100800"]`);
 
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});

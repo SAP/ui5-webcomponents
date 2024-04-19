@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { ICalendarSelectedDates } from "./Calendar.js";
 
 /**
  * @class
@@ -14,7 +15,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @public
  */
 @customElement("ui5-date-range")
-class CalendarDateRange extends UI5Element {
+class CalendarDateRange extends UI5Element implements ICalendarSelectedDates {
 	/**
 	 * Start of date range formatted according to the `formatPattern` property
 	 * of the `ui5-calendar` that hosts the component.
@@ -22,7 +23,7 @@ class CalendarDateRange extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	startValue!: string;
 
 	/**
 	 * End of date range formatted according to the `formatPattern` property
