@@ -227,7 +227,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Describes the accessibility role of the button.
 	 *
-	 * **Note:** Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
+	 * **Note:** Use <code>ButtonAccessibleRole.Link</code> role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
 	 *
 	 * @default "Button"
 	 * @public
@@ -482,7 +482,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
-	get buttonAccessibleRole() {
+	get effectiveAccRole() {
 		return this.accessibleRole.toLowerCase();
 	}
 
