@@ -78,6 +78,11 @@ describe("Menu interaction", () => {
 
 		assert.strictEqual(await submenuList.$$("ui5-menu").length, 2,
 								"Two sub-menus are present");
+
+		// Do the dependency checks after the menu/submenus are open
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-menu", ["ui5-menu", "ui5-menu-item"]); // ui5-menu and ui5-menu-item can appear in the shadow root even though they are not dependencies
+		await checkMissingDependencies("ui5-menu-li");
 	});
 
 	it("Event firing after 'click' on menu item", async () => {

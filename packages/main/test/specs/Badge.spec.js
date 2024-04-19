@@ -5,6 +5,11 @@ describe("Badge rendering", async () => {
 		await browser.url(`test/pages/Badge.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-badge");
+	});
+
 	it("rendering", async () => {
 		let badgeRoot = await browser.$("#badgeWithTextAndIcon").shadow$(".ui5-badge-root");
 		assert.strictEqual(await badgeRoot.getTagName(), "div", "badge root tag is 'div'.");

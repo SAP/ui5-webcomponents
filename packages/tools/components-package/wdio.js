@@ -244,6 +244,23 @@ exports.config = {
 		await browser.addLocatorStrategy('activeElement', (selector) => {
 			return document.querySelector(selector).shadowRoot.activeElement;
 		});
+
+		await browser.addCommand("getMissingDependencies", async function(tagsToIgnore) {
+			return browser.executeAsync((el, tagsToIgnore, done) => {
+				if (!el.shadowRoot) { // safeguard if called on logical elements (normally only meant for physical ones)
+					done([]);
+				}
+				// Check the shadow root against all declared dependencies (
+				let depsTags = el.constructor.dependencies.map(dep => dep.getMetadata().getTag());
+				if (Array.isArray(tagsToIgnore)) {
+					depsTags = [...depsTags, ...tagsToIgnore];
+				}
+				const shadowRootCustomElsTags = [...el.shadowRoot.querySelectorAll("*")].map(el => el.localName).filter(tag => tag.includes("-"));
+				let missing = shadowRootCustomElsTags.filter(tag => !depsTags.includes(tag));
+				missing = [... new Set(missing)]; // unique only
+				done(missing);
+			}, this, tagsToIgnore);
+		}, true);
 	},
 	/**
 	 * Runs before a WebdriverIO command gets executed.

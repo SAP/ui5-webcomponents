@@ -5,6 +5,11 @@ describe("Button general interaction", () => {
 		await browser.url(`test/pages/Button.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-button");
+	});
+
 	it("tests button's text rendering", async () => {
 		const slotsLength = (await browser.$("#button1").shadow$$(".ui5-button-text>bdi>slot")).length;
 

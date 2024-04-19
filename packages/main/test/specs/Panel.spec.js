@@ -5,6 +5,11 @@ describe("Panel general interaction", () => {
 		await browser.url(`test/pages/Panel.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-panel");
+	});
+
 	it("Changing the header text is reflected", async () => {
 		const panel = await browser.$( "#panel-fixed");
 		const title = await panel.shadow$(".ui5-panel-header-title");
@@ -199,7 +204,7 @@ describe("Panel general interaction", () => {
 			const fixedPanelHeader = await fixedPanel.shadow$(".ui5-panel-header");
 			const fixedPanelHeaderTitle = await fixedPanel.shadow$(".ui5-panel-header-title");
 			const fixedPanelHeaderTitleId = await fixedPanelHeaderTitle.getProperty("id");
-			
+
 
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");

@@ -5,6 +5,11 @@ describe("Avatar", () => {
 		await browser.url(`test/pages/Avatar.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-avatar");
+	});
+
 	it("tests rendering of image", async () => {
 		const avatar = await browser.$("#myAvatar1");
 		const image = await avatar.shadow$('slot:not([name="badge"])');

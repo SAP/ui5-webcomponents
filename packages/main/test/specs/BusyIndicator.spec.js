@@ -6,6 +6,11 @@ describe("BusyIndicator general interaction", () => {
 		await browser.url(`test/pages/BusyIndicator.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-busy-indicator");
+	});
+
 	it("tests event propagation", async () => {
 		const dynamicItem = await browser.$(">>>#busy-tree [ui5-tree-item] ui5-icon.ui5-li-tree-toggle-icon");
 		const input = await browser.$("#tree-input");

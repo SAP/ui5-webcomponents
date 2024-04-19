@@ -5,6 +5,11 @@ describe("Calendar general interaction", () => {
 		await browser.url(`test/pages/Calendar.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-calendar", "ui5-year-picker", "ui5-month-picker", "ui5-day-picker"]);
+	});
+
 	it("Calendar is rendered", async () => {
 		const calendar = await browser.$("#calendar1").shadow$(".ui5-cal-root");
 
@@ -366,7 +371,7 @@ describe("Calendar general interaction", () => {
 
 		const calendar = await browser.$("#calendar6");
 		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0]); // sets the max date to 2024-10-04
-		
+
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 

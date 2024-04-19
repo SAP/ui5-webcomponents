@@ -12,6 +12,11 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-breadcrumbs");
+	});
+
 	it("tests getDomRef", async () => {
 		const res = await browser.executeAsync(async (done) => {
 			const breadCrumbsItemOutOfOverflow = document.getElementById("lastItemWithACCName");

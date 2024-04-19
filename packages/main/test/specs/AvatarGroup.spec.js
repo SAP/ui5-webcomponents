@@ -18,6 +18,11 @@ describe("avatar-group rendering", () => {
 		await browser.url(`test/pages/AvatarGroup.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-avatar-group");
+	});
+
 	it("tests if web component is correctly rendered", async () => {
 		const avatarGroupIndividual = await browser.$("#avatar-group-individual").shadow$("div");
 		const avatarGroupGroup = await browser.$("#avatar-group-group").shadow$("div");

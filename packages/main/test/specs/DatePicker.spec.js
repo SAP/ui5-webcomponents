@@ -6,6 +6,11 @@ describe("Date Picker Tests", () => {
 		await datepicker.open();
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-date-picker");
+	});
+
 	it("input renders", async () => {
 		datepicker.id = "#dp";
 

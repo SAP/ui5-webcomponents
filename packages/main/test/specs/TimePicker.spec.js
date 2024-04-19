@@ -5,6 +5,11 @@ describe("TimePicker general interaction", () => {
 		await browser.url(`test/pages/TimePicker.html?sap-ui-language=bg`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-time-picker", "ui5-time-selection-clocks"]);
+	});
+
 	it("input receives value in format pattern depending on the set language", async () => {
 		const timepicker = await browser.$("#timepickerSetTime");
 		const setTimeButton = await browser.$("#setTimeButton");
