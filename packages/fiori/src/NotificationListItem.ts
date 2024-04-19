@@ -97,14 +97,14 @@ const ICON_PER_STATUS = {
  * #### Basic Navigation
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete):
  *
- * - [Enter] - Select an item (trigger "item-click" event)
- * - [Delete] - Close an item (trigger "item-close" event)
+ * - [Enter] - select an item (trigger "item-click" event)
+ * - [Delete] - close an item (trigger "item-close" event)
  *
  * #### Fast Navigation
  * This component provides a fast navigation using the the following keyboard shortcuts:
  *
- * - [Shift + Enter] - "More"/"Less" link will be triggered
- * - [Shift + F10] - Menu (actions) button will be triggered (clicked)
+ * - [Shift] + [Enter] - 'More'/'Less' link will be triggered
+ * - [Shift] + [F10] - 'Menu' (Actions) button will be triggered (clicked)
  *
  * ### ES6 Module Import
  *
@@ -173,7 +173,7 @@ class NotificationListItem extends NotificationListItemBase {
 	state!: `${NotificationListItemState}`;
 
 	/**
-	 * Defines if the `close` button would be displayed.
+	 * Defines if the `Close` button would be displayed.
 	 * @default false
 	 * @public
 	 */
@@ -221,7 +221,7 @@ class NotificationListItem extends NotificationListItemBase {
 	*
 	* **Note:** Use this for implementing actions.
 	*
-	* **Note:** Should be used instead i5-notification-action, which is deprecated as of ui5-web-components version 2.0.
+	* **Note:** Should be used instead `u5-notification-action`, which is deprecated as of version 2.0.
 	* @public
 	*/
 	@slot()

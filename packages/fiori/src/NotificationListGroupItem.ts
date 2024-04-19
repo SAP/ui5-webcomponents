@@ -51,24 +51,23 @@ type NotificationListGroupItemToggleEventDetail = {
  * The component can be used in a standard `ui5-list`.
  *
  * ### Keyboard Handling
+ * The `ui5-li-notification-group` provides advanced keyboard handling.
  *
  * #### Basic Navigation
- * The `ui5-li-notification-group` provides advanced keyboard handling.
- * When a list is focused the user can use the following keyboard
- * shortcuts in order to perform a navigation:
+ * When a list is focused, the user can use the following keyboard shortcuts in order to navigate:
  *
- * - [Up] or [Down] - Navigates up and down the items
- * - [Home] - Navigates to first item
- * - [End] - Navigates to the last item
+ * - [Up] or [Down] - navigates up or down the items
+ * - [Home] - navigates to the first item
+ * - [End] - navigates to the last item
  *
  * #### Fast Navigation
- * This component provides a fast navigation when the Header si focused using the the following keyboard shortcuts:
+ * This component provides fast navigation when the header is focused using the following keyboard shortcuts:
  *
- * - [Space] - toggles "expand" / "collapse" of the group
- * - [Plus] - expands the  group
- * - [Minus] - collapses the  group
- * - [Right] - expands the  group
- * - [Left] - collapses the  group
+ * - [Space] - toggles expand / collapse of the group
+ * - [Plus] - expands the group
+ * - [Minus] - collapses the group
+ * - [Right] - expands the group
+ * - [Left] - collapses the group
  *
  * ### ES6 Module Import
  *
@@ -181,7 +180,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 *
 	 */
 	_onBtnToggleClick() {
-		// handled by the Header with _onHeaderToggleClick
+		// handled by the header with _onHeaderToggleClick
 	}
 
 	_onHeaderToggleClick() {
@@ -221,7 +220,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			const notificationItems = this.items;
 			const firstAvailableItem = notificationItems.find(item => !item.hasAttribute("busy"));
 
-			// if the focus is on the Header (whole group) move it to the first Notification item
+			// if the focus is on the header (whole group) move it to the first notification item
 			if (!this.collapsed && this.hasAttribute("focused") && firstAvailableItem) {
 				firstAvailableItem.focus();
 			}
@@ -231,7 +230,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			const notificationItems = this.items;
 			const firstAvailableItem = notificationItems.find(item => !item.hasAttribute("busy"));
 
-			// if the focus is on the first Notification item move it to the Header (whole group)
+			// if the focus is on the first notification item move it to the header (whole group)
 			if (!this.collapsed && firstAvailableItem && e.target === firstAvailableItem) {
 				this.focus();
 			}
