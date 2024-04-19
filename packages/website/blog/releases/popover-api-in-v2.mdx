@@ -1,17 +1,17 @@
 ---
-title: UI5 Web Components 2.0 will leverage the popover API
-tags: [release]
+title: Popover API in UI5 Web Components 2.0
+tags: [release, v2, popover API]
 slug: /releases/popover-api-in-v2
 ---
 
 UI5 Web Components 2.0 will provide greatly improved popups by taking advantage of the [native browser popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
 
-## What is the popover API and why is it important?
+## What is the popover API?
 
 The [popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) is a browser-native solution to displaying popup-like components (Popovers, Dialogs, etc.)
 above all other content, regardless of its HTML structure and CSS applied.
 
-### How did UI5 Web Components popups look like in **version 1.x** ?
+## Popups in **version 1.x**
 
 There used to be a so-called "static area" (`<ui5-static-area>`) - a DOM element directly in the `<body>` where the popups of all components were placed.
 This guaranteed that even if the HTML document had `overflow: hidden`, `transform`, or similar CSS rules applied, or the component was in a *stacking context*, its popup would still be positioned correctly.
@@ -42,7 +42,7 @@ As you can see, the component used to be physically divided in two parts:
  - The "main" part (the `ui5-date-picker` tag itself) containing the date selection input
  - The "popover" part (the `ui5-static-area-item` tag, associated with the said date picker) containing the picker (calendar with years/months/days)
 
-### How do UI5 Web Components popups look like in **version 2.x** ?
+## Popups in **version 2.x**
 
 There is no longer need for a "static area" since the browser now ensures the correct positioning of popups thanks to the popover API.
 
@@ -66,13 +66,13 @@ The component is no longer physically divided in two parts:
 
 It's that simple!
 
-### What are the **practical** benefits?
+## The **practical** benefits
 
-#### Simpler and more robust components
+### Simpler and more robust components
     - Easier to develop and maintain
     - Everything belonging to a component is now in one place! This includes code logic, HTML and CSS.
 
-#### Enhanced overstyling capabilities for apps
+### Enhanced overstyling capabilities for apps
     - We can now provide [CSS Shadow Parts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_shadow_parts) also for the "popup part", not just in the "main part" of the component!
     - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) set on the comopnent will also have effect for its "popup part"!
 
@@ -101,8 +101,9 @@ Consider the following example:
 
 Since the popover is now part of the component, component authors can provide CSS Shadow Parts for elements in the popover, in addition to the existing CSS Shadow Parts.
 
-#### Components with popups can now have physical children!
-    - Web components with popups had a **hard limitation** of not being able to slot children to the popup
+### Components with popups can now have physical children
+
+Web components with popups had a **hard limitation** of not being able to slot children to the popup
 
 Example of `ui5-select`'s (simplified) DOM structure in **v. 1.24**
 
@@ -163,16 +164,16 @@ Now that the popover is part of the `ui5-select` itself, it's possible to have *
 
 This allows us to provide support for **custom user content** for components that had strict predefined APIs in the past!
 
-#### Easier testing for both apps and component package authors
+### Easier testing for both apps and component package authors
     - Tests no longer need to know how to find the static area item, associated with a given component - everything is directly in the shadow root!
     - Writing tests is much simplified
 
-#### Cross-framework popup compatibility for the future
+### Cross-framework popup compatibility for the future
     - Frameworks who use the native browser popover API no longer need to synchronize themselves (negotiate `z-index` values, etc.)
     - The last popup to be opened will always be on top (guarnateed by the browser)!
 
-### Is it safe to start using the popover API productively?
-    - The current versions of all supported browsers (Chrome, Safari, Edge, and now also Firefox as of version 125) fully support the popover API.
-    - By the time **v. 2.0** is officially released (we are at **v. 2.0-r.c.2** as of writing this blog post) we expect that each major browser will have already released at lest 3 stable versions since the introduction of the popover API.
+## When can I start using it?
+    - The current versions of all supported browsers (Chrome, Safari, Edge, and now also Firefox as of version 125) fully support the popover API. [See Can I Use report](https://caniuse.com/?search=popover)
+    - By the time **v. 2.0** is officially released (we are at **v. 2.0-r.c.2** as of writing this blog post) we expect that each major browser will have already released at least 3 stable versions since the introduction of the popover API.
 
 Make sure to check our blog for future announcements, including the official release date of **UI5 Web Components 2.0**!
