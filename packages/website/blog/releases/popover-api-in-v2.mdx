@@ -4,11 +4,11 @@ tags: [release, v2, popover API]
 slug: /releases/popover-api-in-v2
 ---
 
-UI5 Web Components 2.0 will provide greatly improved popups by taking advantage of the [native browser popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
+UI5 Web Components 2.0 will provide greatly improved popups by taking advantage of the [native browser popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API).
 
 ## What is the popover API?
 
-The [popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) is a browser-native solution to displaying popup-like components (Popovers, Dialogs, etc.)
+The [popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) is a browser-native solution to displaying popup-like components (Popovers, Dialogs, etc.).
 above all other content, regardless of its HTML structure and CSS applied.
 
 ## Popups in **version 1.x**
@@ -16,7 +16,7 @@ above all other content, regardless of its HTML structure and CSS applied.
 There used to be a so-called "static area" (`<ui5-static-area>`) - a DOM element directly in the `<body>` where the popups of all components were placed.
 This guaranteed that even if the HTML document had `overflow: hidden`, `transform`, or similar CSS rules applied, or the component was in a *stacking context*, its popup would still be positioned correctly.
 
-Example of `ui5-date-picker`'s DOM structure in **v. 1.24**
+Example of `ui5-date-picker`'s DOM structure in **v1.24**:
 
 ```html
 <body>
@@ -40,13 +40,13 @@ Example of `ui5-date-picker`'s DOM structure in **v. 1.24**
 
 As you can see, the component used to be physically divided in two parts:
  - The "main" part (the `ui5-date-picker` tag itself) containing the date selection input
- - The "popover" part (the `ui5-static-area-item` tag, associated with the said date picker) containing the picker (calendar with years/months/days)
+ - The "popover" part (the `ui5-static-area-item` tag, associated with the said date picker) containing the picker (calendar with years/months/days).
 
 ## Popups in **version 2.x**
 
 There is no longer need for a "static area" since the browser now ensures the correct positioning of popups thanks to the popover API.
 
-Example of `ui5-date-picker`'s DOM structure in **v. 2.0**
+Example of `ui5-date-picker`'s DOM structure in **v2.0**:
 
 ```html
 <body>
@@ -69,12 +69,12 @@ It's that simple!
 ## The **practical** benefits
 
 ### Simpler and more robust components
-    - Easier to develop and maintain
+    - Easier to develop and maintain.
     - Everything belonging to a component is now in one place! This includes code logic, HTML and CSS.
 
 ### Enhanced overstyling capabilities for apps
     - We can now provide [CSS Shadow Parts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_shadow_parts) also for the "popup part", not just in the "main part" of the component!
-    - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) set on the comopnent will also have effect for its "popup part"!
+    - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) set on the component will also have effect for its "popup part"!
 
 Consider the following example:
 
@@ -103,9 +103,9 @@ Since the popover is now part of the component, component authors can provide CS
 
 ### Components with popups can now have physical children
 
-Web components with popups had a **hard limitation** of not being able to slot children to the popup
+Web components with popups had a **hard limitation** of not being able to slot children to the popup.
 
-Example of `ui5-select`'s (simplified) DOM structure in **v. 1.24**
+Example of `ui5-select`'s (simplified) DOM structure in **v1.24**:
 
 ```html
 <body>
@@ -139,7 +139,7 @@ Example of `ui5-select`'s (simplified) DOM structure in **v. 1.24**
 As you can clearly see from the example, there is no way to **slot** the `ui5-option` components into the `ui5-list` as it is in a completely different part of the DOM, due to the need for a static area.
 Instead, we can only provide **logical** `ui5-option` components and just use their **text content** for the `text` property of the list items (`ui5-li`) in the static area.
 
-Example of `ui5-select`'s (simplified) DOM structure in **v. 2.0**
+Example of `ui5-select`'s (simplified) DOM structure in **v2.0**:
 
 ```html
 <body>
@@ -160,20 +160,20 @@ Example of `ui5-select`'s (simplified) DOM structure in **v. 2.0**
 </body>
 ```
 
-Now that the popover is part of the `ui5-select` itself, it's possible to have **physical** `ui5-option`s and slot their content directly into the popover or its children (`ui5-list` in this example)
+Now that the popover is part of the `ui5-select` itself, it's possible to have **physical** `ui5-option`s and slot their content directly into the popover or its children (`ui5-list` in this example).
 
 This allows us to provide support for **custom user content** for components that had strict predefined APIs in the past!
 
 ### Easier testing for both apps and component package authors
     - Tests no longer need to know how to find the static area item, associated with a given component - everything is directly in the shadow root!
-    - Writing tests is much simplified
+    - Writing tests is much simplified.
 
 ### Cross-framework popup compatibility for the future
-    - Frameworks who use the native browser popover API no longer need to synchronize themselves (negotiate `z-index` values, etc.)
+    - Frameworks who use the native browser popover API no longer need to synchronize themselves (negotiate `z-index` values, etc.).
     - The last popup to be opened will always be on top (guarnateed by the browser)!
 
 ## When can I start using it?
-    - The current versions of all supported browsers (Chrome, Safari, Edge, and now also Firefox as of version 125) fully support the popover API. [See Can I Use report](https://caniuse.com/?search=popover)
-    - By the time **v. 2.0** is officially released (we are at **v. 2.0-r.c.2** as of writing this blog post) we expect that each major browser will have already released at least 3 stable versions since the introduction of the popover API.
+    - The current versions of all supported browsers (Chrome, Safari, Edge, and now also Firefox as of version 125) fully support the popover API. [See Can I Use report](https://caniuse.com/?search=popover).
+    - By the time **v2.0** is officially released (we are at **v2.0-r.c.2** as of writing this blog post) we expect that each major browser will have already released at least 3 stable versions since the introduction of the popover API.
 
 Make sure to check our blog for future announcements, including the official release date of **UI5 Web Components 2.0**!
