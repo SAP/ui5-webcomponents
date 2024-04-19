@@ -27,7 +27,7 @@ const Template: UI5StoryArgs<Table, StoryArgsSlots> = (args) => html`
 	?hide-no-data="${ifDefined(args.hideNoData)}"
 	growing="${ifDefined(args.growing)}"
 	?loading="${ifDefined(args.loading)}"
-	busy-delay="${ifDefined(args.busyDelay)}"
+	loading-delay="${ifDefined(args.loadingDelay)}"
 	?sticky-column-header="${ifDefined(args.stickyColumnHeader)}"
 	selection-mode="${ifDefined(args.selectionMode)}"
 	accessible-name="${ifDefined(args.accessibleName)}"

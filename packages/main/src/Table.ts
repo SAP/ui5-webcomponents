@@ -320,7 +320,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Determines whether the column headers remain fixed at the top of the page during
