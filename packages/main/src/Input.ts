@@ -809,7 +809,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			innerInput.setSelectionRange(itemText.length, itemText.length);
 			if (!suggestionItemPressed) {
-				this.acceptSuggestion(matchingItem, null, true);
+				this.acceptSuggestion(matchingItem, true);
 			}
 		}
 
@@ -1188,7 +1188,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 	}
 
-	acceptSuggestion(item: IInputSuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) {
+	acceptSuggestion(item: IInputSuggestionItem, keyboardUsed: boolean) {
 		if (item.groupItem) {
 			return;
 		}
@@ -1220,7 +1220,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			if (isChangePropagated) {
 				this.fireEvent(INPUT_EVENTS.INPUT);
-				this.fireEvent(INPUT_EVENTS.SELECTION_CHANGE, { item, targetRef: listItem });
 			}
 
 			// value might change in the change event handler
@@ -1374,7 +1373,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	onItemSelected(suggestionItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) {
-		this.acceptSuggestion(suggestionItem, listItem, keyboardUsed);
+		const bFireSelectionChange = !keyboardUsed && this.value !== suggestionItem.text;
+
+		this.acceptSuggestion(suggestionItem, keyboardUsed);
+
+		if (bFireSelectionChange) {
+			this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, {
+				item: suggestionItem,
+				targetRef: listItem!,
+			});
+		}
 	}
 
 	onItemSelect(item: SuggestionListItem) {

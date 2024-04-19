@@ -1549,7 +1549,7 @@ describe("Selection-change event", () => {
 		assert.strictEqual(await selectionChangeCount.getText(), "2", "Selection-change event was fired 2 times");
 	});
 
-	it.only("Selection-change event does not fire when item is clicked but focus is already on it", async () => {
+	it("Selection-change event does not fire when item is clicked but focus is already on it", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await $("#input-selection-change");
@@ -1570,5 +1570,18 @@ describe("Selection-change event", () => {
 		await firstSuggestion.click();
 
 		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
+	});
+});
+
+describe("Property open", () => {
+	it("Suggestions popover is open when attribute open is true", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
 	});
 });
