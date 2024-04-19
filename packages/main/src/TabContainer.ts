@@ -397,13 +397,12 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected tab
-		const selectedTabs = this._itemsFlat.filter((tab): tab is Tab => !tab.isSeparator && (tab as Tab).selected);
-		if (selectedTabs.length) {
-			this._selectedTab.forcedSelected = false;
-			this._selectedTab = selectedTabs[0];
+		const selectedTab = this._itemsFlat.find((tab): tab is Tab => !tab.isSeparator && (tab as Tab).selected);
+
+		if (selectedTab) {
+			this._selectedTab = selectedTab;
 		} else {
 			this._selectedTab = this._itemsFlat[0] as Tab;
-			this._selectedTab.forcedSelected = true;
 		}
 
 		walk(this.items, item => {
@@ -825,14 +824,9 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected property on all items
-		this._itemsFlat!.forEach((item, index) => {
+		this._itemsFlat!.forEach(item => {
 			if (!item.isSeparator) {
-				const selected = selectedTabIndex === index;
-				(item as Tab).selected = selected;
-
-				if ((item as Tab).forcedSelected) {
-					(item as Tab).forcedSelected = false;
-				}
+				(item as Tab).selected = item === selectedTab;
 			}
 		});
 	}
