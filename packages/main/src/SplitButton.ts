@@ -86,6 +86,7 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 	styles: SplitButtonCss,
 	template: SplitButtonTemplate,
 	dependencies: [Button],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the user clicks on the default action.
@@ -251,6 +252,12 @@ class SplitButton extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		if (!this.disabled) {
+			this._tabIndex = "0";
+		}
+	}
+
 	_handleMouseClick(e: MouseEvent) {
 		this._fireClick(e);
 	}
@@ -261,7 +268,6 @@ class SplitButton extends UI5Element {
 		}
 
 		this._shiftOrEscapePressed = false;
-		this._setTabIndexValue();
 	}
 
 	_onFocusIn(e: FocusEvent) {
@@ -269,13 +275,6 @@ class SplitButton extends UI5Element {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
-	}
-
-	_onInnerButtonFocusIn(e: FocusEvent) {
-		e.stopPropagation();
-		this._setTabIndexValue(true);
-		const target = e.target as Button;
-		target.focus();
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
@@ -297,8 +296,6 @@ class SplitButton extends UI5Element {
 			this._activeArrowButton = false;
 			this._textButtonActive = false;
 		}
-
-		this._tabIndex = "-1";
 	}
 
 	_onKeyUp(e: KeyboardEvent) {
@@ -322,8 +319,6 @@ class SplitButton extends UI5Element {
 		if (this._isShiftOrEscape(e)) {
 			this._handleShiftOrEscapePressed();
 		}
-
-		this._tabIndex = "-1";
 	}
 
 	_fireClick(e?: Event) {
@@ -343,27 +338,6 @@ class SplitButton extends UI5Element {
 	_textButtonRelease() {
 		this._textButtonActive = false;
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
-		this._tabIndex = "-1";
-	}
-
-	_arrowButtonPress(e: MouseEvent) {
-		e.stopPropagation();
-
-		this._tabIndex = "-1";
-	}
-
-	_arrowButtonRelease(e: MouseEvent) {
-		e.preventDefault();
-
-		this._tabIndex = "-1";
-	}
-
-	_setTabIndexValue(innerButtonPressed?: boolean) {
-		this._tabIndex = this.disabled ? "-1" : "0";
-
-		if (this._tabIndex === "-1" && innerButtonPressed) {
-			this._tabIndex = "0";
-		}
 	}
 
 	_onArrowButtonActiveStateChange(e: CustomEvent) {
