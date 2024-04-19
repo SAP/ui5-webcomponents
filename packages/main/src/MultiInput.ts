@@ -143,7 +143,6 @@ class MultiInput extends Input {
 
 	showMorePress() {
 		this.expandedTokenizer = false;
-		this.focus();
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
