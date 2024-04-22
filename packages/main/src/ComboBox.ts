@@ -76,7 +76,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -173,7 +173,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		BusyIndicator,
 		Button,
 		StandardListItem,
-		GroupHeaderListItem,
+		ListItemGroupHeader,
 		Popover,
 		ComboBoxGroupItem,
 		Input,
@@ -745,7 +745,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this.fireEvent("input");
-		this._fireChangeEvent();
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {

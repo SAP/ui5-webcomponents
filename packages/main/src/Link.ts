@@ -123,11 +123,11 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines the tooltip of the component.
 	 * @default ""
-	 * @private
-	 * @since 1.18.0
+	 * @public
+	 * @since 2.0
 	 */
 	 @property()
-	 title!: string;
+	 tooltip!: string;
 
 	/**
 	 * Defines the component href.

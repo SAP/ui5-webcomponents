@@ -57,10 +57,10 @@ function initializeBadges() {
 
 	const set3Content = document.querySelector("#set3Content");
 	colorSchemes.forEach((value) => {
-		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}">Set 3 - Value - ${value}</ui5-badge>`);
+		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set3" color-scheme="${value}">Set 3 - Value - ${value}</ui5-badge>`);
 		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set3" color-scheme="${value}">Set 3 - Value - ${value}</ui5-badge>`);
 
-		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 3 - Value - ${value}</ui5-badge>`);
+		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set3" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 3 - Value - ${value}</ui5-badge>`);
 		set3Content.insertAdjacentHTML("beforeend", `<ui5-badge design="Set3" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 3 - Value - ${value}</ui5-badge>`);
 
 		set3Content.insertAdjacentHTML("beforeend", "<br><br>");
