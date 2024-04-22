@@ -17,10 +17,11 @@
 	<ui5-button id="btnOpen2" design="Negative">Open me</ui5-button> <br/>
 	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
 	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
+
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
 
 	<!-- with header and footer slots -->
-	<ui5-responsive-popover id="respPopover">
+	<ui5-responsive-popover initial-focus="emailInput" id="respPopover">
 		<div id="respPopoverHeader" slot="header">
 			<ui5-title>Hello World</ui5-title>
 		</div>
@@ -38,8 +39,8 @@
 	<!-- with header-text and footer slot-->
 	<ui5-responsive-popover id="respPopover2" header-text="Newsletter subscription for very long period of time">
 		<div class="popover-content">
-			<ui5-label for="emailInput" required>Email: </ui5-label>
-			<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
+			<ui5-label for="emailInput2" required>Email: </ui5-label>
+			<ui5-input id="emailInput2" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
 		</div>
 
 		<div slot="footer" class="popover-footer">
@@ -54,8 +55,8 @@
 		</div>
 
 		<div class="popover-content">
-			<ui5-label for="emailInput" required>Email: </ui5-label>
-			<ui5-input id="emailInput" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
+			<ui5-label for="emailInput3" required>Email: </ui5-label>
+			<ui5-input id="emailInput3" class="samples-margin-top responsivepopover3auto"  placeholder="Enter Email"></ui5-input>
 		</div>
 
 		<div slot="footer" class="popover-footer">
@@ -76,7 +77,8 @@
 		</div>
 	</ui5-responsive-popover>
 
-	<ui5-responsive-popover id="popoverAttr" opener="btnOpenWithAttr">
+	<ui5-responsive-popover initial-focus="myInput" id="popoverAttr" opener="btnOpenWithAttr">
+		<ui5-input id="myInput"></ui5-input>
 		<ui5-button id="btnCloseWithMethod">Close with Method</ui5-button>
 		<ui5-button id="btnCloseWithAttr">Close with Attribute</ui5-button>
 	</ui5-responsive-popover>

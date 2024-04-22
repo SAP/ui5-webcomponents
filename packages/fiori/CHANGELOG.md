@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** aligned specs ([#8694](https://github.com/SAP/ui5-webcomponents/issues/8694)) ([c5ec720](https://github.com/SAP/ui5-webcomponents/commit/c5ec720c8fd362b6fe2f502d473bec5fc4071b38))
+* **ui5-shellbar:** assistant icon color fixed ([#8713](https://github.com/SAP/ui5-webcomponents/issues/8713)) ([e501ac8](https://github.com/SAP/ui5-webcomponents/commit/e501ac8147bb979319a6e055ba98458650884112))
+* **ui5-side-navigation:** import overflow icon ([#8736](https://github.com/SAP/ui5-webcomponents/issues/8736)) ([8bc1bb4](https://github.com/SAP/ui5-webcomponents/commit/8bc1bb4698e71c66e1fb59508e115b9e612912fb))
+* **ui5-side-navigation:** replace items and fixedItems union type with SideNavigationItemBase ([#8740](https://github.com/SAP/ui5-webcomponents/issues/8740)) ([b589486](https://github.com/SAP/ui5-webcomponents/commit/b58948676049565410592700b1796475f1ea94fa))
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** add support for close and open events ([#8753](https://github.com/SAP/ui5-webcomponents/issues/8753)) ([1ae2142](https://github.com/SAP/ui5-webcomponents/commit/1ae2142aa6ba2c587126e49422724658686d2344)), closes [#8695](https://github.com/SAP/ui5-webcomponents/issues/8695)
+
+
+
+
+
 # [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
 
 
