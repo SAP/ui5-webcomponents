@@ -52,23 +52,14 @@
 	word-spacing: inherit;
 }
 
-.ui5-shellbar-button[icon-only] {
-	color: var(--sapShell_InteractiveTextColor);
-}
-
-.ui5-shellbar-button[icon-only]:hover:not(:active) {
-	color: var(--sapShell_InteractiveTextColor);
-}
-
-
 ::slotted([ui5-button][slot="startButton"]) {
 	margin-inline-start: 0;
 }
 
-::slotted([ui5-button][slot="startButton"]:hover:not([active])),
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover:not(:active),
-.ui5-shellbar-button:hover:not(:active),
-.ui5-shellbar-image-button:hover:not(:active) {
+::slotted([ui5-button][slot="startButton"]:hover),
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
+.ui5-shellbar-button:hover,
+.ui5-shellbar-image-button:hover {
 	background: var(--sapShell_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	color: var(--sapShell_TextColor);
