@@ -330,7 +330,7 @@ class SideNavigation extends UI5Element {
 
 		const responsivePopover = this.getPicker();
 		responsivePopover.opener = opener;
-		responsivePopover.showAt(opener);
+		responsivePopover.open = tre;
 	}
 
 	openOverflowMenu(opener: HTMLElement) {
@@ -343,7 +343,7 @@ class SideNavigation extends UI5Element {
 
 	closePicker() {
 		const responsivePopover = this.getPicker();
-		responsivePopover.close();
+		responsivePopover.open = false;
 	}
 
 	closeMenu() {

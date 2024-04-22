@@ -62,15 +62,16 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
-	it("tests popover is closed after click outside of it after multiple 'showAt'", async () => {
+	it("tests popover is closed after click outside of it after multiple 'open = true'", async () => {
 		await browser.executeAsync((done) => {
 			const btn = document.getElementById("btn");
 			const popover = document.getElementById("pop");
 
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
+			popover.opener = btn;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
 
 			done();
 		});

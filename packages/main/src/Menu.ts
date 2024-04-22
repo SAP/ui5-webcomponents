@@ -420,7 +420,8 @@ class Menu extends UI5Element {
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
 		popover._disableInitialFocus = !!loadingWithoutItems;
-		popover.showAt(opener);
+		popover.opener = opener;
+		popover.open = true;
 	}
 
 	/**
@@ -498,7 +499,8 @@ class Menu extends UI5Element {
 		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._subMenu!.showAt(opener);
+		item._subMenu!.opener = opener;
+		item._subMenu!.open = true;
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
 		this._subMenuOpenerId = opener.id;
@@ -520,7 +522,7 @@ class Menu extends UI5Element {
 			const parentItem = subMenu._parentMenuItem!;
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
-				subMenu.close();
+				subMenu.open = false;
 				if (keyboard) {
 					subMenu._opener?.focus();
 				}
@@ -640,7 +642,7 @@ class Menu extends UI5Element {
 				}, true, false);
 
 				if (!prevented) {
-					this._popover!.close();
+					this._popover!.open = false;
 				}
 			} else {
 				const mainMenu = this._findMainMenu(item);

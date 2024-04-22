@@ -321,7 +321,7 @@ class Breadcrumbs extends UI5Element {
 
 		// if overflow was emptied while picker was open => close redundant popup
 		if (this._isOverflowEmpty && this._isPickerOpen) {
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 
 		// if the last focused link has done into the overflow =>
@@ -382,7 +382,7 @@ class Breadcrumbs extends UI5Element {
 
 		if (this.fireEvent("item-click", { item }, true)) {
 			window.open(item.href, item.target || "_self", "noopener,noreferrer");
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 	}
 
@@ -406,7 +406,8 @@ class Breadcrumbs extends UI5Element {
 
 	_openRespPopover() {
 		this.responsivePopover = this._respPopover();
-		this.responsivePopover.showAt(this._dropdownArrowLink);
+		this.responsivePopover.opener = this._dropdownArrowLink;
+		this.responsivePopover.open = true;
 	}
 
 	_isItemVisible(item: BreadcrumbsItem) {
