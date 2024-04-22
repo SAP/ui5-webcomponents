@@ -421,7 +421,7 @@
 		<br />
 	</div>
 
-	<h3>Input with open picker on focusin</h3>
+	<h3>Input with openPicker() on focusin</h3>
 	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
 		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
@@ -473,12 +473,6 @@
 	<span id="input-selection-change-count"></span>
 
 	<br />
-
-	<Ui5-input id="input-suggestions-open" show-suggestions open="true">
-		<ui5-suggestion-item text ="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item text ="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item text ="Condensed"></ui5-suggestion-item>
-	</Ui5-input>
 
 	<ui5-button id="dynamic-value-state-trigger">Trigger dynamic value state</ui5-button>
 
@@ -732,7 +726,7 @@
 
 		function handleHistory() {
 			handleSuggestions();
-			openPickerInput.open = true;
+			openPickerInput.openPicker();
 		}
 
 		document.getElementById("clear-button").addEventListener("click", event => {
@@ -765,10 +759,6 @@
 			selectionChangeCounter++;
 			document.getElementById("input-selection-change-count").innerText = selectionChangeCounter;
 		});
-
-		// document.getElementById("").addEventListener("", () => {
-
-		// });
 	</script>
 </body>
 </html>

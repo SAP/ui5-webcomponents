@@ -46,7 +46,7 @@
 
 	const openAll = () => {
 		return Promise.all([...test.children].map(child => {
-			return child.open = true;
+			return child.openPicker();
 		}));
 	};
 

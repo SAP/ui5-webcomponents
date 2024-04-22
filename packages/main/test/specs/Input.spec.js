@@ -1002,7 +1002,7 @@ describe("Input general interaction", () => {
 		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 	});
 
-	it("Should open suggestions popover if open is set on focusin", async () => {
+	it("Should open suggestions popover if openPicker() is called on focusin", async () => {
 		const input = await browser.$("#openPickerInput");
 		const popover = await input.shadow$("ui5-responsive-popover");
 
@@ -1083,7 +1083,7 @@ describe("Input general interaction", () => {
 		await input.scrollIntoView();
 
 		await browser.execute(() =>{
-			document.getElementById("change-event-value").open = true;
+			document.getElementById("change-event-value").openPicker();
 		});
 
 		const listItem = await input.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
@@ -1570,18 +1570,5 @@ describe("Selection-change event", () => {
 		await firstSuggestion.click();
 
 		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
-	});
-});
-
-describe("Property open", () => {
-	it("Suggestions popover is open when attribute open is true", async () => {
-		await browser.url(`test/pages/Input.html`);
-
-		const input = await $("#input-suggestions-open");
-		const respPopover = await input.shadow$("ui5-responsive-popover");
-		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
-
-		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
-		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
 	});
 });
