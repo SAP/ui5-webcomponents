@@ -73,6 +73,8 @@ import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
 import * as Filters from "./Filters.js";
 import Button from "./Button.js";
+import Input, { InputEventDetail } from "./Input.js";
+import SuggestionItem from "./SuggestionItem.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_ERROR,
@@ -104,7 +106,6 @@ import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
-import Input, { InputEventDetail } from "./Input.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 /**
@@ -198,6 +199,8 @@ type MultiComboboxItemWithSelection = {
 		ToggleButton,
 		Button,
 		CheckBox,
+		Input,
+		SuggestionItem,
 	],
 })
 /**
