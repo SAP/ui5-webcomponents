@@ -67,6 +67,7 @@ type MultiInputTokenDeleteEventDetail = {
 	get dependencies() {
 		return [
 			...Input.dependencies,
+			Input,
 			Tokenizer,
 			Token,
 			Icon,
