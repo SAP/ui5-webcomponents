@@ -3,7 +3,7 @@
 
 :host(:not([hidden])) {
 	display: inline-flex;
-	height: 100%;
+	height: var(--_ui5_button_base_height);
 	border-radius: var(--_ui5_button_border_radius);
 	background-color: var(--sapButton_Background);
 	box-shadow: var(--_ui5_split_button_host_default_box_shadow);
@@ -115,6 +115,7 @@
 	display: inline-flex;
 	position: relative;
 	width: inherit;
+	height: 100%;
 }
 
 .ui5-split-button-root:focus,
