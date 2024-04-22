@@ -7,7 +7,7 @@ describe("Calendar general interaction", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies(["ui5-calendar", "ui5-year-picker", "ui5-month-picker", "ui5-day-picker"]);
+		await checkMissingDependencies(["ui5-calendar", "ui5-calendar-header", "ui5-yearpicker", "ui5-monthpicker", "ui5-daypicker"]);
 	});
 
 	it("Calendar is rendered", async () => {
