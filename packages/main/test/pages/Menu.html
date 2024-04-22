@@ -168,9 +168,10 @@
 				if (item.id === "newFolder" || item.id === "preferences") {
 					const link = detailsPopover.querySelector("#detailsLink");
 					link.textContent = item.text;
-					detailsPopover.showAt(item);
+					detailsPopover.opener = item;
+					detailsPopover.open = true;
 				} else {
-					detailsPopover.close(false, false, true);
+					detailsPopover.open = false;
 				}
 			});
 		});

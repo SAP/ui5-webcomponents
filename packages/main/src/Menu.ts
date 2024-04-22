@@ -345,7 +345,8 @@ class Menu extends UI5Element {
 			this._parentMenuItem = undefined;
 		}
 		const popover = await this._createPopover();
-		popover.showAt(opener, true);
+		popover.opener = opener;
+		popover.open = true;
 	}
 
 	/**
