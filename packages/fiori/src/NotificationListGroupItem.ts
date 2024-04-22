@@ -166,6 +166,17 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return !this.collapsed;
 	}
 
+	get accInfo() {
+		const id = this._id;
+
+		return {
+			accessibilityAttributes: {
+				expanded: this._ariaExpanded ? "true" : "false",
+				controls: `${id}-notificationsList`,
+			},
+		};
+	}
+
 	get groupCollapsedIcon() {
 		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
 	}

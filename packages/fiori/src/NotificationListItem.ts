@@ -425,6 +425,14 @@ class NotificationListItem extends NotificationListItemBase {
 		return `${notificationText} ${importanceText} ${readText}`;
 	}
 
+	get accInfo() {
+		return {
+			accessibilityAttributes: {
+				hasPopup: "menu",
+			},
+		};
+	}
+
 	get menuButtonDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-menu-btn")!;
 	}

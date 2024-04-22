@@ -226,16 +226,34 @@ describe("Notification List Item Tests", () => {
 
 	it("tests Menu (actions / '...') button ACC attributes", async () => {
 		const firstItem = await browser.$("#nli1");
-		const menuButton = await firstItem.shadow$(".ui5-nli-menu-btn");
+		const menuButton = await firstItem.shadow$(".ui5-nli-menu-btn").shadow$("button");
+		const thirdItem = await browser.$("#nli3");
+		const btnListItemMenu3 = await thirdItem.shadow$(".ui5-nli-menu-btn");
 
 		// assert
-		assert.strictEqual(await menuButton.getAttribute("tooltip"), 'Actions', "The tooltip text is correct.");
+		assert.strictEqual(await menuButton.getAttribute("title"), 'Actions', "The tooltip text is correct.");
 		assert.strictEqual(await menuButton.getAttribute("aria-haspopup"), 'menu', "The aria-haspopup text is correct.");
+
+		assert.notOk(await btnListItemMenu3.isExisting(), "There is no '...' button rendered");
+	});
+
+	it("tests List Item 'Close' button ACC attributes", async () => {
+		const firstItem = await browser.$("#nli1");
+		const btnListItemClose1 = await firstItem.shadow$("[close-btn]").shadow$("button");
+		const thirdItem = await browser.$("#nli3");
+		const btnListItemClose3 = await thirdItem.shadow$("[close-btn]");
+
+		assert.strictEqual(await btnListItemClose1.getAttribute("aria-label"), 'Close', "The aria-label is correct.");
+		assert.strictEqual(await btnListItemClose1.getAttribute("title"), 'Close', "The title is correct.");
+		assert.strictEqual(await btnListItemClose1.getAttribute("role"), 'button', "The role is correct.");
+
+		assert.notOk(await btnListItemClose3.isExisting(), "There is no 'Close' button rendered");
+
 	});
 
 	it("tests Group Header Button ACC attributes", async () => {
-		const firstGroupButton = await browser.$("#nlgi1").shadow$(".ui5-nli-group-toggle-btn");
-		const thirdGroupButton = await browser.$("#nlgi3").shadow$(".ui5-nli-group-toggle-btn");
+		const firstGroupButton = await browser.$("#nlgi1").shadow$(".ui5-nli-group-toggle-btn").shadow$("button");
+		const thirdGroupButton = await browser.$("#nlgi3").shadow$(".ui5-nli-group-toggle-btn").shadow$("button");
 		const firstGroupItem = await browser.$("#nlgi1");
 		const titleTextId = `${await firstGroupItem.getProperty("_id")}-notificationsList`;
 
@@ -272,12 +290,12 @@ describe("Notification List Item Tests", () => {
 	it("tests List Group Item Button aria-expanded, aria-controls, tooltip when collapsed and expanded", async () => {
 		const groupItem2 = await browser.$("#nlgi2");
 		const groupItemsList2ID = await groupItem2.shadow$(".ui5-nli-group-items").getAttribute("id");
-		const groupItemToggleBtn2 = await groupItem2.shadow$(".ui5-nli-group-toggle-btn");
+		const groupItemToggleBtn2 = await groupItem2.shadow$(".ui5-nli-group-toggle-btn").shadow$("button");
 
 		// assert
 		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("tooltip"), "Collapse", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("title"), "Collapse", "The tooltip value is correct.");
 
 		// act
 		await groupItemToggleBtn2.click();
@@ -285,7 +303,7 @@ describe("Notification List Item Tests", () => {
 		// assert
 		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("tooltip"), "Expand", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemToggleBtn2.getAttribute("title"), "Expand", "The tooltip value is correct.");
 
 		// reset
 		await groupItemToggleBtn2.click();

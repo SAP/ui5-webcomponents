@@ -69,7 +69,7 @@
 				@click="{{_onBtnMenuClick}}"
 				class="ui5-nli-menu-btn"
 				tooltip="{{menuBtnAccessibleName}}"
-				aria-haspopup="menu"
+				.accessibilityAttributes={{accInfo.accessibilityAttributes}}
 			></ui5-button>
 		{{/if}}
 		{{#if showClose}}
@@ -78,7 +78,7 @@
 				design="Transparent"
 				@click="{{_onBtnCloseClick}}"
 				tooltip="{{closeBtnAccessibleName}}"
-				aria-label="{{closeBtnAccessibleName}}"
+				accessible-name="{{closeBtnAccessibleName}}"
 				close-btn
 			></ui5-button>
 		{{/if}}
