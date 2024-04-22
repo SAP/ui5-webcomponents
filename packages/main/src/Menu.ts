@@ -205,7 +205,7 @@ class Menu extends UI5Element {
 	loading!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0

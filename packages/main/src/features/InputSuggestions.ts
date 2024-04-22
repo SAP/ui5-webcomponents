@@ -15,7 +15,7 @@ import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
 import Popover from "../Popover.js";
-import GroupHeaderListItem from "../GroupHeaderListItem.js";
+import ListItemGroupHeader from "../ListItemGroupHeader.js";
 import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
@@ -665,7 +665,7 @@ class Suggestions {
 			ResponsivePopover,
 			List,
 			SuggestionListItem,
-			GroupHeaderListItem,
+			ListItemGroupHeader,
 			Button,
 			Icon,
 			Popover,

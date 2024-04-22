@@ -55,9 +55,10 @@
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover={{_itemMouseOver}}
+			@mouseover={{_loadingMouseOver}}
 			@mouseout={{_itemMouseOut}}
 			@keydown={{_itemKeyDown}}
+			
 		>
 			<slot></slot>
 		</ui5-list>
