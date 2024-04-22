@@ -25,7 +25,7 @@ describe("Component Behavior", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies(["ui5-side-navigation", "ui5-side-navigation-item", "ui5-side-navigation-sub-item", "ui5-side-navigation-group"]);
+		await checkMissingDependencies(["ui5-side-navigation", "ui5-side-navigation-item", "ui5-side-navigation-sub-item"]);
 	});
 
 	describe("Main functionality", async () => {
