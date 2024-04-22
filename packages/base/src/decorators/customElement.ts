@@ -54,9 +54,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 
 		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {
 			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
-
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				// access the property, because it may be dynamic (f.e. "get dependencies" instead of "dependencies") and may return a different result
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};
