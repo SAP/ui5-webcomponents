@@ -8,7 +8,7 @@ describe("Basic mobile picker rendering and interaction", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies("ui5-input");
+		await checkMissingDependencies("ui5-input", ["ui5-input"]);
 	});
 
 	it("Should render properly the mobile picker", async () => {
