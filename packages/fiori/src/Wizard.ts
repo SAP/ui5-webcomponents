@@ -663,7 +663,7 @@ class Wizard extends UI5Element {
 
 	_closeRespPopover() {
 		const responsivePopover = this._respPopover();
-		responsivePopover && responsivePopover.close();
+		responsivePopover?.close();
 	}
 
 	_respPopover() {

@@ -401,7 +401,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this.responsivePopover && this.responsivePopover.close();
+		this.responsivePopover?.close();
 	}
 
 	_openRespPopover() {
