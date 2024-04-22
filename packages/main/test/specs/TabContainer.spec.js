@@ -8,7 +8,7 @@ describe("TabContainer general interaction", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies(["ui5-tab-container", "ui5-tab"]);
+		await checkMissingDependencies(["ui5-tabcontainer", "ui5-tab"]);
 	});
 
 	it("tests initially selected tab", async () => {

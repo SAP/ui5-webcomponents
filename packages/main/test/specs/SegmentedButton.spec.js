@@ -7,7 +7,7 @@ describe("SegmentedButton general interaction", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies(["segmented-button", "segmented-button-item"]);
+		await checkMissingDependencies(["ui5-segmented-button", "ui5-segmented-button-item"]);
 	});
 
 	it("tests if pressed and tooltip attributes are applied", async () => {

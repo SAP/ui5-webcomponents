@@ -6,6 +6,11 @@ describe("Mobile: TabContainer general interaction", () => {
 		await browser.emulateDevice("iPhone X");
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-tabcontainer", "ui5-tab"]);
+	});
+
 	it("should close the overflow popover when pressing the cancel button", async () => {
 		const tc = await browser.$("#tabContainerNestedTabs");
 		const moreButton = await tc.shadow$(`[data-ui5-stable="overflow-end"]`);
