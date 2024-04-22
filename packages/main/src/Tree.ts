@@ -336,7 +336,7 @@ class Tree extends UI5Element {
 	}
 
 	get _role() {
-		return "tree";
+		return "Tree";
 	}
 
 	get _label() {

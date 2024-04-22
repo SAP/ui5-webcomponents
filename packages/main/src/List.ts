@@ -689,6 +689,10 @@ class List extends UI5Element {
 		};
 	}
 
+	get _accessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get classes(): ClassMap {
 		return {
 			root: {

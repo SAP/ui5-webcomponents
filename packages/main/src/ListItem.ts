@@ -213,7 +213,7 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.3.0
 	 *
 	 */
-	@property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
+	@property({ type: ListItemAccessibleRole })
 	accessibleRole!: `${ListItemAccessibleRole}`;
 
 	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
@@ -480,6 +480,10 @@ abstract class ListItem extends ListItemBase {
 		return undefined;
 	}
 
+	get _accessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get ariaSelectedText() {
 		let ariaSelectedText;
 
@@ -514,7 +518,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.accessibleRole || this.role,
+			role: this._accessibleRole || this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
