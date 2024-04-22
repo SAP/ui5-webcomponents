@@ -3,7 +3,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import CustomListItem from "./CustomListItem.js";
 
 import optionCss from "./generated/themes/Option.css.js";
 
@@ -24,10 +23,8 @@ import optionCss from "./generated/themes/Option.css.js";
 @customElement({
 	tag: "ui5-option",
 	styles: [
-		CustomListItem.styles,
 		optionCss,
 	],
-	dependencies: [CustomListItem],
 })
 class Option extends UI5Element {
 	/**

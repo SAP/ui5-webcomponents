@@ -52,7 +52,7 @@ import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
-import StandardListItem from "./StandardListItem.js";
+import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 
@@ -118,7 +118,7 @@ type SelectLiveChangeEventDetail = {
 		ResponsivePopover,
 		Popover,
 		List,
-		StandardListItem,
+		CustomListItem,
 		Icon,
 		Button,
 	],
@@ -570,7 +570,12 @@ class Select extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item as unknown as Option;
+		const listItem = e.detail.item;
+		const id = listItem.getAttribute("data-ui5-id");
+		const item = this.options.find(option => option.__id === id);
+		if (!item) {
+			return;
+		}
 		const selectedItemIndex = this._getItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
