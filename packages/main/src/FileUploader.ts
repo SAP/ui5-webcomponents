@@ -260,7 +260,8 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	_ondrop(e: DragEvent) {
-		this._ondrag(e);
+		e.preventDefault();
+		e.stopPropagation();
 		const files = e.dataTransfer?.files;
 
 		if (files) {
