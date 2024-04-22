@@ -45,8 +45,7 @@ const Template: UI5StoryArgs<FlexibleColumnLayout, StoryArgsSlots> = (args) => {
       style="height: 600px;"
       layout=${ifDefined(args.layout)}
       ?hide-arrows=${ifDefined(args.hideArrows)}
-      .accessibility-texts=${ifDefined(args.accessibilityTexts)}
-      .accessibility-roles=${ifDefined(args.accessibilityRoles)}
+      landmark-info=${ifDefined(args.landmarkInfo)}
     >
       ${unsafeHTML(args.startColumn)} ${unsafeHTML(args.midColumn)}
       ${unsafeHTML(args.endColumn)}

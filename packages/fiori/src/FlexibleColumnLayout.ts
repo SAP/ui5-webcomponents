@@ -64,7 +64,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	resize: boolean,
 };
 
-type FlexibleColumnLayoutAccessibilityTexts = {
+type FlexibleColumnLayoutLandmarkInfo = {
 	startColumnAccessibleName?: I18nText;
 	startArrowContainerAccessibleName?: I18nText;
 	startArrowLeftText?: I18nText;
@@ -74,9 +74,6 @@ type FlexibleColumnLayoutAccessibilityTexts = {
 	endArrowContainerAccessibleName?: I18nText;
 	endArrowRightText?: I18nText;
 	endArrowLeftText?: I18nText;
-};
-
-type FlexibleColumnLayoutAccessibilityRoles = {
 	startColumnRole?: I18nText;
 	midColumnRole?: I18nText;
 	endColumnRole?: I18nText;
@@ -208,7 +205,7 @@ class FlexibleColumnLayout extends UI5Element {
 	hideArrows!: boolean;
 
 	/**
-	* An object of strings that defines several additional accessibility texts for even further customization.
+	* An object of strings that defines several additional accessibility roles and texts for even further customization.
 	*
 	* It supports the following fields:
 	*  - `startColumnAccessibleName`: the accessibility name for the `startColumn` region
@@ -220,17 +217,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - `endArrowRightText`: the text that the second arrow (between the `mid` and `end` columns) will have when pointing to the right
 	*  - `startArrowContainerAccessibleName`: the text that the first arrow container (between the `begin` and `mid` columns) will have as `aria-label`
 	*  - `endArrowContainerAccessibleName`: the text that the second arrow container (between the `mid` and `end` columns) will have as `aria-label`
-	* @default {}
-	* @public
-	* @since 1.0.0-rc.11
-	*/
-	@property({ type: Object })
-	accessibilityTexts!: FlexibleColumnLayoutAccessibilityTexts;
-
-	/**
-	* An object of strings that defines additional accessibility roles for further customization.
-	*
-	* It supports the following fields:
 	*  - `startColumnRole`: the accessibility role for the `startColumn`
 	*  - `startArrowContainerRole`: the accessibility role for the first arrow container (between the `begin` and `mid` columns)
 	*  - `midColumnRole`: the accessibility role for the `midColumn`
@@ -238,10 +224,10 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - `endColumnRole`: the accessibility role for the `endColumn`
 	* @default {}
 	* @public
-	* @since 1.1.0
+	* @since 2.0.0
 	*/
 	@property({ type: Object })
-	accessibilityRoles!: FlexibleColumnLayoutAccessibilityRoles;
+	landmarkInfo!: FlexibleColumnLayoutLandmarkInfo;
 
 	/**
 	* Defines the component width in px.
@@ -678,52 +664,52 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
+		return this.landmarkInfo.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+		return this.landmarkInfo.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
+		return this.landmarkInfo.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get accStartArrowContainerText() {
-		return this.accessibilityTexts.startArrowContainerAccessibleName || undefined;
+		return this.landmarkInfo.startArrowContainerAccessibleName || undefined;
 	}
 
 	get accEndArrowContainerText() {
-		return this.accessibilityTexts.endArrowContainerAccessibleName || undefined;
+		return this.landmarkInfo.endArrowContainerAccessibleName || undefined;
 	}
 
 	get accStartColumnRole() {
 		if (this.startColumnVisible) {
-			return this.accessibilityRoles.startColumnRole || "region";
+			return this.landmarkInfo.startColumnRole || "region";
 		}
 		return undefined;
 	}
 
 	get accMiddleColumnRole() {
 		if (this.midColumnVisible) {
-			return this.accessibilityRoles.midColumnRole || "region";
+			return this.landmarkInfo.midColumnRole || "region";
 		}
 		return undefined;
 	}
 
 	get accEndColumnRole() {
 		if (this.endColumnVisible) {
-			return this.accessibilityRoles.endColumnRole || "region";
+			return this.landmarkInfo.endColumnRole || "region";
 		}
 		return undefined;
 	}
 
 	get accStartArrowContainerRole() {
-		return this.accessibilityRoles.startArrowContainerRole || undefined;
+		return this.landmarkInfo.startArrowContainerRole || undefined;
 	}
 
 	get accEndArrowContainerRole() {
-		return this.accessibilityRoles.endArrowContainerRole || undefined;
+		return this.landmarkInfo.endArrowContainerRole || undefined;
 	}
 
 	get _effectiveLayoutsByMedia() {
@@ -750,7 +736,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartArrowText() {
-		const customTexts = this.accessibilityTexts;
+		const customTexts = this.landmarkInfo;
 
 		if (this.startArrowDirection === "mirror") {
 			return customTexts.startArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
@@ -760,7 +746,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accEndArrowText() {
-		const customTexts = this.accessibilityTexts;
+		const customTexts = this.landmarkInfo;
 
 		if (this.endArrowDirection === "mirror") {
 			return customTexts.endArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
@@ -777,7 +763,6 @@ export default FlexibleColumnLayout;
 export type {
 	MEDIA,
 	FlexibleColumnLayoutLayoutChangeEventDetail,
-	FlexibleColumnLayoutAccessibilityTexts,
-	FlexibleColumnLayoutAccessibilityRoles,
+	FlexibleColumnLayoutLandmarkInfo,
 	FlexibleColumnLayoutColumnLayout,
 };
