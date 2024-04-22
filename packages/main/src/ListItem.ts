@@ -54,7 +54,7 @@ type PressEventDetail = {
 }
 
 type AccInfo = {
-	accessibleRole: string;
+	role: string;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
@@ -503,7 +503,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			accessibleRole: this.accessibleRole,
+			role: this.accessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
