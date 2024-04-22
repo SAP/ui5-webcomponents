@@ -5,6 +5,11 @@ describe("MultiInput general interaction", () => {
 		await browser.url(`test/pages/MultiInput.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-multi-input");
+	});
+
 	it("tests expanding of tokenizer", async () => {
 		const basic = await browser.$("#basic-overflow");
 		const basicInner = await basic.shadow$("input");

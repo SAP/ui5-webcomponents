@@ -18,6 +18,11 @@ describe("Select general interaction", () => {
 		await browser.url(`test/pages/Select.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-select");
+	});
+
 	it("fires change on selection", async () => {
 		const select = await browser.$("#mySelect");
 		const selectText = await browser.$("#mySelect").shadow$(".ui5-select-label-root");

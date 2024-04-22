@@ -6,6 +6,11 @@ describe("ResponsivePopover mobile general interaction", () => {
 		await browser.url(`test/pages/ResponsivePopover.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-responsive-popover");
+	});
+
 	it("tests opening a popover from a responsive popover", async () => {
 		const btnOpenRP = await browser.$("#btnRpWithPopover");
 

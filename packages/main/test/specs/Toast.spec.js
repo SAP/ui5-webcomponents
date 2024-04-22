@@ -8,6 +8,11 @@ describe("Toast general interaction", () => {
 		await browser.url(`test/pages/Toast.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-toast");
+	});
+
 	it("tests open attribute before show", async () => {
 		const toast = await browser.$("#wcToastME");
 

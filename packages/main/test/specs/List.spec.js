@@ -25,6 +25,11 @@ describe("List Tests", () => {
 		await browser.url(`test/pages/List_test_page.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-list", "ui5-li", "ui5-li-custom", "ui5-li-group", "ui5-li-group-header"]);
+	});
+
 	it("List is rendered", async () => {
 		const list = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-root");
 		const loadingInd = await browser.$("#infiniteScrollEx").shadow$(".ui5-list-loading-row");

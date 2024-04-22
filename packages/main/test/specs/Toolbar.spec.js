@@ -5,6 +5,11 @@ describe("Toolbar general interaction", () => {
 		await browser.url(`test/pages/Toolbar.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-toolbar", "ui5-toolbar-button", "ui5-toolbar-select", "ui5-toolbar-select-option", "ui5-toolbar-spacer", "ui5-toolbar-separator"]);
+	});
+
 	it("Should move button with alwaysOverflow priority to overflow popover", async () => {
 
 		const otb = await browser.$("#otb_d");

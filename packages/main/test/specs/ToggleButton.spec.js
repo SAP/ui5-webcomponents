@@ -5,6 +5,11 @@ describe("ToggleButton general interaction", () => {
 		await browser.url(`test/pages/ToggleButton.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-toggle-button");
+	});
+
 	it("should fire click event on a normal togglebutton", async () => {
 		const toggleButton = await browser.$("#toggle-button");
 		const result = await browser.$("#click-result");

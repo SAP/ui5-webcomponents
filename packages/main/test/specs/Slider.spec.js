@@ -8,6 +8,9 @@ describe("Slider basic interactions", () => {
 		const slider = await browser.$("#basic-slider");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-slider");
+
 		assert.strictEqual((await sliderHandle.getCSSProperty("left")).value, "0px", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
 
 		await browser.setWindowSize(1257, 2000);
@@ -109,7 +112,7 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual((await slider.getProperty("_labels"))[0], "-20", "Initial slider start label is -20.");
 		assert.strictEqual((await slider.getProperty("_labels"))[labelLength - 1], "20", "Initial slider end label is 20.");
 
-		// simulate the synchronous update of min and max made programatically 
+		// simulate the synchronous update of min and max made programatically
 		await browser.executeAsync(done => {
 			const slider = document.getElementById("slider-tickmarks-labels");
 			slider.min = 0;

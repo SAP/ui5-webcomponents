@@ -5,6 +5,11 @@ describe("Switch general interaction", async () => {
 		await browser.url(`test/pages/Switch.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-switch");
+	});
+
 	it("tests change event", async () => {
 		const switchEl = await browser.$("#sw");
 		const field = await browser.$("#field");

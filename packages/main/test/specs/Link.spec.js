@@ -10,6 +10,11 @@ describe("General API", () => {
 		await browser.url(`test/pages/Link.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-link");
+	});
+
 	it("render initially", async () => {
 		const linkRoot = await browser.$("ui5-link").shadow$("ui5-link-root");
 

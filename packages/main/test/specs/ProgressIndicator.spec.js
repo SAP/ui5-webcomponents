@@ -5,6 +5,11 @@ describe("API", () => {
 		await browser.url(`test/pages/ProgressIndicator.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-progress-indicator");
+	});
+
 	it("tests value validation", async () => {
 		const progressIndicator = await browser.$("#test-progress-indicator");
 		const negativeButton = await browser.$("#sixthBtn");

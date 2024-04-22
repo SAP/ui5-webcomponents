@@ -6,6 +6,11 @@ describe("Rating Indicator general interaction", () => {
 		await browser.url(`test/pages/RatingIndicator.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-rating-indicator");
+	});
+
 	it("Tests basic rating indicator rendering", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator1");
 

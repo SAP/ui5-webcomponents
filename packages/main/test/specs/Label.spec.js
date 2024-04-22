@@ -5,6 +5,11 @@ describe("General API", () => {
 		await browser.url(`test/pages/Label.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-label");
+	});
+
 	it("tests initial rendering", async () => {
 		const labelRoot = await browser.$("#basic-label").shadow$(".ui5-label-root");
 

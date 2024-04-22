@@ -5,6 +5,11 @@ describe("Table general interaction", () => {
 		await browser.url(`test/pages/TableGrouping.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-table", "ui5-table-column", "ui5-table-row", "ui5-table-group-row", "ui5-table-cell"]);
+	});
+
 	it("Table group rows should be rendered", async () => {
 		const groupRows = await browser.$$("ui5-table-group-row");
 		assert.strictEqual(groupRows.length, 4, "There should be 4 group rows rendered.");

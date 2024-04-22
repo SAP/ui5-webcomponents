@@ -5,6 +5,11 @@ describe("MultiComboBox general interaction", () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-multi-combobox");
+	});
+
 	describe("toggling", () => {
 		it("opens/closes", async () => {
 			const icon = await $("#multi1").shadow$("[input-icon]");

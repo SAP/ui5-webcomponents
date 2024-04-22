@@ -5,6 +5,11 @@ describe("SegmentedButton general interaction", () => {
 		await browser.url(`test/pages/SegmentedButton.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["segmented-button", "segmented-button-item"]);
+	});
+
 	it("tests if pressed and tooltip attributes are applied", async () => {
 		const segmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 		const segmentedButtonItemInner = await segmentedButtonItem.shadow$(".ui5-button-root");

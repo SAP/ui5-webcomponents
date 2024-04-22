@@ -5,6 +5,11 @@ describe("Text", () => {
 		await browser.url("test/pages/Text.html");
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-text");
+	});
+
 	it("tests root element is bdi", async () => {
 		const rootElement = await browser.$("#text1").shadow$(":first-child");
 

@@ -6,6 +6,11 @@ describe("Basic interaction", () => {
 		await browser.emulateDevice('iPhone X');
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-multi-combobox");
+	});
+
 	it("Should render properly the mobile picker", async () => {
 		const multiCombo = await browser.$("#multi1");
 

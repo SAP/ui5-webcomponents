@@ -5,6 +5,11 @@ describe("API", () => {
 		await browser.url(`test/pages/FileUploader.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-file-uploader");
+	});
+
 	it("Files property", async () => {
 		const fileUploader = await browser.$("ui5-file-uploader");
 		assert.ok(await fileUploader.getProperty("files"), "Property 'files' should return FileList with 0 files.")

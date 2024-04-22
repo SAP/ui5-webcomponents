@@ -5,6 +5,11 @@ describe("MessageStrip general interaction", () => {
 		await browser.url(`test/pages/MessageStrip.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-message-strip");
+	});
+
 	it("tests close event", async () => {
 
 		const closeButton = await browser.$("#messageStrip").shadow$(".ui5-message-strip-close-button");

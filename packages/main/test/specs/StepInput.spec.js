@@ -4,6 +4,10 @@ describe("Attributes propagation", () => {
 
 	it("'placeholder' attribute is propagated properly", async () => {
 		await browser.url(`test/pages/StepInput.html`);
+
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-step-input");
+
 		const siCozy = await browser.$("#stepInputCozy");
 		const sExpected = "New placeholder text";
 

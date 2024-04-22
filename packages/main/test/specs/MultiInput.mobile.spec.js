@@ -6,6 +6,11 @@ describe("MultiInput general interaction", () => {
 		await browser.emulateDevice('iPhone X');
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-multi-input");
+	});
+
 	it ("n-more picker dialog is properly rendered", async () => {
 		const mi = await browser.$("#multiInput-warning");
 		const tokenizer = await mi.shadow$("ui5-tokenizer");

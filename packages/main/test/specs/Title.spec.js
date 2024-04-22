@@ -5,6 +5,11 @@ describe("Rendering", () => {
 		await browser.url(`test/pages/Title.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-title");
+	});
+
 	it("h{n} tags rendered correctly", async () => {
 		const titleH1 = await browser.$("#titleH1").shadow$(".ui5-title-root").getHTML();
 		const titleH2 = await browser.$("#titleH2").shadow$(".ui5-title-root").getHTML();

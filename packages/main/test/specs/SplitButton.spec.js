@@ -3,6 +3,10 @@ import { assert } from "chai";
 describe("Split Button general interaction", () => {
 	it("tests inner buttons design", async () => {
 		await browser.url(`test/pages/SplitButton.html`);
+
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-split-button");
+
 		const sbDefault = await browser.$("#sbDefault");
 		const design = await sbDefault.getAttribute("design");
 		const textButton = await sbDefault.shadow$(".ui5-split-text-button");

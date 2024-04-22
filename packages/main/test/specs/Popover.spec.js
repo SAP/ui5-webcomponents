@@ -5,6 +5,11 @@ describe("Attributes propagation", () => {
 		await browser.url(`test/pages/Popover.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-popover");
+	});
+
 	it("Header text attribute is propagated", async () => {
 		const popover = await browser.$("#pop");
 		const selector = "h2=New text";

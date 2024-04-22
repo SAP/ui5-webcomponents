@@ -8,6 +8,11 @@ describe("Attributes propagation", () => {
 		await browser.url(`test/pages/TextArea.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-textarea");
+	});
+
 	it("Should change the placeholder of the inner textarea", async () => {
 		const textarea = await browser.$("#basic-textarea");
 		const sExpected = "New placeholder text";

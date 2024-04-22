@@ -6,6 +6,11 @@ describe("Select mobile general interaction", () => {
 		await browser.url(`test/pages/Select.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-select");
+	});
+
 	it("Changes selection in Dialog", async () => {
 		// assert default
 		const select = await browser.$("#mySelect");

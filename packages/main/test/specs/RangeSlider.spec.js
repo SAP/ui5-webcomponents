@@ -6,6 +6,9 @@ describe("Testing Range Slider interactions", () => {
 		await browser.url(`test/pages/RangeSlider.html`);
 		await browser.setWindowSize(1257, 2000);
 
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-range-slider");
+
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 

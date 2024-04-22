@@ -5,6 +5,11 @@ describe("Table general interaction", () => {
 		await browser.url(`test/pages/Table.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-table", "ui5-table-column", "ui5-table-row", "ui5-table-cell"]);
+	});
+
 	it("tests if column disapears when min-width is reacted (650px)", async () => {
 		const btn = await browser.$("#size-btn-650");
 		const headerTableRow = await browser.$("#tbl").shadow$("thead tr");

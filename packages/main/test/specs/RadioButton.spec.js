@@ -5,6 +5,11 @@ describe("Rendering", () => {
 		await browser.url(`test/pages/RadioButton.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-radio-button");
+	});
+
 	it("DOM structure", async () => {
 		const radioButtonRoot = await browser.$("#testRbtn1").shadow$(".ui5-radio-root");
 		const radioButtonInput = await browser.$("#testRbtn1").shadow$("input");
@@ -238,7 +243,7 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(await radioButtonsShadowRoots[1].getAttribute("tabindex"), "-1", `second radio button has tabindex="-1"`);
 		assert.strictEqual(await radioButtonsShadowRoots[2].getAttribute("tabindex"), "-1", `third radio button has tabindex="-1"`);
 	});
-	
+
 	it("tests form interaction", async () => {
 		const rb = await browser.$("#formRadioBtnRequired");
 		let validForm = await browser.executeAsync(done => {

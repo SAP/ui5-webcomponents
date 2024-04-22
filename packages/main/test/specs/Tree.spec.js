@@ -23,6 +23,11 @@ describe("Tree general interaction", () => {
 		await browser.url(`test/pages/Tree.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-tree", "ui5-tree-item", "ui5-tree-item-custom"]);
+	});
+
 	it("Tree is rendered", async () => {
 		const treeRoot = await browser.$("#tree").shadow$("ui5-tree-list");
 		assert.ok(await treeRoot.isExisting(), "Tree is rendered.");
@@ -235,7 +240,7 @@ describe("Tree drag and drop tests", () => {
 			...await draggedElement.getLocation(),
 			...await draggedElement.getSize()
 		};
-		
+
 		const dropTargetElementRectangle = {
 			...await dropTargetElement.getLocation(),
 			...await dropTargetElement.getSize()
