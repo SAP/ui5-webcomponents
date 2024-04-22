@@ -163,6 +163,8 @@
 	--_ui5-badge-min-width_size_l: 1.75rem;
 	--_ui5-badge-font-size_size_l: 1.25rem;
 	--_ui5-badge-icon_min_width_size_l: 1.25rem;
+	--_ui5-badge-icon_min_height_size_l:1.25rem
+	--_ui5-badge-icon_height_size_l:1.25rem;
 	--_ui5-badge-text_padding_size_l: 0.125rem 0.25rem;
-	--_ui5-badge-text-height_size_l: 1.5rem
+	--_ui5-badge-text-height_size_l: 1.5rem;
 }

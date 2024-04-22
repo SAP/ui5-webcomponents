@@ -1,13 +1,13 @@
 /**
- * Defines badge size types.
+ * Predefined sizes for the badge.
  * @public
  */
 enum BadgeSize {
 	/**
-	 * Standard size of the badge
+	 * Small size of the badge
 	 * @public
 	 */
-	M = "M",
+	S = "S",
 
 	/**
 	 * Large size of the badge

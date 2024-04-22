@@ -594,9 +594,7 @@
 }
 
 /* Sizes */
-:host([size="L"]) .ui5-badge-root,
-:host([size="L"]) [ui5-icon],
-:host([size="L"]) ::slotted([ui5-icon]) {
+:host([size="L"]) .ui5-badge-root{
 	font-size: var(--_ui5-badge-font-size_size_l);
 }
 
@@ -610,8 +608,9 @@
 	padding: var(--_ui5-badge-text_padding_size_l);
 } 
 
-
 :host([size="L"]) [ui5-icon],
 :host([size="L"]) ::slotted([ui5-icon]) {
 	min-width: var(--_ui5-badge-icon_min_width_size_l);
+	min-height: var(--_ui5-badge-icon_min_height_size_l);
+	height: var(--_ui5-badge-icon_height_size_l);
 }
