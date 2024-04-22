@@ -370,7 +370,10 @@ describe("Calendar general interaction", () => {
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 
-		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$("[data-sap-timestamp='1744934400']");
+		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
+			const text = await span.getText();
+			return text === "2025";
+		}).parentElement();
 
 		assert.strictEqual(await year2025.hasClass("ui5-yp-item--disabled"), true, "Year 2025 is disabled");
 	});
