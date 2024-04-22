@@ -7,6 +7,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -112,6 +113,9 @@ class DynamicPageHeaderActions extends UI5Element {
 	}
 
 	get pinButtonIcon() {
+		if (isLegacyThemeFamily()) {
+			return "pushpin-off";
+		}
 		return this.pinned ? "pushpin-on" : "pushpin-off";
 	}
 
