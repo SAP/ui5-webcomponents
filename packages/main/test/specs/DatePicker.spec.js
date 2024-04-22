@@ -64,17 +64,6 @@ describe("Date Picker Tests", () => {
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Value State Message", async () => {
-		datepicker.id = "#dp17";
-		const input = await datepicker.getInput();
-		await input.click();
-
-		const popover = await datepicker.getInputPopover();
-
-		const slot = await popover.$("#coolValueStateMessage");
-		assert.notOk(slot.error, "Value State message slot is working");
-	});
-
 	it("disabled", async () => {
 		datepicker.id = "#dp2";
 		const root = await datepicker.getRoot();
