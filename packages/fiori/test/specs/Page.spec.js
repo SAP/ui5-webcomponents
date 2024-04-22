@@ -5,6 +5,11 @@ describe("Page general interaction", () => {
 		await browser.url(`test/pages/Page.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-page");
+	});
+
 	it("tests initial rendering", async () => {
         const page = await browser.$("#page");
         const header = await page.shadow$(".ui5-page-header-root");

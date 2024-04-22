@@ -5,6 +5,11 @@ describe("Carousel general interaction", () => {
 		await browser.url(`test/pages/Carousel.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-carousel");
+	});
+
 	it("rendering", async () => {
 		const carouselRoot = await browser.$("#carousel1").shadow$(".ui5-carousel-root");
 		const carousel = await browser.$("#carousel1");

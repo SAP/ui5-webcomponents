@@ -5,6 +5,11 @@ describe("Color Picker general interaction", () => {
 		await browser.url(`test/pages/ColorPicker.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-color-picker");
+	});
+
 	it("tests color picker rendering", async () => {
 		const circle = await browser.$("#cp1").shadow$(".ui5-color-picker-circle");
 

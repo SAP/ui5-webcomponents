@@ -55,6 +55,11 @@ describe("DateTimePicker general interaction", () => {
 		await browser.url(`test/pages/DateTimePicker.html?sap-ui-language=en`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-datetime-picker", "ui5-time-selection-clocks", "ui5-toggle-spin-button"]);
+	});
+
 	it("tests picker opens/closes programmatically", async () => {
 		// act
 		await openPickerById("dt");

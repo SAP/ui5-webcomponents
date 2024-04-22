@@ -5,6 +5,11 @@ describe("Notification List Item Tests", () => {
 		await browser.url(`test/pages/NotificationList_test_page.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-li-notification", "ui5-li-notification-group"]);
+	});
+
 	it("tests itemClick fired", async () => {
 		const clickInput = await browser.$("#clickInput");
 		const EXPECTED_RESULT = "New order #2201";

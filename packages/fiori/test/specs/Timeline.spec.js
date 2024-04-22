@@ -5,6 +5,11 @@ describe("Timeline general interaction", () => {
 		await browser.url(`test/pages/Timeline.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-timeline", "ui5-timeline-item"]);
+	});
+
 	it("should fire name-click event on a normal item name", async () => {
 		const timelineItemName = await browser.$("ui5-timeline-item").shadow$("ui5-link");
 		const result = await browser.$("#result");

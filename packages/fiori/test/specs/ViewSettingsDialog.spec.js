@@ -5,6 +5,11 @@ describe("ViewSettingsDialog general interaction", () => {
 		await browser.url(`test/pages/ViewSettingsDialog.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-view-settings-dialog");
+	});
+
 	it("test ViewSettingsDialog initial value", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const viewSettingsDialog = await browser.$("#vsd");

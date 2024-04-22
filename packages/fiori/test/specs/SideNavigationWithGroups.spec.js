@@ -6,6 +6,11 @@ describe("Component Behavior", () => {
 		await browser.url(`test/pages/SideNavigationWithGroups.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-side-navigation", "ui5-side-navigation-item", "ui5-side-navigation-sub-item", "ui5-side-navigation-group"]);
+	});
+
 	describe("Main functionality", async () => {
 		it("rendering", async () => {
 			const sideNavigation = await browser.$("#sn1");

@@ -20,6 +20,9 @@ describe("Basic mobile picker rendering and interaction", () => {
 
 		const dialogOkButton = await combo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
 		assert.ok(await dialogOkButton.isDisplayed(), "Ok button is displayed");
+
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-combobox");
 	});
 
 	it("Should close the mobile picker dialog when pressing the close button", async () => {

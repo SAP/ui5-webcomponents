@@ -1,6 +1,12 @@
 import { assert } from "chai";
 
 describe("'sideContentPosition' property: ", () => {
+	it ("Checks for missing dependencies", async() => {
+		await browser.url(`test/pages/DynamicSideContent.html`);
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-dynamic-side-content");
+	});
+
 	it("set to 'End'", async () => {
 		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");

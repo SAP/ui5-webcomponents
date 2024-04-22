@@ -6,6 +6,11 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-flexible-column-layout");
+	});
+
 	it("tests Desktop size 1400px", async () => {
 		// act
 		await browser.setWindowSize(1400, 1080);

@@ -5,6 +5,11 @@ describe("Calendar Legend with standard items", () => {
 		await browser.url(`test/pages/CalendarLegend.html`);
 	})
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-calendar-legend", "ui5-calendar-legend-item"]);
+	});
+
 	it("Calendar Legend is rendered", async () => {
 		const legend = await browser.$("#calendarLegend").shadow$(".ui5-calendar-legend-root");
 
@@ -14,10 +19,10 @@ describe("Calendar Legend with standard items", () => {
 	it("Calendar Legend items are rendered", async () => {
 		const legend = await browser.$("#calendarLegend").shadow$(".ui5-calendar-legend-root");
 		const items = await legend.$$("ui5-calendar-legend-item");
-	
+
 		assert.strictEqual(items.length, 4, "Calendar Legend items are rendered");
 	});
-	
+
 
 	it("Calendar legend hides Today, when hideToday property provided", async () => {
 		const legend = await browser.$("#calendarLegend");

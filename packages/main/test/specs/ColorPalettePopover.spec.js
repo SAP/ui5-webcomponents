@@ -19,6 +19,9 @@ describe("ColorPalette interactions", () => {
 		// assert - default btn is focused
 		assert.ok(await defaultButton.matches(":focus"),  "The first element is focused");
 
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-color-palette-popover");
+
 		// act - close popover
 		await defaultButton.click();
 	});

@@ -5,6 +5,11 @@ describe("Clock API", () => {
 		await browser.url(`test/pages/TimePickerClock.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-time-picker", "ui5-time-selection-clocks", "ui5-toggle-spin-button"]);
+	});
+
 	it("'disabled' property", async () => {
 		const hours12 = await browser.$("#myHours12");
 		const hours12Disabled = await browser.$("#myHours12Disabled");

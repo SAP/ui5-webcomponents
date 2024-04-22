@@ -9,6 +9,11 @@ describe("CheckBox general interaction", () => {
 		await browser.url(`test/pages/CheckBox.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-checkbox");
+	});
+
 	it("tests checked default value is false", async () => {
 		const checkBox = await browser.$("#cb1");
 

@@ -6,6 +6,11 @@ describe("UploadCollection", () => {
 			await browser.url(`test/pages/UploadCollection.html`);
 		});
 
+		it ("Checks for missing dependencies", async() => {
+			const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+			await checkMissingDependencies(["ui5-upload-collection", "ui5-upload-collection-item"]);
+		});
+
 		it("should show Link when 'fileNameClickable'", async () => {
 			const firstItem = await browser.$("#firstItem");
 			assert.ok(await firstItem.shadow$("ui5-link").isDisplayed(), "Link should be rendered");

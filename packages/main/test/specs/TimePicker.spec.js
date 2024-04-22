@@ -7,7 +7,7 @@ describe("TimePicker general interaction", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies(["ui5-time-picker", "ui5-time-selection-clocks"]);
+		await checkMissingDependencies(["ui5-time-picker", "ui5-time-selection-clocks", "ui5-toggle-spin-button"]);
 	});
 
 	it("input receives value in format pattern depending on the set language", async () => {

@@ -24,6 +24,11 @@ describe("Component Behavior", () => {
 		await browser.url(`test/pages/ShellBar.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-shellbar");
+	});
+
 	describe("Accessibility", () => {
 		it("tests accessibilityTexts property", async () => {
 			const PROFILE_BTN_CUSTOM_TOOLTIP = "John Dow";

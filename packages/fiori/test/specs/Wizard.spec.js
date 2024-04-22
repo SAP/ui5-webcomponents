@@ -5,6 +5,11 @@ describe("Wizard general interaction", () => {
 		await browser.url(`test/pages/Wizard_test.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-wizard", "ui5-wizard-tab"]);
+	});
+
 	it("test initial state", async () => {
 		const wiz = await browser.$("#wizTest");
 		const step1 = await browser.$("#st1");

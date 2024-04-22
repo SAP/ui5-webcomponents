@@ -5,6 +5,11 @@ describe("BarcodeScannerDialog Behavior", () => {
 		await browser.url(`test/pages/BarcodeScannerDialog.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-barcode-scanner-dialog");
+	});
+
 	it("fires scan-error when no permissions granted", async () => {
 		// Setup: deny permissions to access the camera
 		await browser.setPermissions({ name: 'camera' }, 'denied');

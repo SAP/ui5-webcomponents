@@ -5,6 +5,11 @@ describe("ColorPalette interactions", () => {
 		await browser.url(`test/pages/ColorPalette.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-color-palette", "ui5-color-palette-item"]);
+	});
+
 	it("Test if selecting element works", async () => {
 		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");

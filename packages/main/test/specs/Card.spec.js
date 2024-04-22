@@ -5,6 +5,11 @@ describe("Card general interaction", () => {
 		await browser.url(`test/pages/Card.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-card", "ui5-card-header"]);
+	});
+
 	it("tests initial rendering", async () => {
 		const card = await browser.$("#card");
 

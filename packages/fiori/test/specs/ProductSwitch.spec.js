@@ -5,6 +5,11 @@ describe("ProductSwitch general interaction", async () => {
 		await browser.url(`test/pages/ProductSwitch.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-product-switch", "ui5-product-switch-item"]);
+	});
+
 	it("tests desktopColumns attribute", async () => {
 		const productSwitchFourColumn = await browser.$("#productSwitchFourColumn");
 		const productSwitchThreeColumn = await browser.$("#productSwitchThreeColumn");

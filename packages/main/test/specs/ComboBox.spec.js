@@ -13,6 +13,9 @@ describe("General interaction", () => {
 
 		await arrow.click();
 
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-combobox");
+
 		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 	});
 

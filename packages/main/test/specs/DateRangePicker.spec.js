@@ -5,6 +5,11 @@ describe("DateRangePicker general interaction", () => {
 		await browser.url(`test/pages/DateRangePicker.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-daterange-picker");
+	});
+
 	it("Custom Validation Error", async () => {
 		const daterangepicker = await browser.$("#daterange-picker3");
 

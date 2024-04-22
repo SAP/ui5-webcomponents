@@ -5,6 +5,11 @@ describe("IllustratedMessage 'design' property", () => {
 		await browser.url(`test/pages/IllustratedMessage.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-illustrated-message");
+	});
+
 	it("should return correct design", async () => {
 		// Arrange
 		const illustratedMsg = await browser.$("#illustratedMsg2");

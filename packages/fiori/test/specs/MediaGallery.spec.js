@@ -6,6 +6,11 @@ describe("MediaGallery general interaction", () => {
 		await browser.url(`test/pages/MediaGallery.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-media-gallery", "ui5-media-gallery-item"]);
+	});
+
 	it("fires selection-change on thumbnail click", async () => {
 		const item = await browser.$$("#mGallery2 ui5-media-gallery-item")[1];
 

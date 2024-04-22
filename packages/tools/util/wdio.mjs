@@ -8,6 +8,9 @@ const checkMissingDependencies = async (tags, tagsToIgnore) => {
 	for (const tagIndex in tags) {
 		const tag = tags[tagIndex];
 		const elements = await browser.$$(`>>>${tag}`);
+		if (elements.length === 0) {
+			assert.notOk(true, `No elements found on the test page for ${tag}`);
+		}
 		for (let i = 0; i < elements.length; i++) {
 			const missing = await elements[i].getMissingDependencies(tagsToIgnore);
 			if (missing.length === 0) {

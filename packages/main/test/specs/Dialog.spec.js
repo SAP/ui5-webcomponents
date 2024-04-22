@@ -5,6 +5,11 @@ describe("Dialog general interaction", () => {
 		await browser.url(`test/pages/Dialog.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-dialog");
+	});
+
 	it("tests dialog toggling", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const btnCloseDialog= await browser.$("#btnCloseDialog");
