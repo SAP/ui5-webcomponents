@@ -38,11 +38,13 @@ class GridWalker {
 	}
 
 	pageup() {
+		this.colPos = this.getColPos();
 		const rowPos = this.getRowPos();
 		this.rowPos = Math.max(rowPos > this.firstRowPos ? this.firstRowPos : 0, rowPos - this.pageSize);
 	}
 
 	pagedown() {
+		this.colPos = this.getColPos();
 		const rowPos = this.getRowPos();
 		const endRowPos = this.grid.length - 1;
 		const lastRowPos = endRowPos + this.lastRowPos;
@@ -50,24 +52,20 @@ class GridWalker {
 	}
 
 	home() {
+		this.colPos = this.getColPos();
 		if (this.colPos === 0) {
 			this.rowPos = (this.rowPos > this.firstRowPos) ? this.firstRowPos : 0;
-		} else if (this.grid[this.rowPos].length === 1) {
-			this.colPos = 0;
-			this.home();
 		} else {
 			this.colPos = (this.colPos > 1) ? 1 : 0;
 		}
 	}
 
 	end() {
+		this.colPos = this.getColPos();
 		if (this.colPos === 0) {
 			const endRowPos = this.grid.length - 1;
 			const lastRowPos = endRowPos + this.lastRowPos;
 			this.rowPos = (this.rowPos < lastRowPos) ? lastRowPos : endRowPos;
-		} else if (this.grid[this.rowPos].length === 1) {
-			this.colPos = 0;
-			this.end();
 		} else {
 			const lastColPos = this.grid[this.rowPos].length - 1;
 			this.colPos = (this.colPos < lastColPos) ? lastColPos : 0;

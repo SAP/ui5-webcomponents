@@ -1,7 +1,7 @@
 {{#if _hasGrowingButton}}
 	<div
 		id="growing-button"
-		tabindex="0"
+		tabindex="-1"
 		?active="{{_activeState}}"
 		@click="{{loadMore}}"
 		@keydown="{{_onKeydown}}"

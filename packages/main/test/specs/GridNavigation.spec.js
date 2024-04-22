@@ -110,16 +110,16 @@ describe("Grid - Keyboard Navigation", async () => {
 		assert.ok(await getCell(5, 0).isFocused(), `PageUp: Row5 Cell0 is focused.`);
 
 		await browser.keys("PageUp");
-		assert.ok(await getCell(1, 2).isFocused(), `PageUp: Row1 Cell2 is focused.`);
+		assert.ok(await getCell(1, 0).isFocused(), `PageUp: Row1 Cell0 is focused.`);
 
 		await browser.keys("PageUp");
-		assert.ok(await getCell(0, 2).isFocused(), `PageUp: Row0 Cell2 is focused.`);
+		assert.ok(await getCell(0, 0).isFocused(), `PageUp: Row0 Cell0 is focused.`);
 
 		await browser.keys("PageDown");
-		assert.ok(await getCell(20, 2).isFocused(), `PageDown: Row20 Cell2 is focused.`);
+		assert.ok(await getCell(20, 0).isFocused(), `PageDown: Row20 Cell0 is focused.`);
 
 		await browser.keys("PageDown");
-		assert.ok(await getCell(25, 2).isFocused(), `PageDown: Row25 Cell2 is focused.`);
+		assert.ok(await getCell(25, 0).isFocused(), `PageDown: Row25 Cell0 is focused.`);
 
 		await browser.keys("PageDown");
 		assert.ok(await growing.isFocused(), `PageDown: Growing button is focused.`);
