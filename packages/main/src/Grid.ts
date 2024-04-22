@@ -359,8 +359,8 @@ class Grid extends UI5Element {
 		return {
 			grid: {
 				"grid-template-columns": this._gridTemplateColumns,
-				"overflow-x": this._gridOverflowX,
-				"overflow-y": this._gridOverflowY,
+				"grid-overflow-x": this._gridOverflowX,
+				"grid-overflow-y": this._gridOverflowY,
 			},
 		};
 	}
@@ -434,6 +434,10 @@ class Grid extends UI5Element {
 			}
 		}
 		return element;
+	}
+
+	get _stickyElements() {
+		return [this.headerRow].filter(row => row.sticky);
 	}
 }
 

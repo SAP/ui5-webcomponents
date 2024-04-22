@@ -6,6 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 
 import GridHeaderRowTemplate from "./generated/templates/GridHeaderRowTemplate.lit.js";
 import GridHeaderRowCss from "./generated/themes/GridHeaderRow.css.js";
@@ -70,6 +71,12 @@ class GridHeaderRow extends UI5Element {
 	})
 	cells!: Array<GridHeaderCell>;
 
+	@property({ type: Boolean })
+	sticky!: boolean;
+
+	@property({ type: String, defaultValue: "0" })
+	stickyTop!: string;
+
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
@@ -97,6 +104,8 @@ class GridHeaderRow extends UI5Element {
 		} else {
 			this.removeAttribute("aria-selected");
 		}
+
+		this.style.setProperty(getScopedVarName("--ui5-sticky-header-offset"), this.stickyTop);
 	}
 
 	getFocusDomRef() {

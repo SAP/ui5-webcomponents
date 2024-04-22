@@ -134,11 +134,43 @@ class GridNavigation {
 		if (element instanceof HTMLInputElement) {
 			element.select();
 		}
+		this._handleSticky(element);
 		this._ignoreFocusIn = false;
 	}
 
 	_focusCurrentItem() {
 		this._focusElement(this._gridWalker.getCurrent() as HTMLElement);
+	}
+
+	/**
+	 * Scrolls the focused item into view, if it is behind the sticky header/sticky elements.
+	 */
+	_handleSticky(element: HTMLElement) {
+		const stickyElements = this._grid._stickyElements;
+		// If there are no sticky elements or the focused element is the header row, do nothing
+		if (stickyElements.length === 0 || element === this._grid.headerRow) {
+			return;
+		}
+
+		// Find the sticky element that is closest to the focused element
+		const elementRect = element.getBoundingClientRect();
+		const stickyBottom = stickyElements.reduce((min, stickyElement) => {
+			const stickyRect = stickyElement.getBoundingClientRect();
+
+			if (stickyRect.bottom > elementRect.top) {
+				return Math.max(min, stickyRect.bottom);
+			}
+			return min;
+		}, -Infinity);
+
+		// If the focused element is not behind any sticky element, do nothing
+		if (stickyBottom === -Infinity) {
+			return;
+		}
+
+		// Scroll the focused element into view
+		const scrollContainer = this._grid._scrollContainer;
+		scrollContainer.scrollTop += elementRect.top - stickyBottom;
 	}
 
 	_handleEnter(e: KeyboardEvent, eventOrigin: HTMLElement) {

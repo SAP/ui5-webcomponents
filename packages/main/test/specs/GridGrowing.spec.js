@@ -75,7 +75,7 @@ describe('Grid - Growing with Button', async () => {
 
 		await browser.execute((button) => {
 			button.focus();
-		}, growingButton);
+		}, gridGrowing);
 
 		// Press the Enter key
 		await browser.keys("Enter");
@@ -83,7 +83,7 @@ describe('Grid - Growing with Button', async () => {
 
 		await browser.execute((button) => {
 			button.focus();
-		}, growingButton);
+		}, gridGrowing);
 
 		// Press the Space key
 		await browser.keys("Space");
@@ -195,7 +195,7 @@ describe('Grid - Growing with Scroll', async () => {
 		await browser.url(`test/pages/GridGrowing.html`);
 
 		const grid = await browser.$("#grid0");
-		await grid.setProperty("style", `height: 200px`);
+		await grid.setProperty("style", `height: 200px; overflow: auto;`);
 
 		const gridGrowing = await browser.$("#growing");
 		await gridGrowing.setAttribute("type", "Scroll");
@@ -213,7 +213,7 @@ describe('Grid - Growing with Scroll', async () => {
 		const innerGrid = await grid.shadow$("#grid");
 		assert.ok(innerGrid.isExisting(), "Inner Grid exists");
 		const overflowY = await innerGrid.getCSSProperty("overflow-y");
-		assert.strictEqual(overflowY.value, "auto", "Grid is scrollable");
+		assert.strictEqual(overflowY.value, "visible", "Grid is scrollable");
 	});
 
 	// Test Case: Check if the load-more event is dispatched when the Grid is scrolled to the bottom

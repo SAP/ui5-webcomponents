@@ -255,3 +255,78 @@ describe("Grid - Keyboard Navigation", async () => {
 		assert.ok(await rows[2].isFocused(), `Tab: Row2 is focused.`);
 	});
 });
+
+describe("Grid - Keyboard Navigation with Fixed Headers", async() => {
+	before(async() => {
+		await browser.url("test/pages/GridFixedHeader.html");
+	});
+
+	it("scrollable container - focused row should always be below the header", async() => {
+		const grid = await browser.$("#grid0");
+		const lastRow = await browser.$("#row-21");
+
+		await lastRow.scrollIntoView();
+		await lastRow.click();
+		assert.ok(await lastRow.isFocused(), `Click: Row 21 (last row) is focused.`);
+
+		const headerRow = await grid.$("ui5-grid-header-row");
+
+		// Scroll to the top one by one
+		for (let i = 20; i > 0; i--) {
+			const row = await browser.$(`#row-${i}`);
+			await browser.keys("ArrowUp");
+
+			const headerRowLocation = await headerRow.getLocation("y");
+			const rowLocation = await row.getLocation("y");
+			assert.ok(await row.isFocused(), `ArrowUp: Row ${i} is focused.`);
+			assert.ok(await headerRow.isDisplayedInViewport(), `ArrowUp: Header is still displayed in the viewport.`);
+			assert.isAbove(rowLocation, headerRowLocation, `ArrowUp: Row ${i} is below the header.`);
+		}
+	});
+
+	it("scrollable table - focused row should always be below the header", async() => {
+		const grid = await browser.$("#grid1");
+		const lastRow = await browser.$("#row-21-1");
+
+		await lastRow.scrollIntoView();
+		await lastRow.click();
+		assert.ok(await lastRow.isFocused(), `Click: Row 21 (last row) is focused.`);
+
+		const headerRow = await grid.$("ui5-grid-header-row");
+
+		// Scroll to the top one by one
+		for (let i = 20; i > 0; i--) {
+			const row = await browser.$(`#row-${i}-1`);
+			await browser.keys("ArrowUp");
+
+			const headerRowLocation = await headerRow.getLocation("y");
+			const rowLocation = await row.getLocation("y");
+			assert.ok(await row.isFocused(), `ArrowUp: Row ${i} is focused.`);
+			assert.ok(await headerRow.isDisplayedInViewport(), `ArrowUp: Header is still displayed in the viewport.`);
+			assert.isAbove(rowLocation, headerRowLocation, `ArrowUp: Row ${i} is below the header.`);
+		}
+	});
+
+	it("body as scroll container - focused row should always be below the header", async() => {
+		const grid = await browser.$("#grid2");
+		const lastRow = await browser.$("#row-100-2");
+
+		await lastRow.scrollIntoView();
+		await lastRow.click();
+		assert.ok(await lastRow.isFocused(), `Click: Row 100 (last row) is focused.`);
+
+		const headerRow = await grid.$("ui5-grid-header-row");
+
+		// Scroll to the top one by one
+		for (let i = 99; i > 0; i--) {
+			const row = await browser.$(`#row-${i}-2`);
+			await browser.keys("ArrowUp");
+
+			const headerRowLocation = await headerRow.getLocation("y");
+			const rowLocation = await row.getLocation("y");
+			assert.ok(await row.isFocused(), `ArrowUp: Row ${i} is focused.`);
+			assert.ok(await headerRow.isDisplayedInViewport(), `ArrowUp: Header is still displayed in the viewport.`);
+			assert.isAbove(rowLocation, headerRowLocation, `ArrowUp: Row ${i} is below the header.`);
+		}
+	});
+});

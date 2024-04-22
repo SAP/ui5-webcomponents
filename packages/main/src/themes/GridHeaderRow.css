@@ -16,6 +16,13 @@
     outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
+:host([sticky]) {
+    position: sticky;
+    position: -webkit-sticky;
+    top: var(--ui5-sticky-header-offset);
+    z-index: 1;
+}
+
 #selection-cell {
     padding: 0;
 }

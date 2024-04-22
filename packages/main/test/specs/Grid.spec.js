@@ -2,10 +2,6 @@ import { assert } from "chai";
 
 const ROLE_COLUMN_HEADER = "columnheader";
 
-function checkPopinState(grid, expectedPopinState) {
-
-}
-
 describe("Grid - Popin Mode", async () => {
 	before(async () => {
 		await browser.url(`test/pages/GridPopin.html`);
@@ -134,5 +130,70 @@ describe("Grid - Popin Mode", async () => {
 				assert.strictEqual(await headerRow.shadow$(`slot[name=${slotName}]`).isExisting(), expectRole, `Header cell ${slotName} has been rendered (width: ${gridSize}): ${expectRole}`);
 			}
 		}
+	});
+});
+
+// Tests for the fixed header, whether it is shown correctly and behaves as expected
+describe("Grid - Fixed Header", async () => {
+	before(async () => {
+		await browser.url(`test/pages/GridFixedHeader.html`);
+	});
+
+	// Test case, check whether the header is fixed when scrolling
+	it("fixed header with wrapping container that has scrolling", async () => {
+		const grid = await browser.$("#grid0");
+		assert.ok(grid.isExisting(), "Grid exists");
+
+		const headerRow = await grid.$("ui5-grid-header-row");
+		const stickyProperty = await headerRow.getCSSProperty("position");
+		const topProperty = await headerRow.getCSSProperty("top");
+
+		assert.strictEqual(stickyProperty.value, "sticky", "Header CSS is sticky");
+		assert.strictEqual(topProperty.value, "50px", "Header is 50px from the top");
+
+		const lastRow = await browser.$("#row-21");
+		await lastRow.scrollIntoView();
+
+		const headerYPosition = await headerRow.getLocation("y");
+		assert.isAbove(headerYPosition, 50, "Header is above the viewport and above the toolbar");
+		assert.ok(headerRow.isDisplayedInViewport(), "Header is displayed in the viewport");
+	});
+
+	it("fixed header with table being scrollable", async () => {
+		const grid = await browser.$("#grid1");
+		assert.ok(grid.isExisting(), "Grid exists");
+
+		const headerRow = await grid.$("ui5-grid-header-row");
+		const stickyProperty = await headerRow.getCSSProperty("position");
+		const topProperty = await headerRow.getCSSProperty("top");
+
+		assert.strictEqual(stickyProperty.value, "sticky", "Header CSS is sticky");
+		assert.strictEqual(topProperty.value, "0px", "Header is 0 from the top");
+
+		const lastRow = await browser.$("#row-21-1");
+		await lastRow.scrollIntoView();
+
+		const headerYPosition = await headerRow.getLocation("y");
+		assert.isAbove(headerYPosition, 300, "Header is above the viewport and above the toolbar");
+		assert.ok(headerRow.isDisplayedInViewport(), "Header is displayed in the viewport");
+	});
+
+	if("fixed header with body being the scroll container", async() => {
+		const grid = await browser.$("#grid2");
+		assert.ok(grid.isExisting(), "Grid exists");
+
+		const headerRow = await grid.$("ui5-grid-header-row");
+		const stickyProperty = await headerRow.getCSSProperty("position");
+		const topProperty = await headerRow.getCSSProperty("top");
+
+		assert.strictEqual(stickyProperty.value, "sticky", "Header CSS is sticky");
+		assert.strictEqual(topProperty.value, "50px", "Header is 50px from the top");
+
+		const lastRow = await browser.$("#row-100-2");
+		await lastRow.scrollIntoView();
+
+		const headerYPosition = await headerRow.getLocation("y");
+		assert.isAbove(headerYPosition, 50, "Header is above the viewport and above the toolbar");
+		assert.ok(headerRow.isDisplayedInViewport(), "Header is displayed in the viewport");
 	});
 });
