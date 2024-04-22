@@ -278,7 +278,7 @@ class Grid extends UI5Element {
 			const overflow = scrollWidth - clientWidth;
 			const headers = this._getPopinOrderedColumns(false);
 			const poppedInWidth = headers.reduce((totalPoppedInWidth, headerCell) => {
-				if (totalPoppedInWidth <= overflow && !headerCell._popin) {
+				if (totalPoppedInWidth < overflow && !headerCell._popin) {
 					const headerWidth = Math.ceil(headerCell.getBoundingClientRect().width);
 					totalPoppedInWidth += headerWidth;
 					this._setHeaderPopinState(headerCell, true, headerWidth);
