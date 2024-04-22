@@ -929,7 +929,7 @@ class ComboBox extends UI5Element {
 	}
 
 	async _openRespPopover() {
-		(await this._getPicker()).showAt(this, true);
+		(await this._getPicker()).showAt(this);
 	}
 
 	_filterItems(str: string) {

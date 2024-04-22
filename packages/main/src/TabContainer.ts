@@ -574,7 +574,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (popoverTarget && isLongDragOver) {
-			this._showPopoverAt(popoverTarget, false, true);
+			this._showPopoverAt(popoverTarget);
 		} else {
 			this._closePopover();
 		}
@@ -711,7 +711,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		await this._togglePopover(opener, true);
+		await this._togglePopover(opener);
 	}
 
 	_setPopoverInitialFocus() {
@@ -879,7 +879,7 @@ class TabContainer extends UI5Element {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
-		await this._togglePopover(opener, true);
+		await this._togglePopover(opener);
 	}
 
 	_setIndentLevels(items: Array<ITab>, level: number, extraIndent: boolean) {
@@ -1276,27 +1276,25 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _togglePopover(opener: HTMLElement, setInitialFocus = false) {
+	async _togglePopover(opener: HTMLElement) {
 		this.responsivePopover = await this._respPopover();
 
 		if (this.responsivePopover.isOpen()) {
 			this._closePopover();
 		} else {
-			await this._showPopoverAt(opener, setInitialFocus);
+			await this._showPopoverAt(opener);
 		}
 	}
 
-	async _showPopoverAt(opener: HTMLElement, setInitialFocus = false, preventInitialFocus = false) {
+	async _showPopoverAt(opener: HTMLElement) {
 		this._hasScheduledPopoverOpen = true;
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
 
-		if (setInitialFocus) {
-			this._setPopoverInitialFocus();
-		}
+		this._setPopoverInitialFocus();
 
 		if (this._hasScheduledPopoverOpen) {
-			await this.responsivePopover.showAt(opener, preventInitialFocus);
+			await this.responsivePopover.showAt(opener);
 		}
 	}
 

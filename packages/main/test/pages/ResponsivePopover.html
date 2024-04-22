@@ -121,7 +121,7 @@
 	</ui5-responsive-popover>
 
 	<ui5-button id="btnInitialFocusPrevented">Open RP and prevent initial focus</ui5-button>
-	<ui5-responsive-popover id="simpleRPInitialFocusPrevented">
+	<ui5-responsive-popover id="simpleRPInitialFocusPrevented" _disable-initial-focus>
 		Content
 	</ui5-responsive-popover>
 
@@ -209,11 +209,11 @@
 		});
 
 		btnInitialFocus.addEventListener("click", function(event) {
-			simpleRPInitialFocus.showAt(event.target, false);
+			simpleRPInitialFocus.showAt(event.target);
 		});
 
 		btnInitialFocusPrevented.addEventListener("click", function(event) {
-			simpleRPInitialFocusPrevented.showAt(event.target, true);
+			simpleRPInitialFocusPrevented.showAt(event.target);
 		});
 
 		btnRpWithPopover.addEventListener("click", function () {

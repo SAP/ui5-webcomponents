@@ -570,7 +570,7 @@ class ShellBar extends UI5Element {
 
 			if (this.hasMenuItems) {
 				const menuPopover = this._getMenuPopover();
-				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!);
 			}
 		};
 
@@ -796,7 +796,7 @@ class ShellBar extends UI5Element {
 	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
 		const overflowPopover = this._getOverflowPopover();
-		overflowPopover.showAt(overflowButton, true);
+		overflowPopover.showAt(overflowButton);
 	}
 
 	onEnterDOM() {

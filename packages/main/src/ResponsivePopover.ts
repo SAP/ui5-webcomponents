@@ -86,16 +86,15 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Shows popover on desktop and dialog on mobile.
 	 * @param opener the element that the popover is shown at
-	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
 	 * @returns Resolves when the responsive popover is open
 	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
+	async showAt(opener: HTMLElement): Promise<void> {
 		if (!isPhone()) {
-			await super.showAt(opener, preventInitialFocus);
+			await super.showAt(opener);
 		} else {
 			this.style.display = "contents";
-			await this._dialog.show(preventInitialFocus);
+			await this._dialog.show();
 		}
 	}
 

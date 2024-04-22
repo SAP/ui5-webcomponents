@@ -1,6 +1,7 @@
 <ui5-popover class="ui5-shellbar-menu-popover"
 	hide-arrow
 	placement="Bottom"
+	_disable-initial-focus
 	@ui5-before-open={{_menuPopoverBeforeOpen}}
 	@ui5-after-close={{_menuPopoverAfterClose}}
 >
@@ -13,6 +14,7 @@
 
 <ui5-popover class="ui5-shellbar-overflow-popover"
 	placement="Bottom"
+	_disable-initial-focus
 	horizontal-align="{{popoverHorizontalAlign}}"
 	hide-arrow
 	@ui5-before-open={{_overflowPopoverBeforeOpen}}

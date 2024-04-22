@@ -261,7 +261,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	async openPopup() {
-		await this._open(false);
+		await this._open();
 	}
 
 	_resize() {
@@ -382,11 +382,12 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
+	 * Use this method to focus the element denoted by "initialFocus", if provided,
+	 * or the first focusable element otherwise.
 	 * @protected
 	 */
-	async applyInitialFocus(preventInitialFocus: boolean) {
-		if (!this._disableInitialFocus && !preventInitialFocus) {
+	async applyInitialFocus() {
+		if (!this._disableInitialFocus) {
 			await this.applyFocus();
 		}
 	}
@@ -437,7 +438,7 @@ abstract class Popup extends UI5Element {
 	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
 	 * @protected
 	 */
-	async _open(preventInitialFocus: boolean) {
+	async _open() {
 		if (this._isOpened) {
 			return;
 		}
@@ -467,12 +468,12 @@ abstract class Popup extends UI5Element {
 		this.open = true;
 
 		// initial focus, if focused element is statically created
-		await this.applyInitialFocus(preventInitialFocus);
+		await this.applyInitialFocus();
 
 		await renderFinished();
 
 		// initial focus, if focused element is dynamically created
-		await this.applyInitialFocus(preventInitialFocus);
+		await this.applyInitialFocus();
 
 		this.fireEvent("after-open", {}, false, false);
 	}

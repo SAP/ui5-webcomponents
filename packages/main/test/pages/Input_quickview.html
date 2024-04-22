@@ -33,7 +33,9 @@
 		<ui5-suggestion-item class="suggestionItem" text="IPad Air"></ui5-suggestion-item>
 	</ui5-input>
 
-	<ui5-popover id="quickViewCard" hide-arrow placement="Right" height="500px" prevent-focus-restore>
+	<ui5-popover id="quickViewCard"
+				 _disable-initial-focus
+				 hide-arrow placement="Right" height="500px" prevent-focus-restore>
 		<button>hello</button>
 		<ui5-input id="searchInput" class="input_quickview4auto">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
@@ -80,7 +82,9 @@
 	<div class="input_quickview6auto">Test mouseover on item</div>
 	<ui5-input id="mouseoverResult" class="input_quickview7auto"></ui5-input>
 
-	<ui5-popover id="quickViewCard2" hide-arrow placement="End" height="500px">
+	<ui5-popover id="quickViewCard2"
+				 _diable-initial-focus
+				 hide-arrow placement="End" height="500px">
 		<ui5-input id="searchInput2" class="input_quickview4auto">
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
@@ -111,7 +115,7 @@
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
-			quickViewCard.showAt(targetRef, true /* preventInitialFocus */);
+			quickViewCard.showAt(targetRef);
 		});
 
 		/*
@@ -122,7 +126,7 @@
 				const targetRef = event.detail.targetRef;
 
 				quickViewCard.close();
-				quickViewCard.showAt(targetRef, true /* preventInitialFocus */);
+				quickViewCard.showAt(targetRef);
 			});
 
 			el.addEventListener("ui5-mouseout", function (event) {
@@ -162,7 +166,7 @@
 		inputPreview2.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
 			quickViewCard2.close();
-			quickViewCard2.showAt(item, true /* preventInitialFocus */);
+			quickViewCard2.showAt(item);
 
 			// log info
 			suggestionItemPreviewRes.value = item.textContent;
@@ -186,7 +190,7 @@
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 				quickViewCard2.close();
-				quickViewCard2.showAt(targetRef, true /* preventInitialFocus */);
+				quickViewCard2.showAt(targetRef);
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;
