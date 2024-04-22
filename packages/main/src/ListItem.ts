@@ -27,6 +27,7 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
+import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -212,8 +213,8 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.3.0
 	 *
 	 */
-	@property()
-	accessibleRole!: string;
+	@property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
+	accessibleRole!: `${ListItemAccessibleRole}`;
 
 	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
 	_selectionMode!: `${ListSelectionMode}`;

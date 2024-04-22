@@ -39,6 +39,7 @@ import type {
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 
 // Template
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
@@ -402,8 +403,8 @@ class List extends UI5Element {
 	 * @default "list"
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "list" })
-	accessibleRole!: string;
+	@property({ type: ListAccessibleRole, defaultValue: ListAccessibleRole.List })
+	accessibleRole!: `${ListAccessibleRole}`;
 
 	/**
 	 * Defines the description for the accessible role of the component.
