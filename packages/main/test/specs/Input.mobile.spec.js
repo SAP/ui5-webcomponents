@@ -6,6 +6,11 @@ describe("Basic mobile picker rendering and interaction", () => {
 		await browser.emulateDevice('iPhone X');
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-input");
+	});
+
 	it("Should render properly the mobile picker", async () => {
 		const input = await browser.$("#myInput2");
 

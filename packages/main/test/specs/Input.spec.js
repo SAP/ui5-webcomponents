@@ -5,6 +5,11 @@ describe("Attributes propagation", () => {
 		await browser.url(`test/pages/Input.html`);
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies("ui5-input");
+	});
+
 	it("Should change the placeholder of the inner input", async () => {
 		const input = await browser.$("#myInput");
 		const sExpected = "New placeholder text";
