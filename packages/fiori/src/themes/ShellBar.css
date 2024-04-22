@@ -57,6 +57,7 @@
 	margin-inline-start: 0;
 }
 
+::slotted([ui5-toggle-button][slot="assistant"]:hover),
 ::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
@@ -64,6 +65,11 @@
 	background: var(--sapShell_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	color: var(--sapShell_TextColor);
+}
+
+::slotted([ui5-toggle-button][slot="assistant"][pressed]),
+::slotted([ui5-toggle-button][slot="assistant"][pressed]:hover:not([active])) {
+	color: var(--sapShell_Assistant_ForegroundColor);
 }
 
 ::slotted([ui5-toggle-button][slot="assistant"][active]),
