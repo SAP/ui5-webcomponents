@@ -25,6 +25,12 @@ describe("TimePicker on phone - general interactions", () => {
 		await browser.emulateDevice('iPhone X');
 	});
 
+	it ("Checks for missing dependencies", async() => {
+		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
+		await checkMissingDependencies(["ui5-time-picker", "ui5-time-selection-clocks", "ui5-time-picker-clock", "ui5-toggle-spin-button"]);
+	});
+
+
 	it("opening of popover with numeric inputs", async () => {
 		const timePicker = await browser.$("#timepicker");
 		const timePickerPopover = await timePicker.shadow$("ui5-popover");

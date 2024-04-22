@@ -57,7 +57,7 @@ describe("DateTimePicker general interaction", () => {
 
 	it ("Checks for missing dependencies", async() => {
 		const { checkMissingDependencies } = await import("@ui5/webcomponents-tools/util/wdio.mjs");
-		await checkMissingDependencies(["ui5-datetime-picker", "ui5-time-selection-clocks", "ui5-toggle-spin-button"]);
+		await checkMissingDependencies("ui5-datetime-picker");
 	});
 
 	it("tests picker opens/closes programmatically", async () => {
