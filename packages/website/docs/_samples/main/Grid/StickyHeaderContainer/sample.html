@@ -13,9 +13,9 @@
 		<ui5-bar id="toolbar" design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
 			<ui5-title tabindsex="0" level="H3" id="title" slot="startContent">My Sticky Toolbar</ui5-title>
 		</ui5-bar>
-		<ui5-grid id="grid" accessible-name-ref="title" column-mode="Scroll" no-data-text="No data found">
+		<ui5-grid id="grid" accessible-name-ref="title" sticky-top="50px" column-mode="Scroll" no-data-text="No data found">
 			<!-- playground-fold-end -->
-			<ui5-grid-header-row slot="header-row" sticky sticky-top="50px">
+			<ui5-grid-header-row slot="header-row" sticky>
 				<ui5-grid-header-cell id="produtCol"><span>Product</span></ui5-grid-header-cell>
 				<ui5-grid-header-cell id="supplierCol">Supplier</ui5-grid-header-cell>
 				<ui5-grid-header-cell id="dimensionsCol">Dimensions</ui5-grid-header-cell>

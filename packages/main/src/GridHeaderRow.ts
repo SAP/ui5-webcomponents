@@ -74,9 +74,6 @@ class GridHeaderRow extends UI5Element {
 	@property({ type: Boolean })
 	sticky!: boolean;
 
-	@property({ type: String, defaultValue: "0" })
-	stickyTop!: string;
-
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
@@ -105,7 +102,7 @@ class GridHeaderRow extends UI5Element {
 			this.removeAttribute("aria-selected");
 		}
 
-		this.style.setProperty(getScopedVarName("--ui5-sticky-header-offset"), this.stickyTop);
+		this.style.setProperty(getScopedVarName("--ui5-sticky-header-offset"), this._grid.stickyTop);
 	}
 
 	getFocusDomRef() {

@@ -217,6 +217,12 @@ class Grid extends UI5Element {
 	@property({ type: Boolean, defaultValue: false })
 	busy!: boolean;
 
+	/**
+	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
+	 */
+	@property({ type: String, defaultValue: "0" })
+	stickyTop!: string;
+
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
