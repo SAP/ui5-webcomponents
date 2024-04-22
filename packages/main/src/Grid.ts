@@ -426,13 +426,19 @@ class Grid extends UI5Element {
 	}
 
 	get _scrollContainer() {
-		let element = this as HTMLElement;
+		let element: HTMLElement = this as HTMLElement;
 		while (element.scrollHeight <= element.clientHeight) {
 			element = element.parentElement as HTMLElement;
+
+			if (element === document.body) {
+				return window;
+			}
+
 			if (!element) {
 				break;
 			}
 		}
+
 		return element;
 	}
 

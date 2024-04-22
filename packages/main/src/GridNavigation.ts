@@ -170,7 +170,9 @@ class GridNavigation {
 
 		// Scroll the focused element into view
 		const scrollContainer = this._grid._scrollContainer;
-		scrollContainer.scrollTop += elementRect.top - stickyBottom;
+		scrollContainer.scrollBy({
+			top: elementRect.top - stickyBottom,
+		});
 	}
 
 	_handleEnter(e: KeyboardEvent, eventOrigin: HTMLElement) {
