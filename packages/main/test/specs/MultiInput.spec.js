@@ -292,7 +292,7 @@ describe("MultiInput Truncated Token", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
+		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit.");
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");

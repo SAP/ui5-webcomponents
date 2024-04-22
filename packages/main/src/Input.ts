@@ -929,8 +929,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_onfocusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
-		const focusedOutToSuggestions = this.Suggestions && toBeFocused && toBeFocused.shadowRoot && toBeFocused.shadowRoot.contains(this.Suggestions.responsivePopover as Node);
-		const focusedOutToValueStateMessage = toBeFocused && toBeFocused.shadowRoot && toBeFocused.shadowRoot.querySelector(".ui5-valuestatemessage-root");
+
+		if (this.Suggestions?._getPicker().contains(toBeFocused) || this.getSlottedNodes("valueStateMessage").some(el => el.contains(toBeFocused))) {
+			return;
+		}
 
 		this._keepInnerValue = false;
 		this.focused = false; // invalidating property
@@ -938,13 +940,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		if (this.showClearIcon && !this._effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
-		}
-
-		// if focusout is triggered by pressing on suggestion item or value state message popover, skip invalidation, because re-rendering
-		// will happen before "itemPress" event, which will make item "active" state not visualized
-		if (focusedOutToSuggestions || focusedOutToValueStateMessage) {
-			e.stopImmediatePropagation();
-			return;
 		}
 
 		this.open = false;
@@ -1367,8 +1362,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	getInputDOMRefSync() {
-		if (isPhone() && this.Suggestions && this.Suggestions.responsivePopover) {
-			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone")!.shadowRoot!.querySelector<HTMLInputElement>("input")!;
+		if (isPhone() && this.Suggestions?._getPicker()) {
+			return this.Suggestions._getPicker().querySelector(".ui5-input-inner-phone")!.shadowRoot!.querySelector<HTMLInputElement>("input")!;
 		}
 
 		return this.nativeInput;
@@ -1534,7 +1529,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return this.valueStateText ? `${valueState} ${this.valueStateText}` : valueState;
 		}
 
-		return `${valueState}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${valueState}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
 	get itemSelectionAnnounce() {
@@ -1590,10 +1585,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get suggestionSeparators() {
 		return "None";
-	}
-
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {

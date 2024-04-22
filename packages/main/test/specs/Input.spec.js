@@ -600,26 +600,6 @@ describe("Input general interaction", () => {
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
 	});
 
-	it("Checks if valueStateMessage gets updated dynamically", async () => {
-		const btn = await $("#dynamic-value-state-trigger");
-		const input = await $("#dynamic-value-state").shadow$("input");
-
-		await input.scrollIntoView();
-		await btn.click();
-		await browser.pause(2000);
-		await input.click();
-
-		const inputElement = await browser.$("#dynamic-value-state");
-		const valueStatePopover = await inputElement.shadow$("ui5-popover");
-		const initialContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
-
-		await browser.pause(2000);
-
-		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
-
-		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
-	});
-
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
 		const input = await browser.$("#input-max-length"); // Input with no show-suggestions attribute
 		const innerInput = await input.shadow$("input");
@@ -702,12 +682,9 @@ describe("Input general interaction", () => {
 		inputError.click();
 		inputError.keys("a");
 
-		const popoverHeader = await inputError.shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
-		const valueStateText = await popoverHeader.$("div").getText();
 		const ariaHiddenText = await inputError.shadow$(`#valueStateDesc`).getText();
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
-		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");
 	});
 
 	it("Tests autocomplete(type-ahead)", async () => {

@@ -13,7 +13,6 @@ import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
-import Popover from "../Popover.js";
 import ListItemGroupHeader from "../ListItemGroupHeader.js";
 import SuggestionListItem from "../SuggestionListItem.js";
 
@@ -73,7 +72,6 @@ class Suggestions {
 	highlight: boolean;
 	selectedItemIndex: number;
 	accInfo?: SuggestionsAccInfo;
-	responsivePopover?: ResponsivePopover;
 	_scrollContainer?: HTMLElement;
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
