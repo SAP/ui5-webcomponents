@@ -398,13 +398,6 @@ class ShellBar extends UI5Element {
 	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
 	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
 	 *
-	 * **Example:**
-	 * myShellBarRef.accessibilityAttributes = {
-	 *  notifications: {
-	 *     hasPopup: "menu"
-	 *  }
-	 * }
-	 *
 	 * @default {}
 	 * @public
 	 * @since 1.10.0

@@ -56,32 +56,28 @@ class Title extends UI5Element {
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
 	level!: `${TitleLevel}`;
 
-	get normalizedLevel() {
-		return this.level.toLowerCase();
-	}
-
 	get h1() {
-		return this.normalizedLevel === "h1";
+		return this.level === TitleLevel.H1;
 	}
 
 	get h2() {
-		return this.normalizedLevel === "h2";
+		return this.level === TitleLevel.H2;
 	}
 
 	get h3() {
-		return this.normalizedLevel === "h3";
+		return this.level === TitleLevel.H3;
 	}
 
 	get h4() {
-		return this.normalizedLevel === "h4";
+		return this.level === TitleLevel.H4;
 	}
 
 	get h5() {
-		return this.normalizedLevel === "h5";
+		return this.level === TitleLevel.H5;
 	}
 
 	get h6() {
-		return this.normalizedLevel === "h6";
+		return this.level === TitleLevel.H6;
 	}
 }
 
