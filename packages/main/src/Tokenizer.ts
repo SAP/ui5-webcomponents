@@ -39,6 +39,7 @@ import {
 	isLeft,
 	isUp,
 	isDown,
+	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -255,10 +256,17 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
-	 * @private
+	 * @protected
 	 */
 	@property({ type: Boolean })
 	preventPopoverOpen!: boolean;
+
+	/**
+	 * Hides the popover arrow.
+	 * @protected
+	 */
+	@property({ type: Boolean })
+	hidePopoverArrow!: boolean;
 
 	@property({ validator: Integer })
 	_nMoreCount!: number;
@@ -277,7 +285,9 @@ class Tokenizer extends UI5Element {
 	_openedByNmore!: boolean;
 	_tokenDeleting!: boolean;
 	_skipExpanding!: boolean;
+	_skipTabIndex!: boolean;
 	_previousToken!: Token | null;
+	_focusedElement!: HTMLElement | null;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -368,13 +378,7 @@ class Tokenizer extends UI5Element {
 
 		this._nMoreCount = this.overflownTokens.length;
 		if (firstToken && !this.disabled && !this.preventInitialFocus) {
-			const hasSelectedToken = tokensArray.some(token => token.selected && !this.overflownTokens.includes(token));
-
-			tokensArray.forEach(token => {
-				token.forcedTabIndex = token.selected ? "0" : "-1";
-			});
-
-			if (!hasSelectedToken && !this.preventInitialFocus) {
+			if (!this.preventInitialFocus && !this._skipTabIndex) {
 				firstToken.forcedTabIndex = "0";
 			}
 		}
@@ -494,7 +498,7 @@ class Tokenizer extends UI5Element {
 	handleBeforeClose(e: CustomEvent) {
 		const tokensArray = this._tokens;
 
-		if (e.detail.escPressed && this._openedByNmore) {
+		if (this._openedByNmore) {
 			const lastToken = tokensArray[tokensArray.length - 1];
 			const focusedToken = tokensArray.find(token => token.focused);
 
@@ -561,7 +565,9 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 
 			this._skipExpanding = true;
-			this.open = !this.open;
+			this._focusedElement = getActiveElement();
+
+			this.open = true;
 		}
 
 		if (isSpaceShift(e)) {
@@ -588,10 +594,11 @@ class Tokenizer extends UI5Element {
 	_onPopoverListKeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
-		if (isCtrl && e.key.toLowerCase() === "i") {
+		if (isCtrl && e.key.toLowerCase() === "i" || isEscape(e)) {
 			e.preventDefault();
 
 			this.open = false;
+			this._focusedElement.focus();
 		}
 
 		if (e.key.toLowerCase() === "f7") {
@@ -798,7 +805,7 @@ class Tokenizer extends UI5Element {
 
 	_onfocusin(e: FocusEvent) {
 		const target = e.target as Token;
-
+		this.open = false;
 		this._itemNav.setCurrentItem(target);
 
 		if (!this.expanded) {
@@ -812,12 +819,14 @@ class Tokenizer extends UI5Element {
 			return;
 		}
 
-		// When focus is prevented and focus is not going to a token, we need to reset the currentIndex of the ItemNavigation
-		if (this.preventInitialFocus && e.relatedTarget instanceof HTMLElement && !e.relatedTarget.hasAttribute("ui5-token")) {
-			this._tokens.forEach(token => {
-				token.forcedTabIndex = "-1";
-			});
+		const relatedTarget = e.relatedTarget as HTMLElement;
 
+		if (!this.contains(relatedTarget)) {
+			this._tokens[0].forcedTabIndex = "0";
+			this._skipTabIndex = false;
+		} else {
+			this._skipTabIndex = true;
+			this._tokens[0].forcedTabIndex = "-1";
 			this._itemNav._currentIndex = -1;
 		}
 
@@ -841,6 +850,7 @@ class Tokenizer extends UI5Element {
 
 	_handleTokenSelection(e: KeyboardEvent | MouseEvent, deselectAll = true) {
 		const target = e.target as Token;
+
 		if (target.hasAttribute("ui5-token")) {
 			const deselectTokens = deselectAll ? this._tokens : [];
 

@@ -4,6 +4,8 @@
 	.opener="{{morePopoverOpener}}"
 	style={{styles.popover}}
 	content-only-on-desktop
+	prevent-focus-restore
+	?hide-arrow="{{hidePopoverArrow}}"
 	placement="Bottom"
 	horizontal-align="Start"
 	@ui5-before-close="{{handleBeforeClose}}"

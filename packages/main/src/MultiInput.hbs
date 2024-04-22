@@ -6,6 +6,7 @@
 		class="ui5-multi-input-tokenizer"
 		.opener={{morePopoverOpener}}
 		.popoverMinWidth={{_inputWidth}}
+		hide-popover-arrow
 		?expanded="{{tokenizerExpanded}}"
 		@keydown="{{_onTokenizerKeydown}}"
 		@ui5-token-delete={{tokenDelete}}
