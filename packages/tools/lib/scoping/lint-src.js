@@ -16,7 +16,7 @@ glob.sync(path.join(process.cwd(), "src/**/*.css")).forEach(file => {
 	});
 });
 
-glob.sync(path.join(process.cwd(), "src/**/*.js")).forEach(file => {
+glob.sync(path.join(process.cwd(), "src/**/*.ts")).forEach(file => {
 	let content = String(fs.readFileSync(file));
 	tags.forEach(tag => {
 		if (content.match(new RegExp(`querySelector[A-Za-z]*..${tag}`, "g"))) {
