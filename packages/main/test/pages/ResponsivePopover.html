@@ -169,59 +169,69 @@
 
 	<script>
 		btnOpen.addEventListener("click", function(event) {
-			respPopover.showAt(btnOpen);
+			respPopover.opener = btnOpen;
+			respPopover.open = true;
 		});
 		btnClose.addEventListener("click", function(event) {
 			respPopover.close();
 		});
 
 		btnOpen2.addEventListener("click", function(event) {
-			respPopover2.showAt(btnOpen2);
+			respPopover2.opener = btnOpen2;
+			respPopover2.open = true;
 		});
 		btnClose2.addEventListener("click", function(event) {
-			respPopover2.close();
+			respPopover2.open = false;
 		});
 
 		btnOpen3.addEventListener("click", function(event) {
-			respPopover3.showAt(btnOpen3);
+			respPopover3.opener = btnOpen3;
+			respPopover3.open = true;
 		});
 		btnClose3.addEventListener("click", function(event) {
-			respPopover3.close();
+			respPopover3.open = false;
 		});
 
 		btnOpen4.addEventListener("click", function(event) {
-			respPopover4.showAt(btnOpen4);
+			respPopover4.opener = btnOpen4;
+			respPopover4.open = true;
 		});
 		btnClose4.addEventListener("click", function(event) {
-			respPopover4.close();
+			respPopover4.open = false;
 		});
 
 		btnOpenDialog.addEventListener('click', function (event) {
-			dialog.show();
+			dialog.open = true;
 		});
 
 		btnSimpleRP.addEventListener("click", function(event) {
-			simpleRP.showAt(btnSimpleRP);
+			simpleRP.opener = btnSimpleRP;
+			simpleRP.open = true;
 		});
 
 		btnRpTopWithArrow.addEventListener("click", function(event) {
-			rpTopWithArrow.showAt(btnRpTopWithArrow);
+			rpTopWithArrow.opener = btnRpTopWithArrow;
+			rpTopWithArrow.open = true;
 		});
 
 		btnInitialFocus.addEventListener("click", function(event) {
-			simpleRPInitialFocus.showAt(event.target);
+			simpleRPInitialFocus.opener = event.target;
+			simpleRPInitialFocus.open = true;
 		});
 
 		btnInitialFocusPrevented.addEventListener("click", function(event) {
-			simpleRPInitialFocusPrevented.showAt(event.target);
+			simpleRPInitialFocusPrevented.opener = event.target;
+			simpleRPInitialFocusPrevented.open = true;
 		});
 
 		btnRpWithPopover.addEventListener("click", function () {
-			btnRpWithPopoverRP.showAt(btnRpWithPopover);
+			btnRpWithPopoverRP.opener = btnRpWithPopover;
+			btnRpWithPopoverRP.open = true;
 		});
 
 		btnRpWithPopoverOpener.addEventListener("click", function () {
-			btnRpWithPopoverInnerPopover.showAt(btnRpWithPopoverOpener);
+			btnRpWithPopoverInnerPopover.opener = btnRpWithPopoverOpener;
+			btnRpWithPopoverInnerPopover.open = true;
 		});
 
 		btnOpenWithAttr.addEventListener("click", function () {
@@ -229,7 +239,7 @@
 		});
 
 		btnCloseWithMethod.addEventListener("click", function () {
-			popoverAttr.close();
+			popoverAttr.open = false;
 		});
 
 		btnCloseWithAttr.addEventListener("click", function () {
@@ -255,13 +265,14 @@
 		});
 
 		btnRoleAlert.addEventListener("click", function () {
-			rPAlertRole.showAt(btnRoleAlert);
+			rPAlertRole.opener = btnRoleAlert;
+			rPAlertRole.open = true;
 		});
 
 		btnRoleNone.addEventListener("click", function () {
-			rPNoneRole.showAt(btnRoleNone);
+			rPNoneRole.opener = btnRoleNone;
+			rPNoneRole.open = true;
 		});
-
 	</script>
 </body>
 </html>
