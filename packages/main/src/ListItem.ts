@@ -197,15 +197,6 @@ abstract class ListItem extends ListItemBase {
 	role!: string;
 
 	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
-
-	/**
 	 * Used to define the role of the list item.
 	 * @private
 	 * @default ""
