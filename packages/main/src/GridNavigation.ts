@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClickable.js";
+import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import Grid from "./Grid.js";
 import GridRow from "./GridRow.js";
@@ -33,18 +34,17 @@ class GridNavigation {
 	_colPosition: number;
 	_tabPosition: number;
 	_ignoreFocusIn?: boolean;
-	_isRTL: boolean;
 
 	constructor(grid: Grid) {
 		this._grid = grid;
-		this._isRTL = grid.effectiveDir === "rtl";
 		this._onclickBound = this._onclick.bind(this);
 		this._onfocusinBound = this._onfocusin.bind(this);
 		this._onkeydownBound = this._onkeydown.bind(this);
 		grid.addEventListener("click", this._onclickBound);
 		grid.addEventListener("focusin", this._onfocusinBound);
 		grid.addEventListener("keydown", this._onkeydownBound);
-		this._gridWalker = new GridWalker(this._getNavigationItemsOfGrid());
+		this._gridWalker = new GridWalker();
+		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
 		this._colPosition = 0;
 		this._tabPosition = 0;
 	}
@@ -59,21 +59,35 @@ class GridNavigation {
 
 	_getNavigationItemsOfGrid() {
 		const items = [];
-		items.push(this._getNavigationItemsOfRow(this._grid.headerRow));
+		if (this._grid.headerRow && !isElementHidden(this._grid.headerRow)) {
+			items.push(this._getNavigationItemsOfRow(this._grid.headerRow));
+			this._gridWalker.setFirstRowPos(1);
+		} else {
+			this._gridWalker.setFirstRowPos(0);
+		}
+
 		if (this._grid.rows.length) {
-			this._grid.rows.forEach(row => {
-				items.push(this._getNavigationItemsOfRow(row));
-			});
+			this._grid.rows.forEach(row => items.push(this._getNavigationItemsOfRow(row)));
 		} else {
 			items.push(this._getNavigationItemsOfRow(this._grid._nodataRow));
 		}
+
 		if (this._grid._shouldRenderGrowing) {
 			items.push([this._grid._growing.getFocusDomRef()]);
+			this._gridWalker.setLastRowPos(-1);
+		} else {
+			this._gridWalker.setLastRowPos(0);
 		}
+
+		if (!this._gridWalker.getCurrent()) {
+			this._gridWalker.setRowPos(this._gridWalker.getFirstRowPos());
+		}
+
+		this._gridWalker.setGrid(items);
 		return items;
 	}
 
-	_setCurrentNavigationItem(e: Event, callback?: (currentItem: HTMLElement) => void) {
+	_setCurrentItem(e: Event, callback?: (currentItem: HTMLElement) => void) {
 		const navigationItems = this._getNavigationItemsOfGrid().flat();
 		const navigationItem = e.composedPath().find(target => navigationItems.includes(target as HTMLElement)) as HTMLElement;
 		if (navigationItem) {
@@ -92,11 +106,11 @@ class GridNavigation {
 		return eventOrigin instanceof GridCell || eventOrigin instanceof GridHeaderCell;
 	}
 
-	_isEventFromNavigationItem(e: Event) {
+	_isEventFromCurrentItem(e: Event) {
 		return e.composedPath()[0] === this._gridWalker.getCurrent();
 	}
 
-	_focusElement(element: HTMLElement, ignoreFocusIn: boolean = false) {
+	_focusElement(element: HTMLElement, ignoreFocusIn: boolean = true) {
 		if (!element) {
 			return;
 		}
@@ -134,13 +148,11 @@ class GridNavigation {
 	}
 
 	_handleF2(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (this._isEventFromNavigationItem(e)) {
+		if (this._isEventFromCurrentItem(e)) {
 			const firstTabbable = getTabbableElements(eventOrigin)[0];
 			this._focusElement(firstTabbable);
 		} else {
-			this._setCurrentNavigationItem(e, currentItem => {
-				this._focusElement(currentItem);
-			});
+			this._setCurrentItem(e, () => this._focusCurrentItem());
 		}
 		e.preventDefault();
 	}
@@ -155,7 +167,7 @@ class GridNavigation {
 			}
 			this._focusElement(elementToFocus);
 		} else {
-			this._setCurrentNavigationItem(e, currentItem => {
+			this._setCurrentItem(e, currentItem => {
 				this._tabPosition = getTabbableElements(currentItem).indexOf(eventOrigin);
 				this._colPosition = this._gridWalker.getColPos();
 				this._gridWalker.setColPos(0);
@@ -166,25 +178,25 @@ class GridNavigation {
 	}
 
 	_handleTab(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (this._isEventFromNavigationItem(e)) {
-			this._focusElement(e.shiftKey ? this._grid._beforeElement : this._grid._afterElement, true);
+		if (this._isEventFromCurrentItem(e)) {
+			this._focusElement(e.shiftKey ? this._grid._beforeElement : this._grid._afterElement);
 		} else {
 			const tabbables = getTabbableElements(this._grid._gridElement);
 			if (e.shiftKey && tabbables[0] === eventOrigin) {
-				this._focusElement(this._grid._beforeElement, true);
+				this._focusElement(this._grid._beforeElement);
 			}
 			if (!e.shiftKey && tabbables[tabbables.length - 1] === eventOrigin) {
-				this._focusElement(this._grid._afterElement, true);
+				this._focusElement(this._grid._afterElement);
 			}
 		}
 	}
 
 	_handleArrowUpDown(e: KeyboardEvent, eventOrigin: HTMLElement, direction: -1 | 1) {
-		if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey || this._isEventFromNavigationItem(e)) {
+		if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey || e.defaultPrevented || this._isEventFromCurrentItem(e) || /^(input|textarea)$/i.test(eventOrigin.nodeName)) {
 			return false;
 		}
 
-		this._setCurrentNavigationItem(e, currentItem => {
+		this._setCurrentItem(e, currentItem => {
 			this._tabPosition = getTabbableElements(currentItem).indexOf(eventOrigin);
 			this._gridWalker.setRowPos(this._gridWalker.getRowPos() + direction);
 			let elementToFocus = this._gridWalker.getCurrent() as HTMLElement;
@@ -210,24 +222,24 @@ class GridNavigation {
 		}
 
 		const eventOrigin = e.composedPath()[0] as HTMLElement;
+		if (!this._isEventFromCurrentItem(e) && this._getNavigationItemsOfGrid().flat().includes(eventOrigin)) {
+			this._gridWalker.setCurrent(eventOrigin);
+		}
+
 		const keydownHandlerName = `_handle${e.code}` as keyof GridNavigation;
 		const keydownHandler = this[keydownHandlerName] as (e: KeyboardEvent, eventOrigin: HTMLElement) => void | false;
 		if (typeof keydownHandler === "function" && keydownHandler.call(this, e, eventOrigin) === undefined) {
 			return;
 		}
 
-		if (!this._isEventFromNavigationItem(e)) {
+		if (!this._isEventFromCurrentItem(e)) {
 			return;
 		}
 
-		if (this._isRTL && isLeft(e)) {
-			this._gridWalker.right();
-		} else if (this._isRTL && isRight(e)) {
-			this._gridWalker.left();
-		} else if (isLeft(e)) {
-			this._gridWalker.left();
+		if (isLeft(e)) {
+			this._gridWalker[this._grid.effectiveDir === "rtl" ? "right" : "left"]();
 		} else if (isRight(e)) {
-			this._gridWalker.right();
+			this._gridWalker[this._grid.effectiveDir === "rtl" ? "left" : "right"]();
 		} else if (isUp(e)) {
 			this._gridWalker.up();
 		} else if (isDown(e)) {
@@ -280,20 +292,14 @@ class GridNavigation {
 		}
 
 		const evetOrigin = e.composedPath()[0];
-		const navigationItems = this._getNavigationItemsOfGrid();
-
-		this._gridWalker.setGrid(navigationItems);
-		navigationItems.flat().forEach(element => {
-			if (element !== evetOrigin) {
-				element?.removeAttribute("tabindex");
-			}
-		});
+		const currentItem = this._gridWalker.getCurrent() as HTMLElement;
+		if (currentItem && currentItem !== evetOrigin) {
+			currentItem.removeAttribute("tabindex");
+		}
 
 		if (evetOrigin === this._grid._beforeElement || evetOrigin === this._grid._afterElement) {
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
-		} else {
-			this._setCurrentNavigationItem(e);
 		}
 	}
 }

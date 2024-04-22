@@ -68,25 +68,46 @@ interface IGridGrowing extends IGridFeature {
  *
  * ### Keyboard Handling
  *
- * The `ui5-grid` distinguishes between row and cell navigation.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
+ * In order to use this functionality, you need to import the following module:
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
+ *
+ * Furthermore, you can interact with `ui5-grid` via the following keys:
  *
  * If the focus is on a row, the following keyboard shortcuts are available:
- * * <kbd>ARROW_DOWN</kbd> - Navigates down
- * * <kbd>ARROW_UP</kbd> - Navigates up
- * * <kbd>ARROW_RIGHT</kbd> - Selects the first cell of the focused row
- * * <kbd>SPACE</kbd> - Selects/deselects the focused row
- * * <kbd>HOME</kbd> - Navigates to the first row
- * * <kbd>END</kbd> - Navigates to the last row
- * * <kbd>PAGE_UP</kbd> - Navigates one page up
- * * <kbd>PAGE_DOWN</kbd> - Navigates one page down
+ * * <kbd>Down</kbd> - Navigates down
+ * * <kbd>Up</kbd> - Navigates up
+ * * <kbd>Right</kbd> - Selects the first cell of the row
+ * * <kbd>Space</kbd> - Toggles the selection of the row
+ * * <kbd>Ctrl/Cmd + A</kbd> - In multi selection mode, toggles the selection of all rows
+ * * <kbd>Home</kbd> - Navigates to the first row, if the focus is on the first row, navigates to the header row
+ * * <kbd>End</kbd> - Navigates to the last row, if the focus is on the last row, navigates to the growing button
+ * * <kbd>Page Up</kbd> - Navigates one page up, if the focus is on the first row, navigates to the header row
+ * * <kbd>Page Down</kbd> - Navigates one page down, if the focus is on the last row, navigates to the growing button
+ * * <kbd>F2</kbd> - Focuses the first tabbable element in the row
+ * * <kbd>F7</kbd> - If focus position is remembered, moves focus to the corresponding focus position row, otherwise to the first tabbable element within the row
+ * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the grid
+
  *
  * If the focus is on a cell, the following keyboard shortcuts are available:
- * * <kbd>ARROW_DOWN</kbd> - Navigates down
- * * <kbd>ARROW_UP</kbd> - Navigates up
- * * <kbd>ARROW_RIGHT</kbd> - Navigates right
- * * <kbd>ARROW_LEFT</kbd> - Navigates left. If the focus is on the first cell of the row, the focus is moved to the row.
- * * <kbd>HOME</kbd> - Navigates to the first cell of the current row
- * * <kbd>END</kbd> - Navigates to the last cell of the current row
+ * * <kbd>Down</kbd> - Navigates down
+ * * <kbd>Up</kbd> - Navigates up
+ * * <kbd>Right</kbd> - Navigates right
+ * * <kbd>Left</kbd> - Navigates left. If the focus is on the first cell of the row, the focus is moved to the row.
+ * * <kbd>Home</kbd> - Navigates to the first cell of the current row, if the focus is on the first cell, navigates to the corresponding row
+ * * <kbd>End</kbd> - Navigates to the last cell of the current row, if the focus is on the last cell, navigates to the corresponding row
+ * * <kbd>Page Up</kbd> - Navigates one page up while keeping the focus in same column
+ * * <kbd>Page Down</kbd> - Navigates one page down while keeping the focus in same column
+ * * <kbd>F2</kbd> - Toggles the focus between the first tabbable cell content and the cell
+ * * <kbd>Enter</kbd> - Focuses the first tabbable cell content
+ * * <kbd>F7</kbd> - If the focus is on an interactive element inside a row, moves focus to the corresponding row and remembers the focus position of the element within the row
+ * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the grid
+
+ *
+ * If the focus is on an interactive cell content, the following keyboard shortcuts are available:
+ * * <kbd>Down</kbd> - Move the focus to the interactive element in the same column of the previous row, unless the focused element prevents the default
+ * * <kbd>Up</kbd> - Move the focus to the interactive element in the same column of the next row, unless the focused element prevents the default
+ * * <kbd>[Shift]Tab</kbd> - Move the focus to the element in the tab chain
  *
  * ### ES6 Module Import
  *
@@ -105,6 +126,7 @@ interface IGridGrowing extends IGridFeature {
 	renderer: litRender,
 	styles: GridCss,
 	template: GridTemplate,
+	fastNavigation: true,
 	dependencies: [],
 })
 

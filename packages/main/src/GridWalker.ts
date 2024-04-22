@@ -9,55 +9,52 @@ class GridWalker {
 	rowPos: number;
 	colPos: number;
 	pageSize: number;
+	firstRowPos: number;
+	lastRowPos: number;
 
-	constructor(grid: unknown[][] = [[]], pageSize = 20, rowPos = 1, colPos = 0) {
+	constructor(grid: unknown[][] = [[]], pageSize = 20) {
 		this.grid = grid;
 		this.pageSize = pageSize;
-		this.rowPos = rowPos;
-		this.colPos = colPos;
-	}
-
-	setGrid(grid: unknown[][], initColPos = false) {
-		this.grid = grid;
-		this._updateRowPos();
-		if (initColPos) {
-			this.colPos = 0;
-		} else {
-			this._updateColPos();
-		}
+		this.rowPos = 0;
+		this.colPos = 0;
+		this.firstRowPos = 0;
+		this.lastRowPos = 0;
 	}
 
 	left() {
-		this.colPos = Math.max(this.colPos - 1, 0);
+		this.colPos = Math.max(this.getColPos() - 1, 0);
 	}
 
 	right() {
-		this.colPos = Math.min(this.colPos + 1, this.grid[this.rowPos].length - 1);
+		this.colPos = Math.min(this.getColPos() + 1, this.grid[this.getRowPos()].length - 1);
 	}
 
 	up() {
-		this.rowPos = Math.max(this.rowPos - 1, 0);
-		this._updateColPos();
+		this.rowPos = Math.max(this.getRowPos() - 1, 0);
 	}
 
 	down() {
-		this.rowPos = Math.min(this.rowPos + 1, this.grid.length - 1);
-		this._updateColPos();
+		this.rowPos = Math.min(this.getRowPos() + 1, this.grid.length - 1);
 	}
 
 	pageup() {
-		this.rowPos = Math.max(0, this.rowPos - this.pageSize);
-		this._updateColPos();
+		const rowPos = this.getRowPos();
+		this.rowPos = Math.max(rowPos > this.firstRowPos ? this.firstRowPos : 0, rowPos - this.pageSize);
 	}
 
 	pagedown() {
-		this.rowPos = Math.min(this.grid.length - 1, this.rowPos + this.pageSize);
-		this._updateColPos();
+		const rowPos = this.getRowPos();
+		const endRowPos = this.grid.length - 1;
+		const lastRowPos = endRowPos + this.lastRowPos;
+		this.rowPos = Math.min(rowPos < lastRowPos ? lastRowPos : endRowPos, rowPos + this.pageSize);
 	}
 
 	home() {
 		if (this.colPos === 0) {
-			this.rowPos = 0;
+			this.rowPos = (this.rowPos > this.firstRowPos) ? this.firstRowPos : 0;
+		} else if (this.grid[this.rowPos].length === 1) {
+			this.colPos = 0;
+			this.home();
 		} else {
 			this.colPos = (this.colPos > 1) ? 1 : 0;
 		}
@@ -65,15 +62,24 @@ class GridWalker {
 
 	end() {
 		if (this.colPos === 0) {
-			this.rowPos = this.grid.length - 1;
+			const endRowPos = this.grid.length - 1;
+			const lastRowPos = endRowPos + this.lastRowPos;
+			this.rowPos = (this.rowPos < lastRowPos) ? lastRowPos : endRowPos;
+		} else if (this.grid[this.rowPos].length === 1) {
+			this.colPos = 0;
+			this.end();
 		} else {
 			const lastColPos = this.grid[this.rowPos].length - 1;
 			this.colPos = (this.colPos < lastColPos) ? lastColPos : 0;
 		}
 	}
 
+	setGrid(grid: unknown[][]) {
+		this.grid = grid;
+	}
+
 	getCurrent() {
-		return this.grid[this.rowPos][this.colPos];
+		return this.grid[this.getRowPos()][this.getColPos()];
 	}
 
 	setCurrent(current: unknown) {
@@ -87,30 +93,36 @@ class GridWalker {
 		});
 	}
 
-	getColPos() {
-		return this.colPos;
+	setRowPos(rowPos: number) {
+		this.rowPos = rowPos;
+	}
+
+	getRowPos() {
+		return Math.min(this.rowPos, this.grid.length - 1);
 	}
 
 	setColPos(colPos: number) {
 		this.colPos = colPos;
-		this._updateColPos();
 	}
 
-	getRowPos() {
-		return this.rowPos;
+	getColPos() {
+		return Math.min(this.colPos, this.grid[this.getRowPos()].length - 1);
 	}
 
-	setRowPos(rowPos: number) {
-		this.rowPos = rowPos;
-		this._updateRowPos();
+	setFirstRowPos(firstRowPos: number) {
+		this.firstRowPos = firstRowPos;
 	}
 
-	_updateColPos() {
-		this.colPos = Math.min(this.colPos, this.grid[this.rowPos].length - 1);
+	getFirstRowPos() {
+		return this.firstRowPos;
 	}
 
-	_updateRowPos() {
-		this.rowPos = Math.min(this.rowPos, this.grid.length - 1);
+	setLastRowPos(lastRowPos: number) {
+		this.lastRowPos = lastRowPos;
+	}
+
+	getLastRowPos() {
+		return this.lastRowPos;
 	}
 }
 
