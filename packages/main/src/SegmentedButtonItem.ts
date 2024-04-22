@@ -48,7 +48,7 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
 class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButtonItem {
 	/**
 	 * Defines whether the component is disabled.
-	 * A disabled component can't be pressed or
+	 * A disabled component can't be selected or
 	 * focused, and it is not in the tab chain.
 	 * @default false
 	 * @public
@@ -88,7 +88,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	icon!: string;
 
 	/**
-	 * Indicates if the element if focusable
+	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
