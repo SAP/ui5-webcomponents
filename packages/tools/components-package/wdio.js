@@ -317,7 +317,9 @@ exports.config = {
 			.filter(l => l.level === "SEVERE" && l.message.includes("[UI5-FWK]"))
 			.map(l => l.message);
 		assert.equal(severeLogs.length, 0, `[${test.title}]\n\n    ${severeLogs.join("\n    ")}`)
-		test.callback(new Error('oh no'))
+		if (severeLogs.length) {
+			test.callback(new Error('Framework errors detected.'))
+		}
 	},
 	/**
 	 * Hook that gets executed after the suite has ended
