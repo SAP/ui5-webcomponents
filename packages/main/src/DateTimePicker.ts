@@ -192,8 +192,8 @@ class DateTimePicker extends DatePicker {
 	 * Opens the picker.
 	 * @public
 	 */
-	async openPicker(): Promise<void> {
-		await super.openPicker();
+	openPicker() {
+		super.openPicker();
 		this._previewValues = {
 			...this._previewValues,
 			timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
