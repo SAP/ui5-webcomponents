@@ -42,7 +42,7 @@
 }
 
 /* focused */
-:host([focused]) .ui5-media-gallery-item-root {
+.ui5-media-gallery-item-root:focus-within {
 	outline: var(--_ui5_media_gallery_thumbnail_focus_outline);
 	outline-offset: -1px;
 }
@@ -53,7 +53,7 @@
 }
 
 /* selected focused */
-:host([_thumbnail-design][focused][selected]) .ui5-media-gallery-item-root {
+:host([_thumbnail-design][selected]) .ui5-media-gallery-item-root:focus-within {
     outline-offset: -3px;
 }
 

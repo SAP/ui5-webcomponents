@@ -104,12 +104,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	/**
 	 * @private
 	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
-	 * @private
-	 */
 	@property()
 	forcedTabIndex!: string;
 
@@ -255,14 +249,6 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 		if (isSpace(e)) {
 			this._fireItemClick();
 		}
-	}
-
-	_onfocusout() {
-		this.focused = false;
-	}
-
-	_onfocusin() {
-		this.focused = true;
 	}
 
 	_fireItemClick() {
