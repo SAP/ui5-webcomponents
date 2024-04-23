@@ -615,6 +615,21 @@ describe("Select general interaction", () => {
 		const selectedOption = await popover.$("ui5-list").$("ui5-li[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
 	});
+
+	it("tests tooltip property of ui5-option", async () => {
+		const firstOption = await browser.$("#selectTooltip ui5-option:first-child");
+		const initialValue = "Cozy";
+		let tooltipValue = await firstOption.getProperty("tooltip");
+
+		assert.strictEqual(tooltipValue, initialValue, "The tooltip of ui5-option is correctly set");
+
+		const newValue = "New Value";
+		await firstOption.setProperty("tooltip", newValue);
+		tooltipValue = await firstOption.getProperty("tooltip");
+
+		assert.strictEqual(tooltipValue, newValue, "The tooltip of ui5-option is correctly changed");
+
+	});
 });
 
 describe("Attributes propagation", () => {
