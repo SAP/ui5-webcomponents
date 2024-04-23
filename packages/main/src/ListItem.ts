@@ -188,16 +188,6 @@ abstract class ListItem extends ListItemBase {
 	actionable!: boolean;
 
 	/**
-	 * Used to define the role of the list item.
-	 * @private
-	 * @default "listitem"
-	 * @since 1.0.0-rc.9
-	 *
-	 */
-	@property({ defaultValue: "listitem" })
-	role!: string;
-
-	/**
 	 * Defines the description for the accessible role of the component.
 	 * @protected
 	 * @default undefined
@@ -518,7 +508,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.listItemAccessibleRole || this.role,
+			role: this.listItemAccessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
