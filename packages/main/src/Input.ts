@@ -987,7 +987,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_clear() {
 		this.value = "";
-		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
+		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
 		if (!this._isPhone) {
 			this.focus();
 			this._focusedAfterClear = true;
