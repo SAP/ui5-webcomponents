@@ -30,6 +30,7 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListItemBase from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
@@ -402,8 +403,8 @@ class List extends UI5Element {
 	 * @default "list"
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "list" })
-	accessibleRole!: string;
+	@property({ type: ListAccessibleRole, defaultValue: ListAccessibleRole.List })
+	accessibleRole!: `${ListAccessibleRole}`;
 
 	/**
 	 * Defines the description for the accessible role of the component.
@@ -686,6 +687,10 @@ class List extends UI5Element {
 				position: this.loadingIndPosition,
 			},
 		};
+	}
+
+	get listAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
 	}
 
 	get classes(): ClassMap {

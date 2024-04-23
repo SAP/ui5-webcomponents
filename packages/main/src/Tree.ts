@@ -15,6 +15,7 @@ import type TreeItemBase from "./TreeItemBase.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import TreeList from "./TreeList.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type {
 	TreeItemBaseToggleEventDetail,
 	TreeItemBaseStepInEventDetail,
@@ -336,7 +337,7 @@ class Tree extends UI5Element {
 	}
 
 	get _role() {
-		return "tree";
+		return ListAccessibleRole.Tree;
 	}
 
 	get _label() {
