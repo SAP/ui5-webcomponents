@@ -805,7 +805,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Opens the picker.
 	 * @public
-	 * @returns Resolves when the picker is open
 	 */
 	openPicker() {
 		this._isPickerOpen = true;
