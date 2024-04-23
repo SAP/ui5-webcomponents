@@ -372,7 +372,7 @@ describe("TabContainer general interaction", () => {
 		assert.strictEqual(await firstTabItemText.getProperty("innerText"), "Tab 1 (123)" , "The inline number is added to the text.");
 	});
 
-	it("test that tab can be focused right after is inserted in the tab container", async () => {
+	it("test focus() right after tab is inserted in the tab container", async () => {
 		await browser.$("#insertAndFocusNewTab").click();
 		const isNewTabFocused = await browser.executeAsync((done) => {
 			const tabInStripDomRef = document.getElementById("newlyInsertedFocusedTab").getDomRefInStrip();
@@ -381,7 +381,22 @@ describe("TabContainer general interaction", () => {
 			done(tabInStripDomRef === activeElement);
 		});
 
-		assert.ok(isNewTabFocused, "Tab should be focused");
+		assert.ok(isNewTabFocused, "Tab in strip should be focused");
+	});
+
+	it("test focus() on tab in overflow", async () => {
+		await tabContainer.getEndOverflow("narrowTabContainer").click();
+
+		// Act
+		const isTabInOverflowFocused = await browser.executeAsync(async (done) => {
+			const tab = document.getElementById("narrowTabContainerTabFive");
+			await tab.focus();
+
+			const tabInOverflowDomRef = tab._getElementInOverflow();
+			done(document.activeElement.shadowRoot.activeElement === tabInOverflowDomRef);
+		});
+
+		assert.ok(isTabInOverflowFocused, "Tab in overflow should be focused");
 	});
 });
 
