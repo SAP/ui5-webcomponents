@@ -149,9 +149,6 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	movable!: boolean;
 
 	@property({ type: Boolean })
-	forcedSelected!: boolean;
-
-	@property({ type: Boolean })
 	_isTopLevelTab!: boolean;
 
 	@property({ type: Object, defaultValue: null })
@@ -320,7 +317,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 
 	get effectiveSelected() {
 		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
-		return this.selected || this.forcedSelected || subItemSelected;
+		return this.selected || this._selectedTabReference === this || subItemSelected;
 	}
 
 	get effectiveHidden() {

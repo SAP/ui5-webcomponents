@@ -326,6 +326,29 @@ describe("TabContainer general interaction", () => {
 		assert.notOk(await allTabs[4].getProperty("selected"), "The fifth tab should not be selected");
 	});
 
+	it("tests effective selected tab when there is no explicitly selected tab", async () => {
+		const tabContainer = await browser.$("#tabContainerNoExplicitlySelectedTab");
+		let allTabs = await tabContainer.$$("ui5-tab");
+		let effectiveSelectedArr = await Promise.all(allTabs.map(tab => tab.getProperty("effectiveSelected")));
+		let effectiveSelectedTabs = effectiveSelectedArr.filter(Boolean);
+
+		// Assert
+		assert.strictEqual(effectiveSelectedTabs.length, 1, "Only 1 tab is effectively selected");
+		assert.ok(await allTabs[0].getProperty("effectiveSelected"), "First tab is effectively selected");
+
+		// Act
+		await browser.$("#buttonAddTabAtNoExplicitlySelectedTab").click();
+
+		allTabs = await tabContainer.$$("ui5-tab");
+		effectiveSelectedArr = await Promise.all(allTabs.map(tab => tab.getProperty("effectiveSelected")));
+		effectiveSelectedTabs = effectiveSelectedArr.filter(Boolean);
+
+		// Assert
+		assert.strictEqual(effectiveSelectedTabs.length, 1, "Only 1 tab is effectively selected");
+		assert.ok(await allTabs[0].getProperty("effectiveSelected"), "First tab is effectively selected");
+	});
+
+
 	it("tests tabs dom ref", async () => {
 		const productsTabDomRef = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getDomRef());
 		const productsTabStableDomRef = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").shadowRoot.firstElementChild);
