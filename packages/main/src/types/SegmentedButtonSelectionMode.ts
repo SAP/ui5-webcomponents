@@ -13,7 +13,7 @@ enum SegmentedButtonSelectionMode {
 	 * Multiple items can be selected at a time. All items can be deselected.
 	 * @public
 	 */
-	Multi = "Multi",
+	Multiple = "Multiple",
 }
 
 export default SegmentedButtonSelectionMode;

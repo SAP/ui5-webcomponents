@@ -171,7 +171,7 @@ class SegmentedButton extends UI5Element {
 		}
 
 		switch (this.selectionMode) {
-		case SegmentedButtonSelectionMode.Multi:
+		case SegmentedButtonSelectionMode.Multiple:
 			if (e instanceof KeyboardEvent) {
 				target.pressed = !target.pressed;
 			}
