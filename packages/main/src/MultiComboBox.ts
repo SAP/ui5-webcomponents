@@ -106,6 +106,7 @@ import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input, { InputEventDetail } from "./Input.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import SuggestionItem from "./SuggestionItem.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-multi-combobox` as items
@@ -190,6 +191,7 @@ type MultiComboboxItemWithSelection = {
 		Tokenizer,
 		Token,
 		Icon,
+		Input,
 		ResponsivePopover,
 		Popover,
 		List,
@@ -198,6 +200,7 @@ type MultiComboboxItemWithSelection = {
 		ToggleButton,
 		Button,
 		CheckBox,
+		SuggestionItem,
 	],
 })
 /**

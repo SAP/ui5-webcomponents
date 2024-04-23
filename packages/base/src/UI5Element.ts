@@ -27,7 +27,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import executeTemplate from "./renderer/executeTemplate.js";
+import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type {
 	AccessibilityInfo,
@@ -36,6 +36,7 @@ import type {
 	ClassMap,
 } from "./types.js";
 
+const DEV_MODE = true;
 let autoId = 0;
 
 const elementTimeouts = new Map<string, Promise<void>>();
@@ -184,6 +185,19 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
+		if (DEV_MODE) {
+			const rootNode = this.getRootNode();
+			// when an element is connected, check if it exists in the `dependencies` of the parent
+			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
+				const klass = rootNode.host.constructor as typeof UI5Element;
+				const hasDependency = getTagsToScope(rootNode.host).includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
+				if (!hasDependency) {
+					// eslint-disable-next-line no-console
+					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
+				}
+			}
+		}
+
 		const ctor = this.constructor as typeof UI5Element;
 
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");

@@ -23,7 +23,11 @@
       "default": "./dist/ssr-dom.js"
     },
     ".": "./index.js",
-    "./dist/*": "./dist/*",
+    "./dist/*": {
+      "production": "./dist/prod/*",
+      "development": "./dist/*",
+      "default": "./dist/*"
+    },
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
     "./*": "./dist/*"
@@ -35,6 +39,7 @@
     "build": "nps build",
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
+    "generateProd": "nps generateProd",
     "bundle": "nps build.bundle",
     "test": "nps test",
     "prepublishOnly": "tsc -b"
