@@ -8,25 +8,25 @@ enum ListAccessibleRole {
 	 * Represents the ARIA role "list". (by default)
 	 * @public
 	 */
-	List = "list",
+	List = "List",
 
 	/**
 	 * Represents the ARIA role "menu".
 	 * @public
 	 */
-	Menu = "menu",
+	Menu = "Menu",
 
 	/**
 	 * Represents the ARIA role "tree".
 	 * @public
 	 */
-	Tree = "tree",
+	Tree = "Tree",
 
 	/**
 	 * Represents the ARIA role "listbox".
 	 * @public
 	 */
-	Listbox = "listbox"
+	ListBox = "ListBox"
 
 }
 

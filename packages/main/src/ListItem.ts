@@ -480,8 +480,8 @@ abstract class ListItem extends ListItemBase {
 		return undefined;
 	}
 
-	get _accessibleRole() {
-		return this.accessibleRole.toLowerCase();
+	get listItemAccessibleRole() {
+		return this.accessibleRole?.toLowerCase();
 	}
 
 	get ariaSelectedText() {
@@ -518,7 +518,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this._accessibleRole || this.role,
+			role: this.listItemAccessibleRole || this.role,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
