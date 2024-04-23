@@ -114,8 +114,8 @@
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			const targetRef = event.detail.targetRef;
 
-			quickViewCard.close();
-			quickViewCard.showAt(targetRef);
+			quickViewCard.opener = targetRef;
+			quickViewCard.open = true;
 		});
 
 		/*
@@ -125,8 +125,8 @@
 			el.addEventListener("ui5-mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 
-				quickViewCard.close();
-				quickViewCard.showAt(targetRef);
+				quickViewCard.opener = targetRef;
+				quickViewCard.open = true;
 			});
 
 			el.addEventListener("ui5-mouseout", function (event) {
@@ -165,8 +165,8 @@
 
 		inputPreview2.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
-			quickViewCard2.close();
-			quickViewCard2.showAt(item);
+			quickViewCard2.opener = item;
+			quickViewCard2.open = true;
 
 			// log info
 			suggestionItemPreviewRes.value = item.textContent;
@@ -189,8 +189,8 @@
 		[].slice.call(document.querySelectorAll("#inputPreview2 .suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
-				quickViewCard2.close();
-				quickViewCard2.showAt(targetRef);
+				quickViewCard2.opener = targetRef;
+				quickViewCard2.open = true;
 
 				// log info
 				mouseoverResult.value = targetRef.textContent;

@@ -155,8 +155,9 @@ class SelectMenu extends UI5Element {
 	/**
 	 * Closes the dropdown.
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		this.respPopover.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+	close(preventFocusRestore = false) {
+		this.respPopover.preventFocusRestore = preventFocusRestore;
+		this.respPopover.open = false;
 	}
 
 	onBeforeRendering() {

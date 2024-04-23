@@ -113,11 +113,12 @@
 		});
 
 		colorPaletteBtn.addEventListener("click", function(event) {
-			respPopover.showAt(colorPaletteBtn);
+			respPopover.opener = colorPaletteBtn;
+			respPopover.open = true;
 		});
 
 		btnClose.addEventListener("click", function(event) {
-			respPopover.close();
+			respPopover.open = false;
 		});
 	</script>
 </html>

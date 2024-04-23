@@ -1287,15 +1287,13 @@ class TabContainer extends UI5Element {
 	}
 
 	async _showPopoverAt(opener: HTMLElement) {
-		this._hasScheduledPopoverOpen = true;
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
 
 		this._setPopoverInitialFocus();
 
-		if (this._hasScheduledPopoverOpen) {
-			await this.responsivePopover.showAt(opener);
-		}
+		this.responsivePopover._opener = opener;
+		this.responsivePopover.open = true;
 	}
 
 	get hasItems(): boolean {
@@ -1336,8 +1334,9 @@ class TabContainer extends UI5Element {
 	}
 
 	_closePopover() {
-		this._hasScheduledPopoverOpen = false;
-		this.responsivePopover?.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
 	get dropIndicatorDOM(): DropIndicator | null {

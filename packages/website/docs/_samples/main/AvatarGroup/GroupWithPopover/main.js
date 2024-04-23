@@ -21,8 +21,8 @@ function onAvatarGroupClick(targetRef) {
         html += `</ui5-avatar></div>`;
     });
     placeholder.innerHTML = html;
-    peoplePopover.close();
-    peoplePopover.showAt(targetRef);
+    peoplePopover.opener = targetRef;
+	peoplePopover.open = true;
 }
 avatarGroup.addEventListener("click", function (event) {
     onAvatarGroupClick(event.detail.targetRef);

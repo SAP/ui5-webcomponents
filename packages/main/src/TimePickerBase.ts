@@ -236,7 +236,8 @@ class TimePickerBase extends UI5Element {
 	openPicker(): void {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
 		const responsivePopover = this._getPopover();
-		responsivePopover.showAt(this);
+		responsivePopover.opener = this;
+		responsivePopover.open = true;
 	}
 
 	/**
@@ -246,7 +247,7 @@ class TimePickerBase extends UI5Element {
 	 */
 	closePicker(): void {
 		const responsivePopover = this._getPopover();
-		responsivePopover.close();
+		responsivePopover.open = false;
 		this._isPickerOpen = false;
 	}
 
@@ -289,7 +290,8 @@ class TimePickerBase extends UI5Element {
 	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
 		const popover = this._getInputsPopover();
-		popover.showAt(this);
+		popover.opener = this;
+		popover.open = true;
 		this._isInputsPopoverOpen = true;
 	}
 

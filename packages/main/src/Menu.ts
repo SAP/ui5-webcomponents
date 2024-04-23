@@ -429,7 +429,10 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	close(): void {
-		this._popover?.close(false, false, true);
+		if (this._popover) {
+			this._popover.preventFocusRestore = true;
+			this._popover.open = false;
+		}
 	}
 
 	async _createPopover() {
@@ -661,7 +664,8 @@ class Menu extends UI5Element {
 						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
 					} while (parentMenu._parentMenuItem);
 
-					mainMenu._popover!.close();
+					mainMenu._popover!.preventFocusRestore = false;
+					mainMenu._popover!.open = false;
 				}
 			}
 		} else {

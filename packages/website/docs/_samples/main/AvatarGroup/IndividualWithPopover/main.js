@@ -22,7 +22,8 @@ function onAvatarClicked(avatarRef) {
         popAvatar.appendChild(avatarRef.image[i].cloneNode());
     }
     popAvatar.icon = avatarRef.icon;
-    personPopover.showAt(avatarRef);
+    personPopover.opener = avatarRef;
+	personPopover.open = true;
 }
 function onButtonClicked(targetRef) {
     const hiddenItems = avatarGroup.hiddenItems;
@@ -40,8 +41,8 @@ function onButtonClicked(targetRef) {
         html += `</ui5-avatar></div>`;
     });
     placeholder.innerHTML = html;
-    peoplePopover.close();
-    peoplePopover.showAt(targetRef);
+	peoplePopover.opener = targetRef;
+	peoplePopover.open = true;
 }
 avatarGroup.addEventListener("click", function (event) {
     if (event.detail.overflowButtonClicked) {

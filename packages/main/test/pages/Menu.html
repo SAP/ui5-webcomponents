@@ -184,14 +184,16 @@
 			const item = event.detail.item;
 			const opener = event.detail.ref;
 
-			if (detailsPopover.isOpen()) {
-				detailsPopover.close(false, false, true);
+			if (detailsPopover.open) {
+				detailsPopover.preventFocusRestore = true;
+				detailsPopover.open = false;
 			}
 
 			if (item.disabled && shouldOpenDetailsPopover) {
 				const link = detailsPopover.querySelector("#detailsLink");
 				link.textContent = item.text;
-				detailsPopover.showAt(opener)
+				detailsPopover.opener = opener;
+				detailsPopover.open = true;
 				link.focus();
 			}
 		});

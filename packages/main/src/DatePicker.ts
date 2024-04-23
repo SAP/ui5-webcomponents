@@ -600,7 +600,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_click(e: MouseEvent) {
 		if (isPhone()) {
-			this.responsivePopover!.showAt(this);
+			this.responsivePopover!.opener = this;
+			this.responsivePopover!.open = true;
 			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -798,7 +799,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 */
 	closePicker(): void {
-		this.responsivePopover!.close();
+		this.responsivePopover!.open = false;
 	}
 
 	/**
@@ -806,12 +807,13 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @returns Resolves when the picker is open
 	 */
-	async openPicker(): Promise<void> {
+	openPicker() {
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = this.firstPicker;
 		this.responsivePopover = this._respPopover();
 
-		await this.responsivePopover.showAt(this);
+		this.responsivePopover.opener = this;
+		this.responsivePopover.open = true;
 	}
 
 	togglePicker() {

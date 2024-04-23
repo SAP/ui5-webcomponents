@@ -300,8 +300,8 @@
 		}
 		placeholder.innerHTML = html;
 
-		groupPop.close();
-		groupPop.showAt(event.detail.targetRef);
+		groupPop.opener = event.detail.targetRef;
+		groupPop.open = true;
 	}
 
 	function onAvatarClicked(avatarGroup, avatarRef) {
@@ -315,8 +315,8 @@
 		popAvatar.initials = avatarRef.initials;
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
-		individualPop.close();
-		individualPop.showAt(avatarRef);
+		individualPop.opener = avatarRef;
+		individualPop.open = true;
 	}
 
 	avatarGroupGroupEvents.addEventListener("ui5-click", function (event) {
