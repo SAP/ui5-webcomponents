@@ -435,7 +435,8 @@
 		});
 
 		btnOpenPopup.addEventListener("click", function() {
-			popup.showAt(btnOpenPopup);
+			popup.opener = btnOpenPopup;
+			popup.open = true;
 		});
 
 

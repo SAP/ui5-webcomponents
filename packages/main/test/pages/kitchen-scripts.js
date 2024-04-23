@@ -78,10 +78,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverCloser = document.getElementById("closePopoverButton");
 
 	popoverOpener.addEventListener("click", function() {
-		popover.showAt(popoverOpener);
+		popover.opener = popoverOpener;
+		popover.open = true;
 	});
 	popoverCloser.addEventListener("click", function() {
-		popover.close();
+		popover.open = false;
 	});
 
 	/* Dialog */

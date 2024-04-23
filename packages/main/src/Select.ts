@@ -1106,12 +1106,13 @@ class Select extends UI5Element implements IFormElement {
 	openValueStatePopover() {
 		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
-			this.valueStatePopover.showAt(this);
+			this.valueStatePopover.opener = this;
+			this.valueStatePopover.open = true;
 		}
 	}
 
 	closeValueStatePopover() {
-		this.valueStatePopover && this.valueStatePopover.close();
+		this.valueStatePopover && (this.valueStatePopover.open = false);
 	}
 
 	toggleValueStatePopover(open: boolean) {

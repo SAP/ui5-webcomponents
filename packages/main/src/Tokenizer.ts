@@ -221,7 +221,9 @@ class Tokenizer extends UI5Element {
 	}
 
 	async openMorePopover() {
-		(await this.getPopover()).showAt(this.morePopoverOpener || this);
+		const popover = await this.getPopover();
+		popover.opener = this.morePopoverOpener || this;
+		popover.open = true;
 		this._isOpen = true;
 	}
 

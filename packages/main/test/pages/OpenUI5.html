@@ -99,13 +99,14 @@
 
 <script>
 	btn.addEventListener("click", () => {
-		dg.show();
+		dg.open = true;
 	})
 	btnPopup.addEventListener("click", () => {
-		popup.showAt(btnPopup);
+		popup.opener = btnPopup;
+		popup.open = true;
 	})
 	btn2.addEventListener("click", () => {
-		dg2.show();
+		dg2.open = true;
 	})
 
 	componentPopover.addEventListener("after-open", () => {

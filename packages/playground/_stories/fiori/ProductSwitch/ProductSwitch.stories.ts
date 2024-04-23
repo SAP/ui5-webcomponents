@@ -51,7 +51,8 @@ WithShellBar.decorators = [
                     popover.close();
                 } else {
                     event.preventDefault();
-                    popover.showAt(event.detail.targetRef);
+                    popover.opener = event.detail.targetRef;
+					popover.open = true;
                 }
             });
         </script>
