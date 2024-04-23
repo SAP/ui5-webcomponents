@@ -157,7 +157,7 @@ describe("Menu interaction", () => {
 			const openSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
 			const openMenuList = await openSubmenuPopover.$("ui5-list");
 
-			// assert.ok(await openMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
+			// assert.ok(await openMenuList.getProperty("loading"), "Busy property is properly propagated to the ui5-list component.");
 			await browser.waitUntil(async () => {
 				return (await openMenuList.$$("ui5-menu-li")).length === 4;
 			}, 1500, "Two additional nodes have been added.");

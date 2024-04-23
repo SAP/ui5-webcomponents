@@ -27,3 +27,7 @@
 	font-weight: bold;
 	font-family: var(--sapFontHeaderFamily);
 }
+
+.ui5-li-content {
+	width: 100%;
+}

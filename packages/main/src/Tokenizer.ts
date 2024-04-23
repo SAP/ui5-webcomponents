@@ -9,6 +9,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -287,7 +288,7 @@ class Tokenizer extends UI5Element {
 	_skipExpanding!: boolean;
 	_skipTabIndex!: boolean;
 	_previousToken!: Token | null;
-	_focusedElement!: HTMLElement | null;
+	_focusedElementBeforeOpen?: HTMLElement | null;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -495,7 +496,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	handleBeforeClose(e: CustomEvent) {
+	handleBeforeClose() {
 		const tokensArray = this._tokens;
 
 		if (this._openedByNmore) {
@@ -520,9 +521,11 @@ class Tokenizer extends UI5Element {
 			});
 		}
 
-		if (!this._tokenDeleting) {
+		if (!this._tokenDeleting && !this._skipExpanding) {
 			this.expanded = false;
 		}
+
+		this._skipExpanding = false;
 	}
 
 	handleBeforeOpen() {
@@ -565,7 +568,7 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 
 			this._skipExpanding = true;
-			this._focusedElement = getActiveElement();
+			this._focusedElementBeforeOpen = getFocusedElement();
 
 			this.open = true;
 		}
@@ -594,11 +597,12 @@ class Tokenizer extends UI5Element {
 	_onPopoverListKeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
-		if (isCtrl && e.key.toLowerCase() === "i" || isEscape(e)) {
+		if ((isCtrl && e.key.toLowerCase() === "i") || isEscape(e)) {
 			e.preventDefault();
 
+			this._skipExpanding = true;
 			this.open = false;
-			this._focusedElement.focus();
+			this._focusedElementBeforeOpen!.focus();
 		}
 
 		if (e.key.toLowerCase() === "f7") {
@@ -821,13 +825,16 @@ class Tokenizer extends UI5Element {
 
 		const relatedTarget = e.relatedTarget as HTMLElement;
 
+		this._tokens.forEach(token => {
+			token.forcedTabIndex = "-1";
+		});
+
+		this._itemNav._currentIndex = -1;
+		this._skipTabIndex = true;
+
 		if (!this.contains(relatedTarget)) {
 			this._tokens[0].forcedTabIndex = "0";
 			this._skipTabIndex = false;
-		} else {
-			this._skipTabIndex = true;
-			this._tokens[0].forcedTabIndex = "-1";
-			this._itemNav._currentIndex = -1;
 		}
 
 		if (!this._tokenDeleting) {
