@@ -685,6 +685,7 @@ class Select extends UI5Element implements IFormElement {
 		this.fireEvent<CustomEvent>("open");
 		this.itemSelectionAnnounce();
 		this._scrollSelectedItem();
+		this._currentlySelectedOption.focused = true;
 	}
 
 	_afterClose() {
