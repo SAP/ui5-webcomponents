@@ -192,7 +192,7 @@ class DateTimePicker extends DatePicker {
 	 * Opens the picker.
 	 * @public
 	 */
-	openPicker() {
+	openPicker() : void {
 		super.openPicker();
 		this._previewValues = {
 			...this._previewValues,
