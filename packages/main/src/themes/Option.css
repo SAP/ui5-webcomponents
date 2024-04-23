@@ -1,5 +1,5 @@
 :host {
-	height: var(--_ui5_list_item_dropdown_base_height);
+	height: var(--_ui5_list_item_base_height);
 	width: 100%;
 	padding: 0 1rem;
 }
