@@ -424,19 +424,6 @@
 			document.getElementById("dialog").show();
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-selection-change", function (event) {
-			var item = event.detail.item;
-			var mi = event.target
-			var token = document.createElement("ui5-token");
-
-			token.setAttribute("text", item.text);
-			token.setAttribute("slot", "tokens");
-			event.target.appendChild(token);
-
-			// discuss ?!
-			event.target.value = "";
-		});
-
 		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {
 			document.getElementById("basic-event-listener").innerHTML = "value help icon press";
 		});

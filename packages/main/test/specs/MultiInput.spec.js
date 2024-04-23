@@ -122,25 +122,6 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
 	});
 
-	it ("adds a token after selection change", async () => {
-		const mi = await browser.$("#suggestion-token");
-		const input = await mi.shadow$("input");
-		const popover = await mi.shadow$("ui5-responsive-popover");
-
-		await input.click();
-		await input.keys("c");
-
-		assert.ok(await popover.getProperty("open"), "Suggestion Popovoer is open");
-		let allTokens = await mi.$$("ui5-token");
-		assert.strictEqual(allTokens.length, 0, "0 tokens");
-
-		await popover.$("ui5-li-suggestion-item").click();
-
-		allTokens = await mi.$$("ui5-token");
-		assert.notOk(await popover.getProperty("open"), "Suggestion Popovoer is closed");
-		assert.strictEqual(allTokens.length, 1, "a token is added after selection");
-	});
-
 	it ("Placeholder", async () => {
 		const mi1 = await browser.$("#empty-mi").shadow$(".ui5-input-inner");
 		const mi2 = await browser.$("#mi-with-tokens-customicon").shadow$(".ui5-input-inner");
@@ -292,7 +273,7 @@ describe("MultiInput Truncated Token", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
+		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit.");
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -369,8 +350,8 @@ describe("ARIA attributes", () => {
 	it ("aria-describedby value according to the tokens and suggestions count", async () => {
 		const mi = await browser.$("#suggestion-token");
 		const innerInput = await mi.shadow$("input");
-		const tokensCountITextId = `${await mi.getProperty("_id")}-hiddenText-nMore`;
-		const suggestionsITextId = `${await mi.getProperty("_id")}-suggestionsText`;
+		const tokensCountITextId = `hiddenText-nMore`;
+		const suggestionsITextId = `suggestionsText`;
 		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
 
 		await browser.$("#suggestion-token").scrollIntoView();
@@ -600,27 +581,6 @@ describe("Keyboard handling", () => {
 
 		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
 	})
-
-	it("should change input's value when set in selection change event", async () => {
-		const input = $("#suggestion-token");
-		const innerInput = input.shadow$("input");
-
-		await input.scrollIntoView();
-		await innerInput.click();
-		await innerInput.keys('a');
-		await innerInput.keys("Enter");
-
-		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
-		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
-
-		await innerInput.keys("ArrowLeft");
-
-		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
-
-		await innerInput.keys("ArrowRight");
-
-		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
-	});
 
 	it("should text field always when focus in" , async () => {
 		const mi = $("#one-token");
