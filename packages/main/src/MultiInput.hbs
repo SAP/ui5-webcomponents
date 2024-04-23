@@ -1,7 +1,7 @@
 {{>include "./Input.hbs"}}
 
 {{#*inline "preContent"}}
-	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
+	<span id="hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 	<ui5-tokenizer
 		class="ui5-multi-input-tokenizer"
 		.morePopoverOpener={{morePopoverOpener}}
@@ -15,15 +15,15 @@
 		@focusout="{{_tokenizerFocusOut}}"
 	>
 		<slot name="tokens"></slot>
-		<div slot="valueStateMessage">
-			{{#if shouldDisplayDefaultValueStateMessage}}
-				{{valueStateText}}
-			{{else}}
-				{{#each valueStateMessageText}}
-					{{this}}
-				{{/each}}
-			{{/if}}
-		</div>
+		{{#if valueStateOpen}}
+			<div slot="valueStateMessage">
+				{{#if shouldDisplayDefaultValueStateMessage}}
+					{{valueStateText}}
+				{{else}}
+					<slot name="valueStateMessage"></slot>
+				{{/if}}
+			</div>
+		{{/if}}
 	</ui5-tokenizer>
 {{/inline}}
 

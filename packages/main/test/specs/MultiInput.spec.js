@@ -292,7 +292,7 @@ describe("MultiInput Truncated Token", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
+		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit.");
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -369,8 +369,8 @@ describe("ARIA attributes", () => {
 	it ("aria-describedby value according to the tokens and suggestions count", async () => {
 		const mi = await browser.$("#suggestion-token");
 		const innerInput = await mi.shadow$("input");
-		const tokensCountITextId = `${await mi.getProperty("_id")}-hiddenText-nMore`;
-		const suggestionsITextId = `${await mi.getProperty("_id")}-suggestionsText`;
+		const tokensCountITextId = `hiddenText-nMore`;
+		const suggestionsITextId = `suggestionsText`;
 		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
 
 		await browser.$("#suggestion-token").scrollIntoView();
