@@ -1,7 +1,5 @@
 :host {
 	height: var(--_ui5_list_item_dropdown_base_height);
-}
-
-:host ::part(icon) {
-	color: var(--sapList_TextColor);
+	width: 100%;
+	padding: 0 1rem;
 }

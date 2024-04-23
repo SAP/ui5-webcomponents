@@ -42,6 +42,10 @@
 	cursor: pointer;
 }
 
+:host [ui5-li-custom]::part(native-li) {
+	padding: 0;
+}
+
 .ui5-select-popover::part(content),
 .ui5-select-popover::part(header) {
 	padding: 0;
