@@ -198,14 +198,6 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 		this.fireEvent("load-more");
 	}
 
-	focus(focusOptions?: FocusOptions | undefined): Promise<void> {
-		const focusDomRef = this.getFocusDomRef();
-		if (focusDomRef) {
-			focusDomRef.setAttribute("tabindex", "-1");
-		}
-		return UI5Element.prototype.focus.call(this, focusOptions);
-	}
-
 	_hasScrollToLoad() {
 		return this.type === GridGrowingMode.Scroll;
 	}
