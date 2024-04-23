@@ -500,8 +500,6 @@ class TimePickerInternals extends UI5Element {
 	_setExactMatch() {}
 }
 
-TimePickerInternals.define();
-
 export default TimePickerInternals;
 export type {
 	TimePickerComponentIndexMap,
