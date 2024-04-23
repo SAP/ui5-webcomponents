@@ -223,10 +223,9 @@ type InputSuggestionScrollEventDetail = {
  * @param {HTMLElement} item The previewed suggestion item.
  * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
  * @public
- * @since 1.0.0-rc.8
+ * @since 2.0.0
  */
-
-@event<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, {
+@event<InputSelectionChangeEventDetail>("selection-change", {
 	detail: {
 		/**
 	 	* @public
