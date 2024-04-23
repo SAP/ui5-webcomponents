@@ -1,0 +1,25 @@
+@import "./Button.css";
+
+.ui5-ai-button-content {
+	display: flex;
+	align-items: center;
+}
+
+.ui5-ai-button-content > [ui5-icon] {
+	margin-inline-start: 0.25rem;
+	color: var(--sapButton_TextColor);
+}
+
+.ui5-ai-button-content > [ui5-icon][name=""] {
+	display: none;
+}
+
+/* override for icon-only button */
+:host([icon-only]) .ui5-button-root {
+	padding: 0 var(--_ui5_button_base_padding);
+}
+
+/* override for icon-only button */
+:host([icon-only]) .ui5-button-text {
+    display: block;
+}

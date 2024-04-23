@@ -22,19 +22,12 @@
 	part="button"
 	role="{{buttonAccessibleRole}}"
 >
-	{{#if icon}}
-		<ui5-icon
-			class="ui5-button-icon"
-			name="{{icon}}"
-			accessible-role="{{iconRole}}"
-			part="icon"
-			?show-tooltip={{showIconTooltip}}
-		></ui5-icon>
-	{{/if}}
+
+	{{> buttonIcon}}
 
 	<span id="{{_id}}-content" class="ui5-button-text">
 		<bdi>
-			<slot></slot>
+			{{> buttonContent}}
 		</bdi>
 	</span>
 
@@ -44,3 +37,19 @@
 </button>
 
 {{#*inline "ariaPressed"}}{{/inline}}
+
+{{#*inline "buttonIcon"}}
+	{{#if icon}}
+		<ui5-icon
+			class="ui5-button-icon"
+			name="{{icon}}"
+			accessible-role="{{iconRole}}"
+			part="icon"
+			?show-tooltip={{showIconTooltip}}
+		></ui5-icon>
+	{{/if}}
+{{/inline}}
+
+{{#*inline "buttonContent"}}
+<slot></slot>
+{{/inline}}

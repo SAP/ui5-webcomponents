@@ -1,0 +1,15 @@
+{{>include "./Button.hbs"}}
+
+
+{{#*inline "buttonContent1"}}
+<slot></slot>
+{{/inline}}
+
+{{#*inline "buttonContent"}}
+<div class="ui5-ai-button-content">
+    <span>{{_text}}</span>
+    {{#if _icon}}
+    <ui5-icon name="{{_icon}}"></ui5-icon>
+    {{/if}}
+</div>
+{{/inline}}

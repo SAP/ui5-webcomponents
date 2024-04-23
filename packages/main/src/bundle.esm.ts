@@ -96,6 +96,7 @@ import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 // or for custom icon collection
 // setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
 
+import AiButton from "./AiButton.js";
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
 import Badge from "./Badge.js";
