@@ -112,7 +112,7 @@ class ResponsivePopover extends Popover {
 		if (!isPhone()) {
 			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
-			this._dialog.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			this._dialog?.close(escPressed, preventRegistryUpdate, preventFocusRestore);
 		}
 	}
 

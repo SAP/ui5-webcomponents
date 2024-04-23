@@ -335,7 +335,7 @@ class TimePickerBase extends UI5Element {
 		this._isInputsPopoverOpen = false;
 	}
 
-	async _handleInputClick(evt: MouseEvent) {
+	_handleInputClick(evt: MouseEvent) {
 		const target = evt.target as HTMLElement;
 		if (this._isPickerOpen) {
 			return;
@@ -345,7 +345,7 @@ class TimePickerBase extends UI5Element {
 			this.toggleInputsPopover();
 		}
 
-		const inputField = await this._getInputField();
+		const inputField = this._getInputField();
 
 		if (inputField) {
 			(inputField as HTMLInputElement).select();

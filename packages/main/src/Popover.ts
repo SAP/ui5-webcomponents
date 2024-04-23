@@ -274,6 +274,11 @@ class Popover extends Popup {
 			return;
 		}
 
+		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+			this.fireEvent("after-close", {}, false, false);
+			return;
+		}
+
 		await this.showAt(opener);
 	}
 
