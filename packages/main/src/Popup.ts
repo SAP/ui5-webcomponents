@@ -176,6 +176,8 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Indicates whether the initial focus should be set explicitly from the component.
 	 * @public
+	 * @default false
+	 * @since 2.0
 	 */
 	@property({ type: Boolean })
 	preventInitialFocus!: boolean;
