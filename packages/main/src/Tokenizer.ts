@@ -285,7 +285,7 @@ class Tokenizer extends UI5Element {
 	_expandedScrollWidth?: number;
 	_openedByNmore!: boolean;
 	_tokenDeleting!: boolean;
-	_skipExpanding!: boolean;
+	_preventCollapse!: boolean;
 	_skipTabIndex!: boolean;
 	_previousToken!: Token | null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
@@ -338,6 +338,12 @@ class Tokenizer extends UI5Element {
 			this.open = true;
 			this.scrollToEnd();
 		}
+
+		this._tokens.forEach(token => {
+			token.forcedTabIndex = "-1";
+		});
+
+		this._skipTabIndex = true;
 
 		this.fireEvent("show-more-items-press");
 	}
@@ -521,11 +527,11 @@ class Tokenizer extends UI5Element {
 			});
 		}
 
-		if (!this._tokenDeleting && !this._skipExpanding) {
+		if (!this._tokenDeleting && !this._preventCollapse) {
 			this.expanded = false;
 		}
 
-		this._skipExpanding = false;
+		this._preventCollapse = false;
 	}
 
 	handleBeforeOpen() {
@@ -534,6 +540,7 @@ class Tokenizer extends UI5Element {
 
 	handleAfterClose() {
 		this.open = false;
+		this._preventCollapse = false;
 	}
 
 	handleDialogButtonPress(e: MouseEvent) {
@@ -567,7 +574,7 @@ class Tokenizer extends UI5Element {
 		if (isCtrl && e.key.toLowerCase() === "i" && this._tokens.length > 0) {
 			e.preventDefault();
 
-			this._skipExpanding = true;
+			this._preventCollapse = true;
 			this._focusedElementBeforeOpen = getFocusedElement();
 
 			this.open = true;
@@ -599,10 +606,10 @@ class Tokenizer extends UI5Element {
 
 		if ((isCtrl && e.key.toLowerCase() === "i") || isEscape(e)) {
 			e.preventDefault();
-
-			this._skipExpanding = true;
 			this.open = false;
-			this._focusedElementBeforeOpen!.focus();
+
+			this._preventCollapse = true;
+			this._focusedElementBeforeOpen && this._focusedElementBeforeOpen.focus();
 		}
 
 		if (e.key.toLowerCase() === "f7") {
@@ -818,11 +825,6 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onfocusout(e: FocusEvent) {
-		if (this._skipExpanding) {
-			this._skipExpanding = false;
-			return;
-		}
-
 		const relatedTarget = e.relatedTarget as HTMLElement;
 
 		this._tokens.forEach(token => {
@@ -837,9 +839,10 @@ class Tokenizer extends UI5Element {
 			this._skipTabIndex = false;
 		}
 
-		if (!this._tokenDeleting) {
+		if (!this._tokenDeleting && !this._preventCollapse) {
 			this.expanded = false;
 		}
+		this._preventCollapse = false;
 	}
 
 	_toggleTokenSelection(tokens: Array<Token>) {
@@ -1065,5 +1068,4 @@ Tokenizer.define();
 
 export default Tokenizer;
 export { ClipboardDataOperation };
-export type { TokenizerTokenDeleteEventDetail };
-export type { TokenizerSelectionChangeEventDetail };
+export type { TokenizerTokenDeleteEventDetail, TokenizerSelectionChangeEventDetail, TokenizerDialogButtonPressDetail };
