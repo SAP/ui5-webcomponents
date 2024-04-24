@@ -47,7 +47,7 @@
     top: 0;
 }
 
-.ui5-illustrated-message-title :first-child,
+.ui5-illustrated-message-title [ui5-title],
 .ui5-illustrated-message-title ::slotted([slot="title"]) {
     text-align: center;
     margin-bottom: 1rem;
@@ -73,7 +73,7 @@
     margin: 1rem 0;
 }
 
-:host([media="dialog"]) .ui5-illustrated-message-title :first-child,
+:host([media="dialog"]) .ui5-illustrated-message-title [ui5-title],
 :host([media="dialog"]) ::slotted([slot="title"]) {
     margin-bottom: 0.5rem;
     font-size: var(--sapFontHeader4Size);
@@ -100,7 +100,7 @@
     margin-top: 0;
 }
 
-:host([media="spot"]) .ui5-illustrated-message-title :first-child,
+:host([media="spot"]) .ui5-illustrated-message-title [ui5-title],
 :host([media="spot"]) ::slotted([slot="title"]) {
     margin-bottom: 0.5rem;
     font-size: var(--sapFontHeader5Size);
@@ -134,7 +134,7 @@
 	align-self: baseline;
 }
 
-:host([media="dot"]) .ui5-illustrated-message-title :first-child,
+:host([media="dot"]) .ui5-illustrated-message-title [ui5-title],
 :host([media="dot"]) ::slotted([slot="title"])  {
 	margin-bottom: 0.25rem;
 	font-size: var(--sapFontHeader5Size);
@@ -156,7 +156,7 @@
     display: none;
 }
 
-:host([media="base"]) .ui5-illustrated-message-title :first-child,
+:host([media="base"]) .ui5-illustrated-message-title [ui5-title],
 :host([media="base"]) ::slotted([slot="title"]) {
     margin-bottom: 0.25rem;
     font-size: var(--sapFontHeader5Size);
