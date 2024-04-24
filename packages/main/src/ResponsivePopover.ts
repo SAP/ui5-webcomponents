@@ -119,6 +119,7 @@ class ResponsivePopover extends Popover {
 	toggle(opener: HTMLElement) : void {
 		if (this.open) {
 			this.close();
+			return;
 		}
 
 		this.showAt(opener);
