@@ -42,17 +42,35 @@
 	<ui5-icon name="female" class="icon3auto" design="Neutral"></ui5-icon>
 	<ui5-icon name="female" class="icon3auto" design="Positive"></ui5-icon>
 
-	<h3>Icon with aria-hidden="true"</h3>
-	<ui5-icon id="araHiddenIcon" name="add-employee" aria-hidden="true" class="icon-red icon-small"></ui5-icon>
-
 	<h3>Icon with tooltip</h3>
 	<ui5-icon title="company view" class="icon3auto" show-tooltip accessible-name="This is the tooltip`s text" name="company-view"></ui5-icon>
 
-	<h3>Interactive Icon</h3>
-	<ui5-icon id="accRoleIcon" accessible-role="link" interactive class="samples-margin" accessible-name="Hello World" name="horizon/accept"></ui5-icon>
+	<h3>API: mode="Interactive"</h3>
+	<ui5-icon mode="Interactive" class="samples-margin" accessible-name="Hello World" name="horizon/accept"></ui5-icon>
 	<ui5-icon
 		id="myInteractiveIcon"
-		interactive
+		mode="Interactive"
+		name="add-equipment"
+		class="icon3auto">
+	</ui5-icon>
+
+	<br>
+
+	<h3>API: mode="Image" (by default)</h3>
+	<ui5-icon class="samples-margin" accessible-name="Hello World" name="horizon/accept"></ui5-icon>
+	<ui5-icon
+		id="imageIcon"
+		name="add-equipment"
+		class="icon3auto">
+	</ui5-icon>
+
+	<br>
+
+	<h3>API: mode="Decorative"</h3>
+	<ui5-icon  mode="Decorative" class="samples-margin" accessible-name="Hello World" name="horizon/accept"></ui5-icon>
+	<ui5-icon
+		id="decorativeIcon"
+		mode="Decorative"
 		name="add-equipment"
 		class="icon3auto">
 	</ui5-icon>
@@ -89,7 +107,7 @@
 
 	<ui5-title>Tests "click" and "ui5-click" events</ui5-title>
 	<br/>
-	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" interactive></ui5-icon>
+	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" mode="Interactive"></ui5-icon>
 	<ui5-label>"click"</ui5-label><ui5-input id="click-event" value="0"></ui5-input>
 	<ui5-label>"ui5-click"</ui5-label><ui5-input id="ui5-click-event" value="0"></ui5-input>
 	<br/>
