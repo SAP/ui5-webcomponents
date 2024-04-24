@@ -84,9 +84,8 @@ const boot = async (): Promise<void> => {
  * @param { string } theme
  */
 const onThemeRegistered = (theme: string) => {
-	const currentTheme = getTheme();
-	if (booted && theme === currentTheme) {
-		applyTheme(currentTheme);
+	if (booted && theme === getTheme()) { // getTheme should only be called if "booted" is true
+		applyTheme(getTheme());
 	}
 };
 

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
+
+
+### Code Refactoring
+
+* **ui5-multi-combobox:** rename property allowCustomValues to noValidation ([#8765](https://github.com/SAP/ui5-webcomponents/issues/8765)) ([bb27acb](https://github.com/SAP/ui5-webcomponents/commit/bb27acbc2f8321219d99c7732d8536a00ae38272))
+* **ui5-textarea:** rename property growingMaxLines to growingMaxRows ([#8756](https://github.com/SAP/ui5-webcomponents/issues/8756)) ([3fd33ab](https://github.com/SAP/ui5-webcomponents/commit/3fd33aba0164e0a5c06bd44d057157a1dd54b522)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+
+
+### BREAKING CHANGES
+
+* **ui5-multi-combobox:** The `allowCustomValues` property have been renamed to `noValidation`.
+If you have previously used the `allowCustomValues` property
+`<ui5-multi-combobox allow-custom-values></ui5-multi-combobox>`
+Now use noValidation instead:
+`<ui5-multi-combobox no-validation></ui5-multi-combobox>`
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-textarea:** The `growingMaxLines` property have been renamed to `growingMaxRows`.
+
+
+
+
+
 # [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground
