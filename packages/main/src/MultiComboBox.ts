@@ -255,6 +255,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
+	 * @since 2.0.0
 	 */
 	@property()
 	name!: string;
