@@ -4,30 +4,22 @@
 
 :host {
 	height: var(--_ui5_list_item_base_height);
-	background: var(--ui5-listitem-background-color);
 	box-sizing: border-box;
-	border-bottom: 1px solid transparent;
 }
 
 /* selected */
-:host([selected]) {
-	background: var(--sapList_SelectionBackgroundColor);
-}
-
-:host([has-border]) {
+:host([has-border]) .ui5-li-root {
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
-:host([selected]) {
-	border-bottom: var(--ui5-listitem-selected-border-bottom);
-}
-
-:host(:not([focused])[selected][has-border]) {
+:host([selected]) .ui5-li-root {
+	background: var(--sapList_SelectionBackgroundColor);
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
 /* focused & selected */
-:host([focused][selected]) {
+:host([desktop][selected]) .ui5-li-root.ui5-li--focusable:focus,
+:host([selected]) .ui5-li-root.ui5-li--focusable:focus-visible {
 	border-bottom: var(--ui5-listitem-focused-selected-border-bottom);
 }
 
@@ -39,15 +31,17 @@
 	height: 100%;
 	padding: 0 1rem;
 	box-sizing: border-box;
-	background: inherit;
+	background: var(--ui5-listitem-background-color);
+	border-bottom: 0.0625rem solid transparent;
 }
 
 /* focused */
-:host([focused]) .ui5-li-root.ui5-li--focusable {
+.ui5-li-root.ui5-li--focusable {
 	outline: none;
 }
 
-:host([focused]:not([data-moving])) .ui5-li-root.ui5-li--focusable:after {
+:host([desktop]:not([data-moving])) .ui5-li-root.ui5-li--focusable:focus:after,
+:host(:not([data-moving])) .ui5-li-root.ui5-li--focusable:focus-visible:after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
@@ -56,7 +50,8 @@
 	pointer-events: none;
 }
 
-:host([focused]:not(data-moving)) .ui5-li-root .ui5-li-content:focus:after {
+:host([desktop]:not([data-moving])) .ui5-li-root .ui5-li-content:focus:after,
+:host(:not([data-moving])) .ui5-li-root .ui5-li-content:focus-visible:after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
@@ -67,7 +62,8 @@
 	pointer-events: none;
 }
 
-:host([active][focused]) .ui5-li-root.ui5-li--focusable:after {
+:host([desktop][active]) .ui5-li-root.ui5-li--focusable:focus:after,
+:host([active]) .ui5-li-root.ui5-li--focusable:focus-visible:after {
 	border-color: var(--ui5-listitem-active-border-color);
 }
 

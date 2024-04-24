@@ -4,9 +4,11 @@ import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -264,6 +266,10 @@ abstract class ListItem extends ListItemBase {
 		document.addEventListener("mouseup", this.deactivate);
 		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
+
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -291,11 +297,14 @@ abstract class ListItem extends ListItemBase {
 		}
 
 		if (isF2(e)) {
+			const activeElement = getActiveElement();
 			const focusDomRef = this.getFocusDomRef()!;
-			if (this.focused) {
-				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
 			} else {
-				focusDomRef.focus(); // stop content editing
+				focusDomRef.focus();
 			}
 		}
 	}
@@ -333,7 +342,6 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_onfocusout() {
-		super._onfocusout();
 		this.deactivate();
 	}
 
