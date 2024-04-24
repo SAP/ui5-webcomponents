@@ -157,4 +157,14 @@
 	--ui5-badge-set2-color-scheme-10-active-color: var(--sapIndicationColor_10_Active_TextColor);
 	--ui5-badge-set2-color-scheme-10-active-background: var(--sapIndicationColor_10_Active_Background);
 	--ui5-badge-set2-color-scheme-10-active-border: var(--sapIndicationColor_10_Active_BorderColor);
+
+	/* Sizes */
+	--_ui5-badge-height_size_l: 1.75rem;
+	--_ui5-badge-min-width_size_l: 1.75rem;
+	--_ui5-badge-font-size_size_l: 1.25rem;
+	--_ui5-badge-icon_min_width_size_l: 1.25rem;
+	--_ui5-badge-icon_min_height_size_l:1.25rem
+	--_ui5-badge-icon_height_size_l:1.25rem;
+	--_ui5-badge-text_padding_size_l: 0.125rem 0.25rem;
+	--_ui5-badge-text-height_size_l: 1.5rem;
 }

@@ -1,19 +1,19 @@
 /**
- * Different SegmentedButton modes.
+ * Different SegmentedButton selection modes.
  * @public
  */
-enum SegmentedButtonMode {
+enum SegmentedButtonSelectionMode {
 	/**
 	 * There is always one selected. Selecting one deselects the previous one.
 	 * @public
 	 */
-	SingleSelect = "SingleSelect",
+	Single = "Single",
 
 	/**
 	 * Multiple items can be selected at a time. All items can be deselected.
 	 * @public
 	 */
-	MultiSelect = "MultiSelect",
+	Multiple = "Multiple",
 }
 
-export default SegmentedButtonMode;
+export default SegmentedButtonSelectionMode;
