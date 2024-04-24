@@ -267,15 +267,6 @@ class Dialog extends Popup {
 		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
 	}
 
-	/**
-	 * Shows the dialog.
-	 * @public
-	 * @returns Resolves when the dialog is open
-	 */
-	async show(): Promise<void> {
-		await super._open();
-	}
-
 	get isModal() {
 		return true;
 	}
