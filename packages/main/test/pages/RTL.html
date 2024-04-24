@@ -88,7 +88,7 @@
 		});
 
 		tb.addEventListener("ui5-selection-change", function(e) {
-			var lang = e.detail.selectedItem.textContent.toLowerCase();
+			var lang = e.detail.selectedItems[0].textContent.toLowerCase();
 
 			setLanguage(lang).then(function() {
 				const rtlLang = lang === "he" || lang === "ar";

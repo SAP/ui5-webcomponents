@@ -81,7 +81,7 @@
 	<script>
 
 		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
-			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
+			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItems[0].getAttribute("data-ui5-theme-name"));
 		});
 	</script>
 </body>
