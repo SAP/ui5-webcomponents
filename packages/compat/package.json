@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-compat",
   "version": "2.0.0-rc.2",
-  "description": "UI5 Web Components: webcomponents compatibility package",
+  "description": "UI5 Web Components: webcomponents.compat",
   "ui5": {
     "webComponentsPackage": true
   },
@@ -20,15 +20,13 @@
     "lint": "wc-dev lint",
     "lint:scope": "nps scope.lint",
     "start": "wc-dev start",
+    "build": "wc-dev build",
     "watch": "wc-dev watch",
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
-    "build": "wc-dev build",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
-    "test:suite-1": "wc-dev test-suite-1",
-    "test:suite-2": "wc-dev test-suite-2",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
   },
@@ -38,21 +36,18 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
-    "./bundle.common.js": "./bundle.common.js",
     "./bundle.scoped.esm.js": "./bundle.scoped.esm.js",
     "./*": "./dist/*"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",
-    "directory": "packages/main"
+    "directory": "packages/compat"
   },
   "dependencies": {
+    "@ui5/webcomponents": "2.0.0-rc.2",
     "@ui5/webcomponents-base": "2.0.0-rc.2",
     "@ui5/webcomponents-icons": "2.0.0-rc.2",
-    "@ui5/webcomponents-icons-business-suite": "2.0.0-rc.2",
-    "@ui5/webcomponents-icons-tnt": "2.0.0-rc.2",
-    "@ui5/webcomponents-localization": "2.0.0-rc.2",
     "@ui5/webcomponents-theming": "2.0.0-rc.2"
   },
   "devDependencies": {

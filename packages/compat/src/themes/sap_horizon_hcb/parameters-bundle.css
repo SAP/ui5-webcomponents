@@ -3,4 +3,4 @@
 @import "./TableRow-parameters.css";
 @import "./TableGroupRow-parameters.css";
 @import "./GrowingButton-parameters.css";
-@import "./sizes-parameters.css";
+@import "../base/sizes-parameters.css";

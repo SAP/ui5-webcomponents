@@ -19,7 +19,7 @@ import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/Tabbab
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
-import CheckBox from "./CheckBox.js";
+import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";

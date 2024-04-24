@@ -11,7 +11,7 @@
   "scripts": {
     "generate": "wsrun --exclude-missing generate",
     "generateAPI": "wsrun --exclude-missing generateAPI",
-    "ts": "tsc -b packages/fiori/tsconfig.json",
+    "ts": "tsc -b packages/compat/tsconfig.json packages/fiori/tsconfig.json",
     "bundle": "wsrun --exclude-missing bundle",
     "clean": "wsrun --exclude-missing clean",
     "scopePrepare:main": "yarn workspace @ui5/webcomponents nps scope.prepare",
@@ -85,6 +85,7 @@
     "packages/base",
     "packages/localization",
     "packages/main",
+    "packages/compat",
     "packages/fiori",
     "packages/icons",
     "packages/icons-business-suite",

@@ -1,6 +1,6 @@
-import "@ui5/webcomponents-theming/dist/Assets.js"; // Theming
-import "@ui5/webcomponents-icons/dist/Assets.js"; // Icons texts
+// main package assets (transitively base, theming and icons)
+import "@ui5/webcomponents/dist/Assets.js";
 
-// own main package assets
+// own compat package assets
 import "./generated/json-imports/Themes.js";
 import "./generated/json-imports/i18n.js";

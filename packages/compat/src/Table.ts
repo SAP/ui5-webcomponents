@@ -34,7 +34,8 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
-import BusyIndicator from "./BusyIndicator.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import type {
 	TableRowClickEventDetail,
 	TableRowSelectionRequestedEventDetail,
@@ -46,7 +47,6 @@ import type TableCell from "./TableCell.js";
 import type TableColumn from "./TableColumn.js";
 import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 import TableMode from "./types/TableMode.js";
-import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
 import {
@@ -116,6 +116,9 @@ enum TableFocusTargetElement {
  *
  * ### Overview
  *
+ * **Note:** Since 2.0 the Table that previously available 1.x version has been moved to the "@ui5/webcomponents-compat" package.
+ * to free up the space for new Table component implementation available in the main "@ui5/webcomponents" package.
+ * 
  * The `ui5-table` component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
  *
@@ -162,11 +165,11 @@ enum TableFocusTargetElement {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Table.js";`
- * `import "@ui5/webcomponents/dist/TableColumn.js";` (`ui5-table-column`)
- * `import "@ui5/webcomponents/dist/TableRow.js";` (`ui5-table-row`)
- * `import "@ui5/webcomponents/dist/TableGroupRow.js";` (`ui5-table-group-row`)
- * `import "@ui5/webcomponents/dist/TableCell.js";` (`ui5-table-cell`)
+ * - `import "@ui5/webcomponents-compat/dist/Table.js";`
+ * - `import "@ui5/webcomponents-compat/dist/TableColumn.js";` (`ui5-table-column`)
+ * - `import "@ui5/webcomponents-compat/dist/TableRow.js";` (`ui5-table-row`)
+ * - `import "@ui5/webcomponents-compat/dist/TableGroupRow.js";` (`ui5-table-group-row`)
+ * - `import "@ui5/webcomponents-compat/dist/TableCell.js";` (`ui5-table-cell`)
  * @constructor
  * @extends UI5Element
  * @public

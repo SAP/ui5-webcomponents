@@ -3,7 +3,7 @@ import path from "path"
 import { parseDeclaration } from "./component-file.mjs"
 import { findAllImplementations, getInterfaces, getEnums, realPackagesName } from "./manifest.mjs"
 
-const packages = ["main", "fiori"];
+const packages = ["main", "fiori", "compat"];
 
 const generateTypes = () => {
     packages.forEach(async (packageName) => {
