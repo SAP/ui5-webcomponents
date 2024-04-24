@@ -1,6 +1,7 @@
 /**
  * Different Icon modes.
  * @public
+ * @since 2.0.0
  */
 enum IconMode {
 	/**
