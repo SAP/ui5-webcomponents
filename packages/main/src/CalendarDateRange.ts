@@ -8,7 +8,7 @@ import { ICalendarSelectedDates } from "./Calendar.js";
  *
  * ### Overview
  *
- * The `ui5-date` component defines a calendar date to be used inside `ui5-calendar`
+ * The `ui5-date-range` component defines a range of dates to be used inside `ui5-calendar`
  * @constructor
  * @extends UI5Element
  * @abstract

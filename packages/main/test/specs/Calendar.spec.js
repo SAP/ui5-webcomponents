@@ -370,7 +370,7 @@ describe("Calendar general interaction", () => {
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 
-		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1744934400"]`)
+		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1745107200"]`)
 
 		assert.strictEqual(await year2025.hasClass("ui5-yp-item--disabled"), true, "Year 2025 is disabled");
 	});
@@ -391,11 +391,11 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(maxDate, newMaxDate.toString(), "Max date was applied correctly")
 
 		await yearButton.click();
-		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1461024000"]`)
+		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1461110400"]`)
 
 		assert.strictEqual(await year2016.hasClass("ui5-yp-item--disabled"), false, "Year 2016 is not disabled");
 
-		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1713484800"]`)
+		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1713571200"]`)
 
 		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});

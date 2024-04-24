@@ -17,6 +17,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
+import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -172,6 +173,7 @@ type SpecialCalendarDateT = {
 	styles: calendarCSS,
 	dependencies: [
 		CalendarDate,
+		CalendarDateRange,
 		CalendarHeader,
 		DayPicker,
 		MonthPicker,
@@ -302,24 +304,35 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	get _selectedDatesTimestamps(): Array<number> {
-		let selectedDates = [];
-		const isSelectionModeRange = this._checkSelectionModeRange();
+		let selectedDates: Array<number> = [];
 
-		if (isSelectionModeRange) {
-			const dateRange = this.dates[0];
-			const startDate = dateRange.startValue ? this.getFormat().parse(dateRange.startValue, true) as Date : UI5Date.getInstance();
-			const endDate = dateRange.endValue ? this.getFormat().parse(dateRange.endValue, true) as Date : UI5Date.getInstance();
-			const date = UI5Date.getInstance(startDate);
-			do {
-				selectedDates.push(date.getTime() / 1000);
-				date.setDate(date.getDate() + 1);
-			} while (date.getTime() <= endDate.getTime());
-		} else {
-			selectedDates = this.dates.map(date => {
-				const value = date.value;
-				const validValue = value && !!this.getFormat().parse(value);
-				return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
-			}).filter((date): date is number => !!date);
+		switch (this.selectionMode) {
+		case CalendarSelectionMode.Range: {
+			const range = this.dates.filter(date => date.hasAttribute("ui5-date-range"))[0];
+			const startDate = range && range.startValue && this.getFormat().parse(range.startValue, true) as Date;
+			const endDate = range && range.endValue && this.getFormat().parse(range.endValue, true) as Date;
+
+			if (startDate) {
+				selectedDates.push(startDate.getTime() / 1000);
+			}
+
+			if (endDate) {
+				selectedDates.push(endDate.getTime() / 1000);
+			}
+			break;
+		}
+		case CalendarSelectionMode.Multiple:
+		default: {
+			selectedDates = this.dates
+				.filter(dateElement => {
+					return dateElement.hasAttribute("ui5-date")
+						&& dateElement.value
+						&& this._isValidCalendarDate(dateElement.value)
+						&& this._getTimeStampFromString(dateElement.value);
+				})
+				.map(dateElement => Number(this._getTimeStampFromString(dateElement.value!)) / 1000);
+			break;
+		}
 		}
 
 		return selectedDates;
@@ -329,47 +342,56 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedDatesUTC = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true));
-		const isSelectionModeRange = this._checkSelectionModeRange();
+		const selectedUTCDates = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true));
 
-		let valuesInDOM: string[];
-
-		if (isSelectionModeRange) {
-			const dateRange = this.dates[0];
-			const startDate = dateRange.startValue ? this.getFormat().parse(dateRange.startValue) as Date : UI5Date.getInstance();
-			const endDate = dateRange.endValue ? this.getFormat().parse(dateRange.endValue) as Date : UI5Date.getInstance();
-			const date = UI5Date.getInstance(startDate);
-			valuesInDOM = [];
-			do {
-				valuesInDOM.push(this.getFormat().format(date));
-				date.setDate(date.getDate() + 1);
-			} while (date.getTime() <= endDate.getTime());
-		} else {
-			valuesInDOM = [...this.dates].map(dateElement => dateElement.value!);
+		switch (this.selectionMode) {
+		case CalendarSelectionMode.Range: {
+			// Create tags for the selected dates that don't already exist in DOM
+			if (selectedUTCDates.length) {
+				let dateRange = this.dates.find(dateElement => dateElement.startValue === selectedUTCDates[0]) as CalendarDateRange;
+				if (!dateRange) {
+					dateRange = document.createElement(CalendarDateRange.getMetadata().getTag()) as CalendarDateRange;
+					dateRange.startValue = selectedUTCDates[0];
+					this.appendChild(dateRange);
+				} else {
+					dateRange.endValue = selectedUTCDates[1];
+				}
+				// Remove all elements for dates that are no longer selected
+				this.dates
+					.filter(dateElement => {
+						return dateElement.hasAttribute("ui5-date") || dateElement.startValue !== dateRange.startValue;
+					})
+					.forEach(dateElement => {
+						this.removeChild(dateElement);
+					});
+			}
+			break;
 		}
+		case CalendarSelectionMode.Multiple:
+		default: {
+			const valuesInDOM = this._selectedDatesTimestamps.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000)));
 
-		// Remove all elements for dates that are no longer selected
-		this.dates
-			.filter(dateElement => !selectedDatesUTC.includes(isSelectionModeRange ? dateElement.startValue! : dateElement.value!))
-			.forEach(dateElement => {
-				this.removeChild(dateElement);
-			});
+			// Remove all elements for dates that are no longer selected
+			this.dates
+				.filter(dateElement => {
+					return dateElement.hasAttribute("ui5-date-range")
+						|| (dateElement.hasAttribute("ui5-date")
+						&& !selectedUTCDates.includes(dateElement.value!));
+				})
+				.forEach(dateElement => {
+					this.removeChild(dateElement);
+				});
 
-		// Create tags for the selected dates that don't already exist in DOM
-		selectedDatesUTC
-			.filter(value => !valuesInDOM.includes(value))
-			.forEach(value => {
-				const dateElement = document.createElement(CalendarDate.getMetadata().getTag()) as CalendarDate;
-				dateElement.value = value;
-				this.appendChild(dateElement);
-			});
-	}
-
-	_checkSelectionModeRange(): boolean {
-		if (this.selectionMode === CalendarSelectionMode.Range) {
-			return this.dates.length > 0 && this.dates.every(date => date.hasAttribute("ui5-date-range"));
+			// Create tags for the selected dates that don't already exist in DOM
+			selectedUTCDates
+				.filter(value => !valuesInDOM.includes(value))
+				.forEach(value => {
+					const dateElement = document.createElement(CalendarDate.getMetadata().getTag()) as CalendarDate;
+					dateElement.value = value;
+					this.appendChild(dateElement);
+				});
 		}
-		return false;
+		}
 	}
 
 	_isValidCalendarDate(dateString: string): boolean {
@@ -643,7 +665,7 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * Creates instances of `ui5-date` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
+	 * Creates instances of `ui5-date` or `ui5-date-range` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
 	 * @protected
 	 * @deprecated
 	 * @param selectedDates Array of UTC timestamps
