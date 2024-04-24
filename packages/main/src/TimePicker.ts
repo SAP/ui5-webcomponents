@@ -1,17 +1,62 @@
-import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import TimePickerBase from "./TimePickerBase.js";
-
-import type {
-	TimePickerBaseChangeEventDetail as TimePickerChangeEventDetail,
-	TimePickerBaseInputEventDetail as TimePickerInputEventDetail,
-} from "./TimePickerBase.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
+import {
+	isShow,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
+	isTabNext,
+	isTabPrevious,
+	isF6Next,
+	isF6Previous,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import "@ui5/webcomponents-icons/dist/time-entry-request.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import Icon from "./Icon.js";
+import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
+import Input from "./Input.js";
+import Button from "./Button.js";
+import TimeSelectionClocks from "./TimeSelectionClocks.js";
+import TimeSelectionInputs from "./TimeSelectionInputs.js";
+import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
+	TIMEPICKER_SUBMIT_BUTTON,
+	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
+
+// Styles
+import TimePickerCss from "./generated/themes/TimePicker.css.js";
+import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
+import PopoverCss from "./generated/themes/Popover.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+
+type TimePickerChangeInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
+
+type TimePickerChangeEventDetail = TimePickerChangeInputEventDetail;
+type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 
 /**
  * @class
@@ -43,26 +88,26 @@ import {
  * a valid value string is "11:42:35" and the same is displayed in the input.
  *
  * ### Keyboard handling
- * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
+ * [F4], [Alt]+[Up], [Alt]+[Down] Open/Close picker dialog and move focus to it.
  *
  * When closed:
  *
- * - [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
- * - [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
- * - [SHIFT]+[PAGEUP] - Increments minutes by 1.
- * - [SHIFT]+[PAGEDOWN] - Decrements minutes by 1.
- * - [SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.
- * - [SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.
+ * - [Page Up] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
+ * - [Page Down] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
+ * - [Shift]+[Page Up] - Increments minutes by 1.
+ * - [Shift]+[Page Down] - Decrements minutes by 1.
+ * - [Shift]+[Ctrl]+[Page Up] - Increments seconds by 1.
+ * - [Shift]+[Ctrl]+[Page Down] - Decrements seconds by 1.
  * -
  *
  * When opened:
  *
- * - [PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
- * - [PAGEDOWN] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
- * - [SHIFT]+[PAGEUP] - Increments minutes by 1.
- * - [SHIFT]+[PAGEDOWN] - Decrements minutes by 1.
- * - [SHIFT]+[CTRL]+[PAGEUP] - Increments seconds by 1.
- * - [SHIFT]+[CTRL]+[PAGEDOWN] - Decrements seconds by 1.
+ * - [Page Up] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.
+ * - [Page Down] - Decrements the corresponding field by 1. If 1 pm is reached, decrement hours to 12 am and vice versa.
+ * - [Shift]+[Page Up] - Increments minutes by 1.
+ * - [Shift]+[Page Down] - Decrements minutes by 1.
+ * - [Shift]+[Ctrl]+[Page Up] - Increments seconds by 1.
+ * - [Shift]+[Ctrl]+[Page Down] - Decrements seconds by 1.
  * - [A] or [P] - Selects AM or PM respectively.
  * - [0]-[9] - Allows direct time selecting (hours/minutes/seconds).
  * - [:] - Allows switching between hours/minutes/seconds clocks. If the last clock is displayed and [:] is pressed, the first clock is beind displayed.
@@ -71,12 +116,112 @@ import {
  *
  * `import "@ui5/webcomponents/dist/TimePicker.js";`
  * @constructor
- * @extends TimePickerBase
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
  */
-@customElement("ui5-time-picker")
-class TimePicker extends TimePickerBase {
+@customElement({
+	tag: "ui5-time-picker",
+	languageAware: true,
+	renderer: litRender,
+	template: TimePickerTemplate,
+	styles: [
+		TimePickerCss,
+		ResponsivePopoverCommonCss,
+		PopoverCss,
+		TimePickerPopoverCss,
+	],
+	dependencies: [
+		Icon,
+		Popover,
+		ResponsivePopover,
+		TimeSelectionClocks,
+		TimeSelectionInputs,
+		Input,
+		Button,
+	],
+})
+/**
+ * Fired when the input operation has finished by clicking the "OK" button or
+ * when the text in the input field has changed and the focus leaves the input field.
+ * @public
+ * @param {string} value The submitted value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+ */
+@event<TimePickerChangeEventDetail>("change", {
+	detail: {
+		/**
+		 * @public
+		 */
+		value: {
+			type: String,
+		},
+		/**
+		 * @public
+		 */
+		valid: {
+			type: Boolean,
+		},
+	},
+})
+
+/**
+ * Fired when the value of the `ui5-time-picker` is changed at each key stroke.
+ * @public
+ * @param {string} value The current value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+ */
+@event<TimePickerInputEventDetail>("input", {
+	detail: {
+		/**
+		 * @public
+		 */
+		value: {
+			type: String,
+		},
+		/**
+		 * @public
+		 */
+		valid: {
+			type: Boolean,
+		},
+	},
+})
+class TimePicker extends UI5Element {
+	/**
+	 * Defines a formatted time value.
+	 * @default undefined
+	 * @formEvents change input
+	 * @formProperty
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	value?: string;
+
+	/**
+	 * Defines the value state of the `ui5-time-picker`.
+	 * @default "None"
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	valueState!: `${ValueState}`;
+
+	/**
+	 * Determines whether the `ui5-time-picker` is displayed as disabled.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Determines whether the `ui5-time-picker` is displayed as readonly.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
@@ -102,12 +247,72 @@ class TimePicker extends TimePickerBase {
 	@property()
 	formatPattern!: string;
 
+	@property({ type: Boolean, noAttribute: true })
+	_isPickerOpen!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_isInputsPopoverOpen!: boolean;
+
+	/**
+	 * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
+	 *
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
+	 * @since 1.0.0-rc.8
+	 * @public
+	 */
+	@slot()
+	valueStateMessage!: Array<HTMLElement>;
+
+	tempValue?: string;
+
+	static i18nBundle: I18nBundle;
+
+	static async onDefine() {
+		[TimePicker.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
+		]);
+	}
+
 	onBeforeRendering() {
 		if (this.value) {
 			this.value = this.normalizeValue(this.value) || this.value;
 		}
 	}
 
+	get dateAriaDescription() {
+		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+	}
+
+	get accInfo() {
+		return {
+			"ariaRoledescription": this.dateAriaDescription,
+			"ariaHasPopup": "dialog",
+		};
+	}
+
+	/**
+	 * Currently selected time represented as JavaScript Date instance
+	 * @public
+	 * @default null
+	 */
+	get dateValue(): Date | Date[] | null {
+		return this.getFormat().parse(this._effectiveValue as string);
+	}
+
+	/**
+	 * @protected
+	 */
+	get _placeholder() {
+		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+	}
+
+	/**
+	 * @protected
+	 */
 	get _formatPattern() {
 		const hasHours = !!this.formatPattern.match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;
@@ -121,28 +326,364 @@ class TimePicker extends TimePickerBase {
 		return this.getFormat().oFormatOptions.pattern as string;
 	}
 
-	get _placeholder() {
-		return this.placeholder !== undefined ? this.placeholder : this._displayFormat;
+	get _effectiveValue() {
+		return this.value;
+	}
+
+	get _timeSelectionValue() {
+		return this.tempValue;
+	}
+
+	get _isPhone() {
+		return isPhone();
+	}
+
+	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
+		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
 	/**
-	 * Currently selected time represented as JavaScript Date instance
+	 * Opens the picker.
 	 * @public
-	 * @default null
+	 * @returns Resolves when the picker is open
 	 */
-	get dateValue(): Date | Date[] | null {
-		return this.getFormat().parse(this._effectiveValue as string);
+	openPicker(): void {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
+		const responsivePopover = this._getPopover();
+		responsivePopover.showAt(this);
 	}
 
-	get accInfo() {
-		return {
-			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": "dialog",
-		};
+	/**
+	 * Closes the picker
+	 * @public
+	 * @returns Resolves when the picker is closed
+	 */
+	closePicker(): void {
+		const responsivePopover = this._getPopover();
+		responsivePopover.close();
+		this._isPickerOpen = false;
 	}
 
-	get dateAriaDescription() {
-		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+	togglePicker() {
+		if (this.isOpen()) {
+			this.closePicker();
+		} else if (this._canOpenPicker()) {
+			this.openPicker();
+		}
+	}
+
+	/**
+	 * Checks if the picker is open
+	 * @public
+	 */
+	isOpen(): boolean {
+		return !!this._isPickerOpen;
+	}
+
+	submitPickers() {
+		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
+		this.closePicker();
+	}
+
+	onResponsivePopoverAfterClose() {
+		this._isPickerOpen = false;
+	}
+
+	onResponsivePopoverAfterOpen() {
+		this._isPickerOpen = true;
+		const responsivePopover = this._getPopover();
+		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
+	}
+
+	/**
+	 * Opens the Inputs popover.
+	 * @private
+	 * @returns Resolves when the Inputs popover is open
+	 */
+	openInputsPopover() {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
+		const popover = this._getInputsPopover();
+		popover.showAt(this);
+		this._isInputsPopoverOpen = true;
+	}
+
+	/**
+	 * Closes the Inputs popover
+	 * @private
+	 * @returns Resolves when the Inputs popover is closed
+	 */
+	closeInputsPopover() {
+		const popover = this._getInputsPopover();
+		popover.close();
+	}
+
+	toggleInputsPopover() {
+		if (this.isInputsPopoverOpen()) {
+			this.closeInputsPopover();
+		} else if (this._canOpenInputsPopover()) {
+			this.openInputsPopover();
+		}
+	}
+
+	/**
+	 * Checks if the inputs popover is open
+	 * @private
+	 */
+	isInputsPopoverOpen(): boolean {
+		return !!this._isInputsPopoverOpen;
+	}
+
+	submitInputsPopover() {
+		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
+		this.closeInputsPopover();
+	}
+
+	onInputsPopoverAfterOpen() {
+		const popover = this._getInputsPopover();
+		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
+	}
+
+	onInputsPopoverAfterClose() {
+		this._isInputsPopoverOpen = false;
+	}
+
+	_handleInputClick(evt: MouseEvent) {
+		const target = evt.target as HTMLElement;
+		if (this._isPickerOpen) {
+			return;
+		}
+
+		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+			this.toggleInputsPopover();
+		}
+
+		const inputField = this._getInputField();
+
+		if (inputField) {
+			(inputField as HTMLInputElement).select();
+		}
+	}
+
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>) {
+		if (value === this.value) {
+			return;
+		}
+
+		const valid = this.isValid(value);
+
+		if (value !== undefined && valid && normalizeValue) { // if value === undefined, valid is guaranteed to be falsy
+			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
+		}
+		if (!eventsNames.includes("input")) {
+			this.value = ""; // Do not remove! DurationPicker (an external component extending TimePicker) use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
+			this.value = value;
+		}
+		this.tempValue = value; // if the picker is open, sync it
+		this._updateValueState(); // Change the value state to Error/None, but only if needed
+		eventsNames.forEach(eventName => {
+			this.fireEvent<TimePickerChangeInputEventDetail>(eventName, { value, valid });
+		});
+	}
+
+	_updateValueState() {
+		const isValid = this.isValid(this.value);
+		if (!isValid) { // If not valid - always set Error regardless of the current value state
+			this.valueState = ValueState.Error;
+		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
+			this.valueState = ValueState.None;
+		}
+	}
+
+	_handleInputChange(e: CustomEvent) {
+		const target = e.target as Input;
+		this._updateValueAndFireEvents(target.value, true, ["change", "value-changed"]);
+	}
+
+	_handleInputLiveChange(e: CustomEvent) {
+		const target = e.target as Input;
+		this._updateValueAndFireEvents(target.value, false, ["input"]);
+	}
+
+	_canOpenPicker() {
+		return !this.disabled && !this.readonly;
+	}
+
+	_canOpenInputsPopover() {
+		return !this.disabled && this._isPhone;
+	}
+
+	_getPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	_getInputsPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
+	}
+
+	_getInput(): Input {
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	}
+
+	_getInputField() {
+		const input = this._getInput();
+		return input && input.getInputDOMRef();
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (this._isPhone && !this.isInputsPopoverOpen()) {
+			e.preventDefault();
+		}
+		if (isShow(e)) {
+			e.preventDefault();
+			this.togglePicker();
+		}
+
+		const target = e.target as Node;
+
+		if ((this._getInput().isEqualNode(target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+			this.closePicker();
+		}
+		if (this.isOpen()) {
+			return;
+		}
+		if (isPageUpShiftCtrl(e)) {
+			e.preventDefault();
+			this._modifyValueBy(1, "second");
+		} else if (isPageUpShift(e)) {
+			e.preventDefault();
+			this._modifyValueBy(1, "minute");
+		} else if (isPageUp(e)) {
+			e.preventDefault();
+			this._modifyValueBy(1, "hour");
+		} else if (isPageDownShiftCtrl(e)) {
+			e.preventDefault();
+			this._modifyValueBy(-1, "second");
+		} else if (isPageDownShift(e)) {
+			e.preventDefault();
+			this._modifyValueBy(-1, "minute");
+		} else if (isPageDown(e)) {
+			e.preventDefault();
+			this._modifyValueBy(-1, "hour");
+		}
+	}
+
+	get _isPattern() {
+		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
+	getFormat() {
+		let dateFormat;
+
+		if (this._isPattern) {
+			dateFormat = DateFormat.getDateInstance({
+				pattern: this._formatPattern,
+			});
+		} else {
+			dateFormat = DateFormat.getDateInstance({
+				style: this._formatPattern,
+			});
+		}
+
+		return dateFormat;
+	}
+
+	/**
+	 * Formats a Java Script date object into a string representing a locale date and time
+	 * according to the `formatPattern` property of the TimePicker instance
+	 * @param date A Java Script date object to be formatted as string
+	 * @public
+	 * @returns formatted value
+	 */
+	formatValue(date: Date): string {
+		return this.getFormat().format(date);
+	}
+
+	/**
+	 * Checks if a value is valid against the current `formatPattern` value.
+	 *
+	 * **Note:** an empty string is considered as valid value.
+	 * @param value The value to be tested against the current date format
+	 * @public
+	 */
+	isValid(value: string | undefined): boolean {
+		if (value === "") {
+			return true;
+		}
+		return !!this.getFormat().parse(value as string);
+	}
+
+	normalizeValue(value: string) {
+		if (value === "") {
+			return value;
+		}
+		return this.getFormat().format(this.getFormat().parse(value));
+	}
+
+	_modifyValueBy(amount: number, unit: string) {
+		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
+		if (!date) {
+			return;
+		}
+		if (unit === "hour") {
+			date.setHours(date.getHours() + amount);
+		} else if (unit === "minute") {
+			date.setMinutes(date.getMinutes() + amount);
+		} else if (unit === "second") {
+			date.setSeconds(date.getSeconds() + amount);
+		}
+
+		const newValue = this.formatValue(date);
+
+		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
+	}
+
+	/**
+	 * The listener for this event can't be passive as it calls preventDefault()
+	 * @param e Wheel Event
+	 * @private
+	 */
+	_handleWheel(e: WheelEvent) {
+		e.preventDefault();
+	}
+
+	/**
+	 * Hides mobile device keyboard by temporary setting the input to readonly state.
+	 */
+	_hideMobileKeyboard() {
+		this._getInput().readonly = true;
+		setTimeout(() => { this._getInput().readonly = false; }, 0);
+	}
+
+	_onfocusin(evt: FocusEvent) {
+		if (this._isPhone) {
+			this._hideMobileKeyboard();
+			if (this._isInputsPopoverOpen) {
+				const popover = this._getInputsPopover();
+				popover.applyFocus();
+			}
+			evt.preventDefault();
+		}
+	}
+
+	_oninput(evt: CustomEvent) {
+		if (this._isPhone) {
+			evt.preventDefault();
+		}
+	}
+
+	get submitButtonLabel() {
+		return TimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+	}
+
+	get cancelButtonLabel() {
+		return TimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+	}
+
+	/**
+	 * @protected
+	 */
+	get openIconName() {
+		return "time-entry-request";
 	}
 }
 
@@ -150,6 +691,7 @@ TimePicker.define();
 
 export default TimePicker;
 export type {
+	TimeSelectionChangeEventDetail,
 	TimePickerChangeEventDetail,
 	TimePickerInputEventDetail,
 };

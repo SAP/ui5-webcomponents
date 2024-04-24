@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -57,7 +58,6 @@ import {
 
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
@@ -76,7 +76,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -135,15 +135,15 @@ type ComboBoxSelectionChangeEventDetail = {
  *
  * The `ui5-combobox` provides advanced keyboard handling.
  *
- * - [F4], [ALT]+[UP], or [ALT]+[DOWN] - Toggles the picker.
- * - [ESC] - Closes the picker, if open. If closed, cancels changes and reverts the typed in value.
- * - [ENTER] or [RETURN] - If picker is open, takes over the currently selected item and closes it.
- * - [DOWN] - Selects the next matching item in the picker.
- * - [UP] - Selects the previous matching item in the picker.
- * - [PAGEDOWN] - Moves selection down by page size (10 items by default).
- * - [PAGEUP] - Moves selection up by page size (10 items by default).
- * - [HOME] - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
- * - [END] - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
+ * - [F4], [Alt]+[Up], or [Alt]+[Down] - Toggles the picker.
+ * - [Escape] - Closes the picker, if open. If closed, cancels changes and reverts the typed in value.
+ * - [Enter] or [Return] - If picker is open, takes over the currently selected item and closes it.
+ * - [Down] - Selects the next matching item in the picker.
+ * - [Up] - Selects the previous matching item in the picker.
+ * - [Page Down] - Moves selection down by page size (10 items by default).
+ * - [Page Up] - Moves selection up by page size (10 items by default).
+ * - [Home] - If focus is in the ComboBox, moves cursor at the beginning of text. If focus is in the picker, selects the first item.
+ * - [End] - If focus is in the ComboBox, moves cursor at the end of text. If focus is in the picker, selects the last item.
  *
  * ### ES6 Module Import
  *
@@ -157,15 +157,14 @@ type ComboBoxSelectionChangeEventDetail = {
 	tag: "ui5-combobox",
 	languageAware: true,
 	renderer: litRender,
-	styles: ComboBoxCss,
-	staticAreaStyles: [
+	styles: [
+		ComboBoxCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		ComboBoxPopoverCss,
 		SuggestionsCss,
 	],
 	template: ComboBoxTemplate,
-	staticAreaTemplate: ComboBoxPopoverTemplate,
 	dependencies: [
 		ComboBoxItem,
 		Icon,
@@ -174,7 +173,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		BusyIndicator,
 		Button,
 		StandardListItem,
-		GroupHeaderListItem,
+		ListItemGroupHeader,
 		Popover,
 		ComboBoxGroupItem,
 		Input,
@@ -364,6 +363,7 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
+	 * The value state message slot should contain only one root element.
 	 *
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
@@ -468,7 +468,7 @@ class ComboBox extends UI5Element {
 	async shouldClosePopover(): Promise<boolean> {
 		const popover: ResponsivePopover = await this._getPicker();
 
-		return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
+		return popover.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(e: FocusEvent) {
@@ -495,7 +495,8 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (!(this.shadowRoot!.contains(toBeFocused)) && (this.staticAreaItem !== e.relatedTarget)) {
+		const popover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
+		if (!(this.getDomRef()!.contains(toBeFocused)) && (popover !== e.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}
@@ -525,7 +526,7 @@ class ComboBox extends UI5Element {
 	async _toggleRespPopover() {
 		const picker: ResponsivePopover = await this._getPicker();
 
-		if (picker.opened) {
+		if (picker.open) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -555,8 +556,8 @@ class ComboBox extends UI5Element {
 	}
 
 	async _getValueStatePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const popover: Popover = staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
+		await renderFinished();
+		const popover: Popover = this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -744,7 +745,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this.fireEvent("input");
-		this._fireChangeEvent();
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {
@@ -857,7 +857,7 @@ class ComboBox extends UI5Element {
 
 			this._fireChangeEvent();
 
-			if (picker?.opened && !focusedItem?.isGroupItem) {
+			if (picker?.open && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
@@ -1119,8 +1119,8 @@ class ComboBox extends UI5Element {
 	}
 
 	async _getPicker() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		const picker = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+		await renderFinished();
+		const picker = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 
 		// backward compatibility
 		// rework all methods to work with async getters
@@ -1195,7 +1195,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
-		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Left : PopoverHorizontalAlign.Right;
+		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Start : PopoverHorizontalAlign.End;
 	}
 
 	/**
@@ -1206,7 +1206,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get open(): boolean {
-		return this?.responsivePopover?.opened || false;
+		return this?.responsivePopover?.open || false;
 	}
 
 	get _isPhone(): boolean {
@@ -1243,6 +1243,7 @@ class ComboBox extends UI5Element {
 				"min-width": `${this.offsetWidth || 0}px`,
 				"max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
 			},
+			popoverValueStateMessage: {},
 		};
 	}
 

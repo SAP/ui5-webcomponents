@@ -145,20 +145,20 @@ enum TableFocusTargetElement {
  * ### Keyboard Handling
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
  * Furthermore, you can interact with `ui5-table` via the following keys.
  *
  * - [F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.
- * - [CTRL]+[A] - Selects all items, if MultiSelect mode is enabled.
- * - [HOME]/[END] - Focuses the first/last item.
- * - [PAGEUP]/[PAGEDOWN] - Moves focus up/down by page size (20 items by default).
- * - [ALT]+[DOWN]/[UP] - Switches focus between header, last focused item, and More button (if applies) in either direction.
- * - [SHIFT]+[DOWN]/[UP] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).
- * - [SHIFT]+[HOME]/[END] - Range selection to the first/last item of the List.
- * - [CTRL]+[HOME]/[END] - Same behavior as HOME & END.
+ * - [Ctrl]+[A] - Selects all items, if MultiSelect mode is enabled.
+ * - [Home]/[End] - Focuses the first/last item.
+ * - [Page Up]/[Page Down] - Moves focus up/down by page size (20 items by default).
+ * - [Alt]+[Down]/[Up] - Switches focus between header, last focused item, and More button (if applies) in either direction.
+ * - [Shift]+[Down]/[Up] - Selects the next/previous item in a MultiSelect table, if the current item is selected (Range selection). Otherwise, deselects them (Range deselection).
+ * - [Shift]+[Home]/[End] - Range selection to the first/last item of the List.
+ * - [Ctrl]+[Home]/[End] - Same behavior as HOME & END.
  *
  * ### ES6 Module Import
  *

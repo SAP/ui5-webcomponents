@@ -13,9 +13,9 @@ const LIB = path.join(__dirname, `../tools/lib/`);
 const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
 
 const scripts = {
-	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
+	clean: "rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint .`,
-	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates",
+	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates generateSsrDom",
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript integrate.no-remaining-require",
 	typescript: "tsc -b",
 	integrate: {
@@ -40,6 +40,8 @@ const scripts = {
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
+	// these files are ignored in TS because the import in UI5Elments tries to load them from the dist and throws an error. create them empty here
+	generateSsrDom: `yarn nodetouch dist/ssr-dom.js dist/ssr-dom.d.ts`,
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
 		default: "nps generateAPI.generateCEM generateAPI.validateCEM",

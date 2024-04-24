@@ -1,5 +1,4 @@
 :host {
-    display: none;
     position: fixed;
     background: var(--sapGroup_ContentBackground);
     border-radius: var(--_ui5_popup_border_radius);
@@ -7,17 +6,20 @@
     box-sizing: border-box;
 }
 
+:host([open]) {
+	display: flex;
+}
+
 .ui5-popup-root {
     background: inherit;
     border-radius: inherit;
     width: 100%;
-    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    flex: 1 1 auto;
     outline: none;
-    justify-content: space-between;
 }
 
 .ui5-popup-root .ui5-popup-header-root {

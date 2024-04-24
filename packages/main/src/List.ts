@@ -28,7 +28,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
@@ -55,6 +55,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
+import ListItemGroup from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -112,11 +113,11 @@ type ListItemClickEventDetail = {
  *
  * - `ui5-li`
  * - `ui5-li-custom`
- * - `ui5-li-groupheader`
+ * - `ui5-li-group`
  *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
- * `SingleSelect`, `MultiSelect` and `Delete`.
+ * `Single`, `Multiple` and `Delete`.
  *
  * Additionally, the `ui5-list` provides header, footer, and customization for the list item separators.
  *
@@ -127,18 +128,18 @@ type ListItemClickEventDetail = {
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  *
- * - [UP/DOWN] - Navigates up and down the items
- * - [HOME] - Navigates to first item
- * - [END] - Navigates to the last item
+ * - [Up] or [Down] - Navigates up and down the items
+ * - [Home] - Navigates to first item
+ * - [End] - Navigates to the last item
  *
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
- * when the `mode` property is in use:
+ * when the `selectionMode` property is in use:
  *
- * - [SPACE] - Select an item (if `type` is 'Active') when `mode` is selection
- * - [DELETE] - Delete an item if `mode` property is `Delete`
+ * - [Space] - Select an item (if `type` is 'Active') when `selectionMode` is selection
+ * - [Delete] - Delete an item if `selectionMode` property is `Delete`
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -150,7 +151,7 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
  *
- * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
+ * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -161,7 +162,7 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator, DropIndicator],
+	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
  * Fired when an item is activated, unless the item's `type` property
@@ -218,7 +219,7 @@ type ListItemClickEventDetail = {
  * Fired when the Delete button of any item is pressed.
  *
  * **Note:** A Delete button is displayed on each item,
- * when the component `mode` property is set to `Delete`.
+ * when the component `selectionMode` property is set to `Delete`.
  * @param {HTMLElement} item the deleted item.
  * @public
  */
@@ -233,7 +234,7 @@ type ListItemClickEventDetail = {
 
 /**
  * Fired when selection is changed by user interaction
- * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
+ * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
  * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
@@ -311,12 +312,12 @@ class List extends UI5Element {
 	indent!: boolean;
 
 	/**
-	 * Defines the mode of the component.
+	 * Defines the selection mode of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: `${ListMode}`;
+	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+	selectionMode!: `${ListSelectionMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -367,15 +368,15 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.6
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
 	 * @default 1000
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -430,11 +431,11 @@ class List extends UI5Element {
 	/**
 	 * Defines the items of the component.
 	 *
-	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-groupheader` for the intended design.
+	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<ListItemBase>;
+	items!: Array<ListItemBase | ListItemGroup>;
 
 	/**
 	 * Defines the component header.
@@ -458,6 +459,11 @@ class List extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
+
+	onItemFocusedBound: (e: CustomEvent) => void;
+	onForwardAfterBound: (e: CustomEvent) => void;
+	onForwardBeforeBound: (e: CustomEvent) => void;
+	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
 	static async onDefine() {
 		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -490,6 +496,21 @@ class List extends UI5Element {
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
+
+		this.onItemFocusedBound = this.onItemFocused.bind(this);
+		this.onForwardAfterBound = this.onForwardAfter.bind(this);
+		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
+		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+	}
+
+	/**
+	 * Returns an array containing the list item instances without the groups in a flat structure.
+	 * @default []
+	 * @since 2.0.0
+	 * @public
+	 */
+	get listItems(): ListItemBase[] {
+		return this.getItems();
 	}
 
 	onEnterDOM() {
@@ -504,10 +525,12 @@ class List extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.detachGroupHeaderEvents();
 		this.prepareListItems();
 	}
 
 	onAfterRendering() {
+		this.attachGroupHeaderEvents();
 		if (this.growsOnScroll) {
 			this.observeListEnd();
 		} else if (this.listEndObserved) {
@@ -518,6 +541,30 @@ class List extends UI5Element {
 			this.checkListInViewport();
 			this.attachForResize();
 		}
+	}
+
+	attachGroupHeaderEvents() {
+		// events fired by the group headers are not bubbling through the shadow
+		// dom of the groups because of capture: false of the custom events
+		this.getItems().forEach(item => {
+			if (item.hasAttribute("ui5-li-group-header")) {
+				item.addEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
+				item.addEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
+				item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
+				item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+			}
+		});
+	}
+
+	detachGroupHeaderEvents() {
+		this.getItems().forEach(item => {
+			if (item.hasAttribute("ui5-li-group-header")) {
+				item.removeEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
+				item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
+				item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
+				item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+			}
+		});
 	}
 
 	attachForResize() {
@@ -556,20 +603,20 @@ class List extends UI5Element {
 	}
 
 	get isDelete() {
-		return this.mode === ListMode.Delete;
+		return this.selectionMode === ListSelectionMode.Delete;
 	}
 
 	get isSingleSelect() {
 		return [
-			ListMode.SingleSelect,
-			ListMode.SingleSelectBegin,
-			ListMode.SingleSelectEnd,
-			ListMode.SingleSelectAuto,
-		].includes(this.mode as ListMode);
+			ListSelectionMode.Single,
+			ListSelectionMode.SingleStart,
+			ListSelectionMode.SingleEnd,
+			ListSelectionMode.SingleAuto,
+		].includes(this.selectionMode as ListSelectionMode);
 	}
 
-	get isMultiSelect() {
-		return this.mode === ListMode.MultiSelect;
+	get isMultiple() {
+		return this.selectionMode === ListSelectionMode.Multiple;
 	}
 
 	get ariaLabelledBy() {
@@ -578,7 +625,7 @@ class List extends UI5Element {
 		}
 		const ids = [];
 
-		if (this.isMultiSelect || this.isSingleSelect || this.isDelete) {
+		if (this.isMultiple || this.isSingleSelect || this.isDelete) {
 			ids.push(this.modeLabelID);
 		}
 
@@ -595,7 +642,7 @@ class List extends UI5Element {
 
 	get ariaLabelModeText(): string {
 		if (this.hasData) {
-			if (this.isMultiSelect) {
+			if (this.isMultiple) {
 				return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
 			}
 			if (this.isSingleSelect) {
@@ -625,7 +672,7 @@ class List extends UI5Element {
 		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
-	get busyIndPosition() {
+	get loadingIndPosition() {
 		if (!this.grows) {
 			return "absolute";
 		}
@@ -635,8 +682,8 @@ class List extends UI5Element {
 
 	get styles() {
 		return {
-			busyInd: {
-				position: this.busyIndPosition,
+			loadingInd: {
+				position: this.loadingIndPosition,
 			},
 		};
 	}
@@ -659,7 +706,7 @@ class List extends UI5Element {
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
 			if (item.hasConfigurableMode) {
-				(item as ListItem)._mode = this.mode;
+				(item as ListItem)._selectionMode = this.selectionMode;
 			}
 			item.hasBorder = showBottomBorder;
 		});
@@ -701,8 +748,8 @@ class List extends UI5Element {
 		let selectionChange = false;
 		this._selectionRequested = true;
 
-		if (this.mode !== ListMode.None && this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](e.detail.item, !!e.detail.selected);
+		if (this.selectionMode !== ListSelectionMode.None && this[`handle${this.selectionMode}`]) {
+			selectionChange = this[`handle${this.selectionMode}`](e.detail.item, !!e.detail.selected);
 		}
 
 		if (selectionChange) {
@@ -719,7 +766,7 @@ class List extends UI5Element {
 		}
 	}
 
-	handleSingleSelect(item: ListItemBase): boolean {
+	handleSingle(item: ListItemBase): boolean {
 		if (item.selected) {
 			return false;
 		}
@@ -730,19 +777,19 @@ class List extends UI5Element {
 		return true;
 	}
 
-	handleSingleSelectBegin(item: ListItemBase): boolean {
-		return this.handleSingleSelect(item);
+	handleSingleStart(item: ListItemBase): boolean {
+		return this.handleSingle(item);
 	}
 
-	handleSingleSelectEnd(item: ListItemBase): boolean {
-		return this.handleSingleSelect(item);
+	handleSingleEnd(item: ListItemBase): boolean {
+		return this.handleSingle(item);
 	}
 
-	handleSingleSelectAuto(item: ListItemBase): boolean {
-		return this.handleSingleSelect(item);
+	handleSingleAuto(item: ListItemBase): boolean {
+		return this.handleSingle(item);
 	}
 
-	handleMultiSelect(item: ListItemBase, selected: boolean): boolean {
+	handleMultiple(item: ListItemBase, selected: boolean): boolean {
 		item.selected = selected;
 		return true;
 	}
@@ -766,7 +813,20 @@ class List extends UI5Element {
 	}
 
 	getItems(): Array<ListItemBase> {
-		return this.getSlottedNodes<ListItemBase>("items");
+		// drill down when we see ui5-li-group and get the items
+		const items: ListItemBase[] = [];
+		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
+
+		slottedItems.forEach(item => {
+			if (item instanceof ListItemGroup) {
+				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
+				items.push(...groupItems);
+			} else {
+				items.push(item);
+			}
+		});
+
+		return items;
 	}
 
 	getItemsForProcessing(): Array<ListItemBase> {
@@ -1018,7 +1078,7 @@ class List extends UI5Element {
 		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
-		if (this.mode === ListMode.SingleSelectAuto) {
+		if (this.selectionMode === ListSelectionMode.SingleAuto) {
 			const detail: SelectionRequestEventDetail = {
 				item: target,
 				selectionComponentPressed: false,
@@ -1037,7 +1097,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
+		if (!this._selectionRequested && this.selectionMode !== ListSelectionMode.Delete) {
 			this._selectionRequested = true;
 			const detail: SelectionRequestEventDetail = {
 				item: pressedItem,

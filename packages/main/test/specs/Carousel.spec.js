@@ -53,6 +53,7 @@ describe("Carousel general interaction", () => {
 		const navigation = await carousel.shadow$(".ui5-carousel-navigation > .ui5-carousel-navigation-text");
 
 		assert.ok(await navigation.isExisting(), "Navigation is rendered");
+		assert.ok(await navigation.getAttribute("dir"), "auto", "text direction is auto");
 	});
 
 	it("Buttons are rendered in the content only when hovering (arrows-placement)", async () => {
@@ -121,6 +122,11 @@ describe("Carousel general interaction", () => {
 		// check root tag ARIA after navigating to 2nd page
 		await carousel.shadow$(".ui5-carousel-navigation-button:nth-child(2)").click();
 		assert.strictEqual(await carouselRoot.getAttribute("aria-activedescendant"), ACTIVEDESCENDANT_PAGE_2, "The aria-activedescendant of carousel is correct.");
+
+		const carouselWithAccessibleName1 = await browser.$("#carouselAccName").shadow$(".ui5-carousel-root");;
+		const carouselWithAccessibleName2 = await browser.$("#carouselAccNameRef").shadow$(".ui5-carousel-root");;
+		assert.strictEqual(await carouselWithAccessibleName1.getAttribute("aria-label"), "Buttons Carousel", "The aria-label is set.");
+		assert.strictEqual(await carouselWithAccessibleName2.getAttribute("aria-label"), "Many Buttons Carousel", "The aria-label is set.");
 	});
 
 	it("all visible elements in the current page have correct tabindex values", async () => {
@@ -267,5 +273,40 @@ describe("Carousel general interaction", () => {
 		innerFocusedElement = await browser.custom$("activeElement", "#carouselF7Input");
 
 		assert.ok(await browser.$(innerFocusedElement).hasClass("ui5-input-inner"), "Input is focused");
+	});
+
+	it("Items per page", async () => {
+		const carousel = await browser.$("#itemsPerPage");
+		// set outer container width to < 600px (S)
+		await browser.setWindowSize(500, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem2 = await carousel.shadow$(".ui5-carousel-item:nth-child(2)");
+		assert.ok(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "Second Item is hidden only first is visible");
+
+		// set outer container width to < 1024px (M)
+		await browser.setWindowSize(1000, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem3 = await carousel.shadow$(".ui5-carousel-item:nth-child(3)");
+		assert.notOk(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "Second Item is visible");
+		assert.ok(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is hidden");
+
+		// set outer container width to < 1044px (L)
+		await browser.setWindowSize(1240, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem4 = await carousel.shadow$(".ui5-carousel-item:nth-child(4)");
+		assert.notOk(await carouselItem3.hasClass("ui5-carousel-item--hidden"), "Third Item is visible");
+		assert.ok(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is hidden");
+
+		// set outer container width to > 1044px (XL)
+		await browser.setWindowSize(1540, 500);
+		await carousel.scrollIntoView();
+
+		const carouselItem5 = await carousel.shadow$(".ui5-carousel-item:nth-child(5)");
+		assert.notOk(await carouselItem4.hasClass("ui5-carousel-item--hidden"), "Fourth Item is visible");
+		assert.ok(await carouselItem5.hasClass("ui5-carousel-item--hidden"), "Fifth Item is hidden");
+
 	});
 });

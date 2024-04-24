@@ -44,7 +44,7 @@
 	</div>
 
 	<div id="side-nav" class="sidenav">
-		<ui5-list id="side-nav-list" mode="SingleSelect" separators="Inner">
+		<ui5-list id="side-nav-list" selection-mode="Single" separators="Inner">
 			<ui5-li type="Active" id="arg1" icon="developer-settings">ui5-button</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-card</ui5-li>
 			<ui5-li type="Active" id="bg1" icon="developer-settings">ui5-checkbox</ui5-li>
@@ -257,7 +257,7 @@
 					<ui5-button design="Negative">Cencel</ui5-button>
 				</div>
 
-				<ui5-list id="myList" mode="Delete">
+				<ui5-list id="myList" selection-mode="Delete">
 					<ui5-li type="Active" id="arg1">Argentina</ui5-li>
 					<ui5-li type="Active" id="bg1">Bulgaria</ui5-li>
 					<ui5-li type="Active" id="ch1">China</ui5-li>
@@ -270,7 +270,7 @@
 					<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 				</div>
 
-				<ui5-list id="myList2" mode="SingleSelectBegin">
+				<ui5-list id="myList2" selection-mode="SingleStart">
 					<ui5-li type="Active" id="arg2">Up</ui5-li>
 					<ui5-li type="Active" id="bg2">Down</ui5-li>
 					<ui5-li type="Active" id="ch2">Charm</ui5-li>
@@ -283,7 +283,7 @@
 						<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 				</div>
 
-					<ui5-list id="myList3" mode="MultiSelect">
+					<ui5-list id="myList3" selection-mode="Multiple">
 						<ui5-li type="Active" id="arg3">Manager</ui5-li>
 						<ui5-li type="Active" id="bg3">Developer</ui5-li>
 						<ui5-li type="Active" id="ch3">Product Owner</ui5-li>
@@ -309,7 +309,7 @@
 		<section class="kitchen_openui59auto">
 			<div id="sapMDatePicker"></div>
 
-			<ui5-date-picker class="kitchen_openui510auto" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
+			<ui5-date-picker class="kitchen_openui510auto" id="myDatepicker" value="Jun 06, 2018"></ui5-date-picker>
 			<ui5-date-picker class="kitchen_openui510auto" id="myDatepicker"></ui5-date-picker>
 		</section>
 
@@ -391,7 +391,7 @@
 		</section>
 
 		<section class="row">
-			<ui5-list header-text="Products" mode="SingleSelectEnd">
+			<ui5-list header-text="Products" selection-mode="SingleEnd">
 				<ui5-li-custom type="Active">
 					<div class="kitchen_openui513auto">
 						<span>Laptop HP 2GB RAM Dual-core</span>
@@ -412,7 +412,7 @@
 				</ui5-li-custom>
 			</ui5-list>
 
-			<ui5-list header-text="Products" mode="MultiSelect">
+			<ui5-list header-text="Products" selection-mode="Multiple">
 					<ui5-li-custom type="Active">
 						<div class="kitchen_openui513auto">
 							<span>Laptop HP 2GB RAM Dual-core</span>

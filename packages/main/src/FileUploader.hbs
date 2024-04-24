@@ -1,4 +1,3 @@
-
 <div class="ui5-file-uploader-root"
 	@mouseover="{{_onmouseover}}"
 	@mouseout="{{_onmouseout}}"
@@ -7,6 +6,8 @@
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
+	@dragover="{{_ondrag}}"
+	@drop="{{_ondrop}}"
 >
 	<div class="ui5-file-uploader-mask">
 		{{#unless hideInput}}
@@ -38,3 +39,5 @@
 		</slot>
 	{{/if}}
 </div>
+
+{{>include "./FileUploaderPopover.hbs"}}

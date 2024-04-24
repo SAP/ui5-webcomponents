@@ -16,6 +16,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 | [noConflict](#noConflict)                     | `true`, `false`                                                                                                                                                                                                                                                                                | `false`       | When set to true, all events will be fired with a `ui5-` prefix only   | Components that fire events (most do)                          |
 | [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                                                                                                                                                                                                       | `{}`          | Allows to override locale-specific configuration                       | Date/time components (`ui5-date-picker`, etc.)                 |
 | [fetchDefaultLanguage](#fetchDefaultLanguage) | `true`, `false`                                                                                                                                                                                                                                                                                | `false`       | Whether to fetch assets even for the default language                  | Framework                                                      |
+| [timezone](#timezone)             | `Asia/Tokyo`, `Pacific/Apia`, `Asia/Kolkata`, `Europe/Sofia` and etc.                                                                                                                                                                                                                                      | Your local time zone.          | Allows to override your local time zone.                       | Date/time components (`ui5-date-picker`, etc.)                 |
 
 ### theme
 <a name="theme"></a>
@@ -215,6 +216,19 @@ Example:
 }
 </script>
 ```
+### timezone
+<a name="timezone"></a>
+
+The time zone should be an IANA time zone ID, e.g. "America/New_York". It can be set to the `timezone` property in the configuration script.
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"timezone": "Europe/Sofia"
+}
+</script>
+```
 
 ## Configuration Script
 <a name="script"></a>
@@ -241,7 +255,8 @@ Example:
 	"noConflict": {
 		"events": ["selection-change", "header-click"]
 	},
-	"fetchDefaultLanguage": true
+	"fetchDefaultLanguage": true,
+	"timezone": "Europe/Sofia"
 }
 </script>
 ```
@@ -293,4 +308,9 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 
 ```js
 import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+```
+ - `timezone` - can only be set initially in the configuration script.
+
+```js
+import { getTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
 ```

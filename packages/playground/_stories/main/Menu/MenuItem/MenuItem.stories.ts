@@ -19,8 +19,8 @@ const Template: UI5StoryArgs<MenuItem, StoryArgsSlots> = (args) => html`<ui5-men
 	<ui5-menu-item
     accessible-name="${ifDefined(args.accessibleName)}"
     additional-text="${ifDefined(args.additionalText)}"
-    ?busy="${ifDefined(args.busy)}"
-    busy-delay="${ifDefined(args.busyDelay)}"
+    ?loading="${ifDefined(args.loading)}"
+    loading-delay="${ifDefined(args.loadingDelay)}"
     ?disabled="${ifDefined(args.disabled)}"
     icon="${ifDefined(args.icon)}"
     ?starts-section="${ifDefined(args.startsSection)}"

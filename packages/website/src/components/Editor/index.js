@@ -15,9 +15,16 @@ import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
 import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
 import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
+import ExamplesMenu from '../ExamplesMenu/index.tsx';
+
+import hellowWorldHTML from "./examples/hello-world/html";
+import hellowWorldTS from "./examples/hello-world/main";
+import counterHTML from "./examples/counter/html";
+import counterTS from "./examples/counter/main";
 
 if (ExecutionEnvironment.canUseDOM) {
   require('playground-elements');
+  require('./html-autocomplete.js');
 }
 
 const projectPool = [];
@@ -52,6 +59,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const { contentDensity, setContentDensity } = useContext(ContentDensityContext);
   const { textDirection, setTextDirection } = useContext(TextDirectionContext);
   const [copied, setCopied] = useState(false);
+  const [ activeExample, setActiveExample ] = useState("");
 
   function addImportMap(html) {
     return html.replace("<head>", `
@@ -85,6 +93,18 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
       origin = location.origin;
     }
     return new URL(baseUrl, origin).toString();
+  }
+
+  function getActiveExampleContent() {
+    if (activeExample === "hello-world") {
+      return { html: hellowWorldHTML, js: hellowWorldTS }
+    }
+    
+    if (activeExample === "counter") {
+      return { html: counterHTML, js: counterTS }
+    }
+
+    return {}
   }
 
   // samples should use the pattern "../assets/..." for their assets
@@ -125,6 +145,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     return files;
   }
 
+
   const download = () => {
     const files = getSampleFiles();
     downloadSample(files);
@@ -144,6 +165,15 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     localStorage.setItem("project", JSON.stringify(files));
   }
 
+  const resetProject = () => {
+    localStorage.clear("project");
+    location.hash = "";
+  }
+
+  const resetExampleMenuSelection = () => {
+    localStorage.clear("activeExample");
+  }
+
   const baseUrl = useBaseUrl("/");
   const playUrl = useBaseUrl("/play");
 
@@ -154,14 +184,32 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     const hash = encodeToBase64(JSON.stringify(files));
     const url = new URL(`${playUrl}#${hash}`, location.origin);
     window.open(url, "_blank");
+    resetExampleMenuSelection();
+  }
+
+  const loadHelloWorld = () => {
+    resetProject();
+    setActiveExample("hello-world");
+    localStorage.setItem("activeExample", "hello-world");
+  }
+
+  const loadCounter = () => {
+    resetProject();
+    setActiveExample("counter");
+    localStorage.setItem("activeExample", "counter");
   }
 
   useEffect(() => {
     projectRef.current = getProjectFromPool();
+
+    const activeExample = getActiveExampleContent();
+    let _html = activeExample.html || html;
+    let _js = activeExample.js || js;
+
     let newConfig = {
       files: {
         "index.html": {
-          content: addImportMap(fixAssetPaths(html)),
+          content: addImportMap(fixAssetPaths(_html)),
         },
         "playground-support.js": {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
@@ -171,7 +219,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
           content: `/* playground-hide */
 import "./playground-support.js";
 /* playground-hide-end */
-${fixAssetPaths(js)}`,
+${fixAssetPaths(_js)}`,
           selected: mainFileSelected,
         },
         "main.css": {
@@ -212,7 +260,7 @@ ${fixAssetPaths(js)}`,
     }
 
     // shared content - should be after restore from localstorage
-    if ((location.pathname.endsWith("/play") || location.pathname.endsWith("/play/")) && location.hash) {
+    if (location.pathname.includes("/play") && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
         sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
@@ -252,7 +300,7 @@ ${fixAssetPaths(js)}`,
       projectRef.current.removeEventListener("compileStart", saveProject);
       returnProjectToPool(projectRef.current);
     }
-  }, []);
+  }, [activeExample]);
 
   useEffect(() => {
     if (firstRender) {
@@ -324,6 +372,27 @@ ${fixAssetPaths(js)}`,
     )
   }
 
+  function getExampleMenuInitialState() {
+    if (ExecutionEnvironment.canUseDOM) {
+      if (location.hash) {
+        return null;
+      }
+
+      const savedActiveSample = localStorage.getItem("activeExample");
+      if (savedActiveSample) {
+        return savedActiveSample;
+      }
+
+      if (localStorage.getItem("project")) {
+        return null;
+      }
+
+      return "hello-world";
+    }
+
+    return "hello-world";
+  }
+
   return (
     <>
       <div ref={projectContainerRef}></div>
@@ -332,28 +401,31 @@ ${fixAssetPaths(js)}`,
         ?
           <>
             <div className={`${styles.editor__toolbar}`}>
-              <button
-                className={`button button--secondary ${styles.previewResult__download}`}
-                onClick={ download }
-              >
-               <DownloadIcon className={`${styles.btn__icon}`}/>
-                Download
-              </button>
+              <ExamplesMenu loadHelloWorld={loadHelloWorld} loadCounter={loadCounter} initialActiveState={getExampleMenuInitialState()}/>
+              <div>
+                <button
+                  className={`button button--secondary ${styles.previewResult__download}`}
+                  onClick={ download }
+                >
+                <DownloadIcon className={`${styles.btn__icon}`}/>
+                  Download
+                  { copied
+                  ? <div style={ {position: "absolute"} }>
+                      <span className={styles["copy-status"]}>&#x2714; Link copied</span>
+                    </div>
+                  : <></>
+                  }
+                </button>
 
-              <button
-                className={`button button--secondary ${styles.previewResult__share}`}
-                onClick={ share }
-              >
-               <ShareIcon className={`${styles.btn__icon}`}/>
-                Share
-              </button>
-
-              { copied
-                ? <div style={ {position: "absolute"} }>
-                    <span className={styles["copy-status"]}>&#x2714; Link copied</span>
-                  </div>
-                : <></>
-              }
+                <button
+                  className={`button button--secondary ${styles.previewResult__share}`}
+                  onClick={ share }
+                >
+                <ShareIcon className={`${styles.btn__icon}`}/>
+                  Share
+                </button>
+               
+              </div>
             </div>
           </>
         :

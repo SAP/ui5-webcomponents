@@ -137,7 +137,7 @@ class MultiInput extends Input {
 	}
 
 	valueHelpPress() {
-		this.closePopover();
+		this.closeValueStatePopover();
 		this.fireEvent("value-help-trigger");
 	}
 
@@ -175,16 +175,14 @@ class MultiInput extends Input {
 
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
-		this.closePopover();
+		this.closeValueStatePopover();
 		this.tokenizer.closeMorePopover();
 		this._valueHelpIconPressed = true;
 		target.focus();
 	}
 
 	_tokenizerFocusOut(e: FocusEvent) {
-		const isFocusingMorePopover = e.relatedTarget === this.tokenizer.staticAreaItem;
-
-		if (!this.contains(e.relatedTarget as HTMLElement) && !isFocusingMorePopover) {
+		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
@@ -236,6 +234,7 @@ class MultiInput extends Input {
 
 		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
 			e.preventDefault();
+			this.closeValueStatePopover();
 			this.tokenizer.openMorePopover();
 		}
 	}
@@ -327,11 +326,11 @@ class MultiInput extends Input {
 	/**
 	 * @override
 	 */
-	async _onfocusin(e: FocusEvent) {
-		const inputDomRef = await this.getInputDOMRef();
+	_onfocusin(e: FocusEvent) {
+		const inputDomRef = this.getInputDOMRef();
 
 		if (e.target === inputDomRef) {
-			await super._onfocusin(e);
+			super._onfocusin(e);
 		}
 	}
 
@@ -364,7 +363,7 @@ class MultiInput extends Input {
 	}
 
 	get _tokensCountTextId() {
-		return `${this._id}-hiddenText-nMore`;
+		return `hiddenText-nMore`;
 	}
 
 	/**
@@ -400,6 +399,10 @@ class MultiInput extends Input {
 		}
 
 		return this;
+	}
+
+	get shouldDisplayOnlyValueStateMessage() {
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer._isOpen;
 	}
 }
 

@@ -7,6 +7,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import {
+	isDesktop,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type { IIcon } from "./Icon.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/sys-help-2.js";
@@ -16,6 +19,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import WrappingType from "./types/WrappingType.js";
 import BadgeDesign from "./types/BadgeDesign.js";
+import BadgeSize from "./types/BadgeSize.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
@@ -76,11 +80,11 @@ import badgeCss from "./generated/themes/Badge.css.js";
 class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
-	 * @default "Set3"
+	 * @default "Neutral"
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ defaultValue: BadgeDesign.Set3 })
+	@property({ defaultValue: BadgeDesign.Neutral })
 	design!: `${BadgeDesign}`;
 
 	/**
@@ -127,6 +131,15 @@ class Badge extends UI5Element {
 	wrappingType!: `${WrappingType}`;
 
 	/**
+	 * Defines predefined size of the component.
+	 * @default "S"
+	 * @public
+	 * @since 2.0
+	 */
+	@property({ type: BadgeSize, defaultValue: BadgeSize.S })
+	size!: `${BadgeSize}`;
+
+	/**
 	 * Defines if the badge has an icon.
 	 * @private
 	 */
@@ -167,6 +180,12 @@ class Badge extends UI5Element {
 
 	static async onDefine() {
 		Badge.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onBeforeRendering() {

@@ -89,10 +89,11 @@
 	flex-direction: column;
 }
 
-.ui5-busy-indicator-busy-area:focus {
+:host([desktop]) .ui5-busy-indicator-busy-area:focus,
+.ui5-busy-indicator-busy-area:focus-visible {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
-    border-radius: var(--_ui5_busy_indicator_focus_border_radius);
+	border-radius: var(--_ui5_busy_indicator_focus_border_radius);
 }
 
 .ui5-busy-indicator-circles-wrapper {
@@ -131,13 +132,14 @@
 	text-align: center;
 }
 
-.ui5-busy-indicator-text-placement-top {
+:host([text-placement="Top"]) .ui5-busy-indicator-text {
 	margin-bottom: 0.5rem
-}
-
-.ui5-busy-indicator-text-placement-bottom {
-	margin-top: 0.5rem;
-}
+ }
+ 
+ :host(:not([text-placement])) .ui5-busy-indicator-text,
+ :host([text-placement="Bottom"]) .ui5-busy-indicator-text {
+	  margin-top: 0.5rem;
+ }
 
 @keyframes grow {
 	0%, 50%, 100% {

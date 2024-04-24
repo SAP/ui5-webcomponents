@@ -49,12 +49,12 @@
 		<ui5-list
 			accessible-role="tree"
 			id="{{_id}}-menu-list"
-			mode="None"
-			?busy="{{busy}}"
-			busy-delay="{{busyDelay}}"
+			selection-mode="None"
+			?loading="{{loading}}"
+			loading-delay="{{loadingDelay}}"
 			separators="None"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 		>
 		{{#each _currentItems}}
 			{{#if this.item.href}}
@@ -133,12 +133,12 @@
 			{{/if}}
 		{{/each}}
 		</ui5-list>
-	{{else if busy}}
+	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
-			delay="{{busyDelay}}"
+			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}

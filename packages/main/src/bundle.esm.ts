@@ -74,7 +74,7 @@ import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { ignoreCustomElements, shouldIgnoreCustomElement } from "@ui5/webcomponents-base/dist/IgnoreCustomElements.js";
 
 // SAP Icons
-import accept from "@ui5/webcomponents-icons/dist/accept.js";
+import accept, { getPathData } from "@ui5/webcomponents-icons/dist/accept.js";
 import acceptv4 from "@ui5/webcomponents-icons/dist/v4/accept.js";
 import acceptv5 from "@ui5/webcomponents-icons/dist/v5/accept.js";
 // SAP TNT Icons
@@ -99,6 +99,7 @@ import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
 import Badge from "./Badge.js";
+import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
@@ -143,6 +144,7 @@ import MessageStrip from "./MessageStrip.js";
 import MultiComboBox from "./MultiComboBox.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import RatingIndicator from "./RatingIndicator.js";
+import Text from "./Text.js";
 import TabContainer from "./TabContainer.js";
 import Tab from "./Tab.js";
 import TabSeparator from "./TabSeparator.js";
@@ -152,7 +154,6 @@ import TableRow from "./TableRow.js";
 import TableGroupRow from "./TableGroupRow.js";
 import TableCell from "./TableCell.js";
 import TextArea from "./TextArea.js";
-import TimeSelection from "./TimeSelection.js";
 import TimePicker from "./TimePicker.js";
 import TimePickerClock from "./TimePickerClock.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -174,7 +175,8 @@ import List from "./List.js";
 // console.log({List})
 import StandardListItem from "./StandardListItem.js";
 import CustomListItem from "./CustomListItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import ListItemGroup from "./ListItemGroup.js";
 
 // Features
 import "./features/InputElementsFormSupport.js";
@@ -218,6 +220,7 @@ const testAssets = {
 	detachThemeLoaded,
 	getIconNames,
 	getIconAccessibleName,
+	getAcceptIconPathData: getPathData,
 	renderFinished,
 	defaultTexts,
 	getExportedIconsValues: () => icons,

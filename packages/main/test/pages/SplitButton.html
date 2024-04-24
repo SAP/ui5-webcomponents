@@ -19,6 +19,10 @@
 		<h3 class="header-title">Wrapped Split Buttons</h3>
 	</header>
 
+	<div style="border: 1px solid red; display: inline-block; width: 80px; height: 70px">
+		<ui5-split-button style="width: 100%;" icon="picture">Random Text</ui5-split-button>
+	</div>
+
 	<div style="border: 1px solid red; display: inline-block; width: 80px">
 		<ui5-split-button style="width: 100%" icon="picture">Random Text</ui5-split-button>
 	</div>
@@ -115,7 +119,7 @@ splitBtn.addEventListener("ui5-arrow-click", function() {
 	}
 });
 
-menu.addEventListener("after-close", function() {
+menu.addEventListener("close", function() {
 	splitBtn.activeArrowButton = false;
 });
 

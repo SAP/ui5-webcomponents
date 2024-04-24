@@ -41,7 +41,8 @@
 }
 
 /* focused */
-:host(:not([disabled])) .ui5-radio-root:focus::before {
+:host(:not([disabled])[desktop]) .ui5-radio-root:focus::before,
+:host(:not([disabled])) .ui5-radio-root:focus-visible::before {
 	content: "";
 	display: var(--_ui5_radio_button_focus_outline);
 	position: absolute;
@@ -49,11 +50,6 @@
 	pointer-events: none;
 	border: var(--_ui5_radio_button_border_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--_ui5_radio_button_border_radius);
-}
-
-:host(:not([disabled])) .ui5-radio-root:focus {
-	border-radius: var(--_ui5_radio_button_border_radius);
-	border: var(--_ui5_radio_button_focus_border);
 }
 
 /* hovered and value-state */
@@ -85,7 +81,8 @@
 	padding-inline-end: var(--_ui5_radio_button_border_width);
 }
 
-:host([text]) .ui5-radio-root:focus::before {
+:host([text][desktop]) .ui5-radio-root:focus::before,
+:host([text]) .ui5-radio-root:focus-visible::before {
 	inset-inline-end: 0px;
 }
 

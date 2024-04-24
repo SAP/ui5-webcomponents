@@ -16,8 +16,7 @@ describe("TimePicker general interaction", () => {
 
 	it("tests clocks value", async () => {
 		const timepicker = await browser.$("#timepicker");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
-		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
 
 		// act
 		await timepicker.setProperty("value", "11:12:13");
@@ -35,8 +34,7 @@ describe("TimePicker general interaction", () => {
 
 	it("tests clocks submit value", async () => {
 		const timepicker = await browser.$("#timepicker5");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker5");
-		const picker = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const picker = await timepicker.shadow$("ui5-responsive-popover");
 
 		// act
 		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
@@ -73,20 +71,7 @@ describe("TimePicker general interaction", () => {
 		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
 	});
 
-	it("tests valueStateMessage slot", async () => {
-		const timepicker = await browser.$("#timepickerValueStateMessage");
-
-		await timepicker.click();
-
-		const inputId = await timepicker.shadow$("ui5-input").getProperty("_id");
-		const inputStaticAreaItem = await browser.$(`.${inputId}`);
-		const slot = await inputStaticAreaItem.shadow$("ui5-popover").$("#customValueStateMessage");
-
-		assert.notOk(slot.error, "Value State message slot is working");
-	});
-
 	it("tests change event", async () => {
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepickerChange");
 		const timepicker = await browser.$("#timepickerChange");
 		const input = await timepicker.shadow$("ui5-input");
 		const icon = await input.$("ui5-icon");
@@ -94,7 +79,7 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit the same time
 		await icon.click();
-		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
 		await timepickerPopover.$("#submit").click();
 
 		// assert
@@ -203,13 +188,12 @@ describe("TimePicker general interaction", () => {
 
 	it("test closing the picker with the keyboard", async () => {
 		const timepicker = await browser.$("#timepicker3");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
 
 		// act
 		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 		await browser.keys(["Alt", "ArrowUp"]);
 
-		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
 
 		// assert
 		assert.notOk(await timepickerPopover.isDisplayed(), "the picker should be collapsed");

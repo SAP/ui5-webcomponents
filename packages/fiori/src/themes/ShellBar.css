@@ -466,6 +466,11 @@ slot[name="profile"] {
 	height: 2.75rem;
 }
 
+.ui5-shellbar-coPilot-pressed,
+.ui5-shellbar-coPilot-pressed:hover {
+	color: var(--sapShell_Assistant_ForegroundColor);
+}
+
 ::slotted([ui5-button][slot="startButton"]) {
 	margin-inline: 0 0.5rem;
 	justify-content: center;

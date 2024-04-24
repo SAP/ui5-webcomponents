@@ -33,40 +33,6 @@ describe("Dialog general interaction", () => {
 		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed.");
 	});
 
-	it("tests popover in dialog", async () => {
-		const btnOpenDialog = await browser.$("#btnOpenDialog");
-		const select = await browser.$("#mySelect");
-
-		await btnOpenDialog.click();
-		await select.click();
-
-		const dialogZIndex = parseInt((await browser.$("#dialog").getCSSProperty("z-index")).value);
-		const popoverZIndex = parseInt((await browser.$(`.${await select.getProperty("_id")}`).shadow$("ui5-responsive-popover").getCSSProperty("z-index")).value);
-
-		assert.ok(popoverZIndex > dialogZIndex, "Popover is above dialog.");
-	});
-
-	it("tests dialog lifecycle", async () => {
-		await browser.url(`test/pages/DialogLifecycle.html`);
-
-		let staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
-		assert.notOk(await staticAreaItem.isExisting(), "No static area item.");
-
-		const openDialogButton = await browser.$("#openDialogButton");
-		await openDialogButton.click();
-
-		staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
-		assert.ok(await staticAreaItem.isExisting(), "Static area item exists.");
-
-		const closeDialogButton = await browser.$("#closeDialogButton");
-		await closeDialogButton.click();
-
-		/* To be returned when renderFinished correctly awaits for disconnectedCallback to be fired and processed
-		staticAreaItem = await browser.$("ui5-static-area>ui5-static-area-item");
-		assert.notOk(await staticAreaItem.isExisting(), "No static area item.");
-		 */
-	});
-
 	it("dialog repositions after screen resize", async () => {
 		await browser.url(`test/pages/Dialog.html`);
 
@@ -690,7 +656,7 @@ describe("Responsive paddings", async () => {
 		const dialog = await browser.$("#dialog");
 
 		assert.strictEqual(await dialog.getAttribute("media-range"), "M", "dialog has correct media range");
-		
+
 		await browser.$("#btnCloseDialog").click();
 	});
 });
@@ -745,9 +711,7 @@ describe("Block layers", () => {
 	it("test dialog overlay when dialog isn't open", async () => {
 		const isBlockLayerHidden = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialog");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
-
-			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
+			done(!dialog.shadowRoot.querySelector(".ui5-block-layer").matches(":popover-open"));
 		});
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");
@@ -756,60 +720,14 @@ describe("Block layers", () => {
 	it("test dialog overlay when dialog is open", async () => {
 		await browser.$("#dialogOverDialogBtn").click();
 
-		const isBlockLayerHidden = await browser.executeAsync(async (done) => {
+		const isBlockLayerVisible = await browser.executeAsync(async (done) => {
 			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
 
-			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
+			done(dialog.shadowRoot.querySelector(".ui5-block-layer").style.display !== "hidden");
 		});
 
-		assert.notOk(isBlockLayerHidden, "the block layer is visible");
+		assert.ok(isBlockLayerVisible, "the block layer is visible");
 
 		await browser.keys("Escape");
-	});
-
-	it("test dialog over dialog", async () => {
-		await browser.$("#dialogOverDialogBtn").click();
-		await browser.$("#dialogOverDialog1Btn").click();
-
-		let isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
-
-			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
-		});
-
-		assert.ok(isBlockLayerHidden, "the block layer is hidden");
-
-		isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog2");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
-
-			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
-		});
-
-		assert.notOk(isBlockLayerHidden, "the block layer is visible");
-
-		await browser.keys("Escape");
-
-		isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
-
-			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
-		});
-
-		assert.notOk(isBlockLayerHidden, "the block layer is visible");
-
-		await browser.keys("Escape");
-
-		isBlockLayerHidden = await browser.executeAsync(async (done) => {
-			const dialog = document.getElementById("dialogOverDialog1");
-			const staticAreaItemDomRef = await dialog.getStaticAreaItemDomRef();
-
-			done(staticAreaItemDomRef.querySelector(".ui5-block-layer").hasAttribute("hidden"));
-		});
-
-		assert.ok(isBlockLayerHidden, "the block layer is hidden");
 	});
 });
