@@ -454,7 +454,7 @@ slot[name="profile"] {
 	box-shadow: var(--_ui5_shellbar_search_field_box_shadow_hover);
 }
 
-/* Todo: modify this selector after Input.ts is updated */
+/* Todo: modify this selector after ui5-input is updated */
 ::slotted([ui5-input][focused]) {
 	outline: var(--_ui5_shellbar_search_field_outline_focused);
 }
