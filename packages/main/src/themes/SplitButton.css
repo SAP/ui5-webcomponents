@@ -48,6 +48,7 @@
 
 :host([disabled]:not([hidden])) {
 	pointer-events: none;
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 :host([design="Positive"]:not([hidden])) {

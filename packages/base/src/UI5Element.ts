@@ -87,6 +87,23 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 }
 
 /**
+ * looks up a property descsriptor including in the prototype chain
+ * @param proto the starting prototype
+ * @param name the property to look for
+ * @returns the property descriptor if found directly or in the prototype chaing, undefined if not found
+ */
+function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescriptor | undefined {
+	do {
+		const descriptor = Object.getOwnPropertyDescriptor(proto, name);
+		if (descriptor) {
+			return descriptor;
+		}
+		// go up the prototype chain
+		proto = Object.getPrototypeOf(proto);
+	} while (proto && proto !== HTMLElement.prototype);
+}
+
+/**
  * @class
  * Base class for all UI5 Web Components
  *
@@ -989,7 +1006,7 @@ abstract class UI5Element extends HTMLElement {
 				throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
 			}
 
-			const descriptor = Object.getOwnPropertyDescriptor(proto, prop);
+			const descriptor = getPropertyDescriptor(proto, prop);
 			// if the decorator is on a setter, proxy the new setter to it
 			let origSet: (v: any) => void;
 			if (descriptor?.set) {

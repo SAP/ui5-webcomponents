@@ -16,6 +16,7 @@ import * as ComponentStories from "./${component}.stories.ts";
 import { componentInfo } from "./argTypes.ts";
 
 import { Footer } from "@sb/components/footer/Footer.tsx";
+import { Banner } from "@sb/components/banner/Banner.tsx";
 import {
   Title,
   Subtitle,
@@ -27,7 +28,7 @@ import {
 } from "@storybook/addon-docs";
 
 <Meta name="${splitCamelCase(component)} Overview" of={ComponentStories} />
-
+<Banner />
 <header>
   <span className="sb-ui5-title">
     <Title />
@@ -38,9 +39,11 @@ import {
     </span>
   )}
 </header>
+
 <div className="sb-ui5-component-package">
   <b>{componentInfo.package}</b>
 </div>
+
 <h2 className="sb-ui5-control-tag">&lt;{componentInfo.tagName}&gt;</h2>
 <Subtitle />
 <Description />

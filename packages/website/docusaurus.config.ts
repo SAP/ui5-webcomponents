@@ -7,7 +7,7 @@ import packageJson from "./package.json";
 console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
 
 const LATEST_URL_PARTH = "/ui5-webcomponents/";
-const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nightly/";
+const NIGHTLY_URL_PARTH = "/ui5-webcomponents/v1/";
 
 const LATEST_DEPLOYMENT = process.env.DEPLOYMENT_TYPE === "latest";
 const DEVELOPMENT_ENVIRONMENT =  process.env.NODE_ENV === "development";
@@ -39,6 +39,8 @@ const config: Config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: BASE_URL,
+  // github pages makes a redirect to a trailing slash url, which prevents pages from being crawled by google
+  trailingSlash: true,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -110,21 +112,12 @@ const config: Config = {
           activeBasePath: 'play',
         },
         {
-          type: 'custom-settingsNavbarItem',
+          type: 'custom-versionsNavbarItem',
           position: "right",
         },
-        // {
-        //   type: 'custom-contentDensityNavbarItem',
-        //   position: "right",
-        // },
-        // {
-        //   type: 'custom-TextDirectionNavbarItem',
-        //   position: "right",
-        // },
         {
-          label: `v${packageJson.version}`,
+          type: 'custom-settingsNavbarItem',
           position: "right",
-          to: `https://github.com/SAP/ui5-webcomponents/releases/tag/v${packageJson.version}`,
         },
         {
           type: 'custom-GitHubNavbarItem',
@@ -137,7 +130,7 @@ const config: Config = {
       copyright: `© Copyright ${new Date().getFullYear()}, SAP SE and UI5 Web Components Contributors`,
       logo: {
         alt: 'SAP Logo',
-        src: 'https://sap.github.io/ui5-webcomponents/assets/footer/sap-1920-1440.svg',
+        src: 'https://sap.github.io/ui5-webcomponents/img/footer/sap-1920-1440.svg',
         width: 160,
         height: 51,
       },
