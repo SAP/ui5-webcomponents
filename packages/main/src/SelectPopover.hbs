@@ -1,7 +1,7 @@
 {{#if options}}
 	<ui5-responsive-popover
 		hide-arrow
-		_disable-initial-focus
+		prevent-initial-focus
 		placement="Bottom"
 		class="ui5-select-popover {{classes.popover}}"
 		horizontal-align="Start"
@@ -66,7 +66,7 @@
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"

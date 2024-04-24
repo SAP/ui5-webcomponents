@@ -3,7 +3,7 @@
 	horizontal-align="Start"
 	class="{{classes.popover}}"
 	hide-arrow
-	_disable-initial-focus
+	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
 	@ui5-after-close={{_afterClosePicker}}
@@ -102,7 +102,7 @@
 {{#if hasValueStateMessage}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"

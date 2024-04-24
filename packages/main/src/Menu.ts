@@ -419,7 +419,7 @@ class Menu extends UI5Element {
 		const loadingWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.loading;
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
-		popover._disableInitialFocus = !!loadingWithoutItems;
+		popover.preventInitialFocus = !!loadingWithoutItems;
 		popover.opener = opener;
 		popover.open = true;
 	}

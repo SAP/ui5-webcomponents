@@ -174,10 +174,11 @@ abstract class Popup extends UI5Element {
 	mediaRange!: string;
 
 	/**
-	 * @private
+	 * Indicates whether the initial focus should be set explicitly from the component.
+	 * @public
 	 */
 	@property({ type: Boolean })
-	_disableInitialFocus!: boolean;
+	preventInitialFocus!: boolean;
 
 	/**
 	 * Indicates if the element is the top modal popup
@@ -387,7 +388,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async applyInitialFocus() {
-		if (!this._disableInitialFocus) {
+		if (!this.preventInitialFocus) {
 			await this.applyFocus();
 		}
 	}
