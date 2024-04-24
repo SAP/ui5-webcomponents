@@ -64,7 +64,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
 })
 /**
  * Fired when the selected item changes.
- * @param {ISegmentedButtonItem} selectedItem the pressed item.
  * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
  * @public
  */
