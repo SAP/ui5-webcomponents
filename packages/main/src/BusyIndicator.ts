@@ -165,13 +165,6 @@ class BusyIndicator extends UI5Element {
 		return this.text ? `${this._id}-label` : undefined;
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-busy-indicator-root": true,
-			},
-		};
-	}
 	get textPosition() {
 		return {
 			top: this.text && this.textPlacement === BusyIndicatorTextPlacement.Top,

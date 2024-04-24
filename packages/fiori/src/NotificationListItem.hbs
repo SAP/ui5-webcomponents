@@ -9,6 +9,23 @@
 	tabindex="{{forcedTabIndex}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 >
+	{{#if busy}}
+		<ui5-busy-indicator
+			delay="{{busyDelay}}"
+			active
+			class="ui5-nli-busy"
+		>
+			{{> liContent}}
+		</ui5-busy-indicator>
+	{{else}}
+		<span>Hello world</span>
+		{{> liContent}}
+	{{/if}}
+</li>
+
+{{>include "./NotificationOverflowActionsPopover.hbs"}}
+
+{{#*inline "liContent"}}
 	<div class="ui5-nli-actions">
 		{{#if showOverflow}}
 			<ui5-button
@@ -92,15 +109,4 @@
 	<div class="ui5-nli-avatar">
 		<slot name="avatar"></slot>
 	</div>
-
-	{{#if busy}}
-		<ui5-busy-indicator
-				delay="{{busyDelay}}"
-				active
-				class="ui5-nli-busy"
-				data-sap-focus-ref
-		></ui5-busy-indicator>
-	{{/if}}
-</li>
-
-{{>include "./NotificationOverflowActionsPopover.hbs"}}
+{{/inline}}
