@@ -255,7 +255,7 @@ abstract class Popup extends UI5Element {
 		if (value) {
 			this.openPopup();
 		} else {
-			this.close();
+			this.closePopup();
 		}
 	}
 
@@ -487,9 +487,8 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Closes the popup.
-	 * @public
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
+	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
 		if (!this._isOpened) {
 			return;
 		}

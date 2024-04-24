@@ -103,17 +103,17 @@ class ResponsivePopover extends Popover {
 	 * Closes the popover/dialog.
 	 * @public
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
+	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
 		if (!isPhone()) {
-			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			super.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
-			this._dialog?.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			this._dialog?.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
 		}
 	}
 
 	toggle(opener: HTMLElement) : void {
 		if (this.open) {
-			this.close();
+			this.closePopup();
 			return;
 		}
 

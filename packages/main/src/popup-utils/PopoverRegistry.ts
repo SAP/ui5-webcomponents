@@ -21,7 +21,7 @@ const repositionPopovers = () => {
 
 const closePopoversIfLostFocus = () => {
 	if (document.activeElement!.tagName === "IFRAME") {
-		getRegistry().reverse().forEach(popup => popup.instance.close(false, false, true));
+		getRegistry().reverse().forEach(popup => popup.instance.closePopup(false, false, true));
 	}
 };
 
@@ -87,7 +87,7 @@ const clickHandler = (event: MouseEvent) => {
 			break;
 		}
 
-		popup.close();
+		popup.closePopup();
 	}
 };
 
@@ -130,7 +130,7 @@ const removeOpenedPopover = (instance: Popover) => {
 				removeOpenedPopup(openedRegistry[indexOfItemToRemove].instance);
 				detachScrollHandler(openedRegistry[indexOfItemToRemove].instance);
 				const itemToClose = openedRegistry.splice(indexOfItemToRemove, 1);
-				itemToClose[0].instance.close(false, true);
+				itemToClose[0].instance.closePopup(false, true);
 			}
 		}
 	}

@@ -400,7 +400,7 @@ class Popover extends Popup {
 		}
 
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
-			return this.close();
+			return this.closePopup();
 		}
 
 		this._oldPlacement = placement;
