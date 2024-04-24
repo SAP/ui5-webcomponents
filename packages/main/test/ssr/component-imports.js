@@ -55,7 +55,6 @@ import TableRow from "../../dist/TableRow.js";
 import TableGroupRow from "../../dist/TableGroupRow.js";
 import TableCell from "../../dist/TableCell.js";
 import TextArea from "../../dist/TextArea.js";
-import TimeSelection from "../../dist/TimeSelection.js";
 import TimePicker from "../../dist/TimePicker.js";
 import TimePickerClock from "../../dist/TimePickerClock.js";
 import TimeSelectionClocks from "../../dist/TimeSelectionClocks.js";
