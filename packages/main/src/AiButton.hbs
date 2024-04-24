@@ -1,15 +1,24 @@
 {{>include "./Button.hbs"}}
 
-
-{{#*inline "buttonContent1"}}
-<slot></slot>
+{{#*inline "buttonIcon"}}
+	<ui5-icon
+		class="ui5-button-icon"
+		name="{{_stateIcon}}"
+		accessible-role="{{iconRole}}"
+		part="icon"
+		?show-tooltip={{showIconTooltip}}
+	></ui5-icon>
 {{/inline}}
 
 {{#*inline "buttonContent"}}
 <div class="ui5-ai-button-content">
-    <span>{{_text}}</span>
-    {{#if _icon}}
-    <ui5-icon name="{{_icon}}"></ui5-icon>
-    {{/if}}
+	<span>{{_text}}</span>
+	{{#if _icon}}
+	<ui5-icon name="{{_icon}}"></ui5-icon>
+	{{/if}}
 </div>
+{{/inline}}
+
+{{#*inline "buttonSlots"}}
+<slot name="menu"></slot>
 {{/inline}}

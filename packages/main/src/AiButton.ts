@@ -78,8 +78,8 @@ class AiButton extends Button {
 	 * Defines the menu of the component.
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
-	menu!: Array<Node>;
+	@slot({ type: Menu })
+	menu!: Array<Menu>;
 
 	static i18nBundle: I18nBundle;
 
@@ -95,6 +95,10 @@ class AiButton extends Button {
 		return this.state === AiButtonState.Revise;
 	}
 
+	get _stateIcon() {
+		return this.state === AiButtonState.Generating ? "stop" : "ai";
+	}
+
 	static async onDefine() {
 		AiButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -107,14 +111,13 @@ class AiButton extends Button {
 		};
 	}
 
-	_stateIcon() {
-		return this.state === AiButtonState.Generating ? "stop" : "ai";
-	}
-
 	_onclick(e: MouseEvent) {
-		// const menu = this.menu[0] as Menu;
-		const menu = document.getElementById("myMenu") as Menu;
-		const target = e.target as HTMLElement;
+		const target = e.target as Element;
+		if (target.getAttribute("slot") === "menu") {
+			return;
+		}
+
+		const menu = this.menu[0];
 		const currentState = this.state;
 
 		switch (currentState) {
@@ -129,7 +132,7 @@ class AiButton extends Button {
 				if (menu.open) {
 					menu.close();
 				} else {
-					menu.showAt(target);
+					menu.showAt(this);
 				}
 			}
 			break;

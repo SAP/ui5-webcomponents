@@ -27,8 +27,10 @@
 
 <body class="button1auto">
 
-	<ui5-ai-button id="myAiButton" icon="ai" state="Generate">
-		<ui5-menu id="myMenu" slot="menu">
+	<ui5-title>AiButton as Component</ui5-title>
+
+	<ui5-ai-button id="myAiButton1" icon="ai" state="Generate">
+		<ui5-menu id="myAiButton1Menu" slot="menu">
 			<ui5-menu-item text="Regenerate"></ui5-menu-item>
 			<ui5-menu-item text="Fix Spelling & Grammar" starts-section></ui5-menu-item>
 			<ui5-menu-item text="Change Tone">
@@ -49,6 +51,44 @@
 			</ui5-menu-item>
 		</ui5-menu>
 	</ui5-ai-button>
+
+	<script>
+
+		/* AiButton as component */
+
+		// timeout ID (not needed in real scenario)
+		let aiGeneratingTimeout1;
+
+		/**
+		 * Do generation handling here
+		 */
+		 myAiButton1.addEventListener("state-change", function(evt) {
+			const state = evt.detail.state;
+
+			if (state === "Generating") {
+				aiGeneratingTimeout1 = setTimeout(function() {
+					myAiButton1.state = "Revise";
+				}, 2000);
+			} else {
+				clearTimeout(aiGeneratingTimeout1);
+				myAiButton1.state = "Generate";
+			}
+		});
+
+		/**
+		 * Here is the logic what happens when specific menu item is clicked
+		 */
+		 myAiButton1Menu.addEventListener("item-click", function(evt) {
+			if (evt.detail.text === "Regenerate") {
+				myAiButton1.state = "Generating";
+			}
+		});
+
+	</script>
+
+
+	<br><br>
+	<ui5-title>AiButton as Sample (using Button)</ui5-title>
 
 	<ui5-button id="aiButton" class="ai-button" icon="ai" state="generate"><div class="ui5-ai-button-content"><span>Generate</span><ui5-icon name=""></ui5-icon></div></ui5-button>
 
@@ -73,11 +113,12 @@
 		</ui5-menu-item>
 	</ui5-menu>
 
-
 	<script>
+
+		/* AiButton as sample */
+
 		// timeout ID (not needed in real scenario)
 		let generatingTimeout;
-		let aiGeneratingTimeout;
 
 		/**
 		 * AI Button state switcher
@@ -140,19 +181,6 @@
 		menu.addEventListener("item-click", function(evt) {
 			if (evt.detail.text === "Regenerate") {
 				changeButtonState(aiButton, "generating");
-			}
-		});
-
-		myAiButton.addEventListener("state-change", function(evt) {
-			const state = evt.detail.state;
-
-			if (state === "Generating") {
-				aiGeneratingTimeout = setTimeout(function() {
-					myAiButton.state = "Revise";
-				}, 2000);
-			} else {
-				clearTimeout(aiGeneratingTimeout);
-				myAiButton.state = "Generate";
 			}
 		});
 

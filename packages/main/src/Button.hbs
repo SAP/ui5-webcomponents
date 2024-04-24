@@ -31,6 +31,8 @@
 		</bdi>
 	</span>
 
+	{{> buttonSlots}}
+
 	{{#if hasButtonType}}
 		<span class="ui5-hidden-text">{{buttonTypeText}}</span>
 	{{/if}}
@@ -52,4 +54,7 @@
 
 {{#*inline "buttonContent"}}
 <slot></slot>
+{{/inline}}
+
+{{#*inline "buttonSlots"}}
 {{/inline}}
