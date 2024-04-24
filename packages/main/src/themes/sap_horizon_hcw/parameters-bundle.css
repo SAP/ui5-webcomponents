@@ -39,10 +39,6 @@
 @import "./SplitButton-parameters.css";
 @import "./Switch-parameters.css";
 @import "./TabContainer-parameters.css";
-@import "./Table-parameters.css";
-@import "../base/TableColumn-parameters.css";
-@import "./TableRow-parameters.css";
-@import "./TableGroupRow-parameters.css";
 @import "./GrowingButton-parameters.css";
 @import "../base/Text-parameters.css";
 @import "./TextArea-parameters.css";

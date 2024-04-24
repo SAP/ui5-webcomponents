@@ -1,7 +1,0 @@
-@import "../base/Table-parameters.css";
-
-:root {
-	--ui5_table_header_row_outline_width: 1px;
-	--ui5_table_multiselect_column_width: 3rem;
-	--ui5_table_header_row_height: 3rem;
-}

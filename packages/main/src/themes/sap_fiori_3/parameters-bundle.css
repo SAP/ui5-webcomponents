@@ -45,10 +45,6 @@
 @import "../base/ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
-@import "../base/Table-parameters.css";
-@import "../base/TableColumn-parameters.css";
-@import "../base/TableRow-parameters.css";
-@import "../base/TableGroupRow-parameters.css";
 @import "../base/Toolbar-parameters.css";
 @import "../base/GrowingButton-parameters.css";
 @import "./Token-parameters.css";
