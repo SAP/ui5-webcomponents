@@ -95,7 +95,7 @@
 
 	<script>
 		btnOpenDialog.addEventListener("click", function () {
-			vsd.open = true;
+			vsd.show();
 		});
 		btnChangeSettings.addEventListener("click", function () {
 			vsd.setConfirmedSettings(JSON.parse(vsdSettings.value));
@@ -107,13 +107,13 @@
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogSort.addEventListener("click", function () {
-			vsdSort.open = true;
+			vsdSort.show();
 		});
 		vsdSort.addEventListener("ui5-confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogFilter.addEventListener("click", function () {
-			vsdFilter.open = true;
+			vsdFilter.show();
 		});
 		vsdFilter.addEventListener("ui5-confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
