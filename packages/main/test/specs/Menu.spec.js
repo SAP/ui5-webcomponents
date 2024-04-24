@@ -36,7 +36,7 @@ describe("Menu interaction", () => {
 		await openButton.click();
 
 		assert.strictEqual(await menuItems.length, 7, "There are proper count of menu items in the top level menu");
-		assert.strictEqual(await menuItems[0].getAttribute("additional-text"), await menuItems[0].getAttribute("additional-text"), "The first list item has proper additional text set");
+		assert.strictEqual(await menuItems[0].getAttribute("additional-text"), "Ctrl+Alt+Shift+N", "The first list item has proper additional text set");
 		assert.strictEqual(await menuItems[1].getAttribute("disabled"), "true", "The second list item is disabled");
 		assert.strictEqual(await menuItems[2].getAttribute("starts-section"), "", "The third list item has separator addded");
 		assert.ok(await menuItems[3].$(".ui5-menu-item-icon-end"), "The third list item has sub-items and must have arrow right icon after the text");
