@@ -396,7 +396,7 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.isOpen()) {
+		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
 			this._openerRect = this._opener!.getBoundingClientRect();
 		}

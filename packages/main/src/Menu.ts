@@ -360,7 +360,7 @@ class Menu extends UI5Element {
 	}
 
 	get isSubMenuOpened() {
-		return this._parentMenuItem && this._popover?.isOpen();
+		return this._parentMenuItem && this._popover?.open;
 	}
 
 	get menuHeaderTextPhone() {

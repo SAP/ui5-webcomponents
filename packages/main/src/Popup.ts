@@ -227,7 +227,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	onExitDOM() {
-		if (this.isOpen()) {
+		if (this.open) {
 			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
@@ -313,7 +313,7 @@ abstract class Popup extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
 		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
-		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.open;
 
 		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
 			e.preventDefault();
@@ -420,14 +420,6 @@ abstract class Popup extends UI5Element {
 			}
 			element.focus();
 		}
-	}
-
-	/**
-	 * Tells if the component is opened
-	 * @public
-	 */
-	isOpen() : boolean {
-		return this.open;
 	}
 
 	isFocusWithin() {

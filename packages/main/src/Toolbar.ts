@@ -324,7 +324,7 @@ class Toolbar extends UI5Element {
 	 */
 	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
-		return overflowPopover!.isOpen();
+		return overflowPopover!.open;
 	}
 
 	openOverflow(): void {

@@ -732,7 +732,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_findTabInOverflow(realTab: ITab) {
-		if (!this.responsivePopover!.isOpen()) {
+		if (!this.responsivePopover!.open) {
 			return undefined;
 		}
 
@@ -1277,7 +1277,7 @@ class TabContainer extends UI5Element {
 	async _togglePopover(opener: HTMLElement) {
 		this.responsivePopover = await this._respPopover();
 
-		if (this.responsivePopover.isOpen()) {
+		if (this.responsivePopover.open) {
 			this._closePopover();
 		} else {
 			await this._showPopoverAt(opener);

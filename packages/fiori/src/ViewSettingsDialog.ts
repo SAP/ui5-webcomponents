@@ -703,7 +703,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	setConfirmedSettings(settings: VSDSettings): void {
-		if (settings && this._dialog && !this._dialog.isOpen()) {
+		if (settings && this._dialog && !this._dialog.open) {
 			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {

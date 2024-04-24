@@ -116,20 +116,12 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
-	toggle(opener: HTMLElement) {
-		if (this.isOpen()) {
-			return this.close();
+	toggle(opener: HTMLElement) : void {
+		if (this.open) {
+			this.close();
 		}
 
 		this.showAt(opener);
-	}
-
-	/**
-	 * Tells if the responsive popover is open.
-	 * @public
-	 */
-	isOpen() : boolean {
-		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
 	}
 
 	get classes() {
