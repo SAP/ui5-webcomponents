@@ -83,16 +83,12 @@ class AiButton extends Button {
 
 	static i18nBundle: I18nBundle;
 
-	get _icon() {
-		return this.state === AiButtonState.Revise ? "navigation-down-arrow" : "";
+	get _hasIcon() {
+		return this.state === AiButtonState.Revise;
 	}
 
 	get _text() {
 		return AiButton.i18nBundle.getText(AiButton._stateText()[this.state]);
-	}
-
-	get _hasIcon() {
-		return this.state === AiButtonState.Revise;
 	}
 
 	get _stateIcon() {
