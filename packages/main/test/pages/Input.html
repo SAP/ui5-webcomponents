@@ -528,7 +528,7 @@
 		var labelChange = document.getElementById('myLabelChange');
 		var labelLiveChange = document.getElementById('myLabelLiveChange');
 		var oXSSButton = document.getElementById("xss-btn");
-		let labelSelectionChange = document.getElementById("inputPreview2");
+		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 
 
 		var suggest = function (event) {
@@ -582,7 +582,7 @@
 			var item = event.detail.item;
 			labelSelectionChange.innerHTML = "Event [selectionChange] :: " + item.id;
 			selectionChangeCounter += 1;
-			const myInputSelectionChangeResult = document.getElementById('#myInput-selection-change-result');
+			const myInputSelectionChangeResult = document.getElementById('myInput-selection-change-result');
 			myInputSelectionChangeResult.innerText = selectionChangeCounter;
 		});
 

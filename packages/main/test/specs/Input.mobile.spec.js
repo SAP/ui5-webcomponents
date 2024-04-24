@@ -76,12 +76,13 @@ describe("Eventing", () => {
 		const input = await browser.$("#myInput");
 		const sExpectedSelectedKey = "Bg";
 		const sChangeText = "Bulgaria";
+		const sTypedText = "b";
 
 		await input.scrollIntoView();
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("b");
+		await dialogInput.keys(sTypedText);
 
 		const suggestionItem = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item")[2];
 		await suggestionItem.click();
@@ -94,7 +95,7 @@ describe("Eventing", () => {
 		assert.strictEqual(change.split(" :: ")[1], sChangeText, "Change event property was correct");
 
 		const liveChange = await browser.$("#myLabelLiveChange").getText();
-		assert.strictEqual(liveChange.split(" :: ")[1], sChangeText, "liveChange event property was correct");
+		assert.strictEqual(liveChange.split(" :: ")[1], sTypedText, "liveChange event property was correct");
 	});
 });
 
