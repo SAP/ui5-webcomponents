@@ -16,7 +16,7 @@
 <body class="input1auto">
 	<h3> Input with suggestions: type 'a'</h3>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelInputChange">Event [input] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelSelectionChange">Event [selectionChange] :: N/A</ui5-label><br/>
 
 	<div>
@@ -471,6 +471,7 @@
 	<br />
 
 	<span id="input-selection-change-count"></span>
+	<span id="input-selection-change-value"></span>
 
 	<br />
 
@@ -526,9 +527,9 @@
 		var inputResult = document.getElementById('inputResult');
 		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
 		var labelChange = document.getElementById('myLabelChange');
-		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var labelInputChange = document.getElementById('myLabelInputChange');
 		var oXSSButton = document.getElementById("xss-btn");
-		let labelSelectionChange = document.getElementById("inputPreview2");
+		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 
 
 		var suggest = function (event) {
@@ -567,7 +568,7 @@
 				}
 			});
 
-			labelLiveChange.innerHTML = "Event [input] :: " + value;
+			labelInputChange.innerHTML = "Event [input] :: " + value;
 		};
 
 		var changeCounter = 0;
@@ -579,10 +580,10 @@
 		inputError.addEventListener("ui5-input", suggest);
 
 		input.addEventListener("ui5-selection-change", function (event) {
-			var item = event.detail.item;
+			const item = event.detail.item;
 			labelSelectionChange.innerHTML = "Event [selectionChange] :: " + item.id;
 			selectionChangeCounter += 1;
-			const myInputSelectionChangeResult = document.getElementById('#myInput-selection-change-result');
+			const myInputSelectionChangeResult = document.getElementById('myInput-selection-change-result');
 			myInputSelectionChangeResult.innerText = selectionChangeCounter;
 		});
 
@@ -755,9 +756,15 @@
 
 		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
 
-		document.getElementById("input-selection-change").addEventListener("ui5-selection-change", () => {
+		const spanChangeValue = document.getElementById("input-selection-change-value");
+		const spanChangeCount = document.getElementById("input-selection-change-count");
+
+		document.getElementById("input-selection-change").addEventListener("ui5-selection-change", e => {
+			const text = e.detail.item ? e.detail.item.text : "";
 			selectionChangeCounter++;
-			document.getElementById("input-selection-change-count").innerText = selectionChangeCounter;
+			spanChangeValue.innerText = text;
+			spanChangeCount.innerText = selectionChangeCounter;
+			console.log(text);
 		});
 	</script>
 </body>

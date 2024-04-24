@@ -138,8 +138,8 @@ type InputEventDetail = {
 }
 
 type InputSelectionChangeEventDetail = {
-	item: IInputSuggestionItem;
-	targetRef: SuggestionListItem;
+	item: IInputSuggestionItem | null;
+	targetRef: SuggestionListItem | null;
 }
 
 type InputSuggestionScrollEventDetail = {
@@ -550,8 +550,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	hasSuggestionItemSelected: boolean;
 	valueBeforeItemSelection: string;
-	valueBeforeSelectionStart: string
-	suggestionSelectionCancelled: boolean;
+	valueBeforeSelectionStart: string;
 	previousValue: string;
 	firstRendering: boolean;
 	typedInValue: string;
@@ -569,6 +568,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
 	_performTextSelection?: boolean;
+	_isLatestValueFromSuggestions: boolean;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -587,9 +587,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		// Note: Used to cancel selection upon [Escape].
 		this.valueBeforeSelectionStart = "";
 
-		// Indicates if the user selection has been canceled with [Escape].
-		this.suggestionSelectionCancelled = false;
-
 		// tracks the value between focus in and focus out to detect that change event should be fired.
 		this.previousValue = "";
 
@@ -607,6 +604,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		// Suggestions array initialization
 		this.suggestionObjects = [];
+
+		// Indicates whether the value of the input is comming from a suggestion item
+		this._isLatestValueFromSuggestions = false;
 
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -870,9 +870,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			// Restore the value.
 			this.value = this.typedInValue || this.valueBeforeSelectionStart;
 
-			// Mark that the selection has been cancelled, so the popover can close
-			// and not reopen, due to receiving focus.
-			this.suggestionSelectionCancelled = true;
 			this.focused = true;
 
 			return;
@@ -969,6 +966,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.value = "";
 		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
 		if (!this._isPhone) {
+			this.fireResetSelectionChange();
 			this.focus();
 			this._focusedAfterClear = true;
 		}
@@ -1010,7 +1008,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		];
 
 		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
-		this.suggestionSelectionCancelled = false;
 
 		if (e instanceof InputEvent) {
 			// ---- Special cases of numeric Input ----
@@ -1056,6 +1053,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.fireEventByAction(INPUT_ACTIONS.ACTION_ENTER, e as InputEvent);
 
+		this._isLatestValueFromSuggestions = false;
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
 
@@ -1241,12 +1239,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.valueBeforeSelectionStart = "";
-		this.suggestionSelectionCancelled = false;
 
 		if (!isChangePropagated) {
 			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
 			this.hasSuggestionItemSelected = false;
-			this.suggestionSelectionCancelled = true;
 
 			if (fireChange) {
 				// revert properties set during fireChange
@@ -1294,6 +1290,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
+			this.fireResetSelectionChange();
 		}
 	}
 
@@ -1378,16 +1375,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	onItemSelected(suggestionItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) {
-		const bFireSelectionChange = !keyboardUsed && this.value !== suggestionItem.text;
+		const shouldFireSelectionChange = !keyboardUsed && !listItem?.focused && this.valueBeforeItemSelection !== suggestionItem.text;
+
+		if (shouldFireSelectionChange) {
+			this.fireSelectionChange(suggestionItem, listItem);
+		}
 
 		this.acceptSuggestion(suggestionItem, keyboardUsed);
-
-		if (bFireSelectionChange) {
-			this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, {
-				item: suggestionItem,
-				targetRef: listItem!,
-			});
-		}
 	}
 
 	onItemSelect(item: SuggestionListItem) {
@@ -1395,10 +1389,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.updateValueOnSelect(item);
 		this.announceSelectedItem();
 
-		this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, {
-			item: this.getSuggestionByListItem(item),
-			targetRef: item,
-		});
+		this.fireSelectionChange(this.getSuggestionByListItem(item), item);
 	}
 
 	get valueStateTypeMappings() {
@@ -1423,6 +1414,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const invisibleText = this.shadowRoot!.querySelector(`#selectionText`)!;
 
 		invisibleText.textContent = this.itemSelectionAnnounce;
+	}
+
+	fireSelectionChange(item: IInputSuggestionItem | null, targetRef: SuggestionListItem | null) {
+		if (this.Suggestions) {
+			this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item, targetRef });
+			this._isLatestValueFromSuggestions = true;
+		}
+	}
+
+	fireResetSelectionChange() {
+		if (this.Suggestions && this._isLatestValueFromSuggestions) {
+			this.fireSelectionChange(null, null);
+			this._isLatestValueFromSuggestions = false;
+		}
 	}
 
 	get _readonly() {

@@ -1540,4 +1540,28 @@ describe("Selection-change event", () => {
 
 		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
 	});
+
+	it("Selection-change event fires with null arguments when suggestion was selected but user alters input value to something else", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-selection-change");
+		const inner = await input.shadow$("input");
+		const selectionChangeCount = await $("#input-selection-change-count");
+		const selectionChangeValue = await $("#input-selection-change-value");
+
+		await inner.click();
+		await inner.keys("C");
+
+		// select first item
+		await input.keys("ArrowDown");
+		assert.strictEqual(await selectionChangeCount.getText(), "1", "Selection-change event was fired once");
+		assert.strictEqual(await selectionChangeValue.getText(), "Cozy", "Selection-change event was fired with arguments");
+
+		await inner.click();
+		await inner.keys("N"); // this value is not in the suggestions
+		await inner.keys("Enter");
+
+		assert.strictEqual(await selectionChangeCount.getText(), "2", "Selection-change event was fired twice");
+		assert.strictEqual(await selectionChangeValue.getText(), "", "Selection-change event was fired with null arguments");
+	});
 });

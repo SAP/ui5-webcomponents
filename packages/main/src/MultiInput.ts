@@ -48,7 +48,8 @@ type MultiInputTokenDeleteEventDetail = {
  * Fiori Guidelines say that user should create tokens when:
  *
  * - Type a value in the input and press enter or focus out the input field (`change` event is fired)
- * - Move between suggestion items or select suggestion item (`selection-change` event is fired)
+ * - Move between suggestion items (`selection-change` event is fired)
+ * - Clicking on a suggestion item (`selection-change` event is fired if the clicked item is different than the current value. Also `change` event is fired )
  *
  * ### ES6 Module Import
  *
