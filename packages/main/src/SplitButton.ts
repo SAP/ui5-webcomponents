@@ -186,14 +186,6 @@ class SplitButton extends UI5Element {
 	_textButtonActive!: boolean;
 
 	/**
-	 * Defines the icon of the text button
-	 * @default ""
-	 * @private
-	 */
-	@property({ noAttribute: true })
-	_textButtonIcon!: string;
-
-	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
 	 * @default false
 	 * @private
@@ -236,7 +228,6 @@ class SplitButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._textButtonIcon = this.icon;
 		if (this.disabled) {
 			this._tabIndex = "-1";
 		}
@@ -333,7 +324,6 @@ class SplitButton extends UI5Element {
 
 	_textButtonRelease() {
 		this._textButtonActive = false;
-		this._textButtonIcon = this.icon;
 		this._tabIndex = "-1";
 	}
 
