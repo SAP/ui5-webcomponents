@@ -29,8 +29,7 @@ import PageCss from "./generated/themes/Page.css.js";
  * The content occupies the main part of the page. Only the content area is scrollable by default.
  * This can be prevented by setting  `enableScrolling` to `false`.
  * #### Footer
- * The footer is optional and occupies the part above the bottom part of the content. Alternatively, the footer can be fixed and to occupy the bottom part of the page.
- * This is enabled with the `fixedFooter` property.
+ * The footer is optional and occupies the part above the bottom part of the content. Alternatively, the footer can be fixed at the bottom of the page by enabling the `fixedFooter` property.
  *
  * **Note:** `ui5-page` occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the `ui5-page` to be rendered.
