@@ -83,17 +83,11 @@ class ResponsivePopover extends Popover {
 		super();
 	}
 
-	/**
-	 * Shows popover on desktop and dialog on mobile.
-	 * @param opener the element that the popover is shown at
-	 * @public
-	 * @returns Resolves when the responsive popover is open
-	 */
-	async showAt(opener: HTMLElement): Promise<void> {
+	async openPopup() {
 		if (!isPhone()) {
-			await super.showAt(opener);
+			await super.openPopup();
 		} else {
-			await this._dialog.show();
+			await this._dialog.openPopup();
 		}
 	}
 

@@ -254,6 +254,10 @@ class Popover extends Popup {
 	}
 
 	async openPopup() {
+		if (this._isOpened) {
+			return;
+		}
+
 		let opener;
 
 		if (this.opener instanceof HTMLElement) {
@@ -279,7 +283,10 @@ class Popover extends Popup {
 			return;
 		}
 
-		await this.showAt(opener);
+		this._opener = opener;
+		this._openerRect = opener.getBoundingClientRect();
+
+		await super._open();
 	}
 
 	isOpenerClicked(e: MouseEvent) {
@@ -295,23 +302,6 @@ class Popover extends Popup {
 		}
 
 		return e.composedPath().indexOf(this._opener as EventTarget) > -1;
-	}
-
-	/**
-	 * Shows the popover.
-	 * @param opener the element that the popover is shown at
-	 * @public
-	 * @returns Resolved when the popover is open
-	 */
-	async showAt(opener: HTMLElement): Promise<void> {
-		if (!opener || this._isOpened) {
-			return;
-		}
-
-		this._opener = opener;
-		this._openerRect = opener.getBoundingClientRect();
-
-		await super._open();
 	}
 
 	/**
