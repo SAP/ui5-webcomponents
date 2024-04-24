@@ -29,8 +29,7 @@ import PageCss from "./generated/themes/Page.css.js";
  * The content occupies the main part of the page. Only the content area is scrollable by default.
  * This can be prevented by setting  `enableScrolling` to `false`.
  * #### Footer
- * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
- * This is enabled with the `floatingFooter` property.
+ * The footer is optional and occupies the part above the bottom part of the content. Alternatively, the footer can be fixed at the bottom of the page by enabling the `fixedFooter` property.
  *
  * **Note:** `ui5-page` occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the `ui5-page` to be rendered.
@@ -73,17 +72,17 @@ class Page extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disableScrolling!: boolean;
+	noScrolling!: boolean;
 
 	/**
-	 * Defines if the footer should float over the content.
+	 * Defines if the footer is fixed at the very bottom of the page.
 	 *
-	 * **Note:** When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-	 * @default true
+	 * **Note:** When set to true the footer is fixed at the very bottom of the page, otherwise it floats over the content with a slight offset from the bottom.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	floatingFooter!: boolean;
+	fixedFooter!: boolean;
 
 	/**
 	 * Defines the footer visibility.
@@ -112,8 +111,8 @@ class Page extends UI5Element {
 	 * Defines the content HTML Element.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	@slot({ type: Node, "default": true })
+	content!: Array<Node>;
 
 	/**
 	 * Defines the footer HTML Element.
@@ -143,11 +142,11 @@ class Page extends UI5Element {
 	}
 
 	get _contentBottom() {
-		return !this.floatingFooter && !this.hideFooter ? "2.75rem" : "0";
+		return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";
 	}
 
 	get _contentPaddingBottom() {
-		return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
+		return !this.fixedFooter && !this.hideFooter ? "3.5rem" : "0";
 	}
 
 	get _contentTop() {

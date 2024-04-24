@@ -794,11 +794,19 @@
 		</section>
 		<section>
 			<h3>Add new selected tab programmatically</h3>
+			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
 			<ui5-tabcontainer id="tabContainerAddTabsProgrammatically">
 				<ui5-tab text="Tab 0" selected></ui5-tab>
 				<ui5-tab text="Tab 1"></ui5-tab>
 			</ui5-tabcontainer>
-			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
+		</section>
+		<section>
+			<h3>No explicitly selected tab</h3>
+			<ui5-button id="buttonAddTabAtNoExplicitlySelectedTab">add new tab at the beginning</ui5-button>
+			<ui5-tabcontainer id="tabContainerNoExplicitlySelectedTab">
+				<ui5-tab text="Tab 0"></ui5-tab>
+				<ui5-tab text="Tab 1"></ui5-tab>
+			</ui5-tabcontainer>
 		</section>
 
 	</section>
@@ -841,6 +849,17 @@
 			<ui5-tab text="One">
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
+		<h3>Narrow Tab Container</h3>
+		<ui5-tabcontainer id="narrowTabContainer" class="narrowTabContainer">
+			<ui5-tab text="One"></ui5-tab>
+			<ui5-tab text="Two"></ui5-tab>
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Four"></ui5-tab>
+			<ui5-tab id="narrowTabContainerTabFive" text="Five"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
@@ -931,6 +950,13 @@
 			addTab(true);
 			addTab();
 			addTab();
+		});
+
+		document.getElementById("buttonAddTabAtNoExplicitlySelectedTab").addEventListener("click", function () {
+			const newTab = document.createElement("ui5-tab");
+			newTab.text = "New Tab";
+
+			document.getElementById("tabContainerNoExplicitlySelectedTab").prepend(newTab);
 		});
 
 		document.getElementById("insertAndFocusNewTab").addEventListener("click", () => {

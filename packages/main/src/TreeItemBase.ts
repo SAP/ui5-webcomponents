@@ -242,7 +242,7 @@ class TreeItemBase extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this.accessibleRoleDescription ? undefined : TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {

@@ -292,13 +292,6 @@
 	--_ui5_tl_padding: .5rem;
 	--_ui5_tl_li_margin_bottom: .5rem;
 
-	--_ui5_wheelslider_item_width: 64px;
-	--_ui5_wheelslider_item_height: 32px;
-	--_ui5_wheelslider_height: 224px;
-	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
-	--_ui5_wheelslider_arrows_visibility: visible;
-	--_ui5_wheelslider_mobile_selection_frame_margin_top: 128px;
-
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_size: 1rem;
