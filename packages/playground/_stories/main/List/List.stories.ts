@@ -158,9 +158,7 @@ export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
   selectionMode: ListSelectionMode.Multiple,
-  default: `<ui5-li-groupheader
-	>Front End Developers</ui5-li-groupheader
-	>
+  default: `<ui5-li-group header-text="Front End Developers">
 	<ui5-li
 		image="../assets/images/avatars/woman_avatar_3.png"
 		icon="navigation-right-arrow"
@@ -179,25 +177,27 @@ GroupHeaders.args = {
 		icon-end=""
 		>Carlotta</ui5-li
 	>
-	<ui5-li-groupheader>Back End Developers</ui5-li-groupheader>
-	<ui5-li
-		image="../assets/images/avatars/man_avatar_1.png"
-		icon="navigation-right-arrow"
-		icon-end=""
-	>Clark</ui5-li
-	>
-	<ui5-li
-		image="../assets/images/avatars/woman_avatar_1.png"
-		icon="navigation-right-arrow"
-		icon-end=""
-	>Ellen</ui5-li
-	>
-	<ui5-li
-		image="../assets/images/avatars/man_avatar_2.png"
-		icon="navigation-right-arrow"
-		icon-end=""
-	>Adam</ui5-li
-	>`,
+</ui5-li-group>  
+<ui5-li-group header-text="Front End Developers">
+  <ui5-li
+    image="../assets/images/avatars/man_avatar_1.png"
+    icon="navigation-right-arrow"
+    icon-end=""
+  >Clark</ui5-li
+  >
+  <ui5-li
+    image="../assets/images/avatars/woman_avatar_1.png"
+    icon="navigation-right-arrow"
+    icon-end=""
+  >Ellen</ui5-li
+  >
+  <ui5-li
+    image="../assets/images/avatars/man_avatar_2.png"
+    icon="navigation-right-arrow"
+    icon-end=""
+  >Adam</ui5-li
+  >
+</ui5-li-group>`,
 };
 
 

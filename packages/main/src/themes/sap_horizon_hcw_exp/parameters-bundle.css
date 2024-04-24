@@ -16,7 +16,7 @@
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
-@import "../base/GroupHeaderListItem-parameters.css";
+@import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
 @import "./Link-parameters.css";
@@ -46,7 +46,6 @@
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./ToggleButton-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/Tokenizer-parameters.css";

@@ -8,6 +8,7 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
@@ -196,7 +197,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		await super.openPicker();
 		this._previewValues = {
 			...this._previewValues,
-			timeSelectionValue: this.value || this.getFormat().format(new Date()),
+			timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
 		};
 	}
 

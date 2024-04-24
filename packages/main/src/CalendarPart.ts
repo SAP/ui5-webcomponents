@@ -4,6 +4,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import DateComponentBase from "./DateComponentBase.js";
 
 /**
@@ -51,7 +52,7 @@ class CalendarPart extends DateComponentBase {
 	}
 
 	get _localDate() {
-		return new Date(this._timestamp * 1000);
+		return UI5Date.getInstance(this._timestamp * 1000);
 	}
 
 	/**

@@ -55,7 +55,6 @@ import TableRow from "../../dist/TableRow.js";
 import TableGroupRow from "../../dist/TableGroupRow.js";
 import TableCell from "../../dist/TableCell.js";
 import TextArea from "../../dist/TextArea.js";
-import TimeSelection from "../../dist/TimeSelection.js";
 import TimePicker from "../../dist/TimePicker.js";
 import TimePickerClock from "../../dist/TimePickerClock.js";
 import TimeSelectionClocks from "../../dist/TimeSelectionClocks.js";
@@ -76,7 +75,7 @@ import List from "../../dist/List.js";
 // console.log({List})
 import StandardListItem from "../../dist/StandardListItem.js";
 import CustomListItem from "../../dist/CustomListItem.js";
-import GroupHeaderListItem from "../../dist/GroupHeaderListItem.js";
+import ListItemGroupHeader from "../../dist/ListItemGroupHeader.js";
 
 // Features
 import "../../dist/features/ColorPaletteMoreColors.js";

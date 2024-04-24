@@ -78,7 +78,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input, { InputEventDetail } from "./Input.js";
@@ -175,7 +175,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		BusyIndicator,
 		Button,
 		StandardListItem,
-		GroupHeaderListItem,
+		ListItemGroupHeader,
 		Popover,
 		ComboBoxGroupItem,
 		Input,
@@ -493,7 +493,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	async shouldClosePopover(): Promise<boolean> {
 		const popover: ResponsivePopover = await this._getPicker();
 
-		return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
+		return popover.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(e: FocusEvent) {
@@ -551,7 +551,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	async _toggleRespPopover() {
 		const picker: ResponsivePopover = await this._getPicker();
 
-		if (picker.opened) {
+		if (picker.open) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -770,7 +770,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.fireEvent("input");
-		this._fireChangeEvent();
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {
@@ -883,7 +882,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 			this._fireChangeEvent();
 
-			if (picker?.opened && !focusedItem?.isGroupItem) {
+			if (picker?.open && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
@@ -1232,7 +1231,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get open(): boolean {
-		return this?.responsivePopover?.opened || false;
+		return this?.responsivePopover?.open || false;
 	}
 
 	get _isPhone(): boolean {

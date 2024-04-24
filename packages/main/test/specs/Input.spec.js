@@ -367,7 +367,7 @@ describe("Input general interaction", () => {
 		await suggestionsInput.click();
 		await suggestionsInput.keys("p");
 
-		assert.ok(await popover.getProperty("opened"), "suggestions are opened.");
+		assert.ok(await popover.getProperty("open"), "suggestions are opened.");
 
 		// This test is passing when the test is executed on browser that is NOT headless
 
@@ -376,7 +376,7 @@ describe("Input general interaction", () => {
 
 		// await item.click();
 
-		// assert.ok(!await popover.getProperty("opened"), "suggestions are closed");
+		// assert.ok(!await popover.getProperty("open"), "suggestions are closed");
 		// assert.strictEqual(await suggestionsInput.getValue(), "Portugal", "First item has been selected");
 		// assert.strictEqual(await inputResult.getValue(), "1", "suggestionItemSelected event called once");
 
@@ -539,7 +539,7 @@ describe("Input general interaction", () => {
 
 		const input = await browser.$("#myInputGrouping");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
 
 		await input.click();
 		await input.keys("C");
@@ -593,31 +593,11 @@ describe("Input general interaction", () => {
 
 		await inputShadowRef.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover with valueStateMessage should be opened.");
+		assert.ok(await popover.getProperty("open"), "Popover with valueStateMessage should be opened.");
 
 		await inputShadowRef.keys("a");
 
 		assert.ok(respPopover, "Responsive popover with valueStateMessage should be opened.");
-	});
-
-	it("Checks if valueStateMessage gets updated dynamically", async () => {
-		const btn = await $("#dynamic-value-state-trigger");
-		const input = await $("#dynamic-value-state").shadow$("input");
-
-		await input.scrollIntoView();
-		await btn.click();
-		await browser.pause(2000);
-		await input.click();
-
-		const inputElement = await browser.$("#dynamic-value-state");
-		const valueStatePopover = await inputElement.shadow$("ui5-popover");
-		const initialContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
-
-		await browser.pause(2000);
-
-		const changedContent = await valueStatePopover.$("[slot='valueStateMessage']").getHTML();
-
-		assert.notEqual(initialContent, changedContent, "Content of the slot should be cloned when changed");
 	});
 
 	it("Checks if aria-describedby is renderd if not neccessary", async () => {
@@ -647,6 +627,13 @@ describe("Input general interaction", () => {
 
 		assert.notOk(await innerInputWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
 		assert.strictEqual(await innerInputError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
+	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+		const input = await browser.$("#myInput");
+		const innerInput = await input.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 	});
 
 	it("Value state type should be added to the screen readers default value states announcement", async () => {
@@ -695,13 +682,9 @@ describe("Input general interaction", () => {
 		inputError.click();
 		inputError.keys("a");
 
-		const popoverHeader = await inputError.shadow$("ui5-popover").$(".ui5-valuestatemessage-header");
-		const valueStateText = await popoverHeader.$("div").getText();
-		const _id = await inputError.getProperty("_id");
-		const ariaHiddenText = await inputError.shadow$(`#${_id}-valueStateDesc`).getText();
+		const ariaHiddenText = await inputError.shadow$(`#valueStateDesc`).getText();
 
 		assert.strictEqual(ariaHiddenText.includes("Value State Error"), true, "Hidden screen reader text is correct");
-		assert.strictEqual(valueStateText.includes("Custom error value state message"), true, "Displayed value state message text is correct");
 	});
 
 	it("Tests autocomplete(type-ahead)", async () => {
@@ -810,8 +793,8 @@ describe("Input general interaction", () => {
 		const inputDynamicSuggestions = await $("#inputCompact");
 		const inputSuggestions = await $("#myInput2");
 		const dynamicSuggestionsInnerInput = await inputDynamicSuggestions.shadow$("input");
-		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#${await inputDynamicSuggestions.getProperty("_id")}-suggestionsCount`);
-		const suggestionsCount = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-suggestionsCount`);
+		const dynamicSuggestionsCount = await inputDynamicSuggestions.shadow$(`#suggestionsCount`);
+		const suggestionsCount = await inputSuggestions.shadow$(`#suggestionsCount`);
 
 		//act
 		await inputDynamicSuggestions.click();
@@ -843,8 +826,8 @@ describe("Input general interaction", () => {
 		const inputWithGroups = await $("#inputCompact");
 		const inputSuggestions = await $("#myInput2");
 		const inputWithGroupsInnerInput = await inputWithGroups.shadow$("input");
-		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#${await inputWithGroups.getProperty("_id")}-selectionText`);
-		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#${await inputSuggestions.getProperty("_id")}-selectionText`);
+		const inputWithGroupsAnnouncement = await inputWithGroups.shadow$(`#selectionText`);
+		const suggestionsAnnouncement = await inputSuggestions.shadow$(`#selectionText`);
 
 		//act
 		await inputWithGroups.click();
@@ -901,7 +884,7 @@ describe("Input general interaction", () => {
 
 		await input.click();
 
-		assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+		assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
 	});
 
 	it("Displays clear icon when typing and pressing it clears the value", async () => {
@@ -1180,7 +1163,7 @@ describe("Input arrow navigation", () => {
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1289,7 +1272,7 @@ describe("Input HOME navigation", () => {
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const valueStateHeader = await respPopover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "Input's value should be the typed-in value");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1315,7 +1298,7 @@ describe("Input HOME navigation", () => {
 
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
 		const firstListItem = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupHeader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-Header");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
@@ -1447,7 +1430,7 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		await suggestionsInput.keys("PageUp");
 
 		const respPopover = await suggestionsInput.shadow$("ui5-responsive-popover");
-		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-groupheader");
+		const groupHeader = await respPopover.$("ui5-list").$("ui5-li-group-header");
 
 		assert.strictEqual(await suggestionsInput.getValue(), "a", "No item has been selected");
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
@@ -1555,7 +1538,7 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await inner.keys("a");
 
-		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("open"), {
 			timeout: 3000,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1577,7 +1560,7 @@ describe("Lazy loading", () => {
 
 		await browser.pause(3000);
 
-		assert.notOk(await respPopover.getProperty("opened"), "Picker should not be open");
+		assert.notOk(await respPopover.getProperty("open"), "Picker should not be open");
 	});
 
 	it("Should not close picker when items are updated", async () => {
@@ -1588,13 +1571,13 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await inner.keys("S");
 
-		await browser.waitUntil(() => respPopover.getProperty("opened"), {
+		await browser.waitUntil(() => respPopover.getProperty("open"), {
 			timeout: 2000,
 			timeoutMsg: "Popover should be displayed"
 		});
 
 		await inner.keys("b");
 
-		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Picker should not be open");
 	});
 });

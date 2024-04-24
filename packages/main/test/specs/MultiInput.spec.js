@@ -24,7 +24,7 @@ describe("MultiInput general interaction", () => {
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 	});
 
 	it ("fires value-help-trigger on icon press", async () => {
@@ -130,14 +130,14 @@ describe("MultiInput general interaction", () => {
 		await input.click();
 		await input.keys("c");
 
-		assert.ok(await popover.getProperty("opened"), "Suggestion Popovoer is open");
+		assert.ok(await popover.getProperty("open"), "Suggestion Popovoer is open");
 		let allTokens = await mi.$$("ui5-token");
 		assert.strictEqual(allTokens.length, 0, "0 tokens");
 
 		await popover.$("ui5-li-suggestion-item").click();
 
 		allTokens = await mi.$$("ui5-token");
-		assert.notOk(await popover.getProperty("opened"), "Suggestion Popovoer is closed");
+		assert.notOk(await popover.getProperty("open"), "Suggestion Popovoer is closed");
 		assert.strictEqual(allTokens.length, 1, "a token is added after selection");
 	});
 
@@ -239,14 +239,14 @@ describe("MultiInput Truncated Token", () => {
 
 		await token.click();
 
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
 		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
 		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
 		await token.click();
 
-		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await rpo.getProperty("open"), "More Popover should be closed");
 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		assert.ok(await token.getProperty("focused"), "Token should be focused");
 	});
@@ -264,7 +264,7 @@ describe("MultiInput Truncated Token", () => {
 
 		await browser.$("#dummy-btn").click();
 
-		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await rpo.getProperty("open"), "More Popover should be closed");
 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 	});
 
@@ -279,7 +279,7 @@ describe("MultiInput Truncated Token", () => {
 
 		await inner.click();
 
-		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await rpo.getProperty("open"), "More Popover should be closed");
 		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 	});
 
@@ -292,7 +292,7 @@ describe("MultiInput Truncated Token", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
+		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit.");
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -303,7 +303,7 @@ describe("MultiInput Truncated Token", () => {
 
 		await token.click();
 
-		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
 		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
@@ -325,7 +325,7 @@ describe("MultiInput Truncated Token", () => {
 		const innerInput = await browser.$("#added-mi").shadow$("input");
 		const html = await innerInput.getHTML();
 
-		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
+		assert.ok(html, "new MI should be displayed");
 	});
 });
 
@@ -369,8 +369,8 @@ describe("ARIA attributes", () => {
 	it ("aria-describedby value according to the tokens and suggestions count", async () => {
 		const mi = await browser.$("#suggestion-token");
 		const innerInput = await mi.shadow$("input");
-		const tokensCountITextId = `${await mi.getProperty("_id")}-hiddenText-nMore`;
-		const suggestionsITextId = `${await mi.getProperty("_id")}-suggestionsText`;
+		const tokensCountITextId = `hiddenText-nMore`;
+		const suggestionsITextId = `suggestionsText`;
 		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
 
 		await browser.$("#suggestion-token").scrollIntoView();
@@ -387,6 +387,13 @@ describe("ARIA attributes", () => {
 		const innerInput = await mi.shadow$("input");
 
 		assert.strictEqual(await innerInput.getAttribute("aria-roledescription"), "Multi Value Input", "aria-roledescription value is correct");
+	});
+
+	it("aria-haspopup attribute with value 'dialog'", async () => {
+		const mi = await browser.$("#suggestion-token");
+		const innerInput = await mi.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 	});
 });
 
@@ -671,12 +678,12 @@ describe("Keyboard handling", () => {
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
+		assert.ok(await rpo.getProperty("open"), "Focused MI - n-more popover should be opened");
 
 		await mi.click();
 		await mi.keys("ArrowLeft");
 		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+		assert.ok(await rpo.getProperty("open"), "Focused Token - n-more popover should be opened");
 	});
 
 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
@@ -686,7 +693,7 @@ describe("Keyboard handling", () => {
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("opened"), "n-more popover shouldn't be opened since no tokens");
+		assert.notOk(await rpo.getProperty("open"), "n-more popover shouldn't be opened since no tokens");
 	});
 
 	it("should open popover with all tokens on keyboard combination ctrl + i", async () => {
@@ -696,7 +703,7 @@ describe("Keyboard handling", () => {
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
+		assert.ok(await rpo.getProperty("open"), "Focused MI - n-more popover should be opened");
 		const listItems = await rpo.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 2, "All items are shown");
 	});

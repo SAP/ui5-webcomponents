@@ -6,6 +6,8 @@
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
+	@dragover="{{_ondrag}}"
+	@drop="{{_ondrop}}"
 >
 	<div class="ui5-file-uploader-mask">
 		{{#unless hideInput}}

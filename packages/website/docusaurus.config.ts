@@ -93,8 +93,13 @@ const config: Config = {
       items: [
         {
           to: 'docs',
-          label: 'Documentation',
+          label: 'Docs',
           activeBasePath: 'docs',
+        },
+        {
+          to: 'blog',
+          label: 'Blog',
+          activeBasePath: 'blog',
         },
         {
           to: 'components/',

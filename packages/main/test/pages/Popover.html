@@ -337,14 +337,16 @@ z-index: 1;
 			<ui5-icon id="searchIcon" slot="icon" name="search"></ui5-icon>
 		</ui5-input>
 		<ui5-list class="popover8auto">
-			<ui5-li-groupheader>Actions</ui5-li-groupheader>
-			<ui5-li>Delete Product</ui5-li>
-			<ui5-li>Audit Log Settings</ui5-li>
-			<ui5-li>OData API Audit</ui5-li>
-			<ui5-li-groupheader>Products</ui5-li-groupheader>
-			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Error">IPhone 3</ui5-li>
-			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
+			<ui5-li-group header-text="Actions">
+				<ui5-li>Delete Product</ui5-li>
+				<ui5-li>Audit Log Settings</ui5-li>
+				<ui5-li>OData API Audit</ui5-li>
+			</ui5-li-group>
+			<ui5-li-group header-text="Products">
+				<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
+				<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Error">IPhone 3</ui5-li>
+				<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
+			</ui5-li-group>
 		</ui5-list>
 	</ui5-popover>
 
@@ -680,15 +682,6 @@ z-index: 1;
 		createAndRemove.addEventListener("click", function () {
 			var pop = document.createElement("ui5-popover");
 
-			pop.setAttribute("open", true);
-			pop.setAttribute("opener", "createAndRemove");
-
-			var inp = document.createElement("ui5-input");
-			inp.setAttribute("slot", "header")
-			pop.appendChild(inp)
-
-			document.body.appendChild(pop)
-
 			pop.addEventListener("ui5-before-open", async () => {
 				var applyFocusResult = pop.applyFocus();
 				pop.remove();
@@ -696,11 +689,20 @@ z-index: 1;
 				try {
 					await applyFocusResult;
 					createAndRemoveResult.innerText = "No uncaught errors";
- 				} catch (e) {
+				} catch (e) {
 					createAndRemoveResult.innerText = e.toString();
 				}
 				createAndRemoveResult.style.display = "";
-			})
+			});
+
+			var inp = document.createElement("ui5-input");
+			inp.setAttribute("slot", "header");
+			pop.appendChild(inp);
+
+			document.body.appendChild(pop);
+
+			pop.setAttribute("opener", "createAndRemove");
+			pop.setAttribute("open", true);
 		});
 
 		openPopoverInsideContainingBlockButton.addEventListener("click", function () {
