@@ -343,8 +343,8 @@ class Popover extends Popup {
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if ((closedPopupParent as Popover).showAt) {
-			const contentRect = (closedPopupParent as Popover).contentDOM.getBoundingClientRect();
+		if (closedPopupParent instanceof Popover) {
+			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
 		}
@@ -825,7 +825,7 @@ class Popover extends Popup {
 }
 
 const instanceOfPopover = (object: any): object is Popover => {
-	return "showAt" in object;
+	return "opener" in object;
 };
 
 Popover.define();

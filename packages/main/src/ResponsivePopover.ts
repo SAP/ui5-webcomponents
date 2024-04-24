@@ -93,7 +93,6 @@ class ResponsivePopover extends Popover {
 		if (!isPhone()) {
 			await super.showAt(opener);
 		} else {
-			this.style.display = "contents";
 			await this._dialog.show();
 		}
 	}
@@ -101,6 +100,8 @@ class ResponsivePopover extends Popover {
 	_show() {
 		if (!isPhone()) {
 			super._show();
+		} else {
+			this.style.display = "contents";
 		}
 	}
 
@@ -122,7 +123,8 @@ class ResponsivePopover extends Popover {
 			return;
 		}
 
-		this.showAt(opener);
+		this.opener = opener;
+		this.open = true;
 	}
 
 	get classes() {
