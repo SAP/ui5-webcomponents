@@ -95,16 +95,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 	dialogOpener.addEventListener("click", function() {
-		dialog.show();
+		dialog.open = true;
 	});
 	dialogOpener2.addEventListener("click", function() {
-		dialog2.show();
+		dialog2.open = true;
 	});
 	dialogCloser.addEventListener("click", function() {
-		dialog.close();
+		dialog.open = false;
 	});
 	dialogCloser2.addEventListener("click", function() {
-		dialog2.close();
+		dialog2.open = false;
 	});
 
 	/* List */

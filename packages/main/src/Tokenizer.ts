@@ -271,7 +271,8 @@ class Tokenizer extends UI5Element {
 
 		if (!this._getTokens().length) {
 			const popover = await this.getPopover();
-			popover.close();
+			popover.preventFocusRestore = false;
+			popover.open = false;
 		}
 
 		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom! : this.narrowContentDom;
@@ -373,7 +374,7 @@ class Tokenizer extends UI5Element {
 				once: true,
 			});
 
-			morePopover.close();
+			morePopover.open = false;
 		} else {
 			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 		}
@@ -620,7 +621,9 @@ class Tokenizer extends UI5Element {
 	}
 
 	async closeMorePopover() {
-		(await this.getPopover()).close(false, false, true);
+		const popover = await this.getPopover();
+		popover.preventFocusRestore = true;
+		popover.open = false;
 		this._isOpen = false;
 	}
 

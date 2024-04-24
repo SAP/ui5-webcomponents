@@ -696,7 +696,7 @@ class ShellBar extends UI5Element {
 	 */
 	closeOverflow(): void {
 		if (this.overflowPopover) {
-			this.overflowPopover.close();
+			this.overflowPopover.open = false;
 		}
 	}
 

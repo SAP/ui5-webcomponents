@@ -23,7 +23,7 @@ var shellBar = document.getElementById("shellbar");
 var popover = document.getElementById("productswitch-popover");
 shellBar.addEventListener("product-switch-click", (event) => {
     if (popover.open) {
-        popover.close();
+        popover.open = false;
     } else {
         event.preventDefault();
         popover.opener = event.detail.targetRef;

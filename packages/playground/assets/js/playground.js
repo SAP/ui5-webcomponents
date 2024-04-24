@@ -68,11 +68,11 @@ function toggleSettings() {
         }
       });
 
-      dialog.show();
+      dialog.open = true;
     });
 
     cancelButton.addEventListener("click", function(event) {
-      dialog.close();
+      dialog.open = false;
     });
 
     applyButton.addEventListener("click", function(event) {
@@ -92,7 +92,7 @@ function toggleSettings() {
 
         window.location = newLocation;
 
-      dialog.close();
+      dialog.open = false;
     });
   }
 }

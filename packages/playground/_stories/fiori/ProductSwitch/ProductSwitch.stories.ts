@@ -48,7 +48,7 @@ WithShellBar.decorators = [
             var popover = document.getElementById("productswitch-popover");
             shellbar.addEventListener("product-switch-click", (event) => {
                 if (popover.open) {
-                    popover.close();
+                    popover.open = false;
                 } else {
                     event.preventDefault();
                     popover.opener = event.detail.targetRef;
