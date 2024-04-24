@@ -198,6 +198,16 @@ abstract class UI5Element extends HTMLElement {
 			}
 		}
 
+		if (DEV_MODE) {
+			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
+			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
+				if (Object.hasOwn(this, prop)) {
+					// eslint-disable-next-line no-console
+					console.error("hasOwn", this, prop);
+				}
+			}
+		}
+
 		const ctor = this.constructor as typeof UI5Element;
 
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
