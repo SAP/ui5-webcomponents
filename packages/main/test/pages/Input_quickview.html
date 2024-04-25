@@ -114,6 +114,7 @@
 		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			const targetRef = event.detail.targetRef;
 
+			quickViewCard.open = false;
 			quickViewCard.opener = targetRef;
 			quickViewCard.open = true;
 		});
@@ -125,6 +126,7 @@
 			el.addEventListener("ui5-mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 
+				quickViewCard.open = false;
 				quickViewCard.opener = targetRef;
 				quickViewCard.open = true;
 			});
@@ -165,6 +167,7 @@
 
 		inputPreview2.addEventListener("ui5-suggestion-item-preview", function (event) {
 			var item = event.detail.targetRef;
+			quickViewCard2.open = false;
 			quickViewCard2.opener = item;
 			quickViewCard2.open = true;
 
@@ -189,6 +192,7 @@
 		[].slice.call(document.querySelectorAll("#inputPreview2 .suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
+				quickViewCard2.open = false;
 				quickViewCard2.opener = targetRef;
 				quickViewCard2.open = true;
 

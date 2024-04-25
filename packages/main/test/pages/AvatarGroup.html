@@ -300,6 +300,7 @@
 		}
 		placeholder.innerHTML = html;
 
+		groupPop.open = false;
 		groupPop.opener = event.detail.targetRef;
 		groupPop.open = true;
 	}
@@ -315,6 +316,7 @@
 		popAvatar.initials = avatarRef.initials;
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
+		individualPop.open = false;
 		individualPop.opener = avatarRef;
 		individualPop.open = true;
 	}

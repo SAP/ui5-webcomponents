@@ -124,7 +124,8 @@ export default () => {
                         html += \`</ui5-avatar></div>\`;
                     });
                     placeholder.innerHTML = html;
-                    peoplePopover.opener = targetRef;
+					peoplePopover.open = false;
+					peoplePopover.opener = targetRef;
 					peoplePopover.open = true;
                 }
                 avatarGroup.addEventListener("click", function (event) {

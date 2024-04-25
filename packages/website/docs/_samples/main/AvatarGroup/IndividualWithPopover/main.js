@@ -22,7 +22,8 @@ function onAvatarClicked(avatarRef) {
         popAvatar.appendChild(avatarRef.image[i].cloneNode());
     }
     popAvatar.icon = avatarRef.icon;
-    personPopover.opener = avatarRef;
+	personPopover.open = false;
+	personPopover.opener = avatarRef;
 	personPopover.open = true;
 }
 function onButtonClicked(targetRef) {
