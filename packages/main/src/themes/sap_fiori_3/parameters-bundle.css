@@ -16,7 +16,7 @@
 @import "./DayPicker-parameters.css";
 @import "../base/FileUploader-parameters.css";
 @import "../base/Dialog-parameters.css";
-@import "../base/GroupHeaderListItem-parameters.css";
+@import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "../base/InputIcon-parameters.css";
 @import "./Link-parameters.css";
@@ -24,7 +24,7 @@
 @import "../base/ListItemBase-parameters.css";
 @import "../base/Menu-parameters.css";
 @import "./MonthPicker-parameters.css";
-@import "../base/MessageStrip-parameters.css";
+@import "./MessageStrip-parameters.css";
 @import "../base/Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
@@ -42,7 +42,6 @@
 @import "../base/TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "../base/ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";

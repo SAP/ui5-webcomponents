@@ -243,7 +243,7 @@ class TreeItemBase extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this.accessibleRoleDescription ? undefined : TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
@@ -284,8 +284,8 @@ class TreeItemBase extends ListItem {
 		this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {

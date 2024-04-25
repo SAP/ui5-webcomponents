@@ -206,7 +206,7 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`8`);
 
 			const sizeBeforeGrow = await textArea.getSize();
-			assert.strictEqual(initialSize.height, sizeBeforeGrow.height, "TextArea should not grow before it reaches its 8th line");
+			assert.strictEqual(initialSize.height, sizeBeforeGrow.height, "TextArea should not grow before it reaches its 8th row");
 
 			await textAreaInner.addValue(`\n9`);
 			const sizeAfterGrow = await textArea.getSize();
@@ -214,7 +214,7 @@ describe("when enabled", () => {
 			assert.isBelow(sizeBeforeGrow.height, sizeAfterGrow.height, "TextArea should grow");
 		});
 
-		it("Should grow up to 4 lines", async () => {
+		it("Should grow up to 4 rows", async () => {
 			const textArea = await browser.$("#growing-ta-to-four");
 			const textAreaInner = await browser.$("#growing-ta-to-four").shadow$("textarea");
 
@@ -229,9 +229,9 @@ describe("when enabled", () => {
 			await textAreaInner.addValue(`\n5\n6`);
 			const size6lines = await textArea.getSize();
 
-			assert.strictEqual(initialSize.height, size2lines.height, "TA should grow when having 2 lines of text");
-			assert.isBelow(size2lines.height, size4lines.height, "TA should grow up to 4 lines");
-			assert.strictEqual(size6lines.height, size4lines.height, "TA should not grow more than 4 lines");
+			assert.strictEqual(initialSize.height, size2lines.height, "TA should grow when having 2 rows of text");
+			assert.isBelow(size2lines.height, size4lines.height, "TA should grow up to 4 rows");
+			assert.strictEqual(size6lines.height, size4lines.height, "TA should not grow more than 4 rows");
 		});
 	});
 

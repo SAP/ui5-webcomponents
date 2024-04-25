@@ -14,6 +14,7 @@ import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
@@ -393,6 +394,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+
 		ResizeHandler.register(this, this._onResizeHandler);
 	}
 

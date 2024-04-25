@@ -55,6 +55,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
+import ListItemGroup from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -112,7 +113,7 @@ type ListItemClickEventDetail = {
  *
  * - `ui5-li`
  * - `ui5-li-custom`
- * - `ui5-li-groupheader`
+ * - `ui5-li-group`
  *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
@@ -150,7 +151,7 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
  *
- * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
+ * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -161,7 +162,7 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	styles: [browserScrollbarCSS, listCss],
-	dependencies: [BusyIndicator, DropIndicator],
+	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
  * Fired when an item is activated, unless the item's `type` property
@@ -405,15 +406,6 @@ class List extends UI5Element {
 	accessibleRole!: string;
 
 	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
-
-	/**
 	 * Defines if the entire list is in view port.
 	 * @private
 	 */
@@ -430,11 +422,11 @@ class List extends UI5Element {
 	/**
 	 * Defines the items of the component.
 	 *
-	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-groupheader` for the intended design.
+	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<ListItemBase>;
+	items!: Array<ListItemBase | ListItemGroup>;
 
 	/**
 	 * Defines the component header.
@@ -458,6 +450,11 @@ class List extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
+
+	onItemFocusedBound: (e: CustomEvent) => void;
+	onForwardAfterBound: (e: CustomEvent) => void;
+	onForwardBeforeBound: (e: CustomEvent) => void;
+	onItemTabIndexChangeBound: (e: CustomEvent) => void;
 
 	static async onDefine() {
 		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -490,6 +487,21 @@ class List extends UI5Element {
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
+
+		this.onItemFocusedBound = this.onItemFocused.bind(this);
+		this.onForwardAfterBound = this.onForwardAfter.bind(this);
+		this.onForwardBeforeBound = this.onForwardBefore.bind(this);
+		this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+	}
+
+	/**
+	 * Returns an array containing the list item instances without the groups in a flat structure.
+	 * @default []
+	 * @since 2.0.0
+	 * @public
+	 */
+	get listItems(): ListItemBase[] {
+		return this.getItems();
 	}
 
 	onEnterDOM() {
@@ -504,10 +516,12 @@ class List extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.detachGroupHeaderEvents();
 		this.prepareListItems();
 	}
 
 	onAfterRendering() {
+		this.attachGroupHeaderEvents();
 		if (this.growsOnScroll) {
 			this.observeListEnd();
 		} else if (this.listEndObserved) {
@@ -518,6 +532,30 @@ class List extends UI5Element {
 			this.checkListInViewport();
 			this.attachForResize();
 		}
+	}
+
+	attachGroupHeaderEvents() {
+		// events fired by the group headers are not bubbling through the shadow
+		// dom of the groups because of capture: false of the custom events
+		this.getItems().forEach(item => {
+			if (item.hasAttribute("ui5-li-group-header")) {
+				item.addEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
+				item.addEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
+				item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
+				item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+			}
+		});
+	}
+
+	detachGroupHeaderEvents() {
+		this.getItems().forEach(item => {
+			if (item.hasAttribute("ui5-li-group-header")) {
+				item.removeEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
+				item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
+				item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
+				item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+			}
+		});
 	}
 
 	attachForResize() {
@@ -766,7 +804,20 @@ class List extends UI5Element {
 	}
 
 	getItems(): Array<ListItemBase> {
-		return this.getSlottedNodes<ListItemBase>("items");
+		// drill down when we see ui5-li-group and get the items
+		const items: ListItemBase[] = [];
+		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
+
+		slottedItems.forEach(item => {
+			if (item instanceof ListItemGroup) {
+				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
+				items.push(...groupItems);
+			} else {
+				items.push(item);
+			}
+		});
+
+		return items;
 	}
 
 	getItemsForProcessing(): Array<ListItemBase> {

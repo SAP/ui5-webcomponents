@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isTabPrevious, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TreeItemBase from "./TreeItemBase.js";
 
 // Template
@@ -50,14 +50,14 @@ class TreeItemCustom extends TreeItemBase {
 	@slot()
 	content!: Array<HTMLElement>;
 
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
 
-		if (!isTab && !this.focused) {
+		if (!isTab && !this.focused && !isF2(e)) {
 			return;
 		}
 
-		super._onkeydown(e);
+		await super._onkeydown(e);
 	}
 
 	_onkeyup(e: KeyboardEvent) {

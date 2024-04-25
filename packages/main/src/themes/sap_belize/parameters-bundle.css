@@ -17,7 +17,7 @@
 @import "../base/ColorPalette-parameters.css";
 @import "../base/ColorPicker-parameters.css";
 @import "../base/FileUploader-parameters.css";
-@import "../base/GroupHeaderListItem-parameters.css";
+@import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
 @import "../base/Link-parameters.css";
@@ -52,7 +52,6 @@
 @import "../base/Toast-parameters.css";
 @import "../base/ToggleButton-parameters.css";
 @import "./Tokenizer-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "../base/YearPicker-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/ValueStateMessage-parameters.css";

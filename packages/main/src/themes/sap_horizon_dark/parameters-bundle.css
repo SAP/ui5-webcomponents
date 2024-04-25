@@ -19,7 +19,7 @@
 @import "../base/Dialog-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
-@import "../base/GroupHeaderListItem-parameters.css";
+@import "../base/ListItemGroupHeader-parameters.css";
 @import "./Icon-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
@@ -48,7 +48,6 @@
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "./ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
