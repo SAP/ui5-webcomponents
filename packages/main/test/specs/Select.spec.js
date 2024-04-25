@@ -615,14 +615,6 @@ describe("Select general interaction", () => {
 		const selectedOption = await popover.$("ui5-list").$("ui5-li[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
 	});
-
-	it("tests tooltip property of ui5-option", async () => {
-		const firstOption = await browser.$("#selectTooltip ui5-option:first-child");
-		const initialValue = "Cozy";
-		let tooltipValue = await firstOption.getProperty("tooltip");
-
-		assert.strictEqual(tooltipValue, initialValue, "The tooltip of ui5-option is correctly set");
-	});
 });
 
 describe("Attributes propagation", () => {
@@ -639,4 +631,18 @@ describe("Attributes propagation", () => {
 		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
 		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
  	});
+
+	it("Tooltip propagation", async () => {
+		const select = await browser.$("#selectTooltip");
+		const tooltip = "Cozy"
+
+		await select.click();
+
+		const popover = await select.shadow$("[ui5-responsive-popover]");
+		const option = await select.$("[ui5-option]");
+		const listItem = await popover.$("[data-ui5-stable='tooltip-test-option']")
+
+		assert.strictEqual(await option.getProperty("tooltip"), tooltip, "Tooltip is correct");
+		assert.strictEqual(await listItem.getProperty("tooltip"), tooltip, "Tooltip is correctly propagated");
+	});
 });
