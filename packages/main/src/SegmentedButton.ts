@@ -45,7 +45,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * one of the items, it stays in a pressed state. It automatically resizes the items
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  *
- * **Note:** There can be just one selected `item` at a time.
  *
  * ### ES6 Module Import
  *

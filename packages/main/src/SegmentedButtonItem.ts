@@ -98,7 +98,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
-	@property({ defaultValue: "0", noAttribute: true })
+	@property({ type:String, defaultValue: "0", noAttribute: true })
 	forcedTabIndex!: string;
 
 	/**
@@ -152,13 +152,6 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		}
 	}
 
-	_ontouchend(e: TouchEvent) {
-		if (this.disabled) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-	}
-
 	get isIconOnly() {
 		return !willShowContent(this.text);
 	}
@@ -170,7 +163,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 			return tabindex;
 		}
 
-		return this.nonInteractive ? "-1" : this.forcedTabIndex;
+		return this.forcedTabIndex;
 	}
 
 	get ariaLabelText() {
