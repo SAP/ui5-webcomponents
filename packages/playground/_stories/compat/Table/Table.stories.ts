@@ -4,16 +4,16 @@ import type { Meta, StoryFn } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-import type Table from "@ui5/webcomponents/dist/Table.js";
+import type Table from "@ui5/webcomponents-compat/dist/Table.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
-import TableMode from "@ui5/webcomponents/dist/types/TableMode.js";
-import TableGrowingMode from "@ui5/webcomponents/dist/types/TableGrowingMode.js";
+import TableMode from "@ui5/webcomponents-compat/dist/types/TableMode.js";
+import TableGrowingMode from "@ui5/webcomponents-compat/dist/types/TableGrowingMode.js";
 let index = 0;
 
 export default {
-	title: "Main/Table",
+	title: "Compat/Table",
 	component: "Table",
 	argTypes,
 } as Meta<Table>;
