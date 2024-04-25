@@ -98,7 +98,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
-	@property({ type:String, defaultValue: "0", noAttribute: true })
+	@property({ type: String, defaultValue: "0", noAttribute: true })
 	forcedTabIndex!: string;
 
 	/**
