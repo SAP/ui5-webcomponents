@@ -5,7 +5,7 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import type { IMediaGalleryItem } from "./MediaGallery.js";
@@ -53,7 +53,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -61,57 +61,57 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines the layout of the item container.
 	 * @default "Square"
 	 * @public
 	 */
-	@property({ type: MediaGalleryItemLayout, defaultValue: MediaGalleryItemLayout.Square })
-	layout!: `${MediaGalleryItemLayout}`;
+	@property()
+	layout: `${MediaGalleryItemLayout}` = "Square";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_interactive!: boolean;
+	_interactive = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_square!: boolean;
+	_square = false
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_contentImageNotFound!: boolean;
+	_contentImageNotFound = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_thumbnailNotFound!: boolean;
+	_thumbnailNotFound = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_thumbnailDesign!: boolean;
+	_thumbnailDesign = false;
 
 	/**
 	 * @private
 	 */
 	@property()
-	forcedTabIndex!: string;
+	forcedTabIndex?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	contentHeight!: string;
+	contentHeight?: string;
 
 	/**
 	 * Defines the content of the component.

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
 
@@ -33,11 +33,11 @@ type NotificationActionClickEventDetail = {
 class NotificationAction extends UI5Element {
 	/**
 	 * Defines the text of the `ui5-notification-action`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines if the action is disabled.
@@ -47,15 +47,15 @@ class NotificationAction extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the action design.
 	 * @default "Transparent"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
-	design!: `${ButtonDesign}`;
+	@property()
+	design: `${ButtonDesign}` = "Transparent";
 
 	/**
 	 * Defines the `icon` source URI.
@@ -63,11 +63,11 @@ class NotificationAction extends UI5Element {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Fires a custom event "click".

@@ -1,6 +1,6 @@
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -100,7 +100,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Defines if the items `counter` would be displayed.
@@ -108,7 +108,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showCounter!: boolean;
+	showCounter = false;
 
 	/**
 	 * Defines the items of the `ui5-li-notification-group`,

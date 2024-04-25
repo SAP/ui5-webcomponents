@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -29,7 +29,7 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 
 type DynamicSideContentLayoutChangeEventDetail = {
 	currentBreakpoint: string,
-	previousBreakpoint: string,
+	previousBreakpoint?: string,
 	mainContentVisible: boolean,
 	sideContentVisible: boolean,
 }
@@ -115,7 +115,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
 /**
  * Fires when the current breakpoint has been changed.
  * @param {string} currentBreakpoint the current breakpoint.
- * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
+ * @param {string | undefined} previousBreakpoint the breakpoint that was active before change to current breakpoint.
  * @param {boolean} mainContentVisible visibility of the main content.
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
@@ -156,7 +156,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: Boolean })
-	hideMainContent!: boolean;
+	hideMainContent = false;
 
 	/**
 	 * Defines the visibility of the side content.
@@ -165,7 +165,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: Boolean })
-	hideSideContent!: boolean;
+	hideSideContent = false;
 
 	/**
 	 * Defines whether the side content is positioned before the main content (left side
@@ -175,8 +175,8 @@ class DynamicSideContent extends UI5Element {
 	 * @public
 	 *
 	 */
-	@property({ type: SideContentPosition, defaultValue: SideContentPosition.End })
-	sideContentPosition!: `${SideContentPosition}`;
+	@property()
+	sideContentPosition: `${SideContentPosition}` = "End";
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
@@ -184,8 +184,8 @@ class DynamicSideContent extends UI5Element {
 	 * @public
 	 *
 	 */
-	@property({ type: SideContentVisibility, defaultValue: SideContentVisibility.ShowAboveS })
-	sideContentVisibility!: `${SideContentVisibility}`;
+	@property()
+	sideContentVisibility: `${SideContentVisibility}` = "ShowAboveS";
 
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
@@ -193,8 +193,8 @@ class DynamicSideContent extends UI5Element {
 	 * @public
 	 *
 	 */
-	@property({ type: SideContentFallDown, defaultValue: SideContentFallDown.OnMinimumWidth })
-	sideContentFallDown!: `${SideContentFallDown}`;
+	@property()
+	sideContentFallDown: `${SideContentFallDown}` = "OnMinimumWidth";
 
 	/**
 	 * Defines whether the component is in equal split mode. In this mode, the side and
@@ -206,31 +206,31 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: Boolean })
-	equalSplit!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	_mcSpan!: string;
-
-	/**
-	 * @private
-	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	_scSpan!: string;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_toggled!: boolean;
+	equalSplit = false;
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_currentBreakpoint!: string;
+	_mcSpan = "0";
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_scSpan = "0";
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_toggled = false;
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_currentBreakpoint?: string;
 
 	/**
 	 * Defines the side content.

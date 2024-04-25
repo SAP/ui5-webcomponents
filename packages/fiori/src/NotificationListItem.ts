@@ -1,6 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -107,8 +107,8 @@ class NotificationListItem extends NotificationListItemBase {
 	* @public
 	* @since 1.0.0-rc.15
 	*/
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	* Defines the state of the `titleText` and `description`,
@@ -116,14 +116,14 @@ class NotificationListItem extends NotificationListItemBase {
 	* @private
 	*/
 	@property({ type: Boolean })
-	_showMorePressed!: boolean;
+	_showMorePressed = false;
 
 	/**
 	* Defines the visibility of the `showMore` button.
 	* @private
 	*/
 	@property({ type: Boolean })
-	_showMore!: boolean;
+	_showMore = false;
 
 	/**
 	* Defines the avatar, displayed in the `ui5-li-notification`.

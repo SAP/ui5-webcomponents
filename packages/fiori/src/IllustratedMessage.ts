@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -111,8 +111,8 @@ class IllustratedMessage extends UI5Element {
 	* @default "BeforeSearch"
 	* @public
 	*/
-	@property({ type: String, defaultValue: IllustrationMessageType.BeforeSearch })
-	name!: string;
+	@property()
+	name = "BeforeSearch";
 
 	/**
 	* Determines which illustration breakpoint variant is used.
@@ -123,8 +123,8 @@ class IllustratedMessage extends UI5Element {
 	* @public
 	* @since 1.5.0
 	*/
-	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	design!: `${IllustrationMessageSize}`;
+	@property()
+	design: `${IllustrationMessageSize}` = "Auto";
 
 	/**
 	* Defines the subtitle of the component.
@@ -132,30 +132,30 @@ class IllustratedMessage extends UI5Element {
 	* **Note:** Using this property, the default subtitle text of illustration will be overwritten.
 	*
 	* **Note:** Using `subtitle` slot, the default of this property will be overwritten.
-	* @default ""
+	* @default undefined
 	* @public
 	*/
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
 	/**
 	* Defines the title of the component.
 	*
 	* **Note:** Using this property, the default title text of illustration will be overwritten.
-	* @default ""
+	* @default undefined
 	* @public
 	*/
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	* Receives id(or many ids) of the elements that label the component.
-	* @default ""
+	* @default undefined
 	* @public
 	* @since 1.7.0
 	*/
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	* Illustration breakpoint variant for the <code>Dot</code> design.
@@ -164,7 +164,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.24.0
 	*/
 	@property({ noAttribute: true })
-	dotSvg!: string;
+	dotSvg?: string;
 
 	/**
 	* Illustration breakpoint variant for the <code>Spot</code> design.
@@ -173,7 +173,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	spotSvg!: string;
+	spotSvg?: string;
 
 	/**
 	* Illustration breakpoint variant for the `Scene` design.
@@ -181,7 +181,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	sceneSvg!: string;
+	sceneSvg?: string;
 
 	/**
 	* Illustration breakpoint variant for the `Dialog` design.
@@ -189,7 +189,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	dialogSvg!: string;
+	dialogSvg?: string;
 
 	/**
 	* Determinates what is the current media of the component based on its width.
@@ -414,7 +414,7 @@ class IllustratedMessage extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get effectiveIllustration(): string {
+	get effectiveIllustration(): string | undefined {
 		switch (this.media) {
 		case IllustratedMessage.MEDIA.DOT:
 			return this.dotSvg;

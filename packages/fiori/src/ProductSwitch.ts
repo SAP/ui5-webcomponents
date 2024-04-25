@@ -3,12 +3,11 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import {
@@ -30,11 +29,11 @@ import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
  * @public
  */
 interface IProductSwitchItem extends HTMLElement, ITabbable {
-	titleText: string,
-	subtitleText: string,
-	icon: string,
-	target: string,
-	targetSrc: string,
+	titleText?: string,
+	subtitleText?: string,
+	icon?: string,
+	target?: string,
+	targetSrc?: string,
 	selected: boolean,
 }
 
@@ -70,25 +69,11 @@ interface IProductSwitchItem extends HTMLElement, ITabbable {
 	template: ProductSwitchTemplate,
 })
 class ProductSwitch extends UI5Element {
-	constructor() {
-		super();
-
-		this._currentIndex = 0;
-		this._rowSize = 4;
-
-		this._itemNavigation = new ItemNavigation(this, {
-			rowSize: this._rowSize,
-			getItemsCallback: () => this.items,
-		});
-
-		this._handleResizeBound = this._handleResize.bind(this);
-	}
-
 	/**
 	 * Indicates how many columns are displayed.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	desktopColumns?: number;
 
 	/**
@@ -102,6 +87,20 @@ class ProductSwitch extends UI5Element {
 	_currentIndex: number;
 	_rowSize: number;
 	_handleResizeBound: ResizeObserverCallback;
+
+	constructor() {
+		super();
+
+		this._currentIndex = 0;
+		this._rowSize = 4;
+
+		this._itemNavigation = new ItemNavigation(this, {
+			rowSize: this._rowSize,
+			getItemsCallback: () => this.items,
+		});
+
+		this._handleResizeBound = this._handleResize.bind(this);
+	}
 
 	static i18nBundle: I18nBundle;
 

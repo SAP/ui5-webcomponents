@@ -7,7 +7,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { Result, Exception } from "@zxing/library/esm5/index.js";
 
@@ -130,7 +130,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @since 1.24.0
 	*/
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
@@ -138,7 +138,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Indicates whether the user has granted permissions to use the camera.
@@ -146,7 +146,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	permissionsGranted!: boolean;
+	permissionsGranted = false;
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;

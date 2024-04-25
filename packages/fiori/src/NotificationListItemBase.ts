@@ -1,13 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import type Popover from "@ui5/webcomponents/dist/Popover.js";
 import type NotificationAction from "./NotificationAction.js";
@@ -66,15 +65,15 @@ class NotificationListItemBase extends ListItemBase {
 	 * @public
 	 */
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	 * Defines the `priority` of the item.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: Priority, defaultValue: Priority.None })
-	priority!: `${Priority}`;
+	@property()
+	priority: `${Priority}` = "None";
 
 	/**
 	 * Defines if the `close` button would be displayed.
@@ -82,7 +81,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showClose!: boolean;
+	showClose = false;
 
 	/**
 	 * Defines if the `notification` is new or has been already read.
@@ -93,7 +92,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	read!: boolean;
+	read = false;
 
 	/**
 	 * Defines if a busy indicator would be displayed over the item.
@@ -102,15 +101,15 @@ class NotificationListItemBase extends ListItemBase {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	busy = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 * @default 1000
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	@property({ type: Number })
+	busyDelay = 1000;
 
 	/**
 	 * Defines the actions, displayed in the top-right area.
@@ -124,7 +123,7 @@ class NotificationListItemBase extends ListItemBase {
 	static i18nFioriBundle: I18nBundle;
 
 	get hasTitleText() {
-		return !!this.titleText.length;
+		return !!this.titleText?.length;
 	}
 
 	get hasPriority() {
