@@ -400,7 +400,7 @@ class List extends UI5Element {
 	/**
 	 * Defines the accessible role of the component.
 	 * @public
-	 * @default "list"
+	 * @default "List"
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ListAccessibleRole, defaultValue: ListAccessibleRole.List })

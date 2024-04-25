@@ -1,6 +1,7 @@
 /**
  * List accessible roles.
  * @public
+ * @since 2.0.0
  */
 enum ListAccessibleRole {
 

@@ -199,11 +199,11 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Used to define the role of the list item.
 	 * @private
-	 * @default ""
+	 * @default "ListItem"
 	 * @since 1.3.0
 	 *
 	 */
-	@property({ type: ListItemAccessibleRole })
+	@property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
 	accessibleRole!: `${ListItemAccessibleRole}`;
 
 	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
