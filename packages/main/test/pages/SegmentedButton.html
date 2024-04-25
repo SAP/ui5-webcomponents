@@ -97,7 +97,7 @@
 				<section>
 					<h1>Example with 4 items</h1>
 
-					<ui5-segmented-button id="segButtonMulti" mode="MultiSelect">
+					<ui5-segmented-button id="segButtonMulti" selection-mode="Multiple">
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Click</ui5-segmented-button-item>
@@ -193,7 +193,7 @@
 		});
 
 		progSetButton3.addEventListener("click", function() {
-			segButtonProg.selectedItem.pressed = true;
+			segButtonProg.selectedItems[0].pressed = true;
 		});
 
 		progSetButton4.addEventListener("click", function() {
