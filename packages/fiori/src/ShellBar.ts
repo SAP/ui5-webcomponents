@@ -28,7 +28,7 @@ import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
-import type { Timeout, ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
@@ -65,7 +65,10 @@ type ShellBarAccessibilityTexts = {
 	profileButtonTitle?: string;
 };
 
-type ShellBarAccessibilityAttributesValue = Pick<AccessibilityAttributes, "expanded" | "hasPopup">;
+type ShellBarAccessibilityAttributesValue = {
+	expanded?: "true" | "false" | boolean,
+	ariaHasPopup?: `${HasPopup}`,
+}
 
 type ShellBarAccessibilityAttributes = {
 	notifications?: ShellBarAccessibilityAttributesValue;
@@ -384,21 +387,22 @@ class ShellBar extends UI5Element {
 	accessibilityTexts!: ShellBarAccessibilityTexts;
 
 	/**
-	 * Defines additional accessibility attributes for the following areas of the component:
-	 * - notifications
-	 * - profile
-	 * - product
-	 * - search
-	 * - overflow
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
 	 *
-	 * The following accessibility attributes are available for each area, described above:
+	 * It supports the following fields:
 	 *
-	 * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
-	 * Accepts the following string values: `true` | `false`
+	 * - `expanded`: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
 	 *
-	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
-	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
+	 *	- `true`
+	 *	- `false`
 	 *
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+	 *	- `Dialog`
+	 *	- `Grid`
+	 *	- `ListBox`
+	 *	- `Menu`
+	 *	- `Tree`
 	 * @default {}
 	 * @public
 	 * @since 1.10.0
@@ -1273,36 +1277,61 @@ class ShellBar extends UI5Element {
 			notifications: {
 				"title": this._notificationsText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.notifications?.hasPopup,
+					hasPopup: this._notificationsHasPopup,
 				},
 			},
 			profile: {
 				"title": this._profileText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.profile?.hasPopup,
+					hasPopup: this._profileHasPopup,
 				},
 			},
 			products: {
 				"title": this._productsText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.product?.hasPopup,
+					hasPopup: this._productsHasPopup,
 				},
 			},
 			search: {
 				"title": this._searchText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.search?.hasPopup,
+					hasPopup: this._searchHasPopup,
 					expanded: this.showSearchField,
 				},
 			},
 			overflow: {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || HasPopup.Menu.toLowerCase(),
+					hasPopup: this._overflowHasPopup,
 					expanded: this._overflowPopoverExpanded,
 				},
 			},
 		};
+	}
+
+	get _notificationsHasPopup() {
+		const notificationsAccAttributes = this.accessibilityAttributes.notifications;
+		return notificationsAccAttributes ? notificationsAccAttributes.ariaHasPopup?.toLowerCase() : null;
+	}
+
+	get _profileHasPopup() {
+		const profileAccAttributes = this.accessibilityAttributes.profile;
+		return profileAccAttributes ? profileAccAttributes.ariaHasPopup?.toLowerCase() : null;
+	}
+
+	get _productsHasPopup() {
+		const productsAccAttributes = this.accessibilityAttributes.product;
+		return productsAccAttributes ? productsAccAttributes.ariaHasPopup?.toLowerCase() : null;
+	}
+
+	get _searchHasPopup() {
+		const searcAccAttributes = this.accessibilityAttributes.search;
+		return searcAccAttributes ? searcAccAttributes.ariaHasPopup?.toLowerCase() : null;
+	}
+
+	get _overflowHasPopup() {
+		const overflowAccAttributes = this.accessibilityAttributes.overflow;
+		return overflowAccAttributes ? overflowAccAttributes.ariaHasPopup?.toLowerCase() : HasPopup.Menu.toLowerCase();
 	}
 
 	get accLogoRole() {

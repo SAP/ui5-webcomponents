@@ -126,14 +126,13 @@ describe("Notification List Item Tests", () => {
 		const groupItem = await browser.$("#nlgi3");
 		const goupItemRoot = await groupItem.shadow$(".ui5-nli-group-root");
 		const goupItemToggleBtn = await groupItem.shadow$(".ui5-nli-group-toggle-btn");
-		const goupItemToggleBtnInner = await goupItemToggleBtn.shadow$("button");
 		const TOGGLE_BUTTON_EXPAND_GROUP = "Expand Group";
 		const TOGGLE_BUTTON_COLLAPSE_GROUP = "Collapse Group";
 
 		// assert
 		assert.strictEqual(await goupItemRoot.getAttribute("aria-expanded"), "false",
 			"The aria-expanded value is correct.");
-		assert.strictEqual(await goupItemToggleBtnInner.getAttribute("aria-label"), TOGGLE_BUTTON_EXPAND_GROUP,
+		assert.strictEqual(await goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_EXPAND_GROUP,
 			"The aria-label value is correct.");
 
 		// act
@@ -142,7 +141,7 @@ describe("Notification List Item Tests", () => {
 		// assert
 		assert.strictEqual(await goupItemRoot.getAttribute("aria-expanded"), "true",
 			"The aria-expanded value is correct.");
-		assert.strictEqual(await goupItemToggleBtnInner.getAttribute("aria-label"), TOGGLE_BUTTON_COLLAPSE_GROUP,
+		assert.strictEqual(await goupItemToggleBtn.getAttribute("aria-label"), TOGGLE_BUTTON_COLLAPSE_GROUP,
 			"The aria-label value is correct.");
 	});
 

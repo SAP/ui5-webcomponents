@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -13,6 +12,8 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import HasPopup from "./types/HasPopup.js";
+
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 
@@ -28,7 +29,10 @@ type LinkClickEventDetail = {
 	shiftKey: boolean;
 }
 
-type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup">;
+type AccessibilityAttributes = {
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: `${HasPopup}`,
+};
 
 /**
  * @class
@@ -120,7 +124,7 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines the tooltip of the component.
 	 * @default ""
 	 * @public
-	 * @since 2.0.0
+	 * @since 2.0
 	 */
 	 @property()
 	 tooltip!: string;
@@ -203,21 +207,26 @@ class Link extends UI5Element implements ITabbable {
 	accessibleRole!: string;
 
 	/**
-	 * Defines the additional accessibility attributes that will be applied to the component.
-	 * The following fields are supported:
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
 	 *
-	 * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
-	 * Accepts the following string values: `true` | `false`.
+	 * It supports the following fields:
 	 *
-	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
-	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
-	 *
+	 * - `expanded`: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+	 *	- `true`
+	 *	- `false`
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+	 *	- `Dialog`
+	 *	- `Grid`
+	 *	- `ListBox`
+	 *	- `Menu`
+	 *	- `Tree`
 	 * @public
 	 * @since 1.1.0
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: LinkAccessibilityAttributes;
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
@@ -294,7 +303,7 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	get _hasPopup() {
-		return this.accessibilityAttributes.hasPopup;
+		return this.accessibilityAttributes.hasPopup?.toLowerCase();
 	}
 
 	static async onDefine() {
@@ -366,5 +375,5 @@ export default Link;
 
 export type {
 	LinkClickEventDetail,
-	LinkAccessibilityAttributes,
+	AccessibilityAttributes,
 };

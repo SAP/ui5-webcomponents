@@ -33,9 +33,9 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
-import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
+import TableGrowingMode from "./types/TableGrowingMode.js";
 import type {
 	TableRowClickEventDetail,
 	TableRowSelectionRequestedEventDetail,
@@ -118,7 +118,7 @@ enum TableFocusTargetElement {
  *
  * **Note:** Since 2.0 the Table that previously available 1.x version has been moved to the "@ui5/webcomponents-compat" package.
  * to free up the space for new Table component implementation available in the main "@ui5/webcomponents" package.
- * 
+ *
  * The `ui5-table` component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
  *

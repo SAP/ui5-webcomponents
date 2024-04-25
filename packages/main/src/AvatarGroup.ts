@@ -9,7 +9,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 import {
 	isEnter,
@@ -73,8 +72,6 @@ const offsets = {
 		[AvatarGroupType.Group]: "-2.75rem",
 	},
 };
-
-type AvatarGroupAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 type AvatarGroupClickEventDetail = {
 	targetRef: HTMLElement,
@@ -188,18 +185,15 @@ class AvatarGroup extends UI5Element {
 	type!: `${AvatarGroupType}`;
 
 	/**
-	 * Defines the additional accessibility attributes that will be applied to the component.
-	 * The following field is supported:
+	 * Defines the aria-haspopup value of the component on:
 	 *
-	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
-	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
-	 *
-	 * @public
-	 * @since 2.0.0
-	 * @default {}
+	 * -  the whole container when `type` property is `Group`
+	 * -  the default "More" overflow button when `type` is `Individual`
+	 * @since 1.0.0-rc.15
+	 * @protected
 	 */
-	 @property({ type: Object })
-	 accessibilityAttributes!: AvatarGroupAccessibilityAttributes;
+	@property()
+	ariaHaspopup!: string;
 
 	/**
 	 * @private
@@ -583,7 +577,11 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		return this.accessibilityAttributes.hasPopup;
+		if (this.ariaHaspopup === "") {
+			return;
+		}
+
+		return this.ariaHaspopup;
 	}
 }
 
@@ -592,6 +590,5 @@ AvatarGroup.define();
 export default AvatarGroup;
 export type {
 	AvatarGroupClickEventDetail,
-	AvatarGroupAccessibilityAttributes,
 	IAvatarGroupItem,
 };

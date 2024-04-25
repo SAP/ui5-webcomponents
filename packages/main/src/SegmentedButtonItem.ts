@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
@@ -9,11 +9,10 @@ import ToggleButton from "./ToggleButton.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import { AccessibilityAttributes } from "./Button.js";
 import Icon from "./Icon.js";
 
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
-
-type SegmentedButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
 /**
  * @class
@@ -71,7 +70,7 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	 * @public
 	 */
     @property({ type: Object })
-    declare accessibilityAttributes: SegmentedButtonAccessibilityAttributes;
+    declare accessibilityAttributes: AccessibilityAttributes;
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -113,6 +112,3 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 SegmentedButtonItem.define();
 
 export default SegmentedButtonItem;
-export type {
-	SegmentedButtonAccessibilityAttributes,
-};

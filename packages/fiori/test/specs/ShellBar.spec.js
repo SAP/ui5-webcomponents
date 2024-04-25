@@ -57,9 +57,8 @@ describe("Component Behavior", () => {
 		it("tests accessibilityAttributes property", async () => {
 			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "dialog";
 			const sb = await browser.$("#sbAccAttr");
-			const accAttrs = await sb.getProperty("accInfo");
 
-			assert.strictEqual(accAttrs.notifications.accessibilityAttributes.hasPopup, NOTIFICATIONS_BTN_ARIA_HASPOPUP,
+			assert.strictEqual(await sb.getProperty("_notificationsHasPopup"), NOTIFICATIONS_BTN_ARIA_HASPOPUP,
 				"Notifications aria-haspopup could be customized.");
 		});
 	});
