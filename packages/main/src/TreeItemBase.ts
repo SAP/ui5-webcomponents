@@ -10,6 +10,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
+import type HasPopup from "./types/HasPopup.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -255,7 +256,7 @@ class TreeItemBase extends ListItem {
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
-			ariaHaspopup: this.accessibilityAttributes.hasPopup,
+			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };

@@ -29,6 +29,7 @@ const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
     color-scheme="${ifDefined(args.colorScheme)}"
     ?interactive="${ifDefined(args.interactive)}"
     ?disabled="${ifDefined(args.disabled)}"
+    aria-haspopup="${ifDefined(args.ariaHaspopup)}"
     accessible-name="${ifDefined(args.accessibleName)}"
     fallback-icon="${ifDefined(args.fallbackIcon)}"
   >
