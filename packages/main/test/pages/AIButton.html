@@ -7,22 +7,6 @@
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/Button.css">
 
-	<style>
-		.ui5-ai-button-content {
-			display: flex;
-			align-items: center;
-		}
-
-		.ui5-ai-button-content > [ui5-icon] {
-			margin-inline-start: 0.25rem;
-			color: var(--sapButton_TextColor);
-		}
-
-		.ui5-ai-button-content > [ui5-icon][name=""] {
-			display: none;
-		}
-	</style>
-
 </head>
 
 <body class="button1auto">
@@ -89,6 +73,22 @@
 
 	<br><br>
 	<ui5-title>AiButton as Sample (using Button)</ui5-title>
+
+	<style>
+		.ui5-ai-button-content {
+			display: flex;
+			align-items: center;
+		}
+
+		.ui5-ai-button-content > [ui5-icon] {
+			margin-inline-start: 0.25rem;
+			color: var(--sapButton_TextColor);
+		}
+
+		.ui5-ai-button-content > [ui5-icon][name=""] {
+			display: none;
+		}
+	</style>
 
 	<ui5-button id="aiButton" class="ai-button" icon="ai" state="generate"><div class="ui5-ai-button-content"><span>Generate</span><ui5-icon name=""></ui5-icon></div></ui5-button>
 
