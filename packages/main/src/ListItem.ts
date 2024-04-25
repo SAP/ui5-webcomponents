@@ -471,7 +471,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get listItemAccessibleRole() {
-		return this.accessibleRole?.toLowerCase();
+		return this.accessibleRole.toLowerCase();
 	}
 
 	get ariaSelectedText() {
