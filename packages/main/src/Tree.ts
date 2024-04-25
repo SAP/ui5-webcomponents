@@ -282,15 +282,6 @@ class Tree extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
-
-	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.
 	 *
 	 * **Note:** Use `ui5-tree-item` for the intended design.
