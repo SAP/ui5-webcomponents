@@ -452,7 +452,7 @@ class ComboBox extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!isPhone()) {
+		if (this.shouldClosePopover() && !isPhone()) {
 			this._clearFocus();
 			this._itemFocused = false;
 		}
