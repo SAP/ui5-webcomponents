@@ -6,19 +6,14 @@
  */
 class GridWalker {
 	grid: unknown[][];
-	rowPos: number;
-	colPos: number;
-	pageSize: number;
-	firstRowPos: number;
-	lastRowPos: number;
+	rowPos: number = 0;
+	colPos: number = 0;
+	pageSize: number = 20;
+	firstRowPos: number = 0;
+	lastRowPos: number = 0;
 
-	constructor(grid: unknown[][] = [[]], pageSize = 20) {
+	constructor(grid: unknown[][] = [[]]) {
 		this.grid = grid;
-		this.pageSize = pageSize;
-		this.rowPos = 0;
-		this.colPos = 0;
-		this.firstRowPos = 0;
-		this.lastRowPos = 0;
 	}
 
 	left() {

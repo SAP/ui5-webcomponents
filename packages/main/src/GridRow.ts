@@ -79,16 +79,8 @@ class GridRow extends UI5Element {
 		GridRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	_onkeydownBound: (e: KeyboardEvent) => void;
-
-	constructor() {
-		super();
-		this._onkeydownBound = this._onkeydown.bind(this);
-	}
-
 	onEnterDOM() {
 		this.setAttribute("role", "row");
-		this.addEventListener("keydown", this._onkeydownBound);
 	}
 
 	onBeforeRendering() {
@@ -113,8 +105,7 @@ class GridRow extends UI5Element {
 		this._gridSelection?.informRowSelectionChange(this);
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		const eventOrigin = e.composedPath()[0];
+	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if ((isSpace(e) && eventOrigin === this)
 		||	((isSpace(e) || isEnter(e)) && eventOrigin === this._selectionCell)
 		) {

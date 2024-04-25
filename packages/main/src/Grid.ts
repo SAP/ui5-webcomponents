@@ -14,8 +14,9 @@ import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridCss from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
-import GridSelection from "./GridSelection.js";
 import GridHeaderCell from "./GridHeaderCell.js";
+import GridExtension from "./GridExtension.js";
+import GridSelection from "./GridSelection.js";
 import GridOverflowMode from "./types/GridOverflowMode.js";
 import GridNavigation from "./GridNavigation.js";
 import {
@@ -235,6 +236,8 @@ class Grid extends UI5Element {
 		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	_events = ["keydown", "click", "focusin"];
+	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
 	_gridNavigation?: GridNavigation;
 
@@ -243,18 +246,21 @@ class Grid extends UI5Element {
 		this._poppedIn = [];
 		this._containerWidth = 0;
 		this._onResizeBound = this._onResize.bind(this);
+		this._onEventBound = this._onEvent.bind(this);
 	}
 
 	onEnterDOM() {
 		if (this.overflowMode === GridOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
+		this._events.forEach(event => this.addEventListener(event, this._onEventBound));
 		this.features.forEach(feature => feature.onGridActivate(this));
 		this._gridNavigation = new GridNavigation(this);
 	}
 
 	onExitDOM() {
 		this._gridNavigation = undefined;
+		this._events.forEach(event => this.addEventListener(event, this._onEventBound));
 		if (this.overflowMode === GridOverflowMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}
@@ -274,6 +280,21 @@ class Grid extends UI5Element {
 
 	_getSelection(): GridSelection | undefined {
 		return this._getFeature(GridSelection);
+	}
+
+	_onEvent(e: Event) {
+		const composedPath = e.composedPath();
+		const eventOrigin = composedPath[0] as HTMLElement;
+		const elements = [...composedPath, this.features, this._gridNavigation];
+		elements.forEach(element => {
+			if (element instanceof GridExtension || (element instanceof HTMLElement && element.localName.includes("ui5-grid"))) {
+				const eventHandlerName = `_on${e.type}` as keyof typeof element;
+				const eventHandler = element[eventHandlerName] as (e?: Event, eventOrigin?: HTMLElement) => void;
+				if (typeof eventHandler === "function") {
+					eventHandler.call(element, e, eventOrigin);
+				}
+			}
+		});
 	}
 
 	_onResize() {

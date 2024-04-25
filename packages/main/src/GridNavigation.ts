@@ -17,6 +17,7 @@ import GridRow from "./GridRow.js";
 import GridCell from "./GridCell.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridHeaderCell from "./GridHeaderCell.js";
+import GridExtension from "./GridExtension.js";
 import GridWalker from "./GridWalker.js";
 
 /**
@@ -25,28 +26,18 @@ import GridWalker from "./GridWalker.js";
  * @class
  * @private
  */
-class GridNavigation {
+class GridNavigation extends GridExtension {
 	_grid: Grid;
 	_gridWalker: GridWalker;
-	_onclickBound: (e: MouseEvent) => void;
-	_onfocusinBound: (e: FocusEvent) => void;
-	_onkeydownBound: (e: KeyboardEvent) => void;
-	_colPosition: number;
-	_tabPosition: number;
+	_colPosition: number = 0;
+	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
 
 	constructor(grid: Grid) {
+		super();
 		this._grid = grid;
-		this._onclickBound = this._onclick.bind(this);
-		this._onfocusinBound = this._onfocusin.bind(this);
-		this._onkeydownBound = this._onkeydown.bind(this);
-		grid.addEventListener("click", this._onclickBound);
-		grid.addEventListener("focusin", this._onfocusinBound);
-		grid.addEventListener("keydown", this._onkeydownBound);
 		this._gridWalker = new GridWalker();
 		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
-		this._colPosition = 0;
-		this._tabPosition = 0;
 	}
 
 	_getNavigationItemsOfRow(row: GridRow | GridHeaderRow) {
@@ -250,12 +241,11 @@ class GridNavigation {
 		return this._handleArrowUpDown(e, eventOrigin, 1);
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if (e.defaultPrevented) {
 			return;
 		}
 
-		const eventOrigin = e.composedPath()[0] as HTMLElement;
 		if (!this._isEventFromCurrentItem(e) && this._getNavigationItemsOfGrid().flat().includes(eventOrigin)) {
 			this._gridWalker.setCurrent(eventOrigin);
 		}
@@ -294,7 +284,7 @@ class GridNavigation {
 		e.preventDefault();
 	}
 
-	_onclick(e: MouseEvent) {
+	_onclick(e: PointerEvent) {
 		const navigationItems = this._getNavigationItemsOfGrid();
 		const flatNavigationItems = navigationItems.flat();
 		let navigationItem = null;
@@ -320,12 +310,11 @@ class GridNavigation {
 		}
 	}
 
-	_onfocusin(e: FocusEvent) {
+	_onfocusin(e: FocusEvent, evetOrigin: HTMLElement) {
 		if (this._ignoreFocusIn) {
 			return;
 		}
 
-		const evetOrigin = e.composedPath()[0];
 		const currentItem = this._gridWalker.getCurrent() as HTMLElement;
 		if (currentItem && currentItem !== evetOrigin) {
 			currentItem.removeAttribute("tabindex");
