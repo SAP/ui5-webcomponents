@@ -6,7 +6,7 @@ import { getI18nBundle } from "../i18nBundle.js";
 import type { I18nText } from "../i18nBundle.js";
 import type { TemplateFunction } from "../renderer/executeTemplate.js";
 
-const DEFAULT_THEME_FAMILY = "legacy"; // includes sap_belize_* and sap_fiori_*
+const DEFAULT_THEME_FAMILY = "legacy"; // includes sap_fiori_*
 
 type IconLoader = (collectionName: string) => Promise<CollectionData | Array<CollectionData>>;
 

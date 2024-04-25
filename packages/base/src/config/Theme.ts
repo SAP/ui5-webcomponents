@@ -64,7 +64,7 @@ const isTheme = (theme: string) => {
 };
 
 /**
- * Returns if the currently set theme is part of legacy theme families ("sap_belize" or "sap_fiori_3").
+ * Returns if the currently set theme is part of legacy theme families ("sap_fiori_3").
  * **Note**: in addition, the method checks the base theme of a custom theme, built via the ThemeDesigner.
  *
  * @private
