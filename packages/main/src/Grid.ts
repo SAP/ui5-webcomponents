@@ -331,6 +331,39 @@ class Grid extends UI5Element {
 		}
 	}
 
+	_onfocusin(e: FocusEvent) {
+		// Handles focus that is below sticky element
+		const stickyElements = this._stickyElements;
+
+		if (stickyElements.length === 0) {
+			return;
+		}
+
+		// Find the sticky element that is closest to the focused element
+		const target = e.target as HTMLElement;
+		const element = target.closest("ui5-grid-cell, ui5-grid-row") as HTMLElement ?? target;
+		const elementRect = element.getBoundingClientRect();
+		const stickyBottom = stickyElements.reduce((min, stickyElement) => {
+			const stickyRect = stickyElement.getBoundingClientRect();
+
+			if (stickyRect.bottom > elementRect.top) {
+				return Math.max(min, stickyRect.bottom);
+			}
+			return min;
+		}, -Infinity);
+
+		// If the focused element is not behind any sticky element, do nothing
+		if (stickyBottom === -Infinity) {
+			return;
+		}
+
+		// Scroll the focused element into view
+		const scrollContainer = this._scrollContainer;
+		scrollContainer.scrollBy({
+			top: elementRect.top - stickyBottom,
+		});
+	}
+
 	/**
 	 * Refreshes the popin state of the columns.
 	 * Syncs the popin state of the columns with the popin state of the header cells.
@@ -386,8 +419,6 @@ class Grid extends UI5Element {
 		return {
 			grid: {
 				"grid-template-columns": this._gridTemplateColumns,
-				"grid-overflow-x": this._gridOverflowX,
-				"grid-overflow-y": this._gridOverflowY,
 			},
 		};
 	}
@@ -452,21 +483,18 @@ class Grid extends UI5Element {
 		return this.features.find(feature => this._isGrowingFeature(feature)) as IGridGrowing;
 	}
 
+	// TODO: Could be moved to UI5Element. TBD
 	get _scrollContainer() {
 		let element: HTMLElement = this as HTMLElement;
-		while (element.scrollHeight <= element.clientHeight) {
+		while (element) {
+			const { overflowY } = window.getComputedStyle(element);
+			if (overflowY === "auto" || overflowY === "scroll") {
+				return element;
+			}
 			element = element.parentElement as HTMLElement;
-
-			if (element === document.body) {
-				return window;
-			}
-
-			if (!element) {
-				break;
-			}
 		}
 
-		return element;
+		return document.scrollingElement as HTMLElement || document.documentElement;
 	}
 
 	get _stickyElements() {

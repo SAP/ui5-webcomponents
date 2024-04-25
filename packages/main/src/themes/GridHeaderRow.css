@@ -18,7 +18,6 @@
 
 :host([sticky]) {
     position: sticky;
-    position: -webkit-sticky;
     top: var(--ui5-sticky-header-offset);
     z-index: 1;
 }
