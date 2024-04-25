@@ -1,13 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone, isAndroid } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -216,7 +215,7 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
@@ -225,7 +224,7 @@ class ComboBox extends UI5Element {
 	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
-	noTypeahead!: boolean;
+	noTypeahead = false;
 
 	/**
 	 * Defines the "live" value of the component.
@@ -237,16 +236,16 @@ class ComboBox extends UI5Element {
 	 * @private
 	 */
 	@property()
-	filterValue!: string;
+	filterValue = ""
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -256,15 +255,15 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is read-only.
@@ -275,7 +274,7 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -283,7 +282,7 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Indicates whether a loading indicator should be shown in the picker.
@@ -291,15 +290,15 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the filter type of the component.
 	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
-	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
-	filter!: `${ComboBoxFilter}`;
+	@property()
+	filter: `${ComboBoxFilter}` = "StartsWithPerTerm";
 
 	/**
 	 * Defines whether the clear icon of the combobox will be shown.
@@ -308,21 +307,21 @@ class ComboBox extends UI5Element {
 	 * @since 1.20.1
 	 */
 	@property({ type: Boolean })
-	showClearIcon!: boolean;
+	showClearIcon = false;
 
 	/**
 	 * Indicates whether the input is focssed
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isValueStateFocused!: boolean;
+	_isValueStateFocused = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -331,7 +330,7 @@ class ComboBox extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component
@@ -340,19 +339,19 @@ class ComboBox extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed!: boolean;
+	_iconPressed = false;
 
-	@property({ type: Object, noAttribute: true, multiple: true })
+	@property({ type: Array, noAttribute: true })
 	_filteredItems!: Array<IComboBoxItem>;
 
-	@property({ validator: Integer, noAttribute: true })
-	_listWidth!: number;
+	@property({ type: Number, noAttribute: true })
+	_listWidth?: number;
 
 	@property({ type: Boolean, noAttribute: true })
-	_effectiveShowClearIcon!: boolean;
+	_effectiveShowClearIcon = false
 
 	/**
 	 * Defines the component items.
