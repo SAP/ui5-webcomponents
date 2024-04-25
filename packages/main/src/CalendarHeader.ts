@@ -1,12 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -21,9 +20,9 @@ import {
 import calendarHeaderStyles from "./generated/themes/CalendarHeader.css.js";
 
 type SecondaryCalendarButtonTexts = {
-	monthButtonText: string,
-	monthButtonInfo: string,
-	yearButtonText: string,
+	monthButtonText?: string,
+	monthButtonInfo?: string,
+	yearButtonText?: string,
 }
 
 @customElement({
@@ -46,7 +45,7 @@ class CalendarHeader extends UI5Element {
 	 * @public
 	 * @default undefined
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	timestamp?: number;
 
 	/**
@@ -56,7 +55,7 @@ class CalendarHeader extends UI5Element {
 	 * @public
 	 * @default undefined
 	 */
-	@property({ type: CalendarType })
+	@property()
 	primaryCalendarType?: `${CalendarType}`;
 
 	/**
@@ -67,7 +66,7 @@ class CalendarHeader extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ type: CalendarType })
+	@property()
 	secondaryCalendarType?: `${CalendarType}`;
 
 	/**
@@ -75,28 +74,28 @@ class CalendarHeader extends UI5Element {
 	 * @private
 	*/
 	@property({ type: Object })
-	buttonTextForSecondaryCalendarType!: SecondaryCalendarButtonTexts;
+	buttonTextForSecondaryCalendarType: SecondaryCalendarButtonTexts = {};
 
 	@property({ type: Boolean })
-	isNextButtonDisabled!: boolean;
+	isNextButtonDisabled = false
 
 	@property({ type: Boolean })
-	isPrevButtonDisabled!: boolean;
+	isPrevButtonDisabled = false
 
 	@property({ type: Boolean })
-	isMonthButtonHidden!: boolean;
+	isMonthButtonHidden = false
 
 	@property()
-	_monthButtonText!: string;
+	_monthButtonText?: string;
 
 	@property()
-	_yearButtonText!: string;
+	_yearButtonText?: string;
 
 	@property()
-	_yearButtonTextSecType!: string;
+	_yearButtonTextSecType?: string;
 
 	@property({ type: Boolean })
-	isYearButtonHidden!: boolean;
+	isYearButtonHidden = false
 
 	_prevButtonText?: string;
 	_nextButtonText?: string;

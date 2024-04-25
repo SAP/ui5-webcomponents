@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -11,7 +11,6 @@ import {
 	isFirefox,
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
 import {
@@ -63,27 +62,27 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 class CardHeader extends UI5Element {
 	/**
 	 * Defines the title text.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	*/
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	 * Defines the subtitle text.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	*/
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
 	/**
 	 * Defines the additional text.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	*/
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines if the component would be interactive,
@@ -92,7 +91,7 @@ class CardHeader extends UI5Element {
 	 * @public
 	*/
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	/**
 	 * Define the `aria-level` attribute of the component
@@ -101,11 +100,11 @@ class CardHeader extends UI5Element {
 	 * @private
 	 * @default 3
 	*/
-	@property({ validator: Integer, defaultValue: 3 })
-	_ariaLevel!: number;
+	@property({ type: Number })
+	_ariaLevel = 3;
 
 	@property({ type: Boolean, noAttribute: true })
-	_headerActive!: boolean;
+	_headerActive = false;
 
 	/**
 	 * Defines an avatar image, displayed in the left most part of the header.

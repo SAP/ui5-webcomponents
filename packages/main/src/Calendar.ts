@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
@@ -210,11 +210,8 @@ class Calendar extends CalendarPart {
 	 * @default "Single"
 	 * @public
 	 */
-	@property({
-		type: CalendarSelectionMode,
-		defaultValue: CalendarSelectionMode.Single,
-	})
-	selectionMode!: `${CalendarSelectionMode}`;
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -225,32 +222,32 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
 
 	/**
 	 * Which picker is currently visible to the user: day/month/year
 	 * @private
 	 */
-	@property({ defaultValue: "day" })
-	_currentPicker!: string;
+	@property()
+	_currentPicker: "day" | "month" | "year" = "day"
 
 	@property({ type: Boolean })
-	_previousButtonDisabled!: boolean;
+	_previousButtonDisabled = false;
 
 	@property({ type: Boolean })
-	_nextButtonDisabled!: boolean;
+	_nextButtonDisabled = false;
 
 	@property()
-	_headerMonthButtonText!: string;
+	_headerMonthButtonText?: string;
 
 	@property()
-	_headerYearButtonText!: string;
+	_headerYearButtonText?: string;
 
 	@property()
-	_headerYearButtonTextSecType!: string;
+	_headerYearButtonTextSecType?: string;
 
-	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
-	_pickersMode!: CalendarPickersMode;
+	@property({ noAttribute: true })
+	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
 	_valueIsProcessed!: boolean
 
@@ -282,8 +279,8 @@ class Calendar extends CalendarPart {
 	 * Defines the selected item type of the calendar legend item (if such exists).
 	 * @private
 	 */
-	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
-	_selectedItemType!: `${CalendarLegendItemType}`;
+	@property()
+	_selectedItemType: `${CalendarLegendItemType}` = "None";
 
 	/**
 	 * @private
@@ -310,7 +307,7 @@ class Calendar extends CalendarPart {
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
-		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
+		this.dates.filter(dateElement => dateElement.value && !selectedValues.includes(dateElement.value)).forEach(dateElement => {
 			this.removeChild(dateElement);
 		});
 

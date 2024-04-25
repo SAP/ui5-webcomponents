@@ -18,11 +18,11 @@ class CalendarDate extends UI5Element {
 	/**
 	 * The date formatted according to the `formatPattern` property
 	 * of the `ui5-calendar` that hosts the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value?: string;
 }
 
 CalendarDate.define();

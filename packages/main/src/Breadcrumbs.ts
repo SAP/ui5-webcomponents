@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -11,7 +11,6 @@ import {
 	isSpace,
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -142,24 +141,24 @@ class Breadcrumbs extends UI5Element {
 	 * @default "Standard"
 	 * @public
 	*/
-	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
-	design!: `${BreadcrumbsDesign}`;
+	@property()
+	design: `${BreadcrumbsDesign}` = "Standard";
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
 	 * @default "Slash"
 	 * @public
 	 */
-	@property({ type: BreadcrumbsSeparator, defaultValue: BreadcrumbsSeparator.Slash })
-	separators!: `${BreadcrumbsSeparator}`;
+	@property()
+	separators: `${BreadcrumbsSeparator}` = "Slash";
 
 	/**
 	 * Holds the number of items in the overflow.
 	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_overflowSize!: number;
+	@property()
+	_overflowSize = 0;
 
 	/**
 	 * Defines the component items.

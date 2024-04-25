@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -49,26 +49,26 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
 class CalendarLegendItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text content of the Calendar Legend Item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the type of the Calendar Legend Item.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
-	type!: `${CalendarLegendItemType}`;
+	@property()
+	type: `${CalendarLegendItemType}` = "None";
 
 	/**
 	 * Tab index of the component.
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1"
 
 	static i18nBundle: I18nBundle;
 

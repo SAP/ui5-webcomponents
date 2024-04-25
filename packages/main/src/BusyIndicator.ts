@@ -1,11 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isDesktop,
@@ -72,19 +71,19 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the size of the component.
 	 * @default "M"
 	 * @public
 	 */
-	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.M })
-	size!: `${BusyIndicatorSize}`;
+	@property()
+	size: `${BusyIndicatorSize}` = "M";
 
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
@@ -92,15 +91,15 @@ class BusyIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
 	 * @default 1000
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	delay!: number;
+	@property({ type: Number })
+	delay = 1000;
 
 	/**
 	 * Defines the placement of the text.
@@ -108,15 +107,15 @@ class BusyIndicator extends UI5Element {
 	 * @default "Bottom"
 	 * @public
 	 */
-	@property({ type: BusyIndicatorTextPlacement, defaultValue: BusyIndicatorTextPlacement.Bottom })
-	textPlacement!: `${BusyIndicatorTextPlacement}`;
+	@property()
+	textPlacement: `${BusyIndicatorTextPlacement}` = "Bottom";
 
 	/**
 	 * Defines if the component is currently in busy state.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isBusy!: boolean;
+	_isBusy = false;
 
 	_keydownHandler: (e: KeyboardEvent) => void;
 	_preventEventHandler: (e: KeyboardEvent) => void;

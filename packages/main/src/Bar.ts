@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -59,8 +59,8 @@ class Bar extends UI5Element {
 	 * @default "Header"
 	 * @public
 	 */
-	@property({ type: BarDesign, defaultValue: BarDesign.Header })
-	design!: `${BarDesign}`
+	@property()
+	design: `${BarDesign}` = "Header";
 
 	/**
 	* Defines the content at the start of the bar.

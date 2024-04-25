@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -59,7 +59,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideToday!: boolean;
+	hideToday = false;
 
 	/**
 	 * Hides the Selected day item in the legend.
@@ -67,7 +67,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideSelectedDay!: boolean;
+	hideSelectedDay = false;
 
 	/**
 	 * Hides the Non-Working day item in the legend.
@@ -75,7 +75,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideNonWorkingDay!: boolean;
+	hideNonWorkingDay = false;
 
 	/**
 	 * Hides the Working day item in the legend.
@@ -83,7 +83,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideWorkingDay!: boolean;
+	hideWorkingDay = false;
 
 	/**
 	 * Defines the items of the component.

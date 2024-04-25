@@ -241,7 +241,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active: boolean = false;
+	active = false;
 
 	/**
 	 * Defines if a content has been added to the default slot
@@ -282,7 +282,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	forcedTabIndex: string = "0";
+	forcedTabIndex = "0";
 
 	/**
 	 * @since 1.0.0-rc.13
