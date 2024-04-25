@@ -6,7 +6,6 @@ describe("DOMObserver", () => {
 	});
 
 	it("insertion order still fires DOMObserver", async () => {
-
         // prepare the table
         await browser.executeAsync(done => {
             const table = document.createElement("ui5-table");
