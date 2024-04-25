@@ -207,7 +207,7 @@ type StepInfo = {
  * or by clicking on the steps within the component header.
  * @param {WizardStep} step The new step.
  * @param {WizardStep} previousStep The previous step.
- * @param {boolean} withScroll When true the change occurs due to user scrolling.
+ * @param {boolean} withScroll true when the event occurs due to user scrolling.
  * @public
  */
 @event<WizardStepChangeEventDetail>("step-change", {
