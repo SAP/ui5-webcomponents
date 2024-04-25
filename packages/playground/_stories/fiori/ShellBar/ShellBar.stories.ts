@@ -102,12 +102,12 @@ export const Advanced: StoryFn = () => {
                 >
             </div>
             <div class="action-popover-content" style="margin-top: 1rem;">
-                <ui5-list separators="None">
-                    <ui5-li icon="sys-find">App Finder</ui5-li>
-                    <ui5-li icon="settings">Settings</ui5-li>
-                    <ui5-li icon="edit">Edit Home Page</ui5-li>
-                    <ui5-li icon="sys-help">Help</ui5-li>
-                    <ui5-li icon="log">Sign out</ui5-li>
+                <ui5-list accessible-role="menu" separators="None">
+                    <ui5-li accessible-role="menuitem" icon="sys-find">App Finder</ui5-li>
+                    <ui5-li accessible-role="menuitem" icon="settings">Settings</ui5-li>
+                    <ui5-li accessible-role="menuitem" icon="edit">Edit Home Page</ui5-li>
+                    <ui5-li accessible-role="menuitem" icon="sys-help">Help</ui5-li>
+                    <ui5-li accessible-role="menuitem" icon="log">Sign out</ui5-li>
                 </ui5-list>
             </div>
         </ui5-popover>
