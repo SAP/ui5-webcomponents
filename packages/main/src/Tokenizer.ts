@@ -34,6 +34,8 @@ import {
 	isHome,
 	isHomeShift,
 	isEndShift,
+	isPageUpShift,
+	isPageDownShift,
 	isHomeCtrl,
 	isEndCtrl,
 	isRight,
@@ -590,11 +592,11 @@ class Tokenizer extends UI5Element {
 			return this._handleTokenSelection(e, false);
 		}
 
-		if (isHomeShift(e)) {
+		if (isHomeShift(e) || isPageUpShift(e)) {
 			this._handleHomeShift(e);
 		}
 
-		if (isEndShift(e)) {
+		if (isEndShift(e) || isPageDownShift(e)) {
 			this._handleEndShift(e);
 		}
 

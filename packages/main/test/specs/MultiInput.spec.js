@@ -269,7 +269,7 @@ describe("MultiInput Truncated Token", () => {
 
 		// populate new token
 		await inner.click();
-		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
+		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit enim ullamco sunt sunt nisi ullamco cillum velit ullamco cillum velit ullamco cillum velit.");
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -345,8 +345,8 @@ describe("ARIA attributes", () => {
 	it ("aria-describedby value according to the tokens and suggestions count", async () => {
 		const mi = await browser.$("#suggestion-token");
 		const innerInput = await mi.shadow$("input");
-		const tokensCountITextId = `${await mi.getProperty("_id")}-hiddenText-nMore`;
-		const suggestionsITextId = `${await mi.getProperty("_id")}-suggestionsText`;
+		const tokensCountITextId = `hiddenText-nMore`;
+		const suggestionsITextId = `suggestionsText`;
 		const ariaDescribedBy = `${tokensCountITextId} ${suggestionsITextId}`;
 
 		await browser.$("#suggestion-token").scrollIntoView();
@@ -565,54 +565,5 @@ describe("Keyboard handling", () => {
 
 		await browser.pause(2500);
 		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
-	});
-
-	it("value state message popup should be closed when nMore popover is open", async () => {
-		const mi = await $("#multiInput-error");
-		const inner = await mi.shadow$("input");
-		const popover = await mi.shadow$("ui5-popover");
-
-		await mi.scrollIntoView();
-
-		await inner.click();
-		await inner.keys(["Control", "i"]);
-
-		assert.strictEqual(await popover.getProperty("open"), false, "Value state popup is closed");
-	});
-
-	it("should open popover on keyboard combination ctrl + i", async () => {
-		const mi = await browser.$("#truncated-token");
-		const inner = await mi.shadow$("input");
-		const tokenizer = await mi.shadow$("ui5-tokenizer");
-		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-
-		await inner.click();
-		await inner.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("open"), "n-more popover should be opened");
-
-		await inner.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("open"), "n-more popover should be closed");
-	});
-
-	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
-		const mi = await browser.$("#no-tokens");
-		const tokenizer = await mi.shadow$("ui5-tokenizer");
-		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-
-		await mi.click();
-		await mi.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("open"), "n-more popover shouldn't be opened since no tokens");
-	});
-
-	it("should open popover with all tokens on keyboard combination ctrl + i", async () => {
-		const mi = await browser.$("#two-tokens");
-		const tokenizer = await mi.shadow$("ui5-tokenizer");
-		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-
-		await mi.click();
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("open"), "Focused MI - n-more popover should be opened");
-		const listItems = await rpo.$("ui5-list").$$("ui5-li");
-		assert.strictEqual(listItems.length, 2, "All items are shown");
 	});
 });

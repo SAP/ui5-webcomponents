@@ -21,28 +21,28 @@ describe("General interaction", () => {
 	it("tests expanding of tokenizer + focus handling", async () => {
 		const longTokenizer = await browser.$("#long-tokenizer");
 		const selectedTokenizer = await browser.$("#selected-tokenizer");
-		const selectedToken = await selectedTokenizer.$("ui5-token:nth-child(2)");
-		const secondToken = await longTokenizer.$("ui5-token:nth-child(2)");
+		const firstSelectedToken = await selectedTokenizer.$("ui5-token:first-child");
+		const firstLongToken = await longTokenizer.$("ui5-token:first-child");
 
-		await secondToken.click();
+		await firstLongToken.click();
 
 		assert.ok(await longTokenizer.getProperty("expanded"), "Tokenizer should be expanded upon token focus.");
-		assert.ok(await secondToken.getProperty("selected"), "Second token should be selected.");
-		assert.ok(await secondToken.getProperty("focused"), "Second token should be focused");
+		assert.ok(await firstLongToken.getProperty("selected"), "Second token should be selected.");
+		assert.ok(await firstLongToken.getProperty("focused"), "Second token should be focused");
 
 		await browser.keys('Tab');
 
-		assert.ok(await secondToken.getProperty("selected"), "Second token should stay selected after focusout.");
+		assert.ok(await firstLongToken.getProperty("selected"), "Second token should stay selected after focusout.");
 		assert.notOk(await longTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 
 		await browser.keys(['Shift', 'Tab']);
 
 		assert.ok(await longTokenizer.getProperty("expanded"), "Tokenizer should be expanded upon token focus.");
-		assert.ok(await secondToken.getProperty("focused"), "Focus should go back to the selected token.");
+		assert.ok(await firstLongToken.getProperty("focused"), "Focus should go back to the selected token.");
 
 		await browser.keys(['Shift', 'Tab']);
 
-		assert.ok(await selectedToken.getProperty("focused"), "Upon Tab navigation, focus should go to the selected token if any.");
+		assert.ok(await firstSelectedToken.getProperty("focused"), "Upon Tab navigation, focus should go to the first token.");
 	});
 });
 
@@ -119,6 +119,7 @@ describe("Readonly", () => {
 
 	it("tests expanding of tokenizer + focus handling in readonly mode.", async () => {
 		const tokenizer = await browser.$("#readonly-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
 
 		await secondToken.click();
@@ -135,7 +136,7 @@ describe("Readonly", () => {
 		await browser.keys(['Shift', 'Tab']);
 
 		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
-		assert.ok(await secondToken.getProperty("focused"), "Focus should go back to the selected token.");
+		assert.ok(await firstToken.getProperty("focused"), "Focus should go back to the first token.");
 	});
 });
 
@@ -292,6 +293,41 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await lastToken.getProperty("focused"), true, "The second token should be selected");
 
 		await browser.keys(["Shift", "Home"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token should be focused");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await lastToken.getProperty("selected"), true, "The last token should be selected");
+	});
+
+	it("should select tokens with [Shift] + [PageDown] key modifier", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+
+		await firstToken.click();
+		await browser.keys(["Shift", "PageDown"]);
+
+		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
+		assert.strictEqual(await secondToken.getProperty("selected"), true, "The second token should be selected");
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The last token should be focused");
+		assert.strictEqual(await lastToken.getProperty("selected"), true, "The last token should be selected");
+	});
+
+
+	it("should select tokens with [Shift] + [PageUp] key modifier", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+
+		await firstToken.click();
+		await browser.keys("End");
+
+		assert.strictEqual(await lastToken.getProperty("focused"), true, "The second token should be selected");
+
+		await browser.keys(["Shift", "PageUp"]);
 
 		assert.strictEqual(await firstToken.getProperty("selected"), true, "The first token should be selected");
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token should be focused");

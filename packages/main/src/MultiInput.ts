@@ -131,7 +131,7 @@ class MultiInput extends Input {
 	}
 
 	valueHelpPress() {
-		this.closePopover();
+		this.closeValueStatePopover();
 		this.fireEvent("value-help-trigger");
 	}
 
@@ -164,7 +164,7 @@ class MultiInput extends Input {
 
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
-		this.closePopover();
+		this.closeValueStatePopover();
 		this.tokenizer.open = false;
 		this._valueHelpIconPressed = true;
 		target.focus();
@@ -198,8 +198,6 @@ class MultiInput extends Input {
 
 		const target = e.target as HTMLInputElement;
 		const isHomeInBeginning = isHome(e) && target.selectionStart === 0;
-		const isCtrl: boolean = e.metaKey || e.ctrlKey;
-		const tokens = this.tokens;
 
 		if (isHomeInBeginning) {
 			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
@@ -215,12 +213,6 @@ class MultiInput extends Input {
 
 		if (isShow(e)) {
 			this.valueHelpPress();
-		}
-
-		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
-			e.preventDefault();
-			this.closePopover();
-			this.tokenizer.open = true;
 		}
 	}
 
@@ -276,11 +268,11 @@ class MultiInput extends Input {
 	/**
 	 * @override
 	 */
-	async _onfocusin(e: FocusEvent) {
-		const inputDomRef = await this.getInputDOMRef();
+	_onfocusin(e: FocusEvent) {
+		const inputDomRef = this.getInputDOMRef();
 
 		if (e.target === inputDomRef) {
-			await super._onfocusin(e);
+			super._onfocusin(e);
 		}
 	}
 
@@ -297,8 +289,8 @@ class MultiInput extends Input {
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
 	}
 
-	async onAfterRendering() {
-		await super.onAfterRendering();
+	onAfterRendering() {
+		super.onAfterRendering();
 
 		this.tokenizer.preventInitialFocus = true;
 
@@ -331,7 +323,7 @@ class MultiInput extends Input {
 	}
 
 	get _tokensCountTextId() {
-		return `${this._id}-hiddenText-nMore`;
+		return `hiddenText-nMore`;
 	}
 
 	/**
