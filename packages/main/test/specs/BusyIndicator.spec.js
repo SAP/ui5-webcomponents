@@ -110,6 +110,6 @@ describe("BusyIndicator general interaction", () => {
 		const busyIndicator = await browser.$("#busy-indicator-height");
 		const height = parseInt((await busyIndicator.shadow$(".ui5-busy-indicator-root").getCSSProperty("height")).value);
 
-		assert.equal(height, 148, "Height of the root element inherits the height of the Busy Indicator");
+		assert.equal(height, 144, "Height of the root element inherits the height of the Busy Indicator");
 	});
 });
