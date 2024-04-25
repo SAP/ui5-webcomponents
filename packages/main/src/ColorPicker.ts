@@ -1,12 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -95,8 +92,8 @@ class ColorPicker extends UI5Element {
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
-	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
-	value!: string;
+	@property()
+	value = "rgba(255, 255, 255, 1)";
 
 	/**
 	 * Defines the HEX code of the currently selected color
@@ -104,58 +101,58 @@ class ColorPicker extends UI5Element {
 	 * **Note**: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
 	 * @private
 	 */
-	@property({ defaultValue: "ffffff", noAttribute: true })
-	hex!: string;
+	@property({ noAttribute: true })
+	hex = "ffffff";
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
 	 * @private
 	 */
 	@property({ type: Object })
-	_mainValue!: ColorRGB;
+	_mainValue: ColorRGB;
 
 	/**
 	 * Defines the currenty selected color from the main color section.
 	 * @private
 	 */
 	@property({ type: Object })
-	_value!: ColorRGB;
+	_value: ColorRGB = getRGBColor(this.value);;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Object })
-	_selectedCoordinates!: ColorCoordinates;
+	_selectedCoordinates: ColorCoordinates;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Float, defaultValue: 1 })
-	_alpha!: number;
+	@property({ type: Number })
+	_alpha = 1;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	_hue!: number;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_isSelectedColorChanged!: boolean;
+	@property({ type: Number })
+	_hue = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isHueValueChanged!: boolean;
+	_isSelectedColorChanged = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_wrongHEX!: boolean;
+	_isHueValueChanged = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_wrongHEX = false;
 
 	selectedHue: number;
 

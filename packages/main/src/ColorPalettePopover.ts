@@ -1,13 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
 // Styles
@@ -93,7 +91,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showRecentColors!: boolean;
+	showRecentColors = false
 
 	/**
 	 * Defines whether the user can choose a custom color from a component.
@@ -103,7 +101,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showMoreColors!: boolean;
+	showMoreColors = false
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
@@ -111,7 +109,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showDefaultColor!: boolean;
+	showDefaultColor = false
 
 	/**
 	 * Defines the default color of the component.
@@ -120,7 +118,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	defaultColor?: string;
 
 	/**
@@ -130,7 +128,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at.
@@ -138,7 +136,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @default undefined
 	 * @since 1.21.0
 	 */
-	@property({ validator: DOMReference })
+	@property()
 	opener?: HTMLElement | string;
 
 	/**
