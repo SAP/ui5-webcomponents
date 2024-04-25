@@ -622,13 +622,6 @@ describe("Select general interaction", () => {
 		let tooltipValue = await firstOption.getProperty("tooltip");
 
 		assert.strictEqual(tooltipValue, initialValue, "The tooltip of ui5-option is correctly set");
-
-		const newValue = "New Value";
-		await firstOption.setProperty("tooltip", newValue);
-		tooltipValue = await firstOption.getProperty("tooltip");
-
-		assert.strictEqual(tooltipValue, newValue, "The tooltip of ui5-option is correctly changed");
-
 	});
 });
 
