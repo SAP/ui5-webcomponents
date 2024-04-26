@@ -63,9 +63,6 @@ setTheme(getDefaultTheme());
 
 The following themes are deprecated and no longer maintained - out of maintenance and left for compatibility only. The themes will be removed in the next major version.
 We recommend using `Horizon` (sap_horizon) and `Quartz` (sap_fiori_3) theme families.
-- The `sap_belize` is known as `Belize` [deprecated since 1.22].
-- The `sap_belize_hcb` is known as `High Contrast Black` [deprecated since 1.22].
-- The `sap_belize_hcw` is known as `High Contrast White` [deprecated since 1.22].
 
 ### language
 <a name="language"></a>
@@ -248,7 +245,7 @@ Example:
 ```html
 <script data-ui5-config type="application/json">
 {
-	"theme": "sap_belize_hcb",
+	"theme": "sap_horizon_hcb",
 	"language": "ja",
 	"animationMode": "none",
 	"calendarType": "Japanese",
