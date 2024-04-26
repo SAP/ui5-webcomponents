@@ -40,6 +40,10 @@ class TestMenuItem extends UI5Element {
 		this._showSubMenu = true;
 		this._opener = this;
 	}
+
+	get _hasChildren() {
+		return !!this.items.length;
+	}
 }
 
 TestMenuItem.define();

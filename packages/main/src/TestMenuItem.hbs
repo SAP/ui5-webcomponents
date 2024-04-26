@@ -1,7 +1,9 @@
 <li>
     <slot name="content"></slot>
 
-    <ui5-button @click="{{_openSubMenu}}">SubMenu</ui5-button>
+    {{#if _hasChildren}}
+        <ui5-button @click="{{_openSubMenu}}">SubMenu</ui5-button>
+    {{/if}}
 
     {{#if _showSubMenu}}
         <ui5-test-menu open .opener="{{_opener}}">
