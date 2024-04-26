@@ -1223,6 +1223,7 @@ class MultiComboBox extends UI5Element {
 	_resetValueState(valueState: `${ValueState}`, callback?: () => void) {
 		this._validationTimeout = setTimeout(() => {
 			this._effectiveValueState = this.valueState;
+			this._dialogInputValueState = valueState;
 			this.valueState = valueState;
 			this._validationTimeout = null;
 
