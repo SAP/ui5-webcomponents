@@ -64,7 +64,7 @@ type ResponsiveBreakpoints = {
 type WizardStepChangeEventDetail = {
 	step: WizardStep,
 	previousStep: WizardStep,
-	changeWithClick: boolean,
+	withScroll: boolean,
 }
 
 const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
@@ -206,7 +206,7 @@ type StepInfo = {
  * or by clicking on the steps within the component header.
  * @param {WizardStep} step The new step.
  * @param {WizardStep} previousStep The previous step.
- * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
+ * @param {boolean} withScroll true when the event occurs due to user scrolling.
  * @public
  */
 @event<WizardStepChangeEventDetail>("step-change", {
@@ -222,7 +222,7 @@ type StepInfo = {
 		/**
 		* @public
 		*/
-		changeWithClick: { type: Boolean },
+		withScroll: { type: Boolean },
 	},
 })
 
@@ -655,7 +655,7 @@ class Wizard extends UI5Element {
 		const selectedStep = this.selectedStep;
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
 
-		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
+		this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, false);
 		this._closeRespPopover();
 		tabs[newlySelectedIndex].focus();
 	}
@@ -687,7 +687,7 @@ class Wizard extends UI5Element {
 		// If the calculated index is in range,
 		// change selection and fire "step-change".
 		if (!stepToSelect.disabled && newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
-			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
+			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, true);
 			this.selectionRequestedByScroll = true;
 		}
 	}
@@ -722,7 +722,7 @@ class Wizard extends UI5Element {
 
 		if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
 			// Change selection and fire "step-change".
-			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
+			this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, false);
 		}
 	}
 
@@ -1019,10 +1019,10 @@ class Wizard extends UI5Element {
 	 * @param selectedStep the old step
 	 * @param stepToSelect the step to be selected
 	 * @param stepToSelectIndex the index of the newly selected step
-	 * @param changeWithClick the selection changed due to user click in the step navigation
+	 * @param withScroll the selection changed due to user scrolling
 	 * @private
 	 */
-	switchSelectionFromOldToNewStep(selectedStep: WizardStep | null, stepToSelect: WizardStep, stepToSelectIndex: number, changeWithClick: boolean) {
+	switchSelectionFromOldToNewStep(selectedStep: WizardStep | null, stepToSelect: WizardStep, stepToSelectIndex: number, withScroll: boolean) {
 		if (selectedStep && stepToSelect) {
 			// keep the selection if next step is disabled
 			if (!stepToSelect.disabled) {
@@ -1033,7 +1033,7 @@ class Wizard extends UI5Element {
 			this.fireEvent<WizardStepChangeEventDetail>("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
-				changeWithClick,
+				withScroll,
 			});
 
 			this.selectedStepIndex = stepToSelectIndex;
