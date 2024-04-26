@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="height100percent">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Menu</title>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<style>
+		#icon1, #icon2 {
+			color: red;
+		}
+		#icon11, #icon12 {
+			color: blue;
+		}
+	</style>
+
+
+</head>
+
+<body class="bg">
+
+	<ui5-button id="openMenu">Open Test Menu</ui5-button>
+
+	<ui5-test-menu id="menu" header-text="My test menu">
+		<ui5-test-menu-item>
+			<div slot="content">Item 1 <ui5-icon name="add" id="icon1"></ui5-icon></div>
+			<ui5-test-menu-item>
+				<div slot="content">Item 1.1 <ui5-icon name="add" id="icon11"></ui5-icon></div>
+			</ui5-test-menu-item>
+			<ui5-test-menu-item>
+				<div slot="content">Item 1.2 <ui5-icon name="add" id="icon12"></ui5-icon></div>
+			</ui5-test-menu-item>
+		</ui5-test-menu-item>
+
+		<ui5-test-menu-item>
+			<div slot="content">Item 2 <ui5-icon name="add" id="icon2"></ui5-icon></div>
+
+		</ui5-test-menu-item>
+	</ui5-test-menu>
+
+
+	<script>
+		icon1.addEventListener("click", () => {
+			console.log("Clicked icon 1")
+		})
+		icon11.addEventListener("click", () => {
+			console.log("Clicked icon 1.1")
+		})
+		icon12.addEventListener("click", () => {
+			console.log("Clicked icon 1.2")
+		})
+		icon2.addEventListener("click", () => {
+			console.log("Clicked icon 2")
+		})
+
+		openMenu.addEventListener("click", () => {
+			menu.opener = openMenu;
+			menu.open = true;
+		})
+	</script>
+</body>
+</html>
