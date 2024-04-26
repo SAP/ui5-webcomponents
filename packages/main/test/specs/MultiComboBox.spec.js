@@ -1817,9 +1817,11 @@ describe("MultiComboBox general interaction", () => {
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
 
+			let ariaHiddenText = await invisibleText.getHTML(false);
+
 			assert.strictEqual(tokens.length, 2, "should have two tokens");
 			assert.strictEqual(await innerInput.getAttribute("aria-describedby"), inivisbleTextId, "aria-describedby reference is correct");
-			// assert.strictEqual(await invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
+			assert.ok(await ariaHiddenText.includes("Contains 2 tokens"), "aria-describedby text is correct");
 
 			await innerInput.click();
 			await innerInput.keys("Backspace");
@@ -1833,10 +1835,13 @@ describe("MultiComboBox general interaction", () => {
 				done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_ONE_TOKEN));
 			});
 
+			ariaHiddenText = await invisibleText.getHTML(false);
+
 			assert.strictEqual(tokens.length, 1, "should have one token");
-			// assert.strictEqual(await invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 
 			await innerInput.keys("Backspace");
+			await innerInput.keys("Tab");
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			invisibleText = await mcb.shadow$(".ui5-hidden-text");
@@ -1846,8 +1851,10 @@ describe("MultiComboBox general interaction", () => {
 				done(mcb.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_ARIA_CONTAIN_TOKEN));
 			});
 
+			ariaHiddenText = await invisibleText.getHTML(false);
+
 			assert.strictEqual(tokens.length, 0, "should not have tokens");
-			// assert.strictEqual(await invisibleText.getText(), resourceBundleText, "aria-describedby text is correct");
+			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 		});
 
 		it ("Should apply aria-label from the accessibleName property", async () => {
