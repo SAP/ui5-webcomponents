@@ -303,7 +303,7 @@
 
 		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
 			item.addEventListener("ui5-click", function(event) {
-				wcToastTC.show();
+				wcToastTC.open = true;
 			});
 		});
 
