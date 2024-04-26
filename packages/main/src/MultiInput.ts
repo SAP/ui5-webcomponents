@@ -290,7 +290,11 @@ class MultiInput extends Input {
 		const tokens = this.tokens;
 		const lastToken = tokens.length && tokens[tokens.length - 1];
 
-		if (cursorPosition === 0 && lastToken) {
+		// Selection is only permitted with text/search, URL, tel and password.
+		// The likely reason that selection has been disabled for inputs of type number
+		// is that on some devices, or under some circumstances (e.g., when the input
+		// has been is presented as a short list), there might not be a caret.
+		if ((((this.type === "Number" || this.type === "Email") && !this.value) || cursorPosition === 0) && lastToken) {
 			e.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
