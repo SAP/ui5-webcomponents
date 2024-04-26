@@ -115,6 +115,7 @@ class Toast extends UI5Element {
 
 	/**
 	 * Indicates whether the component is open (visible).
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
