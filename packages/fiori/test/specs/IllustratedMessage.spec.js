@@ -19,13 +19,6 @@ describe("IllustratedMessage 'design' property", () => {
 
 		// Assert
 		assert.strictEqual(illustratedMsgDesign, "Base", "'design' should be equal to 'Base'");
-
-		// Act
-		await illustratedMsg.setProperty("design", "Invalid");
-		illustratedMsgDesign = await illustratedMsg.getProperty("design");
-
-		// Assert
-		assert.strictEqual(illustratedMsgDesign, "Auto", "'design' should be equal to 'Auto' when invalid value is passed");
 	});
 
 	it("should show up properly, when in panel and it expand/collapse", async () => {

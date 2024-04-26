@@ -257,6 +257,9 @@ class ColorPicker extends UI5Element {
 	_handleAlphaInput(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
+		if (Number.isNaN(this._alpha)) {
+			this._alpha = 1;
+		}
 		this._setColor(this._value);
 	}
 
