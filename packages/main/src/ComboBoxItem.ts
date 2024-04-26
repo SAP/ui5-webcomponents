@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IComboBoxItem } from "./ComboBox.js";
 
@@ -20,7 +20,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * @public
 	 */
 	@property()
-	text!: string
+	text = "";
 
 	/**
 	 * Defines the additional text of the component.
@@ -29,21 +29,21 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * @public
 	 */
 	@property()
-	additionalText!: string
+	additionalText = "";
 
 	/**
 	 * Indicates whether the item is focssed
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Indicates whether the item is selected
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Used to avoid tag name checks
