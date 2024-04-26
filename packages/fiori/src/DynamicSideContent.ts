@@ -29,7 +29,7 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 
 type DynamicSideContentLayoutChangeEventDetail = {
 	currentBreakpoint: string,
-	previousBreakpoint?: string,
+	previousBreakpoint: string | undefined,
 	mainContentVisible: boolean,
 	sideContentVisible: boolean,
 }

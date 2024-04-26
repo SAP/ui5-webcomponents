@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -52,7 +52,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -62,7 +62,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	_fixed!: boolean;
+	_fixed = false;
 
 	/**
      * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.
@@ -82,7 +82,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ type: Boolean })
-	wholeItemToggleable!: boolean;
+	wholeItemToggleable = false;
 
 	get overflowItems() : Array<HTMLElement> {
 		return [this];

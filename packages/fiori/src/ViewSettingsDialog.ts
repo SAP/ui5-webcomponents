@@ -1,4 +1,4 @@
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -200,43 +200,47 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	sortDescending!: boolean;
+	sortDescending = false;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
 	 * @private
 	 */
 	@property({ type: Object })
-	_recentlyFocused!: List;
-
-	/**
-	 * Stores settings of the dialog before the initial open.
-	 * @private
-	 */
-	@property({ type: Object })
-	_initialSettings!: VSDInternalSettings;
-
-	/**
-	 * Stores settings of the dialog after confirmation.
-	 * @private
-	 */
-	@property({ type: Object })
-	_confirmedSettings!: VSDInternalSettings;
+	_recentlyFocused?: List;
 
 	/**
 	 * Stores current settings of the dialog.
 	 * @private
 	 */
 	@property({ type: Object })
-	_currentSettings!: VSDInternalSettings;
+	_currentSettings: VSDInternalSettings = {
+		sortOrder: [],
+		sortBy: [],
+		filters: [],
+	};
+
+	/**
+	 * Stores settings of the dialog before the initial open.
+	 * @private
+	 */
+	@property({ type: Object })
+	_initialSettings: VSDInternalSettings = this._currentSettings;
+
+	/**
+	 * Stores settings of the dialog after confirmation.
+	 * @private
+	 */
+	@property({ type: Object })
+	_confirmedSettings: VSDInternalSettings = this._currentSettings;
 
 	/**
 	 * Defnies the current mode of the component.
 	 * @since 1.0.0-rc.16
 	 * @private
 	 */
-	@property({ type: ViewSettingsDialogMode, defaultValue: ViewSettingsDialogMode.Sort })
-	_currentMode!: ViewSettingsDialogMode;
+	@property()
+	_currentMode: `${ViewSettingsDialogMode}` = "Sort";
 
 	/**
 	 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
@@ -244,7 +248,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_filterStepTwo!: boolean;
+	_filterStepTwo = false;
 
 	/**
 	 * Defines the list of items against which the user could sort data.
@@ -269,15 +273,6 @@ class ViewSettingsDialog extends UI5Element {
 	_sortBy?: List;
 
 	static i18nBundle: I18nBundle;
-
-	constructor() {
-		super();
-		this._currentSettings = {
-			sortOrder: [],
-			sortBy: [],
-			filters: [],
-		};
-	}
 
 	onBeforeRendering() {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {

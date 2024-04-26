@@ -6,7 +6,7 @@ import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -44,8 +44,8 @@ import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.c
 const PAGE_UP_DOWN_SIZE = 10;
 
 type SideNavigationPopoverContents = {
-	item: SideNavigationItem,
-	subItems: Array<SideNavigationSubItem>,
+	item?: SideNavigationItem,
+	subItems?: Array<SideNavigationSubItem>,
 };
 
 type SideNavigationSelectionChangeEventDetail = {
@@ -140,7 +140,7 @@ class SideNavigation extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Defines the main items of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
@@ -178,16 +178,17 @@ class SideNavigation extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_popoverContents!: SideNavigationPopoverContents;
+	_popoverContents: SideNavigationPopoverContents = {};
 
 	@property({ type: Boolean })
-	inPopover!: boolean;
+	inPopover= false;
+
+	@property({ type: Array })
+	_menuPopoverItems: Array<HTMLElement> = [];
+
 	_isOverflow!: boolean;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
-
-	@property({ type: Object, multiple: true })
-	_menuPopoverItems!: Array<HTMLElement>;
 
 	/**
 	 * @private
@@ -290,7 +291,7 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 		this.closePicker();
 
-		this._popoverContents.item.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {

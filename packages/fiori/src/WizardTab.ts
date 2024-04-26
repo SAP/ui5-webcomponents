@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -47,37 +47,37 @@ type WizardTabInfo = {
 class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the `icon` of the step.
-	 * @default ""
+	 * @default undefined
 	 * @private
 	 */
 	@property()
-	icon!: string
+	icon?: string
 
 	/**
 	 * Defines the `titleText` of the step.
-	 * @default ""
+	 * @default undefined
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	titleText!: string
+	titleText?: string
 
 	/**
 	 * Defines the `subtitleText` of the step.
-	 * @default ""
+	 * @default undefined
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	subtitleText!: string
+	subtitleText?: string
 
 	/**
 	 * Defines the number that will be displayed in place of the `icon`, when it's missing.
-	 * @default ""
+	 * @default undefined
 	 * @private
 	 */
 	@property()
-	number!: string
+	number?: string
 
 	/**
 	 * Defines if the step is `disabled` - the step is not responding to user interaction.
@@ -85,7 +85,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	 @property({ type: Boolean })
-	 disabled!: boolean
+	 disabled = false;
 
 	/**
 	 * Defines if the step is `selected`.
@@ -93,7 +93,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	selected!: boolean
+	selected = false;
 
 	/**
 	 * Defines if the step's separator is hidden or not.
@@ -101,7 +101,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hideSeparator!: boolean
+	hideSeparator = false;
 
 	/**
 	 * Defines if the step's separator is active or not.
@@ -109,7 +109,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	activeSeparator!: boolean
+	activeSeparator = false;
 
 	/**
 	 * Defines if the step's separator is dashed or not.
@@ -117,15 +117,15 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	branchingSeparator!: boolean
+	branchingSeparator = false;
 
 	/**
 	 * Defines the tabindex of the step.
 	 * @default "-1"
 	 * @private
 	 */
-	@property({ defaultValue: "-1" })
-	forcedTabIndex!: string
+	@property()
+	forcedTabIndex?: string
 
 	_wizardTabAccInfo? : WizardTabInfo
 

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -24,8 +24,8 @@ import TimelineLayout from "./types/TimelineLayout.js";
  */
 interface ITimelineItem extends UI5Element, ITabbable {
     layout: `${TimelineLayout}`,
-    icon: string,
-    forcedLineWidth: string,
+    icon?: string,
+    forcedLineWidth?: string,
     nameClickable: boolean,
     focusLink: () => void,
 }
@@ -63,17 +63,17 @@ class Timeline extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
-	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
-	layout!: `${TimelineLayout}`;
+	@property()
+	layout: `${TimelineLayout}` = "Vertical";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Determines the content of the `ui5-timeline`.

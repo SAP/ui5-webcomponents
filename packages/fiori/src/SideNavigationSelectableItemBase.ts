@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
@@ -31,10 +31,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the item is selected
@@ -43,7 +43,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the link target URI. Supports standard hyperlink behavior.
@@ -52,11 +52,11 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 * for the `click` event should be registered.
 	 *
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 * @since 1.19.0
 	 */
 	@property()
-	href!: string;
+	href?: string;
 
 	/**
 	 * Defines the component target.
@@ -72,18 +72,18 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 * **This property must only be used when the `href` property is set.**
 	 *
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 * @since 1.19.0
 	 */
 	@property()
-	target!: string;
+	target?: string;
 
 	/**
 	 * @private
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	isOverflow!: boolean;
+	isOverflow = false;
 
 	get ariaRole() {
 		if (this.sideNavCollapsed) {

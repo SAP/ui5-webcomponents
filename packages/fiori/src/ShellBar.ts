@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -115,7 +115,7 @@ type ShellBarCoPilot = {
 interface IShelBarItemInfo {
 	id: string,
 	icon?: string,
-	text: string,
+	text?: string,
 	priority: number,
 	show: boolean,
 	count?: string,
@@ -298,30 +298,30 @@ class ShellBar extends UI5Element {
 	 * Defines the `primaryTitle`.
 	 *
 	 * **Note:** The `primaryTitle` would be hidden on S screen size (less than approx. 700px).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	primaryTitle!: string;
+	primaryTitle?: string;
 
 	/**
 	 * Defines the `secondaryTitle`.
 	 *
 	 * **Note:** The `secondaryTitle` would be hidden on S and M screen sizes (less than approx. 1300px).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	secondaryTitle!: string;
+	secondaryTitle?: string;
 
 	/**
 	 * Defines the `notificationsCount`,
 	 * displayed in the notification icon top-right corner.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	notificationsCount!: string;
+	notificationsCount?: string;
 
 	/**
 	 * Defines, if the notification icon would be displayed.
@@ -329,7 +329,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showNotifications!: boolean;
+	showNotifications = false;
 
 	/**
 	 * Defines, if the product switch icon would be displayed.
@@ -337,7 +337,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showProductSwitch!: boolean;
+	showProductSwitch = false;
 
 	/**
 	 * Defines, if the product CoPilot icon would be displayed.
@@ -348,7 +348,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showCoPilot!: boolean;
+	showCoPilot = false;
 
 	/**
 	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
@@ -358,7 +358,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showSearchField!: boolean;
+	showSearchField = false;
 
 	/**
 	 * An object of strings that defines additional accessibility roles for further customization.
@@ -370,7 +370,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.6.0
 	 */
 	@property({ type: Object })
-	accessibilityRoles!: ShellBarAccessibilityRoles;
+	accessibilityRoles: ShellBarAccessibilityRoles = {};
 
 	/**
 	 * An object of strings that defines several additional accessibility texts
@@ -384,7 +384,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@property({ type: Object })
-	accessibilityTexts!: ShellBarAccessibilityTexts;
+	accessibilityTexts: ShellBarAccessibilityTexts = {};
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values
@@ -408,13 +408,13 @@ class ShellBar extends UI5Element {
 	 * @since 1.10.0
 	 */
 	 @property({ type: Object })
-	 accessibilityAttributes!: ShellBarAccessibilityAttributes;
+	 accessibilityAttributes: ShellBarAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property()
-	breakpointSize!: string;
+	breakpointSize?: string;
 
 	/**
 	 * @private
@@ -425,23 +425,23 @@ class ShellBar extends UI5Element {
 	@property({ type: Object })
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
-	@property({ type: Object, multiple: true })
-	_menuPopoverItems: Array<HTMLElement>;
+	@property({ type: Array, noAttribute: true })
+	_menuPopoverItems: Array<HTMLElement> = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_menuPopoverExpanded!: boolean;
+	_menuPopoverExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_overflowPopoverExpanded!: boolean;
+	_overflowPopoverExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_fullWidthSearch!: boolean;
+	_fullWidthSearch = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_coPilotPressed!: boolean;
+	_coPilotPressed = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isXXLBreakpoint!: boolean;
+	_isXXLBreakpoint = false;
 
 	/**
 	 * Defines the `ui5-shellbar` aditional items.
@@ -1242,7 +1242,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _notificationsText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
+		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount || 0);
 	}
 
 	get _cancelBtnText() {

@@ -1,4 +1,4 @@
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import {
@@ -58,7 +58,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Defines nested items by passing `ui5-side-navigation-item` to the default slot.

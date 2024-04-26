@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 
 /**
  * @class
@@ -34,23 +34,23 @@ class WizardStep extends UI5Element {
 	 * Defines the `titleText` of the step.
 	 *
 	 * **Note:** The text is displayed in the `ui5-wizard` navigation header.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	titleText!: string
+	titleText?: string
 
 	/**
 	 * Defines the `subtitleText` of the step.
 	 *
 	 * **Note:** the text is displayed in the `ui5-wizard` navigation header.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	subtitleText!: string
+	subtitleText?: string
 
 	/**
 	 * Defines the `icon` of the step.
@@ -59,11 +59,11 @@ class WizardStep extends UI5Element {
 	 *
 	 * The SAP-icons font provides numerous options.
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string
+	icon?: string
 
 	/**
 	 * Defines if the step is `disabled`. When disabled the step is displayed,
@@ -75,7 +75,7 @@ class WizardStep extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean
+	disabled = false;
 
 	/**
 	 * Defines the step's `selected` state - the step that is currently active.
@@ -86,7 +86,7 @@ class WizardStep extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean
+	selected = false;
 
 	/**
 	 * When `branching` is enabled a dashed line would be displayed after the step,
@@ -98,7 +98,7 @@ class WizardStep extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	branching!: boolean
+	branching = false;
 
 	stretch?: boolean;
 	stepContentAriaLabel?: string;
