@@ -322,7 +322,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	hideWeekNumbers!: boolean;
 
 	/**
-	 * Defines the open | closed state of the popover.
+	 * Defines the open or closed state of the popover.
 	 * @public
 	 * @default false
 	 * @since 2.0
@@ -395,10 +395,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 	}
 
-	/**
-	 * @protected
-	 */
-	 onResponsivePopoverBeforeOpen() {
+	onResponsivePopoverBeforeOpen() {
 		this._calendarCurrentPicker = this.firstPicker;
 	}
 
