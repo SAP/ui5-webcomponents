@@ -28,7 +28,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
  */
 interface ISegmentedButtonItem extends UI5Element, ITabbable {
 	disabled: boolean,
-	pressed: boolean,
+	selected: boolean,
 }
 
 type SegmentedButtonSelectionChangeEventDetail = {
@@ -44,7 +44,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * one of the items, it stays in a pressed state. It automatically resizes the items
  * to fit proportionally within the component. When no width is set, the component uses the available width.
  *
- * **Note:** There can be just one selected `item` at a time.
  *
  * ### ES6 Module Import
  *
@@ -172,7 +171,7 @@ class SegmentedButton extends UI5Element {
 		switch (this.selectionMode) {
 		case SegmentedButtonSelectionMode.Multiple:
 			if (e instanceof KeyboardEvent) {
-				target.pressed = !target.pressed;
+				target.selected = !target.selected;
 			}
 			break;
 		default:
@@ -184,16 +183,15 @@ class SegmentedButton extends UI5Element {
 		});
 
 		this._itemNavigation.setCurrentItem(target);
-		target.focus();
 
 		return this;
 	}
 
 	_applySingleSelection(item: ISegmentedButtonItem) {
 		this.items.forEach(currentItem => {
-			currentItem.pressed = false;
+			currentItem.selected = false;
 		});
-		item.pressed = true;
+		item.selected = true;
 		this._selectedItem = item;
 	}
 
@@ -236,8 +234,8 @@ class SegmentedButton extends UI5Element {
 		// If the component is focused for the first time
 		// focus the selected item if such is present
 		if (this.selectedItems.length) {
-			this.selectedItems[0].focus();
 			this._itemNavigation.setCurrentItem(this.selectedItems[0]);
+			this.selectedItems[0].focus();
 			this.hasPreviouslyFocusedItem = true;
 		}
 	}
@@ -249,7 +247,7 @@ class SegmentedButton extends UI5Element {
 	 * @default []
 	 */
 	get selectedItems(): Array<ISegmentedButtonItem> {
-		return this.items.filter(item => item.pressed);
+		return this.items.filter(item => item.selected);
 	}
 
 	get ariaDescribedBy() {
