@@ -232,6 +232,19 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 <ui5-list selection-mode="Multiple">
 ```
 
+### ui5-multi-combobox
+
+| Changed item                 | Old        | New           | 
+|------------------------------|------------|---------------|
+| Property                     | `allowCustomValues` | `noValidation` | 
+
+- The `allowCustomValues` property has been renamed to `noValidation`.
+  If you have previously used the `allowCustomValues` property
+  `<ui5-multi-combobox allow-custom-values></ui5-multi-combobox>`
+  Now use noValidation instead:
+  `<ui5-multi-combobox no-validation></ui5-multi-combobox>`
+
+
 ### ui5-option
 
 | Changed item                 | Old        | New           | 
@@ -367,6 +380,13 @@ Now use:
 someTabSeparator.getDomRefInStrip();
 ```
 
+### ui5-textarea
+
+| Changed item | Old       | New                                                                 | 
+|--------------|-----------|---------------------------------------------------------------------|
+| Property     | `growingMaxLines`      | `growingMaxRows` |
+
+ - The `growingMaxLines` property has been renamed to `growingMaxRows`.
 
 ### ui5-tree
 
@@ -399,6 +419,33 @@ Now, import the `ui5-bar` from `main`:
 ```ts 
 import "@ui5/webcomponents/dist/Bar.js";
 ```
+
+### ui5-barcode-scanner-dialog
+
+| Changed item  | Old       | New             | 
+|---------------|-----------|-----------------|
+| Public method | `show()`  | `open` property |
+| Public method | `close()` | `open` property |
+
+- The `show` and `close` public methods have been removed. Use the public property `open` instead.
+
+For example, if you used:
+
+```js
+d.show();
+...
+d.close();
+```
+
+use:
+
+```js
+d.open = true;
+...
+d.open = false;
+```
+
+instead.
 
 ### ui5-illustrated-message
 

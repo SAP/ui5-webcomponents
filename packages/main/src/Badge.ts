@@ -19,6 +19,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import WrappingType from "./types/WrappingType.js";
 import BadgeDesign from "./types/BadgeDesign.js";
+import BadgeSize from "./types/BadgeSize.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
@@ -90,8 +91,6 @@ class Badge extends UI5Element {
 	 * Defines the color scheme of the component.
 	 * There are 10 predefined schemes.
 	 * To use one you can set a number from `"1"` to `"10"`. The `colorScheme` `"1"` will be set by default.
-	 *
-	 * **Note:** Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 	 * @default "1"
 	 * @public
 	 */
@@ -130,6 +129,15 @@ class Badge extends UI5Element {
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: `${WrappingType}`;
+
+	/**
+	 * Defines predefined size of the component.
+	 * @default "S"
+	 * @public
+	 * @since 2.0
+	 */
+	@property({ type: BadgeSize, defaultValue: BadgeSize.S })
+	size!: `${BadgeSize}`;
 
 	/**
 	 * Defines if the badge has an icon.
