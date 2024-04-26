@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -60,15 +60,15 @@ class DateRangePicker extends DatePicker {
 	 * @default "-"
 	 * @public
 	 */
-	@property({ defaultValue: "-" })
-	delimiter!: string;
+	@property()
+	delimiter = "-";
 
 	 /**
 	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
 	 * @private
 	 */
 	@property()
-	_tempValue!: string;
+	_tempValue?: string;
 
 	private _prevDelimiter: string | null;
 

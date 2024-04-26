@@ -89,6 +89,10 @@ const defaultConverter = {
 		}
 
 		// object, array, other
+		if (value === null) {
+			return value;
+		}
+
 		return String(value);
 	},
 };
