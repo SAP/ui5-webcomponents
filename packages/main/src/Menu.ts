@@ -549,7 +549,7 @@ class Menu extends UI5Element {
 		const menuListItem = target.hasAttribute("ui5-menu-li")
 			? target as MenuListItem
 			: (target.getRootNode() as ShadowRoot).host as MenuListItem;
-		const item = menuListItem.associatedItem;
+		const item = menuListItem.associatedItem!;
 		const mainMenu = this._findMainMenu(item);
 		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: menuListItem, item });
 	}

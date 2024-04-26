@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
@@ -9,7 +9,6 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 // Styles
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
-import type { AccessibilityAttributes } from "./ListItem.js";
 import type { IButton } from "./Button.js";
 import type { IOption } from "./Select.js";
 
@@ -47,7 +46,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @public
 	 */
 	@property()
-	displayText!: string;
+	displayText?: string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -57,7 +56,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare disabled: boolean;
+	declare disabled
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
@@ -66,7 +65,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -74,17 +73,17 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @public
 	 * @deprecated
 	 */
-	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	declare type: `${ListItemType}`;
+	@property()
+	type: `${ListItemType}` = "Active";
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default {}
+	 * @default undefined
 	 * @public
 	 * @deprecated
 	 */
 	@property({ type: Object })
-	declare accessibilityAttributes: AccessibilityAttributes;
+	declare accessibilityAttributes;
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -93,7 +92,7 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: Boolean })
-	declare navigated: boolean;
+	declare navigated
 
 	/**
 	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.

@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import MenuListItemTemplate from "./generated/templates/MenuListItemTemplate.lit.js";
@@ -28,7 +28,7 @@ class MenuListItem extends CustomListItem {
 	 * @private
 	 */
 	@property({ type: Object })
-	associatedItem!: MenuItem;
+	associatedItem?: MenuItem;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -37,23 +37,23 @@ class MenuListItem extends CustomListItem {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.24.0
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
 	 * **Note:** The additional text would not be displayed if the item has a submenu.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.24.0
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	get text() {
 		return this.associatedItem?.text;

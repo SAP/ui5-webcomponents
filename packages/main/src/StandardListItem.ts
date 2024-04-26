@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
@@ -46,12 +46,12 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
 class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 0.8.0
 	 */
 	@property()
-	description!: string;
+	description?: string;
 
 	/**
 	 * Defines the `icon` source URI.
@@ -59,11 +59,11 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
@@ -73,26 +73,26 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean;
+	iconEnd = false;
 
 	/**
 	 * Defines the `image` source URI.
 	 *
 	 * **Note:** The `image` would be displayed in the beginning of the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	image!: string;
+	image?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the state of the `additionalText`.
@@ -102,13 +102,13 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: `${ValueState}`;
+	@property()
+	additionalTextState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -123,18 +123,18 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @private
 	 * @since 1.5.0
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Indicates if the list item has text content.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasTitle!: boolean;
+	hasTitle = false;
 
 	@property({ type: Boolean })
-	_hasImageContent!: boolean;
+	_hasImageContent = false;
 
 	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the

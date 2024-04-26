@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -37,7 +37,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines whether the item is movable.
@@ -45,17 +45,17 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	/**
 	* Defines if the list item should display its bottom border.
 	* @private
 	*/
 	@property({ type: Boolean })
-	hasBorder!: boolean;
+	hasBorder = false;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property()
+	forcedTabIndex?: string;
 
 	/**
 	* Defines whether `ui5-li` is in disabled state.
@@ -66,14 +66,14 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* @since 1.0.0-rc.12
 	*/
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Indicates if the element is on focus
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	_onfocusin(e: FocusEvent) {
 		this.fireEvent("_request-tabindex-change", e);

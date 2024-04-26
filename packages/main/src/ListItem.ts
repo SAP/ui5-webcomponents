@@ -7,7 +7,7 @@ import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/Focu
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -54,7 +54,7 @@ type PressEventDetail = {
 }
 
 type AccInfo = {
-	role: string;
+	role?: string;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
@@ -111,8 +111,8 @@ abstract class ListItem extends ListItemBase {
 	 * @default "Active"
 	 * @public
 	*/
-	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: `${ListItemType}`;
+	@property()
+	type: `${ListItemType}` = "Active";
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values
@@ -126,12 +126,12 @@ abstract class ListItem extends ListItemBase {
 	 * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
 	 * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
 	 * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
-	 * @default {}
+	 * @default undefined
 	 * @public
 	 * @since 1.15.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes?: AccessibilityAttributes;
 
 	/**
 	 * The navigated state of the list item.
@@ -141,33 +141,33 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	navigated!: boolean;
+	navigated = false;
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String, defaultValue: "" })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 * @private
 	*/
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @default ""
+	 * @defaultundefined
 	 * @deprecated
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	title!: string;
+	title = "";
 
 	/**
 	 * Defines the highlight state of the list items.
@@ -176,8 +176,8 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 * @since 1.24
 	 */
-	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
-	highlight!: `${HighlightTypes}`;
+	@property()
+	highlight: `${HighlightTypes}` = "None";
 
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
@@ -189,15 +189,15 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Used to define the role of the list item.
 	 * @private
-	 * @default ""
+	 * @default undefined
 	 * @since 1.3.0
 	 *
 	 */
 	@property()
-	accessibleRole!: string;
+	accessibleRole?: string;
 
-	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
-	_selectionMode!: `${ListSelectionMode}`;
+	@property()
+	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
@@ -501,8 +501,8 @@ abstract class ListItem extends ListItemBase {
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
 			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
-			setsize: this.accessibilityAttributes.ariaSetsize,
-			posinset: this.accessibilityAttributes.ariaPosinset,
+			setsize: this.accessibilityAttributes?.ariaSetsize,
+			posinset: this.accessibilityAttributes?.ariaPosinset,
 			tooltip: this.tooltip || this.title,
 		};
 	}

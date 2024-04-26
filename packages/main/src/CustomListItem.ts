@@ -41,7 +41,7 @@ class CustomListItem extends ListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	declare accessibleName: string;
+	declare accessibleName
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
