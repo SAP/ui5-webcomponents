@@ -116,8 +116,6 @@ enum TableFocusTargetElement {
  *
  * ### Overview
  *
- * **Note:** Since 2.0 the Table that was previously available in 1.x version has been moved to the **@ui5/webcomponents-compat** package.
- *
  * The `ui5-table` component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
  *
