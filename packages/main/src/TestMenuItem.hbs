@@ -1,11 +1,16 @@
-<li>
-    <slot name="content"></slot>
+<div @click="{{_openSubMenu}}">
+    <div class="cnt">
+        <slot name="content"></slot>
 
-    <ui5-button @click="{{_openSubMenu}}">SubMenu</ui5-button>
+    </div>
 
     {{#if _showSubMenu}}
         <ui5-test-menu open .opener="{{_opener}}">
-            <slot></slot>
+            {{#each _effectiveItems}}
+                <ui5-li-custom>
+                    <slot name="{{_individualSlot}}"></slot>
+                </ui5-li-custom>
+            {{/each}}
         </ui5-test-menu>
     {{/if}}
-</li>
+</div>

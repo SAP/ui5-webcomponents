@@ -32,7 +32,12 @@ class TestMenu extends UI5Element {
 	@property({ validator: DOMReference })
 	opener!: HTMLElement | string;
 
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true,
+		individualSlots: true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+	})
 	items!: Array<TestMenuItem>;
 }
 

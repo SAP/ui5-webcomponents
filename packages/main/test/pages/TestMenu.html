@@ -33,6 +33,9 @@
 			</ui5-test-menu-item>
 			<ui5-test-menu-item>
 				<div slot="content">Item 1.2 <ui5-icon name="add" id="icon12"></ui5-icon></div>
+				<ui5-test-menu-item>
+					<div slot="content">Item 1.2.1 <ui5-icon name="add" id="icon121"></ui5-icon></div>
+				</ui5-test-menu-item>
 			</ui5-test-menu-item>
 		</ui5-test-menu-item>
 
@@ -55,6 +58,9 @@
 		})
 		icon2.addEventListener("click", () => {
 			console.log("Clicked icon 2")
+		})
+		icon121.addEventListener("click", () => {
+			console.log("Clicked icon 121")
 		})
 
 		openMenu.addEventListener("click", () => {

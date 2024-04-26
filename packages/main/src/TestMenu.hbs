@@ -1,7 +1,11 @@
 {{#if open}}
     <ui5-popover .opener="{{opener}}" open="{{open}}" >
-        <ul>
-            <slot></slot>
-        </ul>
+        <ui5-list>
+            {{#each items}}
+                <ui5-li-custom>
+                    <slot name="{{_individualSlot}}"></slot>
+                </ui5-li-custom>
+            {{/each}}
+        </ui5-list>
     </ui5-popover>
 {{/if}}

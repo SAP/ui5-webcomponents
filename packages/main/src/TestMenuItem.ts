@@ -24,6 +24,7 @@ class TestMenuItem extends UI5Element {
 			slots: ["default"],
 		},
 		"default": true,
+		individualSlots: true,
 	})
 	items!: Array<TestMenuItem>;
 
@@ -37,8 +38,14 @@ class TestMenuItem extends UI5Element {
 	_showSubMenu!: boolean;
 
 	_openSubMenu() {
-		this._showSubMenu = true;
-		this._opener = this;
+		if (this.items.length) {
+			this._showSubMenu = true;
+			this._opener = this;
+		}
+	}
+
+	get _effectiveItems() {
+		return this.getSlottedNodes("items");
 	}
 }
 
