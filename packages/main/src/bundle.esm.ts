@@ -124,6 +124,8 @@ import Label from "./Label.js";
 import Link from "./Link.js";
 import Menu from "./Menu.js";
 import TestMenu from "./TestMenu.js";
+import TestMenuItem from "./TestMenuItem.js";
+import TestMenuItemCustom from "./TestMenuItemCustom.js";
 import NavigationMenu from "./NavigationMenu.js";
 import NavigationMenuItem from "./NavigationMenuItem.js";
 import MenuItem from "./MenuItem.js";

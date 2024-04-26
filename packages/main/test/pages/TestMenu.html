@@ -26,23 +26,30 @@
 	<ui5-button id="openMenu">Open Test Menu</ui5-button>
 
 	<ui5-test-menu id="menu" header-text="My test menu">
-		<ui5-test-menu-item>
-			<div slot="content">Item 1 <ui5-icon name="add" id="icon1"></ui5-icon></div>
-			<ui5-test-menu-item>
-				<div slot="content">Item 1.1 <ui5-icon name="add" id="icon11"></ui5-icon></div>
-			</ui5-test-menu-item>
-			<ui5-test-menu-item>
-				<div slot="content">Item 1.2 <ui5-icon name="add" id="icon12"></ui5-icon></div>
-				<ui5-test-menu-item>
-					<div slot="content">Item 1.2.1 <ui5-icon name="add" id="icon121"></ui5-icon></div>
-				</ui5-test-menu-item>
-			</ui5-test-menu-item>
-		</ui5-test-menu-item>
+		<ui5-test-menu-item-custom>
+			<div slot="content"><i>Custom Item 1</i> <ui5-icon name="add" id="icon1"></ui5-icon></div>
+			<ui5-test-menu-item-custom>
+				<div slot="content"><b>Custom Item 1.1</b> <ui5-icon name="add" id="icon11"></ui5-icon></div>
+			</ui5-test-menu-item-custom>
+			<ui5-test-menu-item-custom>
+				<div slot="content"><b>Custom Item 1.2</b> <ui5-icon name="add" id="icon12"></ui5-icon></div>
+				<ui5-test-menu-item-custom>
+					<div slot="content">
+						<b>Custom Item 1.2.1</b>
+						<ui5-icon name="add" id="icon121"></ui5-icon>
+						<ui5-icon name="male"></ui5-icon>
+						<ui5-icon name="female"></ui5-icon>
+					</div>
+				</ui5-test-menu-item-custom>
+			</ui5-test-menu-item-custom>
+			<ui5-test-menu-item text="Item 1.3"></ui5-test-menu-item>
+		</ui5-test-menu-item-custom>
 
-		<ui5-test-menu-item>
-			<div slot="content">Item 2 <ui5-icon name="add" id="icon2"></ui5-icon></div>
-
+		<ui5-test-menu-item text="Item 2">
+			<ui5-test-menu-item text="Item 2.1"></ui5-test-menu-item>
+			<ui5-test-menu-item text="Item 2.2"></ui5-test-menu-item>
 		</ui5-test-menu-item>
+		<ui5-test-menu-item text="Item 3"></ui5-test-menu-item>
 	</ui5-test-menu>
 
 
@@ -55,9 +62,6 @@
 		})
 		icon12.addEventListener("click", () => {
 			console.log("Clicked icon 1.2")
-		})
-		icon2.addEventListener("click", () => {
-			console.log("Clicked icon 2")
 		})
 		icon121.addEventListener("click", () => {
 			console.log("Clicked icon 121")
