@@ -34,7 +34,6 @@ class TestMenu extends UI5Element {
 
 	@slot({
 		"default": true,
-		individualSlots: true,
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})

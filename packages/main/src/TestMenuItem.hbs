@@ -1,16 +1,15 @@
-<div @click="{{_openSubMenu}}">
-    <div class="cnt">
-        <slot name="content"></slot>
+{{>include "./ListItem.hbs"}}
 
+{{#*inline "listItemContent"}}
+    <div @click="{{_openSubMenu}}">
+        <div class="cnt">
+            <slot name="content"></slot>
+        </div>
+
+        {{#if _showSubMenu}}
+            <ui5-test-menu open .opener="{{_opener}}">
+                <slot></slot>
+            </ui5-test-menu>
+        {{/if}}
     </div>
-
-    {{#if _showSubMenu}}
-        <ui5-test-menu open .opener="{{_opener}}">
-            {{#each _effectiveItems}}
-                <ui5-li-custom>
-                    <slot name="{{_individualSlot}}"></slot>
-                </ui5-li-custom>
-            {{/each}}
-        </ui5-test-menu>
-    {{/if}}
-</div>
+{{/inline}}
