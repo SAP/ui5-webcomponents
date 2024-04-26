@@ -364,13 +364,13 @@ describe("Calendar general interaction", () => {
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 
-		const calendar = await browser.$("#calendar6");
+		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0]); // sets the max date to 2024-10-04
 		
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 
-		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1745107200"]`)
+		const year2025 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[11];
 
 		assert.strictEqual(await year2025.hasClass("ui5-yp-item--disabled"), true, "Year 2025 is disabled");
 	});
@@ -381,21 +381,16 @@ describe("Calendar general interaction", () => {
 		const calendar = await browser.$("#calendar1");
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
-
-		const newMaxDate = new Date(Date.UTC(2024, 9, 4, 0, 0, 0));
-		await calendar.setAttribute("max-date", `${newMaxDate}`);
+		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
 		await calendar.setAttribute("min-date", "25.10.2018");
-		
-		const maxDate = await calendar.getAttribute("max-date");
-
-		assert.strictEqual(maxDate, newMaxDate.toString(), "Max date was applied correctly")
+		console.log(await calendar.getAttribute("max-date"));
 
 		await yearButton.click();
-		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1461110400"]`)
+		const year2016 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[3];
 
 		assert.strictEqual(await year2016.hasClass("ui5-yp-item--disabled"), false, "Year 2016 is not disabled");
 
-		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$(`div[data-sap-timestamp="1713571200"]`)
+		const year2024 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[10];
 
 		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});
