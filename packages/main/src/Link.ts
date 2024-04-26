@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -118,26 +118,26 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0
 	 */
 	 @property()
-	 tooltip!: string;
+	 tooltip?: string;
 
 	/**
 	 * Defines the component href.
 	 *
 	 * **Note:** Standard hyperlink behavior is supported.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	href!: string;
+	href?: string;
 
 	/**
 	 * Defines the component target.
@@ -151,11 +151,11 @@ class Link extends UI5Element implements ITabbable {
 	 * - `_search`
 	 *
 	 * **This property must only be used when the `href` property is set.**
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	target!: string;
+	target?: string;
 
 	/**
 	 * Defines the component design.
@@ -164,8 +164,8 @@ class Link extends UI5Element implements ITabbable {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: LinkDesign, defaultValue: LinkDesign.Default })
-	design!: `${LinkDesign}`;
+	@property()
+	design: `${LinkDesign}` = "Default";
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -174,26 +174,26 @@ class Link extends UI5Element implements ITabbable {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the ARIA role of the component.
@@ -203,8 +203,8 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 * @since 1.9.0
 	 */
-	@property({ defaultValue: "link" })
-	accessibleRole!: string;
+	@property()
+	accessibleRole = "link"
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values
@@ -226,46 +226,42 @@ class Link extends UI5Element implements ITabbable {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes: AccessibilityAttributes = {};
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
 
 	@property({ noAttribute: true })
-	forcedTabIndex!: string;
+	forcedTabIndex?: string;
 
 	/**
 	 * Indicates if the element is on focus.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean
-
-	_dummyAnchor: HTMLAnchorElement;
+	focused = false;
 
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
-		this._dummyAnchor = document.createElement("a");
 	}
 
 	onBeforeRendering() {
 		const needsNoReferrer = this.target !== "_self"
 			&& this.href
-			&& this._isCrossOrigin();
+			&& this._isCrossOrigin(this.href);
 
 		this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
 	}
 
-	_isCrossOrigin() {
+	_isCrossOrigin(href: string) {
 		const loc = window.location;
+		const url = new URL(href);
 
-		this._dummyAnchor.href = this.href;
-
-		return !(this._dummyAnchor.hostname === loc.hostname
-			&& this._dummyAnchor.port === loc.port
-			&& this._dummyAnchor.protocol === loc.protocol);
+		return !(url.hostname === loc.hostname
+			&& url.port === loc.port
+			&& url.protocol === loc.protocol);
 	}
 
 	get effectiveTabIndex() {

@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -286,7 +286,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines if characters within the suggestions are to be highlighted
@@ -298,16 +298,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	highlight!: boolean;
+	highlight = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -318,7 +318,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -327,7 +327,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.0.0-rc.3
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
@@ -336,7 +336,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.4.0
 	 */
 	@property({ type: Boolean })
-	noTypeahead!: boolean;
+	noTypeahead = false;
 
 	/**
 	 * Defines the HTML type of the component.
@@ -350,8 +350,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @default "Text"
 	 * @public
 	 */
-	@property({ type: InputType, defaultValue: InputType.Text })
-	type!: `${InputType}`;
+	@property()
+	type: `${InputType}` = "Text";
 
 	/**
 	 * Defines the value of the component.
@@ -363,7 +363,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Defines the inner stored value of the component.
@@ -373,15 +373,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_innerValue!: string;
+	_innerValue = "";
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -396,7 +396,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
@@ -407,7 +407,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showSuggestions!: boolean;
+	showSuggestions = false;
 
 	/**
 	 * Sets the maximum number of characters available in the input field.
@@ -417,26 +417,26 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.0.0-rc.5
 	 * @public
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	maxlength?: number;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines whether the clear icon of the input will be shown.
@@ -445,7 +445,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.2.0
 	 */
 	@property({ type: Boolean })
-	showClearIcon!: boolean;
+	showClearIcon = false;
 
 	/**
 	 * Defines whether the clear icon is visible.
@@ -454,64 +454,64 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @since 1.2.0
 	 */
 	@property({ type: Boolean })
-	_effectiveShowClearIcon!: boolean;
+	_effectiveShowClearIcon = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	@property({ type: Boolean })
-	openOnMobile!: boolean;
+	openOnMobile = false;
 
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	@property({ type: Boolean })
-	valueStateOpen!: boolean;
+	valueStateOpen = false;
 
 	/**
 	 * Determines whether to manually show the suggestions popover
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_forceOpen!: boolean;
+	_forceOpen = false;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isValueStateFocused!: boolean;
+	_isValueStateFocused = false;
 
-	@property({ type: Object, noAttribute: true })
-	_inputAccInfo!: AccInfo;
+	@property({ type: Object })
+	_inputAccInfo: AccInfo = {};
 
-	@property({ type: Object, noAttribute: true })
-	_nativeInputAttributes!: NativeInputAttributes;
+	@property({ type: Object })
+	_nativeInputAttributes: NativeInputAttributes = {};
 
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_inputWidth?: number;
 
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_listWidth?: number;
 
 	@property({ type: Boolean, noAttribute: true })
-	_inputIconFocused!: boolean;
+	_inputIconFocused = false;
 
 	/**
 	 * Constantly updated value of texts collected from the associated labels
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true, defaultValue: undefined })
+	@property({ noAttribute: true })
 	_associatedLabelsTexts?: string;
 
 	/**
 	 * Constantly updated value of texts collected from the accessibleNameRef elements
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true, defaultValue: undefined })
+	@property({ noAttribute: true })
 	_accessibleLabelsRefTexts?: string;
 
 	/**

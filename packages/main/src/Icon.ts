@@ -201,7 +201,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @private
 	 */
 	@property({ type: Array })
-	pathData!: Array<string>;
+	pathData: Array<string> = [];
 
 	/**
 	 * @private

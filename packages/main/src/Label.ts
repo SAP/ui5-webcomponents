@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -49,11 +49,11 @@ class Label extends UI5Element {
 	 * Defines the labeled input by providing its ID.
 	 *
 	 * **Note:** Can be used with both `ui5-input` and native input.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	for!: string;
+	for?: string;
 
 	/**
 	 * Defines whether colon is added to the component text.
@@ -63,7 +63,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showColon!: boolean;
+	showColon = false;
 
 	/**
 	 * Defines whether an asterisk character is added to the component text.
@@ -75,7 +75,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -84,8 +84,8 @@ class Label extends UI5Element {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	static i18nBundle: I18nBundle;
 
