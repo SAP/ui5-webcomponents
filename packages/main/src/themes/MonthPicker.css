@@ -93,7 +93,7 @@
 :host([secondary-calendar-type="Persian"]:not([primary-calendar-type="Persian"])) .ui5-mp-root,
 :host([secondary-calendar-type="Islamic"]:not([primary-calendar-type="Islamic"])) .ui5-mp-root {
 	display: grid;
-	padding: 1rem 0 1rem;
+	padding: 0.75rem 0 0.75rem;
 	grid-template-columns: repeat(2, 1fr);
 	gap: var(--_ui5_monthpicker_item_margin);
 }
