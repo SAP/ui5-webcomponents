@@ -1,7 +1,1 @@
-@import "../base/SegmentedButtonItem-parameters.css";
-
-:root {
-	--_ui5_button_focused_border: 0.125rem dotted var(--sapContent_FocusColor);
-	--_ui5_button_focused_border_radius: 0.25rem;
-	--_ui5_button_text_shadow: none;
-}
+@import "./Button-parameters.css";
