@@ -89,6 +89,7 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
 /**
  * Fired after the component is auto closed.
  * @public
+ * @since 2.0.0
  */
 @event("after-close")
 
@@ -117,6 +118,7 @@ class Toast extends UI5Element {
 	 * Indicates whether the component is open (visible).
 	 * @default false
 	 * @public
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	open!: boolean;
