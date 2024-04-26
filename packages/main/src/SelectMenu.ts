@@ -217,15 +217,15 @@ class SelectMenu extends UI5Element {
 	}
 
 	_onBeforeOpen() {
-		this.fireEvent<CustomEvent>("before-open");
+		this.fireEvent<CustomEvent>("before-open", undefined, false, false);
 	}
 
 	_onAfterOpen() {
-		this.fireEvent<CustomEvent>("after-open");
+		this.fireEvent<CustomEvent>("after-open", undefined, false, false);
 	}
 
 	_onAfterClose() {
-		this.fireEvent<CustomEvent>("after-close");
+		this.fireEvent<CustomEvent>("after-close", undefined, false, false);
 	}
 
 	_onCloseBtnClick() {
