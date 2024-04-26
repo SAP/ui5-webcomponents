@@ -241,10 +241,13 @@ class Link extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	focused = false;
 
+	_dummyAnchor: HTMLAnchorElement;
+
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
+		this._dummyAnchor = document.createElement("a");
 	}
 
 	onBeforeRendering() {
@@ -257,11 +260,11 @@ class Link extends UI5Element implements ITabbable {
 
 	_isCrossOrigin(href: string) {
 		const loc = window.location;
-		const url = new URL(href);
+		this._dummyAnchor.href = href;
 
-		return !(url.hostname === loc.hostname
-			&& url.port === loc.port
-			&& url.protocol === loc.protocol);
+		return !(this._dummyAnchor.hostname === loc.hostname
+			&& this._dummyAnchor.port === loc.port
+			&& this._dummyAnchor.protocol === loc.protocol);
 	}
 
 	get effectiveTabIndex() {
