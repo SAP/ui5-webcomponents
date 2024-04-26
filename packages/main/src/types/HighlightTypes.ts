@@ -22,7 +22,7 @@ enum HighlightTypes {
 	/**
 	 * @public
 	 */
-	Error = "Negative",
+	Negative = "Negative",
 
 	/**
 	 * @public
