@@ -19,10 +19,7 @@ import menuCss from "./generated/themes/TestMenuItem.css.js";
 class TestMenuItem extends UI5Element {
 	@slot({
 		type: HTMLElement,
-		invalidateOnChildChange: {
-			properties: false,
-			slots: ["default"],
-		},
+		invalidateOnChildChange: true,
 		"default": true,
 	})
 	items!: Array<TestMenuItem>;
