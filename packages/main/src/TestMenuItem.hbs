@@ -2,9 +2,14 @@
 
 {{#*inline "listItemContent"}}
     <div @click="{{_openSubMenu}}">
-        <div class="cnt">
-            <slot name="content"></slot>
-        </div>
+
+        {{text}} <ui5-icon name="{{icon}}"></ui5-icon>
+
+        {{#if _hasContent}}
+            <div class="cnt">
+                <slot name="content"></slot>
+            </div>
+        {{/if}}
 
         {{#if _showSubMenu}}
             <ui5-test-menu open .opener="{{_opener}}">

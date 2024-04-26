@@ -6,7 +6,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import menuTemplate from "./generated/templates/TestMenuTemplate.lit.js";
 import menuCss from "./generated/themes/TestMenu.css.js";
-import TestMenuItem from "./TestMenuItem.js";
+
+interface IMenuItem extends UI5Element {
+	isSeparator: boolean;
+	items?: Array<IMenuItem>;
+}
 
 @customElement({
 	tag: "ui5-test-menu",
@@ -37,8 +41,9 @@ class TestMenu extends UI5Element {
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})
-	items!: Array<TestMenuItem>;
+	items!: Array<IMenuItem>;
 }
 
 TestMenu.define();
 export default TestMenu;
+export type { IMenuItem };

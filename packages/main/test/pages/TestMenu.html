@@ -26,8 +26,8 @@
 	<ui5-button id="openMenu">Open Test Menu</ui5-button>
 
 	<ui5-test-menu id="menu" header-text="My test menu">
-		<ui5-test-menu-item>
-			<div slot="content">Item 1 <ui5-icon name="add" id="icon1"></ui5-icon></div>
+		<ui5-test-menu-item text="New icon" icon="add-activity">
+			<div slot="content"><b>This is the custom user content</b></div>
 			<ui5-test-menu-item>
 				<div slot="content">Item 1.1 <ui5-icon name="add" id="icon11"></ui5-icon></div>
 			</ui5-test-menu-item>
@@ -39,6 +39,8 @@
 			</ui5-test-menu-item>
 		</ui5-test-menu-item>
 
+		<ui5-test-menu-separator></ui5-test-menu-separator>
+
 		<ui5-test-menu-item>
 			<div slot="content">Item 2 <ui5-icon name="add" id="icon2"></ui5-icon></div>
 
@@ -47,9 +49,6 @@
 
 
 	<script>
-		icon1.addEventListener("click", () => {
-			console.log("Clicked icon 1")
-		})
 		icon11.addEventListener("click", () => {
 			console.log("Clicked icon 1.1")
 		})

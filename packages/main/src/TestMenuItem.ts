@@ -6,6 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import menuItemTemplate from "./generated/templates/TestMenuItemTemplate.lit.js";
 import menuItemCss from "./generated/themes/TestMenuItem.css.js";
 import ListItem from "./ListItem.js";
+import type { IMenuItem } from "./TestMenu.js";
 
 @customElement({
 	tag: "ui5-test-menu-item",
@@ -16,7 +17,13 @@ import ListItem from "./ListItem.js";
 	],
 })
 
-class TestMenuItem extends ListItem {
+class TestMenuItem extends ListItem implements IMenuItem {
+	@property()
+	text!: string;
+
+	@property()
+	icon!: string;
+
 	@slot({
 		type: HTMLElement,
 		invalidateOnChildChange: {
@@ -25,7 +32,7 @@ class TestMenuItem extends ListItem {
 		},
 		"default": true,
 	})
-	items!: Array<TestMenuItem>;
+	items!: Array<IMenuItem>;
 
 	@slot()
 	content!: Array<HTMLElement>;
@@ -36,11 +43,19 @@ class TestMenuItem extends ListItem {
 	@property({ type: Boolean })
 	_showSubMenu!: boolean;
 
+	get isSeparator() {
+		return false;
+	}
+
 	_openSubMenu() {
 		if (this.items.length) {
 			this._showSubMenu = true;
 			this._opener = this;
 		}
+	}
+
+	get _hasContent() {
+		return !!this.content.length;
 	}
 
 	get _effectiveItems() {
@@ -49,4 +64,5 @@ class TestMenuItem extends ListItem {
 }
 
 TestMenuItem.define();
+
 export default TestMenuItem;
