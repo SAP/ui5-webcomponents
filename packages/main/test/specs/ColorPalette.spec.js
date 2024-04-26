@@ -6,7 +6,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if selecting element works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 
@@ -16,7 +15,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -30,7 +28,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -46,7 +43,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -60,7 +56,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[9];
@@ -133,7 +128,6 @@ describe("ColorPalette interactions", () => {
 	});
 	
 	it("Tests if clicking on selected item, does not deselect it", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1SelectedTest");
 		const colorPaletteEntries = await colorPalette.$$("ui5-color-palette-item");
 

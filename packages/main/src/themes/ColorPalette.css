@@ -43,7 +43,7 @@
 .ui5-cp-root-phone .ui5-cp-item-container {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	grid-gap: .75rem;
+	grid-gap: 0.75rem;
 	justify-items: center;
 	align-items: center;
 }

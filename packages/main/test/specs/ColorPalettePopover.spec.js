@@ -151,13 +151,12 @@ describe("ColorPalette interactions", () => {
 	})
 
 	it("After selecting an item, opening the popover again should focus the selected item", async () => {
-		await browser.url(`test/pages/ColorPalettePopover.html`);
-		const colorPaletteButton = await browser.$("#colorPaletteBtnTest6");
+		const colorPaletteButton = await browser.$("#colorPaletteBtnTest7");
 	
 		// act - open color palette popover and select a color
 		await colorPaletteButton.click();
 	
-		const colorPalettePopover = await browser.$("#colorPalettePopoverTest6");
+		const colorPalettePopover = await browser.$("#colorPalettePopoverTest7");
 		const colorPalettePopoverItems = await colorPalettePopover.$$("[ui5-color-palette-item]");
 	
 		await browser.keys("ArrowDown");
@@ -174,12 +173,11 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Clicking default button and opening the popover again should focus the default button", async () => {
-		await browser.url(`test/pages/ColorPalettePopover.html`);
-		const colorPaletteButton = await browser.$("#colorPaletteBtnTest6");
+		const colorPaletteButton = await browser.$("#colorPaletteBtnTest");
 	
 		await colorPaletteButton.click();
 	
-		const colorPalettePopover = await browser.$("#colorPalettePopoverTest6");
+		const colorPalettePopover = await browser.$("#colorPalettePopoverTest");
 		const colorPalette = await colorPalettePopover.shadow$("[ui5-responsive-popover]").$("[ui5-color-palette]");
 		const defaultButton = await colorPalette.shadow$(".ui5-cp-default-color-button");
 
@@ -187,7 +185,7 @@ describe("ColorPalette interactions", () => {
 		await colorPaletteButton.click();
 
 		// check if the default button is focused after reopening the popover
-		assert.ok(defaultButton.getProperty("focused"), "The default button is focused");
+		assert.ok(defaultButton.matches(":focus"), "The default button is focused");
 	});
 
 });
