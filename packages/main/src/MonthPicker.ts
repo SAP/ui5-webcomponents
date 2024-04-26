@@ -126,7 +126,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	get rowSize() {
-		return this.secondaryCalendarType === CalendarType.Islamic || this.secondaryCalendarType === CalendarType.Persian ? 2 : 3;
+		return (this.secondaryCalendarType === CalendarType.Islamic && this.primaryCalendarType !== CalendarType.Islamic)
+			|| (this.secondaryCalendarType === CalendarType.Persian && this.primaryCalendarType !== CalendarType.Persian) ? 2 : 3;
 	}
 
 	_buildMonths() {
