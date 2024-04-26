@@ -39,7 +39,7 @@
 	@ui5-before-open="{{_onBeforePopoverOpen}}"
 	@ui5-before-close="{{_onBeforePopoverClose}}"
 >
-    {{#if _popoverContents.item}}
+	{{#if _popoverContents}}
 	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 		<ui5-side-navigation
 			in-popover
@@ -71,6 +71,6 @@
 			{{/each}}
 			</ui5-side-navigation-item>
 		</ui5-side-navigation>
-    {{/if}}
+	{{/if}}
 </ui5-responsive-popover>
 {{/if}}
