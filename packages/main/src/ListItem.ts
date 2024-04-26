@@ -161,7 +161,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @defaultundefined
+	 * @default undefined
 	 * @deprecated
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -204,7 +204,7 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.10.0
 	 * @private
 	 */
-	@property({ type: HasPopup, noAttribute: true })
+	@property({ noAttribute: true })
 	ariaHaspopup?: `${HasPopup}`;
 
 	/**

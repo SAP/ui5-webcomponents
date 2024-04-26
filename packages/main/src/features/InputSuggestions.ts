@@ -555,7 +555,11 @@ class Suggestions {
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 		const groupItemText = Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
+		if (this.accInfo.isGroup) {
+			return [groupItemText, this.accInfo.itemText].filter(Boolean).join(" ");
+		}
+
+		return [this.accInfo.description, this.accInfo.additionalText, itemPositionText].filter(Boolean).join(" ");
 	}
 
 	getRowText(suggestion: IInputSuggestionItem) {
