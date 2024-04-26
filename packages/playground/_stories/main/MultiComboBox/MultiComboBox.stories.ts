@@ -55,7 +55,7 @@ Basic.args = {
 export const MultiComboBoxCustomValue= Template.bind({});
 MultiComboBoxCustomValue.args = {
 	placeholder: 'Choose your state',
-	valueState: ValueState.Success,
+	valueState: ValueState.Positive,
 	noValidation: true,
 	default: `
 	<ui5-mcb-item text="Fortune"></ui5-mcb-item>

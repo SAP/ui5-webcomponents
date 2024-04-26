@@ -1,0 +1,52 @@
+---
+slug: ../../TableColumn
+---
+
+
+
+The `ui5-table-column` component allows to define column specific properties that are applied
+when rendering the `ui5-table` component.
+
+## Properties
+### minWidth
+|             |   |
+|-------------|---|
+| Description | Defines the minimum table width required to display this column. By default it is always displayed.<br />The responsive behavior of the `ui5-table` is determined by this property. As an example, by setting `minWidth` property to `400` sets the minimum width to 400 pixels, and	shows this column on tablet (and desktop) but hides it on mobile.<br />For further responsive design options, see `demandPopin` property. |
+| Type        | `number`               |
+| Default     | Infinity                         |
+### popinText
+|             |   |
+|-------------|---|
+| Description | The text for the column when it pops in. |
+| Type        | `string`               |
+| Default     | ""                         |
+### demandPopin
+|             |   |
+|-------------|---|
+| Description | According to your `minWidth` settings, the component can be hidden in different screen sizes.<br />Setting this property to `true`, shows this column as pop-in instead of hiding it. |
+| Type        | `boolean`               |
+| Default     | false                         |
+### popinDisplay
+|             |   |
+|-------------|---|
+| Description | Defines how the popin row is displayed.<br />**The available values are:**<br />- `Block`<br />- `Inline` |
+| Type        | `"Block" \| "Inline"`               |
+| Default     | "Block"                         |
+
+## Slots
+### default
+|             |   |
+|-------------|---|
+| Description | Defines the content of the column header |
+| Type        | `Array<Node>` |
+
+## Events
+No events available for this component.
+
+## Methods
+No methods available for this component.
+
+## CSS Parts
+| Name | Description |
+|------|-------------|
+| column | Used to style the native `th` element |

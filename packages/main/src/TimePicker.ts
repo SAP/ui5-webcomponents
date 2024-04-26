@@ -488,8 +488,8 @@ class TimePicker extends UI5Element {
 	_updateValueState() {
 		const isValid = this.isValid(this.value);
 		if (!isValid) { // If not valid - always set Error regardless of the current value state
-			this.valueState = ValueState.Error;
-		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
+			this.valueState = ValueState.Negative;
+		} else if (isValid && this.valueState === ValueState.Negative) { // However if valid, change only Error (but not the others) to None
 			this.valueState = ValueState.None;
 		}
 	}

@@ -39,14 +39,14 @@ import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
  */
 const STEP_SIZE = 16;
 
-type ValueStateWithIcon = ValueState.Error | ValueState.Warning | ValueState.Success | ValueState.Information;
+type ValueStateWithIcon = ValueState.Negative | ValueState.Critical | ValueState.Positive | ValueState.Information;
 /**
  * Defines the icons corresponding to the dialog's state.
  */
 const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
-	[ValueState.Error]: "error",
-	[ValueState.Warning]: "alert",
-	[ValueState.Success]: "sys-enter-2",
+	[ValueState.Negative]: "error",
+	[ValueState.Critical]: "alert",
+	[ValueState.Positive]: "sys-enter-2",
 	[ValueState.Information]: "information",
 };
 
@@ -363,7 +363,7 @@ class Dialog extends Popup {
 			return undefined;
 		}
 
-		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
+		if (this.state === ValueState.Negative || this.state === ValueState.Critical) {
 			return PopupAccessibleRole.AlertDialog.toLowerCase();
 		}
 

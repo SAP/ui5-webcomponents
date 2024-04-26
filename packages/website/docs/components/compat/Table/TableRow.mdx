@@ -1,0 +1,49 @@
+---
+slug: ../../TableRow
+---
+
+
+
+The `ui5-table-row` component represents a row in the `ui5-table`.
+
+## Properties
+### type
+|             |   |
+|-------------|---|
+| Description | Defines the visual indication and behavior of the component.<br />**Note:** When set to `Active`, the item will provide visual response upon press, while with type `Inactive`-will not. |
+| Type        | `"Inactive" \| "Active"`               |
+| Default     | "Inactive"                         |
+| Since | 1.0.0-rc.15 |
+### selected
+|             |   |
+|-------------|---|
+| Description | Defines the row's selected state. |
+| Type        | `boolean`               |
+| Default     | false                         |
+| Since | 1.0.0-rc.15 |
+### navigated
+|             |   |
+|-------------|---|
+| Description | Indicates if the table row is navigated. |
+| Type        | `boolean`               |
+| Default     | false                         |
+| Since | 1.9.0 |
+
+## Slots
+### default
+|             |   |
+|-------------|---|
+| Description | Defines the cells of the component.<br />**Note:** Use `ui5-table-cell` for the intended design. |
+| Type        | `Array<TableCell>` |
+
+## Events
+No events available for this component.
+
+## Methods
+No methods available for this component.
+
+## CSS Parts
+| Name | Description |
+|------|-------------|
+| row | Used to style the native `tr` element |
+| popin-row | Used to style the `tr` element when a row pops in |
