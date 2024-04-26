@@ -36,6 +36,7 @@ import type {
 	ClassMap,
 } from "./types.js";
 
+const DEV_MODE = true;
 let autoId = 0;
 
 const elementTimeouts = new Map<string, Promise<void>>();
@@ -633,6 +634,18 @@ abstract class UI5Element extends HTMLElement {
 		const attrName = camelToKebabCase(name);
 		// const attrValue = this.getAttribute(attrName);
 		const converter = propData.converter || defaultConverter;
+
+		if (DEV_MODE) {
+			const tag = (this.constructor as typeof UI5Element).getMetadata().getTag();
+			if (typeof newValue === "boolean" && propData.type !== Boolean) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] boolean value for property [${name}] of component [${tag}] is missing "{ type: Boolean }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
+			}
+			if (typeof newValue === "number" && propData.type !== Number) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
+			}
+		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
 		if (newAttrValue === null) {
