@@ -1,1 +1,0 @@
-{"kind":"interface","name":"ITableRow","description":"Interface for components that may be slotted inside a `ui5-table` as rows","_ui5privacy":"public","_ui5package":"@ui5/webcomponents-compat","_implementations":["@ui5/webcomponents-compat/TableGroupRow","@ui5/webcomponents-compat/TableRow"]}

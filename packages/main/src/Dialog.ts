@@ -181,7 +181,7 @@ class Dialog extends Popup {
 	/**
 	 * Defines the state of the `Dialog`.
 	 *
-	 * **Note:** If `"Error"` and `"Warning"` state is set, it will change the
+	 * **Note:** If `"Negative"` and `"Critical"` states is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to `"Dialog"`.
 	 * @default "None"
 	 * @public

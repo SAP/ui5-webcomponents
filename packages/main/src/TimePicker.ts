@@ -199,7 +199,7 @@ class TimePicker extends UI5Element {
 	value?: string;
 
 	/**
-	 * Defines the value state of the `ui5-time-picker`.
+	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
@@ -207,7 +207,7 @@ class TimePicker extends UI5Element {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Determines whether the `ui5-time-picker` is displayed as disabled.
+	 * Defines the disabled state of the comonent.
 	 * @default false
 	 * @public
 	 */
@@ -215,7 +215,7 @@ class TimePicker extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Determines whether the `ui5-time-picker` is displayed as readonly.
+	 * Defines the readonly state of the comonent.
 	 * @default false
 	 * @public
 	 */

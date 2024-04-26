@@ -12,17 +12,17 @@ enum HighlightTypes {
 	/**
 	 * @public
 	 */
-	Success = "Success",
+	Success = "Positive",
 
 	/**
 	 * @public
 	 */
-	Warning = "Warning",
+	Warning = "Critical",
 
 	/**
 	 * @public
 	 */
-	Error = "Error",
+	Error = "Negative",
 
 	/**
 	 * @public
