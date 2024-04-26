@@ -191,7 +191,7 @@
 
 		function datePickerInputChangeHandler(e) {
 			var dp = e.currentTarget;
-			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
+			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Negative');
 		}
 
 		document.getElementById('ui5-datepicker--startDate').addEventListener('ui5-input change', datePickerInputChangeHandler);
