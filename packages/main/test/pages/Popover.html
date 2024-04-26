@@ -660,7 +660,7 @@ z-index: 1;
 			var toast = document.createElement("ui5-toast");
 			toast.appendChild(document.createTextNode("Closed chained popover 2"));
 			document.body.appendChild(toast);
-			toast.show();
+			toast.open = true;
 		});
 
 		popoverFocusButton.addEventListener("click", function () {
