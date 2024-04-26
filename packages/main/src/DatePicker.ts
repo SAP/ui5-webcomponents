@@ -395,6 +395,13 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 	}
 
+	/**
+	 * @protected
+	 */
+	 onResponsivePopoverBeforeOpen() {
+		this._calendarCurrentPicker = this.firstPicker;
+	}
+
 	onBeforeRendering() {
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 

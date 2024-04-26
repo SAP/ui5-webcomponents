@@ -154,9 +154,15 @@ class DatePickerTestPage {
 		}, this._sut);
 	}
 
-	async togglePicker() {
+	async openPicker() {
 		return browser.executeAsync((id, done) => {
-			done(document.querySelector(id)._togglePicker());
+			done(document.querySelector(id).open = true);
+		}, this._sut);
+	}
+
+	async closePicker() {
+		return browser.executeAsync((id, done) => {
+			done(document.querySelector(id).open = false);
 		}, this._sut);
 	}
 
