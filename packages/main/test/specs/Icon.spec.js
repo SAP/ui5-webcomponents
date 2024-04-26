@@ -94,7 +94,7 @@ describe("Icon general interaction", () => {
 		// assert - initial SVG aria-label
 		let iconEl = await browser.$("#iconError");
 		let iconSVG = await browser.$("#iconError").shadow$(".ui5-icon-root");
-		assert.equal(await iconSVG.getAttribute("aria-label"), "Negative");
+		assert.equal(await iconSVG.getAttribute("aria-label"), "Error");
 
 		// act
 		iconEl.setAttribute("name", "sap-icon://add");
