@@ -44,8 +44,8 @@ import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.c
 const PAGE_UP_DOWN_SIZE = 10;
 
 type SideNavigationPopoverContents = {
-	item?: SideNavigationItem,
-	subItems?: Array<SideNavigationSubItem>,
+	item: SideNavigationItem,
+	subItems: Array<SideNavigationSubItem>,
 };
 
 type SideNavigationSelectionChangeEventDetail = {
@@ -178,7 +178,7 @@ class SideNavigation extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_popoverContents: SideNavigationPopoverContents = {};
+	_popoverContents!: SideNavigationPopoverContents;
 
 	@property({ type: Boolean })
 	inPopover= false;

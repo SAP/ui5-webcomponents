@@ -272,7 +272,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Array })
-	_groupedTabs?: Array<WizardTab> = [];
+	_groupedTabs: Array<WizardTab> = [];
 
 	@property()
 	_breakpoint!: string
