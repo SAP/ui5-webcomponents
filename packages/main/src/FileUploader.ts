@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -101,7 +101,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property()
-	accept!: string;
+	accept?: string;
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
@@ -109,7 +109,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideInput!: boolean;
+	hideInput = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -119,7 +119,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Allows multiple files to be chosen.
@@ -127,7 +127,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	multiple!: boolean;
+	multiple = false;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -138,43 +138,43 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the name/names of the file/files to upload.
-	 * @default ""
+	 * @default undefined
 	 * @formEvents change
 	 * @formProperty
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
@@ -344,7 +344,9 @@ class FileUploader extends UI5Element implements IFormElement {
 
 		if (this.files) {
 			for (let i = 0; i < this.files.length; i++) {
-				formData.append(this.name, this.files[i]);
+				if (this.name) {
+					formData.append(this.name, this.files[i]);
+				}
 			}
 		}
 

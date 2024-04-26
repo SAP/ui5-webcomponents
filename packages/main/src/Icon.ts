@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -117,8 +117,8 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 * @since 1.9.2
 	 */
-	@property({ type: IconDesign, defaultValue: IconDesign.Default })
-	design!: `${IconDesign}`;
+	@property()
+	design: `${IconDesign}` = "Default";
 
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
@@ -127,7 +127,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	/**
 	 * Defines the unique identifier (icon name) of the component.
@@ -151,11 +151,11 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * Example:
 	 * `name='business-suite/3d'`, `name='business-suite/1x2-grid-layout'`, `name='business-suite/4x4-grid-layout'`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -163,11 +163,11 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * **Note:** Every icon should have a text alternative in order to
 	 * calculate its accessible name.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component should have a tooltip.
@@ -177,16 +177,16 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip!: boolean;
+	showTooltip = false;
 
 	/**
 	 * Defines the accessibility role of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleRole!: string;
+	accessibleRole?: string;
 
 	/**
 	 * Defines the ARIA hidden state of the component.
@@ -195,30 +195,30 @@ class Icon extends UI5Element implements IIcon {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	ariaHidden!: string;
+	ariaHidden: string | null = null;
 
 	/**
 	 * @private
 	 */
-	@property({ multiple: true })
+	@property({ type: Array })
 	pathData!: Array<string>;
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, defaultValue: undefined, noAttribute: true })
+	@property({ type: Object, noAttribute: true })
 	accData?: I18nText;
 
 	/**
 	* @private
 	*/
 	@property({ type: Boolean })
-	invalid!: boolean;
+	invalid = false;
 
 	/**
 	 * @private
 	 */
-	@property({ noAttribute: true, defaultValue: undefined })
+	@property({ noAttribute: true })
 	effectiveAccessibleName?: string;
 
 	ltr?: boolean;
@@ -254,7 +254,7 @@ class Icon extends UI5Element implements IIcon {
 	}
 
 	get effectiveAriaHidden() {
-		if (this.ariaHidden === "") {
+		if (!this.ariaHidden) {
 			if (this.isDecorative) {
 				return true;
 			}
