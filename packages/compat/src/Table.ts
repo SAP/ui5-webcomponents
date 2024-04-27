@@ -195,7 +195,7 @@ enum TableFocusTargetElement {
 /**
  * Fired when `ui5-table-column` is shown as a pop-in instead of hiding it.
  * @param {Array} poppedColumns popped-in columns.
- * @since 1.0.0-rc.6
+ * @since 2.0.0
  * @public
  */
 @event<TablePopinChangeEventDetail>("popin-change", {
@@ -214,7 +214,7 @@ enum TableFocusTargetElement {
  *
  * **Note:** The event will be fired if `growing` is set to `Button` or `Scroll`.
  * @public
- * @since 1.0.0-rc.11
+ * @since 2.0.0
  */
 @event("load-more")
 
@@ -224,7 +224,7 @@ enum TableFocusTargetElement {
  * @param {Array} selectedRows An array of the selected rows.
  * @param {Array} previouslySelectedRows An array of the previously selected rows.
  * @public
- * @since 1.0.0-rc.15
+ * @since 2.0.0
  */
 @event<TableSelectionChangeEventDetail>("selection-change", {
 	detail: {
@@ -255,7 +255,7 @@ class Table extends UI5Element {
 	 *
 	 * **Note:** This property takes effect if `growing` is set to `Button`.
 	 * @default ""
-	 * @since 1.0.0-rc.15
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
@@ -266,7 +266,7 @@ class Table extends UI5Element {
 	 *
 	 * **Note:** This property takes effect if `growing` is set to `Button`.
 	 * @default ""
-	 * @since 1.0.0-rc.15
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
@@ -276,7 +276,7 @@ class Table extends UI5Element {
 	 * Defines if the value of `noDataText` will be diplayed when there is no rows present in the table.
 	 * @default false
 	 * @public
-	 * @since 1.0.0-rc.15
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	hideNoData!: boolean;
@@ -296,7 +296,7 @@ class Table extends UI5Element {
 	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
 	 * and the component will fallback to `growing="Button"`.
 	 * @default "None"
-	 * @since 1.0.0-rc.12
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.None })
@@ -308,7 +308,7 @@ class Table extends UI5Element {
 	 * In this state the component's opacity is reduced
 	 * and busy indicator is displayed at the bottom of the table.
 	 * @default false
-	 * @since 1.0.0-rc.12
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -348,7 +348,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines the mode of the component.
 	 * @default "None"
-	 * @since 1.0.0-rc.15
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
@@ -358,7 +358,7 @@ class Table extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	@property({ defaultValue: undefined })
 	accessibleName?: string;
@@ -367,7 +367,7 @@ class Table extends UI5Element {
 	 * Receives id(or many ids) of the elements that label the component.
 	 * @default ""
 	 * @public
-	 * @since 1.3.0
+	 * @since 2.0.0
 	 */
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
@@ -402,7 +402,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
 	 * @default false
-	 * @since 1.0.0-rc.15
+	 * @since 2.0.0
 	 * @private
 	 */
 	@property({ type: Boolean })
