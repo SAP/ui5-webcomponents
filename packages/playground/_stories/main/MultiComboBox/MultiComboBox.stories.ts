@@ -55,17 +55,17 @@ Basic.args = {
 export const MultiComboBoxCustomValue= Template.bind({});
 MultiComboBoxCustomValue.args = {
 	placeholder: 'Choose your state',
-	valueState: ValueState.Success,
+	valueState: ValueState.Positive,
 	noValidation: true,
 	default: `
 	<ui5-mcb-item text="Fortune"></ui5-mcb-item>
 	<ui5-mcb-item text="Luck"></ui5-mcb-item>
-	<ui5-mcb-item selected="" text="Success"></ui5-mcb-item>
+	<ui5-mcb-item selected="" text="Positive"></ui5-mcb-item>
 	<ui5-mcb-item text="Attention"></ui5-mcb-item>
 	<ui5-mcb-item text="Caution"></ui5-mcb-item>
-	<ui5-mcb-item text="Warning"></ui5-mcb-item>
+	<ui5-mcb-item text="Critical"></ui5-mcb-item>
 	<ui5-mcb-item text="Fault"></ui5-mcb-item>
-	<ui5-mcb-item text="Error"></ui5-mcb-item>
+	<ui5-mcb-item text="Negative"></ui5-mcb-item>
 	<ui5-mcb-item text="Mistake"></ui5-mcb-item>`
 };
 MultiComboBoxCustomValue.storyName = "Custom Value";

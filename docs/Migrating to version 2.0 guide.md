@@ -204,6 +204,230 @@ Now you have to use it like this:
 <ui5-color-picker value="red"></ui5-color-picker>
 ```
 
+
+### ui5-checkbox
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-checkbox value-state="Error"></ui5-checkbox>
+<ui5-checkbox value-state="Warning"></ui5-checkbox>
+<ui5-checkbox value-state="Success"></ui5-checkbox>
+```
+Now you have to use it like:
+```html
+<ui5-checkbox value-state="Negative"></ui5-checkbox>
+<ui5-checkbox value-state="Critical"></ui5-checkbox>
+<ui5-checkbox value-state="Positive"></ui5-checkbox>
+```
+
+### ui5-combobox
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-combobox value-state="Error"></ui5-combobox>
+<ui5-combobox value-state="Warning"></ui5-combobox>
+<ui5-combobox value-state="Success"></ui5-combobox>
+```
+Now you have to use it like:
+```html
+<ui5-combobox value-state="Negative"></ui5-combobox>
+<ui5-combobox value-state="Critical"></ui5-combobox>
+<ui5-combobox value-state="Success"></ui5-combobox>
+```
+
+### ui5-date-picker
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-date-picker value-state="Error"></ui5-date-picker>
+<ui5-date-picker value-state="Warning"></ui5-date-picker>
+<ui5-date-picker value-state="Success"></ui5-date-picker>
+```
+Now you have to use it like:
+```html
+<ui5-date-picker value-state="Negative"></date-picker>
+<ui5-date-picker value-state="Critical"></date-picker>
+<ui5-date-picker value-state="Success"></ui5-date-picker>
+```
+
+
+### ui5-date-time-picker
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-date-time-picker value-state="Error"></ui5-date-time-picker>
+<ui5-date-time-picker value-state="Warning"></ui5-date-time-picker>
+<ui5-date-time-picker value-state="Success"></ui5-date-time-picker>
+```
+Now you have to use it like:
+```html
+<ui5-date-time-picker value-state="Negative"></ui5-date-time-picker>
+<ui5-date-time-picker value-state="Critical"></ui5-date-time-picker>
+<ui5-date-time-picker value-state="Success"></ui5-date-time-picker>
+```
+
+### ui5-date-range-picker
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-date-range-picker value-state="Error"></ui5-date-range-picker>
+<ui5-date-range-picker value-state="Warning"></ui5-date-range-picker>
+<ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+```
+Now you have to use it like:
+```html
+<ui5-date-range-picker value-state="Negative"></ui5-date-range-picker>
+<ui5-date-range-picker value-state="Critical"></ui5-date-range-picker>
+<ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+```
+
+### ui5-dialog
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-dialog state="Error"></ui5-dialog>
+<ui5-dialog state="Warning"></ui5-dialog>
+<ui5-dialog state="Success"></ui5-dialog>
+```
+Now you have to use it like:
+```html
+<ui5-dialog state="Negative"></ui5-dialog>
+<ui5-dialog state="Critical"></ui5-dialog>
+<ui5-dialog state="Success"></ui5-dialog>
+```
+
+### ui5-file-uploader
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-file-uploader value-state="Error"></ui5-file-uploader>
+<ui5-file-uploader value-state="Warning"></ui5-file-uploader>
+<ui5-file-uploader value-state="Success"></ui5-file-uploader>
+```
+Now you have to use it like:
+```html
+<ui5-file-uploader value-state="Negative"></ui5-file-uploader>
+<ui5-file-uploader value-state="Critical"></ui5-file-uploader>
+<ui5-file-uploader value-state="Success"></ui5-file-uploader>
+```
+
+### ui5-input
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-input value-state="Error"></ui5-input>
+<ui5-input value-state="Warning"></ui5-input>
+<ui5-input value-state="Success"></ui5-input>
+```
+Now you have to use it like:
+```html
+<ui5-input value-state="Negative"></ui5-input>
+<ui5-input value-state="Critical"></ui5-input>
+<ui5-input value-state="Success"></ui5-input>
+```
+
+### ui5-multi-input
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-multi-input value-state="Error"></ui5-multi-input>
+<ui5-multi-input value-state="Warning"></ui5-multi-input>
+<ui5-multi-input value-state="Success"></ui5-multi-input>
+```
+Now you have to use it like:
+```html
+<ui5-multi-input value-state="Negative"></ui5-multi-input>
+<ui5-multi-input value-state="Critical"></ui5-multi-input>
+<ui5-multi-input value-state="Success"></ui5-multi-input>
+```
+
+### ui5-message-strip
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | design="Warning" | design="Critical" | 
+
+- The property values `Warning`  are renamed to `Critical`. If you previously used it like:
+```html
+<ui5-message-strip design="Warning"></ui5-message-strip>
+```
+Now you have to use it like:
+```html
+<ui5-message-strip design="Critical"></ui5-message-strip>
+```
+
+### ui5-li
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | highlight="Error/Warning/Success" | highlight="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-li highlight="Warning"></ui5-li>
+<ui5-li highlight="Warning"></ui5-li>
+<ui5-li highlight="Success"></ui5-li>
+```
+Now you have to use it like:
+```html
+<ui5-li highlight="Critical"></ui5-li>
+<ui5-li highlight="Critical"></ui5-li>
+<ui5-li highlight="Success"></ui5-li>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | additionalTextState="Error/Warning/Success" | additional-text-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-li additional-text-state="Warning"></ui5-li>
+<ui5-li additional-text-state="Warning"></ui5-li>
+<ui5-li additional-text-state="Success"></ui5-li>
+```
+Now you have to use it like:
+```html
+<ui5-li additional-text-state="Critical"></ui5-li>
+<ui5-li additional-text-state="Critical"></ui5-li>
+<ui5-li additional-text-state="Success"></ui5-li>
+```
+
 ### ui5-list
 
 | Changed item | Old       | New                                                                  | 
@@ -232,6 +456,23 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 <ui5-list selection-mode="Multiple">
 ```
 
+### ui5-message-strip
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | design="Warning" | design="Critical" | 
+
+- The property values `Warning`  are renamed to `Critical`. If you previously used it like:
+```html
+<ui5-message-strip design="Warning"></ui5-message-strip>
+```
+Now you have to use it like:
+```html
+<ui5-message-strip design="Critical"></ui5-message-strip>
+```
+
+
+
 ### ui5-multi-combobox
 
 | Changed item                 | Old        | New           | 
@@ -243,6 +484,24 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
   `<ui5-multi-combobox allow-custom-values></ui5-multi-combobox>`
   Now use noValidation instead:
   `<ui5-multi-combobox no-validation></ui5-multi-combobox>`
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Warning"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Success"></ui5-multi-combobox>
+```
+Now you have to use it like:
+```html
+<ui5-multi-combobox value-state="Negative"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Critical"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Success"></ui5-multi-combobox>
+```
 
 
 ### ui5-option
@@ -302,6 +561,106 @@ If you have previously used the `disabled` property, it won't take effect:
 ```html
 <ui5-progress-indicator disabled value="60"></ui5-progress-indicator>
 ```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-rogress-indicator value-state="Error"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Warning"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Success"></ui5-rogress-indicator>
+```
+Now you have to use it like:
+```html
+<ui5-rogress-indicator value-state="Negative"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Critical"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Success"></ui5-rogress-indicator>
+```
+
+### ui5-radio-button
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-radio-button value-state="Error"></ui5-radio-button>
+<ui5-radio-button value-state="Warning"></ui5-radio-button>
+<ui5-radio-button value-state="Success"></ui5-radio-button>
+```
+Now you have to use it like:
+```html
+<ui5-radio-button value-state="Negative"></ui5-radio-button>
+<ui5-radio-button value-state="Critical"></ui5-radio-button>
+<ui5-radio-button value-state="Success"></ui5-radio-button>
+```
+
+### ui5-select
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-select value-state="Error"></ui5-select>
+<ui5-select value-state="Warning"></ui5-select>
+<ui5-select value-state="Success"></ui5-select>
+```
+Now you have to use it like:
+```html
+<ui5-select value-state="Negative"></ui5-select>
+<ui5-select value-state="Critical"></ui5-select>
+<ui5-select value-state="Success"></ui5-select>
+```
+
+
+### ui5-step-input
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-step-input value-state="Error"></ui5-step-input>
+<ui5-step-input value-state="Warning"></ui5-step-input>
+<ui5-step-input value-state="Success"></ui5-step-input>
+```
+Now you have to use it like:
+```html
+<ui5-step-input value-state="Negative"></ui5-step-input>
+<ui5-step-input value-state="Critical"></ui5-step-input>
+<ui5-step-input value-state="Success"></ui5-step-input>
+```
+
+### ui5-time-picker
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-time-picker value-state="Error"></ui5-time-picker>
+<ui5-time-picker value-state="Warning"></ui5-time-picker>
+<ui5-time-picker value-state="Success"></ui5-time-picker>
+```
+Now you have to use it like:
+```html
+<ui5-time-picker value-state="Negative"></ui5-time-picker>
+<ui5-time-picker value-state="Critical"></ui5-time-picker>
+<ui5-time-picker value-state="Success"></ui5-time-picker>
+```
+
+
+
 
 ### ui5-tab-container
 
@@ -388,6 +747,23 @@ someTabSeparator.getDomRefInStrip();
 
  - The `growingMaxLines` property has been renamed to `growingMaxRows`.
 
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-textarea value-state="Error"></ui5-textarea>
+<ui5-textarea value-state="Warning"></ui5-textarea>
+<ui5-textarea value-state="Success"></ui5-textarea>
+```
+Now you have to use it like:
+```html
+<ui5-textarea value-state="Negative"></ui5-textarea>
+<ui5-textarea value-state="Critical"></ui5-textarea>
+<ui5-textarea value-state="Success"></ui5-textarea>
+```
+
 ### ui5-tree
 
 | Changed item | Old       | New                                                                  | 
@@ -406,6 +782,44 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 <ui5-tree selection-mode="Multiple">
 
 ```
+
+### ui5-tree-item
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | highlight="Error/Warning/Success" | highlight="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-tree-item highlight="Error"></ui5-tree-item>
+<ui5-tree-item highlight="Warning"></ui5-tree-item>
+<ui5-tree-item highlight="Success"></ui5-tree-item>
+```
+Now you have to use it like:
+```html
+<ui5-tree-item highlight="Negative"></ui5-tree-item>
+<ui5-tree-item highlight="Critical"></ui5-tree-item>
+<ui5-tree-item highlight="Success"></ui5-tree-item>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | additional-text-state="Error/Warning/Success" | additional-text-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-tree-item additional-text-state="Error"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Warning"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Success"></ui5-tree-item>
+```
+Now you have to use it like:
+```html
+<ui5-tree-item additional-text-state="Negative"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Critical"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Success"></ui5-tree-item>
+```
+
 
 ## Fiori package (@ui5/webcomponents-fiori)
 

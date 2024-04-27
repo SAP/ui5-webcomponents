@@ -171,7 +171,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the highlight state of the list items.
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.24

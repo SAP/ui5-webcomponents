@@ -362,9 +362,9 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	valueStateTextMappings() {
 		return {
-			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Negative": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Positive": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 
