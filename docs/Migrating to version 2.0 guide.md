@@ -619,6 +619,24 @@ Now you have to use it like:
 <ui5-select value-state="Success"></ui5-select>
 ```
 
+### ui5-segmented-button
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | mode | selectionMode | 
+
+- The property `mode` renamed to `selectionMode`. The selection modes are renamed from `SingleSelect` and `MultiSelect` to `Single` and `Multiple`. If you previously used it like:
+```html
+<ui5-segmented-button mode="SingleSelect"></ui5-segmented-button>
+<ui5-segmented-button mode="MultiSelect"></ui5-segmented-button>
+```
+Now you have to use it like:
+```html
+<ui5-segmented-button selection-mode="Single"></ui5-segmented-button>
+<ui5-segmented-button selection-mode="Multiple"><ui5-segmented-button>
+```
+
 
 ### ui5-step-input
 
