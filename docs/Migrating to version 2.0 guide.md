@@ -619,6 +619,63 @@ Now you have to use it like:
 <ui5-select value-state="Success"></ui5-select>
 ```
 
+### ui5-segmented-button
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | mode | selectionMode | 
+| Readonly Property     | selectedItem | selectedItems | 
+
+- The property `mode` has been renamed to `selectionMode`. The selection modes are renamed from `SingleSelect` and `MultiSelect` to `Single` and `Multiple`. 
+
+If you previously used it as follows:
+```html
+<ui5-segmented-button mode="SingleSelect"></ui5-segmented-button>
+<ui5-segmented-button mode="MultiSelect"></ui5-segmented-button>
+```
+Now you have to use:
+```html
+<ui5-segmented-button selection-mode="Single"></ui5-segmented-button>
+<ui5-segmented-button selection-mode="Multiple"><ui5-segmented-button>
+```
+- The read-only getter `selectedItem` has been replaced by `selectedItems` as multiple items can be selected.
+
+### ui5-segmented-button-item
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | pressed | selected | 
+| Property     | design | ---- | 
+| Property     | iconEnd | ---- | 
+| Property     | submits | ---- | 
+| Property     | type | ---- | 
+| Property     | accessibilityAttributes | ---- | 
+| Property     | accessibleRole | ---- | 
+
+- The property `pressed` has been renamed to `selected`.
+
+If you previously used it as follows:
+```html
+<ui5-segmented-button id="segButton1">
+	  <ui5-segmented-button-item>Item 1</ui5-segmented-button-item>
+	  <ui5-segmented-button-item pressed>Item 2</ui5-segmented-button-item>
+</ui5-segmented-button>
+```
+Now you have to use it as follows:
+```html
+<ui5-segmented-button id="segButton1">
+	  <ui5-segmented-button-item>Item 1</ui5-segmented-button-item>
+	  <ui5-segmented-button-item selected>Item 2</ui5-segmented-button-item>
+</ui5-segmented-button>
+```
+
+- The property `design` has been inherited but never had effect and it's now removed.
+- The property `iconEnd` has been inherited but never had effect and it's now removed.
+- The property `submits` has been inherited but never had effect and it's now removed.
+- The property `type` has been inherited but never had effect and it's now removed.
+- The property `accessibilityAttributes` has been inherited but never had effect and it's now removed.
+- The property `accessibleRole` has been inherited but never had effect and it's now removed.
 
 ### ui5-step-input
 
