@@ -181,6 +181,17 @@
 		<ui5-button id="progSetButton4">Press first item</ui5-button>
 	</section>
 
+	<section>
+		<h3>Accessibility</h3>
+		<ui5-segmented-button>
+			<ui5-segmented-button-item  id="accBtn1" accessible-name="accessible text">First</ui5-segmented-button-item>
+			<ui5-segmented-button-item  id="accBtn2" accessible-name-ref="accRefText">Second</ui5-segmented-button-item>
+			<ui5-segmented-button-item>Third</ui5-segmented-button-item>
+		</ui5-segmented-button>
+
+		<span id="accRefText">accessible ref text</span>
+	</section>
+
 	<script>
 
 		progSetButton1.addEventListener("click", function() {
