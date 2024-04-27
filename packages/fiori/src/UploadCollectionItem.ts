@@ -403,7 +403,7 @@ class UploadCollectionItem extends ListItem {
 
 	get valueStateName(): ValueState {
 		if (this.uploadState === UploadState.Error) {
-			return ValueState.Error;
+			return ValueState.Negative;
 		}
 
 		if (this.uploadState === UploadState.Ready || this.uploadState === UploadState.Uploading) {

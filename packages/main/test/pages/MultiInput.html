@@ -111,7 +111,7 @@
 
 		<h1 class="sample-container-title">Multi Input - Success</h1>
 		<ui5-multi-input id="multiInput-success"
-			value-state="Success">
+			value-state="Positive">
 			<ui5-token slot="tokens" text="Amet"></ui5-token>
 			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
 			<ui5-token slot="tokens" text="laboris"></ui5-token>
@@ -149,7 +149,7 @@
 
 		<h1 class="sample-container-title">Multi Input - Warning</h1>
 		<ui5-multi-input id="multiInput-warning"
-			value-state="Warning">
+			value-state="Critical">
 			<ui5-token slot="tokens" text="Amet"></ui5-token>
 			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
 			<ui5-token slot="tokens" text="laboris"></ui5-token>
@@ -168,7 +168,7 @@
 
 		<h1 class="sample-container-title">Multi Input - Error</h1>
 		<ui5-multi-input id="multiInput-error"
-			value-state="Error">
+			value-state="Negative">
 			<ui5-token slot="tokens" text="Amet"></ui5-token>
 			<ui5-token slot="tokens" text="Incididunt"></ui5-token>
 			<ui5-token slot="tokens" text="laboris"></ui5-token>
@@ -509,7 +509,7 @@
 			});
 
 			if (isDuplicate) {
-				event.target.valueState = "Error";
+				event.target.valueState = "Negative";
 
 				setTimeout(function () {
 					event.target.valueState = "None";

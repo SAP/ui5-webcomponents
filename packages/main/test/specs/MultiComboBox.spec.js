@@ -199,7 +199,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.keys("c");
 
 			assert.strictEqual(await innerInput.getValue(), "c", "Value is still c (incorrect input is prevented)");
-			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
+			assert.strictEqual(await input.getAttribute("value-state"), "Negative", "Value state is changed to Negative");
 
 			await browser.waitUntil(async () => {
 				return await input.getAttribute("value-state") === "None";
@@ -215,7 +215,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.keys("d");
 			await icon.click();
 
-			assert.strictEqual(await innerInput.getAttribute("value-state"), "Error", "Value state is changed to error");
+			assert.strictEqual(await innerInput.getAttribute("value-state"), "Negative", "Value state is changed to Negative");
 
 			await browser.waitUntil(async () => {
 				return await mcb.getAttribute("_dialog-input-value-state") === "None";
@@ -744,7 +744,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("Enter");
 
 			assert.strictEqual(await input.getValue(), "cosy", "value should remain cosy");
-			assert.strictEqual(await input.getAttribute("value-state"), "Error", "Value state is changed to error");
+			assert.strictEqual(await input.getAttribute("value-state"), "Negative", "Value state is changed to Negative");
 			assert.strictEqual(await mcb.getProperty("valueStateDefaultText"), "This value is already selected.", "Value state text should be set to already selected");
 
 			await browser.waitUntil(async() => {

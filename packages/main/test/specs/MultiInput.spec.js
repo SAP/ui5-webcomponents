@@ -652,7 +652,7 @@ describe("Keyboard handling", () => {
 		await inner.keys("a");
 		await inner.keys("Enter");
 
-		assert.strictEqual(await mi.getProperty("valueState"), "Error", "Value state is Error");
+		assert.strictEqual(await mi.getProperty("valueState"), "Negative", "Value state is Negative");
 
 		await browser.pause(2500);
 		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
