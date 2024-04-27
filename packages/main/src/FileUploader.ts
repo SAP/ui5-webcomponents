@@ -414,10 +414,10 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings(): Record<string, string> {
 		return {
-			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
