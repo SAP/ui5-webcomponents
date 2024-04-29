@@ -50,9 +50,9 @@ Basic.decorators = [
 export const Variations: StoryFn = () => html`
 <ui5-radio-button text="Option A" checked="" name="GroupA"></ui5-radio-button>
 <ui5-radio-button text="Option B" value-state="None" name="GroupA"></ui5-radio-button>
-<ui5-radio-button text="Option C" value-state="Warning" name="GroupA"></ui5-radio-button>
-<ui5-radio-button text="Option D" value-state="Error" name="GroupA"></ui5-radio-button>
-<ui5-radio-button text="Option C" value-state="Success" name="GroupA"></ui5-radio-button>
+<ui5-radio-button text="Option C" value-state="Critical" name="GroupA"></ui5-radio-button>
+<ui5-radio-button text="Option D" value-state="Negative" name="GroupA"></ui5-radio-button>
+<ui5-radio-button text="Option C" value-state="Positive" name="GroupA"></ui5-radio-button>
 <ui5-radio-button text="Option D" value-state="Information" name="GroupA"></ui5-radio-button>
 <ui5-radio-button text="Option E" disabled="" name="GroupA"></ui5-radio-button>
 <ui5-radio-button text="Option F" readonly="" name="GroupA"></ui5-radio-button>

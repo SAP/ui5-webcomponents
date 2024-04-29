@@ -34,14 +34,11 @@
 @import "./RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
+@import "./SegmentedButtonItem-parameters.css";
 @import "./Select-parameters.css";
 @import "./SplitButton-parameters.css";
 @import "./Switch-parameters.css";
 @import "./TabContainer-parameters.css";
-@import "./Table-parameters.css";
-@import "../base/TableColumn-parameters.css";
-@import "./TableRow-parameters.css";
-@import "../base/TableGroupRow-parameters.css";
 @import "../base/Toolbar-parameters.css";
 @import "./GrowingButton-parameters.css";
 @import "../base/Text-parameters.css";

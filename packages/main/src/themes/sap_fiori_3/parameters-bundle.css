@@ -33,6 +33,7 @@
 @import "../base/RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
+@import "./SegmentedButtonItem-parameters.css";
 @import "../base/Select-parameters.css";
 @import "../base/SplitButton-parameters.css";
 @import "../base/Switch-parameters.css";
@@ -44,10 +45,6 @@
 @import "../base/ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
-@import "../base/Table-parameters.css";
-@import "../base/TableColumn-parameters.css";
-@import "../base/TableRow-parameters.css";
-@import "../base/TableGroupRow-parameters.css";
 @import "../base/Toolbar-parameters.css";
 @import "../base/GrowingButton-parameters.css";
 @import "./Token-parameters.css";
