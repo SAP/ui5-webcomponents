@@ -391,11 +391,15 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	_isUpOrDownNavigableColorPaletteItem(e: KeyboardEvent) {
+		return (isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected);
+	}
+
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
 
-		if ((isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
+		if (this._isUpOrDownNavigableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
 		}
 
@@ -430,7 +434,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
-		if ((isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected)) {
+		if (this._isUpOrDownNavigableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
 		}
 		if (isUp(e)) {
