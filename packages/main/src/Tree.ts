@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
@@ -234,52 +234,52 @@ class Tree extends UI5Element {
 	 * @public
 	 * @default "None"
 	 */
-	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
-	selectionMode!: `${ListSelectionMode}`;
+	@property()
+	selectionMode?: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the component header text.
 	 *
 	 * **Note:** If the `header` slot is set, this property is ignored.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the component footer text.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	footerText!: string;
+	footerText?: string;
 
 	/**
 	 * Defines the accessible name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
@@ -25,8 +25,8 @@ class ToolbarItem extends UI5Element {
 	 * @public
 	 * @default "Default"
 	 */
-	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
-	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
+	@property()
+	overflowPriority: `${ToolbarItemOverflowBehavior}` = "Default";
 
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
@@ -35,7 +35,7 @@ class ToolbarItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	preventOverflowClosing!: boolean;
+	preventOverflowClosing = false;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar

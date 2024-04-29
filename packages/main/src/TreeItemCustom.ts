@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isTabNext, isTabPrevious, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TreeItemBase from "./TreeItemBase.js";
@@ -41,7 +41,7 @@ class TreeItemCustom extends TreeItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hideSelectionElement!: boolean;
+	hideSelectionElement = false;
 
 	/**
 	 * Defines the content of the `ui5-tree-item`.

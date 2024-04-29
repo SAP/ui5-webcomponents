@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Button from "./Button.js";
 import type { AccessibilityAttributes as ButtonAccessibilityAttributes } from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
@@ -56,26 +55,26 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the action design.
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
+	@property()
+	design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines the `icon` source URI.
 	 *
 	 * **Note:** SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string
 
 	/**
 	 * Defines whether the icon should be displayed after the component text.
@@ -83,24 +82,24 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean;
+	iconEnd = false;
 
 	/**
 	 * Defines the tooltip of the component.
 	 *
 	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -108,8 +107,8 @@ class ToolbarButton extends ToolbarItem {
 	 * @default ""
 	 * @public
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values
@@ -131,7 +130,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes: AccessibilityAttributes = {};
 
 	/**
 	 * Button text
@@ -148,7 +147,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: CSSSize })
+	@property()
 	width?: string;
 
 	get styles() {

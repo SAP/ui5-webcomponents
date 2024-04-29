@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import TreeItemBase from "./TreeItemBase.js";
 // Template
 import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";
@@ -34,22 +34,22 @@ class TreeItem extends TreeItemBase {
 	/**
 	 * Defines the text of the tree item.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the tree item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	get _showTitle() {
-		return this.text.length;
+		return this.text?.length;
 	}
 }
 
