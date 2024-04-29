@@ -424,7 +424,6 @@ class ComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
-
 		if (this.open && !this._isKeyNavigation) {
 			const items = this._filterItems(this.filterValue);
 
