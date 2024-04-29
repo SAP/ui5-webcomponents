@@ -1,5 +1,5 @@
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -40,18 +40,18 @@ class ListItemGroup extends UI5Element {
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the accessible name of the header.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
-	@property({ type: String })
-	headerAccessibleName!: string;
+	@property()
+	headerAccessibleName?: string;
 
 	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
