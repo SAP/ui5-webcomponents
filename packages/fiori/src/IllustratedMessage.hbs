@@ -5,11 +5,13 @@
 		</div>
 		<div class="ui5-illustrated-message-text-and-actions-container">
 			{{#if hasTitle}}
+				<div part="title" class="ui5-illustrated-message-title">
 					{{#if hasFormattedTitle}}
 						<slot name="title"></slot>
 					{{else}}
-						<ui5-title level="{{titleLevel}}" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+						<ui5-title wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
 					{{/if}}
+				</div>
 			{{/if}}
 
 			{{#if hasSubtitle}}

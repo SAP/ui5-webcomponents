@@ -41,9 +41,9 @@ document.getElementById("multi-input").addEventListener("change", function (even
         return token.text === event.target.value
     });
     if (isDuplicate) {
-        event.target.valueState = "Error";
+        event.target.valueState = "Negative";
         setTimeout(function () {
-            event.target.valueState = "Normal";
+            event.target.valueState = "None";
         }, 2000);
         return;
     }
