@@ -50,15 +50,15 @@
 }
 
 /* [ui5-li]: additionalTextState */
-:host([additional-text-state="Warning"]) .ui5-li-additional-text {
+:host([additional-text-state="Critical"]) .ui5-li-additional-text {
 	color: var(--sapCriticalTextColor);
 }
 
-:host([additional-text-state="Success"]) .ui5-li-additional-text {
+:host([additional-text-state="Positive"]) .ui5-li-additional-text {
 	color: var(--sapPositiveTextColor);
 }
 
-:host([additional-text-state="Error"]) .ui5-li-additional-text {
+:host([additional-text-state="Negative"]) .ui5-li-additional-text {
 	color: var(--sapNegativeTextColor);
 }
 
@@ -234,15 +234,15 @@
     box-sizing: border-box;
 }
 
-:host([highlight="Error"]) .ui5-li-highlight {
+:host([highlight="Negative"]) .ui5-li-highlight {
 	background: var(--sapNegativeTextColor);
 }
 
-:host([highlight="Warning"]) .ui5-li-highlight {
+:host([highlight="Critical"]) .ui5-li-highlight {
 	background: var(--sapCriticalTextColor);
 }
 
-:host([highlight="Success"]) .ui5-li-highlight {
+:host([highlight="Positive"]) .ui5-li-highlight {
 	background: var(--sapPositiveTextColor);
 }
 

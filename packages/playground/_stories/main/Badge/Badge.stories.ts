@@ -40,7 +40,7 @@ export const Interactive = Template.bind({});
 Interactive.args = {
 	design: BadgeDesign.Positive,
 	interactive: true,
-	default: "Success"
+	default: "Positive"
 };
 
 export const WrappingTypes = Template.bind({});

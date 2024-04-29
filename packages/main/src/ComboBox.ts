@@ -106,9 +106,9 @@ type ComboBoxListItem = StandardListItem & {
 };
 
 enum ValueStateIconMapping {
-	Error = "error",
-	Warning = "alert",
-	Success = "sys-enter-2",
+	Negative = "error",
+	Critical = "alert",
+	Positive = "sys-enter-2",
 	Information = "information",
 }
 
@@ -1140,7 +1140,7 @@ class ComboBox extends UI5Element {
 	}
 
 	get hasValueStateText(): boolean {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
 	get ariaValueStateHiddenText(): string {
@@ -1175,19 +1175,19 @@ class ComboBox extends UI5Element {
 
 	get valueStateTextMappings(): ValueStateAnnouncement {
 		return {
-			[ValueState.Success]: ComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			[ValueState.Error]: ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
-			[ValueState.Warning]: ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Positive]: ComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Negative]: ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			[ValueState.Information]: ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
 	get valueStateTypeMappings(): ValueStateTypeAnnouncement {
 		return {
-			[ValueState.Success]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Positive]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			[ValueState.Information]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			[ValueState.Error]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			[ValueState.Warning]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			[ValueState.Negative]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Critical]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
@@ -1263,9 +1263,9 @@ class ComboBox extends UI5Element {
 			popoverValueState: {
 				"ui5-valuestatemessage-header": true,
 				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};

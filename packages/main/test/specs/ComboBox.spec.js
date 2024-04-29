@@ -260,7 +260,7 @@ describe("General interaction", () => {
 		const arrow = await combo.shadow$("[input-icon]");
 
 		await browser.executeAsync(done => {
-			document.querySelector("[value-state='Error']").addEventListener("ui5-change", function(event) {
+			document.querySelector("[value-state='Negative']").addEventListener("ui5-change", function(event) {
 				document.getElementById("change-placeholder").innerHTML = event.target.value;
 				document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
 			});
