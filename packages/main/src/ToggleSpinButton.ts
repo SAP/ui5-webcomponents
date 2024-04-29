@@ -64,7 +64,7 @@ class ToggleSpinButton extends ToggleButton {
 	_onclick() {}
 
 	/**
-	 * Override of the getter in order to set proper role to the button
+	 * Override
 	 */
 	get buttonAccessibleRole() {
 		return "spinbutton";
