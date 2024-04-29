@@ -109,19 +109,6 @@ describe("General interaction", () => {
 		}, 1000)
 	});
 
-	it ("Should get the physical DOM reference for the cb item", async () => {
-		await browser.url(`test/pages/ComboBox.html`);
-
-		const cBox = await browser.$("#combo2");
-		const popover = await cBox.shadow$("ui5-responsive-popover");
-
-		const cbItemDomRef = await browser.executeAsync(done => {
-			return done(document.getElementById("cbi").getDomRef());
-		});
-
-		assert.ok(cbItemDomRef, "ComboBoxItem's DOM reference exists");
-	});
-
 	it ("Should filter items based on input", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -1244,4 +1231,15 @@ describe("Keyboard navigation", async () => {
 
 		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
 	});
+
+	it ("Should get the physical DOM reference for the cb item", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cbItemDomRef = await browser.executeAsync(done => {
+			return done(document.getElementById("cbi").getDomRef());
+		});
+
+		assert.ok(cbItemDomRef, "ComboBoxItem's DOM reference exists");
+	});
+
 });

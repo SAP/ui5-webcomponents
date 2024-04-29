@@ -415,7 +415,6 @@ class ComboBox extends UI5Element {
 
 	async onBeforeRendering() {
 		const popover: Popover | undefined = this.valueStatePopover;
-		const suggestionsPopover = await this._getPicker();
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 
@@ -425,9 +424,6 @@ class ComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
-		this.items.forEach(item => {
-			item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
-		});
 
 		if (this.open && !this._isKeyNavigation) {
 			const items = this._filterItems(this.filterValue);
@@ -443,6 +439,11 @@ class ComboBox extends UI5Element {
 		this._initialRendering = false;
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
+
+		const suggestionsPopover = await this._getPicker();
+		this.items.forEach(item => {
+			item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
+		});
 	}
 
 	get iconsCount() {
