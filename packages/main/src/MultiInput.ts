@@ -296,9 +296,7 @@ class MultiInput extends Input {
 
 		if (this.tokenizer.expanded) {
 			this.tokenizer.scrollToEnd();
-		}
-
-		if (!this.tokenizer.expanded) {
+		} else {
 			this.tokenizer.scrollToStart();
 		}
 	}

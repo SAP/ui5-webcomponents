@@ -386,10 +386,9 @@ class Tokenizer extends UI5Element {
 		const firstToken = tokensArray[0];
 
 		this._nMoreCount = this.overflownTokens.length;
-		if (firstToken && !this.disabled && !this.preventInitialFocus) {
-			if (!this.preventInitialFocus && !this._skipTabIndex) {
-				firstToken.forcedTabIndex = "0";
-			}
+
+		if (firstToken && !this.disabled && !this.preventInitialFocus && !this._skipTabIndex) {
+			firstToken.forcedTabIndex = "0";
 		}
 
 		this._scrollEnablement.scrollContainer = this.contentDom;
@@ -479,14 +478,20 @@ class Tokenizer extends UI5Element {
 		const tokensArray = this._tokens;
 
 		// delay the token deletion in order to close the popover before removing token of the DOM
-		if (tokensArray.length === 1 && tokensArray[0].isTruncatable) {
-			const morePopover = this.getPopover();
+		if (tokensArray.length === 1) {
+			if (tokensArray[0].isTruncatable) {
+				const morePopover = this.getPopover();
 
-			morePopover.addEventListener("ui5-after-close", () => {
-				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
-			}, {
-				once: true,
-			});
+				morePopover.addEventListener("ui5-after-close", () => {
+					this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+				}, {
+					once: true,
+				});
+				return;
+			}
+
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+			this.open = false;
 		} else {
 			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 
@@ -511,11 +516,12 @@ class Tokenizer extends UI5Element {
 			const lastToken = tokensArray[tokensArray.length - 1];
 			const focusedToken = tokensArray.find(token => token.focused);
 
-			if (focusedToken) {
-				this._scrollToToken(focusedToken);
-			} else {
+			if (lastToken) {
 				this._focusLastToken();
-				this._scrollToToken(lastToken);
+			}
+
+			if (focusedToken || lastToken) {
+				this._scrollToToken(focusedToken || lastToken);
 			}
 
 			this._openedByNmore = false;
