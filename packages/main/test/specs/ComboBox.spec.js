@@ -104,9 +104,23 @@ describe("General interaction", () => {
 			const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
 
 			// assert
-			assert.strictEqual(listItems.length, 5, "Items should be 5");
+			assert.strictEqusal(listItems.length, 5, "Items should be 5");
 			assert.strictEqual(firstListItemText, "I #1", "First item should have text.");
 		}, 1000)
+	});
+
+	it ("Should filter items based on input with filter='None' and lazy loading", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cBox = await browser.$("#combo2");
+		const popover = await cBox.shadow$("ui5-responsive-popover");
+		const listItem = await popover.$("ui5-list").$("ui5-li");
+
+		const cbItemDomRef = await browser.executeAsync(done => {
+			return done(document.getElementById("cbi").getDomRef());
+		});
+
+		assert.strictEqual(cbItemDomRef, listItem, "ComboBoxItem's DOM reference is correct");
 	});
 
 	it ("Should filter items based on input", async () => {
