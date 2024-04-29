@@ -40,6 +40,7 @@
 					value-state="{{valueState}}"
 					?show-clear-icon="{{showClearIcon}}"
 					?no-typeahead="{{noTypeahead}}"
+					.openOnMobile={{openOnMobile}}
 				>
 					{{#each _filteredItems}}
 						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
@@ -51,7 +52,9 @@
 		{{#if hasValueStateText}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
+				{{#if open}}
+					{{> valueStateMessage}}
+				{{/if}}
 			</div>
 		{{/if}}
 	{{/if}}
@@ -60,7 +63,9 @@
 		{{#if hasValueStateText}}
 			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} tabindex="0" style="{{styles.suggestionPopoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
+				{{#if open}}
+					{{> valueStateMessage}}
+				{{/if}}
 			</div>
 		{{/if}}
 	{{/unless}}
@@ -99,6 +104,7 @@
 		_disable-initial-focus
 		prevent-focus-restore
 		hide-arrow
+		tabindex="-1"
 		class="ui5-valuestatemessage-popover"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		placement="Bottom"
@@ -108,7 +114,9 @@
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-			{{> valueStateMessage}}
+			{{#if valueStateOpen}}
+				{{> valueStateMessage}}
+			{{/if}}
 		</div>
 	</ui5-popover>
 {{/if}}

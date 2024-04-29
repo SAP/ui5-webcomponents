@@ -397,7 +397,6 @@ class ComboBox extends UI5Element {
 	_lastValue: string;
 	_selectedItemText: string;
 	_userTypedValue: string;
-	valueStatePopover?: Popover;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
 
@@ -425,13 +424,17 @@ class ComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
-		if (this._isPopoverOpen() && !this._isKeyNavigation) {
+		if (this.open && !this._isKeyNavigation) {
 			const items = this._filterItems(this.filterValue);
 
 			this._filteredItems = items.length ? items : this.items;
 		}
 
-		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
+		if (this.shouldOpenValueStateMessagePopover) {
+			this.valueStateOpen = true;
+		} else {
+			this.valueStateOpen = false;
+		}
 
 		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
 			this.valueStateOpen = false;
@@ -458,11 +461,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this.storeResponsivePopoverWidth();
-
-		if (isPhone()) {
-			this.value = this.inner.value;
-			this._selectMatchingItem();
-		}
 	}
 
 	shouldClosePopover(): boolean {
@@ -493,8 +491,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		const popover = this.shadowRoot!.querySelector("[ui5-responsive-popover]");
-		if (!(this.getDomRef()!.contains(toBeFocused)) && (popover !== e.relatedTarget)) {
+		if (!(this.getDomRef()!.contains(toBeFocused)) && (this._getPicker() !== e.relatedTarget)) {
 			this.focused = false;
 			!isPhone() && this._closeRespPopover(e);
 		}
@@ -524,7 +521,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_toggleRespPopover() {
-		if (this._getPicker()?.open) {
+		if (this.open) {
 			this._closeRespPopover();
 		} else {
 			this._openRespPopover();
@@ -537,21 +534,12 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	toggleValueStatePopover(open: boolean) {
-		this.valueStateOpen = open;
-	}
-
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
 	}
 
 	_getValueStatePopover() {
-		const popover: Popover = this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
-
-		// backward compatibility
-		this.valueStatePopover = popover;
-
-		return popover;
+		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	_resetFilter() {
@@ -599,14 +587,7 @@ class ComboBox extends UI5Element {
 
 		// autocomplete
 		if (shouldAutocomplete && !isAndroid()) {
-			const item = this._getFirstMatchingItem(value);
-			item && this._applyAtomicValueAndSelection(item, value, true);
-
-			if (value !== "" && (item && !item.selected && !item.isGroupItem)) {
-				this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
-					item,
-				});
-			}
+			this._handleTypeAhead(value, value, true);
 		}
 
 		this.fireEvent("input");
@@ -621,6 +602,7 @@ class ComboBox extends UI5Element {
 			this._openRespPopover();
 		}
 	}
+
 	shouldAutocomplete(e: InputEvent): boolean {
 		const eventType = e.inputType;
 		const allowedEventTypes = [
@@ -723,16 +705,25 @@ class ComboBox extends UI5Element {
 		}
 
 		// autocomplete
-		const item = this._getFirstMatchingItem(this.value);
-		item && this._applyAtomicValueAndSelection(item, (this._isPopoverOpen() ? this._userTypedValue : ""), true);
+		this._handleTypeAhead(this.value, this._isPopoverOpen() ? this._userTypedValue : "", false);
 
-		if ((item && !item.selected)) {
+		this.fireEvent("input");
+	}
+
+	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean) {
+		const item = this._getFirstMatchingItem(value);
+
+		if (!item) {
+			return;
+		}
+
+		this._applyAtomicValueAndSelection(item, filterValue);
+
+		if (value !== "" && !item.selected && (!checkForGroupItem || item.isGroupItem)) {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item,
 			});
 		}
-
-		this.fireEvent("input");
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {
@@ -745,12 +736,14 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		indexOfItem = !this._isPopoverOpen() && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		indexOfItem = !isOpen && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
 
 		this._handleItemNavigation(e, ++indexOfItem, true /* isForward */);
 	}
 
 	_handleArrowUp(e: KeyboardEvent, indexOfItem: number) {
+		const isOpen = this._isPopoverOpen();
+
 		if (indexOfItem === 0 && !this.hasValueStateText) {
 			this._clearFocus();
 			this.focused = true;
@@ -758,7 +751,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		if (indexOfItem === 0 && this.hasValueStateText && this._isPopoverOpen()) {
+		if (indexOfItem === 0 && this.hasValueStateText && isOpen) {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
@@ -773,7 +766,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		indexOfItem = !this._isPopoverOpen() && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+		indexOfItem = !isOpen && this.hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
 		this._handleItemNavigation(e, --indexOfItem, false /* isForward */);
 	}
 
@@ -909,6 +902,7 @@ class ComboBox extends UI5Element {
 		this._isValueStateFocused = false;
 		this._clearFocus();
 		this.open = false;
+		this.valueStateOpen = false;
 	}
 
 	_openRespPopover() {
@@ -955,13 +949,11 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	_applyAtomicValueAndSelection(item: ComboBoxItem, filterValue: string, highlightValue: boolean) {
+	_applyAtomicValueAndSelection(item: ComboBoxItem, filterValue: string) {
 		const value = (item && item.text) || "";
 
 		this.inner.value = value;
-		if (highlightValue) {
-			this.inner.setSelectionRange(filterValue.length, value.length);
-		}
+		this.inner.setSelectionRange(filterValue.length, value.length);
 		this.value = value;
 	}
 
@@ -1103,11 +1095,17 @@ class ComboBox extends UI5Element {
 
 	get inner(): HTMLInputElement {
 		const picker = this._getPicker();
-		return isPhone() ? picker.querySelector("[ui5-input]")!.shadowRoot!.querySelector("input")! : this.shadowRoot!.querySelector("[inner-input]")!;
+		return (isPhone() && this._isPopoverOpen())
+			? picker.querySelector<HTMLInputElement>("[ui5-input]")!.shadowRoot!.querySelector("input")!
+			: this.shadowRoot!.querySelector<HTMLInputElement>("[inner-input]")!;
 	}
 
 	_getPicker() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	get openOnMobile() {
+		return this._isPhone && this.open;
 	}
 
 	get hasValueState(): boolean {
@@ -1168,7 +1166,7 @@ class ComboBox extends UI5Element {
 
 	get shouldOpenValueStateMessagePopover(): boolean {
 		return this.focused && !this.readonly && this.hasValueStateText && !this._iconPressed
-			&& !this._isPopoverOpen() && !this._isPhone;
+			&& !this.open && !this._isPhone;
 	}
 
 	get shouldDisplayDefaultValueStateMessage(): boolean {

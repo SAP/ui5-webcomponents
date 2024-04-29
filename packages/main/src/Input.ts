@@ -661,7 +661,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const hasItems = !!this.suggestionItems.length;
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot!.querySelector("input") === getActiveElement();
-
 		if (this.shouldDisplayOnlyValueStateMessage) {
 			this.openValueStatePopover();
 		} else {
@@ -674,6 +673,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.open = true;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
+		}
+
+		if (this.shouldDisplayOnlyValueStateMessage) {
+			this.openValueStatePopover();
+		} else {
+			this.closeValueStatePopover();
 		}
 
 		if (this.FormSupport) {
@@ -715,8 +720,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				innerInput.value = this._innerValue;
 			}
 
-			if (this.typedInValue.length && this.value.length) {
-				innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
+			if (this.typedInValue.length && innerInput.value.length) {
+				innerInput.setSelectionRange(this.typedInValue.length, innerInput.value.length);
 			}
 		}
 
