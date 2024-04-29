@@ -35,6 +35,7 @@
 @import "./RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
+@import "./SegmentedButtonItem-parameters.css";
 @import "./Select-parameters.css";
 @import "./SplitButton-parameters.css";
 @import "./Switch-parameters.css";
@@ -50,7 +51,6 @@
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./ToggleButton-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/Tokenizer-parameters.css";

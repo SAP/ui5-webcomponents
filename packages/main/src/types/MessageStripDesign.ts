@@ -25,7 +25,7 @@ enum MessageStripDesign {
 	 * Message is a warning
 	 * @public
 	 */
-	Warning = "Warning",
+	Critical = "Critical",
 
 	/**
 	* Message uses custom color set 1

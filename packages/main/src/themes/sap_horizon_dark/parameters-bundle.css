@@ -36,8 +36,9 @@
 @import "../sap_horizon/ProgressIndicator-parameters.css";
 @import "../base/RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
-@import "./SegmentedButtton-parameters.css";
 @import "./RadioButton-parameters.css";
+@import "./SegmentedButtton-parameters.css";
+@import "./SegmentedButtonItem-parameters.css";
 @import "./Switch-parameters.css";
 @import "./Select-parameters.css";
 @import "./SelectPopover-parameters.css";
@@ -47,7 +48,6 @@
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "./ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";

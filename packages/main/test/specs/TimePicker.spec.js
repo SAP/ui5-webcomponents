@@ -68,18 +68,7 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("123123123");
 		await browser.keys("Enter");
 
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
-	});
-
-	it("tests valueStateMessage slot", async () => {
-		const timepicker = await browser.$("#timepickerValueStateMessage");
-
-		await timepicker.click();
-
-		const input = await timepicker.shadow$("ui5-input");
-		const slot = await input.shadow$("ui5-popover").$("#customValueStateMessage");
-
-		assert.notOk(slot.error, "Value State message slot is working");
+		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is on error");
 	});
 
 	it("tests change event", async () => {

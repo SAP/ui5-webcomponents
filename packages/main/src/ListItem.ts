@@ -171,7 +171,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the highlight state of the list items.
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.24
@@ -185,25 +185,6 @@ abstract class ListItem extends ListItemBase {
 	*/
 	@property({ type: Boolean })
 	actionable!: boolean;
-
-	/**
-	 * Used to define the role of the list item.
-	 * @private
-	 * @default "listitem"
-	 * @since 1.0.0-rc.9
-	 *
-	 */
-	@property({ defaultValue: "listitem" })
-	role!: string;
-
-	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
 
 	/**
 	 * Used to define the role of the list item.
@@ -513,7 +494,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.accessibleRole || this.role,
+			role: this.accessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),

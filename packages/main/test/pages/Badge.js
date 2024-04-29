@@ -17,9 +17,9 @@ function initializeBadges() {
 		"Set2",
 		"Set3",
 		"None",
-		"Success",
-		"Warning",
-		"Error",
+		"Positive",
+		"Critical",
+		"Negative",
 		"Information"
 	];
 
