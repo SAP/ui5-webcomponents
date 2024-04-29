@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import TitleLevel from "./types/TitleLevel.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -44,8 +44,8 @@ class Title extends UI5Element {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Defines the component level.
@@ -53,8 +53,8 @@ class Title extends UI5Element {
 	 * @default "H2"
 	 * @public
 	 */
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	level!: `${TitleLevel}`;
+	@property()
+	level: `${TitleLevel}` = "H2";
 
 	get normalizedLevel() {
 		return this.level.toLowerCase();
