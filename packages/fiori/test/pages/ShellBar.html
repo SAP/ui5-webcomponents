@@ -324,13 +324,19 @@
 			});
 		});
 
-		sbAcc.accessibilityTexts = {
-			profileButtonTitle: "John Dow",
-			logoTitle: "Custom logo title",
+		sbAcc.accessibilityAttributes = {
+			profile: {
+				name:  "John Dow",
+			},
+			logo: {
+				name: "Custom logo title"
+			},
 		};
 
-		sb.accessibilityRoles = {
-			logoRole: "link"
+		sb.accessibilityAttributes = {
+			logo: {
+				role: "link"
+			},
 		};
 
 		sb.addEventListener("ui5-search-button-click", function(event) {
