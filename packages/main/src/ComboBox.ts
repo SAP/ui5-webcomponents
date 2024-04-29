@@ -397,7 +397,6 @@ class ComboBox extends UI5Element {
 	_lastValue: string;
 	_selectedItemText: string;
 	_userTypedValue: string;
-	valueStatePopover?: Popover;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
 
@@ -458,11 +457,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this.storeResponsivePopoverWidth();
-
-		if (isPhone()) {
-			this.value = this.inner.value;
-			this._selectMatchingItem();
-		}
 	}
 
 	shouldClosePopover(): boolean {
@@ -546,12 +540,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_getValueStatePopover() {
-		const popover: Popover = this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
-
-		// backward compatibility
-		this.valueStatePopover = popover;
-
-		return popover;
+		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	_resetFilter() {
@@ -621,6 +610,7 @@ class ComboBox extends UI5Element {
 			this._openRespPopover();
 		}
 	}
+
 	shouldAutocomplete(e: InputEvent): boolean {
 		const eventType = e.inputType;
 		const allowedEventTypes = [
@@ -724,7 +714,7 @@ class ComboBox extends UI5Element {
 
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
-		item && this._applyAtomicValueAndSelection(item, (this._isPopoverOpen() ? this._userTypedValue : ""), true);
+		item && this._applyAtomicValueAndSelection(item, (this.open ? this._userTypedValue : ""), true);
 
 		if ((item && !item.selected)) {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
@@ -892,11 +882,6 @@ class ComboBox extends UI5Element {
 	}
 
 	_closeRespPopover(e?: Event) {
-		if (e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn") && this._selectedItemText) {
-			this.value = this._selectedItemText;
-			this.filterValue = this._selectedItemText;
-		}
-
 		if (e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn")) {
 			this.value = this._lastValue || "";
 			this.filterValue = this._lastValue || "";
@@ -1103,7 +1088,7 @@ class ComboBox extends UI5Element {
 
 	get inner(): HTMLInputElement {
 		const picker = this._getPicker();
-		return isPhone() ? picker.querySelector("[ui5-input]")!.shadowRoot!.querySelector("input")! : this.shadowRoot!.querySelector("[inner-input]")!;
+		return (isPhone() && picker) ? picker.querySelector("[ui5-input]")!.shadowRoot!.querySelector("input")! : this.shadowRoot!.querySelector("[inner-input]")!;
 	}
 
 	_getPicker() {
