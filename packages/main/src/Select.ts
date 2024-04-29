@@ -398,9 +398,9 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const selectOptions = Array.from(this.children) as Array<Option>;
+		const options = Array.from(this.children) as Array<Option>;
 
-		selectOptions.forEach(option => {
+		options.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
 		});
 	}
@@ -410,7 +410,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _selectedIndex() {
-		return this.selectOptions.findIndex(option => option.selected);
+		return this.options.findIndex(option => option.selected);
 	}
 
 	/**
@@ -419,7 +419,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @default undefined
 	 */
 	get selectedOption(): Option | undefined {
-		return this.selectOptions.find(option => option.selected);
+		return this.options.find(option => option.selected);
 	}
 
 	get text() {
@@ -507,7 +507,7 @@ class Select extends UI5Element implements IFormElement {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this.selectOptions.indexOf(itemToSelect);
+			const nextIndex = this.options.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -518,7 +518,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_searchNextItemByText(text: string) {
-		let orderedOptions = this.selectOptions.slice(0);
+		let orderedOptions = this.options.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
@@ -544,7 +544,7 @@ class Select extends UI5Element implements IFormElement {
 			return;
 		}
 
-		const lastIndex = this.selectOptions.length - 1;
+		const lastIndex = this.options.length - 1;
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
@@ -559,19 +559,22 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_getItemIndex(item: Option) {
-		return this.selectOptions.indexOf(item);
+		return this.options.indexOf(item);
 	}
 
 	_select(index: number) {
-		if (this.selectOptions[this._selectedIndex]) {
-			this.selectOptions[this._selectedIndex].selected = false;
+		if (index < 0 || index >= this.options.length || this.options.length === 0) {
+			return;
+		}
+		if (this.options[this._selectedIndex]) {
+			this.options[this._selectedIndex].selected = false;
 		}
 
 		if (this._selectedIndex !== index) {
-			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
+			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
-		this.selectOptions[index].selected = true;
+		this.options[index].selected = true;
 	}
 
 	/**
@@ -579,7 +582,6 @@ class Select extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
-		console.error("item press");
 		const listItem = e.detail.item;
 		const id = listItem.getAttribute("data-ui5-id");
 		const item = this.options.find(option => option.__id === id);
@@ -592,7 +594,6 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_itemMousedown(e: MouseEvent) {
-		console.error("mousedown");
 		// prevent actual focus of items
 		e.preventDefault();
 	}
@@ -660,7 +661,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options: Array<Option> = this.selectOptions;
+		const options: Array<Option> = this.options;
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
@@ -688,7 +689,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
-		this._lastSelectedOption = this.selectOptions[this._selectedIndex];
+		this._lastSelectedOption = this.options[this._selectedIndex];
 	}
 
 	_afterOpen() {
@@ -713,15 +714,11 @@ class Select extends UI5Element implements IFormElement {
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
-		} else if (this._lastSelectedOption !== this.selectOptions[this._selectedIndex]) {
-			this._fireChangeEvent(this.selectOptions[this._selectedIndex]);
-			this._lastSelectedOption = this.selectOptions[this._selectedIndex];
+		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
+			this._fireChangeEvent(this.options[this._selectedIndex]);
+			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
 		this.fireEvent<CustomEvent>("close");
-	}
-
-	get selectOptions(): Array<Option> {
-		return this.options;
 	}
 
 	get hasCustomLabel() {
@@ -794,7 +791,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _currentlySelectedOption() {
-		return this.selectOptions[this._selectedIndex];
+		return this.options[this._selectedIndex];
 	}
 
 	get _effectiveTabIndex() {
@@ -882,7 +879,7 @@ class Select extends UI5Element implements IFormElement {
 
 	itemSelectionAnnounce() {
 		let text;
-		const optionsCount = this.selectOptions.length;
+		const optionsCount = this.options.length;
 		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {

@@ -96,7 +96,7 @@
 			@mousedown="{{_itemMousedown}}"
 			@ui5-item-click="{{_handleItemPress}}"
 		>
-			{{#each selectOptions}}
+			{{#each options}}
 				{{#if this.isCustom}}
 					<ui5-li-custom
 						id="{{this._id}}-li"
