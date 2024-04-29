@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
@@ -97,7 +97,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @default "Vertical"
 	 * @private
 	 */
-	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
+	@property()
 	layout: `${TimelineLayout}` = "Vertical";
 
 	/**

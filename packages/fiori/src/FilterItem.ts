@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type FilterItemOption from "./FilterItemOption.js";
@@ -29,7 +29,7 @@ class FilterItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the additional text of the component.
@@ -37,7 +37,7 @@ class FilterItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the `values` list.
