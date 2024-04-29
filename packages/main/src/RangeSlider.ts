@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -98,8 +97,8 @@ class RangeSlider extends SliderBase {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	startValue!: number;
+	@property({ type: Number })
+	startValue = 0;
 
 	/**
 	 * Defines end point of a selection - position of a second handle on the slider.
@@ -108,8 +107,8 @@ class RangeSlider extends SliderBase {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 100 })
-	endValue!: number;
+	@property({ type: Number })
+	endValue = 100;
 
 	@property({ type: Boolean })
 	rangePressed!: boolean;

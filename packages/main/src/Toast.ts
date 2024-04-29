@@ -186,9 +186,9 @@ class Toast extends UI5Element {
 		// property, but not bigger than the maximum allowed (1000ms).
 		const transitionDuration = Math.min(this.effectiveDuration / 3, MAX_DURATION);
 
-		this.style.transitionDuration = this._opened ? `${transitionDuration}ms` : "";
-		this.style.transitionDelay = this._opened ? `${this.effectiveDuration - transitionDuration}ms` : "";
-		this.style.opacity = this._opened && !this.hover && !this.focused ? "0" : "";
+		this.style.transitionDuration = this.open ? `${transitionDuration}ms` : "";
+		this.style.transitionDelay = this.open ? `${this.effectiveDuration - transitionDuration}ms` : "";
+		this.style.opacity = this.open && !this.hover && !this.focused ? "0" : "";
 
 		if (!globalListenerAdded) {
 			document.addEventListener("keydown", handleGlobalKeydown);
