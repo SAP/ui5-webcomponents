@@ -104,7 +104,7 @@ describe("General interaction", () => {
 			const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
 
 			// assert
-			assert.strictEqusal(listItems.length, 5, "Items should be 5");
+			assert.strictEqual(listItems.length, 5, "Items should be 5");
 			assert.strictEqual(firstListItemText, "I #1", "First item should have text.");
 		}, 1000)
 	});
