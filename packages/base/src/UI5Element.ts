@@ -89,8 +89,8 @@ const defaultConverter = {
 		}
 
 		// object, array, other
-		if (value === null) {
-			return value;
+		if (value === null || value === undefined) {
+			return null;
 		}
 
 		return String(value);
@@ -773,10 +773,7 @@ abstract class UI5Element extends HTMLElement {
 				// in the property setter for compatibility
 				continue; // eslint-disable-line no-continue
 			}
-			if (this._state[prop] !== undefined) {
-				// if there is an initializer or state has been set, update the attribute
-				this._updateAttribute(prop, this._state[prop]);
-			}
+			this._updateAttribute(prop, this._state[prop]);
 		}
 	}
 
