@@ -57,7 +57,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import MultiComboBoxItem from "./MultiComboBoxItem.js";
+import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
@@ -1607,7 +1607,7 @@ class MultiComboBox extends UI5Element {
 
 	handleCancel() {
 		this._itemsBeforeOpen.forEach(item => {
-			if (item.ref instanceof MultiComboBoxItem) {
+			if (isInstanceOfMultiComboBoxItem(item.ref)) {
 				item.ref.selected = item.selected;
 			}
 		});
