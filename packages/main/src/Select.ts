@@ -345,6 +345,7 @@ class Select extends UI5Element implements IFormElement {
 
 	onBeforeRendering() {
 		this._enableFormSupport();
+		this._ensureSelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
@@ -356,6 +357,12 @@ class Select extends UI5Element implements IFormElement {
 			if (!this._listWidth) {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
+		}
+	}
+
+	_ensureSelection() {
+		if (this._selectedIndex === -1) {
+			this._select(0);
 		}
 	}
 
@@ -556,7 +563,9 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_select(index: number) {
-		this.selectOptions[this._selectedIndex].selected = false;
+		if (this.selectOptions[this._selectedIndex]) {
+			this.selectOptions[this._selectedIndex].selected = false;
+		}
 
 		if (this._selectedIndex !== index) {
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
@@ -570,6 +579,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
+		console.error("item press");
 		const listItem = e.detail.item;
 		const id = listItem.getAttribute("data-ui5-id");
 		const item = this.options.find(option => option.__id === id);
@@ -582,6 +592,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_itemMousedown(e: MouseEvent) {
+		console.error("mousedown");
 		// prevent actual focus of items
 		e.preventDefault();
 	}

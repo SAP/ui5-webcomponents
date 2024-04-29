@@ -97,18 +97,33 @@
 			@ui5-item-click="{{_handleItemPress}}"
 		>
 			{{#each selectOptions}}
-				<ui5-li-custom
-					id="{{this._id}}-li"
-					data-ui5-id="{{this._id}}"
-					icon="{{this.icon}}"
-					?selected="{{this.selected}}"
-					?focused="{{this.focused}}"
-					title="{{this.title}}"
-					additional-text="{{this.additionalText}}"
-					?aria-selected="{{this.selected}}"
-					data-ui5-stable="{{this.stableDomRef}}">
-					<slot name="{{this._individualSlot}}"></slot>
-				</ui5-li-custom>
+				{{#if this.isCustom}}
+					<ui5-li-custom
+						id="{{this._id}}-li"
+						data-ui5-id="{{this._id}}"
+						icon="{{this.icon}}"
+						?selected="{{this.selected}}"
+						?focused="{{this.focused}}"
+						title="{{this.title}}"
+						additional-text="{{this.additionalText}}"
+						?aria-selected="{{this.selected}}"
+						data-ui5-stable="{{this.stableDomRef}}">
+						<slot name="{{this._individualSlot}}"></slot>
+					</ui5-li-custom>
+				{{else}}
+					<ui5-li
+						id="{{this._id}}-li"
+						data-ui5-id="{{this._id}}"
+						icon="{{this.icon}}"
+						?selected="{{this.selected}}"
+						?focused="{{this.focused}}"
+						title="{{this.title}}"
+						additional-text="{{this.additionalText}}"
+						?aria-selected="{{this.selected}}"
+						data-ui5-stable="{{this.stableDomRef}}">
+						<slot name="{{this._individualSlot}}"></slot>
+					</ui5-li>
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 	</ui5-responsive-popover>
