@@ -10,6 +10,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import HighlightTypes from "./types/HighlightTypes.js";
@@ -30,7 +31,6 @@ import {
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
-import HasPopup from "./types/HasPopup.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -60,7 +60,7 @@ type AccInfo = {
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${Lowercase<HasPopup>}`;
+	ariaHaspopup?: `${Lowercase<AriaHasPopup>}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;

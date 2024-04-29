@@ -1,3 +1,7 @@
+import type AriaHasPopup from "./types/AriaHasPopup.js";
+import type AriaRole from "./types/AriaRole.js";
+import type AriaLandmarkRole from "./types/AriaLandmarkRole.js";
+
 type PromiseResolve = (value: void | PromiseLike<void>) => void;
 type Timeout = ReturnType<typeof setTimeout>;
 type Interval = ReturnType<typeof setInterval>;
@@ -20,9 +24,12 @@ type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
 
 type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 
+type ARIARoles = LowercaseString<AriaRole>;
+type ARIAHasPopup = LowercaseString<AriaHasPopup>;
+
 type AccessibilityInfo = {
 	// The WAI-ARIA role of the component.
-	role?: LowercaseString<string>,
+	role?: ARIARoles,
 
 	// A translated text that represents the component type. Used when several components share same role,
 	// f.e. Select and ComboBox both have role="combobox".
@@ -46,11 +53,13 @@ type AccessibilityInfo = {
 }
 
 type AccessibilityAttributes = {
-	expanded?: "true" | "false" | boolean,
-	hasPopup?: "dialog" | "grid" | "menu" | "listbox" | "tree",
-	controls?: LowercaseString<string>
 	ariaSetsize?: number,
 	ariaPosinset?: number,
+	controls?: LowercaseString<string>
+	expanded?: "true" | "false" | boolean,
+	hasPopup?: ARIAHasPopup,
+	name?: string
+	role?: ARIARoles,
 }
 
 export type {
