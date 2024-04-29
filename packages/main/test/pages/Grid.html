@@ -49,7 +49,7 @@
 			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label><b>1249</b> EUR</ui5-label></ui5-grid-cell>
 		</ui5-grid-row>
-		<ui5-grid-row key="2">
+		<ui5-grid-row key="2" interactive>
 			<ui5-grid-cell><ui5-label><b>Notebook Basic 17</b><br><a href="#">HT-1002</a></ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
@@ -77,7 +77,7 @@
 			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
 		</ui5-grid-row>
-		<ui5-grid-row key="6">
+		<ui5-grid-row key="6" interactive>
 			<ui5-grid-cell><ui5-label><b>Notebook Basic 21</b><br><a href="#">HT-1006</a></ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
@@ -94,6 +94,9 @@
 		const grid = document.getElementById("grid");
 		slider.addEventListener("input", (e) => {
 			grid.style.width = `${e.target.value}%`;
+		});
+		grid.addEventListener("row-press", (e) => {
+			console.log(`${Date.now()}: Row with the key ${e.detail.row.key} is pressed`);
 		});
 
 		const growing = document.getElementById("growing");

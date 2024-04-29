@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -56,6 +58,10 @@ interface IGridGrowing extends IGridFeature {
 	hasGrowingComponent(): boolean;
 	_individualSlot?: string;
 }
+
+type GridRowPressEventDetail = {
+	row: GridRow,
+};
 
 /**
  * @class
@@ -129,6 +135,21 @@ interface IGridGrowing extends IGridFeature {
 	template: GridTemplate,
 	fastNavigation: true,
 	dependencies: [],
+})
+
+/**
+ * Fired when an interactive row is pressed.
+ *
+ * @param {GridRow} row The row instance
+ * @public
+ */
+@event<GridRowPressEventDetail>("row-press", {
+	detail: {
+		/**
+		 * @public
+		 */
+		row: { type: GridRow },
+	},
 })
 
 class Grid extends UI5Element {
@@ -227,19 +248,17 @@ class Grid extends UI5Element {
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
-	_poppedIn: Array<{col: GridHeaderCell, width: float}>;
-	_containerWidth: number;
-
 	static i18nBundle: I18nBundle;
-
 	static async onDefine() {
 		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	_events = ["keydown", "click", "focusin"];
+	_events = ["keydown", "keyup", "click", "focusin", "focusout"];
 	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
 	_gridNavigation?: GridNavigation;
+	_poppedIn: Array<{col: GridHeaderCell, width: float}>;
+	_containerWidth: number;
 
 	constructor() {
 		super();
@@ -285,7 +304,7 @@ class Grid extends UI5Element {
 	_onEvent(e: Event) {
 		const composedPath = e.composedPath();
 		const eventOrigin = composedPath[0] as HTMLElement;
-		const elements = [...composedPath, this.features, this._gridNavigation];
+		const elements = [this._gridNavigation, ...composedPath, this.features];
 		elements.forEach(element => {
 			if (element instanceof GridExtension || (element instanceof HTMLElement && element.localName.includes("ui5-grid"))) {
 				const eventHandlerName = `_on${e.type}` as keyof typeof element;
@@ -413,6 +432,10 @@ class Grid extends UI5Element {
 
 	_isGrowingFeature(feature: any) {
 		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
+	}
+
+	_onRowPress(row: GridRow) {
+		this.fireEvent<GridRowPressEventDetail>("row-press", { row });
 	}
 
 	get styles() {

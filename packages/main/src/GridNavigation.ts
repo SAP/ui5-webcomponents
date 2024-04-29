@@ -8,7 +8,6 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClickable.js";
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
@@ -32,6 +31,7 @@ class GridNavigation extends GridExtension {
 	_colPosition: number = 0;
 	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
+	_lastFocusedElement?: HTMLElement;
 
 	constructor(grid: Grid) {
 		super();
@@ -102,18 +102,13 @@ class GridNavigation extends GridExtension {
 	}
 
 	_focusElement(element: HTMLElement, ignoreFocusIn: boolean = true) {
-		if (!element) {
-			return;
-		}
-
-		const activeElement = getActiveElement() as HTMLElement;
-		if (activeElement === element) {
+		if (!element || element === this._lastFocusedElement) {
 			return;
 		}
 
 		const navigationItems = this._getNavigationItemsOfGrid().flat();
-		if (navigationItems.includes(activeElement)) {
-			activeElement.removeAttribute("tabindex");
+		if (navigationItems.includes(this._lastFocusedElement)) {
+			this._lastFocusedElement!.removeAttribute("tabindex");
 		}
 
 		if (navigationItems.includes(element)) {
@@ -126,6 +121,7 @@ class GridNavigation extends GridExtension {
 			element.select();
 		}
 		this._ignoreFocusIn = false;
+		this._lastFocusedElement = element;
 	}
 
 	_focusCurrentItem() {
@@ -273,6 +269,8 @@ class GridNavigation extends GridExtension {
 			this._gridWalker.setCurrent(navigationItem);
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
+		} else if (flatNavigationItems.includes(this._lastFocusedElement)) {
+			this._lastFocusedElement!.removeAttribute("tabindex");
 		}
 	}
 
@@ -281,14 +279,11 @@ class GridNavigation extends GridExtension {
 			return;
 		}
 
-		const currentItem = this._gridWalker.getCurrent() as HTMLElement;
-		if (currentItem && currentItem !== evetOrigin) {
-			currentItem.removeAttribute("tabindex");
-		}
-
 		if (evetOrigin === this._grid._beforeElement || evetOrigin === this._grid._afterElement) {
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
+		} else {
+			this._lastFocusedElement = evetOrigin;
 		}
 	}
 }

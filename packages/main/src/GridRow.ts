@@ -1,11 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isIOS, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 import GridRowTemplate from "./generated/templates/GridRowTemplate.lit.js";
 import GridRowCss from "./generated/themes/GridRow.css.js";
@@ -70,6 +72,15 @@ class GridRow extends UI5Element {
 	@property()
 	key!: string;
 
+	/**
+	 * Defines the interactive state of the row.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	interactive!: boolean;
+
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
@@ -77,6 +88,10 @@ class GridRow extends UI5Element {
 
 	static async onDefine() {
 		GridRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		if (isSafari() && isIOS()) {
+			// Safari on iOS does not use the :active state unless there is a touchstart event handler on the <body> element
+			document.body.addEventListener("touchstart", () => {});
+		}
 	}
 
 	onEnterDOM() {
@@ -96,9 +111,10 @@ class GridRow extends UI5Element {
 		return this;
 	}
 
-	focus(focusOptions?: FocusOptions | undefined): Promise<void> {
+	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {
 		this.setAttribute("tabindex", "-1");
-		return UI5Element.prototype.focus.call(this, focusOptions);
+		HTMLElement.prototype.focus.call(this, focusOptions);
+		return Promise.resolve();
 	}
 
 	_informSelectionChange() {
@@ -106,12 +122,30 @@ class GridRow extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if ((isSpace(e) && eventOrigin === this)
-		||	((isSpace(e) || isEnter(e)) && eventOrigin === this._selectionCell)
-		) {
+		if ((eventOrigin === this && this._isSelectable && isSpace(e)) || (eventOrigin === this._selectionCell && (isSpace(e) || isEnter(e)))) {
 			this._informSelectionChange();
 			e.preventDefault();
+			return;
 		}
+
+		if (eventOrigin === this && this._isInteractive && isEnter(e)) {
+			this.toggleAttribute("_active", true);
+			this._grid?._onRowPress(this);
+		}
+	}
+
+	_onclick() {
+		if (this._isInteractive && this === getActiveElement()) {
+			this._grid?._onRowPress(this);
+		}
+	}
+
+	_onkeyup() {
+		this.removeAttribute("_active");
+	}
+
+	_onfocusout() {
+		this.removeAttribute("_active");
 	}
 
 	get _grid(): Grid | undefined {
@@ -124,7 +158,7 @@ class GridRow extends UI5Element {
 	}
 
 	get _isInteractive() {
-		return false;
+		return this.interactive;
 	}
 
 	get _gridSelection(): GridSelection | undefined {

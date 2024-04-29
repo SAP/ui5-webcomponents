@@ -197,7 +197,7 @@ describe("Grid - Keyboard Navigation", async () => {
 		await browser.keys("ArrowLeft");
 		assert.ok(await getCell(0, 0).isFocused(), `ArrowLeft: Row0 Cell0 is focused.`);
 
-		await browser.keys("Return" /* Enter */);
+		await browser.keys("Return");
 		assert.ok(await row0Link.isFocused(), `Enter: Row0 Link is focused.`);
 
 		await browser.keys("ArrowDown");
@@ -254,7 +254,39 @@ describe("Grid - Keyboard Navigation", async () => {
 		await browser.keys("Tab");
 		assert.ok(await rows[2].isFocused(), `Tab: Row2 is focused.`);
 	});
+
+	it("should should work correctly for interactive rows", async () => {
+		const row = await browser.$("#interactive-row");
+		const input = await browser.$("#before-grid1");
+		const rowButton = await browser.$("#row2-button");
+		const anotherRow = await browser.$("#notinteractive-row");
+
+		await row.click();
+		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-press event result is correct.`);
+
+		await browser.keys("Enter");
+		assert.equal(await input.getValue(), "2", `Enter is presed for the interactive row and the row-press event result is correct.`);
+
+		await anotherRow.click();
+		assert.equal(await input.getValue(), "2", `Not interactive row is clicked and there is no row-press event triggered.`);
+
+		await rowButton.click();
+		assert.equal(await input.getValue(), "2", `Button in a row is clicked and there is no row-press event triggered.`);
+
+		await browser.keys("Enter");
+		assert.equal(await input.getValue(), "2", `Enter is presed for the row button and there is no row-press event triggered.`);
+
+		await browser.keys("F7");
+		assert.ok(await row.isFocused(), `Interactive Row is focused.`);
+
+		await browser.keys("Space");
+		assert.equal(await input.getValue(), "2", `Space is presed for the row and there is no row-press event triggered.`);
+
+		await browser.keys("Enter");
+		assert.equal(await input.getValue(), "3", `Enter is finally presed for the interactive row and the row-press event result is correct.`);
+	});
 });
+
 
 describe("Grid - Keyboard Navigation with Fixed Headers", async() => {
 	before(async() => {

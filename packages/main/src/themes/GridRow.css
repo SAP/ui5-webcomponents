@@ -1,41 +1,51 @@
 :host {
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-column: 1 / -1;
-    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-    min-height: var(--_ui5_list_item_base_height);
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: 1 / -1;
+	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
+	min-height: var(--_ui5_list_item_base_height);
 }
 
-:host(:focus[tabindex]) {
-    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-    outline-offset: calc(-1 * var(--sapContent_FocusWidth));
+:host([tabindex]:focus) {
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: calc(-1 * var(--sapContent_FocusWidth));
 }
 
 :host([aria-selected=true]) {
-    background-color: var(--sapList_SelectionBackgroundColor);
-    border-bottom: var(--sapList_BorderWidth) solid var(--sapList_SelectionBorderColor);
+	background-color: var(--sapList_SelectionBackgroundColor);
+	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_SelectionBorderColor);
+}
+
+:host([_interactive]) {
+	cursor: pointer;
 }
 
 @media (hover: hover) {
-    :host([_interactive]:hover) {
-        background-color: var(--sapList_Hover_Background);
-    }
+	:host([_interactive]:hover) {
+		background: var(--sapList_Hover_Background);
+	}
+	:host([_interactive][aria-selected=true]:hover) {
+		background: var(--sapList_Hover_SelectionBackground);
+	}
 }
 
-:host([_interactive]:active) {
-    background-color: var(--sapList_Active_Background);
+:host([_interactive]:active),
+:host([_interactive][_active]),
+:host([_interactive][aria-selected=true]:active),
+:host([_interactive][aria-selected=true][_active]) {
+	background: var(--sapList_Active_Background);
 }
 
 #selection-cell {
-    padding: 0;
+	padding: 0;
 }
 
 #selection-component {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 #popin-cell {
-    align-content: initial;
-    flex-direction: column;
-    grid-column: 1 / -1;
+	align-content: initial;
+	flex-direction: column;
+	grid-column: 1 / -1;
 }
