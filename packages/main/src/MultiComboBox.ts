@@ -498,7 +498,7 @@ class MultiComboBox extends UI5Element {
 		const value = target.value;
 
 		if (!this.noValidation && !this._filterItems(value).length) {
-			this._dialogInputValueState = ValueState.Error;
+			this._dialogInputValueState = ValueState.Negative;
 		} else {
 			this._dialogInputValueState = this.valueState;
 		}
@@ -606,7 +606,7 @@ class MultiComboBox extends UI5Element {
 
 			input.value = newValue;
 			this.value = newValue;
-			this.valueState = ValueState.Error;
+			this.valueState = ValueState.Negative;
 
 			this._shouldAutocomplete = false;
 			this._resetValueState(oldValueState);
@@ -1202,7 +1202,7 @@ class MultiComboBox extends UI5Element {
 					return;
 				}
 
-				this.valueState = ValueState.Error;
+				this.valueState = ValueState.Negative;
 				this._performingSelectionTwice = true;
 				this._resetValueState(oldValueState, () => {
 					this._performingSelectionTwice = false;
@@ -1719,7 +1719,7 @@ class MultiComboBox extends UI5Element {
 	get hasValueStateMessage() {
 		const valueState = isPhone() ? this._dialogInputValueState : this.valueState;
 
-		return this.hasValueState && valueState !== ValueState.Success;
+		return this.hasValueState && valueState !== ValueState.Positive;
 	}
 
 	get ariaValueStateHiddenText() {
@@ -1777,9 +1777,9 @@ class MultiComboBox extends UI5Element {
 		}
 
 		return {
-			[ValueState.Error]: "error",
-			[ValueState.Warning]: "alert",
-			[ValueState.Success]: "sys-enter-2",
+			[ValueState.Negative]: "error",
+			[ValueState.Critical]: "alert",
+			[ValueState.Positive]: "sys-enter-2",
 			[ValueState.Information]: "information",
 		}[valueState];
 	}
@@ -1813,18 +1813,18 @@ class MultiComboBox extends UI5Element {
 
 	get valueStateTypeMappings(): ValueStateTypeAnnouncement {
 		return {
-			[ValueState.Success]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Positive]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			[ValueState.Information]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			[ValueState.Error]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			[ValueState.Warning]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			[ValueState.Negative]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Critical]: MultiComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
 	get valueStateTextMappings(): ValueStateAnnouncement {
 		return {
-			[ValueState.Success]: MultiComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			[ValueState.Error]: MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
-			[ValueState.Warning]: MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Positive]: MultiComboBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Negative]: MultiComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: MultiComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			[ValueState.Information]: MultiComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
@@ -1903,9 +1903,9 @@ class MultiComboBox extends UI5Element {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage--success": (this.valueState === ValueState.Success) || (this._dialogInputValueState === ValueState.Success),
-				"ui5-valuestatemessage--error": (this.valueState === ValueState.Error) || (this._dialogInputValueState === ValueState.Error),
-				"ui5-valuestatemessage--warning": (this.valueState === ValueState.Warning) || (this._dialogInputValueState === ValueState.Warning),
+				"ui5-valuestatemessage--success": (this.valueState === ValueState.Positive) || (this._dialogInputValueState === ValueState.Positive),
+				"ui5-valuestatemessage--error": (this.valueState === ValueState.Negative) || (this._dialogInputValueState === ValueState.Negative),
+				"ui5-valuestatemessage--warning": (this.valueState === ValueState.Critical) || (this._dialogInputValueState === ValueState.Critical),
 				"ui5-valuestatemessage--information": (this.valueState === ValueState.Information) || (this._dialogInputValueState === ValueState.Information),
 			},
 		};

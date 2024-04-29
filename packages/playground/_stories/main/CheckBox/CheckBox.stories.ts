@@ -47,28 +47,28 @@ Wrapping.args = {
 };
 
 export const States: StoryFn = () => html`
-    <ui5-checkbox text="Success" value-state="Success"></ui5-checkbox>
-    <ui5-checkbox text="Error" value-state="Error"></ui5-checkbox>
-    <ui5-checkbox text="Warning" value-state="Warning"></ui5-checkbox>
+    <ui5-checkbox text="Positive" value-state="Positive"></ui5-checkbox>
+    <ui5-checkbox text="Negative" value-state="Negative"></ui5-checkbox>
+    <ui5-checkbox text="Critical" value-state="Critical"></ui5-checkbox>
     <ui5-checkbox text="Information" value-state="Information"></ui5-checkbox>
     <ui5-checkbox text="Disabled" disabled="" checked=""></ui5-checkbox>
     <ui5-checkbox text="Readonly" readonly="" checked=""></ui5-checkbox>
     <ui5-checkbox
-        text="Success disabled"
+        text="Positive disabled"
         disabled=""
-        value-state="Success"
+        value-state="Positive"
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Error disabled"
+        text="Negative disabled"
         disabled=""
-        value-state="Error"
+        value-state="Negative"
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Warning disabled "
+        text="Critical disabled "
         disabled=""
-        value-state="Warning"
+        value-state="Critical"
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
@@ -78,21 +78,21 @@ export const States: StoryFn = () => html`
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Success readonly"
+        text="Positive readonly"
         readonly=""
-        value-state="Success"
+        value-state="Positive"
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Error readonly"
+        text="Negative readonly"
         readonly=""
-        value-state="Error"
+        value-state="Negative"
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Warning readonly"
+        text="Critical readonly"
         readonly=""
-        value-state="Warning"
+        value-state="Critical"
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
@@ -102,20 +102,20 @@ export const States: StoryFn = () => html`
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Success indeterminate"
-        value-state="Success"
+        text="Positive indeterminate"
+        value-state="Positive"
         indeterminate=""
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Error indeterminate"
-        value-state="Error"
+        text="Negative indeterminate"
+        value-state="Negative"
         indeterminate=""
         checked=""
     ></ui5-checkbox>
     <ui5-checkbox
-        text="Warning indeterminate"
-        value-state="Warning"
+        text="Critical indeterminate"
+        value-state="Critical"
         indeterminate=""
         checked=""
     ></ui5-checkbox>
