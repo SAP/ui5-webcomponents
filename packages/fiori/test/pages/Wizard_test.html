@@ -335,7 +335,7 @@
 		wiz.addEventListener("ui5-step-change", function (event) {
 			console.log(event.detail.step);
 			inpStepChangeCounter.value = ++counter;
-			inpStepChangeCause.value = event.detail.changeWithClick;
+			inpStepChangeCause.value = !event.detail.withScroll;
 		});
 
 		toStep2.addEventListener("click", function () {

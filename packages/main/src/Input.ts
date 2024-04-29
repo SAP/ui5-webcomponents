@@ -793,16 +793,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const suggestionItemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
 
 		const innerInput = this.getInputDOMRefSync()!;
+		let matchingIndex = -1;
 		// Check for autocompleted item
-		const matchingItem = this.suggestionItems.find(item => {
+		const matchingItem = this.suggestionItems.find((item, index) => {
+			matchingIndex = index;
 			return (item.text && item.text === this.value) || (item.textContent === this.value);
 		});
 
 		if (matchingItem) {
 			const itemText = matchingItem.text ? matchingItem.text : (matchingItem.textContent || "");
+			const listItem = this.Suggestions!._getItems()[matchingIndex]!;
 
 			innerInput.setSelectionRange(itemText.length, itemText.length);
 			if (!suggestionItemPressed) {
+				this.fireSelectionChange(matchingItem, listItem, true);
 				this.acceptSuggestion(matchingItem, true);
 				this.open = false;
 			}
@@ -1053,7 +1057,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.fireEventByAction(INPUT_ACTIONS.ACTION_ENTER, e as InputEvent);
 
-		this._isLatestValueFromSuggestions = false;
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
 
@@ -1215,15 +1218,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.hasSuggestionItemSelected = true;
 
-		const valueOriginal = this.value;
-		const valueBeforeItemSelectionOriginal = this.valueBeforeItemSelection;
-		const lastConfirmedValueOriginal = this.lastConfirmedValue;
-		const performTextSelectionOriginal = this._performTextSelection;
-		const typedInValueOriginal = this.typedInValue;
-		const previousValueOriginal = this.previousValue;
-
-		let isChangePropagated = true;
-
 		if (fireChange) {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
@@ -1231,7 +1225,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			this._performTextSelection = true;
 
-			isChangePropagated = this.fireEvent(INPUT_EVENTS.CHANGE, null, true);
+			this.fireEvent(INPUT_EVENTS.CHANGE);
 
 			// value might change in the change event handler
 			this.typedInValue = this.value;
@@ -1239,23 +1233,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.valueBeforeSelectionStart = "";
-
-		if (!isChangePropagated) {
-			this.Suggestions?._clearSelectedSuggestionAndAccInfo();
-			this.hasSuggestionItemSelected = false;
-
-			if (fireChange) {
-				// revert properties set during fireChange
-				if (itemText === this.value) {
-					this.value = valueOriginal;
-				}
-				this.valueBeforeItemSelection = valueBeforeItemSelectionOriginal;
-				this.lastConfirmedValue = lastConfirmedValueOriginal;
-				this._performTextSelection = performTextSelectionOriginal;
-				this.typedInValue = typedInValueOriginal;
-				this.previousValue = previousValueOriginal;
-			}
-		}
 
 		this.isTyping = false;
 		this.openOnMobile = false;
@@ -1378,7 +1355,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const shouldFireSelectionChange = !keyboardUsed && !listItem?.focused && this.valueBeforeItemSelection !== suggestionItem.text;
 
 		if (shouldFireSelectionChange) {
-			this.fireSelectionChange(suggestionItem, listItem);
+			this.fireSelectionChange(suggestionItem, listItem, true);
 		}
 
 		this.acceptSuggestion(suggestionItem, keyboardUsed);
@@ -1389,24 +1366,24 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.updateValueOnSelect(item);
 		this.announceSelectedItem();
 
-		this.fireSelectionChange(this.getSuggestionByListItem(item), item);
+		this.fireSelectionChange(this.getSuggestionByListItem(item), item, true);
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Positive": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			"Negative": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Critical": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
 	valueStateTextMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": Input.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": Input.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1416,17 +1393,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		invisibleText.textContent = this.itemSelectionAnnounce;
 	}
 
-	fireSelectionChange(item: IInputSuggestionItem | null, targetRef: SuggestionListItem | null) {
+	fireSelectionChange(item: IInputSuggestionItem | null, targetRef: SuggestionListItem | null, isValueFromSuggestions: boolean) {
 		if (this.Suggestions) {
 			this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item, targetRef });
-			this._isLatestValueFromSuggestions = true;
+			this._isLatestValueFromSuggestions = isValueFromSuggestions;
 		}
 	}
 
 	fireResetSelectionChange() {
-		if (this.Suggestions && this._isLatestValueFromSuggestions) {
-			this.fireSelectionChange(null, null);
-			this._isLatestValueFromSuggestions = false;
+		if (this._isLatestValueFromSuggestions) {
+			this.fireSelectionChange(null, null, false);
 		}
 	}
 
@@ -1467,7 +1443,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			"input": {
 				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
 				"ariaDescribedBy": ariaDescribedBy || undefined,
-				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaInvalid": this.valueState === ValueState.Negative ? "true" : undefined,
 				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
 				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
 				"role": this._inputAccInfo && this._inputAccInfo.role,
@@ -1522,9 +1498,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
 				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
@@ -1570,7 +1546,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get hasValueStateMessage() {
-		return this.hasValueState && this.valueState !== ValueState.Success
+		return this.hasValueState && this.valueState !== ValueState.Positive
 			&& (!this._inputIconFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
 				|| !!(this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
 	}
@@ -1627,9 +1603,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 */
 	get _valueStateInputIcon() {
 		const iconPerValueState = {
-			Error: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20ZM7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071C5.90237 13.3166 5.90237 12.6834 6.29289 12.2929L8.58579 10L6.29289 7.70711C5.90237 7.31658 5.90237 6.68342 6.29289 6.29289C6.68342 5.90237 7.31658 5.90237 7.70711 6.29289L10 8.58579L12.2929 6.29289C12.6834 5.90237 13.3166 5.90237 13.7071 6.29289C14.0976 6.68342 14.0976 7.31658 13.7071 7.70711L11.4142 10L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L10 11.4142L7.70711 13.7071Z" fill="#EE3939"/>`,
-			Warning: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M11.8619 0.49298C11.6823 0.187541 11.3544 0 11 0C10.6456 0 10.3177 0.187541 10.1381 0.49298L0.138066 17.493C-0.0438112 17.8022 -0.0461447 18.1851 0.13195 18.4965C0.310046 18.8079 0.641283 19 1 19H21C21.3587 19 21.69 18.8079 21.868 18.4965C22.0461 18.1851 22.0438 17.8022 21.8619 17.493L11.8619 0.49298ZM11 6C11.5523 6 12 6.44772 12 7V10C12 10.5523 11.5523 11 11 11C10.4477 11 10 10.5523 10 10V7C10 6.44772 10.4477 6 11 6ZM11 16C11.8284 16 12.5 15.3284 12.5 14.5C12.5 13.6716 11.8284 13 11 13C10.1716 13 9.5 13.6716 9.5 14.5C9.5 15.3284 10.1716 16 11 16Z" fill="#F58B00"/>`,
-			Success: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10ZM14.7071 6.29289C14.3166 5.90237 13.6834 5.90237 13.2929 6.29289L8 11.5858L6.70711 10.2929C6.31658 9.90237 5.68342 9.90237 5.29289 10.2929C4.90237 10.6834 4.90237 11.3166 5.29289 11.7071L7.29289 13.7071C7.68342 14.0976 8.31658 14.0976 8.70711 13.7071L14.7071 7.70711C15.0976 7.31658 15.0976 6.68342 14.7071 6.29289Z" fill="#36A41D"/>`,
+			Negative: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20ZM7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071C5.90237 13.3166 5.90237 12.6834 6.29289 12.2929L8.58579 10L6.29289 7.70711C5.90237 7.31658 5.90237 6.68342 6.29289 6.29289C6.68342 5.90237 7.31658 5.90237 7.70711 6.29289L10 8.58579L12.2929 6.29289C12.6834 5.90237 13.3166 5.90237 13.7071 6.29289C14.0976 6.68342 14.0976 7.31658 13.7071 7.70711L11.4142 10L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L10 11.4142L7.70711 13.7071Z" fill="#EE3939"/>`,
+			Critical: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M11.8619 0.49298C11.6823 0.187541 11.3544 0 11 0C10.6456 0 10.3177 0.187541 10.1381 0.49298L0.138066 17.493C-0.0438112 17.8022 -0.0461447 18.1851 0.13195 18.4965C0.310046 18.8079 0.641283 19 1 19H21C21.3587 19 21.69 18.8079 21.868 18.4965C22.0461 18.1851 22.0438 17.8022 21.8619 17.493L11.8619 0.49298ZM11 6C11.5523 6 12 6.44772 12 7V10C12 10.5523 11.5523 11 11 11C10.4477 11 10 10.5523 10 10V7C10 6.44772 10.4477 6 11 6ZM11 16C11.8284 16 12.5 15.3284 12.5 14.5C12.5 13.6716 11.8284 13 11 13C10.1716 13 9.5 13.6716 9.5 14.5C9.5 15.3284 10.1716 16 11 16Z" fill="#F58B00"/>`,
+			Positive: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10ZM14.7071 6.29289C14.3166 5.90237 13.6834 5.90237 13.2929 6.29289L8 11.5858L6.70711 10.2929C6.31658 9.90237 5.68342 9.90237 5.29289 10.2929C4.90237 10.6834 4.90237 11.3166 5.29289 11.7071L7.29289 13.7071C7.68342 14.0976 8.31658 14.0976 8.70711 13.7071L14.7071 7.70711C15.0976 7.31658 15.0976 6.68342 14.7071 6.29289Z" fill="#36A41D"/>`,
 			Information: `<path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M3 0C1.34315 0 0 1.34315 0 3V15C0 16.6569 1.34315 18 3 18H15C16.6569 18 18 16.6569 18 15V3C18 1.34315 16.6569 0 15 0H3ZM9 6.5C9.82843 6.5 10.5 5.82843 10.5 5C10.5 4.17157 9.82843 3.5 9 3.5C8.17157 3.5 7.5 4.17157 7.5 5C7.5 5.82843 8.17157 6.5 9 6.5ZM9 8.5C9.55228 8.5 10 8.94772 10 9.5V13.5C10 14.0523 9.55228 14.5 9 14.5C8.44771 14.5 8 14.0523 8 13.5V9.5C8 8.94772 8.44771 8.5 9 8.5Z" fill="#1B90FF"/>`,
 		};
 
@@ -1653,9 +1629,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 */
 	get _valueStateMessageInputIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 

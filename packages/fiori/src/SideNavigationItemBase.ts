@@ -115,6 +115,15 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 		return element?.slot === "fixedItems";
 	}
+
+	get isSideNavigationItemBase() {
+		return true;
+	}
 }
 
+const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigationItemBase => {
+	return "isSideNavigationItemBase" in object;
+};
+
 export default SideNavigationItemBase;
+export { isInstanceOfSideNavigationItemBase };

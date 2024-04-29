@@ -489,7 +489,7 @@
 			<ui5-label>Dialog states</ui5-label>
 		</div>
 		<ui5-button id="btn-error-state">Dialog with Error State</ui5-button>
-		<ui5-dialog id="dialog-error-state" state="Error">
+		<ui5-dialog id="dialog-error-state" state="Negative">
 			<div slot="header">
 				<ui5-title level="H1">Error</ui5-title>
 			</div>
@@ -504,16 +504,16 @@
 			<span>Hello World!</span>
 		</ui5-dialog>
 
-		<ui5-button id="btn-success-state">Dialog with Success State</ui5-button>
-		<ui5-dialog id="dialog-success-state" state="Success">
+		<ui5-button id="btn-success-state">Dialog with Positive State</ui5-button>
+		<ui5-dialog id="dialog-success-state" state="Positive">
 			<div slot="header">
-				<ui5-title level="H1">Success</ui5-title>
+				<ui5-title level="H1">Positive</ui5-title>
 			</div>
 			<span>Hello World!</span>
 		</ui5-dialog>
 
 		<ui5-button id="btn-warn-state">Dialog with Warning State</ui5-button>
-		<ui5-dialog id="dialog-warn-state" state="Warning">
+		<ui5-dialog id="dialog-warn-state" state="Critical">
 			<div slot="header">
 				<ui5-title level="H1">Warning</ui5-title>
 			</div>
@@ -526,7 +526,7 @@
 			<ui5-label>Dialog roles</ui5-label>
 		</div>
 		<ui5-button id="btn-role-default">Error State, no role set</ui5-button>
-		<ui5-dialog id="dialog-error-no-role" state="Error">
+		<ui5-dialog id="dialog-error-no-role" state="Negative">
 			<div slot="header">
 				<ui5-title level="H1">Error</ui5-title>
 			</div>
@@ -549,10 +549,10 @@
 			<span>Hello World!</span>
 		</ui5-dialog>
 
-		<ui5-button id="btn-role-alert-success-state">Success State, 'AlertDialog' role set</ui5-button>
-		<ui5-dialog id="dialog-success-state-alert-role" state="Success" accessible-role="AlertDialog">
+		<ui5-button id="btn-role-alert-success-state">Positive State, 'AlertDialog' role set</ui5-button>
+		<ui5-dialog id="dialog-success-state-alert-role" state="Positive" accessible-role="AlertDialog">
 			<div slot="header">
-				<ui5-title level="H1">Success</ui5-title>
+				<ui5-title level="H1">Positive</ui5-title>
 			</div>
 			<span>Hello World!</span>
 		</ui5-dialog>
