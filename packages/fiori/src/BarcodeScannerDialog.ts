@@ -53,20 +53,17 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>BarcodeScannerDialog</code> component provides barcode scanning functionality for all devices that support the <code>MediaDevices.getUserMedia()</code> native API.
+ * The `BarcodeScannerDialog` component provides barcode scanning functionality for all devices that support the `MediaDevices.getUserMedia()` native API.
  * Opening the dialog launches the device camera and scans for known barcode formats.
- * <br>
- * <br>
- * A <code>scanSuccess</code> event fires whenever a barcode is identified
- * and a <code>scanError</code> event fires when the scan failed (for example, due to missing permisions).
- * <br>
- * <br>
+ *
+ * A `scanSuccess` event fires whenever a barcode is identified
+ * and a `scanError` event fires when the scan failed (for example, due to missing permisions).
+ *
  * Internally, the component  uses the zxing-js/library third party OSS.
  *
- * For a list of supported barcode formats, see the <ui5-link target="_blank" href="https://github.com/zxing-js/library">zxing-js/library</ui5-link> documentation.
- *
+ * For a list of supported barcode formats, see the [zxing-js/library](https://github.com/zxing-js/library) documentation.
  * @constructor
  * @extends UI5Element
  * @public
@@ -76,17 +73,23 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
 	renderer: litRender,
-	staticAreaTemplate: BarcodeScannerDialogTemplate,
-	staticAreaStyles: [BarcodeScannerDialogCss],
+	template: BarcodeScannerDialogTemplate,
+	styles: [BarcodeScannerDialogCss],
 	dependencies: [
 		Dialog,
 		BusyIndicator,
 		Button,
 	],
 })
+
+/**
+ * Fired when the user closes the component.
+ * @public
+ */
+@event("close")
+
 /**
  * Fires when the scan is completed successfuuly.
- *
  * @param {string} text the scan result as string
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
@@ -106,7 +109,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 /**
  * Fires when the scan fails with error.
- *
  * @param {string} message the error message
  * @public
  */
@@ -121,13 +123,30 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 
 class BarcodeScannerDialog extends UI5Element {
 	/**
-	 * Indicates whether a loading indicator should be displayed in the dialog.
+	 * Indicates whether the dialog is open.
 	 *
+	 * @public
+	 * @default false
+	 * @since 1.24.0
+	*/
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
+	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
 	loading!: boolean;
+
+	/**
+	 * Indicates whether the user has granted permissions to use the camera.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	permissionsGranted!: boolean;
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
@@ -142,38 +161,36 @@ class BarcodeScannerDialog extends UI5Element {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	/**
-	 * Shows a dialog with the camera videostream. Starts a scan session.
-	 * @public
-	 */
-	show(): void {
-		if (this.loading) {
-			console.warn("Barcode scanning is already in progress.");  // eslint-disable-line
-			return;
+	onAfterRendering() {
+		if (this.open) {
+			if (this.loading) {
+				return;
+			}
+
+			if (!this._hasGetUserMedia()) {
+				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+				return;
+			}
+
+			if (!this.permissionsGranted) {
+				this.loading = true;
+			}
+
+			this._getUserPermission()
+				.then(() => {
+					this.permissionsGranted = true;
+				})
+				.catch(err => {
+					this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
+					this.loading = false;
+				});
+		} else {
+			this.loading = false;
 		}
-
-		if (!this._hasGetUserMedia()) {
-			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
-			return;
-		}
-
-		this.loading = true;
-
-		this._getUserPermission()
-			.then(() => this._showDialog())
-			.catch(err => {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
-				this.loading = false;
-			});
 	}
 
-	/**
-	 * Closes the dialog and the scan session.
-	 * @public
-	 */
-	close():void {
-		this._closeDialog();
-		this.loading = false;
+	get _open() {
+		return this.open && this.permissionsGranted;
 	}
 
 	/**
@@ -188,39 +205,27 @@ class BarcodeScannerDialog extends UI5Element {
 		return navigator.mediaDevices.getUserMedia(defaultMediaConstraints);
 	}
 
-	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
-	}
-
-	async _getVideoElement() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
-	}
-
-	async _showDialog() {
-		this.dialog = await this._getDialog();
-		this.dialog.show();
+	_getVideoElement() {
+		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
 	_closeDialog() {
-		if (this.dialog && this.dialog.opened) {
-			this.dialog.close();
-		}
+		this.open = false;
+		this.fireEvent("close");
 	}
 
 	_startReader() {
 		this._decodeFromCamera();
 	}
 
-	async _resetReader() {
-		const videoElement = await this._getVideoElement();
+	_resetReader() {
+		const videoElement = this._getVideoElement();
 		videoElement.pause();
 		this._codeReader.reset();
 	}
 
-	async _decodeFromCamera() {
-		const videoElement = await this._getVideoElement();
+	_decodeFromCamera() {
+		const videoElement = this._getVideoElement();
 		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {

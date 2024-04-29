@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,14 +34,25 @@
 	<ui5-input id="growingScrollTestCounter" value="0"></ui5-input>
 	<section class="list_test_page3auto">
 		<ui5-list id="growingScrollTest" growing="Scroll">
-			<ui5-li-groupheader>New Items</ui5-li-groupheader>
+			<ui5-li-group header-text="New Items"></ui5-li-group>
 		</ui5-list>
 	</section>
 
 	<br><br><br>
 
+	<ui5-list id="infiniteScrollEx2" class="list_test_page2auto" growing="Button" growing-button-text="Custom text">
+		<ui5-li>Laptop Lenovo</ui5-li>
+		<ui5-li>IPhone 3</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li>DVD set</ui5-li>
+		<ui5-li>HP Monitor 24</ui5-li>
+		<ui5-li>Audio cabel</ui5-li>
+		<ui5-li id="lastItem">Last Item</ui5-li>
+	</ui5-list>
+
 	<br/>
-	<ui5-list id="listEvents" mode="SingleSelectEnd">
+	<ui5-list id="listEvents" selection-mode="SingleEnd">
 		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 		<ui5-li id="country3">China</ui5-li>
@@ -54,14 +66,14 @@
 	<br><br><br>
 
 	<br>
-	<ui5-list id="listPreventSelectionChangeSingleSelect" mode="SingleSelect" header-text="Prevent ui5-selection-change on SingleSelect">
+	<ui5-list id="listPreventSelectionChangeSingleSelect" selection-mode="Single" header-text="Prevent ui5-selection-change on Single">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
 		<ui5-li id="country3" selected >China</ui5-li>
 	</ui5-list>
 
 	<br/>
-	<ui5-list id="listPreventSelectionChangeMultiSelect" mode="MultiSelect" header-text="Prevent ui5-selection-change on MultiSelect">
+	<ui5-list id="listPreventSelectionChangeMultiple" selection-mode="Multiple" header-text="Prevent ui5-selection-change on Multiple">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 		<ui5-li id="country3" selected >China</ui5-li>
@@ -70,7 +82,7 @@
 	<br><br><br>
 
 	<br/>
-	<ui5-list id="listPreventClickEvent" mode="SingleSelect">
+	<ui5-list id="listPreventClickEvent" selection-mode="Single">
 		<ui5-li id="country1">Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 	</ui5-list>
@@ -80,24 +92,25 @@
 	<ui5-list id="justList">
 		<ui5-li id="justList-country">Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="listDelete" mode="Delete">
+	<ui5-list id="listDelete" selection-mode="Delete">
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="emptyListDelete" mode="Delete">
+	<ui5-list id="emptyListDelete" selection-mode="Delete">
 	</ui5-list>
-	<ui5-list id="listMultiSelect" mode="MultiSelect">
+	<ui5-list id="listMultiple" selection-mode="Multiple">
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="listSingleSelect" mode="SingleSelect">
+	<ui5-list id="listSingleSelect" selection-mode="Single">
 		<ui5-li>Argentina</ui5-li>
 	</ui5-list>
-	<ui5-list id="listSelectedItem" mode="MultiSelect">
-		<ui5-li-groupheader id="group-header">New Items</ui5-li-groupheader>
-		<ui5-li id="not-selected-country">Argentina</ui5-li>
-		<ui5-li id="selected-country" selected >Bulgaria</ui5-li>
+	<ui5-list id="listSelectedItem" selection-mode="Multiple">
+		<ui5-li-group id="group" header-text="New Items">
+			<ui5-li id="not-selected-country">Argentina</ui5-li>
+			<ui5-li id="selected-country" selected >Bulgaria</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 	<br><br><br>
-	<ui5-list id="listEvents2" mode="MultiSelect">
+	<ui5-list id="listEvents2" selection-mode="Multiple">
 		<ui5-li id="country11">Argentina</ui5-li>
 		<ui5-li id="country22" selected >Bulgaria</ui5-li>
 		<ui5-li id="country33">China</ui5-li>
@@ -107,16 +120,18 @@
 	<ui5-input id="selectionChangeResultField2" placeholder="selectionChange result"></ui5-input>
 
 	<br><br><br>
-	<ui5-list id="list1" header-text="API: GroupHeaderListItem">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" >Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+	<ui5-list id="list1" header-text="API: ListItemGroupHeader">
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+			<ui5-li image="./img/HT-1010.jpg" >Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		</ui5-li-group>
 
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 
 	<label id="lblResult">0</label>
@@ -127,13 +142,13 @@
 		<ui5-li image="./img/HT-2002.jpg"  description="2GB RAM, Intel i7 4.5 GHz">DVD set</ui5-li>
 	</ui5-list>
 
-	<ui5-list id="listMultiSel" mode="MultiSelect">
+	<ui5-list id="listMultiSel" selection-mode="Multiple">
 		<ui5-li id="option1">Option #1</ui5-li>
 		<ui5-li>Option #2</ui5-li>
 		<ui5-li>Option #3</ui5-li>
 	</ui5-list>
 
-	<ui5-list id="default-slot-test" mode="SingleSelect">
+	<ui5-list id="default-slot-test" selection-mode="Single">
 		<ui5-li>Option #1</ui5-li>
 		<ui5-li>Option #2</ui5-li>
 		<ui5-li>Option #3</ui5-li>
@@ -176,7 +191,7 @@
 
 	<ui5-list
 		id="header-slot-list"
-		mode="MultiSelect"
+		selection-mode="Multiple"
 		header-text="Text when no header provided"
 		footer-text="Copyright"
 		no-data-text="No data">
@@ -202,14 +217,14 @@
 
 	<br/><br/>
 
-	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+	<ui5-list id="inactiveMultiple" header-text="API: ListItem type='Inactive'" selection-mode="Multiple">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
-	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" selection-mode="SingleStart">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
@@ -236,6 +251,16 @@
 		<ui5-li>item</ui5-li>
 		<ui5-li >item</ui5-li>
 	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="myList7" header-text="API: ListItem tooltip">
+		<ui5-li tooltip="Option #1">Option 1</ui5-li>
+		<ui5-li tooltip="Option #2">Option 2</ui5-li>
+		<ui5-li tooltip="Option #3">Option 3</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
 
 	<ui5-list id="listWithEmptyItem">
 		<ui5-li id="emptyItem"></ui5-li>
@@ -266,7 +291,7 @@
 	<br />
 	<br />
 	<ui5-button id="btnOpenPopup">Open popup with List</ui5-button>
-	<ui5-responsive-popover id="popup" placement-type="Bottom" class="list_test_page5auto">
+	<ui5-responsive-popover id="popup" placement="Bottom" class="list_test_page5auto">
 		<ui5-list>
 			<div slot="header">
 				<ui5-button id="btnInHeader" icon="refresh"></ui5-button>
@@ -299,6 +324,13 @@
 				<ui5-option icon="laptop" selected>Desktop</ui5-option>
 			</ui5-select>
 		</ui5-li-custom>
+	</ui5-list>
+
+	<ui5-list id="highlight">
+		<ui5-li highlight="Negative" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li highlight="Information" image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li highlight="Positive" image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li highlight="Critical" image="./img/HT-2002.jpg" >DVD set</ui5-li>
 	</ui5-list>
 
 	<input id="customListItemSelectResult" value="0"/>
@@ -366,7 +398,7 @@
 			event.preventDefault();
 		});
 
-		listPreventSelectionChangeMultiSelect.addEventListener("ui5-selection-change", function (event) {
+		listPreventSelectionChangeMultiple.addEventListener("ui5-selection-change", function (event) {
 			event.preventDefault();
 		});
 
@@ -376,6 +408,15 @@
 				var li = document.createElement("ui5-li");
 				li.textContent = "Title" + i;
 				infiniteScrollEx.appendChild(li);
+			}
+			loadMoreResult.value= ++loadMoreCounter;
+		});
+
+		infiniteScrollEx2.addEventListener("ui5-loadMore", function(e) {
+			for(var i = 0; i < 3; i++) {
+				var li = document.createElement("ui5-li");
+				li.textContent = "Title" + i;
+				infiniteScrollEx2.appendChild(li);
 			}
 			loadMoreResult.value= ++loadMoreCounter;
 		});
@@ -406,18 +447,20 @@
 		listWithCustomItems.addEventListener("ui5-item-close", function(e) {
 			customListItemSelectResult.value = ++customListItemSelectResult.value
 		});
-		
+
 	</script>
 
 	<ui5-list growing="Scroll">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa.</ui5-li>
-		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li id="listItem" image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa.</ui5-li>
+			<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
+			<ui5-li id="listItem" image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+		</ui5-li-group>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Negative">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Critical">DVD set</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 
 	<script>

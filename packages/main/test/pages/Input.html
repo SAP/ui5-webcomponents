@@ -83,23 +83,22 @@
 	<h3> Input maxLength = 5</h3>
 	<ui5-input id="input-max-length" maxLength="5" placeholder="Max length of 5"></ui5-input>
 
-	<h3> Input valueState Success</h3>
-	<ui5-input id="input3" value-state="Success" placeholder="Success state ..."></ui5-input>
+	<h3> Input valueState Positive</h3>
+	<ui5-input id="input3" value-state="Positive" placeholder="Positive state ..."></ui5-input>
 
 	<h3> Input valueState Information</h3>
 	<ui5-input value-state="Information" placeholder="Info state ..."></ui5-input>
 
 	<h3> Test 'change' event</h3>
-	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ..."></ui5-input>
+	<ui5-input id="input1" value-state="Critical" placeholder="Warning state ..."></ui5-input>
 
 	<h3>Input with valueState and Dynamic suggestions</h3>
 	<ui5-input id="inputError"
 		class="input2auto"
 		show-suggestions
-		value-state="Error"
+		value-state="Negative"
 		placeholder="Search for a country ...">
 	<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
-	<div slot="valueStateMessage">Additionl custom error value state message with a <a href="#">Link</a>. Extra long text used as an error message. Extra long text used as an error message - 2. Extra long text used as an error message - 3.</div>
 	</ui5-input>
 
 	<h3>Input with long suggestions with valueState and ui5-li</h3>
@@ -139,7 +138,7 @@
 	<ui5-input id="inputResultGrouping"></ui5-input>
 
 	<h3> Test 'input' event</h3>
-	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
+	<ui5-input id="input2" value-state="Negative" placeholder="Negative state ...">
 		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 	</ui5-input>
 	<h3> 'input' test result</h3>
@@ -195,7 +194,7 @@
 	<ui5-input id="aria-label-input" accessible-name="Enter your secret password"></ui5-input>
 
 	<h3> Readonly input with value state</h3>
-	<ui5-input id="readonly-value-state-input" readonly value-state="Error"></ui5-input>
+	<ui5-input id="readonly-value-state-input" readonly value-state="Negative"></ui5-input>
 
 	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
@@ -206,7 +205,7 @@
 
 	<ui5-date-picker id='dp5'
 			placeholder='Delivery Date...'
-			value-state="Error"
+			value-state="Negative"
 			title='Delivery Date!'>
 	</ui5-date-picker>
 
@@ -222,9 +221,9 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
-	<ui5-input  value="input" value-state="Error"></ui5-input>
+	<ui5-input  value="input" value-state="Negative"></ui5-input>
 
-	<ui5-select id="mySelect2" value-state="Error">
+	<ui5-select id="mySelect2" value-state="Negative">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
@@ -236,7 +235,7 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
-	<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+	<ui5-multi-combobox value-state="Negative"></ui5-multi-combobox>
 	<ui5-multi-combobox value-state="Information"></ui5-multi-combobox>
 
 	<h3> Input with multiple icons</h3>
@@ -366,9 +365,9 @@
 		<ui5-input placeholder="No Value State"></ui5-input>
 		<ui5-input placeholder="Disabled" disabled></ui5-input>
 		<ui5-input placeholder="ReadnOnly" readonly></ui5-input>
-		<ui5-input id="vs-error-default" placeholder="Error ValueState" value-state="Error"></ui5-input>
-		<ui5-input id="vs-warning-default" placeholder="Warning ValueState" value-state="Warning"></ui5-input>
-		<ui5-input id="vs-success-default" placeholder="Success ValueState" value-state="Success"></ui5-input>
+		<ui5-input id="vs-error-default" placeholder="Negative ValueState" value-state="Negative"></ui5-input>
+		<ui5-input id="vs-warning-default" placeholder="Critical ValueState" value-state="Critical"></ui5-input>
+		<ui5-input id="vs-success-default" placeholder="Positive ValueState" value-state="Positive"></ui5-input>
 		<ui5-input id="vs-information-default" placeholder="Information ValueState" value-state="Information"></ui5-input>
 	</div>
 
@@ -459,7 +458,7 @@
 
 	<br>
 
-	<ui5-input value-state="Error" id="dynamic-value-state">
+	<ui5-input value-state="Negative" id="dynamic-value-state">
 		<span slot="valueStateMessage" id="text">0</span>
 	</ui5-input>
 
@@ -555,7 +554,7 @@
 					suggestion.description = "travel the world";
 					suggestion.text = item.text
 					suggestion.additionalText = "explore";
-					suggestion.additionalTextState = "Success";
+					suggestion.additionalTextState = "Positive";
 					input.appendChild(suggestion);
 				}
 			});

@@ -1,8 +1,8 @@
 <ui5-responsive-popover
 	id="{{_id}}-menu-rp"
 	class="ui5-menu-rp"
-	horizontal-align="Left"
-	placement-type={{placementType}}
+	horizontal-align="Start"
+	placement={{placement}}
 	vertical-align={{verticalAlign}}
 	hide-arrow
 	allow-target-overlap
@@ -38,7 +38,7 @@
 			icon="decline"
 			design="Transparent"
 			aria-label="{{labelClose}}"
-			@click={{close}}
+			@click={{_closeAll}}
 		>
 		</ui5-button>
 	</div>
@@ -49,16 +49,16 @@
 	{{#if _currentItems.length}}
 		<ui5-list
 			id="{{_id}}-menu-list"
-			mode="None"
-			?busy="{{busy}}"
-			busy-delay="{{busyDelay}}"
+			selection-mode="None"
+			?loading="{{loading}}"
+			loading-delay="{{loadingDelay}}"
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 		>
 		{{#each _currentItems}}
-			<ui5-li
+			<ui5-menu-li
 				.associatedItem="{{this.item}}"
 				class="ui5-menu-item"
 				id="{{../_id}}-menu-item-{{@index}}"
@@ -66,7 +66,8 @@
 				accessible-name={{this.item.ariaLabelledByText}}
 				accessible-role="menuitem"
 				.additionalText="{{this.item._additionalText}}"
-				._ariaHasPopup={{this.ariaHasPopup}}
+				tooltip="{{this.item.tooltip}}"
+				selected="{{this.item.subMenuOpened}}"
 				?disabled={{this.item.disabled}}
 				?starts-section={{this.item.startsSection}}
 				?selected={{this.item.subMenuOpened}}
@@ -74,42 +75,17 @@
 				@mouseover={{../_itemMouseOver}}
 				@mouseout={{../_itemMouseOut}}
 				@keydown={{../_itemKeyDown}}
+				@_focused={{../_onfocusin}}
 			>
-				<div class="ui5-menu-item-text">
-				{{#if this.item.hasDummyIcon}}
-					<div
-						class="ui5-menu-item-dummy-icon"
-					>
-					</div>
-				{{/if}}
-				{{this.item.text}}
-				{{#if this.item.hasSubmenu}}
-					<div
-						class="ui5-menu-item-submenu-icon"
-					>
-						<ui5-icon
-							part="subicon"
-							name="slim-arrow-right"
-							class="ui5-menu-item-icon-end"
-						>
-						</ui5-icon>
-					</div>
-				{{else if this.item._siblingsWithChildren}}
-					<div
-						class="ui5-menu-item-no-icon-end"
-					>
-					</div>
-				{{/if}}
-				</div>
-			</ui5-li>
+			</ui5-menu-li>
 		{{/each}}
 		</ui5-list>
-	{{else if busy}}
+	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
-			delay="{{busyDelay}}"
+			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}

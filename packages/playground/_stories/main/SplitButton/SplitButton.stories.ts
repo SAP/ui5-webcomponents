@@ -19,7 +19,6 @@ const Template: UI5StoryArgs<SplitButton, StoryArgsSlots> = (args) => html`<ui5-
 	?disabled="${ifDefined(args.disabled)}"
 	design="${ifDefined(args.design)}"
 	icon="${ifDefined(args.icon)}"
-	active-icon="${ifDefined(args.activeIcon)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
 >
 	${unsafeHTML(args.default)}

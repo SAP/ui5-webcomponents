@@ -57,7 +57,7 @@
 	background: var(--sapObjectHeader_BorderColor);
 }
 
-:host([state="Error"]) .ui5-popup-header-root::before {
+:host([state="Negative"]) .ui5-popup-header-root::before {
 	background: var(--sapErrorBorderColor);
 }
 
@@ -65,30 +65,31 @@
 	background: var(--sapInformationBorderColor);
 }
 
-:host([state="Success"]) .ui5-popup-header-root::before {
+:host([state="Positive"]) .ui5-popup-header-root::before {
 	background: var(--sapSuccessBorderColor);
 }
 
-:host([state="Warning"]) .ui5-popup-header-root::before {
+:host([state="Critical"]) .ui5-popup-header-root::before {
 	background: var(--sapWarningBorderColor);
 }
 
 .ui5-dialog-value-state-icon {
 	margin-inline-end: 0.5rem;
+	flex-shrink: 0;
 }
 
-:host([state="Error"]) .ui5-dialog-value-state-icon {
+:host([state="Negative"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_error_state_icon_color);
 }
 
 :host([state="Information"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_information_state_icon_color);
 }
-:host([state="Success"]) .ui5-dialog-value-state-icon {
+:host([state="Positive"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_success_state_icon_color);
 }
 
-:host([state="Warning"]) .ui5-dialog-value-state-icon {
+:host([state="Critical"]) .ui5-dialog-value-state-icon {
 	color: var(--_ui5_dialog_header_warning_state_icon_color);
 }
 
@@ -96,7 +97,8 @@
 	outline: none;
 }
 
-.ui5-popup-header-root:focus:after {
+:host([desktop]) .ui5-popup-header-root:focus:after,
+.ui5-popup-header-root:focus-visible:after {
 	content: '';
 	position: absolute;
 	left: var(--_ui5_dialog_header_focus_left_offset);
@@ -136,4 +138,12 @@
 
 ::slotted([slot="header"][ui5-bar]) {
 	box-shadow: none;
+}
+
+:host::backdrop {
+	background-color: var(--_ui5_popup_block_layer_background);
+}
+
+.ui5-block-layer {
+	display: block;
 }

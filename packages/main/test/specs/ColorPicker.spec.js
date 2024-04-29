@@ -41,7 +41,7 @@ describe("Color Picker general interaction", () => {
 		const colorPicker = await browser.$("#cp1");
 		const alphaInput = await colorPicker.shadow$("#alpha");
 
-		await colorPicker.setAttribute("color", "rgba(100, 100, 100, 1)");
+		await colorPicker.setAttribute("value", "rgba(100, 100, 100, 1)");
 
 		await alphaInput.click();
 		await browser.keys('Delete');
@@ -49,7 +49,7 @@ describe("Color Picker general interaction", () => {
 		await browser.keys("0");
 		await browser.keys("Tab");
 
-		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
 	});
 
 	it("Alpha value change via the slider", async () => {
@@ -59,11 +59,11 @@ describe("Color Picker general interaction", () => {
 
 		await stepInput.setAttribute("value", 0);
 		await colorPicker.scrollIntoView();
-		await colorPicker.setAttribute("color", "rgba(183, 61, 61, 1)");
+		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 1)");
 
 		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(183, 61, 61, 0.83)", "Alpha value propely changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(183, 61, 61, 0.83)", "Alpha value propely changed");
 		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on alpha slider change");
 	});
 
@@ -73,11 +73,11 @@ describe("Color Picker general interaction", () => {
 		const stepInput = await browser.$("#changeEventCounter");
 
 		await colorPicker.scrollIntoView();
-		await colorPicker.setAttribute("color", "rgba(183, 61, 61, 0.83)");
+		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 0.83)");
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(182, 61, 184, 0.83)", "Color properly changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0.83)", "Color properly changed");
 		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on hue slider change");
 	});
 
@@ -85,19 +85,19 @@ describe("Color Picker general interaction", () => {
 		const colorPicker = await browser.$("#cp3");
 		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
 
-		await colorPicker.setProperty("color", "rgb(0, 255, 0)");
+		await colorPicker.setProperty("value", "rgb(0, 255, 0)");
 		assert.strictEqual(await hexInput.getProperty("value"), "00ff00", "RGB value is parsed correctly");
 
-		await colorPicker.setProperty("color", "rgba(255, 0, 255, 1)");
+		await colorPicker.setProperty("value", "rgba(255, 0, 255, 1)");
 		assert.strictEqual(await hexInput.getProperty("value"), "ff00ff", "RGBA value is parsed correctly");
 
-		await colorPicker.setProperty("color", "#fafafa");
+		await colorPicker.setProperty("value", "#fafafa");
 		assert.strictEqual(await hexInput.getProperty("value"), "fafafa", "HEX value is parsed correctly");
 
-		await colorPicker.setProperty("color", "#123");
+		await colorPicker.setProperty("value", "#123");
 		assert.strictEqual(await hexInput.getProperty("value"), "112233", "HEX shorthand value is parsed correctly");
 
-		await colorPicker.setProperty("color", "grey");
+		await colorPicker.setProperty("value", "grey");
 		assert.strictEqual(await hexInput.getProperty("value"), "808080", "CSS values are parsed correctly");
 	});
 
@@ -110,7 +110,7 @@ describe("Color Picker general interaction", () => {
 		await browser.keys("0854a0");
 		await browser.keys("Enter");
 
-		const color = await colorPicker.getAttribute("color");
+		const value = await colorPicker.getAttribute("value");
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
@@ -118,7 +118,7 @@ describe("Color Picker general interaction", () => {
 		await browser.keys("0854a0");
 		await browser.keys("Enter");
 
-		assert.strictEqual(await colorPicker.getAttribute("color"), color, "Color is changed to the old color");
+		assert.strictEqual(await colorPicker.getAttribute("value"), value, "Color is changed to the old color");
 	});
 
 	it("Hue value remains unchanged when user presses over the main color section", async () => {

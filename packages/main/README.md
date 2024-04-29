@@ -14,6 +14,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Avatar                   | `ui5-avatar`                | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Avatar Group             | `ui5-avatar-group`          | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
 | Badge                    | `ui5-badge`                 | `import "@ui5/webcomponents/dist/Badge.js";`               |
+| Bar                      | `ui5-bar`                   | `import "@ui5/webcomponents/dist/Bar.js";`                 |
 | Breadcrumbs              | `ui5-breadcrumbs`           | `import "@ui5/webcomponents/dist/Breadcrumbs.js";`         |
 | Breadcrumbs Item         | `ui5-breadcrumbs-item`      | comes with `ui5-breadcrumbs`                               |
 | Badge                    | `ui5-badge`                 | `import "@ui5/webcomponents/dist/Badge.js";`               |
@@ -44,7 +45,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List                     | `ui5-list`                  | `import "@ui5/webcomponents/dist/List.js";`                |
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
-| List - Group Header Item | `ui5-li-groupheader`        | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
+| List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
 | Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |

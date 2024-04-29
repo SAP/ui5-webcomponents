@@ -30,7 +30,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Represents a predefined range of colors for easier selection.
  *
  * Overview
@@ -39,15 +39,14 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  * You can customize them with the use of the colors property. You can specify a defaultColor and display a "Default color" button for the user to choose directly.
  * You can display a "More colors..." button that opens an additional color picker for the user to choose specific colors that are not present in the predefined range.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * The palette is intended for users, who don't want to check and remember the different values of the colors and spend large amount of time to configure the right color through the color picker.
  *
- * For the <code>ui5-color-palette-popover</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-color-palette-popover`
+ * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/ColorPalettePopover.js";</code>
- *
+ * `import @ui5/webcomponents/dist/ColorPalettePopover.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -68,7 +67,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
 /**
  * Fired when the user selects a color.
- *
  * @public
  * @param {string} color the selected color
  */
@@ -83,7 +81,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 	},
 })
 /**
- * Fired when the <code>ui5-color-palette-popover</code> is closed due to user interaction.
+ * Fired when the `ui5-color-palette-popover` is closed due to user interaction.
  * @since 1.21.0
  * @public
  */
@@ -91,7 +89,6 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -100,8 +97,8 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose a custom color from a component.
-	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
 	 *
+	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @default false
 	 * @public
 	 */
@@ -110,7 +107,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -119,8 +115,8 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the default color of the component.
-	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
 	 *
+	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @default undefined
 	 * @public
 	 */
@@ -147,7 +143,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the content of the component.
-	 *
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
@@ -171,33 +166,6 @@ class ColorPalettePopover extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	/**
-	 * Shows the ColorPalettePopover.
-	 *
-	 * @param opener the element that the popover is shown at
-	 * @public
-	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
-	 * @since 1.1.1
-	 */
-	showAt(opener: HTMLElement): void {
-		console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
-		this.open = true;
-		this.opener = opener;
-	}
-
-	/**
-	 * Shows the ColorPalettePopover.
-	 *
-	 * @param opener the element that the popover is shown at
-	 * @public
-	 * @since 1.0.0-rc.16
-	 * @deprecated The method is deprecated in favour of <code>open</code> and <code>opener</code> properties.
-	 */
-	openPopover(opener: HTMLElement): void {
-		console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
-		this.showAt(opener);
-	}
-
 	closePopover() {
 		this.open = false;
 	}
@@ -214,7 +182,6 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Returns if the component is opened.
-	 *
 	 * @protected
 	 * @since 1.0.0-rc.16
 	 */

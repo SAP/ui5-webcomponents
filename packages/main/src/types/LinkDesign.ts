@@ -1,6 +1,5 @@
 /**
  * Different link designs.
- *
  * @public
  */
 enum LinkDesign {

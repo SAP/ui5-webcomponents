@@ -16,7 +16,7 @@
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
-@import "../base/GroupHeaderListItem-parameters.css";
+@import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "../base/InputIcon-parameters.css";
 @import "./Link-parameters.css";
@@ -29,11 +29,12 @@
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
 @import "./PopupsCommon-parameters.css";
-@import "../base/PopupStaticAreaStyles-parameters.css";
+@import "../base/PopupBlockLayer-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";
 @import "../base/RatingIndicator-parameters.css";
 @import "../base/SegmentedButtton-parameters.css";
+@import "./SegmentedButtonItem-parameters.css";
 @import "./Select-parameters.css";
 @import "./SplitButton-parameters.css";
 @import "./Switch-parameters.css";
@@ -44,11 +45,11 @@
 @import "../base/TableGroupRow-parameters.css";
 @import "../base/Toolbar-parameters.css";
 @import "./GrowingButton-parameters.css";
+@import "../base/Text-parameters.css";
 @import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "./ToggleButton-parameters.css";
-@import "./WheelSlider-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./Token-parameters.css";
 @import "../base/Tokenizer-parameters.css";

@@ -20,7 +20,7 @@ const Template: UI5StoryArgs<MultiComboBox, StoryArgsSlots> = (args) => html`
 	value="${ifDefined(args.value)}"
 	?no-typeahead="${ifDefined(args.noTypeahead)}"
 	placeholder="${ifDefined(args.placeholder)}"
-	?allow-custom-values="${ifDefined(args.allowCustomValues)}"
+	?no-validation="${ifDefined(args.noValidation)}"
 	?disabled="${ifDefined(args.disabled)}"
 	value-state="${ifDefined(args.valueState)}"
 	?readonly="${ifDefined(args.readonly)}"
@@ -55,17 +55,17 @@ Basic.args = {
 export const MultiComboBoxCustomValue= Template.bind({});
 MultiComboBoxCustomValue.args = {
 	placeholder: 'Choose your state',
-	valueState: ValueState.Success,
-	allowCustomValues: true,
+	valueState: ValueState.Positive,
+	noValidation: true,
 	default: `
 	<ui5-mcb-item text="Fortune"></ui5-mcb-item>
 	<ui5-mcb-item text="Luck"></ui5-mcb-item>
-	<ui5-mcb-item selected="" text="Success"></ui5-mcb-item>
+	<ui5-mcb-item selected="" text="Positive"></ui5-mcb-item>
 	<ui5-mcb-item text="Attention"></ui5-mcb-item>
 	<ui5-mcb-item text="Caution"></ui5-mcb-item>
-	<ui5-mcb-item text="Warning"></ui5-mcb-item>
+	<ui5-mcb-item text="Critical"></ui5-mcb-item>
 	<ui5-mcb-item text="Fault"></ui5-mcb-item>
-	<ui5-mcb-item text="Error"></ui5-mcb-item>
+	<ui5-mcb-item text="Negative"></ui5-mcb-item>
 	<ui5-mcb-item text="Mistake"></ui5-mcb-item>`
 };
 MultiComboBoxCustomValue.storyName = "Custom Value";

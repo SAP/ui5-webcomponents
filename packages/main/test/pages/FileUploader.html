@@ -23,11 +23,11 @@
 
 	<div>
 		<label>FileUploader with ValueState</label>
-		<ui5-file-uploader placeholder="upload file" value-state="Warning">
+		<ui5-file-uploader placeholder="upload file" value-state="Critical">
 			<ui5-button>Upload</ui5-button>
 		</ui5-file-uploader>
 
-		<ui5-file-uploader placeholder="upload file" value-state="Error">
+		<ui5-file-uploader placeholder="upload file" value-state="Negative">
 			<ui5-button>Upload</ui5-button>
 			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 			<div slot="valueStateMessage">Information message 2. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
@@ -48,7 +48,7 @@
 	</div>
 	<div>
 		<label>Value state Error:</label>
-		<ui5-file-uploader value-state="Error">
+		<ui5-file-uploader value-state="Negative">
 			<ui5-button icon="upload" icon-end>Upload</ui5-button>
 		</ui5-file-uploader>
 	</div>

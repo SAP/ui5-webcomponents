@@ -171,5 +171,3 @@ Tip: for multi-colored icons, you can specify multiple SVG elements and put a fi
     <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
 </g>
 ```
-
-Next: [Using Additional Assets](./05-using-assets.md)

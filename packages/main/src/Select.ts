@@ -60,7 +60,6 @@ import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -74,13 +73,11 @@ import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 
 /**
- * Interface for components that may be slotted inside <code>ui5-select</code> as options
- *
+ * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
 interface IOption extends UI5Element {
 	selected: boolean,
-	disabled: boolean,
 	title: string,
 	icon?: string | null,
 	value: string,
@@ -101,47 +98,43 @@ type SelectLiveChangeEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-select</code> component is used to create a drop-down list.
+ * The `ui5-select` component is used to create a drop-down list.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * There are two main usages of the <code>ui5-select></code>.
+ * There are two main usages of the `ui5-select>`.
  *
- * 1. With Option (<code>ui5-option</code>) web component:
- * <br>
+ * 1. With Option (`ui5-option`) web component:
+ *
  * The available options of the Select are defined by using the Option component.
- * The Option comes with predefined design and layout, including <code>icon</code>, <code>text</code> and <code>additional-text</code>.
- * <br><br>
+ * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With SelectMenu (<code>ui5-select-menu</code>) and SelectMenuOption (<code>ui5-select-menu-option</code>) web components:
- * <br>
+ * 2. With SelectMenu (`ui5-select-menu`) and SelectMenuOption (`ui5-select-menu-option`) web components:
+ *
  * The SelectMenu can be used as alternative to define the Select's dropdown
- * and can be used via the <code>menu</code> property of the Select to reference SelectMenu by its ID.
+ * and can be used via the `menu` property of the Select to reference SelectMenu by its ID.
  * The component gives the possibility to customize the Select's dropdown
  * by slotting entirely custom options (via the SelectMenuOption component) and adding custom styles.
  *
- * <b>Note:</b> SelectMenu is a popover and placing it top-level in the HTML page is recommended,
+ * **Note:** SelectMenu is a popover and placing it top-level in the HTML page is recommended,
  * because some page styles (for example transitions) can misplace the SelectMenu.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-select</code> provides advanced keyboard handling.
- * <br>
- * <ul>
- * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.</li>
- * <li>[UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.</li>
- * <li>[SPACE, ENTER] - If the drop-down is opened - selects the focused option.</li>
- * <li>[ESC] - Closes the drop-down without changing the selection.</li>
- * <li>[HOME] - Navigates to first option</li>
- * <li>[END] - Navigates to the last option</li>
- * </ul>
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-select` provides advanced keyboard handling.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Select";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
+ * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
+ * - [Up] or [Down] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
+ * - [Space], [Enter] - If the drop-down is opened - selects the focused option.
+ * - [Escape] - Closes the drop-down without changing the selection.
+ * - [Home] - Navigates to first option
+ * - [End] - Navigates to the last option
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Select";`
+ *
+ * `import "@ui5/webcomponents/dist/Option";` (comes with `ui5-select`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -152,9 +145,8 @@ type SelectLiveChangeEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: SelectTemplate,
-	staticAreaTemplate: SelectPopoverTemplate,
-	styles: selectCss,
-	staticAreaStyles: [
+	styles: [
+		selectCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		SelectPopoverCss,
@@ -172,7 +164,6 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired when the selected option changes.
- *
  * @allowPreventDefault
  * @param {IOption} selectedOption the selected option.
  * @public
@@ -188,7 +179,6 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
- *
  * @param {IOption} selectedOption the selected option.
  * @public
  * @since 1.17.0
@@ -203,13 +193,11 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired after the component's dropdown menu opens.
- *
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
- *
  * @public
  */
 @event("close")
@@ -219,9 +207,8 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines a reference (ID or DOM element) of component's menu of options
 	 * as alternative to define the select's dropdown.
-	 * <br><br>
-	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
 	 *
+	 * **Note:** Usage of `ui5-select-menu` is recommended.
 	 * @default undefined
 	 * @public
 	 * @since 1.17.0
@@ -231,9 +218,8 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
+	 * **Note:** A disabled component is noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -242,17 +228,14 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
-	 * The value of the component will be the value of the currently selected <code>ui5-option</code>.
+	 * The value of the component will be the value of the currently selected `ui5-option`.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
+	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
-	 * will be created inside the <code>ui5-select</code> so that it can be submitted as
+	 * **Note:** When set, a native `input` HTML element
+	 * will be created inside the `ui5-select` so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -261,7 +244,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -270,7 +252,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @default false
 	 * @public
@@ -280,10 +261,9 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @since 1.21.0
 	 * @public
@@ -293,7 +273,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @public
 	 * @default ""
@@ -303,7 +282,6 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -362,20 +340,18 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component options.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Only one selected option is allowed.
+	 * **Note:** Only one selected option is allowed.
 	 * If more than one option is defined as selected, the last one would be considered as the selected one.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
+	 * **Note:** Use the `ui5-option` component to define the desired options.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<IOption>;
 
 	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
+	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
+	 * when `name` property is set.
 	 * @private
 	 */
 	@slot()
@@ -383,15 +359,14 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br><br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-	 * <br><br>
-	 * <b>Note:</b> If the component has <code>suggestionItems</code>,
-	 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
+	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 *
+	 * **Note:** If the component has `suggestionItems`,
+	 * the `valueStateMessage` would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 	 * @public
 	*/
 	@slot()
@@ -400,15 +375,12 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines the HTML element that will be displayed in the component input part,
 	 * representing the selected option.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified and <code>ui5-select-menu-option</code> is used,
-	 * either the option's <code>display-text</code> or its textContent will be displayed.
-	 * <br><br>
+	 * **Note:** If not specified and `ui5-select-menu-option` is used,
+	 * either the option's `display-text` or its textContent will be displayed.
 	 *
-	 * <b>Note:</b> If not specified and <code>ui5-option</code> is used,
+	 * **Note:** If not specified and `ui5-option` is used,
 	 * the option's textContent will be displayed.
-	 *
 	 * @public
 	 * @since 1.17.0
 	*/
@@ -487,24 +459,22 @@ class Select extends UI5Element implements IFormElement {
 			return menu.open;
 		}
 
-		return !!this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover.open;
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
 	 * Defines the value of the component:
-	 * <br>
-	 * - when get - returns the value of the component, e.g. the <code>value</code> property of the selected option or its text content.
-	 * <br>
-	 * - when set - selects the option with matching <code>value</code> property or text content.
-	 * <br><br>
-	 * <b>Note:</b> If the given value does not match any existing option,
-	 * the first option will get selected.
 	 *
+	 * - when get - returns the value of the component, e.g. the `value` property of the selected option or its text content.
+	 *
+	 * - when set - selects the option with matching `value` property or text content.
+	 *
+	 * **Note:** If the given value does not match any existing option,
+	 * the first option will get selected.
 	 * @public
 	 * @default ""
 	 * @since 1.20.0
@@ -513,7 +483,7 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	set value(newValue: string) {
 		const menu = this._getSelectMenu();
-		const selectOptions = Array.from(menu ? menu.children : this.children).filter(option => !option.getAttribute("disabled")) as Array<IOption>;
+		const selectOptions = Array.from(menu ? menu.children : this.children) as Array<IOption>;
 
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -525,7 +495,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	/**
-	 * Currently selected <code>ui5-option</code> element.
+	 * Currently selected `ui5-option` element.
 	 * @public
 	 * @default undefined
 	 */
@@ -576,7 +546,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _toggleRespPopover() {
+	_toggleRespPopover() {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -589,7 +559,7 @@ class Select extends UI5Element implements IFormElement {
 			return;
 		}
 
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
@@ -597,8 +567,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _attachRealDomRefs() {
-		this.responsivePopover = await this._respPopover();
+	_attachRealDomRefs() {
+		this.responsivePopover = this._respPopover();
 
 		this.options.forEach(option => {
 			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
@@ -608,7 +578,7 @@ class Select extends UI5Element implements IFormElement {
 	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
-		const options = this._filteredItems;
+		const options = this.options;
 		const syncOpts = options.map((opt, index) => {
 			if (opt.selected) {
 				lastSelectedOptionIndex = index;
@@ -959,7 +929,7 @@ class Select extends UI5Element implements IFormElement {
 		if (menu) {
 			return menu.options;
 		}
-		return this._filteredItems;
+		return this.options;
 	}
 
 	get hasCustomLabel() {
@@ -981,19 +951,19 @@ class Select extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Positive]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Negative]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Positive]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			[ValueState.Negative]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Critical]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
@@ -1040,7 +1010,7 @@ class Select extends UI5Element implements IFormElement {
 	get _effectiveTabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.opened) ? "-1" : "0";
+		&& this.responsivePopover.open) ? "-1" : "0";
 	}
 
 	 /**
@@ -1048,9 +1018,9 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageInputIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -1065,9 +1035,9 @@ class Select extends UI5Element implements IFormElement {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 			popover: {
@@ -1082,8 +1052,8 @@ class Select extends UI5Element implements IFormElement {
 				"max-width": `${this.offsetWidth}px`,
 			},
 			responsivePopoverHeader: {
-				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
+				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
 			},
 			responsivePopover: {
 				"min-width": `${this.offsetWidth}px`,
@@ -1104,7 +1074,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get hasValueStateText() {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
 	get shouldOpenValueStateMessagePopover() {
@@ -1120,10 +1090,6 @@ class Select extends UI5Element implements IFormElement {
 		return isPhone();
 	}
 
-	get _filteredItems() {
-		return this.options.filter(option => !option.disabled);
-	}
-
 	itemSelectionAnnounce() {
 		let text;
 		const optionsCount = this.selectOptions.length;
@@ -1136,8 +1102,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		this.valueStatePopover = await this._getPopover() as Popover;
+	openValueStatePopover() {
+		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
 			this.valueStatePopover.showAt(this);
 		}
@@ -1159,9 +1125,8 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOption && this.selectedOption.icon;
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
+	_getPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]");
 	}
 
 	static async onDefine() {

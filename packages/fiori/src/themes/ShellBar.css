@@ -74,7 +74,8 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
+:host([desktop]) .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-within,
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
@@ -87,6 +88,7 @@ slot[name="profile"] {
 	min-width: 0;
 	width: 2rem;
 	height: 2rem;
+	min-height: 2rem;
 	padding: .25rem;
 	pointer-events: none;
 }
@@ -144,6 +146,19 @@ slot[name="profile"] {
 	width: 7.5rem;
 }
 
+.ui5-shellbar-mid-content {
+	height: var(--_ui5_shellbar_overflow_container_middle_height);
+	width: 33.4%;
+}
+
+.ui5-shellbar-overflow-container-left:has(+ .ui5-shellbar-mid-content) {
+	width: 33.3%;
+}
+
+.ui5-shellbar-mid-content + .ui5-shellbar-overflow-container-right {
+	width: 33.3%;
+}
+
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-middle {
 	width: 0;
 }
@@ -194,7 +209,8 @@ slot[name="profile"] {
 	max-height: 2rem;
 }
 
-.ui5-shellbar-logo:focus {
+:host([desktop]) .ui5-shellbar-logo:focus-within,
+.ui5-shellbar-logo:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
@@ -438,6 +454,7 @@ slot[name="profile"] {
 	box-shadow: var(--_ui5_shellbar_search_field_box_shadow_hover);
 }
 
+/* Todo: modify this selector after ui5-input is updated */
 ::slotted([ui5-input][focused]) {
 	outline: var(--_ui5_shellbar_search_field_outline_focused);
 }
@@ -450,6 +467,11 @@ slot[name="profile"] {
 .ui5-shellbar-co-pilot-placeholder {
 	width: 2.75rem;
 	height: 2.75rem;
+}
+
+.ui5-shellbar-coPilot-pressed,
+.ui5-shellbar-coPilot-pressed:hover {
+	color: var(--sapShell_Assistant_ForegroundColor);
 }
 
 ::slotted([ui5-button][slot="startButton"]) {

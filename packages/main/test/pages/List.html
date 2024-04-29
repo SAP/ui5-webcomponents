@@ -19,41 +19,58 @@
 	<label id="result" class="list2auto"> 0 times: 0</label>
 
 	<ui5-list id="infiniteScrollEx" growing="Scroll" class="list3auto">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+			<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+		</ui5-li-group>
 
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Negative">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Critical">DVD set</ui5-li>
+		</ui5-li-group>
 
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		</ui5-li-group>
+	</ui5-list>
+
+	<br/><br/>
+
+	<h2>List growing="Button" and growing-button-text property used</h2>
+	<ui5-list id="infiniteScrollEx2" growing="Button" growing-button-text="Custom growing-button-text" class="list3auto">
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+			<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 
 	<br/><br/>
 
 	<h2>ui5-list</h2>
 
-	<ui5-list header-text="API: GroupHeaderListItem" mode="MultiSelect">
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-		<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Error">Laptop Lenovo</ui5-li>
-		<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Error">IPhone 3</ui5-li>
+	<ui5-list header-text="API: ListItemGroup" selection-mode="Multiple">
+		<ui5-li-group header-text="New Items">
+			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
+			<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
+			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Negative">IPhone 3</ui5-li>
+		</ui5-li-group>
 
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Error">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Success">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Warning">DVD set</ui5-li>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Negative">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Critical">DVD set</ui5-li>
+		</ui5-li-group>
 
-		<ui5-li-groupheader>Discounted Items</ui5-li-groupheader>
-		<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		<ui5-li-group header-text="Discounted Items">
+			<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+		</ui5-li-group>
 	</ui5-list>
 
 	<br/><br/>
@@ -91,7 +108,7 @@
 
 	<br/><br/>
 
-	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" mode="SingleSelect">
+	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" selection-mode="Single">
 		<ui5-li >Active item - press</ui5-li>
 		<ui5-li >Active item - press</ui5-li>
 		<ui5-li selected type="Inactive">Inactive item</ui5-li>
@@ -101,14 +118,14 @@
 
 	<br/><br/>
 
-	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
+	<ui5-list id="inactiveMultiple" header-text="API: ListItem type='Inactive'" selection-mode="Multiple">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 
-	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" mode="SingleSelectBegin">
+	<ui5-list id="inactiveSingleSelect" header-text="API: ListItem type='Inactive'" selection-mode="SingleStart">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
@@ -131,7 +148,7 @@
 
 	<br/><br/>
 
-	<ui5-list id="listPrevent" mode="SingleSelect" header-text="Prevent selection change event">
+	<ui5-list id="listPrevent" selection-mode="Single" header-text="Prevent selection change event">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
 		<ui5-li id="country3" >China</ui5-li>
@@ -141,7 +158,7 @@
 
 	<ui5-label id="itemClickPrevent">[prevented Event] itemClick :: n/a</ui5-label>
 
-	<ui5-list id="myList" mode="SingleSelect" header-text="API: mode='SingleSelect'">
+	<ui5-list id="myList" selection-mode="Single" header-text="API: selection-mode='Single'">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" >Bulgaria</ui5-li>
 		<ui5-li id="country3" selected >China</ui5-li>
@@ -154,7 +171,7 @@
 	<ui5-label id="itemClick">[Event] itemClick :: n/a</ui5-label>
 	<br/><br/>
 	<ui5-label id="selectionChange">[Event] selectionChange :: n/a</ui5-label>
-	<ui5-list id="myList2" mode="SingleSelectEnd" header-text="API: mode='SingleSelectEnd'">
+	<ui5-list id="myList2" selection-mode="SingleEnd" header-text="API: selection-mode='SingleEnd'">
 		<ui5-li id="country1" >Argentina</ui5-li>
 		<ui5-li id="country2" selected >Bulgaria</ui5-li>
 		<ui5-li id="country3" >China</ui5-li>
@@ -164,7 +181,7 @@
 
 	<br/><br/>
 
-	<ui5-list id="myList3" mode="SingleSelectBegin" header-text="API: mode='SingleSelectBegin'">
+	<ui5-list id="myList3" selection-mode="SingleStart" header-text="API: selection-mode='SingleStart'">
 		<ui5-li id="country1" >Dolor dolor ipsum culpa proident esse quis quis incididunt. Sunt duis eu ad deserunt dolor sunt Lorem incididunt est irure qui dolore minim consectetur. Voluptate minim veniam aliqua aute et consectetur magna commodo sit. Duis fugiat esse culpa ea velit sit excepteur duis deserunt aliquip minim laborum. Amet aliquip excepteur esse aute ut dolore labore.</ui5-li>
 		<ui5-li id="country2"  selected>Bulgaria</ui5-li>
 		<ui5-li id="country3" >China</ui5-li>
@@ -175,7 +192,7 @@
 	<ui5-label id="itemPress2">[Event] itemPress :: n/a</ui5-label>
 	<br/><br/>
 	<ui5-label id="selectionChange2">[Event] selectionChange :: n/a</ui5-label>
-	<ui5-list id="myList4" mode="MultiSelect" header-text="API: mode='MultiSelect'">
+	<ui5-list id="myList4" selection-mode="Multiple" header-text="API: selection-mode='Multiple'">
 		<ui5-li id="country1" selected>Argentina</ui5-li>
 		<ui5-li id="country2">Bulgaria</ui5-li>
 		<ui5-li id="country3">China</ui5-li>
@@ -187,7 +204,7 @@
 		<ui5-button id=	"resetBtn">Reset List</ui5-button>
 	</div>
 
-	<ui5-list id="myList5" mode="Delete" header-text="API: mode='Delete'">
+	<ui5-list id="myList5" selection-mode="Delete" header-text="API: selection-mode='Delete'">
 		<ui5-li id="arg">Argentina</ui5-li>
 		<ui5-li id="bg">Bulgaria</ui5-li>
 		<ui5-li id="ch">China</ui5-li>
@@ -209,9 +226,18 @@
 
 	<br/><br/>
 
+	<ui5-list header-text="API: Highlight">
+		<ui5-li highlight="Negative" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
+		<ui5-li highlight="Information" image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
+		<ui5-li highlight="Positive" image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+		<ui5-li highlight="Critical" image="./img/HT-2002.jpg" >DVD set</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 
-	<ui5-list header-text="API: CustomListItem" mode="SingleSelectEnd">
+	<ui5-list header-text="API: CustomListItem" selection-mode="SingleEnd">
 		<ui5-li-custom>
 			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
@@ -246,7 +272,7 @@
 
 	<ui5-list
 		id="keyboardTestList"
-		mode="MultiSelect"
+		selection-mode="Multiple"
 		header-text="Text when no header provided"
 		footer-text="Copyright"
 		no-data-text="No data">
@@ -277,16 +303,16 @@
 	</ui5-list>
 
 	<br />
-	Change mode:
+	Change selectionMode:
 	<ui5-select id="select">
 		<ui5-option selected>None</ui5-option>
-		<ui5-option>SingleSelect</ui5-option>
-		<ui5-option>SingleSelectBegin</ui5-option>
-		<ui5-option>SingleSelectEnd</ui5-option>
-		<ui5-option>MultiSelect</ui5-option>
+		<ui5-option>Single</ui5-option>
+		<ui5-option>SingleStart</ui5-option>
+		<ui5-option>SingleEnd</ui5-option>
+		<ui5-option>Multiple</ui5-option>
 		<ui5-option>Delete</ui5-option>
 	</ui5-select>
-	<ui5-list id="myList6" header-text="visualization of different combinations of icon / title / description / info / image - (Current mode: None)">
+	<ui5-list id="myList6" header-text="visualization of different combinations of icon / title / description / info / image - (Current selectionMode: None)">
 		<ui5-li-custom>
 			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
@@ -295,16 +321,16 @@
 		</ui5-li-custom>
 		<ui5-li>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li additional-text-state="Error" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li additional-text-state="Error" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li additional-text-state="Negative" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li additional-text-state="Negative" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li icon="home">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li icon="home" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li icon="home" additional-text-state="Error" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li icon="home" additional-text-state="Error" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li icon="home" additional-text-state="Negative" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li icon="home" additional-text-state="Negative" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li image="./img/woman_avatar_5.png">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li image="./img/woman_avatar_5.png" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Error" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
-		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Error" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Negative" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
+		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Negative" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 	</ui5-list>
 
 	<script>
@@ -327,12 +353,12 @@
 		var lblSelectionChange2 = document.getElementById('selectionChange2');
 		var visualizationList = document.getElementById('myList6');
 		var select = document.getElementById('select');
-		var modes = {
+		var selectionModes = {
 			"None": undefined,
-			"SingleSelect": "SingleSelect",
-			"SingleSelectBegin": "SingleSelectBegin",
-			"SingleSelectEnd": "SingleSelectEnd",
-			"MultiSelect": "MultiSelect",
+			"Single": "Single",
+			"SingleStart": "SingleStart",
+			"SingleEnd": "SingleEnd",
+			"Multiple": "Multiple",
 			"Delete": "Delete"
 		}
 		var items = ["<ui5-li id='arg'>Argentina</ui5-li>", "<ui5-li id='bg'>Bulgaria</ui5-li>", "<ui5-li id='ch'>China</ui5-li>"];
@@ -343,8 +369,8 @@
 		select.addEventListener("ui5-change", function (event) {
 			var value = event.detail.selectedOption.textContent;
 
-			visualizationList.mode = modes[value];
-			visualizationList.headerText = visualizationList.headerText.replace(/\(.+\)/, "(Current mode: " + value + ")");
+			visualizationList.selectionModes = selectionModes[value];
+			visualizationList.headerText = visualizationList.headerText.replace(/\(.+\)/, "(Current selectionMode: " + value + ")");
 		});
 
 		var getItems = function getItems(items) {
@@ -449,11 +475,23 @@
 
 		infiniteScrollEx.addEventListener("ui5-load-more", function(e) {
 			var el = infiniteScrollEx;
-			el.busy = true;
+			el.loading = true;
 
 			setTimeout(function() {
 				insertItems(el, 3);
-				el.busy = false;
+				el.loading = false;
+				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);
+			}, 1000);
+		});
+
+
+		infiniteScrollEx2.addEventListener("ui5-load-more", function(e) {
+			var el = infiniteScrollEx2;
+			el.loading = true;
+
+			setTimeout(function() {
+				insertItems(el, 3);
+				el.loading = false;
 				result.textContent = (++loadedCount) + " times " + (itemsLoadedTotal += itemsToLoad);
 			}, 1000);
 		});

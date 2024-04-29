@@ -1,15 +1,14 @@
 <ui5-responsive-popover
 	class="{{classes.popover}}"
 	hide-arrow
-	placement-type="Bottom"
-	horizontal-align="Left"
+	placement="Bottom"
+	horizontal-align="Start"
 	style="{{styles.suggestionsPopover}}"
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
 >
 	<ui5-busy-indicator
 		?active={{loading}}
-		size="Medium"
 		class="ui5-combobox-busy"
 	>
 	</ui5-busy-indicator>
@@ -43,7 +42,7 @@
 				</ui5-input>
 			</div>
 		</div>
-		
+
 		{{#if hasValueStateText}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
@@ -67,11 +66,11 @@
 		@ui5-item-click={{_selectItem}}
 		@ui5-item-focused={{_onItemFocus}}
 		@mousedown={{_itemMousedown}}
-		mode="SingleSelect"
+		selection-mode="Single"
 	>
 		{{#each _filteredItems}}
 			{{#if isGroupItem}}
-				<ui5-li-groupheader ?focused={{this.focused}}>{{ this.text }}</ui5-li-groupheader>
+				<ui5-li-group-header ?focused={{this.focused}}>{{ this.text }}</ui5-li-group-header>
 			{{else}}
 				{{> listItem}}
 			{{/if}}
@@ -97,7 +96,7 @@
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
-		placement-type="Bottom"
+		placement="Bottom"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>

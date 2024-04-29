@@ -1,30 +1,35 @@
 <div class="ui5-illustrated-message-root">
-	<div class="ui5-illustrated-message-illustration">
-		{{{effectiveIllustration}}}
+	<div class="ui5-illustrated-message-inner">
+		<div class="ui5-illustrated-message-illustration">
+			{{{effectiveIllustration}}}
+		</div>
+		<div class="ui5-illustrated-message-text-and-actions-container">
+			{{#if hasTitle}}
+				<div part="title" class="ui5-illustrated-message-title">
+					{{#if hasFormattedTitle}}
+						<slot name="title"></slot>
+					{{else}}
+						<ui5-title wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
+					{{/if}}
+				</div>
+			{{/if}}
+
+			{{#if hasSubtitle}}
+				<div part="subtitle" class="ui5-illustrated-message-subtitle">
+					{{#if hasFormattedSubtitle}}
+						<slot name="subtitle"></slot>
+					{{else}}
+						{{effectiveSubitleText}}
+					{{/if}}
+				</div>
+			{{/if}}
+			{{#if hasActions}}
+				<div class="ui5-illustrated-message-actions">
+					<slot></slot>
+				</div>
+			{{/if}}
+		</div>
 	</div>
-	{{#if hasTitle}}
-			{{#if hasFormattedTitle}}
-				<slot name="title"></slot>
-			{{else}}
-				<ui5-title level="{{titleLevel}}" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
-			{{/if}}
-	{{/if}}
-
-	{{#if hasSubtitle}}
-		<div part="subtitle" class="ui5-illustrated-message-subtitle">
-			{{#if hasFormattedSubtitle}}
-				<slot name="subtitle"></slot>
-			{{else}}
-				{{effectiveSubitleText}}
-			{{/if}}
-		</div>
-	{{/if}}
-
-	{{#if hasActions}}
-		<div class="ui5-illustrated-message-actions">
-			<slot></slot>
-		</div>
-	{{/if}}
 
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 		class="ui5-illustrated-message-util">

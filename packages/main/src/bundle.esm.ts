@@ -74,7 +74,7 @@ import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { ignoreCustomElements, shouldIgnoreCustomElement } from "@ui5/webcomponents-base/dist/IgnoreCustomElements.js";
 
 // SAP Icons
-import accept from "@ui5/webcomponents-icons/dist/accept.js";
+import accept, { getPathData } from "@ui5/webcomponents-icons/dist/accept.js";
 import acceptv4 from "@ui5/webcomponents-icons/dist/v4/accept.js";
 import acceptv5 from "@ui5/webcomponents-icons/dist/v5/accept.js";
 // SAP TNT Icons
@@ -85,7 +85,6 @@ import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
 import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
-import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
 import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
@@ -100,6 +99,7 @@ import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
 import Badge from "./Badge.js";
+import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
@@ -144,6 +144,7 @@ import MessageStrip from "./MessageStrip.js";
 import MultiComboBox from "./MultiComboBox.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import RatingIndicator from "./RatingIndicator.js";
+import Text from "./Text.js";
 import TabContainer from "./TabContainer.js";
 import Tab from "./Tab.js";
 import TabSeparator from "./TabSeparator.js";
@@ -153,7 +154,6 @@ import TableRow from "./TableRow.js";
 import TableGroupRow from "./TableGroupRow.js";
 import TableCell from "./TableCell.js";
 import TextArea from "./TextArea.js";
-import TimeSelection from "./TimeSelection.js";
 import TimePicker from "./TimePicker.js";
 import TimePickerClock from "./TimePickerClock.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -175,7 +175,8 @@ import List from "./List.js";
 // console.log({List})
 import StandardListItem from "./StandardListItem.js";
 import CustomListItem from "./CustomListItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import ListItemGroup from "./ListItemGroup.js";
 
 // Features
 import "./features/InputElementsFormSupport.js";
@@ -188,11 +189,6 @@ window.sanitizeHTML = sanitizeHTML;
 window.URLListValidator = URLListValidator;
 ignoreCustomElements("app-");
 ignoreCustomElements("my-");
-// setUseLinks(true); // "true" to force all browsers to use links
-// setPackageCSSRoot("@ui5/webcomponents-base", "./resources/css/base/");
-// setPackageCSSRoot("@ui5/webcomponents-theming", "./resources/css/theming/");
-// setPackageCSSRoot("@ui5/webcomponents", "./resources/css/main/");
-// setPackageCSSRoot("@ui5/webcomponents-fiori", "./resources/css/fiori/");
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon3dv1, icon3dv2];
 
@@ -224,6 +220,7 @@ const testAssets = {
 	detachThemeLoaded,
 	getIconNames,
 	getIconAccessibleName,
+	getAcceptIconPathData: getPathData,
 	renderFinished,
 	defaultTexts,
 	getExportedIconsValues: () => icons,

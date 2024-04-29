@@ -25,6 +25,7 @@ import {
 	MESSAGE_STRIP_WARNING,
 	MESSAGE_STRIP_SUCCESS,
 	MESSAGE_STRIP_INFORMATION,
+	MESSAGE_STRIP_CUSTOM,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -34,14 +35,9 @@ enum DesignClassesMapping {
 	Information = "ui5-message-strip-root--info",
 	Positive = "ui5-message-strip-root--positive",
 	Negative = "ui5-message-strip-root--negative",
-	Warning = "ui5-message-strip-root--warning",
-}
-
-enum IconMapping {
-	Information = "information",
-	Positive = "sys-enter-2",
-	Negative = "error",
-	Warning = "alert",
+	Critical = "ui5-message-strip-root--critical",
+	ColorSet1 = "ui5-message-strip-root--color-set-1",
+	ColorSet2 = "ui5-message-strip-root--color-set-2",
 }
 
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
@@ -49,38 +45,36 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-message-strip</code> component enables the embedding of app-related messages.
- * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
+ * The `ui5-message-strip` component enables the embedding of app-related messages.
+ * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Critical and Negative.
  * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * For the <code>ui5-message-strip</code> component, you can define whether it displays
+ * For the `ui5-message-strip` component, you can define whether it displays
  * an icon in the beginning and a close button. Moreover, its size and background
  * can be controlled with CSS.
  *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/MessageStrip";</code>
- *
+ * `import "@ui5/webcomponents/dist/MessageStrip.js";`
  * @constructor
  * @extends UI5Element
  * @public
  * @since 0.9.0
  * @slot {Array<Node>} default
  * Defines the text of the component.
- * <br><br>
- * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+ *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 @customElement({
 	tag: "ui5-message-strip",
@@ -93,7 +87,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 /**
  * Fired when the close button is pressed either with a
  * click/tap or by using the Enter or Space key.
- *
  * @public
  */
 @event("close")
@@ -101,7 +94,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component type.
-	 *
 	 * @default "Information"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -113,8 +105,22 @@ class MessageStrip extends UI5Element {
 	design!: `${MessageStripDesign}`;
 
 	/**
+	 * Defines the color scheme of the component.
+	 * There are 10 predefined schemes.
+	 * To use one you can set a number from `"1"` to `"10"`. The `colorScheme` `"1"` will be set by default.
+	 *
+	 * @default "1"
+	 * @public
+	 * @since 2.0
+	 */
+	@property({ defaultValue: "1" })
+	colorScheme!: string;
+
+	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
-	 * You can directly provide an icon with the <code>icon</code> slot. Otherwise, the default icon for the type will be used.
+	 * You can directly provide an icon with the `icon` slot. Otherwise, the default icon for the type will be used.
+	 *
+	 *  * **Note:** If <code>MessageStripDesign.ColorSet1</code> or <code>MessageStripDesign.ColorSet2</code> value is set to the <code>design</code> property, default icon will not be presented.
 	 *
 	 * @default false
 	 * @public
@@ -125,7 +131,6 @@ class MessageStrip extends UI5Element {
 
 	/**
 	 * Defines whether the MessageStrip renders close button.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -134,13 +139,11 @@ class MessageStrip extends UI5Element {
 
 	/**
 	 * Defines the content to be displayed as graphical element within the component.
-	 * <br><br>
-	 * <b>Note:</b> If no icon is given, the default icon for the component type will be used.
+	 *
+	 * **Note:** If no icon is given, the default icon for the component type will be used.
 	 * The SAP-icons font provides numerous options.
-	 * <br><br>
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @public
 	 */
 	@slot()
@@ -165,7 +168,9 @@ class MessageStrip extends UI5Element {
 			Information: getTranslation(MESSAGE_STRIP_INFORMATION),
 			Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
 			Negative: getTranslation(MESSAGE_STRIP_ERROR),
-			Warning: getTranslation(MESSAGE_STRIP_WARNING),
+			Critical: getTranslation(MESSAGE_STRIP_WARNING),
+			ColorSet1: getTranslation(MESSAGE_STRIP_CUSTOM),
+			ColorSet2: getTranslation(MESSAGE_STRIP_CUSTOM),
 		};
 	}
 
@@ -197,7 +202,18 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return IconMapping[this.design];
+		switch (this.design) {
+		case MessageStripDesign.Critical:
+			return "alert";
+		case MessageStripDesign.Positive:
+			return "sys-enter-2";
+		case MessageStripDesign.Negative:
+			return "error";
+		case MessageStripDesign.Information:
+			return "information";
+		default:
+			return null;
+		}
 	}
 
 	get designClasses() {

@@ -5,17 +5,17 @@ describe("SegmentedButton general interaction", () => {
 		await browser.url(`test/pages/SegmentedButton.html`);
 	});
 
-	it("tests if pressed and tooltip attributes are applied", async () => {
+	it("tests if selected and tooltip attributes are applied", async () => {
 		const segmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");
-		const segmentedButtonItemInner = await segmentedButtonItem.shadow$(".ui5-button-root");
+		const segmentedButtonItemInner = await segmentedButtonItem.shadow$(".ui5-segmented-button-item-root");
 
-		assert.ok(await segmentedButtonItem.getProperty("pressed"), "SegmentedButtonItem has property pressed");
+		assert.ok(await segmentedButtonItem.getProperty("selected"), "SegmentedButtonItem has property selected");
 		assert.strictEqual(await segmentedButtonItemInner.getProperty("title"), "Employee",
 			"SegmentedButtonItem root element has property title");
 	});
 
 
-	it("tests if pressed attribute is switched to the newly pressed item when selected with enter key", async () => {
+	it("tests if selected attribute is switched to the newly selected item when selected with enter key", async () => {
 		const firstSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 		const secondSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
 
@@ -23,42 +23,42 @@ describe("SegmentedButton general interaction", () => {
 		await firstSegmentedButtonItem.keys("ArrowRight");
 		await browser.keys("Enter");
 
-		assert.notOk(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should not be pressed anymore");
-		assert.ok(await secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem has property pressed");
+		assert.notOk(await firstSegmentedButtonItem.getProperty("selected"), "First SegmentedButtonItem should not be selected anymore");
+		assert.ok(await secondSegmentedButtonItem.getProperty("selected"), "Second SegmentedButtonItem has property selected");
 	});
 
-	it("tests if pressed attribute is switched to the newly pressed item when selected with space key", async () => {
+	it("tests if selected attribute is switched to the newly selected item when selected with space key", async () => {
 		const secondSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:nth-child(2)");
 		const lastSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
 		await secondSegmentedButtonItem.keys("ArrowRight");
 		await browser.keys("Space");
 
-		assert.notOk(await secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem should not be pressed anymore");
-		assert.ok(await lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem has property pressed");
+		assert.notOk(await secondSegmentedButtonItem.getProperty("selected"), "Second SegmentedButtonItem should not be selected anymore");
+		assert.ok(await lastSegmentedButtonItem.getProperty("selected"), "Last SegmentedButtonItem has property selected");
 	});
 
-	it("tests if pressed attribute is switched to the newly pressed item when selected with mouse", async () => {
+	it("tests if selected attribute is switched to the newly selected item when selected with mouse", async () => {
 		const firstSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:first-child");
 		const lastSegmentedButtonItem =  await browser.$("#segButton1 > ui5-segmented-button-item:last-child");
 
 		await firstSegmentedButtonItem.click();
 
-		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem has property pressed");
-		assert.notOk(await lastSegmentedButtonItem.getProperty("pressed"), "Last SegmentedButtonItem should not be pressed anymore");
+		assert.ok(await firstSegmentedButtonItem.getProperty("selected"), "First SegmentedButtonItem has property selected");
+		assert.notOk(await lastSegmentedButtonItem.getProperty("selected"), "Last SegmentedButtonItem should not be selected anymore");
 	});
 
-	it("tests if pressed attribute is applied only to last child when all items are pressed", async () => {
+	it("tests if selected attribute is applied only to last child when all items are selected", async () => {
 		const segmentedButtonItem1 =  await browser.$("#segButton2 > ui5-segmented-button-item:first-child");
 		const segmentedButtonItem2 =  await browser.$("#segButton2 > ui5-segmented-button-item:nth-child(2)");
 		const segmentedButtonItem3 =  await browser.$("#segButton2 > ui5-segmented-button-item:nth-child(3)");
 		const segmentedButtonItem4 =  await browser.$("#segButton2 > ui5-segmented-button-item:last-child");
 
-		// only last item should be pressed
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "SegmentedButtonItem should not be pressed");
-		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "SegmentedButtonItem should not be pressed");
-		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "SegmentedButtonItem should not be pressed");
-		assert.ok(await segmentedButtonItem4.getProperty("pressed"), "SegmentedButtonItem has property pressed");
+		// only last item should be selected
+		assert.notOk(await segmentedButtonItem1.getProperty("selected"), "SegmentedButtonItem should not be selected");
+		assert.notOk(await segmentedButtonItem2.getProperty("selected"), "SegmentedButtonItem should not be selected");
+		assert.notOk(await segmentedButtonItem3.getProperty("selected"), "SegmentedButtonItem should not be selected");
+		assert.ok(await segmentedButtonItem4.getProperty("selected"), "SegmentedButtonItem has property selected");
 
 	});
 
@@ -70,11 +70,11 @@ describe("SegmentedButton general interaction", () => {
 
 		await button1.click();
 		await button1.keys("Tab");
-		assert.ok(await segmentedButtonItem1.isFocused(), "The first SegmentedButtonItem should be focused.");
+		assert.ok(await segmentedButtonItem1.matches(":focus"), "The first SegmentedButtonItem should be focused.");
 
 		await button2.click();
 		await button2.keys("Tab");
-		assert.ok(await segmentedButtonItem2.isFocused(), "The selected SegmentedButtonItem should be focused.");
+		assert.ok(await segmentedButtonItem2.matches(":focus"), "The selected SegmentedButtonItem should be focused.");
 	});
 
 	it("tests programatical item pressing", async () => {
@@ -87,42 +87,42 @@ describe("SegmentedButton general interaction", () => {
 		const segmentedButtonItem3 =  await browser.$("#sbpItem3");
 
 		await button1.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 1] The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "[step 1] The first SegmentedButtonItem should be pressed.");
-		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 1] The first SegmentedButtonItem should not be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("selected"), "[step 1] The first SegmentedButtonItem should not be selected.");
+		assert.ok(await segmentedButtonItem2.getProperty("selected"), "[step 1] The first SegmentedButtonItem should be selected.");
+		assert.notOk(await segmentedButtonItem3.getProperty("selected"), "[step 1] The first SegmentedButtonItem should not be selected.");
 
 		await button2.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 2] The first SegmentedButtonItem should not be pressed.");
-		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "[step 2] The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem3.getProperty("pressed"), "[step 2] The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("selected"), "[step 2] The first SegmentedButtonItem should not be selected.");
+		assert.notOk(await segmentedButtonItem2.getProperty("selected"), "[step 2] The first SegmentedButtonItem should not be selected.");
+		assert.ok(await segmentedButtonItem3.getProperty("selected"), "[step 2] The first SegmentedButtonItem should be selected.");
 
 		await button4.click();
-		assert.ok(await segmentedButtonItem1.getProperty("pressed"), "[step 3] The first SegmentedButtonItem should be pressed.");
-		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "[step 3] The first SegmentedButtonItem should not be pressed.");
-		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 3] The first SegmentedButtonItem should not be pressed.");
+		assert.ok(await segmentedButtonItem1.getProperty("selected"), "[step 3] The first SegmentedButtonItem should be selected.");
+		assert.notOk(await segmentedButtonItem2.getProperty("selected"), "[step 3] The first SegmentedButtonItem should not be selected.");
+		assert.notOk(await segmentedButtonItem3.getProperty("selected"), "[step 3] The first SegmentedButtonItem should not be selected.");
 
 		await button1.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 4] The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "[step 4] The first SegmentedButtonItem should be pressed.");
-		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 4] The first SegmentedButtonItem should not be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("selected"), "[step 4] The first SegmentedButtonItem should not be selected.");
+		assert.ok(await segmentedButtonItem2.getProperty("selected"), "[step 4] The first SegmentedButtonItem should be selected.");
+		assert.notOk(await segmentedButtonItem3.getProperty("selected"), "[step 4] The first SegmentedButtonItem should not be selected.");
 
 		await button3.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should not be pressed.");
-		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("selected"), "[step 5] The first SegmentedButtonItem should not be selected.");
+		assert.ok(await segmentedButtonItem2.getProperty("selected"), "[step 5] The first SegmentedButtonItem should not be selected.");
+		assert.notOk(await segmentedButtonItem3.getProperty("selected"), "[step 5] The first SegmentedButtonItem should be selected.");
 	});
 
-	it("tests if a pressed item could be deselected", async () => {
+	it("tests if a selected item could be deselected", async () => {
 		const firstSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:first-child");
 
 		await firstSegmentedButtonItem.click();
-		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be pressed");
+		assert.ok(await firstSegmentedButtonItem.getProperty("selected"), "First SegmentedButtonItem should be selected");
 
 		await firstSegmentedButtonItem.click();
-		assert.notOk(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be deselected");
+		assert.notOk(await firstSegmentedButtonItem.getProperty("selected"), "First SegmentedButtonItem should be deselected");
 	});
 
-	it("tests if multiple items could be pressed", async () => {
+	it("tests if multiple items could be selected", async () => {
 		const firstSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:first-child");
 		const secondSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:nth-child(1)");
 
@@ -130,7 +130,7 @@ describe("SegmentedButton general interaction", () => {
 		await secondSegmentedButtonItem.keys("ArrowRight");
 		await browser.keys("Space");
 
-		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be pressed");
-		assert.ok(await secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem should be pressed");
+		assert.ok(await firstSegmentedButtonItem.getProperty("selected"), "First SegmentedButtonItem should be selected");
+		assert.ok(await secondSegmentedButtonItem.getProperty("selected"), "Second SegmentedButtonItem should be selected");
 	});
 });

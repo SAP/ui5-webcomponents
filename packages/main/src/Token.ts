@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
 	isBackSpace,
 	isSpace,
@@ -33,13 +32,13 @@ type TokenDeleteEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Tokens are small items of information (similar to tags) that mainly serve to visualize previously selected items.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/Token.js";</code>
+ * `import "@ui5/webcomponents/dist/Token.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.9
@@ -56,14 +55,12 @@ type TokenDeleteEventDetail = {
 })
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
- *
  * @public
  */
 @event("select")
 
 /**
  * Fired when the backspace, delete or close icon of the token is pressed
- *
  * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
@@ -78,7 +75,6 @@ type TokenDeleteEventDetail = {
 class Token extends UI5Element implements IToken {
 	/**
 	 * Defines the text of the token.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -87,10 +83,9 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component can not be deleted or selected,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component can not be deleted or selected,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
@@ -99,7 +94,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is selected or not.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -108,7 +102,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -120,7 +113,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines whether the component is focused or not.
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -130,7 +122,6 @@ class Token extends UI5Element implements IToken {
 	/**
 	 * Defines whether the token is being deleted
 	 * This flag is used in the ui5-multi-combobox
-	 *
 	 * @default false
 	 * @private
 	 */
@@ -139,7 +130,6 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines the tabIndex of the component.
-	 *
 	 * @private
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
@@ -147,8 +137,7 @@ class Token extends UI5Element implements IToken {
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
-	 * Accepts <code>ui5-icon</code>.
-	 *
+	 * Accepts `ui5-icon`.
 	 * @public
 	 * @since 1.0.0-rc.9
 	 */
@@ -206,10 +195,6 @@ class Token extends UI5Element implements IToken {
 	}
 
 	get iconURI() {
-		if (getTheme().includes("sap_belize")) {
-			return "sys-cancel";
-		}
-
 		return "decline";
 	}
 

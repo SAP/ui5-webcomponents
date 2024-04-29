@@ -37,19 +37,18 @@ type DynamicSideContentLayoutChangeEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The DynamicSideContent (<code>ui5-dynamic-side-content</code>) is a layout component that allows additional content
+ * The DynamicSideContent (`ui5-dynamic-side-content`) is a layout component that allows additional content
  * to be displayed in a way that flexibly adapts to different screen sizes. The side
  * content appears in a container next to or directly below the main content
  * (it doesn't overlay). When the side content is triggered, the main content becomes
  * narrower (if appearing side-by-side). The side content contains a separate scrollbar
  * when appearing next to the main content.
  *
+ * ### Usage
  *
- * <h3>Usage</h3>
- *
- * <i>When to use?</i>
+ * *When to use?*
  *
  * Use this component if you want to display relevant information that is not critical
  * for users to complete a task. Users should have access to all the key functions and
@@ -57,41 +56,40 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * important because on smaller screen sizes it may be difficult to display the side
  * content in a way that is easily accessible for the user.
  *
- * <i>When not to use?</i>
+ * *When not to use?*
  *
  * Don't use it if you want to display navigation or critical information that prevents
  * users from completing a task when they have no access to the side content.
  *
+ * ### Responsive Behavior
  *
- * <h3>Responsive Behavior</h3>
+ * Screen width \> 1440px
  *
- * Screen width > 1440px
+ * - Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px
+ * each).
+ * - If the application defines a trigger, the side content can be hidden.
  *
- * <ul><li>Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px
- * each).</li>
- * <li>If the application defines a trigger, the side content can be hidden.</li></ul>
+ * Screen width \<\= 1440px and \> 1024px
  *
- * Screen width <= 1440px and > 1024px
- *
- * <ul><li>Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of
+ * - Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of
  * 320px each). If the side content width falls below 320 px, it automatically slides
  * under the main content, unless the app development team specifies that it should
- * disappear.</li></ul>
+ * disappear.
  *
- * Screen width <= 1024px and > 720px
+ * Screen width \<\= 1024px and \> 720px
  *
- * <ul><li>The side content ratio is fixed to 340px, and the main content takes the rest
- * of the width. Only if the <code>sideContentFallDown</code> is set to <code>OnMinimumWidth</code>
- * and screen width is <= 960px and > 720px the side content falls below the main content.</li></ul>
+ * - The side content ratio is fixed to 340px, and the main content takes the rest
+ * of the width. Only if the `sideContentFallDown` is set to `OnMinimumWidth`
+ * and screen width is \<\= 960px and \> 720px the side content falls below the main content.
  *
- * Screen width <= 720px (for example on a mobile device)
+ * Screen width \<\= 720px (for example on a mobile device)
  *
- * <ul><li>In this case, the side content automatically disappears from the screen (unless
- * specified to stay under the content by setting of <code>sideContentVisibility</code>
- * property to <code>AlwaysShow</code>) and can be triggered from a pre-set trigger
+ * - In this case, the side content automatically disappears from the screen (unless
+ * specified to stay under the content by setting of `sideContentVisibility`
+ * property to `AlwaysShow`) and can be triggered from a pre-set trigger
  * (specified within the app). When the side content is triggered, it replaces the main
  * content. We recommend that you always place the trigger for the side content in the
- * same location, such as in the app footer.</li></ul>
+ * same location, such as in the app footer.
  *
  * A special case allows switching the comparison mode between the main and side content.
  * In this case, the screen is split into 50:50 percent for main vs. side content. The
@@ -99,10 +97,9 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * side content disappears on screen widths of less than 720 px and can only be
  * viewed by triggering it.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/DynamicSideContent";</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/DynamicSideContent.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -154,7 +151,6 @@ type DynamicSideContentLayoutChangeEventDetail = {
 class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines the visibility of the main content.
-	 *
 	 * @default false
 	 * @public
 	 *
@@ -164,7 +160,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines the visibility of the side content.
-	 *
 	 * @default false
 	 * @public
 	 *
@@ -175,15 +170,7 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Defines whether the side content is positioned before the main content (left side
 	 * in LTR mode), or after the the main content (right side in LTR mode).
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Start</code></li>
-	 * <li><code>End</code></li>
-	 * </ul>
-	 *
+
 	 * @default "End"
 	 * @public
 	 *
@@ -193,19 +180,7 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>AlwaysShow</code></li>
-	 * <li><code>ShowAboveL</code></li>
-	 * <li><code>ShowAboveM</code></li>
-	 * <li><code>ShowAboveS</code></li>
-	 * <li><code>NeverShow</code></li>
-	 * </ul>
-	 *
-	 * @default "ShowAboveS"
+ 	 * @default "ShowAboveS"
 	 * @public
 	 *
 	 */
@@ -214,17 +189,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
-	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>BelowXL</code></li>
-	 * <li><code>BelowL</code></li>
-	 * <li><code>BelowM</code></li>
-	 * <li><code>OnMinimumWidth</code></li>
-	 * </ul>
-	 *
 	 * @default "OnMinimumWidth"
 	 * @public
 	 *
@@ -237,7 +201,6 @@ class DynamicSideContent extends UI5Element {
 	 * the main content take 50:50 percent of the container on all screen sizes
 	 * except for phone, where the main and side contents are switching visibility
 	 * using the toggle method.
-	 *
 	 * @default false
 	 * @public
 	 *
@@ -271,7 +234,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Defines the side content.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -304,7 +266,6 @@ class DynamicSideContent extends UI5Element {
 
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
-	 *
 	 * @public
 	 */
 	toggleContents(): void {

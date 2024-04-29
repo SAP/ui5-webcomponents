@@ -49,8 +49,7 @@ describe("Breadcrumbs general interaction", () => {
 		// Act
 		await overflowArrowLink.click(); // open the overflow
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+		const firstItem = (await browser.$(`#breadcrumbs1`).shadow$$("ui5-li"))[0];
 
 		await firstItem.click();
 
@@ -159,55 +158,51 @@ describe("Breadcrumbs general interaction", () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
 
 		await browser.keys("Space");
-		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+		assert.ok(await popover.getProperty("open"), "Dropdown is opened.");
 	});
 
 	it("toggles upon F4", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
 
 		await browser.keys("F4");
-		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+		assert.ok(await popover.getProperty("open"), "Dropdown is opened.");
 
 		await browser.keys("F4");
-		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
+		assert.notOk(await popover.getProperty("open"), "Dropdown is closed.");
 	});
 
 	it("toggles upon ALT + DOWN", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
 		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbs1");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
 
 		await externalElement.click();
 		await externalElement.keys("Tab");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.ok(await popover.getProperty("opened"), "Dropdown is opened.");
+		assert.ok(await popover.getProperty("open"), "Dropdown is opened.");
 
 		await browser.keys(["Alt", "ArrowDown", "NULL"]);
-		assert.notOk(await popover.getProperty("opened"), "Dropdown is closed.");
+		assert.notOk(await popover.getProperty("open"), "Dropdown is closed.");
 	});
 
 	it("renders accessible names of overflowing link items", async () => {
 		await browser.url(`test/pages/Breadcrumbs.html`);
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#breadcrumbsWithAccName"),
-			listItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[1],
+		const listItem = (await browser.$(`#breadcrumbsWithAccName`).shadow$$("ui5-li"))[1],
 			expectedAriaLabel = "first link acc name";
 
 		// Check

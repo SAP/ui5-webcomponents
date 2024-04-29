@@ -11,11 +11,11 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
 
 /**
  * @class
- * The <code>ui5-li</code> represents the simplest type of item for a <code>ui5-list</code>.
+ * The `ui5-li` represents the simplest type of item for a `ui5-list`.
  *
  * This is a list item,
- * providing the most common use cases such as <code>text</code>,
- * <code>image</code> and <code>icon</code>.
+ * providing the most common use cases such as `text`,
+ * `image` and `icon`.
 
  * @csspart title - Used to style the title of the list item
  * @csspart description - Used to style the description of the list item
@@ -27,11 +27,9 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @csspart delete-button - Used to style the button rendered when the list item is in delete mode
  * @csspart radio - Used to style the radio button rendered when the list item is in single selection mode
  * @csspart checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode
- *
  * @slot {Node[]} default - Defines the text of the component.
- * <br><br>
- * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  *
+ * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  * @constructor
  * @extends ListItem
  * @public
@@ -56,12 +54,11 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	description!: string;
 
 	/**
-	 * Defines the <code>icon</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b>
-	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * Defines the `icon` source URI.
 	 *
+	 * **Note:**
+	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
+	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @public
 	 */
@@ -69,10 +66,9 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	icon!: string;
 
 	/**
-	 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
-	 * <br><br>
-	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
+	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
 	 *
+	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
 	 * @default false
 	 * @public
 	 */
@@ -80,10 +76,9 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	iconEnd!: boolean;
 
 	/**
-	 * Defines the <code>image</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
+	 * Defines the `image` source URI.
 	 *
+	 * **Note:** The `image` would be displayed in the beginning of the list item.
 	 * @default ""
 	 * @public
 	 */
@@ -91,7 +86,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	image!: string;
 
 	/**
-	 * Defines the <code>additionalText</code>, displayed in the end of the list item.
+	 * Defines the `additionalText`, displayed in the end of the list item.
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -100,9 +95,9 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	additionalText!: string;
 
 	/**
-	 * Defines the state of the <code>additionalText</code>.
-	 * <br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+	 * Defines the state of the `additionalText`.
+	 *
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -113,7 +108,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.
-	 *
 	 * @default ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -124,8 +118,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines if the text of the component should wrap, they truncate by default.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
+	 * **Note:** this property takes affect only if text node is provided to default slot of the component
 	 * @default "None"
 	 * @private
 	 * @since 1.5.0
@@ -144,10 +137,11 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	_hasImageContent!: boolean;
 
 	/**
-	 * <b>Note:</b> While the slot allows option for setting custom avatar, to match the
-	 * design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S.
-	 * <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the
-	 * <code>ui5-li</code> should be customized in order to fit.
+	 * **Note:** While the slot allows option for setting custom avatar, to match the
+	 * design guidelines, please use the `ui5-avatar` with it's default size - S.
+	 *
+	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
+	 * `ui5-li` should be customized in order to fit.
 	 * @since 1.10.0
 	 * @public
 	 */

@@ -22,14 +22,14 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-toolbar-select</code> component is used to create a toolbar drop-down list.
- * The items inside the <code>ui5-toolbar-select</code> define the available options by using the <code>ui5-toolbar-select-option</code> component.
+ * ### Overview
+ * The `ui5-toolbar-select` component is used to create a toolbar drop-down list.
+ * The items inside the `ui5-toolbar-select` define the available options by using the `ui5-toolbar-select-option` component.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/ToolbarSelect";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/ToolbarSelect.js";`
+ *
+ * `import "@ui5/webcomponents/dist/ToolbarSelectOption.js";` (comes with `ui5-toolbar-select`)
  * @constructor
  * @abstract
  * @extends ToolbarItem
@@ -43,7 +43,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
 /**
  * Fired when the selected option changes.
- *
  * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
@@ -59,13 +58,11 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
 /**
  * Fired after the component's dropdown menu opens.
- *
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
- *
  * @public
  */
 @event("close")
@@ -73,10 +70,8 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the width of the select.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
-	 *
+	 * **Note:** all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 * @default undefined
 	 * @public
 	 */
@@ -86,12 +81,10 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the component options.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Only one selected option is allowed.
+	 * **Note:** Only one selected option is allowed.
 	 * If more than one option is defined as selected, the last one would be considered as the selected one.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
+	 * **Note:** Use the `ui5-toolbar-select-option` component to define the desired options.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -99,8 +92,6 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 *
 	 * @default "None"
 	 * @public
 	 */
@@ -109,9 +100,8 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Defines whether the component is in disabled state.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
+	 * **Note:** A disabled component is noninteractive.
 	 * @default false
 	 * @public
 	 */
@@ -120,7 +110,6 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
 	 * @public
 	 * @default ""
 	 */
@@ -129,7 +118,6 @@ class ToolbarSelect extends ToolbarItem {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 *
 	 * @default ""
 	 * @public
 	 */

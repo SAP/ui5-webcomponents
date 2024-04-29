@@ -15,6 +15,7 @@
 	left: 0;
 	height: 100%;
 	width: 100%;
+	font-size: 0;
 }
 
 .ui5-file-uploader-root input[type=file]:not([disabled]) {
@@ -37,17 +38,17 @@
 	box-shadow: var(--sapField_Hover_Shadow);
 }
 
-:host([value-state="Error"]:not([disabled]):hover) [ui5-input] {
+:host([value-state="Negative"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--_ui5_file_uploader_value_state_error_hover_background_color);
 	box-shadow: var(--sapField_Hover_InvalidShadow);
 }
 
-:host([value-state="Warning"]:not([disabled]):hover) [ui5-input] {
+:host([value-state="Critical"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--sapField_Hover_WarningShadow);
 }
 
-:host([value-state="Success"]:not([disabled]):hover) [ui5-input] {
+:host([value-state="Positive"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--sapField_Hover_SuccessShadow);
 }

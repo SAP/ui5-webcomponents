@@ -12,6 +12,7 @@ import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 
 /**
  * @class
@@ -21,7 +22,6 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  *  - "languageAware: true" metadata setting, CLDR fetch and i18n initialization
  *  - common properties (primaryCalendar, minDate, maxDate and formatPattern) declaration and methods that operate on them
  *  - additional common methods
- *
  * @constructor
  * @abstract
  * @extends UI5Element
@@ -35,7 +35,6 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Sets a calendar type used for display.
 	 * If not set, the calendar type of the global configuration is used.
-	 *
 	 * @default undefined
 	 * @public
 	 */
@@ -45,7 +44,6 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Defines the secondary calendar type.
 	 * If not set, the calendar will only show the primary calendar type.
-	 *
 	 * @since 1.0.0-rc.16
 	 * @default undefined
 	 * @public
@@ -55,7 +53,6 @@ class DateComponentBase extends UI5Element {
 
 	/**
 	 * Determines the format, displayed in the input field.
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -65,8 +62,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the minimum date available for selection.
 	 *
-	 * <b>Note:</b> If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
-	 *
+	 * **Note:** If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
@@ -77,8 +73,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the maximum date available for selection.
 	 *
-	 * <b>Note:</b> If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
-	 *
+	 * **Note:** If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 * @default ""
 	 * @since 1.0.0-rc.6
 	 * @public
@@ -91,7 +86,6 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Cached instance of DateFormat with a format pattern of "YYYY-MM-dd".
 	 * Used by the getISOFormat method to avoid creating a new DateFormat instance on each call.
-	 *
 	 * @private
 	 */
 	_isoFormatInstance?: DateFormat;
@@ -167,7 +161,7 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getStringFromTimestamp(timestamp: number) {
-		const localDate = new Date(timestamp);
+		const localDate = UI5Date.getInstance(timestamp);
 		return this.getFormat().format(localDate, true);
 	}
 

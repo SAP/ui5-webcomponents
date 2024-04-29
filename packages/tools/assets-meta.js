@@ -4,9 +4,6 @@ const assetsMeta = {
     "all": [
       "sap_fiori_3",
       "sap_fiori_3_dark",
-      "sap_belize",
-      "sap_belize_hcb",
-      "sap_belize_hcw",
       "sap_fiori_3_hcb",
       "sap_fiori_3_hcw",
 	    "sap_horizon",
@@ -83,7 +80,7 @@ const assetsMeta = {
       "ar_SA",
       "bg",
       "ca",
-      // "cnr_ME" - cldr for not available yet
+      "cnr",
       "cs",
       "da",
       "de",
@@ -131,7 +128,7 @@ const assetsMeta = {
       "lt",
       "lv",
       "ms",
-      // "mk_MK" cldr not available yet
+      "mk",
       "nb",
       "nl",
       "nl_BE",
@@ -144,7 +141,6 @@ const assetsMeta = {
       "sk",
       "sl",
       "sr",
-      // "sr_Cyrl_RS" - cldr not available yet
       "sr_Latn",
       "sv",
       "th",
