@@ -194,13 +194,14 @@ const loadManifests = () => {
 }
 
 const getPackages = () => {
-    return ["main", "fiori", "base"];
+    return ["main", "fiori", "compat", "base"];
 }
 
 const realPackagesName = (key) => {
     const map = {
         "base": "@ui5/webcomponents-base",
         "main": "@ui5/webcomponents",
+        "compat": "@ui5/webcomponents-compat",
         "fiori": "@ui5/webcomponents-fiori"
     };
 
