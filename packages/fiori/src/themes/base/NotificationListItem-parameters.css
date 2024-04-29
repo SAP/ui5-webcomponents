@@ -1,6 +1,8 @@
 :root {
 	--_ui5-notification_item-border-radius: 0px;
 	--_ui5-notification_group_header-border-bottom-width: 0.0625rem;
+	--_ui5-notification_group_header-margin: 0;
+	--_ui5_notification_group_header-icon-color: var(--sapContent_IconColor);
 	--_ui5-notification_item-state-icon-padding: 0.625rem;
 	--_ui5-notification_item-border-bottom: var(--ui5-listitem-border-bottom);
 	--_ui5-notification_item-border-top-left-right: none;

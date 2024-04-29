@@ -19,8 +19,8 @@
 	<ui5-button id="btnCompact">Toggle sapUiSizeCompact</ui5-button>
 
 	<!-- the list that we create to contain several NotificationGroups should have 
-		aria-label="Notifications". All applications should do the same -->
-	<ui5-list id="notificationList" aria-label="Notifications">
+		accessible-name="Notifications". All applications should do the same -->
+	<ui5-list id="notificationList" accessible-name="Notifications">
 		<ui5-li-notification-group
 			show-close
 			show-counter
@@ -32,15 +32,16 @@
 				show-close
 				title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				priority="Low"
-				state="Negative"
+				state="Critical"
 				importance="Important"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+				<ui5-avatar icon="employee" size="XS" shape="Square" slot="avatar"></ui5-avatar>
 
 				<span slot="footnotes">Office Notifications</span>
-				<span slot="footnotes">3 Days</span>
-
+				<span slot="footnotes">Category</span>
+				<span slot="footnotes">11:13</span>
+				
 				<ui5-notification-action icon="accept" text="Accept-deprecated" slot="actions"></ui5-notification-action>
 
 				<ui5-menu slot="menu">
@@ -55,7 +56,9 @@
 				state="Negative"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+				<ui5-avatar size="XS" slot="avatar">
+					<img src="./img/man_avatar_1.png" />
+				</ui5-avatar>
 
 				<span slot="footnotes">Office Notifications</span>
 				<span slot="footnotes">3 Days</span>
@@ -68,7 +71,8 @@
 			<ui5-li-notification
 				show-close
 				title-text="New order (#252) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-				state="Negative"
+				state="Positive"
+				wrapping-type="Normal"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
@@ -185,9 +189,10 @@
 	</ui5-list>
 
 	<ui5-title>ACC test</ui5-title>
+	<ui5-button design="Transparent" >Tab stop</ui5-button>
 	<!-- the list that we create to contain several NotificationGroups should have 
-	 aria-label="Notifications". All applications should do the same -->
-	<ui5-list id="ACCtestGroup" aria-label="Notifications">
+	 accessible-name="Notifications". All applications should do the same -->
+	<ui5-list id="ACCtestGroup" accessible-name="Notifications">
 		
 		<ui5-li-notification-group
 			show-close
@@ -217,10 +222,11 @@
 
 			<ui5-li-notification
 				show-close
+				read
 				title-text="Message 2"
 				state="Negative"
 			>
-				And with a very long description and long labels of the action buttons"
+				And with a very long description and long labels of the action buttons
 				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
 
 				<span slot="footnotes">Office</span>
@@ -263,7 +269,7 @@
 				title-text="Message 2"
 				state="Negative"
 			>
-				And with a very long description and long labels of the action buttons"
+				And with a very long description and long labels of the action buttons
 				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
 
 				<span slot="footnotes">Office</span>
@@ -275,13 +281,20 @@
 			</ui5-li-notification>
 		</ui5-li-notification-group>
 	</ui5-list>
+	<ui5-button design="Transparent">Tab stop</ui5-button>
 
 	<br><br>
 
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" class="notificationlistgroupitem2auto" placement="Bottom" horizontal-align="End">
-		<ui5-list id="notificationListTop" aria-label="Notifications">
+		<ui5-bar id="notificationsPopoverBar" design="Header">
+			<ui5-title level="H5" slot="startContent">Notifications</ui5-title>
+			<ui5-button design="Transparent" slot="endContent">Clear All</ui5-button>
+			<ui5-button design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
+			<ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
+		</ui5-bar>
+		<ui5-list id="notificationListTop" accessible-name="Notifications">
 			<ui5-li-notification-group				
 				title-text="Orders"
 			>
@@ -297,8 +310,8 @@
 					</ui5-avatar>
 
 					<span slot="footnotes">John Doe</span>
-					<span slot="footnotes">2 Days</span>
-					<span slot="footnotes">Other stuff</span>
+					<span slot="footnotes">Category</span>
+					<span slot="footnotes">11:13</span>
 
 					<ui5-menu slot="menu">
 						<ui5-menu-item id="acceptBtnInPopover" icon="accept" text="Accept"></ui5-menu-item>

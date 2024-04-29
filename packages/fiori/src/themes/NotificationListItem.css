@@ -1,7 +1,7 @@
 @import "./NotificationListItemBase.css";
 @import "./NotificationStateIcon.css";
 
-:host([wrapping-type="None"]) .ui5-nli-title-text {
+:host(:not([wrapping-type="Normal"])) .ui5-nli-title-text {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;

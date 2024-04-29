@@ -59,7 +59,7 @@ Basic.args = {
 };
 
 const wrapInList = (story: () => unknown) => {
-	return html`<ui5-list aria-label="Notifications">
+	return html`<ui5-list accessible-name="Notifications">
 	${story()}
 </ui5-list>
 

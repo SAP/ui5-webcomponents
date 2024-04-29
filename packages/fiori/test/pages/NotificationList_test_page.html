@@ -48,7 +48,7 @@
 
 	<div class="test-section">
 
-		<ui5-list id="notificationList" aria-label="Notifications" class="notificationlist_test_page2auto">
+		<ui5-list id="notificationList" accessible-name="Notifications" class="notificationlist_test_page2auto">
 			<ui5-li-notification-group
 				id="nlgi1"
 				title-text="Orders"
@@ -60,7 +60,7 @@
 					state="Negative"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<ui5-avatar icon="employee" size="XS" shape="Square" slot="avatar"></ui5-avatar>
 
 					<span slot="footnotes">Office Notifications</span>
 					<span slot="footnotes">3 Days</span>
@@ -98,7 +98,21 @@
 					id="nli3"
 					importance="Important"
 					wrapping-type="Normal"
-					title-text="New payment #2900"
+					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
+					state="Negative"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
+
+				</ui5-li-notification>
+
+				<ui5-li-notification
+					id="nli3a"
+					importance="Important"
+					title-text="New payment #2900 and more more more more more more more more more more more more more more more text to make the title truncate"
 					state="Negative"
 				>
 					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.

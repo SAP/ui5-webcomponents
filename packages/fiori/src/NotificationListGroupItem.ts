@@ -166,19 +166,13 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return !this.collapsed;
 	}
 
-	get accInfo() {
-		const id = this._id;
-
-		return {
-			accessibilityAttributes: {
-				expanded: this._ariaExpanded ? "true" : "false",
-				controls: `${id}-notificationsList`,
-			},
-		};
-	}
-
 	get groupCollapsedIcon() {
 		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
+	}
+
+	get groupCollapsedTooltip() {
+		// ToDo: edit and add translation when spec is ready
+		return this.collapsed ? "expand arrow" : "collapse arrow";
 	}
 
 	toggleCollapsed() {
@@ -229,20 +223,31 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 		if (down) {
 			const notificationItems = this.items;
-			const firstAvailableItem = notificationItems.find(item => !item.hasAttribute("busy"));
+			const lastItemIndex = notificationItems.length - 1;
+			const isLastItem = e.target === notificationItems[lastItemIndex];
+			const groupsInList = this.parentElement?.children;
+			const indexOfCurrentGroup = groupsInList ? Array.from(groupsInList).findIndex(element => (element === this)) : -1;
 
 			// if the focus is on the header (whole group) move it to the first notification item
-			if (!this.collapsed && this.hasAttribute("focused") && firstAvailableItem) {
-				firstAvailableItem.focus();
+			if (!this.collapsed && this.hasAttribute("focused") && notificationItems[0]) {
+				notificationItems[0].focus();
+			}
+
+			// if the focus is on the last item move it to the next group (if available)
+			if (!this.collapsed && isLastItem) {
+				// focus the next (sibling) group
+				if (groupsInList && groupsInList[indexOfCurrentGroup] && groupsInList[indexOfCurrentGroup + 1]) {
+					// @ts-ignore
+					groupsInList[indexOfCurrentGroup + 1].focus();
+				}
 			}
 		}
 
 		if (up) {
 			const notificationItems = this.items;
-			const firstAvailableItem = notificationItems.find(item => !item.hasAttribute("busy"));
 
 			// if the focus is on the first notification item move it to the header (whole group)
-			if (!this.collapsed && firstAvailableItem && e.target === firstAvailableItem) {
+			if (!this.collapsed && e.target === notificationItems[0]) {
 				this.focus();
 			}
 		}

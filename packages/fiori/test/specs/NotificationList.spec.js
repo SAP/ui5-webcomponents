@@ -11,7 +11,7 @@ describe("Notification List Item Tests", () => {
 		const toggleInput = await browser.$("#toggleInput");
 		const EXPECTED_RESULT = "Orders";
 		const firstGroupItem = await browser.$("#nlgi1");
-		const btnListGroupItemToggle = await firstGroupItem.shadow$(".ui5-nli-group-toggle-btn");
+		const btnListGroupItemToggle = await firstGroupItem.shadow$(".ui5-nli-group-header");
 
 		// act
 		await btnListGroupItemToggle.click();
@@ -107,29 +107,37 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests click on ShowMore", async () => {
-		const firstItem = await browser.$("#nli1");
+		const firstItem = await browser.$("#nli3a");
 		const btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
 		const content = await firstItem.shadow$(".ui5-nli-content");
+		const title = await firstItem.shadow$(".ui5-nli-title-text");
 
-		const hightBefore = await content.getSize("height");
+		const hightBeforeContent = await content.getSize("height");
+		const hightBeforeTitle = await title.getSize("height");
 
 		// act
 		await btnListItemShowMore.click();
 
-		const hightAfter = await content.getSize("height");
+		const hightAfterContent = await content.getSize("height");
+		const hightAfterTitle = await title.getSize("height");
 
 		// assert
-		assert.isAbove(hightAfter, hightBefore,
+		assert.isAbove(hightAfterContent, hightBeforeContent,
 			"The content has been expanded by the ShowMore button.");
+		assert.isAbove(hightAfterTitle, hightBeforeTitle,
+			"The title has been expanded by the ShowMore button.");
 
 		// act
 		await firstItem.click();
 		await firstItem.keys(["Enter", "Shift"]);
 
-		const hightAfterKeys = await content.getSize("height");
+		const hightAfterKeysContent = await content.getSize("height");
+		const hightAfterKeysTitle = await title.getSize("height");
 		// assert
-		assert.isAbove(hightAfter, hightAfterKeys,
+		assert.isAbove(hightAfterContent, hightAfterKeysContent,
 			"The content has been collapsed by the Shift+Enter keyboard combination.");
+		assert.isAbove(hightAfterTitle, hightAfterKeysTitle,
+			"The title has been collapsed by the Shift+Enter keyboard combination.");
 	});
 
 	it("tests no ShowMore, when truncate is not enabled", async () => {
@@ -210,6 +218,9 @@ describe("Notification List Item Tests", () => {
 			"The ariaLabelledBy text is correct.");
 		assert.strictEqual(await firstItemRoot.getAttribute("aria-describedby"), invisibleTextId,
 			"The ariaDescribedBy text is correct.");
+		assert.strictEqual(await firstItemRoot.getAttribute("aria-level"), "2",
+			"The ariaLevel text is correct.");
+			
 	});
 
 	it("tests List Item ACC invisible texts", async () => {
@@ -251,17 +262,6 @@ describe("Notification List Item Tests", () => {
 
 	});
 
-	it("tests Group Header Button ACC attributes", async () => {
-		const firstGroupButton = await browser.$("#nlgi1").shadow$(".ui5-nli-group-toggle-btn").shadow$("button");
-		const thirdGroupButton = await browser.$("#nlgi3").shadow$(".ui5-nli-group-toggle-btn").shadow$("button");
-		const firstGroupItem = await browser.$("#nlgi1");
-		const titleTextId = `${await firstGroupItem.getProperty("_id")}-notificationsList`;
-
-		assert.strictEqual(await firstGroupButton.getAttribute("aria-expanded"), 'true', "The aria-expanded for the first item is correct.");
-		assert.strictEqual(await thirdGroupButton.getAttribute("aria-expanded"), 'false', "The aria-expanded for the third is correct.");
-		assert.strictEqual(await firstGroupButton.getAttribute("aria-controls"), titleTextId, "The aria-controls id is correct.");
-	});
-
 	it("tests Group Header Text ACC attributes", async () => {
 		const firstGroupText = await browser.$("#nlgi1").shadow$(".ui5-nli-group-title-text");
 
@@ -277,7 +277,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await firstGroupList.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
 	});
 
-	it("tests Group Item aria-description", async () => {
+	it("tests Group Item 'aria-description' and 'aria-level'", async () => {
 		const firstGroupItemRoot = await browser.$("#nlgi1").shadow$(".ui5-nli-group-root");
 		const EXPECTED_TEXT_1 = "Notification group Expanded";
 		const thirdGroupItemRoot = await browser.$("#nlgi3").shadow$(".ui5-nli-group-root");
@@ -285,27 +285,33 @@ describe("Notification List Item Tests", () => {
 
 		assert.strictEqual(await firstGroupItemRoot.getAttribute("aria-description"), EXPECTED_TEXT_1, "The aria-description text is correct.");
 		assert.strictEqual(await thirdGroupItemRoot.getAttribute("aria-description"), EXPECTED_TEXT_3, "The aria-description text is correct.");
+		assert.strictEqual(await firstGroupItemRoot.getAttribute("aria-level"), "1", "The aria-level is correct.");
 	});
 
-	it("tests List Group Item Button aria-expanded, aria-controls, tooltip when collapsed and expanded", async () => {
+	it("tests List Group Header ACC attributes when collapsed and expanded", async () => {
 		const groupItem2 = await browser.$("#nlgi2");
 		const groupItemsList2ID = await groupItem2.shadow$(".ui5-nli-group-items").getAttribute("id");
-		const groupItemToggleBtn2 = await groupItem2.shadow$(".ui5-nli-group-toggle-btn").shadow$("button");
+		const groupItemHeader = await groupItem2.shadow$(".ui5-nli-group-header");
+		const groupItemHeaderIcon = await groupItem2.shadow$(".ui5-nli-group-toggle-icon").shadow$("svg");
 
 		// assert
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("title"), "Collapse", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "collapse arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// act
-		await groupItemToggleBtn2.click();
+		await groupItemHeader.click();
 
 		// assert
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
-		assert.strictEqual(await groupItemToggleBtn2.getAttribute("title"), "Expand", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "expand arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// reset
-		await groupItemToggleBtn2.click();
+		await groupItemHeader.click();
 	});
 });

@@ -8,6 +8,7 @@
 	tabindex="{{forcedTabIndex}}"
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-describedby="{{ariaDescribedBy}}"
+	aria-level="2"
 >
 	
 	<div class="{{contentClasses}}">
@@ -50,7 +51,6 @@
 				class="ui5-nli-footer-showMore"
 				?hidden="{{hideShowMore}}"
 				@ui5-click="{{_onShowMoreClick}}"
-				aria-hidden="true"
 				href="#" {{!--without href ENTER does not trigger click --}}
 				showMore-btn
 			>

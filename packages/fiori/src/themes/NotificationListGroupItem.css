@@ -18,12 +18,13 @@
 }
 
 .ui5-nli-group-header {
+	height: 2.75rem;
 	position: relative;
 	background: var(--sapList_GroupHeaderBackground);
 	display: flex;
 	align-items: center;
-	padding-block: 0.75rem 0.25rem;
-	padding-inline: 0.75rem 0.5rem;
+	margin-block: var(--_ui5-notification_group_header-margin);
+	padding-inline: 1.5rem 0.5rem;
 	width: 100%;
 	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
@@ -42,9 +43,11 @@
 	pointer-events: none;
 }
 
-.ui5-nli-group-toggle-btn {
-	margin-inline-end: 0.75rem;
-	cursor: pointer;
+.ui5-nli-group-toggle-icon {
+	min-width: 1rem;
+	min-height: 1rem;
+	margin-inline-end:  0.75rem;
+	color: var(--_ui5_notification_group_header-icon-color);
 }
 
 .ui5-nli-group-title-text {
@@ -55,6 +58,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	line-height: 2rem;
 }
 
 .ui5-nli-group-divider {
