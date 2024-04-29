@@ -15,7 +15,7 @@ import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
-import NotificationListItemState from "./types/NotificationListItemState.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
@@ -64,11 +64,11 @@ type Footnote = Record<string, any>;
  * Defines the icons corresponding to the notification's status indicator.
  */
 const ICON_PER_STATUS = {
-	[NotificationListItemState.Negative]: "message-error",
-	[NotificationListItemState.Critical]: "message-warning",
-	[NotificationListItemState.Positive]: "message-success",
-	[NotificationListItemState.Information]: "message-information",
-	[NotificationListItemState.None]: "",
+	[ValueState.Negative]: "message-error",
+	[ValueState.Critical]: "message-warning",
+	[ValueState.Positive]: "message-success",
+	[ValueState.Information]: "message-information",
+	[ValueState.None]: "",
 };
 
 /**
@@ -169,8 +169,8 @@ class NotificationListItem extends NotificationListItemBase {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: NotificationListItemState, defaultValue: NotificationListItemState.None })
-	state!: `${NotificationListItemState}`;
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	state!: `${ValueState}`;
 
 	/**
 	 * Defines if the `Close` button would be displayed.
@@ -270,7 +270,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hasState() {
-		return this.state !== NotificationListItemState.None;
+		return this.state !== ValueState.None;
 	}
 
 	get hasDesc() {
@@ -398,19 +398,19 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get stateText() {
-		if (this.state === NotificationListItemState.Positive) {
+		if (this.state === ValueState.Positive) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_POSITIVE_STATUS_TXT);
 		}
 
-		if (this.state === NotificationListItemState.Critical) {
+		if (this.state === ValueState.Critical) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CRITICAL_STATUS_TXT);
 		}
 
-		if (this.state === NotificationListItemState.Negative) {
+		if (this.state === ValueState.Negative) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_NEGATIVE_STATUS_TXT);
 		}
 
-		if (this.state === NotificationListItemState.Information) {
+		if (this.state === ValueState.Information) {
 			return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_INFORMATION_STATUS_TXT);
 		}
 

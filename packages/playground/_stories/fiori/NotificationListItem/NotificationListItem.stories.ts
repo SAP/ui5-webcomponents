@@ -5,8 +5,8 @@ import type { Meta } from "@storybook/web-components";
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import type NotificationListItem from "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
-import NotificationListItemState from "@ui5/webcomponents-fiori/dist/types/NotificationListItemState.js";
 
 export default {
 	title: "Fiori/Notification List Item",
@@ -58,7 +58,7 @@ Basic.args = {
 	titleText: "New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
 	default: "And with a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
 	showClose: true,
-	state: NotificationListItemState.Negative,
+	state: ValueState.Negative,
 	avatar: `<ui5-avatar size="XS" slot="avatar">
 	<img src="../assets/images/avatars/woman_avatar_1.png">
 </ui5-avatar>`,
