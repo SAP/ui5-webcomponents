@@ -1,10 +1,9 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ToastPlacement from "./types/ToastPlacement.js";
 
@@ -103,16 +102,16 @@ class Toast extends UI5Element {
 	 * @default 3000
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 3000 })
-	duration!: number;
+	@property({ type: Number })
+	duration = 3000;
 
 	/**
 	 * Defines the placement of the component.
 	 * @default "BottomCenter"
 	 * @public
 	 */
-	@property({ type: ToastPlacement, defaultValue: ToastPlacement.BottomCenter })
-	placement!: `${ToastPlacement}`;
+	@property()
+	placement: `${ToastPlacement}` = "BottomCenter";
 
 	/**
 	 * Indicates whether the component is open (visible).
@@ -121,21 +120,27 @@ class Toast extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	set open(value: boolean) {
+		if (this._opened === value) {
+			return;
+		}
+
+		this.toggleAttribute("open", value);
+		this._opened = value;
+	}
+
+	get open() : boolean {
+		return this._opened;
+	}
+
+	_opened = false;
 
 	/**
 	 * Indicates whether the component is hovered.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hover!: boolean;
-
-	/**
-	 * Indicates whether the component DOM is rendered.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	domRendered!: boolean;
+	hover = false;
 
 	/**
 	 * Indicates whether the toast could be focused
@@ -143,7 +148,7 @@ class Toast extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focusable!: boolean;
+	focusable = false;
 
 	/**
 	 * Indicates whether the toast is focused
@@ -151,7 +156,7 @@ class Toast extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	_onfocusinFn: () => void;
 	_onfocusoutFn: () => void;
@@ -173,16 +178,17 @@ class Toast extends UI5Element {
 
 	onBeforeRendering() {
 		if (this.open) {
-			this._initiateOpening();
+			openedToasts.pop();
+			openedToasts.push(this);
 		}
 
 		// Transition duration (animation) should be a third of the duration
 		// property, but not bigger than the maximum allowed (1000ms).
 		const transitionDuration = Math.min(this.effectiveDuration / 3, MAX_DURATION);
 
-		this.style.transitionDuration = this.open ? `${transitionDuration}ms` : "";
-		this.style.transitionDelay = this.open ? `${this.effectiveDuration - transitionDuration}ms` : "";
-		this.style.opacity = this.open && !this.hover && !this.focused ? "0" : "";
+		this.style.transitionDuration = this._opened ? `${transitionDuration}ms` : "";
+		this.style.transitionDelay = this._opened ? `${this.effectiveDuration - transitionDuration}ms` : "";
+		this.style.opacity = this._opened && !this.hover && !this.focused ? "0" : "";
 
 		if (!globalListenerAdded) {
 			document.addEventListener("keydown", handleGlobalKeydown);
@@ -209,20 +215,10 @@ class Toast extends UI5Element {
 		return this.duration < MIN_DURATION ? MIN_DURATION : this.duration;
 	}
 
-	_initiateOpening() {
-		this.domRendered = true;
-		requestAnimationFrame(() => {
-			this.open = true;
-			openedToasts.pop();
-			openedToasts.push(this);
-		});
-	}
-
 	_ontransitionend() {
 		if (this.hover || this.focused) {
 			return;
 		}
-		this.domRendered = false;
 		this.open = false;
 		this.focusable = false;
 		this.focused = false;
