@@ -1,6 +1,5 @@
 import type AriaHasPopup from "./types/AriaHasPopup.js";
 import type AriaRole from "./types/AriaRole.js";
-import type AriaLandmarkRole from "./types/AriaLandmarkRole.js";
 
 type PromiseResolve = (value: void | PromiseLike<void>) => void;
 type Timeout = ReturnType<typeof setTimeout>;

@@ -12,8 +12,13 @@ import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorIn
 // Styles
 import stripCss from "./generated/themes/TabSeparatorInStrip.css.js";
 import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
+import type CustomListItem from "./CustomListItem.js";
 
 interface TabSeparatorInStrip extends HTMLElement {
+	realTabReference: TabSeparator;
+}
+
+interface TabSeparatorInOverflow extends CustomListItem {
 	realTabReference: TabSeparator;
 }
 
@@ -94,4 +99,5 @@ TabContainer.registerTabStyles(overflowCss);
 export default TabSeparator;
 export type {
 	TabSeparatorInStrip,
+	TabSeparatorInOverflow,
 };

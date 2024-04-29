@@ -241,16 +241,16 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
@@ -378,15 +378,15 @@ class Menu extends UI5Element {
 			item.item._siblingsWithIcon = itemsWithIcon;
 			const subMenu = item.item._subMenu;
 			const menuItem = item.item;
-			if (subMenu && subMenu.busy) {
+			if (subMenu && subMenu.loading) {
 				subMenu.innerHTML = "";
 				const fragment = this._clonedItemsFragment(menuItem);
 				subMenu.appendChild(fragment);
 			}
 
 			if (subMenu) {
-				subMenu.busy = item.item.busy;
-				subMenu.busyDelay = item.item.busyDelay;
+				subMenu.loading = item.item.loading;
+				subMenu.loadingDelay = item.item.loadingDelay;
 			}
 		});
 	}
@@ -416,10 +416,10 @@ class Menu extends UI5Element {
 			this._parentMenuItem = undefined;
 			this._opener = undefined;
 		}
-		const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
+		const loadingWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.loading;
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
-		popover.showAt(opener, busyWithoutItems);
+		popover.showAt(opener, loadingWithoutItems);
 	}
 
 	/**
@@ -473,8 +473,8 @@ class Menu extends UI5Element {
 		subMenu.setAttribute("id", `submenu-${opener.id}`);
 		subMenu._parentMenuItem = item;
 		subMenu._opener = opener;
-		subMenu.busy = item.busy;
-		subMenu.busyDelay = item.busyDelay;
+		subMenu.loading = item.loading;
+		subMenu.loadingDelay = item.loadingDelay;
 		const fragment = this._clonedItemsFragment(item);
 		subMenu.appendChild(fragment);
 		this.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
@@ -585,7 +585,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_busyMouseOver() {
+	_loadingMouseOver() {
 		if (this._parentMenuItem) {
 			this._parentMenuItem._preventSubMenuClose = true;
 		}

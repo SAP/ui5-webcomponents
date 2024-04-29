@@ -68,7 +68,7 @@ class MenuListItem extends CustomListItem {
 	}
 
 	get hasSubmenu() {
-		return !!(this.associatedItem?.items.length || this.associatedItem?.busy);
+		return !!(this.associatedItem?.items.length || this.associatedItem?.loading);
 	}
 
 	get subMenuOpened() {

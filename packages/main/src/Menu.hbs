@@ -50,12 +50,12 @@
 		<ui5-list
 			id="{{_id}}-menu-list"
 			selection-mode="None"
-			?busy="{{busy}}"
-			busy-delay="{{busyDelay}}"
+			?loading="{{loading}}"
+			loading-delay="{{loadingDelay}}"
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 		>
 		{{#each _currentItems}}
 			<ui5-menu-li
@@ -80,12 +80,12 @@
 			</ui5-menu-li>
 		{{/each}}
 		</ui5-list>
-	{{else if busy}}
+	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
-			delay="{{busyDelay}}"
+			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}

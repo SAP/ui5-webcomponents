@@ -44,7 +44,7 @@ names are "kebab-case" (e.g. `value-state`) while property names are "camelCase"
 Attributes can be set directly on the web component in HTML.
 
 ```html
-<ui5-checkbox id="cb" value-state="Error"></ui5-checkbox>
+<ui5-checkbox id="cb" value-state="Negative"></ui5-checkbox>
 ```
 
 Properties can only be set programmatically.
@@ -53,14 +53,14 @@ To set a property:
 
 ```js
 const myCb = document.getElementById("cb");
-myCb.valueState = "Error";
+myCb.valueState = "Negative";
 ```
 
 To set an attribute:
 
 ```js
 const myCb = document.getElementById("cb");
-myCb.setAttribute("value-state", "Error");
+myCb.setAttribute("value-state", "Negative");
 ```
 
 A note on Boolean attributes: in HTML Boolean attributes may have no value

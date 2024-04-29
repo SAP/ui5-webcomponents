@@ -254,6 +254,25 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
+	_ondrag(e: DragEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+	_ondrop(e: DragEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		const files = e.dataTransfer?.files;
+
+		if (files) {
+			this._input.files = files;
+			this._updateValue(files);
+			this.fireEvent<FileUploaderChangeEventDetail>("change", {
+				files,
+			});
+		}
+	}
+
 	_onfocusin() {
 		this.focused = true;
 	}
@@ -395,10 +414,10 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings(): Record<string, string> {
 		return {
-			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -411,7 +430,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	get hasValueStateText(): boolean {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
 	get valueStateMessageText() {
@@ -431,9 +450,9 @@ class FileUploader extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageInputIcon(): string {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -444,9 +463,9 @@ class FileUploader extends UI5Element implements IFormElement {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
