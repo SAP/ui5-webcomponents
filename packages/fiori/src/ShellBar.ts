@@ -359,26 +359,26 @@ class ShellBar extends UI5Element {
 	 * The accessibilityAttributes object has the following fields,
 	 * where each field is an object supporting one or more accessibility attributes:
 	 *
-	 * - logo - `logo.role` and `logo.name`.
-	 * - notifications - `notifications.expanded` and `notifications.hasPopup`.
-	 * - profile - `profile.expanded`, `profile.hasPopup` and `profile.name`.
-	 * - product - `product.expanded` and `product.hasPopup`.
-	 * - search - `search.expanded` and `search.hasPopup`.
-	 * - overflow - `overflow.expanded` and `overflow.hasPopup`.
+	 * - **logo** - `logo.role` and `logo.name`.
+	 * - **notifications** - `notifications.expanded` and `notifications.hasPopup`.
+	 * - **profile** - `profile.expanded`, `profile.hasPopup` and `profile.name`.
+	 * - **product** - `product.expanded` and `product.hasPopup`.
+	 * - **search** - `search.expanded` and `search.hasPopup`.
+	 * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
 	 *
 	 * The accessibility attributes support the following values:
 	 *
 	 * - **role**: Defines the accessible ARIA role of the logo area.
-	 * Accepts the following string values: `button` | `link`.
+	 * Accepts the following string values: `button` or `link`.
 	 *
 	 * - **expanded**: Indicates whether the button, or another grouping element it controls,
 	 * is currently expanded or collapsed.
-	 * Accepts the following string values: `true` | `false`.
+	 * Accepts the following string values: `true` or `false`.
 	 *
 	 * - **hasPopup**: Indicates the availability and type of interactive popup element,
 	 * such as menu or dialog, that can be triggered by the button.
-	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
 	 *
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
 	 * - **name**: Defines the accessible ARIA name of the area.
 	 * Accepts any string.
 	 *
@@ -1252,6 +1252,9 @@ class ShellBar extends UI5Element {
 	}
 
 	get accInfo() {
+		const searchExpanded = this.accessibilityAttributes.search?.expanded;
+		const overflowExpanded = this.accessibilityAttributes.overflow?.expanded;
+
 		return {
 			notifications: {
 				"title": this._notificationsText,
@@ -1278,14 +1281,14 @@ class ShellBar extends UI5Element {
 				"title": this._searchText,
 				"accessibilityAttributes": {
 					hasPopup: this.accessibilityAttributes.search?.hasPopup,
-					expanded: this.accessibilityAttributes.search?.expanded || this.showSearchField,
+					expanded: searchExpanded === undefined ? this.showSearchField : searchExpanded,
 				},
 			},
 			overflow: {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
 					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || AriaHasPopup.Menu.toLowerCase(),
-					expanded: this.accessibilityAttributes.overflow?.expanded || this._overflowPopoverExpanded,
+					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
 				},
 			},
 		};

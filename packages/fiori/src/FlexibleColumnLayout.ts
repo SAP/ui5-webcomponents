@@ -229,19 +229,20 @@ class FlexibleColumnLayout extends UI5Element {
 	* The accessibilityAttributes object has the following fields,
 	* where each field is an object supporting one or more accessibility attributes:
 	*
-	*  - `startColumn`: `startColumn.role` and `startColumn.name` are available.
-	*  - `midColumn`: `midColumn.role` and `midColumn.name` are available.
-	*  - `endColumn`: `endColumn.role` and `endColumn.name` are available.
-	*  - `startArrowContainer`: `startArrowContainer.role` and `startArrowContainer.name` are available.
-	*  - `endArrowContainer`: `endArrowContainerrole.role` and `endArrowContainer.name` are available.
-	*  - `startArrowRight`: `startArrowRight.name` is available.
-	*  - `endArrowLeft`: `endArrowLeft.name` is available.
-	*  - `endArrowRight`: `endArrowRight.name` is available.
+	*  - **startColumn**: `startColumn.role` and `startColumn.name`.
+	*  - **midColumn**: `midColumn.role` and `midColumn.name`.
+	*  - **endColumn**: `endColumn.role` and `endColumn.name`.
+	*  - **startArrowContainer**: `startArrowContainer.role` and `startArrowContainer.name`.
+	*  - **endArrowContainer**: `endArrowContainerrole.role` and `endArrowContainer.name`.
+	*  - **startArrowLeft**: `startArrowLeft.name`.
+	*  - **startArrowRight**: `startArrowRight.name`.
+	*  - **endArrowLeft**: `endArrowLeft.name`.
+	*  - **endArrowRight**: `endArrowRight.name`.
 	*
 	* The accessibility attributes support the following values:
 	*
 	* - **role**: Defines the accessible ARIA landmark role of the area.
-	* Accepts the following values: "none" | "complementary" | "contentinfo" | "main" | "region".
+	* Accepts the following values: `none`, `complementary`, `contentinfo`, `main` or `region`.
 	*
 	* - **name**: Defines the accessible ARIA name of the area.
 	* Accepts any string.
