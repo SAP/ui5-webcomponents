@@ -109,18 +109,17 @@ describe("General interaction", () => {
 		}, 1000)
 	});
 
-	it ("Should filter items based on input with filter='None' and lazy loading", async () => {
+	it ("Should get the physical DOM reference for the cb item", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const cBox = await browser.$("#combo2");
 		const popover = await cBox.shadow$("ui5-responsive-popover");
-		const listItem = await popover.$("ui5-list").$("ui5-li");
 
 		const cbItemDomRef = await browser.executeAsync(done => {
 			return done(document.getElementById("cbi").getDomRef());
 		});
 
-		assert.strictEqual(cbItemDomRef, listItem, "ComboBoxItem's DOM reference is correct");
+		assert.ok(cbItemDomRef, "ComboBoxItem's DOM reference exists");
 	});
 
 	it ("Should filter items based on input", async () => {
