@@ -188,6 +188,14 @@
                     dynamicPage.removeAttribute("show-footer");
                 });
             });
+
+            dynamicPage.addEventListener("pin-button-toggle", event => {
+                console.log("Pin button toggled", dynamicPage.headerPinned)
+            });
+
+            dynamicPage.addEventListener("title-toggle", event => {
+                console.log("Title toggled", dynamicPage.headerSnapped)
+            });
         </script>
     </body>
 </html>

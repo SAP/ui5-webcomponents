@@ -88,7 +88,7 @@ const SCROLL_DEBOUNCE_RATE = 5; // ms
  *
  * @constructor
  * @extends UI5Element
- * @since 1.23.0
+ * @since 2.0.0
  * @public
  */
 @customElement({
@@ -100,25 +100,18 @@ const SCROLL_DEBOUNCE_RATE = 5; // ms
 })
 
 /**
- * Fired when the pin header button is clicked.
+ * Fired when the pin header button is toggled.
  *
  * @public
  */
-@event("pin-click")
+@event("pin-button-toggle")
 
 /**
- * Fired when the expand or collapse header button is clicked.
+ * Fired when the expand/collapse area of the title is toggled.
  *
  * @public
  */
-@event("expand-click")
-
-/**
- * Fired when the expand/collapse area of the title is clicked.
- *
- * @public
- */
-@event("title-click")
+@event("title-toggle")
 
 class DynamicPage extends UI5Element {
 	/**
@@ -298,32 +291,23 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onExpandClick() {
-		const prevented = !this.fireEvent("expand-click");
-		if (prevented) {
-			return;
-		}
 		this._toggleHeader();
+		this.fireEvent("title-toggle");
 		await renderFinished();
 		this.headerActions?.focusExpandButton();
 		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
 	async onPinClick() {
-		const prevented = !this.fireEvent("pin-click");
-		if (prevented) {
-			return;
-		}
 		this.headerPinned = !this.headerPinned;
+		this.fireEvent("pin-button-toggle");
 		await renderFinished();
 		this.headerActions?.focusPinButton();
 	}
 
 	async onToggleTitle() {
-		const prevented = !this.fireEvent("title-click");
-		if (prevented) {
-			return;
-		}
 		this._toggleHeader();
+		this.fireEvent("title-toggle");
 		await renderFinished();
 		this.dynamicPageTitle!.focus();
 	}

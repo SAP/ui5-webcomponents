@@ -41,7 +41,6 @@ import {
  * @constructor
  * @extends UI5Element
  * @private
- * @since 1.23.0
  */
 @customElement({
 	tag: "ui5-dynamic-page-header-actions",
