@@ -38,6 +38,8 @@
 
 #selection-cell {
 	padding: 0;
+	width: auto;
+	min-width: auto;
 }
 
 #selection-component {
