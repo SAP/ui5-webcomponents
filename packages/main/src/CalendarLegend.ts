@@ -177,7 +177,7 @@ class CalendarLegend extends UI5Element {
 
 	get legendItems() {
 		const items = this.getSlottedNodes<CalendarLegendItem>("items");
-		return items.filter(item => item instanceof CalendarLegendItem);
+		return items.filter(item => item.hasAttribute("ui5-calendar-legend-item"));
 	}
 
 	get defaultItemsMapping() {

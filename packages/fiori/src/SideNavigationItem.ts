@@ -230,8 +230,17 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
+
+	get isSideNavigationItem() {
+		return true;
+	}
 }
 
 SideNavigationItem.define();
 
+const isInstanceOfSideNavigationItem = (object: any): object is SideNavigationItem => {
+	return "isSideNavigationItem" in object;
+};
+
 export default SideNavigationItem;
+export { isInstanceOfSideNavigationItem };

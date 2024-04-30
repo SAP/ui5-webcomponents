@@ -84,8 +84,17 @@ class ListItemGroup extends UI5Element {
 	get hasFormattedHeader(): boolean {
 		return !!this.header.length;
 	}
+
+	get isListItemGroup() {
+		return true;
+	}
 }
 
 ListItemGroup.define();
 
+const isInstanceOfListItemGroup = (object: any): object is ListItemGroup => {
+	return "isListItemGroup" in object;
+};
+
 export default ListItemGroup;
+export { isInstanceOfListItemGroup };

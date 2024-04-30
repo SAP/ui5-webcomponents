@@ -29,6 +29,7 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListItemBase from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
@@ -54,7 +55,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
-import ListItemGroup from "./ListItemGroup.js";
+import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -398,11 +399,11 @@ class List extends UI5Element {
 	/**
 	 * Defines the accessible role of the component.
 	 * @public
-	 * @default "list"
+	 * @default "List"
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleRole = "list"
+	accessibleRole: `${ListAccessibleRole}` = "List";
 
 	/**
 	 * Defines if the entire list is in view port.
@@ -678,6 +679,10 @@ class List extends UI5Element {
 		};
 	}
 
+	get listAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get classes(): ClassMap {
 		return {
 			root: {
@@ -808,7 +813,7 @@ class List extends UI5Element {
 		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
 
 		slottedItems.forEach(item => {
-			if (item instanceof ListItemGroup) {
+			if (isInstanceOfListItemGroup(item)) {
 				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
 				items.push(...groupItems);
 			} else {

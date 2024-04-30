@@ -78,7 +78,7 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
  */
 interface IOption extends UI5Element {
 	selected: boolean,
-	title: string,
+	tooltip: string,
 	icon?: string | null,
 	value: string,
 	additionalText?: string,
@@ -596,7 +596,7 @@ class Select extends UI5Element implements IFormElement {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
-				title: opt.title,
+				tooltip: opt.tooltip,
 				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
