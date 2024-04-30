@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -50,20 +50,20 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	 * @default "None"
 	 * @private
 	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
+	@property()
+	mode: `${TableMode}` = "None";
 
-	@property({ type: Object, multiple: true })
-	_columnsInfo!: Array<TableColumnInfo>;
+	@property({ type: Array })
+	_columnsInfo?: Array<TableColumnInfo>;
 
-	@property({ defaultValue: "-1" })
-	forcedTabIndex!: string;
+	@property()
+	forcedTabIndex?: string;
 
 	@property({ type: Boolean })
-	forcedBusy!: boolean;
+	forcedBusy = false;
 
-	@property({ defaultValue: "", noAttribute: true })
-	forcedAriaPosition!: string;
+	@property()
+	forcedAriaPosition?: string;
 
 	// Properties, set and handled by the Table
 	selected = false;
@@ -83,9 +83,9 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	}
 
 	visibleColCount(): number {
-		let count = this._columnsInfo.reduce((acc, column) => {
+		let count = this._columnsInfo?.reduce((acc, column) => {
 			return column.visible ? ++acc : acc;
-		}, 0);
+		}, 0) || 0;
 
 		if (this.mode === TableMode.MultiSelect) {
 			count++;

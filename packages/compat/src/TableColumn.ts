@@ -1,8 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 
@@ -39,8 +38,8 @@ class TableColumn extends UI5Element {
 	 * @default Infinity
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: Infinity })
-	minWidth!: number;
+	@property({ type: Number })
+	minWidth = Infinity;
 
 	/**
 	 * The text for the column when it pops in.
@@ -48,7 +47,7 @@ class TableColumn extends UI5Element {
 	 * @public
 	 */
 	@property()
-	popinText!: string;
+	popinText?: string;
 
 	/**
 	 * According to your `minWidth` settings, the component can be hidden
@@ -59,7 +58,7 @@ class TableColumn extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	demandPopin!: boolean;
+	demandPopin = false;
 
 	/**
 	 * Defines how the popin row is displayed.
@@ -71,20 +70,20 @@ class TableColumn extends UI5Element {
 	 * @default "Block"
 	 * @public
 	 */
-	@property({ type: TableColumnPopinDisplay, defaultValue: TableColumnPopinDisplay.Block })
-	popinDisplay!: `${TableColumnPopinDisplay}`;
+	@property()
+	popinDisplay: `${TableColumnPopinDisplay}` = "Block";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	first!: boolean;
+	first = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	last!: boolean;
+	last = false;
 }
 
 TableColumn.define();

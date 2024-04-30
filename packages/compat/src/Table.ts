@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -70,9 +70,9 @@ interface ITableRow extends HTMLElement, ITabbable {
 	mode: `${TableMode}`,
 	selected: boolean,
 	forcedBusy: boolean,
-	forcedAriaPosition: string,
+	forcedAriaPosition?: string,
 	_columnsInfoString: string,
-	_columnsInfo: Array<TableColumnInfo>,
+	_columnsInfo?: Array<TableColumnInfo>,
 	tabbableElements: Array<HTMLElement>,
 }
 
@@ -245,7 +245,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the text that will be displayed inside the growing button at the bottom of the table,
@@ -259,7 +259,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	growingButtonText!: string;
+	growingButtonText?: string;
 
 	/**
 	 * Defines the subtext that will be displayed under the `growingButtonText`.
@@ -270,7 +270,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	growingButtonSubtext!: string;
+	growingButtonSubtext?: string;
 
 	/**
 	 * Defines if the value of `noDataText` will be diplayed when there is no rows present in the table.
@@ -279,7 +279,7 @@ class Table extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	hideNoData!: boolean;
+	hideNoData = false;
 
 	/**
 	 * Defines whether the table will have growing capability either by pressing a `More` button,
@@ -299,8 +299,8 @@ class Table extends UI5Element {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.None })
-	growing!: `${TableGrowingMode}`;
+	@property()
+	growing: `${TableGrowingMode}` = "None";
 
 	/**
 	 * Defines if the table is in busy state.
@@ -312,15 +312,15 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	busy = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 	 * @default 1000
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	@property({ type: Number })
+	busyDelay = 1000;
 
 	/**
 	 * Determines whether the column headers remain fixed at the top of the page during
@@ -343,7 +343,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	stickyColumnHeader!: boolean;
+	stickyColumnHeader = false;
 
 	/**
 	 * Defines the mode of the component.
@@ -351,8 +351,8 @@ class Table extends UI5Element {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
+	@property()
+	mode: `${TableMode}` = "None";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -360,7 +360,7 @@ class Table extends UI5Element {
 	 * @public
 	 * @since 2.0.0
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -369,21 +369,21 @@ class Table extends UI5Element {
 	 * @public
 	 * @since 2.0.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
-	@property({ type: Object, multiple: true })
-	_hiddenColumns!: Array<TableColumnInfo>;
+	@property({ type: Array })
+	_hiddenColumns?: Array<TableColumnInfo>;
 
 	@property({ type: Boolean })
-	_noDataDisplayed!: boolean;
+	_noDataDisplayed = false;
 
 	/**
 	 * Defines the active state of the `More` button.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_loadMoreActive!: boolean;
+	_loadMoreActive = false;
 
 	/**
 	 * Used to represent the table column header for the purpose of the item navigation as it does not work with DOM objects directly
@@ -397,7 +397,7 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_inViewport!: boolean;
+	_inViewport = false;
 
 	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
@@ -406,7 +406,7 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_allRowsSelected!: boolean;
+	_allRowsSelected = false;
 
 	/**
 	 * Defines the component rows.
@@ -523,7 +523,7 @@ class Table extends UI5Element {
 		});
 
 		this.visibleColumns = this.columns.filter((column, index) => {
-			return !this._hiddenColumns[index];
+			return !this._hiddenColumns?.[index];
 		});
 
 		this._noDataDisplayed = !this.rows.length && !this.hideNoData;
@@ -1096,7 +1096,7 @@ class Table extends UI5Element {
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
-		const hiddenColumnsChange = (this._hiddenColumns.length !== hiddenColumns.length) || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
+		const hiddenColumnsChange = (this._hiddenColumns?.length !== hiddenColumns.length) || this._hiddenColumns?.some((column, index) => column !== hiddenColumns[index]);
 		const shownColumnsChange = hiddenColumns.length === 0;
 
 		// invalidate if hidden columns count has changed or columns are shown
@@ -1120,7 +1120,7 @@ class Table extends UI5Element {
 				text: column.textContent,
 				popinText: column.popinText,
 				popinDisplay: column.popinDisplay,
-				visible: !this._hiddenColumns[index],
+				visible: !this._hiddenColumns?.[index],
 			};
 		}, this);
 	}
