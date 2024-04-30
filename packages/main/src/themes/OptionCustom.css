@@ -1,6 +1,7 @@
 :host {
-	height: var(--_ui5_list_item_base_height);
+	display: flex;
 	align-items: center;
+	height: var(--_ui5_list_item_base_height);
 	width: 100%;
 	padding: 0 1rem;
 }

@@ -345,7 +345,7 @@ class Select extends UI5Element implements IFormElement {
 
 	onBeforeRendering() {
 		this._enableFormSupport();
-		this._ensureSelection();
+		this._ensureSingleSelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
@@ -360,9 +360,16 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	_ensureSelection() {
-		if (this._selectedIndex === -1) {
-			this._select(0);
+	_ensureSingleSelection() {
+		// if no item is selected => select the first one
+		// if multiple items are selected => select the last selected one
+		const selectedIndex = this.options.findLastIndex(option => option.selected);
+		if (selectedIndex === -1) {
+			this.options[0].selected = true;
+		} else {
+			for (let i = 0; i < selectedIndex; i++) {
+				this.options[i].selected = selectedIndex === i;
+			}
 		}
 	}
 
