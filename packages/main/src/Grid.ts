@@ -59,6 +59,11 @@ interface IGridGrowing extends IGridFeature {
 	_individualSlot?: string;
 }
 
+/**
+ * Fired when an interactive row is pressed.
+ * @param {GridRow} row The pressed row instance
+ * @public
+ */
 type GridRowPressEventDetail = {
 	row: GridRow,
 };
@@ -532,4 +537,5 @@ export default Grid;
 export type {
 	IGridFeature,
 	IGridGrowing,
+	GridRowPressEventDetail,
 };
