@@ -175,7 +175,7 @@ describe("Picker filtering", () => {
 	it("Should filter group header list items", async () => {
 		const dialogList = await browser.$("#myInput").shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is 1 filtered group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is 1 filtered group header");
 	});
 });
 

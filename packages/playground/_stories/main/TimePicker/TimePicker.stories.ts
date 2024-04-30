@@ -32,6 +32,6 @@ export const WithValueState = Template.bind({});
 WithValueState.storyName = "Value State and Message";
 WithValueState.args = {
 	formatPattern: "hh:mm:ss a",
-	valueState: ValueState.Error,
+	valueState: ValueState.Negative,
 	valueStateMessage: `<div slot="valueStateMessage">Please provide valid value</div>`,
 };

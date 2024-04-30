@@ -45,7 +45,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List                     | `ui5-list`                  | `import "@ui5/webcomponents/dist/List.js";`                |
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
-| List - Group Header Item | `ui5-li-groupheader`        | `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` |
+| List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
 | Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
@@ -71,11 +71,6 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Tab Container            | `ui5-tabcontainer`          | `import "@ui5/webcomponents/dist/TabContainer.js";`        |
 | Tab                      | `ui5-tab`                   | `import "@ui5/webcomponents/dist/Tab.js";`                 |
 | Tab Separator            | `ui5-tab-separator`         | `import "@ui5/webcomponents/dist/TabSeparator.js";`        |
-| Table                    | `ui5-table`                 | `import "@ui5/webcomponents/dist/Table.js";`               |
-| Table Column             | `ui5-table-column`          | `import "@ui5/webcomponents/dist/TableColumn.js";`         |
-| Table Row                | `ui5-table-row`             | `import "@ui5/webcomponents/dist/TableRow.js";`            |
-| Table Group Row          | `ui5-table-group-row`       | `import "@ui5/webcomponents/dist/TableGroupRow.js";`       |
-| Table Cell               | `ui5-table-cell`            | `import "@ui5/webcomponents/dist/TableCell.js";`           |
 | Textarea                 | `ui5-textarea`              | `import "@ui5/webcomponents/dist/TextArea.js";`            |
 | TimePicker               | `ui5-time-picker`           | `import "@ui5/webcomponents/dist/TimePicker.js";`          |
 | Title                    | `ui5-title`                 | `import "@ui5/webcomponents/dist/Title.js";`               |

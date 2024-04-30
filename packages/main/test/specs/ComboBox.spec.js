@@ -246,7 +246,7 @@ describe("General interaction", () => {
 		const arrow = await combo.shadow$(".input-icon");
 
 		await browser.executeAsync(done => {
-			document.querySelector("[value-state='Error']").addEventListener("ui5-change", function(event) {
+			document.querySelector("[value-state='Negative']").addEventListener("ui5-change", function(event) {
 				document.getElementById("change-placeholder").innerHTML = event.target.value;
 				document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
 			});
@@ -655,7 +655,7 @@ describe("Grouping", () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$(".input-icon");
 		let popover = await combo.shadow$("ui5-responsive-popover");
-		let groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
+		let groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		await arrow.click();
@@ -665,7 +665,7 @@ describe("Grouping", () => {
 		await input.keys("c");
 
 		popover = await combo.shadow$("ui5-responsive-popover");
-		groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
+		groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
@@ -684,7 +684,7 @@ describe("Grouping", () => {
 		await arrow.click();
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-group-header")[0];
 
 		assert.ok(await groupItem.getProperty("focused"),  "The first group header should be focused");
 	});
@@ -704,7 +704,7 @@ describe("Grouping", () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[1];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-group-header")[1];
 
 		assert.ok(await groupItem.getProperty("focused"),  "The second group header should be focused");
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
@@ -922,7 +922,7 @@ describe("Keyboard navigation", async () => {
 		await arrow.click();
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-group-header")[0];
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 
@@ -967,7 +967,7 @@ describe("Keyboard navigation", async () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-group-header")[0];
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});

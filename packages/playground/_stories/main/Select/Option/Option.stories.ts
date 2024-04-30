@@ -23,6 +23,7 @@ const Template: UI5StoryArgs<Option, StoryArgsSlots> = (args) => {
    icon="${ifDefined(args.icon)}"
    ?selected="${ifDefined(args.selected)}"
    value="${ifDefined(args.value)}"
+   tooltip="${ifDefined(args.tooltip)}"
    >${unsafeHTML(args.default)}</ui5-option>
 </ui5-select> `;
 };

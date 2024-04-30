@@ -157,7 +157,7 @@ describe("Menu interaction", () => {
 			const openSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
 			const openMenuList = await openSubmenuPopover.$("ui5-list");
 
-			// assert.ok(await openMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
+			// assert.ok(await openMenuList.getProperty("loading"), "Busy property is properly propagated to the ui5-list component.");
 			await browser.waitUntil(async () => {
 				return (await openMenuList.$$("ui5-menu-li")).length === 4;
 			}, 1500, "Two additional nodes have been added.");
@@ -213,8 +213,8 @@ describe("Menu Accessibility", () => {
 		const list = await popover.$("ui5-list");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 
-		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
-		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(await list.getAttribute("accessible-role"), "Menu", "There is proper 'menu' role for the menu list");
+		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "MenuItem", "There is proper 'menuitem' role for the menu list items");
 		assert.strictEqual(await listItems[0].getAttribute("tooltip"), "Select a file - prevent default", "There is a tooltip");
 		assert.strictEqual(await listItems[2].shadow$(".ui5-li-root").getAttribute("aria-haspopup"), "menu", "There is an aria-haspopup attribute");
 		assert.strictEqual(

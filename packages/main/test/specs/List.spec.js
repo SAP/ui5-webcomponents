@@ -113,7 +113,7 @@ describe("List Tests", () => {
 		const header = await list.getHeader();
 
 		assert.ok(await header.hasClass("ui5-list-header"), "header has the right classes");
-		assert.ok(await header.getHTML(false), "API: GroupHeaderListItem");
+		assert.ok(await header.getHTML(false), "API: ListItemGroupHeader");
 	});
 
 	it("Tests header slot", async () => {
@@ -568,7 +568,7 @@ describe("List Tests", () => {
 	});
 
 	it('group headers should not be with role options', async () => {
-		const groupHeader = await browser.$("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
+		const groupHeader = await browser.$(">>>#listSelectedItem #group .ui5-ghli-root");
 
 		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
 	});
@@ -634,7 +634,7 @@ describe("List Tests", () => {
 
 	it("Tests the highlight property", async () => {
 		const listItem = await browser.$("#highlight ui5-li:nth-child(1)");
-		const initialValueState = "Error";
+		const initialValueState = "Negative";
 		let highlightValue = await listItem.getProperty("highlight");
 
 		assert.strictEqual(highlightValue, initialValueState, "Highlight property is correctly set to the list item.");

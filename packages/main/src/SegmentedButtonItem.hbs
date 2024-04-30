@@ -3,39 +3,29 @@
 		aria-roledescription="{{ariaDescription}}"
 		aria-posinset="{{posInSet}}"
 		aria-setsize="{{sizeOfSet}}"
-		aria-selected="{{pressed}}"
-		class="ui5-button-root"
+		aria-selected="{{selected}}"
+		class="ui5-segmented-button-item-root"
 		aria-disabled="{{disabled}}"
 		data-sap-focus-ref
-	{{> ariaPressed}}
-		@focusout={{_onfocusout}}
-		@focusin={{_onfocusin}}
 		@click={{_onclick}}
-		@mousedown={{_onmousedown}}
-		@mouseup={{_onmouseup}}
-		@keydown={{_onkeydown}}
 		@keyup={{_onkeyup}}
-		@touchstart="{{_ontouchstart}}"
-		@touchend="{{_ontouchend}}"
 		tabindex={{tabIndexValue}}
 		aria-label="{{ariaLabelText}}"
 		title="{{tooltip}}"
 >
 	{{#if icon}}
 		<ui5-icon
-			class="ui5-button-icon"
+			class="ui5-segmented-button-item-icon"
 			name="{{icon}}"
 			part="icon"
-			?show-tooltip={{showIconTooltip}}
+			?show-tooltip={{isIconOnly}}
 		></ui5-icon>
 	{{/if}}
 
-	<span id="{{_id}}-content" class="ui5-button-text">
+	<span id="{{_id}}-content" class="ui5-segmented-button-item-text">
 		<bdi>
 			<slot></slot>
 		</bdi>
 	</span>
 
 </li>
-
-{{#*inline "ariaPressed"}}{{/inline}}

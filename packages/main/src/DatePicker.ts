@@ -43,6 +43,7 @@ import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
+import IconMode from "./types/IconMode.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
 
 // default calendar for bundling
@@ -546,7 +547,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const valid = this._checkValueValidity(this.value);
 		const previousValueState = this.valueState;
 
-		this.valueState = valid ? ValueState.None : ValueState.Error;
+		this.valueState = valid ? ValueState.None : ValueState.Negative;
 
 		const eventPrevented = !this.fireEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
 
@@ -726,8 +727,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines whether the value help icon is hidden
 	 * @private
 	 */
-	get _ariaHidden() {
-		return isDesktop();
+	get _iconMode() {
+		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
 	}
 
 	_respPopover() {

@@ -34,12 +34,12 @@
 					<div class="ui5-vsd-sub-header">
 						<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
 								<ui5-segmented-button-item
-									?pressed="{{isModeSort}}"
+									?selected="{{isModeSort}}"
 									icon="sort"
 									mode="Sort"
 								></ui5-segmented-button-item>
 								<ui5-segmented-button-item
-									?pressed="{{isModeFilter}}"
+									?selected="{{isModeFilter}}"
 									icon="filter"
 									mode="Filter"
 								></ui5-segmented-button-item>
@@ -58,21 +58,23 @@
 						@ui5-item-click="{{_onSortOrderChange}}"
 						sort-order
 						accessible-name-ref="{{_id}}-label">
-						<ui5-li-groupheader>{{_sortOrderLabel}}</ui5-li-groupheader>
+						<ui5-li-group header-text="{{_sortOrderLabel}}">
 						{{#each _currentSettings.sortOrder}}
 							<ui5-li
 								?selected="{{this.selected}}"
 							>{{this.text}}</ui5-li>
 						{{/each}}
+						</ui5-li-group>
 					</ui5-list>
 					<ui5-list
 						selection-mode="SingleStart"
 						@ui5-item-click={{_onSortByChange}}
 						sort-by>
-						<ui5-li-groupheader>{{_sortByLabel}}</ui5-li-groupheader>
+						<ui5-li-group header-text="{{_sortByLabel}}">
 						{{#each _currentSettings.sortBy}}
 							<ui5-li data-ui5-external-action-item-index="{{@index}}" ?selected="{{this.selected}}">{{this.text}}</ui5-li>
 						{{/each}}
+						</ui5-li-group>
 					</ui5-list>
 				</div>
 			{{/if}}
@@ -96,12 +98,13 @@
 					</ui5-list>
 				{{else}}
 					<ui5-list @ui5-item-click="{{_changeCurrentFilter}}" accessible-name-ref="{{_id}}-label">
-						<ui5-li-groupheader>{{_filterByLabel}}</ui5-li-groupheader>
+						<ui5-li-group header-text="{{_filterByLabel}}">
 						{{#each filterItems}}
 							<ui5-li class="ui5-vsd-filterItemList" ?selected={{this.selected}} additional-text={{this.additionalText}}>
 								{{this.text}}
 							</ui5-li>
 						{{/each}}
+						</ui5-li-group>
 					</ui5-list>
 				{{/if}}
 			{{/if}}
