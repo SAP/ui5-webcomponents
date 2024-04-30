@@ -389,31 +389,31 @@
 	box-sizing: content-box !important;
 }
 
-:host([value-state="Error"]) [input-icon],
-:host([value-state="Warning"]) [input-icon]{
+:host([value-state="Error"]) .input-icon,
+:host([value-state="Warning"]) .input-icon{
 	padding: var(--_ui5_input_error_warning_icon_padding);
 }
 
-:host([value-state="Error"][focused]) [input-icon],
-:host([value-state="Warning"][focused]) [input-icon]{
+:host([value-state="Error"][focused]) .input-icon,
+:host([value-state="Warning"][focused]) .input-icon{
 	padding: var(--_ui5_input_error_warning_focused_icon_padding);
 }
 
-:host([value-state="Information"]) [input-icon] {
+:host([value-state="Information"]) .input-icon {
 	padding: var(--_ui5_input_information_icon_padding);
 }
 
-:host([value-state="Information"][focused]) [input-icon] {
+:host([value-state="Information"][focused]) .input-icon {
 	padding: var(--_ui5_input_information_focused_icon_padding);
 }
 
-:host([value-state="Error"]) ::slotted([input-icon][ui5-icon]),
+:host([value-state="Error"]) ::slotted(.input-icon[ui5-icon]),
 :host([value-state="Error"]) ::slotted([ui5-icon][slot="icon"]),
 :host([value-state="Warning"]) ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_error_warning_custom_icon_padding);
 }
 
-:host([value-state="Error"][focused]) ::slotted([input-icon][ui5-icon]),
+:host([value-state="Error"][focused]) ::slotted(.input-icon[ui5-icon]),
 :host([value-state="Error"][focused]) ::slotted([ui5-icon][slot="icon"]),
 :host([value-state="Warning"][focused]) ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_error_warning_custom_focused_icon_padding);
@@ -427,43 +427,43 @@
 	padding: var(--_ui5_input_information_custom_focused_icon_padding);
 }
 
-:host([value-state="Error"]) [input-icon]:active,
-:host([value-state="Error"]) [input-icon][pressed] {
+:host([value-state="Error"]) .input-icon:active,
+:host([value-state="Error"]) .input-icon[pressed] {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 	color: var(--_ui5_input_icon_error_pressed_color);
 }
 
-:host([value-state="Error"]) [input-icon]:not([pressed]):not(:active):hover {
+:host([value-state="Error"]) .input-icon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 }
 
-:host([value-state="Warning"]) [input-icon]:active,
-:host([value-state="Warning"]) [input-icon][pressed] {
+:host([value-state="Warning"]) .input-icon:active,
+:host([value-state="Warning"]) .input-icon[pressed] {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 	color: var(--_ui5_input_icon_warning_pressed_color);
 }
 
-:host([value-state="Warning"]) [input-icon]:not([pressed]):not(:active):hover {
+:host([value-state="Warning"]) .input-icon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 }
 
-:host([value-state="Information"]) [input-icon]:active,
-:host([value-state="Information"]) [input-icon][pressed] {
+:host([value-state="Information"]) .input-icon:active,
+:host([value-state="Information"]) .input-icon[pressed] {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 	color: var(--_ui5_input_icon_information_pressed_color);
 }
 
-:host([value-state="Information"]) [input-icon]:not([pressed]):not(:active):hover {
+:host([value-state="Information"]) .input-icon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 }
 
-:host([value-state="Success"]) [input-icon]:active,
-:host([value-state="Success"]) [input-icon][pressed] {
+:host([value-state="Success"]) .input-icon:active,
+:host([value-state="Success"]) .input-icon[pressed] {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 	color: var(--_ui5_input_icon_success_pressed_color);
 }
 
-:host([value-state="Success"]) [input-icon]:not([pressed]):not(:active):hover {
+:host([value-state="Success"]) .input-icon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 

@@ -37,9 +37,9 @@
 
 }
 
-.input-root-phone [value-state="Error"] [input-icon][data-ui5-compact-size],
-.input-root-phone [value-state="Success"] [input-icon][data-ui5-compact-size],
-.input-root-phone [value-state="Warning"] [input-icon][data-ui5-compact-size] {
+.input-root-phone [value-state="Error"] .input-icon[data-ui5-compact-size],
+.input-root-phone [value-state="Success"] .input-icon[data-ui5-compact-size],
+.input-root-phone [value-state="Warning"] .input-icon[data-ui5-compact-size] {
 	padding: .1875rem .5rem
 }
 
