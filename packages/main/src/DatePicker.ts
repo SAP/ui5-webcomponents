@@ -467,8 +467,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 				this._toggleAndFocusInput();
 			}
 		}
-
-		if ((this._getInput().isEqualNode(e.target as Node) && this.open) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		const target = e.target as HTMLElement;
+		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 
