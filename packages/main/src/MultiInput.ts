@@ -289,10 +289,9 @@ class MultiInput extends Input {
 		const cursorPosition = this.getDomRef()!.querySelector(`input`)!.selectionStart;
 		const tokens = this.tokens;
 		const lastToken = tokens.length && tokens[tokens.length - 1];
-		const isNumberOrEmail = this.type === "Number" || this.type === "Email";
 
-		// Selection is only permitted with text/search, URL, tel and password.
-		if (((isNumberOrEmail && !this.value) || cursorPosition === 0) && lastToken) {
+		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
+		if (((cursorPosition === null && !this.value) || cursorPosition === 0) && lastToken) {
 			e.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
