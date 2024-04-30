@@ -49,7 +49,6 @@
 	border-radius: inherit;
 	border-color: inherit;
 	position: relative;
-	outline: none;
 }
 
 .ui5-textarea-wrapper {
@@ -142,7 +141,7 @@
 :host([growing]) .ui5-textarea-inner {
 	box-sizing: border-box;
 	height: 100%;
-  	position: absolute;
+ 	position: absolute;
 	top: 0;
 	left: 0;
 }
@@ -183,34 +182,28 @@
 }
 
 :host([growing-max-rows]) .ui5-textarea-mirror {
-	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([rows="1"]) .ui5-textarea-inner {
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([growing-max-rows="1"]) .ui5-textarea-inner, :host([growing-max-rows="1"]) .ui5-textarea-mirror {
-	max-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([rows="1"][growing-max-rows]) .ui5-textarea-inner, :host([rows="1"][growing-max-rows]) .ui5-textarea-mirror {
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-}
-
-:host([rows="1"][value-state="Negative"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
-:host([rows="1"][value-state="Critical"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
-	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([value-state="Negative"]) .ui5-textarea-mirror,
 :host([value-state="Critical"]) .ui5-textarea-mirror {
 	padding-top: var(--_ui5_textarea_padding_top_error_warning);
 	padding-bottom: var(--_ui5_textarea_padding_bottom_error_warning);
-	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
+	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
 }
 
 :host([growing-max-rows="1"][value-state="Negative"]) .ui5-textarea-inner, :host([growing-max-rows="1"][value-state="Negative"]) .ui5-textarea-mirror
@@ -222,12 +215,12 @@
 :host([value-state="Information"]) .ui5-textarea-mirror {
 	padding-top: var(--_ui5_textarea_padding_top_information);
 	padding-bottom: var(--_ui5_textarea_padding_bottom_information);
-	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
+	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
 }
 
 :host([rows="1"][value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
-	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
+	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
 }
 
 :host([growing-max-rows="1"][value-state="Information"]) .ui5-textarea-inner, :host([growing-max-rows="1"][value-state="Information"]) .ui5-textarea-mirror {
@@ -401,16 +394,13 @@
 	border-color: var(--sapField_InformationColor);
 	box-shadow: var(--sapField_InformationShadow);
 	padding: var(--_ui5_textarea_information_wrapper_padding);
+	border-width: var(--_ui5_textarea_information_border_width);
+	border-style: var(--_ui5_textarea_error_warning_border_style);
 }
 
 :host([value-state="Information"][focused]:not([readonly])) .ui5-textarea-wrapper {
 	background-color: var(--_ui5_textarea_focused_value_state_information_background);
 	border-color: var(--sapField_InformationColor);
-}
-
-:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
-	border-width: var(--_ui5_textarea_information_border_width);
-	border-style: var(--_ui5_textarea_error_warning_border_style);
 }
 
 :host([value-state="Information"]:not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
