@@ -21,8 +21,17 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	 */
 	@property({ type: Boolean })
 	declare selected: boolean;
+
+	get isMultiComboBoxItem() {
+		return true;
+	}
 }
+
+const isInstanceOfMultiComboBoxItem = (object: any): object is MultiComboBoxItem => {
+	return "isMultiComboBoxItem" in object;
+};
 
 MultiComboBoxItem.define();
 
 export default MultiComboBoxItem;
+export { isInstanceOfMultiComboBoxItem };
