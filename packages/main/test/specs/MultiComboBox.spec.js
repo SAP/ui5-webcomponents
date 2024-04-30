@@ -209,7 +209,7 @@ describe("MultiComboBox general interaction", () => {
 		it("should remove the value state header after validation reset", async () => {
 			const mcb = await browser.$("#mcb-predefined-value");
 			const innerInput = await browser.$("#mcb-predefined-value").shadow$("#ui5-multi-combobox-input");
-			const icon = await mcb.shadow$("[input-icon]");
+			const icon = await mcb.shadow$(".input-icon");
 
 			await innerInput.click();
 			await innerInput.keys("d");
