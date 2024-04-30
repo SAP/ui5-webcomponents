@@ -364,6 +364,10 @@ class Tokenizer extends UI5Element {
 			const target = e.target as Token;
 			this.expanded = true;
 
+			if (this.open) {
+				this._preventCollapse = true;
+			}
+
 			if (!target.toBeDeleted) {
 				this._itemNav.setCurrentItem(target);
 				this._scrollToToken(target);
@@ -528,10 +532,9 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (!this._tokenDeleting && !this._preventCollapse) {
+			this._preventCollapse = false;
 			this.expanded = false;
 		}
-
-		this._preventCollapse = false;
 	}
 
 	handleBeforeOpen() {
@@ -845,9 +848,9 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (!this._tokenDeleting && !this._preventCollapse) {
+			this._preventCollapse = false;
 			this.expanded = false;
 		}
-		this._preventCollapse = false;
 	}
 
 	_toggleTokenSelection(tokens: Array<Token>) {

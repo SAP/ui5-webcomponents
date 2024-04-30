@@ -461,4 +461,21 @@ describe("Keyboard handling", () => {
 		await browser.keys(["Control", "i"]);
 		assert.notOk(await rpo.getProperty("open"), "nMore Popover should be closed");
 	});
+
+	it("should close popover on token selection via mouse", async () => {
+		const tokenizer = await $("#long-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
+
+		await firstToken.click();
+		await browser.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened");
+
+		await secondToken.click();
+
+		assert.notOk(await rpo.getProperty("open"), "nMore Popover should be closed");
+		assert.ok(await secondToken.getProperty("focused"), "Second token should be focused");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded");
+	});
 });
