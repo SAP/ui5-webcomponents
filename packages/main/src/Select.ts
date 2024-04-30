@@ -363,12 +363,12 @@ class Select extends UI5Element implements IFormElement {
 	_ensureSingleSelection() {
 		// if no item is selected => select the first one
 		// if multiple items are selected => select the last selected one
-		const selectedIndex = this.options.findLastIndex(option => option.selected);
-		if (selectedIndex === -1) {
-			this.options[0].selected = true;
-		} else {
-			for (let i = 0; i < selectedIndex; i++) {
-				this.options[i].selected = selectedIndex === i;
+		let selectedIndex = this.options.findLastIndex(option => option.selected);
+		selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
+		for (let i = 0; i < this.options.length; i++) {
+			this.options[i].selected = selectedIndex === i;
+			if (selectedIndex === i) {
+				break;
 			}
 		}
 	}
