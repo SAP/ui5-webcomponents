@@ -14,20 +14,15 @@
 </head>
 
 <body>
-	<!-- <div id="input">
-		<ui5-title level="H2">Input</ui5-title>
-	</div>
+	<ui5-input value="Some initial value" show-clear-icon >
+		<ui5-icon id="custom-icon" name="search" slot="icon"></ui5-icon>
+	</ui5-input>
 	<script type="module">
-		import inputCss from "../../dist/styles/Input.module.css";
+		import inputCss from "@ui5/webcomponents/dist/styles/InputIcon.module.css";
 
-		input.innerHTML += `<ui5-input>
-			<ui5-icon name="search" slot="icon" class=${inputCss.inputIcon}></ui5-icon>
-		</ui5-input>
-		<br />
-		<ui5-input  value="Some initial value" show-clear-icon >
-			<ui5-icon name="search" slot="icon"class=${inputCss.inputIcon}></ui5-icon>
-		</ui5-input>`
-	</script> -->
+		const input = document.getElementById("custom-icon");
+		input.classList.add(inputCss["input-icon"]);
+	</script>
 </body>
 
 </html>
