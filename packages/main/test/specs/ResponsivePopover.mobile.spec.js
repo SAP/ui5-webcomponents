@@ -41,4 +41,11 @@ describe("Acc", () => {
 		assert.notOk(await respPopoverNoneRole.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("role"), "role is not set.");
 		assert.notOk(await respPopoverNoneRole.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("aria-modal"), "aria-modal not set.");
 	});
+
+	it("tests initial focus", async () => {
+		await browser.$("#btnOpen").click();
+
+		assert.ok(await browser.$("#emailInput").isFocused(), "focus is correct.");
+		await browser.keys("Escape");
+	});
 });

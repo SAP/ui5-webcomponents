@@ -151,7 +151,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines the state of the `additionalText`.
 	 *
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -243,7 +243,7 @@ class TreeItemBase extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this.accessibleRoleDescription ? undefined : TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
@@ -284,8 +284,8 @@ class TreeItemBase extends ListItem {
 		this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {

@@ -61,7 +61,7 @@ type ExceededText = {
  *
  * ### Overview
  *
- * The `ui5-textarea` component is used to enter multiple lines of text.
+ * The `ui5-textarea` component is used to enter multiple rows of text.
  *
  * When empty, it can hold a placeholder similar to a `ui5-input`.
  * You can define the rows of the `ui5-textarea` and also determine specific behavior when handling long texts.
@@ -172,7 +172,7 @@ class TextArea extends UI5Element implements IFormElement {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Defines the number of visible text lines for the component.
+	 * Defines the number of visible text rows for the component.
 	 *
 	 * **Notes:**
 	 *
@@ -216,12 +216,12 @@ class TextArea extends UI5Element implements IFormElement {
 	growing!: boolean;
 
 	/**
-	 * Defines the maximum number of lines that the component can grow.
+	 * Defines the maximum number of rows that the component can grow.
 	 * @default 0
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
-	growingMaxLines!: number;
+	growingMaxRows!: number;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -450,7 +450,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_setCSSParams() {
 		this.style.setProperty("--_textarea_rows", this.rows ? String(this.rows) : "2");
-		this.style.setProperty("--_textarea_growing_max_lines", String(this.growingMaxLines));
+		this.style.setProperty("--_textarea_growing_max_rows", String(this.growingMaxRows));
 	}
 
 	toggleValueStateMessage(toggle: boolean) {
@@ -530,8 +530,8 @@ class TextArea extends UI5Element implements IFormElement {
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
@@ -592,7 +592,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : null;
+		return this.valueState === ValueState.Negative ? "true" : null;
 	}
 
 	get openValueStateMsgPopover() {
@@ -608,7 +608,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	get hasValueState() {
-		return this.valueState === ValueState.Error || this.valueState === ValueState.Warning || this.valueState === ValueState.Information;
+		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
 	}
 
 	get valueStateMessageText() {
@@ -624,9 +624,9 @@ class TextArea extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -635,19 +635,19 @@ class TextArea extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Positive": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			"Negative": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Critical": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 }

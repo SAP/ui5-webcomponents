@@ -298,7 +298,7 @@ describe("Value state header", () => {
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 
 		const dialogInput = await multiCombo.shadow$("ui5-responsive-popover").$("ui5-input");
-		assert.strictEqual(await dialogInput.getAttribute("value-state"), "Error", "Inner input's value state is correct");
+		assert.strictEqual(await dialogInput.getAttribute("value-state"), "Negative", "Inner input's value state is correct");
 	});
 });
 
@@ -400,7 +400,7 @@ describe("Validation", () => {
 
 		const dialogStateHeader = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-valuestatemessage-header");
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
-		assert.strictEqual(await dialogInput.getAttribute("value-state"), "Error", "Inner input's value state is correct");
+		assert.strictEqual(await dialogInput.getAttribute("value-state"), "Negative", "Inner input's value state is correct");
 		assert.strictEqual(await dialogInput.getValue(), "comm", "Additional input is allowed, but value state is error");
 	});
 

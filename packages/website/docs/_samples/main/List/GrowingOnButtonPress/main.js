@@ -11,7 +11,7 @@ const listItemTemplate = (index) => {
     li.textContent = "Fruit name";
     li.description = "the description goes here " + index;
     li.additionalText = "Available";
-    li.additionalTextState = "Success";
+    li.additionalTextState = "Positive";
     li.icon = "nutrition-activity";
     return li;
 }

@@ -1,6 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace, isEnter, isDelete, isF2,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -24,6 +27,7 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
+import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -168,7 +172,7 @@ abstract class ListItem extends ListItemBase {
 
 	/**
 	 * Defines the highlight state of the list items.
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.24
@@ -186,31 +190,12 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Used to define the role of the list item.
 	 * @private
-	 * @default "listitem"
-	 * @since 1.0.0-rc.9
-	 *
-	 */
-	@property({ defaultValue: "listitem" })
-	role!: string;
-
-	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
-
-	/**
-	 * Used to define the role of the list item.
-	 * @private
-	 * @default ""
+	 * @default "ListItem"
 	 * @since 1.3.0
 	 *
 	 */
-	@property()
-	accessibleRole!: string;
+	@property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
+	accessibleRole!: `${ListItemAccessibleRole}`;
 
 	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
 	_selectionMode!: `${ListSelectionMode}`;
@@ -287,7 +272,7 @@ abstract class ListItem extends ListItemBase {
 		document.removeEventListener("touchend", this.deactivate);
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -303,6 +288,15 @@ abstract class ListItem extends ListItemBase {
 
 		if (isEnter(e)) {
 			this.fireItemPress(e);
+		}
+
+		if (isF2(e)) {
+			const focusDomRef = this.getFocusDomRef()!;
+			if (this.focused) {
+				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+			} else {
+				focusDomRef.focus(); // stop content editing
+			}
 		}
 	}
 
@@ -467,6 +461,10 @@ abstract class ListItem extends ListItemBase {
 		return undefined;
 	}
 
+	get listItemAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get ariaSelectedText() {
 		let ariaSelectedText;
 
@@ -501,7 +499,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.accessibleRole || this.role,
+			role: this.listItemAccessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),

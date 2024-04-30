@@ -78,7 +78,7 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
  */
 interface IOption extends UI5Element {
 	selected: boolean,
-	title: string,
+	tooltip: string,
 	icon?: string | null,
 	value: string,
 	additionalText?: string,
@@ -596,7 +596,7 @@ class Select extends UI5Element implements IFormElement {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
-				title: opt.title,
+				tooltip: opt.tooltip,
 				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
@@ -951,19 +951,19 @@ class Select extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Positive]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Negative]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Positive]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			[ValueState.Negative]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Critical]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
@@ -1018,9 +1018,9 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageInputIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -1035,9 +1035,9 @@ class Select extends UI5Element implements IFormElement {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 			popover: {
@@ -1074,7 +1074,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get hasValueStateText() {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
 	get shouldOpenValueStateMessagePopover() {

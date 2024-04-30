@@ -33,7 +33,6 @@ import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit
 interface IMediaGalleryItem extends HTMLElement, ITabbable {
 	selected: boolean,
 	disabled: boolean,
-	focused: boolean,
 	displayedContent: HTMLElement | null;
 	layout: `${MediaGalleryItemLayout}`
 }
