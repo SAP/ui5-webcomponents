@@ -1,8 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type Menu from "./Menu.js";
 
 /**
@@ -36,7 +35,7 @@ class MenuItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
@@ -47,7 +46,7 @@ class MenuItem extends UI5Element {
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText!: string;
+	additionalText = "";
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -56,11 +55,11 @@ class MenuItem extends UI5Element {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether a visual separator should be rendered before the item.
@@ -68,7 +67,7 @@ class MenuItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	startsSection!: boolean;
+	startsSection = false;
 
 	/**
 	 * Defines whether `ui5-menu-item` is in disabled state.
@@ -78,7 +77,7 @@ class MenuItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -89,7 +88,7 @@ class MenuItem extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -97,8 +96,8 @@ class MenuItem extends UI5Element {
 	 * @public
 	 * @since 1.13.0
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -107,39 +106,39 @@ class MenuItem extends UI5Element {
 	 * @since 1.7.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName = "";
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates whether any of the element siblings have children items.
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithChildren!: boolean;
+	_siblingsWithChildren = false;
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithIcon!: boolean;
+	_siblingsWithIcon = false;
 
 	/**
 	 * Defines whether the submenu closing must be prevented
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_preventSubMenuClose!: boolean;
+	_preventSubMenuClose = false;
 
 	/**
 	 * Stores Menu object with submenu items
 	 */
-	@property({ type: Object, defaultValue: undefined })
+	@property({ type: Object })
 	_subMenu?: Menu;
 
 	/**
