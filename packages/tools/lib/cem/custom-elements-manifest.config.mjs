@@ -117,7 +117,7 @@ function processClass(ts, classNode, moduleDoc) {
 	// Slots (with accessor), methods and fields
 	for (let i = 0; i < (currClass.members?.length || 0); i++) {
 		const member = currClass.members[i];
-		const classNodeMember = classNode.members?.find(nodeMember => nodeMember.name?.text === member?.name && nodeMember.jsDoc?.[0]);
+		const classNodeMember = classNode.members?.find(nodeMember => nodeMember.name?.text === member?.name.replace(/^"(.*)"$/, "$1") && nodeMember.jsDoc?.[0]);
 		const classNodeMemberJSdoc = classNodeMember?.jsDoc?.[0];
 
 		if (!classNodeMember || !classNodeMemberJSdoc) continue;
