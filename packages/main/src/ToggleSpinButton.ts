@@ -62,6 +62,13 @@ class ToggleSpinButton extends ToggleButton {
 	 * Override of the handler in order to prevent button toggle functionality
 	 */
 	_onclick() {}
+
+	/**
+	 * Override
+	 */
+	get buttonAccessibleRole() {
+		return "spinbutton";
+	}
 }
 
 ToggleSpinButton.define();
