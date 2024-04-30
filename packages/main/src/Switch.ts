@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -77,8 +77,8 @@ class Switch extends UI5Element implements IFormElement {
 	 * @public
 	 * @default "Textual"
 	 */
-	@property({ type: SwitchDesign, defaultValue: SwitchDesign.Textual })
-	design!: `${SwitchDesign}`;
+	@property()
+	design: `${SwitchDesign}` = "Textual";
 
 	/**
 	 * Defines if the component is checked.
@@ -91,7 +91,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	checked!: boolean;
+	checked = false;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -101,62 +101,62 @@ class Switch extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean
+	disabled = false
 
 	/**
 	 * Defines the text, displayed when the component is checked.
 	 *
 	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	textOn!: string
+	textOn?: string
 
 	/**
 	 * Defines the text, displayed when the component is not checked.
 	 *
 	 * **Note:** We recommend using short texts, up to 3 letters (larger texts would be cut off).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	textOff!: string
+	textOff?: string
 
 	/**
 	 * Sets the accessible ARIA name of the component.
 	 *
 	 * **Note**: We recommend that you set an accessibleNameRef pointing to an external label or at least an `accessibleName`.
 	 * Providing an `accessibleNameRef` or an `accessibleName` is mandatory in the cases when `textOn` and `textOff` properties aren't set.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
 	 * **Note**: We recommend that you set an accessibleNameRef pointing to an external label or at least an `accessibleName`.
 	 * Providing an `accessibleNameRef` or an `accessibleName` is mandatory in the cases when `textOn` and `textOff` properties aren't set.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the tooltip of the component.
 	 *
 	 * **Note:** If applicable an external label reference should always be the preferred option to provide context to the `ui5-switch` component over a tooltip.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.9.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * Defines whether the component is required.
@@ -165,7 +165,7 @@ class Switch extends UI5Element implements IFormElement {
 	 * @since 1.16.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -176,12 +176,12 @@ class Switch extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.16.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit, when `Switch` is a part of HTML form.

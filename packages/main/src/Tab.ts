@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -81,11 +81,11 @@ interface TabInOverflow extends CustomListItem {
 class Tab extends UI5Element implements ITabbable, ITab {
 	/**
 	 * The text to be displayed for the item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Disabled tabs can't be selected.
@@ -93,25 +93,25 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the icon source URI to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous built-in icons.
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the component's design color.
@@ -128,8 +128,8 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: SemanticColor, defaultValue: SemanticColor.Default })
-	design!: `${SemanticColor}`;
+	@property()
+	design: `${SemanticColor}` = "Default";
 
 	/**
 	 * Specifies if the component is selected.
@@ -137,7 +137,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines if the tab is movable.
@@ -146,13 +146,13 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	@property({ type: Boolean })
-	_isTopLevelTab!: boolean;
+	_isTopLevelTab = false;
 
-	@property({ type: Object, defaultValue: null })
-	_selectedTabReference!: Tab;
+	@property({ type: Object })
+	_selectedTabReference?: Tab;
 
 	/**
 	 * Holds the content associated with this tab.
