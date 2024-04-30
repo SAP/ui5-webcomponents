@@ -192,7 +192,7 @@ class AvatarGroup extends UI5Element {
 	 * The following field is supported:
 	 *
 	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
-	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
 	 *
 	 * @public
 	 * @since 2.0.0

@@ -188,10 +188,10 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * The following fields are supported:
 	 *
 	 * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
-	 * Accepts the following string values: `true` | `false`
+	 * Accepts the following string values: `true` or `false`
 	 *
 	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
-	 * Accepts the following string values: `dialog` | `grid` | listbox` | `menu` | `tree`.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
 	 *
 	 * - **controls**: Identifies the element (or elements) whose contents or presence are controlled by the button element.
 	 * Accepts a lowercase string value.
