@@ -941,7 +941,7 @@ fcl.accessibilityTexts = {
 }
 
 fclAccRoles.accessibilityRoles = {
-    startColumnRole: "complimentary",
+    startColumnRole: "complementary",
     startArrowContainerRole: "navigation",
     midColumnRole: "main",
     endArrowContainerRole: "navigation",
