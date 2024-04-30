@@ -178,7 +178,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 
 	hasGrowingComponent(): boolean {
 		if (this._hasScrollToLoad()) {
-			return !this._grid?._scrollContainer;
+			return !(this._grid && this._grid._scrollContainer.scrollHeight > this._grid._scrollContainer.clientHeight) ?? true;
 		}
 
 		return this.type === GridGrowingMode.Button && !this.disabled;

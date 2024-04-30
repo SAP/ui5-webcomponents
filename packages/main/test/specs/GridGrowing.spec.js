@@ -16,16 +16,16 @@ describe('Grid - Growing with Button', async () => {
 		assert.ok(gridGrowing.isExisting(), "Grid Growing exists");
 
 		// The Growing Button is located inside of the grid. You can see the structure in the Grid.hbs file.
-		// It has a dedicated row with id "growing-button-row"
-		// Inside of that row, there is a cell with id "growing-button-cell".
-		const growingButtonRow = await grid.$("#growing-button-row");
-		assert.ok(growingButtonRow.isExisting(), "Growing Button Row exists");
+		// It has a dedicated row with id "growing-row"
+		// Inside of that row, there is a cell with id "growing-cell".
+		const growingButtonRow = await grid.shadow$("#growing-row");
+		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
 
-		const growingButtonCell = await grid.$("#growing-button-cell");
-		assert.ok(growingButtonCell.isExisting(), "Growing Button Cell exists");
+		const growingButtonCell = await grid.shadow$("#growing-cell");
+		assert.ok(await growingButtonCell.isExisting(), "Growing Button Cell exists");
 
 		const growingButton = await gridGrowing.shadow$("#growing-button");
-		assert.ok(growingButton.isExisting(), "Growing Button exists");
+		assert.ok(await growingButton.isExisting(), "Growing Button exists");
 	});
 
 	// Test Case: Check if the Growing Button is rendered with the correct growing-text and growing-sub-text
@@ -39,7 +39,7 @@ describe('Grid - Growing with Button', async () => {
 
 		// Check the growing-sub-text. The text is in growingButton. It's a direct child of the growing-button as seen in the GridGrowing.hbs file
 		const growingSubText = await gridGrowing.shadow$("#growing-subtext");
-		assert.ok(growingSubText.isExisting(), "Growing Sub Text exists");
+		assert.ok(await growingSubText.isExisting(), "Growing Sub Text exists");
 		assert.strictEqual(await growingSubText.getText(), "More Items Loading...", "Growing Sub Text is correct");
 	});
 
@@ -171,7 +171,7 @@ describe('Grid - Growing with Button', async () => {
 		const popinFirst = await firstRow.shadow$("#popin-cell");
 
 		// Check if the popin is visible
-		assert.ok(popinFirst.isExisting(), "Popin of first row is visible");
+		assert.ok(await popinFirst.isExisting(), "Popin of first row is visible");
 
 		// Click the Growing Button
 		let growingButton = await gridGrowing.shadow$("#growing-button");
@@ -185,7 +185,7 @@ describe('Grid - Growing with Button', async () => {
 		const popin = await firstNewRow.shadow$("#popin-cell");
 
 		// Check if the popin is visible
-		assert.ok(popin.isExisting(), "Popin of new row is visible");
+		assert.ok(await popin.isExisting(), "Popin of new row is visible");
 	});
 });
 
@@ -204,14 +204,14 @@ describe('Grid - Growing with Scroll', async () => {
 	// Test Case: Check if grid is scrollable (overflow-y: auto)
 	it('Check if grid is scrollable', async () => {
 		let grid = await browser.$("#grid0");
-		assert.ok(grid.isExisting(), "Grid exists");
+		assert.ok(await grid.isExisting(), "Grid exists");
 
 		const gridGrowing = await browser.$("#growing");
 		assert.equal(await gridGrowing.getAttribute("type"), "Scroll", "Growing is of type Scroll");
 
 		// Check if div with ID "grid" has overflow-y: auto
 		const innerGrid = await grid.shadow$("#grid");
-		assert.ok(innerGrid.isExisting(), "Inner Grid exists");
+		assert.ok(await innerGrid.isExisting(), "Inner Grid exists");
 		const overflowY = await innerGrid.getCSSProperty("overflow-y");
 		assert.strictEqual(overflowY.value, "visible", "Grid is scrollable");
 	});
@@ -230,5 +230,44 @@ describe('Grid - Growing with Scroll', async () => {
 
 		await endRow.scrollIntoView();
 		assert.strictEqual(await loadMoreCounter.getProperty("value"), "2", "The load-more event is dispatched");
+	});
+
+	
+});
+
+describe('Grid - Growing with Scroll (Edge Cases)', async () => {
+	before(async () => {
+		await browser.url(`test/pages/GridGrowing.html`);
+		await browser.setWindowSize(2000, 2000);
+
+		const gridGrowing = await browser.$("#growing");
+		await gridGrowing.setAttribute("type", "Scroll");
+	});
+
+	it('Check if growing button is rendered, when no scrollbar is visible', async () => {
+		const gridGrowing = await browser.$("#growing");
+
+		const grid = await browser.$("#grid0");
+
+		const growingButtonRow = await grid.shadow$("#growing-row");
+		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
+
+		const growingButtonCell = await grid.shadow$("#growing-cell");
+		assert.ok(await growingButtonCell.isExisting(), "Growing Button Cell exists");
+
+		const growingButton = await gridGrowing.shadow$("#growing-button");
+		assert.ok(await growingButton.isExisting(), "Growing Button exists");
+
+		await growingButton.click();
+		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
+		await growingButton.click();
+		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
+		await growingButton.click();
+		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
+
+		await growingButton.click();
+
+		assert.notOk(await growingButtonRow.isExisting(), "Growing Button Row is not rendered");
+		assert.notOk(await growingButtonCell.isExisting(), "Growing Button Cell is not rendered");
 	});
 });
