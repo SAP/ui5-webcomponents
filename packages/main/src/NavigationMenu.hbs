@@ -47,7 +47,7 @@
 	>
 	{{#if _currentItems.length}}
 		<ui5-list
-			accessible-role="tree"
+			accessible-role="Tree"
 			id="{{_id}}-menu-list"
 			selection-mode="None"
 			?loading="{{loading}}"
@@ -63,7 +63,7 @@
 					id="{{../_id}}-menu-item-{{@index}}"
 					.icon="{{this.item.icon}}"
 					accessible-name={{this.item.ariaLabelledByText}}
-					accessible-role="none"
+					accessible-role="None"
 					.additionalText="{{this.item._additionalText}}"
 					.ariaHasPopup={{this.ariaHasPopup}}
 					?disabled={{this.item.disabled}}
@@ -104,7 +104,7 @@
 					id="{{../_id}}-menu-item-{{@index}}"
 					.icon="{{this.item.icon}}"
 					accessible-name={{this.item.ariaLabelledByText}}
-					accessible-role="treeitem"
+					accessible-role="TreeItem"
 					.additionalText="{{this.item._additionalText}}"
 					.ariaHasPopup={{this.ariaHasPopup}}
 					?disabled={{this.item.disabled}}

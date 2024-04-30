@@ -75,7 +75,7 @@ Basic.args = {
 	</div>
 	<div>
 		<ui5-label for="password" required show-colon>Password</ui5-label>
-		<ui5-input id="password" type="Password" value-state="Error"></ui5-input>
+		<ui5-input id="password" type="Password" value-state="Negative"></ui5-input>
 	</div>
 	<div>
 		<ui5-label for="email" type="Email" required show-colon>Email</ui5-label>
@@ -155,7 +155,7 @@ ${story()}`
 
 export const WithState = Template.bind({});
 WithState.args = {
-	state: ValueState.Error,
+	state: ValueState.Negative,
 	default: "<p>Dialog with state</p>",
 	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<ui5-button class="dialogCloser">Close</ui5-button>

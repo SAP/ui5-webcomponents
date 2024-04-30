@@ -30,13 +30,13 @@ class Option extends UI5Element implements IOption {
 	selected!: boolean;
 
 	/**
-	 * Defines the tooltip of the component.
+	 * Defines the text of the tooltip that would be displayed for the option component.
 	 * @default ""
-	 * @private
-	 * @since 1.1.0
+	 * @public
+	 * @since 2.0.0
 	 */
 	@property()
-	title!: string;
+	tooltip!: string;
 
 	/**
 	 * Defines the `icon` source URI.
