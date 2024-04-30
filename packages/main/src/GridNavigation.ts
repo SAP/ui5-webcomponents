@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClickable.js";
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import Grid from "./Grid.js";
 import GridRow from "./GridRow.js";
@@ -102,7 +103,7 @@ class GridNavigation extends GridExtension {
 	}
 
 	_focusElement(element: HTMLElement, ignoreFocusIn: boolean = true) {
-		if (!element || element === this._lastFocusedElement) {
+		if (!element || element === getActiveElement()) {
 			return;
 		}
 
@@ -120,8 +121,8 @@ class GridNavigation extends GridExtension {
 		if (element instanceof HTMLInputElement) {
 			element.select();
 		}
-		this._ignoreFocusIn = false;
 		this._lastFocusedElement = element;
+		this._ignoreFocusIn = false;
 	}
 
 	_focusCurrentItem() {
@@ -250,12 +251,14 @@ class GridNavigation extends GridExtension {
 		const navigationItems = this._getNavigationItemsOfGrid();
 		const flatNavigationItems = navigationItems.flat();
 		let navigationItem = null;
+		let focusableElement = null;
 
 		// eslint-disable-next-line no-restricted-syntax
 		for (const target of e.composedPath() as any[]) {
 			if (target.nodeType === Node.ELEMENT_NODE) {
 				const element = target as HTMLElement;
 				if (element.getAttribute("tabindex") === "-1" || isElementClickable(element)) {
+					focusableElement = element;
 					break;
 				}
 				if (flatNavigationItems.includes(element)) {
@@ -265,12 +268,12 @@ class GridNavigation extends GridExtension {
 			}
 		}
 
-		if (navigationItem) {
+		if (focusableElement && focusableElement !== this._lastFocusedElement && flatNavigationItems.includes(this._lastFocusedElement)) {
+			this._lastFocusedElement!.removeAttribute("tabindex");
+		} else if (navigationItem) {
 			this._gridWalker.setCurrent(navigationItem);
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
-		} else if (flatNavigationItems.includes(this._lastFocusedElement)) {
-			this._lastFocusedElement!.removeAttribute("tabindex");
 		}
 	}
 
