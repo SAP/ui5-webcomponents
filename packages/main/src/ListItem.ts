@@ -28,6 +28,7 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
+import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -174,12 +175,12 @@ abstract class ListItem extends ListItemBase {
 	/**
 	 * Used to define the role of the list item.
 	 * @private
-	 * @default ""
+	 * @default "ListItem"
 	 * @since 1.3.0
 	 *
 	 */
-	@property()
-	accessibleRole!: string;
+	@property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
+	accessibleRole!: `${ListItemAccessibleRole}`;
 
 	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
 	_selectionMode!: `${ListSelectionMode}`;
@@ -437,6 +438,10 @@ abstract class ListItem extends ListItemBase {
 		return undefined;
 	}
 
+	get listItemAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get ariaSelectedText() {
 		let ariaSelectedText;
 
@@ -471,7 +476,7 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.accessibleRole,
+			role: this.listItemAccessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
