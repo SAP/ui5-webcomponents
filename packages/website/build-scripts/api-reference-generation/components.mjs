@@ -4,7 +4,7 @@ import { parseComponentDeclaration } from "./component-file.mjs"
 import { removeFileExtension } from "./utils.mjs";
 import { findDeclaration, realPackagesName } from "./manifest.mjs";
 
-const packages = ["main", "fiori"];
+const packages = ["main", "fiori", "compat"];
 
 const generateComponents = (source = "./docs/_components_pages", level = 1) => {
     const sourcePath = path.resolve(source);
@@ -37,6 +37,8 @@ const generateComponents = (source = "./docs/_components_pages", level = 1) => {
                 packageName = "main"
             } else if (sourcePath.includes("fiori")) {
                 packageName = "fiori";
+            } else if (sourcePath.includes("compat")) {
+                packageName = "compat";
             }
 
             if (packageName) {

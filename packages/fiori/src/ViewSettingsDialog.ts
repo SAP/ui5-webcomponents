@@ -520,7 +520,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
-		const mode: ViewSettingsDialogMode = e.detail.selectedItem.getAttribute("mode");
+		const mode: ViewSettingsDialogMode = e.detail.selectedItems[0].getAttribute("mode");
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 

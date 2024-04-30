@@ -35,13 +35,13 @@ class OptionBase extends UI5Element {
 	selected!: boolean;
 
 	/**
-	 * Defines the tooltip of the component.
+	 * Defines the text of the tooltip that would be displayed for the option component.
 	 * @default ""
-	 * @private
-	 * @since 1.1.0
+	 * @public
+	 * @since 2.0.0
 	 */
 	@property()
-	title!: string;
+	tooltip!: string;
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
