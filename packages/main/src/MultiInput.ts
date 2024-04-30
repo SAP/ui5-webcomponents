@@ -11,7 +11,6 @@ import {
 	isRightCtrl,
 	isHome,
 	isEnd,
-	isUp,
 	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -204,7 +203,7 @@ class MultiInput extends Input {
 			return this._focusFirstToken(e);
 		}
 
-		if (isLeft(e) || isUp(e) || isBackSpace(e)) {
+		if (isLeft(e) || isBackSpace(e)) {
 			this._skipOpenSuggestions = true;
 			return this._handleLeft(e);
 		}

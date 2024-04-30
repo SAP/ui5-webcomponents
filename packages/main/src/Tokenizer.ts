@@ -98,7 +98,7 @@ enum ClipboardDataOperation {
  *
  * ### Overview
  *
- * A `ui5-tokenizer` is an invisible container for `ui5-tokens` that supports keyboard navigation and token selection.
+ * A `ui5-tokenizer` is an invisible container for `ui5-token`s that supports keyboard navigation and token selection.
  *
  * The `ui5-tokenizer` consists of two parts:
  * - Tokens - displays the available tokens.
@@ -108,7 +108,7 @@ enum ClipboardDataOperation {
  *
  * #### Basic Navigation
  * The `ui5-tokenizer` provides advanced keyboard handling.
- * When a tokem is focused the user can use the following keyboard
+ * When a token is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  *
  * - [Left] or [Right] / [Up] or [Down] - Navigates left and right through the tokens.
@@ -151,7 +151,7 @@ enum ClipboardDataOperation {
 })
 
 /**
- * Fired when a token is deleted (delete icon, delete or bacspace is pressed)
+ * Fired when a token is deleted (delete icon, delete or backspace is pressed)
  *
  * @param {HTMLElement} ref DOM ref of the token to be deleted.
  * @public
@@ -200,16 +200,6 @@ enum ClipboardDataOperation {
 
 class Tokenizer extends UI5Element {
 	/**
-	 * Defines whether the component is disabled.
-	 *
-	 * **Note:** A disabled component is completely noninteractive.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
-
-	/**
 	 * Defines whether the component is read-only.
 	 *
 	 * **Note:** A read-only component is not editable,
@@ -221,23 +211,37 @@ class Tokenizer extends UI5Element {
 	readonly!: boolean;
 
 	/**
+	 * Defines whether the component is disabled.
+	 *
+	 * **Note:** A disabled component is completely noninteractive.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
-	 * @protected
+	 * **Note:** Used inside MultiInput and MultiComboBox components.
+	 * @default false
+	 * @private
 	 */
 	@property({ type: Boolean })
 	expanded!: boolean;
 
 	/**
 	 * Indicates if the nMore popover is open
-	 * @protected
+	 * **Note:** Used inside MultiInput and MultiComboBox components.
 	 * @default false
+	 * @private
 	 */
 	@property({ type: Boolean })
 	open!: boolean;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
-	 * @protected
+	 * **Note:** Used inside MultiInput and MultiComboBox components.
+	 * @private
 	 * @default ""
 	 */
 	@property({ validator: DOMReference, defaultValue: "" })
@@ -245,28 +249,35 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Sets the min-width of the nMore Popover.
-	 * @protected
+	 * **Note:** Used inside MultiInput and MultiComboBox components.
+	 * @private
 	 */
 	@property({ validator: Integer })
 	popoverMinWidth?: number;
 
 	/**
 	 * Prevents tokens to be part of the tab chain.
-	 * @protected
+	 * **Note:** Used inside MultiInput and MultiComboBox components.
+	 * @default false
+	 * @private
 	 */
 	@property({ type: Boolean })
 	preventInitialFocus!: boolean;
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
-	 * @protected
+	 * **Note:** Used inside MultiComboBox component.
+	 * @default false
+	 * @private
 	 */
 	@property({ type: Boolean })
 	preventPopoverOpen!: boolean;
 
 	/**
 	 * Hides the popover arrow.
-	 * @protected
+	 * **Note:** Used inside MultiInput and MultiComboBox components.
+	 * @default false
+	 * @private
 	 */
 	@property({ type: Boolean })
 	hidePopoverArrow!: boolean;
@@ -285,7 +296,6 @@ class Tokenizer extends UI5Element {
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
-	_openedByNmore!: boolean;
 	_tokenDeleting!: boolean;
 	_preventCollapse!: boolean;
 	_skipTabIndex!: boolean;
@@ -333,7 +343,6 @@ class Tokenizer extends UI5Element {
 			return;
 		}
 
-		this._openedByNmore = true;
 		this.expanded = true;
 
 		if (!this.preventPopoverOpen) {
@@ -512,23 +521,6 @@ class Tokenizer extends UI5Element {
 	handleBeforeClose() {
 		const tokensArray = this._tokens;
 
-		if (this._openedByNmore) {
-			const lastToken = tokensArray[tokensArray.length - 1];
-			const focusedToken = tokensArray.find(token => token.focused);
-
-			if (lastToken) {
-				this._focusLastToken();
-			}
-
-			if (focusedToken || lastToken) {
-				this._scrollToToken(focusedToken || lastToken);
-			}
-
-			this._openedByNmore = false;
-
-			return;
-		}
-
 		if (isPhone()) {
 			tokensArray.forEach(token => {
 				token.selected = false;
@@ -549,6 +541,7 @@ class Tokenizer extends UI5Element {
 	handleAfterClose() {
 		this.open = false;
 		this._preventCollapse = false;
+		this._focusedElementBeforeOpen = null;
 	}
 
 	handleDialogButtonPress(e: MouseEvent) {
@@ -618,6 +611,10 @@ class Tokenizer extends UI5Element {
 
 			this._preventCollapse = true;
 			this._focusedElementBeforeOpen && this._focusedElementBeforeOpen.focus();
+
+			if (!this._focusedElementBeforeOpen) {
+				this._focusLastToken();
+			}
 		}
 
 		if (e.key.toLowerCase() === "f7") {
