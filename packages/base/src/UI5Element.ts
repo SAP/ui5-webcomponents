@@ -773,7 +773,7 @@ abstract class UI5Element extends HTMLElement {
 				// in the property setter for compatibility
 				continue; // eslint-disable-line no-continue
 			}
-			this._updateAttribute(prop, this._state[prop]);
+			this._updateAttribute(prop, (this as unknown as Record<string, PropertyValue>)[prop]);
 		}
 	}
 
