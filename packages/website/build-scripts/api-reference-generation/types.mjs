@@ -28,12 +28,10 @@ import DocCardList from '@theme/DocCardList';
             declaration._implementations = findAllImplementations(declaration);
 
             await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `${declaration.name}.mdx`), parseDeclaration(declaration, packageName))
-            await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
         })
 
         enums.forEach(async (declaration) => {
             await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `${declaration.name}.mdx`), parseDeclaration(declaration, packageName))
-            await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
         })
     })
 }
