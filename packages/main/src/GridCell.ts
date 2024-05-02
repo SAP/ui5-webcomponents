@@ -1,15 +1,10 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-
 import GridCellTemplate from "./generated/templates/GridCellTemplate.lit.js";
-import GridCellCss from "./generated/themes/GridCell.css.js";
-import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
-import Grid from "./Grid.js";
+import GridCellStyles from "./generated/themes/GridCell.css.js";
+import GridCellBase from "./GridCellBase.js";
 import GridRow from "./GridRow.js";
+import Grid from "./Grid.js";
+import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -30,41 +25,10 @@ import GridRow from "./GridRow.js";
  */
 @customElement({
 	tag: "ui5-grid-cell",
-	renderer: litRender,
-	styles: GridCellCss,
+	styles: [GridCellBase.styles, GridCellStyles],
 	template: GridCellTemplate,
-	dependencies: [],
 })
-class GridCell extends UI5Element {
-	/**
-	 * Defines the content of the component.
-	 *
-	 * @public
-	 */
-	@slot({ type: Node, "default": true })
-	content!: Array<Node>;
-
-	@property({ type: Boolean })
-	_popin!: boolean;
-
-	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		GridCell.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
-	onBeforeRendering() {
-		if (this._popin) {
-			this.removeAttribute("role");
-		} else {
-			this.setAttribute("role", "gridcell");
-		}
-	}
-
-	getFocusDomRef() {
-		return this;
-	}
-
+class GridCell extends GridCellBase {
 	get _popinHeader() {
 		const row = this.parentElement as GridRow;
 		const grid = row.parentElement as Grid;
@@ -74,7 +38,7 @@ class GridCell extends UI5Element {
 	}
 
 	get _i18nPopinColon() {
-		return GridCell.i18nBundle.getText(LABEL_COLON);
+		return GridCellBase.i18nBundle.getText(LABEL_COLON);
 	}
 }
 

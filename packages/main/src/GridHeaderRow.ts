@@ -1,22 +1,12 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-
+import GridRowBase from "./GridRowBase.js";
 import GridHeaderRowTemplate from "./generated/templates/GridHeaderRowTemplate.lit.js";
-import GridHeaderRowCss from "./generated/themes/GridHeaderRow.css.js";
+import GridHeaderRowStyles from "./generated/themes/GridHeaderRow.css.js";
 import GridHeaderCell from "./GridHeaderCell.js";
-import Grid from "./Grid.js";
-import GridSelection from "./GridSelection.js";
-import CheckBox from "./CheckBox.js";
 import {
 	GRID_SELECTION,
-	GRID_ROW_SELECTOR,
 	GRID_ROW_POPIN,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -34,16 +24,14 @@ import {
  * <code>import @ui5/webcomponents/dist/GridHeaderRow.js";</code>
  *
  * @constructor
- * @extends UI5Element
+ * @extends GridRowBase
  * @public
  */
 @customElement({
 	tag: "ui5-grid-header-row",
 	languageAware: true,
-	renderer: litRender,
-	styles: GridHeaderRowCss,
+	styles: [GridRowBase.styles, GridHeaderRowStyles],
 	template: GridHeaderRowTemplate,
-	dependencies: [CheckBox],
 })
 
 /**
@@ -52,7 +40,7 @@ import {
  *
  * @public
  */
-class GridHeaderRow extends UI5Element {
+class GridHeaderRow extends GridRowBase {
 	/**
 	 * Defines the cells of the component.
 	 * <br><br>
@@ -74,88 +62,31 @@ class GridHeaderRow extends UI5Element {
 	@property({ type: Boolean })
 	sticky!: boolean;
 
-	@property({ type: Integer, defaultValue: 0, noAttribute: true })
-	_invalidate!: number;
-
-	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		GridHeaderRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
-	onEnterDOM() {
-		this.setAttribute("role", "row");
-	}
-
 	onBeforeRendering() {
-		if (this._isMultiSelect) {
-			this.setAttribute("aria-selected", `${this._isSelected}`);
-		} else {
-			this.removeAttribute("aria-selected");
-		}
-
-		this.style.setProperty(getScopedVarName("--ui5-sticky-header-offset"), this._grid.stickyTop);
-	}
-
-	getFocusDomRef() {
-		return this;
-	}
-
-	_informSelectionChange() {
-		this._gridSelection?.informHeaderRowSelectionChange();
-	}
-
-	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if ((isSpace(e) && eventOrigin === this)
-		||	((isSpace(e) || isEnter(e)) && eventOrigin === this._selectionCell)
-		) {
-			this._informSelectionChange();
-			e.preventDefault();
+		super.onBeforeRendering();
+		if (this._grid) {
+			this.style.top = this._grid.stickyTop;
 		}
 	}
 
-	get _grid(): Grid {
-		return this.parentElement as Grid;
+	isHeaderRow() {
+		return true;
 	}
 
-	get _gridSelection(): GridSelection | undefined {
-		return this._grid._getSelection();
+	get _isSelectable() {
+		return this._isMultiSelect;
 	}
 
 	get _isSelected() {
 		return this._gridSelection?.areAllRowsSelected();
 	}
 
-	get _isMultiSelect() {
-		return this._gridSelection?.isMultiSelect();
-	}
-
-	get _hasRowSelector() {
-		return this._gridSelection?.hasRowSelector();
-	}
-
-	get _selectionCell() {
-		return this.shadowRoot!.getElementById("selection-cell");
-	}
-
-	get _visibleCells() {
-		return this.cells.filter(c => !c._popin);
-	}
-
-	get _popinCells() {
-		return this.cells.filter(c => c._popin);
-	}
-
-	get _i18nRowSelector() {
-		return GridHeaderRow.i18nBundle.getText(GRID_ROW_SELECTOR);
-	}
-
 	get _i18nSelection() {
-		return GridHeaderRow.i18nBundle.getText(GRID_SELECTION);
+		return GridRowBase.i18nBundle.getText(GRID_SELECTION);
 	}
 
 	get _i18nRowPopin() {
-		return GridHeaderRow.i18nBundle.getText(GRID_ROW_POPIN);
+		return GridRowBase.i18nBundle.getText(GRID_ROW_POPIN);
 	}
 }
 

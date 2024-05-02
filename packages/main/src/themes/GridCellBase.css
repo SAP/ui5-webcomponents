@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: var(--_ui5_grid_cell_valign);
+    min-width: var(--_ui5_grid_cell_min_width);
+    max-width: 100%;
+    overflow: clip;
+    overflow-clip-margin: content-box;
+    padding: var(--_ui5_grid_cell_padding);
+    box-sizing: border-box;
+}
+
+:host(:focus) {
+    outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+    outline-offset: calc(-1 * var(--sapContent_FocusWidth));
+}

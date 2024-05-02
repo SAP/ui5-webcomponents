@@ -1,12 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-
+import GridCellBase from "./GridCellBase.js";
 import GridHeaderCellTemplate from "./generated/templates/GridHeaderCellTemplate.lit.js";
-import GridHeaderCellCss from "./generated/themes/GridHeaderCell.css.js";
+import GridHeaderCellStyles from "./generated/themes/GridHeaderCell.css.js";
 
 /**
  * @class
@@ -22,25 +19,15 @@ import GridHeaderCellCss from "./generated/themes/GridHeaderCell.css.js";
  * <code>import @ui5/webcomponents/dist/GridHeaderCell.js";</code>
  *
  * @constructor
- * @extends UI5Element
+ * @extends GridCellBase
  * @public
  */
 @customElement({
 	tag: "ui5-grid-header-cell",
-	renderer: litRender,
-	styles: GridHeaderCellCss,
+	styles: [GridCellBase.styles, GridHeaderCellStyles],
 	template: GridHeaderCellTemplate,
-	dependencies: [],
 })
-class GridHeaderCell extends UI5Element {
-	/**
-	 * Defines the content of the component.
-	 *
-	 * @public
-	 */
-	@slot({ type: Node, "default": true })
-	content!: Array<Node>;
-
+class GridHeaderCell extends GridCellBase {
 	/**
 	 * Defines the width of the component, including padding and border.
 	 *
@@ -62,28 +49,13 @@ class GridHeaderCell extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_popin!: boolean;
 
-	_popinWidth: number;
-
-	constructor() {
-		super();
-		this._popinWidth = 0;
-	}
+	protected ariaRole: string = "columnheader";
+	_popinWidth: number = 0;
 
 	onEnterDOM() {
 		this.style.minWidth = this.minWidth;
 		this.style.maxWidth = this.maxWidth;
 		this.style.width = this.width;
-	}
-
-	onBeforeRendering() {
-		this.setAttribute("role", "columnheader");
-		if (this._popin) {
-			this.removeAttribute("role");
-		}
-	}
-
-	getFocusDomRef() {
-		return this;
 	}
 }
 

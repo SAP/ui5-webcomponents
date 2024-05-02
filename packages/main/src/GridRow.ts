@@ -1,24 +1,17 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isIOS, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 import GridRowTemplate from "./generated/templates/GridRowTemplate.lit.js";
 import GridRowCss from "./generated/themes/GridRow.css.js";
 import GridCell from "./GridCell.js";
-import Grid from "./Grid.js";
-import GridSelection from "./GridSelection.js";
 import RadioButton from "./RadioButton.js";
-import CheckBox from "./CheckBox.js";
-import {
-	GRID_ROW_SELECTOR,
-} from "./generated/i18n/i18n-defaults.js";
+import GridRowBase from "./GridRowBase.js";
 
 /**
  * @class
@@ -34,17 +27,16 @@ import {
  * <code>import @ui5/webcomponents/dist/GridRow.js";</code>
  *
  * @constructor
- * @extends UI5Element
+ * @extends GridRowBase
  * @public
  */
 @customElement({
 	tag: "ui5-grid-row",
-	renderer: litRender,
-	styles: GridRowCss,
+	styles: [GridRowBase.styles, GridRowCss],
 	template: GridRowTemplate,
-	dependencies: [RadioButton, CheckBox],
+	dependencies: [RadioButton],
 })
-class GridRow extends UI5Element {
+class GridRow extends GridRowBase {
 	/**
 	 * Defines the cells of the component.
 	 * <br><br>
@@ -85,7 +77,6 @@ class GridRow extends UI5Element {
 	_invalidate!: number;
 
 	static i18nBundle: I18nBundle;
-
 	static async onDefine() {
 		GridRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 		if (isSafari() && isIOS()) {
@@ -94,21 +85,9 @@ class GridRow extends UI5Element {
 		}
 	}
 
-	onEnterDOM() {
-		this.setAttribute("role", "row");
-	}
-
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		this.toggleAttribute("_interactive", this._isInteractive);
-		if (this._isSelectable) {
-			this.setAttribute("aria-selected", `${this._isSelected}`);
-		} else {
-			this.removeAttribute("aria-selected");
-		}
-	}
-
-	getFocusDomRef() {
-		return this;
 	}
 
 	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {
@@ -117,14 +96,9 @@ class GridRow extends UI5Element {
 		return Promise.resolve();
 	}
 
-	_informSelectionChange() {
-		this._gridSelection?.informRowSelectionChange(this);
-	}
-
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if ((eventOrigin === this && this._isSelectable && isSpace(e)) || (eventOrigin === this._selectionCell && (isSpace(e) || isEnter(e)))) {
-			this._informSelectionChange();
-			e.preventDefault();
+		super._onkeydown(e, eventOrigin);
+		if (e.defaultPrevented) {
 			return;
 		}
 
@@ -148,53 +122,8 @@ class GridRow extends UI5Element {
 		this.removeAttribute("_active");
 	}
 
-	get _grid(): Grid | undefined {
-		const grid = this.parentElement;
-		return grid instanceof Grid ? grid : undefined;
-	}
-
-	get _gridId() {
-		return this._grid?._id;
-	}
-
 	get _isInteractive() {
 		return this.interactive;
-	}
-
-	get _gridSelection(): GridSelection | undefined {
-		return this._grid?._getSelection();
-	}
-
-	get _isSelected() {
-		return this._gridSelection?.isSelected(this);
-	}
-
-	get _isSelectable() {
-		return this._gridSelection?.isSelectable();
-	}
-
-	get _isMultiSelect() {
-		return this._gridSelection?.isMultiSelect();
-	}
-
-	get _hasRowSelector() {
-		return this._gridSelection?.hasRowSelector();
-	}
-
-	get _selectionCell() {
-		return this.shadowRoot!.getElementById("selection-cell");
-	}
-
-	get _visibleCells() {
-		return this.cells.filter(c => !c._popin);
-	}
-
-	get _popinCells() {
-		return this.cells.filter(c => c._popin);
-	}
-
-	get _i18nRowSelector(): string {
-		return GridRow.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 }
 

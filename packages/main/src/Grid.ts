@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -13,7 +13,7 @@ import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBund
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
-import GridCss from "./generated/themes/Grid.css.js";
+import GridStyles from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
 import GridHeaderRow from "./GridHeaderRow.js";
 import GridHeaderCell from "./GridHeaderCell.js";
@@ -136,7 +136,7 @@ type GridRowPressEventDetail = {
 @customElement({
 	tag: "ui5-grid",
 	renderer: litRender,
-	styles: GridCss,
+	styles: GridStyles,
 	template: GridTemplate,
 	fastNavigation: true,
 	dependencies: [],
@@ -453,10 +453,11 @@ class Grid extends UI5Element {
 
 	get _gridTemplateColumns() {
 		const widths = [];
+		const visibleHeaderCells = this.headerRow._visibleCells as GridHeaderCell[];
 		if (this._getSelection()?.hasRowSelector()) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
-		widths.push(...this.headerRow._visibleCells.map(cell => {
+		widths.push(...visibleHeaderCells.map(cell => {
 			const minWidth = cell.minWidth === "auto" ? "3rem" : cell.minWidth;
 			if (cell.width === "auto" || cell.width.includes("%") || cell.width.includes("fr") || cell.width.includes("vw")) {
 				return `minmax(${minWidth}, ${cell.maxWidth})`;

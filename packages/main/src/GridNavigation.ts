@@ -13,10 +13,8 @@ import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.j
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import Grid from "./Grid.js";
-import GridRow from "./GridRow.js";
-import GridCell from "./GridCell.js";
-import GridHeaderRow from "./GridHeaderRow.js";
-import GridHeaderCell from "./GridHeaderCell.js";
+import GridRowBase from "./GridRowBase.js";
+import GridCellBase from "./GridCellBase.js";
 import GridExtension from "./GridExtension.js";
 import GridWalker from "./GridWalker.js";
 
@@ -32,7 +30,7 @@ class GridNavigation extends GridExtension {
 	_colPosition: number = 0;
 	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
-	_lastFocusedElement?: HTMLElement;
+	_lastFocusedItem?: HTMLElement;
 
 	constructor(grid: Grid) {
 		super();
@@ -41,7 +39,7 @@ class GridNavigation extends GridExtension {
 		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
 	}
 
-	_getNavigationItemsOfRow(row: GridRow | GridHeaderRow) {
+	_getNavigationItemsOfRow(row: GridRowBase) {
 		return [row, ...row.shadowRoot!.children].map(element => {
 			return element.localName === "slot" ? (element as HTMLSlotElement).assignedElements() : element;
 		}).flat().filter(element => {
@@ -88,16 +86,6 @@ class GridNavigation extends GridExtension {
 		}
 	}
 
-	_isRowEvent(e: Event) {
-		const eventOrigin = e.composedPath()[0];
-		return eventOrigin instanceof GridRow || eventOrigin instanceof GridHeaderRow;
-	}
-
-	_isCellEvent(e: Event) {
-		const eventOrigin = e.composedPath()[0];
-		return eventOrigin instanceof GridCell || eventOrigin instanceof GridHeaderCell;
-	}
-
 	_isEventFromCurrentItem(e: Event) {
 		return e.composedPath()[0] === this._gridWalker.getCurrent();
 	}
@@ -108,12 +96,13 @@ class GridNavigation extends GridExtension {
 		}
 
 		const navigationItems = this._getNavigationItemsOfGrid().flat();
-		if (navigationItems.includes(this._lastFocusedElement)) {
-			this._lastFocusedElement!.removeAttribute("tabindex");
+		if (navigationItems.includes(this._lastFocusedItem)) {
+			this._lastFocusedItem?.removeAttribute("tabindex");
 		}
 
 		if (navigationItems.includes(element)) {
 			element.setAttribute("tabindex", "-1");
+			this._lastFocusedItem = element;
 		}
 
 		this._ignoreFocusIn = ignoreFocusIn;
@@ -121,7 +110,6 @@ class GridNavigation extends GridExtension {
 		if (element instanceof HTMLInputElement) {
 			element.select();
 		}
-		this._lastFocusedElement = element;
 		this._ignoreFocusIn = false;
 	}
 
@@ -130,7 +118,7 @@ class GridNavigation extends GridExtension {
 	}
 
 	_handleEnter(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (this._isCellEvent(e)) {
+		if (eventOrigin instanceof GridCellBase) {
 			this._handleF2(e, eventOrigin);
 		}
 	}
@@ -146,7 +134,7 @@ class GridNavigation extends GridExtension {
 	}
 
 	_handleF7(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (this._isRowEvent(e)) {
+		if (eventOrigin instanceof GridRowBase) {
 			this._gridWalker.setColPos(this._colPosition);
 			let elementToFocus = this._gridWalker.getCurrent() as HTMLElement;
 			if (this._tabPosition > -1) {
@@ -268,8 +256,9 @@ class GridNavigation extends GridExtension {
 			}
 		}
 
-		if (focusableElement && focusableElement !== this._lastFocusedElement && flatNavigationItems.includes(this._lastFocusedElement)) {
-			this._lastFocusedElement!.removeAttribute("tabindex");
+		if (focusableElement && focusableElement !== this._lastFocusedItem) {
+			this._lastFocusedItem?.removeAttribute("tabindex");
+			this._lastFocusedItem = undefined;
 		} else if (navigationItem) {
 			this._gridWalker.setCurrent(navigationItem);
 			this._gridWalker.setColPos(0);
@@ -277,16 +266,16 @@ class GridNavigation extends GridExtension {
 		}
 	}
 
-	_onfocusin(e: FocusEvent, evetOrigin: HTMLElement) {
+	_onfocusin(e: FocusEvent, eventOrigin: HTMLElement) {
 		if (this._ignoreFocusIn) {
 			return;
 		}
 
-		if (evetOrigin === this._grid._beforeElement || evetOrigin === this._grid._afterElement) {
+		if (eventOrigin === this._grid._beforeElement || eventOrigin === this._grid._afterElement) {
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
-		} else {
-			this._lastFocusedElement = evetOrigin;
+		} else if (eventOrigin !== this._lastFocusedItem && this._getNavigationItemsOfGrid().flat().includes(eventOrigin)) {
+			this._lastFocusedItem = eventOrigin;
 		}
 	}
 }

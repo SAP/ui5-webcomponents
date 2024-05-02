@@ -5,6 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
 import Grid, { IGridFeature } from "./Grid.js";
 import GridRow from "./GridRow.js";
+import GridRowBase from "./GridRowBase.js";
 
 /**
  * @class
@@ -84,12 +85,16 @@ class GridSelection extends UI5Element implements IGridFeature {
 		return row.key;
 	}
 
-	isSelected(row: GridRow): boolean {
+	isSelected(row: GridRowBase): boolean {
 		if (!this._grid || !this.isSelectable()) {
 			return false;
 		}
 
-		const rowIdentifier = this.getRowIdentifier(row);
+		if (row.isHeaderRow()) {
+			return this.areAllRowsSelected();
+		}
+
+		const rowIdentifier = this.getRowIdentifier(row as GridRow);
 		return this.selectedAsArray.includes(rowIdentifier);
 	}
 
@@ -117,28 +122,12 @@ class GridSelection extends UI5Element implements IGridFeature {
 		});
 	}
 
-	informRowSelectionChange(row: GridRow) {
-		const isRowSelected = this.isMultiSelect() ? this.isSelected(row) : true;
-		const rowIdentifier = this.getRowIdentifier(row);
-		if (this.selected && this.mode === GridSelectionMode.Multi) {
-			const selectedSet = this.selectedAsSet;
-			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
-			this.selectedAsSet = selectedSet;
+	informSelectionChange(row: GridRowBase) {
+		if (row.isHeaderRow()) {
+			this._informHeaderRowSelectionChange();
 		} else {
-			this.selected = rowIdentifier;
+			this._informRowSelectionChange(row as GridRow);
 		}
-		this.fireEvent("change");
-	}
-
-	informHeaderRowSelectionChange() {
-		const isRowSelected = this.areAllRowsSelected();
-		const selectedSet = this.selectedAsSet;
-		this._grid!.rows.forEach(row => {
-			const rowIdentifier = this.getRowIdentifier(row);
-			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
-		});
-		this.selectedAsSet = selectedSet;
-		this.fireEvent("change");
 	}
 
 	get selectedAsArray(): string[] {
@@ -155,6 +144,30 @@ class GridSelection extends UI5Element implements IGridFeature {
 
 	set selectedAsSet(selectedSet: Set<string>) {
 		this.selectedAsArray = [...selectedSet];
+	}
+
+	_informRowSelectionChange(row: GridRow) {
+		const isRowSelected = this.isMultiSelect() ? this.isSelected(row) : true;
+		const rowIdentifier = this.getRowIdentifier(row);
+		if (this.selected && this.mode === GridSelectionMode.Multi) {
+			const selectedSet = this.selectedAsSet;
+			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
+			this.selectedAsSet = selectedSet;
+		} else {
+			this.selected = rowIdentifier;
+		}
+		this.fireEvent("change");
+	}
+
+	_informHeaderRowSelectionChange() {
+		const isRowSelected = this.areAllRowsSelected();
+		const selectedSet = this.selectedAsSet;
+		this._grid!.rows.forEach(row => {
+			const rowIdentifier = this.getRowIdentifier(row);
+			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
+		});
+		this.selectedAsSet = selectedSet;
+		this.fireEvent("change");
 	}
 
 	_invalidateGridAndRows() {
