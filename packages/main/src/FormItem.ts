@@ -16,16 +16,17 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * The FormItem (ui5-form-item) represents pair of a label and
  * one or more components (text or text fields), associated to it.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * The FormItem is being used in FormGroup (ui5-form-group) or directly in Form (ui5-form).
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
+ *
  * <code>import @ui5/webcomponents/dist/FormItem.js";</code>
  *
  * @constructor

@@ -11,7 +11,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * The FormGroup (ui5-form-group) represents a group inside the Form (ui5-form) component
  * and it consists of FormItem (ui5-form-item) components.
@@ -20,12 +20,12 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  * Still, one can influence the layout via the FormGroup's <code>columnSpan</code> property,
  * that defines how many columns the group should expand to.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * Тhe FormGroup (ui5-form-group) allows to split a Form into groups,
  * e.g to group FormItems that logically belong together.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
  * <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
  *
