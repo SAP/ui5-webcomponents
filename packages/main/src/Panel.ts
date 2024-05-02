@@ -99,7 +99,7 @@ class Panel extends UI5Element {
 	 * The text is visible in both expanded and collapsed states.
 	 *
 	 * **Note:** This property is overridden by the `header` slot.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -152,7 +152,7 @@ class Panel extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -83,7 +83,7 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 * @since 1.0.3
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -92,8 +92,8 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 * @since 1.14.0
 	 */
-	@property({ type: SegmentedButtonSelectionMode, defaultValue: SegmentedButtonSelectionMode.Single })
-	selectionMode!: `${SegmentedButtonSelectionMode}`;
+	@property()
+	selectionMode: `${SegmentedButtonSelectionMode}` = "Single";
 
 	/**
 	 * Defines the items of `ui5-segmented-button`.

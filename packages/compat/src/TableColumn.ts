@@ -43,7 +43,7 @@ class TableColumn extends UI5Element {
 
 	/**
 	 * The text for the column when it pops in.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

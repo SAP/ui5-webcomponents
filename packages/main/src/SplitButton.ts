@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import {
 	isEscape,
@@ -109,7 +109,7 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the arrow button should have the active state styles or not.
@@ -118,15 +118,15 @@ class SplitButton extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
-	activeArrowButton!: boolean;
+	activeArrowButton = false;
 
 	/**
 	 * Defines the component design.
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
+	@property()
+	design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines whether the component is disabled.
@@ -136,14 +136,14 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -151,15 +151,15 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_splitButtonAccInfo!: Record<string, boolean>;
+	_splitButtonAccInfo?: Record<string, boolean>;
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @default "0"
 	 * @private
 	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	_tabIndex!: string;
+	@property({ noAttribute: true })
+	_tabIndex = "0"
 
 	/**
 	 * Indicates if there is Space key pressed
@@ -167,7 +167,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed!: boolean;
+	_spacePressed = false;
 
 	/**
 	 * Indicates if there is SHIFT or ESCAPE key pressed
@@ -175,7 +175,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_shiftOrEscapePressed!: boolean;
+	_shiftOrEscapePressed = false;
 
 	/**
 	 * Defines the active state of the text button
@@ -183,7 +183,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_textButtonActive!: boolean;
+	_textButtonActive = false;
 
 	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
@@ -191,7 +191,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_activeArrowButton!: boolean;
+	_activeArrowButton = false;
 
 	/**
 	 * Defines the text of the component.

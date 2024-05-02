@@ -31,7 +31,7 @@ class Option extends UI5Element implements IOption {
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the option component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
@@ -44,7 +44,7 @@ class Option extends UI5Element implements IOption {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default null
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -61,7 +61,7 @@ class Option extends UI5Element implements IOption {
 
 	/**
 	 * Defines the additional text displayed at the end of the option element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.3.0
 	 */

@@ -247,7 +247,7 @@ class Select extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the `ui5-select` so that it can be submitted as
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -286,14 +286,14 @@ class Select extends UI5Element implements IFormElement {
 	 * Defines the accessible ARIA name of the component.
 	 * @since 1.0.0-rc.9
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
 	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */

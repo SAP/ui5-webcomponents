@@ -8,7 +8,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -241,7 +240,7 @@ enum TableFocusTargetElement {
 class Table extends UI5Element {
 	/**
 	 * Defines the text that will be displayed when there is no data and `hideNoData` is not present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -254,7 +253,7 @@ class Table extends UI5Element {
 	 * **Note:** If not specified a built-in text will be displayed.
 	 *
 	 * **Note:** This property takes effect if `growing` is set to `Button`.
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
@@ -265,7 +264,7 @@ class Table extends UI5Element {
 	 * Defines the subtext that will be displayed under the `growingButtonText`.
 	 *
 	 * **Note:** This property takes effect if `growing` is set to `Button`.
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
@@ -365,7 +364,7 @@ class Table extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */

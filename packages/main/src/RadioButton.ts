@@ -136,7 +136,7 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -166,7 +166,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * **Note:** When set, a native `input` HTML element
 	 * will be created inside the component so that it can be submitted as
 	 * part of an HTML form.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -179,7 +179,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 *
 	 * **Important:** For the `value` property to have effect, you must add the following import to your project:
 	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -206,7 +206,7 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
