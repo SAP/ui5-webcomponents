@@ -5,6 +5,9 @@
 	--_ui5_split_button_middle_separator_top: 0.625rem;
 	--_ui5_split_button_middle_separator_height: 1rem;
 
+	/* CallendarLegend */
+	--_ui5-calendar-legend-item-root-focus-border-radius: 0.25rem;
+
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.75rem;
 	--_ui5_color-palette-item-hover-height: 2.25rem;
@@ -29,6 +32,9 @@
 	/* SplitButton */
 	--_ui5_split_button_middle_separator_top: 0.3125rem;
 	--_ui5_split_button_middle_separator_height: 1rem;
+
+	/* Calendar Legend Item */
+	--_ui5-calendar-legend-item-box-margin: 0.25rem 0.5rem 0.25rem 0.25rem;
 
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.25rem;

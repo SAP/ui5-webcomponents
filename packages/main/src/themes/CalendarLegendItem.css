@@ -7,6 +7,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	cursor: default;
+	margin: 0.0625rem 0;
 }
 
 .ui5-calendar-legend-item-box {
@@ -153,6 +154,7 @@
 
 .ui5-calendar-legend-item-root:focus {
 	outline: var(--_ui5-calendar-legend-item-root-focus-border);
-	outline-offset: -.0625rem;
+	outline-offset: var(--_ui5-calendar-legend-item-root-focus-offset);
 	border-radius: var(--_ui5-calendar-legend-item-root-focus-border-radius);
+	margin: 0.0625rem 0;
 }
