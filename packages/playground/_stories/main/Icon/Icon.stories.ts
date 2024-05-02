@@ -17,10 +17,9 @@ export default {
 const Template: UI5StoryArgs<Icon, StoryArgsSlots> = (args) =>
 	html`<ui5-icon
 	design="${ifDefined(args.design)}"
-	?interactive="${ifDefined(args.interactive)}"
+	mode="${ifDefined(args.mode)}"
 	name="${ifDefined(args.name)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
-	accessible-role="${ifDefined(args.accessibleRole)}"
 	?show-tooltip="${ifDefined(args.showTooltip)}"
 	style="${ifDefined(args.style)}"
 ></ui5-icon>`;
