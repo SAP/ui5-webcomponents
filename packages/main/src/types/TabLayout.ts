@@ -1,6 +1,5 @@
 /**
  * Tab layout of TabContainer.
- *
  * @public
  */
 enum TabLayout {

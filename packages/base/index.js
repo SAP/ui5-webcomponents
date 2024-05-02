@@ -12,7 +12,7 @@ import {
 	getDefaultIconCollection,
 } from "./dist/config/Icons.js";
 import { RegisteredIconCollection } from "./dist/asset-registries/util/IconCollectionsByTheme.js";
-import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionsByTheme.js";
+import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionByTheme.js";
 import {
 	getLanguage,
 	setLanguage,
@@ -56,13 +56,6 @@ import { registerIconLoader } from "./dist/asset-registries/Icons.js";
 // Boot.ts
 import { attachBoot } from "./dist/Boot.js";
 
-// CSP.ts
-import {
-	setPackageCSSRoot,
-	setUseLinks,
-	setPreloadLinks,
-} from "./dist/CSP.js";
-
 // CustomElementsScope.ts
 import {
 	setCustomElementsScopingSuffix,
@@ -75,7 +68,6 @@ import {
 // Device.ts
 import {
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,
@@ -173,11 +165,6 @@ export {
 	// Boot.ts
 	attachBoot,
 
-	// CSP.ts
-	setPackageCSSRoot,
-	setUseLinks,
-	setPreloadLinks,
-
 	// CustomElementsScope.ts
 	setCustomElementsScopingSuffix,
 	getCustomElementsScopingSuffix,
@@ -187,7 +174,6 @@ export {
 
 	// Device.ts
 	supportsTouch,
-	isIE,
 	isSafari,
 	isChrome,
 	isFirefox,

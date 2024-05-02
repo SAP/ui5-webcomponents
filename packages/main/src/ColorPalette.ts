@@ -20,7 +20,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
 import type Dialog from "./Dialog.js";
@@ -35,11 +34,10 @@ import {
 
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
-import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
+import ColorPaletteDialogCss from "./generated/themes/ColorPaletteDialog.css.js";
 
 /**
- * Interface for components that may be used inside a <code>ui5-color-palette</code> or <code>ui5-color-palette-popover</code>
- *
+ * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
  * @public
  */
 interface IColorPaletteItem extends HTMLElement, ITabbable {
@@ -56,18 +54,17 @@ type ColorPaletteItemClickEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-color-palette</code> provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
+ * ### Overview
+ * The `ui5-color-palette` provides the users with a range of predefined colors. The colors are fixed and do not change with the theme.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * The <code>ui5-color-palette</code> is meant for users that need to select a color from a predefined set.
- * To define the colors, use the <code>ui5-color-palette-item</code> component inside the default slot of the <code>ui5-color-palette</code>.
+ * The `ui5-color-palette` is meant for users that need to select a color from a predefined set.
+ * To define the colors, use the `ui5-color-palette-item` component inside the default slot of the `ui5-color-palette`.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/ColorPalette.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/ColorPalette.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.12
@@ -77,9 +74,7 @@ type ColorPaletteItemClickEventDetail = {
 	tag: "ui5-color-palette",
 	renderer: litRender,
 	template: ColorPaletteTemplate,
-	staticAreaTemplate: ColorPaletteDialogTemplate,
-	styles: ColorPaletteCss,
-	staticAreaStyles: ColorPaletteStaticAreaCss,
+	styles: [ColorPaletteCss, ColorPaletteDialogCss],
 	get dependencies() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
@@ -88,7 +83,6 @@ type ColorPaletteItemClickEventDetail = {
 
 /**
  * Fired when the user selects a color.
- *
  * @public
  * @since 1.0.0-rc.15
  * @param {string} color the selected color
@@ -114,7 +108,8 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
-	 * <b>Note:</b> In order to use this property you need to import the following module: <code>"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"</code>
+	 *
+	 * **Note:** In order to use this property you need to import the following module: `"@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js"`
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -132,7 +127,8 @@ class ColorPalette extends UI5Element {
 
 	/**
 	 * Defines the default color of the color palette
-	 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
+	 *
+	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
@@ -154,7 +150,14 @@ class ColorPalette extends UI5Element {
 	popupMode!: boolean;
 
 	/**
-	 * Defines the <code>ui5-color-palette-item</code> elements.
+	 * Defines if the palette is rendered on phone.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
+	 * Defines the `ui5-color-palette-item` elements.
 	 * @public
 	 */
 	@slot({
@@ -169,7 +172,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature?: ColorPaletteMoreColors;
+	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
 
 	static i18nBundle: I18nBundle;
 
@@ -212,6 +215,8 @@ class ColorPalette extends UI5Element {
 				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
 		}
+
+		this.onPhone = isPhone();
 	}
 
 	onAfterRendering() {
@@ -395,19 +400,19 @@ class ColorPalette extends UI5Element {
 		return this.colorPaletteNavigationElements[0];
 	}
 
-	async _chooseCustomColor() {
-		const colorPicker = await this.getColorPicker();
-		this._setColor(colorPicker.color);
+	_chooseCustomColor() {
+		const colorPicker = this.getColorPicker();
+		this._setColor(colorPicker.value);
 		this._closeDialog();
 	}
 
-	async _closeDialog() {
-		const dialog = await this._getDialog();
+	_closeDialog() {
+		const dialog = this._getDialog();
 		dialog.close();
 	}
 
-	async _openMoreColorsDialog() {
-		const dialog = await this._getDialog();
+	_openMoreColorsDialog() {
+		const dialog = this._getDialog();
 		dialog.show();
 	}
 
@@ -504,13 +509,12 @@ class ColorPalette extends UI5Element {
 		};
 	}
 
-	async _getDialog() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
+	_getDialog() {
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
-	async getColorPicker() {
-		const dialog = await this._getDialog();
+	getColorPicker() {
+		const dialog = this._getDialog();
 		return dialog.content[0].querySelector<ColorPicker>("[ui5-color-picker]")!;
 	}
 }

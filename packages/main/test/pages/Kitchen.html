@@ -21,7 +21,7 @@
 	<!-- OPENUI5 WITH CSS VARIABLES
 	<script id='sap-ui-bootstrap'
 			src='https://sdk.openui5.org/resources/sap-ui-core.js'
-			data-sap-ui-theme='sap_belize_hcb'
+			data-sap-ui-theme='sap_horizon_hcb'
 			data-sap-ui-libs='sap.m'
 			data-sap-ui-preload="async"
 			data-sap-ui-xx-cssVariables="true"
@@ -49,7 +49,7 @@
 	</div>
 
 	<div id="side-nav" class="sidenav">
-		<ui5-list id="side-nav-list" mode="SingleSelect" separators="Inner">
+		<ui5-list id="side-nav-list" selection-mode="Single" separators="Inner">
 			<ui5-li id="arg1" icon="developer-settings">ui5-button</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-card</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-checkbox</ui5-li>
@@ -64,7 +64,6 @@
 			<ui5-li id="arg1" icon="developer-settings">ui5-popover</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-radio-button</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-tabcontainer</ui5-li>
-			<ui5-li id="bg1" icon="developer-settings">ui5-table</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-textarea</ui5-li>
 		</ui5-list>
 	</div>
@@ -234,10 +233,10 @@
 			<ui5-radio-button id="myRb3" disabled text="disabled"></ui5-radio-button>
 			<ui5-radio-button id="myRb4" read-only text="read only" checked></ui5-radio-button>
 			<ui5-radio-button id="myRb5" disabled text="disabled" checked></ui5-radio-button>
-			<ui5-radio-button id="myRb6" value-state="Warning" checked text="warning"></ui5-radio-button>
-			<ui5-radio-button id="myRb7" value-state="Error" checked text="error"></ui5-radio-button>
-			<ui5-radio-button id="myRb6" value-state="Warning" text="warning"></ui5-radio-button>
-			<ui5-radio-button id="myRb7" value-state="Error" text="error long text should truncate"></ui5-radio-button>
+			<ui5-radio-button id="myRb6" value-state="Critical" checked text="warning"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" value-state="Negative" checked text="error"></ui5-radio-button>
+			<ui5-radio-button id="myRb6" value-state="Critical" text="warning"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" value-state="Negative" text="error long text should truncate"></ui5-radio-button>
 		</section>
 
 		<section class="row row-centered">
@@ -246,9 +245,9 @@
 			<ui5-checkbox id="myCb3" disabled wrapping-type="Normal" text="disabled long text might also wrap"></ui5-checkbox>
 			<ui5-checkbox id="myCb4" read-only text="read only" checked></ui5-checkbox>
 			<ui5-checkbox id="myCb5" disabled text="disabled" checked></ui5-checkbox>
-			<ui5-checkbox id="myCb6" value-state="Warning" checked text="warning"></ui5-checkbox>
-			<ui5-checkbox id="myCb7" value-state="Error" checked text="error"></ui5-checkbox>
-			<ui5-checkbox id="myCb7" value-state="Error" text="error long text should truncate"></ui5-checkbox>
+			<ui5-checkbox id="myCb6" value-state="Critical" checked text="warning"></ui5-checkbox>
+			<ui5-checkbox id="myCb7" value-state="Negative" checked text="error"></ui5-checkbox>
+			<ui5-checkbox id="myCb7" value-state="Negative" text="error long text should truncate"></ui5-checkbox>
 		</section>
 
 		<section class="row row-centered">
@@ -274,7 +273,7 @@
 					<ui5-button id="button1" icon="refresh">Reset</ui5-button>
 					<ui5-button design="Negative">Cencel</ui5-button>
 				</div>
-				<ui5-list id="myList" mode="Delete">
+				<ui5-list id="myList" selection-mode="Delete">
 					<ui5-li id="arg1">Argentina</ui5-li>
 					<ui5-li id="bg1">Bulgaria</ui5-li>
 					<ui5-li id="ch1">China</ui5-li>
@@ -286,7 +285,7 @@
 					<ui5-button id="button2" icon="add">Add</ui5-button>
 					<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 				</div>
-				<ui5-list id="myList2" mode="SingleSelectBegin">
+				<ui5-list id="myList2" selection-mode="SingleStart">
 					<ui5-li id="arg2">Up</ui5-li>
 					<ui5-li id="bg2">Down</ui5-li>
 					<ui5-li id="ch2">Charm</ui5-li>
@@ -298,7 +297,7 @@
 						<ui5-button id="button3" icon="add">Add</ui5-button>
 						<ui5-button design="Negative" icon="delete">Remove</ui5-button>
 					</div>
-					<ui5-list id="myList3" mode="MultiSelect">
+					<ui5-list id="myList3" selection-mode="Multiple">
 						<ui5-li id="arg3">Manager</ui5-li>
 						<ui5-li id="bg3">Developer</ui5-li>
 						<ui5-li id="ch3">Product Owner</ui5-li>
@@ -309,25 +308,25 @@
 		<section class="row">
 			<div class="kitchen5auto">
 				<ui5-label required for="user">user:</ui5-label>
-				<ui5-input id="user" value-state="Warning" show-suggestions placeholder="username ...">
+				<ui5-input id="user" value-state="Critical" show-suggestions placeholder="username ...">
 					<ui5-icon id="user-icon" slot="icon" name="message-warning"></ui5-icon>
 				</ui5-input>
 			</div>
 			<div class="kitchen5auto">
 				<ui5-label required for="pass">pass:</ui5-label>
-				<ui5-input id="pass" value-state="Error" type="Password" placeholder="pwd ...">
+				<ui5-input id="pass" value-state="Negative" type="Password" placeholder="pwd ...">
 						<ui5-icon slot="icon" name="message-error"></ui5-icon>
 				</ui5-input>
 			</div>
 		</section>
 
 		<section class="kitchen6auto">
-			<ui5-date-picker class="kitchen7auto" id="myDatepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-date-picker>
+			<ui5-date-picker class="kitchen7auto" id="myDatepicker" value="Jun 06, 2018"></ui5-date-picker>
 			<ui5-date-picker class="kitchen7auto" id="myDatepicker1"></ui5-date-picker>
 		</section>
 
 		<section class="kitchen6auto">
-			<ui5-datetime-picker class="kitchen7auto" id="myDateTimepicker" value="Jun 06, 2018" popover-horizontal-align="Left"></ui5-datetime-picker>
+			<ui5-datetime-picker class="kitchen7auto" id="myDateTimepicker" value="Jun 06, 2018"></ui5-datetime-picker>
 			<ui5-datetime-picker class="kitchen7auto" id="myDateTimepicker1"></ui5-datetime-picker>
 		</section>
 
@@ -387,16 +386,16 @@
 				</ui5-tabcontainer>
 
 
-				<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" class="kitchen9auto">
+				<ui5-tree id="tree" no-data-text="No data" selection-mode="Multiple" class="kitchen9auto">
 					<div slot="header" class="kitchen10auto">
 						<ui5-title>My tree</ui5-title>
 						<div class="spacer"></div>
 						<ui5-select id="modeSelect">
 							<ui5-option>None</ui5-option>
-							<ui5-option>SingleSelect</ui5-option>
-							<ui5-option>SingleSelectBegin</ui5-option>
-							<ui5-option>SingleSelectEnd</ui5-option>
-							<ui5-option selected>MultiSelect</ui5-option>
+							<ui5-option>Single</ui5-option>
+							<ui5-option>SingleStart</ui5-option>
+							<ui5-option>SingleEnd</ui5-option>
+							<ui5-option selected>Multiple</ui5-option>
 
 							<ui5-option>Delete</ui5-option>
 						</ui5-select>
@@ -458,7 +457,7 @@
 		</section>
 
 		<section class="row">
-			<ui5-list header-text="Products" mode="SingleSelectEnd">
+			<ui5-list header-text="Products" selection-mode="SingleEnd">
 				<ui5-li-custom>
 					<div class="kitchen12auto">
 						<span>Laptop HP 2GB RAM Dual-core</span>
@@ -479,7 +478,7 @@
 				</ui5-li-custom>
 			</ui5-list>
 
-			<ui5-list header-text="Products" mode="MultiSelect">
+			<ui5-list header-text="Products" selection-mode="Multiple">
 					<ui5-li-custom>
 						<div class="kitchen13auto">
 							<span>Laptop HP 2GB RAM Dual-core</span>
@@ -499,129 +498,6 @@
 						</div>
 					</ui5-li-custom>
 			</ui5-list>
-		</section>
-
-		<section class="row">
-			<ui5-table class="kitchen14auto">
-				<ui5-table-column demand-popin min-width="600px" popin-text="Component" slot="columns">
-					<span class="kitchen15auto" >Component</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="1000px" popin-text="Accessibility" slot="columns">
-					<span class="kitchen15auto" >Accessibility</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="800px" popin-text="Text Coverage" slot="columns">
-					<span class="kitchen15auto">Test Coverage</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="600px" popin-text="RTL" slot="columns">
-					<span class="kitchen15auto">RTL</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="600px" popin-text="i18n" slot="columns">
-					<span class="kitchen15auto">i18n</span>
-				</ui5-table-column>
-
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 1</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="red">40%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 2</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 3</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 4</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="yellow">80%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 5</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="red">45%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 6</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="yellow">70%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-			</ui5-table>
 		</section>
 
 		<section class="row row-centered">

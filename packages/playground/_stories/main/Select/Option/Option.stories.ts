@@ -13,17 +13,17 @@ export default {
   title: "Main/Select/Option",
   component: "Option",
   argTypes,
-  
+
 } as Meta<Option>;
 
 const Template: UI5StoryArgs<Option, StoryArgsSlots> = (args) => {
   return html`<ui5-select>
    <ui5-option
    additional-text="${ifDefined(args.additionalText)}"
-   ?disabled="${ifDefined(args.disabled)}"
    icon="${ifDefined(args.icon)}"
    ?selected="${ifDefined(args.selected)}"
    value="${ifDefined(args.value)}"
+   tooltip="${ifDefined(args.tooltip)}"
    >${unsafeHTML(args.default)}</ui5-option>
 </ui5-select> `;
 };

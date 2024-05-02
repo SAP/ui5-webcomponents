@@ -18,28 +18,26 @@ import PageCss from "./generated/themes/Page.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-page</code> is a container component that holds one whole screen of an application.
+ * The `ui5-page` is a container component that holds one whole screen of an application.
  * The page has three distinct areas that can hold content - a header, content area and a footer.
- * <h3>Structure</h3>
- * <h4>Header</h4>
+ * ### Structure
+ * #### Header
  * The top most area of the page is occupied by the header. The standard header includes a navigation button and a title.
- * <h4>Content</h4>
+ * #### Content
  * The content occupies the main part of the page. Only the content area is scrollable by default.
- * This can be prevented by setting  <code>enableScrolling</code> to <code>false</code>.
- * <h4>Footer</h4>
- * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
- * This is enabled with the <code>floatingFooter</code> property.
+ * This can be prevented by setting  `enableScrolling` to `false`.
+ * #### Footer
+ * The footer is optional and occupies the part above the bottom part of the content. Alternatively, the footer can be fixed at the bottom of the page by enabling the `fixedFooter` property.
  *
- * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
- * that there is enough space for the <code>ui5-page</code> to be rendered.
- * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
+ * **Note:** `ui5-page` occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
+ * that there is enough space for the `ui5-page` to be rendered.
+ * **Note:** In order for the `ui5-page` to be displayed, the parent element should have fixed height.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents-fiori/dist/Page.js";</code>
- *
+ * `import "@ui5/webcomponents-fiori/dist/Page.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.12
@@ -58,11 +56,9 @@ import PageCss from "./generated/themes/Page.css.js";
 })
 class Page extends UI5Element {
 	/**
-	 * Defines the background color of the <code>ui5-page</code>.
-	 * <br><br>
-	 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
-	 * <br><br>
+	 * Defines the background color of the `ui5-page`.
 	 *
+	 * **Note:** When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
 	 * @default "Solid"
 	 * @public
 	 */
@@ -72,27 +68,24 @@ class Page extends UI5Element {
 	/**
 	 * Disables vertical scrolling of page content.
 	 * If set to true, there will be no vertical scrolling at all.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disableScrolling!: boolean;
+	noScrolling!: boolean;
 
 	/**
-	 * Defines if the footer should float over the content.
-	 * <br><br>
-	 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
+	 * Defines if the footer is fixed at the very bottom of the page.
 	 *
-	 * @default true
+	 * **Note:** When set to true the footer is fixed at the very bottom of the page, otherwise it floats over the content with a slight offset from the bottom.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	floatingFooter!: boolean;
+	fixedFooter!: boolean;
 
 	/**
 	 * Defines the footer visibility.
-	 *
 	 * @default false
 	 * @public
 	 */
@@ -101,7 +94,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the current media query size.
-	 *
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
@@ -110,7 +102,6 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the header HTML Element.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -118,15 +109,13 @@ class Page extends UI5Element {
 
 	/**
 	 * Defines the content HTML Element.
-	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	@slot({ type: Node, "default": true })
+	content!: Array<Node>;
 
 	/**
 	 * Defines the footer HTML Element.
-	 *
 	 * @public
 	 */
 	@slot()
@@ -153,11 +142,11 @@ class Page extends UI5Element {
 	}
 
 	get _contentBottom() {
-		return !this.floatingFooter && !this.hideFooter ? "2.75rem" : "0";
+		return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";
 	}
 
 	get _contentPaddingBottom() {
-		return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
+		return !this.fixedFooter && !this.hideFooter ? "3.5rem" : "0";
 	}
 
 	get _contentTop() {

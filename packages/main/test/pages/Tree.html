@@ -31,16 +31,16 @@
 	</ui5-segmented-button>
 
 	<br><br>
-	<ui5-tree id="tree" no-data-text="No data" mode="MultiSelect" accessible-name="Tree with accessibleName">
+	<ui5-tree id="tree" no-data-text="No data" selection-mode="Multiple" accessible-name="Tree with accessibleName">
 		<div slot="header" class="hdr">
 			<ui5-title>My tree</ui5-title>
 			<div class="spacer"></div>
 			<ui5-select id="modeSelect">
 				<ui5-option>None</ui5-option>
-				<ui5-option>SingleSelect</ui5-option>
-				<ui5-option>SingleSelectBegin</ui5-option>
-				<ui5-option>SingleSelectEnd</ui5-option>
-				<ui5-option selected>MultiSelect</ui5-option>
+				<ui5-option>Single</ui5-option>
+				<ui5-option>SingleStart</ui5-option>
+				<ui5-option>SingleEnd</ui5-option>
+				<ui5-option selected>Multiple</ui5-option>
 
 				<ui5-option>Delete</ui5-option>
 			</ui5-select>
@@ -51,14 +51,14 @@
 		</div>
 
 		<ui5-tree-item expanded text="Tree 1" icon="paste" additional-text="Available" indeterminate selected additional-text-state="Information" accessible-name="Tree item with accessibleName">
-			<ui5-title slot="content"> 
+			<ui5-title slot="content">
 				<ui5-label>Tree 1</ui5-label>
 				<ui5-label>Tree 1</ui5-label>
 			</ui5-title>
 
-			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Error" indeterminate selected>
-				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Warning" selected></ui5-tree-item>
-				<ui5-tree-item text="Tree 1.1.2" additional-text="Available" additional-text-state="Success"></ui5-tree-item>
+			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Negative" indeterminate selected>
+				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Critical" selected></ui5-tree-item>
+				<ui5-tree-item text="Tree 1.1.2" additional-text="Available" additional-text-state="Positive"></ui5-tree-item>
 			</ui5-tree-item>
 		</ui5-tree-item>
 
@@ -120,7 +120,7 @@
 	<br><br>
 
 	<ui5-label id="tree-label">Tree with accessibleNameRef</ui5-label>
-	<ui5-tree id="preventable-click-event" class="full-width" mode="MultiSelect" accessible-name-ref="tree-label">
+	<ui5-tree id="preventable-click-event" class="full-width" selection-mode="Multiple" accessible-name-ref="tree-label">
 		<div slot="header" class="hdr">
 			<ui5-title>Prevent item-click Events</ui5-title>
 		</div>
@@ -131,7 +131,7 @@
 	Prevented events counter
 	<ui5-input id="prevented-counter" value="0"></ui5-input>
 
-	<ui5-tree id="treeIndeterminate" mode="MultiSelect">
+	<ui5-tree id="treeIndeterminate" selection-mode="Multiple">
 		<div slot="header" class="hdr">
 			<ui5-title>Tree with indeterminate items</ui5-title>
 		</div>
@@ -157,7 +157,7 @@
 		</ui5-tree-item>
 	</ui5-tree>
 
-	<ui5-tree mode="MultiSelect">
+	<ui5-tree selection-mode="Multiple">
 		<div slot="header" class="hdr">
 			<ui5-title>Tree with custom items</ui5-title>
 		</div>
@@ -169,7 +169,7 @@
 			level="1"
 		>
 			<ui5-button slot="content">Level 1</ui5-button>
-	
+
 			<ui5-tree-item-custom
 				type="Active"
 				show-toggle-button
@@ -181,19 +181,20 @@
 					<ui5-option>Option 2.1</ui5-option>
 					<ui5-option>Option 2.3</ui5-option>
 				</ui5-select>
-	
+
 				<ui5-tree-item-custom
 					hide-selection-element
 					type="Active"
 					level="3"
+					class="item"
 				>
-					<ui5-button slot="content">Level 3</ui5-button>
+					<ui5-button slot="content" class="itemBtn">Level 3</ui5-button>
 				</ui5-tree-item-custom>
 			</ui5-tree-item-custom>
 		</ui5-tree-item-custom>
 	</ui5-tree>
 
-	<ui5-tree mode="MultiSelect" id="allItemsMultiSelect">
+	<ui5-tree selection-mode="Multiple" id="allItemsMultiple">
 		<ui5-tree-item text="Should have checkbox">
 			<ui5-tree-item text="Should have checkbox">
 				<ui5-tree-item
@@ -249,7 +250,7 @@
 		document.getElementById("modeSelect").addEventListener("ui5-change", function(event) {
 			var newMode = event.detail.selectedOption.textContent;
 			var tree = document.getElementById("tree");
-			tree.mode = newMode;
+			tree.selectionMode = newMode;
 		});
 
 		document.getElementById("expandAll").addEventListener("click", function(event) {

@@ -13,6 +13,7 @@ import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupI
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 
@@ -36,6 +37,7 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -44,28 +46,26 @@ type NotificationListGroupItemToggleEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-li-notification-group</code> is a special type of list item,
- * that unlike others can group items within self, usually <code>ui5-li-notification</code> items.
- * <br>
+ * ### Overview
+ * The `ui5-li-notification-group` is a special type of list item,
+ * that unlike others can group items within self, usually `ui5-li-notification` items.
  *
  * The component consists of:
- * <ul>
- * <li><code>Toggle</code> button to expand and collapse the group</li>
- * <li><code>Priority</code> icon to display the priority of the group</li>
- * <li><code>TitleText</code> to entitle the group</li>
- * <li>Custom actions - with the use of <code>ui5-notification-action</code></li>
- * <li>Items of the group</li>
- * </ul>
  *
- * <h3>Usage</h3>
- * The component can be used in a standard <code>ui5-list</code>.
+ * - `Toggle` button to expand and collapse the group
+ * - `Priority` icon to display the priority of the group
+ * - `TitleText` to entitle the group
+ * - Custom actions - with the use of `ui5-notification-action`
+ * - Items of the group
  *
- * <h3>ES6 Module Import</h3>
+ * ### Usage
+ * The component can be used in a standard `ui5-list`.
  *
- * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/NotificationListGroupItem.js";`
+ *
+ * `import "@ui5/webcomponents/dist/NotificationAction.js";` (optional)
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
@@ -74,7 +74,10 @@ type NotificationListGroupItemToggleEventDetail = {
 @customElement({
 	tag: "ui5-li-notification-group",
 	languageAware: true,
-	styles: NotificationListGroupItemCss,
+	styles: [
+		NotificationListGroupItemCss,
+		NotificationOverflowActionsPopoverCss,
+	],
 	template: NotificationListGroupItemTemplate,
 	dependencies: [
 		List,
@@ -86,8 +89,7 @@ type NotificationListGroupItemToggleEventDetail = {
 })
 
 /**
- * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
- *
+ * Fired when the `ui5-li-notification-group` is expanded/collapsed by user interaction.
  * @public
  */
 @event("toggle")
@@ -101,7 +103,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	collapsed!: boolean;
 
 	/**
-	 * Defines if the items <code>counter</code> would be displayed.
+	 * Defines if the items `counter` would be displayed.
 	 * @default false
 	 * @public
 	 */
@@ -109,9 +111,8 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	showCounter!: boolean;
 
 	/**
-	 * Defines the items of the <code>ui5-li-notification-group</code>,
-	 * usually <code>ui5-li-notification</code> items.
-	 *
+	 * Defines the items of the `ui5-li-notification-group`,
+	 * usually `ui5-li-notification` items.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })

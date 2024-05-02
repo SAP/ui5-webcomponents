@@ -1,0 +1,130 @@
+:host {
+	display: contents;
+}
+
+:host([_busy]) .ui5-table-row-root {
+	opacity: 0.72;
+	pointer-events: none;
+}
+
+.ui5-table-row-root {
+	background-color: var(--sapList_Background);
+	color: var(--sapList_TextColor);
+	border-top: 1px solid var(--sapList_BorderColor);
+}
+
+.ui5-table-row-root:focus {
+	outline: var(--ui5_table_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: var(--ui5_table_focus_outline_offset);
+}
+
+.ui5-table-popin-row {
+	background-color: var(--sapList_Background);
+}
+
+.ui5-table-popin-row.all-columns-popped-in.popin-header {
+	border-top: 1px solid var(--sapList_BorderColor);
+}
+
+.ui5-table-popin-row td:not(.ui5-table-row-navigated) {
+	padding-top: .5rem;
+	padding-inline-start: 1rem;
+}
+
+:host([mode="MultiSelect"]) .ui5-table-popin-row td:not(.ui5-table-row-navigated) {
+	padding-inline-start: var(--ui5_table_multiselect_popin_row_padding);
+}
+
+.ui5-table-popin-row:last-child td {
+	padding-bottom: .5rem;
+}
+
+.ui5-table-row-popin-title {
+	color: var(--sapContent_LabelColor);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+}
+
+.ui5-table-cell-display-inline {
+	margin-inline-start: 0.5rem;
+}
+
+.ui5-table-display-inline-container {
+	display: flex;
+	align-items: center;
+}
+
+.ui5-table-multi-select-cell {
+	padding: .25rem 0;
+	box-sizing: border-box;
+	text-align: center;
+	vertical-align: middle;
+}
+
+:host([mode="SingleSelect"]) .ui5-table-row-root {
+	cursor: pointer;
+}
+:host([mode="MultiSelect"]) .ui5-table-row-root .ui5-table-multi-select-cell {
+	cursor: pointer;
+}
+
+:host ::slotted([ui5-table-cell]:not([popined])) {
+	padding: .25rem .5rem;
+}
+
+:host(:not([mode="MultiSelect"])) ::slotted([ui5-table-cell]:not([popined]):first-child) {
+	padding-inline-start: 1rem;
+}
+
+/** Hover **/
+:host([type="Active"]) .ui5-table-row-root:hover,
+:host([mode="SingleSelect"]) .ui5-table-row-root:hover:not(:active) {
+	background-color: var(--sapList_Hover_Background);
+}
+
+/** Down/Active **/
+:host([type="Active"]) .ui5-table-row-root:active,
+:host([selected][type="Active"]) .ui5-table-row-root:active {
+	background-color: var(--sapList_Active_Background);
+}
+
+:host([type="Active"]) .ui5-table-row-root:active ::slotted([ui5-table-cell]) {
+	color: var(--sapList_Active_TextColor);
+}
+
+/** Selected **/
+:host([selected]) .ui5-table-row-root:not(:active),
+:host([selected]) .ui5-table-row-root:not(:active) ~ tr {
+	background-color: var(--sapList_SelectionBackgroundColor);
+}
+
+:host([selected]) tr:last-child {
+	border-bottom: 1px solid var(--sapList_SelectionBorderColor);
+}
+
+/** Hover on Selected **/
+:host([selected][type="Active"]) .ui5-table-row-root:hover:not(:active),
+:host([selected][mode="SingleSelect"]) .ui5-table-row-root:hover:not(:active) {
+	background-color: var(--sapList_Hover_SelectionBackground);
+}
+
+/** Navigated **/
+:host([navigated]) .ui5-table-row-root:focus .ui5-table-div-navigated {
+    width: 0.09375rem;
+	top: 2px;
+	inset-inline-end: 2px;
+	bottom: 1px;
+}
+
+:host([navigated]) .ui5-table-row-navigated {
+    vertical-align: middle;
+    padding: 0;
+    position: relative;
+}
+
+:host([navigated]) .ui5-table-div-navigated {
+	width: 0.1875rem;
+    position: absolute;
+	inset: 0;
+    background-color: var(--sapList_SelectionBorderColor);
+}

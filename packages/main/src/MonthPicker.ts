@@ -62,11 +62,9 @@ type MonthPickerNavigateEventDetail = {
 
 /**
  * Month picker component.
- *
  * @class
  *
  * Displays months which can be selected.
- *
  * @constructor
  * @extends CalendarPart
  * @private
@@ -91,7 +89,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 *
 	 * @public
 	 * @default []
 	 */
@@ -302,7 +299,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js.
-	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
+	 *
+	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -311,7 +309,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js
-	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
+	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
 	_showNextPage() {

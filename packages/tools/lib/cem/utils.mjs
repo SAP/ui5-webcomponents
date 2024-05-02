@@ -14,6 +14,10 @@ const getDeprecatedStatus = (jsdocComment) => {
             : undefined;
 };
 
+const toKebabCase = str => {
+    return str.replaceAll(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase())
+}
+
 const normalizeDescription = (description) => {
 	return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, ""): description;
 }
@@ -376,4 +380,5 @@ export {
     normalizeTagType,
     displayDocumentationErrors,
     logDocumentationError,
+    toKebabCase
 };

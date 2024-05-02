@@ -52,7 +52,7 @@
 		@focusout={{inputFocusOut}}
 		@paste={{_handlePaste}}
 		role="combobox"
-		aria-haspopup="listbox"
+		aria-haspopup="dialog"
 		aria-expanded="{{open}}"
 		aria-autocomplete="both"
 		aria-describedby="{{ariaDescribedByText}}"
@@ -84,3 +84,5 @@
 		></ui5-icon>
 	{{/unless}}
 </div>
+
+{{>include "./MultiComboBoxPopover.hbs"}}

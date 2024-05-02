@@ -21,7 +21,7 @@ const isBooted = (): boolean => {
 
 /**
  * Attaches a callback that will be executed after boot finishes.
- * <b>Note:</b> If the framework already booted, the callback will be immediately executed.
+ * **Note:** If the framework already booted, the callback will be immediately executed.
  * @public
  * @param { Function } listener
  */
@@ -84,9 +84,8 @@ const boot = async (): Promise<void> => {
  * @param { string } theme
  */
 const onThemeRegistered = (theme: string) => {
-	const currentTheme = getTheme();
-	if (booted && theme === currentTheme) {
-		applyTheme(currentTheme);
+	if (booted && theme === getTheme()) { // getTheme should only be called if "booted" is true
+		applyTheme(getTheme());
 	}
 };
 

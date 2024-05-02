@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -9,7 +10,6 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
@@ -17,22 +17,24 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
-import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
 
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
@@ -133,37 +135,32 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * @class
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-shellbar</code> is meant to serve as an application header
+ * The `ui5-shellbar` is meant to serve as an application header
  * and includes numerous built-in features, such as: logo, profile image/icon, title, search field, notifications and so on.
- * <br><br>
  *
- * <h3>Stable DOM Refs</h3>
+ * ### Stable DOM Refs
  *
- * You can use the following stable DOM refs for the <code>ui5-shellbar</code>:
- * <ul>
- * <li>logo</li>
- * <li>copilot</li>
- * <li>notifications</li>
- * <li>overflow</li>
- * <li>profile</li>
- * <li>product-switch</li>
- * </ul>
+ * You can use the following stable DOM refs for the `ui5-shellbar`:
  *
- * <h3>Keyboard Handling</h3>
+ * - logo
+ * - copilot
+ * - notifications
+ * - overflow
+ * - profile
+ * - product-switch
  *
- * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * ### Keyboard Handling
+ *
+ * #### Fast Navigation
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/ShellBar";</code>
- *
- * @csspart root - Used to style the outermost wrapper of the <code>ui5-shellbar</code>
- *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`
+ * @csspart root - Used to style the outermost wrapper of the `ui5-shellbar`
  * @constructor
  * @extends UI5Element
  * @public
@@ -176,11 +173,10 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 	languageAware: true,
 	renderer: litRender,
 	template: ShellBarTemplate,
-	staticAreaTemplate: ShellBarPopoverTemplate,
-	styles: shellBarStyles,
-	staticAreaStyles: [ShellBarPopoverCss],
+	styles: [shellBarStyles, ShellBarPopoverCss],
 	dependencies: [
 		Button,
+		Icon,
 		List,
 		Popover,
 		StandardListItem,
@@ -189,7 +185,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  *
  * Fired, when the notification icon is activated.
- *
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
@@ -205,7 +200,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the profile slot is present.
- *
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -220,8 +214,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the product switch icon is activated.
- * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
  *
+ * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
@@ -237,7 +231,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the logo is activated.
- *
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @since 0.10
  * @public
@@ -253,7 +246,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the co pilot is activated.
- *
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @since 0.10
  * @public
@@ -269,8 +261,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when a menu item is activated
- * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
  *
+ * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
  * @param {HTMLElement} item DOM ref of the activated list item
  * @since 0.10
  * @public
@@ -286,8 +278,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 /**
  * Fired, when the search button is activated.
- * <b>Note:</b> You can prevent expanding/collapsing of the search field by calling <code>event.preventDefault()</code>.
  *
+ * **Note:** You can prevent expanding/collapsing of the search field by calling `event.preventDefault()`.
  * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @param {Boolean} searchFieldVisible whether the search field is visible
@@ -303,9 +295,9 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 
 class ShellBar extends UI5Element {
 	/**
-	 * Defines the <code>primaryTitle</code>.
-	 * <br><br>
-	 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
+	 * Defines the `primaryTitle`.
+	 *
+	 * **Note:** The `primaryTitle` would be hidden on S screen size (less than approx. 700px).
 	 * @default ""
 	 * @public
 	 */
@@ -313,9 +305,9 @@ class ShellBar extends UI5Element {
 	primaryTitle!: string;
 
 	/**
-	 * Defines the <code>secondaryTitle</code>.
-	 * <br><br>
-	 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
+	 * Defines the `secondaryTitle`.
+	 *
+	 * **Note:** The `secondaryTitle` would be hidden on S and M screen sizes (less than approx. 1300px).
 	 * @default ""
 	 * @public
 	 */
@@ -323,7 +315,7 @@ class ShellBar extends UI5Element {
 	secondaryTitle!: string;
 
 	/**
-	 * Defines the <code>notificationsCount</code>,
+	 * Defines the `notificationsCount`,
 	 * displayed in the notification icon top-right corner.
 	 * @default ""
 	 * @public
@@ -349,8 +341,9 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines, if the product CoPilot icon would be displayed.
-	 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
-	 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
+	 *
+	 * **Note:** By default the co-pilot is displayed as static SVG.
+	 * If you need an animated co-pilot, you can import the `"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"` module as add-on feature.
 	 * @default false
 	 * @public
 	 */
@@ -358,8 +351,9 @@ class ShellBar extends UI5Element {
 	showCoPilot!: boolean;
 
 	/**
-	 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
-	 * <br><b>Note:</b> By default the Search Field is not displayed.
+	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+	 *
+	 * **Note:** By default the Search Field is not displayed.
 	 * @default false
 	 * @public
 	 */
@@ -370,7 +364,7 @@ class ShellBar extends UI5Element {
 	 * An object of strings that defines additional accessibility roles for further customization.
 	 *
 	 * It supports the following fields:
-	 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
+	 *  - `logoRole`: the accessibility role for the `logo`
 	 * @default {}
 	 * @public
 	 * @since 1.6.0
@@ -383,9 +377,8 @@ class ShellBar extends UI5Element {
 	 * for even further customization.
 	 *
 	 * It supports the following fields:
-	 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
-	 * - <code>logoTitle</code>: defines the tooltip for the logo
-	 *
+	 * - `profileButtonTitle`: defines the tooltip for the profile button
+	 * - `logoTitle`: defines the tooltip for the logo
 	 * @default {}
 	 * @public
 	 * @since 1.1.0
@@ -399,23 +392,17 @@ class ShellBar extends UI5Element {
 	 *
 	 * It supports the following fields:
 	 *
-	 * <ul>
-	 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-	 *			<ul>
-	 *				<li><code>true</code></li>
-	 *				<li><code>false</code></li>
-	 *			</ul>
-	 * 		</li>
-	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
-	 * 			<ul>
-	 *				<li><code>Dialog</code></li>
-	 *				<li><code>Grid</code></li>
-	 *				<li><code>ListBox</code></li>
-	 *				<li><code>Menu</code></li>
-	 *				<li><code>Tree</code></li>
-	 * 			</ul>
-	 * 		</li>
-	 * </ul>
+	 * - `expanded`: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+	 *
+	 *	- `true`
+	 *	- `false`
+	 *
+	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+	 *	- `Dialog`
+	 *	- `Grid`
+	 *	- `ListBox`
+	 *	- `Menu`
+	 *	- `Tree`
 	 * @default {}
 	 * @public
 	 * @since 1.10.0
@@ -439,7 +426,7 @@ class ShellBar extends UI5Element {
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
 	@property({ type: Object, multiple: true })
-	_menuPopoverItems!: Array<HTMLElement>;
+	_menuPopoverItems: Array<HTMLElement>;
 
 	@property({ type: Boolean, noAttribute: true })
 	_menuPopoverExpanded!: boolean;
@@ -457,22 +444,21 @@ class ShellBar extends UI5Element {
 	_isXXLBreakpoint!: boolean;
 
 	/**
-	 * Defines the <code>ui5-shellbar</code> aditional items.
-	 * <br><br>
-	 * <b>Note:</b>
-	 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
+	 * Defines the `ui5-shellbar` aditional items.
 	 *
+	 * **Note:**
+	 * You can use the `<ui5-shellbar-item></ui5-shellbar-item>`.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
 	items!: Array<ShellBarItem>;
 
 	/**
-	 * You can pass <code>ui5-avatar</code> to set the profile image/icon.
+	 * You can pass `ui5-avatar` to set the profile image/icon.
 	 * If no profile slot is set - profile will be excluded from actions.
 	 *
-	 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
-	 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
+	 * **Note:** We recommend not using the `size` attribute of `ui5-avatar` because
+	 * it should have specific size by design in the context of `ui5-shellbar` profile.
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
@@ -480,8 +466,8 @@ class ShellBar extends UI5Element {
 	profile!: Array<HTMLElement>;
 
 	/**
-	 * Defines the logo of the <code>ui5-shellbar</code>.
-	 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
+	 * Defines the logo of the `ui5-shellbar`.
+	 * For example, you can use `ui5-avatar` or `img` elements as logo.
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -490,10 +476,8 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Defines the items displayed in menu after a click on the primary title.
-	 * <br><br>
-	 * <b>Note:</b>
-	 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 	 *
+	 * **Note:** You can use the  `<ui5-li></ui5-li>` and its ancestors.
 	 * @since 0.10
 	 * @public
 	 */
@@ -501,29 +485,25 @@ class ShellBar extends UI5Element {
 	menuItems!: Array<ListItemBase>;
 
 	/**
-	 * Defines the <code>ui5-input</code>, that will be used as a search field.
-	 *
+	 * Defines the `ui5-input`, that will be used as a search field.
 	 * @public
 	 */
 	@slot()
 	searchField!: Array<Input>;
 
 	/**
-	 * Defines a <code>ui5-button</code> in the bar that will be placed in the beginning.
+	 * Defines a `ui5-button` in the bar that will be placed in the beginning.
 	 * We encourage this slot to be used for a back or home button.
 	 * It gets overstyled to match ShellBar's styling.
-	 *
 	 * @public
 	 */
 	@slot()
 	startButton!: Array<IButton>;
 
 	/**
-	 * The container is positioned in the center of the <code>ui5-shellbar</code> and occupies one-third of the total length of the <code>ui5-shellbar</code>.
+	 * The container is positioned in the center of the `ui5-shellbar` and occupies one-third of the total length of the `ui5-shellbar`.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> If set, the <code>searchField</code> slot is not rendered.
-	 *
+	 * **Note:** If set, the `searchField` slot is not rendered.
 	 * @private
 	 */
 	@slot()
@@ -538,9 +518,9 @@ class ShellBar extends UI5Element {
 	coPilot?: ShellBarCoPilot;
 	_coPilotIcon: string;
 	_debounceInterval?: Timeout | null;
-	_hiddenIcons?: Array<IShelBarItemInfo>;
+	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
-	_headerPress: () => Promise<void>;
+	_headerPress: () => void;
 
 	static get CO_PILOT_ICON_PRESSED() {
 		return "sap-icon://da-2";
@@ -573,6 +553,8 @@ class ShellBar extends UI5Element {
 	constructor() {
 		super();
 
+		this._menuPopoverItems = [];
+		this._hiddenIcons = [];
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
 		this._coPilotIcon = ShellBar.CO_PILOT_ICON_UNPRESSED;
@@ -584,19 +566,20 @@ class ShellBar extends UI5Element {
 			this._updateClonedMenuItems();
 		});
 
-		this._headerPress = async () => {
+		this._headerPress = () => {
 			this._updateClonedMenuItems();
 
 			if (this.hasMenuItems) {
-				const menuPopover = await this._getMenuPopover();
-				menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+				const menuPopover = this._getMenuPopover();
+				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
 			}
 		};
 
 		this._handleResize = () => {
-			this._debounce(async () => {
-				await this._getResponsivePopover();
-				this.overflowPopover!.close();
+			this._debounce(() => {
+				this.menuPopover = this._getMenuPopover();
+				this.overflowPopover = this._getOverflowPopover();
+				this.overflowPopover.close();
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
@@ -608,7 +591,7 @@ class ShellBar extends UI5Element {
 		this._coPilotPressed = !this._coPilotPressed;
 	}
 
-	_debounce(fn: () => Promise<void>, delay: number) {
+	_debounce(fn: () => void, delay: number) {
 		clearTimeout(this._debounceInterval!);
 		this._debounceInterval = setTimeout(() => {
 			this._debounceInterval = null;
@@ -811,14 +794,18 @@ class ShellBar extends UI5Element {
 		this._updateItemsInfo(newItems);
 	}
 
-	async _toggleActionPopover() {
+	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
-		const overflowPopover = await this._getOverflowPopover();
-		overflowPopover!.showAt(overflowButton, true);
+		const overflowPopover = this._getOverflowPopover();
+		overflowPopover.showAt(overflowButton, true);
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
+
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -918,7 +905,7 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
-	 * Returns the <code>logo</code> DOM ref.
+	 * Returns the `logo` DOM ref.
 	 * @public
 	 * @default null
 	 * @since 1.0.0-rc.16
@@ -928,7 +915,7 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
-	 * Returns the <code>copilot</code> DOM ref.
+	 * Returns the `copilot` DOM ref.
 	 * @public
 	 * @default null
 	 * @since 1.0.0-rc.16
@@ -938,7 +925,7 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
-	 * Returns the <code>notifications</code> icon DOM ref.
+	 * Returns the `notifications` icon DOM ref.
 	 * @public
 	 * @default null
 	 * @since 1.0.0-rc.16
@@ -948,7 +935,7 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
-	 * Returns the <code>overflow</code> icon DOM ref.
+	 * Returns the `overflow` icon DOM ref.
 	 * @public
 	 * @default null
 	 * @since 1.0.0-rc.16
@@ -958,7 +945,7 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
-	 * Returns the <code>profile</code> icon DOM ref.
+	 * Returns the `profile` icon DOM ref.
 	 * @public
 	 * @default null
 	 * @since 1.0.0-rc.16
@@ -968,7 +955,7 @@ class ShellBar extends UI5Element {
 	}
 
 	/**
-	 * Returns the <code>product-switch</code> icon DOM ref.
+	 * Returns the `product-switch` icon DOM ref.
 	 * @public
 	 * @default null
 	 * @since 1.0.0-rc.16
@@ -1123,20 +1110,12 @@ class ShellBar extends UI5Element {
 		});
 	}
 
-	async _getResponsivePopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.overflowPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
-		this.menuPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
+	_getOverflowPopover() {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-overflow-popover")!;
 	}
 
-	async _getOverflowPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
-	}
-
-	async _getMenuPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
+	_getMenuPopover() {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-shellbar-menu-popover")!;
 	}
 
 	isIconHidden(name: string) {
@@ -1171,6 +1150,7 @@ class ShellBar extends UI5Element {
 				},
 				copilot: {
 					"ui5-shellbar-hidden-button": this.isIconHidden(this._coPilotIcon),
+					"ui5-shellbar-coPilot-pressed": this._coPilotPressed,
 				},
 				overflow: {
 					"ui5-shellbar-hidden-button": this.isIconHidden("overflow"),
@@ -1229,8 +1209,8 @@ class ShellBar extends UI5Element {
 		return this.primaryTitle || this.showLogoInMenuButton;
 	}
 
-	get popoverHorizontalAlign() {
-		return this.effectiveDir === "rtl" ? "Left" : "Right";
+	get popoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir === "rtl" ? "Start" : "End";
 	}
 
 	get hasSearchField() {

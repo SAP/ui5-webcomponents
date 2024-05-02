@@ -59,7 +59,7 @@ This command downloads the published source code of the UI5 Web Components to th
 
 ### Documentation
 
-Take a look at the available UI5 Web Components documentation in the [playground](./playground/docs/).
+Take a look at the available UI5 Web Components documentation in the [playground](https://sap.github.io/ui5-webcomponents/playground).
 
 ### Usage
 
@@ -108,5 +108,3 @@ dist/assets/vendor.c05c7785.js 114.92kb / brotli: 24.30kb
 The contents of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
 
 #### 4. Enjoy UI5 Web Components.
-
-Next: [Importing UI5 Web Components](./02-importing-components.md)

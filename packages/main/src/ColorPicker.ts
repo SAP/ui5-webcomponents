@@ -48,26 +48,23 @@ type ColorCoordinates = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-color-picker</code> allows users to choose any color and provides different input options for selecting colors.
+ * ### Overview
+ * The `ui5-color-picker` allows users to choose any color and provides different input options for selecting colors.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
- * <h4>When to use:</h4
+ * #### When to use
  * Use the color picker if:
- * <ul>
- * <li> users need to select any color freely.</li>
- * </ul>
  *
- * <h4>When not to use:</h4>
- * <ul>
- * <li> Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.</li>
- * </ul>
+ * -  users need to select any color freely.
  *
- * <h3>ES6 Module Import</h3>
+ * #### When not to use
  *
- * <code>import "@ui5/webcomponents/dist/ColorPicker.js";</code>
+ * -  Users need to select one color from a predefined set of colors. Use the ColorPalette component instead.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ColorPicker.js";`
  * @constructor
  * @since 1.0.0-rc.12
  * @extends UI5Element
@@ -87,26 +84,24 @@ type ColorCoordinates = {
 })
 /**
  * Fired when the the selected color is changed
- *
  * @public
  */
 @event("change")
 class ColorPicker extends UI5Element {
 	/**
 	 * Defines the currently selected color of the component.
-	 * <br><br>
-	 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 	 *
+	 * **Note**: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
 	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
-	color!: string;
+	value!: string;
 
 	/**
 	 * Defines the HEX code of the currently selected color
-	 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
 	 *
+	 * **Note**: If Alpha(transperancy) is set it is not included in this property. Use `color` property.
 	 * @private
 	 */
 	@property({ defaultValue: "ffffff", noAttribute: true })
@@ -114,19 +109,17 @@ class ColorPicker extends UI5Element {
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
-	_mainColor!: ColorRGB;
+	_mainValue!: ColorRGB;
 
 	/**
 	 * Defines the currenty selected color from the main color section.
-	 *
 	 * @private
 	 */
 	@property({ type: Object })
-	_color!: ColorRGB;
+	_value!: ColorRGB;
 
 	/**
 	 * @private
@@ -186,7 +179,7 @@ class ColorPicker extends UI5Element {
 		};
 
 		// Default main color is red
-		this._mainColor = {
+		this._mainValue = {
 			r: 255,
 			g: 0,
 			b: 0,
@@ -199,9 +192,9 @@ class ColorPicker extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// we have the color & _mainColor properties here
-		this._color = getRGBColor(this.color);
-		const tempColor = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, 1)`;
+		// we have the color & ._mainValue properties here
+		this._value = getRGBColor(this.value);
+		const tempColor = `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, 1)`;
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
@@ -267,7 +260,7 @@ class ColorPicker extends UI5Element {
 	_handleAlphaInput(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
-		this._setColor(this._color);
+		this._setColor(this._value);
 	}
 
 	_handleHueInput(e: CustomEvent) {
@@ -323,18 +316,18 @@ class ColorPicker extends UI5Element {
 		let tempColor;
 		switch (target.id) {
 		case "red":
-			tempColor = { ...this._color, r: targetValue };
+			tempColor = { ...this._value, r: targetValue };
 			break;
 
 		case "green":
-			tempColor = { ...this._color, g: targetValue };
+			tempColor = { ...this._value, g: targetValue };
 			break;
 
 		case "blue":
-			tempColor = { ...this._color, b: targetValue };
+			tempColor = { ...this._value, b: targetValue };
 			break;
 		default:
-			tempColor = { ...this._color };
+			tempColor = { ...this._value };
 		}
 
 		this._setColor(tempColor);
@@ -342,37 +335,37 @@ class ColorPicker extends UI5Element {
 
 	_setMainColor(hueValue: number) {
 		if (hueValue <= 255) {
-			this._mainColor = {
+			this._mainValue = {
 				r: 255,
 				g: hueValue,
 				b: 0,
 			};
 		} else if (hueValue <= 510) {
-			this._mainColor = {
+			this._mainValue = {
 				r: 255 - (hueValue - 255),
 				g: 255,
 				b: 0,
 			};
 		} else if (hueValue <= 765) {
-			this._mainColor = {
+			this._mainValue = {
 				r: 0,
 				g: 255,
 				b: hueValue - 510,
 			};
 		} else if (hueValue <= 1020) {
-			this._mainColor = {
+			this._mainValue = {
 				r: 0,
 				g: 765 - (hueValue - 255),
 				b: 255,
 			};
 		} else if (hueValue <= 1275) {
-			this._mainColor = {
+			this._mainValue = {
 				r: hueValue - 1020,
 				g: 0,
 				b: 255,
 			};
 		} else {
-			this._mainColor = {
+			this._mainValue = {
 				r: 255,
 				g: 0,
 				b: 1275 - (hueValue - 255),
@@ -432,7 +425,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
-		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
+		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 		this._wrongHEX = !this.isValidRGBColor(color);
 		this.fireEvent("change");
 	}
@@ -442,9 +435,9 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setHex() {
-		let red = this._color.r.toString(16),
-			green = this._color.g.toString(16),
-			blue = this._color.b.toString(16);
+		let red = this._value.r.toString(16),
+			green = this._value.g.toString(16),
+			blue = this._value.b.toString(16);
 
 		if (red.length === 1) {
 			red = `0${red}`;
@@ -460,7 +453,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setValues() {
-		const hslColours: ColorHSL = RGBToHSL(this._color);
+		const hslColours: ColorHSL = RGBToHSL(this._value);
 		this._selectedCoordinates = {
 			x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
 			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
@@ -517,14 +510,14 @@ class ColorPicker extends UI5Element {
 	get styles() {
 		return {
 			mainColor: {
-				"background-color": `rgb(${this._mainColor.r}, ${this._mainColor.g}, ${this._mainColor.b})`,
+				"background-color": `rgb(${this._mainValue.r}, ${this._mainValue.g}, ${this._mainValue.b})`,
 			},
 			circle: {
 				left: `${this._selectedCoordinates.x}px`,
 				top: `${this._selectedCoordinates.y}px`,
 			},
 			colorSpan: {
-				"background-color": `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, ${this._alpha})`,
+				"background-color": `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, ${this._alpha})`,
 			},
 		};
 	}

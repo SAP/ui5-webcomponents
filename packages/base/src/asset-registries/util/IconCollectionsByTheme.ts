@@ -27,7 +27,7 @@ iconCollections.set("business-suite", {
 
 /**
  * Registers collection version per theme.
- * </b>For exmaple:</b> registerIconCollectionForTheme("my-custom-icons", {"sap_horizon": "my-custom-icons-v5"})
+ * **For exmaple:** registerIconCollectionForTheme("my-custom-icons", {"sap_horizon": "my-custom-icons-v5"})
  * @param { string } collectionName
  * @param { ThemeToCollectionMap } themeCollectionMap
  */

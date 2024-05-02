@@ -1,14 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import type { IInputSuggestionItem } from "./Input.js";
 
 /**
  * @class
- * The <code>ui5-suggestion-group-item</code> is type of suggestion item,
- * that can be used to split the <code>ui5-input</code> suggestions into groups.
- *
+ * The `ui5-suggestion-group-item` is type of suggestion item,
+ * that can be used to split the `ui5-input` suggestions into groups.
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -18,12 +17,11 @@ import type { IInputSuggestionItem } from "./Input.js";
  */
 @customElement({
 	tag: "ui5-suggestion-group-item",
-	dependencies: [GroupHeaderListItem],
+	dependencies: [ListItemGroupHeader],
 })
 class SuggestionGroupItem extends UI5Element implements IInputSuggestionItem {
 	/**
-	 * Defines the text of the <code>ui5-suggestion-group-item</code>.
-	 *
+	 * Defines the text of the `ui5-suggestion-group-item`.
 	 * @default ""
 	 * @public
 	 */

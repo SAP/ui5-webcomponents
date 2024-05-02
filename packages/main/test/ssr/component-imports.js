@@ -1,6 +1,6 @@
 import Avatar from "../../dist/Avatar.js";
 import AvatarGroup from "../../dist/AvatarGroup.js";
-import Badge from "../../dist/Badge.js";
+import Bar from "../../dist/Bar.js";
 import Breadcrumbs from "../../dist/Breadcrumbs.js";
 import BusyIndicator from "../../dist/BusyIndicator.js";
 import Button from "../../dist/Button.js";
@@ -45,16 +45,12 @@ import MessageStrip from "../../dist/MessageStrip.js";
 import MultiComboBox from "../../dist/MultiComboBox.js";
 import ProgressIndicator from "../../dist/ProgressIndicator.js";
 import RatingIndicator from "../../dist/RatingIndicator.js";
+import Tag from "../../dist/Tag.js";
 import TabContainer from "../../dist/TabContainer.js";
 import Tab from "../../dist/Tab.js";
 import TabSeparator from "../../dist/TabSeparator.js";
-import Table from "../../dist/Table.js";
-import TableColumn from "../../dist/TableColumn.js";
-import TableRow from "../../dist/TableRow.js";
-import TableGroupRow from "../../dist/TableGroupRow.js";
-import TableCell from "../../dist/TableCell.js";
+import Text from "../../dist/Text.js";
 import TextArea from "../../dist/TextArea.js";
-import TimeSelection from "../../dist/TimeSelection.js";
 import TimePicker from "../../dist/TimePicker.js";
 import TimePickerClock from "../../dist/TimePickerClock.js";
 import TimeSelectionClocks from "../../dist/TimeSelectionClocks.js";
@@ -75,7 +71,7 @@ import List from "../../dist/List.js";
 // console.log({List})
 import StandardListItem from "../../dist/StandardListItem.js";
 import CustomListItem from "../../dist/CustomListItem.js";
-import GroupHeaderListItem from "../../dist/GroupHeaderListItem.js";
+import ListItemGroupHeader from "../../dist/ListItemGroupHeader.js";
 
 // Features
 import "../../dist/features/InputElementsFormSupport.js";

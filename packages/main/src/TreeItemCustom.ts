@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import { isTabNext, isTabPrevious, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TreeItemBase from "./TreeItemBase.js";
 
 // Template
@@ -11,20 +12,18 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 
 /**
  * @class
- * The <code>ui5-tree-item-custom</code> represents a node in a tree structure, shown as a <code>ui5-list</code>.
- * <br>
- * This is the item to use inside a <code>ui5-tree</code>.
+ * The `ui5-tree-item-custom` represents a node in a tree structure, shown as a `ui5-list`.
+ *
+ * This is the item to use inside a `ui5-tree`.
  * You can represent an arbitrary tree structure by recursively nesting tree items.
  *
  * You can use this item to put any custom content inside the tree item.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/TreeItemCustom.js";</code>
- *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/TreeItemCustom.js";`
  * @csspart title - Used to style the title of the tree list item
  * @csspart additionalText - Used to style the additionalText of the tree list item
  * @csspart icon - Used to style the icon of the tree list item
- *
  * @constructor
  * @extends TreeItemBase
  * @public
@@ -38,7 +37,6 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines whether the tree list item should display the selection element.
-	 *
 	 * @public
 	 * @default false
 	 */
@@ -46,12 +44,31 @@ class TreeItemCustom extends TreeItemBase {
 	hideSelectionElement!: boolean;
 
 	/**
-	 * Defines the content of the <code>ui5-tree-item</code>.
-	 *
+	 * Defines the content of the `ui5-tree-item`.
 	 * @public
 	 */
 	@slot()
 	content!: Array<HTMLElement>;
+
+	async _onkeydown(e: KeyboardEvent) {
+		const isTab = isTabNext(e) || isTabPrevious(e);
+
+		if (!isTab && !this.focused && !isF2(e)) {
+			return;
+		}
+
+		await super._onkeydown(e);
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		const isTab = isTabNext(e) || isTabPrevious(e);
+
+		if (!isTab && !this.focused) {
+			return;
+		}
+
+		super._onkeyup(e);
+	}
 
 	/**
 	 * @override

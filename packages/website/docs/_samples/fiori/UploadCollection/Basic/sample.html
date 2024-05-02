@@ -1,0 +1,41 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+
+    <ui5-upload-collection id="uploadCollection" accessible-name="Uploaded (2)">
+        <div slot="header" class="header">
+            <ui5-title>Uploaded (2)</ui5-title>
+            <ui5-label show-colon>Add new files and press to start uploading pending files</ui5-label>
+            <ui5-button id="startUploading">Start</ui5-button>
+            <div class="spacer"></div>
+            <ui5-file-uploader id="fileUploader" hide-input multiple>
+                <ui5-button icon="add" design="Transparent"></ui5-button>
+            </ui5-file-uploader>
+        </div>
+
+        <ui5-upload-collection-item file-name="LaptopHT-1000.jpg" file-name-clickable upload-state="Complete">
+            Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
+            <img src="../assets/images/HT-1000.jpg" slot="thumbnail">
+        </ui5-upload-collection-item>
+
+        <ui5-upload-collection-item file-name="Notes.txt" upload-state="Complete">
+            Uploaded By: John Smith · Uploaded On: 2014-09-02 · File Size: 226.6 KB
+            <ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+        </ui5-upload-collection-item>
+    </ui5-upload-collection>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
