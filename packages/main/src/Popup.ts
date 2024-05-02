@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -123,11 +123,11 @@ type PopupBeforeCloseEventDetail = {
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initialFocus!: string;
+	initialFocus?: string;
 
 	/**
 	 * Defines if the focus should be returned to the previously focused element,
@@ -137,7 +137,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: Boolean })
-	preventFocusRestore!: boolean;
+	preventFocusRestore = false;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -145,17 +145,17 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Allows setting a custom role.
@@ -163,21 +163,21 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.10.0
 	 */
-	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: `${PopupAccessibleRole}`;
+	@property()
+	accessibleRole: `${PopupAccessibleRole}` = "Dialog";
 
 	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_disableInitialFocus!: boolean;
+	_disableInitialFocus = false;
 
 	/**
 	 * Indicates if the element is the top modal popup
@@ -187,7 +187,7 @@ abstract class Popup extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	isTopModalPopup!: boolean;
+	isTopModalPopup = false;
 
 	/**
 	 * Defines the content of the Popup.
@@ -199,8 +199,8 @@ abstract class Popup extends UI5Element {
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_isOpened!: boolean;
-	_opened!: boolean;
+	_isOpened = false;
+	_opened = false;
 
 	constructor() {
 		super();

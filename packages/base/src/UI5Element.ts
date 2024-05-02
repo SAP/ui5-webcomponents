@@ -1156,7 +1156,7 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
-						// TODO
+						// todo
 						if (!propData.hasInitializer || this._rendering) {
 							// old style properties with default value, update the attribute here
 							// new style properties while rendering - safe to update here, it's not the constructor

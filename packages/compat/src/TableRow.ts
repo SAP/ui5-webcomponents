@@ -419,7 +419,7 @@ class TableRow extends UI5Element implements ITableRow {
 	}
 
 	getColumnTextByIdx(index: number): string {
-		const columnInfo: TableColumnInfo | undefined  = this._columnsInfo?.[index];
+		const columnInfo: TableColumnInfo | undefined = this._columnsInfo?.[index];
 
 		if (!columnInfo) {
 			return "";

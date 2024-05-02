@@ -130,7 +130,7 @@ class Dialog extends Popup {
 	 * Defines the header text.
 	 *
 	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
