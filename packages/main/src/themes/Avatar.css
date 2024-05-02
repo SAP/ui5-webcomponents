@@ -261,12 +261,12 @@
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapBackgroundColor);
 
-	--_ui5-badge-height: 1.125rem;
-	--_ui5-badge-border-radius: 50%;
+	--_ui5-tag-height: 1.125rem;
+	--_ui5-tag-border-radius: 50%;
 
-	--ui5-badge-color-scheme-1-background: var(--sapButton_Emphasized_Background);
-	--ui5-badge-color-scheme-1-color: var(--sapButton_Emphasized_TextColor);
-	--ui5-badge-color-scheme-1-border: var(--sapButton_Emphasized_BorderColor);
+	--ui5-tag-color-scheme-1-background: var(--sapButton_Emphasized_Background);
+	--ui5-tag-color-scheme-1-color: var(--sapButton_Emphasized_TextColor);
+	--ui5-tag-color-scheme-1-border: var(--sapButton_Emphasized_BorderColor);
 }
 
 :host([_size="L"]) ::slotted([slot="badge"]),
@@ -274,8 +274,8 @@
 	width: 1.25rem;
 	height: 1.25rem;
 
-	--_ui5-badge-height: 1.25rem;
-	--_ui5-badge-icon-width: 0.875rem;
+	--_ui5-tag-height: 1.25rem;
+	--_ui5-tag-icon-width: 0.875rem;
 }
 
 :host([_size="XL"]) ::slotted([slot="badge"]),
@@ -283,8 +283,8 @@
 	width: 1.75rem;
 	height: 1.75rem;
 
-	--_ui5-badge-height: 1.75rem;
-	--_ui5-badge-icon-width: 1rem;
+	--_ui5-tag-height: 1.75rem;
+	--_ui5-tag-icon-width: 1rem;
 }
 
 /* Slotted Badge - Square Avatar Shape */
