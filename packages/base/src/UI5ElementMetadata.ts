@@ -28,7 +28,7 @@ type Property = {
 	compareValues?: boolean,
 	hasInitializer?: boolean,
 	converter?: {
-		fromAttribute(): string | number | boolean | null | undefined,
+		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
 		toAttribute(value: unknown, type: unknown): string | null,
 	}
 }
@@ -38,7 +38,7 @@ type PropertyV2 = {
 	noAttribute?: boolean,
 	hasInitializer?: boolean,
 	converter?: {
-		fromAttribute(): string | number | boolean | null | undefined,
+		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
 		toAttribute(value: unknown, type: unknown): string | null,
 	}
 }

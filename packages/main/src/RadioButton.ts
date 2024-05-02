@@ -1,7 +1,7 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -97,7 +97,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -108,7 +108,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -117,7 +117,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @since 1.9.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines whether the component is checked or not.
@@ -132,7 +132,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	checked!: boolean;
+	checked = false;
 
 	/**
 	 * Defines the text of the component.
@@ -140,15 +140,15 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the name of the component.
@@ -170,7 +170,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the form value of the component.
@@ -192,8 +192,8 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -202,7 +202,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @since 1.6.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -213,8 +213,8 @@ class RadioButton extends UI5Element implements IFormElement {
 	@property()
 	accessibleNameRef!: string;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	@property()
+	_tabIndex?: string;
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
@@ -222,7 +222,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
@@ -233,8 +233,8 @@ class RadioButton extends UI5Element implements IFormElement {
 	formSupport!: Array<HTMLElement>;
 
 	_deactivate: () => void;
-	_name!: string;
-	_checked!: boolean;
+	_name = "";
+	_checked = false;
 	_internals: ElementInternals;
 
 	static get formAssociated() {
@@ -308,7 +308,7 @@ class RadioButton extends UI5Element implements IFormElement {
 			RadioButtonGroup.updateTabOrder(this.name);
 		}
 
-		this._name = this.name;
+		this._name = this.name || "";
 		this._checked = this.checked;
 	}
 

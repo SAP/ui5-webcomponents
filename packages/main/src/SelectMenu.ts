@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -109,25 +109,25 @@ class SelectMenu extends UI5Element {
 	 * Defines the width of the component.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	selectWidth?: number;
 
 	@property({ type: Boolean })
-	hasValueState!: boolean;
+	hasValueState = false;
 
 	@property({ type: Boolean })
-	hasValueStateSlot!: boolean;
-
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	hasValueStateSlot = false;
 
 	@property()
-	valueStateText!: string;
+	valueState: `${ValueState}` = "None";
 
-	@property({ type: String, noAttribute: true })
-	value!: string;
+	@property()
+	valueStateText?: string;
 
-	@property({ type: String, noAttribute: true })
+	@property({ noAttribute: true })
+	value = "";
+
+	@property({ noAttribute: true })
 	selectId?: string;
 
 	valueStateMessageText: Array<Node>;

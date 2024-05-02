@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import type { IOption } from "./Select.js";
 /**
  * @class
@@ -27,7 +27,7 @@ class Option extends UI5Element implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the option component.
@@ -36,7 +36,7 @@ class Option extends UI5Element implements IOption {
 	 * @since 2.0.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * Defines the `icon` source URI.
@@ -47,8 +47,8 @@ class Option extends UI5Element implements IOption {
 	 * @default null
 	 * @public
 	 */
-	@property({ defaultValue: null })
-	icon?: string | null;
+	@property()
+	icon?: string;
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
@@ -66,7 +66,7 @@ class Option extends UI5Element implements IOption {
 	 * @since 1.3.0
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the focused state of the component.
@@ -75,7 +75,7 @@ class Option extends UI5Element implements IOption {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Defines the text of the component.

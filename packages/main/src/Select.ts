@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -17,7 +17,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -32,7 +31,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import List from "./List.js";
@@ -213,7 +211,20 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 * @since 1.17.0
 	 */
-	@property({ validator: DOMReference })
+	@property({
+		converter: {
+			toAttribute(propertyValue: string | HTMLElement) {
+				if (propertyValue instanceof HTMLElement) {
+					return null;
+				}
+
+				return propertyValue;
+			},
+			fromAttribute(value: string | null) {
+				return value;
+			},
+		},
+	})
 	menu?: HTMLElement | string;
 
 	/**
@@ -224,7 +235,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -240,15 +251,15 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is required.
@@ -257,7 +268,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -269,7 +280,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -278,7 +289,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @default ""
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
@@ -287,43 +298,43 @@ class Select extends UI5Element implements IFormElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true })
-	_text?: string | null;
+	@property()
+	_text?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed!: boolean;
+	_iconPressed = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	opened!: boolean;
+	opened = false;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
-	_listWidth!: number;
+	@property({ type: Number, noAttribute: true })
+	_listWidth = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_selectedIndex!: number;
+	@property({ type: Number, noAttribute: true })
+	_selectedIndex = -1;
 
 	_syncedOptions: Array<IOption>;
 	_selectedIndexBeforeOpen: number;
@@ -608,7 +619,7 @@ class Select extends UI5Element implements IFormElement {
 			syncOpts[lastSelectedOptionIndex].focused = true;
 			options[lastSelectedOptionIndex].selected = true;
 			options[lastSelectedOptionIndex].focused = true;
-			this._text = syncOpts[lastSelectedOptionIndex].textContent;
+			this._text = syncOpts[lastSelectedOptionIndex].textContent || undefined;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
 			this._text = "";
@@ -619,7 +630,7 @@ class Select extends UI5Element implements IFormElement {
 				options[firstEnabledOptionIndex].selected = true;
 				options[firstEnabledOptionIndex].focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = options[firstEnabledOptionIndex].textContent;
+				this._text = options[firstEnabledOptionIndex].textContent || undefined;
 			}
 		}
 
