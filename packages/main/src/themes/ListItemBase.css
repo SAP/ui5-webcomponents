@@ -18,6 +18,7 @@
 }
 
 /* focused & selected */
+:host([focused][selected]) .ui5-li-root.ui5-li--focusable
 :host([desktop][selected]) .ui5-li-root.ui5-li--focusable:focus,
 :host([selected]) .ui5-li-root.ui5-li--focusable:focus-visible {
 	border-bottom: var(--ui5-listitem-focused-selected-border-bottom);
@@ -40,8 +41,12 @@
 	outline: none;
 }
 
+:host([desktop][focused]:not([data-moving])) .ui5-li-root.ui5-li--focusable::after,
 :host([desktop]:not([data-moving])) .ui5-li-root.ui5-li--focusable:focus:after,
-:host(:not([data-moving])) .ui5-li-root.ui5-li--focusable:focus-visible:after {
+:host(:not([data-moving], [focused])) .ui5-li-root.ui5-li--focusable:focus-visible:after,
+:host([desktop][focused]:not([data-moving])) .ui5-li-root .ui5-li-content::after,
+:host([desktop]:not([data-moving], [focused])) .ui5-li-root .ui5-li-content:focus:after,
+:host(:not([data-moving], [focused])) .ui5-li-root .ui5-li-content:focus-visible:after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
@@ -50,18 +55,7 @@
 	pointer-events: none;
 }
 
-:host([desktop]:not([data-moving])) .ui5-li-root .ui5-li-content:focus:after,
-:host(:not([data-moving])) .ui5-li-root .ui5-li-content:focus-visible:after {
-	content: "";
-	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	pointer-events: none;
-}
-
+:host([focused][active]) .ui5-li-root.ui5-li--focusable:after,
 :host([desktop][active]) .ui5-li-root.ui5-li--focusable:focus:after,
 :host([active]) .ui5-li-root.ui5-li--focusable:focus-visible:after {
 	border-color: var(--ui5-listitem-active-border-color);

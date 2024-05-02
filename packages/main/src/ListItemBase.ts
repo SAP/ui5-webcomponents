@@ -68,6 +68,13 @@ class ListItemBase extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	disabled!: boolean;
 
+	/**
+	 * Indicates if the element is on focus
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
 	_onfocusin(e: FocusEvent) {
 		this.fireEvent("_request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
