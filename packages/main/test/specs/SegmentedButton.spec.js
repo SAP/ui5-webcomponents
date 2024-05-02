@@ -135,7 +135,7 @@ describe("SegmentedButton general interaction", () => {
 	});
 });
 
-describe.only("SegmentedButton accessibility", () => {
+describe("SegmentedButton accessibility", () => {
 	before(async () => {
 		await browser.url(`test/pages/SegmentedButton.html`);
 	});
