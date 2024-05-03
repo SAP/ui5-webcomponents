@@ -568,10 +568,12 @@ class Calendar extends CalendarPart {
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
+			this.fireEvent("show-month-press", e);
 		}
 
 		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
+			this.fireEvent("show-year-press", e);
 		}
 	}
 
