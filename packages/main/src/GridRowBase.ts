@@ -5,7 +5,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-
 import GridCellBase from "./GridCellBase.js";
 import GridRowBaseCss from "./generated/themes/GridRowBase.css.js";
 import Grid from "./Grid.js";
@@ -114,7 +113,5 @@ abstract class GridRowBase extends UI5Element {
 		return GridRowBase.i18nBundle.getText(GRID_ROW_SELECTOR);
 	}
 }
-
-GridRowBase.onDefine();
 
 export default GridRowBase;

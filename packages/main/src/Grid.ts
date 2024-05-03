@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -11,7 +10,6 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridStyles from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
@@ -277,14 +275,14 @@ class Grid extends UI5Element {
 		if (this.overflowMode === GridOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
-		this._events.forEach(event => this.addEventListener(event, this._onEventBound));
+		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
 		this.features.forEach(feature => feature.onGridActivate(this));
 		this._gridNavigation = new GridNavigation(this);
 	}
 
 	onExitDOM() {
 		this._gridNavigation = undefined;
-		this._events.forEach(event => this.addEventListener(event, this._onEventBound));
+		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
 		if (this.overflowMode === GridOverflowMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}

@@ -33,7 +33,7 @@ abstract class GridCellBase extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
-		GridCellBase.i18nBundle ??= await getI18nBundle("@ui5/webcomponents");
+		GridCellBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -48,7 +48,5 @@ abstract class GridCellBase extends UI5Element {
 		return this;
 	}
 }
-
-GridCellBase.onDefine();
 
 export default GridCellBase;
