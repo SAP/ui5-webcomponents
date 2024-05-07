@@ -51,6 +51,7 @@
 				{{#if this.isCustom}}
 					<ui5-li-custom
 						id="{{this._id}}-li"
+						tooltip="{{this.tooltip}}"
 						data-ui5-id="{{this._id}}"
 						icon="{{this.icon}}"
 						?selected="{{this.selected}}"
@@ -64,6 +65,7 @@
 				{{else}}
 					<ui5-li
 						id="{{this._id}}-li"
+						tooltip="{{this.tooltip}}"
 						data-ui5-id="{{this._id}}"
 						icon="{{this.icon}}"
 						?selected="{{this.selected}}"
