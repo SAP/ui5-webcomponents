@@ -10,7 +10,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Badge from "@ui5/webcomponents/dist/Badge.js";
+import Tag from "@ui5/webcomponents/dist/Tag.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
@@ -128,7 +128,7 @@ const ICON_PER_STATUS = {
 		Icon,
 		BusyIndicator,
 		Link,
-		Badge,
+		Tag,
 	],
 })
 
