@@ -14,9 +14,6 @@ const toPosixPath = (pathStr) => {
 }
 
 const customResolver = (id, source, options) => {
-	if (id === "@ui5/webcomponents-base/dist/ssr-dom.js") {
-		return source.replace("UI5Element", "ssr-dom");
-	}
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
@@ -98,8 +95,6 @@ const customResolver = (id, source, options) => {
 		return resolved;
 	}
 }
-
-const addChecker = !!process.env.NO_TS_CHECKER;
 
 module.exports = defineConfig(async () => {
 	return {
