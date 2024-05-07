@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import OptionBase from "./OptionBase.js";
 import optionCustomCss from "./generated/themes/OptionCustom.css.js";
@@ -26,8 +27,21 @@ import optionCustomCss from "./generated/themes/OptionCustom.css.js";
 	],
 })
 class OptionCustom extends OptionBase {
+	/**
+	 * Defines the text, displayed inside the `ui5-select` input filed
+	 * when the option gets selected.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	displayText!: string;
+
 	get isCustom() {
 		return true;
+	}
+
+	get effectiveDisplayText() {
+		return this.displayText || this.textContent || "";
 	}
 }
 

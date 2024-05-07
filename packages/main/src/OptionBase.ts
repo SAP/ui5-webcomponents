@@ -6,6 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 import OptionBaseTemplate from "./generated/templates/OptionBaseTemplate.lit.js";
+import { IOption } from "./Select.js";
 
 /**
  * @class
@@ -25,7 +26,7 @@ import OptionBaseTemplate from "./generated/templates/OptionBaseTemplate.lit.js"
 	template: OptionBaseTemplate,
 	renderer: litRender,
 })
-class OptionBase extends UI5Element {
+class OptionBase extends UI5Element implements IOption {
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -74,6 +75,10 @@ class OptionBase extends UI5Element {
 
 	get isCustom() {
 		return false;
+	}
+
+	get effectiveDisplayText() {
+		return this.textContent || "";
 	}
 }
 
