@@ -42,7 +42,8 @@ class ListItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines whether the item is movable.
 	 * @default false
-	 * @private
+	 * @public
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	movable!: boolean;
