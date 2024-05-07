@@ -27,6 +27,7 @@ import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 import HasPopup from "./types/HasPopup.js";
+import IconMode from "./types/IconMode.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -458,12 +459,12 @@ class Button extends UI5Element implements IFormElement, IButton {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
-	get iconRole() {
+	get iconMode() {
 		if (!this.icon) {
 			return "";
 		}
 
-		return "presentation";
+		return IconMode.Decorative;
 	}
 
 	get isIconOnly() {

@@ -1,6 +1,6 @@
 @import "./Avatar-parameters.css";
 @import "../sap_horizon/AvatarGroup-parameters.css";
-@import "./Badge-parameters.css";
+@import "./Tag-parameters.css";
 @import "../base/Bar-parameters.css";
 @import "./Breadcrumbs-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
@@ -51,17 +51,11 @@
 @import "./ToggleButton-parameters.css";
 @import "./YearPicker-parameters.css";
 @import "./CalendarHeader-parameters.css";
-@import "../base/Table-parameters.css";
-@import "../base/TableRow-parameters.css";
 @import "./Token-parameters.css";
 @import "./Tokenizer-parameters.css";
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "./ValueStateMessage-parameters.css";
-@import "./Table-parameters.css";
-@import "./TableColumn-parameters.css";
-@import "./TableRow-parameters.css";
-@import "./TableGroupRow-parameters.css";
 @import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";
 @import "./sizes-parameters.css";

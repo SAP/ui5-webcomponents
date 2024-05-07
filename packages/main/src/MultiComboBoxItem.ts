@@ -25,8 +25,17 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
+
+	get isMultiComboBoxItem() {
+		return true;
+	}
 }
+
+const isInstanceOfMultiComboBoxItem = (object: any): object is MultiComboBoxItem => {
+	return "isMultiComboBoxItem" in object;
+};
 
 MultiComboBoxItem.define();
 
 export default MultiComboBoxItem;
+export { isInstanceOfMultiComboBoxItem };

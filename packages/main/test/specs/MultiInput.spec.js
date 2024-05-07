@@ -495,8 +495,23 @@ describe("Keyboard handling", () => {
 		assert.equal(tokens.length, 0, "should have no tokens");
 		assert.equal(await input.getProperty("focused"), true, "The input is focused");
 	});
+  
+	it("should focus token on backspace for inputs of type 'Number' and 'Email'", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
 
-	it("should move focus to token on backspace", async () => {
+		// Act
+		await input.setProperty("value", "");
+		await input.setProperty("type", "Number");
+
+		await innerInput.click();
+		await browser.keys("Backspace");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
+	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
 		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
