@@ -96,7 +96,7 @@ const SCROLL_DEBOUNCE_RATE = 5; // ms
 	renderer: litRender,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
-	dependencies: [DynamicPageHeader, DynamicPageTitle, DynamicPageHeaderActions],
+	dependencies: [DynamicPageHeaderActions],
 })
 
 /**
@@ -217,6 +217,7 @@ class DynamicPage extends UI5Element {
 	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this.headerSnapped;
+			this.dynamicPageTitle.toggleAttribute("interactive", this.showHeaderActions);
 		}
 	}
 
@@ -264,6 +265,10 @@ class DynamicPage extends UI5Element {
 		};
 	}
 
+	get showHeaderActions() {
+		return this.headerArea.length > 0;
+	}
+
 	snapOnScroll() {
 		debounce(() => this.snapTitleByScroll(), SCROLL_DEBOUNCE_RATE);
 	}
@@ -281,8 +286,8 @@ class DynamicPage extends UI5Element {
 		}
 
 		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
-			this.headerSnapped = true;
 			this.showHeaderInStickArea = false;
+			this.headerSnapped = true;
 		} else {
 			this.headerSnapped = false;
 		}
@@ -312,7 +317,19 @@ class DynamicPage extends UI5Element {
 		this.dynamicPageTitle!.focus();
 	}
 
+	async onExpandHoverIn() {
+		this.dynamicPageTitle?.setAttribute("hovered", "");
+		await renderFinished();
+	}
+
+	async onExpandHoverOut() {
+		this.dynamicPageTitle?.removeAttribute("hovered");
+		await renderFinished();
+	}
+
 	_toggleHeader() {
+		this.dynamicPageTitle?.removeAttribute("hovered");
+
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
 		this.headerSnapped = !this.headerSnapped;
 

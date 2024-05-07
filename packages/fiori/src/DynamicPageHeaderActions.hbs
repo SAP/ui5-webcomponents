@@ -2,11 +2,13 @@
     <div class="ui5-dynamic-page-header-actions--wrapper">
         <ui5-button
             class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-expand"
-            @click="{{onExpandClick}}" 
+            @click="{{onExpandClick}}"
             icon="{{arrowButtonIcon}}"
             accessible-name="{{expandLabel}}"
             .accessibilityAttributes="{{accessibilityAttributes}}"
             title="{{expandLabel}}"
+            @mouseover="{{onExpandHoverIn}}"
+            @mouseout="{{onExpandHoverOut}}"
         ></ui5-button>
     {{#if showPinButton}}
         <ui5-toggle-button
