@@ -1,4 +1,3 @@
-
 :not(:defined) {
     visibility: hidden;
 }
@@ -19,7 +18,8 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width:100%;
+    width: 100%;
+    height: 100%;
 }
 .selectMenuOption--warning {
     color: yellow;
@@ -30,6 +30,7 @@ section {
 
 .selectLabel {
     display: flex;
+    height: 100%;
     align-items: center;
     justify-content: space-between;
     padding-inline-end: 0.25rem;

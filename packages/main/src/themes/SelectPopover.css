@@ -3,6 +3,10 @@
 	padding: 0;
 }
 
+:host [ui5-li-custom]::part(native-li) {
+	padding: 0;
+}
+
 .ui5-select-popover [ui5-li] {
 	height: var(--_ui5_list_item_dropdown_base_height);
 }

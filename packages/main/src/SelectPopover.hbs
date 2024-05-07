@@ -1,10 +1,12 @@
 {{#if options}}
 	<ui5-responsive-popover
+		{{!-- tabindex -1 is needed to keep the popover out of tab chain --}}
+		tabindex="-1"
 		hide-arrow
 		_disable-initial-focus
 		placement="Bottom"
 		class="ui5-select-popover {{classes.popover}}"
-		horizontal-align="Start"
+		horizontal-align="Left"
 		@ui5-after-open="{{_afterOpen}}"
 		@ui5-before-open="{{_beforeOpen}}"
 		@ui5-after-close="{{_afterClose}}"
@@ -40,24 +42,39 @@
 		{{/unless}}
 
 		<ui5-list
-			selection-mode="SingleAuto"
+			mode="SingleSelectAuto"
 			separators="None"
 			@mousedown="{{_itemMousedown}}"
 			@ui5-item-click="{{_handleItemPress}}"
 		>
-			{{#each _syncedOptions}}
-				<ui5-li
-					id="{{this.id}}-li"
-					icon="{{this.icon}}"
-					?selected="{{this.selected}}"
-					?focused="{{this._focused}}"
-					tooltip="{{this.tooltip}}"
-					additional-text="{{this.additionalText}}"
-					?aria-selected="{{this.selected}}"
-					data-ui5-stable="{{this.stableDomRef}}"
-				>
-					{{this.textContent}}
-				</ui5-li>
+			{{#each options}}
+				{{#if this.isCustom}}
+					<ui5-li-custom
+						id="{{this._id}}-li"
+						data-ui5-id="{{this._id}}"
+						icon="{{this.icon}}"
+						?selected="{{this.selected}}"
+						?focused="{{this.focused}}"
+						title="{{this.title}}"
+						additional-text="{{this.additionalText}}"
+						?aria-selected="{{this.selected}}"
+						data-ui5-stable="{{this.stableDomRef}}">
+						<slot name="{{this._individualSlot}}"></slot>
+					</ui5-li-custom>
+				{{else}}
+					<ui5-li
+						id="{{this._id}}-li"
+						data-ui5-id="{{this._id}}"
+						icon="{{this.icon}}"
+						?selected="{{this.selected}}"
+						?focused="{{this.focused}}"
+						title="{{this.title}}"
+						additional-text="{{this.additionalText}}"
+						?aria-selected="{{this.selected}}"
+						data-ui5-stable="{{this.stableDomRef}}">
+						<slot name="{{this._individualSlot}}"></slot>
+					</ui5-li>
+				{{/if}}
 			{{/each}}
 		</ui5-list>
 	</ui5-responsive-popover>
@@ -65,13 +82,15 @@
 
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
+		{{!-- tabindex -1 is needed to keep the popover out of tab chain --}}
+		tabindex="-1"
 		skip-registry-update
 		_disable-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		placement="Bottom"
-		horizontal-align="Start"
+		horizontal-align="Left"
 	>
 		<div class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
