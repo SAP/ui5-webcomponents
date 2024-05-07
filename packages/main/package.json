@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents",
-  "version": "1.24.0-rc.1",
+  "version": "2.0.0-rc.2",
   "description": "UI5 Web Components: webcomponents.main",
   "ui5": {
     "webComponentsPackage": true
@@ -49,15 +49,15 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.24.0-rc.1",
-    "@ui5/webcomponents-icons": "1.24.0-rc.1",
-    "@ui5/webcomponents-icons-business-suite": "1.24.0-rc.1",
-    "@ui5/webcomponents-icons-tnt": "1.24.0-rc.1",
-    "@ui5/webcomponents-localization": "1.24.0-rc.1",
-    "@ui5/webcomponents-theming": "1.24.0-rc.1"
+    "@ui5/webcomponents-base": "2.0.0-rc.2",
+    "@ui5/webcomponents-icons": "2.0.0-rc.2",
+    "@ui5/webcomponents-icons-business-suite": "2.0.0-rc.2",
+    "@ui5/webcomponents-icons-tnt": "2.0.0-rc.2",
+    "@ui5/webcomponents-localization": "2.0.0-rc.2",
+    "@ui5/webcomponents-theming": "2.0.0-rc.2"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.24.0-rc.1",
-    "chromedriver": "^121.0.2"
+    "@ui5/webcomponents-tools": "2.0.0-rc.2",
+    "chromedriver": "^123.0.3"
   }
 }

@@ -42,8 +42,8 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  *
  * ### Keyboard Handling
  *
- * - [SPACE, ENTER, RETURN] - Fires the `click` event if the `interactive` property is set to true.
- * - [SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Shift] - If [Space] is pressed, pressing [Shift] releases the component without triggering the click event.
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Avatar.js";`
@@ -91,13 +91,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 */
 	@property({ type: Boolean })
 	interactive!: boolean;
-
-	/**
-	 * Indicates if the elements is pressed
-	 * @private
-	 */
-	@property({ type: Boolean })
-	pressed!: boolean;
 
 	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
@@ -225,7 +218,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Defines the optional badge that will be used for visual affordance.
 	 *
 	 * **Note:** While the slot allows for custom badges, to achieve
-	 * the Fiori design, please use `ui5-badge` with `ui5-icon`
+	 * the Fiori design, you can use the `ui5-tag` with `ui5-icon`
 	 * in the corresponding `icon` slot, without text nodes.
 	 * @public
 	 * @since 1.7.0
@@ -404,7 +397,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	_fireClick() {
 		this.fireEvent("click");
-		this.pressed = !this.pressed;
 	}
 
 	_getAriaHasPopup() {

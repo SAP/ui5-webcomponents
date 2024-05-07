@@ -7,12 +7,13 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
 import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
@@ -31,7 +32,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerPopoverTemplate.lit.js";
+import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate.lit.js";
 
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
@@ -110,13 +111,10 @@ type PreviewValues = {
  */
 @customElement({
 	tag: "ui5-datetime-picker",
-	staticAreaTemplate: DateTimePickerPopoverTemplate,
+	template: DateTimePickerTemplate,
 	styles: [
-		DateTimePicker.styles,
+		DatePicker.styles,
 		DateTimePickerCss,
-	],
-	staticAreaStyles: [
-		DatePicker.staticAreaStyles,
 		DateTimePickerPopoverCss,
 	],
 	dependencies: [
@@ -198,7 +196,7 @@ class DateTimePicker extends DatePicker {
 		await super.openPicker();
 		this._previewValues = {
 			...this._previewValues,
-			timeSelectionValue: this.value || this.getFormat().format(new Date()),
+			timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
 		};
 	}
 
@@ -296,14 +294,14 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
 		const dateTimePickerContent = e.path ? e.path[1] : e.composedPath()[1];
 		this._previewValues = {
 			...this._previewValues,
 			calendarTimestamp: e.detail.timestamp,
-			calendarValue: e.detail.values[0],
+			calendarValue: e.detail.selectedValues[0],
 			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
 	}
@@ -382,9 +380,8 @@ class DateTimePicker extends DatePicker {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	async getPicker() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	getPicker() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	getSelectedDateTime() {

@@ -11,9 +11,10 @@
     "packages/tools",
     "packages/playground",
     "packages/website",
-    "packages/create-package"
+    "packages/create-package",
+    "packages/compat"
   ],
-  "version": "1.24.0-rc.1",
+  "version": "2.0.0-rc.2",
   "command": {
     "publish": {
       "allowBranch": "*",

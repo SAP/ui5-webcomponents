@@ -30,7 +30,6 @@ import {
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
-import type { IUploadCollectionItem } from "./UploadCollection.js";
 
 // Template
 import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
@@ -50,7 +49,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @constructor
  * @extends ListItem
  * @public
- * @implements {IUploadCollectionItem}
  * @slot {Node[]} default - Hold the description of the `ui5-upload-collection-item`. Will be shown below the file name.
  * @since 1.0.0-rc.7
  */
@@ -112,7 +110,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @private
  */
 @event("_uci-delete")
-class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
+class UploadCollectionItem extends ListItem {
 	/**
 	 * Holds an instance of `File` associated with this item.
 	 * @default null
@@ -146,8 +144,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	declare disableDeleteButton: boolean;
 
 	/**
-	 * By default, the delete button will always be shown, regardless of the `ui5-upload-collection`'s property `mode`.
-	 * Setting this property to `true` will hide the delete button.
+	 * Hides the delete button.
 	 * @default false
 	 * @public
 	 */
@@ -181,9 +178,15 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 	progress!: number;
 
 	/**
-	 * If set to `Uploading` or `Error`, a progress indicator showing the `progress` is displayed.
-	 * Also if set to `Error`, a refresh button is shown. When this icon is pressed `retry` event is fired.
-	 * If set to `Uploading`, a terminate button is shown. When this icon is pressed `terminate` event is fired.
+	 * Upload state.
+	 *
+	 * Depending on this property, the item displays the following:
+	 *
+	 * - `Ready` - progress indicator is displayed.
+	 * - `Uploading` - progress indicator and terminate button are displayed. When the terminate button is pressed, `terminate` event is fired.
+	 * - `Error` - progress indicator and retry button are displayed. When the retry button is pressed, `retry` event is fired.
+	 * - `Complete` - progress indicator is not displayed.
+	 *
 	 * @default "Ready"
 	 * @public
 	 */
@@ -346,13 +349,6 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 		};
 	}
 
-	/**
-	 * @override
-	 */
-	get renderUploadCollectionDeleteButton() {
-		return !this.hideDeleteButton;
-	}
-
 	get _fileNameWithoutExtension() {
 		return this.fileName.substring(0, this.fileName.length - this._fileExtension.length);
 	}
@@ -407,7 +403,7 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 
 	get valueStateName(): ValueState {
 		if (this.uploadState === UploadState.Error) {
-			return ValueState.Error;
+			return ValueState.Negative;
 		}
 
 		if (this.uploadState === UploadState.Ready || this.uploadState === UploadState.Uploading) {

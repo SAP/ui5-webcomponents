@@ -20,9 +20,6 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
  Components    | `import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js"`| Applies direction ("ltr"/"rtl") - re-renders all RTL-aware components     |
  Components    | `import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/CustomElementsScope.js"`| Adds suffix to the tag names of all components          |
  Components    | `@ui5/webcomponents-base/dist/util/InvisibleMessage.js`   | Provides a way to expose dynamic content changes that can be announced by screen readers   |
- CSP compliance| `import { setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js"`| Sets directory path where the CSS resources for given package will be served from    |
- CSP compliance| `import { setUseLinks } from "@ui5/webcomponents-base/dist/CSP.js"`      | Enables or disables the usage of `<link>` tags instead of `<style>` tags             |
- CSP compliance| `import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"`  | Enables or disables the preloading of `<link>` tags                                  |
 
 ### `applyDirection.js`
 - `applyDirection`
@@ -41,11 +38,6 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
 ### `IgnoreCustomElements.js`
 
  - `ignoreCustomElements`
-
-###  `CSP.js`
- - `setPackageCSSRoot` 
- - `setUseLinks`
- - `setPreloadLinks`
 
 ### `i18nBundle.js`
 

@@ -5,7 +5,7 @@
 >
 	{{#if selectedOptionIcon}}
 		<ui5-icon
-			aria-hidden="true"
+			mode="Decorative"
 			class="ui5-select-option-icon"
 			name="{{selectedOptionIcon}}"
 		></ui5-icon>
@@ -48,3 +48,5 @@
 	{{/if}}
 	<slot name="formSupport"></slot>
 </div>
+
+{{>include "./SelectPopover.hbs"}}

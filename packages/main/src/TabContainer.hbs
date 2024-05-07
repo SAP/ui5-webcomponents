@@ -6,7 +6,7 @@
 		class="{{classes.header}}"
 		id="{{_id}}-header"
 		@focusin="{{_onHeaderFocusin}}"
-		@dragstart="{{_onHeaderDragStart}}"
+		@dragstart="{{_onDragStart}}"
 		@dragenter="{{_onHeaderDragEnter}}"
 		@dragover="{{_onHeaderDragOver}}"
 		@drop="{{_onHeaderDrop}}"
@@ -75,7 +75,7 @@
 		{{> contentArea}}
 	{{/unless}}
 
-	{{#if hasSubTabs}}
+	{{#if hasItems}}
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	{{/if}}
 
@@ -96,3 +96,5 @@
 		</div>
 	</div>
 {{/inline}}
+
+{{>include "./TabContainerPopover.hbs"}}

@@ -35,6 +35,7 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/ProgressIndicator.js";`
+ * @csspart bar - Used to style the main bar of the `ui5-progress-indicator`
  * @csspart remaining-bar - Used to style the remaining bar of the `ui5-progress-indicator`
  * @constructor
  * @extends UI5Element
@@ -58,14 +59,6 @@ class ProgressIndicator extends UI5Element {
 	*/
 	@property()
 	accessibleName!: string;
-
-	/**
-	 * Defines whether component is in disabled state.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
 
 	/**
 	 * Defines whether the component value is shown.
@@ -125,18 +118,18 @@ class ProgressIndicator extends UI5Element {
 
 	valueStateTextMappings(): Record<string, string> {
 		return {
-			"Error": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Negative": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Positive": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
 	valueStateIconMappings(): Record<string, string> {
 		return {
-			"Error": "status-negative",
-			"Warning": "status-critical",
-			"Success": "status-positive",
+			"Negative": "status-negative",
+			"Critical": "status-critical",
+			"Positive": "status-positive",
 			"Information": "information",
 		};
 	}
@@ -192,10 +185,6 @@ class ProgressIndicator extends UI5Element {
 
 	get valueStateIcon() {
 		return this.valueStateIconMappings()[this.valueState];
-	}
-
-	get _ariaDisabled() {
-		return this.disabled || undefined;
 	}
 
 	static async onDefine() {

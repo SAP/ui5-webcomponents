@@ -4,7 +4,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import type List from "@ui5/webcomponents/dist/List.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
+import ListSelectionMode from "@ui5/webcomponents/dist/types/ListSelectionMode.js";
 import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
 
 import argTypes from "./argTypes.js";
@@ -18,12 +18,12 @@ export default {
 
 const Template: UI5StoryArgs<List, StoryArgsSlots> = (args) => {
   return html` <ui5-list
-    mode="${ifDefined(args.mode)}"
-    ?busy="${ifDefined(args.busy)}"
+    selection-mode="${ifDefined(args.selectionMode)}"
+    ?loading="${ifDefined(args.loading)}"
     ?indent="${ifDefined(args.indent)}"
     ?growing="${ifDefined(args.growing)}"
     growing-button-text="${ifDefined(args.growingButtonText)}"
-    busy-delay="${ifDefined(args.busyDelay)}"
+    loading-delay="${ifDefined(args.loadingDelay)}"
     separators="${ifDefined(args.separators)}"
     header-text="${ifDefined(args.headerText)}"
     footer-text="${ifDefined(args.footerText)}"
@@ -42,13 +42,13 @@ Basic.args = {
 		icon="nutrition-activity"
 		description="Tropical plant with an edible fruit"
 		additional-text="In-stock"
-		additional-text-state="Success"
+		additional-text-state="Positive"
 		>Pineapple</ui5-li>
 	<ui5-li
 		icon="nutrition-activity"
 		description="Occurs between red and yellow"
 		additional-text="Expires"
-		additional-text-state="Warning"
+		additional-text-state="Critical"
 		>Orange</ui5-li>
 	<ui5-li
 		icon="nutrition-activity"
@@ -60,7 +60,7 @@ Basic.args = {
 		icon="nutrition-activity"
 		description="The tropical stone fruit"
 		additional-text="Re-stock"
-		additional-text-state="Error"
+		additional-text-state="Negative"
 		>Mango</ui5-li>`,
 };
 
@@ -70,21 +70,21 @@ export const Growing: StoryFn = () =>
         icon="nutrition-activity"
         description="Tropical plant with an edible fruit"
         additional-text="In-stock"
-        additional-text-state="Success"
+        additional-text-state="Positive"
         >Pineapple</ui5-li
       >
       <ui5-li
         icon="nutrition-activity"
         description="Occurs between red and yellow"
         additional-text="Expires"
-        additional-text-state="Warning"
+        additional-text-state="Critical"
         >Orange</ui5-li
       >
       <ui5-li
         icon="nutrition-activity"
         description="The yellow lengthy fruit"
         additional-text="Re-stock"
-        additional-text-state="Error"
+        additional-text-state="Negative"
         >Banana</ui5-li
       >
     </ui5-list>
@@ -94,7 +94,7 @@ export const Growing: StoryFn = () =>
         li.textContent = "Fruit name";
         li.description = "the description goes here " + i;
         li.additionalText = "Available";
-        li.additionalTextState = "Success";
+        li.additionalTextState = "Positive";
         li.icon = "nutrition-activity";
         return li;
       }
@@ -105,10 +105,10 @@ export const Growing: StoryFn = () =>
       }
       infiniteScrollEx.addEventListener("load-more", (e) => {
         var el = infiniteScrollEx;
-        el.busy = true;
+        el.loading = true;
         setTimeout(() => {
           insertItems(el, 5);
-          el.busy = false;
+          el.loading = false;
         }, 200);
       });
     </script>`;
@@ -122,8 +122,8 @@ Growing.parameters = {
   },
 };
 
-export const Modes: StoryFn = () => html`
-<ui5-list mode="SingleSelect" header-text="Single Select Mode:">
+export const SelectionModes: StoryFn = () => html`
+<ui5-list selection-mode="Single" header-text="Single Selection Mode:">
 <ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 	<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 	<ui5-li icon="map" icon-end>China</ui5-li>
@@ -132,7 +132,7 @@ export const Modes: StoryFn = () => html`
 
 </br>
 
-<ui5-list mode="MultiSelect" header-text="Multi Select Mode:">
+<ui5-list selection-mode="Multiple" header-text="Multiple Selection Mode:">
 <ui5-li>Pineapple</ui5-li>
 <ui5-li selected="">Orange</ui5-li>
 <ui5-li>Banana</ui5-li>
@@ -141,7 +141,7 @@ export const Modes: StoryFn = () => html`
 
 </br>
 
-<ui5-list mode="Delete" header-text="Delete Mode:">
+<ui5-list selection-mode="Delete" header-text="Delete Mode:">
 <ui5-li>Argentina</ui5-li>
 <ui5-li>Bulgaria</ui5-li>
 <ui5-li>China</ui5-li>
@@ -149,7 +149,7 @@ export const Modes: StoryFn = () => html`
 
 </br>
 
-<ui5-list mode="NoData" header-text="No Data Mode:" no-data-text="No Data Available">
+<ui5-list selection-mode="None" header-text="None Selection Mode:" no-data-text="No Data Available">
 </ui5-list>
 `;
 
@@ -157,10 +157,8 @@ export const Modes: StoryFn = () => html`
 export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
-  mode: ListMode.MultiSelect,
-  default: `<ui5-li-groupheader
-	>Front End Developers</ui5-li-groupheader
-	>
+  selectionMode: ListSelectionMode.Multiple,
+  default: `<ui5-li-group header-text="Front End Developers">
 	<ui5-li
 		image="../assets/images/avatars/woman_avatar_3.png"
 		icon="navigation-right-arrow"
@@ -179,25 +177,27 @@ GroupHeaders.args = {
 		icon-end=""
 		>Carlotta</ui5-li
 	>
-	<ui5-li-groupheader>Back End Developers</ui5-li-groupheader>
-	<ui5-li
-		image="../assets/images/avatars/man_avatar_1.png"
-		icon="navigation-right-arrow"
-		icon-end=""
-	>Clark</ui5-li
-	>
-	<ui5-li
-		image="../assets/images/avatars/woman_avatar_1.png"
-		icon="navigation-right-arrow"
-		icon-end=""
-	>Ellen</ui5-li
-	>
-	<ui5-li
-		image="../assets/images/avatars/man_avatar_2.png"
-		icon="navigation-right-arrow"
-		icon-end=""
-	>Adam</ui5-li
-	>`,
+</ui5-li-group>  
+<ui5-li-group header-text="Front End Developers">
+  <ui5-li
+    image="../assets/images/avatars/man_avatar_1.png"
+    icon="navigation-right-arrow"
+    icon-end=""
+  >Clark</ui5-li
+  >
+  <ui5-li
+    image="../assets/images/avatars/woman_avatar_1.png"
+    icon="navigation-right-arrow"
+    icon-end=""
+  >Ellen</ui5-li
+  >
+  <ui5-li
+    image="../assets/images/avatars/man_avatar_2.png"
+    icon="navigation-right-arrow"
+    icon-end=""
+  >Adam</ui5-li
+  >
+</ui5-li-group>`,
 };
 
 
@@ -229,8 +229,8 @@ export const HighlightTypes: StoryFn = () =>
       class="full-width"
     >
       <ui5-li highlight="None">None</ui5-li>
-      <ui5-li highlight="Success">Success</ui5-li>
-      <ui5-li highlight="Warning">Warning</ui5-li>
-      <ui5-li highlight="Error">Error</ui5-li>
+      <ui5-li highlight="Positive">Success</ui5-li>
+      <ui5-li highlight="Critical">Warning</ui5-li>
+      <ui5-li highlight="Negative">Error</ui5-li>
       <ui5-li highlight="Information">Information</ui5-li>
     </ui5-list>`;

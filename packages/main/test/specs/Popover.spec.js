@@ -62,6 +62,25 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests popover is closed after click outside of it after multiple 'showAt'", async () => {
+		await browser.executeAsync((done) => {
+			const btn = document.getElementById("btn");
+			const popover = document.getElementById("pop");
+
+			popover.showAt(btn);
+			popover.showAt(btn);
+			popover.showAt(btn);
+			popover.showAt(btn);
+
+			done();
+		});
+
+		await browser.$("body").click();
+		const popover = await browser.$("#pop");
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
 	// it("tests if popover auto closes when opener goes out of the viewport", async () => {
 	// 	const btnOpenPopover = await browser.$("#btnOpenWithAttr");
 	// 	const btnAccNameRef = await browser.$("#btnAccNameRef");
@@ -94,7 +113,7 @@ describe("Popover general interaction", () => {
 		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(await popover.getProperty("opened"), true,
+		assert.strictEqual(await popover.getProperty("open"), true,
 			"Popover remains open.");
 		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -120,9 +139,8 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
-		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
-		const items = await staticAreaItem.shadow$$("ui5-li");
+		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
+		const items = await popover.$$("ui5-li");
 
 		await manyItemsSelect.click();
 
@@ -133,9 +151,8 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 2", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#many-items");
-		const staticAreaItem = await browser.$(`.${staticAreaItemClassName}`);
-		const items = await staticAreaItem.shadow$$("ui5-li");
+		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
+		const items = await popover.$$("ui5-li");
 		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
@@ -196,21 +213,6 @@ describe("Popover general interaction", () => {
 		await btnOpenPopover.click();
 		assert.ok(await popover.getProperty("open"), "Popover is opened.");
 
-		const blockLayerIsCreated = await browser.executeAsync((popoverId, done) => {
-			const staticAreaItems = document.querySelectorAll("ui5-static-area-item");
-			let result = false;
-
-			staticAreaItems.forEach(item => {
-				if (item.shadowRoot.querySelector(".ui5-block-layer") && item.classList.contains(popoverId)) {
-					result = true;
-				}
-			});
-
-			done(result);
-		}, popoverId);
-
-		assert.notOk(blockLayerIsCreated, "Block layer is not created.");
-
 		await browser.keys("Escape");
 	});
 
@@ -220,7 +222,7 @@ describe("Popover general interaction", () => {
 
 		await btnOpenPopover.click();
 
-		assert.ok(await focusedButton.getProperty("focused"), "The button is focused.");
+		assert.ok(await focusedButton.matches(":focus"), "The button is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -231,17 +233,17 @@ describe("Popover general interaction", () => {
 
 		await btn.click();
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// list
 		await browser.keys("Tab");
 
-		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// button
 		await browser.keys("Tab");
 
-		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// select
 		await browser.keys("Tab");
@@ -252,7 +254,7 @@ describe("Popover general interaction", () => {
 		// goes to first focusable again
 		await browser.keys("Tab");
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -263,7 +265,7 @@ describe("Popover general interaction", () => {
 
 		await btn.click();
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// footer button
 		await browser.keys(["Shift", "Tab"]);
@@ -280,7 +282,7 @@ describe("Popover general interaction", () => {
 		// header button
 		await browser.keys(["Shift", "Tab"]);
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -384,6 +386,8 @@ describe("Popover general interaction", () => {
 		const createAndRemovePopover = await browser.$("#createAndRemove");
 		const result = await browser.$("#createAndRemoveResult");
 
+		await createAndRemovePopover.scrollIntoView();
+
 		await createAndRemovePopover.click();
 		await result.waitForDisplayed({ timeout: 3000 })
 
@@ -481,8 +485,8 @@ describe("Alignment", () => {
 			assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
 		});
 
-		it("Left", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
+		it("Start", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Start']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");
@@ -490,8 +494,8 @@ describe("Alignment", () => {
 			assert.ok(await isHorizontallyLeftAligned(popover, opener), `Popover should be left aligned`);
 		});
 
-		it("Right", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
+		it("End", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='End']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");
@@ -509,8 +513,8 @@ describe("Alignment", () => {
 			assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
 		});
 
-		it("Left, in RTL", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Left']").click();
+		it("Start, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Start']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");
@@ -518,8 +522,8 @@ describe("Alignment", () => {
 			assert.ok(isHorizontallyRightAligned(popover, opener), `Popover should be right aligned, flipped by RTL direction`);
 		});
 
-		it("Right, in RTL", async () => {
-			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='Right']").click();
+		it("End, in RTL", async () => {
+			await browser.$("[ui5-radio-button][name='horizontalAlign'][text='End']").click();
 			await browser.$("#horizontalAlignBtn").click();
 			const popover = await browser.$("#popoverHorizontalAlign");
 			const opener = await browser.$("#targetOpener");

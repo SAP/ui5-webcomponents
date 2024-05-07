@@ -11,7 +11,7 @@ const listItemTemplate = (index) => {
     li.textContent = "Fruit name";
     li.description = "the description goes here " + index;
     li.additionalText = "Available";
-    li.additionalTextState = "Success";
+    li.additionalTextState = "Positive";
     li.icon = "nutrition-activity";
     return li;
 }
@@ -24,10 +24,10 @@ const insertItems = (list) => {
 }
 
 growingList.addEventListener("load-more", (e) => {
-    growingList.busy = true;
+    growingList.loading = true;
     
     setTimeout(() => {
         insertItems(growingList);
-        growingList.busy = false;
+        growingList.loading = false;
     }, 1500);
 });

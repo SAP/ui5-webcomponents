@@ -65,7 +65,7 @@ let activeCb: CheckBox;
  *
  * The user can use the following keyboard shortcuts to toggle the checked state of the `ui5-checkbox`.
  *
- * - [SPACE, ENTER] - Toggles between different states: checked, not checked.
+ * - [Space],[Enter] - Toggles between different states: checked, not checked.
  *
  * ### ES6 Module Import
  *
@@ -267,6 +267,12 @@ class CheckBox extends UI5Element implements IFormElement {
 		this._enableFormSupport();
 	}
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
@@ -356,9 +362,9 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	valueStateTextMappings() {
 		return {
-			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Negative": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Positive": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 

@@ -123,7 +123,7 @@
 		<ui5-option>TntUnsuccessfulAuth</ui5-option>
 		<ui5-option>TntUser2</ui5-option>
 	</ui5-select>
-	Size:
+	Designs:
 	<ui5-select id="sizeSelect">
 		<ui5-option>base</ui5-option>
 		<ui5-option>dot</ui5-option>
@@ -144,7 +144,7 @@
 		</ui5-bar>
 	</ui5-dialog>
 
-	<ui5-illustrated-message id="illustratedMsg2" name="UnableToUpload" title="Something went wrong..." accessible-name-ref="lbl" title-level="H6">
+	<ui5-illustrated-message id="illustratedMsg2" name="UnableToUpload" title="Something went wrong..." accessible-name-ref="lbl">
 		<div slot="subtitle">Please try again or contact us at <ui5-link>example@example.com</ui5-link> <br><label id="lbl">Text from aria-labelledby</label></div>
 		<ui5-button icon="refresh">Try again</ui5-button>
 	</ui5-illustrated-message>
@@ -201,7 +201,7 @@
 		const containerHeightSelect = document.getElementById("containerHeightSelect");
 		const containerWidthSelect = document.getElementById("containerWidthSelect");
 		const illustratedMessageContainer = document.getElementById("container");
-		const sizes = {
+		const designs = {
 			base: 159,
 			dot: 259,
 			spot: 319,
@@ -209,14 +209,14 @@
 			scene: 1100,
 		}
 
-		illustratedMessage.style.width = `${sizes.scene}px`;
+		illustratedMessage.style.width = `${designs.scene}px`;
 
 		illustrationSelect.addEventListener("ui5-change", (event) => {
 			illustratedMessage.setAttribute("name", event.detail.selectedOption.textContent);
 		});
 
 		sizeSelect.addEventListener("ui5-change", (event) => {
-			illustratedMessage.style.width = `${sizes[event.detail.selectedOption.textContent]}px`;
+			illustratedMessage.style.width = `${designs[event.detail.selectedOption.textContent]}px`;
 		});
 
 		dialogOpener.addEventListener("click", () => {

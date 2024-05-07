@@ -33,12 +33,12 @@ const Template: UI5StoryArgs<Card, StoryArgsSlots> = (args) => {
 	`;
 };
 
-const header = (titleText: string, subtitleText: string, status?: string, actions?: string[], avatar?: string, interactive?: boolean) => {
+const header = (titleText: string, subtitleText: string, additionalText?: string, actions?: string[], avatar?: string, interactive?: boolean) => {
 	return `<ui5-card-header
 	slot="header"
 	title-text="${titleText}"
 	subtitle-text="${subtitleText}"
-	${status ? `status="${status}"` : ""}
+	${additionalText ? `additional-text="${additionalText}"` : ""}
 	${interactive ? "interactive" : ""}
 >
 	${avatar ? avatar : ""}
@@ -184,9 +184,9 @@ const MoreCards = [{
 }, {
 	header: header("Project Cloud Transformation", "Revenue per Product | EUR", "3 of 3"),
 	default: `<ui5-list separators="None" style="margin-block-end: 0.75rem;">
-	<ui5-li description="ID234522566-D44" additional-text="27.25K EUR" additional-text-state="Success">Avantel</ui5-li>
-	<ui5-li description="ID7125852785-A51" additional-text="22.89K EUR" additional-text-state="Warning">Telecomunicaciones Star</ui5-li>
-	<ui5-li description="ID123555587-I05" additional-text="7.85K EUR" additional-text-state="Error">Talpa</ui5-li>
+	<ui5-li description="ID234522566-D44" additional-text="27.25K EUR" additional-text-state="Positive">Avantel</ui5-li>
+	<ui5-li description="ID7125852785-A51" additional-text="22.89K EUR" additional-text-state="Critical">Telecomunicaciones Star</ui5-li>
+	<ui5-li description="ID123555587-I05" additional-text="7.85K EUR" additional-text-state="Negative">Talpa</ui5-li>
 </ui5-list>`
 }, {
 	header: header("Donna Maria Moore", "Senior Sales Executive", undefined, undefined, `<img src="../assets/images/avatars/man_avatar_1.png" slot="avatar">`),

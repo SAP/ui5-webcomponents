@@ -6,6 +6,31 @@ const _manifest = {
 }
 const processedDeclarations = new Map();
 
+const getAutocompleteData = (_package) => {
+    const result = {};
+    _manifest.modules.forEach(module => {
+        module.declarations.forEach(declaration => {
+            if (declaration.kind === "class" && declaration.customElement) {
+                // console.log(declaration.tagName, declaration.attributes);
+                result[declaration.tagName] = {attrs: {}};
+                declaration.attributes?.forEach(attr => {
+                    if (attr.type.text === "boolean") {
+                        result[declaration.tagName].attrs[attr.name] = ["", attr.name];
+                    } else if (attr.type.text === "string") {
+                        result[declaration.tagName].attrs[attr.name] = "null";
+                    } else if (attr.type.text.includes("|")) {
+                        // enum
+                        result[declaration.tagName].attrs[attr.name] = attr.type.text.split("|").map(x => x.trim().replaceAll('\"', ''));
+                    } else {
+                        result[declaration.tagName].attrs[attr.name] = "null";
+                    }
+                });
+            };
+        });
+    });
+    return result;
+};
+
 const findDeclaration = ({ package: packageName, name }) => {
     let declaration;
 
@@ -169,13 +194,14 @@ const loadManifests = () => {
 }
 
 const getPackages = () => {
-    return ["main", "fiori", "base"];
+    return ["main", "fiori", "compat", "base"];
 }
 
 const realPackagesName = (key) => {
     const map = {
         "base": "@ui5/webcomponents-base",
         "main": "@ui5/webcomponents",
+        "compat": "@ui5/webcomponents-compat",
         "fiori": "@ui5/webcomponents-fiori"
     };
 
@@ -217,5 +243,6 @@ export {
     findAllImplementations,
     realPackagesName,
     getEnums,
-    getInterfaces
+    getInterfaces,
+    getAutocompleteData,
 }

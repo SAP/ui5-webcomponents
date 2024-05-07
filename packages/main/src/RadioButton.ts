@@ -270,6 +270,12 @@ class RadioButton extends UI5Element implements IFormElement {
 		this._enableFormSupport();
 	}
 
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
+
 	onExitDOM() {
 		this.syncGroup(true);
 	}
@@ -446,11 +452,11 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	get valueStateText() {
 		switch (this.valueState) {
-		case ValueState.Error:
+		case ValueState.Negative:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_ERROR);
-		case ValueState.Warning:
+		case ValueState.Critical:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_WARNING);
-		case ValueState.Success:
+		case ValueState.Positive:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS);
 		case ValueState.Information:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION);
@@ -475,10 +481,6 @@ class RadioButton extends UI5Element implements IFormElement {
 		}
 
 		return tabindex || "0";
-	}
-
-	get strokeWidth() {
-		return this.valueState === "None" ? "1" : "2";
 	}
 }
 

@@ -1,6 +1,7 @@
 const { defineConfig } = require('vite');
 const virtualIndex = require("@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js");
 const customHotUpdate = require("@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js");
+const ssrDomShimLoader = require("@ui5/webcomponents-tools/lib/dev-server/ssr-dom-shim-loader.js");
 const { existsSync } = require('fs');
 const { dirname, join, resolve } = require('path');
 const path = require('path');
@@ -71,15 +72,7 @@ const customResolver = (id, source, options) => {
 			}
 			return resolved;
 		}
-
 	}
-
-	// The `base/package.json` has exports that resolves the absolute import to "dist/ssr-dom.js".
-	// However, in development, the file is not present in `dist`. Instead, load `ssr-dom.ts` from `src`.
-	if (id === "@ui5/webcomponents-base/dist/ssr-dom.js") {
-		return join("packages/base/src/ssr-dom.ts");
-	}
-
 
 	// relative imports from fiori src that are to a folder starting with `illustrations` are in dist
 	if (source.includes("fiori/src/") && id.includes("/illustrations") && !id.includes("AllIllustrations") && id.startsWith(".")) {
@@ -113,8 +106,8 @@ module.exports = defineConfig(async () => {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(),
-			addChecker && checker({
+		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
+			checker({
 				// e.g. use TypeScript check
 				typescript: {
 					tsconfigPath: "packages/fiori/tsconfig.json",

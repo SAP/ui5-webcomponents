@@ -60,7 +60,6 @@ import Button from "./Button.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import SelectPopoverTemplate from "./generated/templates/SelectPopoverTemplate.lit.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
@@ -79,8 +78,7 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
  */
 interface IOption extends UI5Element {
 	selected: boolean,
-	disabled: boolean,
-	title: string,
+	tooltip: string,
 	icon?: string | null,
 	value: string,
 	additionalText?: string,
@@ -126,12 +124,12 @@ type SelectLiveChangeEventDetail = {
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
  *
- * - [F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - Opens/closes the drop-down.
- * - [UP, DOWN] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
- * - [SPACE, ENTER] - If the drop-down is opened - selects the focused option.
- * - [ESC] - Closes the drop-down without changing the selection.
- * - [HOME] - Navigates to first option
- * - [END] - Navigates to the last option
+ * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
+ * - [Up] or [Down] - If the drop-down is closed - changes selection to the next or the previous option. If the drop-down is opened - moves focus to the next or the previous option.
+ * - [Space], [Enter] - If the drop-down is opened - selects the focused option.
+ * - [Escape] - Closes the drop-down without changing the selection.
+ * - [Home] - Navigates to first option
+ * - [End] - Navigates to the last option
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
@@ -147,9 +145,8 @@ type SelectLiveChangeEventDetail = {
 	languageAware: true,
 	renderer: litRender,
 	template: SelectTemplate,
-	staticAreaTemplate: SelectPopoverTemplate,
-	styles: selectCss,
-	staticAreaStyles: [
+	styles: [
+		selectCss,
 		ResponsivePopoverCommonCss,
 		ValueStateMessageCss,
 		SelectPopoverCss,
@@ -462,12 +459,11 @@ class Select extends UI5Element implements IFormElement {
 			return menu.open;
 		}
 
-		return !!this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover.open;
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -487,7 +483,7 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	set value(newValue: string) {
 		const menu = this._getSelectMenu();
-		const selectOptions = Array.from(menu ? menu.children : this.children).filter(option => !option.getAttribute("disabled")) as Array<IOption>;
+		const selectOptions = Array.from(menu ? menu.children : this.children) as Array<IOption>;
 
 		selectOptions.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -550,7 +546,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _toggleRespPopover() {
+	_toggleRespPopover() {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -563,7 +559,7 @@ class Select extends UI5Element implements IFormElement {
 			return;
 		}
 
-		this.responsivePopover = await this._respPopover();
+		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
@@ -571,8 +567,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _attachRealDomRefs() {
-		this.responsivePopover = await this._respPopover();
+	_attachRealDomRefs() {
+		this.responsivePopover = this._respPopover();
 
 		this.options.forEach(option => {
 			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
@@ -582,7 +578,7 @@ class Select extends UI5Element implements IFormElement {
 	_syncSelection() {
 		let lastSelectedOptionIndex = -1,
 			firstEnabledOptionIndex = -1;
-		const options = this._filteredItems;
+		const options = this.options;
 		const syncOpts = options.map((opt, index) => {
 			if (opt.selected) {
 				lastSelectedOptionIndex = index;
@@ -600,7 +596,7 @@ class Select extends UI5Element implements IFormElement {
 				icon: opt.icon,
 				value: opt.value,
 				textContent: opt.textContent,
-				title: opt.title,
+				tooltip: opt.tooltip,
 				additionalText: opt.additionalText,
 				id: opt._id,
 				stableDomRef: opt.stableDomRef,
@@ -933,7 +929,7 @@ class Select extends UI5Element implements IFormElement {
 		if (menu) {
 			return menu.options;
 		}
-		return this._filteredItems;
+		return this.options;
 	}
 
 	get hasCustomLabel() {
@@ -955,19 +951,19 @@ class Select extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Positive]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
+			[ValueState.Negative]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Critical]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Positive]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			[ValueState.Negative]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Critical]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
@@ -1014,7 +1010,7 @@ class Select extends UI5Element implements IFormElement {
 	get _effectiveTabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
-		&& this.responsivePopover.opened) ? "-1" : "0";
+		&& this.responsivePopover.open) ? "-1" : "0";
 	}
 
 	 /**
@@ -1022,9 +1018,9 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageInputIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -1039,9 +1035,9 @@ class Select extends UI5Element implements IFormElement {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 			popover: {
@@ -1056,8 +1052,8 @@ class Select extends UI5Element implements IFormElement {
 				"max-width": `${this.offsetWidth}px`,
 			},
 			responsivePopoverHeader: {
-				"display": this._filteredItems.length && this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this._filteredItems.length ? this._listWidth : this.offsetWidth}px`,
+				"display": this.options.length && this._listWidth === 0 ? "none" : "inline-block",
+				"width": `${this.options.length ? this._listWidth : this.offsetWidth}px`,
 			},
 			responsivePopover: {
 				"min-width": `${this.offsetWidth}px`,
@@ -1078,7 +1074,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get hasValueStateText() {
-		return this.hasValueState && this.valueState !== ValueState.Success;
+		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
 	get shouldOpenValueStateMessagePopover() {
@@ -1094,10 +1090,6 @@ class Select extends UI5Element implements IFormElement {
 		return isPhone();
 	}
 
-	get _filteredItems() {
-		return this.options.filter(option => !option.disabled);
-	}
-
 	itemSelectionAnnounce() {
 		let text;
 		const optionsCount = this.selectOptions.length;
@@ -1110,8 +1102,8 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openValueStatePopover() {
-		this.valueStatePopover = await this._getPopover() as Popover;
+	openValueStatePopover() {
+		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
 			this.valueStatePopover.showAt(this);
 		}
@@ -1133,9 +1125,8 @@ class Select extends UI5Element implements IFormElement {
 		return this.selectedOption && this.selectedOption.icon;
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
+	_getPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]");
 	}
 
 	static async onDefine() {

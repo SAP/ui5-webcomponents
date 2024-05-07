@@ -50,7 +50,6 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * `ui5-split-button` consists two separate buttons:
  *
  * - for the first one (default action) you can define some `text` or an `icon`, or both.
- * Also, it is possible to define different icon for active state of this button - `activeIcon`.
  * - the second one (arrow action) contains only `slim-arrow-down` icon.
  *
  * You can choose a `design` from a set of predefined types (the same as for ui5-button) that offer
@@ -113,14 +112,6 @@ class SplitButton extends UI5Element {
 	icon!: string;
 
 	/**
-	 * Defines the icon to be displayed in active state as graphical element within the component.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	activeIcon!: string;
-
-	/**
 	 * Defines whether the arrow button should have the active state styles or not.
 	 * @default false
 	 * @public
@@ -154,14 +145,6 @@ class SplitButton extends UI5Element {
 	 */
 	@property({ defaultValue: undefined })
 	accessibleName?: string;
-
-	/**
-	 * Indicates if the elements is on focus
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
 
 	/**
 	 * Accessibility-related properties for inner elements of the Split Button
@@ -203,14 +186,6 @@ class SplitButton extends UI5Element {
 	_textButtonActive!: boolean;
 
 	/**
-	 * Defines the icon of the text button
-	 * @default ""
-	 * @private
-	 */
-	@property({ noAttribute: true })
-	_textButtonIcon!: string;
-
-	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
 	 * @default false
 	 * @private
@@ -227,7 +202,7 @@ class SplitButton extends UI5Element {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
-	_textButtonPress: { handleEvent: () => void, passive: boolean };
+	_textButtonPress: { handleEvent: (e: MouseEvent) => void, passive: boolean };
 	_isDefaultActionPressed = false;
 	_isKeyDownOperation = false;
 
@@ -240,9 +215,9 @@ class SplitButton extends UI5Element {
 	constructor() {
 		super();
 
-		const handleTouchStartEvent = () => {
+		const handleTouchStartEvent = (e: MouseEvent) => {
+			e.stopPropagation();
 			this._textButtonActive = true;
-			this.focused = false;
 			this._tabIndex = "-1";
 		};
 
@@ -252,29 +227,13 @@ class SplitButton extends UI5Element {
 		};
 	}
 
-	/**
-	 * Function that makes sure the focus is properly managed.
-	 * @private
-	 */
-	_manageFocus(button?: Button | SplitButton) {
-		const buttons: Array<Button | SplitButton> = [this.textButton!, this.arrowButton!, this];
-
-		buttons.forEach(btn => {
-			btn.focused = btn === button;
-		});
-	}
-
 	onBeforeRendering() {
-		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		if (this.disabled) {
 			this._tabIndex = "-1";
 		}
 	}
 
 	_handleMouseClick(e: MouseEvent) {
-		const target = e.target as Button;
-
-		this._manageFocus(target);
 		this._fireClick(e);
 	}
 
@@ -285,7 +244,6 @@ class SplitButton extends UI5Element {
 
 		this._shiftOrEscapePressed = false;
 		this._setTabIndexValue();
-		this._manageFocus();
 	}
 
 	_onFocusIn(e: FocusEvent) {
@@ -293,14 +251,13 @@ class SplitButton extends UI5Element {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
-		this._manageFocus(this);
 	}
 
-	_textButtonFocusIn(e?: FocusEvent) {
-		e?.stopPropagation();
-		this._manageFocus(this.textButton!);
-
-		this._setTabIndexValue();
+	_onInnerButtonFocusIn(e: FocusEvent) {
+		e.stopPropagation();
+		this._setTabIndexValue(true);
+		const target = e.target as Button;
+		target.focus();
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
@@ -367,13 +324,11 @@ class SplitButton extends UI5Element {
 
 	_textButtonRelease() {
 		this._textButtonActive = false;
-		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		this._tabIndex = "-1";
 	}
 
 	_arrowButtonPress(e: MouseEvent) {
-		e.preventDefault();
-		this.arrowButton!.focus();
+		e.stopPropagation();
 
 		this._tabIndex = "-1";
 	}
@@ -384,10 +339,10 @@ class SplitButton extends UI5Element {
 		this._tabIndex = "-1";
 	}
 
-	_setTabIndexValue() {
+	_setTabIndexValue(innerButtonPressed?: boolean) {
 		this._tabIndex = this.disabled ? "-1" : "0";
 
-		if (this._tabIndex === "-1" && (this.textButton?.focused || this.arrowButton?.focused)) {
+		if (this._tabIndex === "-1" && innerButtonPressed) {
 			this._tabIndex = "0";
 		}
 	}
@@ -448,19 +403,20 @@ class SplitButton extends UI5Element {
 	_handleDefaultAction(e: KeyboardEvent) {
 		e.preventDefault();
 		const wasSpacePressed = isSpace(e);
+		const target = e.target as Button;
 
-		if (this.focused || this.textButton?.focused) {
-			this._textButtonActive = true;
-			this._fireClick();
-			if (wasSpacePressed) {
-				this._spacePressed = true;
-			}
-		} else if (this.arrowButton && this.arrowButton.focused) {
+		if (this.arrowButton && target === this.arrowButton) {
 			this._activeArrowButton = true;
 			this._fireArrowClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;
 				this._textButtonActive = false;
+			}
+		} else {
+			this._textButtonActive = true;
+			this._fireClick();
+			if (wasSpacePressed) {
+				this._spacePressed = true;
 			}
 		}
 	}

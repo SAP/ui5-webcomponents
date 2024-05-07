@@ -1,10 +1,14 @@
 # Dependencies
 /node_modules
 
+# generated
+src/components/Editor/ui5-autocomplete.json
+
 # Production
 /build
 /docs/components/fiori
 /docs/components/main
+/docs/components/compat
 /docs/docs/
 /docs/samples/**/*.mdx
 /local-cdn

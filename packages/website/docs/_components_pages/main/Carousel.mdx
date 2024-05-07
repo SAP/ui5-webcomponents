@@ -7,6 +7,7 @@ slug: ../Carousel
 import Basic from "../../_samples/main/Carousel/Basic/Basic.md";
 import Cyclic from "../../_samples/main/Carousel/Cyclic/Cyclic.md";
 import ArrowsPlacement from "../../_samples/main/Carousel/ArrowsPlacement/ArrowsPlacement.md";
+import AccessibleName from "../../_samples/main/Carousel/AccessibleName/AccessibleName.md";
 import PageIndicatorType from "../../_samples/main/Carousel/PageIndicatorType/PageIndicatorType.md";
 import MultipleItemsPerPage from "../../_samples/main/Carousel/MultipleItemsPerPage/MultipleItemsPerPage.md";
 
@@ -23,20 +24,25 @@ When the first page is reached, pressing "Backward" will navigate to the last pa
 <Cyclic />
 
 ### Arrows Placement
-When **pageIndicatorStyle** is set to **"Content"**, the arrows are placed on the sides of the current page.
-When **pageIndicatorStyle** is set to **"Navigation"**, the arrows are placed on the sides of the page indicator.
+When **arrowsPlacement** is set to **"Content"**, the arrows are placed on the sides of the current page.
+When **arrowsPlacement** is set to **"Navigation"**, the arrows are placed on the sides of the page indicator.
 
 <ArrowsPlacement />
 
 ### Page Indicator
-When **pageIndicatorStyle** is set to **"Default"**, the page indicator appear as dots.
-When **pageIndicatorStyle** is set to **"Numeric"** - as numbers.
+When **pageIndicatorType** is set to **"Default"**, the page indicator appear as dots.
+When **pageIndicatorType** is set to **"Numeric"** - as numbers.
 
 <PageIndicatorType />
 
 ### Multiple Items per Page
 
-The **items-per-page-s**, **items-per-page-m** and **items-per-page-l** properties
-define the number of items per page for given breakpoint ("S", "M" and "L").
+The **items-per-page** property
+define the number of items per page for given breakpoint ("S", "M", "L" and "XL").
 
 <MultipleItemsPerPage />
+
+### Accessible name
+Use the **accessibleName** or the **accessibleNameRef** properties to label the Carousel and improve its accessibility.
+
+<AccessibleName />

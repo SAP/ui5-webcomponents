@@ -35,10 +35,9 @@
 
 		<ul id="{{_id}}-listUl"
 			class="ui5-list-ul"
-			role="{{accessibleRole}}"
+			role="{{listAccessibleRole}}"
 			aria-label="{{ariaLabelTxt}}"
 			aria-labelledby="{{ariaLabelledBy}}"
-			aria-roledescription="{{accessibleRoleDescription}}"
 		>
 			<slot></slot>
 
@@ -68,14 +67,13 @@
 		<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span>
 	</div>
 
-	{{#if busy}}
-		<div class="ui5-list-busy-row">
+	{{#if loading}}
+		<div class="ui5-list-loading-row">
 			<ui5-busy-indicator
-				delay="{{busyDelay}}"
+				delay="{{loadingDelay}}"
 				active
-				size="Medium"
-				class="ui5-list-busy-ind"
-				style="{{styles.busyInd}}"
+				class="ui5-list-loading-ind"
+				style="{{styles.loadingInd}}"
 				data-sap-focus-ref
 			></ui5-busy-indicator>
 		</div>

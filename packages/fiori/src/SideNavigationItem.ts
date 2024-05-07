@@ -6,6 +6,7 @@ import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import "@ui5/webcomponents-icons/dist/arrow-right.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
@@ -229,8 +230,17 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
+
+	get isSideNavigationItem() {
+		return true;
+	}
 }
 
 SideNavigationItem.define();
 
+const isInstanceOfSideNavigationItem = (object: any): object is SideNavigationItem => {
+	return "isSideNavigationItem" in object;
+};
+
 export default SideNavigationItem;
+export { isInstanceOfSideNavigationItem };

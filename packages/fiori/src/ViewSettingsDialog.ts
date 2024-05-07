@@ -11,7 +11,7 @@ import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
-import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
+import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
@@ -114,7 +114,7 @@ type VSDInternalSettings = {
 		Label,
 		List,
 		StandardListItem,
-		GroupHeaderListItem,
+		ListItemGroup,
 		SegmentedButton,
 		SegmentedButtonItem,
 	],
@@ -520,7 +520,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
-		const mode: ViewSettingsDialogMode = e.detail.selectedItem.getAttribute("mode");
+		const mode: ViewSettingsDialogMode = e.detail.selectedItems[0].getAttribute("mode");
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
@@ -632,7 +632,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * If the dialog is closed by [ESC] key, do the same as if the `Cancel` button is pressed.
+	 * If the dialog is closed by [Escape] key, do the same as if the `Cancel` button is pressed.
 	 * @param evt
 	 */
 	_restoreConfirmedOnEscape(evt: CustomEvent) { // Dialog#before-close

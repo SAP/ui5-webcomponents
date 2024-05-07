@@ -49,16 +49,6 @@ describe("Icon general interaction", () => {
 		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click..");
 	});
 
-	it("Tests the accessibility attributes", async () => {
-		const iconRoot = await browser.$("#myIcon").shadow$(".ui5-icon-root");
-		const accRoleIconRoot = await browser.$("#accRoleIcon").shadow$(".ui5-icon-root");
-		const ariaHiddenIconRoot = await browser.$("#araHiddenIcon").shadow$(".ui5-icon-root");
-
-		assert.strictEqual(await iconRoot.getAttribute("aria-hidden"), null, "The aria-hidden attribute is not set");
-		assert.strictEqual(await accRoleIconRoot.getAttribute("role"), "link", "The accessibleRole property works");
-		assert.strictEqual(await ariaHiddenIconRoot.getAttribute("aria-hidden"), "true", "The ariaHidden property works");
-	});
-
 	it("Tests switch to sap_horizon", async () => {
 		const V4_PATH_START = "M118";
 		const V5_PATH_START = "M486";
@@ -124,5 +114,31 @@ describe("Icon general interaction", () => {
 
 		assert.strictEqual(actualAccNames.join(), expectedAccNames.join(),
 			"getIconAccessibleName returns the correct icon a11y names.");
+	});
+
+	it("Tests mode property", async () => {
+		let icon = await browser.$("#imageIcon");
+		let iconSVG = await browser.$("#imageIcon").shadow$(".ui5-icon-root");
+		let mode = icon.getProperty("mode");
+		const intercativeMode = "Interactive";
+		const imageMode = "Image";
+		const decorativeMode = "Decorative";
+
+		assert.equal(await mode, imageMode, "Image mode is correctly set by default.");
+		assert.equal(await iconSVG.getAttribute("role"), "img", "The SVG for the image icon has the correct role.");
+
+		await icon.setProperty("mode", intercativeMode)
+		mode = await icon.getProperty("mode");
+
+		assert.equal(await mode, intercativeMode, "Interactive mode is correctly set.");
+		assert.equal(await iconSVG.getAttribute("role"), "button", "The SVG for the interactive icon has the correct role.");
+
+		await icon.setProperty("mode", decorativeMode)
+		mode = await icon.getProperty("mode");
+
+		assert.equal(await mode, decorativeMode, "Decorative mode is correctly set.");
+		assert.equal(await iconSVG.getAttribute("role"), "presentation", "The SVG for the decorative icon has the correct role.");
+		assert.equal(await iconSVG.getAttribute("aria-hidden"), "true", "The SVG for the decorative icon includes aria-hidden=true as expected");
+
 	});
 });
