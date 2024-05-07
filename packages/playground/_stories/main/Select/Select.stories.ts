@@ -109,7 +109,7 @@ TwoColumnLayout.storyName = "Two-column layout";
 
 export const CustomOptions: StoryFn = () =>
   html`
-  <ui5-select menu="selectMenu"></ui5-select>
+  <ui5-select menu="selectCustom"></ui5-select>
 
 
 
@@ -123,7 +123,7 @@ export const CustomOptions: StoryFn = () =>
       }
     </style>
 
-    <ui5-select-menu id="selectMenu">
+    <ui5-select-menu id="selectCustom">
       <ui5-select-menu-option display-text="AR">
           <div class="optionContent">
               <ui5-icon name="soccer"></ui5-icon>

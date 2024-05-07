@@ -4,14 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<title>ui5-select-menu</title>
+	<title>ui5-option-custom</title>
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/SelectMenu.css">
+	<link rel="stylesheet" type="text/css" href="./styles/SelectCustom.css">
 </head>
 
-<body class="selectMenu-bg">
-	<div class="selectMenu-app">
+<body class="selectCustom-bg">
+	<div class="selectCustom-app">
 
 		<label id="lblOpt"></label><br>
 		<label id="lbl"></label><br>
@@ -22,7 +22,7 @@
 
 		<div class="app-inner">
 			<section>
-				<ui5-title>Select + SelectMenu + SelectMenuOption</ui5-title><br>
+				<ui5-title>Select + OptionCustom</ui5-title><br>
 
 				<ui5-select id="sel">
 					<div class="selectLabel" slot="label">
@@ -31,7 +31,7 @@
 					</div>
 
 					<ui5-option-custom data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S" value="tshirt">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							T-shirt [1]
 							<div>
 								<ui5-icon name="accept"></ui5-icon>
@@ -41,17 +41,17 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom data-display-text="Dress [2]" value="dress" data-additional-text="M" accessible-name="Dress size M" style="background-color: red; color:yellow;">
-						<div class="selectMenuOption selectMenuOption--warning">
+						<div class="selecOptionCustom selecOptionCustom--warning">
 							Dress [2]
 							<div>
-								<ui5-icon name="accept" class="selectMenuOptionIcon--warning"></ui5-icon>
-								<ui5-icon name="employee" class="selectMenuOptionIcon--warning"></ui5-icon>
+								<ui5-icon name="accept" class="selectCustomIcon--warning"></ui5-icon>
+								<ui5-icon name="employee" class="selectCustomIcon--warning"></ui5-icon>
 							</div>
 						</div>
 					</ui5-option-custom>
 			
 					<ui5-option-custom data-display-text="Skirt [3]" value="skirt" data-additional-text="L" accessible-name="Skirt size L" selected>
-						<div  class="selectMenuOption">
+						<div  class="selecOptionCustom">
 							Skirt [3]
 							<div>
 								<ui5-icon name="accept"></ui5-icon>
@@ -66,7 +66,7 @@
 					<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 
 					<ui5-option-custom selected display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -76,7 +76,7 @@
 					</ui5-option-custom>
 
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -86,7 +86,7 @@
 					</ui5-option-custom>
 
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -100,7 +100,7 @@
 				<ui5-select value-state="Information">
 
 					<ui5-option-custom display-text="item text [1]" selected>
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Item 1 Text
 							<div>
 								<ui5-icon name="accept"></ui5-icon>
@@ -110,7 +110,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="item text [2]">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Item 2 Text
 							<div>
 								<ui5-icon name="accept"></ui5-icon>
@@ -120,7 +120,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="item text [3]">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Item 3 Text
 							<div>
 								<ui5-icon name="accept"></ui5-icon>
@@ -133,7 +133,7 @@
 
 				<ui5-select value-state="Negative">
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -143,7 +143,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -153,7 +153,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -163,7 +163,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -173,7 +173,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -183,7 +183,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -193,7 +193,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -203,7 +203,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -213,7 +213,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -223,7 +223,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -233,7 +233,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -243,7 +243,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -253,7 +253,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -263,7 +263,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -273,7 +273,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -283,7 +283,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -293,7 +293,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -303,7 +303,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -313,7 +313,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -323,7 +323,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -333,7 +333,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -343,7 +343,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -353,7 +353,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -363,7 +363,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -373,7 +373,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -383,7 +383,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -393,7 +393,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -403,7 +403,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -413,7 +413,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -423,7 +423,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -433,7 +433,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -443,7 +443,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -453,7 +453,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -463,7 +463,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -473,7 +473,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -483,7 +483,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -493,7 +493,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -503,7 +503,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -513,7 +513,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -523,7 +523,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -533,7 +533,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -543,7 +543,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -555,7 +555,7 @@
 
 				<ui5-select readonly>
 					<ui5-option-custom display-text="Phone">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Phone
 							<div>
 								<ui5-icon name="phone"></ui5-icon>
@@ -565,7 +565,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Tablet">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Tablet
 							<div>
 								<ui5-icon name="ipad-2"></ui5-icon>
@@ -575,7 +575,7 @@
 					</ui5-option-custom>
 			
 					<ui5-option-custom display-text="Desktop">
-						<div class="selectMenuOption">
+						<div class="selecOptionCustom">
 							Desktop
 							<div>
 								<ui5-icon name="laptop"></ui5-icon>
@@ -589,7 +589,7 @@
 
 
 			<section>
-				<ui5-title>Select+ SelectMenu Test setup</ui5-title><br>
+				<ui5-title>Select+ OptionCustom Test setup</ui5-title><br>
 		
 				<ui5-input id="testChange" placeholder="change fired 0"></ui5-input><br>
 				<ui5-input id="testPreview" placeholder="live-change fired 0"></ui5-input><br>
