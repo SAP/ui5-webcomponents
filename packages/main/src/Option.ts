@@ -14,7 +14,7 @@ import OptionBase from "./OptionBase.js";
  *
  * `import "@ui5/webcomponents/dist/Option.js";`
  * @constructor
- * @extends UI5Element
+ * @extends OptionBase
  * @public
  */
 @customElement({

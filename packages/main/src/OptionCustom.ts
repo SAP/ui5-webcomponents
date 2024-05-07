@@ -16,7 +16,7 @@ import optionCustomCss from "./generated/themes/OptionCustom.css.js";
  *
  * `import "@ui5/webcomponents/dist/OptionCustom.js";`
  * @constructor
- * @extends UI5Element
+ * @extends OptionBase
  * @public
  */
 @customElement({
