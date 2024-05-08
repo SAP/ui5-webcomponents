@@ -217,14 +217,14 @@ Setting the property on the custom element as:
 <script>
     const component = document.getElemetnById("component");
     component.accessibilityRoles = {
-        startColumnRole: "complimentary",
+        startColumnRole: "complementary",
     };
 </script>
 ```
 
 Results in the shadow DOM as: 
 ```html
-<div role="complimentary" ... >
+<div role="complementary" ... >
     ...
 </div>
 ```
