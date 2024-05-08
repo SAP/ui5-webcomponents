@@ -296,7 +296,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	@property({ type: Boolean })
 	_isTouch!: boolean;
 
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_cancelAction!: boolean;
 
 	/**
