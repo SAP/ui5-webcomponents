@@ -109,56 +109,39 @@ TwoColumnLayout.storyName = "Two-column layout";
 
 export const CustomOptions: StoryFn = () =>
   html`
-  <ui5-select menu="selectCustom"></ui5-select>
+  <style>
+  .optionContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+  }
+  </style>
+  <ui5-select>
+    <ui5-option-custom display-text="AR">
+        <div class="optionContent">
+            <ui5-icon name="soccer"></ui5-icon>
+            Argentina
+            <ui5-icon name="employee"></ui5-icon>
+        </div>
+    </ui5-option-custom>
 
+    <ui5-option-custom display-text="BE">
+        <div class="optionContent">
+            <ui5-icon name="soccer"></ui5-icon>
+            Belgium
+            <ui5-icon name="employee"></ui5-icon>
+        </div>
+    </ui5-option-custom>
 
-
-  <template id="selectMenuTemplate">
-    <style>
-      .optionContent {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width:100%;
-      }
-    </style>
-
-    <ui5-select-menu id="selectCustom">
-      <ui5-select-menu-option display-text="AR">
-          <div class="optionContent">
-              <ui5-icon name="soccer"></ui5-icon>
-              Argentina
-              <ui5-icon name="employee"></ui5-icon>
-          </div>
-      </ui5-select-menu-option>
-
-      <ui5-select-menu-option display-text="BE">
-          <div class="optionContent">
-              <ui5-icon name="soccer"></ui5-icon>
-              Belgium
-              <ui5-icon name="employee"></ui5-icon>
-          </div>
-      </ui5-select-menu-option>
-
-      <ui5-select-menu-option display-text="BR">
-          <div class="optionContent">
-              <ui5-icon name="soccer"></ui5-icon>
-              Brazil
-              <ui5-icon name="employee"></ui5-icon>
-          </div>
-      </ui5-select-menu-option>
-  </ui5-select-menu>
-</template>
-
-<script>
-    const template = document.querySelector("#selectMenuTemplate");
-    const clone = template.content.cloneNode(true);
-
-    document.body.appendChild(clone);
-</script>`;
-
-
-
-
+    <ui5-option-custom display-text="BR">
+        <div class="optionContent">
+            <ui5-icon name="soccer"></ui5-icon>
+            Brazil
+            <ui5-icon name="employee"></ui5-icon>
+        </div>
+    </ui5-option-custom>
+  </ui5-select>
+`;
 
 CustomOptions.storyName = "Custom Options";
