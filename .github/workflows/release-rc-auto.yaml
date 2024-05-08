@@ -3,6 +3,19 @@ name: Release RC version [auto]
 on:
   workflow_dispatch:
 
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+        fetch-depth: 0
+    - uses: actions/setup-node@v4.0.1
+      with:
+        node-version: 18
+        cache: 'yarn'
+
 # on:
 #   schedule:
 #   - cron: "00 08 * * THU"
