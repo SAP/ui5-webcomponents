@@ -111,7 +111,7 @@ class MessageStrip extends UI5Element {
 	 *
 	 * @default "1"
 	 * @public
-	 * @since 2.0
+	 * @since 2.0.0
 	 */
 	@property({ defaultValue: "1" })
 	colorScheme!: string;

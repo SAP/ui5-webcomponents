@@ -933,6 +933,75 @@ d.open = false;
 
 instead.
 
+
+
+### ui5-flexible-column-layout
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `accessibilityTexts` | removed |
+| Property     | `accessibilityRoles` | removed |
+
+- The `accessibilityTexts` and `accessibilityRoles` properties of the `ui5-flexible-column-layout` are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+fcl.accessibilityTexts = {
+    startColumnAccessibleName: "Products list",
+    midColumnAccessibleName: "Product information",
+    endColumnAccessibleName: "Product detailed information",
+    startArrowLeftText: "Collapse products list",
+    startArrowRightText: "Expand products list",
+    endArrowLeftText: "Expand product detailed information",
+    endArrowRightText: "Collapse product detailed information",
+    startArrowContainerAccessibleName: "Start Arrow Container",
+    endArrowContainerAccessibleName: "End Arrow Container",
+}
+
+fclAccRoles.accessibilityRoles = {
+    startColumnRole: "complementary",
+    startArrowContainerRole: "navigation",
+    midColumnRole: "main",
+    endArrowContainerRole: "navigation",
+    endColumnRole: "complementary".
+}
+```
+
+Now use `accessibilityAttributes` instead:
+```js
+fcl.accessibilityAttributes = {
+    startColumn: {
+      role: "complementary"
+      name: "Products list",
+    },
+    midColumn: {
+      role: "complementary"
+      name: "Product information",
+    },
+    endColumn: {
+      role: "complementary"
+      name: "Product detailed information",
+    },
+    startArrowLeft:  {
+      name: "Collapse products list",
+    },
+    startArrowRight: {
+      name: "Expand products list",
+    },
+    endArrowLeft: {
+      name: "Expand product detailed information",
+    },
+    endArrowRight:  {
+      name: "Collapse product detailed information",
+    },
+    startArrowContainer: {
+      role: "navigation"
+      name: "Start Arrow Container",
+    },
+    endArrowContainer: {
+      role: "navigation"
+      name: "End Arrow Container",
+    },
+};
+```
+
 ### ui5-illustrated-message
 
 | Changed item | Old    | New                                                           | 
@@ -948,6 +1017,38 @@ Now use `design` instead:
 ```html
 <ui5-illustrated-message design="Dialog">
 ```
+
+
+### ui5-shellbar
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `accessibilityTexts` | removed |
+| Property     | `accessibilityRoles` | removed |
+
+- The `accessibilityTexts` and `accessibilityRoles` properties of the `ui5-shellbar` are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+shellbar.accessibilityTexts = {
+    profileButtonTitle: "John Dow",
+    logoTitle: "Custom logo title",
+}
+
+shellbar.accessibilityRoles = {
+		logoRole: "link"
+};
+```
+Now use `accessibilityAttributes` instead:
+```js
+shellbar.accessibilityAttributes = {
+    profile: {
+      name:  "John Dow",
+    },
+    logo: {
+      role: "link"
+      name: "Custom logo title"
+    },
+};
+```
+
 
 ### ui5-upload-collection
 
