@@ -140,6 +140,18 @@ describe("Readonly", () => {
 	});
 });
 
+describe("Disabled", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Tokenizer.html`);
+	});
+
+	it("Disabled Tokenizer should not be interactive", async () => {
+		const disabledTokenizer = await browser.$("#disabled-tokenizer");
+
+		assert.notOk(await disabledTokenizer.isClickable(), "Tokenizer should not be clickable");
+	});
+});
+
 describe("Single token", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/Tokenizer.html`);
@@ -170,6 +182,56 @@ describe("Single token", () => {
 describe("Accessibility", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/Tokenizer.html`);
+	});
+
+	it("should test aria-readonly attribute", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const readonlyTokenizer = await browser.$("#readonly-tokenizer");
+		const readonlyTokenizerContent = await readonlyTokenizer.shadow$(".ui5-tokenizer--content");
+
+		assert.notOk(await tokenizer.getAttribute("readonly"), "tokenizer should not be readonly");
+		assert.notOk(await tokenizerContent.getAttribute("aria-readonly"), "aria-readonly should not be set on tokenizer");
+
+		assert.ok(await readonlyTokenizer.getAttribute("readonly"), "tokenizer should be readonly");
+		assert.ok(await readonlyTokenizerContent.getAttribute("aria-readonly"), "aria-readonly should be set on disabled tokenizer");
+	});
+
+	it("should test aria-disabled attribute", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const disabledTokenizer = await browser.$("#disabled-tokenizer");
+		const disabledTokenizerContent = await disabledTokenizer.shadow$(".ui5-tokenizer--content");
+
+		assert.notOk(await tokenizer.getAttribute("disabled"), "tokenizer should not be disabled");
+		assert.notOk(await tokenizerContent.getAttribute("aria-disabled"), "aria-disabled should not be set on tokenizer");
+
+		assert.ok(await disabledTokenizer.getAttribute("disabled"), "tokenizer should be disabled");
+		assert.ok(await disabledTokenizerContent.getAttribute("aria-disabled"), "aria-disabled should be set on disabled tokenizer");
+	});
+
+	it("should test tokenizer content aria attributes", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const expandedTokenizer = await browser.$("#expanded-tokenizer");
+		const expandedTokenizerContent = await expandedTokenizer.shadow$(".ui5-tokenizer--content");
+		const keys = [
+			"TOKENIZER_ARIA_LABEL",
+		];
+		const texts = await getResourceBundleTexts(keys);
+
+		assert.strictEqual(await tokenizerContent.getAttribute("role"), "listbox", "tokenizer content should have correct role=listbox");
+		assert.strictEqual(await tokenizerContent.getAttribute("aria-label"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-label");
+		assert.strictEqual(await expandedTokenizerContent.getAttribute("aria-label"), 'Test label', "tokenizer content should have correct aria-label when accesible name is set");
+		assert.strictEqual(await expandedTokenizerContent.getAttribute("aria-description"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-description when accesible name is set");
+	});
+
+	it("should test nMore aria attributes", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+
+		assert.strictEqual(await nMoreLabel.getAttribute("role"), "button", "nMore label should have role=button");
+		assert.strictEqual(await nMoreLabel.getAttribute("aria-haspopup"), "dialog", "nMore label should have aria-haspopup=dialog");
 	});
 
 	it("nMore link should be translated", async () => {

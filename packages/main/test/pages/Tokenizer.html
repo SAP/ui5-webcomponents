@@ -21,7 +21,7 @@
 	<div class="wrapper">
 		<h1 class="sample-container-title">Expanded tokenizer</h1>
 		<div>
-			<ui5-tokenizer id="expanded-tokenizer" expanded>
+			<ui5-tokenizer id="expanded-tokenizer" accessible-name="Test label" expanded>
 				<ui5-token text="Andora"></ui5-token>
 				<ui5-token text="Bulgaria"></ui5-token>
 				<ui5-token text="Canada"></ui5-token>
@@ -173,14 +173,13 @@
 
 	<script>
 		const deleteTokenizer = document.getElementById("delete-tokenizer");
-		let deleteTokenizerItems;
 		let tokensToShowMoreItemsPress = [];
 
 		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
 			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItems[0].getAttribute("data-ui5-theme-name"));
 		});
 
-		document.getElementById("delete-tokenizer").addEventListener("ui5-token-delete", event => {
+		deleteTokenizer.addEventListener("ui5-token-delete", event => {
 			const token = event.detail?.ref;
 			token && token.remove();
 		});

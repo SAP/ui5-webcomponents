@@ -8,6 +8,7 @@ import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -188,7 +189,7 @@ enum ClipboardDataOperation {
 
 /**
  * Fired when nMore link is pressed.
- * @private
+ * @public
  */
 @event("show-more-items-press")
 
@@ -219,6 +220,22 @@ class Tokenizer extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	accessibleName?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 * @default ""
+	 * @public
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
@@ -976,7 +993,20 @@ class Tokenizer extends UI5Element {
 	}
 
 	get tokenizerLabel() {
-		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+		const effectiveLabelText = getEffectiveAriaLabelText(this);
+		return effectiveLabelText || Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL);
+	}
+
+	get tokenizerAriaDescription() {
+		return getEffectiveAriaLabelText(this) ? Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL) : null;
+	}
+
+	get _ariaDisabled() {
+		return this.disabled || undefined;
+	}
+
+	get _ariaReadonly() {
+		return this.readonly || undefined;
 	}
 
 	get morePopoverTitle() {

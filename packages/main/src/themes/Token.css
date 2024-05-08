@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 :host {
 	display: inline-block;
 	background: var(--_ui5_token_background);

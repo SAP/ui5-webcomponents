@@ -14,7 +14,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
+import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
@@ -205,6 +205,16 @@ class Token extends UI5Element implements IToken {
 		}
 
 		return Math.ceil(this.textDom.getBoundingClientRect().width) < Math.ceil(this.textDom.scrollWidth);
+	}
+
+	get ariaDescription() {
+		let describedBy = Token.i18nBundle.getText(TOKEN_ARIA_LABEL);
+
+		if (!this.readonly) {
+			describedBy += ` ${Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE)}`;
+		}
+
+		return describedBy;
 	}
 
 	static async onDefine() {
