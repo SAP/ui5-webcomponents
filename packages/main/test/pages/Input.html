@@ -581,7 +581,7 @@
 
 		input.addEventListener("ui5-selection-change", function (event) {
 			const item = event.detail.item;
-			labelSelectionChange.innerHTML = "Event [selectionChange] :: " + item ? item.id : "";
+			labelSelectionChange.innerHTML = "Event [selectionChange] :: " + (item ? item.id : "");
 			selectionChangeCounter += 1;
 			const myInputSelectionChangeResult = document.getElementById('myInput-selection-change-result');
 			myInputSelectionChangeResult.innerText = selectionChangeCounter;
