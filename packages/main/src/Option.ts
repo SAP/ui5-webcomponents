@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import OptionBase from "./OptionBase.js";
@@ -27,7 +28,7 @@ class Option extends OptionBase {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default null
+	 * @default ""
 	 * @public
 	 */
 	@property()
@@ -41,6 +42,15 @@ class Option extends OptionBase {
 	 */
 	@property()
 	additionalText!: string;
+
+	/**
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
+	text!: Array<Node>;
 }
 
 Option.define();

@@ -54,6 +54,8 @@ import Popover from "./Popover.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
+import OptionBase from "./OptionBase.js";
+import Option from "./Option.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -66,28 +68,11 @@ import selectCss from "./generated/themes/Select.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 
-/**
- * Interface for components that may be slotted inside `ui5-select` as options
- * @public
- */
-interface IOption extends UI5Element {
-	selected: boolean,
-	tooltip: string,
-	icon?: string | null,
-	value: string,
-	additionalText?: string,
-	focused?: boolean,
-	text?: Array<Node>,
-	stableDomRef: string,
-	displayText?: string,
-	effectiveDisplayText: string,
-}
-
 type SelectChangeEventDetail = {
-	selectedOption: IOption,
+	selectedOption: OptionBase,
 }
 type SelectLiveChangeEventDetail = {
-	selectedOption: IOption,
+	selectedOption: OptionBase,
 }
 
 /**
@@ -124,7 +109,7 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/Option";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/OptionBase";` (comes with `ui5-select`)
  * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
  * @constructor
  * @extends UI5Element
@@ -155,7 +140,7 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the selected option changes.
  * @allowPreventDefault
- * @param {IOption} selectedOption the selected option.
+ * @param {OptionBase} selectedOption the selected option.
  * @public
  */
 @event<SelectChangeEventDetail>("change", {
@@ -169,7 +154,7 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
- * @param {IOption} selectedOption the selected option.
+ * @param {OptionBase} selectedOption the selected option.
  * @public
  * @since 1.17.0
  */
@@ -293,7 +278,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption: IOption | null;
+	_lastSelectedOption: OptionBase | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
@@ -314,7 +299,7 @@ class Select extends UI5Element implements IFormElement {
 		individualSlots: true,
 		invalidateOnChildChange: true,
 	})
-	options!: Array<IOption>;
+	options!: Array<OptionBase>;
 
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
@@ -360,10 +345,6 @@ class Select extends UI5Element implements IFormElement {
 		this._typedChars = "";
 
 		this._upgradeProperty("value");
-	}
-
-	onEnterDOM() {
-		this._selectedIndexBeforeOpen = this._selectedIndex;
 	}
 
 	onBeforeRendering() {
@@ -428,7 +409,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const options = Array.from(this.children) as Array<IOption>;
+		const options = Array.from(this.children) as Array<OptionBase>;
 
 		options.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -448,7 +429,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 * @default undefined
 	 */
-	get selectedOption(): IOption | undefined {
+	get selectedOption(): OptionBase | undefined {
 		return this.options.find(option => option.selected);
 	}
 
@@ -489,7 +470,7 @@ class Select extends UI5Element implements IFormElement {
 		const isTab = (isTabNext(e) || isTabPrevious(e));
 
 		if (isTab && this._isPickerOpen) {
-			this.responsivePopover.close();
+			this.responsivePopover.open = false;
 		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
@@ -589,7 +570,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	_getItemIndex(item: IOption) {
+	_getItemIndex(item: OptionBase) {
 		return this.options.indexOf(item);
 	}
 
@@ -686,7 +667,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options: Array<IOption> = this.options;
+		const options: Array<OptionBase> = this.options;
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
@@ -750,7 +731,7 @@ class Select extends UI5Element implements IFormElement {
 		return !!this.label.length;
 	}
 
-	_fireChangeEvent(selectedOption: IOption) {
+	_fireChangeEvent(selectedOption: OptionBase) {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
@@ -922,7 +903,9 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	closeValueStatePopover() {
-		this.valueStatePopover && this.valueStatePopover.close();
+		if (this.valueStatePopover) {
+			this.valueStatePopover.open = false;
+		}
 	}
 
 	toggleValueStatePopover(open: boolean) {
@@ -934,7 +917,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get selectedOptionIcon() {
-		return this.selectedOption && this.selectedOption.icon;
+		return this.selectedOption && (this.selectedOption as Option).icon;
 	}
 
 	_getPopover() {
@@ -952,5 +935,5 @@ export default Select;
 export type {
 	SelectChangeEventDetail,
 	SelectLiveChangeEventDetail,
-	IOption,
+	OptionBase,
 };

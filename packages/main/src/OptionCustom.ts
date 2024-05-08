@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import OptionBase from "./OptionBase.js";
@@ -36,6 +37,13 @@ class OptionCustom extends OptionBase {
 	 */
 	@property()
 	displayText!: string;
+
+	/**
+	 * Defines the content of the component.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
 
 	get isCustom() {
 		return true;
