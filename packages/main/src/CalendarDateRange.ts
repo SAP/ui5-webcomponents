@@ -13,6 +13,7 @@ import { ICalendarSelectedDates } from "./Calendar.js";
  * @extends UI5Element
  * @abstract
  * @public
+ * @since 2.0
  */
 @customElement("ui5-date-range")
 class CalendarDateRange extends UI5Element implements ICalendarSelectedDates {

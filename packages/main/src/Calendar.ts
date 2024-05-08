@@ -308,7 +308,7 @@ class Calendar extends CalendarPart {
 
 		switch (this.selectionMode) {
 		case CalendarSelectionMode.Range: {
-			const range = this.dates.filter(date => date.hasAttribute("ui5-date-range"))[0];
+			const range = this.dates.find(date => date.hasAttribute("ui5-date-range"));
 			const startDate = range && range.startValue && this.getFormat().parse(range.startValue, true) as Date;
 			const endDate = range && range.endValue && this.getFormat().parse(range.endValue, true) as Date;
 
@@ -348,7 +348,7 @@ class Calendar extends CalendarPart {
 		case CalendarSelectionMode.Range: {
 			// Create tags for the selected dates that don't already exist in DOM
 			if (selectedUTCDates.length) {
-				let dateRange = this.dates.find(dateElement => dateElement.startValue === selectedUTCDates[0]) as CalendarDateRange;
+				let dateRange = this.dates.find(dateElement => dateElement.hasAttribute("ui5-date-range") && dateElement.startValue === selectedUTCDates[0]);
 				if (!dateRange) {
 					dateRange = document.createElement(CalendarDateRange.getMetadata().getTag()) as CalendarDateRange;
 					dateRange.startValue = selectedUTCDates[0];
@@ -359,7 +359,8 @@ class Calendar extends CalendarPart {
 				// Remove all elements for dates that are no longer selected
 				this.dates
 					.filter(dateElement => {
-						return dateElement.hasAttribute("ui5-date") || dateElement.startValue !== dateRange.startValue;
+						return dateElement.hasAttribute("ui5-date")
+							|| (dateRange && dateElement.startValue !== dateRange.startValue);
 					})
 					.forEach(dateElement => {
 						this.removeChild(dateElement);
@@ -375,8 +376,7 @@ class Calendar extends CalendarPart {
 			this.dates
 				.filter(dateElement => {
 					return dateElement.hasAttribute("ui5-date-range")
-						|| (dateElement.hasAttribute("ui5-date")
-						&& !selectedUTCDates.includes(dateElement.value!));
+						|| (dateElement.hasAttribute("ui5-date") && !selectedUTCDates.includes(dateElement.value!));
 				})
 				.forEach(dateElement => {
 					this.removeChild(dateElement);
