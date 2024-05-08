@@ -58,6 +58,22 @@ import "@ui5/webcomponents-icons/dist/Assets.js"
 
 ## Main package (@ui5/webcomponents)
 
+### ui5-badge
+
+| Changed item                  | Old               | New          | 
+|-------------------------------|-------------------|--------------|
+| tag                      | `ui5-badge` | `ui5-tag` | 
+
+- The Badge `ui5-badge` has been renamed to Tag `ui5-tag`. If you have previously used the `ui5-badge`:
+```html
+<ui5-badge></ui5-badge>
+```
+Now use `ui5-tag` instead:
+```html
+<ui5-tag></ui5-tag>
+```
+
+
 ### ui5-breadcrumbs
 
 | Changed item                  | Old               | New          | 
@@ -74,7 +90,6 @@ Now use  `separators`  instead:
 ```html
 <ui5-breadcrumbs separators="Slash">
 ```
-
 
 ### ui5-busy-indicator
 
