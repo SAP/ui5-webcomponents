@@ -5,7 +5,7 @@
 		accessible-name-ref={{accessibleNameRef}}
 		accessible-role={{accessibleRole}}
 		stretch
-		?prevent-initial-focus="{{preventInitialFocus}}"
+		?_disable-initial-focus="{{_disableInitialFocus}}"
 		initial-focus="{{initialFocus}}"
 		@ui5-before-open="{{_beforeDialogOpen}}"
 		@ui5-after-open="{{_propagateDialogEvent}}"
@@ -26,8 +26,8 @@
 						<ui5-button
 							icon="decline"
 							design="Transparent"
-							aria-label="{{_closeDialogAriaLabel}}"
-							@click="{{closePopup}}"
+							accessible-name="{{_closeDialogAriaLabel}}"
+							@click="{{close}}"
 						>
 						</ui5-button>
 					{{/unless}}

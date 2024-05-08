@@ -6,6 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -255,6 +256,12 @@ class Tab extends UI5Element implements ITabbable, ITab {
 
 	get hasOwnContent() {
 		return willShowContent(this.content);
+	}
+
+	get expandBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
 	}
 
 	receiveStripInfo({

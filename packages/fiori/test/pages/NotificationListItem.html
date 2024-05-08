@@ -216,12 +216,12 @@
 	<script>
 		notificationList.addEventListener("ui5-item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		notificationList.addEventListener("ui5-item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		notificationList2.addEventListener("ui5-item-click", function(event) {
@@ -234,32 +234,32 @@
 
 			item.busy = true;
 			wcToastBS.textContent = item.titleText;
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		notificationList2.addEventListener("ui5-item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		acceptBtn.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Accept btn clicked";
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		acceptBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Accept btn In popover btn clicked";
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		rejectBtn.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Reject btn clicked";
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		rejectBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Reject btn In popover btn clicked";
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		openNotifications.addEventListener("click", function(event) {

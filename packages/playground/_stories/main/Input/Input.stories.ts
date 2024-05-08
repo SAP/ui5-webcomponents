@@ -103,8 +103,8 @@ ValueStateMessage.args = {
 	<ui5-li>Condensed</ui5-li>`,
 	placeholder: "Choose content density",
 	showSuggestions: true,
-	valueState: ValueState.Error,
-	valueStateMessage: '<div slot="valueStateMessage">This is an error message. Extra long text used as an error message.</div>'
+	valueState: ValueState.Negative,
+	valueStateMessage: '<div slot="valueStateMessage">This is an negative message. Extra long text used as an negative message.</div>'
 };
 
 export const Label = Template.bind({});

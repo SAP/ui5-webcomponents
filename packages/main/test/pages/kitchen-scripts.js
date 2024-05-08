@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
 	var COMPACT_CLASS = "ui5-content-density-compact";
 	var THEME = Configuration.getTheme();
-	var HCB = "sap_belize_hcb";
+	var HCB = "sap_horizon_hcb";
 	var FIORI3 = "sap_fiori_3";
 	var FIORI3_DARK = "sap_fiori_3_dark";
 	var btnRTL = document.getElementById("btnRTL");

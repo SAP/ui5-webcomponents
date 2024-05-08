@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -1413,6 +1413,12 @@ class TabContainer extends UI5Element {
 
 	get accInvisibleText() {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_SUBTABS_DESCRIPTION);
+	}
+
+	get overflowBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
 	}
 
 	get tablistAriaDescribedById() {

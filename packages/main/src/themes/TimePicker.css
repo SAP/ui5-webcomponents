@@ -21,7 +21,7 @@
 	-ms-user-select: none;
 }
 
-:host([value-state="Error"]) {
+:host([value-state="Negative"]) {
 	background-color: var(--sapField_InvalidBackground);
 }
 

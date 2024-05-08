@@ -7,6 +7,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isSpace,
 	isShow,
@@ -515,11 +516,10 @@ class Breadcrumbs extends UI5Element {
 		return this._overflowItemsData.length === 0;
 	}
 
-	get _ariaHasPopup() {
-		if (!this._isOverflowEmpty) {
-			return "listbox";
-		}
-		return undefined;
+	get linkAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: this._isOverflowEmpty ? undefined : "listbox",
+		};
 	}
 
 	get _isPickerOpen() {

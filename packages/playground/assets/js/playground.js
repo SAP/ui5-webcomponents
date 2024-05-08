@@ -21,9 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
 var THEMES = {
   "sap_fiori_3": "fiori",
   "sap_fiori_3_dark": "fiori--dark",
-  "sap_belize": "belize",
-  "sap_belize_hcb": "hcb",
-  "sap_belize_hcw": "hcw",
   "sap_horizon": "horizon",
   "sap_horizon_dark": "horizon--dark",
   "sap_horizon_hcb": "horizon--hcb",
