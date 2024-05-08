@@ -405,7 +405,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _isPickerOpen() {
-		return !!this.responsivePopover && this.responsivePopover._opened;
+		return !!this.responsivePopover && this.responsivePopover.open;
 	}
 
 	_respPopover() {
@@ -465,9 +465,10 @@ class Select extends UI5Element implements IFormElement {
 
 		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
-			this.responsivePopover.close();
+			this.responsivePopover.open = false;
 		} else {
-			this.responsivePopover.showAt(this);
+			this.responsivePopover.opener = this;
+			this.responsivePopover.open = true;
 		}
 	}
 
@@ -628,13 +629,7 @@ class Select extends UI5Element implements IFormElement {
 		e.preventDefault();
 	}
 
-	_onclick(e: MouseEvent) {
-		const target = e.target as HTMLElement;
-
-		if (target.hasAttribute("ui5-option")) {
-			return;
-		}
-
+	_onclick() {
 		this.getFocusDomRef()!.focus();
 		this._toggleRespPopover();
 	}

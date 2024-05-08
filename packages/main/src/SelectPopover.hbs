@@ -6,7 +6,7 @@
 		_disable-initial-focus
 		placement="Bottom"
 		class="ui5-select-popover {{classes.popover}}"
-		horizontal-align="Left"
+		horizontal-align="Start"
 		@ui5-after-open="{{_afterOpen}}"
 		@ui5-before-open="{{_beforeOpen}}"
 		@ui5-after-close="{{_afterClose}}"
@@ -42,7 +42,7 @@
 		{{/unless}}
 
 		<ui5-list
-			mode="SingleSelectAuto"
+			mode="SingleAuto"
 			separators="None"
 			@mousedown="{{_itemMousedown}}"
 			@ui5-item-click="{{_handleItemPress}}"
@@ -58,7 +58,6 @@
 						?focused="{{this.focused}}"
 						title="{{this.title}}"
 						additional-text="{{this.additionalText}}"
-						?aria-selected="{{this.selected}}"
 						data-ui5-stable="{{this.stableDomRef}}">
 						<slot name="{{this._individualSlot}}"></slot>
 					</ui5-li-custom>
@@ -72,7 +71,6 @@
 						?focused="{{this.focused}}"
 						title="{{this.title}}"
 						additional-text="{{this.additionalText}}"
-						?aria-selected="{{this.selected}}"
 						data-ui5-stable="{{this.stableDomRef}}">
 						<slot name="{{this._individualSlot}}"></slot>
 					</ui5-li>
@@ -92,7 +90,7 @@
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
 		placement="Bottom"
-		horizontal-align="Left"
+		horizontal-align="Start"
 	>
 		<div class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
