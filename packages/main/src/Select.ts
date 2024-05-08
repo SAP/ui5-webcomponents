@@ -101,10 +101,15 @@ type SelectLiveChangeEventDetail = {
  *
  * There are two main usages of the `ui5-select>`.
  *
- * 1. With IOption (`ui5-option`) web component:
+ * 1. With Option (`ui5-option`) web component:
  *
- * The available options of the Select are defined by using the IOption component.
- * The IOption comes with predefined design and layout, including `icon`, `text` and `additional-text`.
+ * The available options of the Select are defined by using the Option component.
+ * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
+ *
+ * 2. With OptionCustom (`ui5-option-custom`) web component.
+ *
+ * Options with custom content are defined by using the OptionCustom component
+ * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
@@ -119,7 +124,8 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/IOption";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/Option";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
  * @constructor
  * @extends UI5Element
  * @public
