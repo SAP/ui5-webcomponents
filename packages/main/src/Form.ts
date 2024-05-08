@@ -72,42 +72,42 @@ type ItemsInfo = {
  * - **M** (600px - 1022px) – up to 2 columns are recommended (default: 1)
  * - **L** (1023px - 1439px) - up to 3 columns are recommended (default: 2)
  * - **XL** (> 1439px) – up to 6 columns are recommended (default: 2)
+ *
  * To change the layout, use the <code>layout</code> property - f.e. layout="S1 M2 L3 XL6".
  *
- * #### Groups distribution
+ * ### Groups
  *
- * To make better use of screen space, there is built-in logic to calculate
- * how many columns should a FormGroup occupy.
+ * To make better use of screen space, there is built-in logic to determine how many columns should a FormGroup occupy.
  *
- * - Example #1 (perfect match):
+ * - **Example #1** (perfect match):
  * 4 columns and 4 groups: each group will use 1 column.
  *
- * - Example #2 (balanced distribution):
+ * - **Example #2** (balanced distribution):
  * 4 columns and 2 groups: each group will use 2 columns.
  * 6 columns and 2 groups: each group will use 3 columns.
  *
- * - Example #3 (unbalanced distribution):
- *
+ * - **Example #3** (unbalanced distribution):
  * 3 columns and 2 groups: the larger one will use 2 columns, the smaller 1 column.
  * 5 columns and 3 groups: two of the groups will use 2 columns each, the smallest 1 column.
- *
  * **Note:** The size of a group element is determined by the number of FormItems assigned to it.
  * In the case of equality, the first in the DOM will use more columns, and the last - fewer columns.
  *
- * - Example #4 (more groups than columns):
+ * - **Example #4** (more groups than columns):
  * 3 columns and 4 groups: each FormGroup uses only 1 column, the last FormGroup will wrap on the second row.
  *
- * #### Group column-span
+ * ### Groups Column Span
  *
- * To influence the built-in group distribution, you can use the FormGroup's <code>columnSpan</code> property,
+ * To influence the built-in group distribution, described in the previous section,
+ * you can use the FormGroup's <code>columnSpan</code> property,
  * that defines how many columns the group should expand to.
  *
- * #### Label placement
+ * ### Items Label Span
  *
  * The placement of the labels depends on the size of the used column.
  * If there is enough space, the labels are next to their associated fields, otherwise  - above the fields.
  * By default, the labels take 4/12 of the FormItem, leaving 8/12 parts to associated fields.
- * You can control what space the labels should take via the <code>labelSpan</code> property
+ * You can control what space the labels should take via the <code>labelSpan</code> property.
+ *
  * **For example:** To always place the labels on top set: <code>labelSpan="S12 M12 L12 XL12"</code> property.
  *
  * ### ES6 Module Import

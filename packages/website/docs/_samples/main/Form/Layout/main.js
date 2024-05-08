@@ -1,9 +1,11 @@
 import "@ui5/webcomponents/dist/Form.js";
+import "@ui5/webcomponents/dist/FormGroup.js";
 import "@ui5/webcomponents/dist/FormItem.js";
 
 
 // The following code is required only for the sample
 import "@ui5/webcomponents/dist/Label.js";
+import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents/dist/Slider.js";
 
