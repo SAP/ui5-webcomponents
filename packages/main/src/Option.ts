@@ -30,8 +30,8 @@ class Option extends OptionBase {
 	 * @default null
 	 * @public
 	 */
-	@property({ defaultValue: null })
-	icon?: string | null;
+	@property()
+	icon!: string;
 
 	/**
 	 * Defines the additional text displayed at the end of the option element.

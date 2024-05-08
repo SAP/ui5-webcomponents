@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 import OptionBaseTemplate from "./generated/templates/OptionBaseTemplate.lit.js";
-import { IOption } from "./Select.js";
 
 /**
  * @class
@@ -18,7 +17,6 @@ import { IOption } from "./Select.js";
  * ### ES6 Module Import
  *
  * @constructor
- * @abstract
  * @extends UI5Element
  * @public
  */
@@ -26,7 +24,7 @@ import { IOption } from "./Select.js";
 	template: OptionBaseTemplate,
 	renderer: litRender,
 })
-class OptionBase extends UI5Element implements IOption {
+class OptionBase extends UI5Element {
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
