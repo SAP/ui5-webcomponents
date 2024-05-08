@@ -89,12 +89,13 @@ const SKIP_ITEMS_SIZE = 10;
  * Interface for components that may be slotted inside a `ui5-combobox`
  * @public
  */
-interface IComboBoxItem {
+interface IComboBoxItem extends UI5Element {
 	text: string,
 	focused: boolean,
 	isGroupItem: boolean,
 	selected?: boolean,
 	additionalText?: string,
+	stableDomRef: string,
 }
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
@@ -413,7 +414,7 @@ class ComboBox extends UI5Element {
 		this._userTypedValue = "";
 	}
 
-	onBeforeRendering() {
+	async onBeforeRendering() {
 		const popover: Popover | undefined = this.valueStatePopover;
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
@@ -438,6 +439,11 @@ class ComboBox extends UI5Element {
 		this._initialRendering = false;
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
+
+		const suggestionsPopover = await this._getPicker();
+		this.items.forEach(item => {
+			item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
+		});
 	}
 
 	get iconsCount() {

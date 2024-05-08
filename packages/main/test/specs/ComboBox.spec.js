@@ -1215,4 +1215,15 @@ describe("Keyboard navigation", async () => {
 
 		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
 	});
+
+	it ("Should get the physical DOM reference for the cb item", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cbItemDomRef = await browser.executeAsync(done => {
+			return done(document.getElementById("cbi").getDomRef());
+		});
+
+		assert.ok(cbItemDomRef, "ComboBoxItem's DOM reference exists");
+	});
+
 });
