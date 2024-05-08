@@ -548,11 +548,18 @@ class ComboBox extends UI5Element {
 	}
 
 	async openValueStatePopover() {
-		(await this._getValueStatePopover())?.showAt(this);
+		const popover = await this._getValueStatePopover();
+		if (popover) {
+			popover.opener = this;
+			popover.open = true;
+		}
 	}
 
 	async closeValueStatePopover() {
-		(await this._getValueStatePopover())?.close();
+		const popover = await this._getValueStatePopover();
+		if (popover) {
+			popover.open = false;
+		}
 	}
 
 	async _getValueStatePopover() {
