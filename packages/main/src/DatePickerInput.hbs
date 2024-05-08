@@ -27,15 +27,16 @@
 
         {{#unless readonly}}
             <ui5-icon
+                    id="{{_id}}-value-help"
                     slot="icon"
                     name="{{openIconName}}"
                     tabindex="-1"
                     accessible-name="{{openIconTitle}}"
                     mode={{_iconMode}}
                     show-tooltip
-                    @click="{{togglePicker}}"
+                    @click="{{_togglePicker}}"
                     input-icon
-                    ?pressed="{{_isPickerOpen}}"
+                    ?pressed="{{open}}"
             ></ui5-icon>
         {{/unless}}
     </ui5-input>

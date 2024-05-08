@@ -809,13 +809,18 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
+	});
+
+	it("Years are disabled when out of range, part 2", async () => {
+		const root = await datepicker.getRoot();
 		await root.keys("ArrowRight");
 
-		displayedYear = await datepicker.getDisplayedYear(10);
+		let displayedYear = await datepicker.getDisplayedYear(10);
 		assert.ok(await displayedYear.isFocusedDeep(), "Focus remained on year 2100");
 
 		displayedYear = await datepicker.getDisplayedYear(11);
 		assert.notOk(await displayedYear.isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
+		await datepicker.closePicker();
 	});
 
 	it("Months are disabled when out of range", async () => {
@@ -832,7 +837,7 @@ describe("Date Picker Tests", () => {
 		await root.keys("ArrowDown");
 
 		displayedMonth = await datepicker.getDisplayedMonth(0);
-		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range  can not be reached with keyboard");
+		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range cannot be reached with keyboard");
 	});
 
 	it("Days are disabled when out of range", async () => {
@@ -1344,7 +1349,10 @@ describe("Date Picker Tests", () => {
 		let currentPicker = await calendar.getProperty("_currentPicker");
 		assert.equal(currentPicker, "month", "calendar is opened on months");
 
+		await datepicker.closePicker();
+
 		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
+
 		await datepicker.openPicker();
 		currentPicker = await calendar.getProperty("_currentPicker");
 
