@@ -1,4 +1,7 @@
-# name: Release RC version [auto]
+name: Release RC version [auto]
+
+on:
+  workflow_dispatch:
 
 # on:
 #   schedule:
