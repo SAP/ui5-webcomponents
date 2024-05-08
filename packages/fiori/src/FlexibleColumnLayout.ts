@@ -66,36 +66,36 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 
 type FCLAccessibilityRoles = Extract<Lowercase<AriaLandmarkRole>, "none" | "complementary" | "contentinfo" | "main" | "region">
 type FCLAccessibilityAttributes = {
-	startColumn: {
+	startColumn?: {
 		role: FCLAccessibilityRoles,
 		name: string,
 	},
-	midColumn: {
+	midColumn?: {
 		role: FCLAccessibilityRoles,
 		name: string,
 	},
-	endColumn: {
+	endColumn?: {
 		role: FCLAccessibilityRoles,
 		name: string,
 	},
-	startArrowContainer: {
+	startArrowContainer?: {
 		role: FCLAccessibilityRoles,
 		name: string,
 	},
-	endArrowContainer: {
+	endArrowContainer?: {
 		role: FCLAccessibilityRoles,
 		name: string,
 	},
-	startArrowLeft: {
+	startArrowLeft?: {
 		name: string,
 	},
-	startArrowRight: {
+	startArrowRight?: {
 		name: string,
 	},
-	endArrowLeft: {
+	endArrowLeft?: {
 		name: string,
 	},
-	endArrowRight: {
+	endArrowRight?: {
 		name: string,
 	},
 }
