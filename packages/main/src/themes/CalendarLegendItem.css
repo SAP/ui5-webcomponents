@@ -16,6 +16,7 @@
 	height: 1rem;
 	width: 1rem;
 	margin: var(--_ui5-calendar-legend-item-box-margin);
+	margin-inline-end: var(--_ui5-calendar-legend-item-box-inner-margin);
 	background: var(--sapLegend_WorkingBackground);
 	border: 0.0625rem solid var(--sapContent_ForegroundBorderColor);
 }
