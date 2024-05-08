@@ -258,6 +258,7 @@ Now you have to use it like:
 <ui5-combobox value-state="Success"></ui5-combobox>
 ```
 
+
 ### ui5-date-picker
 
 | Changed item | Old     | New     | 
@@ -277,6 +278,26 @@ Now you have to use it like:
 <ui5-date-picker value-state="Success"></ui5-date-picker>
 ```
 
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const datePicker = document.getElementById("exampleID");
+datePicker.openPicker();
+datePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const datePicker = document.getElementById("exampleID");
+datePicker.open = true;
+datePicker.open = false;
+```
 
 ### ui5-date-time-picker
 
@@ -286,15 +307,35 @@ Now you have to use it like:
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
-<ui5-date-time-picker value-state="Error"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Warning"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Success"></ui5-date-time-picker>
+<ui5-datetime-picker value-state="Error"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Warning"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
 ```
 Now you have to use it like:
 ```html
-<ui5-date-time-picker value-state="Negative"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Critical"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Success"></ui5-date-time-picker>
+<ui5-datetime-picker value-state="Negative"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Critical"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const datetimePicker = document.getElementById("exampleID");
+datetimePicker.openPicker();
+datetimePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const datetimePicker = document.getElementById("exampleID");
+datetimePicker.open = true;
+datetimePicker.open = false;
 ```
 
 ### ui5-date-range-picker
@@ -314,6 +355,26 @@ Now you have to use it like:
 <ui5-date-range-picker value-state="Negative"></ui5-date-range-picker>
 <ui5-date-range-picker value-state="Critical"></ui5-date-range-picker>
 <ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const dateRangePicker = document.getElementById("exampleID");
+dateRangePicker.openPicker();
+dateRangePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const dateRangePicker = document.getElementById("exampleID");
+dateRangePicker.open = true;
+dateRangePicker.open = false;
 ```
 
 ### ui5-dialog
