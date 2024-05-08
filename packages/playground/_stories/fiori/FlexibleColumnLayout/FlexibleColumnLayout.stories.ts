@@ -471,7 +471,7 @@ Basic.args = {
           style="padding: 1rem 1rem; background: var(--sapList_Background);"
         >
           <p>
-            <ui5-title level="H5" wrapping-type="Normal"
+            <ui5-title level="H5"
               >"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -482,7 +482,7 @@ Basic.args = {
             </ui5-title>
           </p>
           <p>
-            <ui5-title level="H5" wrapping-type="Normal"
+            <ui5-title level="H5"
               >"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -493,7 +493,7 @@ Basic.args = {
             </ui5-title>
           </p>
           <p>
-            <ui5-title level="H5" wrapping-type="Normal"
+            <ui5-title level="H5"
               >"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris

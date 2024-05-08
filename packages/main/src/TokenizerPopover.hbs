@@ -25,7 +25,13 @@
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
 			<div class="row" style="{{styles.popoverHeaderTitle}}">
-				<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{morePopoverTitle}}</ui5-title>
+				<ui5-title 
+					level="H5"
+					wrapping-type="None"
+					class="ui5-responsive-popover-header-text"
+				>
+					{{morePopoverTitle}}
+				</ui5-title>
 				<ui5-button
 					class="ui5-responsive-popover-close-btn"
 					icon="decline"
