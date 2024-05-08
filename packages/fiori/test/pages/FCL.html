@@ -673,24 +673,52 @@
 
 	<script>
 
-		fclAcc.accessibilityTexts = {
-			startColumnAccessibleName: "Products list",
-			midColumnAccessibleName: "Product information",
-			endColumnAccessibleName: "Product detailed information",
-			startArrowLeftText: "Collapse products list",
-			startArrowRightText: "Expand products list",
-			endArrowLeftText: "Expand product detailed information",
-			endArrowRightText: "Collapse product detailed information",
-			startArrowContainerAccessibleName: "Start Arrow Container",
-			endArrowContainerAccessibleName: "End Arrow Container",
+		fclAcc.accessibilityAttributes = {
+			startColumn: {
+				name: "Products list",
+			},
+			midColumn: {
+				name: "Product information",
+			},
+			endColumn: {
+				name: "Product detailed information",
+			},
+			startArrowLeft:  {
+				name: "Collapse products list",
+			},
+			startArrowRight: {
+				name: "Expand products list",
+			},
+			endArrowLeft: {
+				name: "Expand product detailed information",
+			},
+			endArrowRight:  {
+				name: "Collapse product detailed information",
+			},
+			startArrowContainer: {
+				name: "Start Arrow Container",
+			},
+			endArrowContainer: {
+				name: "End Arrow Container",
+			},
 		};
 
-		fclAccRoles.accessibilityRoles = {
-			startColumnRole: "complimentary",
-			startArrowContainerRole: "navigation",
-			midColumnRole: "main",
-			endArrowContainerRole: "navigation",
-			endColumnRole: "complementary"
+		fclAccRoles.accessibilityAttributes = {
+			startColumn: {
+				role: "complementary"
+			},
+			startArrowContainer: {
+				role: "navigation"
+			},
+			midColumn:{
+				role: "main"
+			},
+			endArrowContainer: {
+				role: "navigation"
+			},
+			endColumn: {
+				role: "complementary"
+			},
 		};
 
 		var counter = 0;
