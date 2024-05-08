@@ -315,7 +315,7 @@
 	<div class="sample-container">
 		<h1>Create tokens on change and on paste</h1>
 
-		<ui5-multi-input show-suggestions id="token-unique" show-value-help-icon style="width: 50%">
+		<ui5-multi-input show-suggestions id="token-unique" show-value-help-icon>
 			<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
 			<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
 		</ui5-multi-input>
@@ -422,19 +422,6 @@
 			});
 
 			document.getElementById("dialog").show();
-		});
-
-		document.getElementById("suggestion-token").addEventListener("ui5-suggestion-item-select", function (event) {
-			var item = event.detail.item;
-			var mi = event.target
-			var token = document.createElement("ui5-token");
-
-			token.setAttribute("text", item.text);
-			token.setAttribute("slot", "tokens");
-			event.target.appendChild(token);
-
-			// discuss ?!
-			event.target.value = "";
 		});
 
 		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {
