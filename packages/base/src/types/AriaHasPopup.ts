@@ -1,8 +1,8 @@
 /**
- * Different types of HasPopup.
+ * Different types of ARIA hasPopup.
  * @public
  */
-enum HasPopup {
+enum AriaHasPopup {
 	/**
 	 * Dialog popup type.
 	 * @public
@@ -34,4 +34,4 @@ enum HasPopup {
 	Tree = "Tree",
 }
 
-export default HasPopup;
+export default AriaHasPopup;
