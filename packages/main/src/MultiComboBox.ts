@@ -57,7 +57,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
-import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
+import MultiComboBoxGroup from "./MultiComboBoxGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
@@ -187,7 +187,7 @@ type MultiComboboxItemWithSelection = {
 	],
 	dependencies: [
 		MultiComboBoxItem,
-		MultiComboBoxGroupItem,
+		MultiComboBoxGroup,
 		Tokenizer,
 		Token,
 		Icon,
