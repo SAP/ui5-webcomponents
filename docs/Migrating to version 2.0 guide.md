@@ -897,6 +897,29 @@ Now you have to use it like:
 <ui5-textarea value-state="Success"></ui5-textarea>
 ```
 
+### ui5-title
+
+| Changed item  | Old   | New | 
+|---------------|-------|-----|
+| `wrappingType` default value | `None` | `Normal` |
+
+- The defualt value of the wrappingType property has been changed from `None` to `Normal`.
+
+Previously long texts would truncate if there is not enough space:
+```html
+<ui5-title>some very very very long title</ui5-menu> <!-- text will truncate if there is not enough space -->
+```
+
+Now, long texts would wrap:
+```html
+<ui5-title>some very very very long title</ui5-menu> <!-- text will wrap if there is not enough space -->
+```
+And you need to set `wrapping-type="None"` explicitly to make it truncate as before:
+```html
+<ui5-title wrapping-type="None">some very very very long title</ui5-menu> <!-- will truncate the text -->
+```
+
+
 ### ui5-tree
 
 | Changed item | Old       | New                                                                  | 
