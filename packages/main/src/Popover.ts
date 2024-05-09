@@ -228,6 +228,7 @@ class Popover extends Popup {
 		super();
 	}
 
+	_openerStorage?: string | HTMLElement;
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at
 	 * @public
@@ -248,20 +249,20 @@ class Popover extends Popup {
 			},
 		},
 	})
-	set opener(value: HTMLElement) {
-		if (this._opener === value) {
+	set opener(value: HTMLElement | string) {
+		if (this._openerStorage === value) {
 			return;
 		}
 
-		this._opener = value;
+		this._openerStorage = value;
 
 		if (value && this.open) {
 			this.openPopup();
 		}
 	}
 
-	get opener(): HTMLElement | undefined {
-		return this._opener;
+	get opener(): HTMLElement | string | undefined {
+		return this._openerStorage;
 	}
 
 	async openPopup() {
