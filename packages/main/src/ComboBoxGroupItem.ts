@@ -1,7 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IComboBoxItem } from "./ComboBox.js";
+import ComboBoxItem from "./ComboBoxItem.js";
 
 /**
  * @class
@@ -30,6 +32,17 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		 */
 		@property({ type: Boolean })
 		focused!: boolean;
+
+		/**
+		 * Defines the items of the <code>ui5-li-group</code>.
+		 * @public
+		 */
+		@slot({
+			"default": true,
+			invalidateOnChildChange: true,
+			type: HTMLElement,
+		})
+		items!: Array<ComboBoxItem>;
 
 		/**
 		 * Used to avoid tag name checks
