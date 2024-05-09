@@ -631,4 +631,18 @@ describe("Attributes propagation", () => {
 		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
 		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
  	});
+
+	it("Tooltip propagation", async () => {
+		const select = await browser.$("#selectTooltip");
+		const tooltip = "Cozy"
+
+		await select.click();
+
+		const popover = await select.shadow$("[ui5-responsive-popover]");
+		const option = await select.$("[ui5-option]");
+		const listItem = await popover.$("[data-ui5-stable='tooltip-test-option']")
+
+		assert.strictEqual(await option.getProperty("tooltip"), tooltip, "Tooltip is correct");
+		assert.strictEqual(await listItem.getProperty("tooltip"), tooltip, "Tooltip is correctly propagated");
+	});
 });
