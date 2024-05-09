@@ -80,7 +80,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	}
 
 	get _is24HoursFormat() {
-		return this.formatPattern.indexOf("HH") !== -1 || this.formatPattern.indexOf("H") !== -1;
+		return this.formatPattern?.includes("HH") || this.formatPattern?.includes("H");
 	}
 
 	onBeforeRendering() {

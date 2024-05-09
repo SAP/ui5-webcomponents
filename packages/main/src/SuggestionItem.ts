@@ -44,11 +44,11 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
-	 * @default undefined
+	 * @default ""
 	 * @public
 	 */
 	@property()
-	description?: string;
+	description = "";
 
 	/**
 	 * Defines the `icon` source URI.
@@ -84,12 +84,12 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the item.
-	 * @default undefined
+	 * @default ""
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
 	@property()
-	additionalText?: string;
+	additionalText = "";
 
 	/**
 	 * Defines the state of the `additionalText`.
