@@ -38,6 +38,15 @@
 		</bdi>
 	</span>
 
+	{{#if iconEnd}}
+		<ui5-icon
+			class="ui5-button-icon-end"
+			name="{{iconEnd}}"
+			mode="{{iconEndMode}}"
+			part="iconEnd"
+		></ui5-icon>
+	{{/if}}
+
 	{{#if hasButtonType}}
 		<span class="ui5-hidden-text">{{buttonTypeText}}</span>
 	{{/if}}

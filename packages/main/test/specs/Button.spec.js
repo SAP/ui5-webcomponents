@@ -16,10 +16,20 @@ describe("Button general interaction", () => {
 		const button = await browser.$("#button1");
 
 		await button.setAttribute("icon", "add");
-		assert.ok(await button.shadow$("ui5-icon").isExisting(), "icon is present");
+		assert.ok(await button.shadow$(".ui5-button-icon").isExisting(), "icon is present");
 
 		await button.setAttribute("icon", "");
-		assert.notOk(await button.shadow$("ui5-icon").isExisting(),"icon is not present");
+		assert.notOk(await button.shadow$(".ui5-button-icon").isExisting(),"icon is not present");
+	});
+
+	it("tests button's iconEnd rendering", async () => {
+		const button = await browser.$("#button1");
+
+		await button.setAttribute("icon-end", "add");
+		assert.ok(await button.shadow$(".ui5-button-icon-end").isExisting(), "iconEnd is present");
+
+		await button.setAttribute("icon-end", "");
+		assert.notOk(await button.shadow$(".ui5-button-icon-end").isExisting(),"iconEnd is not present");
 	});
 
 	it("tests button's slot rendering", async () => {

@@ -68,7 +68,7 @@
 	<ui5-button icon="download"></ui5-button>
 
 	<ui5-button icon="employee" accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
-	<ui5-button icon="employee" icon-end accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
+	<ui5-button icon-end="employee" accessible-name="Download book" class="button4auto">Action Bar Button</ui5-button>
 
 	<br />
 	<br />
@@ -193,6 +193,22 @@
 	<ui5-button icon="arrow-down" tooltip="Go down"></ui5-button>
 	<ui5-button icon="arrow-down" disabled tooltip="Go down"></ui5-button>
 
+
+	<br/>
+	<br/>
+	<ui5-title>Menu Buttons</ui5-title>
+	<br/>
+	<ui5-button id="menuButtonText" icon-end="navigation-down-arrow">Menu Button</ui5-button>
+	<ui5-button id="menuButtonIcon" icon="action-settings" icon-end="navigation-down-arrow"></ui5-button>
+	<ui5-button id="menuButtonTextIcon" icon="action-settings" icon-end="navigation-down-arrow">Menu Button</ui5-button>
+	<ui5-button id="menuButtonIconEnd" icon-end="navigation-down-arrow"></ui5-button>
+
+	<ui5-menu id="menu">
+		<ui5-menu-item text="Item 1"></ui5-menu-item>
+		<ui5-menu-item text="Item 2"></ui5-menu-item>
+		<ui5-menu-item text="Item 3"></ui5-menu-item>
+	</ui5-menu>
+
 	<br/>
 	<br/>
 
@@ -273,6 +289,26 @@
 
 		dialogCloser.addEventListener("click", function() {
 			dialog.close();
+		});
+
+		function showMenu(target) {
+			menu.showAt(target);
+		}
+
+		menuButtonText.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+
+		menuButtonIcon.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+
+		menuButtonTextIcon.addEventListener("click", function(event) {
+			showMenu(event.target);
+		});
+
+		menuButtonIconEnd.addEventListener("click", function(event) {
+			showMenu(event.target);
 		});
 	</script>
 </body>

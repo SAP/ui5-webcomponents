@@ -134,12 +134,19 @@ class Button extends UI5Element implements IFormElement, IButton {
 	icon!: string;
 
 	/**
-	 * Defines whether the icon should be displayed after the component text.
-	 * @default false
+	 * Defines the icon, displayed as graphical element within the component after the button text.
+	 * <b>Note:</b> It is highly recommended to use <b>iconEnd</b> property only together with icon and/or text.
+	 * Usage of endIcon only should be avoided.
+	 *
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
 	 * @public
 	 */
-	@property({ type: Boolean })
-	iconEnd!: boolean;
+	@property()
+	iconEnd!: string;
 
 	/**
 	 * When set to `true`, the component will
@@ -249,6 +256,13 @@ class Button extends UI5Element implements IFormElement, IButton {
 	hasIcon!: boolean;
 
 	/**
+	 * Indicates if the elements has a slotted end icon
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasIconEnd!: boolean;
+
+	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
@@ -343,8 +357,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
-		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
+		this.hasIconEnd = !!this.iconEnd;
+		this.iconOnly = this.isIconOnly && !this.hasIconEnd;
 
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
@@ -451,6 +466,14 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	get iconMode() {
 		if (!this.icon) {
+			return "";
+		}
+
+		return IconMode.Decorative;
+	}
+
+	get iconEndMode() {
+		if (!this.iconEnd) {
 			return "";
 		}
 
