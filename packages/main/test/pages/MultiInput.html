@@ -424,6 +424,17 @@
 			document.getElementById("dialog").show();
 		});
 
+		document.getElementById("suggestion-token").addEventListener("ui5-change", function (event) {
+			var text = event.target.value;
+			var token = document.createElement("ui5-token");
+
+			token.setAttribute("text", text);
+			token.setAttribute("slot", "tokens");
+			event.target.appendChild(token);
+
+			event.target.value = "";
+		});
+
 		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {
 			document.getElementById("basic-event-listener").innerHTML = "value help icon press";
 		});
