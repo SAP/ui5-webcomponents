@@ -290,9 +290,18 @@ class ColorPalette extends UI5Element {
 	 * @private
 	 */
 	_ensureSingleSelectionOrDeselectAll() {
-		const selectedItems = this.allColorsInPalette.filter(item => item.selected);
-		selectedItems.pop();
-		selectedItems.forEach(item => { item.selected = false; });
+		let lastSelectedItem: IColorPaletteItem;
+
+		this.allColorsInPalette.forEach(item => {
+			if (item.selected) {
+				if (lastSelectedItem) {
+					lastSelectedItem.selected = false;
+				}
+				lastSelectedItem = item;
+			} else {
+				item.selected = false;
+			}
+		});
 	}
 
 	_onclick(e: MouseEvent) {
@@ -311,6 +320,10 @@ class ColorPalette extends UI5Element {
 		const target = e.target as ColorPaletteItem;
 		if (isEnter(e)) {
 			this.handleSelection(target);
+		}
+
+		if (isSpace(e)) {
+			e.preventDefault();
 		}
 	}
 
@@ -338,15 +351,24 @@ class ColorPalette extends UI5Element {
 		this._ensureSingleSelectionOrDeselectAll();
 	}
 
+	_handleDefaultColorClick(e: KeyboardEvent) {
+		e.preventDefault();
+		this._onDefaultColorClick();
+	}
+
+	_onDefaultColorKeyUp(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._handleDefaultColorClick(e);
+		}
+	}
+
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
 		if (isTabNext(e) && this.popupMode) {
-			e.preventDefault();
-			this._onDefaultColorClick();
+			this._handleDefaultColorClick(e);
 		}
 
-		if (isSpace(e) || isEnter(e)) {
-			e.preventDefault();
-			this._onDefaultColorClick();
+		if (isEnter(e)) {
+			this._handleDefaultColorClick(e);
 		}
 
 		if (isDown(e)) {
@@ -391,7 +413,7 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	_isUpOrDownNavigableColorPaletteItem(e: KeyboardEvent) {
+	_isUpOrDownNavigatableColorPaletteItem(e: KeyboardEvent) {
 		return (isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected);
 	}
 
@@ -399,7 +421,7 @@ class ColorPalette extends UI5Element {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
 
-		if (this._isUpOrDownNavigableColorPaletteItem(e)) {
+		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
 		}
 
@@ -434,7 +456,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
-		if (this._isUpOrDownNavigableColorPaletteItem(e)) {
+		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
 		}
 		if (isUp(e)) {
@@ -512,13 +534,6 @@ class ColorPalette extends UI5Element {
 				this._currentlySelected = undefined;
 			}
 		}
-	}
-
-	/**
-	 * Returns the default color item.
-	 */
-	get defaultColorItem() {
-		return this.effectiveColorItems.find(item => item.value === this.defaultColor);
 	}
 
 	/**

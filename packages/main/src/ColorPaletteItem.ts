@@ -118,7 +118,6 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 		return {
 			root: {
 				"ui5-cp-item": true,
-				"ui5-cp-selected": this.selected,
 			},
 		};
 	}

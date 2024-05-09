@@ -51,20 +51,18 @@
 }
 
 .ui5-cp-item:hover:not(:focus),
-:host(:not([on-phone])) .ui5-cp-item.ui5-cp-selected {
+:host([selected]:not([on-phone])) .ui5-cp-item {
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;
 }
 
-:host([selected]:not([_disabled]):not([on-phone]):not(:hover):focus) .ui5-cp-item.ui5-cp-selected,
-:host(:not([selected]):not([_disabled]):not([on-phone]):hover:focus) .ui5-cp-item, 
-:host([selected]:not([_disabled]):not([on-phone]):hover:focus) .ui5-cp-item.ui5-cp-selected {
+:host(:not([_disabled]):not([on-phone])) .ui5-cp-item:focus,
+:host([selected]:not([_disabled]):not([on-phone]):hover:focus) .ui5-cp-item {
 	border: var(--_ui5_color-palette-item-selected-focused-border);
 }
 
-.ui5-cp-item.ui5-cp-selected:focus,
-:host(:not([_disabled]):not([on-phone])) .ui5-cp-item:focus,
-:host(:not([_disabled])[on-phone]) .ui5-cp-item:focus {
+:host([selected]) .ui5-cp-item:focus,
+:host(:not([_disabled])) .ui5-cp-item:focus {
 	outline: none;
 }
 
@@ -128,8 +126,8 @@
 	border: var(--_ui5_color-palette-item-after-focus-not-selected-border);
 }
 
-:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
-:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::before {
+:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item:focus:not(:hover)::before,
+:host([selected]:not([_disabled]):not([on-phone])) .ui5-cp-item:focus:hover::before {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
