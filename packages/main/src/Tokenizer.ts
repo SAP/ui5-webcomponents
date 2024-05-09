@@ -274,7 +274,7 @@ class Tokenizer extends UI5Element {
 			},
 		},
 	})
-	opener?: HTMLElement;
+	opener!: HTMLElement;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
