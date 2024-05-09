@@ -26,7 +26,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 type TimePickerComponentIndexMap = {
-	hours?: number,
+	hours: number,
 	minutes: number,
 	seconds: number,
 }
