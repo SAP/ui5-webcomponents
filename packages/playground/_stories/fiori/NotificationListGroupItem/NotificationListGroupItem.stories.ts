@@ -158,7 +158,8 @@ InShellBar.decorators = [
 		return html`<style>
 		#popover-with-notifications::part(content) {
 			padding: 0;
-			max-width: 400px;
+			max-height: 40rem;
+			max-width: 27rem;
 		}
 	</style>
 	${story()}

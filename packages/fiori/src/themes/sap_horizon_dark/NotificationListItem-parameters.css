@@ -4,7 +4,6 @@
 	--_ui5-notification_item-border-radius: var(--sapTile_BorderCornerRadius);
 	--_ui5-notification_group_header-border-bottom-width: 0;
 	--_ui5-notification_group_header-margin: 0.75rem 0.5rem;
-	--_ui5_notification_group_header-icon-color: var(--sapButton_Lite_TextColor);
 	--_ui5-notification_item-state-icon-padding: 0.25rem;
 	--_ui5-notification_item-border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
 	--_ui5-notification_item-border-top-left-right: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);

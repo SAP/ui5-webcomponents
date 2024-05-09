@@ -1,7 +1,10 @@
-#popover-with-notifications::part(content) {
-    padding: 0;
+#popover-with-notifications {
     max-width: 27rem;
     max-height: 40rem;
+}
+
+#popover-with-notifications::part(content) {
+    padding: 0;
 }
 
 #notificationsPopoverBar::part(bar) {

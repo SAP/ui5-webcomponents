@@ -4,7 +4,13 @@
 }
 
 .notificationlistgroupitem2auto {
-    max-width: 400px
+    max-height: 40rem;
+    max-width: 27rem;
+}
+
+/* Remove the responsive paddings for the content area of the Popover */
+.notificationlistgroupitem2auto::part(content) {
+    padding: 0;
 }
 
 .notificationlistgroupitem3auto {
@@ -12,12 +18,6 @@
     justify-content: flex-end;
     padding: 0.25rem;
     border-bottom: 1px solid grey;
-}
-
-/* Remove the responsive paddings for the content area of the Popover */
-.notificationlistgroupitem2auto::part(content) {
-    padding: 0;
-    padding: 0;
 }
 
 #ACCtestGroup {
