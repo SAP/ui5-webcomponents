@@ -97,7 +97,7 @@
 			document.getElementById("dialog").open = true;
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-suggestion-item-select", function (event) {
+		document.getElementById("suggestion-token").addEventListener("ui5-selection-change", function (event) {
 			var item = event.detail.item;
 			var mi = event.target
 			var token = document.createElement("ui5-token");

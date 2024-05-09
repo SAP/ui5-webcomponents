@@ -35,8 +35,8 @@ interface SuggestionComponent extends UI5Element {
 	open: boolean;
 	onItemMouseOver: (e: MouseEvent) => void;
 	onItemMouseOut: (e: MouseEvent) => void;
-	onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
-	onItemPreviewed: (item: SuggestionListItem) => void;
+	onItemSelected: (pressedItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) => void;
+	onItemSelect: (item: SuggestionListItem) => void;
 }
 
 type InputSuggestion = {
@@ -299,14 +299,14 @@ class Suggestions {
 			return;
 		}
 
-		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
+		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], item, keyboardUsed);
 		item.selected = false;
 		item.focused = false;
 		this._getComponent().open = false;
 	}
 
-	onItemPreviewed(item: SuggestionListItem) {
-		this._getComponent().onItemPreviewed(item);
+	onItemSelect(item: SuggestionListItem) {
+		this._getComponent().onItemSelect(item);
 	}
 
 	/* Private methods */
@@ -476,7 +476,7 @@ class Suggestions {
 		}
 
 		this.component.hasSuggestionItemSelected = true;
-		this.onItemPreviewed(currentItem);
+		this.onItemSelect(currentItem);
 
 		if (!this._isItemIntoView(currentItem)) {
 			this._scrollItemIntoView(currentItem);
