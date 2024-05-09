@@ -488,7 +488,7 @@ class Toolbar extends UI5Element {
 			const abstractItem = this.getItemByID(refItemId);
 			const eventType: string = e.type.replace("ui5-", "");
 			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
-			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
+			const eventOptions = abstractItem?.subscribedEvents.get(e.type) || abstractItem?.subscribedEvents.get(eventType);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
 				return;
