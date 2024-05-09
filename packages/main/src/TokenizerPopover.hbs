@@ -1,58 +1,35 @@
 <ui5-responsive-popover
 	tokenizer-popover="true"
+	?open="{{open}}"
+	.opener="{{morePopoverOpener}}"
 	style={{styles.popover}}
-	class={{classes.popover}}
-	?content-only-on-desktop="{{noValueStatePopover}}"
-	hide-arrow
+	content-only-on-desktop
+	prevent-focus-restore
+	?hide-arrow="{{hidePopoverArrow}}"
 	placement="Bottom"
 	horizontal-align="Start"
-	@before-close={{handleBeforeClose}}
-	@before-open="{{handleBeforeOpen}}"
+	@ui5-before-close="{{handleBeforeClose}}"
+	@ui5-after-close="{{handleAfterClose}}"
+	@ui5-before-open="{{handleBeforeOpen}}"
 >
-	{{#unless _isPhone}}
-		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
-			{{#unless noValueStatePopover}}
-				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-					{{#each valueStateMessageText}}
-						{{this}}
-					{{/each}}
-				</div>
-			{{/unless}}
-		</div>
-	{{/unless}}
-
 	{{#if _isPhone}}
-		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
-			<div class="row" style="{{styles.popoverHeaderTitle}}">
-				<ui5-title 
+		<div slot="header" class="ui5-responsive-popover-header">
+			<div class="row">
+				<ui5-title
 					level="H5"
 					wrapping-type="None"
 					class="ui5-responsive-popover-header-text"
 				>
 					{{morePopoverTitle}}
 				</ui5-title>
-				<ui5-button
-					class="ui5-responsive-popover-close-btn"
-					icon="decline"
-					design="Transparent"
-					@click="{{closeMorePopover}}"
-				>
-				</ui5-button>
 			</div>
 		</div>
-		{{#unless noValueStatePopover}}
-			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{#each valueStateMessageText}}
-					{{this}}
-				{{/each}}
-			</div>
-		{{/unless}}
 	{{/if}}
 	<ui5-list
 		class="ui5-tokenizer-list"
-		selection-mode="Delete"
+		selection-mode={{_nMoreListMode}}
+		separators="None"
+		@keydown="{{_onPopoverListKeydown}}"
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}
@@ -67,10 +44,14 @@
 	{{#if _isPhone}}
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
-				id="ui5-tokenizer-dialog-confirm-btn"
 				design="Emphasized"
-				@click="{{closeMorePopover}}"
+				data-ui5-tokenizer-dialog-ok-button
+				@click="{{handleDialogButtonPress}}"
 			>OK</ui5-button>
+			<ui5-button
+				design="Transparent"
+				@click="{{handleDialogButtonPress}}"
+			>Cancel</ui5-button>
 		</div>
 	{{/if}}
 </ui5-responsive-popover>
