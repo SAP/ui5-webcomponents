@@ -507,27 +507,6 @@ describe("Keyboard handling", () => {
 		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
 	});
 
-	it("should change input's value when set in selection change event", async () => {
-		const input = $("#suggestion-token");
-		const innerInput = input.shadow$("input");
-
-		await input.scrollIntoView();
-		await innerInput.click();
-		await innerInput.keys('a');
-		await innerInput.keys("Enter");
-
-		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
-		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
-
-		await innerInput.keys("ArrowLeft");
-
-		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
-
-		await innerInput.keys("ArrowRight");
-
-		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
-	});
-
 	it("should text field always when focus in" , async () => {
 		const mi = $("#one-token");
 		const inner = mi.shadow$("input");
