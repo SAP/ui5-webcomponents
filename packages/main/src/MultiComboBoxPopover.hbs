@@ -71,7 +71,11 @@
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group-header data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-group-header>
+					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+						{{#each this.items}}
+							{{> listItem}}
+						{{/each}}
+					</ui5-li-group>
 				{{else}}
 					{{> listItem}}
 				{{/if}}
@@ -81,7 +85,11 @@
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group-header data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-group-header>
+					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+						{{#each this.items}}
+							{{> listItem}}
+						{{/each}}
+					</ui5-li-group>
 				{{else}}
 					{{> listItem}}
 				{{/if}}

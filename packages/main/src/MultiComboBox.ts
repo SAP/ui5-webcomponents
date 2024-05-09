@@ -56,7 +56,7 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
-import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
+import MultiComboBoxGroup from "./MultiComboBoxGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
@@ -184,7 +184,7 @@ type MultiComboboxItemWithSelection = {
 	],
 	dependencies: [
 		MultiComboBoxItem,
-		MultiComboBoxGroupItem,
+		MultiComboBoxGroup,
 		Tokenizer,
 		Token,
 		Icon,

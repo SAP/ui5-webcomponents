@@ -74,22 +74,25 @@ export const MultiComboBoxGrouping = Template.bind({});
 MultiComboBoxGrouping.args = {
 	placeholder: 'Select a country',
 	default: `
-	<ui5-mcb-group-item text="Asia"></ui5-mcb-group-item>
-	<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
-	<ui5-mcb-item text="China"></ui5-mcb-item>
-	<ui5-mcb-item text="India"></ui5-mcb-item>
-	<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
-	<ui5-mcb-group-item text="Europe"></ui5-mcb-group-item>
-	<ui5-mcb-item text="Austria"></ui5-mcb-item>
-	<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
-	<ui5-mcb-item text="Germany"></ui5-mcb-item>
-	<ui5-mcb-item text="Italy"></ui5-mcb-item>
-	<ui5-mcb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-mcb-item>
-	<ui5-mcb-group-item text="North America"></ui5-mcb-group-item>
-	<ui5-mcb-item text="Canada"></ui5-mcb-item>
-	<ui5-mcb-item text="Granada"></ui5-mcb-item>
-	<ui5-mcb-item text="Haiti"></ui5-mcb-item>
-	<ui5-mcb-item text="United States"></ui5-mcb-item>`
+	<ui5-mcb-group text="Asia">
+		<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+		<ui5-mcb-item text="China"></ui5-mcb-item>
+		<ui5-mcb-item text="India"></ui5-mcb-item>
+		<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
+	</ui5-mcb-group>
+	<ui5-mcb-group text="Europe">
+		<ui5-mcb-item text="Austria"></ui5-mcb-item>
+		<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+		<ui5-mcb-item text="Germany"></ui5-mcb-item>
+		<ui5-mcb-item text="Italy"></ui5-mcb-item>
+		<ui5-mcb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-mcb-item>
+	</ui5-mcb-group>
+	<ui5-mcb-group text="North America">
+		<ui5-mcb-item text="Canada"></ui5-mcb-item>
+		<ui5-mcb-item text="Granada"></ui5-mcb-item>
+		<ui5-mcb-item text="Haiti"></ui5-mcb-item>
+		<ui5-mcb-item text="United States"></ui5-mcb-item>
+	</ui5-mcb-group>`
 };
 MultiComboBoxGrouping.storyName = "Grouping";
 
