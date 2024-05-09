@@ -695,6 +695,7 @@ class MultiComboBox extends UI5Element {
 	_tokenizerFocusIn() {
 		this._tokenizerFocused = true;
 		this.focused = false;
+		this._tokenizer.scrollToEnd();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
