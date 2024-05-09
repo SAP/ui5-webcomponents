@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -28,7 +28,7 @@ type TimePickerClockItem = {
 }
 
 type TimePickerClockSelection = {
-	showMarker: boolean,
+	showMarker?: boolean,
 	itemClasses?: string,
 	innerItemClasses?: string,
 }
@@ -119,28 +119,28 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines whether the component is active (visible).
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * Minimum item value for the outer circle of the clock.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	itemMin!: number;
+	@property({ type: Number })
+	itemMin = -1;
 
 	/**
 	 * Maximum item value for the outer circle of the clock.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	itemMax!: number;
+	@property({ type: Number })
+	itemMax = -1;
 
 	/**
 	 * If set to `true`, an inner circle is displayed.
@@ -148,13 +148,13 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	showInnerCircle!: boolean;
+	showInnerCircle = false;
 
 	/**
 	 * Label of the clock dial - for example, 'Hours', 'Minutes', or 'Seconds'.
 	 * @default undefined
 	 */
-	@property({ type: String, defaultValue: undefined })
+	@property()
 	label?: string;
 
 	/**
@@ -163,7 +163,7 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hideFractions!: boolean;
+	hideFractions = false;
 
 	/**
 	 * If provided, this will replace the last item displayed. If there is only one (outer) circle,
@@ -171,22 +171,22 @@ class TimePickerClock extends UI5Element {
 	 * item of inner circle will be replaced. Usually, the last item '24' is replaced with '0'.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	lastItemReplacement!: number;
+	@property({ type: Number })
+	lastItemReplacement = -1;
 
 	/**
 	 * Prepend with zero flag. If `true`, values less than 10 will be prepend with 0.
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	prependZero!: boolean;
+	prependZero = false;
 
 	/**
 	 * The currently selected value of the clock.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	selectedValue!: number;
+	@property({ type: Number })
+	selectedValue = -1
 
 	/**
 	 * The step for displaying of one unit of items.
@@ -195,8 +195,8 @@ class TimePickerClock extends UI5Element {
 	 * For hours the display step must be set to 1.
 	 * @default 5
 	 */
-	@property({ validator: Integer, defaultValue: 5 })
-	displayStep!: number;
+	@property({ type: Number })
+	displayStep = 5;
 
 	/**
 	 * The step for selection of items.
@@ -205,20 +205,20 @@ class TimePickerClock extends UI5Element {
 	 * - if the clock displays minutes/seconds - 1 unit = 1 minute/second
 	 * @default 1
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	valueStep!: number;
+	@property({ type: Number })
+	valueStep = 1;
 
 	/**
 	 * Defines the currently available Time Picker Clock items depending on Clock setup.
 	 */
-	@property({ type: Object, multiple: true })
-	_items!: Array<TimePickerClockItem>;
+	@property({ type: Array })
+	_items: Array<TimePickerClockItem> = [];
 
 	/**
 	 * Defines the currently selected Time Picker Clock item.
 	 */
 	@property({ type: Object })
-	_selectedItem!: TimePickerClockSelectedItem;
+	_selectedItem: TimePickerClockSelectedItem = {};
 
 	/**
 	 * Keeps variables used in interaction calculations.
@@ -231,49 +231,49 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_mouseOrTouchDown!: boolean;
+	_mouseOrTouchDown = false;
 
 	/**
 	 * Cancel Mouseout flag.
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_cancelTouchOut!: boolean;
+	_cancelTouchOut = false;
 
 	/**
 	 * Calculated selected value of the clock during interactions.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_selectedValue!: number;
+	@property({ type: Number, noAttribute: true })
+	_selectedValue = -1;
 
 	/**
 	 * Selected value of the clock during interactions.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_movSelectedValue!: number;
+	@property({ type: Number, noAttribute: true })
+	_movSelectedValue = -1;
 
 	/**
 	 * Hovered value of the clock during interactions.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_hoveredValue!: number;
+	@property({ type: Number, noAttribute: true })
+	_hoveredValue = -1;
 
 	/**
 	 * Previously hovered value of the clock during interactions.
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_prevHoveredValue!: number;
+	@property({ type: Number, noAttribute: true })
+	_prevHoveredValue = -1;
 
 	/**
 	 * Animation in progress flag.
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_animationInProgress!: boolean;
+	_animationInProgress = false;
 
 	_fnOnMouseOutUp: () => void;
 

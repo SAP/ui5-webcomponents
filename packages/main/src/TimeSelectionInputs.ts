@@ -1,8 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isEnter,
 	isNumber,
@@ -53,11 +52,11 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 })
 
 class TimeSelectionInputs extends TimePickerInternals {
-	@property({ validator: Integer, defaultValue: -1 })
-	_editedInput!: number;
+	@property({ type: Number })
+	_editedInput = -1;
 
 	@property()
-	_editedInputValue!: string;
+	_editedInputValue?: string;
 
 	get enterHoursLabel() {
 		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_INPUTS_ENTER_HOURS);

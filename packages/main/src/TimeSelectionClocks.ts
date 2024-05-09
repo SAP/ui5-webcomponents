@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
@@ -70,19 +70,19 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * Flag for pressed Space key
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed!: boolean;
+	_spacePressed = false;
 
 	/**
 	 * Flag for focused state of Clocks component
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_focused!: boolean;
+	_focused = false;
 
 	/**
 	 * Flag for focused state of AM/PM segmented button
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_amPmFocused!: boolean;
+	_amPmFocused = false;
 
 	onBeforeRendering() {
 		this._createComponents();

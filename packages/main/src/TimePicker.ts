@@ -1,7 +1,7 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -195,7 +195,7 @@ class TimePicker extends UI5Element {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	value?: string;
 
 	/**
@@ -203,8 +203,8 @@ class TimePicker extends UI5Element {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the disabled state of the comonent.
@@ -212,7 +212,7 @@ class TimePicker extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the readonly state of the comonent.
@@ -220,7 +220,7 @@ class TimePicker extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -231,7 +231,7 @@ class TimePicker extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	placeholder?: string;
 
 	/**
@@ -241,17 +241,17 @@ class TimePicker extends UI5Element {
 	 * HH:mm:ss -> 11:42:35
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	formatPattern!: string;
+	formatPattern?: string;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isPickerOpen!: boolean;
+	_isPickerOpen = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isInputsPopoverOpen!: boolean;
+	_isInputsPopoverOpen = false;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
@@ -314,7 +314,7 @@ class TimePicker extends UI5Element {
 	 * @protected
 	 */
 	get _formatPattern() {
-		const hasHours = !!this.formatPattern.match(/H/i);
+		const hasHours = !!this.formatPattern?.match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;
 
 		const localeData = getCachedLocaleDataInstance(getLocale());
