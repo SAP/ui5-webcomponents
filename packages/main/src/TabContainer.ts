@@ -574,7 +574,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (popoverTarget && isLongDragOver) {
-			this._showPopoverAt(popoverTarget);
+			this._showPopoverAt(popoverTarget, false, true);
 		} else {
 			this._closePopover();
 		}
@@ -711,7 +711,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		await this._togglePopover(opener);
+		await this._togglePopover(opener, true);
 	}
 
 	_setPopoverInitialFocus() {
@@ -882,7 +882,7 @@ class TabContainer extends UI5Element {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
-		await this._togglePopover(opener);
+		await this._togglePopover(opener, true);
 	}
 
 	_sendOverflowPresentationInfos(items: Array<ITab>) {
@@ -1274,24 +1274,30 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _togglePopover(opener: HTMLElement) {
+	async _togglePopover(opener: HTMLElement, setInitialFocus = false) {
 		this.responsivePopover = await this._respPopover();
 
 		if (this.responsivePopover.open) {
 			this._closePopover();
 		} else {
-			await this._showPopoverAt(opener);
+			await this._showPopoverAt(opener, setInitialFocus);
 		}
 	}
 
-	async _showPopoverAt(opener: HTMLElement) {
+	async _showPopoverAt(opener: HTMLElement, setInitialFocus = false, preventInitialFocus = false) {
+		this._hasScheduledPopoverOpen = true;
 		this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
 		this.responsivePopover = await this._respPopover();
 
-		this._setPopoverInitialFocus();
+		if (setInitialFocus) {
+			this._setPopoverInitialFocus();
+		}
 
-		this.responsivePopover._opener = opener;
-		this.responsivePopover.open = true;
+		if (this._hasScheduledPopoverOpen) {
+			this.responsivePopover.preventInitialFocus = preventInitialFocus;
+			this.responsivePopover.opener = opener;
+			this.responsivePopover.open = true;
+		}
 	}
 
 	get hasItems(): boolean {
@@ -1332,6 +1338,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_closePopover() {
+		this._hasScheduledPopoverOpen = false;
 		if (this.responsivePopover) {
 			this.responsivePopover.open = false;
 		}

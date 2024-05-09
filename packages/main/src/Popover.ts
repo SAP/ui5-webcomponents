@@ -254,7 +254,7 @@ class Popover extends Popup {
 	}
 
 	async openPopup() {
-		if (this._isOpened) {
+		if (this._opened) {
 			return;
 		}
 
@@ -286,7 +286,7 @@ class Popover extends Popup {
 		this._opener = opener;
 		this._openerRect = opener.getBoundingClientRect();
 
-		await super._open();
+		await super.openPopup();
 	}
 
 	isOpenerClicked(e: MouseEvent) {
@@ -374,7 +374,7 @@ class Popover extends Popup {
 	_show() {
 		super._show();
 
-		if (!this._isOpened) {
+		if (!this._opened) {
 			this._showOutsideViewport();
 		}
 

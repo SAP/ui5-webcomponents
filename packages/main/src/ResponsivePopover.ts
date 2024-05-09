@@ -101,7 +101,7 @@ class ResponsivePopover extends Popover {
 
 	/**
 	 * Closes the popover/dialog.
-	 * @public
+	 * @override
 	 */
 	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
 		if (!isPhone()) {
@@ -157,13 +157,13 @@ class ResponsivePopover extends Popover {
 	}
 
 	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
-		this._isOpened = true;
+		this._opened = true;
 		this.open = true;
 		this._propagateDialogEvent(e);
 	}
 
 	_afterDialogClose(e: CustomEvent) {
-		this._isOpened = false;
+		this._opened = false;
 		this.open = false;
 		this._propagateDialogEvent(e);
 	}
