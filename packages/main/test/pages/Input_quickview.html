@@ -73,8 +73,8 @@
 	<ui5-input id="keyupResult" class="input_quickview7auto"></ui5-input>
 	<br><br>
 
-	<div class="input_quickview6auto">Test suggestion-item-preview</div>
-	<ui5-input id="suggestionItemPreviewRes" class="input_quickview8auto"></ui5-input>
+	<div class="input_quickview6auto">Test selection-change</div>
+	<ui5-input id="selectionChangeRes" class="input_quickview8auto"></ui5-input>
 	<br><br>
 
 	<div class="input_quickview6auto">Test mouseover on item</div>
@@ -105,9 +105,9 @@
 		var focusQuickView = false;
 
 		/*
-		 * Open quickviewCard on suggestion-item-preview
+		 * Open quickviewCard on selection-change
 		 */
-		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
+		inputPreview.addEventListener("ui5-selection-change", function (event) {
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
@@ -159,17 +159,16 @@
 		 */
 		var focusQuickView2 = false;
 
-		inputPreview2.addEventListener("ui5-suggestion-item-preview", function (event) {
+		inputPreview2.addEventListener("ui5-selection-change", function (event) {
 			var item = event.detail.targetRef;
 			quickViewCard2.close();
 			quickViewCard2.showAt(item, true /* preventInitialFocus */);
 
 			// log info
-			suggestionItemPreviewRes.value = item.textContent;
+			selectionChangeRes.value = item.textContent;
 		});
 
 		inputPreview2.addEventListener("keyup", async function (event) {
-			const item = event.target.previewItem;
 			const combination = event.key === "1";
 
 			if (combination) {
@@ -179,7 +178,7 @@
 			}
 
 			// log info
-			keyupResult.value = event.key + " on item: " + (item && item.text);
+			keyupResult.value = event.key + " on suggestion item";
 		});
 
 		[].slice.call(document.querySelectorAll("#inputPreview2 .suggestionItem")).forEach(function(el) {

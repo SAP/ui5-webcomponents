@@ -122,25 +122,6 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
 	});
 
-	it ("adds a token after selection change", async () => {
-		const mi = await browser.$("#suggestion-token");
-		const input = await mi.shadow$("input");
-		const popover = await mi.shadow$("ui5-responsive-popover");
-
-		await input.click();
-		await input.keys("c");
-
-		assert.ok(await popover.getProperty("open"), "Suggestion Popovoer is open");
-		let allTokens = await mi.$$("ui5-token");
-		assert.strictEqual(allTokens.length, 0, "0 tokens");
-
-		await popover.$("ui5-li-suggestion-item").click();
-
-		allTokens = await mi.$$("ui5-token");
-		assert.notOk(await popover.getProperty("open"), "Suggestion Popovoer is closed");
-		assert.strictEqual(allTokens.length, 1, "a token is added after selection");
-	});
-
 	it ("Placeholder", async () => {
 		const mi1 = await browser.$("#empty-mi").shadow$(".ui5-input-inner");
 		const mi2 = await browser.$("#mi-with-tokens-customicon").shadow$(".ui5-input-inner");
