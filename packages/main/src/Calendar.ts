@@ -306,8 +306,7 @@ class Calendar extends CalendarPart {
 	get _selectedDatesTimestamps(): Array<number> {
 		let selectedDates: Array<number> = [];
 
-		switch (this.selectionMode) {
-		case CalendarSelectionMode.Range: {
+		if (this.selectionMode === CalendarSelectionMode.Range) {
 			const range = this.dates.find(date => date.hasAttribute("ui5-date-range"));
 			const startDate = range && range.startValue && this.getFormat().parse(range.startValue, true) as Date;
 			const endDate = range && range.endValue && this.getFormat().parse(range.endValue, true) as Date;
@@ -319,10 +318,7 @@ class Calendar extends CalendarPart {
 			if (endDate) {
 				selectedDates.push(endDate.getTime() / 1000);
 			}
-			break;
-		}
-		case CalendarSelectionMode.Multiple:
-		default: {
+		} else {
 			selectedDates = this.dates
 				.filter(dateElement => {
 					return dateElement.hasAttribute("ui5-date")
@@ -331,8 +327,6 @@ class Calendar extends CalendarPart {
 						&& this._getTimeStampFromString(dateElement.value);
 				})
 				.map(dateElement => Number(this._getTimeStampFromString(dateElement.value!)) / 1000);
-			break;
-		}
 		}
 
 		return selectedDates;
@@ -344,8 +338,7 @@ class Calendar extends CalendarPart {
 	_setSelectedDates(selectedDates: Array<number>) {
 		const selectedUTCDates = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true));
 
-		switch (this.selectionMode) {
-		case CalendarSelectionMode.Range: {
+		if (this.selectionMode === CalendarSelectionMode.Range) {
 			// Create tags for the selected dates that don't already exist in DOM
 			if (selectedUTCDates.length) {
 				let dateRange = this.dates.find(dateElement => dateElement.hasAttribute("ui5-date-range") && dateElement.startValue === selectedUTCDates[0]);
@@ -366,10 +359,7 @@ class Calendar extends CalendarPart {
 						this.removeChild(dateElement);
 					});
 			}
-			break;
-		}
-		case CalendarSelectionMode.Multiple:
-		default: {
+		} else {
 			const valuesInDOM = this._selectedDatesTimestamps.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000)));
 
 			// Remove all elements for dates that are no longer selected
@@ -390,7 +380,6 @@ class Calendar extends CalendarPart {
 					dateElement.value = value;
 					this.appendChild(dateElement);
 				});
-		}
 		}
 	}
 
