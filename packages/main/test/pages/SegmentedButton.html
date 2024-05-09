@@ -88,7 +88,7 @@
 
 				<section>
 					<ui5-segmented-button id="segButton1">
-						<ui5-segmented-button-item tooltip="Employee" icon="employee" pressed></ui5-segmented-button-item>
+						<ui5-segmented-button-item tooltip="Employee" icon="employee" selected></ui5-segmented-button-item>
 						<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 					</ui5-segmented-button>
@@ -101,7 +101,7 @@
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Click</ui5-segmented-button-item>
-						<ui5-segmented-button-item pressed>Pressed SegmentedButtonItem</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>selected SegmentedButtonItem</ui5-segmented-button-item>
 					</ui5-segmented-button>
 				</section>
 
@@ -109,11 +109,11 @@
 					<h1>Example with 5 items</h1>
 
 					<ui5-segmented-button id="segButton2">
-						<ui5-segmented-button-item pressed>Word</ui5-segmented-button-item>
-						<ui5-segmented-button-item pressed>Pressed SegmentedButtonItem With Bigger Text</ui5-segmented-button-item>
-						<ui5-segmented-button-item pressed>Item</ui5-segmented-button-item>
-						<ui5-segmented-button-item pressed>Pressed SegmentedButtonItem</ui5-segmented-button-item>
-						<ui5-segmented-button-item pressed>A</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>Word</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>selected SegmentedButtonItem With Bigger Text</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>Item</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>selected SegmentedButtonItem</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>A</ui5-segmented-button-item>
 					</ui5-segmented-button>
 				</section>
 
@@ -122,7 +122,7 @@
 
 					<ui5-segmented-button class="segmentedbutton1auto">
 						<ui5-segmented-button-item icon="employee"></ui5-segmented-button-item>
-						<ui5-segmented-button-item icon="menu" pressed></ui5-segmented-button-item>
+						<ui5-segmented-button-item icon="menu" selected></ui5-segmented-button-item>
 						<ui5-segmented-button-item icon="factory"></ui5-segmented-button-item>
 					</ui5-segmented-button>
 				</section>
@@ -131,7 +131,7 @@
 					<h1>SegmentedButton with 100% width</h1>
 
 					<ui5-segmented-button class="segmentedbutton2auto">
-						<ui5-segmented-button-item pressed>Pressed SegmentedButtonItem</ui5-segmented-button-item>
+						<ui5-segmented-button-item selected>selected SegmentedButtonItem</ui5-segmented-button-item>
 						<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
 						<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
 					</ui5-segmented-button>
@@ -141,7 +141,7 @@
 					<h1>SegmentedButton wrapped in a container with set width</h1>
 					<div class="segmentedbutton1auto">
 						<ui5-segmented-button class="segmentedbutton2auto">
-							<ui5-segmented-button-item icon="employee" pressed></ui5-segmented-button-item>
+							<ui5-segmented-button-item icon="employee" selected></ui5-segmented-button-item>
 							<ui5-segmented-button-item icon="menu"></ui5-segmented-button-item>
 							<ui5-segmented-button-item icon="accept"></ui5-segmented-button-item>
 						</ui5-segmented-button>
@@ -163,7 +163,7 @@
 		<ui5-button id="button2">Press</ui5-button>
 		<ui5-segmented-button id="testSB2">
 			<ui5-segmented-button-item icon="employee"></ui5-segmented-button-item>
-			<ui5-segmented-button-item id="testSB2ToggleBtn" icon="menu" pressed></ui5-segmented-button-item>
+			<ui5-segmented-button-item id="testSB2ToggleBtn" icon="menu" selected></ui5-segmented-button-item>
 			<ui5-segmented-button-item icon="accept"></ui5-segmented-button-item>
 		</ui5-segmented-button>
 	</section>
@@ -171,33 +171,45 @@
 	<section>
 		<h3>Programatical change test</h3>
 		<ui5-segmented-button id="segButtonProg">
-			<ui5-segmented-button-item id="sbpItem1" pressed>First</ui5-segmented-button-item>
+			<ui5-segmented-button-item id="sbpItem1" selected>First</ui5-segmented-button-item>
 			<ui5-segmented-button-item id="sbpItem2">Second</ui5-segmented-button-item>
 			<ui5-segmented-button-item id="sbpItem3">Third</ui5-segmented-button-item>
 		</ui5-segmented-button>
 		<ui5-button id="progSetButton1">Press second item</ui5-button>
 		<ui5-button id="progSetButton2">Press multiple items</ui5-button>
-		<ui5-button id="progSetButton3">Press pressed item</ui5-button>
+		<ui5-button id="progSetButton3">Press selected item</ui5-button>
 		<ui5-button id="progSetButton4">Press first item</ui5-button>
+	</section>
+
+	<section>
+		<h3>Accessibility</h3>
+		<ui5-segmented-button>
+			<ui5-segmented-button-item  id="accBtn1" accessible-name="accessible text">First</ui5-segmented-button-item>
+			<ui5-segmented-button-item  id="accBtn2" accessible-name-ref="accRefText">Second</ui5-segmented-button-item>
+			<ui5-segmented-button-item>Third</ui5-segmented-button-item>
+		</ui5-segmented-button>
+
+		<span id="accRefText">accessible ref text</span>
 	</section>
 
 	<script>
 
 		progSetButton1.addEventListener("click", function() {
-			segButtonProg.items[1].pressed = true;
+			segButtonProg.items[1].selected = true;
 		});
 
 		progSetButton2.addEventListener("click", function() {
-			segButtonProg.items[0].pressed = true;
-			segButtonProg.items[2].pressed = true;
+			segButtonProg.items[0].selected = true;
+			segButtonProg.items[2].selected = true;
 		});
 
 		progSetButton3.addEventListener("click", function() {
-			segButtonProg.selectedItems[0].pressed = true;
+			segButtonProg.selectedItems[0].selected = true;
+			segButtonProg.selected = true;
 		});
 
 		progSetButton4.addEventListener("click", function() {
-			segButtonProg.items[0].pressed = true;
+			segButtonProg.items[0].selected = true;
 		});
 
 	</script>

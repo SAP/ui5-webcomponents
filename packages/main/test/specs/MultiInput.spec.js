@@ -122,25 +122,6 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
 	});
 
-	it ("adds a token after selection change", async () => {
-		const mi = await browser.$("#suggestion-token");
-		const input = await mi.shadow$("input");
-		const popover = await mi.shadow$("ui5-responsive-popover");
-
-		await input.click();
-		await input.keys("c");
-
-		assert.ok(await popover.getProperty("open"), "Suggestion Popovoer is open");
-		let allTokens = await mi.$$("ui5-token");
-		assert.strictEqual(allTokens.length, 0, "0 tokens");
-
-		await popover.$("ui5-li-suggestion-item").click();
-
-		allTokens = await mi.$$("ui5-token");
-		assert.notOk(await popover.getProperty("open"), "Suggestion Popovoer is closed");
-		assert.strictEqual(allTokens.length, 1, "a token is added after selection");
-	});
-
 	it ("Placeholder", async () => {
 		const mi1 = await browser.$("#empty-mi").shadow$(".ui5-input-inner");
 		const mi2 = await browser.$("#mi-with-tokens-customicon").shadow$(".ui5-input-inner");
@@ -544,6 +525,21 @@ describe("Keyboard handling", () => {
 		assert.equal(await input.getProperty("focused"), true, "The input is focused");
 	});
 
+	it("should focus token on backspace for inputs of type 'Number' and 'Email'", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await input.setProperty("value", "");
+		await input.setProperty("type", "Number");
+
+		await innerInput.click();
+		await browser.keys("Backspace");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
 	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
@@ -601,27 +597,6 @@ describe("Keyboard handling", () => {
 		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
 	})
 
-	it("should change input's value when set in selection change event", async () => {
-		const input = $("#suggestion-token");
-		const innerInput = input.shadow$("input");
-
-		await input.scrollIntoView();
-		await innerInput.click();
-		await innerInput.keys('a');
-		await innerInput.keys("Enter");
-
-		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
-		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
-
-		await innerInput.keys("ArrowLeft");
-
-		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
-
-		await innerInput.keys("ArrowRight");
-
-		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
-	});
-
 	it("should text field always when focus in" , async () => {
 		const mi = $("#one-token");
 		const inner = mi.shadow$("input");
@@ -652,7 +627,7 @@ describe("Keyboard handling", () => {
 		await inner.keys("a");
 		await inner.keys("Enter");
 
-		assert.strictEqual(await mi.getProperty("valueState"), "Error", "Value state is Error");
+		assert.strictEqual(await mi.getProperty("valueState"), "Negative", "Value state is Negative");
 
 		await browser.pause(2500);
 		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");

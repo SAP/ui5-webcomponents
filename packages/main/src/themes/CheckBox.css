@@ -36,7 +36,7 @@
 }
 
 /* readonly */
-:host([readonly]:not([value-state="Warning"]):not([value-state="Error"])) .ui5-checkbox-inner {
+:host([readonly]:not([value-state="Critical"]):not([value-state="Negative"])) .ui5-checkbox-inner {
 	background: var(--sapField_ReadOnly_Background);
 	border: var(--_ui5_checkbox_inner_readonly_border);
 	color: var(--sapField_TextColor);
@@ -67,25 +67,25 @@
 }
 
 /* value states */
-:host([value-state="Error"]) .ui5-checkbox-inner,
-:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Negative"]) .ui5-checkbox-inner,
+:host([value-state="Negative"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--sapField_InvalidBackground);
 	border: var(--_ui5_checkbox_inner_error_border);
 	color: var(--sapField_InvalidColor);
 }
 
-:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Negative"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_inner_error_background_hover);
 }
 
-:host([value-state="Warning"]) .ui5-checkbox-inner,
-:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Critical"]) .ui5-checkbox-inner,
+:host([value-state="Critical"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
 	color: var(--_ui5_checkbox_inner_warning_color);
 }
 
-:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
+:host([value-state="Critical"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_inner_warning_background_hover);
 }
 
@@ -100,19 +100,19 @@
 	background: var(--_ui5_checkbox_inner_information_background_hover);
 }
 
-:host([value-state="Success"]) .ui5-checkbox-inner,
-:host([value-state="Success"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner  {
+:host([value-state="Positive"]) .ui5-checkbox-inner,
+:host([value-state="Positive"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner  {
 	background: var(--sapField_SuccessBackground);
 	border: var(--_ui5_checkbox_inner_success_border);
 	color: var(--sapField_SuccessColor);
 }
 
-:host([value-state="Success"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner  {
+:host([value-state="Positive"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner  {
 	background: var(--_ui5_checkbox_inner_success_background_hover);
 }
 
-:host([value-state="Warning"]) .ui5-checkbox-icon,
-:host([value-state="Warning"][indeterminate]) .ui5-checkbox-inner::after {
+:host([value-state="Critical"]) .ui5-checkbox-icon,
+:host([value-state="Critical"][indeterminate]) .ui5-checkbox-inner::after {
 	color: var(--_ui5_checkbox_checkmark_warning_color);
 }
 
