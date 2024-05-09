@@ -231,11 +231,11 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property({ defaultValue: undefined })
+	accessibleNameRef?: string;
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
@@ -998,7 +998,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get tokenizerAriaDescription() {
-		return getEffectiveAriaLabelText(this) ? Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL) : null;
+		return getEffectiveAriaLabelText(this) ? Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_LABEL) : undefined;
 	}
 
 	get _ariaDisabled() {

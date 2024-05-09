@@ -208,13 +208,13 @@ class Token extends UI5Element implements IToken {
 	}
 
 	get ariaDescription() {
-		let describedBy = Token.i18nBundle.getText(TOKEN_ARIA_LABEL);
+		let description = Token.i18nBundle.getText(TOKEN_ARIA_LABEL);
 
 		if (!this.readonly) {
-			describedBy += ` ${Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE)}`;
+			description += ` ${Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE)}`;
 		}
 
-		return describedBy;
+		return description;
 	}
 
 	static async onDefine() {
