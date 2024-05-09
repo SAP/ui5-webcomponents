@@ -52,6 +52,10 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	get isGroupItem(): boolean {
 		return false;
 	}
+
+	get stableDomRef() {
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	}
 }
 
 ComboBoxItem.define();

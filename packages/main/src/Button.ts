@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -26,7 +26,6 @@ import ButtonType from "./types/ButtonType.js";
 import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
-import HasPopup from "./types/HasPopup.js";
 import IconMode from "./types/IconMode.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
@@ -46,11 +45,7 @@ interface IButton extends HTMLElement, ITabbable {
 let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
-type AccessibilityAttributes = {
-	expanded?: "true" | "false" | boolean,
-	hasPopup?: `${HasPopup}`,
-	controls?: string,
-};
+type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
 /**
  * @class
@@ -189,29 +184,24 @@ class Button extends UI5Element implements IFormElement, IButton {
 	accessibleNameRef?: string;
 
 	/**
-	 * An object of strings that defines several additional accessibility attribute values
-	 * for customization depending on the use case.
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
 	 *
-	 * It supports the following fields:
+	 * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
+	 * Accepts the following string values: `true` or `false`
 	 *
-	 * - `expanded`: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-	 *	- `true`
-	 *	- `false`
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
 	 *
-	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
-	 *	- `Dialog`
-	 *	- `Grid`
-	 *	- `ListBox`
-	 *	- `Menu`
-	 *	- `Tree`
+	 * - **controls**: Identifies the element (or elements) whose contents or presence are controlled by the button element.
+	 * Accepts a lowercase string value.
 	 *
-	 * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
 	 * @public
 	 * @since 1.2.0
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: AccessibilityAttributes = {};
+	accessibilityAttributes: ButtonAccessibilityAttributes = {};
 
 	/**
 	 * Defines whether the button has special form-related functionality.
@@ -451,7 +441,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	get _hasPopup() {
-		return this.accessibilityAttributes.hasPopup?.toLowerCase();
+		return this.accessibilityAttributes.hasPopup;
 	}
 
 	get hasButtonType() {
@@ -521,6 +511,6 @@ Button.define();
 
 export default Button;
 export type {
-	AccessibilityAttributes,
+	ButtonAccessibilityAttributes,
 	IButton,
 };

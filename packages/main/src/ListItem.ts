@@ -5,11 +5,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import HighlightTypes from "./types/HighlightTypes.js";
@@ -31,7 +32,6 @@ import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
-import HasPopup from "./types/HasPopup.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -61,7 +61,7 @@ type AccInfo = {
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${Lowercase<HasPopup>}`;
+	ariaHaspopup?: `${Lowercase<AriaHasPopup>}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;
@@ -71,10 +71,7 @@ type AccInfo = {
 	tooltip?: string;
 }
 
-type AccessibilityAttributes = {
-	ariaSetsize?: number,
-	ariaPosinset?: number,
-}
+type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
 
 /**
  * @class
@@ -116,23 +113,21 @@ abstract class ListItem extends ListItemBase {
 	type: `${ListItemType}` = "Active";
 
 	/**
-	 * An object of strings that defines several additional accessibility attribute values
-	 * for customization depending on the use case.
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
 	 *
-	 *  It supports the following fields:
+	 * - **ariaSetsize**: Defines the number of items in the current set  when not all items in the set are present in the DOM.
+	 * **Note:** The value is an integer reflecting the number of items in the complete set. If the size of the entire set is unknown, set `-1`.
 	 *
-	 * - `ariaSetsize`: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
-	 * 	The value of each `aria-setsize` is an integer reflecting number of items in the complete set.
+	 * 	- **ariaPosinset**: Defines an element's number or position in the current set when not all items are present in the DOM.
+	 * 	**Note:** The value is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
 	 *
-	 * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
-	 * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
-	 * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
-	 * @default undefined
+	 * @default {}
 	 * @public
 	 * @since 1.15.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes?: AccessibilityAttributes;
+	accessibilityAttributes: ListItemAccessibilityAttributes = {};
 
 	/**
 	 * The navigated state of the list item.
@@ -159,16 +154,6 @@ abstract class ListItem extends ListItemBase {
 	*/
 	@property({ type: Boolean })
 	active = false;
-
-	/**
-	 * Defines the tooltip of the component.
-	 * @default undefined
-	 * @deprecated
-	 * @private
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	title = "";
 
 	/**
 	 * Defines the highlight state of the list items.
@@ -199,14 +184,6 @@ abstract class ListItem extends ListItemBase {
 
 	@property()
 	_selectionMode: `${ListSelectionMode}` = "None";
-
-	/**
-	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @since 1.10.0
-	 * @private
-	 */
-	@property({ noAttribute: true })
-	ariaHaspopup?: `${HasPopup}`;
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
@@ -505,10 +482,10 @@ abstract class ListItem extends ListItemBase {
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
-			setsize: this.accessibilityAttributes?.ariaSetsize,
-			posinset: this.accessibilityAttributes?.ariaPosinset,
-			tooltip: this.tooltip || this.title,
+			ariaHaspopup: this.accessibilityAttributes.hasPopup,
+			setsize: this.accessibilityAttributes.ariaSetsize,
+			posinset: this.accessibilityAttributes.ariaPosinset,
+			tooltip: this.tooltip,
 		};
 	}
 
@@ -534,5 +511,5 @@ export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
 	PressEventDetail,
-	AccessibilityAttributes,
+	ListItemAccessibilityAttributes,
 };
