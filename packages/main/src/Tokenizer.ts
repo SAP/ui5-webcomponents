@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -122,29 +122,29 @@ enum ClipboardDataOperation {
 @event("before-more-popover-open")
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
-	showMore!: boolean;
+	showMore = false;
 
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventPopoverOpen!: boolean;
+	preventPopoverOpen = false;
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
 	 * @private
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	@property({ type: Object })
-	morePopoverOpener!: Tokenizer;
+	morePopoverOpener?: Tokenizer;
 
-	@property({ validator: Integer })
+	@property({ type: Number })
 	popoverMinWidth?: number;
 
 	/**
@@ -152,14 +152,14 @@ class Tokenizer extends UI5Element {
 	 * @default "None"
 	 * @private
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
-	@property({ validator: Integer })
-	_nMoreCount!: number;
+	@property({ type: Number })
+	_nMoreCount = 0;
 
-	@property({ validator: Integer })
-	_tokensCount!: number;
+	@property({ type: Number })
+	_tokensCount = 0;
 
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	tokens!: Array<Token>;

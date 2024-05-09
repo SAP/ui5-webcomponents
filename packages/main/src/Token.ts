@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -79,7 +79,7 @@ class Token extends UI5Element implements IToken {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines whether the component is read-only.
@@ -90,7 +90,7 @@ class Token extends UI5Element implements IToken {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is selected or not.
@@ -98,7 +98,7 @@ class Token extends UI5Element implements IToken {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
@@ -106,10 +106,10 @@ class Token extends UI5Element implements IToken {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	overflows!: boolean;
+	overflows = false;
 
 	@property({ type: Boolean })
-	singleToken!: boolean;
+	singleToken = false;
 
 	/**
 	 * Defines whether the component is focused or not.
@@ -117,7 +117,7 @@ class Token extends UI5Element implements IToken {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Defines whether the token is being deleted
@@ -126,14 +126,14 @@ class Token extends UI5Element implements IToken {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	toBeDeleted!: boolean;
+	toBeDeleted = false;
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1";
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
