@@ -8,9 +8,9 @@ These are features that **logically belong** to a component but are not necessar
 
 The goal of these features is to keep the components' code simple and let users have more choices over what to include.
 
-If you want to use an extra feature of a component, you need to import it explicitly.
+If you want to use an additional feature of a component, you need to import it explicitly.
 
-## Importing Extra Features
+## Importing Additional Features
 
 You can import the feature file from the respective NPM package:
 
