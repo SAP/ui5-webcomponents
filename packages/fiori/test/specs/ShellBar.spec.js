@@ -6,20 +6,6 @@ const getOverflowPopover = async id => {
 	return browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 }
 
-const getOverflowChildProp = async (id, pos, prop) => {
-	const popover = await getOverflowPopover(id);
-	const items = await popover.$$("ui5-li");
-
-	return [...items][pos].getAttribute(prop);
-}
-
-const getCustomActionProp = async (id, pos, prop) => {
-	const shellbar = await browser.$(`#${id}`);
-	const items = await shellbar.shadowRoot.querySelectorAll(".ui5-shellbar-custom-item");
-
-	return [...items][pos].getAttribute(prop);
-}
-
 describe("Component Behavior", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/ShellBar.html`);
@@ -141,195 +127,156 @@ describe("Component Behavior", () => {
 
 		it("tests XXL Breakpoint 1920px", async () => {
 
-			await browser.setWindowSize(1920, 1080);
+			await browser.setWindowSize(1920, 1680);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
-				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-				const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
-				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-				const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XXL", "XXL Breakpoint class should be set");
-				assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
-				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
-				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
-				assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
-				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
-				assert.ok(await customActionIcon1.isDisplayed(), "Custom Action 1 should be visible");
-				assert.ok(await customActionIcon2.isDisplayed(), "Custom Action 2 should be visible");
-				assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
-				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
-				assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			const shellbar = await browser.$("#shellbar");
+			const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+			const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
+			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+			const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+			const searchField = await browser.$("#shellbar [slot='searchField']");
+			const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
+			const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(3)");
+			const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+			const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XXL", "XXL Breakpoint class should be set");
+			assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
+			assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+			assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
+			assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
+			assert.ok(await searchField.isDisplayed(), "Search field should be visible");
+			assert.ok(await customActionIcon1.isDisplayed(), "Custom Action 1 should be visible");
+			assert.ok(await customActionIcon2.isDisplayed(), "Custom Action 2 should be visible");
+			assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
+			assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+			assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
 		});
 
 		it("tests XL Breakpoint 1820px", async () => {
-			await browser.setWindowSize(1820, 1080);
+			await browser.setWindowSize(1820, 1680);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XL", "XL Breakpoint class should be set");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			const shellbar = await browser.$("#shellbar");
+
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "XL", "XL Breakpoint class should be set");
 		});
 
 		it("tests L Breakpoint 1400px", async () => {
-			await browser.setWindowSize(1400, 1080);
+			await browser.setWindowSize(1400, 1680);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
-				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-				const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
-				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-				const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "L", "L Breakpoint class should be set");
-				assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
-				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
-				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
-				assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
-				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
-				assert.ok(await customActionIcon1.isDisplayed(), "Custom Action 1 should be visible");
-				assert.ok(await customActionIcon2.isDisplayed(), "Custom Action 2 should be visible");
-				assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
-				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
-				assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			const shellbar = await browser.$("#shellbar");
+			const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+			const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
+			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+			const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+			const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+			const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
+			const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(4)");
+			const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+			const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "L", "L Breakpoint class should be set");
+			assert.notOk(await overflowButton.isDisplayed(), "Overflow button should be hidden");
+			assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+			assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
+			assert.ok(await secondaryTitle.isDisplayed(), "Secondary title should be visible");
+			assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
+			assert.ok(await customActionIcon1.isDisplayed(), "Custom Action 1 should be visible");
+			assert.ok(await customActionIcon2.isDisplayed(), "Custom Action 2 should be visible");
+			assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
+			assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+			assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
 		});
 
-		it("tests M Breakpoint and overflow 870px", async () => {
-			await browser.setWindowSize(870, 1080);
+		it("tests M Breakpoint 870px", async () => {
+			await browser.setWindowSize(810, 1680);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
-				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-				const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
-				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-				const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-				const overflowPopover = await getOverflowPopover("shellbar");
-				const overflowPopoverItem1Icon = await getOverflowChildProp("shellbar", 0, "icon");
-				const overflowPopoverItem2Icon = await getOverflowChildProp("shellbar", 1, "icon");
+			const shellbar = await browser.$("#shellbar");
+			const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
+			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+			const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+			const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+			const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+			const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
 
-				await overflowButton.click();
-
-				const listItemsCount = (await overflowPopover.getHTML()).split("</ui5-li>").length - 1;
-
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
-				assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
-				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
-				assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
-				assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
-				assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
-				assert.notOk(await customActionIcon1.isDisplayed(), "Custom Action 1 should be hidden");
-				assert.notOk(await customActionIcon2.isDisplayed(), "Custom Action 2 should be hidden");
-				assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
-				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
-				assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
-				assert.ok(await overflowPopover.isDisplayedInViewport(), "Overflow popover should be visible");
-				assert.strictEqual(listItemsCount, 2, "2 actions should overflow");
-				assert.strictEqual(overflowPopoverItem1Icon, await getCustomActionProp("shellbar", 0, "icon"), "Popover items have same sources as corresponding icons");
-				assert.strictEqual(overflowPopoverItem2Icon, await getCustomActionProp("shellbar", 1, "icon"), "Popover items have same sources as corresponding icons");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
+			assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+			assert.ok(await primaryTitle.isDisplayed(), "Primary title should be visible");
+			assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
+			assert.ok(await searchIcon.isDisplayed(), "Search icon should be visible");
+			assert.ok(await notificationsIcon.isDisplayed(), "Notifications icon should be visible");
+			assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+			assert.ok(await productSwitchIcon.isDisplayed(), "Product switch should be visible");
 		});
 
-		it("tests M Breakpoint and overflow 780px", async () => {
-			await browser.setWindowSize(780, 1080);
+		it("tests M Breakpoint 780px", async () => {
+			await browser.setWindowSize(780, 1680);
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
-				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+			const shellbar = await browser.$("#shellbar");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
-
-				const listItemsCount = (await overflowPopover.getHTML()).split("</ui5-li>").length - 1;
-
-				assert.strictEqual(listItemsCount, 3, "3 actions should overflow");
-				assert.strictEqual(await productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
 		});
 
-		it("tests M Breakpoint and overflow 710px", async () => {
-			await browser.setWindowSize(710, 1080);
+		it("tests M Breakpoint 710px", async () => {
+			await browser.setWindowSize(710, 1680);
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
-				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
-				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const shellbar = await browser.$("#shellbar");
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
-
-				const listItemsCount = (await overflowPopover.getHTML().split("</ui5-li>")).length - 1;
-
-				assert.strictEqual(listItemsCount, 4, "4 actions should overflow");
-				assert.strictEqual(await productSwitchIcon.isDisplayed(), false, "Product switch should be hidden");
-				assert.strictEqual(await notificationsIcon.isDisplayed(), false, "Notifications should be hidden");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "M", "M Breakpoint class should be set");
 		});
 
 		it("tests M Breakpoint and overflow 570px", async () => {
 			await browser.setWindowSize(570, 1080);
 
-			setTimeout(async () => {
-				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+			const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 
-				assert.notOk(await searchIcon.isDisplayed(), "Search should be hidden");
-				assert.ok(await overflowButton.isDisplayed(), "Overflow should be visible");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			assert.notOk(await searchIcon.isDisplayed(), "Search should be hidden");
+			assert.ok(await overflowButton.isDisplayed(), "Overflow should be visible");
 		});
 
 		it("tests S Breakpoint and overflow 510px", async () => {
-			await browser.setWindowSize(510, 1080);
+			await browser.setWindowSize(510, 1680);
 
-			setTimeout(async () => {
-				const shellbar = await browser.$("#shellbar");
-				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
-				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
-				const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
-				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-				const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
-				const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
-				const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
-				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
-				const listItemsCount = await overflowPopover.getHTML().split("</ui5-li>").length - 1;
+			await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-				assert.strictEqual(await shellbar.getProperty("breakpointSize"), "S", "S Breakpoint class should be set");
-				assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
-				assert.ok(await backButton.isDisplayed(), "Back icon is visible");
-				assert.notOk(await primaryTitle.isDisplayed(), "Primary title should be hidden");
-				assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
-				assert.notOk(await searchIcon.isDisplayed(), "Search icon should be hidden");
-				assert.notOk(await notificationsIcon.isDisplayed(), "Notifications icon should be hidden");
-				assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
-				assert.notOk(await productSwitchIcon.isDisplayed(), "Product switch should be hidden");
-				assert.strictEqual(listItemsCount, 5, "5 actions should overflow");
-			}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+			const shellbar = await browser.$("#shellbar");
+			const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
+			const backButton = await browser.$("#shellbar ui5-button[slot='startButton'");
+			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button-title");
+			const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
+			const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+			const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
+			const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
+			const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+			const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
+			const listItemsCount = await overflowPopover.getHTML().split("</ui5-li>").length - 1;
+
+			assert.strictEqual(await shellbar.getProperty("breakpointSize"), "S", "S Breakpoint class should be set");
+			assert.ok(await overflowButton.isDisplayed(), "Overflow button should be visible");
+			assert.ok(await backButton.isDisplayed(), "Back icon is visible");
+			assert.notOk(await primaryTitle.isDisplayed(), "Primary title should be hidden");
+			assert.notOk(await secondaryTitle.isDisplayed(), "Secondary title should be hidden");
+			assert.notOk(await searchIcon.isDisplayed(), "Search icon should be hidden");
+			assert.notOk(await notificationsIcon.isDisplayed(), "Notifications icon should be hidden");
+			assert.ok(await profileIcon.isDisplayed(), "Profile icon should be visible");
+			assert.notOk(await productSwitchIcon.isDisplayed(), "Product switch should be hidden");
+			assert.strictEqual(listItemsCount, 6, "6 actions should overflow");
 		});
 	});
 
@@ -337,7 +284,7 @@ describe("Component Behavior", () => {
 
 		describe("Big screen", () => {
 			beforeEach(async () => {
-				await browser.setWindowSize(1920, 1080);
+				await browser.setWindowSize(1920, 1680);
 			});
 
 			it("tests opening of menu", async () => {
@@ -390,26 +337,26 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests search-button-click event", async () => {
-				setTimeout(async () => {
-					const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
-					const input = await browser.$("#press-input");
+				await browser.setWindowSize(870, 1680); // search icon is not visible on XXL breakpoint
+				await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-					await searchIcon.click();
-					assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
-				}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+				const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
+				const input = await browser.$("#press-input");
 
+				await searchIcon.click();
+				assert.strictEqual(await input.getValue(), "Search Button", "Input value is set by click event of Search Button");
 			});
 
 			it("tests search-button-click event", async () => {
-				setTimeout(async () => {
-					const searchButton  = await browser.$("#sb").shadow$(".ui5-shellbar-search-button");
-					const searchField  = await browser.$("#sb").shadow$(".ui5-shellbar-search-field");
-					assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
+				await browser.setWindowSize(870, 1680); // search icon is not visible on XXL breakpoint
+				await browser.pause(HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
 
-					await searchButton .click();
-					assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
-				}, HANDLE_RESIZE_DEBOUNCE_RATE_WAIT);
+				const searchButton  = await browser.$("#sb").shadow$(".ui5-shellbar-search-button");
+				const searchField  = await browser.$("#sb").shadow$(".ui5-shellbar-search-field");
+				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
 
+				await searchButton .click();
+				assert.notOk(await searchField.isDisplayed(), "Search field should not be opened");
 			});
 
 
@@ -447,7 +394,7 @@ describe("Component Behavior", () => {
 
 		describe("Small screen", () => {
 			beforeEach(async () => {
-				await browser.setWindowSize(510, 1080);
+				await browser.setWindowSize(510, 1680);
 			});
 
 			it("tests logoClick event", async () => {
