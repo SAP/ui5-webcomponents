@@ -24,7 +24,7 @@
 	display: flex;
 	align-items: center;
 	margin-block: var(--_ui5-notification_group_header-margin);
-	padding-inline: 0.5rem;
+	padding-inline: var(--_ui5-notification_group_header-padding);
 	width: 100%;
 	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;

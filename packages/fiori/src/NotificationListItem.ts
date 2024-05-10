@@ -61,13 +61,24 @@ type NotificationListItemPressEventDetail = {
 type Footnote = Record<string, any>;
 
 /**
- * Defines the icons corresponding to the notification's status indicator.
+ * Defines the icons name corresponding to the notification's status indicator.
  */
-const ICON_PER_STATUS = {
-	[ValueState.Negative]: "message-error",
-	[ValueState.Critical]: "message-warning",
-	[ValueState.Positive]: "message-success",
-	[ValueState.Information]: "message-information",
+const ICON_PER_STATUS_NAME = {
+	[ValueState.Negative]: "error",
+	[ValueState.Critical]: "alert",
+	[ValueState.Positive]: "sys-enter-2",
+	[ValueState.Information]: "information",
+	[ValueState.None]: "",
+};
+
+/**
+ * Defines the icons design (color) corresponding to the notification's status indicator.
+ */
+const ICON_PER_STATUS_DESIGN = {
+	[ValueState.Negative]: "Negative",
+	[ValueState.Critical]: "Critical",
+	[ValueState.Positive]: "Positive",
+	[ValueState.Information]: "Information",
 	[ValueState.None]: "",
 };
 
@@ -382,8 +393,12 @@ class NotificationListItem extends NotificationListItemBase {
 		return `${id}-invisibleText`;
 	}
 
-	get statusIcon() {
-		return ICON_PER_STATUS[this.state];
+	get statusIconName() {
+		return ICON_PER_STATUS_NAME[this.state];
+	}
+
+	get statusIconDesign() {
+		return ICON_PER_STATUS_DESIGN[this.state];
 	}
 
 	get importanceText() {

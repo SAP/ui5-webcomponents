@@ -3,15 +3,3 @@
 	min-height: 1rem;
 	padding-inline-end: var(--_ui5-notification_item-state-icon-padding);
 }
-
-.ui5-state-icon--message-error {
-	color: var(--sapNegativeElementColor);
-}
-
-.ui5-state-icon--message-warning {
-	color: var(--sapCriticalElementColor);
-}
-
-.ui5-state-icon--message-success {
-	color: var(--sapPositiveElementColor);
-}

@@ -158,11 +158,11 @@ describe("Notification List Item Tests", () => {
 	it("tests state", async () => {
 		const secondItem = await browser.$("#nli2");
 		const thirdItem = await browser.$("#nli3");
-		const state2 = await secondItem.shadow$(".ui5-state-icon--message-warning").getAttribute("name");
-		const state3 = await thirdItem.shadow$(".ui5-state-icon--message-error").getAttribute("name");
+		const state2 = await secondItem.shadow$(".ui5-state-icon").getAttribute("name");
+		const state3 = await thirdItem.shadow$(".ui5-state-icon").getAttribute("name");
 
-		assert.strictEqual(state2, "message-warning", "The 'Warning' state icon is correctly displayed.");
-		assert.strictEqual(state3, "message-error", "The 'Error' state icon is correctly displayed.");
+		assert.strictEqual(state2, "alert", "The 'Warning' state icon is correctly displayed.");
+		assert.strictEqual(state3, "error", "The 'Error' state icon is correctly displayed.");
 
 	});
 
@@ -224,7 +224,7 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests List Item ACC invisible texts", async () => {
-		const EXPECTED_RESULT_STATUS = "Status Negative";
+		const EXPECTED_RESULT_STATUS = "Status Positive";
 		const EXPECTED_RESULT_ITEM = "notification unread";
 		const firstItem = await browser.$("#nli1");
 		const invisibleTextStatus = await firstItem.shadow$(".ui5-nli-root").$$(".ui5-hidden-text")[0];
