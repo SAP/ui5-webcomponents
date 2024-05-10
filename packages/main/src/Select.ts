@@ -250,7 +250,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	required!: boolean;
 
 	/**
@@ -320,7 +320,7 @@ class Select extends UI5Element implements IFormInputElement {
 		validator: Integer,
 		defaultValue: -1,
 		noAttribute: true,
-		updatesFormValue: true,
+		formValue: true,
 	 })
 	_selectedIndex!: number;
 
@@ -349,7 +349,7 @@ class Select extends UI5Element implements IFormInputElement {
 		"default": true,
 		type: HTMLElement,
 		invalidateOnChildChange: true,
-		updatesFormValue: true,
+		formValue: true,
 	})
 	options!: Array<IOption>;
 

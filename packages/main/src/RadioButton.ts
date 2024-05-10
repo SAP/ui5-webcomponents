@@ -114,7 +114,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.9.0
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	required!: boolean;
 
 	/**
@@ -129,7 +129,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	checked!: boolean;
 
 	/**
@@ -171,7 +171,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @default ""
 	 * @public
 	 */
-	@property({ type: String, updatesFormValue: true })
+	@property({ type: String, formValue: true })
 	value!: string;
 
 	/**
@@ -218,9 +218,9 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @private
 	 */
-	@property({ type: Boolean, updatesFormValue: true, noAttribute: true })
+	@property({ type: Boolean, formValue: true, noAttribute: true })
 	_groupChecked!: boolean;
-	@property({ type: Boolean, updatesFormValue: true, noAttribute: true })
+	@property({ type: Boolean, formValue: true, noAttribute: true })
 	_groupRequired!: boolean;
 
 	_deactivate: () => void;

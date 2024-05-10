@@ -97,7 +97,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @default "rgba(255, 255, 255, 1)"
 	 * @public
 	 */
-	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)", updatesFormValue: true })
+	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)", formValue: true })
 	value!: string;
 
 	/**

@@ -120,7 +120,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @default ""
 	 * @public
 	 */
-	@property({ type: String, updatesFormValue: true })
+	@property({ type: String, formValue: true })
 	value!: string;
 	/**
 	 * Indicates whether the user can interact with the component or not.
@@ -147,7 +147,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.3
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	required!: boolean;
 
 	/**

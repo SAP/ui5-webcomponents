@@ -354,10 +354,11 @@ class Button extends UI5Element implements IButton, IFormElement {
 		}
 
 		markEvent(e, "button");
-		if (this.internals_?.form && this._isSubmit) {
+		if (this._isSubmit) {
 			submitForm(this);
 		}
-		if (this.internals_?.form && this._isReset) {
+
+		if (this._isReset) {
 			resetForm(this);
 		}
 

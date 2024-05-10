@@ -412,7 +412,7 @@ abstract class UI5Element extends HTMLElement {
 
 				invalidated = true;
 
-				if (slotData.updatesFormValue) {
+				if (slotData.formValue) {
 					setFormValue(this as unknown as IFormInputElement);
 				}
 			}
@@ -1053,7 +1053,7 @@ abstract class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 
-						if (propData.updatesFormValue) {
+						if (propData.formValue) {
 							setFormValue(this as unknown as IFormInputElement);
 						}
 						this._updateAttribute(prop, value);

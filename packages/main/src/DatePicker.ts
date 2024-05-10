@@ -252,7 +252,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, updatesFormValue: true })
+	@property({ type: String, formValue: true })
 	value!: string
 
 	/**
@@ -269,7 +269,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	required!: boolean;
 
 	/**

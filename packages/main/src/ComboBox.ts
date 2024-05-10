@@ -217,7 +217,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, updatesFormValue: true })
+	@property({ type: String, formValue: true })
 	value!: string;
 
 	/**
@@ -295,7 +295,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	required!: boolean;
 
 	/**

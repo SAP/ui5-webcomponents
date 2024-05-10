@@ -48,19 +48,11 @@ const setFormValidity = async (element: IFormInputElement) => {
 };
 
 const submitForm = (element: IFormElement) => {
-	if (!element.internals_?.form) {
-		return;
-	}
-
-	element.internals_.form.requestSubmit();
+	element.internals_?.form?.requestSubmit();
 };
 
 const resetForm = (element: IFormElement) => {
-	if (!element.internals_?.form) {
-		return;
-	}
-
-	element.internals_?.form.reset();
+	element.internals_?.form?.reset();
 };
 
 const isInputElement = (element: IFormInputElement | IFormElement): element is IFormInputElement => {
@@ -75,7 +67,7 @@ export {
 	resetForm,
 };
 
-export {
+export type {
 	IFormInputElement,
 	IFormElement,
 };

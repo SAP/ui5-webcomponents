@@ -154,7 +154,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.3.0
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	required!: boolean;
 
 	/**
@@ -185,7 +185,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: Boolean, updatesFormValue: true })
+	@property({ type: Boolean, formValue: true })
 	checked!: boolean;
 
 	/**
