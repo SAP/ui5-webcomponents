@@ -577,7 +577,7 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		if (this.hasCustomValueState) {
-			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 		}
 
 		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
@@ -609,10 +609,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 	get hasValueState() {
 		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
-	}
-
-	get valueStateMessageText() {
-		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {

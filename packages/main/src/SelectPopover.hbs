@@ -24,20 +24,23 @@
 					</ui5-button>
 				</div>
 				{{#if hasValueStateText}}
-					<div class="{{classes.popoverValueState}} row ui5-select-value-state-dialog-header">
-						{{> valueStateMessage}}
-					</div>
+					{{#unless shouldOpenValueStateMessagePopover}}
+						<div class="{{classes.popoverValueState}} row ui5-select-value-state-dialog-header">
+							{{> valueStateMessageContent}}
+						</div>
+					{{/unless}}
 				{{/if}}
 			</div>
-		{{/if}}
-		{{#unless _isPhone}}
+		{{else}}
 			{{#if hasValueStateText}}
-				<div class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
-					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
-					{{> valueStateMessage}}
-				</div>
+				{{#unless shouldOpenValueStateMessagePopover}}
+					<div class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
+						<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
+						{{> valueStateMessageContent}}
+					</div>
+				{{/unless}}
 			{{/if}}
-		{{/unless}}
+		{{/if}}
 
 		<ui5-list
 			selection-mode="SingleAuto"
@@ -75,17 +78,15 @@
 	>
 		<div class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
-			{{> valueStateMessage}}
+			{{> valueStateMessageContent}}
 		</div>
 	</ui5-popover>
 {{/if}}
 
-{{#*inline "valueStateMessage"}}
+{{#*inline "valueStateMessageContent"}}
 	{{#if shouldDisplayDefaultValueStateMessage}}
 		{{valueStateText}}
 	{{else}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessage"></slot>
 	{{/if}}
 {{/inline}}

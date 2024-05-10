@@ -11,16 +11,14 @@
 		{{#if _valueStateMessageInputIcon}}
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 		{{/if}}
-		{{> valueStateMessage}}
+		{{> valueStateMessageContent}}
 	</div>
 </ui5-popover>
 
-{{#*inline "valueStateMessage"}}
+{{#*inline "valueStateMessageContent"}}
 	{{#if shouldDisplayDefaultValueStateMessage}}
 		{{valueStateText}}
 	{{else}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessage"></slot>
 	{{/if}}
 {{/inline}}

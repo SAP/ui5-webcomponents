@@ -1105,7 +1105,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceValueStateText() {
-		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
+		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessage.map(el => el.textContent).join(" ");
 
 		if (valueStateText) {
 			announce(valueStateText, InvisibleMessageMode.Polite);
@@ -1158,7 +1158,7 @@ class ComboBox extends UI5Element {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
-		return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
 	get valueStateDefaultText(): string | undefined {
@@ -1167,10 +1167,6 @@ class ComboBox extends UI5Element {
 		}
 
 		return this.valueStateTextMappings[this.valueState];
-	}
-
-	get valueStateMessageText(): Array<Node> {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get valueStateTextMappings(): ValueStateAnnouncement {

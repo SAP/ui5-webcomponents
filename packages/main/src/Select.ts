@@ -973,7 +973,7 @@ class Select extends UI5Element implements IFormElement {
 		if (this.shouldDisplayDefaultValueStateMessage) {
 			valueStateText = this.valueStateDefaultText;
 		} else {
-			valueStateText = this.valueStateMessageText.map(el => el.textContent).join(" ");
+			valueStateText = this.valueStateMessage.map(el => el.textContent).join(" ");
 		}
 
 		return `${this.valueStateTypeText} ${valueStateText}`;
@@ -1070,7 +1070,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
-		return !this.valueStateMessageText.length && this.hasValueStateText;
+		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
 
 	get hasValueStateText() {

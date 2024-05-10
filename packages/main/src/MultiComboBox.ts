@@ -1738,7 +1738,7 @@ class MultiComboBox extends UI5Element {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
-		return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
 	get valueStateDefaultText(): string {
@@ -1757,10 +1757,6 @@ class MultiComboBox extends UI5Element {
 
 	get valueStateTextId() {
 		return this.hasValueState ? `ui5-multi-combobox-valueStateDesc` : undefined;
-	}
-
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get ariaLabelText() {

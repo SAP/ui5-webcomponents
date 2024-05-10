@@ -44,21 +44,23 @@
 		</div>
 
 		{{#if hasValueStateText}}
-			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
-				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
-			</div>
+			{{#unless shouldOpenValueStateMessagePopover}}
+				<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+					{{> valueStateMessageContent}}
+				</div>
+			{{/unless}}
+		{{/if}}
+	{{else}}
+		{{#if hasValueStateText}}
+			{{#unless shouldOpenValueStateMessagePopover}}
+				<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} tabindex="0" style="{{styles.suggestionPopoverHeader}}">
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+					{{> valueStateMessageContent}}
+				</div>
+			{{/unless}}
 		{{/if}}
 	{{/if}}
-
-	{{#unless _isPhone}}
-		{{#if hasValueStateText}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} tabindex="0" style="{{styles.suggestionPopoverHeader}}">
-				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
-			</div>
-		{{/if}}
-	{{/unless}}
 
 	<ui5-list
 		class="ui5-combobox-items-list"
@@ -100,18 +102,16 @@
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-			{{> valueStateMessage}}
+			{{> valueStateMessageContent}}
 		</div>
 	</ui5-popover>
 {{/if}}
 
-{{#*inline "valueStateMessage"}}
+{{#*inline "valueStateMessageContent"}}
 	{{#if shouldDisplayDefaultValueStateMessage}}
 		{{valueStateDefaultText}}
 	{{else}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessageText"></slot>
 	{{/if}}
 {{/inline}}
 
