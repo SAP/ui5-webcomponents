@@ -41,8 +41,8 @@ const Template: UI5StoryArgs<NotificationListItem, StoryArgsSlots> = (args) => {
 	state="${ifDefined(args.state)}"
 	?show-close="${ifDefined(args.showClose)}"
 	?read="${ifDefined(args.read)}"
-	?busy="${ifDefined(args.busy)}"
-	busy-delay="${ifDefined(args.busyDelay)}"
+	?loading="${ifDefined(args.loading)}"
+	loading-delay="${ifDefined(args.loadingDelay)}"
 	wrappingType="${ifDefined(args.wrappingType)}"
 >
 	${unsafeHTML(args.menu)}

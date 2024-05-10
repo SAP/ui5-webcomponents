@@ -26,8 +26,8 @@ const Template: UI5StoryArgs<NotificationListGroupItem, StoryArgsSlots> = (args)
 	?collapsed="${ifDefined(args.collapsed)}"
 	title-text="${ifDefined(args.titleText)}"
 	?read="${ifDefined(args.read)}"
-	?busy="${ifDefined(args.busy)}"
-	busy-delay="${ifDefined(args.busyDelay)}"
+	?loading="${ifDefined(args.loading)}"
+	loading-delay="${ifDefined(args.loadingDelay)}"
 >
 	${unsafeHTML(args.default)}
 </ui5-li-notification-group>`;

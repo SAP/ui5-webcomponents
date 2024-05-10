@@ -91,7 +91,7 @@
 			title-text="Payments"
 		>
 			<ui5-li-notification
-				busy
+				loading
 				show-close
 				title-text="New order (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				state="Negative"
@@ -141,12 +141,12 @@
 		</ui5-li-notification-group>
 
 		<ui5-li-notification-group
-			id="busyGroup"
+			id="loadingGroup"
 			read
 			title-text="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
 			<ui5-li-notification
-				busy
+				loading
 				show-close
 				title-text="New order (#35001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 				state="Negative"
@@ -405,14 +405,6 @@
 		openNotifications.addEventListener("click", function(event) {
 			notificationsPopover.showAt(openNotifications);
 		});
-
-		// btnMakeGroupBusy.addEventListener("click", function(event) {
-		// 	busyGroup.busy = true;
-
-		// 	setTimeout(function() {
-		// 		busyGroup.busy = false;
-		// 	}, 2000);
-		// });
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();

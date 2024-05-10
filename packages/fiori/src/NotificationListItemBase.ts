@@ -42,7 +42,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
@@ -50,7 +50,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	static i18nFioriBundle: I18nBundle;
 

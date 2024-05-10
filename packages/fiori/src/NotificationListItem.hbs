@@ -91,11 +91,11 @@
 
 	<slot name="menu"></slot>
 
-	{{#if busy}}
+	{{#if loading}}
 		<ui5-busy-indicator
-				delay="{{busyDelay}}"
+				delay="{{loadingDelay}}"
 				active
-				class="ui5-nli-busy"
+				class="ui5-nli-loading"
 				data-sap-focus-ref
 		></ui5-busy-indicator>
 	{{/if}}

@@ -150,7 +150,7 @@ describe("Notification List Item Tests", () => {
 
 	it("tests busy indicator is displayed", async () => {
 		const busyItem = await browser.$("#nli4");
-		const busyIndicator = await busyItem.shadow$(".ui5-nli-busy");
+		const busyIndicator = await busyItem.shadow$(".ui5-nli-loading");
 
 		assert.ok(await busyIndicator.isExisting(), "The busy indicator is displayed");
 	});

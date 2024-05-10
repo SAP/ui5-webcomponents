@@ -116,18 +116,18 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	items!: Array<NotificationListItemBase>
 
 	onBeforeRendering() {
-		if (this.busy) {
+		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
 	}
 
 	/**
-	 * Clears child items busy state to show a single busy over the entire group,
+	 * Clears child items loading state to show a single loading over the entire group,
 	 * instead of multiple BusyIndicator instances
 	 */
 	clearChildBusyIndicator() {
 		this.items.forEach(item => {
-			item.busy = false;
+			item.loading = false;
 		});
 	}
 

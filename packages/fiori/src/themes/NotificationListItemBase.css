@@ -24,12 +24,12 @@
 	pointer-events: none;
 }
 
-:host([busy])  {
+:host([loading])  {
 	opacity: 0.6;
 	pointer-events: none;
 }
 
-:host([busy]) .ui5-nli-busy {
+:host([loading]) .ui5-nli-loading {
 	position: absolute;
 	top: 50%;
 	left: 50%;
