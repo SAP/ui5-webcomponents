@@ -51,7 +51,7 @@
 	<script>
 		sbAccAttr.accessibilityAttributes = {
 			notifications: {
-				ariaHasPopup: "Dialog"
+				hasPopup: "dialog"
 			},
 		};
 	</script>
@@ -94,7 +94,7 @@
 		<ui5-shellbar-item icon="thing-type" text="Messages"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="action-settings" text="Settings"></ui5-shellbar-item>
 		<ui5-shellbar-item icon="sys-help" text="Help"></ui5-shellbar-item>
-		<ui5-input slot="searchField" value-state="Error"></ui5-input>
+		<ui5-input slot="searchField" value-state="Negative"></ui5-input>
 	</ui5-shellbar>
 
 	<ui5-checkbox id="checkKeepPopoverOpen" text="keep popover open on menu-item click"></ui5-checkbox>
@@ -189,20 +189,20 @@
 	<ui5-shellbar>
 		<ui5-input id="mySearch" slot="searchField" show-suggestions value-state="Information">
 			<div slot="valueStateMessage">Instructions</div>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">1</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">2</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">3</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">4</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">5</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">6</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">7</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">8</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">9</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">10</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">11</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">12</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">13</ui5-li>
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">14</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">1</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">2</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">3</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">4</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">5</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">6</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">7</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">8</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">9</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">10</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">11</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">12</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">13</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">14</ui5-li>
 		</ui5-input>
 	</ui5-shellbar>
 
@@ -235,12 +235,12 @@
 	<ui5-shellbar id="sb">
 		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 		<ui5-input slot="searchField">
-			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Success">1</ui5-li>
+			<ui5-li icon="world" description="travel the world" additional-text="explore" additional-text-state="Positive">1</ui5-li>
 		</ui5-input>
 	</ui5-shellbar>
 
 	<script>
-		mySearch.addEventListener("ui5-suggestion-item-select", function (event) {
+		mySearch.addEventListener("ui5-selection-change", function (event) {
 			console.log(event);
 		});
 
@@ -303,7 +303,7 @@
 
 		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
 			item.addEventListener("ui5-click", function(event) {
-				wcToastTC.show();
+				wcToastTC.open = true;
 			});
 		});
 
@@ -324,13 +324,19 @@
 			});
 		});
 
-		sbAcc.accessibilityTexts = {
-			profileButtonTitle: "John Dow",
-			logoTitle: "Custom logo title",
+		sbAcc.accessibilityAttributes = {
+			profile: {
+				name:  "John Dow",
+			},
+			logo: {
+				name: "Custom logo title"
+			},
 		};
 
-		sb.accessibilityRoles = {
-			logoRole: "link"
+		sb.accessibilityAttributes = {
+			logo: {
+				role: "link"
+			},
 		};
 
 		sb.addEventListener("ui5-search-button-click", function(event) {

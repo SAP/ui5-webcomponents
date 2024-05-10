@@ -6,5 +6,5 @@ textArea.addEventListener("input", () => {
 	const value = textArea.value;
 	const maxlength = textArea.maxlength;
 
-	textArea.valueState = value.length > maxlength ? "Warning" : "None";	
+	textArea.valueState = value.length > maxlength ? "Critical" : "None";	
 });

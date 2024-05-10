@@ -6,15 +6,9 @@
 
     <title>OpenUI5 Latest Stable + UI5 Web Components</title>
 
-	<style>
-		:popover-open {
-			inset: unset;
-		}
-	</style>
-
     <script id='sap-ui-bootstrap'
             src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
-            data-sap-ui-theme='sap_belize_hcb'
+            data-sap-ui-theme='sap_horizon_hcb'
             data-sap-ui-libs='sap.m, sap.ui.core'
             data-sap-ui-preload="async"
     ></script>
@@ -51,9 +45,84 @@
 				},
 			});
 
+			// Chain opening
+			const dialogSpecial = new sap.m.Dialog({
+				contentWidth: "1000px",
+				contentHeight: "1000px",
+				title: "sap.m.Dialog that opens ui5-dialog that opens sap.m.Popover",
+				content: [
+					new sap.ui.core.HTML({
+						content: `
+							<ui5-button id="btnChain">Open ui5-dialog</ui5-button>
+							<ui5-dialog header-text="This is ui5-dialog" id="dialogChain" opener="btnChain">
+
+							</ui5-dialog>
+						`
+					}),
+				]
+			});
+			const btnSpecial = new sap.m.Button({
+				text: "Chain opening",
+				press: function() {
+					dialogSpecial.open();
+					btnChain.addEventListener("click", () => {
+						dialogChain.addEventListener("after-open", () => {
+							const popoverChain = new sap.m.Popover({
+								title: "This is a sap.m.Popover",
+								content: [
+									new sap.m.Label({text: "Some popover content"}),
+									new sap.m.DatePicker()
+								],
+							})
+							const btnChain2 = new sap.m.Button("btnChain2", {
+								text: "Open sap.m.Popover",
+								press: function() {
+									popoverChain.openBy(btnChain2);
+								},
+							});
+							btnChain2.placeAt("dialogChain")
+						});
+						dialogChain.open = true;
+					})
+				},
+			});
+
+			const modal1 = new sap.m.Popover({
+				title: "Modal 1",
+				// modal: true,
+				contentWidth: "200px",
+				contentHeight: "200px"
+			});
+			const modal2 = new sap.m.Popover({
+				title: "Modal 2",
+				// modal: true,
+				contentWidth: "100px",
+				contentHeight: "300px"
+			});
+			const modal3 = new sap.m.Popover({
+				title: "Modal 3",
+				// modal: true,
+				contentWidth: "300px",
+				contentHeight: "100px"
+			});
+			const btnModal = new sap.m.Button("btnModal", {
+				text: "Open several modal sap.m.Popovers",
+				press: () => {
+					modal1.openBy(btnModal);
+					modal2.openBy(btnModal2);
+				}
+			});
+			const btnModal2 = new sap.m.Button("btnModal2", {
+				text: "Open several modal sap.m.Popovers",
+				press: () => {
+					modal2.openBy(btnModal2);
+				}
+			});
+
+
             const page = new sap.m.Page({
                 content: [
-                    dialog, dialog2, btn, btn2
+                    dialog, dialog2, btn, btn2, btnSpecial, btnModal, btnModal2
                 ],
             });
 
@@ -92,7 +161,10 @@
 	<ui5-popover id="popup" header-text="Popover"></ui5-popover>
 
 	<ui5-button id="componentPopoverOpener">Open a WC Popover that in turn opens an OpenUI5 popover</ui5-button>
-	<ui5-popover id="componentPopover" opener="componentPopoverOpener" header-text="This is a ui5-popover"></ui5-popover>
+	<ui5-dialog id="componentPopover" opener="componentPopoverOpener" header-text="This is a ui5-dialog">
+		<ui5-title>Use the buttons in the footer to open UI5 controls</ui5-title>
+		<div id="componentPopoverFooter" slot="footer"></div>
+	</ui5-dialog>
 
 	<div id='content'></div>
 </body>
@@ -108,23 +180,42 @@
 		dg2.show();
 	})
 
+	let done = false;
 	componentPopover.addEventListener("after-open", () => {
-		const openButton = new sap.m.Button({text: "Open an OpenUI5 Popover"});
-		openButton.placeAt("componentPopover");
+		if (done) {
+			return;
+		}
+		const openPopoverButton = new sap.m.Button({text: "Open an OpenUI5 Popover"});
+		const openDialogButton = new sap.m.Button({text: "Open an OpenUI5 Dialog"});
+		const toolbar = new sap.m.Toolbar({
+			content: [openPopoverButton, openDialogButton]
+		});
+		toolbar.placeAt("componentPopoverFooter");
 
 		const sapMPopover = new sap.m.Popover({
 			title: "This is a sap.m.Popover",
 			content: [
-				new sap.m.Label({text: "Some popover content"})
+				new sap.m.Label({text: "Some popover content"}),
+				new sap.m.DatePicker()
 			],
 		});
 
-		openButton.attachPress(() => {
-			sapMPopover.openBy(openButton);
-			const domRef = sapMPopover.getDomRef();
-			domRef.popover = "manual";
-			domRef.showPopover();
-		})
+		const sapMDialog = new sap.m.Dialog({
+			title: "This is a sap.m.Dialog",
+			content: [
+				new sap.m.Label({text: "Some dialog content"}),
+				new sap.m.TimePicker()
+			],
+		});
+
+		openPopoverButton.attachPress(() => {
+			sapMPopover.openBy(openPopoverButton);
+		});
+
+		openDialogButton.attachPress(() => {
+			sapMDialog.open();
+		});
+		done = true;
 	});
 
 	componentPopoverOpener.addEventListener("click", () => {

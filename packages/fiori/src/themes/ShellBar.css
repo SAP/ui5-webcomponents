@@ -74,7 +74,8 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
+:host([desktop]) .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-within,
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
@@ -208,7 +209,8 @@ slot[name="profile"] {
 	max-height: 2rem;
 }
 
-.ui5-shellbar-logo:focus {
+:host([desktop]) .ui5-shellbar-logo:focus-within,
+.ui5-shellbar-logo:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);

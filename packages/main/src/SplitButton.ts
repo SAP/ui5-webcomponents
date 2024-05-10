@@ -50,7 +50,6 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * `ui5-split-button` consists two separate buttons:
  *
  * - for the first one (default action) you can define some `text` or an `icon`, or both.
- * Also, it is possible to define different icon for active state of this button - `activeIcon`.
  * - the second one (arrow action) contains only `slim-arrow-down` icon.
  *
  * You can choose a `design` from a set of predefined types (the same as for ui5-button) that offer
@@ -113,14 +112,6 @@ class SplitButton extends UI5Element {
 	icon!: string;
 
 	/**
-	 * Defines the icon to be displayed in active state as graphical element within the component.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	activeIcon!: string;
-
-	/**
 	 * Defines whether the arrow button should have the active state styles or not.
 	 * @default false
 	 * @public
@@ -156,13 +147,6 @@ class SplitButton extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Accessibility-related properties for inner elements of the Split Button
-	 * @private
-	 */
-	@property({ type: Object })
-	_splitButtonAccInfo!: Record<string, boolean>;
-
-	/**
 	 * Defines the tabIndex of the component.
 	 * @default "0"
 	 * @private
@@ -193,14 +177,6 @@ class SplitButton extends UI5Element {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_textButtonActive!: boolean;
-
-	/**
-	 * Defines the icon of the text button
-	 * @default ""
-	 * @private
-	 */
-	@property({ noAttribute: true })
-	_textButtonIcon!: string;
 
 	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
@@ -245,7 +221,6 @@ class SplitButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		if (this.disabled) {
 			this._tabIndex = "-1";
 		}
@@ -342,7 +317,6 @@ class SplitButton extends UI5Element {
 
 	_textButtonRelease() {
 		this._textButtonActive = false;
-		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		this._tabIndex = "-1";
 	}
 
@@ -468,9 +442,6 @@ class SplitButton extends UI5Element {
 
 	get accessibilityInfo() {
 		return {
-			// affects arrow button
-			ariaExpanded: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaExpanded,
-			ariaHaspopup: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaHaspopup,
 			// affects root element
 			description: SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 			keyboardHint: SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
