@@ -2,9 +2,12 @@
 * The Form layout is divided into one or more columns. 
 * XL - max. 4 columns, L - max. 3 columns, M - max. 2 columns and S - 1 column.
 */
+/* 
+* S max-width: 600px - container padding 24px
+*/
 
 /* S - 1 column */
-@container (max-width: 599px) {
+@container (max-width: 600px) {
 	.ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
@@ -18,7 +21,7 @@
 }
 
 /* M  - 1 column by default, up to 2 columns */
-@container (width > 599px) and (width < 1024px) {
+@container (width > 600px) and (width <= 1024px) {
 	.ui5-form-layout {
 		grid-template-columns: 1fr;
 	}
@@ -39,7 +42,7 @@
 }
 
 /* L - 2 columns by default, up to 3 columns */
-@container (width > 1023px) and (width < 1439px) {
+@container (width > 1024px) and (width <= 1440px) {
 
 	.ui5-form-layout {
 		grid-template-columns: repeat(2, 1fr);
@@ -74,7 +77,7 @@
 }
 
 /* XL - 2 columns by default, up to 6 */
-@container (min-width: 1440px) {
+@container (min-width: 1441px) {
 	.ui5-form-layout {
 		grid-template-columns: repeat(2, 1fr);
 	}

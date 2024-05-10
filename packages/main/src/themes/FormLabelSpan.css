@@ -5,7 +5,7 @@
 */
 
 /* S - 12 cells */
-@container (max-width: 599px) {
+@container (max-width: 600px) {
 	:host([label-span-s="1"]) .ui5-form-item,
 	:host([label-span-s="1"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
@@ -72,7 +72,7 @@
 }
 
 /* M  - 4 cells by default, up to 12 cells */
-@container (width > 599px) and (width < 1024px) {
+@container (width > 600px) and (width <= 1024px) {
 	:host([label-span-m="1"]) .ui5-form-item,
 	:host([label-span-m="1"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
@@ -137,7 +137,7 @@
 }
 
 /* L - 4 cells by default, up to 12 cells */
-@container (width > 1023px) and (width < 1439px) {
+@container (width > 1024px) and (width <= 1440px) {
 	:host([label-span-l="1"]) .ui5-form-item,
 	:host([label-span-l="1"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
@@ -202,7 +202,7 @@
 }
 
 /* XL - 4 cells by default, up to 12 cells */
-@container (min-width: 1440px) {
+@container (min-width: 1441px) {
 	:host([label-span-xl="1"]) .ui5-form-item,
 	:host([label-span-xl="1"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);

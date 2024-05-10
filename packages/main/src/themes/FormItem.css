@@ -33,7 +33,13 @@
 }
 
 /* S - 1 column */
-@container (max-width: 599px) {
+
+/* 
+ * There are 24px (1.5rem) paddings on the Form itself and when the Form is around 600px,
+ * the actual FormItem is less than 600px and the following container query is applied a bit earlier.
+ * Note: using CSS variable in the container query is not possible.
+ */
+@container (max-width: calc(600px - 1.5rem)) {
 	:host(:not([label-span])) .ui5-form-item-layout {
 		--ui5-form-item-layout: 1fr;
 	}
