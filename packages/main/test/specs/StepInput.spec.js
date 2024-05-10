@@ -457,7 +457,6 @@ describe("'change' event firing", () => {
 	});
 
 	it("Value state is not changed, when value-state-change is prevented", async () => {
-		await browser.url(`test/pages/StepInput.html`);
 		const input = await browser.$("#stepInputValueStateChange").shadow$("ui5-input").shadow$("input");
 
 		const valueState = await input.getProperty("valueState");
@@ -467,6 +466,19 @@ describe("'change' event firing", () => {
 
 		assert.strictEqual(await input.getProperty("valueState"), valueState, "value state is not changed");
 	});
+
+	it("Value is not rounding when valuePrecision is set, and Value State is set to 'Negative' when the value is not compliant", async () => {
+		const input = await browser.$("#stepInputPrecision").shadow$("ui5-input");
+		const innerInput = await input.shadow$("input");
+
+		await innerInput.click();
+		await innerInput.setValue("0.100");
+		await browser.keys("Enter");
+
+
+		assert.strictEqual(await input.getProperty("valueState"), "Negative", "value state is set to Error");
+		assert.strictEqual(await input.getProperty("value"), "0.100", "value is not rounded");
+	})
 
 });
 
