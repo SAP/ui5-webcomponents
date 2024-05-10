@@ -359,7 +359,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 		this.hasIcon = !!this.icon;
 		this.hasIconEnd = !!this.iconEnd;
-		this.iconOnly = this.isIconOnly && !this.hasIconEnd;
+		this.iconOnly = this.isIconOnly;
 
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}

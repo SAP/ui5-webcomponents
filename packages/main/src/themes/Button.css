@@ -68,7 +68,7 @@
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([icon-only]) .ui5-button-root {
+:host([icon-only]:not([has-icon-end])) .ui5-button-root {
 	min-width: auto;
 	padding: 0;
 }
