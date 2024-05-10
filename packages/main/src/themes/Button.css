@@ -303,3 +303,34 @@ bdi {
 	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
 }
+
+/* @keyframes */
+/*
+@keyframes fadeOutIcon {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	60% {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-1rem);
+	}
+}
+
+@keyframes fadeInIcon {
+	from {
+		opacity: 0;
+		transform: translateY(1rem);
+	}
+	40% {
+		opacity: 1;
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+*/

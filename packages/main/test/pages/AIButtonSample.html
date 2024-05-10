@@ -9,70 +9,11 @@
 
 </head>
 
-<body class="button1auto">
-
-	<ui5-title>AiButton as Component</ui5-title>
-
-	<ui5-ai-button id="myAiButton1" icon="ai" state="Generate">
-		<ui5-menu id="myAiButton1Menu" slot="menu">
-			<ui5-menu-item text="Regenerate"></ui5-menu-item>
-			<ui5-menu-item text="Fix Spelling & Grammar" starts-section></ui5-menu-item>
-			<ui5-menu-item text="Change Tone">
-				<ui5-menu-item text="Option 1"></ui5-menu-item>
-				<ui5-menu-item text="Option 2"></ui5-menu-item>
-				<ui5-menu-item text="Option 3"></ui5-menu-item>
-			</ui5-menu-item>
-			<ui5-menu-item text="Text Length">
-				<ui5-menu-item text="Short"></ui5-menu-item>
-				<ui5-menu-item text="Medium"></ui5-menu-item>
-				<ui5-menu-item text="Long"></ui5-menu-item>
-			</ui5-menu-item>
-			<ui5-menu-item text="Bulleted List"></ui5-menu-item>
-			<ui5-menu-item text="Translate">
-				<ui5-menu-item text="English"></ui5-menu-item>
-				<ui5-menu-item text="German"></ui5-menu-item>
-				<ui5-menu-item text="Spanish"></ui5-menu-item>
-			</ui5-menu-item>
-		</ui5-menu>
-	</ui5-ai-button>
-
-	<script>
-
-		/* AiButton as component */
-
-		// timeout ID (not needed in real scenario)
-		let aiGeneratingTimeout1;
-
-		/**
-		 * Do generation handling here
-		 */
-		 myAiButton1.addEventListener("state-change", function(evt) {
-			const state = evt.detail.state;
-
-			if (state === "Generating") {
-				aiGeneratingTimeout1 = setTimeout(function() {
-					myAiButton1.state = "Revise";
-				}, 2000);
-			} else {
-				clearTimeout(aiGeneratingTimeout1);
-				myAiButton1.state = "Generate";
-			}
-		});
-
-		/**
-		 * Here is the logic what happens when specific menu item is clicked
-		 */
-		 myAiButton1Menu.addEventListener("item-click", function(evt) {
-			if (evt.detail.text === "Regenerate") {
-				myAiButton1.state = "Generating";
-			}
-		});
-
-	</script>
-
+<body>
 
 	<br><br>
 	<ui5-title>AiButton as Sample (using Button)</ui5-title>
+    <br><br>
 
 	<style>
 
@@ -236,10 +177,6 @@
 		</ui5-menu-item>
 	</ui5-menu>
 
-	<br><br><ui5-button id="classifyOut">Add FadeOut Class</ui5-button><ui5-button id="classifyIn">Add FadeIn Class</ui5-button>
-
-	<br><br><div id="testDiv" style="display: inline-block; border: 1px solid #000000; width: 100px; overflow: hidden; transition: width 2s;"><span id="testSpan">TEXT</span><div class="ai-button-hidden-container"></div></div>
-
 	<script>
 
 		/* AiButton as sample */
@@ -266,8 +203,6 @@
 				},
 			};
 
-//			debugger;
-
 			const invisibleText = button.querySelector(".ai-invisible-text");
 			const buttonContent = button.querySelector(".ui5-ai-button-content");
 			const buttonContentClone = buttonContent.cloneNode(true);
@@ -293,7 +228,7 @@
 						if (aiButton.getAttribute("state") === "generating") {
 							changeButtonState(aiButton, "revise");
 						}
-					}, 5000);
+					}, 3000);
 				}
 
 				if (aiButtonStates[state]) {
@@ -336,17 +271,6 @@
 				changeButtonState(aiButton, "generating");
 			}
 		});
-
-		classifyOut.addEventListener("click", function() {
-			aiButton.classList.add("fade-out");
-			aiButton.classList.remove("fade-in");
-		});
-
-		classifyIn.addEventListener("click", function() {
-			aiButton.classList.add("fade-in");
-			aiButton.classList.remove("fade-out");
-		});
-
 	</script>
 
 </body>
