@@ -5,6 +5,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import {
 	isEnter,
 	isSpace,
@@ -35,7 +36,6 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 
 const PAGE_SIZE = 12; // total months on a single page
-const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
 
 type Month = {
 	timestamp: string,
@@ -120,6 +120,11 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
+	get rowSize() {
+		return (this.secondaryCalendarType === CalendarType.Islamic && this.primaryCalendarType !== CalendarType.Islamic)
+			|| (this.secondaryCalendarType === CalendarType.Persian && this.primaryCalendarType !== CalendarType.Persian) ? 2 : 3;
+	}
+
 	_buildMonths() {
 		if (this._hidden) {
 			return;
@@ -167,7 +172,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				month.classes += " ui5-mp-item--disabled";
 			}
 
-			const quarterIndex = Math.floor(i / ROW_SIZE);
+			const quarterIndex = Math.floor(i / this.rowSize);
 
 			if (months[quarterIndex]) {
 				months[quarterIndex].push(month);
@@ -196,9 +201,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isRight(e)) {
 			this._modifyTimestampBy(1);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-ROW_SIZE);
+			this._modifyTimestampBy(-this.rowSize);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(ROW_SIZE);
+			this._modifyTimestampBy(this.rowSize);
 		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-PAGE_SIZE);
 		} else if (isPageDown(e)) {
@@ -208,7 +213,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHomeCtrl(e)) {
 			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
+			this._setTimestamp(parseInt(this._months[PAGE_SIZE / this.rowSize - 1][this.rowSize - 1].timestamp)); // last month of last row
 		} else {
 			preventDefault = false;
 		}
@@ -222,7 +227,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._months.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
 			if (indexInRow !== -1) { // The current month is on this row
-				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
+				const index = homePressed ? 0 : this.rowSize - 1; // select the first (if Home) or last (if End) month on the row
 				this._setTimestamp(parseInt(row[index].timestamp));
 			}
 		});
