@@ -250,7 +250,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**
@@ -316,12 +316,7 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * @private
 	 */
-	@property({
-		validator: Integer,
-		defaultValue: -1,
-		noAttribute: true,
-		formValue: true,
-	 })
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_selectedIndex!: number;
 
 	_syncedOptions: Array<IOption>;
@@ -345,12 +340,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * **Note:** Use the `ui5-option` component to define the desired options.
 	 * @public
 	 */
-	@slot({
-		"default": true,
-		type: HTMLElement,
-		invalidateOnChildChange: true,
-		formValue: true,
-	})
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<IOption>;
 
 	/**

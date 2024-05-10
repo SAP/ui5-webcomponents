@@ -117,7 +117,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, formValue: true })
+	@slot({ type: HTMLElement })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;

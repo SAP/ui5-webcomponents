@@ -100,7 +100,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0, formValue: true })
+	@property({ validator: Float, defaultValue: 0 })
 	startValue!: number;
 
 	/**
@@ -110,7 +110,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 100, formValue: true })
+	@property({ validator: Float, defaultValue: 100 })
 	endValue!: number;
 
 	@property({ type: Boolean })

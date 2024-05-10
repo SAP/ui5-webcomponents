@@ -253,7 +253,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, formValue: true })
+	@property()
 	value!: string
 
 	/**
@@ -270,7 +270,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**
@@ -477,7 +477,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 
 		if (isEnter(e)) {
-			if (this.internals_?.form) {
+			if (this._internals?.form) {
 				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {

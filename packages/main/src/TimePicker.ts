@@ -197,7 +197,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, defaultValue: undefined, formValue: true })
+	@property({ type: String, defaultValue: undefined })
 	value?: string;
 
 	/**

@@ -218,7 +218,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, formValue: true })
+	@property()
 	value!: string;
 
 	/**
@@ -296,7 +296,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**
@@ -893,7 +893,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
-			} else if (this.internals_?.form) {
+			} else if (this._internals?.form) {
 				submitForm(this);
 			}
 		}

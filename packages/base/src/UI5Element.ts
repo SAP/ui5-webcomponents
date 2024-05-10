@@ -125,7 +125,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	internals_?: ElementInternals;
+	_internals?: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -412,7 +412,7 @@ abstract class UI5Element extends HTMLElement {
 
 				invalidated = true;
 
-				if (slotData.formValue) {
+				if (ctor.getMetadata().isFormAssociated()) {
 					setFormValue(this as unknown as IFormInputElement);
 				}
 			}
@@ -1053,7 +1053,7 @@ abstract class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 
-						if (propData.formValue) {
+						if (ctor.getMetadata().isFormAssociated()) {
 							setFormValue(this as unknown as IFormInputElement);
 						}
 						this._updateAttribute(prop, value);
@@ -1188,10 +1188,10 @@ abstract class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	get validity() { return this.internals_?.validity; }
-	get validationMessage() { return this.internals_?.validationMessage; }
-	checkValidity() { return this.internals_?.checkValidity(); }
-	reportValidity() { return this.internals_?.reportValidity(); }
+	get validity() { return this._internals?.validity; }
+	get validationMessage() { return this._internals?.validationMessage; }
+	checkValidity() { return this._internals?.checkValidity(); }
+	reportValidity() { return this._internals?.reportValidity(); }
 }
 
 /**

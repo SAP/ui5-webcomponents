@@ -153,7 +153,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, formValue: true })
+	@property()
 	value!: string;
 
 	/**

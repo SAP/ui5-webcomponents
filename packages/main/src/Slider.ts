@@ -85,7 +85,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0, formValue: true })
+	@property({ validator: Float, defaultValue: 0 })
 	value!: number;
 
 	_valueInitial?: number;

@@ -138,7 +138,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0, formValue: true })
+	@property({ validator: Float, defaultValue: 0 })
 	value!: number;
 
 	/**
@@ -178,7 +178,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**

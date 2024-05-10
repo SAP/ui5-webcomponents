@@ -244,7 +244,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, formValue: true })
+	@property()
 	value!: string;
 
 	/**
@@ -319,7 +319,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.5
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**
@@ -425,12 +425,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * Defines the component items.
 	 * @public
 	 */
-	@slot({
-		type: HTMLElement,
-		"default": true,
-		invalidateOnChildChange: true,
-		formValue: true,
-	})
+	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
 	items!: Array<IMultiComboBoxItem>;
 
 	/**
@@ -1243,7 +1238,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
-		if (this.internals_?.form) {
+		if (this._internals?.form) {
 			submitForm(this);
 		}
 

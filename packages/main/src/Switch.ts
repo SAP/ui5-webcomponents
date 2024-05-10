@@ -89,7 +89,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	checked!: boolean;
 
 	/**
@@ -163,7 +163,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 1.16.0
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**

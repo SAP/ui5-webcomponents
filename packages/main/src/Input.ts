@@ -309,7 +309,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 * @since 1.0.0-rc.3
 	 */
-	@property({ type: Boolean, formValue: true })
+	@property({ type: Boolean })
 	required!: boolean;
 
 	/**
@@ -345,7 +345,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, formValue: true })
+	@property()
 	value!: string;
 
 	/**
@@ -816,7 +816,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
 
-			if (this.internals_?.form) {
+			if (this._internals?.form) {
 				submitForm(this);
 			}
 
