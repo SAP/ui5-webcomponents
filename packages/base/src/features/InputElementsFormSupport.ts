@@ -32,7 +32,7 @@ const setFormValue = (element: IFormInputElement) => {
 		return;
 	}
 
-	element._internals.setFormValue(element.formFormattedValue || null);
+	element._internals.setFormValue(element.formFormattedValue);
 };
 
 const setFormValidity = async (element: IFormInputElement) => {
@@ -56,7 +56,7 @@ const resetForm = (element: IFormElement) => {
 };
 
 const isInputElement = (element: IFormInputElement | IFormElement): element is IFormInputElement => {
-	return true;
+	return "formFormattedValue" in element && "name" in element;
 };
 
 export {

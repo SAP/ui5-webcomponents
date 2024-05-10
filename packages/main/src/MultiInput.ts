@@ -146,7 +146,7 @@ class MultiInput extends Input implements IFormInputElement {
 			return formData;
 		}
 
-		return this.value || null;
+		return this.value;
 	}
 
 	constructor() {

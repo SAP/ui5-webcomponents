@@ -135,8 +135,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	get formFormattedValue() {
 		const formData = new FormData();
 
-		formData.append(this.name, `${this.startValue}`);
-		formData.append(this.name, `${this.endValue}`);
+		formData.append(this.name, this.startValue.toString());
+		formData.append(this.name, this.endValue.toString());
 
 		return formData;
 	}

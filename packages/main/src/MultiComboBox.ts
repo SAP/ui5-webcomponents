@@ -502,7 +502,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return formData;
 		}
 
-		return this.value || null;
+		return this.value;
 	}
 
 	constructor() {

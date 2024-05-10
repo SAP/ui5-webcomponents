@@ -56,7 +56,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?combobox4=ok&combobox5=ok"));
+			done(location.href.endsWith("FormSupport.html?combobox3=&combobox4=ok&combobox5=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -80,7 +80,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?date_picker4=ok&date_picker5=ok"));
+			done(location.href.endsWith("FormSupport.html?date_picker3=&date_picker4=ok&date_picker5=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -104,7 +104,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?daterange_picker4=ok&daterange_picker5=ok"));
+			done(location.href.endsWith("FormSupport.html?daterange_picker3=&daterange_picker4=ok&daterange_picker5=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -128,7 +128,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?datetime_picker4=ok&datetime_picker5=ok"));
+			done(location.href.endsWith("FormSupport.html?datetime_picker3=&datetime_picker4=ok&datetime_picker5=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -152,7 +152,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?input4=ok&input5=ok"));
+			done(location.href.endsWith("FormSupport.html?input3=&input4=ok&input5=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -176,7 +176,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?multi_combobox6=ok&multi_combobox7=ok&multi_combobox8=ok&multi_combobox8=ok&multi_combobox9=ok&multi_combobox10=ok&multi_combobox11=ok&multi_combobox12=ok&multi_combobox12=ok"));
+			done(location.href.endsWith("FormSupport.html?multi_combobox5=&multi_combobox6=ok&multi_combobox7=ok&multi_combobox8=ok&multi_combobox8=ok&multi_combobox9=ok&multi_combobox10=ok&multi_combobox11=ok&multi_combobox12=ok&multi_combobox12=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -200,7 +200,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?multi_input6=ok&multi_input7=ok&multi_input8=ok&multi_input8=ok&multi_input9=ok&multi_input10=ok&multi_input11=ok&multi_input12=ok&multi_input12=ok"));
+			done(location.href.endsWith("FormSupport.html?multi_input5=&multi_input6=ok&multi_input7=ok&multi_input8=ok&multi_input8=ok&multi_input9=ok&multi_input10=ok&multi_input11=ok&multi_input12=ok&multi_input12=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -298,7 +298,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?select4=Option+1&select5=option2&select7=Option+1&select8=option2&select9=option2"));
+			done(location.href.endsWith("FormSupport.html?select4=Option+1&select5=option2&select6=&select7=Option+1&select8=option2&select9=option2"));
 		});
 
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
@@ -370,7 +370,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?textarea4=ok&textarea5=ok"));
+			done(location.href.endsWith("FormSupport.html?textarea3=&textarea4=ok&textarea5=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -382,7 +382,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		const hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?time_picker4=1%3A10%3A10%E2%80%AFPM"));
+			done(location.href.endsWith("FormSupport.html?time_picker3=&time_picker4=1%3A10%3A10%E2%80%AFPM"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
