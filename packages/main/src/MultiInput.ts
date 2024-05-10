@@ -135,12 +135,10 @@ class MultiInput extends Input implements IFormInputElement {
 		if (tokens.length) {
 			const formData = new FormData();
 
+			formData.append(this.name, this.value);
+
 			for (let i = 0; i < tokens.length; i++) {
 				formData.append(this.name, tokens[i].text);
-			}
-
-			if (this.value) {
-				formData.append(this.name, this.value);
 			}
 
 			return formData;

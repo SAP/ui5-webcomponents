@@ -176,7 +176,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?multi_combobox5=&multi_combobox6=ok&multi_combobox7=ok&multi_combobox8=ok&multi_combobox8=ok&multi_combobox9=ok&multi_combobox10=ok&multi_combobox11=ok&multi_combobox12=ok&multi_combobox12=ok"));
+			done(location.href.endsWith("FormSupport.html?multi_combobox5=&multi_combobox6=ok&multi_combobox7=&multi_combobox7=ok&multi_combobox8=ok&multi_combobox8=ok&multi_combobox9=ok&multi_combobox10=ok&multi_combobox11=&multi_combobox11=ok&multi_combobox12=ok&multi_combobox12=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -200,7 +200,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?multi_input5=&multi_input6=ok&multi_input7=ok&multi_input8=ok&multi_input8=ok&multi_input9=ok&multi_input10=ok&multi_input11=ok&multi_input12=ok&multi_input12=ok"));
+			done(location.href.endsWith("FormSupport.html?multi_input5=&multi_input6=ok&multi_input7=&multi_input7=ok&multi_input8=ok&multi_input8=ok&multi_input9=ok&multi_input10=ok&multi_input11=&multi_input11=ok&multi_input12=ok&multi_input12=ok"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});

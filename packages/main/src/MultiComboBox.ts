@@ -491,12 +491,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (selectedItems.length) {
 			const formData = new FormData();
 
+			formData.append(this.name, this.value);
+
 			for (let i = 0; i < selectedItems.length; i++) {
 				formData.append(this.name, selectedItems[i].text);
-			}
-
-			if (this.value) {
-				formData.append(this.name, this.value);
 			}
 
 			return formData;
