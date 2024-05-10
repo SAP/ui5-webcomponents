@@ -338,7 +338,7 @@ datetimePicker.open = true;
 datetimePicker.open = false;
 ```
 
-### ui5-date-range-picker
+### ui5-daterange-picker
 
 | Changed item | Old     | New     | 
 |--------------|---------|---------|
@@ -346,15 +346,15 @@ datetimePicker.open = false;
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
-<ui5-date-range-picker value-state="Error"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Warning"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+<ui5-daterange-picker value-state="Error"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Warning"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Success"></ui5-daterange-picker>
 ```
 Now you have to use it like:
 ```html
-<ui5-date-range-picker value-state="Negative"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Critical"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+<ui5-daterange-picker value-state="Negative"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Critical"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Success"></ui5-daterange-picker>
 ```
 
 | Changed item | Old     | New     | 
@@ -896,6 +896,29 @@ Now you have to use it like:
 <ui5-textarea value-state="Critical"></ui5-textarea>
 <ui5-textarea value-state="Success"></ui5-textarea>
 ```
+
+### ui5-title
+
+| Changed item  | Old   | New | 
+|---------------|-------|-----|
+| `wrappingType` default value | `None` | `Normal` |
+
+- The defualt value of the wrappingType property has been changed from `None` to `Normal`.
+
+Previously long texts would truncate if there is not enough space:
+```html
+<ui5-title>some very very very long title</ui5-title> <!-- text will truncate if there is not enough space -->
+```
+
+Now, long texts would wrap:
+```html
+<ui5-title>some very very very long title</ui5-title> <!-- text will wrap if there is not enough space -->
+```
+And you need to set `wrapping-type="None"` explicitly to make it truncate as before:
+```html
+<ui5-title wrapping-type="None">some very very very long title</ui5-title> <!-- will truncate the text -->
+```
+
 
 ### ui5-tree
 

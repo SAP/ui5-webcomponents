@@ -20,7 +20,13 @@
 			{{else}}
 				<div class="{{classes.header}}" slot="header">
 					{{#if headerText }}
-						<ui5-title level="H2" class="ui5-popup-header-text ui5-responsive-popover-header-text">{{headerText}}</ui5-title>
+						<ui5-title 
+							level="H2"
+							wrapping-type="None"
+							class="ui5-popup-header-text ui5-responsive-popover-header-text"
+						>
+							{{headerText}}
+						</ui5-title>
 					{{/if}}
 					{{#unless _hideCloseButton}}
 						<ui5-button
