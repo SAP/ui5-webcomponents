@@ -68,7 +68,7 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("123123123");
 		await browser.keys("Enter");
 
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
+		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is on error");
 	});
 
 	it("tests change event", async () => {

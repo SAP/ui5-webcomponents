@@ -526,8 +526,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
@@ -588,7 +588,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : null;
+		return this.valueState === ValueState.Negative ? "true" : null;
 	}
 
 	get openValueStateMsgPopover() {
@@ -604,7 +604,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	}
 
 	get hasValueState() {
-		return this.valueState === ValueState.Error || this.valueState === ValueState.Warning || this.valueState === ValueState.Information;
+		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
 	}
 
 	get valueStateMessageText() {
@@ -620,9 +620,9 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 */
 	get _valueStateMessageIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -631,19 +631,19 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Positive": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			"Negative": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Critical": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 }

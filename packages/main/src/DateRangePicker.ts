@@ -246,7 +246,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		}
 		const newValue = this._buildValue(event.detail.selectedDates[0], event.detail.selectedDates[1]); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**

@@ -55,7 +55,7 @@
 							The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 						</ui5-message-strip><br>
 
-						<ui5-label wrapping-type="Normal">Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
+						<ui5-label>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 						</ui5-label>
 						<ui5-button id="btnOpenDialog" class="fcl8auto">Open Wizard Dialog</ui5-button>
 					</div>
@@ -644,7 +644,7 @@
 
 			<section class="fcl21auto">
 				<p>
-					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					<ui5-title level="H5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -652,7 +652,7 @@
 					</ui5-title>
 				</p>
 				<p>
-					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					<ui5-title level="H5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -660,7 +660,7 @@
 					</ui5-title>
 				</p>
 				<p>
-					<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					<ui5-title level="H5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 					aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -673,24 +673,52 @@
 
 	<script>
 
-		fclAcc.accessibilityTexts = {
-			startColumnAccessibleName: "Products list",
-			midColumnAccessibleName: "Product information",
-			endColumnAccessibleName: "Product detailed information",
-			startArrowLeftText: "Collapse products list",
-			startArrowRightText: "Expand products list",
-			endArrowLeftText: "Expand product detailed information",
-			endArrowRightText: "Collapse product detailed information",
-			startArrowContainerAccessibleName: "Start Arrow Container",
-			endArrowContainerAccessibleName: "End Arrow Container",
+		fclAcc.accessibilityAttributes = {
+			startColumn: {
+				name: "Products list",
+			},
+			midColumn: {
+				name: "Product information",
+			},
+			endColumn: {
+				name: "Product detailed information",
+			},
+			startArrowLeft:  {
+				name: "Collapse products list",
+			},
+			startArrowRight: {
+				name: "Expand products list",
+			},
+			endArrowLeft: {
+				name: "Expand product detailed information",
+			},
+			endArrowRight:  {
+				name: "Collapse product detailed information",
+			},
+			startArrowContainer: {
+				name: "Start Arrow Container",
+			},
+			endArrowContainer: {
+				name: "End Arrow Container",
+			},
 		};
 
-		fclAccRoles.accessibilityRoles = {
-			startColumnRole: "complimentary",
-			startArrowContainerRole: "navigation",
-			midColumnRole: "main",
-			endArrowContainerRole: "navigation",
-			endColumnRole: "complementary"
+		fclAccRoles.accessibilityAttributes = {
+			startColumn: {
+				role: "complementary"
+			},
+			startArrowContainer: {
+				role: "navigation"
+			},
+			midColumn:{
+				role: "main"
+			},
+			endArrowContainer: {
+				role: "navigation"
+			},
+			endColumn: {
+				role: "complementary"
+			},
 		};
 
 		var counter = 0;

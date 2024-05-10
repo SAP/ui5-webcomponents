@@ -15,9 +15,9 @@
 
 <body class="input1auto">
 	<h3> Input with suggestions: type 'a'</h3>
-	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
 	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelInputChange">Event [input] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelSelectionChange">Event [selectionChange] :: N/A</ui5-label><br/>
 
 	<div>
 		<h3>Input in Cozy</h3>
@@ -32,6 +32,7 @@
 			Change event count: <span id="myInput-change-count"></span>
 		</div>
 		<div id="myInput-change-result"></div>
+		<div id="myInput-selection-change-result"></div>
 	</div>
 
 	<div class="sapUiSizeCompact">
@@ -83,20 +84,20 @@
 	<h3> Input maxLength = 5</h3>
 	<ui5-input id="input-max-length" maxLength="5" placeholder="Max length of 5"></ui5-input>
 
-	<h3> Input valueState Success</h3>
-	<ui5-input id="input3" value-state="Success" placeholder="Success state ..."></ui5-input>
+	<h3> Input valueState Positive</h3>
+	<ui5-input id="input3" value-state="Positive" placeholder="Positive state ..."></ui5-input>
 
 	<h3> Input valueState Information</h3>
 	<ui5-input value-state="Information" placeholder="Info state ..."></ui5-input>
 
 	<h3> Test 'change' event</h3>
-	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ..."></ui5-input>
+	<ui5-input id="input1" value-state="Critical" placeholder="Warning state ..."></ui5-input>
 
 	<h3>Input with valueState and Dynamic suggestions</h3>
 	<ui5-input id="inputError"
 		class="input2auto"
 		show-suggestions
-		value-state="Error"
+		value-state="Negative"
 		placeholder="Search for a country ...">
 	<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
 	</ui5-input>
@@ -134,11 +135,8 @@
 	<h3> 'selection-item-select' event result</h3>
 	<ui5-input id="input-selection-event-test"></ui5-input>
 
-	<h3> 'suggestionItemSelect' event result on group item</h3>
-	<ui5-input id="inputResultGrouping"></ui5-input>
-
 	<h3> Test 'input' event</h3>
-	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
+	<ui5-input id="input2" value-state="Negative" placeholder="Negative state ...">
 		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 	</ui5-input>
 	<h3> 'input' test result</h3>
@@ -194,7 +192,7 @@
 	<ui5-input id="aria-label-input" accessible-name="Enter your secret password"></ui5-input>
 
 	<h3> Readonly input with value state</h3>
-	<ui5-input id="readonly-value-state-input" readonly value-state="Error"></ui5-input>
+	<ui5-input id="readonly-value-state-input" readonly value-state="Negative"></ui5-input>
 
 	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
@@ -205,7 +203,7 @@
 
 	<ui5-date-picker id='dp5'
 			placeholder='Delivery Date...'
-			value-state="Error"
+			value-state="Negative"
 			title='Delivery Date!'>
 	</ui5-date-picker>
 
@@ -221,9 +219,9 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
-	<ui5-input  value="input" value-state="Error"></ui5-input>
+	<ui5-input  value="input" value-state="Negative"></ui5-input>
 
-	<ui5-select id="mySelect2" value-state="Error">
+	<ui5-select id="mySelect2" value-state="Negative">
 		<ui5-option>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option>Condensed</ui5-option>
@@ -235,7 +233,7 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
-	<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+	<ui5-multi-combobox value-state="Negative"></ui5-multi-combobox>
 	<ui5-multi-combobox value-state="Information"></ui5-multi-combobox>
 
 	<h3> Input with multiple icons</h3>
@@ -365,9 +363,9 @@
 		<ui5-input placeholder="No Value State"></ui5-input>
 		<ui5-input placeholder="Disabled" disabled></ui5-input>
 		<ui5-input placeholder="ReadnOnly" readonly></ui5-input>
-		<ui5-input id="vs-error-default" placeholder="Error ValueState" value-state="Error"></ui5-input>
-		<ui5-input id="vs-warning-default" placeholder="Warning ValueState" value-state="Warning"></ui5-input>
-		<ui5-input id="vs-success-default" placeholder="Success ValueState" value-state="Success"></ui5-input>
+		<ui5-input id="vs-error-default" placeholder="Negative ValueState" value-state="Negative"></ui5-input>
+		<ui5-input id="vs-warning-default" placeholder="Critical ValueState" value-state="Critical"></ui5-input>
+		<ui5-input id="vs-success-default" placeholder="Positive ValueState" value-state="Positive"></ui5-input>
 		<ui5-input id="vs-information-default" placeholder="Information ValueState" value-state="Information"></ui5-input>
 	</div>
 
@@ -458,11 +456,24 @@
 
 	<br>
 
-	<ui5-input value-state="Error" id="dynamic-value-state">
+	<ui5-input value-state="Negative" id="dynamic-value-state">
 		<span slot="valueStateMessage" id="text">0</span>
 	</ui5-input>
 
 	<br>
+
+	<Ui5-input id="input-selection-change" show-suggestions>
+		<ui5-suggestion-item text ="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text ="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text ="Condensed"></ui5-suggestion-item>
+	</Ui5-input>
+
+	<br />
+
+	<span id="input-selection-change-count"></span>
+	<span id="input-selection-change-value"></span>
+
+	<br />
 
 	<ui5-button id="dynamic-value-state-trigger">Trigger dynamic value state</ui5-button>
 
@@ -514,14 +525,12 @@
 		var input1 = document.getElementById('input1');
 		var input2 = document.getElementById('input2');
 		var inputResult = document.getElementById('inputResult');
-		var inputResultGrouping = document.getElementById('inputResultGrouping');
 		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
-		var label = document.getElementById('myLabel');
 		var labelChange = document.getElementById('myLabelChange');
-		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var labelInputChange = document.getElementById('myLabelInputChange');
 		var oXSSButton = document.getElementById("xss-btn");
+		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 
-		var suggestionSelectedCounterWithGrouping = 0;
 
 		var suggest = function (event) {
 			var input = event.target;
@@ -554,38 +563,35 @@
 					suggestion.description = "travel the world";
 					suggestion.text = item.text
 					suggestion.additionalText = "explore";
-					suggestion.additionalTextState = "Success";
+					suggestion.additionalTextState = "Positive";
 					input.appendChild(suggestion);
 				}
 			});
 
-			labelLiveChange.innerHTML = "Event [input] :: " + value;
+			labelInputChange.innerHTML = "Event [input] :: " + value;
 		};
+
+		var changeCounter = 0;
+		var inputCounter = 0;
+		var selectionChangeCounter = 0;
 
 		input.addEventListener("ui5-input", suggest);
 		inputCompact.addEventListener("ui5-input", suggest);
 		inputError.addEventListener("ui5-input", suggest);
 
-		input.addEventListener("ui5-suggestionItemSelect", function (event) {
-			var item = event.detail.item;
-			label.innerHTML = "Event [suggestionSelectEvent] :: " + item.id;
-			suggestionSelectedCounter += 1;
-			inputResult.value = suggestionSelectedCounter;
-		});
-
-		inputGrouping.addEventListener("ui5-suggestionItemSelect", function (event) {
-			var item = event.detail.item;
-			suggestionSelectedCounterWithGrouping += 1;
-			inputResultGrouping.value = suggestionSelectedCounterWithGrouping;
+		input.addEventListener("ui5-selection-change", function (event) {
+			const item = event.detail.item;
+			labelSelectionChange.innerHTML = "Event [selectionChange] :: " + (item ? item.id : "");
+			selectionChangeCounter += 1;
+			const myInputSelectionChangeResult = document.getElementById('myInput-selection-change-result');
+			myInputSelectionChangeResult.innerText = selectionChangeCounter;
 		});
 
 		input.addEventListener("ui5-change", function (event) {
 			labelChange.innerHTML = "Event [change] :: " + event.target.value;
+			changeCounter += 1;
+			inputResult.value = changeCounter;
 		});
-
-		var changeCounter = 0;
-		var inputCounter = 0;
-		var suggestionSelectedCounter = 0;
 
 		input1.addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
@@ -597,11 +603,6 @@
 			inputLiveChangeResult.value = inputCounter;
 		});
 
-		myInput2.addEventListener("ui5-suggestionItemSelect", function (event) {
-			var item = event.detail.item;
-			suggestionSelectedCounter += 1;
-			inputResult.value = suggestionSelectedCounter;
-		});
 
 		var inputChangeResultCounter = 0;
 
@@ -657,15 +658,11 @@
 			compactClearIconInput.toggleAttribute("readonly");
 		});
 
-		document.getElementById("myInput").addEventListener("ui5-suggestion-item-select", event => {
-			const resultInput = document.getElementById("input-selection-event-test");
-			resultInput.setAttribute("value", parseInt(resultInput.getAttribute("value") || 0) + 1);
-		});
 
 		const openPickerInput = document.getElementById("openPickerInput");
 		let recentItems = [];
 		openPickerInput.addEventListener("input", handleSuggestions);
-		openPickerInput.addEventListener("suggestion-item-select", handleSelection);
+		openPickerInput.addEventListener("selection-change", handleSelection);
 		openPickerInput.addEventListener("click", handleHistory);
 		openPickerInput.addEventListener("focus", handleHistory);
 
@@ -759,13 +756,15 @@
 
 		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
 
-		const inputWithPreventableSelection = document.getElementById("input-prevent-suggestion-select");
-		inputWithPreventableSelection.addEventListener("ui5-suggestionItemSelect", (e) => {
-			const selectedItemText = e.detail.item.text || e.detail.item.textContent;
-			if(selectedItemText === "Cozy"){
-				e.preventDefault();
-				inputWithPreventableSelection.value = "test test";
-			}
+		const spanChangeValue = document.getElementById("input-selection-change-value");
+		const spanChangeCount = document.getElementById("input-selection-change-count");
+
+		document.getElementById("input-selection-change").addEventListener("ui5-selection-change", e => {
+			const text = e.detail.item ? e.detail.item.text : "";
+			selectionChangeCounter++;
+			spanChangeValue.innerText = text;
+			spanChangeCount.innerText = selectionChangeCounter;
+			console.log(text);
 		});
 	</script>
 </body>

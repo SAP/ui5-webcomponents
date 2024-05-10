@@ -213,8 +213,8 @@ describe("Menu Accessibility", () => {
 		const list = await popover.$("ui5-list");
 		const listItems = await popover.$("ui5-list").$$("ui5-menu-li");
 
-		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
-		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(await list.getAttribute("accessible-role"), "Menu", "There is proper 'menu' role for the menu list");
+		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "MenuItem", "There is proper 'menuitem' role for the menu list items");
 		assert.strictEqual(await listItems[0].getAttribute("tooltip"), "Select a file - prevent default", "There is a tooltip");
 		assert.strictEqual(await listItems[2].shadow$(".ui5-li-root").getAttribute("aria-haspopup"), "menu", "There is an aria-haspopup attribute");
 		assert.strictEqual(

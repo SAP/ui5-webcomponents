@@ -186,19 +186,18 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	/**
-	 * PUBLIC METHODS
+	 * @override
+	 * @private
 	 */
+	_togglePicker() {
+		super._togglePicker();
 
-	/**
-	 * Opens the picker.
-	 * @public
-	 */
-	async openPicker(): Promise<void> {
-		await super.openPicker();
-		this._previewValues = {
-			...this._previewValues,
-			timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
-		};
+		if (this.open) {
+			this._previewValues = {
+				...this._previewValues,
+				timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
+			};
+		}
 	}
 
 	/**
@@ -342,7 +341,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 			this._updateValueAndFireEvents(value, true, ["change", "value-changed"]);
 		}
 
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -350,7 +349,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * that would disregard the user selection.
 	 */
 	_cancelClick() {
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**

@@ -1,3 +1,7 @@
+import patchPatcher from "./patchPatcher.js";
+import type { OpenUI5Patcher } from "./patchPatcher.js";
+import patchPopup from "./patchPopup.js";
+import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
@@ -84,7 +88,7 @@ class OpenUI5Support {
 		return new Promise<void>(resolve => {
 			window.sap.ui.require(["sap/ui/core/Core"], async (Core: OpenUI5Core) => {
 				const callback = () => {
-					let deps: Array<string> = ["sap/ui/core/LocaleData"];
+					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/Patcher", "sap/ui/core/LocaleData"];
 					if (OpenUI5Support.isAtLeastVersion116()) { // for versions since 1.116.0 and onward, use the modular core
 						deps = [
 							...deps,
@@ -95,7 +99,11 @@ class OpenUI5Support {
 							"sap/ui/core/date/CalendarUtils",
 						];
 					}
-					window.sap.ui.require(deps, resolve);
+					window.sap.ui.require(deps, (Popup: OpenUI5Popup, Patcher: OpenUI5Patcher) => {
+						patchPatcher(Patcher);
+						patchPopup(Popup);
+						resolve();
+					});
 				};
 				if (OpenUI5Support.isAtLeastVersion116()) {
 					await Core.ready();

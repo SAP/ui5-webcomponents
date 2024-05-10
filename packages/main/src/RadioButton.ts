@@ -424,11 +424,11 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 	get valueStateText() {
 		switch (this.valueState) {
-		case ValueState.Error:
+		case ValueState.Negative:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_ERROR);
-		case ValueState.Warning:
+		case ValueState.Critical:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_WARNING);
-		case ValueState.Success:
+		case ValueState.Positive:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS);
 		case ValueState.Information:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION);
