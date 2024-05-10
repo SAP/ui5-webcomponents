@@ -57,7 +57,7 @@ class FormItem extends UI5Element implements IFormItem {
 		"default": true,
 		individualSlots: true,
 	})
-	fields!: Array<HTMLElement>;
+	content!: Array<HTMLElement>;
 
 	/**
 	 * @private

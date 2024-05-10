@@ -1,0 +1,116 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
+    
+    <ui5-label show-colon>Form Layout</ui5-label><ui5-text>S1 M2 L3 XL4</ui5-text></br>
+    <ui5-label show-colon>Page Size</ui5-label><ui5-text id="txtLayout">L</ui5-text>
+    <ui5-slider id="slider" value="80"></ui5-slider>
+
+    <div id="container" style="max-width: 1500px; width: 1250px; overflow-x: auto">
+        <ui5-form header-text="Address" layout="S1 M2 L3 XL4">
+            <ui5-form-group header-text="Group1 (Text Fields)">
+
+                <ui5-form-item>
+                    <ui5-label required for="nameInp" slot="labelContent">Label:</ui5-label>
+                    <ui5-input id="nameInp" value="Typed text"></ui5-input>
+                </ui5-form-item>
+                
+                <ui5-form-item>
+                    <ui5-label required for="cityInp" slot="labelContent">Label:</ui5-label>
+                    <div class="row-align-center">
+                        <ui5-input id="cityInp" placeholder="Placeholder" style="flex-grow: 1; margin-inline-end: 0.25rem;"></ui5-input>
+                        <ui5-text>UNIT</ui5-text>
+                    </div>
+                </ui5-form-item>
+            
+                <ui5-form-item>
+                    <ui5-label required for="streetInp" slot="labelContent">Label:</ui5-label>
+                    <ui5-textarea id="streetInp" placeholder="Write your message here" show-exceeded-text  maxlength="10"></ui5-textarea>
+                </ui5-form-item>
+                
+                <ui5-form-item>
+                    <ui5-label required slot="labelContent" for="fileUpload">Label:</ui5-label>
+                    <ui5-file-uploader id="fileUpload" placeholder="Choose a file">
+                        <ui5-button>Browse...</ui5-button>
+                    </ui5-file-uploader>
+                </ui5-form-item>
+
+                <ui5-form-item>
+                    <ui5-label required for="durationInp" slot="labelContent">Duration:</ui5-label>
+                    <ui5-time-picker id="durationInp" format-pattern="hh:mm:ss" value="12:00:01"></ui5-time-picker>
+                </ui5-form-item>
+    
+                <ui5-form-item>
+                    <ui5-label required for="cityInp3" slot="labelContent">Label:</ui5-label>
+                    <ui5-input id="cityInp3" placeholder="Placeholder"></ui5-input>
+                    <ui5-input placeholder="Placeholder"></ui5-input>
+                </ui5-form-item>
+            </ui5-form-group>
+
+            <ui5-form-group header-text="Group2 (Cb, Rb, Switch)">
+                <ui5-form-item>
+                    <ui5-checkbox text="Here comes your checkbox text"></ui5-checkbox>
+                </ui5-form-item>
+
+                <ui5-form-item>
+                    <ui5-label required slot="labelContent">Label:</ui5-label>
+
+                    <div role="radiogroup" class="radioGroup">
+                        <ui5-radio-button text="With Text" name="test"></ui5-radio-button>
+                        <ui5-radio-button text="With Tex" name="test"></ui5-radio-button>
+                    </div>
+                </ui5-form-item>
+
+                <ui5-form-item>
+                    <ui5-label required slot="labelContent">Label:</ui5-label>
+                    <ui5-switch checked></ui5-switch>
+                </ui5-form-item>
+            </ui5-form-group>
+
+            <ui5-form-group header-text="Group3 (Select Fields)">
+                <ui5-form-item>
+                    <ui5-label required for="countrySel" slot="labelContent">Label:</ui5-label>
+                    <ui5-select id="countrySel" accessible-name-ref="countryLbl">
+                        <ui5-option>Australia</ui5-option>
+                        <ui5-option selected>Germany</ui5-option>
+                        <ui5-option>England</ui5-option>
+                    </ui5-select>
+                </ui5-form-item>
+
+                <ui5-form-item>
+                    <ui5-label required for="countrySel2" slot="labelContent">Label:</ui5-label>
+                    <ui5-select id="countrySel2" accessible-name-ref="countryLbl">
+                        <ui5-option>Australia</ui5-option>
+                        <ui5-option>Germany</ui5-option>
+                        <ui5-option selected>England</ui5-option>
+                    </ui5-select>
+                </ui5-form-item>
+
+                <ui5-form-item>
+                    <ui5-label required for="mcb-grouping1" slot="labelContent">Label:</ui5-label>
+                    <ui5-multi-input id="mcb-grouping1" show-value-help-icon>
+                        <ui5-token slot="tokens" text="laboris"></ui5-token>
+                        <ui5-token slot="tokens" text="ipsum"></ui5-token>
+                        <ui5-token slot="tokens" text="esse"></ui5-token>
+                        <ui5-token slot="tokens" text="amet"></ui5-token>
+                    </ui5-multi-input>
+                </ui5-form-item>
+            </ui5-form-group>
+        </ui5-form>
+    </div>
+
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

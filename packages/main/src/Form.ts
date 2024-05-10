@@ -117,7 +117,7 @@ type ItemsInfo = {
  * - <code>import @ui5/webcomponents/dist/FormItem.js";</code>
  *
  * @public
- * @since 1.23
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-form",
@@ -288,7 +288,7 @@ class Form extends UI5Element {
 
 		const itemsCount = this.items.length;
 		const sortedItems = [...this.items].sort((itemA: IFormItem, itemB: IFormItem) => {
-			return (itemB as FormGroup)?.children?.length - (itemA as FormGroup)?.children?.length;
+			return (itemB as FormGroup)?.items.length - (itemA as FormGroup)?.items.length;
 		});
 
 		sortedItems.forEach((item: IFormItem, idx: number) => {
