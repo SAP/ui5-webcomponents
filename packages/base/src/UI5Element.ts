@@ -35,7 +35,8 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { IFormInputElement, attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 
 let autoId = 0;
 
