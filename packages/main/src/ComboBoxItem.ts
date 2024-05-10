@@ -32,6 +32,13 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	additionalText!: string
 
 	/**
+	 * Indicates whether the item is filtered
+	 * @private
+	 */
+		@property({ type: Boolean, noAttribute: true })
+		_isVisible!: boolean;
+
+	/**
 	 * Indicates whether the item is focssed
 	 * @protected
 	 */

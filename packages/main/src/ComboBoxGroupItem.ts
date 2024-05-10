@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IComboBoxItem } from "./ComboBox.js";
-import ComboBoxItem from "./ComboBoxItem.js";
 
 /**
  * @class
@@ -27,7 +26,7 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		text!: string;
 
 		/**
-		 * Indicates whether the item is focssed
+		 * Indicates whether the item is focused
 		 * @protected
 		 */
 		@property({ type: Boolean })
@@ -42,7 +41,7 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 			invalidateOnChildChange: true,
 			type: HTMLElement,
 		})
-		items!: Array<ComboBoxItem>;
+		items!: Array<IComboBoxItem>;
 
 		/**
 		 * Used to avoid tag name checks

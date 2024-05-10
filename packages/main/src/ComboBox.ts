@@ -96,6 +96,8 @@ interface IComboBoxItem extends UI5Element {
 	selected?: boolean,
 	additionalText?: string,
 	stableDomRef: string,
+	_isVisible?: boolean,
+	items?: Array<IComboBoxItem>
 }
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
@@ -601,6 +603,19 @@ class ComboBox extends UI5Element {
 		const { value } = e.target as HTMLInputElement;
 		const shouldAutocomplete = this.shouldAutocomplete(e);
 
+		// Reset item filtration
+		this.items.forEach(item => {
+			if (item.isGroupItem) {
+				item.items?.forEach(i => {
+					i._isVisible = false;
+				});
+
+				return;
+			}
+
+			item._isVisible = false;
+		});
+
 		if (e.target === this.inner) {
 			// stop the native event, as the semantic "input" would be fired.
 			e.stopImmediatePropagation();
@@ -939,28 +954,26 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str: string) {
-		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
-		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
+		const itemsToFilter: Array<IComboBoxItem> = [];
+		const itemGroups: Array<IComboBoxItem> = [];
 
-		// Return the filtered items and their group items
-		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
-	}
+		this.items.forEach(item => {
+			if (item.items?.length) {
+				const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
+				filteredItems.forEach(i => {
+					i._isVisible = true;
+				});
 
-	/**
-	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
-	 * @private
-	 */
-	static _groupItemFilter(item: IComboBoxItem, idx: number, allItems: Array<IComboBoxItem>, filteredItems: Array<IComboBoxItem>) {
-		if (item.isGroupItem) {
-			let groupHasFilteredItems;
-
-			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
-				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
-				idx++;
+				if (filteredItems.length) {
+					itemGroups.push(item);
+				}
+				return;
 			}
 
-			return groupHasFilteredItems;
-		}
+			itemsToFilter.push(item);
+		});
+
+		return itemGroups;
 	}
 
 	_getFirstMatchingItem(current: string): ComboBoxItem | undefined {
