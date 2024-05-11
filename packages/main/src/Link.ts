@@ -373,4 +373,5 @@ export default Link;
 export type {
 	LinkClickEventDetail,
 	LinkAccessibilityAttributes,
+	LinkAccessibleRole,
 };

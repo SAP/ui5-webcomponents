@@ -519,4 +519,5 @@ export default Button;
 export type {
 	ButtonAccessibilityAttributes,
 	IButton,
+	ButtonAccessibleRole,
 };
