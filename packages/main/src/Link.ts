@@ -11,7 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 // Template
@@ -30,6 +30,11 @@ type LinkClickEventDetail = {
 }
 
 type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup">;
+
+enum LinkAccessibleRole {
+	Button = AriaRole.Button,
+	Link = AriaRole.Link
+}
 
 /**
  * @class
@@ -195,13 +200,13 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines the ARIA role of the component.
 	 *
-	 * **Note:** Use the <code>ButtonAccessibleRole.Button</code> role in cases when navigation is not expected to occur and the href property is not defined.
+	 * **Note:** Use the <code>LinkAccessibleRole.Button</code> role in cases when navigation is not expected to occur and the href property is not defined.
 	 * @default "link"
 	 * @public
 	 * @since 1.9.0
 	 */
-	@property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Link })
-	accessibleRole!: `${ButtonAccessibleRole}`;
+	@property({ type: LinkAccessibleRole, defaultValue: LinkAccessibleRole.Link })
+	accessibleRole!: `${LinkAccessibleRole}`;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
