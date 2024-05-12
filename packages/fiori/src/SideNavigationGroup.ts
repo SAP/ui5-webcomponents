@@ -128,7 +128,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	}
 
 	get belowGroupClassName() {
-		if (this.previousElementSibling instanceof SideNavigationGroup) {
+		if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
 			return "ui5-sn-item-group-below-group";
 		}
 
@@ -164,6 +164,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		this.expanded = !this.expanded;
 	}
 
+	get isSideNavigationGroup() {
+		return true;
+	}
+
 	static async onDefine() {
 		[SideNavigationGroup.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents-fiori"),
@@ -174,4 +178,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 
 SideNavigationGroup.define();
 
+const isInstanceOfSideNavigationGroup = (object: any): object is SideNavigationGroup => {
+	return "isSideNavigationGroup" in object;
+};
+
 export default SideNavigationGroup;
+export { isInstanceOfSideNavigationGroup };

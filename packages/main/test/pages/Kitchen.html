@@ -64,7 +64,6 @@
 			<ui5-li id="arg1" icon="developer-settings">ui5-popover</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-radio-button</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-tabcontainer</ui5-li>
-			<ui5-li id="bg1" icon="developer-settings">ui5-table</ui5-li>
 			<ui5-li id="bg1" icon="developer-settings">ui5-textarea</ui5-li>
 		</ui5-list>
 	</div>
@@ -501,132 +500,9 @@
 			</ui5-list>
 		</section>
 
-		<section class="row">
-			<ui5-table class="kitchen14auto">
-				<ui5-table-column demand-popin min-width="600px" popin-text="Component" slot="columns">
-					<span class="kitchen15auto" >Component</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="1000px" popin-text="Accessibility" slot="columns">
-					<span class="kitchen15auto" >Accessibility</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="800px" popin-text="Text Coverage" slot="columns">
-					<span class="kitchen15auto">Test Coverage</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="600px" popin-text="RTL" slot="columns">
-					<span class="kitchen15auto">RTL</span>
-				</ui5-table-column>
-				<ui5-table-column demand-popin min-width="600px" popin-text="i18n" slot="columns">
-					<span class="kitchen15auto">i18n</span>
-				</ui5-table-column>
-
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 1</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="red">40%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 2</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 3</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 4</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="yellow">80%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 5</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="red">45%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-				<ui5-table-row >
-					<ui5-table-cell>
-						<span>Component 6</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="yellow">70%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-					<ui5-table-cell>
-						<span class="green">100%</span>
-					</ui5-table-cell>
-				</ui5-table-row>
-			</ui5-table>
-		</section>
-
 		<section class="row row-centered">
-			<ui5-label>This is a long long even longer text defined via the ui5-label and it truncates by default</ui5-label>
-			<ui5-label wrapping-type="Normal">This is a long long even longer text defined via the ui5-label, but this one wraps</ui5-label>
+			<ui5-label>This is a long long even longer text defined via the ui5-label and it wraps by default</ui5-label>
+			<ui5-label wrapping-type="None">This is a long long even longer text defined via the ui5-label, but it's truncated</ui5-label>
 		</section>
 	</div>
 	<script src="./kitchen-scripts.js" type="module"></script>

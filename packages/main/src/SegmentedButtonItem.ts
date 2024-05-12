@@ -76,6 +76,24 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	tooltip!: string;
 
 	/**
+	 * Defines the accessible ARIA name of the component.
+	 * @default undefined
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ defaultValue: undefined })
+	accessibleName?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 * @default ""
+	 * @public
+	 * @since 1.1.0
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
+
+	/**
 	 * Defines the icon, displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous options.
 	 *

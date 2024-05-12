@@ -134,3 +134,23 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(await secondSegmentedButtonItem.getProperty("selected"), "Second SegmentedButtonItem should be selected");
 	});
 });
+
+describe("SegmentedButton accessibility", () => {
+	before(async () => {
+		await browser.url(`test/pages/SegmentedButton.html`);
+	});
+
+	it ("aria-label is correctly set from accessibleName attr", async () => {
+		const item = await browser.$("#accBtn1"),
+			itemRoot = item.shadow$(".ui5-segmented-button-item-root");
+
+		assert.equal(await itemRoot.getAttribute("aria-label"), await item.getAttribute("accessible-name"), "aria-label should be set according to accessibleName property");
+	});
+
+	it("aria-label is correctly set from accessibleNameRef attr", async () => {
+		const button = await browser.$("#accBtn2").shadow$(".ui5-segmented-button-item-root");
+
+		assert.strictEqual(await button.getAttribute("aria-label"), "accessible ref text", "aria-label should be set according to accessibleNameRef property");
+	});
+});
+

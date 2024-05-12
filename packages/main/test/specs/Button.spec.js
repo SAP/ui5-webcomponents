@@ -122,7 +122,7 @@ describe("Button general interaction", () => {
 		const button = await browser.$("#attentionIconButton");
 		const icon = await button.shadow$("ui5-icon");
 
-		assert.ok(icon.getAttribute("accessible-role", "presentation"), "icon has proper role");
+		assert.strictEqual(await icon.getAttribute("mode"), "Decorative", "icon has proper role");
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", async () => {
