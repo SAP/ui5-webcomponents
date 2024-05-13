@@ -276,7 +276,7 @@ abstract class Popup extends UI5Element {
 
 		this._opened = true;
 
-		if (this.isModal && !this.shouldHideBackdrop) {
+		if (this.isModal) {
 			Popup.blockPageScrolling(this);
 		}
 
@@ -555,12 +555,6 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	abstract get isModal(): boolean
-
-	/**
-	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-	 * @protected
-	 */
-	abstract get shouldHideBackdrop(): boolean
 
 	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup

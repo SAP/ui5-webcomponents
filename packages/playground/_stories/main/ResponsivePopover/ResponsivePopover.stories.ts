@@ -34,7 +34,6 @@ const Template: UI5StoryArgs<ResponsivePopover, StoryArgsSlots> = (args) => {
 	horizontal-align="${ifDefined(args.horizontalAlign)}"
 	vertical-align="${ifDefined(args.verticalAlign)}"
 	?modal="${ifDefined(args.modal)}"
-	?hide-backdrop="${ifDefined(args.hideBackdrop)}"
 	?hire-arrow="${ifDefined(args.hideArrow)}"
 	?allow-target-overlap="${ifDefined(args.allowTargetOverlap)}"
 	opener="${ifDefined(args.opener)}"
