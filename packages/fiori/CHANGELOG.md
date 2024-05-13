@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v1.24.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** typo in the UnsuccessfulAuth name ([#8882](https://github.com/SAP/ui5-webcomponents/issues/8882)) ([bedbee1](https://github.com/SAP/ui5-webcomponents/commit/bedbee18d6612f81943abbe8cfedf7c1e46227e6)), closes [#8873](https://github.com/SAP/ui5-webcomponents/issues/8873)
+* **ui5-multi-combobox:** remove value state header on validation reset ([#8836](https://github.com/SAP/ui5-webcomponents/issues/8836)) ([ae490b6](https://github.com/SAP/ui5-webcomponents/commit/ae490b61e645fa9893aafeac2e28cc459dea5db6)), closes [#8586](https://github.com/SAP/ui5-webcomponents/issues/8586)
+* **ui5-shellbar:** assistant icon color fixed ([#8746](https://github.com/SAP/ui5-webcomponents/issues/8746)) ([ae0e430](https://github.com/SAP/ui5-webcomponents/commit/ae0e430530a6cb6ec78cd9b644613fa8dee083d0))
+* **ui5-side-navigation:** import overflow icon ([#8861](https://github.com/SAP/ui5-webcomponents/issues/8861)) ([6bd9e39](https://github.com/SAP/ui5-webcomponents/commit/6bd9e39c887b23203feb9699bef0c12c96254856)), closes [#8242](https://github.com/SAP/ui5-webcomponents/issues/8242)
+* **ui5-side-navigation:** replace items and fixedItems union type with SideNavigationItemBase ([#8862](https://github.com/SAP/ui5-webcomponents/issues/8862)) ([c542aae](https://github.com/SAP/ui5-webcomponents/commit/c542aaec7fca20cb43ca03b1b10264a8d2cd5197))
+* **ui5-upload-collection:** correct drag and drop text and icon color ([#8863](https://github.com/SAP/ui5-webcomponents/issues/8863)) ([c208132](https://github.com/SAP/ui5-webcomponents/commit/c208132dea1ed199cb3041557254eb89a59589e1)), closes [#8616](https://github.com/SAP/ui5-webcomponents/issues/8616)
+
+
+
+
+
 # [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
