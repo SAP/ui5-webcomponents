@@ -117,6 +117,7 @@ type ItemsInfo = {
  * - <code>import @ui5/webcomponents/dist/FormItem.js";</code>
  *
  * @public
+ * @experimental
  * @since 2.0.0
  */
 @customElement({

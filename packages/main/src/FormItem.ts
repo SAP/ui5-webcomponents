@@ -31,6 +31,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  *
  * @constructor
  * @public
+ * @experimental
  * @since 1.23.0
  */
 @customElement({
