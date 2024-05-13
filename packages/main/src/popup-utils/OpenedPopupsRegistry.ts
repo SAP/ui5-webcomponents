@@ -47,7 +47,7 @@ const _keydownListener = (event: KeyboardEvent) => {
 
 	if (isEscape(event)) {
 		event.stopPropagation();
-		OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance.close(true);
+		OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance.closePopup(true);
 	}
 };
 

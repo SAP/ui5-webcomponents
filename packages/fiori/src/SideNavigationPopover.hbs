@@ -1,4 +1,3 @@
-{{#if isOverflow}}
 <ui5-navigation-menu
 	id="{{_id}}-side-navigation-overflow-menu"
 	@ui5-before-open="{{_onBeforeMenuOpen}}"
@@ -30,7 +29,6 @@
 		</ui5-navigation-menu-item>
 	{{/each}}
 </ui5-navigation-menu>
-{{else}}
 <ui5-responsive-popover
 	vertical-align="Top"
 	class="ui5-side-navigation-popover"
@@ -73,4 +71,3 @@
 		</ui5-side-navigation>
     {{/if}}
 </ui5-responsive-popover>
-{{/if}}
