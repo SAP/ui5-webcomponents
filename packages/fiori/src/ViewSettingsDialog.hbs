@@ -16,7 +16,7 @@
 						@click="{{_navigateToFilters}}"
 					></ui5-button>
 				{{/if}}
-				<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_title}}</ui5-title>
+				<ui5-title wrapping-type="None" class="ui5-vsd-title" id="{{_id}}-label">{{_title}}</ui5-title>
 			</div>
 			<div class="ui5-vsd-header-end">
 				<ui5-button
@@ -34,12 +34,12 @@
 					<div class="ui5-vsd-sub-header">
 						<ui5-segmented-button @ui5-selection-change="{{_handleModeChange}}">
 								<ui5-segmented-button-item
-									?pressed="{{isModeSort}}"
+									?selected="{{isModeSort}}"
 									icon="sort"
 									mode="Sort"
 								></ui5-segmented-button-item>
 								<ui5-segmented-button-item
-									?pressed="{{isModeFilter}}"
+									?selected="{{isModeFilter}}"
 									icon="filter"
 									mode="Filter"
 								></ui5-segmented-button-item>

@@ -22,8 +22,6 @@ const Template: UI5StoryArgs<ShellBar, StoryArgsSlots> = (
     notifications-count="${ifDefined(args.notificationsCount)}"
     ?show-notifications="${ifDefined(args.showNotifications)}"
     ?show-search-field="${ifDefined(args.showSearchField)}"
-    .accessibilityRoles="${ifDefined(args.accessibilityRoles)}"
-    .accessibilityTexts="${ifDefined(args.accessibilityTexts)}"
     .accessibilityAttributes="${ifDefined(args.accessibilityAttributes)}"
 >
     ${unsafeHTML(args.assistant)}

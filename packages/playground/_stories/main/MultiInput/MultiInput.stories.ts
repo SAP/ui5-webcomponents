@@ -128,7 +128,7 @@ TokenCreation.decorators = [
 			return token.text === event.target.value
 		});
 		if (isDuplicate) {
-			event.target.valueState = "Error";
+			event.target.valueState = "Negative";
 			setTimeout(function () {
 				event.target.valueState = "Normal";
 			}, 2000);

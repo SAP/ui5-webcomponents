@@ -4,7 +4,6 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
-import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 
 import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -22,7 +21,6 @@ export default {
 const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
   html`<ui5-avatar-group
     .type="${ifDefined(args.type)}"
-    .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
   >
     ${unsafeHTML(args.default)}
     ${unsafeHTML(args.overflowButton)}
