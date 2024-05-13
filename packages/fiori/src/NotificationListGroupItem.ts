@@ -141,7 +141,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get accInvisibleText() {
 		return `${this.groupText} ${this.expandText}`;
-		// return `${this.groupText}`;
 	}
 
 	get expandText() {
@@ -184,9 +183,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * Event handlers
 	 *
 	 */
-	_onBtnToggleClick() {
-		// handled by the header with _onHeaderToggleClick
-	}
 
 	_onHeaderToggleClick() {
 		this.toggleCollapsed();

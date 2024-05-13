@@ -13,6 +13,8 @@
 	--_ui5-notification_item-root-padding-inline: 1rem 0.5rem;
 	--_ui5-notification_item-content-padding: 0.75rem 1rem;
 	--_ui5-notification_item-title-margin-bottom: 0.25rem;
+	--_ui5-notification_item-title-padding-end-two-buttons: 4.375rem;
+	--_ui5-notification_item-title-padding-end-one-button: 2.125rem;
 	--_ui5-notification_item-description-margin-top: 0.75rem;
 	--_ui5-notification_item-footer-margin-top: 0.75rem;
 	--_ui5-notification_item-focus-offset: 0;
@@ -23,4 +25,6 @@
 .sapUiSizeCompact {
 	--_ui5-notification_item-description-margin-top: 0.5rem;
 	--_ui5-notification_item-footer-margin-top: 0.5rem;
+	--_ui5-notification_item-title-padding-end-two-buttons: 3.875rem;
+	--_ui5-notification_item-title-padding-end-one-button: 1.875rem;
 }

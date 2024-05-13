@@ -393,6 +393,18 @@ class NotificationListItem extends NotificationListItemBase {
 		return `${id}-invisibleText`;
 	}
 
+	get itemClasses() {
+		const classes = ["ui5-nli-root", "ui5-nli-focusable"];
+
+		if (this.getMenu() && this.showClose) {
+			classes.push("ui5-nli-two-buttons");
+		} else if (this.getMenu() || this.showClose) {
+			classes.push("ui5-nli-one-button");
+		}
+
+		return classes.join(" ");
+	}
+
 	get statusIconName() {
 		return ICON_PER_STATUS_NAME[this.state];
 	}
