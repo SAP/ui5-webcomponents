@@ -19,11 +19,11 @@ import {
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 import IconMode from "./types/IconMode.js";
@@ -46,11 +46,6 @@ let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
-
-enum ButtonAccessibleRole {
-	Button = AriaRole.Button,
-	Link = AriaRole.Link
-}
 
 /**
  * @class
@@ -519,5 +514,4 @@ export default Button;
 export type {
 	ButtonAccessibilityAttributes,
 	IButton,
-	ButtonAccessibleRole,
 };

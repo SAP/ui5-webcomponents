@@ -11,9 +11,9 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import LinkAccessibleRole from "./types/LinkAccessibleRole.js";
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 
@@ -30,11 +30,6 @@ type LinkClickEventDetail = {
 }
 
 type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup">;
-
-enum LinkAccessibleRole {
-	Button = AriaRole.Button,
-	Link = AriaRole.Link
-}
 
 /**
  * @class
@@ -373,5 +368,4 @@ export default Link;
 export type {
 	LinkClickEventDetail,
 	LinkAccessibilityAttributes,
-	LinkAccessibleRole,
 };
