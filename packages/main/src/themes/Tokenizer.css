@@ -3,25 +3,30 @@
 :host {
 	display: inline-block;
 	box-sizing: border-box;
-	border: 1px solid black;
+	border: none;
 	height: 2.25rem;
+}
+
+:host([disabled]) {
+	opacity: 40%;
+	pointer-events: none;
+}
+
+:host(:not([expanded])) .ui5-tokenizer-root {
+	overflow: hidden;
+}
+
+:host([_tokens-count="0"]) .ui5-tokenizer-root {
+	padding: 0;
 }
 
 .ui5-tokenizer-root {
 	height: 100%;
 	display: flex;
 	align-items: center;
-	overflow-x: scroll;
 	box-sizing: border-box;
+	touch-action: none;
 	font-family: "72override", var(--sapFontFamily);
-}
-
-.ui5-tokenizer-no-padding {
-	padding: 0;
-}
-
-.ui5-tokenizer-root.ui5-tokenizer-nmore--wrapper {
-	overflow: hidden;
 }
 
 .ui5-tokenizer--token--wrapper {
@@ -62,4 +67,13 @@
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	color: var(--_ui5_tokenizer_n_more_text_color);
+}
+
+.ui5-tokenizer-more-text:hover {
+	text-decoration: underline;
+}
+
+/* Underline needs to be removed on mousedown. */
+.ui5-tokenizer-more-text:active {
+	text-decoration: none;
 }

@@ -732,7 +732,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_findTabInOverflow(realTab: ITab) {
-		if (!this.responsivePopover!.isOpen()) {
+		if (!this.responsivePopover!.open) {
 			return undefined;
 		}
 
@@ -1277,7 +1277,7 @@ class TabContainer extends UI5Element {
 	async _togglePopover(opener: HTMLElement, setInitialFocus = false) {
 		this.responsivePopover = await this._respPopover();
 
-		if (this.responsivePopover.isOpen()) {
+		if (this.responsivePopover.open) {
 			this._closePopover();
 		} else {
 			await this._showPopoverAt(opener, setInitialFocus);
@@ -1294,7 +1294,9 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this._hasScheduledPopoverOpen) {
-			await this.responsivePopover.showAt(opener, preventInitialFocus);
+			this.responsivePopover.preventInitialFocus = preventInitialFocus;
+			this.responsivePopover.opener = opener;
+			this.responsivePopover.open = true;
 		}
 	}
 
@@ -1337,7 +1339,9 @@ class TabContainer extends UI5Element {
 
 	_closePopover() {
 		this._hasScheduledPopoverOpen = false;
-		this.responsivePopover?.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
 	get dropIndicatorDOM(): DropIndicator | null {

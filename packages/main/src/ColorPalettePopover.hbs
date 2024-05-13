@@ -4,11 +4,12 @@
 	placement="Bottom"
 	?open="{{_open}}"
 	.opener="{{opener}}"
-	@ui5-after-close="{{onAfterClose}}"
+	@ui5-close="{{onAfterClose}}"
 >
 	<div slot="header" class="ui5-cp-header">
 		<ui5-title
 			level="H5"
+			wrapping-type="None"
 		>{{_colorPaletteTitle}}</ui5-title>
 	</div>
 	<div>

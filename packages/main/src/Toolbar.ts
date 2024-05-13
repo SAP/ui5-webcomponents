@@ -324,18 +324,19 @@ class Toolbar extends UI5Element {
 	 */
 	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
-		return overflowPopover!.isOpen();
+		return overflowPopover!.open;
 	}
 
 	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.showAt(this.overflowButtonDOM!);
+		overflowPopover!.opener = this.overflowButtonDOM!;
+		overflowPopover!.open = true;
 		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.close();
+		overflowPopover!.open = false;
 	}
 
 	toggleOverflow() {
@@ -486,9 +487,10 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			const eventType: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
-			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
+			const eventType = e.type;
+			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
+			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
+			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
 				return;
