@@ -34,8 +34,8 @@
 }
 
 .ui5-form-group-heading {
-	height: 2.5rem;
-	line-height: 2.5rem;
+	height: var(--_ui5-form-group-heading-height);
+	line-height: var(--_ui5-form-group-heading-height);
 	padding-inline-start: 0.25rem;
 }
 

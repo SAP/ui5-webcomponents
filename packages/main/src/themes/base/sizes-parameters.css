@@ -75,6 +75,7 @@
 	/* Form */
 	--_ui5_form_item_min_height: 2.813rem;
 	--_ui5_form_item_padding:  0.65rem;
+	--_ui5-form-group-heading-height: 2.75rem;
 
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.75rem;
@@ -242,6 +243,7 @@
 	/* Form */
 	--_ui5_form_item_min_height: 2rem;
 	--_ui5_form_item_padding:  0.25rem;
+	--_ui5-form-group-heading-height: 2rem;
 
 	/* Input */
 	--_ui5_input_height: var(--sapElement_Compact_Height);
