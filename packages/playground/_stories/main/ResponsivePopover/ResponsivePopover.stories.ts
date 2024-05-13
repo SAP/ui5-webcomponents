@@ -83,10 +83,11 @@ ${story()}
 	var popover = document.querySelector("ui5-responsive-popover");
 	var popoverCloser = document.getElementById("closePopoverButton");
 	popoverOpener.addEventListener("click", () => {
-		popover.showAt(popoverOpener);
+		popover.opener = popoverOpener;
+		popover.open = true;
 	});
 	popoverCloser.addEventListener("click", () => {
-		popover.close();
+		popover.open = false;
 	});
 </script>`;
 	}

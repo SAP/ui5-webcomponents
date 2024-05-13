@@ -3,7 +3,7 @@
 		class="{{classes.popover}}"
 		hide-arrow
 		prevent-focus-restore
-		_disable-initial-focus
+		prevent-initial-focus
 		placement="Bottom"
 		horizontal-align="Start"
 		tabindex="-1"
@@ -76,7 +76,7 @@
 {{#if hasValueStateMessage}}
 		<ui5-popover
 			skip-registry-update
-			_disable-initial-focus
+			prevent-initial-focus
 			prevent-focus-restore
 			hide-arrow
 			class="ui5-valuestatemessage-popover"

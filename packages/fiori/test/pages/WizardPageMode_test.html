@@ -231,7 +231,7 @@
 		};
 
 		btnOpenDialog.addEventListener("click", () => {
-			dialog.show();
+			dialog.open = true;
 			const index = wiz2.getSelectedStepIndex();
 			setButtonVisibility(index, wiz2.children.length);
 		});
@@ -255,12 +255,12 @@
 		});
 
 		cancelButton.addEventListener("click", () => {
-			dialog.close();
+			dialog.open = false;
 		});
 
 		finalizeButton.addEventListener("click", () => {
 			alert("Finalize");
-			dialog.close();
+			dialog.open = false;
 		});
 	</script>
 </body>

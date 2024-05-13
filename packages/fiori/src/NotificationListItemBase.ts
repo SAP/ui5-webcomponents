@@ -210,12 +210,13 @@ class NotificationListItemBase extends ListItemBase {
 
 	openOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover.showAt(this.overflowButtonDOM);
+		overflowPopover.opener = this.overflowButtonDOM;
+		overflowPopover.open = true;
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover.close();
+		overflowPopover.open = false;
 	}
 
 	getOverflowPopover() {
