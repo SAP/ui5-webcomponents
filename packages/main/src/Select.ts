@@ -561,9 +561,10 @@ class Select extends UI5Element implements IFormElement {
 
 		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
-			this.responsivePopover.close();
+			this.responsivePopover.open = false;
 		} else {
-			this.responsivePopover.showAt(this);
+			this.responsivePopover.opener = this;
+			this.responsivePopover.open = true;
 		}
 	}
 
@@ -674,9 +675,9 @@ class Select extends UI5Element implements IFormElement {
 		if (isTab && this._isPickerOpen) {
 			const menu = this._getSelectMenu();
 			if (menu) {
-				menu.close(false, false, true /* preventFocusRestore */);
+				menu.close(true /* preventFocusRestore */);
 			} else {
-				this.responsivePopover.close();
+				this.responsivePopover.open = false;
 			}
 		} else if (isShow(e)) {
 			e.preventDefault();
@@ -1105,12 +1106,13 @@ class Select extends UI5Element implements IFormElement {
 	openValueStatePopover() {
 		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
-			this.valueStatePopover.showAt(this);
+			this.valueStatePopover.opener = this;
+			this.valueStatePopover.open = true;
 		}
 	}
 
 	closeValueStatePopover() {
-		this.valueStatePopover && this.valueStatePopover.close();
+		this.valueStatePopover && (this.valueStatePopover.open = false);
 	}
 
 	toggleValueStatePopover(open: boolean) {

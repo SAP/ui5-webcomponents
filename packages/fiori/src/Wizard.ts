@@ -632,7 +632,8 @@ class Wizard extends UI5Element {
 		}
 
 		const responsivePopover = this._respPopover();
-		responsivePopover.showAt(oDomTarget);
+		responsivePopover.opener = oDomTarget;
+		responsivePopover.open = true;
 	}
 
 	_onGroupedTabClick(e: MouseEvent) {
@@ -662,7 +663,9 @@ class Wizard extends UI5Element {
 
 	_closeRespPopover() {
 		const responsivePopover = this._respPopover();
-		responsivePopover && responsivePopover.close();
+		if (responsivePopover) {
+			responsivePopover.open = false;
+		}
 	}
 
 	_respPopover() {

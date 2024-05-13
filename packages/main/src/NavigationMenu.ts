@@ -117,7 +117,7 @@ class NavigationMenu extends Menu {
 				openerMenuItem = parentMenu._parentMenuItem as MenuItem;
 			} while (parentMenu._parentMenuItem);
 
-			mainMenu._popover!.close();
+			mainMenu._popover!.open = false;
 		}
 
 		this._prepareSubMenu(item, opener);
