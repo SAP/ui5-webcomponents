@@ -429,6 +429,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	showClearIcon!: boolean;
 
 	/**
+	 * Defines whether the suggestions popover is open.
+	 * @default false
+	 * @public
+	 * @since rc.2.0.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
 	 * Defines whether the clear icon is visible.
 	 * @default false
 	 * @private
@@ -444,20 +453,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	focused!: boolean;
 
 	@property({ type: Boolean })
-	openOnMobile!: boolean;
-
-	@property({ type: Boolean })
-	open!: boolean;
-
-	@property({ type: Boolean })
 	valueStateOpen!: boolean;
-
-	/**
-	 * Determines whether to manually show the suggestions popover
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_forceOpen!: boolean;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
@@ -648,12 +644,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.closeValueStatePopover();
 		}
 
-		if (this._isPhone) {
-			this.open = this.openOnMobile;
-		} else if (this._forceOpen) {
-			this.open = true;
-		} else {
-			this.open = hasValue && hasItems && isFocused && this.isTyping;
+		if (!this._isPhone) {
+			this.open = this.open || (hasValue && hasItems && isFocused && this.isTyping);
 		}
 
 		if (this.FormSupport) {
@@ -931,7 +923,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.lastConfirmedValue = "";
 		this.isTyping = false;
-		this._forceOpen = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -949,7 +940,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_click() {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this.openOnMobile = true;
+			this.open = true;
 		}
 	}
 
@@ -1106,7 +1097,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_closePicker() {
 		this.open = false;
-		this.openOnMobile = false;
 	}
 
 	_afterOpenPicker() {
@@ -1127,10 +1117,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.focused = false;
 		}
 
-		this.openOnMobile = false;
 		this.open = false;
 		this.isTyping = false;
-		this._forceOpen = false;
 
 		if (this.hasSuggestionItemSelected) {
 			this.focus();
@@ -1179,19 +1167,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
-	/**
-	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-	 * @public
-	 * @since 1.3.0
-	 */
-	openPicker() : void {
-		if (!this.suggestionItems.length || this.disabled || this.readonly) {
-			return;
-		}
-
-		this._forceOpen = true;
-	}
-
 	enableSuggestions() {
 		if (this.Suggestions) {
 			return;
@@ -1235,8 +1210,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeSelectionStart = "";
 
 		this.isTyping = false;
-		this.openOnMobile = false;
-		this._forceOpen = false;
+		this.open = false;
 	}
 
 	/**

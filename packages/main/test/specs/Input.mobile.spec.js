@@ -197,3 +197,19 @@ describe("Value state header", () => {
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 	});
 });
+
+describe("Property open", () => {
+	before(async () => {
+		await browser.url("test/pages/Input.html");
+		await browser.emulateDevice('iPhone X');
+	});
+
+	it("Suggestions popover is open when attribute open is true", async () => {
+		const input = await $("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+});

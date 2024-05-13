@@ -421,7 +421,7 @@
 		<br />
 	</div>
 
-	<h3>Input with openPicker() on focusin</h3>
+	<h3>Input with open suggestions on focusin</h3>
 	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
 		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
@@ -472,6 +472,14 @@
 
 	<span id="input-selection-change-count"></span>
 	<span id="input-selection-change-value"></span>
+
+	<br />
+	<h3>Input with open suggestions by default</h3>
+	<ui5-input id="input-suggestions-open" show-suggestions open="true">
+		<ui5-suggestion-item text ="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text ="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text ="Condensed"></ui5-suggestion-item>
+	</ui5-input>
 
 	<br />
 
@@ -727,7 +735,7 @@
 
 		function handleHistory() {
 			handleSuggestions();
-			openPickerInput.openPicker();
+			openPickerInput.open = true;
 		}
 
 		document.getElementById("clear-button").addEventListener("click", event => {

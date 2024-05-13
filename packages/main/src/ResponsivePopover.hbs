@@ -12,6 +12,7 @@
 		@ui5-before-close="{{_propagateDialogEvent}}"
 		@ui5-after-close="{{_afterDialogClose}}"
 		exportparts="content, header, footer"
+		.open={{open}}
 	>
 		{{!-- forward slot header to inner dialog slot header --}}
 		{{#unless _hideHeader}}
@@ -20,7 +21,7 @@
 			{{else}}
 				<div class="{{classes.header}}" slot="header">
 					{{#if headerText }}
-						<ui5-title 
+						<ui5-title
 							level="H2"
 							wrapping-type="None"
 							class="ui5-popup-header-text ui5-responsive-popover-header-text"
