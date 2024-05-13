@@ -32,37 +32,6 @@
 	box-sizing: border-box;
 }
 
-/* S - 1 column */
-
-/* 
- * There are 24px (1.5rem) paddings on the Form itself and when the Form is around 600px,
- * the actual FormItem is less than 600px and the following container query is applied a bit earlier.
- * Note: using CSS variable in the container query is not possible.
- */
-@container (max-width: calc(600px - 1.5rem)) {
-	:host(:not([label-span])) .ui5-form-item-layout {
-		--ui5-form-item-layout: 1fr;
-	}
-
-	:host(:not([label-span])) .ui5-form-item-label {
-		padding: var(--ui5-form-item-label-padding-span12);
-		justify-self: var(--ui5-form-item-label-justify-span12);
-	}
-
-	:host([item-spacing="Large"]) .ui5-form-item-layout {
-		min-height: initial;
-		padding-top: 0;
-		padding-bottom: 0;
-		box-sizing: border-box;
-	}
-
-	:host([item-spacing="Large"]) .ui5-form-item-content {
-		min-height: var(--_ui5_form_item_min_height);
-		padding-top: var(--_ui5_form_item_padding);
-		box-sizing: border-box;
-	}
-}
-
 ::slotted([ui5-input]) {
 	width: 100%;
 }
