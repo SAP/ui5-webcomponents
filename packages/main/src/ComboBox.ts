@@ -75,7 +75,7 @@ import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
-import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
+import ComboBoxGroupItem from "./ComboBoxItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
@@ -954,26 +954,30 @@ class ComboBox extends UI5Element {
 	}
 
 	_filterItems(str: string) {
-		const itemsToFilter: Array<IComboBoxItem> = [];
-		const itemGroups: Array<IComboBoxItem> = [];
+		let filteredItem:IComboBoxItem;
+		let filteredGroupItems: Array<IComboBoxItem> = [];
+		const filteredItems: Array<IComboBoxItem> = [];
+		const filteredItemGroups: Array<IComboBoxItem> = [];
 
 		this.items.forEach(item => {
 			if (item.items?.length) {
-				const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
-				filteredItems.forEach(i => {
+				filteredGroupItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
+				filteredGroupItems.forEach(i => {
 					i._isVisible = true;
 				});
 
-				if (filteredItems.length) {
-					itemGroups.push(item);
+				if (filteredGroupItems.length) {
+					filteredItemGroups.push(item);
 				}
+
 				return;
 			}
 
-			itemsToFilter.push(item);
+			[filteredItem] = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, [item], "text");
+			filteredItem && filteredItems.push(filteredItem);
 		});
 
-		return itemGroups;
+		return [...filteredItemGroups, ...filteredItems];
 	}
 
 	_getFirstMatchingItem(current: string): ComboBoxItem | undefined {
@@ -984,7 +988,7 @@ class ComboBox extends UI5Element {
 			return;
 		}
 
-		const matchingItems: Array<ComboBoxItem> = (this._startsWithMatchingItems(current).filter(item => !item.isGroupItem) as Array<ComboBoxItem>);
+		const matchingItems: Array<ComboBoxItem> = (this._startsWithMatchingItems(current).map(item => (item?.items?.length && item.items[0]) || item) as Array<ComboBoxItem>);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
@@ -1006,11 +1010,22 @@ class ComboBox extends UI5Element {
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 
 		const itemToBeSelected = this._filteredItems.find(item => {
-			return !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+			return ((!item.isGroupItem && (item.text === this.value)) || (item.items?.length && (item.items[0].text === this.value))) && !shouldSelectionBeCleared;
 		});
 
+		if (!itemToBeSelected) {
+			return;
+		}
+
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = item === itemToBeSelected;
+			if (!item.items) {
+				item.selected = item === itemToBeSelected;
+			}
+
+			if (item.items && !!itemToBeSelected?.items?.length) {
+				item.items[0].selected = itemToBeSelected.items[0] === item.items[0];
+			}
+
 			return item;
 		});
 	}

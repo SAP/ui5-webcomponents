@@ -15,7 +15,7 @@ import type { IComboBoxItem } from "./ComboBox.js";
  * @implements {IComboBoxItem}
  * @since 1.0.0-rc.15
  */
-@customElement("ui5-cb-group-item")
+@customElement("ui5-cb-item-group")
 class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		/**
 		 * Defines the text of the component.
