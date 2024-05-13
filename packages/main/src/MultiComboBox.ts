@@ -531,7 +531,8 @@ class MultiComboBox extends UI5Element {
 
 		if (!changePrevented) {
 			matchingItem.selected = !initiallySelected;
-			this._getResponsivePopover().close();
+			this._getResponsivePopover().preventFocusRestore = false;
+			this._getResponsivePopover().open = false;
 			this.value = "";
 		}
 	}
@@ -620,9 +621,10 @@ class MultiComboBox extends UI5Element {
 
 		if (!isPhone()) {
 			if (filteredItems.length === 0) {
-				this._getRespPopover().close();
+				this._getRespPopover().open = false;
 			} else {
-				this._getRespPopover().showAt(this);
+				this._getRespPopover().opener = this;
+				this._getRespPopover().open = true;
 			}
 		}
 
@@ -896,7 +898,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_handleTab() {
-		this._getRespPopover().close();
+		this._getRespPopover().open = false;
 	}
 
 	_handleSelectAll() {
@@ -1045,7 +1047,7 @@ class MultiComboBox extends UI5Element {
 
 	_onItemTab() {
 		this._inputDom.focus();
-		this._getRespPopover().close();
+		this._getRespPopover().open = false;
 	}
 
 	_handleArrowNavigation(e: KeyboardEvent, isDownControl: boolean) {
@@ -1220,7 +1222,7 @@ class MultiComboBox extends UI5Element {
 			}
 
 			innerInput.setSelectionRange(matchingItem.text.length, matchingItem.text.length);
-			this._getRespPopover().close();
+			this._getRespPopover().open = false;
 		}
 	}
 
@@ -1343,7 +1345,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (!e.detail.selectionComponentPressed && !isSpace(castedEvent) && !isSpaceCtrl(castedEvent)) {
-			this._getRespPopover().close();
+			this._getRespPopover().open = false;
 			this.value = "";
 
 			// if the item (not checkbox) is clicked, call the selection change
@@ -1394,7 +1396,8 @@ class MultiComboBox extends UI5Element {
 
 	_click() {
 		if (isPhone() && !this.readonly && !this._showMorePressed && !this._deleting) {
-			this._getRespPopover().showAt(this);
+			this._getRespPopover().opener = this;
+			this._getRespPopover().open = true;
 		}
 
 		this._showMorePressed = false;
@@ -1405,8 +1408,9 @@ class MultiComboBox extends UI5Element {
 		const hasTruncatedToken = tokens.length === 1 && tokens[0].isTruncatable;
 		const popover = this._getResponsivePopover();
 
-		if (hasTruncatedToken) {
-			popover?.close(false, false, true);
+		if (hasTruncatedToken && popover) {
+			popover.preventFocusRestore = true;
+			popover.open = false;
 		}
 	}
 
@@ -1617,7 +1621,11 @@ class MultiComboBox extends UI5Element {
 	}
 
 	openPopover() {
-		this._getPopover()?.showAt(this);
+		const popover = this._getPopover();
+		if (popover) {
+			popover.opener = this;
+			popover.open = true;
+		}
 	}
 
 	_forwardFocusToInner() {
@@ -1635,7 +1643,9 @@ class MultiComboBox extends UI5Element {
 	}
 
 	closePopover() {
-		this._getPopover()?.close();
+		if (this._getPopover()) {
+			this._getPopover().open = false;
+		}
 	}
 
 	_getPopover() {

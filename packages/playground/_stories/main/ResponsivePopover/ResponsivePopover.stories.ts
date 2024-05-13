@@ -34,7 +34,6 @@ const Template: UI5StoryArgs<ResponsivePopover, StoryArgsSlots> = (args) => {
 	horizontal-align="${ifDefined(args.horizontalAlign)}"
 	vertical-align="${ifDefined(args.verticalAlign)}"
 	?modal="${ifDefined(args.modal)}"
-	?hide-backdrop="${ifDefined(args.hideBackdrop)}"
 	?hire-arrow="${ifDefined(args.hideArrow)}"
 	?allow-target-overlap="${ifDefined(args.allowTargetOverlap)}"
 	opener="${ifDefined(args.opener)}"
@@ -83,10 +82,11 @@ ${story()}
 	var popover = document.querySelector("ui5-responsive-popover");
 	var popoverCloser = document.getElementById("closePopoverButton");
 	popoverOpener.addEventListener("click", () => {
-		popover.showAt(popoverOpener);
+		popover.opener = popoverOpener;
+		popover.open = true;
 	});
 	popoverCloser.addEventListener("click", () => {
-		popover.close();
+		popover.open = false;
 	});
 </script>`;
 	}

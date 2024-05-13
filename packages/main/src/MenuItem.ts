@@ -173,7 +173,7 @@ class MenuItem extends CustomListItem {
 	}
 
 	get isSubMenuOpen() {
-		return this._popover?.isOpen();
+		return this._popover?.open;
 	}
 
 	get ariaLabelledByText() {

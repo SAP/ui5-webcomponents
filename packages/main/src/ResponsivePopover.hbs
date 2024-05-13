@@ -5,12 +5,12 @@
 		accessible-name-ref={{accessibleNameRef}}
 		accessible-role={{accessibleRole}}
 		stretch
-		?_disable-initial-focus="{{_disableInitialFocus}}"
+		?prevent-initial-focus="{{preventInitialFocus}}"
 		initial-focus="{{initialFocus}}"
 		@ui5-before-open="{{_beforeDialogOpen}}"
-		@ui5-after-open="{{_propagateDialogEvent}}"
+		@ui5-open="{{_propagateDialogEvent}}"
 		@ui5-before-close="{{_propagateDialogEvent}}"
-		@ui5-after-close="{{_afterDialogClose}}"
+		@ui5-close="{{_afterDialogClose}}"
 		exportparts="content, header, footer"
 	>
 		{{!-- forward slot header to inner dialog slot header --}}
@@ -20,7 +20,7 @@
 			{{else}}
 				<div class="{{classes.header}}" slot="header">
 					{{#if headerText }}
-						<ui5-title 
+						<ui5-title
 							level="H2"
 							wrapping-type="None"
 							class="ui5-popup-header-text ui5-responsive-popover-header-text"
@@ -33,7 +33,7 @@
 							icon="decline"
 							design="Transparent"
 							accessible-name="{{_closeDialogAriaLabel}}"
-							@click="{{close}}"
+							@click="{{closePopup}}"
 						>
 						</ui5-button>
 					{{/unless}}

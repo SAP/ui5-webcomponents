@@ -247,7 +247,7 @@ export const PageMode: StoryFn = () => html`
 		}
 
 		btnOpendialog${index}.addEventListener("click", () => {
-			dialog${index}.show();
+			dialog${index}.open = true;
 			const index = wizard${index}Wiz.getSelectedStepIndex();
 			setButtonVisibility${index}(index, wizard${index}Wiz.children.length);
 		});
@@ -271,12 +271,12 @@ export const PageMode: StoryFn = () => html`
 		});
 
 		cancelButton${index}.addEventListener("click", () => {
-			dialog${index}.close();
+			dialog${index}.open = false;
 		});
 
 		wizard${index}Finalize.addEventListener("click", () => {
 			alert("Finalize");
-			dialog${index}.close();
+			dialog${index}.open = false;
 		});
 	</script>
 `;

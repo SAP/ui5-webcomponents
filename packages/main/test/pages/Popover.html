@@ -177,7 +177,7 @@ z-index: 1;
 
 	<ui5-button id="btnPopModalNoLayer">Opens modal popover with no block layer!</ui5-button>
 
-	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" hide-backdrop>
+	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" class="hidebackdrop">
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>Again</ui5-li>
@@ -486,7 +486,8 @@ z-index: 1;
 
 	<script>
 		btn.addEventListener("click", function (event) {
-			pop.showAt(btn);
+			pop.opener = btn;
+			pop.open = true;
 		});
 
 		btnOpenWithAttr.addEventListener("click", function () {
@@ -494,7 +495,7 @@ z-index: 1;
 		});
 
 		btnCloseWithMethod.addEventListener("click", function () {
-			popoverAttr.close();
+			popoverAttr.open = false;
 		});
 
 		btnCloseWithAttr.addEventListener("click", function () {
@@ -502,31 +503,36 @@ z-index: 1;
 		});
 
 		popbtn.addEventListener("click", function (event) {
-			danger.showAt(popbtn);
+			danger.opener = popbtn;
+			danger.open = true;
 		});
 
 		bigDanger.addEventListener("click", function (event) {
-			bigDangerPop.showAt(bigDanger);
+			bigDangerPop.opener = bigDanger;
+			bigDangerPop.open = true;
 		});
 
 		btnPopModal.addEventListener("click", function (event) {
-			modalPopover.showAt(btnPopModal);
+			modalPopover.opener = btnPopModal;
+			modalPopover.open = true;
 		});
 
 		btnPopModalNoLayer.addEventListener("click", function() {
-			modalPopoverNoLayer.showAt(btnPopModalNoLayer);
+			modalPopoverNoLayer.opener = btnPopModalNoLayer;
+			modalPopoverNoLayer.open = true;
 		});
 
 		modalPopoverNoLayerClose.addEventListener("click", function() {
-			modalPopoverNoLayer.close();
+			modalPopoverNoLayer.open = false;
 		});
 
 		modalPopoverClose.addEventListener("click", function (event) {
-			modalPopover.close();
+			modalPopover.open = false;
 		});
 
 		btnPopFocus.addEventListener("click", function (event) {
-			popFocus.showAt(btnPopFocus);
+			popFocus.opener = btnPopFocus;
+			popFocus.open = true;
 		});
 
 		document.getElementById("many-items").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
@@ -546,71 +552,87 @@ z-index: 1;
 		}).join("");
 
 		document.getElementById("big-popover-button").addEventListener("click", function (event) {
-			document.getElementById("big-popover").showAt(event.target);
+			document.getElementById("big-popover").opener = event.target;
+			document.getElementById("big-popover").open = true;
 		});
 
 		document.getElementById("acc-role-popover-button").addEventListener("click", function (event) {
-			document.getElementById("acc-role-popover").showAt(event.target);
+			document.getElementById("acc-role-popover").opener = event.target;
+			document.getElementById("acc-role-popover").open = true;
 		});
 
 		document.getElementById("acc-role-popover-button2").addEventListener("click", function (event) {
-			document.getElementById("acc-role-popover2").showAt(event.target);
+			document.getElementById("acc-role-popover2").opener = event.target;
+			document.getElementById("acc-role-popover2").open = true;
 		});
 
 		btnFullWidth.addEventListener("click", function (event) {
-			popFullWidth.showAt(btnFullWidth);
+			popFullWidth.opener = btnFullWidth;
+			popFullWidth.open = true;
 		});
 		btnNormalWidth.addEventListener("click", function (event) {
-			popFullWidth.showAt(btnNormalWidth);
+			popFullWidth.opener = btnNormalWidth;
+			popFullWidth.open = true;
 		});
 
 		btnFullWidthTargetOverlap.addEventListener("click", function (event) {
-			popFullWidthTargetOverlap.showAt(btnFullWidthTargetOverlap);
+			popFullWidthTargetOverlap.opener = btnFullWidthTargetOverlap;
+			popFullWidthTargetOverlap.open = true;
 		});
 		btnNormalWidthTargetOverlap.addEventListener("click", function (event) {
-			popFullWidthTargetOverlap.showAt(btnNormalWidthTargetOverlap);
+			popFullWidthTargetOverlap.opener = btnNormalWidthTargetOverlap;
+			popFullWidthTargetOverlap.open = true;
 		});
 
 		btnFullWidthLeft.addEventListener("click", function (event) {
-			popFullWidthLeft.showAt(btnFullWidthLeft);
+			popFullWidthLeft.opener = btnFullWidthLeft;
+			popFullWidthLeft.open = true;
 		});
 		btnNormalWidthLeft.addEventListener("click", function (event) {
-			popFullWidthLeft.showAt(btnNormalWidthLeft);
+			popFullWidthLeft.opener = btnNormalWidthLeft;
+			popFullWidthLeft.open = true;
 		});
 
 		btnFullWidthLeftTargetOverlap.addEventListener("click", function (event) {
-			popFullWidthLeftTargetOverlap.showAt(btnFullWidthLeftTargetOverlap);
+			popFullWidthLeftTargetOverlap.opener = btnFullWidthLeftTargetOverlap;
+			popFullWidthLeftTargetOverlap.open = true;
 		});
 		btnNormalWidthLeftTargetOverlap.addEventListener("click", function (event) {
-			popFullWidthLeftTargetOverlap.showAt(btnNormalWidthLeftTargetOverlap);
+			popFullWidthLeftTargetOverlap.opener = btnNormalWidthLeftTargetOverlap;
+			popFullWidthLeftTargetOverlap.open = true;
 		});
 
 		[btnFullWidthTop, btnLeftEdgeTop, btnRightEdgeTop].forEach((el) => {
 			el.addEventListener("click", function (event) {
-				popFullWidthTop.showAt(el);
+				popFullWidthTop.opener = el;
+				popFullWidthTop.open = true;
 			});
 		});
 
 		[btnFullWidthBottom, btnLeftEdgeBottom, btnRightEdgeBottom].forEach((el) => {
 			el.addEventListener("click", function (event) {
-				popFullWidthBottom.showAt(el);
+				popFullWidthBottom.opener = el;
+				popFullWidthBottom.open = true;
 			});
 		});
 
 		btnQuickViewCardOpener.addEventListener("click", function (event) {
-			quickViewCard.showAt(btnQuickViewCardOpener);
+			quickViewCard.opener = btnQuickViewCardOpener;
+			quickViewCard.open = true;
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
 
 		firstBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "First button is clicked";
-			popNoFocusableContent.showAt(event.target);
+			popNoFocusableContent.opener = event.target;
+			popNoFocusableContent.open = true;
 		});
 
 		secondBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "Second button is clicked";
-			popNoFocusableContent.showAt(event.target);
+			popNoFocusableContent.opener = event.target;
+			popNoFocusableContent.open = true;
 		});
 
 		btnOpenDynamic.addEventListener("click", function () {
@@ -624,39 +646,46 @@ z-index: 1;
 
 			document.body.appendChild(popover);
 
-			popover.showAt(btnOpenDynamic);
+			popover.opener = btnOpenDynamic;
+			popover.open = true;
 		});
 
 		btnOpenPopoverWithDiv.addEventListener("click", function (event) {
-			popWithDiv.showAt(event.target);
+			popWithDiv.opener = event.target;
+			popWithDiv.open = true;
 		});
 
 		btnOpenXRightWide.addEventListener("click", function () {
-			popXRightWide.showAt(btnOpenXRightWide);
+			popXRightWide.opener = btnOpenXRightWide;
+			popXRightWide.open = true;
 		});
 
 		btnRightEdge.addEventListener("click", function () {
-			popoverRightEdge.showAt(btnRightEdge);
+			popoverRightEdge.opener = btnRightEdge;
+			popoverRightEdge.open = true;
 		});
 
 		btnAccNameRef.addEventListener("click", function () {
-			popAccNameRef.showAt(btnAccNameRef);
+			popAccNameRef.opener = btnAccNameRef;
+			popAccNameRef.open = true;
 		});
 
 		openChainedPopover1.addEventListener("click", function () {
-			chainedPopover1.showAt(openChainedPopover1);
+			chainedPopover1.opener = openChainedPopover1;
+			chainedPopover1.open = true;
 		});
 
 		openChainedPopover2List.addEventListener("ui5-item-click", function () {
-			chainedPopover1.close();
-			chainedPopover2.showAt(openChainedPopover1);
+			chainedPopover1.open = false;
+			chainedPopover2.opener = openChainedPopover1;
+			chainedPopover2.open = true;
 		});
 
 		closeChainedPopover2.addEventListener("click", function () {
-			chainedPopover2.close();
+			chainedPopover2.open = false;
 		});
 
-		chainedPopover2.addEventListener("ui5-after-close", function () {
+		chainedPopover2.addEventListener("ui5-close", function () {
 			var toast = document.createElement("ui5-toast");
 			toast.appendChild(document.createTextNode("Closed chained popover 2"));
 			document.body.appendChild(toast);
@@ -664,7 +693,8 @@ z-index: 1;
 		});
 
 		popoverFocusButton.addEventListener("click", function () {
-			popoverFocus.showAt(popoverFocusButton);
+			popoverFocus.opener = popoverFocusButton;
+			popoverFocus.open = true;
 		});
 
 		horizontalAlignBtn.addEventListener("click", function () {
@@ -672,7 +702,8 @@ z-index: 1;
 
 			popoverHorizontalAlign.horizontalAlign = selectedAlign;
 			popoverHorizontalAlign.firstElementChild.innerText = "Horizontal alignment is: " + selectedAlign;
-			popoverHorizontalAlign.showAt(targetOpener);
+			popoverHorizontalAlign.opener = targetOpener;
+			popoverHorizontalAlign.open = true;
 		});
 
 		rtlCb.addEventListener("ui5-change", function (e) {
@@ -706,23 +737,28 @@ z-index: 1;
 		});
 
 		openPopoverInsideContainingBlockButton.addEventListener("click", function () {
-			popoverInsideContainingBlock.showAt(openPopoverInsideContainingBlockButton);
+			popoverInsideContainingBlock.opener = openPopoverInsideContainingBlockButton;
+			popoverInsideContainingBlock.open = true;
 		});
 
 		document.getElementById("btn-footer-position").addEventListener("click", (e) => {
-		document.getElementById("popover-footer-position").showAt(e.currentTarget);
+			document.getElementById("popover-footer-position").opener = e.currentTarget;
+			document.getElementById("popover-footer-position").open = true;
 		});
 
 		document.getElementById("btn2-footer-position").addEventListener("click", (e) => {
-		document.getElementById("popover2-footer-position").showAt(e.currentTarget);
+			document.getElementById("popover2-footer-position").opener = e.currentTarget;
+			document.getElementById("popover2-footer-position").open = true;
 		});
 
 		document.getElementById("btn3-footer-position").addEventListener("click", (e) => {
-		document.getElementById("popover3-footer-position").showAt(e.currentTarget);
+			document.getElementById("popover3-footer-position").opener = e.currentTarget;
+			document.getElementById("popover3-footer-position").open = true;
 		});
 
 		document.getElementById("btn4-footer-position").addEventListener("click", (e) => {
-		document.getElementById("popover4-footer-position").showAt(e.currentTarget);
+			document.getElementById("popover4-footer-position").opener = e.currentTarget;
+			document.getElementById("popover4-footer-position").open = true;
 		});
 
 	</script>

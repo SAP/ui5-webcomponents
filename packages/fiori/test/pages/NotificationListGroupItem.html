@@ -289,7 +289,8 @@
 		});
 
 		openNotifications.addEventListener("click", function(event) {
-			notificationsPopover.showAt(openNotifications);
+			notificationsPopover.opener = openNotifications;
+			notificationsPopover.open = true;
 		});
 
 		btnMakeGroupBusy.addEventListener("click", function(event) {
@@ -302,7 +303,8 @@
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
-			notificationsPopover.showAt(event.detail.targetRef);
+			notificationsPopover.opener = event.detail.targetRef;
+			notificationsPopover.open = true;
 		});
 
 		notificationListTop.addEventListener("ui5-item-close", function (event) {

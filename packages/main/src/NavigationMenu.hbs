@@ -3,9 +3,9 @@
 	class="ui5-menu-rp ui5-navigation-menu"
 	vertical-align="Center"
 	@ui5-before-open={{_beforePopoverOpen}}
-	@ui5-after-open={{_afterPopoverOpen}}
+	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
-	@ui5-after-close={{_afterPopoverClose}}
+	@ui5-close={{_afterPopoverClose}}
     accessible-name-ref="{{_id}}-navigationMenuPopoverText"
 >
 <span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
