@@ -685,7 +685,7 @@ z-index: 1;
 			chainedPopover2.open = false;
 		});
 
-		chainedPopover2.addEventListener("ui5-after-close", function () {
+		chainedPopover2.addEventListener("ui5-close", function () {
 			var toast = document.createElement("ui5-toast");
 			toast.appendChild(document.createTextNode("Closed chained popover 2"));
 			document.body.appendChild(toast);

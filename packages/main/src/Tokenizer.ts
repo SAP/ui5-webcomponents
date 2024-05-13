@@ -512,7 +512,7 @@ class Tokenizer extends UI5Element {
 			if (tokensArray[0].isTruncatable) {
 				const morePopover = this.getPopover();
 
-				morePopover.addEventListener("ui5-after-close", () => {
+				morePopover.addEventListener("ui5-close", () => {
 					this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 				}, {
 					once: true,
