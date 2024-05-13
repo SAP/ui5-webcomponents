@@ -363,7 +363,8 @@ class FileUploader extends UI5Element implements IFormElement {
 		const popover = this._getPopover();
 
 		if (popover) {
-			popover.showAt(this);
+			popover.opener = this;
+			popover.open = true;
 		}
 	}
 
@@ -371,7 +372,7 @@ class FileUploader extends UI5Element implements IFormElement {
 		const popover = this._getPopover();
 
 		if (popover) {
-			popover.close();
+			popover.open = false;
 		}
 	}
 

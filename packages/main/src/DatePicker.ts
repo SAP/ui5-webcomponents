@@ -606,7 +606,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_click(e: MouseEvent) {
 		if (isPhone()) {
-			this.responsivePopover!.showAt(this);
+			this.responsivePopover!.opener = this;
+			this.responsivePopover!.open = true;
 			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
