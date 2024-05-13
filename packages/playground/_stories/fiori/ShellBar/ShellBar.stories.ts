@@ -26,10 +26,10 @@ const Template: UI5StoryArgs<ShellBar, StoryArgsSlots> = (
 >
     ${unsafeHTML(args.assistant)}
     ${unsafeHTML(args.default)} 
-	${unsafeHTML(args.profile)}
-    ${unsafeHTML(args.logo)} 
+	  ${unsafeHTML(args.profile)}
+    ${unsafeHTML(args.logo)}
 	${unsafeHTML(args.menuItems)}
-    ${unsafeHTML(args.searchField)} 
+    ${unsafeHTML(args.searchField)}
 	${unsafeHTML(args.startButton)}
 </ui5-shellbar>`;
 
@@ -118,7 +118,8 @@ export const Advanced: StoryFn = () => {
                 shellbar.addEventListener(
                     "ui5-profile-click",
                     function (event) {
-                        actionPopover.showAt(event.detail.targetRef);
+                        actionPopover.opener = event.detail.targetRef;
+						actionPopover.open = true;
                     }
                 );
             })();

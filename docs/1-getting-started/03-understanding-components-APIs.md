@@ -231,7 +231,7 @@ Get a reference to the UI5 Web Component and call the method on it, as you would
 
 ```js
 const myDialog = document.getElementsByTagName("ui5-dialog")[0];
-myDialog.show();
+myDialog.open = true;
 ```
 
 Consult the documentation for the available public methods for each UI5 Web Component.

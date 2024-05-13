@@ -29,6 +29,13 @@
 	--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom: 0;
 	--_ui5_daypicker_two_calendar_item_selected_focus_padding_right: 0.4375rem;
 
+	/* CalendarLegend */
+	--_ui5-calendar-legend-item-root-focus-offset: -0.125rem;
+
+	/* Calendar Legend Item */
+	--_ui5-calendar-legend-item-box-margin: 0.25rem;
+	--_ui5-calendar-legend-item-box-inner-margin: 0.5rem;
+
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
 	 --_ui5_color-palette-item-hover-height: 2.375rem;
@@ -165,7 +172,6 @@
 	--_ui5-calendar-legend-root-width: 16.75rem;
 
 	/* Calendar Legend Item */
-	--_ui5-calendar-legend-item-box-margin: 0.125rem 0.5rem 0.125rem 0.125rem;
 	--_ui5-calendar-legend-item-root-focus-margin: -0.125rem;
 
 	/* CheckBox */

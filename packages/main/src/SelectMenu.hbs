@@ -2,11 +2,11 @@
 	class="ui5-select-menu"
 	placement="Bottom"
 	horizontal-align="Start"
-	@ui5-after-open="{{_onAfterOpen}}"
-	@ui5-after-close="{{_onAfterClose}}"
+	@ui5-open="{{_onAfterOpen}}"
+	@ui5-close="{{_onAfterClose}}"
 	@ui5-before-open="{{_onBeforeOpen}}"
 	hide-arrow
-	_disable-initial-focus
+	prevent-initial-focus
 	style={{styles.responsivePopover}}
 	>
 		{{#if _isPhone}}
